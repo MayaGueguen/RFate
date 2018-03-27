@@ -4,8 +4,8 @@ Date: 2018-03-27
 Type: Package
 Encoding: UTF-8
 Title: Vegetation modelling with the FATE-HD model
-Author: M. Gu?guen
-Maintainer: M. Gu?guen <maya.gueguen@univ-grenoble-alpes.fr>
+Authors@R: M. Guéguen
+Maintainer: M. Guéguen <maya.gueguen@univ-grenoble-alpes.fr>
 Description: FATE-HD is a vegetation model based on Plant Functional Groups (PFG)
     that aims to simulate primary ecological succession.
     RFate is a package which provides functions to :
@@ -17,10 +17,12 @@ Imports:
     graphics, grDevices, methods, stats, utils,
     ggplot2, ggthemes, ggrepel, reshape2, foreach,
     raster, phyloclim, FD, fpc, clValid, ade4
-Suggests: 
+Suggests:
+    spelling, 
     testthat,
     covr
 License:
     file LICENSE
 URL: https://github.com/MayaGueguen/RFate.git
 RoxygenNote: 6.0.1
+Language: en-US

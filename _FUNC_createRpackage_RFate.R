@@ -7,8 +7,10 @@ library(devtools)
 library(tools)
 library(roxygen2)
 library(usethis)
+library(spelling)
 # devtools::install_github("hadley/pkgdown")
 library(pkgdown)
+
 
 #####################################################################
 ## INFORMATION / PARAMETERS
@@ -29,6 +31,11 @@ setwd("RFate/")
 usethis::use_travis()
 usethis::use_appveyor()
 usethis::use_coverage()
+
+spelling::spell_check_setup()
+
+usethis::use_pkgdown()
+pkgdown:::build_site()
 setwd("./../")
 
 #####################################################################
