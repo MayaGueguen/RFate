@@ -1,0 +1,61 @@
+### HEADER #####################################################################
+##' @title Transform Braun-Blanquet abundances into relative abundances
+##' 
+##' @name PRE_FATE.abundBraunBlanquet
+##'
+##' @author Maya Guéguen
+##' 
+# @date 15/03/2018
+##' 
+##' @description This script is designed to transform Braun-Blanquet abundance information
+##'              into relative abundances or average recovery values (between 0 and 100).
+##'              
+##' @param abund a vector with abundance values from Braun-Blanquet (+, r, 1, 2, 3, 4, 5) with NA when no information
+##' 
+##' @details 
+##' 
+##' Braun-Blanquet values allow to estimate the abundance-dominance of a species based on ans estimation of the number of individuals
+##' and the covering surface. A correspondence has been defined between this index and average recovery values :
+##' 
+##' \tabular{crr}{
+##'   Braun-Blanquet \tab Recovery class (\%) \tab Average recovery (\%) \cr
+##'   + \tab <1 \tab 0.5 \cr
+##'   1 \tab 1-5 \tab 2.5 \cr
+##'   2 \tab 5-25 \tab 15 \cr
+##'   3 \tab 25-50 \tab 37.5 \cr
+##'   4 \tab 50-75 \tab 62.5 \cr
+##'   5 \tab 75-100 \tab 87.5
+##' }
+##' 
+##' Braun-Blanquet J., Roussine N. & Nègre R., 1952. Les groupements végétaux de la France méditerranéenne.
+##' Dir. Carte Group. Vég. Afr. Nord , CNRS, 292 p.
+##' 
+##' Baudière A. & Serve L., 1975. Les groupements végétaux du Plade Gorra-Blanc (massif du Puigmal, Pyrénées Orientales).
+##' Essai d'interprétation phytosociologique et phytogéographique. Nat. Monsp., sér. Bot., 25, 5-21.
+##' 
+##' Foucault B. (de), 1980. Les prairies du bocage virois (Basse-Normandie, France). Typologie phytosociologique et 
+##' essai de reconstitution des séries évolutives herbagères. Doc. Phytosoc., N.S., 5, 1-109.
+##' 
+##' @return a vector with numerical values between 0 and 100 corresponding to the median of each recovery class.
+##' 
+##' @keywords abundance, Braun-Blanquet
+##' 
+##' @examples
+##' 
+##' ## Load example data
+##' data(MontBlanc)
+##'
+## END OF HEADER ###############################################################
+
+PRE_FATE.abundBraunBlanquet = function(abund){
+  ## Convert Braun-Blanquet abundance classes into median coverage percentage
+  abund = as.character(abund)
+  abund[which(abund %in% c("+","r"))] = 0.5
+  abund[which(abund=="1")] = 3
+  abund[which(abund=="2")] = 15
+  abund[which(abund=="3")] = 37.5
+  abund[which(abund=="4")] = 62.5
+  abund[which(abund=="5")] = 87.5
+  abund = as.numeric(abund)
+  return(abund)
+}

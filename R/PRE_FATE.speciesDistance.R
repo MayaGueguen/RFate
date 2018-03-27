@@ -1,0 +1,284 @@
+### HEADER #####################################################################
+##' @title Computation of distances between species
+##' based on traits and niche overlap
+##' 
+##' @name PRE_FATE.speciesDistance
+##'
+##' @author Maya Guéguen
+##' 
+ # @date 21/03/2018
+##' 
+##' @description This script is designed to create a distance matrix between
+##' species, combining functional distances (based on functional trait values)
+##' and niche overlap (based on co-occurrence of species). 
+##'              
+##' @param mat.species.traits A \code{data.frame} with at least 3 columns :
+##' \describe{
+##' \item{\code{species}}{the ID of each studied species}
+##' \item{\code{GROUP}}{a factor variable containing grouping information to
+##'   divide the species into sub data sets (see \code{Details})}
+##' \item{\code{...}}{one column for each functional trait}
+##' }
+##' 
+##' @param mat.species.overlap Three options :
+##' \itemize{
+  # \item a \code{data.frame} with a column for each species containing
+  # presence-absence information (0 or 1) or probability values (between 0 and 1)
+##'   \item a \code{data.frame} with 2 columns :
+##'   \describe{
+##'     \item{\code{species}}{the ID of each studied species}
+##'     \item{\code{raster}}{path to raster file with species distribution}
+##'   }
+##'   \item a dissimilarity structure representing the niche overlap between
+##'   each pair of species. It can be a \code{dist} object, a \code{niolap}
+##'   object, or simply a \code{matrix}.
+##' }
+##' 
+##' @details 
+##' 
+##' This function allows one to obtain a distance matrix between species, based
+##' on two types of distance information :
+##' 
+##' \enumerate{
+##'   \item{\strong{Functional traits : }}{
+##'   \itemize{
+##'     \item The \code{GROUP} column is required if species must be separated
+##'     to have one final distance matrix per \code{GROUP} value. If the column
+##'     is missing, all species will be considered as part of a unique dataset.
+##'     \item The traits can be qualitative or quantitative, but previously
+##'     identified as such (i.e. with the use of functions such as
+##'     \code{as.numeric}, \code{as.factor} and \code{ordered}).
+##'     \item Functional distance matrix is calculated with Gower dissimilarity,
+##'     using the \code{gowdis} function from \pkg{FD} package.
+##'   }
+##'   }
+##'   \item{\strong{Niche overlap : }}{
+##'   \itemize{
+##'     \item If a \code{data.frame} is given, the degree of niche overlap will
+##'     be computed using the \code{niche.overlap} function from \pkg{phyloclim}
+##'     package.
+##'   }
+##'   }
+##' }
+##' 
+##' Functional distances and niche overlap informations are then \strong{combined}
+##' according to the following formula :
+##' 
+##' \deqn{mat.DIST_{sub-group} = [ mat.OVERLAP_{sub-group} +
+##' mat.FUNCTIONAL_{sub-group} * n_{traits} ] / [ n_{traits} + 1 ]}
+##' 
+##' meaning that distance matrix obtained from functional information is
+##' weighted by the number of traits used.
+##' 
+##' 
+##' @return A \code{dist} object corresponding to the distance between each pair
+##' of species, or a \code{list} of \code{dist} objects, one for each
+##' \code{GROUP} value.
+##' 
+##' @note Informations must be complete to include a species into the distance
+##' calculation. Hence, \strong{if a species is missing a trait value, or information
+##' about distribution or niche overlap, it will be removed from the computation}.
+##' 
+##' @keywords Gower distance
+##' 
+##' 
+##' @examples
+##' ## Load example data
+##' data(MontBlanc)
+##' str(MontBlanc)
+##' 
+##' ## MontBlanc$mat.traits : data.frame
+##' ## MontBlanc$mat.nicheOverlap : niolap object
+##' sp.DIST = PRE_FATE.speciesDistance(mat.species.traits = MontBlanc$mat.traits,
+##'                                    mat.species.overlap = MontBlanc$mat.nicheOverlap)
+##' 
+##' str(sp.DIST)
+##' 
+##' @export
+##' 
+##' @importFrom stats as.dist na.exclude
+##' 
+##' @importFrom raster raster
+##' @importFrom phyloclim niche.overlap
+##' @importFrom FD gowdis
+##' 
+## END OF HEADER ###############################################################
+
+
+
+PRE_FATE.speciesDistance = function(mat.species.traits ## data.frame with columns : species, GROUP and one for each trait
+                                    , mat.species.overlap ## species x species matrix ? or XY and one column with PA for each species ?
+){
+  
+  #################################################################################################
+  
+  ## Check existence of parameters
+  if (is.null(mat.species.traits) || is.null(mat.species.overlap))
+  {
+    stop("No data given!\n (neither `mat.species.traits` or `mat.species.overlap` information)")
+  }
+  ## Control form of parameters : mat.species.traits
+  if (!is.data.frame(mat.species.traits))
+  {
+    stop("Wrong type of data!\n `mat.species.traits` must be a data.frame")
+  }
+  if (nrow(mat.species.traits) == 0)
+  {
+    stop("Wrong dimension(s) of data!\n `mat.species.traits` does not have the appropriate number of rows (>0)")
+  }
+  if (sum(colnames(mat.species.traits) == "species") != 1)
+  {
+    stop("Wrong data given!\n `mat.species.traits` must contain a column whose name is `species`")
+  }
+  if (sum(colnames(mat.species.traits) == "GROUP") == 0)
+  {
+    warning("`mat.species.traits` does not contain any column with `GROUP` information\n
+            Data will be considered as one unique dataset.")
+    mat.species.traits$GROUP = "AllSpecies"
+  }
+  ## Control form of parameters : mat.species.overlap
+  if (class(mat.species.overlap) %in% c("dist", "niolap"))
+  {
+    mat.species.overlap = as.matrix(mat.species.overlap)
+  } else if (is.matrix(mat.species.overlap))
+  {
+    if (ncol(mat.species.overlap) != nrow(mat.species.overlap))
+    {
+      stop(paste0("Wrong dimension(s) of data!\n `mat.species.overlap` does not have the
+                  same number of rows (",nrow(mat.species.overlap),")
+                  and columns (",ncol(mat.species.overlap),")"))
+    }
+  } else if (is.data.frame(mat.species.overlap))
+  {
+    # if (length(which(mat.species.overlap < 0)) > 0 || length(which(mat.species.overlap > 1)) > 0)
+    # {
+    #   stop("Wrong data given!\n `mat.species.overlap` must contain values between 0 and 1
+    #        (either presence-absence or probability values)")
+    # }
+    if (sum(colnames(mat.species.overlap) == "species") != 1)
+    {
+      stop("Wrong data given!\n `mat.species.overlap` must contain a column whose name is `species`")
+    }
+    if (sum(colnames(mat.species.overlap) == "raster") != 1)
+    {
+      stop("Wrong data given!\n `mat.species.overlap` must contain a column whose name is `raster`")
+    }
+    # .loadPackage("raster") ## raster
+    # .loadPackage("phyloclim") ## niche.overlap
+    mat.species.overlap = mat.species.overlap[which(file.exists(mat.species.overlap$raster)), ]
+    raster.list = lapply(mat.species.overlap$raster, function(x) as(raster(x), "SpatialGridDataFrame"))
+    overlap.mat = as.matrix(niche.overlap(raster.list))
+    rownames(overlap.mat) = colnames(overlap.mat) = mat.species.overlap$species
+    mat.species.overlap = overlap.mat
+  } else {
+    stop("Wrong type of data!\n `mat.species.overlap` must be either
+         a data.frame or a dissimilarity object (`dist`, `niolap`, `matrix`)")
+  }
+  
+  # .loadPackage("FD") ## gowdis
+  
+  
+  #################################################################################################
+  ### PREPARATION OF DATA
+  #################################################################################################
+  
+  ## TRAITS ------------------------------------------------------------------------------------- #
+  rownames(mat.species.traits) = mat.species.traits$species
+  species_names.traits = sort(unique(as.character(mat.species.traits$species)))
+  traits_names = colnames(mat.species.traits)[which(!(colnames(mat.species.traits) %in% c("species","GROUP")))]
+  group_names = sort(unique(as.character(mat.species.traits$GROUP)))
+  mat.species.traits$GROUP = factor(mat.species.traits$GROUP, group_names)
+  no_NA_values = sapply(lapply(split(mat.species.traits[,traits_names], f = mat.species.traits$GROUP), as.matrix), function(x) sum(is.na(x)))
+  
+  ## Remove species with NAs
+  mat.species.traits = na.exclude(mat.species.traits)
+  
+  ## SPLIT INFORMATION by species type
+  mat.species.traits.split = split(mat.species.traits[,traits_names], f = mat.species.traits$GROUP)
+  species.split = split(as.character(mat.species.traits$species), f = mat.species.traits$GROUP)
+  
+  ## GOWER DISSIMILARITY FOR MIXED VARIABLES
+  mat.species.gower.split = lapply(mat.species.traits.split, FD::gowdis) 
+  
+  cat("\n ############## TRAIT INFORMATIONS ############## \n")
+  cat("\n Number of species : ", nrow(mat.species.traits))
+  cat("\n Measured traits : ", paste0(traits_names, collapse = ", "))
+  cat("\n Groups : ", paste0(group_names, collapse = ", "))
+  cat("\n Number of NA values in each group (which have been removed) : ", no_NA_values)
+  cat("\n Number of species in each group : ", sapply(species.split, length))
+  cat("\n")
+  
+  
+  ## OVERLAP ------------------------------------------------------------------------------------ #
+  species_names.overlap = sort(unique(as.character(colnames(mat.species.overlap))))
+  
+  ## SPLIT INFORMATION by species type
+  mat.species.overlap.split = lapply(species.split, function(x) {
+    ind = which(rownames(mat.species.overlap) %in% x)
+    return(mat.species.overlap[ind, ind])
+  })
+  
+  ## Transform into similarity distances (instead of dissimilarity)
+  mat.species.overlap.split = lapply(mat.species.overlap.split, function(x) {
+    return(as.dist(1 - x)) ## 1- (x/max(x[upper.tri(x)]))
+  })
+  
+  
+  #################################################################################################
+  ### COMBINE TRAITS & OVERLAP DISTANCES
+  #################################################################################################
+  
+  ## ADD OVERLAP as PART OF THE DISTANCE BETWEEN SPECIES
+  ## 1 PART for each trait (Disp, Light, Height, Palatability...)
+  ## 1 PART for climatic distance between species (overlap)
+  
+  ## Check for correspondence :
+  cat("\n Number of species with traits : ", length(species_names.traits))
+  cat("\n Number of species with traits and no overlap information : "
+      , length(setdiff(species_names.traits, species_names.overlap)))
+  cat("\n Number of species with overlap : ", length(species_names.overlap))
+  cat("\n Number of species with overlap and no traits information : "
+      , length(setdiff(species_names.overlap, species_names.traits)))
+  cat("\n")
+  
+  ## Check for correspondence : DIM mat.species.gower.split = DIM mat.species.overlap.split ?
+  cat("\n Comparison of groups' dimensions : \n")
+  for(x in 1:length(group_names)){
+    cat("\n Group ", x, ":\n")
+    cat("Trait distances : ", dim(as.matrix(mat.species.gower.split[[x]])), "\n")
+    cat("Overlap distances : ", dim(as.matrix(mat.species.overlap.split[[x]])), "\n")
+  }
+  species_names.traits_overlap = intersect(species_names.traits, species_names.overlap)
+  cat("\n Number of species with both trait and overlap distances: ", length(species_names.traits_overlap))
+  cat("\n")
+  
+  # Keep only species present in both distance matrices (trait & overlap)
+  mat.species.gower.split = lapply(1:length(group_names), function(x) {
+    tmp = as.matrix(mat.species.gower.split[[x]])
+    ind = which(colnames(tmp) %in% species_names.traits_overlap)
+    return(as.dist(tmp[ind, ind]))
+  })
+  mat.species.overlap.split = lapply(1:length(group_names), function(x) {
+    tmp = as.matrix(mat.species.overlap.split[[x]])
+    ind = which(colnames(tmp) %in% species_names.traits_overlap)
+    return(as.dist(tmp[ind, ind]))
+  })
+  
+  ## COMBINE TRAIT & OVERLAP DISTANCES
+  mat.species.DIST = lapply(1:length(group_names), function(x) {
+    tmp.gower = as.matrix(mat.species.gower.split[[x]])
+    tmp.overlap = as.matrix(mat.species.overlap.split[[x]])
+    mat = (tmp.overlap + length(traits_names) * tmp.gower) / (length(traits_names) + 1)
+    return(as.dist(mat))
+  })
+  names(mat.species.DIST) = group_names
+  
+  if(length(mat.species.DIST) == 1)
+  {
+    mat.species.DIST = mat.species.DIST[[1]]
+  }
+  
+  return(mat.species.DIST)
+  
+}
+
