@@ -25,7 +25,9 @@ setwd("RFate/")
 usethis::use_testthat()
 usethis::use_test(name ="PRE_functions")
 
-usethis::use_tra
+usethis::use_travis()
+usethis::use_appveyor()
+usethis::use_coverage()
 
 #####################################################################
 ## RUN Roxygen ------------------------------------------------------
