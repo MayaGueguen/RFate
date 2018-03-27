@@ -5,3 +5,6 @@
 .git
 _FUNC_createRpackage_RFate.R
 R/examples.R
+^\.travis\.yml$
+^appveyor\.yml$
+^codecov\.yml$
