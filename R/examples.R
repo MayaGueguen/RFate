@@ -1,4 +1,4 @@
-library(RFate)
+# library(RFate)
 
 ## Load example data
 data(MontBlanc)
@@ -36,4 +36,7 @@ sp.DETERM = PRE_FATE.speciesClustering_step2(clust.dendograms = sp.CLUST$clust.d
 str(sp.DETERM)
 
 file.remove(list.files(pattern = "^PRE_FATE_CLUSTERING_STEP"))
+file.remove(list.files(pattern = "Rplots.pdf"))
+file.remove(list.files(pattern = "^DOMINANT_species_selected"))
+
 
