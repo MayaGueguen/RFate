@@ -20,14 +20,13 @@ package_version = "0.0.0.9000"
 
 #####################################################################
 
-load("RFate/data/MontBlanc.rda")
+load("RFate/data/MontBlanc")
 devtools::use_data(MontBlanc, pkg = package_name, overwrite = TRUE)
 
 setwd("RFate/")
 usethis::use_testthat()
 usethis::use_test(name ="PRE_functions")
 
-setwd("RFate/")
 usethis::use_travis()
 usethis::use_appveyor()
 usethis::use_coverage()

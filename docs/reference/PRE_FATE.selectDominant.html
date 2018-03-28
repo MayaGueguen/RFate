@@ -103,7 +103,7 @@
     <pre class="usage"><span class='fu'>PRE_FATE.selectDominant</span>(<span class='kw'>mat.site.species.abund</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sites</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>species</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>abund</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>landclass</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>selectionRule.quanti</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>selectionRule.min_mean_abund</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>selectionRule.min_no_high_abund</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>doLandclass</span> <span class='kw'>=</span> <span class='no'>F</span>,
+  <span class='kw'>selectionRule.min_no_high_abund</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>doLandclass</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>selectionRule.min_percent_landclass</span> <span class='kw'>=</span> <span class='fl'>0.05</span>,
   <span class='kw'>selectionRule.min_no_landclass</span> <span class='kw'>=</span> <span class='fl'>5</span>)</pre>
     
@@ -112,7 +112,9 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>mat.site.species.abund</th>
-      <td><p>a data.frame with at least 3 columns : sites ID, species ID, abundance values (e.g. Braun Blanquet) with NA when no information, landscape ID (optional)</p></td>
+      <td><p>a data.frame with at least 3 columns :
+sites ID, species ID, abundance values (e.g. Braun Blanquet) with NA when
+no information, landscape ID (optional)</p></td>
     </tr>
     <tr>
       <th>sites</th>
@@ -124,7 +126,8 @@
     </tr>
     <tr>
       <th>abund</th>
-      <td><p>a vector with abundance values (e.g. Braun Blanquet) with NA when no information</p></td>
+      <td><p>a vector with abundance values (e.g. Braun Blanquet) with NA
+when no information</p></td>
     </tr>
     <tr>
       <th>landclass</th>
@@ -132,7 +135,8 @@
     </tr>
     <tr>
       <th>selectionRule.quanti</th>
-      <td><p>minimum quantile of total number of sites that must occupy the species (between 0 and 1)</p></td>
+      <td><p>minimum quantile of total number of sites that
+must occupy the species (between 0 and 1)</p></td>
     </tr>
     <tr>
       <th>selectionRule.min_mean_abund</th>
@@ -140,34 +144,49 @@
     </tr>
     <tr>
       <th>selectionRule.min_no_high_abund</th>
-      <td><p>minimum number of sites where species is dominant (&gt;= 25 % of coverage)</p></td>
+      <td><p>minimum number of sites where species
+is dominant (&gt;= 25 % of coverage)</p></td>
     </tr>
     <tr>
       <th>doLandclass</th>
-      <td><p>default FALSE. If TRUE, selection is also done including constraints on landscape class</p></td>
+      <td><p>default FALSE. If TRUE, selection is also done including
+constraints on landscape class</p></td>
     </tr>
     <tr>
       <th>selectionRule.min_percent_landclass</th>
-      <td><p>minimum percentage of the landclass occupied by the species (between 0 and 1)</p></td>
+      <td><p>minimum percentage of the landclass
+occupied by the species (between 0 and 1)</p></td>
     </tr>
     <tr>
       <th>selectionRule.min_no_landclass</th>
-      <td><p>minimum number of sites of a landclass occupied by the species</p></td>
+      <td><p>minimum number of sites of a landclass
+occupied by the species</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a data.frame with all the species selected and the values of parameters used to make the selection :</p>
-<dt>stat.no_sites_recorded</dt><dd><p>number of sites with information (presence-absence or abundance)</p></dd>
+    <p>a <code>data.frame</code> with all the species selected and the values of
+parameters used to make the selection :</p>
+<dt>stat.no_sites_recorded</dt><dd><p>number of sites with information
+(presence-absence or abundance)</p></dd>
 <dt>stat.no_sites_abund</dt><dd><p>number of sites with abundance information</p></dd>
 <dt>stat.abund_median</dt><dd><p>median abundance (coverage percentage)</p></dd>
 <dt>stat.abund_mean</dt><dd><p>mean abundance (coverage percentage)</p></dd>
 <dt>stat.abund_max</dt><dd><p>maximal abundance (coverage percentage)</p></dd>
 <dt>stat.no_sites_abund_max</dt><dd><p>number of sites with maximal abundance</p></dd>
-<dt>stat.no_sites_abund_over25</dt><dd><p>number of sites with maximal abundance &gt;= 25 %</p></dd>
+<dt>stat.no_sites_abund_over25</dt><dd><p>number of sites with maximal abundance &gt;= 25</p></dd>
+<dt>SELECTION</dt><dd><p>dataset in which the species has been selected as
+dominant (global = all data, or landclass)</p></dd>
 
-The information is also written in .csv files :
+The information is written in .csv files :
+
+
+  
+  
+
+
+Two .pdf files are also created : 
 
 
   
@@ -177,21 +196,30 @@ The information is also written in .csv files :
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function provides a way to <em>select dominant species based on abundance sampling information</em>.
-This information can be given either directly in the form of a data.frame, or indirectly with a vector
+    <p>This function provides a way to <em>select dominant species based on
+abundance sampling information</em>.
+This information can be given either directly in the form of a data.frame,
+or indirectly with a vector
 for each required information (sites, species, abundance, landscape class - optional).</p>
     <p>3 rules are applied to make the species selection :</p><dl class='dl-horizontal'>
-  <dt><strong>on number of sites</strong></dt><dd><p>the species should be found in at least <code>n</code> sites,
-  which corresponds to the quantile <code>selectionRule.quanti</code> of all the number of records per species</p></dd>
-  <dt><strong>on average abundance</strong></dt><dd><p>the species should have a mean abundance superior or equal to <code>selectionRule.min_mean_abund</code></p></dd>
-  <dt><strong>on dominancy</strong></dt><dd><p>the species should be dominant (i.e. represent at least 25 % of the coverage of the site) 
+  <dt><strong>on number of sites</strong></dt><dd><p>the species should be found in at
+  least <code>n</code> sites, which corresponds to the quantile <code>selectionRule.quanti</code>
+  of all the number of records per species</p></dd>
+  <dt><strong>on average abundance</strong></dt><dd><p>the species should have a mean
+  abundance superior or equal to <code>selectionRule.min_mean_abund</code></p></dd>
+  <dt><strong>on dominancy</strong></dt><dd><p>the species should be dominant (i.e. represent
+  at least 25 % of the coverage of the site) 
   in at least <code>selectionRule.min_no_high_abund</code> sites</p></dd>
 </dl>
-    <p>If landscape information is available (e.g. type of environment : urban, desert, grassland... ;
-type of vegetation : shrubs, forest, alpine grasslands... ; etc), 2 rules can be added to the selection steps,
-<em>in order to keep species that are not dominant at the large scale but could be representative of a specific environment</em> :</p><dl class='dl-horizontal'>
-  <dt><strong>on occupancy</strong></dt><dd><p>the species should occupy at least <code>selectionRule.min_percent_landclass</code> % of a landclass</p></dd>
-  <dt><strong>on representation</strong></dt><dd><p>the species should be found in at least <code>selectionRule.min_no_landclass</code> sites of a landclass</p></dd>
+    <p>If landscape information is available (e.g. type of environment : urban,
+desert, grassland... ; type of vegetation : shrubs, forest, alpine grasslands... ;
+etc), 2 rules can be added to the selection steps,
+<em>in order to keep species that are not dominant at the large scale
+but could be representative of a specific environment</em> :</p><dl class='dl-horizontal'>
+  <dt><strong>on occupancy</strong></dt><dd><p>the species should occupy at least
+  <code>selectionRule.min_percent_landclass</code> % of a landclass</p></dd>
+  <dt><strong>on representation</strong></dt><dd><p>the species should be found in at least
+  <code>selectionRule.min_no_landclass</code> sites of a landclass</p></dd>
 </dl>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
@@ -204,10 +232,11 @@ type of vegetation : shrubs, forest, alpine grasslands... ; etc), 2 rules can be
 <span class='co'>## Load example data</span>
 <span class='fu'>data</span>(<span class='no'>MontBlanc</span>)
 <span class='fu'>str</span>(<span class='no'>MontBlanc</span>)</div><div class='output co'>#&gt; List of 3
-#&gt;  $ mat.releves     :'data.frame':	4221248 obs. of  3 variables:
-#&gt;   ..$ sites  : int [1:4221248] 622751 622751 622751 622751 622751 622751 622752 622752 622752 622752 ...
-#&gt;   ..$ species: int [1:4221248] 40519 12833 14671 15666 10119 7609 15780 7951 16303 7449 ...
-#&gt;   ..$ abund  : Factor w/ 12 levels "+","0","1","+;1",..: 1 3 3 3 1 6 NA NA NA NA ...
+#&gt;  $ mat.releves     :'data.frame':	12302 obs. of  4 variables:
+#&gt;   ..$ sites    : int [1:12302] 660398 662913 663085 663104 663104 664839 751362 751377 751484 922672 ...
+#&gt;   ..$ species  : chr [1:12302] "Abies alba Miller" "Abies alba Miller" "Abies alba Miller" "Abies alba Miller" ...
+#&gt;   ..$ abund    : Factor w/ 7 levels "","+","1","2",..: 2 2 2 3 6 4 2 3 2 2 ...
+#&gt;   ..$ landclass: int [1:12302] 4 2 6 4 4 4 2 2 3 8 ...
 #&gt;  $ mat.traits      :'data.frame':	337 obs. of  6 variables:
 #&gt;   ..$ species     : chr [1:337] "X23" "X139" "X190" "X197" ...
 #&gt;   ..$ Disp        : num [1:337] 4 5 7 6 7 1 4 7 7 7 ...
@@ -221,20 +250,26 @@ type of vegetation : shrubs, forest, alpine grasslands... ; etc), 2 rules can be
 #&gt;   .. ..$ : chr [1:270] "X10053" "X10106" "X10113" "X10182" ...</div><div class='input'>
 <span class='co'>## MontBlanc$mat.releves : data.frame</span>
 
+<span class='co'>## Transformation of Braun-Blanquet abundances</span>
+<span class='no'>MontBlanc</span>$<span class='no'>mat.releves</span>$<span class='no'>abund</span> <span class='kw'>=</span> <span class='fu'><a href='PRE_FATE.abundBraunBlanquet.html'>PRE_FATE.abundBraunBlanquet</a></span>(<span class='kw'>abund</span> <span class='kw'>=</span> <span class='no'>MontBlanc</span>$<span class='no'>mat.releves</span>$<span class='no'>abund</span>)
+
 <span class='co'>## Selection of dominant species</span>
+
+<span class='co'>## With default parametrization</span>
 <span class='no'>sp.DOM</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.selectDominant</span>(<span class='kw'>mat.site.species.abund</span> <span class='kw'>=</span> <span class='no'>MontBlanc</span>$<span class='no'>mat.releves</span>)</div><div class='output co'>#&gt; 
 #&gt;  ############## SAMPLING INFORMATIONS ############## 
 #&gt; 
-#&gt;  Number of releves :  4221248
-#&gt;  Number of sites :  408509
-#&gt;  Number of species :  4253</div><div class='output co'>#&gt; <span class='warning'>Warning: NAs introduits lors de la conversion automatique</span></div><div class='output co'>#&gt; 
+#&gt;  Number of releves :  12302
+#&gt;  Number of sites :  568
+#&gt;  Number of species :  1116
+#&gt; 
 #&gt;  ############## ABUNDANCE INFORMATIONS ############## 
 #&gt; 
-#&gt;  Percentage of releves with abundance information :  11.52147 %</div><div class='output co'>#&gt; <span class='warning'>Warning: Data with NO abundance information will NOT be used for the dominant species selection...</span></div><div class='output co'>#&gt; 
-#&gt;  Percentage of sites with abundance information :  13.24255 %
-#&gt;  Percentage of sites without abundance information :  98.0446 %
-#&gt;  Percentage of species with abundance information :  77.31013 %
-#&gt;  Percentage of species without abundance information :  99.41218 %
+#&gt;  Percentage of releves with abundance information :  99.53666 %</div><div class='output co'>#&gt; <span class='warning'>Warning: Species with NO abundance information can only be selected with the criteria based on number of presences...</span></div><div class='output co'>#&gt; 
+#&gt;  Percentage of sites with abundance information :  99.82394 %
+#&gt;  Percentage of sites without abundance information :  1.232394 %
+#&gt;  Percentage of species with abundance information :  99.73118 %
+#&gt;  Percentage of species without abundance information :  4.928315 %
 #&gt; 
 #&gt;  ############## STATISTICS COMPUTATION ############## 
 #&gt; 
@@ -251,23 +286,165 @@ type of vegetation : shrubs, forest, alpine grasslands... ; etc), 2 rules can be
 #&gt; 
 #&gt;  ############## SELECTION OF DOMINANT SPECIES ############## 
 #&gt; 
-#&gt; &gt; Over all sites...</div><div class='img'><img src='PRE_FATE.selectDominant-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
-#&gt; &gt; Combine selections...
+#&gt; &gt; Over all sites...
+#&gt; &gt; Combine selections...</div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 20 rows containing non-finite values (stat_bin).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 4466 rows containing missing values (geom_vline).</span></div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 20 rows containing non-finite values (stat_bin).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 4466 rows containing missing values (geom_vline).</span></div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 20 rows containing non-finite values (stat_bin).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 4466 rows containing missing values (geom_vline).</span></div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 20 rows containing non-finite values (stat_bin).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 4466 rows containing missing values (geom_vline).</span></div><div class='output co'>#&gt; 
 #&gt; &gt; Done!
 #&gt; 
-#&gt;   4253 species have been selected with the given criteria.
+#&gt;   1116 species have been selected with the given criteria.
 #&gt;   Complete table of information about selected species can be find in output files.</div><div class='input'>
-<span class='co'>## 2 .csv files have been produced</span>
-<span class='fu'>str</span>(<span class='no'>sp.DOM</span>)</div><div class='output co'>#&gt; 'data.frame':	4253 obs. of  9 variables:
-#&gt;  $ species                   : int  40519 12833 14671 15666 10119 7609 15780 7951 16303 7449 ...
-#&gt;  $ stat.abund_max            : num  5 5 4 5 2 3 3 NA NA NA ...
-#&gt;  $ stat.no_sites_abund_max   : num  2 2 5 45 1 3 3 NA NA NA ...
-#&gt;  $ stat.no_sites_abund       : num  352 1288 217 2092 1 ...
-#&gt;  $ stat.no_sites_abund_over25: num  0 0 0 0 0 0 0 NA NA NA ...
-#&gt;  $ stat.abund_median         : num  1 1 1 1 2 1 1.5 NA NA NA ...
-#&gt;  $ stat.abund_mean           : num  1.49 1.51 1.46 1.77 2 ...
-#&gt;  $ stat.no_sites_recorded    : int  2938 9105 1925 11033 5 706 152 6 86 7 ...
-#&gt;  $ SELECTION                 : chr  "all" "all" "all" "all" ...</div><div class='input'>
+<span class='co'>## Redefinition of global selection rules</span>
+<span class='no'>sp.DOM</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.selectDominant</span>(<span class='kw'>mat.site.species.abund</span> <span class='kw'>=</span> <span class='no'>MontBlanc</span>$<span class='no'>mat.releves</span>
+                                 , <span class='kw'>selectionRule.quanti</span> <span class='kw'>=</span> <span class='fl'>0.9</span>
+                                 , <span class='kw'>selectionRule.min_mean_abund</span> <span class='kw'>=</span> <span class='fl'>25</span>
+                                 , <span class='kw'>selectionRule.min_no_high_abund</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='output co'>#&gt; 
+#&gt;  ############## SAMPLING INFORMATIONS ############## 
+#&gt; 
+#&gt;  Number of releves :  12302
+#&gt;  Number of sites :  568
+#&gt;  Number of species :  1116
+#&gt; 
+#&gt;  ############## ABUNDANCE INFORMATIONS ############## 
+#&gt; 
+#&gt;  Percentage of releves with abundance information :  99.53666 %</div><div class='output co'>#&gt; <span class='warning'>Warning: Species with NO abundance information can only be selected with the criteria based on number of presences...</span></div><div class='img'><img src='PRE_FATE.selectDominant-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
+#&gt;  Percentage of sites with abundance information :  99.82394 %
+#&gt;  Percentage of sites without abundance information :  1.232394 %
+#&gt;  Percentage of species with abundance information :  99.73118 %
+#&gt;  Percentage of species without abundance information :  4.928315 %
+#&gt; 
+#&gt;  ############## STATISTICS COMPUTATION ############## 
+#&gt; 
+#&gt;  For each species, calculate :
+#&gt;      - stat.no_sites_abund = number of sites
+#&gt;      - stat.abund_median = median abundance (coverage percentage)
+#&gt;      - stat.abund_mean = mean abundance (coverage percentage)
+#&gt;      - stat.abund_max = maximal abundance (coverage percentage)
+#&gt;      - stat.no_sites_abund_max = number of sites with maximal abundance
+#&gt;      - stat.no_sites_abund_over25 = number of sites with maximal abundance &gt;= 25%
+#&gt;   This is done over all sites, and for each landclass
+#&gt; 
+#&gt; &gt; Landclass :  all ...
+#&gt; 
+#&gt;  ############## SELECTION OF DOMINANT SPECIES ############## 
+#&gt; 
+#&gt; &gt; Over all sites...
+#&gt; &gt; Combine selections...</div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 20 rows containing non-finite values (stat_bin).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 4466 rows containing missing values (geom_vline).</span></div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 20 rows containing non-finite values (stat_bin).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 4466 rows containing missing values (geom_vline).</span></div><div class='img'><img src='PRE_FATE.selectDominant-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 2 rows containing non-finite values (stat_bin).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 502 rows containing missing values (geom_vline).</span></div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 2 rows containing non-finite values (stat_bin).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 502 rows containing missing values (geom_vline).</span></div><div class='img'><img src='PRE_FATE.selectDominant-3.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
+#&gt; &gt; Done!
+#&gt; 
+#&gt;   125 species have been selected with the given criteria.
+#&gt;   Complete table of information about selected species can be find in output files.</div><div class='input'>
+<span class='co'>## Add landclass selection with default parametrization</span>
+<span class='no'>sp.DOM</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.selectDominant</span>(<span class='kw'>mat.site.species.abund</span> <span class='kw'>=</span> <span class='no'>MontBlanc</span>$<span class='no'>mat.releves</span>
+                                 , <span class='kw'>selectionRule.quanti</span> <span class='kw'>=</span> <span class='fl'>0.9</span>
+                                 , <span class='kw'>selectionRule.min_mean_abund</span> <span class='kw'>=</span> <span class='fl'>25</span>
+                                 , <span class='kw'>selectionRule.min_no_high_abund</span> <span class='kw'>=</span> <span class='fl'>10</span>
+                                 , <span class='kw'>doLandclass</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; 
+#&gt;  ############## SAMPLING INFORMATIONS ############## 
+#&gt; 
+#&gt;  Number of releves :  12302
+#&gt;  Number of sites :  568
+#&gt;  Number of species :  1116
+#&gt; 
+#&gt;  ############## ABUNDANCE INFORMATIONS ############## 
+#&gt; 
+#&gt;  Percentage of releves with abundance information :  99.53666 %</div><div class='output co'>#&gt; <span class='warning'>Warning: Species with NO abundance information can only be selected with the criteria based on number of presences...</span></div><div class='output co'>#&gt; 
+#&gt;  Percentage of sites with abundance information :  99.82394 %
+#&gt;  Percentage of sites without abundance information :  1.232394 %
+#&gt;  Percentage of species with abundance information :  99.73118 %
+#&gt;  Percentage of species without abundance information :  4.928315 %
+#&gt; 
+#&gt;  ############## STATISTICS COMPUTATION ############## 
+#&gt; 
+#&gt;  For each species, calculate :
+#&gt;      - stat.no_sites_abund = number of sites
+#&gt;      - stat.abund_median = median abundance (coverage percentage)
+#&gt;      - stat.abund_mean = mean abundance (coverage percentage)
+#&gt;      - stat.abund_max = maximal abundance (coverage percentage)
+#&gt;      - stat.no_sites_abund_max = number of sites with maximal abundance
+#&gt;      - stat.no_sites_abund_over25 = number of sites with maximal abundance &gt;= 25%
+#&gt;   This is done over all sites, and for each landclass
+#&gt; 
+#&gt; &gt; Landclass :  all ...
+#&gt; &gt; Landclass :  4 ...
+#&gt; &gt; Landclass :  2 ...
+#&gt; &gt; Landclass :  6 ...
+#&gt; &gt; Landclass :  3 ...
+#&gt; &gt; Landclass :  8 ...
+#&gt; &gt; Landclass :  5 ...
+#&gt; &gt; Landclass :  7 ...
+#&gt; &gt; Landclass :  1 ...
+#&gt; 
+#&gt;  ############## SELECTION OF DOMINANT SPECIES ############## 
+#&gt; 
+#&gt; &gt; Over all sites...
+#&gt; &gt; Over each landclass...
+#&gt; &gt; Combine selections...</div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 20 rows containing non-finite values (stat_bin).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 4466 rows containing missing values (geom_vline).</span></div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 20 rows containing non-finite values (stat_bin).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 4466 rows containing missing values (geom_vline).</span></div><div class='img'><img src='PRE_FATE.selectDominant-4.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 2 rows containing non-finite values (stat_bin).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 502 rows containing missing values (geom_vline).</span></div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 2 rows containing non-finite values (stat_bin).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 502 rows containing missing values (geom_vline).</span></div><div class='img'><img src='PRE_FATE.selectDominant-5.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
+#&gt; &gt; Done!
+#&gt; 
+#&gt;   125 species have been selected with the given criteria.
+#&gt;   Complete table of information about selected species can be find in output files.</div><div class='input'>
+<span class='co'>## Redefinition of landclass selection rules</span>
+<span class='no'>sp.DOM</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.selectDominant</span>(<span class='kw'>mat.site.species.abund</span> <span class='kw'>=</span> <span class='no'>MontBlanc</span>$<span class='no'>mat.releves</span>
+                                 , <span class='kw'>selectionRule.quanti</span> <span class='kw'>=</span> <span class='fl'>0.9</span>
+                                 , <span class='kw'>selectionRule.min_mean_abund</span> <span class='kw'>=</span> <span class='fl'>25</span>
+                                 , <span class='kw'>selectionRule.min_no_high_abund</span> <span class='kw'>=</span> <span class='fl'>10</span>
+                                 , <span class='kw'>doLandclass</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+                                 , <span class='kw'>selectionRule.min_percent_landclass</span> <span class='kw'>=</span> <span class='fl'>0.05</span>
+                                 , <span class='kw'>selectionRule.min_no_landclass</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='output co'>#&gt; 
+#&gt;  ############## SAMPLING INFORMATIONS ############## 
+#&gt; 
+#&gt;  Number of releves :  12302
+#&gt;  Number of sites :  568
+#&gt;  Number of species :  1116
+#&gt; 
+#&gt;  ############## ABUNDANCE INFORMATIONS ############## 
+#&gt; 
+#&gt;  Percentage of releves with abundance information :  99.53666 %</div><div class='output co'>#&gt; <span class='warning'>Warning: Species with NO abundance information can only be selected with the criteria based on number of presences...</span></div><div class='output co'>#&gt; 
+#&gt;  Percentage of sites with abundance information :  99.82394 %
+#&gt;  Percentage of sites without abundance information :  1.232394 %
+#&gt;  Percentage of species with abundance information :  99.73118 %
+#&gt;  Percentage of species without abundance information :  4.928315 %
+#&gt; 
+#&gt;  ############## STATISTICS COMPUTATION ############## 
+#&gt; 
+#&gt;  For each species, calculate :
+#&gt;      - stat.no_sites_abund = number of sites
+#&gt;      - stat.abund_median = median abundance (coverage percentage)
+#&gt;      - stat.abund_mean = mean abundance (coverage percentage)
+#&gt;      - stat.abund_max = maximal abundance (coverage percentage)
+#&gt;      - stat.no_sites_abund_max = number of sites with maximal abundance
+#&gt;      - stat.no_sites_abund_over25 = number of sites with maximal abundance &gt;= 25%
+#&gt;   This is done over all sites, and for each landclass
+#&gt; 
+#&gt; &gt; Landclass :  all ...
+#&gt; &gt; Landclass :  4 ...
+#&gt; &gt; Landclass :  2 ...
+#&gt; &gt; Landclass :  6 ...
+#&gt; &gt; Landclass :  3 ...
+#&gt; &gt; Landclass :  8 ...
+#&gt; &gt; Landclass :  5 ...
+#&gt; &gt; Landclass :  7 ...
+#&gt; &gt; Landclass :  1 ...
+#&gt; 
+#&gt;  ############## SELECTION OF DOMINANT SPECIES ############## 
+#&gt; 
+#&gt; &gt; Over all sites...
+#&gt; &gt; Over each landclass...
+#&gt; &gt; Combine selections...</div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 20 rows containing non-finite values (stat_bin).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 4466 rows containing missing values (geom_vline).</span></div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 20 rows containing non-finite values (stat_bin).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 4466 rows containing missing values (geom_vline).</span></div><div class='img'><img src='PRE_FATE.selectDominant-6.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 2 rows containing non-finite values (stat_bin).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 502 rows containing missing values (geom_vline).</span></div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 2 rows containing non-finite values (stat_bin).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 502 rows containing missing values (geom_vline).</span></div><div class='img'><img src='PRE_FATE.selectDominant-7.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
+#&gt; &gt; Done!
+#&gt; 
+#&gt;   125 species have been selected with the given criteria.
+#&gt;   Complete table of information about selected species can be find in output files.</div><div class='input'>
+<span class='co'>## 2 .csv and 2 .pdf files have been produced</span>
+<span class='fu'>str</span>(<span class='no'>sp.DOM</span>)</div><div class='output co'>#&gt; 'data.frame':	125 obs. of  9 variables:
+#&gt;  $ species                   : chr  "Acer pseudoplatanus L." "Achillea millefolium L." "Agrostis capillaris L." "Agrostis rupestris All." ...
+#&gt;  $ stat.abund_max            : num  87.5 37.5 37.5 37.5 37.5 37.5 87.5 37.5 37.5 37.5 ...
+#&gt;  $ stat.no_sites_abund_max   : num  2 20 26 6 25 9 1 5 42 10 ...
+#&gt;  $ stat.no_sites_abund       : num  33 61 51 29 42 37 21 29 111 38 ...
+#&gt;  $ stat.no_sites_abund_over25: num  11 20 26 6 25 9 10 5 42 10 ...
+#&gt;  $ stat.abund_median         : num  15 0.5 37.5 0.5 37.5 0.5 15 0.5 15 0.5 ...
+#&gt;  $ stat.abund_mean           : num  18.9 13.6 22.5 10.7 24.9 ...
+#&gt;  $ stat.no_sites_recorded    : int  33 62 51 29 42 37 21 29 111 38 ...
+#&gt;  $ SELECTION                 : chr  "all" "all_2" "all_2" "all" ...</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

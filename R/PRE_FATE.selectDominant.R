@@ -10,59 +10,91 @@
 ##' @description This script is designed to select dominant species from
 ##'              abundance records, and landclass if the information is available.
 ##'              
-##' @param mat.site.species.abund a data.frame with at least 3 columns : sites ID, species ID, abundance values (e.g. Braun Blanquet) with NA when no information, landscape ID (optional)
+##' @param mat.site.species.abund a data.frame with at least 3 columns :
+##' sites ID, species ID, abundance values (e.g. Braun Blanquet) with NA when
+##' no information, landscape ID (optional)
 ##' @param sites a vector with sites ID
 ##' @param species a vector with species ID
-##' @param abund a vector with abundance values (e.g. Braun Blanquet) with NA when no information
+##' @param abund a vector with abundance values (e.g. Braun Blanquet) with NA
+##' when no information
 ##' @param landclass a vector with landscape ID
 ##' 
-##' @param selectionRule.quanti minimum quantile of total number of sites that must occupy the species (between 0 and 1)
+##' @param selectionRule.quanti minimum quantile of total number of sites that
+##' must occupy the species (between 0 and 1)
 ##' @param selectionRule.min_mean_abund minimal average abundance of the species
-##' @param selectionRule.min_no_high_abund minimum number of sites where species is dominant (>= 25 \% of coverage)
-##' @param doLandclass default FALSE. If TRUE, selection is also done including constraints on landscape class
-##' @param selectionRule.min_percent_landclass minimum percentage of the landclass occupied by the species (between 0 and 1)
-##' @param selectionRule.min_no_landclass minimum number of sites of a landclass occupied by the species
+##' @param selectionRule.min_no_high_abund minimum number of sites where species
+##' is dominant (>= 25 \% of coverage)
+##' @param doLandclass default FALSE. If TRUE, selection is also done including
+##' constraints on landscape class
+##' @param selectionRule.min_percent_landclass minimum percentage of the landclass
+##' occupied by the species (between 0 and 1)
+##' @param selectionRule.min_no_landclass minimum number of sites of a landclass
+##' occupied by the species
 ##' 
 ##' @details 
 ##' 
-##' This function provides a way to \emph{select dominant species based on abundance sampling information}.
-##' This information can be given either directly in the form of a data.frame, or indirectly with a vector
+##' This function provides a way to \emph{select dominant species based on
+##' abundance sampling information}.
+##' This information can be given either directly in the form of a data.frame,
+##' or indirectly with a vector
 ##' for each required information (sites, species, abundance, landscape class - optional).
 ##' 
 ##' 
 ##' 3 rules are applied to make the species selection :
 ##' \describe{
-##'   \item{\strong{on number of sites}}{the species should be found in at least \code{n} sites,
-##'   which corresponds to the quantile \code{selectionRule.quanti} of all the number of records per species}
-##'   \item{\strong{on average abundance}}{the species should have a mean abundance superior or equal to \code{selectionRule.min_mean_abund}}
-##'   \item{\strong{on dominancy}}{the species should be dominant (i.e. represent at least 25 \% of the coverage of the site) 
+##'   \item{\strong{on number of sites}}{the species should be found in at
+##'   least \code{n} sites, which corresponds to the quantile \code{selectionRule.quanti}
+##'   of all the number of records per species}
+##'   \item{\strong{on average abundance}}{the species should have a mean
+##'   abundance superior or equal to \code{selectionRule.min_mean_abund}}
+##'   \item{\strong{on dominancy}}{the species should be dominant (i.e. represent
+##'   at least 25 \% of the coverage of the site) 
 ##'   in at least \code{selectionRule.min_no_high_abund} sites}
 ##' }
 ##' 
-##' If landscape information is available (e.g. type of environment : urban, desert, grassland... ;
-##' type of vegetation : shrubs, forest, alpine grasslands... ; etc), 2 rules can be added to the selection steps,
-##' \emph{in order to keep species that are not dominant at the large scale but could be representative of a specific environment} :
+##' If landscape information is available (e.g. type of environment : urban,
+##' desert, grassland... ; type of vegetation : shrubs, forest, alpine grasslands... ;
+##' etc), 2 rules can be added to the selection steps,
+##' \emph{in order to keep species that are not dominant at the large scale
+##' but could be representative of a specific environment} :
 ##' \describe{
-##'   \item{\strong{on occupancy}}{the species should occupy at least \code{selectionRule.min_percent_landclass} \% of a landclass}
-##'   \item{\strong{on representation}}{the species should be found in at least \code{selectionRule.min_no_landclass} sites of a landclass}
+##'   \item{\strong{on occupancy}}{the species should occupy at least
+##'   \code{selectionRule.min_percent_landclass} \% of a landclass}
+##'   \item{\strong{on representation}}{the species should be found in at least
+##'   \code{selectionRule.min_no_landclass} sites of a landclass}
 ##' }
 ##' 
 ##' 
-##' @return a data.frame with all the species selected and the values of parameters used to make the selection :
+##' @return a \code{data.frame} with all the species selected and the values of
+##' parameters used to make the selection :
 ##' 
-##' \item{stat.no_sites_recorded}{number of sites with information (presence-absence or abundance)}
+##' \item{stat.no_sites_recorded}{number of sites with information
+##' (presence-absence or abundance)}
 ##' \item{stat.no_sites_abund}{number of sites with abundance information}
 ##' \item{stat.abund_median}{median abundance (coverage percentage)}
 ##' \item{stat.abund_mean}{mean abundance (coverage percentage)}
 ##' \item{stat.abund_max}{maximal abundance (coverage percentage)}
 ##' \item{stat.no_sites_abund_max}{number of sites with maximal abundance}
-##' \item{stat.no_sites_abund_over25}{number of sites with maximal abundance >= 25 \%}
+##' \item{stat.no_sites_abund_over25}{number of sites with maximal abundance >= 25}
+##' \item{SELECTION}{dataset in which the species has been selected as
+##' dominant (global = all data, or landclass)}
 ##' 
-##' The information is also written in .csv files :
+##' The information is written in .csv files :
 ##' 
 ##' \describe{
-##'   \item{\file{DOMINANT_species_selected_COMPLETE_TABLE}}{the complete table of selected species with all the statistics described above}
-##'   \item{\file{DOMINANT_species_selected_SPECIES_ONLY}}{only the names / ID of the species selected}
+##'   \item{\file{PRE_FATE_DOMINANT_species_selected_COMPLETE_TABLE}}{the complete
+##'   table of selected species with all the statistics described above}
+##'   \item{\file{PRE_FATE_DOMINANT_species_selected_SPECIES_ONLY}}{only the names /
+##'   ID of the species selected}
+##' }
+##' 
+##' Two .pdf files are also created : 
+##' 
+##' \describe{
+##'   \item{\file{PRE_FATE_DOMINANT_STEP_1_selectionCriteria}}{to visualize
+##'   the values of species metrics, and the criteria used to make the selection}
+##'   \item{\file{PRE_FATE_DOMINANT_STEP_2_selectedSpecies}}{to visualize
+##'   the values of species metrics, for the selected dominant species}
 ##' }
 ##' 
 ##' @keywords abundance, dominant species, qunatile, landscape class
@@ -77,17 +109,53 @@
 ##' 
 ##' ## MontBlanc$mat.releves : data.frame
 ##' 
+##' ## Transformation of Braun-Blanquet abundances
+##' MontBlanc$mat.releves$abund = PRE_FATE.abundBraunBlanquet(abund = MontBlanc$mat.releves$abund)
+##' 
 ##' ## Selection of dominant species
+##' 
+##' ## With default parametrization
 ##' sp.DOM = PRE_FATE.selectDominant(mat.site.species.abund = MontBlanc$mat.releves)
 ##' 
-##' ## 2 .csv files have been produced
+##' ## Redefinition of global selection rules
+##' sp.DOM = PRE_FATE.selectDominant(mat.site.species.abund = MontBlanc$mat.releves
+##'                                  , selectionRule.quanti = 0.9
+##'                                  , selectionRule.min_mean_abund = 25
+##'                                  , selectionRule.min_no_high_abund = 10)
+##' 
+##' ## Add landclass selection with default parametrization
+##' sp.DOM = PRE_FATE.selectDominant(mat.site.species.abund = MontBlanc$mat.releves
+##'                                  , selectionRule.quanti = 0.9
+##'                                  , selectionRule.min_mean_abund = 25
+##'                                  , selectionRule.min_no_high_abund = 10
+##'                                  , doLandclass = TRUE)
+##'                                  
+##' ## Redefinition of landclass selection rules
+##' sp.DOM = PRE_FATE.selectDominant(mat.site.species.abund = MontBlanc$mat.releves
+##'                                  , selectionRule.quanti = 0.9
+##'                                  , selectionRule.min_mean_abund = 25
+##'                                  , selectionRule.min_no_high_abund = 10
+##'                                  , doLandclass = TRUE
+##'                                  , selectionRule.min_percent_landclass = 0.05
+##'                                  , selectionRule.min_no_landclass = 10)
+##' 
+##' ## 2 .csv and 2 .pdf files have been produced
 ##' str(sp.DOM)
 ##' 
 ##' @export
 ##' 
-##' @importFrom graphics abline hist par plot text title
+##' @importFrom grDevices colorRampPalette
 ##' @importFrom stats median na.omit quantile
 ##' @importFrom utils write.csv
+##' 
+##' @importFrom reshape2 melt
+##' @importFrom ggplot2 ggplot aes aes_string ggsave
+##' geom_line geom_point geom_vline geom_label geom_histogram
+##' element_text element_blank
+##' as_labeller facet_wrap facet_grid
+##' scale_color_manual scale_fill_manual scale_linetype_discrete
+##' labs theme
+##' @importFrom ggthemes theme_fivethirtyeight
 ##' 
 ## END OF HEADER ###############################################################
 
@@ -100,7 +168,7 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
                                    , selectionRule.quanti = 0 ## minimum quantile of total number of sites that must occupy the species
                                    , selectionRule.min_mean_abund = 0 ## minimum mean abundance of the species
                                    , selectionRule.min_no_high_abund = 0 ## minimum number of sites where species is dominant (>= 25 % of coverage)
-                                   , doLandclass = F ## landclasses are given in the data.frame
+                                   , doLandclass = FALSE ## landclasses are given in the data.frame
                                    , selectionRule.min_percent_landclass = 0.05 ## minimum percentage of the landclass occupied by the species 
                                    , selectionRule.min_no_landclass = 5 ## minimum number of sites of the landclass occupied by the species
 ){
@@ -177,6 +245,7 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
   cat("\n Number of species : ", no.species)
   cat("\n")
   
+  mat.site.species.abund$species = as.character(mat.site.species.abund$species)
   mat.site.species.abund$abund = as.numeric(as.character(mat.site.species.abund$abund))
   
   cat("\n ############## ABUNDANCE INFORMATIONS ############## \n")
@@ -184,11 +253,11 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
   
   if (length(which(!is.na(mat.site.species.abund$abund))) / no.releves < 1)
   {
-    warning("Data with NO abundance information will NOT be used for the dominant species selection...")
+    warning("Species with NO abundance information can only be selected with the criteria based on number of presences...")
   }
   if (length(which(!is.na(mat.site.species.abund$abund))) / no.releves == 0)
   {
-    stop("NO abundance information in your data. Dominant species selection can not be applied...")
+    warning("NO abundance information in your data. Dominant species selection will only be done with the criteria based on number of presences...")
   }
   
   cat("\n Percentage of sites with abundance information : ", 100 * length(unique(mat.site.species.abund$sites[which(!is.na(mat.site.species.abund$abund))])) / no.sites, "%")
@@ -229,45 +298,49 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
   mat.species.stat.landclass = list()
   for(landclass_i in categories)
   {
-    cat("\n> Landclass : ",landclass_i, "...")
-    if (landclass_i == "all")
+    if(!is.na(landclass_i))
     {
-      mat.site.species_landclass = mat.site.species.abund
-    } else
-    {
-      mat.site.species_landclass = mat.site.species.abund[which(mat.site.species.abund$landclass == landclass_i),]
-    }
-    ## Split abundance data by species
-    list.species = unique(mat.site.species_landclass$species)
-    list.dat = split(mat.site.species_landclass$abund, mat.site.species_landclass$species)
-    list.number = sapply(list.dat,length)
-    list.dat = lapply(list.dat, na.omit)
-    mat.species.stat = as.data.frame(t(sapply(list.dat, function(dat)
-    {
-      ## For each species :
-      if (length(dat) > 0)
+      cat("\n> Landclass : ",landclass_i, "...")
+      if (landclass_i == "all")
       {
-        return(c(max(dat)
-                 , length(which(dat == max(dat)))
-                 , length(dat)
-                 , length(dat[which(dat >= 25)])
-                 , median(dat)
-                 , mean(dat)))
+        mat.site.species_landclass = mat.site.species.abund
       } else
       {
-        return(rep(NA, 6))
+        mat.site.species_landclass = mat.site.species.abund[which(mat.site.species.abund$landclass == landclass_i),]
       }
-    })))
-    colnames(mat.species.stat) = c("stat.abund_max"
-                                   , "stat.no_sites_abund_max"
-                                   , "stat.no_sites_abund"
-                                   , "stat.no_sites_abund_over25"
-                                   , "stat.abund_median"
-                                   , "stat.abund_mean")
-    mat.species.stat = data.frame(species = list.species
-                                  , mat.species.stat
-                                  , stat.no_sites_recorded = list.number)
-    mat.species.stat.landclass[[landclass_i]] = mat.species.stat
+      ## Split abundance data by species
+      list.dat = split(mat.site.species_landclass$abund, mat.site.species_landclass$species)
+      list.number = sapply(list.dat,length)
+      mat.species.stat = as.data.frame(t(sapply(list.dat, function(dat)
+      {
+        dat = na.omit(dat)
+        col.names = c("stat.abund_max"
+                      , "stat.no_sites_abund_max"
+                      , "stat.no_sites_abund"
+                      , "stat.no_sites_abund_over25"
+                      , "stat.abund_median"
+                      , "stat.abund_mean")
+        ## For each species :
+        if (length(dat) > 0)
+        {
+          res = c(max(dat)
+                  , length(which(dat == max(dat)))
+                  , length(dat)
+                  , length(dat[which(dat >= 25)])
+                  , median(dat)
+                  , mean(dat))
+        } else
+        {
+          res = rep(NA, 6)
+        }
+        names(res) = col.names
+        return(res)
+      })))
+      mat.species.stat = data.frame(species = names(list.dat)
+                                    , mat.species.stat
+                                    , stat.no_sites_recorded = list.number)
+      mat.species.stat.landclass[[landclass_i]] = mat.species.stat
+    }
   }
   cat("\n")
   
@@ -282,46 +355,18 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
   
   cat("\n> Over all sites...")
   mat.all = mat.species.stat.landclass[["all"]]
+  mat.all$species = as.character(mat.all$species)
   
   ## Select species located above chosen quantile
   quant = quantile(mat.all$stat.no_sites_recorded, prob = selectionRule.quanti)
-  
-  ## GRAPHICS TO HELP ADJUST PARAMETERS TO SELECT DOMINANT SPECIES
-  par(mfrow=c(2,2))
-  plot(0, 0, col = "white", main = "", xlab = "", ylab = "", xaxt = "n", yaxt = "n", bty = "n")
-  title(main = "Graphics to vizualise\n which species will be\n selected with given parameters :")
-  text(0, 0, paste("USED CRITERIA for each species:\n"
-                   , "Total number of presences :", selectionRule.quanti * 100, "%\n"
-                   , "Mean abundance :", selectionRule.min_mean_abund, "\n"
-                   , "Number of sites with abundance > 25 % :", selectionRule.min_no_high_abund))
-  hist(
-    mat.all$stat.no_sites_recorded,
-    breaks = 100,
-    main = "Histogram of\n total number of presences",
-    xlab = "Total number of presences"
-  )
-  abline(v = quant, col = "red", lwd = 2)
-  hist(
-    mat.all$stat.abund_mean,
-    breaks = 100,
-    main = "Histogram of\n mean abundance of species",
-    xlab = "Mean abundance of species"
-  )
-  abline(v = selectionRule.min_mean_abund, col = "red", lwd = 2)
-  hist(
-    mat.all$stat.no_sites_abund_over25,
-    breaks = 100,
-    main = "Histogram of\n number of sites with abundance > 25%",
-    xlab = "Number of sites with abundance > 25%"
-  )
-  abline(v = selectionRule.min_no_high_abund, col = "red", lwd = 2)
   
   ## Select species that occur with a minimum number of sites, a minimum mean abundance and
   ## a minimum number of sites with high abundance (>= 25%)
   select_1 = which(mat.all$stat.no_sites_recorded >= quant)
   select_2 = which(mat.all$stat.abund_mean >= selectionRule.min_mean_abund)
   select_3 = which(mat.all$stat.no_sites_abund_over25 >= selectionRule.min_no_high_abund)
-  select_all = union(select_1, intersect(select_2,select_3))
+  select_23 = intersect(select_2,select_3)
+  select_all = union(select_1, select_23)
   if (length(select_all) > 0)
   {
     mat.select.species.all = mat.all[select_all, ]
@@ -338,14 +383,16 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
     for(i in 2:length(mat.species.stat.landclass))
     {
       mat.land = mat.species.stat.landclass[[i]]
+      mat.land$species = as.character(mat.land$species)
       ## Select species which are present in the landclass with a certain percentage
       select_1 = which(mat.land$stat.no_sites_recorded >= (no_sites_habitat[i] * selectionRule.min_percent_landclass))
       ## Select species which are present in the landclass with a minimum number of sites
       select_2 = which(mat.land$stat.no_sites_recorded >= selectionRule.min_no_landclass)
       select_12 = intersect(select_1,select_2)
-      if(length(select_12)>0){
+      if (length(select_12) > 0)
+      {
         mat.select.species.landclass = rbind(mat.select.species.landclass,
-                                             data.frame(species = mat.land$species[intersect(select_1,select_2)],
+                                             data.frame(species = mat.land$species[select_12],
                                                         landclass = names(mat.species.stat.landclass)[i]))
       }
     }
@@ -391,12 +438,127 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
     mat.species.dominant$SELECTION = "all"
   }
   
+  #################################################################################################
   write.csv(mat.species.dominant
-            , file = "DOMINANT_species_selected_COMPLETE_TABLE.csv"
+            , file = "PRE_FATE_DOMINANT_species_selected_COMPLETE_TABLE.csv"
             , row.names = F)
   write.csv(mat.species.dominant$species
-            , file = "DOMINANT_species_selected_SPECIES_ONLY.csv"
+            , file = "PRE_FATE_DOMINANT_species_selected_SPECIES_ONLY.csv"
             , row.names = F)
+  
+  
+  #################################################################################################
+  ## GRAPHICS TO HELP ADJUST PARAMETERS TO SELECT DOMINANT SPECIES
+  #################################################################################################
+
+  colRamp = colorRampPalette(c('#8e0152','#c51b7d','#de77ae','#7fbc41','#4d9221','#276419'))
+  
+  variables.labeller = c("stat.no_sites_recorded" = "stat.no_sites_recorded"
+                         , "Fake1" = "", "Fake2" = ""
+                         , "stat.abund_median" = "stat.abund_median"
+                         , "stat.abund_mean" = "stat.abund_mean"
+                         , "stat.abund_max" = "stat.abund_max"
+                         , "stat.no_sites_abund" = "stat.no_sites_abund"
+                         , "stat.no_sites_abund_max" = "stat.no_sites_abund_max"
+                         , "stat.no_sites_abund_over25" = "stat.no_sites_abund_over25"
+  )
+  
+  ## STEP 1 : Selection -----------------------------------------------------------
+  
+  # tmp = mat.species.stat.landclass#[-1]
+  # tmp = lapply(1:length(tmp), function(x) data.frame(tmp[[x]], landclass = names(tmp)[x]))
+  # tmp = do.call(rbind, tmp)
+  
+  tmp = mat.all
+  tmp$landclass = "all"
+  
+  mat.plot = melt(tmp, id.vars = c("species","landclass"))
+  mat.plot = rbind(mat.plot, data.frame(species = "SP.ghost", landclass = NA, variable = c("Fake1","Fake2"), value = NA))
+  mat.plot$variable = factor(mat.plot$variable, c("stat.no_sites_recorded"
+                                                  , "Fake1", "Fake2"
+                                                  , "stat.abund_median"
+                                                  , "stat.abund_mean"
+                                                  , "stat.abund_max"
+                                                  , "stat.no_sites_abund"
+                                                  , "stat.no_sites_abund_max"
+                                                  , "stat.no_sites_abund_over25"
+  ))
+  mat.plot$landclass = as.character(mat.plot$landclass)
+  mat.plot$landclass[which(mat.plot$landclass == "all")] = NA
+  mat.plot$limit = NA
+  mat.plot$limit[which(mat.plot$variable == "stat.no_sites_recorded")] = quant
+  mat.plot$limit[which(mat.plot$variable == "stat.abund_mean")] = selectionRule.min_mean_abund
+  mat.plot$limit[which(mat.plot$variable == "stat.no_sites_abund_over25")] = selectionRule.min_no_high_abund
+  
+  pp1 = ggplot(mat.plot, aes_string(x = "value")) +
+    geom_histogram() +
+    # geom_histogram(aes(x = value, fill = landclass)) +
+    # geom_density(aes(x = value, ..count.., group = landclass)) +
+    # scale_color_discrete("Landclass", na.value = NA, breaks = levels(factor(mat.plot$landclass))) +
+    geom_vline(aes_string(xintercept = "limit"), lwd = 1, color = "#fb6a4a") +
+    facet_wrap("variable", scales="free", labeller = as_labeller(variables.labeller)) +
+    labs(x="", y = "", title = "STEP 1 : Selection of dominant species",
+         subtitle = paste0("Criteria used for each species (highlighted with colored vertical lines) :\n"
+                           , "Total number of presences >= quantile( ", selectionRule.quanti * 100, "% )\n"
+                           , "Mean abundance >= ", selectionRule.min_mean_abund, "\n"
+                           , "Number of releves with (abundance > 25) >= ", selectionRule.min_no_high_abund
+                           , "\n")) +
+    theme_fivethirtyeight() +
+    theme(legend.position = c(0.7, 0.85),
+          legend.title = element_text(size=10))
+  
+  plot(pp1)
+  
+  ggsave(filename = "PRE_FATE_DOMINANT_STEP_1_selectionCriteria.pdf", plot = pp1, width = 10, height = 8)
+  
+  ## STEP 2 : Selected -----------------------------------------------------------
+
+  mat.plot = melt(mat.species.dominant, id.vars = c("species","SELECTION"))
+  mat.plot = rbind(mat.plot, data.frame(species = "SP.ghost", SELECTION = NA, 
+                                        variable = c("Fake1","Fake2"), value = NA))
+  mat.plot$variable = factor(mat.plot$variable, c("stat.no_sites_recorded"
+                                                  , "Fake1", "Fake2"
+                                                  , "stat.abund_median"
+                                                  , "stat.abund_mean"
+                                                  , "stat.abund_max"
+                                                  , "stat.no_sites_abund"
+                                                  , "stat.no_sites_abund_max"
+                                                  , "stat.no_sites_abund_over25"
+  ))
+  mat.plot$SELECTION = sub("all_","global + landclass ",mat.plot$SELECTION)
+  mat.plot$SELECTION = sub("all","global",mat.plot$SELECTION)
+  mat.plot$limit = NA
+  mat.plot$limit[which(mat.plot$variable == "stat.no_sites_recorded")] = quant
+  mat.plot$limit[which(mat.plot$variable == "stat.abund_mean")] = selectionRule.min_mean_abund
+  mat.plot$limit[which(mat.plot$variable == "stat.no_sites_abund_over25")] = selectionRule.min_no_high_abund
+  
+  if(length(na.exclude(unique(mat.plot$SELECTION))) == 1) {
+    colos = "grey35"
+  } else {
+    colos = colRamp(length(na.exclude(unique(mat.plot$SELECTION))))
+  }
+  
+  pp2 = ggplot(mat.plot, aes_string(x = "value", fill = "SELECTION")) +
+    geom_histogram(position = "dodge") +
+    geom_vline(aes_string(xintercept = "limit"), lwd = 1, color = "#fb6a4a") +
+    scale_fill_manual("Species selected in dataset :", values = colos) +
+    facet_wrap("variable", scales="free", labeller = as_labeller(variables.labeller)) +
+    labs(x="", y = "", title = paste0("STEP 2 : selected dominant species (", nrow(mat.plot),")"),
+         subtitle = paste0("Criteria used for each species (highlighted with colored vertical lines) :\n"
+                           , "Total number of presences >= quantile( ", selectionRule.quanti * 100, "% )\n"
+                           , "Mean abundance >= ", selectionRule.min_mean_abund, "\n"
+                           , "Number of releves with (abundance > 25) >= ", selectionRule.min_no_high_abund
+                           , "\n")) +
+    theme_fivethirtyeight() +
+    theme(legend.position = c(0.7, 1),
+          legend.title = element_text(size=10),
+          legend.direction = "vertical")
+  
+  plot(pp2)
+  
+  ggsave(filename = "PRE_FATE_DOMINANT_STEP_2_selectedSpecies.pdf", plot = pp2, width = 10, height = 8)
+
+  #################################################################################################
   
   cat("\n> Done!\n")
   cat("\n ", length(unique(mat.species.dominant$species)), "species have been selected with the given criteria.")
@@ -405,38 +567,5 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
   
   return(mat.species.dominant)
   
-  #################################################################################################
 }
-
-
-#################################################################################################
-
-# PRE_FATE.abundBraun-Blanquet = function(abund){
-#   ## Convert Braun-Blanquet abundance classes into median coverage percentage
-#   abund = as.character(abund)
-#   abund[which(abund %in% c("+","r"))] = 0.5
-#   abund[which(abund=="1")] = 3
-#   abund[which(abund=="2")] = 15
-#   abund[which(abund=="3")] = 37.5
-#   abund[which(abund=="4")] = 62.5
-#   abund[which(abund=="5")] = 87.5
-#   abund = as.numeric(abund)
-#   return(abund)
-# }
-
-# library(foreign)
-# mat.site.species.abund = read.dbf(file="/home/gueguen/Documents/_PERSO/06_Cours/TUTOS/3_R/_DATA/Observations.dbf")
-# mat.site.species.abund = mat.site.species.abund[,c("numchrono","numtaxon","codeabonda")]
-# colnames(mat.site.species.abund) = c("sites","species","abund")
-# mat.site.species.abund$abund = PRE_FATE.abundRaunkier(mat.site.species.abund$abund)
-# # mat.site.species.abund$abund = NA
-# 
-# SELECTION = PRE_FATE.selectDominant(mat.site.species.abund = mat.site.species.abund)
-# SELECTION = PRE_FATE.selectDominant(mat.site.species.abund = mat.site.species.abund
-#                                     , selectionRule.min_mean_abund = 90
-#                                     , selectionRule.min_no_high_abund = 5)
-
-
-
-
 
