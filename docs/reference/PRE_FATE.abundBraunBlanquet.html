@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Transform Braun-Blanquet abundances into relative abundances — PRE_FATE.abundBraunBlanquet • RFate</title>
+<title>Transform Braun-Blanquet values into relative abundances — PRE_FATE.abundBraunBlanquet • RFate</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -25,7 +25,7 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-<meta property="og:title" content="Transform Braun-Blanquet abundances into relative abundances — PRE_FATE.abundBraunBlanquet" />
+<meta property="og:title" content="Transform Braun-Blanquet values into relative abundances — PRE_FATE.abundBraunBlanquet" />
 
 <meta property="og:description" content="This script is designed to transform Braun-Blanquet abundance
 information into relative abundances or average recovery values
@@ -92,7 +92,7 @@ information into relative abundances or average recovery values
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Transform Braun-Blanquet abundances into relative abundances</h1>
+    <h1>Transform Braun-Blanquet values into relative abundances</h1>
     <small>Source: <a href='https://github.com/MayaGueguen/RFate.git/blob/master/R/PRE_FATE.abundBraunBlanquet.R'><code>R/PRE_FATE.abundBraunBlanquet.R</code></a></small>
     </div>
 
@@ -109,57 +109,102 @@ information into relative abundances or average recovery values
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>abund</th>
-      <td><p>a vector with abundance values from Braun-Blanquet
-(+, r, 1, 2, 3, 4, 5) with NA when no information</p></td>
+      <td><p>a <code>vector</code> with abundance values from Braun-Blanquet
+(+, r, 1, 2, 3, 4, 5), and with <code>NA</code> when no information</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a vector with numerical values between 0 and 100 corresponding to the median of each recovery class.</p>
+    <p>A <code>vector</code> with numerical values between 0 and 100 corresponding to the median of each recovery class.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Braun-Blanquet values allow to estimate the abundance-dominance of a species
-based on ans estimation of the number of individuals and the covering surface.
+based on an estimation of the number of individuals and the covering surface.
 A correspondence has been defined between this index and average recovery values :</p>
 <table><tr><td>
-  Braun-Blanquet </td>
-<td> Recovery class (%) </td>
-<td> Average recovery (%) </td>
+   </td>
+<td> <strong>Braun-Blanquet</strong> </td>
+<td> ..... </td>
+<td> <strong>Recovery class (%)</strong> </td>
+<td> ..... </td>
+<td> <strong>Average recovery (%)</strong> </td>
 </tr><tr><td><br />
-  + </td>
+   </td>
+<td> + </td>
+<td>  </td>
 <td> &lt;1 </td>
+<td>  </td>
 <td> 0.5 </td>
 </tr><tr><td><br />
-  1 </td>
+   </td>
+<td> 1 </td>
+<td>  </td>
 <td> 1-5 </td>
+<td>  </td>
 <td> 2.5 </td>
 </tr><tr><td><br />
-  2 </td>
+   </td>
+<td> 2 </td>
+<td>  </td>
 <td> 5-25 </td>
+<td>  </td>
 <td> 15 </td>
 </tr><tr><td><br />
-  3 </td>
+   </td>
+<td> 3 </td>
+<td>  </td>
 <td> 25-50 </td>
+<td>  </td>
 <td> 37.5 </td>
 </tr><tr><td><br />
-  4 </td>
+   </td>
+<td> 4 </td>
+<td>  </td>
 <td> 50-75 </td>
+<td>  </td>
 <td> 62.5 </td>
 </tr></table>
-    <p>Braun-Blanquet J., Roussine N. &amp; Nègre R., 1952. Les groupements végétaux de la France méditerranéenne.
-Dir. Carte Group. Vég. Afr. Nord , CNRS, 292 p.</p>
-<p>Baudière A. &amp; Serve L., 1975. Les groupements végétaux du Plade Gorra-Blanc (massif du Puigmal, Pyrénées Orientales).
-Essai d'interprétation phytosociologique et phytogéographique. Nat. Monsp., sér. Bot., 25, 5-21.</p>
-<p>Foucault B. (de), 1980. Les prairies du bocage virois (Basse-Normandie, France). Typologie phytosociologique et 
-essai de reconstitution des séries évolutives herbagères. Doc. Phytosoc., N.S., 5, 1-109.</p>
+    <p><br /></p>
+<p><em>Braun-Blanquet J., Roussine N. &amp; Nègre R., 1952. Les groupements végétaux de la France méditerranéenne.
+Dir. Carte Group. Vég. Afr. Nord , CNRS, 292 p.</em></p>
+<p><em>Baudière A. &amp; Serve L., 1975. Les groupements végétaux du Plade Gorra-Blanc (massif du Puigmal, Pyrénées Orientales).
+Essai d'interprétation phytosociologique et phytogéographique. Nat. Monsp., sér. Bot., 25, 5-21.</em></p>
+<p><em>Foucault B. (de), 1980. Les prairies du bocage virois (Basse-Normandie, France). Typologie phytosociologique et 
+essai de reconstitution des séries évolutives herbagères. Doc. Phytosoc., N.S., 5, 1-109.</em></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'>## Load example data</span>
-<span class='fu'>data</span>(<span class='no'>MontBlanc</span>)</div></pre>
+<span class='fu'>data</span>(<span class='no'>MontBlanc</span>)
+<span class='fu'>str</span>(<span class='no'>MontBlanc</span>)</div><div class='output co'>#&gt; List of 3
+#&gt;  $ mat.releves     :'data.frame':	12302 obs. of  4 variables:
+#&gt;   ..$ sites    : int [1:12302] 660398 662913 663085 663104 663104 664839 751362 751377 751484 922672 ...
+#&gt;   ..$ species  : chr [1:12302] "Abies alba Miller" "Abies alba Miller" "Abies alba Miller" "Abies alba Miller" ...
+#&gt;   ..$ abund    : Factor w/ 7 levels "","+","1","2",..: 2 2 2 3 6 4 2 3 2 2 ...
+#&gt;   ..$ landclass: int [1:12302] 4 2 6 4 4 4 2 2 3 8 ...
+#&gt;  $ mat.traits      :'data.frame':	337 obs. of  6 variables:
+#&gt;   ..$ species     : chr [1:337] "X23" "X139" "X190" "X197" ...
+#&gt;   ..$ Disp        : num [1:337] 4 5 7 6 7 1 4 7 7 7 ...
+#&gt;   ..$ Light       : num [1:337] 2 2 3 3 5 3 5 5 5 3 ...
+#&gt;   ..$ Height      : num [1:337] 1500 50 70 11 30 ...
+#&gt;   ..$ Palatability: Factor w/ 5 levels "","0","1","2",..: 4 5 5 5 5 5 5 5 5 5 ...
+#&gt;   ..$ GROUP       : Factor w/ 3 levels "C","H","P": 3 2 2 2 2 2 2 2 2 2 ...
+#&gt;  $ mat.nicheOverlap: niolap [1:270, 1:270] NA 0.524 0.789 0.626 0.675 ...
+#&gt;   ..- attr(*, "dimnames")=List of 2
+#&gt;   .. ..$ : chr [1:270] "X10053" "X10106" "X10113" "X10182" ...
+#&gt;   .. ..$ : chr [1:270] "X10053" "X10106" "X10113" "X10182" ...</div><div class='input'>
+<span class='co'>## MontBlanc$mat.releves : data.frame</span>
+<span class='fu'>summary</span>(<span class='no'>MontBlanc</span>$<span class='no'>mat.releves</span>$<span class='no'>abund</span>)</div><div class='output co'>#&gt;         +    1    2    3    4    5 NA's 
+#&gt;    1 7442 2853 1328  493  118   11   56 </div><div class='input'>
+<span class='co'>## Transformation of Braun-Blanquet abundances</span>
+<span class='no'>MontBlanc</span>$<span class='no'>mat.releves</span>$<span class='no'>abund</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.abundBraunBlanquet</span>(<span class='kw'>abund</span> <span class='kw'>=</span> <span class='no'>MontBlanc</span>$<span class='no'>mat.releves</span>$<span class='no'>abund</span>)
+
+<span class='fu'>summary</span>(<span class='no'>MontBlanc</span>$<span class='no'>mat.releves</span>$<span class='no'>abund</span>)</div><div class='output co'>#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+#&gt;    0.50    0.50    0.50   12.86   37.50   87.50      57 </div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -182,7 +227,7 @@ Maya Guéguen
 
       <footer>
       <div class="copyright">
-  <p>Developed by .</p>
+  <p>Developed by Maya Gueguen.</p>
 </div>
 
 <div class="pkgdown">

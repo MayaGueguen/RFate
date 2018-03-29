@@ -2,16 +2,16 @@
 % Please edit documentation in R/PRE_FATE.abundBraunBlanquet.R
 \name{PRE_FATE.abundBraunBlanquet}
 \alias{PRE_FATE.abundBraunBlanquet}
-\title{Transform Braun-Blanquet abundances into relative abundances}
+\title{Transform Braun-Blanquet values into relative abundances}
 \usage{
 PRE_FATE.abundBraunBlanquet(abund)
 }
 \arguments{
-\item{abund}{a vector with abundance values from Braun-Blanquet
-(+, r, 1, 2, 3, 4, 5) with NA when no information}
+\item{abund}{a \code{vector} with abundance values from Braun-Blanquet
+(+, r, 1, 2, 3, 4, 5), and with \code{NA} when no information}
 }
 \value{
-a vector with numerical values between 0 and 100 corresponding to the median of each recovery class.
+A \code{vector} with numerical values between 0 and 100 corresponding to the median of each recovery class.
 }
 \description{
 This script is designed to transform Braun-Blanquet abundance
@@ -20,32 +20,43 @@ information into relative abundances or average recovery values
 }
 \details{
 Braun-Blanquet values allow to estimate the abundance-dominance of a species
-based on ans estimation of the number of individuals and the covering surface.
+based on an estimation of the number of individuals and the covering surface.
 A correspondence has been defined between this index and average recovery values :
 
-\tabular{crr}{
-  Braun-Blanquet \tab Recovery class (\%) \tab Average recovery (\%) \cr
-  + \tab <1 \tab 0.5 \cr
-  1 \tab 1-5 \tab 2.5 \cr
-  2 \tab 5-25 \tab 15 \cr
-  3 \tab 25-50 \tab 37.5 \cr
-  4 \tab 50-75 \tab 62.5 \cr
-  5 \tab 75-100 \tab 87.5
+\tabular{ccrrrr}{
+   \tab \strong{Braun-Blanquet} \tab ..... \tab \strong{Recovery class (\%)} \tab ..... \tab \strong{Average recovery (\%)} \cr
+   \tab + \tab  \tab <1 \tab  \tab 0.5 \cr
+   \tab 1 \tab  \tab 1-5 \tab  \tab 2.5 \cr
+   \tab 2 \tab  \tab 5-25 \tab  \tab 15 \cr
+   \tab 3 \tab  \tab 25-50 \tab  \tab 37.5 \cr
+   \tab 4 \tab  \tab 50-75 \tab  \tab 62.5 \cr
+   \tab 5 \tab  \tab 75-100 \tab  \tab 87.5
 }
 
-Braun-Blanquet J., Roussine N. & Nègre R., 1952. Les groupements végétaux de la France méditerranéenne.
-Dir. Carte Group. Vég. Afr. Nord , CNRS, 292 p.
+\cr
 
-Baudière A. & Serve L., 1975. Les groupements végétaux du Plade Gorra-Blanc (massif du Puigmal, Pyrénées Orientales).
-Essai d'interprétation phytosociologique et phytogéographique. Nat. Monsp., sér. Bot., 25, 5-21.
+\emph{Braun-Blanquet J., Roussine N. & Nègre R., 1952. Les groupements végétaux de la France méditerranéenne.
+Dir. Carte Group. Vég. Afr. Nord , CNRS, 292 p.}
 
-Foucault B. (de), 1980. Les prairies du bocage virois (Basse-Normandie, France). Typologie phytosociologique et 
-essai de reconstitution des séries évolutives herbagères. Doc. Phytosoc., N.S., 5, 1-109.
+\emph{Baudière A. & Serve L., 1975. Les groupements végétaux du Plade Gorra-Blanc (massif du Puigmal, Pyrénées Orientales).
+Essai d'interprétation phytosociologique et phytogéographique. Nat. Monsp., sér. Bot., 25, 5-21.}
+
+\emph{Foucault B. (de), 1980. Les prairies du bocage virois (Basse-Normandie, France). Typologie phytosociologique et 
+essai de reconstitution des séries évolutives herbagères. Doc. Phytosoc., N.S., 5, 1-109.}
 }
 \examples{
 
 ## Load example data
 data(MontBlanc)
+str(MontBlanc)
+ 
+## MontBlanc$mat.releves : data.frame
+summary(MontBlanc$mat.releves$abund)
+
+## Transformation of Braun-Blanquet abundances
+MontBlanc$mat.releves$abund = PRE_FATE.abundBraunBlanquet(abund = MontBlanc$mat.releves$abund)
+
+summary(MontBlanc$mat.releves$abund)
 
 }
 \author{

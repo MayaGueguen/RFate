@@ -112,26 +112,26 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>mat.site.species.abund</th>
-      <td><p>a data.frame with at least 3 columns :
-sites ID, species ID, abundance values (e.g. Braun Blanquet) with NA when
+      <td><p>a <code>data.frame</code> with at least 3 columns :
+sites ID, species ID, abundance values (e.g. Braun Blanquet) with <code>NA</code> when
 no information, landscape ID (optional)</p></td>
     </tr>
     <tr>
       <th>sites</th>
-      <td><p>a vector with sites ID</p></td>
+      <td><p>a <code>vector</code> with sites ID</p></td>
     </tr>
     <tr>
       <th>species</th>
-      <td><p>a vector with species ID</p></td>
+      <td><p>a <code>vector</code> with species ID</p></td>
     </tr>
     <tr>
       <th>abund</th>
-      <td><p>a vector with abundance values (e.g. Braun Blanquet) with NA
+      <td><p>a <code>vector</code> with abundance values (e.g. Braun Blanquet) with <code>NA</code>
 when no information</p></td>
     </tr>
     <tr>
       <th>landclass</th>
-      <td><p>a vector with landscape ID</p></td>
+      <td><p>a <code>vector</code> with landscape ID</p></td>
     </tr>
     <tr>
       <th>selectionRule.quanti</th>
@@ -149,7 +149,7 @@ is dominant (&gt;= 25 % of coverage)</p></td>
     </tr>
     <tr>
       <th>doLandclass</th>
-      <td><p>default FALSE. If TRUE, selection is also done including
+      <td><p>default <code>FALSE</code>. If <code>TRUE</code>, selection is also done including
 constraints on landscape class</p></td>
     </tr>
     <tr>
@@ -166,60 +166,73 @@ occupied by the species</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>a <code>data.frame</code> with all the species selected and the values of
+    <p>A <code>data.frame</code> with all the species selected and the values of
 parameters used to make the selection :</p>
-<dt>stat.no_sites_recorded</dt><dd><p>number of sites with information
-(presence-absence or abundance)</p></dd>
-<dt>stat.no_sites_abund</dt><dd><p>number of sites with abundance information</p></dd>
-<dt>stat.abund_median</dt><dd><p>median abundance (coverage percentage)</p></dd>
-<dt>stat.abund_mean</dt><dd><p>mean abundance (coverage percentage)</p></dd>
-<dt>stat.abund_max</dt><dd><p>maximal abundance (coverage percentage)</p></dd>
-<dt>stat.no_sites_abund_max</dt><dd><p>number of sites with maximal abundance</p></dd>
-<dt>stat.no_sites_abund_over25</dt><dd><p>number of sites with maximal abundance &gt;= 25</p></dd>
-<dt>SELECTION</dt><dd><p>dataset in which the species has been selected as
-dominant (global = all data, or landclass)</p></dd>
+<dl class='dl-horizontal'>
+  <dt>stat.no_sites_recorded</dt><dd><p>number of sites with information
+  (presence-absence or abundance)</p></dd>
+  <dt>stat.no_sites_abund</dt><dd><p>number of sites with abundance information</p></dd>
+  <dt>stat.abund_median</dt><dd><p>median abundance (coverage percentage)</p></dd>
+  <dt>stat.abund_mean</dt><dd><p>mean abundance (coverage percentage)</p></dd>
+  <dt>stat.abund_max</dt><dd><p>maximal abundance (coverage percentage)</p></dd>
+  <dt>stat.no_sites_abund_max</dt><dd><p>number of sites with maximal abundance</p></dd>
+  <dt>stat.no_sites_abund_over25</dt><dd><p>number of sites with maximal abundance &gt;= 25</p></dd>
+  <dt>SELECTION</dt><dd><p>dataset in which the species has been selected as dominant
+  <br /> (global = all data, or landclass)</p></dd>
+</dl>
 
-The information is written in .csv files :
+<p><br /></p>
+<p>The information is written in <code>PRE_FATE_DOMINANT_species_selected_[...].csv</code> files :</p><dl class='dl-horizontal'>
+  <dt><code class="file">COMPLETE_TABLE</code></dt><dd><p>the complete
+  table of selected species with all the statistics described above</p></dd>
+  <dt><code class="file">SPECIES_ONLY</code></dt><dd><p>only the names /
+  ID of the species selected</p></dd>
+</dl>
 
-
-  
-  
-
-
-Two .pdf files are also created : 
-
-
-  
-  
-
+<p>Two <code>PRE_FATE_DOMINANT_[...].pdf</code> files are also created :</p><dl class='dl-horizontal'>
+  <dt><code class="file">STEP_1_selectionCriteria</code></dt><dd><p>to visualize the values of
+  species metrics, and the criteria used to make the selection</p></dd>
+  <dt><code class="file">STEP_2_selectedSpecies</code></dt><dd><p>to visualize the values of
+  species metrics, for the selected dominant species</p></dd>
+</dl>
 
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This function provides a way to <em>select dominant species based on
 abundance sampling information</em>.
-This information can be given either directly in the form of a data.frame,
-or indirectly with a vector
-for each required information (sites, species, abundance, landscape class - optional).</p>
-    <p>3 rules are applied to make the species selection :</p><dl class='dl-horizontal'>
-  <dt><strong>on number of sites</strong></dt><dd><p>the species should be found in at
-  least <code>n</code> sites, which corresponds to the quantile <code>selectionRule.quanti</code>
-  of all the number of records per species</p></dd>
-  <dt><strong>on average abundance</strong></dt><dd><p>the species should have a mean
-  abundance superior or equal to <code>selectionRule.min_mean_abund</code></p></dd>
-  <dt><strong>on dominancy</strong></dt><dd><p>the species should be dominant (i.e. represent
-  at least 25 % of the coverage of the site) 
-  in at least <code>selectionRule.min_no_high_abund</code> sites</p></dd>
+This information can be given either directly in the form of a <code>data.frame</code>,
+or indirectly with a <code>vector</code> for each required information (sites,
+species, abundance, landscape class - optional).</p>
+    <p>2 rules are applied to make the species selection :</p>
+<dl class='dl-horizontal'>
+  <dt><strong>1. Presence releves</strong></dt><dd><p><dl class='dl-horizontal'>
+    <dt><strong>on number of sites</strong></dt><dd><p>the species should be found in at
+    least <code>n</code> sites, which corresponds to the quantile <code>selectionRule.quanti</code>
+    of all the number of records per species</p></dd>
+  </dl></p></dd>
+  <dt><strong>2. Abundance releves : </strong></dt><dd><p>both conditions must be fullfilled
+  <dl class='dl-horizontal'>
+    <dt><strong>on average abundance</strong></dt><dd><p>the species should have a mean
+    abundance superior or equal to <code>selectionRule.min_mean_abund</code></p></dd>
+    <dt><strong>on dominancy</strong></dt><dd><p>the species should be dominant (i.e. represent
+    at least 25 % of the coverage of the site) in at least
+    <code>selectionRule.min_no_high_abund</code> sites</p></dd>
+  </dl></p></dd>
 </dl>
     <p>If landscape information is available (e.g. type of environment : urban,
 desert, grassland... ; type of vegetation : shrubs, forest, alpine grasslands... ;
-etc), 2 rules can be added to the selection steps,
+etc), 1 rule with 2 conditions can be added to the selection steps,
 <em>in order to keep species that are not dominant at the large scale
-but could be representative of a specific environment</em> :</p><dl class='dl-horizontal'>
-  <dt><strong>on occupancy</strong></dt><dd><p>the species should occupy at least
-  <code>selectionRule.min_percent_landclass</code> % of a landclass</p></dd>
-  <dt><strong>on representation</strong></dt><dd><p>the species should be found in at least
-  <code>selectionRule.min_no_landclass</code> sites of a landclass</p></dd>
+but could be representative of a specific environment</em> :</p>
+<dl class='dl-horizontal'>
+  <dt><strong>3. Releves per habitat : </strong></dt><dd><p>both conditions must be fullfilled
+  <dl class='dl-horizontal'>
+    <dt><strong>on occupancy</strong></dt><dd><p>the species should occupy at least
+    <code>selectionRule.min_percent_landclass</code> % of a landclass</p></dd>
+    <dt><strong>on representation</strong></dt><dd><p>the species should be found in at least
+    <code>selectionRule.min_no_landclass</code> sites of a landclass</p></dd>
+  </dl></p></dd>
 </dl>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
@@ -255,7 +268,10 @@ but could be representative of a specific environment</em> :</p><dl class='dl-ho
 
 <span class='co'>## Selection of dominant species</span>
 
-<span class='co'>## With default parametrization</span>
+<span class='co'>#########################################################################################</span>
+<span class='co'>## EXAMPLE 1 : With default parametrization</span>
+<span class='co'>#########################################################################################</span>
+
 <span class='no'>sp.DOM</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.selectDominant</span>(<span class='kw'>mat.site.species.abund</span> <span class='kw'>=</span> <span class='no'>MontBlanc</span>$<span class='no'>mat.releves</span>)</div><div class='output co'>#&gt; 
 #&gt;  ############## SAMPLING INFORMATIONS ############## 
 #&gt; 
@@ -287,12 +303,15 @@ but could be representative of a specific environment</em> :</p><dl class='dl-ho
 #&gt;  ############## SELECTION OF DOMINANT SPECIES ############## 
 #&gt; 
 #&gt; &gt; Over all sites...
-#&gt; &gt; Combine selections...</div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 20 rows containing non-finite values (stat_bin).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 4466 rows containing missing values (geom_vline).</span></div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 20 rows containing non-finite values (stat_bin).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 4466 rows containing missing values (geom_vline).</span></div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 20 rows containing non-finite values (stat_bin).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 4466 rows containing missing values (geom_vline).</span></div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 20 rows containing non-finite values (stat_bin).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 4466 rows containing missing values (geom_vline).</span></div><div class='output co'>#&gt; 
+#&gt; &gt; Combine selections...</div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; 
 #&gt; &gt; Done!
 #&gt; 
 #&gt;   1116 species have been selected with the given criteria.
 #&gt;   Complete table of information about selected species can be find in output files.</div><div class='input'>
-<span class='co'>## Redefinition of global selection rules</span>
+<span class='co'>#########################################################################################</span>
+<span class='co'>## EXAMPLE 2 : Redefinition of global selection rules</span>
+<span class='co'>#########################################################################################</span>
+
 <span class='no'>sp.DOM</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.selectDominant</span>(<span class='kw'>mat.site.species.abund</span> <span class='kw'>=</span> <span class='no'>MontBlanc</span>$<span class='no'>mat.releves</span>
                                  , <span class='kw'>selectionRule.quanti</span> <span class='kw'>=</span> <span class='fl'>0.9</span>
                                  , <span class='kw'>selectionRule.min_mean_abund</span> <span class='kw'>=</span> <span class='fl'>25</span>
@@ -305,7 +324,7 @@ but could be representative of a specific environment</em> :</p><dl class='dl-ho
 #&gt; 
 #&gt;  ############## ABUNDANCE INFORMATIONS ############## 
 #&gt; 
-#&gt;  Percentage of releves with abundance information :  99.53666 %</div><div class='output co'>#&gt; <span class='warning'>Warning: Species with NO abundance information can only be selected with the criteria based on number of presences...</span></div><div class='img'><img src='PRE_FATE.selectDominant-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
+#&gt;  Percentage of releves with abundance information :  99.53666 %</div><div class='output co'>#&gt; <span class='warning'>Warning: Species with NO abundance information can only be selected with the criteria based on number of presences...</span></div><div class='output co'>#&gt; 
 #&gt;  Percentage of sites with abundance information :  99.82394 %
 #&gt;  Percentage of sites without abundance information :  1.232394 %
 #&gt;  Percentage of species with abundance information :  99.73118 %
@@ -327,12 +346,15 @@ but could be representative of a specific environment</em> :</p><dl class='dl-ho
 #&gt;  ############## SELECTION OF DOMINANT SPECIES ############## 
 #&gt; 
 #&gt; &gt; Over all sites...
-#&gt; &gt; Combine selections...</div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 20 rows containing non-finite values (stat_bin).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 4466 rows containing missing values (geom_vline).</span></div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 20 rows containing non-finite values (stat_bin).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 4466 rows containing missing values (geom_vline).</span></div><div class='img'><img src='PRE_FATE.selectDominant-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 2 rows containing non-finite values (stat_bin).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 502 rows containing missing values (geom_vline).</span></div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 2 rows containing non-finite values (stat_bin).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 502 rows containing missing values (geom_vline).</span></div><div class='img'><img src='PRE_FATE.selectDominant-3.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
+#&gt; &gt; Combine selections...</div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='img'><img src='PRE_FATE.selectDominant-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
 #&gt; &gt; Done!
 #&gt; 
 #&gt;   125 species have been selected with the given criteria.
-#&gt;   Complete table of information about selected species can be find in output files.</div><div class='input'>
-<span class='co'>## Add landclass selection with default parametrization</span>
+#&gt;   Complete table of information about selected species can be find in output files.</div><div class='img'><img src='PRE_FATE.selectDominant-2.png' alt='' width='700' height='433' /></div><div class='img'><img src='PRE_FATE.selectDominant-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'>#########################################################################################</span>
+<span class='co'>## EXAMPLE 3 : Add landclass selection with default parametrization</span>
+<span class='co'>#########################################################################################</span>
+
 <span class='no'>sp.DOM</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.selectDominant</span>(<span class='kw'>mat.site.species.abund</span> <span class='kw'>=</span> <span class='no'>MontBlanc</span>$<span class='no'>mat.releves</span>
                                  , <span class='kw'>selectionRule.quanti</span> <span class='kw'>=</span> <span class='fl'>0.9</span>
                                  , <span class='kw'>selectionRule.min_mean_abund</span> <span class='kw'>=</span> <span class='fl'>25</span>
@@ -377,12 +399,15 @@ but could be representative of a specific environment</em> :</p><dl class='dl-ho
 #&gt; 
 #&gt; &gt; Over all sites...
 #&gt; &gt; Over each landclass...
-#&gt; &gt; Combine selections...</div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 20 rows containing non-finite values (stat_bin).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 4466 rows containing missing values (geom_vline).</span></div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 20 rows containing non-finite values (stat_bin).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 4466 rows containing missing values (geom_vline).</span></div><div class='img'><img src='PRE_FATE.selectDominant-4.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 2 rows containing non-finite values (stat_bin).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 502 rows containing missing values (geom_vline).</span></div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 2 rows containing non-finite values (stat_bin).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 502 rows containing missing values (geom_vline).</span></div><div class='img'><img src='PRE_FATE.selectDominant-5.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
+#&gt; &gt; Combine selections...</div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; 
 #&gt; &gt; Done!
 #&gt; 
 #&gt;   125 species have been selected with the given criteria.
-#&gt;   Complete table of information about selected species can be find in output files.</div><div class='input'>
-<span class='co'>## Redefinition of landclass selection rules</span>
+#&gt;   Complete table of information about selected species can be find in output files.</div><div class='img'><img src='PRE_FATE.selectDominant-4.png' alt='' width='700' height='433' /></div><div class='img'><img src='PRE_FATE.selectDominant-5.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'>#########################################################################################       </span>
+<span class='co'>## EXAMPLE 4 : Redefinition of landclass selection rules</span>
+<span class='co'>#########################################################################################</span>
+
 <span class='no'>sp.DOM</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.selectDominant</span>(<span class='kw'>mat.site.species.abund</span> <span class='kw'>=</span> <span class='no'>MontBlanc</span>$<span class='no'>mat.releves</span>
                                  , <span class='kw'>selectionRule.quanti</span> <span class='kw'>=</span> <span class='fl'>0.9</span>
                                  , <span class='kw'>selectionRule.min_mean_abund</span> <span class='kw'>=</span> <span class='fl'>25</span>
@@ -429,11 +454,13 @@ but could be representative of a specific environment</em> :</p><dl class='dl-ho
 #&gt; 
 #&gt; &gt; Over all sites...
 #&gt; &gt; Over each landclass...
-#&gt; &gt; Combine selections...</div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 20 rows containing non-finite values (stat_bin).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 4466 rows containing missing values (geom_vline).</span></div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 20 rows containing non-finite values (stat_bin).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 4466 rows containing missing values (geom_vline).</span></div><div class='img'><img src='PRE_FATE.selectDominant-6.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 2 rows containing non-finite values (stat_bin).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 502 rows containing missing values (geom_vline).</span></div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 2 rows containing non-finite values (stat_bin).</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 502 rows containing missing values (geom_vline).</span></div><div class='img'><img src='PRE_FATE.selectDominant-7.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
+#&gt; &gt; Combine selections...</div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; 
 #&gt; &gt; Done!
 #&gt; 
 #&gt;   125 species have been selected with the given criteria.
-#&gt;   Complete table of information about selected species can be find in output files.</div><div class='input'>
+#&gt;   Complete table of information about selected species can be find in output files.</div><div class='img'><img src='PRE_FATE.selectDominant-6.png' alt='' width='700' height='433' /></div><div class='img'><img src='PRE_FATE.selectDominant-7.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='co'>#########################################################################################</span>
+
 <span class='co'>## 2 .csv and 2 .pdf files have been produced</span>
 <span class='fu'>str</span>(<span class='no'>sp.DOM</span>)</div><div class='output co'>#&gt; 'data.frame':	125 obs. of  9 variables:
 #&gt;  $ species                   : chr  "Acer pseudoplatanus L." "Achillea millefolium L." "Agrostis capillaris L." "Agrostis rupestris All." ...
@@ -470,7 +497,7 @@ Maya Guéguen
 
       <footer>
       <div class="copyright">
-  <p>Developed by .</p>
+  <p>Developed by Maya Gueguen.</p>
 </div>
 
 <div class="pkgdown">

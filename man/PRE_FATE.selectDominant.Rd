@@ -12,18 +12,18 @@ PRE_FATE.selectDominant(mat.site.species.abund = NULL, sites = NULL,
   selectionRule.min_no_landclass = 5)
 }
 \arguments{
-\item{mat.site.species.abund}{a data.frame with at least 3 columns :
-sites ID, species ID, abundance values (e.g. Braun Blanquet) with NA when
+\item{mat.site.species.abund}{a \code{data.frame} with at least 3 columns :
+sites ID, species ID, abundance values (e.g. Braun Blanquet) with \code{NA} when
 no information, landscape ID (optional)}
 
-\item{sites}{a vector with sites ID}
+\item{sites}{a \code{vector} with sites ID}
 
-\item{species}{a vector with species ID}
+\item{species}{a \code{vector} with species ID}
 
-\item{abund}{a vector with abundance values (e.g. Braun Blanquet) with NA
+\item{abund}{a \code{vector} with abundance values (e.g. Braun Blanquet) with \code{NA}
 when no information}
 
-\item{landclass}{a vector with landscape ID}
+\item{landclass}{a \code{vector} with landscape ID}
 
 \item{selectionRule.quanti}{minimum quantile of total number of sites that
 must occupy the species (between 0 and 1)}
@@ -33,7 +33,7 @@ must occupy the species (between 0 and 1)}
 \item{selectionRule.min_no_high_abund}{minimum number of sites where species
 is dominant (>= 25 \% of coverage)}
 
-\item{doLandclass}{default FALSE. If TRUE, selection is also done including
+\item{doLandclass}{default \code{FALSE}. If \code{TRUE}, selection is also done including
 constraints on landscape class}
 
 \item{selectionRule.min_percent_landclass}{minimum percentage of the landclass
@@ -43,36 +43,38 @@ occupied by the species (between 0 and 1)}
 occupied by the species}
 }
 \value{
-a \code{data.frame} with all the species selected and the values of
+A \code{data.frame} with all the species selected and the values of
 parameters used to make the selection :
 
-\item{stat.no_sites_recorded}{number of sites with information
-(presence-absence or abundance)}
-\item{stat.no_sites_abund}{number of sites with abundance information}
-\item{stat.abund_median}{median abundance (coverage percentage)}
-\item{stat.abund_mean}{mean abundance (coverage percentage)}
-\item{stat.abund_max}{maximal abundance (coverage percentage)}
-\item{stat.no_sites_abund_max}{number of sites with maximal abundance}
-\item{stat.no_sites_abund_over25}{number of sites with maximal abundance >= 25}
-\item{SELECTION}{dataset in which the species has been selected as
-dominant (global = all data, or landclass)}
-
-The information is written in .csv files :
-
 \describe{
-  \item{\file{PRE_FATE_DOMINANT_species_selected_COMPLETE_TABLE}}{the complete
+  \item{stat.no_sites_recorded}{number of sites with information
+  (presence-absence or abundance)}
+  \item{stat.no_sites_abund}{number of sites with abundance information}
+  \item{stat.abund_median}{median abundance (coverage percentage)}
+  \item{stat.abund_mean}{mean abundance (coverage percentage)}
+  \item{stat.abund_max}{maximal abundance (coverage percentage)}
+  \item{stat.no_sites_abund_max}{number of sites with maximal abundance}
+  \item{stat.no_sites_abund_over25}{number of sites with maximal abundance >= 25}
+  \item{SELECTION}{dataset in which the species has been selected as dominant
+  \cr (global = all data, or landclass)}
+}
+
+\cr
+
+The information is written in \code{PRE_FATE_DOMINANT_species_selected_[...].csv} files :
+\describe{
+  \item{\file{COMPLETE_TABLE}}{the complete
   table of selected species with all the statistics described above}
-  \item{\file{PRE_FATE_DOMINANT_species_selected_SPECIES_ONLY}}{only the names /
+  \item{\file{SPECIES_ONLY}}{only the names /
   ID of the species selected}
 }
 
-Two .pdf files are also created : 
-
+Two \code{PRE_FATE_DOMINANT_[...].pdf} files are also created : 
 \describe{
-  \item{\file{PRE_FATE_DOMINANT_STEP_1_selectionCriteria}}{to visualize
-  the values of species metrics, and the criteria used to make the selection}
-  \item{\file{PRE_FATE_DOMINANT_STEP_2_selectedSpecies}}{to visualize
-  the values of species metrics, for the selected dominant species}
+  \item{\file{STEP_1_selectionCriteria}}{to visualize the values of
+  species metrics, and the criteria used to make the selection}
+  \item{\file{STEP_2_selectedSpecies}}{to visualize the values of
+  species metrics, for the selected dominant species}
 }
 }
 \description{
@@ -82,33 +84,47 @@ This script is designed to select dominant species from
 \details{
 This function provides a way to \emph{select dominant species based on
 abundance sampling information}.
-This information can be given either directly in the form of a data.frame,
-or indirectly with a vector
-for each required information (sites, species, abundance, landscape class - optional).
+This information can be given either directly in the form of a \code{data.frame},
+or indirectly with a \code{vector} for each required information (sites,
+species, abundance, landscape class - optional).
 
 
-3 rules are applied to make the species selection :
+2 rules are applied to make the species selection :
+
 \describe{
-  \item{\strong{on number of sites}}{the species should be found in at
-  least \code{n} sites, which corresponds to the quantile \code{selectionRule.quanti}
-  of all the number of records per species}
-  \item{\strong{on average abundance}}{the species should have a mean
-  abundance superior or equal to \code{selectionRule.min_mean_abund}}
-  \item{\strong{on dominancy}}{the species should be dominant (i.e. represent
-  at least 25 \% of the coverage of the site) 
-  in at least \code{selectionRule.min_no_high_abund} sites}
+  \item{\strong{1. Presence releves}}{
+  \describe{
+    \item{\strong{on number of sites}}{the species should be found in at
+    least \code{n} sites, which corresponds to the quantile \code{selectionRule.quanti}
+    of all the number of records per species}
+  }
+  }
+  \item{\strong{2. Abundance releves : }}{both conditions must be fullfilled
+  \describe{
+    \item{\strong{on average abundance}}{the species should have a mean
+    abundance superior or equal to \code{selectionRule.min_mean_abund}}
+    \item{\strong{on dominancy}}{the species should be dominant (i.e. represent
+    at least 25 \% of the coverage of the site) in at least
+    \code{selectionRule.min_no_high_abund} sites}
+  }
+  }
 }
 
 If landscape information is available (e.g. type of environment : urban,
 desert, grassland... ; type of vegetation : shrubs, forest, alpine grasslands... ;
-etc), 2 rules can be added to the selection steps,
+etc), 1 rule with 2 conditions can be added to the selection steps,
 \emph{in order to keep species that are not dominant at the large scale
 but could be representative of a specific environment} :
+
 \describe{
-  \item{\strong{on occupancy}}{the species should occupy at least
-  \code{selectionRule.min_percent_landclass} \% of a landclass}
-  \item{\strong{on representation}}{the species should be found in at least
-  \code{selectionRule.min_no_landclass} sites of a landclass}
+  \item{\strong{3. Releves per habitat : }}{both conditions must be fullfilled
+  \describe{
+    \item{\strong{on occupancy}}{the species should occupy at least
+    \code{selectionRule.min_percent_landclass} \% of a landclass}
+    \item{\strong{on representation}}{the species should be found in at least
+    \code{selectionRule.min_no_landclass} sites of a landclass}
+  }
+  }
 }
 }
 \examples{
@@ -124,23 +140,35 @@ MontBlanc$mat.releves$abund = PRE_FATE.abundBraunBlanquet(abund = MontBlanc$mat.
 
 ## Selection of dominant species
 
-## With default parametrization
+#########################################################################################
+## EXAMPLE 1 : With default parametrization
+#########################################################################################
+
 sp.DOM = PRE_FATE.selectDominant(mat.site.species.abund = MontBlanc$mat.releves)
 
-## Redefinition of global selection rules
+#########################################################################################
+## EXAMPLE 2 : Redefinition of global selection rules
+#########################################################################################
+
 sp.DOM = PRE_FATE.selectDominant(mat.site.species.abund = MontBlanc$mat.releves
                                  , selectionRule.quanti = 0.9
                                  , selectionRule.min_mean_abund = 25
                                  , selectionRule.min_no_high_abund = 10)
 
-## Add landclass selection with default parametrization
+#########################################################################################
+## EXAMPLE 3 : Add landclass selection with default parametrization
+#########################################################################################
+
 sp.DOM = PRE_FATE.selectDominant(mat.site.species.abund = MontBlanc$mat.releves
                                  , selectionRule.quanti = 0.9
                                  , selectionRule.min_mean_abund = 25
                                  , selectionRule.min_no_high_abund = 10
                                  , doLandclass = TRUE)
-                                 
-## Redefinition of landclass selection rules
+                          
+#########################################################################################       
+## EXAMPLE 4 : Redefinition of landclass selection rules
+#########################################################################################
+
 sp.DOM = PRE_FATE.selectDominant(mat.site.species.abund = MontBlanc$mat.releves
                                  , selectionRule.quanti = 0.9
                                  , selectionRule.min_mean_abund = 25
@@ -148,6 +176,8 @@ sp.DOM = PRE_FATE.selectDominant(mat.site.species.abund = MontBlanc$mat.releves
                                  , doLandclass = TRUE
                                  , selectionRule.min_percent_landclass = 0.05
                                  , selectionRule.min_no_landclass = 10)
+                                 
+#########################################################################################
 
 ## 2 .csv and 2 .pdf files have been produced
 str(sp.DOM)

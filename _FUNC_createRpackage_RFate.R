@@ -34,6 +34,9 @@ usethis::use_coverage()
 spelling::spell_check_setup()
 
 usethis::use_pkgdown()
+setwd("./../")
+
+setwd("RFate/")
 pkgdown:::build_site()
 setwd("./../")
 
