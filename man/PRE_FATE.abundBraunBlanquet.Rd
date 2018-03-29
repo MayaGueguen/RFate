@@ -33,7 +33,6 @@ A correspondence has been defined between this index and average recovery values
    \tab 5 \tab  \tab 75-100 \tab  \tab 87.5
 }
 
-\cr
 
 \emph{Braun-Blanquet J., Roussine N. & Nègre R., 1952. Les groupements végétaux de la France méditerranéenne.
 Dir. Carte Group. Vég. Afr. Nord , CNRS, 292 p.}

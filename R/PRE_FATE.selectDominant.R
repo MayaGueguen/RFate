@@ -94,7 +94,7 @@
 ##'   \cr (global = all data, or landclass)}
 ##' }
 ##' 
-##' \cr
+##\cr
 ##' 
 ##' The information is written in \code{PRE_FATE_DOMINANT_species_selected_[...].csv} files :
 ##' \describe{
