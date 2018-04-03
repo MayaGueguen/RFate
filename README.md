@@ -2,23 +2,25 @@
 [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/MayaGueguen/RFate?branch=master&svg=true)](https://ci.appveyor.com/project/MayaGueguen/RFate)
 [![Coverage status](https://codecov.io/gh/MayaGueguen/RFate/branch/master/graph/badge.svg)](https://codecov.io/github/MayaGueguen/RFate?branch=master)
 
-# RFate
-RFate package - to be used with FATE-HD
+# RFate package - to be used with `FATE-HD`
 
----
-title: "FATE-HD tutorial - Building PFGs"
-author: "LECA Grenoble"
-date: "08/12/2015"
-output:
-  html_document:
-    highlight: espresso
-    number_sections: yes
-    theme: readable
-    toc: yes
----
+This package aims at presenting support functions to the software `FATE-HD`.  
+Functions are classified in two categories :
 
-# Presentation
-This tutorial has to be linked with other tutorials about `FATE-HD`.
+- `PRE_FATE.` functions :
+    - to build Plant Functional Groups
+    - to prepare parameter files
+
+- `POST_FATE.` functions :
+    - to organize results from `FATE-HD`
+    - to plot graphics
+    - etc
+    
+___________________________________________________________________________________________________
+
+___________________________________________________________________________________________________
+
+## 1. PRE_FATE - build Plant Functional Groups (PFG)    
 
 ___________________________________________________________________________________________________
 
@@ -32,57 +34,57 @@ ________________________________________________________________________________
 A plant functional group, or **PFG**, is "*A set of representative species is classified based on key biological characteristics, to determine groups of species sharing ecological strategies*" ([Boulangeat, 2012](http://j.boulangeat.free.fr/pdfs/Boulangeat2012_GCB_published.pdf "Boulangeat, I., Philippe, P., Abdulhak, S., Douzet, R., Garraud, L., Lavergne, S., Lavorel, S., Van Es J., Vittoz, P. and Thuiller, W. Improving plant functional groups for dynamic models of biodiversity: at the crossroad between functional and community ecology. Global Change Biology, 18, 3464-3475.")).
 PFGs are based on their distribution, physiological characteristics, competition traits...
 
-___________________________________________________________________________________________________
 
-This tutorial aims at presenting a method to build such PFGs that can then be used in a `FATE-HD` simulation.
+### What are the main steps of this process ?
 
-# What are the main steps of this process ?
+1. **Selection of dominant species**  
+with the function [PRE_FATE.selectDominant](https://mayagueguen.github.io/RFate/reference/PRE_FATE.selectDominant.html)  
 
-*1. Overlap of species climatic niches :*
+2. **Overlap of species climatic niches**  
+with either Principal Component Analysis (PCA) or Species Distribution Models (SDM)
 
-- Gather **environmental data** for the studied area
-- Compute **PCA** over environment to create a *climatic space*
+3. **Calculation of species pairwise distance**  
+by combining overlap and functional distances with the function [PRE_FATE.speciesDistance](https://mayagueguen.github.io/RFate/reference/PRE_FATE.speciesDistance.html)
 
+4. **Clustering of species :**  
+- calculate all possible clusters, and the corresponding evaluation metrics  
+with the function [PRE_FATE.speciesClustering_step1](https://mayagueguen.github.io/RFate/reference/PRE_FATE.speciesClustering_step1.html)
+- choose the best number of clusters from the previous step and find determinant species  
+with the function [PRE_FATE.speciesClustering_step2](https://mayagueguen.github.io/RFate/reference/PRE_FATE.speciesClustering_step2.html)
+
+
+### What do you need ?
+
+*1. Selection of dominant species*
 - Gather **occurrences** for all species within the studied area
 - Identify **dominant species** based on abundances and frequençy of sampling
-- Calculate the **density of each species** within this *climatic space* from the PCA
 
-- For each pair of species, compute the **overlap** of the 2 considered species within the *climatic space*
+*2. Overlap of species climatic niches :* 
+- *Option 1: Principal Component analysis*
+    - Gather **environmental data** for the studied area
+    - Compute **PCA** over environment to create a *climatic space*
+    - Calculate the **density of each species** within this *climatic space* from the PCA
+    - For each pair of species, compute the **overlap** of the 2 considered species within the *climatic space*
+- *Option 2: Species Distribution Models*
+    - Gather **environmental data** for the studied area
+    - For each dominant species, compute a **species distribution model** (SDM)  
+    combining environmental data and occurrences to determine the *climatic niche* of the species
+    - With these SDMs, calculate the **niche overlap** of each pair of species
 
-OR
-
-- Gather **environmental data** for the studied area
-- Gather **occurrences** for all species within the studied area
-- Identify **dominant species** based on abundances and frequençy of sampling
-
-- For each dominant species, compute a **species distribution model** (SDM)  
-combining environmental data and occurrences to determine the *climatic niche* of the species
-- With these SDMs, calculate the **niche overlap** of each pair of species
-
-
-*2. Clustering of species :*
-
+*3. Calculation of species pairwise distance*  
 - Gather **traits data** for all dominant species within the studied area  
 (traits need to be related to fundamental process of growth : light tolerance, dispersal, height...)
-- Compute **dissimilarity distances** between pairs of species based on these traits and taking also into account the overlap of the 2 species within the *climatic space*
+- Compute **dissimilarity distances** between pairs of species based on these traits and taking also into account the overlap of the 2 species within the *climatic space* (see previous step)
 
-# What do you need ?
+*4. Clustering of species :*  
+- Using the **dissimilarity distances** from previous step, apply hierarchical clustering
 
-*1. Overlap of species climatic niches :*
 
-- a **mask** of the studied area (any raster format, with the defined area coded with 1)
-- **environmental data** (any raster format, with preferentially same extent and projection)
-- **sampled data** (per plot : coordinates, species sampled and abundances recorded)
-    
-*2. Clustering of species :*
+___________________________________________________________________________________________________
 
-- **traits data** :
-    - height
-    - light tolerance ([Ellenberg light values](https://www.brc.ac.uk/plantatlas/index.php?q=light-help))
-    - palatability
-    - dispersal ability ([Vittoz et Engler, 2007](http://www.wsl.ch/staff/niklaus.zimmermann/papers/Ecography_Engler_2009_SupMat.pdf "Vittoz P. and Engler R. 2007. Seed dispersal distances: a typology based on dispersal modes and plant traits. Botanica Helvetica, 117 (2), 109–124."))
+## 2. PRE_FATE - build parameter files  
 
-*For further details about the data, please refer to [Boulangeat, 2012](http://j.boulangeat.free.fr/pdfs/Boulangeat2012_GCB_published.pdf "Boulangeat, I., Philippe, P., Abdulhak, S., Douzet, R., Garraud, L., Lavergne, S., Lavorel, S., Van Es J., Vittoz, P. and Thuiller, W. Improving plant functional groups for dynamic models of biodiversity: at the crossroad between functional and community ecology. Global Change Biology, 18, 3464-3475."). 
+___________________________________________________________________________________________________
 
-- **overlap** obtained from the first section
+## 3. POST_FATE - evaluation of simulation  
 

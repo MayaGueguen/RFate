@@ -69,10 +69,116 @@
   <div class="contents col-md-9">
     
 
-<div id="rfate" class="section level1">
+<div id="rfate-package---to-be-used-with-fate-hd" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#rfate" class="anchor"></a>RFate</h1></div>
-<p>RFate package - to be used with FATE-HD</p>
+<a href="#rfate-package---to-be-used-with-fate-hd" class="anchor"></a>RFate package - to be used with <code>FATE-HD</code>
+</h1></div>
+<p>This package aims at presenting support functions to the software <code>FATE-HD</code>.<br>
+Functions are classified in two categories :</p>
+<ul>
+<li>
+<code>PRE_FATE.</code> functions :
+<ul>
+<li>to build Plant Functional Groups</li>
+<li>to prepare parameter files</li>
+</ul>
+</li>
+<li>
+<code>POST_FATE.</code> functions :
+<ul>
+<li>to organize results from <code>FATE-HD</code>
+</li>
+<li>to plot graphics</li>
+<li>etc</li>
+</ul>
+</li>
+</ul>
+<hr>
+<hr>
+<div id="pre_fate---build-plant-functional-groups-pfg" class="section level2">
+<h2 class="hasAnchor">
+<a href="#pre_fate---build-plant-functional-groups-pfg" class="anchor"></a>1. PRE_FATE - build Plant Functional Groups (PFG)</h2>
+<hr>
+<p>“<em>The recurring suggestions are that models should explicitly (i) include spatiotemporal dynamics; (ii) consider multiple species in interactions and (iii) account for the processes shaping biodiversity distribution.</em>”</p>
+<p><code>FATE-HD</code> is a “<em>a biodiversity model that meets this challenge at regional scale by combining phenomenological and process-based approaches and using well-defined</em> <strong><em>plant</em> <em>functional</em> <em>group</em></strong>”. (<a href="http://www.will.chez-alice.fr/pdf/BoulangeatGCB2014.pdf" title="Boulangeat, I., Georges, D., Thuiller, W., FATE-HD: A spatially and temporally explicit integrated model for predicting vegetation structure and diversity at regional scale. Global Change Biology, 20, 2368–2378.">Boulangeat, 2014</a>)</p>
+<hr>
+<p>A plant functional group, or <strong>PFG</strong>, is “<em>A set of representative species is classified based on key biological characteristics, to determine groups of species sharing ecological strategies</em>” (<a href="http://j.boulangeat.free.fr/pdfs/Boulangeat2012_GCB_published.pdf" title="Boulangeat, I., Philippe, P., Abdulhak, S., Douzet, R., Garraud, L., Lavergne, S., Lavorel, S., Van Es J., Vittoz, P. and Thuiller, W. Improving plant functional groups for dynamic models of biodiversity: at the crossroad between functional and community ecology. Global Change Biology, 18, 3464-3475.">Boulangeat, 2012</a>). PFGs are based on their distribution, physiological characteristics, competition traits…</p>
+<div id="what-are-the-main-steps-of-this-process" class="section level3">
+<h3 class="hasAnchor">
+<a href="#what-are-the-main-steps-of-this-process" class="anchor"></a>What are the main steps of this process ?</h3>
+<ol>
+<li><p><strong>Selection of dominant species</strong><br>
+with the function <a href="https://mayagueguen.github.io/RFate/reference/PRE_FATE.selectDominant.html">PRE_FATE.selectDominant</a></p></li>
+<li><p><strong>Overlap of species climatic niches</strong><br>
+with either Principal Component Analysis (PCA) or Species Distribution Models (SDM)</p></li>
+<li><p><strong>Calculation of species pairwise distance</strong><br>
+by combining overlap and functional distances with the function <a href="https://mayagueguen.github.io/RFate/reference/PRE_FATE.speciesDistance.html">PRE_FATE.speciesDistance</a></p></li>
+<li>
+<strong>Clustering of species :</strong><br>
+</li>
+</ol>
+<ul>
+<li>calculate all possible clusters, and the corresponding evaluation metrics<br>
+with the function <a href="https://mayagueguen.github.io/RFate/reference/PRE_FATE.speciesClustering_step1.html">PRE_FATE.speciesClustering_step1</a>
+</li>
+<li>choose the best number of clusters from the previous step and find determinant species<br>
+with the function <a href="https://mayagueguen.github.io/RFate/reference/PRE_FATE.speciesClustering_step2.html">PRE_FATE.speciesClustering_step2</a>
+</li>
+</ul>
+</div>
+<div id="what-do-you-need" class="section level3">
+<h3 class="hasAnchor">
+<a href="#what-do-you-need" class="anchor"></a>What do you need ?</h3>
+<p><em>1. Selection of dominant species</em></p>
+<ul>
+<li>Gather <strong>occurrences</strong> for all species within the studied area</li>
+<li>Identify <strong>dominant species</strong> based on abundances and frequençy of sampling</li>
+</ul>
+<p><em>2. Overlap of species climatic niches :</em></p>
+<ul>
+<li>
+<em>Option 1: Principal Component analysis</em>
+<ul>
+<li>Gather <strong>environmental data</strong> for the studied area</li>
+<li>Compute <strong>PCA</strong> over environment to create a <em>climatic space</em>
+</li>
+<li>Calculate the <strong>density of each species</strong> within this <em>climatic space</em> from the PCA</li>
+<li>For each pair of species, compute the <strong>overlap</strong> of the 2 considered species within the <em>climatic space</em>
+</li>
+</ul>
+</li>
+<li>
+<em>Option 2: Species Distribution Models</em>
+<ul>
+<li>Gather <strong>environmental data</strong> for the studied area</li>
+<li>For each dominant species, compute a <strong>species distribution model</strong> (SDM)<br>
+combining environmental data and occurrences to determine the <em>climatic niche</em> of the species</li>
+<li>With these SDMs, calculate the <strong>niche overlap</strong> of each pair of species</li>
+</ul>
+</li>
+</ul>
+<p><em>3. Calculation of species pairwise distance</em></p>
+<ul>
+<li>Gather <strong>traits data</strong> for all dominant species within the studied area<br>
+(traits need to be related to fundamental process of growth : light tolerance, dispersal, height…)</li>
+<li>Compute <strong>dissimilarity distances</strong> between pairs of species based on these traits and taking also into account the overlap of the 2 species within the <em>climatic space</em> (see previous step)</li>
+</ul>
+<p><em>4. Clustering of species :</em></p>
+<ul>
+<li>Using the <strong>dissimilarity distances</strong> from previous step, apply hierarchical clustering</li>
+</ul>
+<hr>
+</div>
+</div>
+<div id="pre_fate---build-parameter-files" class="section level2">
+<h2 class="hasAnchor">
+<a href="#pre_fate---build-parameter-files" class="anchor"></a>2. PRE_FATE - build parameter files</h2>
+<hr>
+</div>
+<div id="post_fate---evaluation-of-simulation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#post_fate---evaluation-of-simulation" class="anchor"></a>3. POST_FATE - evaluation of simulation</h2>
+</div>
 </div>
 
   </div>
