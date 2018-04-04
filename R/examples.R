@@ -19,6 +19,7 @@ sp.DOM = PRE_FATE.selectDominant(mat.site.species.abund = MontBlanc$mat.releves
                                  , selectionRule.quanti = 0.9
                                  , selectionRule.min_mean_abund = 25
                                  , selectionRule.min_no_high_abund = 10)
+
 ## Add landclass selection with default parametrization
 sp.DOM = PRE_FATE.selectDominant(mat.site.species.abund = MontBlanc$mat.releves
                                , selectionRule.quanti = 0.9

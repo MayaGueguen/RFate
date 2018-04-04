@@ -471,7 +471,7 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
   write.csv(mat.species.dominant
             , file = "PRE_FATE_DOMINANT_species_selected_COMPLETE_TABLE.csv"
             , row.names = F)
-  write.csv(mat.species.dominant$species
+  write.csv(mat.species.dominant[,"species"]
             , file = "PRE_FATE_DOMINANT_species_selected_SPECIES_ONLY.csv"
             , row.names = F)
   
@@ -570,7 +570,7 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
     geom_vline(aes_string(xintercept = "limit"), lwd = 1, color = "#fb6a4a", na.rm = TRUE) +
     scale_fill_manual("Species selected in dataset :", values = colos) +
     facet_wrap("variable", scales="free", labeller = as_labeller(variables.labeller)) +
-    labs(x="", y = "", title = paste0("STEP 2 : selected dominant species (", nrow(mat.plot),")"),
+    labs(x="", y = "", title = paste0("STEP 2 : selected dominant species (", length(unique(mat.plot$species)) - 1,")"),
          subtitle = paste0("Criteria used for each species (highlighted with colored vertical lines) :\n"
                            , "Total number of presences >= quantile( ", selectionRule.quanti * 100, "% )\n"
                            , "Mean abundance >= ", selectionRule.min_mean_abund, "\n"
