@@ -65,7 +65,11 @@
 
 PRE_FATE.abundBraunBlanquet = function(abund){
   ## Convert Braun-Blanquet abundance classes into median coverage percentage
-  # abund = as.character(abund)
+  if (!(is.vector(abund) | is.factor(abund)) |
+      is.list(abund) | is.matrix(abund) | is.data.frame(abund)){
+    stop("Wrong type of data!\n `abund` must be a vector")
+  }
+  
   if (length(na.exclude(abund)) > 0) {
     abund = sapply(abund, function(x){
       x = as.character(x)
@@ -87,13 +91,7 @@ PRE_FATE.abundBraunBlanquet = function(abund){
         return(NA)
       }
     })
-    # abund[which(abund %in% c("+","r"))] = 0.5
-    # abund[which(abund=="1")] = 3
-    # abund[which(abund=="2")] = 15
-    # abund[which(abund=="3")] = 37.5
-    # abund[which(abund=="4")] = 62.5
-    # abund[which(abund=="5")] = 87.5
-    abund = as.numeric(abund)
   }
+  abund = as.numeric(abund)
   return(abund)
 }
