@@ -468,11 +468,28 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
   }
   
   #################################################################################################
+  
+  end_filename = paste0(c(selectionRule.quanti
+                          , selectionRule.min_mean_abund
+                          , selectionRule.min_no_high_abund)
+                        , collapse = "_")
+  if(doLandclass)
+  {
+    end_filename = paste0(c(end_filename
+                            , selectionRule.min_percent_landclass
+                            , selectionRule.min_no_landclass)
+                          , collapse = "_")
+  }
+  
   write.csv(mat.species.dominant
-            , file = "PRE_FATE_DOMINANT_species_selected_COMPLETE_TABLE.csv"
+            , file = paste0("PRE_FATE_DOMINANT_species_selected_COMPLETE_TABLE_"
+                            , end_filename
+                            , ".csv")
             , row.names = F)
   write.csv(mat.species.dominant[,"species"]
-            , file = "PRE_FATE_DOMINANT_species_selected_SPECIES_ONLY.csv"
+            , file = paste0("PRE_FATE_DOMINANT_species_selected_SPECIES_ONLY_"
+                            , end_filename
+                            , ".csv")
             , row.names = F)
   
   
@@ -536,7 +553,8 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
     theme(legend.position = c(0.7, 0.85),
           legend.title = element_text(size=10))
   
-  ggsave(filename = "PRE_FATE_DOMINANT_STEP_1_selectionCriteria.pdf", plot = pp1, width = 10, height = 8)
+  ggsave(filename = paste0("PRE_FATE_DOMINANT_STEP_1_selectionCriteria_", end_filename, ".pdf")
+         , plot = pp1, width = 10, height = 8)
   
   ## STEP 2 : Selected -----------------------------------------------------------
 
@@ -581,7 +599,8 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
           legend.title = element_text(size=10),
           legend.direction = "vertical")
   
-  ggsave(filename = "PRE_FATE_DOMINANT_STEP_2_selectedSpecies.pdf", plot = pp2, width = 10, height = 8)
+  ggsave(filename = paste0("PRE_FATE_DOMINANT_STEP_2_selectedSpecies_", end_filename, ".pdf")
+         , plot = pp2, width = 10, height = 8)
 
   #################################################################################################
   
