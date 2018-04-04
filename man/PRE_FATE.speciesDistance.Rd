@@ -16,7 +16,7 @@ PRE_FATE.speciesDistance(mat.species.traits, mat.species.overlap)
 \item{\code{...}}{one column for each functional trait}
 }}
 
-\item{mat.species.overlap}{Three options :
+\item{mat.species.overlap}{Two options :
 \itemize{
   \item a \code{data.frame} with 2 columns :
   \describe{

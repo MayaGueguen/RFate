@@ -7,33 +7,34 @@
 PRE_FATE.speciesClustering_step1(mat.species.DIST)
 }
 \arguments{
-\item{mat.species.DIST}{A \code{dist} object corresponding to the distance
-between each pair of species, or a \code{list} of \code{dist} objects, one for each
-\code{GROUP} value. Such an object can be obtained with the
+\item{mat.species.DIST}{a \code{dist} object corresponding to the distance
+between each pair of species, or a \code{list} of \code{dist} objects, one
+for each \code{GROUP} value. Such an object can be obtained with the
 \code{PRE_FATE.speciesDistance} function.}
 }
 \value{
 A \code{list} object with 2 elements :
 
-\item{clust.dendograms}{a \code{list} object with as many objects of class
-\code{hclust} as subset of data}
-\item{clust.evaluation}{a \code{data.frame} with 4 columns :
-\itemize{
-  \item \code{group} : name of sub-dataset
-  \item \code{nb.cluster} : number of clusters used for the clustering
-  \item \code{variable} : evaluation metrics' name
-  \item \code{value} : value of evaluation metric
-}
-}
-
-Two .pdf files are also created : 
-
 \describe{
-  \item{\file{PRE_FATE_CLUSTERING_STEP_1A_clusteringMethod}}{to account
-  for the chosen clustering method}
-  \item{\file{PRE_FATE_CLUSTERING_STEP_1B_numberOfClusters}}{for decision
-  support, to help the user to choose the adequate number of clusters
-  to be used into the \code{hclust} method}
+  \item{clust.dendograms}{a \code{list} object with as many objects of class
+  \code{hclust} as subset of data}
+  \item{clust.evaluation}{a \code{data.frame} with 4 columns :
+  \itemize{
+    \item \code{group} : name of sub-dataset
+    \item \code{nb.cluster} : number of clusters used for the clustering
+    \item \code{variable} : evaluation metrics' name
+    \item \code{value} : value of evaluation metric
+  }
+  }
+}
+
+Two \code{PRE_FATE_CLUSTERING_[...].pdf} files are created : 
+\describe{
+  \item{\file{STEP_1A \cr clusteringMethod}}{to account for the chosen
+  clustering method}
+  \item{\file{STEP_1B \cr numberOfClusters}}{for decision support, to help
+  the user to choose the adequate number of clusters to be used into
+  the \code{hclust} method}
 }
 }
 \description{
@@ -45,32 +46,34 @@ given for each of them).
 }
 \details{
 This function allows one to obtain dendograms based on a distance matrix
-between species. As for the \code{PRE_FATE.speciesDistance} method,
-clustering can be made for sub-datasets, conditioning that \code{mat.species.DIST}
-parameter is given as a \code{list} of \code{dist} object (instead of a \code{dist}
+between species.
+
+As for the \code{PRE_FATE.speciesDistance} method, clustering can be made
+for sub-datasets, conditioning that \code{mat.species.DIST} parameter is
+given as a \code{list} of \code{dist} object (instead of a \code{dist}
 object alone).
 
 The process is as follows :
 
-\enumerate{
-  \item{\strong{Choice of the optimal clustering method : }}{hierarchical
-  clustering on the dissimilarity matrix is realized with the \code{hclust}
-  function.
+\describe{
+  \item{\strong{1. Choice of the \cr optimal \cr clustering method}}{
+  hierarchical clustering on the dissimilarity matrix is realized with the
+  \code{hclust} function.
   \itemize{
     \item Several methods are available for the agglomeration : complete,
-  ward.D, ward.D2, single, average (UPGMA), mcquitty (WPGMA), median (WPGMC)
-  and centroid (UPGMC).
-    \item Mouchet et el. (2008) proposed of measure of
-  similarity between the input distance and the one obtained with the
-  clustering which must be minimized to help finding the best clustering method :
-  \deqn{ 1 - cor( input.DIST, clustering.DIST ) ^ 2}
+    ward.D, ward.D2, single, average (UPGMA), mcquitty (WPGMA), median
+    (WPGMC) and centroid (UPGMC).
+    \item Mouchet et el. (2008) proposed of measure of similarity between
+    the input distance and the one obtained with the clustering which must
+    be minimized to help finding the best clustering method :
+    \deqn{ 1 - cor( input.DIST, clustering.DIST ) ^ 2}
   }
-  For each agglomeration method, this measure is calculated. The method
-  that minimizes it is kept and used for further analyses. A graphic is made
-  to account for the comparison of these methods.
+  \strong{For each agglomeration method, this measure is calculated. The
+  method that minimizes it is kept and used for further analyses. A graphic
+  (\code{STEP_1A}) is made to account for the comparison of these methods.}
   }
   
-  \item{\strong{Evaluation of the clustering : }}{once the hierarchical
+  \item{\strong{2. Evaluation of the \cr clustering}}{once the hierarchical
   clustering is done, the number of clusters to keep should be chosen.
   
   To do that, several metrics are computed :
@@ -95,10 +98,10 @@ The process is as follows :
     observations with a negative s(i) are probably placed in the wrong cluster.
     Should be maximized.}
   }
-  A graphic is produced, giving the values of these metrics in function of
-  the number of clusters used. Number of clusters with evaluation metrics'
-  values among the 3 best are highlighted to help the user to make his/her
-  optimal choice.   
+  \strong{A graphic (\code{STEP_1B}) is produced, giving the values of these
+  metrics in function of the number of clusters used. Number of clusters with
+  evaluation metrics' values among the 3 best are highlighted to help the user
+  to make his/her optimal choice.}
   }
 }
 }

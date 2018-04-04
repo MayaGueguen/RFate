@@ -113,9 +113,9 @@ given for each of them).</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>mat.species.DIST</th>
-      <td><p>A <code>dist</code> object corresponding to the distance
-between each pair of species, or a <code>list</code> of <code>dist</code> objects, one for each
-<code>GROUP</code> value. Such an object can be obtained with the
+      <td><p>a <code>dist</code> object corresponding to the distance
+between each pair of species, or a <code>list</code> of <code>dist</code> objects, one
+for each <code>GROUP</code> value. Such an object can be obtained with the
 <code>PRE_FATE.speciesDistance</code> function.</p></td>
     </tr>
     </table>
@@ -123,49 +123,52 @@ between each pair of species, or a <code>list</code> of <code>dist</code> object
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A <code>list</code> object with 2 elements :</p>
-<dt>clust.dendograms</dt><dd><p>a <code>list</code> object with as many objects of class
-<code>hclust</code> as subset of data</p></dd>
-<dt>clust.evaluation</dt><dd><p>a <code>data.frame</code> with 4 columns :
-<ul>
+<dl class='dl-horizontal'>
+  <dt>clust.dendograms</dt><dd><p>a <code>list</code> object with as many objects of class
+  <code>hclust</code> as subset of data</p></dd>
+  <dt>clust.evaluation</dt><dd><p>a <code>data.frame</code> with 4 columns :
+  <ul>
 <li><p><code>group</code> : name of sub-dataset</p></li>
 <li><p><code>nb.cluster</code> : number of clusters used for the clustering</p></li>
 <li><p><code>variable</code> : evaluation metrics' name</p></li>
 <li><p><code>value</code> : value of evaluation metric</p></li>
 </ul></p></dd>
+</dl>
 
-Two .pdf files are also created : 
-
-
-  
-  
-
+<p>Two <code>PRE_FATE_CLUSTERING_[...].pdf</code> files are created :</p><dl class='dl-horizontal'>
+  <dt><code class="file">STEP_1A <br /> clusteringMethod</code></dt><dd><p>to account for the chosen
+  clustering method</p></dd>
+  <dt><code class="file">STEP_1B <br /> numberOfClusters</code></dt><dd><p>for decision support, to help
+  the user to choose the adequate number of clusters to be used into
+  the <code>hclust</code> method</p></dd>
+</dl>
 
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This function allows one to obtain dendograms based on a distance matrix
-between species. As for the <code>PRE_FATE.speciesDistance</code> method,
-clustering can be made for sub-datasets, conditioning that <code>mat.species.DIST</code>
-parameter is given as a <code>list</code> of <code>dist</code> object (instead of a <code>dist</code>
+between species.</p>
+<p>As for the <code>PRE_FATE.speciesDistance</code> method, clustering can be made
+for sub-datasets, conditioning that <code>mat.species.DIST</code> parameter is
+given as a <code>list</code> of <code>dist</code> object (instead of a <code>dist</code>
 object alone).</p>
 <p>The process is as follows :</p>
-<ol>
-<li><p><strong>Choice of the optimal clustering method : </strong>hierarchical
-  clustering on the dissimilarity matrix is realized with the <code>hclust</code>
-  function.
+<dl class='dl-horizontal'>
+  <dt><strong>1. Choice of the <br /> optimal <br /> clustering method</strong></dt><dd><p>hierarchical clustering on the dissimilarity matrix is realized with the
+  <code>hclust</code> function.
   <ul>
 <li><p>Several methods are available for the agglomeration : complete,
-  ward.D, ward.D2, single, average (UPGMA), mcquitty (WPGMA), median (WPGMC)
-  and centroid (UPGMC).</p></li>
-<li><p>Mouchet et el. (2008) proposed of measure of
-  similarity between the input distance and the one obtained with the
-  clustering which must be minimized to help finding the best clustering method :
-  $$ 1 - cor( input.DIST, clustering.DIST ) ^ 2$$</p></li>
+    ward.D, ward.D2, single, average (UPGMA), mcquitty (WPGMA), median
+    (WPGMC) and centroid (UPGMC).</p></li>
+<li><p>Mouchet et el. (2008) proposed of measure of similarity between
+    the input distance and the one obtained with the clustering which must
+    be minimized to help finding the best clustering method :
+    $$ 1 - cor( input.DIST, clustering.DIST ) ^ 2$$</p></li>
 </ul>
-  For each agglomeration method, this measure is calculated. The method
-  that minimizes it is kept and used for further analyses. A graphic is made
-  to account for the comparison of these methods.</p></li>
-<li><p><strong>Evaluation of the clustering : </strong>once the hierarchical
+  <strong>For each agglomeration method, this measure is calculated. The
+  method that minimizes it is kept and used for further analyses. A graphic
+  (<code>STEP_1A</code>) is made to account for the comparison of these methods.</strong></p></dd>
+    <dt><strong>2. Evaluation of the <br /> clustering</strong></dt><dd><p>once the hierarchical
   clustering is done, the number of clusters to keep should be chosen.
     To do that, several metrics are computed :
   <ul>
@@ -189,11 +192,11 @@ object alone).</p>
     observations with a negative s(i) are probably placed in the wrong cluster.
     Should be maximized.</p></li>
 </ul>
-  A graphic is produced, giving the values of these metrics in function of
-  the number of clusters used. Number of clusters with evaluation metrics'
-  values among the 3 best are highlighted to help the user to make his/her
-  optimal choice.</p></li>
-</ol>
+  <strong>A graphic (<code>STEP_1B</code>) is produced, giving the values of these
+  metrics in function of the number of clusters used. Number of clusters with
+  evaluation metrics' values among the 3 best are highlighted to help the user
+  to make his/her optimal choice.</strong></p></dd>
+</dl>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
@@ -288,9 +291,9 @@ the <code>PRE_FATE.speciesClustering_step2</code> function.</p>
 #&gt;  ############## CLUSTERING ############## 
 #&gt; 
 #&gt;  Clustering method :  average
-#&gt;  Clustering evaluation...</div><div class='img'><img src='PRE_FATE.speciesClustering_step1-2.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt;  Clustering evaluation...</div><div class='input'>
 <span class='co'>## 2 .pdf files have been produced</span>
-<span class='fu'>str</span>(<span class='no'>sp.CLUST</span>)</div><div class='output co'>#&gt; List of 2
+<span class='fu'>str</span>(<span class='no'>sp.CLUST</span>)</div><div class='img'><img src='PRE_FATE.speciesClustering_step1-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; List of 2
 #&gt;  $ clust.dendograms:List of 3
 #&gt;   ..$ C:List of 7
 #&gt;   .. ..$ merge      : int [1:37, 1:2] -27 -8 -26 -17 -9 -29 -11 -25 -33 -3 ...

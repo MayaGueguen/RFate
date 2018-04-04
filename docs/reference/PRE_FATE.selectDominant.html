@@ -175,8 +175,8 @@ parameters used to make the selection :</p>
   <dt>stat.abund_median</dt><dd><p>median abundance (coverage percentage)</p></dd>
   <dt>stat.abund_mean</dt><dd><p>mean abundance (coverage percentage)</p></dd>
   <dt>stat.abund_max</dt><dd><p>maximal abundance (coverage percentage)</p></dd>
-  <dt>stat.no_sites_abund_max</dt><dd><p>number of sites with maximal abundance</p></dd>
-  <dt>stat.no_sites_abund_over25</dt><dd><p>number of sites with maximal abundance &gt;= 25</p></dd>
+  <dt>stat.no_sites <br /> abund_max</dt><dd><p>number of sites with maximal abundance</p></dd>
+  <dt>stat.no_sites <br /> abund_over25</dt><dd><p>number of sites with maximal abundance &gt;= 25</p></dd>
   <dt>SELECTION</dt><dd><p>dataset in which the species has been selected as dominant
   <br /> (global = all data, or landclass)</p></dd>
 </dl>
@@ -190,9 +190,9 @@ parameters used to make the selection :</p>
 </dl>
 
 <p>Two <code>PRE_FATE_DOMINANT_[...].pdf</code> files are also created :</p><dl class='dl-horizontal'>
-  <dt><code class="file">STEP_1_selectionCriteria</code></dt><dd><p>to visualize the values of
+  <dt><code class="file">STEP_1 <br /> selectionCriteria</code></dt><dd><p>to visualize the values of
   species metrics, and the criteria used to make the selection</p></dd>
-  <dt><code class="file">STEP_2_selectedSpecies</code></dt><dd><p>to visualize the values of
+  <dt><code class="file">STEP_2 <br /> selectedSpecies</code></dt><dd><p>to visualize the values of
   species metrics, for the selected dominant species</p></dd>
 </dl>
 
@@ -307,7 +307,7 @@ but could be representative of a specific environment</em> :</p>
 #&gt; &gt; Done!
 #&gt; 
 #&gt;   1116 species have been selected with the given criteria.
-#&gt;   Complete table of information about selected species can be find in output files.</div><div class='img'><img src='PRE_FATE.selectDominant-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='PRE_FATE.selectDominant-2.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt;   Complete table of information about selected species can be find in output files.</div><div class='input'>
 <span class='co'>#########################################################################################</span>
 <span class='co'>## EXAMPLE 2 : Redefinition of global selection rules</span>
 <span class='co'>#########################################################################################</span>
@@ -346,11 +346,11 @@ but could be representative of a specific environment</em> :</p>
 #&gt;  ############## SELECTION OF DOMINANT SPECIES ############## 
 #&gt; 
 #&gt; &gt; Over all sites...
-#&gt; &gt; Combine selections...</div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; 
+#&gt; &gt; Combine selections...</div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='img'><img src='PRE_FATE.selectDominant-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
 #&gt; &gt; Done!
 #&gt; 
 #&gt;   125 species have been selected with the given criteria.
-#&gt;   Complete table of information about selected species can be find in output files.</div><div class='img'><img src='PRE_FATE.selectDominant-3.png' alt='' width='700' height='433' /></div><div class='img'><img src='PRE_FATE.selectDominant-4.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt;   Complete table of information about selected species can be find in output files.</div><div class='img'><img src='PRE_FATE.selectDominant-2.png' alt='' width='700' height='433' /></div><div class='img'><img src='PRE_FATE.selectDominant-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'>#########################################################################################</span>
 <span class='co'>## EXAMPLE 3 : Add landclass selection with default parametrization</span>
 <span class='co'>#########################################################################################</span>
@@ -403,7 +403,7 @@ but could be representative of a specific environment</em> :</p>
 #&gt; &gt; Done!
 #&gt; 
 #&gt;   125 species have been selected with the given criteria.
-#&gt;   Complete table of information about selected species can be find in output files.</div><div class='img'><img src='PRE_FATE.selectDominant-5.png' alt='' width='700' height='433' /></div><div class='img'><img src='PRE_FATE.selectDominant-6.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt;   Complete table of information about selected species can be find in output files.</div><div class='img'><img src='PRE_FATE.selectDominant-4.png' alt='' width='700' height='433' /></div><div class='img'><img src='PRE_FATE.selectDominant-5.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'>#########################################################################################       </span>
 <span class='co'>## EXAMPLE 4 : Redefinition of landclass selection rules</span>
 <span class='co'>#########################################################################################</span>
@@ -458,7 +458,7 @@ but could be representative of a specific environment</em> :</p>
 #&gt; &gt; Done!
 #&gt; 
 #&gt;   125 species have been selected with the given criteria.
-#&gt;   Complete table of information about selected species can be find in output files.</div><div class='img'><img src='PRE_FATE.selectDominant-7.png' alt='' width='700' height='433' /></div><div class='img'><img src='PRE_FATE.selectDominant-8.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt;   Complete table of information about selected species can be find in output files.</div><div class='img'><img src='PRE_FATE.selectDominant-6.png' alt='' width='700' height='433' /></div><div class='img'><img src='PRE_FATE.selectDominant-7.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'>#########################################################################################</span>
 
 <span class='co'>## 2 .csv and 2 .pdf files have been produced</span>

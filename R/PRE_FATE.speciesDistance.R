@@ -20,7 +20,7 @@
 ##' \item{\code{...}}{one column for each functional trait}
 ##' }
 ##' 
-##' @param mat.species.overlap Three options :
+##' @param mat.species.overlap Two options :
 ##' \itemize{
   # \item a \code{data.frame} with a column for each species containing
   # presence-absence information (0 or 1) or probability values (between 0 and 1)

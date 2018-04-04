@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Choose — PRE_FATE.speciesClustering_step2 • RFate</title>
+<title>Choose clusters and select determinant species — PRE_FATE.speciesClustering_step2 • RFate</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -25,12 +25,12 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-<meta property="og:title" content="Choose — PRE_FATE.speciesClustering_step2" />
+<meta property="og:title" content="Choose clusters and select determinant species — PRE_FATE.speciesClustering_step2" />
 
 <meta property="og:description" content="This script is designed to obtain functional groups by : 1)
 select the number of clusters to be kept from an object obtained with the
 PRE_FATE.speciesClustering_step1 function ; 2) refine these groups
-by identifying determinant species in each one." />
+by identifying determinant species in each of them." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -93,7 +93,7 @@ by identifying determinant species in each one." />
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Choose</h1>
+    <h1>Choose clusters and select determinant species</h1>
     <small>Source: <a href='https://github.com/MayaGueguen/RFate.git/blob/master/R/PRE_FATE.speciesClustering_step2.R'><code>R/PRE_FATE.speciesClustering_step2.R</code></a></small>
     </div>
 
@@ -101,7 +101,7 @@ by identifying determinant species in each one." />
     <p>This script is designed to obtain functional groups by : 1)
 select the number of clusters to be kept from an object obtained with the
 <code>PRE_FATE.speciesClustering_step1</code> function ; 2) refine these groups
-by identifying determinant species in each one.</p>
+by identifying determinant species in each of them.</p>
     
 
     <pre class="usage"><span class='fu'>PRE_FATE.speciesClustering_step2</span>(<span class='no'>clust.dendograms</span>, <span class='no'>no.clusters</span>,
@@ -112,18 +112,18 @@ by identifying determinant species in each one.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>clust.dendograms</th>
-      <td><p>A dendogram or a <code>list</code> of dendograms with one
+      <td><p>a dendogram or a <code>list</code> of dendograms with one
 for each <code>GROUP</code> value, as can be obtained with the 
 <code>PRE_FATE.speciesClustering_step1</code> function.</p></td>
     </tr>
     <tr>
       <th>no.clusters</th>
-      <td><p>A <code>vector</code> with the number of clusters to be kept
+      <td><p>a <code>vector</code> with the number of clusters to be kept
 in each subset of data (if the data is split).</p></td>
     </tr>
     <tr>
       <th>mat.species.DIST</th>
-      <td><p>A <code>dist</code> object corresponding to the distance
+      <td><p>a <code>dist</code> object corresponding to the distance
 between each pair of species, or a <code>list</code> of <code>dist</code> objects,
 one for each <code>GROUP</code> value. Such an object can be obtained with the
 <code>PRE_FATE.speciesDistance</code> function.</p></td>
@@ -133,36 +133,66 @@ one for each <code>GROUP</code> value. Such an object can be obtained with the
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A <code>list</code> object with 2 elements :</p>
-<dt>determ.sp</dt><dd><p>a <code>vector</code> with the names of all determinant species</p></dd>
-<dt>determ.all</dt><dd><p>a <code>data.frame</code> containing all species (determinant
-and non-determinant) with 10 columns :
-<ul>
+<dl class='dl-horizontal'>
+  <dt>determ.sp</dt><dd><p>a <code>vector</code> with the names of all determinant species</p></dd>
+  <dt>determ.all</dt><dd><p>a <code>data.frame</code> containing all species (determinant
+  and non-determinant) with 10 columns :
+  <ul>
 <li><p><code>pfg</code> : the ID of the PFG (group + no.cluster)</p></li>
 <li><p><code>group</code> : name of sub-dataset</p></li>
 <li><p><code>no.cluster</code> : cluster number</p></li>
 <li><p><code>sp</code> : name of species</p></li>
 <li><p><code>ID</code> : species number in each PFG</p></li>
 <li><p><code>sp.mean.dist</code> : species mean distance to other species of
-  the same PFG</p></li>
+    the same PFG</p></li>
 <li><p><code>allSp.mean</code> : mean(sp.mean.dist) within the PFG</p></li>
 <li><p><code>allSp.min</code> : mean(sp.mean.dist) - 1.64 * sd(sp.mean.dist)
-   within the PFG</p></li>
+    within the PFG</p></li>
 <li><p><code>allSp.max</code> : mean(sp.mean.dist) + 1.64 * sd(sp.mean.dist)
-   within the PFG</p></li>
+    within the PFG</p></li>
 <li><p><code>toSuppr</code> : 0 if determinant species, 1 otherwise</p></li>
 </ul></p></dd>
+</dl>
 
-Two .pdf files are also created : 
-
-
-  
-  
-
+<p>Two <code>PRE_FATE_CLUSTERING_[...].pdf</code> files are created :</p><dl class='dl-horizontal'>
+  <dt><code class="file">STEP_2C <br /> distantSpecies</code></dt><dd><p>to visualize in each PFG the
+  distribution of mean distance of each species to other species, and
+  non-determinant species which are outside the distribution</p></dd>
+  <dt><code class="file">STEP_2C <br /> PCO</code></dt><dd><p>to visualize in each PFG the distribution
+  of species, with and without non-determinant species</p></dd>
+</dl>
 
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function allows one to obtain</p>
+    <p>This function allows one to obtain a classification of <em>dominant</em>
+species into Plant Functional Groups (PFG), and the <em>determinant</em>
+species based on these PFGs.</p>
+<p><strong>What is the difference between <code>dominant</code> and
+<code>determinant</code> species ?</strong></p>
+<ul>
+<li><p><strong>Dominant</strong> species are species representative of an
+  environment or a studied area, in terms of number of releves or
+  abundance values. They can be found with the <code>PRE_FATE.selectDominant</code>
+  function of this package. These dominant species are used to build PFG
+  with the <code>PRE_FATE.speciesClustering_step1</code> function.</p></li>
+<li><p>Once PFG are built, <strong>determinant</strong> species are defined as
+  refined subsets of dominant species within each PFG. The process is
+  detailed below :
+  <ul>
+<li><p>each dominant species is assigned to a PFG</p></li>
+<li><p>within each PFG :</p><ul>
+<li><p>for each species, compute its mean distance to the other
+      species within the PFG (<code>sp.mean.dist</code>)</p></li>
+<li><p>calculate the mean value of all these mean distances
+      (<code>allSp.mean</code>)</p></li>
+<li><p>calculate the deviation values around this mean value
+      (<code>allSp.min</code> and <code>allSp.max</code>)</p></li>
+<li><p>determinant species are the ones that are included between
+      these deviation values</p></li>
+</ul></li>
+</ul></p></li>
+</ul>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -233,9 +263,9 @@ Two .pdf files are also created :
 #&gt;  ############## CLUSTERING ############## 
 #&gt; 
 #&gt;  Clustering method :  average
-#&gt;  Clustering evaluation...</div><div class='img'><img src='PRE_FATE.speciesClustering_step2-2.png' alt='' width='700' height='433' /></div><div class='input'>
+#&gt;  Clustering evaluation...</div><div class='input'>
 <span class='co'>## 2 .pdf files have been produced</span>
-<span class='fu'>str</span>(<span class='no'>sp.CLUST</span>)</div><div class='output co'>#&gt; List of 2
+<span class='fu'>str</span>(<span class='no'>sp.CLUST</span>)</div><div class='img'><img src='PRE_FATE.speciesClustering_step2-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; List of 2
 #&gt;  $ clust.dendograms:List of 3
 #&gt;   ..$ C:List of 7
 #&gt;   .. ..$ merge      : int [1:37, 1:2] -27 -8 -26 -17 -9 -29 -11 -25 -33 -3 ...

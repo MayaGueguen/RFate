@@ -88,8 +88,8 @@
 ##'   \item{stat.abund_median}{median abundance (coverage percentage)}
 ##'   \item{stat.abund_mean}{mean abundance (coverage percentage)}
 ##'   \item{stat.abund_max}{maximal abundance (coverage percentage)}
-##'   \item{stat.no_sites_abund_max}{number of sites with maximal abundance}
-##'   \item{stat.no_sites_abund_over25}{number of sites with maximal abundance >= 25}
+##'   \item{stat.no_sites \cr abund_max}{number of sites with maximal abundance}
+##'   \item{stat.no_sites \cr abund_over25}{number of sites with maximal abundance >= 25}
 ##'   \item{SELECTION}{dataset in which the species has been selected as dominant
 ##'   \cr (global = all data, or landclass)}
 ##' }
@@ -106,9 +106,9 @@
 ##' 
 ##' Two \code{PRE_FATE_DOMINANT_[...].pdf} files are also created : 
 ##' \describe{
-##'   \item{\file{STEP_1_selectionCriteria}}{to visualize the values of
+##'   \item{\file{STEP_1 \cr selectionCriteria}}{to visualize the values of
 ##'   species metrics, and the criteria used to make the selection}
-##'   \item{\file{STEP_2_selectedSpecies}}{to visualize the values of
+##'   \item{\file{STEP_2 \cr selectedSpecies}}{to visualize the values of
 ##'   species metrics, for the selected dominant species}
 ##' }
 ##' 
