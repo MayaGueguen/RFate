@@ -37,7 +37,7 @@ usethis::use_pkgdown()
 setwd("./../")
 
 setwd("RFate/")
-pkgdown:::build_site()
+pkgdown:::build_site(lazy = TRUE)
 setwd("./../")
 
 #####################################################################

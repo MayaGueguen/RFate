@@ -23,11 +23,11 @@
 ##' \tabular{ccrrrr}{
 ##'    \tab \strong{Braun-Blanquet} \tab ..... \tab \strong{Recovery class (\%)} \tab ..... \tab \strong{Average recovery (\%)} \cr
 ##'    \tab + \tab  \tab <1 \tab  \tab 0.5 \cr
-##'    \tab 1 \tab  \tab 1-5 \tab  \tab 2.5 \cr
+##'    \tab 1 \tab  \tab 1-5 \tab  \tab 3 \cr
 ##'    \tab 2 \tab  \tab 5-25 \tab  \tab 15 \cr
 ##'    \tab 3 \tab  \tab 25-50 \tab  \tab 37.5 \cr
 ##'    \tab 4 \tab  \tab 50-75 \tab  \tab 62.5 \cr
-##'    \tab 5 \tab  \tab 75-100 \tab  \tab 87.5
+##'    \tab 5 \tab  \tab 75-100 \tab  \tab 87.5 \cr
 ##' }
 ##' 
 ## \cr
@@ -65,13 +65,35 @@
 
 PRE_FATE.abundBraunBlanquet = function(abund){
   ## Convert Braun-Blanquet abundance classes into median coverage percentage
-  abund = as.character(abund)
-  abund[which(abund %in% c("+","r"))] = 0.5
-  abund[which(abund=="1")] = 3
-  abund[which(abund=="2")] = 15
-  abund[which(abund=="3")] = 37.5
-  abund[which(abund=="4")] = 62.5
-  abund[which(abund=="5")] = 87.5
-  abund = as.numeric(abund)
+  # abund = as.character(abund)
+  if (length(na.exclude(abund)) > 0) {
+    abund = sapply(abund, function(x){
+      x = as.character(x)
+      if (is.na(x) | x == "") {
+        return(NA)
+      } else if (x == "+" | x == "r") {
+        return(0.5)
+      } else if (x == "1") {
+        return(3)
+      } else if (x == "2") {
+        return(15)
+      } else if (x == "3") {
+        return(37.5)
+      } else if (x == "4") {
+        return(62.5)
+      } else if (x == "5") {
+        return(87.5)
+      } else {
+        return(NA)
+      }
+    })
+    # abund[which(abund %in% c("+","r"))] = 0.5
+    # abund[which(abund=="1")] = 3
+    # abund[which(abund=="2")] = 15
+    # abund[which(abund=="3")] = 37.5
+    # abund[which(abund=="4")] = 62.5
+    # abund[which(abund=="5")] = 87.5
+    abund = as.numeric(abund)
+  }
   return(abund)
 }
