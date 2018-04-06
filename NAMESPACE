@@ -2,6 +2,7 @@
 
 export(PRE_FATE.abundBraunBlanquet)
 export(PRE_FATE.selectDominant)
+export(PRE_FATE.skeletonDirectory)
 export(PRE_FATE.speciesClustering_step1)
 export(PRE_FATE.speciesClustering_step2)
 export(PRE_FATE.speciesDistance)
