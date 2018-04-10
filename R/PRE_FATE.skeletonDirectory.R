@@ -73,6 +73,8 @@ PRE_FATE.skeletonDirectory = function(name.simulation = "FATE_simulation")
     dir.create(name.simulation, showWarnings = FALSE)
     ## the DATA dir
     dir.create(file.path(name.simulation, "DATA"), showWarnings = FALSE)
+    dir.create(file.path(name.simulation, "DATA", "GLOBAL_PARAMS"), showWarnings = FALSE)
+    dir.create(file.path(name.simulation, "DATA", "NAMESPACE_CONSTANTS"), showWarnings = FALSE)
     dir.create(file.path(name.simulation, "DATA", "MASK"), showWarnings = FALSE)
     dir.create(file.path(name.simulation, "DATA", "SCENARIO"), showWarnings = FALSE)
     dir.create(file.path(name.simulation, "DATA", "SAVE"), showWarnings = FALSE)
