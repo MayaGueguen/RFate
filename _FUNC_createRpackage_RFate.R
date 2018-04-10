@@ -16,7 +16,7 @@ library(pkgdown)
 ## INFORMATION / PARAMETERS
 
 package_name = "RFate"
-package_version = "0.0.0.9000"
+package_version = "0.0.1.9000"
 
 #####################################################################
 
@@ -37,7 +37,14 @@ usethis::use_pkgdown()
 setwd("./../")
 
 setwd("RFate/")
-pkgdown:::build_site(lazy = TRUE)
+# pkgdown:::build_site(lazy = TRUE)
+
+# pkgdown:::build_init_site()
+# pkgdown:::build_home()
+pkgdown:::build_reference(examples = FALSE)
+# pkgdown:::build_articles()
+# pkgdown:::build_tutorials()
+# pkgdown:::build_news()
 setwd("./../")
 
 #####################################################################

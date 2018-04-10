@@ -28,9 +28,11 @@
 ##'   \item{DATA}{this folder will contain all the data or parameters that are
 ##'   needed by the model
 ##'   \itemize{
+##'     \item \strong{GLOBAL_PARAMS} : files containing global parameters for the simulation
+##'     \item \strong{NAMESPACE_CONSTANTS} : files containing constants used in the model
 ##'     \item \strong{MASK} : all maps used in the model
-##'     \item \strong{SCENARIO} : files containing information about changes in input data
-##'     ( e.g. habitat suitability maps, disturbances maps, etc) 
+##'     \item \strong{SCENARIO} : files containing information about changes in
+##'     input data ( e.g. habitat suitability maps, disturbances maps, etc) 
 ##'     \item \strong{SAVE} : files containing information about times to save outputs
 ##'     \item \strong{PFGS} :
 ##'     \itemize{

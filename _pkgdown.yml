@@ -1,0 +1,14 @@
+reference:
+  - title: Build Plant Functional Groups (PFG)
+    desc:  Functions to select dominant species, compute functional distance between species and build clusters. <br/> ..
+    contents:
+      - "PRE_FATE.abundBraunBlanquet"
+      - "PRE_FATE.selectDominant"
+      - "PRE_FATE.speciesDistance"
+      - "PRE_FATE.speciesClustering_step1"
+      - "PRE_FATE.speciesClustering_step2"
+  - title: Create FATE-HD parameter files
+    desc: Create user-friendly directory tree, parameter and simulation files for FATE-HD simulation.  <br/> ..
+    contents:
+      - "PRE_FATE.skeletonDirectory"
+      - "PRE_FATE.params_namespaceConstants"

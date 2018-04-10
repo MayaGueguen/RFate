@@ -59,7 +59,7 @@ given for each of them)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RFate</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.0.0.9000</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.0.1.9000</span>
       </span>
     </div>
 
@@ -213,121 +213,27 @@ the <code>PRE_FATE.speciesClustering_step2</code> function.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
 <span class='co'>## Load example data</span>
 <span class='fu'>data</span>(<span class='no'>MontBlanc</span>)
-<span class='fu'>str</span>(<span class='no'>MontBlanc</span>)</div><div class='output co'>#&gt; List of 3
-#&gt;  $ mat.releves     :'data.frame':	12302 obs. of  4 variables:
-#&gt;   ..$ sites    : int [1:12302] 660398 662913 663085 663104 663104 664839 751362 751377 751484 922672 ...
-#&gt;   ..$ species  : chr [1:12302] "Abies alba Miller" "Abies alba Miller" "Abies alba Miller" "Abies alba Miller" ...
-#&gt;   ..$ abund    : Factor w/ 7 levels "","+","1","2",..: 2 2 2 3 6 4 2 3 2 2 ...
-#&gt;   ..$ landclass: int [1:12302] 4 2 6 4 4 4 2 2 3 8 ...
-#&gt;  $ mat.traits      :'data.frame':	337 obs. of  6 variables:
-#&gt;   ..$ species     : chr [1:337] "X23" "X139" "X190" "X197" ...
-#&gt;   ..$ Disp        : num [1:337] 4 5 7 6 7 1 4 7 7 7 ...
-#&gt;   ..$ Light       : num [1:337] 2 2 3 3 5 3 5 5 5 3 ...
-#&gt;   ..$ Height      : num [1:337] 1500 50 70 11 30 ...
-#&gt;   ..$ Palatability: Factor w/ 5 levels "","0","1","2",..: 4 5 5 5 5 5 5 5 5 5 ...
-#&gt;   ..$ GROUP       : Factor w/ 3 levels "C","H","P": 3 2 2 2 2 2 2 2 2 2 ...
-#&gt;  $ mat.nicheOverlap: niolap [1:270, 1:270] NA 0.524 0.789 0.626 0.675 ...
-#&gt;   ..- attr(*, "dimnames")=List of 2
-#&gt;   .. ..$ : chr [1:270] "X10053" "X10106" "X10113" "X10182" ...
-#&gt;   .. ..$ : chr [1:270] "X10053" "X10106" "X10113" "X10182" ...</div><div class='input'>
+<span class='fu'>str</span>(<span class='no'>MontBlanc</span>)
+
 <span class='co'>## MontBlanc$mat.traits : data.frame</span>
 <span class='co'>## MontBlanc$mat.nicheOverlap : niolap object</span>
 
 <span class='co'>## Calculate distance between species</span>
 <span class='no'>sp.DIST</span> <span class='kw'>=</span> <span class='fu'><a href='PRE_FATE.speciesDistance.html'>PRE_FATE.speciesDistance</a></span>(<span class='kw'>mat.species.traits</span> <span class='kw'>=</span> <span class='no'>MontBlanc</span>$<span class='no'>mat.traits</span>,
-                                   <span class='kw'>mat.species.overlap</span> <span class='kw'>=</span> <span class='no'>MontBlanc</span>$<span class='no'>mat.nicheOverlap</span>)</div><div class='output co'>#&gt; 
-#&gt;  ############## TRAIT INFORMATIONS ############## 
-#&gt; 
-#&gt;  Number of species :  335
-#&gt;  Measured traits :  Disp, Light, Height, Palatability
-#&gt;  Groups :  C, H, P
-#&gt;  Number of NA values in each group (which have been removed) :  0 4 0
-#&gt;  Number of species in each group :  48 269 18
-#&gt; 
-#&gt;  Number of species with traits :  337
-#&gt;  Number of species with traits and no overlap information :  69
-#&gt;  Number of species with overlap :  270
-#&gt;  Number of species with overlap and no traits information :  2
-#&gt; 
-#&gt;  Comparison of groups' dimensions : 
-#&gt; 
-#&gt;  Group  1 :
-#&gt; Trait distances :  48 48 
-#&gt; Overlap distances :  38 38 
-#&gt; 
-#&gt;  Group  2 :
-#&gt; Trait distances :  269 269 
-#&gt; Overlap distances :  215 215 
-#&gt; 
-#&gt;  Group  3 :
-#&gt; Trait distances :  18 18 
-#&gt; Overlap distances :  15 15 
-#&gt; 
-#&gt;  Number of species with both trait and overlap distances:  268</div><div class='input'>
-<span class='fu'>str</span>(<span class='no'>sp.DIST</span>)</div><div class='output co'>#&gt; List of 3
-#&gt;  $ C:Class 'dist'  atomic [1:703] 0.0846 0.2436 0.1439 0.3741 0.038 ...
-#&gt;   .. ..- attr(*, "Labels")= chr [1:38] "X10192" "X11256" "X12051" "X12060" ...
-#&gt;   .. ..- attr(*, "Size")= int 38
-#&gt;   .. ..- attr(*, "call")= language as.dist.default(m = mat)
-#&gt;   .. ..- attr(*, "Diag")= logi FALSE
-#&gt;   .. ..- attr(*, "Upper")= logi FALSE
-#&gt;  $ H:Class 'dist'  atomic [1:23005] 0.232 0.165 0.262 0.273 0.24 ...
-#&gt;   .. ..- attr(*, "Labels")= chr [1:215] "X10053" "X10106" "X10113" "X10182" ...
-#&gt;   .. ..- attr(*, "Size")= int 215
-#&gt;   .. ..- attr(*, "call")= language as.dist.default(m = mat)
-#&gt;   .. ..- attr(*, "Diag")= logi FALSE
-#&gt;   .. ..- attr(*, "Upper")= logi FALSE
-#&gt;  $ P:Class 'dist'  atomic [1:105] 0.382 0.192 0.277 0.252 0.395 ...
-#&gt;   .. ..- attr(*, "Labels")= chr [1:15] "X11313" "X11388" "X11726" "X11729" ...
-#&gt;   .. ..- attr(*, "Size")= int 15
-#&gt;   .. ..- attr(*, "call")= language as.dist.default(m = mat)
-#&gt;   .. ..- attr(*, "Diag")= logi FALSE
-#&gt;   .. ..- attr(*, "Upper")= logi FALSE</div><div class='input'>
+                                   <span class='kw'>mat.species.overlap</span> <span class='kw'>=</span> <span class='no'>MontBlanc</span>$<span class='no'>mat.nicheOverlap</span>)
+
+<span class='fu'>str</span>(<span class='no'>sp.DIST</span>)
+
 <span class='co'>## Run hierarchical clustering and number of clusters' selection                      </span>
-<span class='no'>sp.CLUST</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.speciesClustering_step1</span>(<span class='kw'>mat.species.DIST</span> <span class='kw'>=</span> <span class='no'>sp.DIST</span>)</div><div class='img'><img src='PRE_FATE.speciesClustering_step1-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; 
-#&gt;  ############## CLUSTERING ############## 
-#&gt; 
-#&gt;  Clustering method :  average
-#&gt;  Clustering evaluation...</div><div class='input'>
+<span class='no'>sp.CLUST</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.speciesClustering_step1</span>(<span class='kw'>mat.species.DIST</span> <span class='kw'>=</span> <span class='no'>sp.DIST</span>)
+
 <span class='co'>## 2 .pdf files have been produced</span>
-<span class='fu'>str</span>(<span class='no'>sp.CLUST</span>)</div><div class='img'><img src='PRE_FATE.speciesClustering_step1-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; List of 2
-#&gt;  $ clust.dendograms:List of 3
-#&gt;   ..$ C:List of 7
-#&gt;   .. ..$ merge      : int [1:37, 1:2] -27 -8 -26 -17 -9 -29 -11 -25 -33 -3 ...
-#&gt;   .. ..$ height     : num [1:37] 0.00661 0.00672 0.0078 0.01186 0.01203 ...
-#&gt;   .. ..$ order      : int [1:38] 7 14 15 16 32 24 33 25 26 27 ...
-#&gt;   .. ..$ labels     : chr [1:38] "X10192" "X11256" "X12051" "X12060" ...
-#&gt;   .. ..$ method     : chr "average"
-#&gt;   .. ..$ call       : language hclust(d = as.dist(x), method = clust.method)
-#&gt;   .. ..$ dist.method: NULL
-#&gt;   .. ..- attr(*, "class")= chr "hclust"
-#&gt;   ..$ H:List of 7
-#&gt;   .. ..$ merge      : int [1:214, 1:2] -5 -17 -188 -131 -160 -58 -169 -52 -82 -106 ...
-#&gt;   .. ..$ height     : num [1:214] 0.00529 0.00662 0.0067 0.00718 0.00752 ...
-#&gt;   .. ..$ order      : int [1:215] 27 81 129 208 29 166 78 79 95 165 ...
-#&gt;   .. ..$ labels     : chr [1:215] "X10053" "X10106" "X10113" "X10182" ...
-#&gt;   .. ..$ method     : chr "average"
-#&gt;   .. ..$ call       : language hclust(d = as.dist(x), method = clust.method)
-#&gt;   .. ..$ dist.method: NULL
-#&gt;   .. ..- attr(*, "class")= chr "hclust"
-#&gt;   ..$ P:List of 7
-#&gt;   .. ..$ merge      : int [1:14, 1:2] -12 -5 -4 -9 -7 -1 2 -2 6 3 ...
-#&gt;   .. ..$ height     : num [1:14] 0.0361 0.045 0.0489 0.0708 0.1343 ...
-#&gt;   .. ..$ order      : int [1:15] 14 4 11 1 3 5 15 9 10 2 ...
-#&gt;   .. ..$ labels     : chr [1:15] "X11313" "X11388" "X11726" "X11729" ...
-#&gt;   .. ..$ method     : chr "average"
-#&gt;   .. ..$ call       : language hclust(d = as.dist(x), method = clust.method)
-#&gt;   .. ..$ dist.method: NULL
-#&gt;   .. ..- attr(*, "class")= chr "hclust"
-#&gt;  $ clust.evaluation:'data.frame':	234 obs. of  4 variables:
-#&gt;   ..$ group     : Factor w/ 3 levels "C","H","P": 1 1 1 1 1 1 1 1 1 1 ...
-#&gt;   ..$ nb.cluster: int [1:234] 2 3 4 5 6 7 8 9 10 11 ...
-#&gt;   ..$ variable  : Factor w/ 6 levels "mdunn","mVI",..: 1 1 1 1 1 1 1 1 1 1 ...
-#&gt;   ..$ value     : num [1:234] 0.379 0.399 0.613 0.613 0.67 ...</div><div class='input'>
-</div></pre>
+<span class='fu'>str</span>(<span class='no'>sp.CLUST</span>)
+
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

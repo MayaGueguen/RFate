@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create the skeleton folder for a FATE-HD simulation — PRE_FATE.skeletonDirectory • RFate</title>
+<title>Create the skeleton folder for a <code>FATE-HD</code> simulation — PRE_FATE.skeletonDirectory • RFate</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -25,7 +25,7 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-<meta property="og:title" content="Create the skeleton folder for a FATE-HD simulation — PRE_FATE.skeletonDirectory" />
+<meta property="og:title" content="Create the skeleton folder for a <code>FATE-HD</code> simulation — PRE_FATE.skeletonDirectory" />
 
 <meta property="og:description" content="This script is designed to create a user-friendly directory
 tree to run a FATE-HD simulation." />
@@ -56,7 +56,7 @@ tree to run a FATE-HD simulation." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RFate</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.0.0.9000</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.0.1.9000</span>
       </span>
     </div>
 
@@ -91,7 +91,7 @@ tree to run a FATE-HD simulation." />
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create the skeleton folder for a FATE-HD simulation</h1>
+    <h1>Create the skeleton folder for a <code>FATE-HD</code> simulation</h1>
     <small>Source: <a href='https://github.com/MayaGueguen/RFate.git/blob/master/R/PRE_FATE.skeletonDirectory.R'><code>R/PRE_FATE.skeletonDirectory.R</code></a></small>
     </div>
 
@@ -131,9 +131,11 @@ simulation.</p>
   <dt>DATA</dt><dd><p>this folder will contain all the data or parameters that are
   needed by the model
   <ul>
+<li><p><strong>GLOBAL_PARAMS</strong> : files containing global parameters for the simulation</p></li>
+<li><p><strong>NAMESPACE_CONSTANTS</strong> : files containing constants used in the model</p></li>
 <li><p><strong>MASK</strong> : all maps used in the model</p></li>
-<li><p><strong>SCENARIO</strong> : files containing information about changes in input data
-    ( e.g. habitat suitability maps, disturbances maps, etc)</p></li>
+<li><p><strong>SCENARIO</strong> : files containing information about changes in
+    input data ( e.g. habitat suitability maps, disturbances maps, etc)</p></li>
 <li><p><strong>SAVE</strong> : files containing information about times to save outputs</p></li>
 <li><p><strong>PFGS</strong> :</p><ul>
 <li><p><strong>SUCC</strong> : all the PFG life history parameter files</p></li>
@@ -150,10 +152,11 @@ simulation.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
 <span class='co'>## Create a skeleton folder with the default name ('FATE_simulation')</span>
-<span class='fu'>PRE_FATE.skeletonDirectory</span>()</div><div class='output co'>#&gt; <span class='warning'>Warning: Directory already exists! (`FATE_simulation`)</span></div><div class='input'>
-</div></pre>
+<span class='fu'>PRE_FATE.skeletonDirectory</span>()
+
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
