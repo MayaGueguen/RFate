@@ -63,6 +63,9 @@
 ##' 
 ##' @examples
 ##' 
+##' ## Create a skeleton folder with the default name ('FATE_simulation')
+##' PRE_FATE.skeletonDirectory()
+##' 
 ##' ## Create a Namespace_constants parameter file
 ##' PRE_FATE.params_namespaceConstants(name.simulation = "FATE_simulation"
 ##'                                    , global.abund.low = 1000000

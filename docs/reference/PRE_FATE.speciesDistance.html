@@ -177,19 +177,77 @@ about distribution or niche overlap, it will be removed from the computation</st
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='co'>## Load example data</span>
+    <pre class="examples"><div class='input'><span class='co'>## Load example data</span>
 <span class='fu'>data</span>(<span class='no'>MontBlanc</span>)
-<span class='fu'>str</span>(<span class='no'>MontBlanc</span>)
-
+<span class='fu'>str</span>(<span class='no'>MontBlanc</span>)</div><div class='output co'>#&gt; List of 3
+#&gt;  $ mat.releves     :'data.frame':	12302 obs. of  4 variables:
+#&gt;   ..$ sites    : int [1:12302] 660398 662913 663085 663104 663104 664839 751362 751377 751484 922672 ...
+#&gt;   ..$ species  : chr [1:12302] "Abies alba Miller" "Abies alba Miller" "Abies alba Miller" "Abies alba Miller" ...
+#&gt;   ..$ abund    : Factor w/ 7 levels "","+","1","2",..: 2 2 2 3 6 4 2 3 2 2 ...
+#&gt;   ..$ landclass: int [1:12302] 4 2 6 4 4 4 2 2 3 8 ...
+#&gt;  $ mat.traits      :'data.frame':	337 obs. of  6 variables:
+#&gt;   ..$ species     : chr [1:337] "X23" "X139" "X190" "X197" ...
+#&gt;   ..$ Disp        : num [1:337] 4 5 7 6 7 1 4 7 7 7 ...
+#&gt;   ..$ Light       : num [1:337] 2 2 3 3 5 3 5 5 5 3 ...
+#&gt;   ..$ Height      : num [1:337] 1500 50 70 11 30 ...
+#&gt;   ..$ Palatability: Factor w/ 5 levels "","0","1","2",..: 4 5 5 5 5 5 5 5 5 5 ...
+#&gt;   ..$ GROUP       : Factor w/ 3 levels "C","H","P": 3 2 2 2 2 2 2 2 2 2 ...
+#&gt;  $ mat.nicheOverlap: niolap [1:270, 1:270] NA 0.524 0.789 0.626 0.675 ...
+#&gt;   ..- attr(*, "dimnames")=List of 2
+#&gt;   .. ..$ : chr [1:270] "X10053" "X10106" "X10113" "X10182" ...
+#&gt;   .. ..$ : chr [1:270] "X10053" "X10106" "X10113" "X10182" ...</div><div class='input'>
 <span class='co'>## MontBlanc$mat.traits : data.frame</span>
 <span class='co'>## MontBlanc$mat.nicheOverlap : niolap object</span>
 <span class='no'>sp.DIST</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.speciesDistance</span>(<span class='kw'>mat.species.traits</span> <span class='kw'>=</span> <span class='no'>MontBlanc</span>$<span class='no'>mat.traits</span>,
-                                   <span class='kw'>mat.species.overlap</span> <span class='kw'>=</span> <span class='no'>MontBlanc</span>$<span class='no'>mat.nicheOverlap</span>)
-
-<span class='fu'>str</span>(<span class='no'>sp.DIST</span>)
-
-<span class='co'># }</span></pre>
+                                   <span class='kw'>mat.species.overlap</span> <span class='kw'>=</span> <span class='no'>MontBlanc</span>$<span class='no'>mat.nicheOverlap</span>)</div><div class='output co'>#&gt; 
+#&gt;  ############## TRAIT INFORMATIONS ############## 
+#&gt; 
+#&gt;  Number of species :  335
+#&gt;  Measured traits :  Disp, Light, Height, Palatability
+#&gt;  Groups :  C, H, P
+#&gt;  Number of NA values in each group (which have been removed) :  0 4 0
+#&gt;  Number of species in each group :  48 269 18
+#&gt; 
+#&gt;  Number of species with traits :  337
+#&gt;  Number of species with traits and no overlap information :  69
+#&gt;  Number of species with overlap :  270
+#&gt;  Number of species with overlap and no traits information :  2
+#&gt; 
+#&gt;  Comparison of groups' dimensions : 
+#&gt; 
+#&gt;  Group  1 :
+#&gt; Trait distances :  48 48 
+#&gt; Overlap distances :  38 38 
+#&gt; 
+#&gt;  Group  2 :
+#&gt; Trait distances :  269 269 
+#&gt; Overlap distances :  215 215 
+#&gt; 
+#&gt;  Group  3 :
+#&gt; Trait distances :  18 18 
+#&gt; Overlap distances :  15 15 
+#&gt; 
+#&gt;  Number of species with both trait and overlap distances:  268</div><div class='input'>
+<span class='fu'>str</span>(<span class='no'>sp.DIST</span>)</div><div class='output co'>#&gt; List of 3
+#&gt;  $ C:Class 'dist'  atomic [1:703] 0.0846 0.2436 0.1439 0.3741 0.038 ...
+#&gt;   .. ..- attr(*, "Labels")= chr [1:38] "X10192" "X11256" "X12051" "X12060" ...
+#&gt;   .. ..- attr(*, "Size")= int 38
+#&gt;   .. ..- attr(*, "call")= language as.dist.default(m = mat)
+#&gt;   .. ..- attr(*, "Diag")= logi FALSE
+#&gt;   .. ..- attr(*, "Upper")= logi FALSE
+#&gt;  $ H:Class 'dist'  atomic [1:23005] 0.232 0.165 0.262 0.273 0.24 ...
+#&gt;   .. ..- attr(*, "Labels")= chr [1:215] "X10053" "X10106" "X10113" "X10182" ...
+#&gt;   .. ..- attr(*, "Size")= int 215
+#&gt;   .. ..- attr(*, "call")= language as.dist.default(m = mat)
+#&gt;   .. ..- attr(*, "Diag")= logi FALSE
+#&gt;   .. ..- attr(*, "Upper")= logi FALSE
+#&gt;  $ P:Class 'dist'  atomic [1:105] 0.382 0.192 0.277 0.252 0.395 ...
+#&gt;   .. ..- attr(*, "Labels")= chr [1:15] "X11313" "X11388" "X11726" "X11729" ...
+#&gt;   .. ..- attr(*, "Size")= int 15
+#&gt;   .. ..- attr(*, "call")= language as.dist.default(m = mat)
+#&gt;   .. ..- attr(*, "Diag")= logi FALSE
+#&gt;   .. ..- attr(*, "Upper")= logi FALSE</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

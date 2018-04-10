@@ -53,8 +53,6 @@ directory with the following parameters :
 This script is designed to
 }
 \details{
-<br/>
-
 \describe{
   \item{To get abundances \cr per PFG per pixel}{
   \itemize{
@@ -72,6 +70,9 @@ This script is designed to
 }
 }
 \examples{
+
+## Create a skeleton folder with the default name ('FATE_simulation')
+PRE_FATE.skeletonDirectory()
 
 ## Create a Namespace_constants parameter file
 PRE_FATE.params_namespaceConstants(name.simulation = "FATE_simulation"

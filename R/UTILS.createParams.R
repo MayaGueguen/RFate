@@ -15,6 +15,9 @@
   if (is.null(names(params.list))) {
     stop("Wrong type of data!\n `params.list` must be a list with non-null names")
   }
+  if (!dir.exists(dirname(params.file))){
+    stop("Wrong name file given!\n `params.file` directory does not exist")
+  }
 
   
   text.to.paste = sapply(1:length(params.list), function(x){
@@ -26,7 +29,7 @@
                          , "## Date : ", date(), "\n"
                          , text.to.paste)
   
-  cat(text.to.paste, sep = "", file = params.file)
+  cat(text.to.paste, sep = "", file = params.file, append = FALSE)
   cat("\n The parameter file ", params.file, "has been successfully created !\n")
   cat("\n")
 }

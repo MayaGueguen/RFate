@@ -182,20 +182,35 @@ essai de reconstitution des séries évolutives herbagères. Doc. Phytosoc., N.S
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
+    <pre class="examples"><div class='input'>
 <span class='co'>## Load example data</span>
 <span class='fu'>data</span>(<span class='no'>MontBlanc</span>)
-<span class='fu'>str</span>(<span class='no'>MontBlanc</span>)
-
+<span class='fu'>str</span>(<span class='no'>MontBlanc</span>)</div><div class='output co'>#&gt; List of 3
+#&gt;  $ mat.releves     :'data.frame':	12302 obs. of  4 variables:
+#&gt;   ..$ sites    : int [1:12302] 660398 662913 663085 663104 663104 664839 751362 751377 751484 922672 ...
+#&gt;   ..$ species  : chr [1:12302] "Abies alba Miller" "Abies alba Miller" "Abies alba Miller" "Abies alba Miller" ...
+#&gt;   ..$ abund    : Factor w/ 7 levels "","+","1","2",..: 2 2 2 3 6 4 2 3 2 2 ...
+#&gt;   ..$ landclass: int [1:12302] 4 2 6 4 4 4 2 2 3 8 ...
+#&gt;  $ mat.traits      :'data.frame':	337 obs. of  6 variables:
+#&gt;   ..$ species     : chr [1:337] "X23" "X139" "X190" "X197" ...
+#&gt;   ..$ Disp        : num [1:337] 4 5 7 6 7 1 4 7 7 7 ...
+#&gt;   ..$ Light       : num [1:337] 2 2 3 3 5 3 5 5 5 3 ...
+#&gt;   ..$ Height      : num [1:337] 1500 50 70 11 30 ...
+#&gt;   ..$ Palatability: Factor w/ 5 levels "","0","1","2",..: 4 5 5 5 5 5 5 5 5 5 ...
+#&gt;   ..$ GROUP       : Factor w/ 3 levels "C","H","P": 3 2 2 2 2 2 2 2 2 2 ...
+#&gt;  $ mat.nicheOverlap: niolap [1:270, 1:270] NA 0.524 0.789 0.626 0.675 ...
+#&gt;   ..- attr(*, "dimnames")=List of 2
+#&gt;   .. ..$ : chr [1:270] "X10053" "X10106" "X10113" "X10182" ...
+#&gt;   .. ..$ : chr [1:270] "X10053" "X10106" "X10113" "X10182" ...</div><div class='input'>
 <span class='co'>## MontBlanc$mat.releves : data.frame</span>
-<span class='fu'>summary</span>(<span class='no'>MontBlanc</span>$<span class='no'>mat.releves</span>$<span class='no'>abund</span>)
-
+<span class='fu'>summary</span>(<span class='no'>MontBlanc</span>$<span class='no'>mat.releves</span>$<span class='no'>abund</span>)</div><div class='output co'>#&gt;         +    1    2    3    4    5 NA's 
+#&gt;    1 7442 2853 1328  493  118   11   56 </div><div class='input'>
 <span class='co'>## Transformation of Braun-Blanquet abundances</span>
 <span class='no'>MontBlanc</span>$<span class='no'>mat.releves</span>$<span class='no'>abund</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.abundBraunBlanquet</span>(<span class='kw'>abund</span> <span class='kw'>=</span> <span class='no'>MontBlanc</span>$<span class='no'>mat.releves</span>$<span class='no'>abund</span>)
 
-<span class='fu'>summary</span>(<span class='no'>MontBlanc</span>$<span class='no'>mat.releves</span>$<span class='no'>abund</span>)
-
-<span class='co'># }</span></pre>
+<span class='fu'>summary</span>(<span class='no'>MontBlanc</span>$<span class='no'>mat.releves</span>$<span class='no'>abund</span>)</div><div class='output co'>#&gt;    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+#&gt;    0.50    0.50    0.50    4.82    3.00   87.50      57 </div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
