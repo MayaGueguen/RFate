@@ -90,22 +90,70 @@ PRE_FATE.params_namespaceConstants = function(
   , global.resource.thresh.low
 ){
   
-  params.list = list(global.abund.low
-                     , global.abund.med
-                     , global.abund.high
-                     , global.max.by.cohort
-                     , global.resource.thresh.med
-                     , global.resource.thresh.low
-                     , 9000000)
-  names(params.list) = c("GLOBAL_LOW_ABUND"
-                         , "GLOBAL_MEDIUM_ABUND"
-                         , "GLOBAL_HIGH_ABUND"
-                         , "GLOBAL_MAX_BY_COHORT"
-                         , "GLOBAL_MEDIUM_RESOURCES_TRESH"
-                         , "GLOBAL_LOW_RESOURCES_TRESH"
-                         , "GLOBAL_FULL_SOIL_COVERAGE")
-  .createParams(params.file = paste0(name.simulation, "/DATA/Namespace_constants.txt")
-                , params.list = params.list)
+  if (!dir.exists(paste0(name.simulation, "/DATA/NAMESPACE_CONSTANTS/"))){
+    stop("Wrong name folder given!\n `name.simulation` does not exist or does not contain a DATA/NAMESPACE_CONSTANTS/ folder")
+  }
+  if (!is.numeric(global.abund.low)){
+    stop("Wrong type of data!\n `global.abund.low` must be an integer")
+  }
+  if (!is.numeric(global.abund.med)){
+    stop("Wrong type of data!\n `global.abund.med` must be an integer")
+  }
+  if (!is.numeric(global.abund.high)){
+    stop("Wrong type of data!\n `global.abund.high` must be an integer")
+  }
+  if (!is.numeric(global.max.by.cohort)){
+    stop("Wrong type of data!\n `global.max.by.cohort` must be an integer")
+  }
+  if (!is.numeric(global.resource.thresh.med)){
+    stop("Wrong type of data!\n `global.resource.thresh.med` must be an integer")
+  }
+  if (!is.numeric(global.resource.thresh.low)){
+    stop("Wrong type of data!\n `global.resource.thresh.low` must be an integer")
+  }
+  
+  params.combi = expand.grid(as.integer(global.abund.low)
+                             , as.integer(global.abund.med)
+                             , as.integer(global.abund.high)
+                             , as.integer(global.max.by.cohort)
+                             , as.integer(global.resource.thresh.med)
+                             , as.integer(global.resource.thresh.low)
+                             , as.integer(9000000))
+  params.list = lapply(1:nrow(params.combi), function(x) {
+    list(params.combi[x, 1]
+         , params.combi[x, 2]
+         , params.combi[x, 3]
+         , params.combi[x, 4]
+         , params.combi[x, 5]
+         , params.combi[x, 6]
+         , params.combi[x, 7])
+  })
+  names.params.list = paste0("V", length(params.list))
+  names.params.list.sub = c("GLOBAL_LOW_ABUND"
+                            , "GLOBAL_MEDIUM_ABUND"
+                            , "GLOBAL_HIGH_ABUND"
+                            , "GLOBAL_MAX_BY_COHORT"
+                            , "GLOBAL_MEDIUM_RESOURCES_TRESH"
+                            , "GLOBAL_LOW_RESOURCES_TRESH"
+                            , "GLOBAL_FULL_SOIL_COVERAGE")
 
+  for (i in 1:length(params.list)){
+    params = params.list[[i]]
+    names(params) = names.params.list.sub
+    
+    .createParams(params.file = paste0(name.simulation,
+                                       "/DATA/NAMESPACE_CONSTANTS/Namespace_constants_",
+                                       names.params.list[i],
+                                       ".txt")
+                  , params.list = params)
+  }
 }
+
+PRE_FATE.params_namespaceConstants(name.simulation = "FATE_simulation"
+                                   , global.abund.low = 1000000
+                                   , global.abund.med = 5000000
+                                   , global.abund.high = 8000000
+                                   , global.max.by.cohort = 5000000
+                                   , global.resource.thresh.med = 13000000
+                                   , global.resource.thresh.low = 19000000)
   
