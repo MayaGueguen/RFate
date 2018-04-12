@@ -50,7 +50,8 @@ directory with the following parameters :
 }
 }
 \description{
-This script is designed to
+This script is designed to create one (or several) parameter file
+containing \code{NAMESPACE CONSTANTS} used in \code{FATE-HD} model.
 }
 \details{
 \describe{
@@ -79,6 +80,15 @@ PRE_FATE.params_namespaceConstants(name.simulation = "FATE_simulation"
                                    , global.abund.low = 1000000
                                    , global.abund.med = 5000000
                                    , global.abund.high = 8000000
+                                   , global.max.by.cohort = 5000000
+                                   , global.resource.thresh.med = 13000000
+                                   , global.resource.thresh.low = 19000000)
+                                   
+## Create SEVERAL Namespace_constants parameter file
+PRE_FATE.params_namespaceConstants(name.simulation = "FATE_simulation"
+                                   , global.abund.low = 1000000
+                                   , global.abund.med = 5000000
+                                   , global.abund.high = c(8000000, 9000000)
                                    , global.max.by.cohort = 5000000
                                    , global.resource.thresh.med = 13000000
                                    , global.resource.thresh.low = 19000000)

@@ -12,3 +12,4 @@ reference:
     contents:
       - "PRE_FATE.skeletonDirectory"
       - "PRE_FATE.params_namespaceConstants"
+      - "PRE_FATE.params_PFGdispersal"

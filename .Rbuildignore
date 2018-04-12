@@ -5,6 +5,7 @@
 .git
 _FUNC_createRpackage_RFate.R
 R/examples.R
+^FATE_simulation$
 ^\.travis\.yml$
 ^appveyor\.yml$
 ^codecov\.yml$
