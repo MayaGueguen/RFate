@@ -27,7 +27,7 @@ dispersal distances for each PFG (one file for each of them) used in the
 dispersal module of \code{FATE-HD}.
 }
 \details{
-For each PFG, a dispersal module is available to diperse seeds
+For each PFG, a dispersal module is available to disperse seeds
 with a kernel. \cr
 Dispersal distances are needed to quantify the amount of
 seeds dispersed into 3 different concentric circles :
