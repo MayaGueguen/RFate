@@ -6,8 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create <em>SAVE</em> parameter files for a <code>FATE-HD</code>
-simulation — PRE_FATE.params_saveYears • RFate</title>
+<title>Create <em>SUCCESSION</em> parameter files for a <code>FATE-HD</code>
+simulation — PRE_FATE.params_PFGsuccession • RFate</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -26,12 +26,12 @@ simulation — PRE_FATE.params_saveYears • RFate</title>
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-<meta property="og:title" content="Create <em>SAVE</em> parameter files for a <code>FATE-HD</code>
-simulation — PRE_FATE.params_saveYears" />
+<meta property="og:title" content="Create <em>SUCCESSION</em> parameter files for a <code>FATE-HD</code>
+simulation — PRE_FATE.params_PFGsuccession" />
 
-<meta property="og:description" content="This script is designed to create a parameter file containing
-simulation years at which the FATE-HD software must save rasters of
-PFG abundances or simulation objects." />
+<meta property="og:description" content="This script is designed to create parameter files containing 
+succession parameters for each PFG (one file for each of them) used in the
+core module of FATE-HD." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -94,19 +94,18 @@ PFG abundances or simulation objects." />
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create <em>SAVE</em> parameter files for a <code>FATE-HD</code>
+    <h1>Create <em>SUCCESSION</em> parameter files for a <code>FATE-HD</code>
 simulation</h1>
-    <small>Source: <a href='https://github.com/MayaGueguen/RFate.git/blob/master/R/PRE_FATE.params_saveYears.R'><code>R/PRE_FATE.params_saveYears.R</code></a></small>
+    <small>Source: <a href='https://github.com/MayaGueguen/RFate.git/blob/master/R/PRE_FATE.params_PFGsuccession.R'><code>R/PRE_FATE.params_PFGsuccession.R</code></a></small>
     </div>
 
     
-    <p>This script is designed to create a parameter file containing
-simulation years at which the <code>FATE-HD</code> software must save rasters of
-PFG abundances or simulation objects.</p>
+    <p>This script is designed to create parameter files containing 
+succession parameters for each PFG (one file for each of them) used in the
+core module of <code>FATE-HD</code>.</p>
     
 
-    <pre class="usage"><span class='fu'>PRE_FATE.params_saveYears</span>(<span class='no'>name.simulation</span>, <span class='kw'>years.maps</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>years.objects</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>PRE_FATE.params_PFGsuccession</span>(<span class='no'>name.simulation</span>, <span class='no'>mat.PFG.disp</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -117,35 +116,32 @@ PFG abundances or simulation objects.</p>
 or simulation name of the <code>FATE-HD</code> simulation</p></td>
     </tr>
     <tr>
-      <th>years.maps</th>
-      <td><p>a <code>vector</code> of simulation years at which PFG abundance
-maps will be saved</p></td>
-    </tr>
-    <tr>
-      <th>years.objects</th>
-      <td><p>a <code>vector</code> of simulation years at which <code>FATE-HD</code>
-simulation state will be saved</p></td>
+      <th>mat.PFG.disp</th>
+      <td><p>a <code>data.frame</code> with 4 columns : PFG, d50, d99, ldd</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Two <code>.txt</code> files into the <code>name.simulation/DATA/SAVE/</code>
-directory with one line for each simulation year for which the raster maps /
-<code>FATE-HD</code> object are to be saved.</p>
+    <p>A <code>.txt</code> file per PFG into the <code>name.simulation/DATA/PFGS/SUCC/</code>
+directory with the following parameters :</p>
+<ul>
+<li><p>MATURITY : the maturity age of the PFG (in years)</p></li>
+<li><p>LONGEVITY : the PFG life span (in years)</p></li>
+<li><p>MAX_ABUNDANCE : the maximal (qualitative) shade that the PFG is able to produce (1: Low 2: Medium 3: High)</p></li>
+<li><p>IMM_SIZE : the relative size of the immature PFG (0: 0<!-- % 1: 10% 2: 50% 3: 90% 4: 100% 5: 40% 6: 80%) --></p></li>
+<li><p>CHANG_STR_AGES : the ages at which the PFG goes in the upper stratum (in years, put a value higher than the PFG life span if it is not supposed to rise a stratum)</p></li>
+<li><p>WIDE_DISPERS : is the PFG able to disperse everywhere (i.e. no dispersal limits) (0: No 1: Yes)</p></li>
+<li><p>ACTIVE_GERM : the germination rates depending on light conditions (0: 0<!-- % 1: 10% 2: 50% 3: 90% 4: 100% 5: 40% 6: 80%) --></p></li>
+<li><p>SHADE_TOL : the PFG shade tolerance table (in a single row). This is a vector of 9 numbers (0: Die 1: Survive) corresponding to the ability of the PFG to survive or not at different life stages (Germinate (Ge), Immature (Im), Mature (Ma)) under different light conditions (Low (L), Medium (M) or High (H) light resources). These parameters should be given in this order : GeL, GeM, GeH, ImL, ImM, ImH, MaL, MaM, MaH.</p></li>
+<li><p>SEED_POOL_LIFE : the maximal number of years seeds are able to survive</p></li>
+<li><p>SEED_DORMANCY</p></li>
+</ul>
+
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>FATE-HD</code> software allows the user to save two different types of outputs :</p>
-<dl class='dl-horizontal'>
-  <dt>Raster maps</dt><dd><p>PFG maps can be saved for all specified simulation years.
-  It includes maps per PFG per strata and summary maps per PFG for all height
-  strata combined. <br /> Raster format used is depending on input data format. It
-  can be either <code>.img</code> or <code>.tif</code>.</p></dd>
-  <dt>Model objects</dt><dd><p>using <code>BOOST</code> library and its serialization functions,
-  <code>FATE-HD</code> is able to save a simulation at a specific time. This object
-  allows the user to restart a simulation from this precise state.</p></dd>
-</dl>
+    <p>For each PFG,</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -154,9 +150,11 @@ directory with one line for each simulation year for which the raster maps /
 <span class='fu'><a href='PRE_FATE.skeletonDirectory.html'>PRE_FATE.skeletonDirectory</a></span>()
 
 <span class='co'>## Create a Namespace_constants parameter file</span>
-<span class='fu'>PRE_FATE.params_saveYears</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
-                          , <span class='kw'>years.maps</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>100</span>, <span class='fl'>150</span>, <span class='fl'>200</span>)
-                          , <span class='kw'>years.objects</span> <span class='kw'>=</span> <span class='fl'>200</span>)
+<span class='fu'>PRE_FATE.params_PFGsuccession</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
+                            , <span class='kw'>mat.PFG.disp</span> <span class='kw'>=</span> <span class='fu'>data.frame</span>(<span class='kw'>PFG</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"PFG1"</span>, <span class='st'>"PFG2"</span>, <span class='st'>"PFG3"</span>)
+                                                        , <span class='kw'>d50</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>500</span>, <span class='fl'>500</span>, <span class='fl'>100</span>)
+                                                        , <span class='kw'>d99</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>10000</span>, <span class='fl'>15000</span>, <span class='fl'>20000</span>)
+                                                        , <span class='kw'>ldd</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>100000</span>, <span class='fl'>50000</span>, <span class='fl'>100000</span>)))
 
 <span class='co'># }</span></pre>
   </div>
