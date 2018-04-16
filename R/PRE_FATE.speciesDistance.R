@@ -114,15 +114,17 @@
 
 PRE_FATE.speciesDistance = function(mat.species.traits ## data.frame with columns : species, GROUP and one for each trait
                                     , mat.species.overlap ## species x species matrix / or table with raster file names
-                                    , min.info.thresh
+                                    , min.info.thresh = 1
 ){
   
   #################################################################################################
   
   ## Check existence of parameters
-  if (is.null(mat.species.traits) || is.null(mat.species.overlap) || is.null(min.info.thresh))
+  if (missing(mat.species.traits) || missing(mat.species.overlap) ||
+      is.null(mat.species.traits) || is.null(mat.species.overlap) ||
+      is.na(mat.species.traits) || is.na(mat.species.overlap))
   {
-    stop("No data given!\n (no `mat.species.traits`, `mat.species.overlap` or `min.info.thresh` information)")
+    stop("No data given!\n (missing `mat.species.traits` or `mat.species.overlap` information)")
   }
   ## Control form of parameters : min.info.thresh
   if (!is.numeric(min.info.thresh) || min.info.thresh < 0 || min.info.thresh > 1)
@@ -134,9 +136,9 @@ PRE_FATE.speciesDistance = function(mat.species.traits ## data.frame with column
   {
     stop("Wrong type of data!\n `mat.species.traits` must be a data.frame")
   }
-  if (nrow(mat.species.traits) == 0)
+  if (ncol(mat.species.traits) <= 2 )
   {
-    stop("Wrong dimension(s) of data!\n `mat.species.traits` does not have the appropriate number of rows (>0)")
+    stop("Wrong dimension(s) of data!\n `mat.species.traits` does not have the appropriate number of cols (>=3, at least 2 traits)")
   }
   if (sum(colnames(mat.species.traits) == "species") != 1)
   {
@@ -148,6 +150,10 @@ PRE_FATE.speciesDistance = function(mat.species.traits ## data.frame with column
             Data will be considered as one unique dataset.")
     mat.species.traits$GROUP = "AllSpecies"
   }
+  if (nrow(mat.species.traits) <= 1)
+  {
+    stop("Wrong dimension(s) of data!\n `mat.species.traits` does not have the appropriate number of rows (>=2)")
+  }
   ## Control form of parameters : mat.species.overlap
   if (class(mat.species.overlap) %in% c("dist", "niolap"))
   {
@@ -156,9 +162,11 @@ PRE_FATE.speciesDistance = function(mat.species.traits ## data.frame with column
   {
     if (ncol(mat.species.overlap) != nrow(mat.species.overlap))
     {
-      stop(paste0("Wrong dimension(s) of data!\n `mat.species.overlap` does not have the
-                  same number of rows (",nrow(mat.species.overlap),")
-                  and columns (",ncol(mat.species.overlap),")"))
+      stop(paste0("Wrong dimension(s) of data!\n `mat.species.overlap` does not have the same number of rows ("
+                  ,nrow(mat.species.overlap)
+                  ,") and columns ("
+                  ,ncol(mat.species.overlap)
+                  ,")"))
     }
   } else if (is.data.frame(mat.species.overlap))
   {
@@ -170,10 +178,12 @@ PRE_FATE.speciesDistance = function(mat.species.traits ## data.frame with column
     if (sum(colnames(mat.species.overlap) == "species") != 1)
     {
       stop("Wrong data given!\n `mat.species.overlap` must contain a column whose name is `species`")
-    }
-    if (sum(colnames(mat.species.overlap) == "raster") != 1)
+    } else if (sum(colnames(mat.species.overlap) == "raster") != 1)
     {
       stop("Wrong data given!\n `mat.species.overlap` must contain a column whose name is `raster`")
+    } else if (sum(file.exists(as.character(mat.species.overlap$raster))) < nrow(mat.species.overlap))
+    {
+      stop("Wrong data given!\n `mat.species.overlap$raster` must contain file names which exist")
     }
     mat.species.overlap = mat.species.overlap[which(file.exists(mat.species.overlap$raster)), ]
     raster.list = lapply(mat.species.overlap$raster, function(x) as(raster(x), "SpatialGridDataFrame"))
@@ -181,8 +191,7 @@ PRE_FATE.speciesDistance = function(mat.species.traits ## data.frame with column
     rownames(overlap.mat) = colnames(overlap.mat) = mat.species.overlap$species
     mat.species.overlap = overlap.mat
   } else {
-    stop("Wrong type of data!\n `mat.species.overlap` must be either
-         a data.frame or a dissimilarity object (`dist`, `niolap`, `matrix`)")
+    stop("Wrong type of data!\n `mat.species.overlap` must be either a data.frame or a dissimilarity object (`dist`, `niolap`, `matrix`)")
   }
   
   
