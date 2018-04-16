@@ -5,13 +5,14 @@
 \title{Create \emph{SUCCESSION} parameter files for a \code{FATE-HD}
 simulation}
 \usage{
-PRE_FATE.params_PFGsuccession(name.simulation, mat.PFG.disp)
+PRE_FATE.params_PFGsuccession(name.simulation, mat.PFG.succ)
 }
 \arguments{
 \item{name.simulation}{a \code{string} that corresponds to the main directory
 or simulation name of the \code{FATE-HD} simulation}
 
-\item{mat.PFG.disp}{a \code{data.frame} with 4 columns : PFG, d50, d99, ldd}
+\item{mat.PFG.succ}{a \code{data.frame} with 6 columns : PFG, type, height,
+maturity, longevity, dispersal}
 }
 \value{
 A \code{.txt} file per PFG into the \code{name.simulation/DATA/PFGS/SUCC/}
@@ -45,10 +46,12 @@ PRE_FATE.skeletonDirectory()
 
 ## Create a Namespace_constants parameter file
 PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
-                            , mat.PFG.disp = data.frame(PFG = c("PFG1", "PFG2", "PFG3")
-                                                        , d50 = c(500, 500, 100)
-                                                        , d99 = c(10000, 15000, 20000)
-                                                        , ldd = c(100000, 50000, 100000)))
+                            , mat.PFG.succ = data.frame(PFG = c("PFG1", "PFG2", "PFG3")
+                                                        , type = c("H", "C", "P")  
+                                                        , height = c(50, 20, 100)
+                                                        , maturity = c(5, 5, 12)
+                                                        , longevity = c(25, 9, 54)
+                                                        , dispersal = c(1, 1, 1)))
 
 }
 \author{
