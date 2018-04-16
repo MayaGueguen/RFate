@@ -8,7 +8,8 @@ test_that("PRE_FATE.speciesDistance gives error with missing data", {
   expect_error(PRE_FATE.speciesDistance(NULL), "No data given!\n (missing", fixed = T)
 
   expect_error(PRE_FATE.speciesDistance(mat.species.traits = NA), "No data given!\n (missing", fixed = T)
-  expect_error(PRE_FATE.speciesDistance(mat.species.traits = NA, mat.species.overlap = NA), "No data given!\n (missing", fixed = T)
+  expect_error(PRE_FATE.speciesDistance(mat.species.traits = NA, mat.species.overlap = NA), "must be a data.frame", fixed = T)
+  expect_error(PRE_FATE.speciesDistance(mat.species.overlap = NA), "No data given!\n (missing", fixed = T)
 })
 
 

@@ -121,8 +121,7 @@ PRE_FATE.speciesDistance = function(mat.species.traits ## data.frame with column
   
   ## Check existence of parameters
   if (missing(mat.species.traits) || missing(mat.species.overlap) ||
-      is.null(mat.species.traits) || is.null(mat.species.overlap) ||
-      is.na(mat.species.traits) || is.na(mat.species.overlap))
+      is.null(mat.species.traits) || is.null(mat.species.overlap))
   {
     stop("No data given!\n (missing `mat.species.traits` or `mat.species.overlap` information)")
   }
@@ -210,7 +209,7 @@ PRE_FATE.speciesDistance = function(mat.species.traits ## data.frame with column
   ind_NA_values = which(no_NA_values > (1 - min.info.thresh))
   if (length(ind_NA_values) > 0)
   {
-    stop(paste0("Wrong data given!\n `mat.species.traits` contain trait with too many missing values : "
+    stop(paste0("Missing data!\n `mat.species.traits` contain trait with too many missing values : "
                 , paste0(round(no_NA_values[ind_NA_values], 4), " % for ", traits_names[ind_NA_values]), "\n"))
   }
   
