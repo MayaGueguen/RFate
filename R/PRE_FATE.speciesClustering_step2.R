@@ -106,8 +106,9 @@
 ##' ## MontBlanc$mat.nicheOverlap : niolap object
 ##' 
 ##' ## Calculate distance between species
-##' sp.DIST = PRE_FATE.speciesDistance(mat.species.traits = MontBlanc$mat.traits,
-##'                                    mat.species.overlap = MontBlanc$mat.nicheOverlap)
+##' sp.DIST = PRE_FATE.speciesDistance(mat.species.traits = MontBlanc$mat.traits
+##'                                    , mat.species.overlap = MontBlanc$mat.nicheOverlap
+##'                                    , min.info.thresh = 0.9)
 ##'                                    
 ##' str(sp.DIST)
 ##'              

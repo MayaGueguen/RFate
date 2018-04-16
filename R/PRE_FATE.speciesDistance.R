@@ -34,6 +34,8 @@
 ##'   object, or simply a \code{matrix}.
 ##' }
 ##' 
+##' @param min.info.thresh minimum percentage of values for each trait (between 0 and 1)
+##' 
 ##' @details 
 ##' 
 ##' This function allows one to obtain a distance matrix between species, based
@@ -50,6 +52,9 @@
 ##'     \code{as.numeric}, \code{as.factor} and \code{ordered}).
 ##'     \item Functional distance matrix is calculated with Gower dissimilarity,
 ##'     using the \code{gowdis} function from \pkg{FD} package.
+##'     \item This function allows \code{NA} values. In order to let the user
+##'     decide what importance to give to missing values, the \code{min.info.thresh}
+##'     defines which minimum percentage of species should have values for each trait. 
 ##'   }
 ##'   }
 ##'   \item{\strong{Niche overlap : }}{
@@ -64,8 +69,8 @@
 ##' Functional distances and niche overlap informations are then \strong{combined}
 ##' according to the following formula :
 ##' 
-##' \deqn{mat.DIST_{sub-group} = [ mat.OVERLAP_{sub-group} +
-##' mat.FUNCTIONAL_{sub-group} * n_{traits} ] / [ n_{traits} + 1 ]}
+##' \deqn{\text{mat.DIST}_{sub-group} = [ \text{mat.OVERLAP}_{sub-group} +
+##' \text{mat.FUNCTIONAL}_{sub-group} * n_{traits} ] / [ n_{traits} + 1 ]}
 ##' 
 ##' meaning that distance matrix obtained from functional information is
 ##' weighted by the number of traits used.
@@ -74,11 +79,8 @@
 ##' @return A \code{dist} object corresponding to the distance between each pair
 ##' of species, or a \code{list} of \code{dist} objects, one for each
 ##' \code{GROUP} value.
-##' 
-##' @note Informations must be complete to include a species into the distance
-##' calculation. Hence, \strong{if a species is missing a trait value, or information
-##' about distribution or niche overlap, it will be removed from the computation}.
-##' 
+##'
+##'  
 ##' @keywords Gower distance
 ##' 
 ##' 
@@ -89,8 +91,13 @@
 ##' 
 ##' ## MontBlanc$mat.traits : data.frame
 ##' ## MontBlanc$mat.nicheOverlap : niolap object
-##' sp.DIST = PRE_FATE.speciesDistance(mat.species.traits = MontBlanc$mat.traits,
-##'                                    mat.species.overlap = MontBlanc$mat.nicheOverlap)
+##' # sp.DIST = PRE_FATE.speciesDistance(mat.species.traits = MontBlanc$mat.traits
+##' #                                    , mat.species.overlap = MontBlanc$mat.nicheOverlap
+##' #                                    , min.info.thresh = 1)
+##'                                    
+##' sp.DIST = PRE_FATE.speciesDistance(mat.species.traits = MontBlanc$mat.traits
+##'                                    , mat.species.overlap = MontBlanc$mat.nicheOverlap
+##'                                    , min.info.thresh = 0.9)
 ##' 
 ##' str(sp.DIST)
 ##' 
@@ -105,17 +112,22 @@
 ## END OF HEADER ###############################################################
 
 
-
 PRE_FATE.speciesDistance = function(mat.species.traits ## data.frame with columns : species, GROUP and one for each trait
-                                    , mat.species.overlap ## species x species matrix ? or XY and one column with PA for each species ?
+                                    , mat.species.overlap ## species x species matrix / or table with raster file names
+                                    , min.info.thresh
 ){
   
   #################################################################################################
   
   ## Check existence of parameters
-  if (is.null(mat.species.traits) || is.null(mat.species.overlap))
+  if (is.null(mat.species.traits) || is.null(mat.species.overlap) || is.null(min.info.thresh))
   {
-    stop("No data given!\n (neither `mat.species.traits` or `mat.species.overlap` information)")
+    stop("No data given!\n (no `mat.species.traits`, `mat.species.overlap` or `min.info.thresh` information)")
+  }
+  ## Control form of parameters : min.info.thresh
+  if (!is.numeric(min.info.thresh) || min.info.thresh < 0 || min.info.thresh > 1)
+  {
+    stop("Wrong type of data!\n `min.info.thresh` must be a number between 0 and 1")
   }
   ## Control form of parameters : mat.species.traits
   if (!is.data.frame(mat.species.traits))
@@ -163,8 +175,6 @@ PRE_FATE.speciesDistance = function(mat.species.traits ## data.frame with column
     {
       stop("Wrong data given!\n `mat.species.overlap` must contain a column whose name is `raster`")
     }
-    # .loadPackage("raster") ## raster
-    # .loadPackage("phyloclim") ## niche.overlap
     mat.species.overlap = mat.species.overlap[which(file.exists(mat.species.overlap$raster)), ]
     raster.list = lapply(mat.species.overlap$raster, function(x) as(raster(x), "SpatialGridDataFrame"))
     overlap.mat = as.matrix(niche.overlap(raster.list))
@@ -174,8 +184,6 @@ PRE_FATE.speciesDistance = function(mat.species.traits ## data.frame with column
     stop("Wrong type of data!\n `mat.species.overlap` must be either
          a data.frame or a dissimilarity object (`dist`, `niolap`, `matrix`)")
   }
-  
-  # .loadPackage("FD") ## gowdis
   
   
   #################################################################################################
@@ -188,10 +196,15 @@ PRE_FATE.speciesDistance = function(mat.species.traits ## data.frame with column
   traits_names = colnames(mat.species.traits)[which(!(colnames(mat.species.traits) %in% c("species","GROUP")))]
   group_names = sort(unique(as.character(mat.species.traits$GROUP)))
   mat.species.traits$GROUP = factor(mat.species.traits$GROUP, group_names)
-  no_NA_values = sapply(lapply(split(mat.species.traits[,traits_names], f = mat.species.traits$GROUP), as.matrix), function(x) sum(is.na(x)))
+  no_NA_values = apply(as.matrix(mat.species.traits[,traits_names]), 2, function(x) sum(is.na(x)))
+  no_NA_values = no_NA_values / nrow(mat.species.traits)
+  ind_NA_values = which(no_NA_values > (1 - min.info.thresh))
+  if (length(ind_NA_values) > 0)
+  {
+    stop(paste0("Wrong data given!\n `mat.species.traits` contain trait with too many missing values : "
+                , paste0(round(no_NA_values[ind_NA_values], 4), " % for ", traits_names[ind_NA_values]), "\n"))
+  }
   
-  ## Remove species with NAs
-  mat.species.traits = na.exclude(mat.species.traits)
   
   ## SPLIT INFORMATION by species type
   mat.species.traits.split = split(mat.species.traits[,traits_names], f = mat.species.traits$GROUP)
@@ -204,7 +217,6 @@ PRE_FATE.speciesDistance = function(mat.species.traits ## data.frame with column
   cat("\n Number of species : ", nrow(mat.species.traits))
   cat("\n Measured traits : ", paste0(traits_names, collapse = ", "))
   cat("\n Groups : ", paste0(group_names, collapse = ", "))
-  cat("\n Number of NA values in each group (which have been removed) : ", no_NA_values)
   cat("\n Number of species in each group : ", sapply(species.split, length))
   cat("\n")
   

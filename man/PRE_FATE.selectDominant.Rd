@@ -5,7 +5,7 @@
 \title{Selection of dominant species from abundance releves}
 \usage{
 PRE_FATE.selectDominant(mat.site.species.abund = NULL, sites = NULL,
-  species = NULL, abund = NULL, landclass = NULL,
+  species = NULL, abund = NULL, habitat = NULL,
   selectionRule.quanti = 0, selectionRule.min_mean_abund = 0,
   selectionRule.min_no_abund_over25 = 0, doHabitatSelection = FALSE,
   selectionRule.min_percent_habitat = 0.05,
@@ -23,6 +23,8 @@ with \code{NA} when no information, habitat ID (optional)}
 \item{abund}{a \code{vector} with abundance values (e.g. Braun Blanquet) with \code{NA}
 when no information}
 
+\item{habitat}{a \code{vector} with habitat ID}
+
 \item{selectionRule.quanti}{minimum quantile of total number of sites that
 must occupy the species (between 0 and 1)}
 
@@ -39,8 +41,6 @@ occupied by the species (between 0 and 1)}
 
 \item{selectionRule.min_no_habitat}{minimum number of sites of specific habitat
 occupied by the species}
-
-\item{habitat}{a \code{vector} with habitat ID}
 }
 \value{
 A \code{data.frame} with all the species selected and the values of
@@ -164,7 +164,7 @@ sp.DOM = PRE_FATE.selectDominant(mat.site.species.abund = MontBlanc$mat.releves
                                  , selectionRule.min_no_abund_over25 = 10)
 
 #########################################################################################
-## EXAMPLE 3 : Add landclass selection with default parametrization
+## EXAMPLE 3 : Add habitat selection with default parametrization
 #########################################################################################
 
 sp.DOM = PRE_FATE.selectDominant(mat.site.species.abund = MontBlanc$mat.releves
@@ -174,7 +174,7 @@ sp.DOM = PRE_FATE.selectDominant(mat.site.species.abund = MontBlanc$mat.releves
                                  , doHabitatSelection = TRUE)
                           
 #########################################################################################       
-## EXAMPLE 4 : Redefinition of landclass selection rules
+## EXAMPLE 4 : Redefinition of habitat selection rules
 #########################################################################################
 
 sp.DOM = PRE_FATE.selectDominant(mat.site.species.abund = MontBlanc$mat.releves

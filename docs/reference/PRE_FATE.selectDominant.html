@@ -101,7 +101,7 @@
     
 
     <pre class="usage"><span class='fu'>PRE_FATE.selectDominant</span>(<span class='kw'>mat.site.species.abund</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sites</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>species</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>abund</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>landclass</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>species</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>abund</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>habitat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>selectionRule.quanti</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>selectionRule.min_mean_abund</span> <span class='kw'>=</span> <span class='fl'>0</span>,
   <span class='kw'>selectionRule.min_no_abund_over25</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>doHabitatSelection</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>selectionRule.min_percent_habitat</span> <span class='kw'>=</span> <span class='fl'>0.05</span>,
@@ -128,6 +128,10 @@ with <code>NA</code> when no information, habitat ID (optional)</p></td>
       <th>abund</th>
       <td><p>a <code>vector</code> with abundance values (e.g. Braun Blanquet) with <code>NA</code>
 when no information</p></td>
+    </tr>
+    <tr>
+      <th>habitat</th>
+      <td><p>a <code>vector</code> with habitat ID</p></td>
     </tr>
     <tr>
       <th>selectionRule.quanti</th>
@@ -157,10 +161,6 @@ occupied by the species (between 0 and 1)</p></td>
       <th>selectionRule.min_no_habitat</th>
       <td><p>minimum number of sites of specific habitat
 occupied by the species</p></td>
-    </tr>
-    <tr>
-      <th>habitat</th>
-      <td><p>a <code>vector</code> with habitat ID</p></td>
     </tr>
     </table>
     
@@ -278,7 +278,7 @@ but could be representative of a specific habitat</em> :</p>
                                  , <span class='kw'>selectionRule.min_no_abund_over25</span> <span class='kw'>=</span> <span class='fl'>10</span>)
 
 <span class='co'>#########################################################################################</span>
-<span class='co'>## EXAMPLE 3 : Add landclass selection with default parametrization</span>
+<span class='co'>## EXAMPLE 3 : Add habitat selection with default parametrization</span>
 <span class='co'>#########################################################################################</span>
 
 <span class='no'>sp.DOM</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.selectDominant</span>(<span class='kw'>mat.site.species.abund</span> <span class='kw'>=</span> <span class='no'>MontBlanc</span>$<span class='no'>mat.releves</span>
@@ -288,7 +288,7 @@ but could be representative of a specific habitat</em> :</p>
                                  , <span class='kw'>doHabitatSelection</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'>#########################################################################################       </span>
-<span class='co'>## EXAMPLE 4 : Redefinition of landclass selection rules</span>
+<span class='co'>## EXAMPLE 4 : Redefinition of habitat selection rules</span>
 <span class='co'>#########################################################################################</span>
 
 <span class='no'>sp.DOM</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.selectDominant</span>(<span class='kw'>mat.site.species.abund</span> <span class='kw'>=</span> <span class='no'>MontBlanc</span>$<span class='no'>mat.releves</span>

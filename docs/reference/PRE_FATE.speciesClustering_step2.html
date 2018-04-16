@@ -209,8 +209,9 @@ species based on these PFGs.</p>
 <span class='co'>## MontBlanc$mat.nicheOverlap : niolap object</span>
 
 <span class='co'>## Calculate distance between species</span>
-<span class='no'>sp.DIST</span> <span class='kw'>=</span> <span class='fu'><a href='PRE_FATE.speciesDistance.html'>PRE_FATE.speciesDistance</a></span>(<span class='kw'>mat.species.traits</span> <span class='kw'>=</span> <span class='no'>MontBlanc</span>$<span class='no'>mat.traits</span>,
-                                   <span class='kw'>mat.species.overlap</span> <span class='kw'>=</span> <span class='no'>MontBlanc</span>$<span class='no'>mat.nicheOverlap</span>)
+<span class='no'>sp.DIST</span> <span class='kw'>=</span> <span class='fu'><a href='PRE_FATE.speciesDistance.html'>PRE_FATE.speciesDistance</a></span>(<span class='kw'>mat.species.traits</span> <span class='kw'>=</span> <span class='no'>MontBlanc</span>$<span class='no'>mat.traits</span>
+                                   , <span class='kw'>mat.species.overlap</span> <span class='kw'>=</span> <span class='no'>MontBlanc</span>$<span class='no'>mat.nicheOverlap</span>
+                                   , <span class='kw'>min.info.thresh</span> <span class='kw'>=</span> <span class='fl'>0.9</span>)
 
 <span class='fu'>str</span>(<span class='no'>sp.DIST</span>)
 

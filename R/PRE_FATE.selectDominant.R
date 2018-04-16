@@ -152,7 +152,7 @@
 ##'                                  , selectionRule.min_no_abund_over25 = 10)
 ##' 
 ##' #########################################################################################
-##' ## EXAMPLE 3 : Add landclass selection with default parametrization
+##' ## EXAMPLE 3 : Add habitat selection with default parametrization
 ##' #########################################################################################
 ##' 
 ##' sp.DOM = PRE_FATE.selectDominant(mat.site.species.abund = MontBlanc$mat.releves
@@ -162,7 +162,7 @@
 ##'                                  , doHabitatSelection = TRUE)
 ##'                           
 ##' #########################################################################################       
-##' ## EXAMPLE 4 : Redefinition of landclass selection rules
+##' ## EXAMPLE 4 : Redefinition of habitat selection rules
 ##' #########################################################################################
 ##' 
 ##' sp.DOM = PRE_FATE.selectDominant(mat.site.species.abund = MontBlanc$mat.releves
@@ -200,13 +200,13 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
                                    , sites = NULL ## vector
                                    , species = NULL ## vector
                                    , abund = NULL ## vector
-                                   , landclass = NULL ## vector
+                                   , habitat = NULL ## vector
                                    , selectionRule.quanti = 0 ## minimum quantile of total number of sites that must occupy the species
                                    , selectionRule.min_mean_abund = 0 ## minimum mean abundance of the species
                                    , selectionRule.min_no_abund_over25 = 0 ## minimum number of sites where species is dominant (>= 25 % of coverage)
-                                   , doHabitatSelection = FALSE ## landclasses are given in the data.frame
-                                   , selectionRule.min_percent_habitat = 0.05 ## minimum percentage of the landclass occupied by the species 
-                                   , selectionRule.min_no_habitat = 5 ## minimum number of sites of the landclass occupied by the species
+                                   , doHabitatSelection = FALSE ## habitat are given in the data.frame
+                                   , selectionRule.min_percent_habitat = 0.05 ## minimum percentage of the habitat occupied by the species 
+                                   , selectionRule.min_no_habitat = 5 ## minimum number of sites of the habitat occupied by the species
 ){
   
   #################################################################################################
@@ -227,7 +227,7 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
     if (nrow(mat.site.species.abund) == 0 || ncol(mat.site.species.abund) < 3)
     {
       stop("Wrong dimension(s) of data!\n `mat.site.species.abund` does not have the appropriate number of rows (>0)
-           or columns (sites, species, abund, landclass - optional)")
+           or columns (sites, species, abund, habitat - optional)")
     }
     if (ncol(mat.site.species.abund) == 3)
     {
@@ -237,19 +237,19 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
       }
     } else if (ncol(mat.site.species.abund) == 4)
     {
-      if (sum(colnames(mat.site.species.abund) == c("sites", "species", "abund", "landclass")) < 3)
+      if (sum(colnames(mat.site.species.abund) == c("sites", "species", "abund", "habitat")) < 3)
       {
-        colnames(mat.site.species.abund) = c("sites", "species", "abund", "landclass")
+        colnames(mat.site.species.abund) = c("sites", "species", "abund", "habitat")
       }
     }
   } else if (is.null(mat.site.species.abund) &&
              (!is.null(sites) && !is.null(species) && !is.null(abund)))
   {
-    ## CASE 2 : Control form of parameters : sites, species, abund, landclass - optional
+    ## CASE 2 : Control form of parameters : sites, species, abund, habitat - optional
     mat.site.species.abund = data.frame(sites = sites, species = species, abund = abund)
-    if (!is.null(landclass))
+    if (!is.null(habitat))
     {
-      mat.site.species.abund$landclass = landclass
+      mat.site.species.abund$habitat = habitat
     }
   }
   
@@ -304,13 +304,13 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
   
   if(doHabitatSelection)
   {
-    ## Calculate the number of sites in each landclass
-    list.landclass.sites = split(mat.site.species.abund$sites, mat.site.species.abund$landclass)
-    no_sites_habitat = sapply(list.landclass.sites, FUN=length)
-    names(no_sites_habitat) = names(list.landclass.sites)
+    ## Calculate the number of sites in each habitat
+    list.habitat.sites = split(mat.site.species.abund$sites, mat.site.species.abund$habitat)
+    no_sites_habitat = sapply(list.habitat.sites, FUN=length)
+    names(no_sites_habitat) = names(list.habitat.sites)
   } else
   {
-    mat.site.species.abund$landclass = NA
+    mat.site.species.abund$habitat = NA
   }
   
   cat("\n ############## STATISTICS COMPUTATION ############## \n")
@@ -321,31 +321,31 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
   cat("\n     - stat.abund_max = maximal abundance (coverage percentage)")
   cat("\n     - stat.no_sites_abund_max = number of sites with maximal abundance")
   cat("\n     - stat.no_sites_abund_over25 = number of sites with maximal abundance >= 25%")
-  cat("\n  This is done over all sites, and for each landclass")
+  cat("\n  This is done over all sites, and for each habitat")
   cat("\n")
   
-  categories = unique(mat.site.species.abund$landclass)
+  categories = unique(mat.site.species.abund$habitat)
   if (length(categories) == 1 && is.na(categories[1])) {
     categories = "all"
   } else {
     categories = c("all", categories)
   }
   
-  mat.species.stat.landclass = list()
-  for(landclass_i in categories)
+  mat.species.stat.habitat = list()
+  for(habitat_i in categories)
   {
-    if(!is.na(landclass_i))
+    if(!is.na(habitat_i))
     {
-      cat("\n> Landclass : ",landclass_i, "...")
-      if (landclass_i == "all")
+      cat("\n> Habitat : ",habitat_i, "...")
+      if (habitat_i == "all")
       {
-        mat.site.species_landclass = mat.site.species.abund
+        mat.site.species_habitat = mat.site.species.abund
       } else
       {
-        mat.site.species_landclass = mat.site.species.abund[which(mat.site.species.abund$landclass == landclass_i),]
+        mat.site.species_habitat = mat.site.species.abund[which(mat.site.species.abund$habitat == habitat_i),]
       }
       ## Split abundance data by species
-      list.dat = split(mat.site.species_landclass$abund, mat.site.species_landclass$species)
+      list.dat = split(mat.site.species_habitat$abund, mat.site.species_habitat$species)
       list.number = sapply(list.dat,length)
       mat.species.stat = as.data.frame(t(sapply(list.dat, function(dat)
       {
@@ -375,7 +375,7 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
       mat.species.stat = data.frame(species = names(list.dat)
                                     , mat.species.stat
                                     , stat.no_sites_recorded = list.number)
-      mat.species.stat.landclass[[landclass_i]] = mat.species.stat
+      mat.species.stat.habitat[[habitat_i]] = mat.species.stat
     }
   }
   cat("\n")
@@ -390,7 +390,7 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
   ## OVER ALL SITES -------------------------------------------------------------------------------
   
   cat("\n> Over all sites...")
-  mat.all = mat.species.stat.landclass[["all"]]
+  mat.all = mat.species.stat.habitat[["all"]]
   mat.all$species = as.character(mat.all$species)
   
   ## Select species located above chosen quantile
@@ -408,17 +408,17 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
     mat.select.species.all = mat.all[select_all, ]
   }
   
-  ## FOR EACH LANDCLASS ---------------------------------------------------------------------------
+  ## FOR EACH HABITAT ---------------------------------------------------------------------------
   
   if(doHabitatSelection)
   {
-    cat("\n> Over each landclass...")
+    cat("\n> Over each habitat...")
     
     ## Select species that occur on at least a certain percentage of landclass
-    mat.select.species.landclass = data.frame()
-    for(i in 2:length(mat.species.stat.landclass))
+    mat.select.species.habitat = data.frame()
+    for(i in 2:length(mat.species.stat.habitat))
     {
-      mat.land = mat.species.stat.landclass[[i]]
+      mat.land = mat.species.stat.habitat[[i]]
       mat.land$species = as.character(mat.land$species)
       ## Select species which are present in the landclass with a certain percentage
       select_1 = which(mat.land$stat.no_sites_recorded >= (no_sites_habitat[i] * selectionRule.min_percent_habitat))
@@ -427,9 +427,9 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
       select_12 = intersect(select_1,select_2)
       if (length(select_12) > 0)
       {
-        mat.select.species.landclass = rbind(mat.select.species.landclass,
+        mat.select.species.habitat = rbind(mat.select.species.habitat,
                                              data.frame(species = mat.land$species[select_12],
-                                                        landclass = names(mat.species.stat.landclass)[i]))
+                                                        habitat = names(mat.species.stat.habitat)[i]))
       }
     }
   }
@@ -439,14 +439,14 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
   cat("\n> Combine selections...")
   
   ## Get information about how each species has been selected
-  ## (over all area, or within specific landclass and which one(s), or both)
+  ## (over all area, or within specific habitat and which one(s), or both)
   
   if(doHabitatSelection)
   {
-    selected.species = c(mat.select.species.all$species, mat.select.species.landclass$species)
-    selected.species.doubled = intersect(mat.select.species.all$species, mat.select.species.landclass$species)
-    selected.species.all = setdiff(mat.select.species.all$species, mat.select.species.landclass$species)
-    selected.species.landclass = setdiff(mat.select.species.landclass$species, mat.select.species.all$species)
+    selected.species = c(mat.select.species.all$species, mat.select.species.habitat$species)
+    selected.species.doubled = intersect(mat.select.species.all$species, mat.select.species.habitat$species)
+    selected.species.all = setdiff(mat.select.species.all$species, mat.select.species.habitat$species)
+    selected.species.habitat = setdiff(mat.select.species.habitat$species, mat.select.species.all$species)
     
     mat.species.dominant = mat.all[which(mat.all$species %in% unique(selected.species)),]
     mat.species.dominant$SELECTION = NA
@@ -455,15 +455,15 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
       if (mat.species.dominant$species[i] %in% selected.species.all)
       {
         mat.species.dominant$SELECTION[i] = "all"
-      } else if (mat.species.dominant$species[i] %in% selected.species.landclass)
+      } else if (mat.species.dominant$species[i] %in% selected.species.habitat)
       {
-        ind_sp = which(mat.select.species.landclass == mat.species.dominant$species[i])
-        mat.species.dominant$SELECTION[i] = paste0(mat.select.species.landclass$landclass[ind_sp]
+        ind_sp = which(mat.select.species.habitat == mat.species.dominant$species[i])
+        mat.species.dominant$SELECTION[i] = paste0(mat.select.species.habitat$habitat[ind_sp]
                                                    , collapse = "_")
       } else if (mat.species.dominant$species[i] %in% selected.species.doubled)
       {
-        ind_sp = which(mat.select.species.landclass == mat.species.dominant$species[i])
-        mat.species.dominant$SELECTION[i] = paste0(c("all", mat.select.species.landclass$landclass[ind_sp])
+        ind_sp = which(mat.select.species.habitat == mat.species.dominant$species[i])
+        mat.species.dominant$SELECTION[i] = paste0(c("all", mat.select.species.habitat$habitat[ind_sp])
                                                    , collapse = "_")
       }
     }
@@ -518,15 +518,15 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
   
   ## STEP 1 : Selection -----------------------------------------------------------
   
-  # tmp = mat.species.stat.landclass#[-1]
+  # tmp = mat.species.stat.habitat#[-1]
   # tmp = lapply(1:length(tmp), function(x) data.frame(tmp[[x]], landclass = names(tmp)[x]))
   # tmp = do.call(rbind, tmp)
   
   tmp = mat.all
-  tmp$landclass = "all"
+  tmp$habitat = "all"
   
-  mat.plot = melt(tmp, id.vars = c("species","landclass"))
-  mat.plot = rbind(mat.plot, data.frame(species = "SP.ghost", landclass = NA, variable = c("Fake1","Fake2"), value = NA))
+  mat.plot = melt(tmp, id.vars = c("species","habitat"))
+  mat.plot = rbind(mat.plot, data.frame(species = "SP.ghost", habitat = NA, variable = c("Fake1","Fake2"), value = NA))
   mat.plot$variable = factor(mat.plot$variable, c("stat.no_sites_recorded"
                                                   , "Fake1", "Fake2"
                                                   , "stat.abund_median"
@@ -536,8 +536,8 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
                                                   , "stat.no_sites_abund_max"
                                                   , "stat.no_sites_abund_over25"
   ))
-  mat.plot$landclass = as.character(mat.plot$landclass)
-  mat.plot$landclass[which(mat.plot$landclass == "all")] = NA
+  mat.plot$habitat = as.character(mat.plot$habitat)
+  mat.plot$habitat[which(mat.plot$habitat == "all")] = NA
   mat.plot$limit = NA
   mat.plot$limit[which(mat.plot$variable == "stat.no_sites_recorded")] = quant
   mat.plot$limit[which(mat.plot$variable == "stat.abund_mean")] = selectionRule.min_mean_abund
@@ -545,9 +545,9 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
   
   pp1 = ggplot(mat.plot, aes_string(x = "value")) +
     geom_histogram(na.rm = T) +
-    # geom_histogram(aes(x = value, fill = landclass)) +
-    # geom_density(aes(x = value, ..count.., group = landclass)) +
-    # scale_color_discrete("Landclass", na.value = NA, breaks = levels(factor(mat.plot$landclass))) +
+    # geom_histogram(aes(x = value, fill = habitat)) +
+    # geom_density(aes(x = value, ..count.., group = habitat)) +
+    # scale_color_discrete("Habitat", na.value = NA, breaks = levels(factor(mat.plot$habitat))) +
     geom_vline(aes_string(xintercept = "limit"), lwd = 1, color = "#fb6a4a", na.rm = TRUE) +
     facet_wrap("variable", scales="free", labeller = as_labeller(variables.labeller)) +
     labs(x="", y = "", title = "STEP 1 : Selection of dominant species",
@@ -577,7 +577,7 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
                                                   , "stat.no_sites_abund_max"
                                                   , "stat.no_sites_abund_over25"
   ))
-  mat.plot$SELECTION = sub("all_","global + landclass ",mat.plot$SELECTION)
+  mat.plot$SELECTION = sub("all_","global + habitat ",mat.plot$SELECTION)
   mat.plot$SELECTION = sub("all","global",mat.plot$SELECTION)
   mat.plot$limit = NA
   mat.plot$limit[which(mat.plot$variable == "stat.no_sites_recorded")] = quant

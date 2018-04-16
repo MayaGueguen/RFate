@@ -105,7 +105,8 @@ species, combining functional distances (based on functional trait values)
 and niche overlap (based on co-occurrence of species).</p>
     
 
-    <pre class="usage"><span class='fu'>PRE_FATE.speciesDistance</span>(<span class='no'>mat.species.traits</span>, <span class='no'>mat.species.overlap</span>)</pre>
+    <pre class="usage"><span class='fu'>PRE_FATE.speciesDistance</span>(<span class='no'>mat.species.traits</span>, <span class='no'>mat.species.overlap</span>,
+  <span class='no'>min.info.thresh</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -131,6 +132,10 @@ and niche overlap (based on co-occurrence of species).</p>
   object, or simply a <code>matrix</code>.</p></li>
 </ul></td>
     </tr>
+    <tr>
+      <th>min.info.thresh</th>
+      <td><p>minimum percentage of values for each trait (between 0 and 1)</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -154,6 +159,9 @@ on two types of distance information :</p>
     <code>as.numeric</code>, <code>as.factor</code> and <code>ordered</code>).</p></li>
 <li><p>Functional distance matrix is calculated with Gower dissimilarity,
     using the <code>gowdis</code> function from <span class="pkg">FD</span> package.</p></li>
+<li><p>This function allows <code>NA</code> values. In order to let the user
+    decide what importance to give to missing values, the <code>min.info.thresh</code>
+    defines which minimum percentage of species should have values for each trait.</p></li>
 </ul></p></li>
 <li><p><strong>Niche overlap : </strong>
   <ul>
@@ -164,16 +172,10 @@ on two types of distance information :</p>
 </ol>
     <p>Functional distances and niche overlap informations are then <strong>combined</strong>
 according to the following formula :</p>
-<p>$$mat.DIST_{sub-group} = [ mat.OVERLAP_{sub-group} +
-mat.FUNCTIONAL_{sub-group} * n_{traits} ] / [ n_{traits} + 1 ]$$</p>
+<p>$$\text{mat.DIST}_{sub-group} = [ \text{mat.OVERLAP}_{sub-group} +
+\text{mat.FUNCTIONAL}_{sub-group} * n_{traits} ] / [ n_{traits} + 1 ]$$</p>
 <p>meaning that distance matrix obtained from functional information is
 weighted by the number of traits used.</p>
-    
-    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
-
-    <p>Informations must be complete to include a species into the distance
-calculation. Hence, <strong>if a species is missing a trait value, or information
-about distribution or niche overlap, it will be removed from the computation</strong>.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -184,8 +186,13 @@ about distribution or niche overlap, it will be removed from the computation</st
 
 <span class='co'>## MontBlanc$mat.traits : data.frame</span>
 <span class='co'>## MontBlanc$mat.nicheOverlap : niolap object</span>
-<span class='no'>sp.DIST</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.speciesDistance</span>(<span class='kw'>mat.species.traits</span> <span class='kw'>=</span> <span class='no'>MontBlanc</span>$<span class='no'>mat.traits</span>,
-                                   <span class='kw'>mat.species.overlap</span> <span class='kw'>=</span> <span class='no'>MontBlanc</span>$<span class='no'>mat.nicheOverlap</span>)
+<span class='co'># sp.DIST = PRE_FATE.speciesDistance(mat.species.traits = MontBlanc$mat.traits</span>
+<span class='co'>#                                    , mat.species.overlap = MontBlanc$mat.nicheOverlap</span>
+<span class='co'>#                                    , min.info.thresh = 1)</span>
+
+<span class='no'>sp.DIST</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.speciesDistance</span>(<span class='kw'>mat.species.traits</span> <span class='kw'>=</span> <span class='no'>MontBlanc</span>$<span class='no'>mat.traits</span>
+                                   , <span class='kw'>mat.species.overlap</span> <span class='kw'>=</span> <span class='no'>MontBlanc</span>$<span class='no'>mat.nicheOverlap</span>
+                                   , <span class='kw'>min.info.thresh</span> <span class='kw'>=</span> <span class='fl'>0.9</span>)
 
 <span class='fu'>str</span>(<span class='no'>sp.DIST</span>)
 
@@ -199,8 +206,6 @@ about distribution or niche overlap, it will be removed from the computation</st
       <li><a href="#value">Value</a></li>
 
       <li><a href="#details">Details</a></li>
-
-      <li><a href="#note">Note</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

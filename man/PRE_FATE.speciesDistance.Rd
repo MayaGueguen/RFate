@@ -5,7 +5,8 @@
 \title{Computation of distances between species
 based on traits and niche overlap}
 \usage{
-PRE_FATE.speciesDistance(mat.species.traits, mat.species.overlap)
+PRE_FATE.speciesDistance(mat.species.traits, mat.species.overlap,
+  min.info.thresh)
 }
 \arguments{
 \item{mat.species.traits}{A \code{data.frame} with at least 3 columns :
@@ -27,6 +28,8 @@ PRE_FATE.speciesDistance(mat.species.traits, mat.species.overlap)
   each pair of species. It can be a \code{dist} object, a \code{niolap}
   object, or simply a \code{matrix}.
 }}
+
+\item{min.info.thresh}{minimum percentage of values for each trait (between 0 and 1)}
 }
 \value{
 A \code{dist} object corresponding to the distance between each pair
@@ -53,6 +56,9 @@ on two types of distance information :
     \code{as.numeric}, \code{as.factor} and \code{ordered}).
     \item Functional distance matrix is calculated with Gower dissimilarity,
     using the \code{gowdis} function from \pkg{FD} package.
+    \item This function allows \code{NA} values. In order to let the user
+    decide what importance to give to missing values, the \code{min.info.thresh}
+    defines which minimum percentage of species should have values for each trait. 
   }
   }
   \item{\strong{Niche overlap : }}{
@@ -67,16 +73,11 @@ on two types of distance information :
 Functional distances and niche overlap informations are then \strong{combined}
 according to the following formula :
 
-\deqn{mat.DIST_{sub-group} = [ mat.OVERLAP_{sub-group} +
-mat.FUNCTIONAL_{sub-group} * n_{traits} ] / [ n_{traits} + 1 ]}
+\deqn{\text{mat.DIST}_{sub-group} = [ \text{mat.OVERLAP}_{sub-group} +
+\text{mat.FUNCTIONAL}_{sub-group} * n_{traits} ] / [ n_{traits} + 1 ]}
 
 meaning that distance matrix obtained from functional information is
 weighted by the number of traits used.
-}
-\note{
-Informations must be complete to include a species into the distance
-calculation. Hence, \strong{if a species is missing a trait value, or information
-about distribution or niche overlap, it will be removed from the computation}.
 }
 \examples{
 ## Load example data
@@ -85,8 +86,13 @@ str(MontBlanc)
 
 ## MontBlanc$mat.traits : data.frame
 ## MontBlanc$mat.nicheOverlap : niolap object
-sp.DIST = PRE_FATE.speciesDistance(mat.species.traits = MontBlanc$mat.traits,
-                                   mat.species.overlap = MontBlanc$mat.nicheOverlap)
+# sp.DIST = PRE_FATE.speciesDistance(mat.species.traits = MontBlanc$mat.traits
+#                                    , mat.species.overlap = MontBlanc$mat.nicheOverlap
+#                                    , min.info.thresh = 1)
+                                   
+sp.DIST = PRE_FATE.speciesDistance(mat.species.traits = MontBlanc$mat.traits
+                                   , mat.species.overlap = MontBlanc$mat.nicheOverlap
+                                   , min.info.thresh = 0.9)
 
 str(sp.DIST)
 
