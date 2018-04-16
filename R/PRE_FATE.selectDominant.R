@@ -213,9 +213,9 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
   
   ## Check existence of parameters
   if (is.null(mat.site.species.abund) &&
-      (is.null(sites) || is.null(species)))
+      (is.null(sites) || is.null(species) || is.null(abund)))
   {
-    stop("No data given!\n (neither `mat.site.species.abund` or separated `sites` / `species` information)")
+    stop("No data given!\n (missing `mat.site.species.abund` or separated `sites` / `species` / `abund` information)")
   } else if (!is.null(mat.site.species.abund))
   {
     ## CASE 1 : Control form of parameters : mat.site.species.abund
@@ -226,20 +226,19 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
     }
     if (nrow(mat.site.species.abund) == 0 || ncol(mat.site.species.abund) < 3)
     {
-      stop("Wrong dimension(s) of data!\n `mat.site.species.abund` does not have the appropriate number of rows (>0)
-           or columns (sites, species, abund, habitat - optional)")
+      stop("Wrong dimension(s) of data!\n `mat.site.species.abund` does not have the appropriate number of rows (>0) or columns (sites, species, abund, habitat - optional)")
     }
     if (ncol(mat.site.species.abund) == 3)
     {
-      if (sum(colnames(mat.site.species.abund) == c("sites", "species", "abund")) < 3)
+      if (sum(colnames(mat.site.species.abund) %in% c("sites", "species", "abund")) < 3)
       {
-        colnames(mat.site.species.abund) = c("sites", "species", "abund")
+        stop("Wrong type of data!\n Column names of `mat.site.species.abund` must be `sites`, `species` and `abund`")
       }
     } else if (ncol(mat.site.species.abund) == 4)
     {
-      if (sum(colnames(mat.site.species.abund) == c("sites", "species", "abund", "habitat")) < 3)
+      if (sum(colnames(mat.site.species.abund) %in% c("sites", "species", "abund", "habitat")) < 4)
       {
-        colnames(mat.site.species.abund) = c("sites", "species", "abund", "habitat")
+        stop("Wrong type of data!\n Column names of `mat.site.species.abund` must be `sites`, `species`, `abund` and `habitat`")
       }
     }
   } else if (is.null(mat.site.species.abund) &&
@@ -253,15 +252,28 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
     }
   }
   
-  if( selectionRule.quanti < 0 || selectionRule.quanti > 1)
+  if (!is.numeric(selectionRule.quanti) ||
+      !is.numeric(selectionRule.min_mean_abund) ||
+      !is.numeric(selectionRule.min_no_abund_over25) ||
+      !is.numeric(selectionRule.min_no_habitat) ||
+      !is.numeric(selectionRule.min_percent_habitat))
+  {
+    stop("Wrong data given!\n `selectionRule.quanti`, `selectionRule.min_mean_abund`,
+         `selectionRule.min_no_abund_over25`, `selectionRule.min_no_habitat` and
+         `selectionRule.min_percent_habitat` must contain numeric values")
+  }
+  if (selectionRule.quanti < 0 || selectionRule.quanti > 1)
   {
     stop("Wrong data given!\n `selectionRule.quanti` must be between 0 and 1")
   }
-  if( selectionRule.min_mean_abund < 0 || selectionRule.min_no_abund_over25 < 0 || selectionRule.min_no_habitat < 0)
+  if (selectionRule.min_mean_abund < 0 ||
+      selectionRule.min_no_abund_over25 < 0 ||
+      selectionRule.min_no_habitat < 0)
   {
     stop("Wrong data given!\n `selectionRule.min_mean_abund`, `selectionRule.min_no_abund_over25` and `selectionRule.min_no_habitat` must be >= 0")
   }
-  if( selectionRule.min_percent_habitat < 0 || selectionRule.min_percent_habitat > 1)
+  if (selectionRule.min_percent_habitat < 0 ||
+      selectionRule.min_percent_habitat > 1)
   {
     stop("Wrong data given!\n `selectionRule.min_percent_habitat` must be between 0 and 1")
   }

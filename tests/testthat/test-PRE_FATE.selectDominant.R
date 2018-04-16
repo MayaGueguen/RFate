@@ -1,77 +1,74 @@
 library(RFate)
 context("PRE_FATE.selectDominant() function")
 
-## INPUT
-test_that("PRE_FATE.selectDominant gives error with wrong type of data", {
-  expect_error(PRE_FATE.selectDominant(), "No data given!")
-  expect_error(PRE_FATE.selectDominant(mat.site.species.abund = matrix(1)), "Wrong type of data!")
-  expect_error(PRE_FATE.selectDominant(mat.site.species.abund = c(1, 89, 3)), "Wrong type of data!")
-  expect_error(PRE_FATE.selectDominant(mat.site.species.abund = data.frame("1")), "Wrong dimension(s) of data!", fixed = T)
-  expect_error(PRE_FATE.selectDominant(mat.site.species.abund = data.frame("1","abc")), "Wrong dimension(s) of data!", fixed = T)
-  expect_error(PRE_FATE.selectDominant(mat.site.species.abund = data.frame(species = "1",sites = "A")), "Wrong dimension(s) of data!", fixed = T)
-  # expect_error(PRE_FATE.selectDominant(mat.site.species.abund = data.frame(species = "1",sites = "A", abundance = 3)), "Wrong dimension(s) of data!", fixed = T)
+## INPUTS
+test_that("PRE_FATE.selectDominant gives error with missing values", {
+  expect_error(PRE_FATE.selectDominant(), "No data given!\n (missing", fixed = T)
 })
 
-# ## OUTPUTS
-# test_that("PRE_FATE.abundBraunBlanquet of BB values give right results", {
-#   expect_equal(PRE_FATE.abundBraunBlanquet("r"), 0.5)
-#   expect_equal(PRE_FATE.abundBraunBlanquet("+"), 0.5)
-#   expect_equal(PRE_FATE.abundBraunBlanquet("1"), 3)
-#   expect_equal(PRE_FATE.abundBraunBlanquet("2"), 15)
-#   expect_equal(PRE_FATE.abundBraunBlanquet("3"), 37.5)
-#   expect_equal(PRE_FATE.abundBraunBlanquet("4"), 62.5)
-#   expect_equal(PRE_FATE.abundBraunBlanquet("5"), 87.5)
-#   expect_equal(PRE_FATE.abundBraunBlanquet(factor("r")), 0.5)
-#   expect_equal(PRE_FATE.abundBraunBlanquet(factor("+")), 0.5)
-#   expect_equal(PRE_FATE.abundBraunBlanquet(factor("1")), 3)
-#   expect_equal(PRE_FATE.abundBraunBlanquet(factor("2")), 15)
-#   expect_equal(PRE_FATE.abundBraunBlanquet(factor("3")), 37.5)
-#   expect_equal(PRE_FATE.abundBraunBlanquet(factor("4")), 62.5)
-#   expect_equal(PRE_FATE.abundBraunBlanquet(factor("5")), 87.5)
-#   expect_equal(PRE_FATE.abundBraunBlanquet(1), 3)
-#   expect_equal(PRE_FATE.abundBraunBlanquet(2), 15)
-#   expect_equal(PRE_FATE.abundBraunBlanquet(3), 37.5)
-#   expect_equal(PRE_FATE.abundBraunBlanquet(4), 62.5)
-#   expect_equal(PRE_FATE.abundBraunBlanquet(5), 87.5)
-#   expect_equal(PRE_FATE.abundBraunBlanquet(factor(1)), 3)
-#   expect_equal(PRE_FATE.abundBraunBlanquet(factor(2)), 15)
-#   expect_equal(PRE_FATE.abundBraunBlanquet(factor(3)), 37.5)
-#   expect_equal(PRE_FATE.abundBraunBlanquet(factor(4)), 62.5)
-#   expect_equal(PRE_FATE.abundBraunBlanquet(factor(5)), 87.5)
-# })
-# 
-# ## OUTPUTS
-# test_that("PRE_FATE.abundBraunBlanquet of none BB values give NA", {
-#   expect_equal(PRE_FATE.abundBraunBlanquet(-1), as.numeric(NA))
-#   expect_equal(PRE_FATE.abundBraunBlanquet(6), as.numeric(NA))
-#   expect_equal(PRE_FATE.abundBraunBlanquet(19856394), as.numeric(NA))
-#   expect_equal(PRE_FATE.abundBraunBlanquet("a"), as.numeric(NA))
-#   expect_equal(PRE_FATE.abundBraunBlanquet("abc"), as.numeric(NA))
-# })
-# 
-# ## OUTPUTS
-# test_that("PRE_FATE.abundBraunBlanquet of missing give NA", {
-#   expect_equal(PRE_FATE.abundBraunBlanquet(NA), as.numeric(NA))
-#   expect_equal(PRE_FATE.abundBraunBlanquet("NA"), as.numeric(NA))
-# })
-# 
-# ## OUTPUTS
-# test_that("PRE_FATE.abundBraunBlanquet does not modify length", {
-#   expect_equal(length(PRE_FATE.abundBraunBlanquet(NA)), 1)
-#   expect_equal(length(PRE_FATE.abundBraunBlanquet("NA")), 1)
-#   expect_equal(length(PRE_FATE.abundBraunBlanquet("1")), 1)
-#   expect_equal(length(PRE_FATE.abundBraunBlanquet(c("1", NA))), 2)
-#   expect_equal(length(PRE_FATE.abundBraunBlanquet(c("1", "NA"))), 2)
-#   expect_equal(length(PRE_FATE.abundBraunBlanquet(c(NA, NA))), 2)
-#   expect_equal(length(PRE_FATE.abundBraunBlanquet(c(12, -789))), 2)
-# })
-# 
-# ## OUTPUTS
-# test_that("PRE_FATE.abundBraunBlanquet gives numeric output", {
-#   expect_output(str(PRE_FATE.abundBraunBlanquet(NA)), "num")
-#   expect_output(str(PRE_FATE.abundBraunBlanquet(1)), "num")
-#   expect_output(str(PRE_FATE.abundBraunBlanquet("1")), "num")
-#   expect_output(str(PRE_FATE.abundBraunBlanquet(c(1, NA))), "num")
-# })
-# 
-# 
+## INPUTS
+test_that("PRE_FATE.selectDominant gives error with wrong type of data : mat.site.species.abund", {
+  expect_error(PRE_FATE.selectDominant(mat.site.species.abund = matrix(1)), "Wrong type of data!\n `mat.site.species.abund` must be a data.frame")
+  expect_error(PRE_FATE.selectDominant(mat.site.species.abund = c(1, 89, 3)), "Wrong type of data!\n `mat.site.species.abund` must be a data.frame")
+  expect_error(PRE_FATE.selectDominant(mat.site.species.abund = data.frame("1")),  "does not have the appropriate number of rows")
+  expect_error(PRE_FATE.selectDominant(mat.site.species.abund = data.frame("1","abc")), "does not have the appropriate number of rows", fixed = T)
+  expect_error(PRE_FATE.selectDominant(mat.site.species.abund = data.frame(species = "1",sites = "A")), "does not have the appropriate number of rows", fixed = T)
+  expect_error(PRE_FATE.selectDominant(mat.site.species.abund = data.frame(species = "1",sites = "A", abundance = 3)), "Wrong type of data!\n Column names of", fixed = T)
+  expect_error(PRE_FATE.selectDominant(mat.site.species.abund = data.frame(species = "1",sites = "A", abundance = 3, habitat = "grass")), "Wrong type of data!\n Column names of", fixed = T)
+ })
+
+## INPUTS
+test_that("PRE_FATE.selectDominant gives error with wrong type of data : sites / species / abund", {
+  expect_error(PRE_FATE.selectDominant(species = "1"), "No data given!\n (missing", fixed = T)
+  expect_error(PRE_FATE.selectDominant(sites = "A"), "No data given!\n (missing", fixed = T)
+  expect_error(PRE_FATE.selectDominant(species = "1", sites = "A"), "No data given!\n (missing", fixed = T)
+  # expect_error(PRE_FATE.selectDominant(species = "1", sites = "A", abund = c(3, 10)), "No data given!\n (missing", fixed = T)
+})
+
+## INPUTS
+test_that("PRE_FATE.selectDominant gives error with wrong type of data : selectionRule", {
+  expect_error(PRE_FATE.selectDominant(mat.site.species.abund = data.frame(sites = "A", species = "1", abund = 3)
+                                       , selectionRule.quanti = "a"), "must contain numeric values")
+  expect_error(PRE_FATE.selectDominant(mat.site.species.abund = data.frame(sites = "A", species = "1", abund = 3)
+                                       , selectionRule.quanti = factor(1)), "must contain numeric values")
+  expect_error(PRE_FATE.selectDominant(mat.site.species.abund = data.frame(sites = "A", species = "1", abund = 3)
+                                       , selectionRule.quanti = 1.1), "must be between 0 and 1")
+  expect_error(PRE_FATE.selectDominant(mat.site.species.abund = data.frame(sites = "A", species = "1", abund = 3)
+                                       , selectionRule.quanti = -119), "must be between 0 and 1")
+  
+  expect_error(PRE_FATE.selectDominant(mat.site.species.abund = data.frame(sites = "A", species = "1", abund = 3)
+                                       , selectionRule.min_mean_abund = "a"), "must contain numeric values")
+  expect_error(PRE_FATE.selectDominant(mat.site.species.abund = data.frame(sites = "A", species = "1", abund = 3)
+                                       , selectionRule.min_mean_abund = factor(1)), "must contain numeric values")
+  expect_error(PRE_FATE.selectDominant(mat.site.species.abund = data.frame(sites = "A", species = "1", abund = 3)
+                                       , selectionRule.min_mean_abund = -119), "must be >= 0")
+  
+  expect_error(PRE_FATE.selectDominant(mat.site.species.abund = data.frame(sites = "A", species = "1", abund = 3)
+                                       , selectionRule.min_no_abund_over25 = "a"), "must contain numeric values")
+  expect_error(PRE_FATE.selectDominant(mat.site.species.abund = data.frame(sites = "A", species = "1", abund = 3)
+                                       , selectionRule.min_no_abund_over25 = factor(1)), "must contain numeric values")
+  expect_error(PRE_FATE.selectDominant(mat.site.species.abund = data.frame(sites = "A", species = "1", abund = 3)
+                                       , selectionRule.min_no_abund_over25 = -119), "must be >= 0")
+  
+  expect_error(PRE_FATE.selectDominant(mat.site.species.abund = data.frame(sites = "A", species = "1", abund = 3)
+                                       , selectionRule.min_percent_habitat = "a"), "must contain numeric values")
+  expect_error(PRE_FATE.selectDominant(mat.site.species.abund = data.frame(sites = "A", species = "1", abund = 3)
+                                       , selectionRule.min_percent_habitat = factor(1)), "must contain numeric values")
+  expect_error(PRE_FATE.selectDominant(mat.site.species.abund = data.frame(sites = "A", species = "1", abund = 3)
+                                       , selectionRule.min_percent_habitat = 1.1), "must be between 0 and 1")
+  expect_error(PRE_FATE.selectDominant(mat.site.species.abund = data.frame(sites = "A", species = "1", abund = 3)
+                                       , selectionRule.min_percent_habitat = -119), "must be between 0 and 1")
+  
+  expect_error(PRE_FATE.selectDominant(mat.site.species.abund = data.frame(sites = "A", species = "1", abund = 3)
+                                       , selectionRule.min_no_habitat = "a"), "must contain numeric values")
+  expect_error(PRE_FATE.selectDominant(mat.site.species.abund = data.frame(sites = "A", species = "1", abund = 3)
+                                       , selectionRule.min_no_habitat = factor(1)), "must contain numeric values")
+  expect_error(PRE_FATE.selectDominant(mat.site.species.abund = data.frame(sites = "A", species = "1", abund = 3)
+                                       , selectionRule.min_no_habitat = -119), "must be >= 0")
+})
+
+## OUTPUTS
+test_that("PRE_FATE.selectDominant right results", {
+  expect_output(str(PRE_FATE.selectDominant(mat.site.species.abund = data.frame(sites = "A", species = "1", abund = 3))), "data.frame")
+  expect_output(str(PRE_FATE.selectDominant(mat.site.species.abund = data.frame(sites = "A", species = "1", abund = 3))), "9 variables")
+})
