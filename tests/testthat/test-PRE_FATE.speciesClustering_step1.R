@@ -16,7 +16,8 @@ test_that("PRE_FATE.speciesClustering_step1 gives error with wrong data", {
   expect_error(PRE_FATE.speciesClustering_step1(factor("A")), "must be a dissimilarity object", fixed = T)
   expect_error(PRE_FATE.speciesClustering_step1(data.frame(1)), "must be a dissimilarity object", fixed = T)
   
-  expect_error(PRE_FATE.speciesClustering_step1(matrix(c(1,5,2,2), ncol=2)), "All clustering methods give NA values for Mouchet measure")
+  expect_error(PRE_FATE.speciesClustering_step1(matrix(c(1,5,2,2), ncol=2))
+               , "All clustering methods (maybe for a specific group) give NA values for Mouchet measure", fixed = T)
   expect_error(PRE_FATE.speciesClustering_step1(matrix(c(1,2,3,4,NA,6,7,8,9), ncol=3)), "`mat.species.DIST` contain NA values ")
   expect_error(PRE_FATE.speciesClustering_step1(matrix(c(1,2,3,NA,NA,6,7,8,9), ncol=3)), "`mat.species.DIST` contain NA values ")
   
