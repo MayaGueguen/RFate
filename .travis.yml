@@ -4,13 +4,15 @@ language: R
 
 matrix:
   include:
-  - r: release
-    os: osx
+  - r: devel
+    os: linux
   - r: release
     os: linux
     after_success: travis_wait Rscript -e 'covr::codecov()'
-  - r: devel
-    os: linux
+  - r: release
+    os: osx
+
+
 
 sudo: false
 cache: packages

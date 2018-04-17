@@ -166,41 +166,48 @@ PRE_FATE.speciesClustering_step1 = function(mat.species.DIST)
   #################################################################################################
   
   ## Check existence of parameters
-  if (is.null(mat.species.DIST))
+  if (missing(mat.species.DIST) || is.null(mat.species.DIST))
   {
-    stop("No data given!\n (no `mat.species.DIST` information)")
+    stop("No data given!\n (missing `mat.species.DIST` information)")
   }
   ## Control form of parameters : mat.species.DIST
   if(is.list(mat.species.DIST))
   {
-    for (i in 1:length(mat.species.DIST))
+    if (length(mat.species.DIST) > 0)
     {
-      if (class(mat.species.DIST[[i]]) %in% c("dist", "niolap"))
+      for (i in 1:length(mat.species.DIST))
       {
-        mat.species.DIST[[i]] = as.matrix(mat.species.DIST[[i]])
-      } else if (is.matrix(mat.species.DIST[[i]]))
-      {
-        if (ncol(mat.species.DIST[[i]]) != nrow(mat.species.DIST[[i]]))
+        if (class(mat.species.DIST[[i]]) %in% c("dist", "niolap"))
         {
-          stop(paste0("Wrong dimension(s) of data!\n `mat.species.DIST[[",
-                      i,
-                      "]]` does not have the same number of rows (",
-                      nrow(mat.species.DIST[[i]]),
-                      ") and columns (",
-                      ncol(mat.species.DIST[[i]]),
-                      ")"
-          ))
+          mat.species.DIST[[i]] = as.matrix(mat.species.DIST[[i]])
+        } else if (is.matrix(mat.species.DIST[[i]]))
+        {
+          if (ncol(mat.species.DIST[[i]]) != nrow(mat.species.DIST[[i]]))
+          {
+            stop(paste0("Wrong dimension(s) of data!\n `mat.species.DIST[[",
+                        i,
+                        "]]` does not have the same number of rows (",
+                        nrow(mat.species.DIST[[i]]),
+                        ") and columns (",
+                        ncol(mat.species.DIST[[i]]),
+                        ")"
+            ))
+          }
+        } else {
+          stop(paste0("Wrong type of data!\n `mat.species.DIST[["
+                      , i
+                      , "]]` must be a dissimilarity object (`dist`, `niolap`, `matrix`)"))
         }
-      } else {
-        stop("Wrong type of data!\n `mat.species.DIST[[", i, "]]` must be a
-             dissimilarity object (`dist`, `niolap`, `matrix`)")
       }
+    } else
+    {
+      stop("Wrong dimension(s) of data!\n `mat.species.DIST` must be of length > 0")
     }
     if(!is.null(names(mat.species.DIST)))
     {
       group_names = names(mat.species.DIST)
     } else {
-      group_names = paste0("GROUP", length(mat.species.DIST))
+      group_names = paste0("GROUP", 1:length(mat.species.DIST))
     }
   } else {
     if (class(mat.species.DIST) %in% c("dist", "niolap"))
@@ -218,9 +225,18 @@ PRE_FATE.speciesClustering_step1 = function(mat.species.DIST)
         ))
       }
     } else {
-      stop("Wrong type of data!\n `mat.species.DIST` must be a
-             dissimilarity object (`dist`, `niolap`, `matrix`)")
+      stop(paste0("Wrong type of data!\n `mat.species.DIST` must be a dissimilarity object"
+                  , " (`dist`, `niolap`, `matrix`) or a list of dissimilarity objects"))
     }
+    mat.species.DIST = list(mat.species.DIST)
+    group_names = paste0("GROUP", 1:length(mat.species.DIST))
+  }
+  no_NA_values = sapply(mat.species.DIST, function(mat) sum(is.na(mat)))
+  if (length(which(no_NA_values > 0)) > 0)
+  {
+    stop(paste0("Missing data!\n `mat.species.DIST` contain NA values ("
+                   , paste0(no_NA_values, collapse = ", ")
+                   , "), clustering with `hclust` function might have problems dealing with this data"))
   }
   
   #################################################################################################
@@ -252,6 +268,20 @@ PRE_FATE.speciesClustering_step1 = function(mat.species.DIST)
     return(data.frame(clust.method = clust.method, group = group_names, metric = clust.choice))
   }
   clust.choice = do.call(rbind, clust.choice)
+  if (length(group_names) == 1)
+  {
+    no_NA_values = length(which(is.na(clust.choice$metric)))
+    no_NA_values = (no_NA_values == nrow(clust.choice))
+  } else {
+    no_NA_values = sapply(group_names, function(x) length(which(is.na(clust.choice$metric[which(clust.choice$group == x)]))))
+    no_NA_values = (no_NA_values == sapply(group_names, function(x) length(which(clust.choice$group == x))))
+    no_NA_values = (sum(no_NA_values) >= 1)
+  }
+  if (no_NA_values)
+  {
+    stop(paste0("All clustering methods (maybe for a specific group) give NA values for Mouchet measure.\n"
+                , "Please check if you have sufficient values to run `hclust` function"))
+  }
   
   ## GRAPHICAL REPRESENTATION
   pp1 = ggplot(clust.choice, aes_string(x = "group", y = "metric", group = "clust.method", lty = "clust.method")) +
