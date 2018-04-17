@@ -40,7 +40,7 @@ setwd("RFate/")
 # pkgdown:::build_site(lazy = TRUE)
 
 # pkgdown:::build_init_site()
-# pkgdown:::build_home()
+pkgdown:::build_home()
 pkgdown:::build_reference(examples = FALSE)
 # pkgdown:::build_articles()
 # pkgdown:::build_tutorials()
@@ -67,5 +67,6 @@ devtools::check(pkg = package_name)
 # INSTALL THE PACKAGE ----------------------------------------------
 
 install.packages(pkgs = paste0(package_name, "_", package_version, ".tar.gz"), repos = NULL, type = "source")
+system(paste0("scp ",paste0(package_name, "_", package_version, ".tar.gz"), " ", package_name, "/archive/"))
 eval(parse(text = paste0("library(package = ", package_name, ")")))
 

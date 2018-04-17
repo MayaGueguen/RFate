@@ -1,3 +1,12 @@
+
+navbar:
+  right:
+    - icon: fa-rocket
+      text: 'Download Current Version'
+      href: archive/RFate_0.0.1.9000.tar.gz
+    - icon: fa-github
+      href: https://github.com/MayaGueguen/RFate
+
 reference:
   - title: Build Plant Functional Groups (PFG)
     desc:  Functions to select dominant species, compute functional distance between species and build clusters. <br/> ..
