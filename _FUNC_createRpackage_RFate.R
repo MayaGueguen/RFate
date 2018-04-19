@@ -41,7 +41,7 @@ setwd("RFate/")
 
 # pkgdown:::build_init_site()
 pkgdown:::build_home()
-pkgdown:::build_reference(examples = FALSE)
+pkgdown:::build_reference(examples = TRUE)
 # pkgdown:::build_articles()
 # pkgdown:::build_tutorials()
 # pkgdown:::build_news()
@@ -61,12 +61,12 @@ Rcmd(args = paste0("build ",package_name)) ## or with a shell : R CMD build MyPa
 ## CHECK THE PACKAGE ------------------------------------------------
 
 # Rcmd(args = paste0("check ",package_name)) ## or with a shell : R CMD check MyPackage
-devtools::check(pkg = package_name, document = FALSE)
+# devtools::check(pkg = package_name, document = FALSE)
 devtools::check(pkg = package_name)
 
 # INSTALL THE PACKAGE ----------------------------------------------
 
 install.packages(pkgs = paste0(package_name, "_", package_version, ".tar.gz"), repos = NULL, type = "source")
-system(paste0("scp ",paste0(package_name, "_", package_version, ".tar.gz"), " ", package_name, "/archive/"))
+system(paste0("scp ",paste0(package_name, "_", package_version, ".tar.gz"), " ", package_name, "/docs/archive/"))
 eval(parse(text = paste0("library(package = ", package_name, ")")))
 

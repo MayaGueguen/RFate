@@ -18,23 +18,23 @@ sp.DOM = PRE_FATE.selectDominant(mat.site.species.abund = MontBlanc$mat.releves)
 sp.DOM = PRE_FATE.selectDominant(mat.site.species.abund = MontBlanc$mat.releves
                                  , selectionRule.quanti = 0.9
                                  , selectionRule.min_mean_abund = 25
-                                 , selectionRule.min_no_high_abund = 10)
+                                 , selectionRule.min_no_abund_over25 = 10)
 
 ## Add landclass selection with default parametrization
 sp.DOM = PRE_FATE.selectDominant(mat.site.species.abund = MontBlanc$mat.releves
                                , selectionRule.quanti = 0.9
                                , selectionRule.min_mean_abund = 25
-                               , selectionRule.min_no_high_abund = 10
-                               , doLandclass = TRUE)
+                               , selectionRule.min_no_abund_over25 = 10
+                               , doHabitatSelection = TRUE)
 
 ## Redefinition of landclass selection rules
 sp.DOM = PRE_FATE.selectDominant(mat.site.species.abund = MontBlanc$mat.releves
                                  , selectionRule.quanti = 0.9
                                  , selectionRule.min_mean_abund = 25
-                                 , selectionRule.min_no_high_abund = 10
-                                 , doLandclass = TRUE
-                                 , selectionRule.min_percent_landclass = 0.05
-                                 , selectionRule.min_no_landclass = 10)
+                                 , selectionRule.min_no_abund_over25 = 10
+                                 , doHabitatSelection = TRUE
+                                 , selectionRule.min_percent_habitat = 0.05
+                                 , selectionRule.min_no_habitat = 10)
 
 ## 2 .csv and 2 .pdf files have been produced
 str(sp.DOM)
@@ -43,8 +43,9 @@ str(sp.DOM)
 ## MontBlanc$mat.nicheOverlap : niolap object
 
 ## Calculate distance between species
-sp.DIST = PRE_FATE.speciesDistance(mat.species.traits = MontBlanc$mat.traits,
-                                   mat.species.overlap = MontBlanc$mat.nicheOverlap)
+sp.DIST = PRE_FATE.speciesDistance(mat.species.traits = MontBlanc$mat.traits
+                                   , mat.species.overlap = MontBlanc$mat.nicheOverlap
+                                   , min.info.thresh = 0.9)
 
 str(sp.DIST)
 
