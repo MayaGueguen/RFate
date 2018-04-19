@@ -277,6 +277,15 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
   {
     stop("Wrong data given!\n `selectionRule.min_percent_habitat` must be between 0 and 1")
   }
+  if (doHabitatSelection &&
+      (length(unique(mat.site.species.abund$habitat)) == 1 ||
+       sum(colnames(mat.site.species.abund) == "habitat") == 0))
+  {
+    doHabitatSelection = FALSE
+    warning(paste0("Only 1 value indicated in `habitat` variable ("
+                   , unique(mat.site.species.abund$habitat)
+                   , "). `doHabitatSelection` set to FALSE"))
+  }
 
   
   #################################################################################################

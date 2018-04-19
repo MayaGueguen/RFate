@@ -49,6 +49,14 @@ test_that("PRE_FATE.speciesDistance gives error with wrong data : mat.species.ov
   expect_error(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("A", "B"), 2, 3)
                                         , mat.species.overlap = data.frame(species = 1, raster = 1))
                , "must contain file names which exist", fixed = T)
+  
+  expect_error(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("A", "B"), 2, 3)
+                                        , mat.species.overlap = matrix(seq(2), ncol=2))
+               , "Wrong dimension(s) of data!\n `mat.species.overlap` does not have the same number of rows", fixed = T)
+  expect_error(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("A", "B"), 2, 3)
+                                        , mat.species.overlap = matrix(seq(2), ncol=1))
+               , "Wrong dimension(s) of data!\n `mat.species.overlap` does not have the same number of rows", fixed = T)
+
 })
 
 ## INPUTS
@@ -71,11 +79,21 @@ test_that("PRE_FATE.speciesDistance gives error with wrong data : min.info.thres
                , "must be a number between 0 and 1", fixed = T)
 })
 
+## INPUTS
+test_that("PRE_FATE.speciesDistance gives error with missing data : mat.species.traits", {  
+  expect_error(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("A", "B"), NA, 3)
+                                        , mat.species.overlap = matrix(1)
+                                        , min.info.thresh = 1)
+               , "`mat.species.traits` contain trait with too many missing values", fixed = T)
+})
+
 
 ## OUTPUTS
 test_that("PRE_FATE.speciesDistance gives correct output", {
   expect_output(str(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("A", "B"), 2, 3)
                                              , mat.species.overlap = matrix(1))), "dist")
+  expect_output(str(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("A", "B"), 2, 3)
+                                             , mat.species.overlap = as.dist(matrix(seq(4), ncol=2)))), "dist")
 
   expect_output(str(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("A", "B"), 2, 3, GROUP = c("A", "B"))
                                              , mat.species.overlap = matrix(1))), "dist")

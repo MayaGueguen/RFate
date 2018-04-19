@@ -20,6 +20,8 @@ test_that("PRE_FATE.speciesClustering_step1 gives error with wrong data", {
                , "All clustering methods (maybe for a specific group) give NA values for Mouchet measure", fixed = T)
   expect_error(PRE_FATE.speciesClustering_step1(matrix(c(1,2,3,4,NA,6,7,8,9), ncol=3)), "`mat.species.DIST` contain NA values ")
   expect_error(PRE_FATE.speciesClustering_step1(matrix(c(1,2,3,NA,NA,6,7,8,9), ncol=3)), "`mat.species.DIST` contain NA values ")
+  expect_error(PRE_FATE.speciesClustering_step1(matrix(c(1,2,3,4,5,6,7,8), ncol=4))
+               , "`mat.species.DIST` does not have the same number of rows")
   
   expect_error(PRE_FATE.speciesClustering_step1(list()), "must be of length > 0")
   expect_error(PRE_FATE.speciesClustering_step1(list(NA)), "must be a dissimilarity object")
@@ -36,6 +38,9 @@ test_that("PRE_FATE.speciesClustering_step1 gives error with wrong data", {
   expect_error(PRE_FATE.speciesClustering_step1(list(matrix(c(1,2,3,4,5,6,7,8,9), ncol=3)
                                                      , matrix(c(1,2,3,4,NA,6,7,8,9), ncol=3)))
                , "`mat.species.DIST` contain NA values ", fixed = T)
+  expect_error(PRE_FATE.speciesClustering_step1(list(matrix(c(1,2,3,4,5,6,7,8,9), ncol=3)
+                                                     , matrix(c(1,2,3,4,5,6,7,8), ncol=4)))
+               , "does not have the same number of rows", fixed = T)
 })
 
 ## OUTPUTS
