@@ -149,7 +149,62 @@ PRE_FATE.speciesClustering_step2 = function(clust.dendograms
                                             , mat.species.DIST
 ){
   
-  group_names = names(clust.dendograms)
+  if (missing(clust.dendograms) ||
+      is.na(clust.dendograms) ||
+      is.null(clust.dendograms) ||
+      length(clust.dendograms) == 0 ||
+      !(class(clust.dendograms) %in% c("list","hclust")))
+  {
+    stop("No data given!\n (missing `clust.dendograms` information which must be of class `hclust` or a list `hclust` objects)")
+  } else
+  {
+    if (class(clust.dendograms) == "list" && length(which(sapply(clust.dendograms, class) == "hclust")) < length(clust.dendograms))
+    {
+      stop("Wrong type of data!\n each element of `clust.dendograms` must be of class `hclust`")
+    }
+    if (class(clust.dendograms) == "hclust")
+    {
+      clust.dendograms = list(GROUP1 = clust.dendograms)
+    }
+    if(!is.null(names(clust.dendograms)))
+    {
+      group_names = names(clust.dendograms)
+    } else {
+      group_names = paste0("GROUP", 1:length(clust.dendograms))
+    }
+  }
+  if (missing(no.clusters) ||
+      is.na(no.clusters) ||
+      is.null(no.clusters) ||
+      length(no.clusters) == 0 ||
+      !is.numeric(no.clusters))
+  {
+    stop("No data given!\n (missing `no.clusters` information)")
+  } else
+  {
+    if (length(no.clusters) != length(clust.dendograms))
+    {
+      stop("Wrong type of data!\n `no.clusters` must have the same length than `clust.dendograms`")
+    }
+  }
+  if (missing(mat.species.DIST) ||
+      is.na(mat.species.DIST) ||
+      is.null(mat.species.DIST) ||
+      !(class(mat.species.DIST) %in% c("list", "dist")))
+  {
+    stop("No data given!\n (missing `mat.species.DIST` information which must be a dist object, or a list of dist objects)")
+  } else
+  {
+    if (class(mat.species.DIST) == "list" && length(mat.species.DIST) != length(clust.dendograms))
+    {
+      stop("Wrong type of data!\n `mat.species.DIST` must have the same length than `clust.dendograms`")
+    }
+    if (class(mat.species.DIST) == "dist")
+    {
+      mat.species.DIST = list(GROUP1 = mat.species.DIST)
+    }
+  }
+  
   
   ################################################################################################################################
   ## DEFINITION OF CLUSTERED GROUPS
@@ -202,6 +257,10 @@ PRE_FATE.speciesClustering_step2 = function(clust.dendograms
     }
   }
   determ = do.call(rbind, determ)
+  if (length(determ) == 0 || is.null(determ))
+  {
+    stop("No determinant species have been selected. Please check your data")
+  }
   determ$toSuppr = 0
   determ$toSuppr[which(determ$sp.mean.dist > determ$allSp.max)] = 1
   determ$toSuppr[which(determ$sp.mean.dist < determ$allSp.min)] = 1

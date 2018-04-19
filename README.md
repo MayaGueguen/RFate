@@ -2,7 +2,9 @@
 [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/MayaGueguen/RFate?branch=master&svg=true)](https://ci.appveyor.com/project/MayaGueguen/RFate)
 [![Coverage status](https://codecov.io/gh/MayaGueguen/RFate/branch/master/graph/badge.svg)](https://codecov.io/github/MayaGueguen/RFate?branch=master)
 
-# RFate package - to be used with `FATE-HD`
+
+
+# <i class="fa fa-pagelines"></i> `RFate` package - to be used with `FATE-HD`
 
 This package aims at presenting support functions to the software `FATE-HD`.  
 Functions are classified in two categories :
@@ -20,7 +22,7 @@ ________________________________________________________________________________
 
 ___________________________________________________________________________________________________
 
-## 1. PRE_FATE - build Plant Functional Groups (PFG)    
+## <i class="fa fa-battery-quarter"></i> PRE_FATE - build Plant Functional Groups (PFG)
 
 ___________________________________________________________________________________________________
 
@@ -82,9 +84,9 @@ with the function [PRE_FATE.speciesClustering_step2](https://mayagueguen.github.
 
 ___________________________________________________________________________________________________
 
-## 2. PRE_FATE - build parameter files  
+## <i class="fa fa-battery-half"></i> PRE_FATE - build parameter files  
 
 ___________________________________________________________________________________________________
 
-## 3. POST_FATE - evaluation of simulation  
+## <i class="fa fa-battery-three-quarters"></i> POST_FATE - evaluation of simulation  
 
