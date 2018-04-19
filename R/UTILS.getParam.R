@@ -7,20 +7,45 @@
                      , is.num = TRUE
 ){
   
-  if (is.null(length(params.lines)) || length(params.lines) == 0){
-    stop("Wrong type of data!\n `params.lines` must be of length > 0")
+  if (missing(params.lines) ||
+      is.na(params.lines) ||
+      is.null(length(params.lines)) ||
+      !is.character(params.lines) ||
+      length(params.lines) == 0)
+  {
+    stop("Wrong type of data!\n `params.lines` must contain a character value of length > 0")
+  } else
+  {
+    if (!file.exists(params.lines))
+    {
+      stop("Wrong type of data!\n `params.lines` file does not exist")
+    }
   }
-  if (nchar(flag) == 0) {
+  if (missing(flag) ||
+      is.na(flag) ||
+      !is.character(flag) ||
+      nchar(flag) == 0)
+  {
     stop("Wrong type of data!\n `flag` must be a string of length > 0")
   }
-  if (!(flag.split %in% c(" ", "^--.*--$"))){
+  if (missing(flag.split) ||
+      is.na(flag.split) ||
+      !is.character(flag.split) ||
+      !(flag.split %in% c(" ", "^--.*--$")))
+  {
     stop("Wrong type of data!\n `flag.split` must be either ` ` or `^--.*--$`")
   }
-  if (!is.logical(is.num)){
+  if (!is.logical(is.num))
+  {
     stop("Wrong type of data!\n `is.num` must be logical")
   }
+  
+  params.lines = readLines(params.lines)
   if (length(grep(flag, params.lines)) == 0){
     stop("Wrong type of data!\n `flag` is not found within `params.lines`")
+  }
+  if (length(grep(flag.split, params.lines)) == 0){
+    stop("Wrong type of data!\n `flag.split` is not found within `params.lines`")
   }
 
 
@@ -33,7 +58,9 @@
     ind.flag = grep(flag, params.lines)
     ind.start = which(ind.flag.split == ind.flag)
     
-    value.line = params.lines[(ind.flag.split[ind.start] + 1):(ind.flag.split[ind.start + 1] - 1)]
+    ind1 = (ind.flag.split[ind.start] + 1)
+    ind2 = ifelse(length(ind.flag.split) == 1, max(length(params.lines), ind1), ind1 - 1)
+    value.line = params.lines[ind1:ind2]
     value.line = as.character(value.line)
   }
   return(value.line)

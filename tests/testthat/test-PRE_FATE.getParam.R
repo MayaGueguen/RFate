@@ -1,0 +1,76 @@
+library(RFate)
+context(".getParam() function")
+
+## INPUTS
+test_that(".getParam gives error with missing data", {
+  expect_error(.getParam(NA), "`params.lines` must contain a character value of length > 0")
+  expect_error(.getParam(NULL), "`params.lines` must contain a character value of length > 0")
+})
+
+## INPUTS
+test_that(".getParam gives error with wrong data", {
+  expect_error(.getParam(1), "`params.lines` must contain a character value of length > 0")
+  expect_error(.getParam(factor("a")), "`params.lines` must contain a character value of length > 0")
+  expect_error(.getParam(factor(1)), "`params.lines` must contain a character value of length > 0")
+  expect_error(.getParam(params.lines = "fake"), "`params.lines` file does not exist")
+  
+  write.table(data.frame(1), file = "TEST_getParam.txt")
+  expect_error(.getParam(params.lines = "TEST_getParam.txt"), "`flag` must be a string of length > 0")
+  expect_error(.getParam(params.lines = "TEST_getParam.txt", flag = NA), "`flag` must be a string of length > 0")
+  expect_error(.getParam(params.lines = "TEST_getParam.txt", flag = NULL), "`flag` must be a string of length > 0")
+  expect_error(.getParam(params.lines = "TEST_getParam.txt", flag = 1), "`flag` must be a string of length > 0")
+  expect_error(.getParam(params.lines = "TEST_getParam.txt", flag = factor(1)), "`flag` must be a string of length > 0")
+  
+  expect_error(.getParam(params.lines = "TEST_getParam.txt", flag = "PARAM1")
+               , "`flag.split` must be either ` ` or `^--.*--$`", fixed = T)
+  expect_error(.getParam(params.lines = "TEST_getParam.txt", flag = "PARAM1", flag.split = NA)
+               , "`flag.split` must be either ` ` or `^--.*--$`", fixed = T)
+  expect_error(.getParam(params.lines = "TEST_getParam.txt", flag = "PARAM1", flag.split = NULL)
+               , "`flag.split` must be either ` ` or `^--.*--$`", fixed = T)
+  expect_error(.getParam(params.lines = "TEST_getParam.txt", flag = "PARAM1", flag.split = 1)
+               , "`flag.split` must be either ` ` or `^--.*--$`", fixed = T)
+  expect_error(.getParam(params.lines = "TEST_getParam.txt", flag = "PARAM1", flag.split = factor(1))
+               , "`flag.split` must be either ` ` or `^--.*--$`", fixed = T)
+  expect_error(.getParam(params.lines = "TEST_getParam.txt", flag = "PARAM1", flag.split = "aa")
+               , "`flag.split` must be either ` ` or `^--.*--$`", fixed = T)
+
+  expect_error(.getParam(params.lines = "TEST_getParam.txt", flag = "PARAM1", flag.split = " ")
+               , "`flag` is not found within `params.lines`")
+  expect_error(.getParam(params.lines = "TEST_getParam.txt", flag = "PARAM1", flag.split = "^--.*--$")
+               , "`flag` is not found within `params.lines`")
+  
+  write.table(data.frame("PARAM1", 12), file = "TEST_getParam.txt", col.names = F, row.names = F, quote = F)
+  expect_error(.getParam(params.lines = "TEST_getParam.txt", flag = "PARAM1", flag.split = "^--.*--$")
+               , "`flag.split` is not found within `params.lines`")
+  expect_error(.getParam(params.lines = "TEST_getParam.txt", flag = "PARAM1", flag.split = "^--.*--$", is.num = FALSE)
+               , "`flag.split` is not found within `params.lines`")
+
+  
+  write.table(data.frame(c("PARAM1 ", 12)), file = "TEST_getParam.txt", col.names = F, row.names = F, quote = F)
+  expect_error(.getParam(params.lines = "TEST_getParam.txt", flag = "PARAM1", flag.split = "^--.*--$")
+               , "`flag.split` is not found within `params.lines`")
+  expect_error(.getParam(params.lines = "TEST_getParam.txt", flag = "PARAM1", flag.split = "^--.*--$", is.num = FALSE)
+               , "`flag.split` is not found within `params.lines`")
+})
+
+
+## OUTPUTS
+test_that(".getParam gives correct output", {
+  write.table(data.frame("PARAM1", 12), file = "TEST_getParam.txt", col.names = F, row.names = F, quote = F)
+  expect_equal(length(.getParam(params.lines = "TEST_getParam.txt", flag = "PARAM1", flag.split = " ", is.num = FALSE)), 1)
+  expect_equal(.getParam(params.lines = "TEST_getParam.txt", flag = "PARAM1", flag.split = " "), 12)
+  
+  write.table(data.frame(c("PARAM1 ", 12)), file = "TEST_getParam.txt", col.names = F, row.names = F, quote = F)
+  expect_equal(length(.getParam(params.lines = "TEST_getParam.txt", flag = "PARAM1", flag.split = " ")), 0)
+  expect_equal(.getParam(params.lines = "TEST_getParam.txt", flag = "PARAM1", flag.split = " ", is.num = FALSE), "12")
+  
+  write.table(data.frame("PARAM1", 12, 3), file = "TEST_getParam.txt", col.names = F, row.names = F, quote = F)
+  expect_equal(length(.getParam(params.lines = "TEST_getParam.txt", flag = "PARAM1", flag.split = " ", is.num = FALSE)), 1)
+  expect_equal(.getParam(params.lines = "TEST_getParam.txt", flag = "PARAM1", flag.split = " "), c(12,3))
+  expect_equal(length(.getParam(params.lines = "TEST_getParam.txt", flag = "PARAM1", flag.split = " ")), 2)
+  
+  write.table(data.frame(c("PARAM1 ", 12, 3)), file = "TEST_getParam.txt", col.names = F, row.names = F, quote = F)
+  expect_equal(length(.getParam(params.lines = "TEST_getParam.txt", flag = "PARAM1", flag.split = " ", is.num = FALSE)), 2)
+  expect_equal(.getParam(params.lines = "TEST_getParam.txt", flag = "PARAM1", flag.split = " ", is.num = FALSE), c("12","3"))
+  expect_equal(length(.getParam(params.lines = "TEST_getParam.txt", flag = "PARAM1", flag.split = " ")), 0)
+})

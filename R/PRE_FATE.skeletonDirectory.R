@@ -66,8 +66,12 @@
 
 PRE_FATE.skeletonDirectory = function(name.simulation = "FATE_simulation")
 {
-  ## do nothing if directory already exists
-  if (file.exists(name.simulation)) {
+  if (is.na(name.simulation) || length(name.simulation) == 0){
+    stop("No data given!\n (missing `name.simulation`)")
+  } else if (!is.character(name.simulation)){
+    stop("Wrong type of data!\n `name.simulation` must contain a character value")
+  } else if (file.exists(name.simulation)) {
+    ## do nothing if directory already exists
     warning("Directory already exists! (`", name.simulation, "`)")
     invisible(NULL)
   } else {
@@ -92,7 +96,7 @@ PRE_FATE.skeletonDirectory = function(name.simulation = "FATE_simulation")
     
     invisible(NULL)
     
-    cat("\n Your directory tree for your FATE-HD simulation (", name.simulation, ") is ready!\n")
+    message(paste0("\n Your directory tree for your FATE-HD simulation (", name.simulation, ") is ready!\n"))
   }
 }
 
