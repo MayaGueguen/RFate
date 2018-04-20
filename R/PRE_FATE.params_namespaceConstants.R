@@ -100,26 +100,85 @@ PRE_FATE.params_namespaceConstants = function(
   , global.resource.thresh.low
 ){
   
-  if (!dir.exists(paste0(name.simulation, "/DATA/NAMESPACE_CONSTANTS/"))){
+  if (missing(name.simulation) ||
+      is.na(name.simulation) ||
+      is.null(name.simulation) ||
+      !is.character(name.simulation) ||
+      !dir.exists(paste0(name.simulation, "/DATA/NAMESPACE_CONSTANTS/")))
+  {
     stop("Wrong name folder given!\n `name.simulation` does not exist or does not contain a DATA/NAMESPACE_CONSTANTS/ folder")
   }
-  if (!is.numeric(global.abund.low)){
+  if (missing(global.abund.low) ||
+      is.na(global.abund.low) ||
+      is.null(global.abund.low) ||
+      !is.numeric(global.abund.low)){
     stop("Wrong type of data!\n `global.abund.low` must be an integer")
+  } else
+  {
+    if (round(global.abund.low) != global.abund.low)
+    {
+      warning("`global.abund.low` is a double. It will be converted (rounded) to an integer")
+    }
   }
-  if (!is.numeric(global.abund.med)){
+  if (missing(global.abund.med) ||
+      is.na(global.abund.med) ||
+      is.null(global.abund.med) ||
+      !is.numeric(global.abund.med)){
     stop("Wrong type of data!\n `global.abund.med` must be an integer")
+  } else
+  {
+    if (round(global.abund.med) != global.abund.med)
+    {
+      warning("`global.abund.med` is a double. It will be converted (rounded) to an integer")
+    }
   }
-  if (!is.numeric(global.abund.high)){
+  if (missing(global.abund.high) ||
+      is.na(global.abund.high) ||
+      is.null(global.abund.high) ||
+      !is.numeric(global.abund.high)){
     stop("Wrong type of data!\n `global.abund.high` must be an integer")
+  } else
+  {
+    if (round(global.abund.high) != global.abund.high)
+    {
+      warning("`global.abund.high` is a double. It will be converted (rounded) to an integer")
+    }
   }
-  if (!is.numeric(global.max.by.cohort)){
+  if (missing(global.max.by.cohort) ||
+      is.na(global.max.by.cohort) ||
+      is.null(global.max.by.cohort) ||
+      !is.numeric(global.max.by.cohort)){
     stop("Wrong type of data!\n `global.max.by.cohort` must be an integer")
+  } else
+  {
+    if (round(global.max.by.cohort) != global.max.by.cohort)
+    {
+      warning("`global.max.by.cohort` is a double. It will be converted (rounded) to an integer")
+    }
   }
-  if (!is.numeric(global.resource.thresh.med)){
+  if (missing(global.resource.thresh.med) ||
+      is.na(global.resource.thresh.med) ||
+      is.null(global.resource.thresh.med) ||
+      !is.numeric(global.resource.thresh.med)){
     stop("Wrong type of data!\n `global.resource.thresh.med` must be an integer")
+  } else
+  {
+    if (round(global.resource.thresh.med) != global.resource.thresh.med)
+    {
+      warning("`global.resource.thresh.med` is a double. It will be converted (rounded) to an integer")
+    }
   }
-  if (!is.numeric(global.resource.thresh.low)){
+  if (missing(global.resource.thresh.low) ||
+      is.na(global.resource.thresh.low) ||
+      is.null(global.resource.thresh.low) ||
+      !is.numeric(global.resource.thresh.low)){
     stop("Wrong type of data!\n `global.resource.thresh.low` must be an integer")
+  } else
+  {
+    if (round(global.resource.thresh.low) != global.resource.thresh.low)
+    {
+      warning("`global.resource.thresh.low` is a double. It will be converted (rounded) to an integer")
+    }
   }
   
   params.combi = expand.grid(as.integer(global.abund.low)

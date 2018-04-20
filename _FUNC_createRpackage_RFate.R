@@ -39,9 +39,9 @@ setwd("./../")
 setwd("RFate/")
 # pkgdown:::build_site(lazy = TRUE)
 
-# pkgdown:::build_init_site()
+# pkgdown:::init_site()
 pkgdown:::build_home()
-pkgdown:::build_reference(examples = TRUE)
+# pkgdown:::build_reference(examples = TRUE)
 # pkgdown:::build_articles()
 # pkgdown:::build_tutorials()
 # pkgdown:::build_news()
@@ -54,6 +54,15 @@ roxygenize(
   package.dir = package_name
   , clean = TRUE)
 
+# setwd("./../")
+# roxygenize(
+#   package.dir = package_name
+#   , clean = TRUE)
+# setwd("RFate/")
+# pkgdown:::build_home()
+
+
+
 ## BUILD THE PACKAGE ------------------------------------------------
 
 Rcmd(args = paste0("build ",package_name)) ## or with a shell : R CMD build MyPackage
@@ -61,8 +70,8 @@ Rcmd(args = paste0("build ",package_name)) ## or with a shell : R CMD build MyPa
 ## CHECK THE PACKAGE ------------------------------------------------
 
 # Rcmd(args = paste0("check ",package_name)) ## or with a shell : R CMD check MyPackage
-# devtools::check(pkg = package_name, document = FALSE)
-devtools::check(pkg = package_name)
+devtools::check(pkg = package_name, document = FALSE)
+# devtools::check(pkg = package_name)
 
 # INSTALL THE PACKAGE ----------------------------------------------
 

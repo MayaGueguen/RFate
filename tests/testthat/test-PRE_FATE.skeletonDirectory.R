@@ -13,6 +13,7 @@ test_that("PRE_FATE.skeletonDirectory gives message / warning / error with missi
 
 ## OUTPUTS
 test_that("PRE_FATE.skeletonDirectory gives correct output", {
+  if (dir.exists("FATE_simulation")) system("rm -r FATE_simulation/")
   expect_message(PRE_FATE.skeletonDirectory(), "Your directory tree for your FATE-HD simulation")
   expect_warning(PRE_FATE.skeletonDirectory(), "Directory already exists!")
 })

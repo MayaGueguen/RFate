@@ -73,7 +73,6 @@ PRE_FATE.skeletonDirectory = function(name.simulation = "FATE_simulation")
   } else if (file.exists(name.simulation)) {
     ## do nothing if directory already exists
     warning("Directory already exists! (`", name.simulation, "`)")
-    invisible(NULL)
   } else {
     ## the main simulation dir
     dir.create(name.simulation, showWarnings = FALSE)
@@ -94,9 +93,7 @@ PRE_FATE.skeletonDirectory = function(name.simulation = "FATE_simulation")
     ## the RESULTS dir
     dir.create(file.path(name.simulation, "RESULTS"), showWarnings = FALSE)
     
-    invisible(NULL)
-    
-    message(paste0("\n Your directory tree for your FATE-HD simulation (", name.simulation, ") is ready!\n"))
+    message("\n Your directory tree for your FATE-HD simulation (", name.simulation, ") is ready!\n")
   }
 }
 
