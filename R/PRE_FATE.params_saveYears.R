@@ -59,34 +59,43 @@ PRE_FATE.params_saveYears = function(
   , years.objects = NULL
 ){
   
-  if (!dir.exists(paste0(name.simulation, "/DATA/SAVE/"))){
+  if (missing(name.simulation) ||
+      !is.character(name.simulation) ||
+      !dir.exists(paste0(name.simulation, "/DATA/SAVE/")))
+  {
     stop("Wrong name folder given!\n `name.simulation` does not exist or does not contain a DATA/SAVE/ folder")
-  }
-  if (is.null(years.maps) && is.null(years.objects)){
-    warning("Both `years.maps` and `years.objects` parameters are NULL. No parameter file will be created")
   }
   if ( (!is.null(years.maps) && !is.numeric(years.maps)) ||
        (!is.null(years.objects) && !is.numeric(years.objects))){
-    stop("Wrong type of data!\n `years.maps` and/or `years.objects` must contain NULL or numeric values")
+    stop("Wrong type of data!\n `years.maps` and/or `years.objects` must contain numeric values")
   }
-
-  params = lapply(years.maps, function(x) x)
-  names(params) = rep("", length(params))
-  .createParams(params.file = paste0(name.simulation, "/DATA/SAVE/SAVE_YEARS_maps.txt")
-                , params.list = params)
-  file.lines = readLines(paste0(name.simulation, "/DATA/SAVE/SAVE_YEARS_maps.txt"))
-  file.lines = file.lines[-c(1,2)]
-  file.lines = gsub(" ", "", file.lines)
-  cat(file.lines, sep = "\n", file = paste0(name.simulation, "/DATA/SAVE/SAVE_YEARS_maps.txt"), append = FALSE)
-  
-  params = lapply(years.objects, function(x) x)
-  names(params) = rep("", length(params))
-  .createParams(params.file = paste0(name.simulation, "/DATA/SAVE/SAVE_YEARS_objects.txt")
-                , params.list = params)
-  file.lines = readLines(paste0(name.simulation, "/DATA/SAVE/SAVE_YEARS_objects.txt"))
-  file.lines = file.lines[-c(1,2)]
-  file.lines = gsub(" ", "", file.lines)
-  cat(file.lines, sep = "\n", file = paste0(name.simulation, "/DATA/SAVE/SAVE_YEARS_objects.txt"), append = FALSE)
-  
+  if (is.null(years.maps) && is.null(years.objects)){
+    warning("Both `years.maps` and `years.objects` parameters are NULL. No parameter file will be created")
+  } else
+  {
+    if (!is.null(years.maps))
+    {
+      params = lapply(years.maps, function(x) x)
+      names(params) = rep("", length(params))
+      .createParams(params.file = paste0(name.simulation, "/DATA/SAVE/SAVE_YEARS_maps.txt")
+                    , params.list = params)
+      file.lines = readLines(paste0(name.simulation, "/DATA/SAVE/SAVE_YEARS_maps.txt"))
+      file.lines = file.lines[-c(1,2)]
+      file.lines = gsub(" ", "", file.lines)
+      cat(file.lines, sep = "\n", file = paste0(name.simulation, "/DATA/SAVE/SAVE_YEARS_maps.txt"), append = FALSE)
+    }
+    
+    if (!is.null(years.objects))
+    {
+      params = lapply(years.objects, function(x) x)
+      names(params) = rep("", length(params))
+      .createParams(params.file = paste0(name.simulation, "/DATA/SAVE/SAVE_YEARS_objects.txt")
+                    , params.list = params)
+      file.lines = readLines(paste0(name.simulation, "/DATA/SAVE/SAVE_YEARS_objects.txt"))
+      file.lines = file.lines[-c(1,2)]
+      file.lines = gsub(" ", "", file.lines)
+      cat(file.lines, sep = "\n", file = paste0(name.simulation, "/DATA/SAVE/SAVE_YEARS_objects.txt"), append = FALSE)
+    }
+  }
 }
 

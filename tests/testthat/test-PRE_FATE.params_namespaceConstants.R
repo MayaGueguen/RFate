@@ -179,14 +179,6 @@ test_that("PRE_FATE.params_namespaceConstants gives error with wrong data : glob
                                                   , global.resource.thresh.med = 100
                                                   , global.resource.thresh.low = "")
                , "`global.resource.thresh.low` must be an integer")
-  # expect_error(PRE_FATE.params_namespaceConstants(name.simulation = "FATE_simulation"
-  #                                                 , global.abund.low = 10
-  #                                                 , global.abund.med = 5
-  #                                                 , global.abund.high = 2
-  #                                                 , global.max.by.cohort = 4
-  #                                                 , global.resource.thresh.med = 100
-  #                                                 , global.resource.thresh.low = 200)
-  #              , "`global.resource.thresh.low` must be an integer")
 })
 
 
