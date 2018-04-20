@@ -59,39 +59,42 @@ PRE_FATE.params_PFGdispersal = function(
   , mat.PFG.disp
 ){
   
-  if (!dir.exists(paste0(name.simulation, "/DATA/PFGS/DISP/"))){
+  if (missing(name.simulation) ||
+      !is.character(name.simulation) ||
+      !dir.exists(paste0(name.simulation, "/DATA/PFGS/DISP/"))){
     stop("Wrong name folder given!\n `name.simulation` does not exist or does not contain a DATA/PFGS/DISP/ folder")
   }
-  if (!is.data.frame(mat.PFG.disp))
+  if (missing(mat.PFG.disp) || !is.data.frame(mat.PFG.disp))
   {
     stop("Wrong type of data!\n `mat.PFG.disp` must be a data.frame")
-  }
-  if (nrow(mat.PFG.disp) == 0 || ncol(mat.PFG.disp) != 4)
+  } else
   {
-    stop("Wrong dimension(s) of data!\n `mat.PFG.disp` does not have the appropriate number of rows (>0)
-           or columns (PFG, d50, d99, ldd)")
-  }
-  if (ncol(mat.PFG.disp) == 4)
-  {
-    if (sum(colnames(mat.PFG.disp) == c("PFG", "d50", "d99", "ldd")) == 4)
+    if (nrow(mat.PFG.disp) == 0 || ncol(mat.PFG.disp) != 4)
     {
-      mat.PFG.disp = mat.PFG.disp[ , c("PFG", "d50", "d99", "ldd")]
-    } else {
-      stop("Wrong type of data!\n Column names of `mat.PFG.disp` must be `PFG`, `d50`, `d99` and `ldd`")
+      stop("Wrong dimension(s) of data!\n `mat.PFG.disp` does not have the appropriate number of rows (>0) or columns (PFG, d50, d99, ldd)")
     }
-  }
-  if (length(unique(mat.PFG.disp$PFG)) < nrow(mat.PFG.disp)){
-    stop("Wrong type of data!\n Column `PFG` of mat.PFG.disp` must contain different values")
-  }
-  if (!is.numeric(mat.PFG.disp$d50) ||
-      !is.numeric(mat.PFG.disp$d99) ||
-      !is.numeric(mat.PFG.disp$ldd)) {
-    stop("Wrong type of data!\n Columns `d50`, `d99` and `ldd` of `mat.PFG.disp` must contain numeric values")
-  }
-  if (length(which(is.na(mat.PFG.disp$d50))) > 0 ||
-      length(which(is.na(mat.PFG.disp$d99))) > 0 ||
-      length(which(is.na(mat.PFG.disp$ldd))) > 0) {
-    stop("Wrong type of data!\n Columns `d50`, `d99` and `ldd` of `mat.PFG.disp` must not contain NA values")
+    if (ncol(mat.PFG.disp) == 4)
+    {
+      if (sum(colnames(mat.PFG.disp) == c("PFG", "d50", "d99", "ldd")) == 4)
+      {
+        mat.PFG.disp = mat.PFG.disp[ , c("PFG", "d50", "d99", "ldd")]
+      } else {
+        stop("Wrong type of data!\n Column names of `mat.PFG.disp` must be `PFG`, `d50`, `d99` and `ldd`")
+      }
+    }
+    if (length(unique(mat.PFG.disp$PFG)) < nrow(mat.PFG.disp)){
+      stop("Wrong type of data!\n Column `PFG` of mat.PFG.disp` must contain different values")
+    }
+    if (!is.numeric(mat.PFG.disp$d50) ||
+        !is.numeric(mat.PFG.disp$d99) ||
+        !is.numeric(mat.PFG.disp$ldd)) {
+      stop("Wrong type of data!\n Columns `d50`, `d99` and `ldd` of `mat.PFG.disp` must contain numeric values")
+    }
+    if (length(which(is.na(mat.PFG.disp$d50))) > 0 ||
+        length(which(is.na(mat.PFG.disp$d99))) > 0 ||
+        length(which(is.na(mat.PFG.disp$ldd))) > 0) {
+      stop("Wrong type of data!\n Columns `d50`, `d99` and `ldd` of `mat.PFG.disp` must not contain NA values")
+    }
   }
   
   params.list = lapply(1:nrow(mat.PFG.disp), function(x) {
