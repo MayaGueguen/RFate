@@ -38,6 +38,7 @@ setwd("./../")
 
 setwd("RFate/")
 # pkgdown:::build_site(lazy = TRUE)
+pkgdown::template_navbar()
 
 # pkgdown:::init_site()
 pkgdown:::build_home()

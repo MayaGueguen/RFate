@@ -1,11 +1,46 @@
 
 navbar:
-  right:
-    - icon: fa-rocket
+  structure:
+    left:
+    - home
+    - intro
+    - tutorials
+    - reference
+    - articles
+    - news
+    right:
+    - download
+    - github
+  components:
+    home:
+      icon: fa-home fa-lg
+      href: index.html
+    reference:
+      text: Reference
+      icon: fa-book fa-lg
+      href: reference/index.html
+    tutorials:
+      text: Tutorials
+      menu:
+        - text: "---------"
+        - text: Build PFG
+          icon: fa-battery-quarter
+          href: index.html#pre_fate---build-plant-functional-groups-pfg
+        - text: Build parameter files
+          icon: fa-battery-half
+          href: index.html/#pre_fate---build-parameter-files
+        - text: Evaluate simulation
+          icon: fa-battery-three-quarters
+          href: index.html/#post_fate---evaluation-of-simulation
+        - text: "---------"
+    download:
       text: 'Download Current Version'
+      icon: fa-rocket fa-lg
       href: archive/RFate_0.0.1.9000.tar.gz
-    - icon: fa-github
-      href: https://github.com/MayaGueguen/RFate
+    github:
+      icon: fa-github fa-lg
+      href: https://github.com/MayaGueguen/RFate.git
+
 
 reference:
   - title: Build Plant Functional Groups (PFG)

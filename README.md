@@ -3,7 +3,6 @@
 [![Coverage status](https://codecov.io/gh/MayaGueguen/RFate/branch/master/graph/badge.svg)](https://codecov.io/github/MayaGueguen/RFate?branch=master)
 
 
-
 # <i class="fa fa-pagelines"></i> `RFate` package - to be used with `FATE-HD`
 
 This package aims at presenting support functions to the software `FATE-HD`.  

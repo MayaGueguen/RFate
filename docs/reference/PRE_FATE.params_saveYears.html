@@ -51,7 +51,7 @@ PFG abundances or simulation objects." />
   <body>
     <div class="container template-reference-topic">
       <header>
-      <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
@@ -76,22 +76,51 @@ PFG abundances or simulation objects." />
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Tutorials
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="divider"></li>
+    <li>
+      <a href="https://mayagueguen.github.io/RFate/#pre_fate---build-plant-functional-groups-pfg">
+        <span class="fa fa-battery-quarter"></span>
+         
+        Build PFG
+      </a>
+    </li>
+    <li>
+      <a href="https://mayagueguen.github.io/RFate/#pre_fate---build-parameter-files">
+        <span class="fa fa-battery-half"></span>
+         
+        Build parameter files
+      </a>
+    </li>
+    <li>
+      <a href="https://mayagueguen.github.io/RFate/#post_fate---evaluation-of-simulation">
+        <span class="fa fa-battery-three-quarters"></span>
+         
+        Evaluate simulation
+      </a>
+    </li>
+    <li class="divider"></li>
+  </ul>
+</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="../reference/index.html">functions</a>
-</li>
-<li>
   <a href="../archive/RFate_0.0.1.9000.tar.gz">
-    <span class="fa fa-rocket"></span>
+    <span class="fa fa-rocket fa-lg"></span>
      
     Download Current Version
   </a>
 </li>
 <li>
-  <a href="https://github.com/MayaGueguen/RFate">
-    <span class="fa fa-github"></span>
+  <a href="https://github.com/MayaGueguen/RFate.git">
+    <span class="fa fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -167,12 +196,9 @@ directory with one line for each simulation year for which the raster maps /
 <span class='co'>## Create a Namespace_constants parameter file</span>
 <span class='fu'>PRE_FATE.params_saveYears</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
                           , <span class='kw'>years.maps</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>100</span>, <span class='fl'>150</span>, <span class='fl'>200</span>)
-                          , <span class='kw'>years.objects</span> <span class='kw'>=</span> <span class='fl'>200</span>)</div><div class='output co'>#&gt; 
-#&gt;  The parameter file  FATE_simulation/DATA/SAVE/SAVE_YEARS_maps.txt has been successfully created !
-#&gt; 
-#&gt; 
-#&gt;  The parameter file  FATE_simulation/DATA/SAVE/SAVE_YEARS_objects.txt has been successfully created !
-#&gt; </div><div class='input'>
+                          , <span class='kw'>years.objects</span> <span class='kw'>=</span> <span class='fl'>200</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: `params.file` already exists. It will be replaced.</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'> The parameter file FATE_simulation/DATA/SAVE/SAVE_YEARS_maps.txt has been successfully created !</span></div><div class='output co'>#&gt; <span class='warning'>Warning: `params.file` already exists. It will be replaced.</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='message'> The parameter file FATE_simulation/DATA/SAVE/SAVE_YEARS_objects.txt has been successfully created !</span></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
