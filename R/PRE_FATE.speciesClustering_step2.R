@@ -254,6 +254,12 @@ PRE_FATE.speciesClustering_step2 = function(clust.dendograms
                         allSp.mean = mean(sp.mean.dist),
                         allSp.min = mean(sp.mean.dist) - 1.64 * sd(sp.mean.dist),
                         allSp.max = mean(sp.mean.dist) + 1.64 * sd(sp.mean.dist)))
+    } else if (length(sp) == 1)
+    {
+      return(data.frame(pfg, group, no.cluster, sp, ID = 1, sp.mean.dist = 1,
+                        allSp.mean = 1,
+                        allSp.min = 1,
+                        allSp.max = 1))
     }
   }
   determ = do.call(rbind, determ)
