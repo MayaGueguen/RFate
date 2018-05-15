@@ -19,13 +19,25 @@ test_that("PRE_FATE.selectDominant gives error with wrong type of data : mat.sit
   expect_error(PRE_FATE.selectDominant(mat.site.species.abund = data.frame(species = "1",sites = "A")), "does not have the appropriate number of rows", fixed = T)
   expect_error(PRE_FATE.selectDominant(mat.site.species.abund = data.frame(species = "1",sites = "A", abundance = 3)), "Wrong type of data!\n Column names of", fixed = T)
   expect_error(PRE_FATE.selectDominant(mat.site.species.abund = data.frame(species = "1",sites = "A", abundance = 3, habitat = "grass")), "Wrong type of data!\n Column names of", fixed = T)
- })
+  expect_error(PRE_FATE.selectDominant(mat.site.species.abund = data.frame(species = "1",sites = "A", abund = "a"))
+               , "Wrong type of data!\n Column `abund` of `mat.site.species.abund` must constain positive numeric values", fixed = T)
+  expect_error(PRE_FATE.selectDominant(mat.site.species.abund = data.frame(species = "1",sites = "A", abund = factor(1)))
+               , "Wrong type of data!\n Column `abund` of `mat.site.species.abund` must constain positive numeric values", fixed = T)
+  expect_error(PRE_FATE.selectDominant(mat.site.species.abund = data.frame(species = "1",sites = "A", abund = -0.5))
+               , "Wrong type of data!\n Column `abund` of `mat.site.species.abund` must constain positive numeric values", fixed = T)
+})
 
 ## INPUTS
 test_that("PRE_FATE.selectDominant gives error with wrong type of data : sites / species / abund", {
   expect_error(PRE_FATE.selectDominant(species = "1"), "No data given!\n (missing", fixed = T)
   expect_error(PRE_FATE.selectDominant(sites = "A"), "No data given!\n (missing", fixed = T)
   expect_error(PRE_FATE.selectDominant(species = "1", sites = "A"), "No data given!\n (missing", fixed = T)
+  expect_error(PRE_FATE.selectDominant(species = "1", sites = "A", abund = "a")
+               , "Wrong type of data!\n Column `abund` of `mat.site.species.abund` must constain positive numeric values", fixed = T)
+  expect_error(PRE_FATE.selectDominant(species = "1", sites = "A", abund = factor(1))
+               , "Wrong type of data!\n Column `abund` of `mat.site.species.abund` must constain positive numeric values", fixed = T)
+  expect_error(PRE_FATE.selectDominant(species = "1", sites = "A", abund = -0.5)
+               , "Wrong type of data!\n Column `abund` of `mat.site.species.abund` must constain positive numeric values", fixed = T)
 })
 
 ## INPUTS

@@ -221,7 +221,6 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
     ## CASE 1 : Control form of parameters : mat.site.species.abund
     if (!is.data.frame(mat.site.species.abund))
     {
-      
       stop("Wrong type of data!\n `mat.site.species.abund` must be a data.frame")
     }
     if (nrow(mat.site.species.abund) == 0 || ncol(mat.site.species.abund) < 3)
@@ -241,6 +240,11 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
         stop("Wrong type of data!\n Column names of `mat.site.species.abund` must be `sites`, `species`, `abund` and `habitat`")
       }
     }
+    if (!(is.numeric(mat.site.species.abund$abund) ||is.na(mat.site.species.abund$abund)) ||
+        length(which(mat.site.species.abund$abund < 0)) > 0)
+    {
+      stop("Wrong type of data!\n Column `abund` of `mat.site.species.abund` must constain positive numeric values")
+    }
   } else if (is.null(mat.site.species.abund) &&
              (!is.null(sites) && !is.null(species) && !is.null(abund)))
   {
@@ -249,6 +253,11 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
     if (!is.null(habitat))
     {
       mat.site.species.abund$habitat = habitat
+    }
+    if (!(is.numeric(mat.site.species.abund$abund) ||is.na(mat.site.species.abund$abund)) ||
+        length(which(mat.site.species.abund$abund < 0)) > 0)
+    {
+      stop("Wrong type of data!\n Column `abund` of `mat.site.species.abund` must constain positive numeric values")
     }
   }
   
