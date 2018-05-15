@@ -1,6 +1,23 @@
 library(RFate)
 context("PRE_FATE.abundBraunBlanquet() function")
 
+
+## INPUT
+test_that("PRE_FATE.abundBraunBlanquet gives error with wrong type of data", {
+  expect_error(PRE_FATE.abundBraunBlanquet(list(1,NA)), "Wrong type of data!")
+  expect_error(PRE_FATE.abundBraunBlanquet(matrix(c(1,NA,2,2), ncol=2)), "Wrong type of data!")
+  expect_error(PRE_FATE.abundBraunBlanquet(data.frame("1")), "Wrong type of data!")
+  
+  expect_error(PRE_FATE.abundBraunBlanquet(TRUE), "Wrong type of data!")
+  expect_error(PRE_FATE.abundBraunBlanquet(-1), "Wrong type of data!")
+  expect_error(PRE_FATE.abundBraunBlanquet(6), "Wrong type of data!")
+  expect_error(PRE_FATE.abundBraunBlanquet(19856394), "Wrong type of data!")
+  expect_error(PRE_FATE.abundBraunBlanquet(c(12, -789)), "Wrong type of data!")
+  expect_error(PRE_FATE.abundBraunBlanquet("a"), "Wrong type of data!")
+  expect_error(PRE_FATE.abundBraunBlanquet("abc"), "Wrong type of data!")
+})
+
+
 ## OUTPUTS
 test_that("PRE_FATE.abundBraunBlanquet of BB values give right results", {
   expect_equal(PRE_FATE.abundBraunBlanquet("r"), 0.5)
@@ -30,15 +47,6 @@ test_that("PRE_FATE.abundBraunBlanquet of BB values give right results", {
 })
 
 ## OUTPUTS
-test_that("PRE_FATE.abundBraunBlanquet of none BB values give NA", {
-  expect_equal(PRE_FATE.abundBraunBlanquet(-1), as.numeric(NA))
-  expect_equal(PRE_FATE.abundBraunBlanquet(6), as.numeric(NA))
-  expect_equal(PRE_FATE.abundBraunBlanquet(19856394), as.numeric(NA))
-  expect_equal(PRE_FATE.abundBraunBlanquet("a"), as.numeric(NA))
-  expect_equal(PRE_FATE.abundBraunBlanquet("abc"), as.numeric(NA))
-})
-
-## OUTPUTS
 test_that("PRE_FATE.abundBraunBlanquet of missing give NA", {
   expect_equal(PRE_FATE.abundBraunBlanquet(NA), as.numeric(NA))
   expect_equal(PRE_FATE.abundBraunBlanquet("NA"), as.numeric(NA))
@@ -52,7 +60,6 @@ test_that("PRE_FATE.abundBraunBlanquet does not modify length", {
   expect_equal(length(PRE_FATE.abundBraunBlanquet(c("1", NA))), 2)
   expect_equal(length(PRE_FATE.abundBraunBlanquet(c("1", "NA"))), 2)
   expect_equal(length(PRE_FATE.abundBraunBlanquet(c(NA, NA))), 2)
-  expect_equal(length(PRE_FATE.abundBraunBlanquet(c(12, -789))), 2)
 })
 
 ## OUTPUTS
@@ -63,9 +70,3 @@ test_that("PRE_FATE.abundBraunBlanquet gives numeric output", {
   expect_output(str(PRE_FATE.abundBraunBlanquet(c(1, NA))), "num")
 })
 
-## INPUT
-test_that("PRE_FATE.abundBraunBlanquet gives error with wrong type of data", {
-  expect_error(PRE_FATE.abundBraunBlanquet(list(1,NA)), "Wrong type of data!")
-  expect_error(PRE_FATE.abundBraunBlanquet(matrix(c(1,NA,2,2), ncol=2)), "Wrong type of data!")
-  expect_error(PRE_FATE.abundBraunBlanquet(data.frame("1")), "Wrong type of data!")
-})
