@@ -12,30 +12,143 @@
 ##'              
 ##' @param name.simulation a \code{string} that corresponds to the main directory
 ##' or simulation name of the \code{FATE-HD} simulation
-##' @param mat.PFG.succ a \code{data.frame} with 6 columns : PFG, type, height,
-##' maturity, longevity, dispersal
+##' @param mat.PFG.succ a \code{data.frame} with 7 columns : PFG, type, height,
+##' maturity, longevity, dispersal, light
 ##' 
 ##' 
 ##' @details
 ##' 
-##' For each PFG, 
+##' The core module of \code{FATE-HD} allows the user to simulate a primary vegetation
+##' succession based on light competition.
+##' Several parameters are required for each PFG in order to set up this life cycle :
+##' 
+##' \describe{
+##'   \item{type}{or life-form, based on Raunkier. It should be either \code{H} 
+##'   (herbaceous), \code{C} (chamaephyte) or \code{P} (phanerophyte) for now}
+##'   \item{height}{the maximum or average height that reach the PFG}
+##'   \item{maturity}{the age from which the PFG can reproduce}
+##'   \item{longevity}{the maximum or average lifespan of the PFG}
+##'   \item{dispersal}{the method of dispersal of the PFG
+##'   \itemize{
+##'     \item 0 = no dispersal
+##'     \item 1 = homogeneous dispersal within the d50, d99 and ldd circles
+##'     \item 2 = negative exponential kernel within the d50, d99 and ldd circles
+##'     \item 3 = negative exponential kernel + probability decreasing with distance
+##'     within the d50, d99 and ldd circles
+##'     \item 4 = homogeneous dispersal EVERYWHERE \emph{(!not available YET!)}
+##'   }
+##'   }
+##'   \item{light}{a value between 0 and 10 corresponding to the Ellenberg value
+##'   of the PFG \cr \cr}
+##' }
+##' 
+##' 
+##' 
+##' 
+##' These values will allow to calculate or define a set of characteristics for each
+##' PFG :
+##' 
+##' \describe{
+##'   \item{STRATA_LIMITS}{= the height values that define each stratum. \cr \cr
+##'   The steps are detailed below and try to homongenize the number of PFG
+##'   within each stratum :
+##'   \itemize{
+##'     \item the average number of PFG per stratum should be close to 
+##'     the square root of the total number of PFG (\code{no.PFG.perStrata})
+##'     \item \code{strata limits} should go exponentially and will be selected among \cr
+##'     \code{c(round(10 * seq(0, 6, 0.5) ^ 2), 10000)}
+##'     \item PFG are divided according to their \code{height} and these \code{strata limits}
+##'     and then grouped in order to have per stratum a number of PFG \code{>= (no.PFG.perStrata - 2)}
+##'   }
+##'   }
+##'   \item{STRATA}{the maximum stratum that each PFG can reach}
+##'   \item{MAX_ABUNDANCE}{= maximum abundance of mature PFG in favorable conditions \cr
+##'   = maximum shade a PFG can make in a pixel corresponding to a number of individuals \cr \cr
+##'   It is defined according to the number of strata potentially occupied by a PFG :
+##'   \itemize{
+##'     \item herbaceous make little shade (1), chamaephytes make medium shade (2) and
+##'     phanerophytes make lot of shade (3)
+##'     \item all plants in first stratum make little shade (1)
+##'     \item plants other than herbaceous in stratum 2 make medium shade (2)
+##'     \item herbaceous in stratum > 2 make medium shade (2)
+##'     \item chamaephytes in stratum > 3 make lot of shade (3)
+##'   }
+##'   }
+##'   \item{IMM_SIZE}{= relative shade of immature plants \cr
+##'   \itemize{
+##'     \item immature herbaceous contribute to shade in the same way than mature
+##'     herbaceous (100 \%)
+##'     \item immature chamaephytes contribute to shade half less than mature
+##'     herbaceous (50 \%)
+##'     \item immature phanerophytes contribute to shade only by 10 \% of their
+##'      full capacity
+##'     \item intermediate percentages for herbaceous in stratum 2 (80 \%) and in 
+##'     stratum > 2 (50 \%)
+##'     \item immature chamaephytes in 1st stratum contribute to shade in the same 
+##'     way than mature chamaephytes (100 \%)
+##'     \item immature phanerophytes with height < 10m contribute to shade half less 
+##'     than mature phanerophytes (50 \%)
+##'   }
+##'   }
+##'   \item{CHANG_STR_AGES}{= at what age each PFG goes into the upper stratum. \cr \cr
+##'   It is defined using a logistic growth curve with 2 points to parameterize it :
+##'   \enumerate{
+##'     \item at \code{age = maturity/2}, \code{height = IMM_SIZE * height}
+##'     \item at \code{age = longevity}, \code{height = height}
+##'   }
+##'   }
+##'   \item{SHADE_TOL}{ defined for each life stage (Germinant, Immature, Mature) and 
+##'   each light condition (Low, Medium, High) :
+##'   \itemize{
+##'     \item PFG are tolerant to low light if \code{light <= 3}
+##'     \item PFG are tolerant to medium light if \code{light <= 4}
+##'     \item PFG are tolerant to high light if \code{light >= 3}
+##'     \item all germinants are assumed to be tolerant to Low and Medium light
+##'     \item all mature trees are assumed to be tolerant to High light in the upper strata
+##'     \item all immature trees that grow in the penultimate stratum are assumed to
+##'     be tolerant to High light
+##'   }
+##'   }
+##' }
+##' 
 ##' 
 ##' 
 ##' @return A \code{.txt} file per PFG into the \code{name.simulation/DATA/PFGS/SUCC/}
 ##' directory with the following parameters :
 ##' 
 ##' \itemize{
-##'   \item MATURITY : the maturity age of the PFG (in years)
-##'   \item LONGEVITY : the PFG life span (in years)
-##'   \item MAX_ABUNDANCE : the maximal (qualitative) shade that the PFG is able to produce (1: Low 2: Medium 3: High)
-##'   \item IMM_SIZE : the relative size of the immature PFG (0: 0% 1: 10% 2: 50% 3: 90% 4: 100% 5: 40% 6: 80%)
-##'   \item CHANG_STR_AGES : the ages at which the PFG goes in the upper stratum (in years, put a value higher than the PFG life span if it is not supposed to rise a stratum)
-##'   \item WIDE_DISPERS : is the PFG able to disperse everywhere (i.e. no dispersal limits) (0: No 1: Yes)
-##'   \item ACTIVE_GERM : the germination rates depending on light conditions (0: 0% 1: 10% 2: 50% 3: 90% 4: 100% 5: 40% 6: 80%)
-##'   \item SHADE_TOL : the PFG shade tolerance table (in a single row). This is a vector of 9 numbers (0: Die 1: Survive) corresponding to the ability of the PFG to survive or not at different life stages (Germinate (Ge), Immature (Im), Mature (Ma)) under different light conditions (Low (L), Medium (M) or High (H) light resources). These parameters should be given in this order : GeL, GeM, GeH, ImL, ImM, ImH, MaL, MaM, MaH.
+##'   \item NAME : name of the PFG
+##'   \item MATURITY : the maturity age of the PFG \emph{(in years)}
+##'   \item LONGEVITY : the PFG life span \emph{(in years)}
+##'   \item MAX_ABUNDANCE : the maximal (qualitative) shade that the PFG is able to
+##'   produce \cr \emph{(1: Low 2: Medium 3: High)}
+##'   \item IMM_SIZE : the relative size of the immature PFG \cr
+##'   \emph{(0: 0\% 1: 10\% 2: 20\% 3: 30\% 4: 40\% 5: 50\% 6: 60\% 7: 70\% 8: 80\% 9: 
+##'   90\% 10: 100\%)}
+##'   \item CHANG_STR_AGES : the ages at which the PFG goes in the upper stratum  \cr
+##'   \emph{(in years, put a value higher than the PFG life span if it is not supposed to
+##'   rise a stratum)}
+##'   \item WIDE_DISPERS : is the PFG able to disperse everywhere (i.e. no dispersal
+##'   limits) \emph{(0: No 1: Yes)}
+##'   \item ACTIVE_GERM : the germination rates depending on light conditions \cr
+##'   \emph{(0: 0\% 1: 10\% 2: 20\% 3: 30\% 4: 40\% 5: 50\% 6: 60\% 7: 70\% 8: 80\% 9: 
+##'   90\% 10: 100\%)}
+##'   \item SHADE_TOL : the PFG shade tolerance table (in a single row). \cr This is a
+##'   vector of 9 numbers \emph{(0: Die 1: Survive)} corresponding to the ability of the PFG
+##'   to survive or not :
+##'   \itemize{
+##'     \item at different life stages \emph{(Germinate (Ge), Immature (Im), Mature (Ma))}
+##'     \item under different light conditions \emph{(Low (L), Medium (M) or High (H))}.
+##'   }
+##'   These parameters should be given in this order : GeL, GeM, GeH, ImL, ImM, ImH,
+##'   MaL, MaM, MaH.
 ##'   \item SEED_POOL_LIFE : the maximal number of years seeds are able to survive
-##'   \item SEED_DORMANCY
+##'   (for active and dormant pool)
+##'   \item SEED_DORMANCY : are the seeds dormant or not \emph{(0: No 1: Yes) \cr \cr}
 ##' }
+##' 
+##' A \code{SUCC_COMPLETE_TABLE.csv} file summarizing information for all groups into the
+##' \code{name.simulation/DATA/PFGS/} directory.
 ##' 
 ##' 
 ##' @examples
@@ -45,14 +158,17 @@
 ##' 
 ##' ## Create a Namespace_constants parameter file
 ##' PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
-##'                             , mat.PFG.succ = data.frame(PFG = c("PFG1", "PFG2", "PFG3")
-##'                                                         , type = c("H", "C", "P")  
-##'                                                         , height = c(50, 20, 100)
-##'                                                         , maturity = c(5, 5, 12)
-##'                                                         , longevity = c(25, 9, 54)
-##'                                                         , dispersal = c(1, 1, 1)))
+##'                             , mat.PFG.succ = data.frame(PFG = c("PFG1", "PFG2", "PFG3", "PFG4", "PFG5", "PFG6")
+##'                                                         , type = c("C", "C", "H", "H", "P", "P")  
+##'                                                         , height = c(10, 250, 36, 68, 1250, 550)
+##'                                                         , maturity = c(5, 5, 3, 3, 8, 9)
+##'                                                         , longevity = c(12, 200, 25, 4, 110, 70)
+##'                                                         , dispersal = 1
+##'                                                         , light = c(4, 6, 3, 6, 5, 5)))
 ##' 
 ##' @export
+##' 
+##' @importFrom utils write.table
 ##'
 ## END OF HEADER ###############################################################
 
@@ -69,18 +185,18 @@ PRE_FATE.params_PFGsuccession = function(
   {
     stop("Wrong type of data!\n `mat.PFG.succ` must be a data.frame")
   }
-  if (nrow(mat.PFG.succ) == 0 || ncol(mat.PFG.succ) != 6)
+  if (nrow(mat.PFG.succ) == 0 || ncol(mat.PFG.succ) != 7)
   {
     stop("Wrong dimension(s) of data!\n `mat.PFG.succ` does not have the appropriate number of rows (>0)
-           or columns (PFG, type, height, maturity, longevity, dispersal)")
+           or columns (PFG, type, height, maturity, longevity, dispersal, light)")
   }
   if (ncol(mat.PFG.succ) == 6)
   {
-    if (sum(colnames(mat.PFG.succ) == c("PFG", "type","height", "maturity", "longevity", "dispersal")) == 6)
+    if (sum(colnames(mat.PFG.succ) == c("PFG", "type","height", "maturity", "longevity", "dispersal", "light")) == 7)
     {
-      mat.PFG.succ = mat.PFG.succ[ , c("PFG", "type","height", "maturity", "longevity", "dispersal")]
+      mat.PFG.succ = mat.PFG.succ[ , c("PFG", "type","height", "maturity", "longevity", "dispersal", "light")]
     } else {
-      stop("Wrong type of data!\n Column names of `mat.PFG.succ` must be `PFG`, `type`, height`, `maturity`, `longevity` and `dispersal`")
+      stop("Wrong type of data!\n Column names of `mat.PFG.succ` must be `PFG`, `type`, height`, `maturity`, `longevity`, `dispersal` and `light`")
     }
   }
   if (length(unique(mat.PFG.succ$PFG)) < nrow(mat.PFG.succ)){
@@ -89,20 +205,33 @@ PRE_FATE.params_PFGsuccession = function(
   if (!is.numeric(mat.PFG.succ$height) ||
       !is.numeric(mat.PFG.succ$maturity) ||
       !is.numeric(mat.PFG.succ$longevity) ||
-      !is.numeric(mat.PFG.succ$dispersal)) {
-    stop("Wrong type of data!\n Columns `height`, `maturity`, `longevity` and `dispersal` of `mat.PFG.succ` must contain numeric values")
+      !is.numeric(mat.PFG.succ$dispersal) ||
+      !is.numeric(mat.PFG.succ$light)) {
+    stop("Wrong type of data!\n Columns `height`, `maturity`, `longevity`, `dispersal` and `light` of `mat.PFG.succ` must contain numeric values")
   }
   if (length(which(is.na(mat.PFG.succ$height))) > 0 ||
       length(which(is.na(mat.PFG.succ$maturity))) > 0 ||
       length(which(is.na(mat.PFG.succ$longevity))) > 0 ||
-      length(which(is.na(mat.PFG.succ$dispersal))) > 0) {
-    stop("Wrong type of data!\n Columns `height`, `maturity`, `longevity` and `dispersal` of `mat.PFG.succ` must not contain NA values")
+      length(which(is.na(mat.PFG.succ$dispersal))) > 0 ||
+      length(which(is.na(mat.PFG.succ$light))) > 0) {
+    stop("Wrong type of data!\n Columns `height`, `maturity`, `longevity`, `dispersal` and `light` of `mat.PFG.succ` must not contain NA values")
+  }
+  if (sum(mat.PFG.succ$type %in% c("H", "C", "P")) < nrow(mat.PFG.succ)){
+    stop("Wrong type of data!\n Column `type` of mat.PFG.succ` must contain values such as `H`, `C` or `P`")
   }
   if (sum(mat.PFG.succ$dispersal %in% seq(0,3)) < nrow(mat.PFG.succ)){
     stop("Wrong type of data!\n Column `dispersal` of mat.PFG.succ` must contain values between 0 and 3")
   }
+  if (sum(mat.PFG.succ$light %in% seq(0,10)) < nrow(mat.PFG.succ)){
+    stop("Wrong type of data!\n Column `light` of mat.PFG.succ` must contain values between 0 and 10")
+  }
+  
+  #################################################################################################
   
   no.PFG = nrow(mat.PFG.succ)
+  
+  ## GET PFG NAME
+  NAME = as.character(mat.PFG.succ$PFG)
 
   ## GET MATURITY AGE values
   MATURITY = mat.PFG.succ$maturity
@@ -110,6 +239,8 @@ PRE_FATE.params_PFGsuccession = function(
   ## GET LONGEVITY values
   ## Death precedes seed productivity in the model thus longevity param = longevity + 1
   LONGEVITY = mat.PFG.succ$longevity + 1
+  
+  #################################################################################################
   
   ## GET height strata limits (for light competition and PFG growth)
   ## n strata (+ germinants = 0)
@@ -130,12 +261,15 @@ PRE_FATE.params_PFGsuccession = function(
       tmp = tmp + categories.table[categ]
     }
   }
+  # STRATA_LIMITS = c(0,50,150,400,1000,2000)
   # barplot(table(cut(mat.PFG.succ$height, breaks = STRATA_LIMITS)))
   
   ## GET STRATA attribution
   STRATA = sapply(mat.PFG.succ$height, function(h) {
     max(which(STRATA_LIMITS < h), na.rm = T)
   })
+  
+  #################################################################################################
   
   ## GET MAX ABUNDANCE
   ##  = maximum abundance of mature PFG in favorable conditions
@@ -150,6 +284,8 @@ PRE_FATE.params_PFGsuccession = function(
   MAX_ABUNDANCE[which(STRATA == 2 & mat.PFG.succ$type != "H")] = 2 ## plants other than herbaceous in stratum 2 make medium shade
   MAX_ABUNDANCE[which(STRATA > 2 & mat.PFG.succ$type == "H")] = 2 ## herbaceous in stratum > 2 make medium shade
   MAX_ABUNDANCE[which(STRATA > 3 & mat.PFG.succ$type == "C")] = 3 ## chamaephytes in stratum > 3 make lot of shade
+  
+  #################################################################################################
   
   ## GET IMMATURE SIZE
   ##   = relative shade of immature plants
@@ -173,6 +309,7 @@ PRE_FATE.params_PFGsuccession = function(
   IMM_SIZE[which(mat.PFG.succ$type == "C" & STRATA == 1)] = 10 ## immature chamaephytes in 1st stratum contribute to shade in the same way than mature chamaephytes
   IMM_SIZE[which(mat.PFG.succ$type == "P" & mat.PFG.succ$height < 1000)] = 5 ## immature phanerophytes with height < 10m contribute to shade half less than mature phanerophytes
   
+  #################################################################################################
   
   ## GET CHANGE STRATA AGES
   ## Logistic growth curve with 2 points to parameterize it :
@@ -203,6 +340,8 @@ PRE_FATE.params_PFGsuccession = function(
     # }
   }
   
+  #################################################################################################
+  
   ## GET DISPERSAL MODE : is PFG widely dispersed ?
   ## 0 = no
   ## 1 = yes
@@ -215,6 +354,8 @@ PRE_FATE.params_PFGsuccession = function(
   ## 3 = negative exponential kernel + probability decreasing with distance within the d50, d99 and ldd circles
   ## 4 = homogeneous dispersal EVERYWHERE (!not available YET!)
   MODE_DISPERS = mat.PFG.succ$dispersal
+  
+  #################################################################################################
   
   ## GET GERMINATION RATE depending on light conditions
   ##   = these rates should express a deviation from the
@@ -240,6 +381,8 @@ PRE_FATE.params_PFGsuccession = function(
   ACTIVE_GERM[2, which(mat.PFG.succ$type == "H")] = 8 ## medium light conditions
   ACTIVE_GERM[3, which(mat.PFG.succ$type == "H")] = 9 ## high light conditions
   
+  #################################################################################################
+  
   ## GET SHADE TOLERANCE
   ##    = for each life stage (Germinant, Immature, Mature)
   ##    = and for each light condition (Low, Medium, High)
@@ -247,59 +390,101 @@ PRE_FATE.params_PFGsuccession = function(
   ## 1 = tolerant
   SHADE_TOL = matrix(0, nrow = 3 * 3, ncol = no.PFG)
   
-  # ## parameterisation according to Landolt classes and parcimony
-  # for (i in 1:n){
-  #   if(dat$light[i]==2) {
-  #     SHADE_TOL["GeL",i] <- SHADE_TOL["ImL",i] <- SHADE_TOL["MaL",i] <- 1
-  #     SHADE_TOL["GeM",i] <- SHADE_TOL["ImM",i] <- SHADE_TOL["MaM",i] <- 1
-  #     SHADE_TOL["GeH",i] <- SHADE_TOL["ImH",i] <- SHADE_TOL["MaH",i] <- 0
-  #   }
-  #   if(dat$light[i]==3) {
-  #     SHADE_TOL["GeL",i] <- SHADE_TOL["ImL",i] <- SHADE_TOL["MaL",i] <- 1
-  #     SHADE_TOL["GeM",i] <- SHADE_TOL["ImM",i] <- SHADE_TOL["MaM",i] <- 1
-  #     SHADE_TOL["GeH",i] <- SHADE_TOL["ImH",i] <- SHADE_TOL["MaH",i] <- 1
-  #   }
-  #   if(dat$light[i]==4) {
-  #     SHADE_TOL["GeL",i] <- SHADE_TOL["ImL",i] <- SHADE_TOL["MaL",i] <- 0
-  #     SHADE_TOL["GeM",i] <- SHADE_TOL["ImM",i] <- SHADE_TOL["MaM",i] <- 1
-  #     SHADE_TOL["GeH",i] <- SHADE_TOL["ImH",i] <- SHADE_TOL["MaH",i] <- 1
-  #   }
-  #   if(dat$light[i]==5) {
-  #     SHADE_TOL["GeL",i] <- SHADE_TOL["ImL",i] <- SHADE_TOL["MaL",i] <- 0
-  #     SHADE_TOL["GeM",i] <- SHADE_TOL["ImM",i] <- SHADE_TOL["MaM",i] <- 0
-  #     SHADE_TOL["GeH",i] <- SHADE_TOL["ImH",i] <- SHADE_TOL["MaH",i] <- 1
-  #   }
-  # }
-  # 
-  # 
-  # ## we assum that all germinants are tolerant to LOW and MEDIUM light
-  # SHADE_TOL["GeL",] <- SHADE_TOL["GeM",] <- 1
-  # 
-  # ## we have to adjust so that big trees continue growing when they are in the upper strata
-  # SHADE_TOL["MaH",which(dat$type=="P")] <- 1 # last stratum in which all trees must tolerate the light
-  # # the stratum before the last stratum must also tolerate the light (for the highest trees) because there will never be enough shadow in this stratum
-  # SHADE_TOL["ImH",which(dat$type=="P" & CHANG_STR_AGES[3,] < dat$maturity )] <- 1 
-  # ## Marvin: Maybe change CHANG_STR_AGES[3,] because we have more strata now??
-  # 
-  # ## update SHADE_TOL rownames
-  # rownames(SHADE_TOL) <- paste("SHADE_TOL", "_for_", rownames(SHADE_TOL), sep="")
+  for (i in 1:no.PFG){
+    ## Low light condition
+    if (mat.PFG.succ$light[i] <= 3)
+    {
+      SHADE_TOL[c(1, 4, 7), i] = 1
+    }
+    ## Medium light condition
+    if (mat.PFG.succ$light[i] <= 4)
+    {
+      SHADE_TOL[c(2, 5, 8), i] = 1
+    }
+    ## High light condition
+    if (mat.PFG.succ$light[i] >= 3)
+    {
+      SHADE_TOL[c(3, 6, 9), i] = 1
+    }
+  }
   
+  ## All germinants are assumed to be tolerant to Low and Medium light
+  SHADE_TOL[c(1, 2),] = 1
+  ## All mature trees are assumed to be tolerant to High light in the upper strata
+  SHADE_TOL[c(9), which(mat.PFG.succ$type == "P")] = 1
+  ## All immature trees that grow in the penultimate stratum are assumed to be tolerant to High light
+  SHADE_TOL[c(6), which(mat.PFG.succ$type == "P" & CHANG_STR_AGES[nrow(CHANG_STR_AGES) - 1,] < MATURITY)] = 1
   
-  # params.list = lapply(1:nrow(mat.PFG.disp), function(x) {
-  #   list(as.integer(mat.PFG.disp[x , c("d50", "d99", "ldd")]))
-  # })
-  # names.params.list = mat.PFG.disp$PFG
-  # names.params.list.sub = "DISPERS_DIST"
-  # 
-  # for (i in 1:length(params.list)) {
-  #   params = params.list[[i]]
-  #   names(params) = names.params.list.sub
-  #   
-  #   .createParams(params.file = paste0(name.simulation,
-  #                                      "/DATA/PFGS/DISP/DISP_",
-  #                                      names.params.list[i],
-  #                                      ".txt")
-  #                 , params.list = params)
-  # }
+  #################################################################################################
+  
+  ## GET SEED POOLS (active and dormant) LIFE SPAN
+  ##   = available seeds will exponentially decrease according to seed pool life span parameter
+  SEED_POOL_LIFE = matrix(0, nrow = 2, ncol = no.PFG)
+  
+  ## GET SEED DORMANCY
+  ## 0 = no
+  ## 1 = yes
+  SEED_DORMANCY = rep(0, no.PFG)
+  
+  #################################################################################################
+
+  names.params.list = get("NAME")
+  names.params.list.sub = c("NAME"
+                            , "LONGEVITY"
+                            , "MATURITY"
+                            , "MAX_ABUNDANCE"
+                            , "IMM_SIZE"
+                            , "CHANG_STR_AGES"
+                            , "MODE_DISPERS"
+                            , "ACTIVE_GERM"
+                            , "SHADE_TOL"
+                            , "SEED_POOL_LIFE"
+                            , "SEED_DORMANCY")
+  
+  params.list = lapply(names.params.list.sub, function(x) { return(get(x)) })
+  
+  params.csv = do.call(rbind, params.list)
+  rownames(params.csv) = c("NAME"
+                           , "LONGEVITY"
+                           , "MATURITY"
+                           , "MAX_ABUNDANCE"
+                           , "IMM_SIZE"
+                           , paste0("CHANG_STR_AGES_to_str_", 1:length(STRATA_LIMITS))
+                           , "MODE_DISPERS"
+                           , paste0("ACTIVE_GERM_for_", c("L", "M", "H"))
+                           , paste0("SHADE_TOL_for_",
+                                    c("GeL", "GeM", "GeH", "ImL", "ImM", "ImH", "MaL", "MaM", "MaH"))
+                           , paste0("SEED_POOL_LIFE_", c("active", "dormant"))
+                           , "SEED_DORMANCY")
+  
+  write.table(params.csv
+            , file = paste0(name.simulation, "/DATA/PFGS/SUCC_COMPLETE_TABLE.csv")
+            , row.names = T
+            , col.names = F)
+
+  #################################################################################################
+  
+  params.list = lapply(1:no.PFG, function(x) {
+    lapply(names.params.list.sub, function(y) {
+      val = get(y)
+      if (is.null(nrow(val))){
+        val = val[x]
+      } else {
+        val = val[, x]
+      }
+      return(val)
+    })
+  })
+
+  for (i in 1:length(params.list)) {
+    params = params.list[[i]]
+    names(params) = names.params.list.sub
+
+    .createParams(params.file = paste0(name.simulation,
+                                       "/DATA/PFGS/SUCC/SUCC_",
+                                       names.params.list[i],
+                                       ".txt")
+                  , params.list = params)
+  }
 }
 

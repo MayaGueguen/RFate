@@ -11,25 +11,46 @@ PRE_FATE.params_PFGsuccession(name.simulation, mat.PFG.succ)
 \item{name.simulation}{a \code{string} that corresponds to the main directory
 or simulation name of the \code{FATE-HD} simulation}
 
-\item{mat.PFG.succ}{a \code{data.frame} with 6 columns : PFG, type, height,
-maturity, longevity, dispersal}
+\item{mat.PFG.succ}{a \code{data.frame} with 7 columns : PFG, type, height,
+maturity, longevity, dispersal, light}
 }
 \value{
 A \code{.txt} file per PFG into the \code{name.simulation/DATA/PFGS/SUCC/}
 directory with the following parameters :
 
 \itemize{
-  \item MATURITY : the maturity age of the PFG (in years)
-  \item LONGEVITY : the PFG life span (in years)
-  \item MAX_ABUNDANCE : the maximal (qualitative) shade that the PFG is able to produce (1: Low 2: Medium 3: High)
-  \item IMM_SIZE : the relative size of the immature PFG (0: 0% 1: 10% 2: 50% 3: 90% 4: 100% 5: 40% 6: 80%)
-  \item CHANG_STR_AGES : the ages at which the PFG goes in the upper stratum (in years, put a value higher than the PFG life span if it is not supposed to rise a stratum)
-  \item WIDE_DISPERS : is the PFG able to disperse everywhere (i.e. no dispersal limits) (0: No 1: Yes)
-  \item ACTIVE_GERM : the germination rates depending on light conditions (0: 0% 1: 10% 2: 50% 3: 90% 4: 100% 5: 40% 6: 80%)
-  \item SHADE_TOL : the PFG shade tolerance table (in a single row). This is a vector of 9 numbers (0: Die 1: Survive) corresponding to the ability of the PFG to survive or not at different life stages (Germinate (Ge), Immature (Im), Mature (Ma)) under different light conditions (Low (L), Medium (M) or High (H) light resources). These parameters should be given in this order : GeL, GeM, GeH, ImL, ImM, ImH, MaL, MaM, MaH.
+  \item NAME : name of the PFG
+  \item MATURITY : the maturity age of the PFG \emph{(in years)}
+  \item LONGEVITY : the PFG life span \emph{(in years)}
+  \item MAX_ABUNDANCE : the maximal (qualitative) shade that the PFG is able to
+  produce \cr \emph{(1: Low 2: Medium 3: High)}
+  \item IMM_SIZE : the relative size of the immature PFG \cr
+  \emph{(0: 0\% 1: 10\% 2: 20\% 3: 30\% 4: 40\% 5: 50\% 6: 60\% 7: 70\% 8: 80\% 9: 
+  90\% 10: 100\%)}
+  \item CHANG_STR_AGES : the ages at which the PFG goes in the upper stratum  \cr
+  \emph{(in years, put a value higher than the PFG life span if it is not supposed to
+  rise a stratum)}
+  \item WIDE_DISPERS : is the PFG able to disperse everywhere (i.e. no dispersal
+  limits) \emph{(0: No 1: Yes)}
+  \item ACTIVE_GERM : the germination rates depending on light conditions \cr
+  \emph{(0: 0\% 1: 10\% 2: 20\% 3: 30\% 4: 40\% 5: 50\% 6: 60\% 7: 70\% 8: 80\% 9: 
+  90\% 10: 100\%)}
+  \item SHADE_TOL : the PFG shade tolerance table (in a single row). \cr This is a
+  vector of 9 numbers \emph{(0: Die 1: Survive)} corresponding to the ability of the PFG
+  to survive or not :
+  \itemize{
+    \item at different life stages \emph{(Germinate (Ge), Immature (Im), Mature (Ma))}
+    \item under different light conditions \emph{(Low (L), Medium (M) or High (H))}.
+  }
+  These parameters should be given in this order : GeL, GeM, GeH, ImL, ImM, ImH,
+  MaL, MaM, MaH.
   \item SEED_POOL_LIFE : the maximal number of years seeds are able to survive
-  \item SEED_DORMANCY
+  (for active and dormant pool)
+  \item SEED_DORMANCY : are the seeds dormant or not \emph{(0: No 1: Yes) \cr \cr}
 }
+
+A \code{SUCC_COMPLETE_TABLE.csv} file summarizing information for all groups into the
+\code{name.simulation/DATA/PFGS/} directory.
 }
 \description{
 This script is designed to create parameter files containing 
@@ -37,7 +58,98 @@ succession parameters for each PFG (one file for each of them) used in the
 core module of \code{FATE-HD}.
 }
 \details{
-For each PFG,
+The core module of \code{FATE-HD} allows the user to simulate a primary vegetation
+succession based on light competition.
+Several parameters are required for each PFG in order to set up this life cycle :
+
+\describe{
+  \item{type}{or life-form, based on Raunkier. It should be either \code{H} 
+  (herbaceous), \code{C} (chamaephyte) or \code{P} (phanerophyte) for now}
+  \item{height}{the maximum or average height that reach the PFG}
+  \item{maturity}{the age from which the PFG can reproduce}
+  \item{longevity}{the maximum or average lifespan of the PFG}
+  \item{dispersal}{the method of dispersal of the PFG
+  \itemize{
+    \item 0 = no dispersal
+    \item 1 = homogeneous dispersal within the d50, d99 and ldd circles
+    \item 2 = negative exponential kernel within the d50, d99 and ldd circles
+    \item 3 = negative exponential kernel + probability decreasing with distance
+    within the d50, d99 and ldd circles
+    \item 4 = homogeneous dispersal EVERYWHERE \emph{(!not available YET!)}
+  }
+  }
+  \item{light}{a value between 0 and 10 corresponding to the Ellenberg value
+  of the PFG \cr \cr}
+}
+
+
+
+
+These values will allow to calculate or define a set of characteristics for each
+PFG :
+
+\describe{
+  \item{STRATA_LIMITS}{= the height values that define each stratum. \cr \cr
+  The steps are detailed below and try to homongenize the number of PFG
+  within each stratum :
+  \itemize{
+    \item the average number of PFG per stratum should be close to 
+    the square root of the total number of PFG (\code{no.PFG.perStrata})
+    \item \code{strata limits} should go exponentially and will be selected among \cr
+    \code{c(round(10 * seq(0, 6, 0.5) ^ 2), 10000)}
+    \item PFG are divided according to their \code{height} and these \code{strata limits}
+    and then grouped in order to have per stratum a number of PFG \code{>= (no.PFG.perStrata - 2)}
+  }
+  }
+  \item{STRATA}{the maximum stratum that each PFG can reach}
+  \item{MAX_ABUNDANCE}{= maximum abundance of mature PFG in favorable conditions \cr
+  = maximum shade a PFG can make in a pixel corresponding to a number of individuals \cr \cr
+  It is defined according to the number of strata potentially occupied by a PFG :
+  \itemize{
+    \item herbaceous make little shade (1), chamaephytes make medium shade (2) and
+    phanerophytes make lot of shade (3)
+    \item all plants in first stratum make little shade (1)
+    \item plants other than herbaceous in stratum 2 make medium shade (2)
+    \item herbaceous in stratum > 2 make medium shade (2)
+    \item chamaephytes in stratum > 3 make lot of shade (3)
+  }
+  }
+  \item{IMM_SIZE}{= relative shade of immature plants \cr
+  \itemize{
+    \item immature herbaceous contribute to shade in the same way than mature
+    herbaceous (100 \%)
+    \item immature chamaephytes contribute to shade half less than mature
+    herbaceous (50 \%)
+    \item immature phanerophytes contribute to shade only by 10 \% of their
+     full capacity
+    \item intermediate percentages for herbaceous in stratum 2 (80 \%) and in 
+    stratum > 2 (50 \%)
+    \item immature chamaephytes in 1st stratum contribute to shade in the same 
+    way than mature chamaephytes (100 \%)
+    \item immature phanerophytes with height < 10m contribute to shade half less 
+    than mature phanerophytes (50 \%)
+  }
+  }
+  \item{CHANG_STR_AGES}{= at what age each PFG goes into the upper stratum. \cr \cr
+  It is defined using a logistic growth curve with 2 points to parameterize it :
+  \enumerate{
+    \item at \code{age = maturity/2}, \code{height = IMM_SIZE * height}
+    \item at \code{age = longevity}, \code{height = height}
+  }
+  }
+  \item{SHADE_TOL}{ defined for each life stage (Germinant, Immature, Mature) and 
+  each light condition (Low, Medium, High) :
+  \itemize{
+    \item PFG are tolerant to low light if \code{light <= 3}
+    \item PFG are tolerant to medium light if \code{light <= 4}
+    \item PFG are tolerant to high light if \code{light >= 3}
+    \item all germinants are assumed to be tolerant to Low and Medium light
+    \item all mature trees are assumed to be tolerant to High light in the upper strata
+    \item all immature trees that grow in the penultimate stratum are assumed to
+    be tolerant to High light
+  }
+  }
+}
 }
 \examples{
 
@@ -46,12 +158,13 @@ PRE_FATE.skeletonDirectory()
 
 ## Create a Namespace_constants parameter file
 PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
-                            , mat.PFG.succ = data.frame(PFG = c("PFG1", "PFG2", "PFG3")
-                                                        , type = c("H", "C", "P")  
-                                                        , height = c(50, 20, 100)
-                                                        , maturity = c(5, 5, 12)
-                                                        , longevity = c(25, 9, 54)
-                                                        , dispersal = c(1, 1, 1)))
+                            , mat.PFG.succ = data.frame(PFG = c("PFG1", "PFG2", "PFG3", "PFG4", "PFG5", "PFG6")
+                                                        , type = c("C", "C", "H", "H", "P", "P")  
+                                                        , height = c(10, 250, 36, 68, 1250, 550)
+                                                        , maturity = c(5, 5, 3, 3, 8, 9)
+                                                        , longevity = c(12, 200, 25, 4, 110, 70)
+                                                        , dispersal = 1
+                                                        , light = c(4, 6, 3, 6, 5, 5)))
 
 }
 \author{

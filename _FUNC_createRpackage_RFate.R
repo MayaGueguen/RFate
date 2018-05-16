@@ -60,7 +60,7 @@ roxygenize(
 #   package.dir = package_name
 #   , clean = TRUE)
 # setwd("RFate/")
-# pkgdown:::build_home()
+# pkgdown:::build_reference(examples = FALSE)
 
 
 
