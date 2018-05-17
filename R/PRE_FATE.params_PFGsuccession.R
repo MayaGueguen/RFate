@@ -158,7 +158,7 @@
 ##' 
 ##' ## Create a Namespace_constants parameter file
 ##' PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
-##'                             , mat.PFG.succ = data.frame(PFG = c("PFG1", "PFG2", "PFG3", "PFG4", "PFG5", "PFG6")
+##'                             , mat.PFG.succ = data.frame(PFG = paste0("PFG",1:6)
 ##'                                                         , type = c("C", "C", "H", "H", "P", "P")  
 ##'                                                         , height = c(10, 250, 36, 68, 1250, 550)
 ##'                                                         , maturity = c(5, 5, 3, 3, 8, 9)
@@ -178,52 +178,59 @@ PRE_FATE.params_PFGsuccession = function(
   , mat.PFG.succ
 ){
   
-  if (!dir.exists(paste0(name.simulation, "/DATA/PFGS/SUCC/"))){
+  if (missing(name.simulation) ||
+      !is.character(name.simulation) ||
+      !dir.exists(paste0(name.simulation, "/DATA/PFGS/SUCC/"))){
     stop("Wrong name folder given!\n `name.simulation` does not exist or does not contain a DATA/PFGS/SUCC/ folder")
   }
-  if (!is.data.frame(mat.PFG.succ))
+  if (missing(mat.PFG.succ) || !is.data.frame(mat.PFG.succ))
   {
     stop("Wrong type of data!\n `mat.PFG.succ` must be a data.frame")
   }
   if (nrow(mat.PFG.succ) == 0 || ncol(mat.PFG.succ) != 7)
   {
-    stop("Wrong dimension(s) of data!\n `mat.PFG.succ` does not have the appropriate number of rows (>0)
-           or columns (PFG, type, height, maturity, longevity, dispersal, light)")
+    stop(paste0("Wrong dimension(s) of data!\n `mat.PFG.succ` does not have "
+                , "the appropriate number of rows (>0) or columns "
+                , "(PFG, type, height, maturity, longevity, dispersal, light)"))
   }
-  if (ncol(mat.PFG.succ) == 6)
+  if (ncol(mat.PFG.succ) == 7)
   {
     if (sum(colnames(mat.PFG.succ) == c("PFG", "type","height", "maturity", "longevity", "dispersal", "light")) == 7)
     {
       mat.PFG.succ = mat.PFG.succ[ , c("PFG", "type","height", "maturity", "longevity", "dispersal", "light")]
     } else {
-      stop("Wrong type of data!\n Column names of `mat.PFG.succ` must be `PFG`, `type`, height`, `maturity`, `longevity`, `dispersal` and `light`")
+      stop(paste0("Wrong type of data!\n Column names of `mat.PFG.succ` must be "
+                  , "`PFG`, `type`, height`, `maturity`, `longevity`, `dispersal` and `light`"))
     }
   }
-  if (length(unique(mat.PFG.succ$PFG)) < nrow(mat.PFG.succ)){
-    stop("Wrong type of data!\n Column `PFG` of mat.PFG.succ` must contain different values")
+  if (length(which(is.na(mat.PFG.succ$PFG))) > 0 ||
+      length(unique(mat.PFG.succ$PFG)) < nrow(mat.PFG.succ)){
+    stop("Wrong type of data!\n Column `PFG` of `mat.PFG.succ` must contain different values")
+  }
+  if (sum(mat.PFG.succ$type %in% c("H", "C", "P")) < nrow(mat.PFG.succ)){
+    stop("Wrong type of data!\n Column `type` of `mat.PFG.succ` must contain values such as `H`, `C` or `P`")
   }
   if (!is.numeric(mat.PFG.succ$height) ||
       !is.numeric(mat.PFG.succ$maturity) ||
       !is.numeric(mat.PFG.succ$longevity) ||
       !is.numeric(mat.PFG.succ$dispersal) ||
       !is.numeric(mat.PFG.succ$light)) {
-    stop("Wrong type of data!\n Columns `height`, `maturity`, `longevity`, `dispersal` and `light` of `mat.PFG.succ` must contain numeric values")
+    stop(paste0("Wrong type of data!\n Columns `height`, `maturity`, `longevity`, "
+                , "`dispersal` and `light` of `mat.PFG.succ` must contain numeric values"))
   }
   if (length(which(is.na(mat.PFG.succ$height))) > 0 ||
       length(which(is.na(mat.PFG.succ$maturity))) > 0 ||
       length(which(is.na(mat.PFG.succ$longevity))) > 0 ||
       length(which(is.na(mat.PFG.succ$dispersal))) > 0 ||
       length(which(is.na(mat.PFG.succ$light))) > 0) {
-    stop("Wrong type of data!\n Columns `height`, `maturity`, `longevity`, `dispersal` and `light` of `mat.PFG.succ` must not contain NA values")
-  }
-  if (sum(mat.PFG.succ$type %in% c("H", "C", "P")) < nrow(mat.PFG.succ)){
-    stop("Wrong type of data!\n Column `type` of mat.PFG.succ` must contain values such as `H`, `C` or `P`")
+    stop(paste0("Wrong type of data!\n Columns `height`, `maturity`, `longevity`, "
+                , "`dispersal` and `light` of `mat.PFG.succ` must not contain NA values"))
   }
   if (sum(mat.PFG.succ$dispersal %in% seq(0,3)) < nrow(mat.PFG.succ)){
-    stop("Wrong type of data!\n Column `dispersal` of mat.PFG.succ` must contain values between 0 and 3")
+    stop("Wrong type of data!\n Column `dispersal` of `mat.PFG.succ` must contain values between 0 and 3")
   }
   if (sum(mat.PFG.succ$light %in% seq(0,10)) < nrow(mat.PFG.succ)){
-    stop("Wrong type of data!\n Column `light` of mat.PFG.succ` must contain values between 0 and 10")
+    stop("Wrong type of data!\n Column `light` of `mat.PFG.succ` must contain values between 0 and 10")
   }
   
   #################################################################################################

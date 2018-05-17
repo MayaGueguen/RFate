@@ -158,7 +158,7 @@ PRE_FATE.skeletonDirectory()
 
 ## Create a Namespace_constants parameter file
 PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
-                            , mat.PFG.succ = data.frame(PFG = c("PFG1", "PFG2", "PFG3", "PFG4", "PFG5", "PFG6")
+                            , mat.PFG.succ = data.frame(PFG = paste0("PFG",1:6)
                                                         , type = c("C", "C", "H", "H", "P", "P")  
                                                         , height = c(10, 250, 36, 68, 1250, 550)
                                                         , maturity = c(5, 5, 3, 3, 8, 9)
