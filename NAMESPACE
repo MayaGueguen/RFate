@@ -2,6 +2,7 @@
 
 export(PRE_FATE.abundBraunBlanquet)
 export(PRE_FATE.params_PFGdispersal)
+export(PRE_FATE.params_PFGdisturbance)
 export(PRE_FATE.params_PFGsuccession)
 export(PRE_FATE.params_namespaceConstants)
 export(PRE_FATE.params_saveYears)

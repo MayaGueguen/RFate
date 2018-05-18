@@ -55,12 +55,12 @@ roxygenize(
   package.dir = package_name
   , clean = TRUE)
 
-# setwd("./../")
-# roxygenize(
-#   package.dir = package_name
-#   , clean = TRUE)
-# setwd("RFate/")
-# pkgdown:::build_reference(examples = FALSE)
+setwd("./../")
+roxygenize(
+  package.dir = package_name
+  , clean = TRUE)
+setwd("RFate/")
+pkgdown:::build_reference(examples = FALSE)
 
 
 

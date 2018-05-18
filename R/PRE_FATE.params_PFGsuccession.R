@@ -56,7 +56,7 @@
 ##'     \item the average number of PFG per stratum should be close to 
 ##'     the square root of the total number of PFG (\code{no.PFG.perStrata})
 ##'     \item \code{strata limits} should go exponentially and will be selected among \cr
-##'     \code{c(round(10 * seq(0, 6, 0.5) ^ 2), 10000)}
+##'     \code{0, 20, 50, 150, 400, 1000, 2000, 5000, 10000}
 ##'     \item PFG are divided according to their \code{height} and these \code{strata limits}
 ##'     and then grouped in order to have per stratum a number of PFG \code{>= (no.PFG.perStrata - 2)}
 ##'   }
@@ -137,7 +137,7 @@
 ##'   vector of 9 numbers \emph{(0: Die 1: Survive)} corresponding to the ability of the PFG
 ##'   to survive or not :
 ##'   \itemize{
-##'     \item at different life stages \emph{(Germinate (Ge), Immature (Im), Mature (Ma))}
+##'     \item at different life stages \emph{(Germinant (Ge), Immature (Im), Mature (Ma))}
 ##'     \item under different light conditions \emph{(Low (L), Medium (M) or High (H))}.
 ##'   }
 ##'   These parameters should be given in this order : GeL, GeM, GeH, ImL, ImM, ImH,
@@ -148,7 +148,8 @@
 ##' }
 ##' 
 ##' A \code{SUCC_COMPLETE_TABLE.csv} file summarizing information for all groups into the
-##' \code{name.simulation/DATA/PFGS/} directory.
+##' \code{name.simulation/DATA/PFGS/} directory.  
+##' This file can be used to parameterize the disturbance files.
 ##' 
 ##' 
 ##' @examples
@@ -156,7 +157,7 @@
 ##' ## Create a skeleton folder with the default name ('FATE_simulation')
 ##' PRE_FATE.skeletonDirectory()
 ##' 
-##' ## Create a Namespace_constants parameter file
+##' ## Create PFG succession parameter files
 ##' PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
 ##'                             , mat.PFG.succ = data.frame(PFG = paste0("PFG",1:6)
 ##'                                                         , type = c("C", "C", "H", "H", "P", "P")  
@@ -239,6 +240,9 @@ PRE_FATE.params_PFGsuccession = function(
   
   ## GET PFG NAME
   NAME = as.character(mat.PFG.succ$PFG)
+  
+  ## GET PFG TYPE
+  TYPE = as.character(mat.PFG.succ$type)
 
   ## GET MATURITY AGE values
   MATURITY = mat.PFG.succ$maturity
@@ -252,7 +256,7 @@ PRE_FATE.params_PFGsuccession = function(
   ## GET height strata limits (for light competition and PFG growth)
   ## n strata (+ germinants = 0)
   no.PFG.perStrata = round(sqrt(no.PFG))
-  strata.limits = c(round(10 * seq(0, 6, 0.5) ^ 2), 10000)
+  strata.limits = c(0, 20, 50, 150, 400, 1000, 2000, 5000, 10000)
   categories = cut(mat.PFG.succ$height, breaks = strata.limits)
   categories.table = table(categories)
   STRATA_LIMITS = 0
@@ -268,7 +272,6 @@ PRE_FATE.params_PFGsuccession = function(
       tmp = tmp + categories.table[categ]
     }
   }
-  # STRATA_LIMITS = c(0,50,150,400,1000,2000)
   # barplot(table(cut(mat.PFG.succ$height, breaks = STRATA_LIMITS)))
   
   ## GET STRATA attribution
@@ -437,8 +440,10 @@ PRE_FATE.params_PFGsuccession = function(
 
   names.params.list = get("NAME")
   names.params.list.sub = c("NAME"
+                            , "TYPE"
                             , "LONGEVITY"
                             , "MATURITY"
+                            , "STRATA"
                             , "MAX_ABUNDANCE"
                             , "IMM_SIZE"
                             , "CHANG_STR_AGES"
@@ -450,10 +455,12 @@ PRE_FATE.params_PFGsuccession = function(
   
   params.list = lapply(names.params.list.sub, function(x) { return(get(x)) })
   
-  params.csv = do.call(rbind, params.list)
-  rownames(params.csv) = c("NAME"
+  params.csv = t(do.call(rbind, params.list))
+  colnames(params.csv) = c("NAME"
+                           , "TYPE"
                            , "LONGEVITY"
                            , "MATURITY"
+                           , "STRATA"
                            , "MAX_ABUNDANCE"
                            , "IMM_SIZE"
                            , paste0("CHANG_STR_AGES_to_str_", 1:length(STRATA_LIMITS))
@@ -466,9 +473,9 @@ PRE_FATE.params_PFGsuccession = function(
   
   write.table(params.csv
             , file = paste0(name.simulation, "/DATA/PFGS/SUCC_COMPLETE_TABLE.csv")
-            , row.names = T
-            , col.names = F)
-
+            , row.names = F
+            , col.names = T)
+  
   #################################################################################################
   
   params.list = lapply(1:no.PFG, function(x) {

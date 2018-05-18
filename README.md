@@ -2,8 +2,10 @@
 [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/MayaGueguen/RFate?branch=master&svg=true)](https://ci.appveyor.com/project/MayaGueguen/RFate)
 [![Coverage status](https://codecov.io/gh/MayaGueguen/RFate/branch/master/graph/badge.svg)](https://codecov.io/github/MayaGueguen/RFate?branch=master)
 
+___________________________________________________________________________________________________
 
-# <i class="fa fa-pagelines"></i> `RFate` package - to be used with `FATE-HD`
+# <font color=#52962b> <i class="fa fa-pagelines"></i> `RFate` package - to be used with `FATE-HD` </font>
+
 
 This package aims at presenting support functions to the software `FATE-HD`.  
 Functions are classified in two categories :
@@ -21,7 +23,7 @@ ________________________________________________________________________________
 
 ___________________________________________________________________________________________________
 
-## <i class="fa fa-battery-quarter"></i> PRE_FATE - build Plant Functional Groups (PFG)
+## <font color="#068f96"><i class="fa fa-battery-quarter"></i> `PRE_FATE` - build Plant Functional Groups (PFG)</font>
 
 ___________________________________________________________________________________________________
 
@@ -80,12 +82,70 @@ with the function [PRE_FATE.speciesClustering_step2](https://mayagueguen.github.
 *4. Clustering of species :*  
 - Using the **dissimilarity distances** from previous step, apply hierarchical clustering
 
+___________________________________________________________________________________________________
 
 ___________________________________________________________________________________________________
 
-## <i class="fa fa-battery-half"></i> PRE_FATE - build parameter files  
+## <font color="#068f96"> <i class="fa fa-battery-half"></i> `PRE_FATE` - build parameter files </font>
+
+### The different type of parameters and *flags*
+
+`FATE-HD` requires a quite large number of parameters, which are stored into `.txt` files, presented to and recovered by the software. These **parameters** can be of 3 types :
+
+1. **Filenames**, to guide the application to other parameter files that should be read
+2. These filenames either correspond to :
+    - other parameter files that contain **values** to be actually read and used
+    - **raster** files, with the extension `.tif` (lighter) or `.img`
+
+<br/>
+
+To enumerate these settings, **2 types of flag** can be found and used within the parameter files :
+
+1. To give one or several links to other files containing parameter values or to raster files : **`--PARAM_NAME--`**
+```Shell
+--GLOBAL_PARAMS--
+SAVE_OBJ/DATA/Global_parameters.txt
+--MASK--
+SAVE_OBJ/DATA/MASK/mask_studiedArea.asc
+--PFG_LIFE_HISTORY_PARAMS--
+SAVE_OBJ/DATA/PFGS/SUCC/SUCC_PFG1.txt
+SAVE_OBJ/DATA/PFGS/SUCC/SUCC_PFG2.txt
+...
+```
+In this way, each parameter can have several values (filenames), and **each line corresponds to a value**. The transition to a new parameter is made thanks to the presence of a new flag on the next line.
+
+2. To give parameter values : **`PARAM_NAME`**
+```Shell
+NAME H2_dryGrass
+MATURITY 3
+LONGEVITY 11
+MAX_ABUNDANCE 1
+IMM_SIZE 4
+CHANG_STR_AGES 0 10000 10000 10000 10000
+```
+Each line corresponds to a parameter, given by the **flag** (parameter name in capital letters) **followed by all values linked to this flag on the same line**. Each value has to be separated from another by a **space**.
+
+
+### Which files for which settings ?
+
+*1. Simulation parameterization*
+- **Namespace constants** : for the software to manage abundance values  
+with the function [PRE_FATE.params_namespaceConstants](https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_namespaceConstants.html)
+- **Global parameters** : related to the simulation definition  
+(number of PFG and strata, simulation duration, computer resources, modules loaded...)
+- **Years to save abundance rasters and simulation outputs** with the function [PRE_FATE.params_saveYears](https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_saveYears.html)
+
+*2. For each PFG : behavior and characteristics*
+- **Succession files** : related to the life history with the function [PRE_FATE.params_PFGsuccession](https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGsuccession.html)
+- **Dispersal files** : related to the dispersal ability with the function [PRE_FATE.params_PFGdispersal](https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGdispersal.html)
+- **Disturbance files** : related to the response to perturbations in terms of resprouting and mortality
+
+*3. Parameter management*
+- **ParamSimulation file** :
 
 ___________________________________________________________________________________________________
 
-## <i class="fa fa-battery-three-quarters"></i> POST_FATE - evaluation of simulation  
+___________________________________________________________________________________________________
+
+## <font color="#068f96"> <i class="fa fa-battery-three-quarters"></i> `POST_FATE` - evaluation of simulation </font>
 

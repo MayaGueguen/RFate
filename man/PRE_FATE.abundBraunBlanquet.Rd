@@ -34,7 +34,8 @@ A correspondence has been defined between this index and average recovery values
 }
 
 
-\emph{Braun-Blanquet J., Roussine N. & Nègre R., 1952. Les groupements végétaux de la France méditerranéenne.
+\emph{\cr \cr
+Braun-Blanquet J., Roussine N. & Nègre R., 1952. Les groupements végétaux de la France méditerranéenne.
 Dir. Carte Group. Vég. Afr. Nord , CNRS, 292 p.}
 
 \emph{Baudière A. & Serve L., 1975. Les groupements végétaux du Plade Gorra-Blanc (massif du Puigmal, Pyrénées Orientales).

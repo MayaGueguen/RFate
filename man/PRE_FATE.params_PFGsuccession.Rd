@@ -39,7 +39,7 @@ directory with the following parameters :
   vector of 9 numbers \emph{(0: Die 1: Survive)} corresponding to the ability of the PFG
   to survive or not :
   \itemize{
-    \item at different life stages \emph{(Germinate (Ge), Immature (Im), Mature (Ma))}
+    \item at different life stages \emph{(Germinant (Ge), Immature (Im), Mature (Ma))}
     \item under different light conditions \emph{(Low (L), Medium (M) or High (H))}.
   }
   These parameters should be given in this order : GeL, GeM, GeH, ImL, ImM, ImH,
@@ -50,7 +50,8 @@ directory with the following parameters :
 }
 
 A \code{SUCC_COMPLETE_TABLE.csv} file summarizing information for all groups into the
-\code{name.simulation/DATA/PFGS/} directory.
+\code{name.simulation/DATA/PFGS/} directory.  
+This file can be used to parameterize the disturbance files.
 }
 \description{
 This script is designed to create parameter files containing 
@@ -96,7 +97,7 @@ PFG :
     \item the average number of PFG per stratum should be close to 
     the square root of the total number of PFG (\code{no.PFG.perStrata})
     \item \code{strata limits} should go exponentially and will be selected among \cr
-    \code{c(round(10 * seq(0, 6, 0.5) ^ 2), 10000)}
+    \code{0, 20, 50, 150, 400, 1000, 2000, 5000, 10000}
     \item PFG are divided according to their \code{height} and these \code{strata limits}
     and then grouped in order to have per stratum a number of PFG \code{>= (no.PFG.perStrata - 2)}
   }
@@ -156,7 +157,7 @@ PFG :
 ## Create a skeleton folder with the default name ('FATE_simulation')
 PRE_FATE.skeletonDirectory()
 
-## Create a Namespace_constants parameter file
+## Create PFG succession parameter files
 PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
                             , mat.PFG.succ = data.frame(PFG = paste0("PFG",1:6)
                                                         , type = c("C", "C", "H", "H", "P", "P")  
