@@ -158,8 +158,10 @@
 ##' @export
 ##' 
 ##' @importFrom utils read.table write.table
+##' @importFrom raster extension
 ##'
 ## END OF HEADER ###############################################################
+
 
 
 PRE_FATE.params_PFGdisturbance = function(
@@ -175,10 +177,23 @@ PRE_FATE.params_PFGdisturbance = function(
   }
   
   ## CHECKS for mat.PFG.succ parameter
-  mat.PFG.succ = read.table(file = mat.PFG.succ, header = T, sep = " ")
-  if (missing(mat.PFG.succ) || !is.data.frame(mat.PFG.succ))
+  isDataFrame = is.data.frame(mat.PFG.succ)
+  isCharacter = is.character(mat.PFG.succ)
+  if (!isDataFrame && !isCharacter)
   {
-    stop("Wrong type of data!\n `mat.PFG.succ` must be a data.frame")
+    stop(paste0("Wrong type of data!\n `mat.PFG.succ` must be either :\n"
+                , " ==> an existing `.csv` or `.txt` filename with a header and space separator"
+                , " ==> a data.frame"))
+  } else if (isCharacter && 
+             (!file.exists(mat.PFG.succ) || !(extension(mat.PFG.succ) %in% c(".csv", ".txt"))))
+  {
+    stop(paste0("Wrong type of data!\n `mat.PFG.succ` must be an existing `.csv` or `.txt` "
+                , "filename with a header and space separator"))
+  } else if (isCharacter &&
+             file.exists(mat.PFG.succ) && 
+             (extension(mat.PFG.succ) %in% c(".csv", ".txt")))
+  {
+    mat.PFG.succ = read.table(file = mat.PFG.succ, header = T, sep = " ")
   }
   if (nrow(mat.PFG.succ) == 0 || ncol(mat.PFG.succ) < 6)
   {
@@ -203,14 +218,16 @@ PRE_FATE.params_PFGdisturbance = function(
   }
   if (!is.numeric(mat.PFG.succ$MATURITY) ||
       !is.numeric(mat.PFG.succ$LONGEVITY) ||
-      !is.numeric(mat.PFG.succ$STRATA)) {
-    stop(paste0("Wrong type of data!\n Columns `MATURITY`, `LONGEVITY` and `STRATA` "
+      !is.numeric(mat.PFG.succ$STRATA) ||
+      !is.numeric(mat.PFG.succ$CHANG_STR_AGES_to_str_3)) {
+    stop(paste0("Wrong type of data!\n Columns `MATURITY`, `LONGEVITY`, `STRATA` and `CHANG_STR_AGES_to_str_3` "
                 , "of `mat.PFG.succ` must contain numeric values"))
   }
   if (length(which(is.na(mat.PFG.succ$MATURITY))) > 0 ||
       length(which(is.na(mat.PFG.succ$LONGEVITY))) > 0 ||
-      length(which(is.na(mat.PFG.succ$STRATA))) > 0) {
-    stop(paste0("Wrong type of data!\n Columns `MATURITY`, `LONGEVITY` and `STRATA` "
+      length(which(is.na(mat.PFG.succ$STRATA))) > 0 ||
+      length(which(is.na(mat.PFG.succ$CHANG_STR_AGES_to_str_3))) > 0) {
+    stop(paste0("Wrong type of data!\n Columns `MATURITY`, `LONGEVITY`, `STRATA` and `CHANG_STR_AGES_to_str_3` "
                 , "of `mat.PFG.succ` must not contain NA values"))
   }
   
@@ -265,21 +282,29 @@ PRE_FATE.params_PFGdisturbance = function(
   if (sum(mat.PFG.dist$responseStage %in% seq(1,4)) < nrow(mat.PFG.dist)){
     stop("Wrong type of data!\n Column `responseStage` of `mat.PFG.dist` must contain values between 1 and 4")
   }
-
-
-
+  
+  
+  
   #################################################################################################
   
   no.PFG = nrow(mat.PFG.succ)
   
   ## GET PFG NAME
   NAME = as.character(mat.PFG.succ$NAME)
-
+  
   ## GET NUMBER OF DISTURBANCES
   no.DIST = length(unique(as.character(mat.PFG.dist$name)))
   
   ## GET DIST NAME
   DIST_NAME = unique(as.character(mat.PFG.dist$name))
+  
+  
+  cat("\n ############## DIST INFORMATIONS ############## \n")
+  cat("\n Number of disturbances : ", no.DIST)
+  cat("\n Names of disturbances : ", DIST_NAME)
+  cat("\n")
+  
+  #################################################################################################
   
   ## GET PROPORTION OF KILLED PROPAGULES
   ## 0 for all PFG and disturbances
@@ -294,10 +319,10 @@ PRE_FATE.params_PFGdisturbance = function(
   #   PROP_KILLED = matrix(0, nrow = no.DIST, ncol = no.PFG)
   # }
   PROP_KILLED = matrix(0, nrow = no.DIST, ncol = no.PFG)
-      
-
+  
+  
   #################################################################################################
-
+  
   ## GET CHANGE between RESPONSE STAGES AGES
   ##   = response classes depend on the age of the PFG
   ## Annuals and biennials won't change their response to disturbances
@@ -355,7 +380,7 @@ PRE_FATE.params_PFGdisturbance = function(
   ## ANNUALS and BIENNIALS
   ##   = always start back at 0 when resprout, even  in the 3rd age class
   RESPR_AGE[seq(3, nrow(RESPR_AGE), by = no.STAGES), which(mat.PFG.succ$LONGEVITY <= 2)] = 0
-
+  
   
   #################################################################################################
   
@@ -413,7 +438,7 @@ PRE_FATE.params_PFGdisturbance = function(
       }
     }
   }
-
+  
   #################################################################################################
   ## GET END OF SEED DORMANCY : % of seeds activated by the perturbation
   ## 11 levels : 0 = 0 %
@@ -431,7 +456,7 @@ PRE_FATE.params_PFGdisturbance = function(
   
   
   #################################################################################################
-
+  
   names.params.list = get("NAME")
   names.params.list.sub = c("NAME"
                             , "PROP_KILLED"
@@ -450,12 +475,12 @@ PRE_FATE.params_PFGdisturbance = function(
                            , paste0("FATES_", rep(DIST_NAME, each = no.STAGES * 2), "_"
                                     , paste0(rep(1:no.STAGES, each = 2), c("_kill","_respr")))
                            , paste0("ACTIVATED_SEED_", DIST_NAME))
-
+  
   write.table(params.csv
               , file = paste0(name.simulation, "/DATA/PFGS/DIST_COMPLETE_TABLE.csv")
               , row.names = T
               , col.names = F)
-
+  
   #################################################################################################
   
   params.list = lapply(1:no.PFG, function(x) {
@@ -469,16 +494,22 @@ PRE_FATE.params_PFGdisturbance = function(
       return(val)
     })
   })
-
+  
   for (i in 1:length(params.list)) {
     params = params.list[[i]]
     names(params) = names.params.list.sub
-
+    
     .createParams(params.file = paste0(name.simulation,
                                        "/DATA/PFGS/DIST/DIST_",
                                        names.params.list[i],
                                        ".txt")
                   , params.list = params)
   }
+  
+  cat("\n> Done!\n")
+  cat("\n  Complete table of information about PFG disturbance parameters can be find in "
+      , paste0(name.simulation, "/DATA/PFGS/"), "folder.")
+  cat("\n")
+  
 }
 

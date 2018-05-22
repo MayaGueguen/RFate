@@ -196,11 +196,21 @@ test_that("PRE_FATE.params_PFGsuccession gives correct output", {
   if (dir.exists("FATE_simulation")) system("rm -r FATE_simulation/")
   PRE_FATE.skeletonDirectory()
   expect_message(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
-                                               , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
-                                                                           , longevity = 10, dispersal = 1, light = 2))
-               , "The parameter file FATE_simulation/DATA/PFGS/SUCC/SUCC_1.txt has been successfully created !")
+                                               , mat.PFG.succ = data.frame(PFG = paste0("PFG",1:6)
+                                                                           , type = c("C", "C", "H", "H", "P", "P")
+                                                                           , height = c(10, 250, 36, 68, 1250, 550)
+                                                                           , maturity = c(5, 5, 3, 3, 8, 9)
+                                                                           , longevity = c(12, 200, 25, 4, 110, 70)
+                                                                           , dispersal = 1
+                                                                           , light = c(4, 6, 3, 6, 5, 5)))
+               , "The parameter file FATE_simulation/DATA/PFGS/SUCC/SUCC_PFG1.txt has been successfully created !")
   expect_warning(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
-                                               , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
-                                                                           , longevity = 10, dispersal = 1, light = 2))
+                                               , mat.PFG.succ = data.frame(PFG = paste0("PFG",1:6)
+                                                                           , type = c("C", "C", "H", "H", "P", "P")
+                                                                           , height = c(10, 250, 36, 68, 1250, 550)
+                                                                           , maturity = c(5, 5, 3, 3, 8, 9)
+                                                                           , longevity = c(12, 200, 25, 4, 110, 70)
+                                                                           , dispersal = 1
+                                                                           , light = c(4, 6, 3, 6, 5, 5)))
                  , "`params.file` already exists. It will be replaced.")
 })

@@ -145,7 +145,7 @@ PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
                                                         
 ## Create PFG disturbance parameter files
 PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
-                               , mat.PFG.dist = data.frame(name = rep(c("MOWING","GRAZING"), each = 4)
+                               , mat.PFG.dist = data.frame(name = rep(c("DIST1","DIST2"), each = 4)
                                                            , responseStage = rep(1:4, 2)
                                                            #, KilledPropagule_H = 0
                                                            #, KilledPropagule_C = 0

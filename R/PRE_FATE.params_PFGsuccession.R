@@ -251,6 +251,14 @@ PRE_FATE.params_PFGsuccession = function(
   ## Death precedes seed productivity in the model thus longevity param = longevity + 1
   LONGEVITY = mat.PFG.succ$longevity + 1
   
+  cat("\n ############## GROUP INFORMATIONS ############## \n")
+  cat("\n Number of groups : ", no.PFG)
+  cat("\n Number of PFG of each type : "
+      , length(which(TYPE == "H")), " H, "
+      , length(which(TYPE == "C")), " C, "
+      , length(which(TYPE == "P")), " P, ")
+  cat("\n")
+  
   #################################################################################################
   
   ## GET height strata limits (for light competition and PFG growth)
@@ -263,7 +271,7 @@ PRE_FATE.params_PFGsuccession = function(
   tmp = categories.table[1]
   for (categ in 2:length(strata.limits))
   {
-    if (tmp >= (no.PFG.perStrata - 2))
+    if (tmp >= max(c(2, (no.PFG.perStrata - 2))))
     {
       STRATA_LIMITS = c(STRATA_LIMITS, strata.limits[categ])
       tmp = categories.table[categ]
@@ -273,6 +281,12 @@ PRE_FATE.params_PFGsuccession = function(
     }
   }
   # barplot(table(cut(mat.PFG.succ$height, breaks = STRATA_LIMITS)))
+  
+  cat("\n ############## STRATA INFORMATIONS ############## \n")
+  cat("\n Number of strata : ", length(STRATA_LIMITS))
+  cat("\n Height limits of selected strata : ", STRATA_LIMITS)
+  cat("\n Number of PFG within each stratum : ", table(cut(mat.PFG.succ$height, breaks = STRATA_LIMITS)))
+  cat("\n")
   
   ## GET STRATA attribution
   STRATA = sapply(mat.PFG.succ$height, function(h) {
@@ -500,5 +514,11 @@ PRE_FATE.params_PFGsuccession = function(
                                        ".txt")
                   , params.list = params)
   }
+  
+  cat("\n> Done!\n")
+  cat("\n  Complete table of information about PFG succession parameters can be find in "
+      , paste0(name.simulation, "/DATA/PFGS/"), "folder.")
+  cat("\n")
+  
 }
 
