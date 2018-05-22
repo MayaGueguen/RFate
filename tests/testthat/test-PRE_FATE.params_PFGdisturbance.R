@@ -57,17 +57,22 @@ test_that("PRE_FATE.params_PFGdisturbance gives error with wrong data : mat.PFG.
                , fixed = T)
   
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
+                                              , mat.PFG.succ = data.frame(NAME = 1, TYPE = 2, MATURITY = 4
+                                                                          , LONGEVITY = 10, STRATA = 1, HOP = 1))
+               , "Column names of `mat.PFG.succ` must contain `NAME`, `TYPE`, `MATURITY`, `LONGEVITY`, `STRATA` and `CHANG_STR_AGES_to_str_3`")
+  
+  expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(NAME = 1, TYPE = c(2,2), MATURITY = 4
                                                                          , LONGEVITY = 10, STRATA = 1, CHANG_STR_AGES_to_str_3 = 1))
-               , "Column `NAME` of `mat.PFG.succ` must contain different values")
+               , "Column `NAME` of `mat.PFG.succ` must contain different values and no NA values")
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(NAME = NA, TYPE = 2, MATURITY = 4
                                                                          , LONGEVITY = 10, STRATA = 1, CHANG_STR_AGES_to_str_3 = 1))
-               , "Column `NAME` of `mat.PFG.succ` must contain different values")
+               , "Column `NAME` of `mat.PFG.succ` must contain different values and no NA values")
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(NAME = c(1,NA), TYPE = c(2,2), MATURITY = 4
                                                                          , LONGEVITY = 10, STRATA = 1, CHANG_STR_AGES_to_str_3 = 1))
-               , "Column `NAME` of `mat.PFG.succ` must contain different values")
+               , "Column `NAME` of `mat.PFG.succ` must contain different values and no NA values")
   
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(NAME = 1, TYPE = NA, MATURITY = 4
@@ -167,6 +172,18 @@ test_that("PRE_FATE.params_PFGdisturbance gives error with wrong data : mat.PFG.
                , "`mat.PFG.dist` does not have the appropriate number of rows (>0) or columns (at least `name` and `responseStage`)", fixed = T)
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation", mat.PFG.dist = data.frame(1,2,3,4,5,6,7))
                , "Column names of `mat.PFG.dist` must contain `name` and `responseStage`")
+  expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
+                                              , mat.PFG.dist = data.frame(name = 1, stage = 1))
+               , "Column names of `mat.PFG.dist` must contain `name` and `responseStage`")
+  expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
+                                              , mat.PFG.dist = data.frame(name = 1, responseStage = -1))
+               , "Column `responseStage` of `mat.PFG.dist` must contain values between 1 and 4")
+  expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
+                                              , mat.PFG.dist = data.frame(name = 1, responseStage = 1.5))
+               , "Column `responseStage` of `mat.PFG.dist` must contain values between 1 and 4")
+  expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
+                                              , mat.PFG.dist = data.frame(name = 1, responseStage = "a"))
+               , "Column `responseStage` of `mat.PFG.dist` must contain values between 1 and 4")
   
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                               , mat.PFG.dist = data.frame(name = 1, responseStage = 1))
@@ -192,6 +209,22 @@ test_that("PRE_FATE.params_PFGdisturbance gives error with wrong data : mat.PFG.
                                                                           , ResproutIndiv_H = 0
                                                                           , ResproutIndiv_H = 0))
                , "Column names of `mat.PFG.dist` must contain either :\n ==> `ResproutIndiv_H`")
+  expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
+                                              , mat.PFG.dist = data.frame(name = 1, responseStage = 1
+                                                                          , KilledIndiv_1 = 0))
+               , "Column names of `mat.PFG.dist` must contain either :\n ==> `KilledIndiv_H`")
+  expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
+                                              , mat.PFG.dist = data.frame(name = 1, responseStage = 1
+                                                                          , KilledIndiv_1 = 0
+                                                                          , ResproutIndiv_1 = 0))
+               , "Column names of `mat.PFG.dist` must contain either :\n ==> `KilledIndiv_H`")
+  expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
+                                              , mat.PFG.dist = data.frame(name = 1, responseStage = 1
+                                                                          , KilledIndiv_H = 0
+                                                                          , KilledIndiv_C = 0
+                                                                          , KilledIndiv_P = 0
+                                                                          , ResproutIndiv_1 = 0))
+               , "Column names of `mat.PFG.dist` must contain either :\n ==> `ResproutIndiv_H`")
 })
 
 
@@ -209,7 +242,7 @@ test_that("PRE_FATE.params_PFGdisturbance gives correct output", {
                                                             , light = c(4, 6, 3, 6, 5, 5)))
   
   expect_message(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
-                                               , mat.PFG.dist = data.frame(name = "PFG1", responseStage = 1
+                                               , mat.PFG.dist = data.frame(name = "DIST1", responseStage = 1
                                                                            , KilledIndiv_H = 0
                                                                            , KilledIndiv_C = 0
                                                                            , KilledIndiv_P = 0
@@ -218,7 +251,7 @@ test_that("PRE_FATE.params_PFGdisturbance gives correct output", {
                                                                            , ResproutIndiv_P = 0))
                , "The parameter file FATE_simulation/DATA/PFGS/DIST/DIST_PFG1.txt has been successfully created !")
   expect_warning(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
-                                               , mat.PFG.dist = data.frame(name = "PFG1", responseStage = 1
+                                               , mat.PFG.dist = data.frame(name = "DIST1", responseStage = 1
                                                                            , KilledIndiv_H = 0
                                                                            , KilledIndiv_C = 0
                                                                            , KilledIndiv_P = 0

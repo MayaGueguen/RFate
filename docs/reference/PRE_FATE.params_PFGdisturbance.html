@@ -89,14 +89,14 @@ used in the disturbance module of FATE-HD." />
       </a>
     </li>
     <li>
-      <a href="../index.html/#pre_fate---build-parameter-files">
+      <a href="../index.html#pre_fate---build-parameter-files">
         <span class="fa fa-battery-half"></span>
          
         Build parameter files
       </a>
     </li>
     <li>
-      <a href="../index.html/#post_fate---evaluation-of-simulation">
+      <a href="../index.html#post_fate---evaluation-of-simulation">
         <span class="fa fa-battery-three-quarters"></span>
          
         Evaluate simulation
@@ -285,7 +285,7 @@ PFG :</p>
 
 <span class='co'>## Create PFG disturbance parameter files</span>
 <span class='fu'>PRE_FATE.params_PFGdisturbance</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
-                               , <span class='kw'>mat.PFG.dist</span> <span class='kw'>=</span> <span class='fu'>data.frame</span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='fu'>rep</span>(<span class='fu'>c</span>(<span class='st'>"MOWING"</span>,<span class='st'>"GRAZING"</span>), <span class='kw'>each</span> <span class='kw'>=</span> <span class='fl'>4</span>)
+                               , <span class='kw'>mat.PFG.dist</span> <span class='kw'>=</span> <span class='fu'>data.frame</span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='fu'>rep</span>(<span class='fu'>c</span>(<span class='st'>"DIST1"</span>,<span class='st'>"DIST2"</span>), <span class='kw'>each</span> <span class='kw'>=</span> <span class='fl'>4</span>)
                                                            , <span class='kw'>responseStage</span> <span class='kw'>=</span> <span class='fu'>rep</span>(<span class='fl'>1</span>:<span class='fl'>4</span>, <span class='fl'>2</span>)
                                                            <span class='co'>#, KilledPropagule_H = 0</span>
                                                            <span class='co'>#, KilledPropagule_C = 0</span>

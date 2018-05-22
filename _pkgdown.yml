@@ -28,10 +28,10 @@ navbar:
           href: index.html#pre_fate---build-plant-functional-groups-pfg
         - text: Build parameter files
           icon: fa-battery-half
-          href: index.html/#pre_fate---build-parameter-files
+          href: index.html#pre_fate---build-parameter-files
         - text: Evaluate simulation
           icon: fa-battery-three-quarters
-          href: index.html/#post_fate---evaluation-of-simulation
+          href: index.html#post_fate---evaluation-of-simulation
         - text: "---------"
     download:
       text: 'Download Current Version'

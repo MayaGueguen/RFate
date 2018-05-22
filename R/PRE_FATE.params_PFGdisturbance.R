@@ -211,7 +211,7 @@ PRE_FATE.params_PFGdisturbance = function(
   }
   if (length(which(is.na(mat.PFG.succ$NAME))) > 0 ||
       length(unique(mat.PFG.succ$NAME)) < nrow(mat.PFG.succ)){
-    stop("Wrong type of data!\n Column `NAME` of `mat.PFG.succ` must contain different values")
+    stop("Wrong type of data!\n Column `NAME` of `mat.PFG.succ` must contain different values and no NA values")
   }
   if (sum(mat.PFG.succ$TYPE %in% c("H", "C", "P")) < nrow(mat.PFG.succ)){
     stop("Wrong type of data!\n Column `TYPE` of `mat.PFG.succ` must contain values such as `H`, `C` or `P`")
@@ -247,6 +247,17 @@ PRE_FATE.params_PFGdisturbance = function(
     {
       stop(paste0("Wrong type of data!\n Column names of `mat.PFG.dist` must contain `name` and `responseStage`"))
     }
+    # if (sum(unique(mat.PFG.dist$name) %in% mat.PFG.succ$NAME) < length(unique(mat.PFG.dist$name)))
+    # {
+    #   warning(paste0("Column `name` of `mat.PFG.dist` contains values not in column `NAME` of `mat.PFG.succ`"))
+    # }
+    # if (sum(unique(mat.PFG.dist$name) %in% mat.PFG.succ$NAME) < nrow(mat.PFG.succ))
+    # {
+    #   warning(paste0("Column `name` of `mat.PFG.dist` does not contain all values in column `NAME` of `mat.PFG.succ`"))
+    # }
+    if (sum(mat.PFG.dist$responseStage %in% seq(1,4)) < nrow(mat.PFG.dist)){
+      stop("Wrong type of data!\n Column `responseStage` of `mat.PFG.dist` must contain values between 1 and 4")
+    }
     # if (sum(colnames(mat.PFG.dist) %in% paste0("KilledPropagule_", c("H", "C", "P"))) < 3 &&
     #     sum(colnames(mat.PFG.dist) %in% paste0("KilledPropagule_", mat.PFG.succ$NAME)) < nrow(mat.PFG.succ))
     # {
@@ -276,12 +287,7 @@ PRE_FATE.params_PFGdisturbance = function(
                   , " ==> ", paste0("`ResproutIndiv_", mat.PFG.succ$NAME, collapse = "`, ")))
     }
   }
-  if (length(which(is.na(mat.PFG.succ$NAME))) > 0){
-    stop("Wrong type of data!\n Column `NAME` of `mat.PFG.succ` must not contain NA values")
-  }
-  if (sum(mat.PFG.dist$responseStage %in% seq(1,4)) < nrow(mat.PFG.dist)){
-    stop("Wrong type of data!\n Column `responseStage` of `mat.PFG.dist` must contain values between 1 and 4")
-  }
+
   
   
   

@@ -138,7 +138,7 @@ with the function [PRE_FATE.params_namespaceConstants](https://mayagueguen.githu
 *2. For each PFG : behavior and characteristics*
 - **Succession files** : related to the life history with the function [PRE_FATE.params_PFGsuccession](https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGsuccession.html)
 - **Dispersal files** : related to the dispersal ability with the function [PRE_FATE.params_PFGdispersal](https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGdispersal.html)
-- **Disturbance files** : related to the response to perturbations in terms of resprouting and mortality
+- **Disturbance files** : related to the response to perturbations in terms of resprouting and mortality with the function [PRE_FATE.params_PFGdisturbance](https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGdisturbance.html)
 
 *3. Parameter management*
 - **ParamSimulation file** :
