@@ -132,13 +132,15 @@ Each line corresponds to a parameter, given by the **flag** (parameter name in c
 - **Namespace constants** : for the software to manage abundance values  
 with the function [PRE_FATE.params_namespaceConstants](https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_namespaceConstants.html)
 - **Global parameters** : related to the simulation definition  
-(number of PFG and strata, simulation duration, computer resources, modules loaded...)
+(number of PFG and strata, simulation duration, computer resources, modules loaded...)  
+with the function [PRE_FATE.params_globalParameters](https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_globalParameters.html)
 - **Years to save abundance rasters and simulation outputs** with the function [PRE_FATE.params_saveYears](https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_saveYears.html)
 
 *2. For each PFG : behavior and characteristics*
 - **Succession files** : related to the life history with the function [PRE_FATE.params_PFGsuccession](https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGsuccession.html)
 - **Dispersal files** : related to the dispersal ability with the function [PRE_FATE.params_PFGdispersal](https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGdispersal.html)
-- **Disturbance files** : related to the response to perturbations in terms of resprouting and mortality with the function [PRE_FATE.params_PFGdisturbance](https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGdisturbance.html)
+- **Disturbance files** : related to the response to perturbations in terms of resprouting and mortality  
+with the function [PRE_FATE.params_PFGdisturbance](https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGdisturbance.html)
 
 *3. Parameter management*
 - **ParamSimulation file** :

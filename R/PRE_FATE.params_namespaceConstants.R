@@ -197,7 +197,7 @@ PRE_FATE.params_namespaceConstants = function(
          , params.combi[x, 6]
          , params.combi[x, 7])
   })
-  names.params.list = paste0("V", length(params.list))
+  names.params.list = paste0("V", 1:length(params.list))
   names.params.list.sub = c("GLOBAL_LOW_ABUND"
                             , "GLOBAL_MEDIUM_ABUND"
                             , "GLOBAL_HIGH_ABUND"

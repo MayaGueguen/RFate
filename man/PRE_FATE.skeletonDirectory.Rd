@@ -34,7 +34,7 @@ The tree structure is detailed below :
   \item{DATA}{this folder will contain all the data or parameters that are
   needed by the model
   \itemize{
-    \item \strong{GLOBAL_PARAMS} : files containing global parameters for the simulation
+    \item \strong{GLOBAL_PARAMETERS} : files containing global parameters for the simulation
     \item \strong{NAMESPACE_CONSTANTS} : files containing constants used in the model
     \item \strong{MASK} : all maps used in the model
     \item \strong{SCENARIO} : files containing information about changes in

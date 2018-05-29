@@ -43,6 +43,10 @@ navbar:
 
 
 reference:
+  - title: Datasets
+    desc:  Used in the examples. <br/> ..
+    contents:
+      - "MontBlanc"
   - title: Build Plant Functional Groups (PFG)
     desc:  Functions to select dominant species, compute functional distance between species and build clusters. <br/> ..
     contents:
@@ -56,7 +60,12 @@ reference:
     contents:
       - "PRE_FATE.skeletonDirectory"
       - "PRE_FATE.params_namespaceConstants"
+      - "PRE_FATE.params_globalParameters"
       - "PRE_FATE.params_saveYears"
       - "PRE_FATE.params_PFGsuccession"
       - "PRE_FATE.params_PFGdispersal"
       - "PRE_FATE.params_PFGdisturbance"
+  - title: Analyze FATE-HD outputs
+    desc: Evalute predicted maps, produce summary and dynamic graphics.  <br/> ..
+    contents:
+      - "POST_FATE."

@@ -10,7 +10,9 @@ Carte
 centroid
 chamaephyte
 chamaephytes
+CHRONO
 CNRS
+CURR
 de
 dendogram
 dendograms
@@ -27,6 +29,8 @@ essai
 Essai
 et
 évolutives
+fateh
+FG
 frequence
 fullfilled
 GeH
@@ -38,6 +42,7 @@ Gorra
 Gower
 groupements
 Guéguen
+HAB
 Harabasz
 HD
 herbagères
@@ -67,7 +72,7 @@ Nègre
 Nord
 Normandie
 Orientales
-PARAMS
+parallelize
 PFG
 PFGs
 PFGS
@@ -96,10 +101,13 @@ séries
 sp
 str
 STR
+SUBDISTURBANCES
+SUBDROUGHT
 SUCC
 th
 TOL
 TRESH
+TRESHOLDS
 Typologie
 UPGMA
 UPGMC

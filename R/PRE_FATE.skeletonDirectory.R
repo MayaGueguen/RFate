@@ -28,7 +28,7 @@
 ##'   \item{DATA}{this folder will contain all the data or parameters that are
 ##'   needed by the model
 ##'   \itemize{
-##'     \item \strong{GLOBAL_PARAMS} : files containing global parameters for the simulation
+##'     \item \strong{GLOBAL_PARAMETERS} : files containing global parameters for the simulation
 ##'     \item \strong{NAMESPACE_CONSTANTS} : files containing constants used in the model
 ##'     \item \strong{MASK} : all maps used in the model
 ##'     \item \strong{SCENARIO} : files containing information about changes in
@@ -78,7 +78,7 @@ PRE_FATE.skeletonDirectory = function(name.simulation = "FATE_simulation")
     dir.create(name.simulation, showWarnings = FALSE)
     ## the DATA dir
     dir.create(file.path(name.simulation, "DATA"), showWarnings = FALSE)
-    dir.create(file.path(name.simulation, "DATA", "GLOBAL_PARAMS"), showWarnings = FALSE)
+    dir.create(file.path(name.simulation, "DATA", "GLOBAL_PARAMETERS"), showWarnings = FALSE)
     dir.create(file.path(name.simulation, "DATA", "NAMESPACE_CONSTANTS"), showWarnings = FALSE)
     dir.create(file.path(name.simulation, "DATA", "MASK"), showWarnings = FALSE)
     dir.create(file.path(name.simulation, "DATA", "SCENARIO"), showWarnings = FALSE)
