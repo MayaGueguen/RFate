@@ -148,10 +148,10 @@ simulation</h1>
 containing <code>GLOBAL PARAMETERS</code> used in <code>FATE-HD</code> model.</p>
     
 
-    <pre class="usage"><span class='fu'>PRE_FATE.params_globalParameters</span>(<span class='no'>name.simulation</span>, <span class='kw'>opt.nb_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='no'>required.succ_option</span>, <span class='no'>required.nb_PFG</span>, <span class='no'>required.nb_STRATA</span>, <span class='no'>required.hs_option</span>,
+    <pre class="usage"><span class='fu'>PRE_FATE.params_globalParameters</span>(<span class='no'>name.simulation</span>, <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='no'>required.no_PFG</span>, <span class='no'>required.no_STRATA</span>, <span class='no'>required.succ_option</span>, <span class='no'>required.hs_option</span>,
   <span class='no'>required.seeding_timestep</span>, <span class='no'>required.seeding_duration</span>, <span class='no'>required.simul_duration</span>,
-  <span class='kw'>doDisturbances</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>DIST.nb</span>, <span class='no'>DIST.nb_sub</span>, <span class='no'>DIST.freq</span>, <span class='kw'>doSoil</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>doDisturbances</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>DIST.no</span>, <span class='no'>DIST.no_sub</span>, <span class='no'>DIST.freq</span>, <span class='kw'>doSoil</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>doFire</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>doDrought</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>doHabStability</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>doAliens</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
@@ -164,23 +164,23 @@ containing <code>GLOBAL PARAMETERS</code> used in <code>FATE-HD</code> model.</p
 or simulation name of the <code>FATE-HD</code> simulation</p></td>
     </tr>
     <tr>
-      <th>opt.nb_CPU</th>
-      <td><p>default 1 (<em>optional</em>). The number of resources that can be used 
-to parallelize the <code>FATE-HD</code> simulation</p></td>
+      <th>opt.no_CPU</th>
+      <td><p>default 1 (<em>optional</em>). The number of resources that 
+can be used to parallelize the <code>FATE-HD</code> simulation</p></td>
+    </tr>
+    <tr>
+      <th>required.no_PFG</th>
+      <td><p>an <code>integer</code> corresponding to the number of PFG</p></td>
+    </tr>
+    <tr>
+      <th>required.no_STRATA</th>
+      <td><p>an <code>integer</code> corresponding to the number of 
+height strata</p></td>
     </tr>
     <tr>
       <th>required.succ_option</th>
       <td><p>a <code>string</code> to choose if the simulation will
 include habitat suitability (<em>fateh</em>) or not (<em>fate</em>)</p></td>
-    </tr>
-    <tr>
-      <th>required.nb_PFG</th>
-      <td><p>an <code>integer</code> corresponding to the number of PFG</p></td>
-    </tr>
-    <tr>
-      <th>required.nb_STRATA</th>
-      <td><p>an <code>integer</code> corresponding to the number of 
-height strata</p></td>
     </tr>
     <tr>
       <th>required.hs_option</th>
@@ -211,12 +211,12 @@ are applied in the <code>FATE-HD</code> simulation, and associated parameters
 are required</p></td>
     </tr>
     <tr>
-      <th>DIST.nb</th>
+      <th>DIST.no</th>
       <td><p>the number of disturbances</p></td>
     </tr>
     <tr>
-      <th>DIST.nb_sub</th>
-      <td><p>the number of way a PFG should react to a disturbance</p></td>
+      <th>DIST.no_sub</th>
+      <td><p>the number of way a PFG could react to a disturbance</p></td>
     </tr>
     <tr>
       <th>DIST.freq</th>
@@ -230,9 +230,9 @@ are required</p></td>
 directory with the following parameters :</p>
 <ul>
 <li><p>NB_CPUS</p></li>
-<li><p>SUCC_MOD</p></li>
 <li><p>NB_FG</p></li>
 <li><p>NB_STRATUM</p></li>
+<li><p>SUCC_MOD</p></li>
 <li><p>ENVSUIT_OPTION</p></li>
 <li><p>SEEDING_TIMESTEP</p></li>
 <li><p>SEEDING_DURATION</p></li>
@@ -278,16 +278,88 @@ directory with the following parameters :</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <dl class='dl-horizontal'>
-  <dt>To get abundances <br /> per PFG per pixel</dt><dd><p><ul>
-<li><p>per strata</p></li>
-<li><p>for all strata</p></li>
-</ul>
-  $$abund = 10 000 * totalAbund / \text{GLOBAL HIGH ABUND}$$</p></dd>
-  <dt>To transform PFG <br /> abundances into <br /> light resources</dt><dd><p>$$abund &lt; \text{GLOBAL MEDIUM RESOURCES THRESH} \Leftrightarrow Light = High$$
-    $$abund &gt; \text{GLOBAL MEDIUM RESOURCES THRESH } \&amp; \\
-    abund &lt; \text{GLOBAL LOW RESOURCES THRESH} \Leftrightarrow Light = Medium$$
-    $$abund &gt; \text{GLOBAL LOW RESOURCES THRESH} \Leftrightarrow Light = Low$$</p></dd>
+    <p>The core module of <code>FATE-HD</code> requires several parameters to define 
+general characteristics of the simulation :</p>
+<dl class='dl-horizontal'>
+  <dt>Studied system</dt><dd><p><ul>
+<li><p><em>required.no_PFG</em> : the number of Plant Functional Groups 
+    that will be included into the simulation.  
+    This number should match with the number of files that will be given 
+    with the characteristics of each group (SUCC, DISP, ...).</p></li>
+<li><p><em>required.no_STRATA</em> : the number of height strata that 
+    will be used into the succession module.  
+    This number should match with the maximum number of strata possible
+    defined into the PFG SUCC files.</p></li>
+</ul></p></dd>
+  <dt>Habitat suitability</dt><dd><p><ul>
+<li><p><em>required.succ_option</em> : if the simulation will include 
+    habitat suitability filter (<em>fateh</em>) or not (<em>fate</em>). <br />
+    This filter is based on maps given for each PFG, with values between 
+    0 and 1 corresponding to the probability of presence of the group in 
+    each pixel. Each year (timestep), this value will be compared to a 
+    reference value, and if superior, the PFG will be able to grow and
+    survive.</p></li>
+<li><p><em>required.hs_option</em> : the habitat suitability reference
+    value can be set in two possible ways :</p><ol>
+<li><p><em>random</em> : for each pixel, the reference value is drawn from
+      a uniform distribution, and the same value is used for each PFG 
+      within this pixel.</p></li>
+<li><p><em>PFG specific</em> : for each PFG, a mean value and a standard 
+      deviation value are drawn from a uniform distribution. For each 
+      pixel and for each PFG, the reference value is drawn from a normal 
+      distribution of parameters the mean and standard deviation of the PFG.</p></li>
+</ol></li>
+</ul></p></dd>
+  <dt>Simulation timing</dt><dd><p><ul>
+<li><p><em>required.seeding_timestep</em> : the time interval at which 
+    occurs the seeding, and until the seeding duration is not over 
+    (<em>in years</em>)</p></li>
+<li><p><em>required.seeding_duration</em> : the duration of seeding 
+    (<em>in years</em>)</p></li>
+<li><p><em>required.simul_duration</em> : the duration of simulation 
+    (<em>in years</em>) <br /> <br /></p></li>
+</ul></p></dd>
+</dl>
+    <p>The other modules of <code>FATE-HD</code> can be activated within this file, and
+if so, some additional parameters will be required :</p>
+<dl class='dl-horizontal'>
+  <dt>DISTURBANCES</dt><dd><p>= defined for events such as mowing, grazing, but also
+  urbanization, crops, etc. <br /> <br />
+  The impact zone is defined with a mask (map with 0 or 1) and the user will
+  have to define how each PFG will be impacted depending on age and life stage. 
+  <ul>
+<li><p><em>DIST.no</em> : the number of different disturbances</p></li>
+<li><p><em>DIST.no_sub</em> : the number of way a PFG could react to a 
+    perturbation</p></li>
+<li><p><em>DIST.freq</em> : the frequency of each disturbance (<em>in years</em>)</p></li>
+</ul></p></dd>
+  <dt>DROUGHT</dt><dd><p>= <br /> <br />
+  <ul>
+<li><p><em>DROUGHT.no_sub</em> :</p></li>
+<li><p><em>DROUGHT.chrono_post</em> :</p></li>
+<li><p><em>DROUGHT.chrono_curr</em> :</p></li>
+</ul></p></dd>
+  <dt>HABITAT STABILITY</dt><dd><p>= to evaluate through the evolution of the PFG 
+  composition in different habitats. <br /> <br />
+  The habitat distribution is given with a categorical map with each value
+  corresponding to a specific habitat. Every year, the abundance of each PFG
+  within each habitat is recorded, as well as the evenness of the habitat :
+  $$
+  \text{evenness} = - SUM(\text{PFG.proportion} * log(\text{PFG.proportion})) / log(\text{no.PFG} - 1)
+  $$
+  $$\text{with PFG.proportion} = \text{abund.PFG.in.Habitat} / \text{abund.allPFG.in.Habitat}$$
+  Every 5 years, a stability check is done to see if the abundance or the
+  evenness has values out of the usual distribution.
+  <ul>
+<li><p><em>HABSTAB.no_hab</em> : the number of different habitats</p></li>
+</ul></p></dd>
+  <dt>INVASIVE <br /> INTRODUCTION</dt><dd><p>= to add new PFG during the simulation. <br /> <br />
+  The introduction areas are defined with a mask (map with 0 or 1). If the 
+  habitat suitability filter is on, suitability maps will also be needed for
+  these new groups.
+  <ul>
+<li><p><em>ALIEN.freq</em> : the frequency of each introduction (<em>in years</em>)</p></li>
+</ul></p></dd>
 </dl>
     
 
@@ -298,9 +370,9 @@ directory with the following parameters :</p>
 
 <span class='co'>## Create a Global_parameters file</span>
 <span class='fu'>PRE_FATE.params_globalParameters</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
+                                 , <span class='kw'>required.no_PFG</span> <span class='kw'>=</span> <span class='fl'>3</span>
+                                 , <span class='kw'>required.no_STRATA</span> <span class='kw'>=</span> <span class='fl'>5</span>
                                  , <span class='kw'>required.succ_option</span> <span class='kw'>=</span> <span class='st'>"fateh"</span>
-                                 , <span class='kw'>required.nb_PFG</span> <span class='kw'>=</span> <span class='fl'>3</span>
-                                 , <span class='kw'>required.nb_STRATA</span> <span class='kw'>=</span> <span class='fl'>5</span>
                                  , <span class='kw'>required.hs_option</span> <span class='kw'>=</span> <span class='fl'>1</span>
                                  , <span class='kw'>required.seeding_timestep</span> <span class='kw'>=</span> <span class='fl'>1</span>
                                  , <span class='kw'>required.seeding_duration</span> <span class='kw'>=</span> <span class='fl'>10</span>
@@ -308,9 +380,9 @@ directory with the following parameters :</p>
 
 <span class='co'>## Create SEVERAL Global_parameters files</span>
 <span class='fu'>PRE_FATE.params_globalParameters</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
+                                 , <span class='kw'>required.no_PFG</span> <span class='kw'>=</span> <span class='fl'>3</span>
+                                 , <span class='kw'>required.no_STRATA</span> <span class='kw'>=</span> <span class='fl'>5</span>
                                  , <span class='kw'>required.succ_option</span> <span class='kw'>=</span> <span class='st'>"fateh"</span>
-                                 , <span class='kw'>required.nb_PFG</span> <span class='kw'>=</span> <span class='fl'>3</span>
-                                 , <span class='kw'>required.nb_STRATA</span> <span class='kw'>=</span> <span class='fl'>5</span>
                                  , <span class='kw'>required.hs_option</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>,<span class='fl'>2</span>)
                                  , <span class='kw'>required.seeding_timestep</span> <span class='kw'>=</span> <span class='fl'>1</span>
                                  , <span class='kw'>required.seeding_duration</span> <span class='kw'>=</span> <span class='fl'>10</span>

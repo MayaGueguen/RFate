@@ -42,7 +42,7 @@
 ##' ## Create a skeleton folder with the default name ('FATE_simulation')
 ##' PRE_FATE.skeletonDirectory()
 ##' 
-##' ## Create a Namespace_constants parameter file
+##' ## Create PFG dispersal parameter files
 ##' PRE_FATE.params_PFGdispersal(name.simulation = "FATE_simulation"
 ##'                             , mat.PFG.disp = data.frame(PFG = c("PFG1", "PFG2", "PFG3")
 ##'                                                         , d50 = c(500, 500, 100)

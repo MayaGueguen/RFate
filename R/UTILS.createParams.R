@@ -1,7 +1,7 @@
 ##' #@export
 ## @importFrom utils install.packages
 
-.createParams = function(params.file, params.list)
+.createParams = function(params.file, params.list, separator = " ")
 {
   if (missing(params.file) ||
       is.na(params.file) ||
@@ -39,8 +39,8 @@
 
   
   text.to.paste = sapply(1:length(params.list), function(x){
-    res = paste0(params.list[[x]], collapse = " ")
-    res = paste0(names(params.list)[x], " ", res, "\n")
+    res = paste0(params.list[[x]], collapse = separator)
+    res = paste0(names(params.list)[x], separator, res, "\n")
   })
   text.to.paste = paste0(text.to.paste, collapse = "")
   text.to.paste = paste0("## File automatically generated \n"

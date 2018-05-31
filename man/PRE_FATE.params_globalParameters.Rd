@@ -5,10 +5,10 @@
 \title{Create \emph{Global_parameters} parameter file for a \code{FATE-HD}
 simulation}
 \usage{
-PRE_FATE.params_globalParameters(name.simulation, opt.nb_CPU = 1,
-  required.succ_option, required.nb_PFG, required.nb_STRATA, required.hs_option,
+PRE_FATE.params_globalParameters(name.simulation, opt.no_CPU = 1,
+  required.no_PFG, required.no_STRATA, required.succ_option, required.hs_option,
   required.seeding_timestep, required.seeding_duration, required.simul_duration,
-  doDisturbances = FALSE, DIST.nb, DIST.nb_sub, DIST.freq, doSoil = FALSE,
+  doDisturbances = FALSE, DIST.no, DIST.no_sub, DIST.freq, doSoil = FALSE,
   doFire = FALSE, doDrought = FALSE, doHabStability = FALSE,
   doAliens = FALSE)
 }
@@ -16,16 +16,16 @@ PRE_FATE.params_globalParameters(name.simulation, opt.nb_CPU = 1,
 \item{name.simulation}{a \code{string} that corresponds to the main directory
 or simulation name of the \code{FATE-HD} simulation}
 
-\item{opt.nb_CPU}{default 1 (\emph{optional}). The number of resources that can be used 
-to parallelize the \code{FATE-HD} simulation}
+\item{opt.no_CPU}{default 1 (\emph{optional}). The number of resources that 
+can be used to parallelize the \code{FATE-HD} simulation}
+
+\item{required.no_PFG}{an \code{integer} corresponding to the number of PFG}
+
+\item{required.no_STRATA}{an \code{integer} corresponding to the number of 
+height strata}
 
 \item{required.succ_option}{a \code{string} to choose if the simulation will
 include habitat suitability (\emph{fateh}) or not (\emph{fate})}
-
-\item{required.nb_PFG}{an \code{integer} corresponding to the number of PFG}
-
-\item{required.nb_STRATA}{an \code{integer} corresponding to the number of 
-height strata}
 
 \item{required.hs_option}{an \code{integer} corresponding to the way of 
 simulating the habitat suitability variation between years for each PFG, 
@@ -45,9 +45,9 @@ duration of simulation (\emph{in years})}
 are applied in the \code{FATE-HD} simulation, and associated parameters 
 are required}
 
-\item{DIST.nb}{the number of disturbances}
+\item{DIST.no}{the number of disturbances}
 
-\item{DIST.nb_sub}{the number of way a PFG should react to a disturbance}
+\item{DIST.no_sub}{the number of way a PFG could react to a disturbance}
 
 \item{DIST.freq}{the frequency of each disturbance (\emph{in years})}
 }
@@ -57,9 +57,9 @@ directory with the following parameters :
 
 \itemize{
   \item NB_CPUS
-  \item SUCC_MOD
   \item NB_FG
   \item NB_STRATUM
+  \item SUCC_MOD
   \item ENVSUIT_OPTION
   \item SEEDING_TIMESTEP
   \item SEEDING_DURATION
@@ -112,19 +112,102 @@ This script is designed to create one parameter file
 containing \code{GLOBAL PARAMETERS} used in \code{FATE-HD} model.
 }
 \details{
+The core module of \code{FATE-HD} requires several parameters to define 
+general characteristics of the simulation :
+
 \describe{
-  \item{To get abundances \cr per PFG per pixel}{
+  \item{Studied system}{
   \itemize{
-    \item per strata
-    \item for all strata
+    \item \emph{required.no_PFG} : the number of Plant Functional Groups 
+    that will be included into the simulation.  
+    This number should match with the number of files that will be given 
+    with the characteristics of each group (SUCC, DISP, ...).
+    \item \emph{required.no_STRATA} : the number of height strata that 
+    will be used into the succession module.  
+    This number should match with the maximum number of strata possible
+    defined into the PFG SUCC files.
   }
-  \deqn{abund = 10 000 * totalAbund / \text{GLOBAL HIGH ABUND}}
   }
-  \item{To transform PFG \cr abundances into \cr light resources}{
-    \deqn{abund < \text{GLOBAL MEDIUM RESOURCES THRESH} \Leftrightarrow Light = High}
-    \deqn{abund > \text{GLOBAL MEDIUM RESOURCES THRESH } \& \\
-    abund < \text{GLOBAL LOW RESOURCES THRESH} \Leftrightarrow Light = Medium}
-    \deqn{abund > \text{GLOBAL LOW RESOURCES THRESH} \Leftrightarrow Light = Low}
+  \item{Habitat suitability}{
+  \itemize{
+    \item \emph{required.succ_option} : if the simulation will include 
+    habitat suitability filter (\emph{fateh}) or not (\emph{fate}). \cr
+    This filter is based on maps given for each PFG, with values between 
+    0 and 1 corresponding to the probability of presence of the group in 
+    each pixel. Each year (timestep), this value will be compared to a 
+    reference value, and if superior, the PFG will be able to grow and
+    survive.
+    \item \emph{required.hs_option} : the habitat suitability reference
+    value can be set in two possible ways :
+    \enumerate{
+      \item \emph{random} : for each pixel, the reference value is drawn from
+      a uniform distribution, and the same value is used for each PFG 
+      within this pixel.
+      \item \emph{PFG specific} : for each PFG, a mean value and a standard 
+      deviation value are drawn from a uniform distribution. For each 
+      pixel and for each PFG, the reference value is drawn from a normal 
+      distribution of parameters the mean and standard deviation of the PFG.
+    }
+  }
+  }
+  \item{Simulation timing}{
+  \itemize{
+    \item \emph{required.seeding_timestep} : the time interval at which 
+    occurs the seeding, and until the seeding duration is not over 
+    (\emph{in years})
+    \item \emph{required.seeding_duration} : the duration of seeding 
+    (\emph{in years})
+    \item \emph{required.simul_duration} : the duration of simulation 
+    (\emph{in years}) \cr \cr
+  }
+  }
+}
+
+
+The other modules of \code{FATE-HD} can be activated within this file, and
+if so, some additional parameters will be required :
+
+\describe{
+  \item{DISTURBANCES}{= defined for events such as mowing, grazing, but also
+  urbanization, crops, etc. \cr \cr
+  The impact zone is defined with a mask (map with 0 or 1) and the user will
+  have to define how each PFG will be impacted depending on age and life stage. 
+  \itemize{
+    \item \emph{DIST.no} : the number of different disturbances
+    \item \emph{DIST.no_sub} : the number of way a PFG could react to a 
+    perturbation
+    \item \emph{DIST.freq} : the frequency of each disturbance (\emph{in years})
+  }
+  }
+  \item{DROUGHT}{= \cr \cr
+  \itemize{
+    \item \emph{DROUGHT.no_sub} : 
+    \item \emph{DROUGHT.chrono_post} : 
+    \item \emph{DROUGHT.chrono_curr} : 
+  }
+  }
+  \item{HABITAT STABILITY}{= to evaluate through the evolution of the PFG 
+  composition in different habitats. \cr \cr
+  The habitat distribution is given with a categorical map with each value
+  corresponding to a specific habitat. Every year, the abundance of each PFG
+  within each habitat is recorded, as well as the evenness of the habitat :
+  \deqn{
+  \text{evenness} = - SUM(\text{PFG.proportion} * log(\text{PFG.proportion})) / log(\text{no.PFG} - 1)
+  }
+  \deqn{\text{with PFG.proportion} = \text{abund.PFG.in.Habitat} / \text{abund.allPFG.in.Habitat}}
+  Every 5 years, a stability check is done to see if the abundance or the
+  evenness has values out of the usual distribution.
+  \itemize{
+    \item \emph{HABSTAB.no_hab} : the number of different habitats
+  }
+  }
+  \item{INVASIVE \cr INTRODUCTION}{= to add new PFG during the simulation. \cr \cr
+  The introduction areas are defined with a mask (map with 0 or 1). If the 
+  habitat suitability filter is on, suitability maps will also be needed for
+  these new groups.
+  \itemize{
+    \item \emph{ALIEN.freq} : the frequency of each introduction (\emph{in years})
+  }
   }
 }
 }
@@ -135,9 +218,9 @@ PRE_FATE.skeletonDirectory()
 
 ## Create a Global_parameters file
 PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                 , required.no_PFG = 3
+                                 , required.no_STRATA = 5
                                  , required.succ_option = "fateh"
-                                 , required.nb_PFG = 3
-                                 , required.nb_STRATA = 5
                                  , required.hs_option = 1
                                  , required.seeding_timestep = 1
                                  , required.seeding_duration = 10
@@ -145,9 +228,9 @@ PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                    
 ## Create SEVERAL Global_parameters files
 PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                 , required.no_PFG = 3
+                                 , required.no_STRATA = 5
                                  , required.succ_option = "fateh"
-                                 , required.nb_PFG = 3
-                                 , required.nb_STRATA = 5
                                  , required.hs_option = c(1,2)
                                  , required.seeding_timestep = 1
                                  , required.seeding_duration = 10

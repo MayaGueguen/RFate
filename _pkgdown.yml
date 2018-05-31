@@ -65,7 +65,6 @@ reference:
       - "PRE_FATE.params_PFGsuccession"
       - "PRE_FATE.params_PFGdispersal"
       - "PRE_FATE.params_PFGdisturbance"
+      - "PRE_FATE.params_simulParameters"
   - title: Analyze FATE-HD outputs
     desc: Evalute predicted maps, produce summary and dynamic graphics.  <br/> ..
-    contents:
-      - "POST_FATE."

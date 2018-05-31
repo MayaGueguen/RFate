@@ -91,7 +91,7 @@ PFG :
 
 \describe{
   \item{STRATA_LIMITS}{= the height values that define each stratum. \cr \cr
-  The steps are detailed below and try to homongenize the number of PFG
+  The steps are detailed below and try to homogenize the number of PFG
   within each stratum :
   \itemize{
     \item the average number of PFG per stratum should be close to 

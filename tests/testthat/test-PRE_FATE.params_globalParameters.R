@@ -46,47 +46,47 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : requir
 
 
 ## INPUTS
-test_that("PRE_FATE.params_globalParameters gives error with wrong data : required.nb_PFG", {
+test_that("PRE_FATE.params_globalParameters gives error with wrong data : required.no_PFG", {
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.succ_option = "fate"
-                                                , required.nb_PFG = NA)
-               , "`required.nb_PFG` must be an integer > 0")
+                                                , required.no_PFG = NA)
+               , "`required.no_PFG` must be an integer > 0")
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.succ_option = "fate"
-                                                , required.nb_PFG = NULL)
-               , "`required.nb_PFG` must be an integer > 0")
+                                                , required.no_PFG = NULL)
+               , "`required.no_PFG` must be an integer > 0")
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.succ_option = "fate"
-                                                , required.nb_PFG = "")
-               , "`required.nb_PFG` must be an integer > 0")
+                                                , required.no_PFG = "")
+               , "`required.no_PFG` must be an integer > 0")
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.succ_option = "fate"
-                                                , required.nb_PFG = 5)
-               , "`required.nb_STRATA` must be an integer > 0")
+                                                , required.no_PFG = 5)
+               , "`required.no_STRATA` must be an integer > 0")
 })
 
 
 ## INPUTS
-test_that("PRE_FATE.params_globalParameters gives error with wrong data : required.nb_STRATA", {
+test_that("PRE_FATE.params_globalParameters gives error with wrong data : required.no_STRATA", {
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.succ_option = "fate"
-                                                , required.nb_PFG = 5
-                                                , required.nb_STRATA = NA)
-               , "`required.nb_STRATA` must be an integer > 0")
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = NA)
+               , "`required.no_STRATA` must be an integer > 0")
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.succ_option = "fate"
-                                                , required.nb_PFG = 5
-                                                , required.nb_STRATA = NULL)
-               , "`required.nb_STRATA` must be an integer > 0")
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = NULL)
+               , "`required.no_STRATA` must be an integer > 0")
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.succ_option = "fate"
-                                                , required.nb_PFG = 5
-                                                , required.nb_STRATA = "")
-               , "`required.nb_STRATA` must be an integer > 0")
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = "")
+               , "`required.no_STRATA` must be an integer > 0")
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.succ_option = "fate"
-                                                , required.nb_PFG = 5
-                                                , required.nb_STRATA = 2)
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2)
                , "`required.hs_option` must be either 1 (random) or 2 (distribution per PFG)", fixed = T)
 })
 
@@ -95,26 +95,26 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : requir
 test_that("PRE_FATE.params_globalParameters gives error with wrong data : required.hs_option", {
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.succ_option = "fate"
-                                                , required.nb_PFG = 5
-                                                , required.nb_STRATA = 2
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
                                                 , required.hs_option = NA)
                , "`required.hs_option` must be either 1 (random) or 2 (distribution per PFG)", fixed = T)
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.succ_option = "fate"
-                                                , required.nb_PFG = 5
-                                                , required.nb_STRATA = 2
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
                                                 , required.hs_option = NULL)
                , "`required.hs_option` must be either 1 (random) or 2 (distribution per PFG)", fixed = T)
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.succ_option = "fate"
-                                                , required.nb_PFG = 5
-                                                , required.nb_STRATA = 2
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
                                                 , required.hs_option = "")
                , "`required.hs_option` must be either 1 (random) or 2 (distribution per PFG)", fixed = T)
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.succ_option = "fate"
-                                                , required.nb_PFG = 5
-                                                , required.nb_STRATA = 2
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
                                                 , required.hs_option = 1)
                , "`required.seeding_timestep` must be an integer > 0")
 })
@@ -124,29 +124,29 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : requir
 test_that("PRE_FATE.params_globalParameters gives error with wrong data : required.seeding_timestep", {
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.succ_option = "fate"
-                                                , required.nb_PFG = 5
-                                                , required.nb_STRATA = 2
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
                                                 , required.hs_option = 1
                                                 , required.seeding_timestep = NA)
                , "`required.seeding_timestep` must be an integer > 0")
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.succ_option = "fate"
-                                                , required.nb_PFG = 5
-                                                , required.nb_STRATA = 2
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
                                                 , required.hs_option = 1
                                                 , required.seeding_timestep = NULL)
                , "`required.seeding_timestep` must be an integer > 0")
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.succ_option = "fate"
-                                                , required.nb_PFG = 5
-                                                , required.nb_STRATA = 2
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
                                                 , required.hs_option = 1
                                                 , required.seeding_timestep = "")
                , "`required.seeding_timestep` must be an integer > 0")
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.succ_option = "fate"
-                                                , required.nb_PFG = 5
-                                                , required.nb_STRATA = 2
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
                                                 , required.hs_option = 1
                                                 , required.seeding_timestep = 100)
                , "`required.seeding_duration` must be an integer > 0")
@@ -156,32 +156,32 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : requir
 test_that("PRE_FATE.params_globalParameters gives error with wrong data : required.seeding_duration", {
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.succ_option = "fate"
-                                                , required.nb_PFG = 5
-                                                , required.nb_STRATA = 2
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
                                                 , required.hs_option = 1
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_duration = NA)
                , "`required.seeding_duration` must be an integer > 0")
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.succ_option = "fate"
-                                                , required.nb_PFG = 5
-                                                , required.nb_STRATA = 2
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
                                                 , required.hs_option = 1
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_duration = NULL)
                , "`required.seeding_duration` must be an integer > 0")
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.succ_option = "fate"
-                                                , required.nb_PFG = 5
-                                                , required.nb_STRATA = 2
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
                                                 , required.hs_option = 1
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_duration = "")
                , "`required.seeding_duration` must be an integer > 0")
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.succ_option = "fate"
-                                                , required.nb_PFG = 5
-                                                , required.nb_STRATA = 2
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
                                                 , required.hs_option = 1
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_duration = 100)
@@ -193,8 +193,8 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : requir
 test_that("PRE_FATE.params_globalParameters gives error with wrong data : required.simul_duration", {
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.succ_option = "fate"
-                                                , required.nb_PFG = 5
-                                                , required.nb_STRATA = 2
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
                                                 , required.hs_option = 1
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_duration = 100
@@ -202,8 +202,8 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : requir
                , "`required.simul_duration` must be an integer > 0")
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.succ_option = "fate"
-                                                , required.nb_PFG = 5
-                                                , required.nb_STRATA = 2
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
                                                 , required.hs_option = 1
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_duration = 100
@@ -211,8 +211,8 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : requir
                , "`required.simul_duration` must be an integer > 0")
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.succ_option = "fate"
-                                                , required.nb_PFG = 5
-                                                , required.nb_STRATA = 2
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
                                                 , required.hs_option = 1
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_duration = 100
@@ -226,20 +226,20 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : requir
 test_that("PRE_FATE.params_globalParameters gives correct output", {
   PRE_FATE.skeletonDirectory()
   expect_warning(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
-                                                  , opt.nb_CPU = "a"
+                                                  , opt.no_CPU = "a"
                                                   , required.succ_option = "fate"
-                                                  , required.nb_PFG = 5
-                                                  , required.nb_STRATA = 2
+                                                  , required.no_PFG = 5
+                                                  , required.no_STRATA = 2
                                                   , required.hs_option = 1
                                                   , required.seeding_timestep = 100
                                                   , required.seeding_duration = 100
                                                   , required.simul_duration = 100)
-               , "`opt.nb_CPU` must be an integer > 0", fixed = T)
+               , "`opt.no_CPU` must be an integer > 0", fixed = T)
 
   expect_message(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                   , required.succ_option = "fate"
-                                                  , required.nb_PFG = 5
-                                                  , required.nb_STRATA = 2
+                                                  , required.no_PFG = 5
+                                                  , required.no_STRATA = 2
                                                   , required.hs_option = 1
                                                   , required.seeding_timestep = 100
                                                   , required.seeding_duration = 100
@@ -247,8 +247,8 @@ test_that("PRE_FATE.params_globalParameters gives correct output", {
                  , "The parameter file FATE_simulation/DATA/GLOBAL_PARAMETERS/Global_parameters_V1.txt has been successfully created !")
   expect_warning(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                   , required.succ_option = "fate"
-                                                  , required.nb_PFG = 5
-                                                  , required.nb_STRATA = 2
+                                                  , required.no_PFG = 5
+                                                  , required.no_STRATA = 2
                                                   , required.hs_option = 1
                                                   , required.seeding_timestep = 100
                                                   , required.seeding_duration = 100
