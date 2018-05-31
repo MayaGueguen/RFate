@@ -196,7 +196,7 @@ if so, some additional parameters will be required :
   }
   \deqn{\text{with PFG.proportion} = \text{abund.PFG.in.Habitat} / \text{abund.allPFG.in.Habitat}}
   Every 5 years, a stability check is done to see if the abundance or the
-  evenness has values out of the usual distribution.
+  evenness have values out of the usual distribution.
   \itemize{
     \item \emph{HABSTAB.no_hab} : the number of different habitats
   }
