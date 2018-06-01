@@ -333,11 +333,19 @@ if so, some additional parameters will be required :</p>
     perturbation</p></li>
 <li><p><em>DIST.freq</em> : the frequency of each disturbance (<em>in years</em>)</p></li>
 </ul></p></dd>
-  <dt>DROUGHT</dt><dd><p>= <br /> <br />
+  <dt>DROUGHT</dt><dd><p>= to experience extreme events with a direct and a delayed
+  response on PFG. <br /> <br />
+  The PFG's past drought exposure is compared to current moisture values as 
+  a proxy of drought index. Developed canopy closure helps to reduce these 
+  values. Each PFG is impacted if submitted one year to drought, and also (and  
+  more consequently) if submitted several years in a row.
   <ul>
-<li><p><em>DROUGHT.no_sub</em> :</p></li>
-<li><p><em>DROUGHT.chrono_post</em> :</p></li>
-<li><p><em>DROUGHT.chrono_curr</em> :</p></li>
+<li><p><em>DROUGHT.no_sub</em> : the number of way a PFG could react to a 
+    perturbation</p></li>
+<li><p><em>DROUGHT.chrono_post</em> : if post-drought effects will occur 
+    previously to succession (0) or after (1)</p></li>
+<li><p><em>DROUGHT.chrono_curr</em> : if current-drought effects will occur 
+    previously to succession (0) or after (1)</p></li>
 </ul></p></dd>
   <dt>HABITAT STABILITY</dt><dd><p>= to evaluate through the evolution of the PFG 
   composition in different habitats. <br /> <br />

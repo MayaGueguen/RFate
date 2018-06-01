@@ -107,11 +107,19 @@
 ##'     \item \emph{DIST.freq} : the frequency of each disturbance (\emph{in years})
 ##'   }
 ##'   }
-##'   \item{DROUGHT}{= \cr \cr
+##'   \item{DROUGHT}{= to experience extreme events with a direct and a delayed
+##'   response on PFG. \cr \cr
+##'   The PFG's past drought exposure is compared to current moisture values as 
+##'   a proxy of drought index. Developed canopy closure helps to reduce these 
+##'   values. Each PFG is impacted if submitted one year to drought, and also (and  
+##'   more consequently) if submitted several years in a row.
 ##'   \itemize{
-##'     \item \emph{DROUGHT.no_sub} : 
-##'     \item \emph{DROUGHT.chrono_post} : 
-##'     \item \emph{DROUGHT.chrono_curr} : 
+##'     \item \emph{DROUGHT.no_sub} : the number of way a PFG could react to a 
+##'     perturbation
+##'     \item \emph{DROUGHT.chrono_post} : if post-drought effects will occur 
+##'     previously to succession (0) or after (1)
+##'     \item \emph{DROUGHT.chrono_curr} : if current-drought effects will occur 
+##'     previously to succession (0) or after (1)
 ##'   }
 ##'   }
 ##'   \item{HABITAT STABILITY}{= to evaluate through the evolution of the PFG 
