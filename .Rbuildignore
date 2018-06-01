@@ -4,7 +4,8 @@
 .Rproj.user
 .git
 _FUNC_createRpackage_RFate.R
-R/examples.R
+R/examples.PRE_FATE1.R
+R/examples.PRE_FATE2.R
 ^FATE_simulation$
 ^\.travis\.yml$
 ^appveyor\.yml$
