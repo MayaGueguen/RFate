@@ -94,7 +94,7 @@ test_that("PRE_FATE.params_changingYears gives error with wrong data : type.chan
                                              , mat.changing = data.frame(year = 10, order = c(1,NA), file.name = "hop"))
                , "Columns `year`, `order` and `file.name` of `mat.changing` must not contain NA values")
   
-
+  
   expect_error(PRE_FATE.params_changingYears(name.simulation = "FATE_simulation", type.changing = "DIST"
                                              , mat.changing = data.frame(year = 10, order = 1, file.name = c("",NA)))
                , "Columns `year`, `order` and `file.name` of `mat.changing` must not contain NA values")
@@ -110,12 +110,31 @@ test_that("PRE_FATE.params_changingYears gives correct output", {
   if (dir.exists("FATE_simulation")) system("rm -r FATE_simulation/")
   PRE_FATE.skeletonDirectory()
   expect_message(PRE_FATE.params_changingYears(name.simulation = "FATE_simulation", type.changing = "DIST"
-                                             , mat.changing = data.frame(year = c(10,10), order = c(1,2), file.name = c("A","B")))
-               , "The parameter file FATE_simulation/DATA/SCENARIO/DIST_changing_times.txt has been successfully created !")
+                                               , mat.changing = data.frame(year = c(10,10), order = c(1,2), file.name = c("A","B")))
+                 , "The parameter file FATE_simulation/DATA/SCENARIO/DIST_changing_times.txt has been successfully created !")
   expect_message(PRE_FATE.params_changingYears(name.simulation = "FATE_simulation", type.changing = "DIST"
                                                , mat.changing = data.frame(year = c(10,10), order = c(1,2), file.name = c("A","B")))
                  , "The parameter file FATE_simulation/DATA/SCENARIO/DIST_changing_masks_t10.txt has been successfully created !")
   expect_warning(PRE_FATE.params_changingYears(name.simulation = "FATE_simulation", type.changing = "DIST"
                                                , mat.changing = data.frame(year = c(10,10), order = c(1,2), file.name = c("A","B")))
                  , "`params.file` already exists. It will be replaced.")
+  
+  
+  expect_warning(PRE_FATE.params_changingYears(name.simulation = "FATE_simulation", type.changing = "DIST"
+                                               , mat.changing = data.frame(year = c(10,10), order = c(1,2), file.name = c("A","B"))
+                                               , opt.folder.name = NA)
+                 , "As `opt.folder.name` does not contain character value, it will be ignored")
+  expect_warning(PRE_FATE.params_changingYears(name.simulation = "FATE_simulation", type.changing = "DIST"
+                                               , mat.changing = data.frame(year = c(10,10), order = c(1,2), file.name = c("A","B"))
+                                               , opt.folder.name = 1)
+                 , "As `opt.folder.name` does not contain character value, it will be ignored")
+  
+  expect_message(PRE_FATE.params_changingYears(name.simulation = "FATE_simulation", type.changing = "DIST"
+                                               , mat.changing = data.frame(year = c(10,10), order = c(1,2), file.name = c("A","B"))
+                                               , opt.folder.name = "scen1")
+                 , "The parameter file FATE_simulation/DATA/SCENARIO/scen1/DIST_changing_times.txt has been successfully created !")
+  expect_message(PRE_FATE.params_changingYears(name.simulation = "FATE_simulation", type.changing = "DIST"
+                                               , mat.changing = data.frame(year = c(10,10), order = c(1,2), file.name = c("A","B"))
+                                               , opt.folder.name = "scen1")
+                 , "The parameter file FATE_simulation/DATA/SCENARIO/scen1/DIST_changing_masks_t10.txt has been successfully created !")
 })

@@ -323,7 +323,7 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : DIST.n
                                                 , doDisturbances = T
                                                 , DIST.no = 2
                                                 , DIST.no_sub = 2)
-               , "`DIST.freq` must be an integer > 0")
+               , "`DIST.freq` must be a vector of integer > 0")
 })
 
 ## INPUTS

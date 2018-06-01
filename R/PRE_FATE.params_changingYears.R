@@ -13,6 +13,9 @@
 ##' @param name.simulation a \code{string} that corresponds to the main directory
 ##' or simulation name of the \code{FATE-HD} simulation
 ##' @param mat.changing a 
+##' @param opt.folder.name a \code{string} taht corresponds to the name of the folder
+##' that will be created into the \code{name.simulation/DATA/SCENARIO/} directory to
+##' store the results (\emph{optional})
 ##' 
 ##' 
 ##' @details 
@@ -59,6 +62,7 @@ PRE_FATE.params_changingYears = function(
   name.simulation
   , type.changing
   , mat.changing
+  , opt.folder.name = NULL
 ){
   
   if (missing(name.simulation) ||
@@ -106,11 +110,23 @@ PRE_FATE.params_changingYears = function(
                 , " All combinations must be represented"))
   }
   
+  if (is.null(opt.folder.name)){
+    opt.folder.name = ""
+  } else if (!is.null(opt.folder.name) && !is.character(opt.folder.name)){
+    warning("As `opt.folder.name` does not contain character value, it will be ignored")
+    opt.folder.name = ""
+  } else if (nchar(opt.folder.name) > 0){
+    opt.folder.name = paste0(opt.folder.name, "/")
+    dir.create(paste0(name.simulation, "/DATA/SCENARIO/", opt.folder.name))
+  } else {
+    opt.folder.name = ""
+  }
+  
   ### CREATE changing_times.txt file
   params = lapply(sort(unique(mat.changing$year)), function(x) x)
   names(params) = rep("", length(params))
   
-  file.name = paste0(name.simulation, "/DATA/SCENARIO/", type.changing, "_changing_times.txt")
+  file.name = paste0(name.simulation, "/DATA/SCENARIO/", opt.folder.name, type.changing, "_changing_times.txt")
   .createParams(params.file = file.name
                 , params.list = params)
   file.lines = readLines(file.name)
@@ -127,7 +143,7 @@ PRE_FATE.params_changingYears = function(
     params = lapply(changing.names, function(x) x)
     names(params) = rep("", length(params))
     
-    file.name = paste0(name.simulation, "/DATA/SCENARIO/", type.changing, "_changing_masks_t", y, ".txt")
+    file.name = paste0(name.simulation, "/DATA/SCENARIO/", opt.folder.name, type.changing, "_changing_masks_t", y, ".txt")
     .createParams(params.file = file.name
                   , params.list = params)
     file.lines = readLines(file.name)

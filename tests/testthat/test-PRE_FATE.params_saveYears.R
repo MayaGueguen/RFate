@@ -64,6 +64,9 @@ test_that("PRE_FATE.params_saveYears gives error with wrong data : years.maps an
                , "years.maps` and/or `years.objects` must contain numeric values")
   expect_error(PRE_FATE.params_saveYears(name.simulation = "FATE_simulation", years.maps = factor(1), years.objects = 1)
                , "years.maps` and/or `years.objects` must contain numeric values")
+  
+  
+
 })
 
 
@@ -79,4 +82,16 @@ test_that("PRE_FATE.params_saveYears gives correct output", {
                  , "`params.file` already exists. It will be replaced.")
   expect_warning(PRE_FATE.params_saveYears(name.simulation = "FATE_simulation", years.objects = 1)
                  , "`params.file` already exists. It will be replaced.")
+  
+  expect_warning(PRE_FATE.params_saveYears(name.simulation = "FATE_simulation", years.maps = 1, years.objects = 1
+                                           , opt.folder.name = NA)
+                 , "As `opt.folder.name` does not contain character value, it will be ignored")
+  expect_warning(PRE_FATE.params_saveYears(name.simulation = "FATE_simulation", years.maps = 1, years.objects = 1
+                                           , opt.folder.name = 1)
+                 , "As `opt.folder.name` does not contain character value, it will be ignored")
+  
+  expect_message(PRE_FATE.params_saveYears(name.simulation = "FATE_simulation", years.maps = 1, opt.folder.name = "scen1")
+                 , "The parameter file FATE_simulation/DATA/SAVE/scen1/SAVE_YEARS_maps.txt has been successfully created !")
+  expect_message(PRE_FATE.params_saveYears(name.simulation = "FATE_simulation", years.objects = 1, opt.folder.name = "scen1")
+                 , "The parameter file FATE_simulation/DATA/SAVE/scen1/SAVE_YEARS_objects.txt has been successfully created !")
 })

@@ -16,6 +16,9 @@
 ##' maps will be saved
 ##' @param years.objects a \code{vector} of simulation years at which \code{FATE-HD}
 ##' simulation state will be saved
+##' @param opt.folder.name a \code{string} taht corresponds to the name of the folder
+##' that will be created into the \code{name.simulation/DATA/SAVE/} directory to
+##' store the results (\emph{optional})
 ##' 
 ##' 
 ##' @details 
@@ -57,6 +60,7 @@ PRE_FATE.params_saveYears = function(
   name.simulation
   , years.maps = NULL
   , years.objects = NULL
+  , opt.folder.name = NULL
 ){
   
   if (missing(name.simulation) ||
@@ -73,28 +77,44 @@ PRE_FATE.params_saveYears = function(
     warning("Both `years.maps` and `years.objects` parameters are NULL. No parameter file will be created")
   } else
   {
+    if (is.null(opt.folder.name)){
+      opt.folder.name = ""
+    } else if (!is.null(opt.folder.name) && !is.character(opt.folder.name)){
+      warning("As `opt.folder.name` does not contain character value, it will be ignored")
+      opt.folder.name = ""
+    } else if (nchar(opt.folder.name) > 0){
+      opt.folder.name = paste0(opt.folder.name, "/")
+      dir.create(paste0(name.simulation, "/DATA/SAVE/", opt.folder.name))
+    } else {
+      opt.folder.name = ""
+    }
+    
     if (!is.null(years.maps))
     {
       params = lapply(years.maps, function(x) x)
       names(params) = rep("", length(params))
-      .createParams(params.file = paste0(name.simulation, "/DATA/SAVE/SAVE_YEARS_maps.txt")
+      
+      file.name = paste0(name.simulation, "/DATA/SAVE/", opt.folder.name, "SAVE_YEARS_maps.txt")
+      .createParams(params.file = file.name
                     , params.list = params)
-      file.lines = readLines(paste0(name.simulation, "/DATA/SAVE/SAVE_YEARS_maps.txt"))
+      file.lines = readLines(file.name)
       file.lines = file.lines[-c(1,2)]
       file.lines = gsub(" ", "", file.lines)
-      cat(file.lines, sep = "\n", file = paste0(name.simulation, "/DATA/SAVE/SAVE_YEARS_maps.txt"), append = FALSE)
+      cat(file.lines, sep = "\n", file = file.name, append = FALSE)
     }
     
     if (!is.null(years.objects))
     {
       params = lapply(years.objects, function(x) x)
       names(params) = rep("", length(params))
-      .createParams(params.file = paste0(name.simulation, "/DATA/SAVE/SAVE_YEARS_objects.txt")
+      
+      file.name = paste0(name.simulation, "/DATA/SAVE/", opt.folder.name, "SAVE_YEARS_objects.txt")
+      .createParams(params.file = file.name
                     , params.list = params)
-      file.lines = readLines(paste0(name.simulation, "/DATA/SAVE/SAVE_YEARS_objects.txt"))
+      file.lines = readLines(file.name)
       file.lines = file.lines[-c(1,2)]
       file.lines = gsub(" ", "", file.lines)
-      cat(file.lines, sep = "\n", file = paste0(name.simulation, "/DATA/SAVE/SAVE_YEARS_objects.txt"), append = FALSE)
+      cat(file.lines, sep = "\n", file = file.name, append = FALSE)
     }
   }
 }
