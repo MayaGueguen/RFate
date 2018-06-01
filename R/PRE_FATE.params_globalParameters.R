@@ -361,7 +361,7 @@ PRE_FATE.params_globalParameters = function(
         is.na(DIST.freq) ||
         is.null(DIST.freq) ||
         !is.numeric(DIST.freq) ||
-        sum(DIST.freq <= 0) < length(DIST.freq)){
+        sum(DIST.freq <= 0) > 0){
       stop("Wrong type of data!\n `DIST.freq` must be a vector of integer > 0")
     } else if (length(DIST.freq) != DIST.no){
       stop("Wrong type of data!\n `DIST.freq` must contain as many values as the number of disturbances (`DIST.no`)")

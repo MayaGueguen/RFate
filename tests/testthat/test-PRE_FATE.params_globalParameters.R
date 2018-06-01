@@ -226,6 +226,175 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : requir
 })
 
 
+## INPUTS
+test_that("PRE_FATE.params_globalParameters gives error with wrong data : DIST.no", {
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.succ_option = "fate"
+                                                , required.hs_option = 1
+                                                , required.seeding_timestep = 100
+                                                , required.seeding_duration = 100
+                                                , required.simul_duration = 100
+                                                , doDisturbances = T
+                                                , DIST.no = NA)
+               , "`DIST.no` must be an integer > 0")
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.succ_option = "fate"
+                                                , required.hs_option = 1
+                                                , required.seeding_timestep = 100
+                                                , required.seeding_duration = 100
+                                                , required.simul_duration = 100
+                                                , doDisturbances = T
+                                                , DIST.no = NULL)
+               , "`DIST.no` must be an integer > 0")
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.succ_option = "fate"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.hs_option = 1
+                                                , required.seeding_timestep = 100
+                                                , required.seeding_duration = 100
+                                                , required.simul_duration = 100
+                                                , doDisturbances = T
+                                                , DIST.no = "")
+               , "`DIST.no` must be an integer > 0")
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.succ_option = "fate"
+                                                , required.hs_option = 1
+                                                , required.seeding_timestep = 100
+                                                , required.seeding_duration = 100
+                                                , required.simul_duration = 100
+                                                , doDisturbances = T
+                                                , DIST.no = 2)
+               , "`DIST.no_sub` must be an integer > 0")
+})
+
+## INPUTS
+test_that("PRE_FATE.params_globalParameters gives error with wrong data : DIST.no_sub", {
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.succ_option = "fate"
+                                                , required.hs_option = 1
+                                                , required.seeding_timestep = 100
+                                                , required.seeding_duration = 100
+                                                , required.simul_duration = 100
+                                                , doDisturbances = T
+                                                , DIST.no = 2
+                                                , DIST.no_sub = NA)
+               , "`DIST.no_sub` must be an integer > 0")
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.succ_option = "fate"
+                                                , required.hs_option = 1
+                                                , required.seeding_timestep = 100
+                                                , required.seeding_duration = 100
+                                                , required.simul_duration = 100
+                                                , doDisturbances = T
+                                                , DIST.no = 2
+                                                , DIST.no_sub = NULL)
+               , "`DIST.no_sub` must be an integer > 0")
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.succ_option = "fate"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.hs_option = 1
+                                                , required.seeding_timestep = 100
+                                                , required.seeding_duration = 100
+                                                , required.simul_duration = 100
+                                                , doDisturbances = T
+                                                , DIST.no = 2
+                                                , DIST.no_sub = "")
+               , "`DIST.no_sub` must be an integer > 0")
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.succ_option = "fate"
+                                                , required.hs_option = 1
+                                                , required.seeding_timestep = 100
+                                                , required.seeding_duration = 100
+                                                , required.simul_duration = 100
+                                                , doDisturbances = T
+                                                , DIST.no = 2
+                                                , DIST.no_sub = 2)
+               , "`DIST.freq` must be an integer > 0")
+})
+
+## INPUTS
+test_that("PRE_FATE.params_globalParameters gives error with wrong data : DIST.freq", {
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.succ_option = "fate"
+                                                , required.hs_option = 1
+                                                , required.seeding_timestep = 100
+                                                , required.seeding_duration = 100
+                                                , required.simul_duration = 100
+                                                , doDisturbances = T
+                                                , DIST.no = 2
+                                                , DIST.no_sub = 2
+                                                , DIST.freq = NA)
+               , "`DIST.freq` must be a vector of integer > 0")
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.succ_option = "fate"
+                                                , required.hs_option = 1
+                                                , required.seeding_timestep = 100
+                                                , required.seeding_duration = 100
+                                                , required.simul_duration = 100
+                                                , doDisturbances = T
+                                                , DIST.no = 2
+                                                , DIST.no_sub = 2
+                                                , DIST.freq = NULL)
+               , "`DIST.freq` must be a vector of integer > 0")
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.succ_option = "fate"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.hs_option = 1
+                                                , required.seeding_timestep = 100
+                                                , required.seeding_duration = 100
+                                                , required.simul_duration = 100
+                                                , doDisturbances = T
+                                                , DIST.no = 2
+                                                , DIST.no_sub = 2
+                                                , DIST.freq = "")
+               , "`DIST.freq` must be a vector of integer > 0")
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.succ_option = "fate"
+                                                , required.hs_option = 1
+                                                , required.seeding_timestep = 100
+                                                , required.seeding_duration = 100
+                                                , required.simul_duration = 100
+                                                , doDisturbances = T
+                                                , DIST.no = 2
+                                                , DIST.no_sub = 2
+                                                , DIST.freq = 2)
+               , "`DIST.freq` must contain as many values as the number of disturbances (`DIST.no`)", fixed = T)
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.succ_option = "fate"
+                                                , required.hs_option = 1
+                                                , required.seeding_timestep = 100
+                                                , required.seeding_duration = 100
+                                                , required.simul_duration = 100
+                                                , doDisturbances = T
+                                                , DIST.no = 2
+                                                , DIST.no_sub = 2
+                                                , DIST.freq = c(2,0))
+               , "`DIST.freq` must be a vector of integer > 0")
+})
+
 
 ## OUTPUTS
 test_that("PRE_FATE.params_globalParameters gives correct output", {
@@ -259,4 +428,18 @@ test_that("PRE_FATE.params_globalParameters gives correct output", {
                                                   , required.seeding_duration = 100
                                                   , required.simul_duration = 100)
                  , "`params.file` already exists. It will be replaced.")
+  
+  expect_message(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                  , required.no_PFG = 5
+                                                  , required.no_STRATA = 2
+                                                  , required.succ_option = "fate"
+                                                  , required.hs_option = 1
+                                                  , required.seeding_timestep = 100
+                                                  , required.seeding_duration = 100
+                                                  , required.simul_duration = 100
+                                                  , doDisturbances = T
+                                                  , DIST.no = 2
+                                                  , DIST.no_sub = 2
+                                                  , DIST.freq = c(2,2))
+                 , "The parameter file FATE_simulation/DATA/GLOBAL_PARAMETERS/Global_parameters_V1.txt has been successfully created !")
 })
