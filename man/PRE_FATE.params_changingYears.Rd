@@ -5,18 +5,34 @@
 \title{Create \emph{SCENARIO} parameter files for a \code{FATE-HD}
 simulation}
 \usage{
-PRE_FATE.params_changingYears(name.simulation, type.changing, mat.changing)
+PRE_FATE.params_changingYears(name.simulation, type.changing, mat.changing,
+  opt.folder.name = NULL)
 }
 \arguments{
 \item{name.simulation}{a \code{string} that corresponds to the main directory
 or simulation name of the \code{FATE-HD} simulation}
 
-\item{mat.changing}{a}
+\item{type.changing}{a \code{string} to choose the concerned module : \cr
+succession (\emph{MASK}), habitat suitability (\emph{HS}) or disturbances 
+(\emph{DIST})}
+
+\item{mat.changing}{a \code{data.frame} with 3 columns : year, order, file.name}
+
+\item{opt.folder.name}{(\emph{optional}) \cr a \code{string} that corresponds 
+to the name of the folder that will be created into the 
+\code{name.simulation/DATA/SCENARIO/} directory to store the results}
 }
 \value{
-Two \code{.txt} files into the \code{name.simulation/DATA/SAVE/}
-directory with one line for each simulation year for which the raster maps /
-\code{FATE-HD} object are to be saved.
+Several \code{.txt} files into the \code{name.simulation/DATA/SCENARIO/} :
+\itemize{
+  \item \code{type.changing_changing_times.txt} : one line for each simulation 
+  year 
+  \item \code{type.changing_changing_masks_t}...\code{.txt} : one line for each
+  new raster file \cr \cr
+}
+
+If the \code{opt.folder.name} has been used, the files will be into the folder
+\code{name.simulation/DATA/SCENARIO/opt.folder.name/}
 }
 \description{
 This script is designed to create a parameter file containing
@@ -24,16 +40,42 @@ simulation years at which the \code{FATE-HD} software must save rasters of
 PFG abundances or simulation objects.
 }
 \details{
-\code{FATE-HD} software allows the user to save two different types of outputs :
+Several modules of the \code{FATE-HD} software allow the user to simulate
+changes over time :
 
 \describe{
-  \item{Raster maps}{PFG maps can be saved for all specified simulation years.
-  It includes maps per PFG per strata and summary maps per PFG for all height
-  strata combined. \cr Raster format used is depending on input data format. It
-  can be either \code{.img} or \code{.tif}.}
-  \item{Model objects}{using \code{BOOST} library and its serialization functions,
-  \code{FATE-HD} is able to save a simulation at a specific time. This object
-  allows the user to restart a simulation from this precise state.}
+  \item{succession}{the core module is based on a raster mask, with either 0
+  or 1 within each pixel, 1 corresponding to the cells in which the PFG
+  can try to colonize. \cr
+  The available pixels can change through time, 
+  to simulate habitat loss (e.g. urbanization) or gain (e.g. glacial retreat).}
+  \item{habitat suitability}{if the option \emph{fateh} of the \code{SUCC_MOD}
+  parameter within the \emph{Global_parameters} has been selected, PFG colonization 
+  depends on maps given for each PFG, with values between 0 and 1 corresponding 
+  to the probability of presence of the group in each pixel. \cr
+  These probabilities can change through time, as they often come from 
+  Species Distribution Models (SDM) that can be based for example on climatic
+  variables.}
+  \item{disturbances}{as for succession, each disturbance relies on a raster
+  mask with 0 or 1 to define where the perturbation occurs. \cr
+  The impacted pixels can also change through time (e.g. change in forestry
+  practices, expansion of grazing areas, etc). \cr \cr}
+}
+
+
+These changes require two types of information, that must be presented within
+two different files :
+
+\describe{
+  \item{Years of change \cr \code{column} year}{all simulation years at which
+   the raster files of a specific module (succession, habitat suitability, 
+   disturbance) will be changed. To each given year must correspond a file 
+   with the names of the new maps.}
+  \item{New maps / mask \cr \code{column} file.name}{for a specific year of 
+  change, the names of the new raster files, always in the same order. \cr 
+  It can be either \code{.img} or \code{.tif}.}
+  \item{Order of the filenames \cr \code{column} order}{\code{integer} to be 
+  sure to always give the raster maps in the same order.}
 }
 }
 \examples{

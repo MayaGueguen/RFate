@@ -6,7 +6,7 @@
 simulation}
 \usage{
 PRE_FATE.params_saveYears(name.simulation, years.maps = NULL,
-  years.objects = NULL)
+  years.objects = NULL, opt.folder.name = NULL)
 }
 \arguments{
 \item{name.simulation}{a \code{string} that corresponds to the main directory
@@ -17,11 +17,18 @@ maps will be saved}
 
 \item{years.objects}{a \code{vector} of simulation years at which \code{FATE-HD}
 simulation state will be saved}
+
+\item{opt.folder.name}{(\emph{optional}) \cr a \code{string} that corresponds 
+to the name of the folder that will be created into the 
+\code{name.simulation/DATA/SAVE/} directory to store the results}
 }
 \value{
 Two \code{.txt} files into the \code{name.simulation/DATA/SAVE/}
 directory with one line for each simulation year for which the raster maps /
-\code{FATE-HD} object are to be saved.
+\code{FATE-HD} object are to be saved. \cr \cr
+
+If the \code{opt.folder.name} has been used, the files will be into the folder
+\code{name.simulation/DATA/SAVE/opt.folder.name/}
 }
 \description{
 This script is designed to create a parameter file containing

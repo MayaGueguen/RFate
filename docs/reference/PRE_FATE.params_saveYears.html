@@ -151,7 +151,7 @@ PFG abundances or simulation objects.</p>
     
 
     <pre class="usage"><span class='fu'>PRE_FATE.params_saveYears</span>(<span class='no'>name.simulation</span>, <span class='kw'>years.maps</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>years.objects</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>years.objects</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>opt.folder.name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -171,13 +171,21 @@ maps will be saved</p></td>
       <td><p>a <code>vector</code> of simulation years at which <code>FATE-HD</code>
 simulation state will be saved</p></td>
     </tr>
+    <tr>
+      <th>opt.folder.name</th>
+      <td><p>(<em>optional</em>) <br /> a <code>string</code> that corresponds 
+to the name of the folder that will be created into the 
+<code>name.simulation/DATA/SAVE/</code> directory to store the results</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Two <code>.txt</code> files into the <code>name.simulation/DATA/SAVE/</code>
 directory with one line for each simulation year for which the raster maps /
-<code>FATE-HD</code> object are to be saved.</p>
+<code>FATE-HD</code> object are to be saved. <br /> <br /></p>
+<p>If the <code>opt.folder.name</code> has been used, the files will be into the folder
+<code>name.simulation/DATA/SAVE/opt.folder.name/</code></p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
