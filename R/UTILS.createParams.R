@@ -18,11 +18,11 @@
     }
     if (!dir.exists(dirname(params.file)))
     {
-      stop("Wrong name file given!\n `params.file` directory does not exist")
+      stop("Wrong name file given!\n `params.file` directory (", dirname(params.file), ") does not exist")
     }
     if (file.exists(params.file))
     {
-      warning("`params.file` already exists. It will be replaced.")
+      warning(paste0("`params.file` (", params.file, ") already exists. It will be replaced."))
     }
   }
   if (missing(params.list) || !is.list(params.list))

@@ -151,67 +151,179 @@ PRE_FATE.params_simulParameters = function(
   
   #################################################################################################
   
-  files.SAVE.maps = list.files(path = paste0(name.simulation, "/DATA/SAVE")
-                               , pattern = "^SAVE_YEARS_maps"
-                               , full.names = TRUE)
-  if (length(files.SAVE.maps) == 0)
+  dirs.SAVE = list.dirs(path = paste0(name.simulation, "/DATA/SAVE")
+                        , full.names = FALSE
+                        , recursive = FALSE)
+  if (length(dirs.SAVE) > 0)
   {
-    warning(paste0("There is no adequate file "
-                   , "(`.txt` file starting with `SAVE_YEARS_maps`) "
-                   , "into the DATA/SAVE/ folder"))
-  }
-  
-  files.SAVE.objects = list.files(path = paste0(name.simulation, "/DATA/SAVE")
-                                  , pattern = "^SAVE_YEARS_objects"
-                                  , full.names = TRUE)
-  if (length(files.SAVE.objects) == 0)
+    dirs.SAVE = paste0(name.simulation, "/DATA/SAVE/", dirs.SAVE)
+  } else
   {
-    warning(paste0("There is no adequate file "
-                   , "(`.txt` file starting with `SAVE_YEARS_objects`) "
-                   , "into the DATA/SAVE/ folder"))
+    dirs.SAVE = paste0(name.simulation, "/DATA/SAVE")
   }
   
   #################################################################################################
   
-  if (length(files.SAVE.maps) == 0 && length(files.SAVE.objects) == 0)
+  dirs.SCENARIO = list.dirs(path = paste0(name.simulation, "/DATA/SCENARIO")
+                            , full.names = FALSE
+                            , recursive = FALSE)
+  
+  if (length(dirs.SCENARIO) > 0)
   {
-    params.combi = expand.grid(NAMESPACE = files.NAMESPACE
-                               , GLOBAL = files.GLOBAL)
-    names.params.combi = c("--NAMESPACE_CONSTANTS--"
-                           , "--GLOBAL_PARAMS--")
-  } else if (length(files.SAVE.maps) == 0 && length(files.SAVE.objects) > 0)
+    dirs.SCENARIO = paste0(name.simulation, "/DATA/SCENARIO/", dirs.SAVE)
+  } else
   {
-    params.combi = expand.grid(NAMESPACE = files.NAMESPACE
-                               , GLOBAL = files.GLOBAL
-                               , files.SAVE.objects)
-    names.params.combi = c("--NAMESPACE_CONSTANTS--"
-                           , "--GLOBAL_PARAMS--"
-                           , "--OBJECTS_SAVING_YEARS--")
-  } else if (length(files.SAVE.maps) > 0 && length(files.SAVE.objects) == 0)
-  {
-    params.combi = expand.grid(NAMESPACE = files.NAMESPACE
-                               , GLOBAL = files.GLOBAL
-                               , files.SAVE.maps)
-    names.params.combi = c("--NAMESPACE_CONSTANTS--"
-                           , "--GLOBAL_PARAMS--"
-                           , "--ARRAYS_SAVING_YEARS--")
-  }  else if (length(files.SAVE.maps) > 0 && length(files.SAVE.objects) > 0)
-  {
-    params.combi = expand.grid(NAMESPACE = files.NAMESPACE
-                               , GLOBAL = files.GLOBAL
-                               , files.SAVE.maps
-                               , files.SAVE.objects)
-    names.params.combi = c("--NAMESPACE_CONSTANTS--"
-                           , "--GLOBAL_PARAMS--"
-                           , "--ARRAYS_SAVING_YEARS--"
-                           , "--OBJECTS_SAVING_YEARS--")
+    dirs.SCENARIO = paste0(name.simulation, "/DATA/SCENARIO")
   }
+  dirs.SCENARIO.MASK = dirs.SCENARIO.HS = dirs.SCENARIO.DIST = vector()
+  
+  for (di in dirs.SCENARIO)
+  {
+    for (ty in c("MASK", "HS", "DIST"))
+    {
+      files.ty = list.files(path = di
+                            , pattern = paste0("^", ty, "_changing_times")
+                            , full.names = TRUE)
+      if (length(files.ty) > 0)
+      {
+        eval(parse(text = paste0("dirs.SCENARIO.", ty, " = c(dirs.SCENARIO.", ty, ", di)")))
+      }
+    }
+  }
+  # } else
+  # {
+  #   dirs.SCENARIO.MASK = dirs.SCENARIO.HS = dirs.SCENARIO.DIST = paste0(name.simulation, "/DATA/SCENARIO")
+  # }
   
   #################################################################################################
+  #################################################################################################
   
-  for (i in 1:nrow(params.combi))
+  sce.mask = sce.hs = sce.dist = 0
+  if (length(dirs.SCENARIO.MASK) > 0) sce.mask = 1:length(dirs.SCENARIO.MASK)
+  if (length(dirs.SCENARIO.HS) > 0) sce.hs = 1:length(dirs.SCENARIO.HS)
+  if (length(dirs.SCENARIO.DIST) > 0) sce.dist = 1:length(dirs.SCENARIO.DIST)
+  
+  PARAMS.combi = expand.grid(NAMESPACE = 1:length(files.NAMESPACE)
+                             , GLOBAL = 1:length(files.GLOBAL)
+                             , SAVE = 1:length(dirs.SAVE)
+                             , SCENARIO.MASK = sce.mask
+                             , SCENARIO.HS = sce.hs
+                             , SCENARIO.DIST = sce.dist)
+
+  #################################################################################################
+  #################################################################################################
+  
+  for (i in 1:nrow(PARAMS.combi))
   {
-    no_PFG = .getParam(params.lines = as.character(params.combi$GLOBAL[i])
+    
+    params.combi = data.frame(NAMESPACE = files.NAMESPACE[PARAMS.combi$NAMESPACE[i]]
+                              , GLOBAL = files.GLOBAL[PARAMS.combi$GLOBAL[i]]
+                              , SAVE.dir = paste0(name.simulation, "/DATA/RESULTS/SIMUL_V", i))
+    
+    names.params.combi = c("--NAMESPACE_CONSTANTS--"
+                           , "--GLOBAL_PARAMS--"
+                           , "--SAVE_DIR--")
+    
+    #################################################################################################
+    
+    di = dirs.SAVE[PARAMS.combi$SAVE[i]]
+    
+    ### -------------------------------------------------------------------- ###
+    
+    files.SAVE.maps = list.files(path = di
+                                 , pattern = "^SAVE_YEARS_maps"
+                                 , full.names = TRUE)
+    if (length(files.SAVE.maps) == 0)
+    {
+      warning(paste0("There is no adequate file (`.txt` file starting with `SAVE_YEARS_maps`) "
+                     , "into the folder ", di))
+    } else if (length(files.SAVE.maps) == 1)
+    {
+      params.combi$SAVE.maps = files.SAVE.maps
+      names.params.combi = c(names.params.combi, "--ARRAYS_SAVING_YEARS--")
+    } else
+    {
+      stop(paste0("There is to many adequate files (`.txt` file starting with `SAVE_YEARS_maps`) "
+                  , "into the folder", di))
+    }
+    
+    ### -------------------------------------------------------------------- ###
+    
+    files.SAVE.objects = list.files(path = di
+                                    , pattern = "^SAVE_YEARS_objects"
+                                    , full.names = TRUE)
+    if (length(files.SAVE.objects) == 0)
+    {
+      warning(paste0("There is no adequate file (`.txt` file starting with `SAVE_YEARS_objects`) "
+                     , "into the folder ", di))
+    } else if (length(files.SAVE.objects) == 1)
+    {
+      params.combi$SAVE.obj = files.SAVE.objects
+      names.params.combi = c(names.params.combi, "--OBJECTS_SAVING_YEARS--")
+    } else
+    {
+      stop(paste0("There is to many adequate files (`.txt` file starting with `SAVE_YEARS_objects`) "
+                  , "into the folder", di))
+    }
+    #################################################################################################
+    
+    for (ty in c("MASK", "HS", "DIST"))
+    {
+      if (PARAMS.combi[, paste0("SCENARIO.", ty)][i] > 0)
+      {
+        eval(parse(text = paste0("di = dirs.SCENARIO.", ty, "[PARAMS.combi$SCENARIO.", ty, "[i]]")))
+        
+        files.SCENARIO.times = list.files(path = di
+                                          , pattern = paste0("^", ty, "_changing_times")
+                                          , full.names = TRUE)
+        if (length(files.SCENARIO.times) == 0)
+        {
+          warning(paste0("There is no adequate file (`.txt` file starting with `", ty, "_changing_times`) "
+                         , "into the folder ", di))
+        } else if (length(files.SCENARIO.times) == 1)
+        {
+          eval(parse(text = paste0("params.combi$SCENARIO.", ty, " = files.SCENARIO.times")))
+          if (ty == "HS"){
+            names.params.combi = c(names.params.combi, paste0("--CLIM_CHANGE_TIME--"))
+          } else {
+            names.params.combi = c(names.params.combi, paste0("--", ty, "_CHANGE_TIME--"))
+          }
+        } else
+        {
+          stop(paste0("There is to many adequate files (`.txt` file starting with `", ty, "_changing_times`) "
+                      , "into the folder", di))
+        }
+      }
+    }
+    
+    ### -------------------------------------------------------------------- ###
+    
+    for (ty in c("MASK", "HS", "DIST"))
+    {
+      if (PARAMS.combi[, paste0("SCENARIO.", ty)][i] > 0)
+      {
+        eval(parse(text = paste0("di = dirs.SCENARIO.", ty, "[PARAMS.combi$SCENARIO.", ty, "[i]]")))
+        files.SCENARIO.masks = list.files(path = di
+                                          , pattern = paste0("^", ty, "_changing_masks")
+                                          , full.names = TRUE)
+        if (length(files.SCENARIO.masks) == 0)
+        {
+          warning(paste0("There is no adequate file (`.txt` file starting with `", ty, "_changing_masks`) "
+                         , "into the folder ", di))
+        } else if (length(files.SCENARIO.masks) > 0)
+        {
+          eval(parse(text = paste0("SCENARIO.", ty, " = files.SCENARIO.masks")))
+        }
+      }
+    }
+    
+    #################################################################################################
+    
+    globi = as.character(files.GLOBAL[PARAMS.combi$GLOBAL[i]])
+    
+    ### -------------------------------------------------------------------- ###
+    
+    no_PFG = .getParam(params.lines = globi
                        , flag = "NB_FG"
                        , flag.split = " "
                        , is.num = TRUE)
@@ -223,10 +335,10 @@ PRE_FATE.params_simulParameters = function(
     if (length(files.PFG.SUCC) != no_PFG)
     {
       stop(paste0("There is not the same number of files "
-                     , "(`.txt` file starting with `SUCC`) "
-                     , "into the DATA/PFGS/SUCC/ folder as the number of PFG "
-                     , "indicated into the file "
-                     , as.character(params.combi$GLOBAL[i])))
+                  , "(`.txt` file starting with `SUCC`) "
+                  , "into the DATA/PFGS/SUCC/ folder as the number of PFG "
+                  , "indicated into the file "
+                  , globi))
     }
     
     files.PFG.DISP = list.files(path = paste0(name.simulation, "/DATA/PFGS/DISP")
@@ -235,15 +347,15 @@ PRE_FATE.params_simulParameters = function(
     if (length(files.PFG.DISP) != no_PFG)
     {
       stop(paste0("There is not the same number of files "
-                     , "(`.txt` file starting with `DISP`) "
-                     , "into the DATA/PFGS/DISP/ folder as the number of PFG "
-                     , "indicated into the file "
-                     , as.character(params.combi$GLOBAL[i])))
+                  , "(`.txt` file starting with `DISP`) "
+                  , "into the DATA/PFGS/DISP/ folder as the number of PFG "
+                  , "indicated into the file "
+                  , globi))
     }
     
     #################################################################################################
     
-    doDisturbances = .getParam(params.lines = as.character(params.combi$GLOBAL[i])
+    doDisturbances = .getParam(params.lines = globi
                                , flag = "DO_DISTURBANCES"
                                , flag.split = " "
                                , is.num = TRUE)
@@ -260,12 +372,12 @@ PRE_FATE.params_simulParameters = function(
                      , "(`.txt` file starting with `DIST`) "
                      , "into the DATA/PFGS/DIST/ folder as the number of PFG "
                      , "indicated into the file "
-                     , as.character(params.combi$GLOBAL[i])))
+                     , globi))
     }
     
     #################################################################################################
     
-    succ_model = .getParam(params.lines = as.character(params.combi$GLOBAL[i])
+    succ_model = .getParam(params.lines = globi
                            , flag = "SUCC_MOD"
                            , flag.split = " "
                            , is.num = FALSE)
@@ -281,21 +393,31 @@ PRE_FATE.params_simulParameters = function(
       warning(paste0("There is not the same number of files "
                      , "into the DATA/PFGS/ENVSUIT/ folder as the number of PFG "
                      , "indicated into the file "
-                     , as.character(params.combi$GLOBAL[i])))
+                     , globi))
     }
     
     
     #################################################################################################
+    #################################################################################################    
     
+    params.list = lapply(1:ncol(params.combi), function(x) { as.character(params.combi[, x]) })
+    names.params.list = names.params.combi
     
-    params.list = lapply(1:ncol(params.combi), function(x) { params.combi[i, x] })
-    
-    params.list = c(params.list, list(paste0(dir(path = name.simulation
-                                                 , recursive = FALSE
-                                                 , pattern = "^RESULTS"
-                                                 , full.names = TRUE)
-                                             , "SIMUL_V", i)))
-    names.params.list = c(names.params.combi, "--SAVE_DIR--")
+    if (exists("SCENARIO.MASK"))
+    {
+      params.list = c(params.list, list(SCENARIO.MASK))
+      names.params.list = c(names.params.list, "--MASK_CHANGE_MASK--")
+    }
+    if (exists("SCENARIO.HS"))
+    {
+      params.list = c(params.list, list(SCENARIO.HS))
+      names.params.list = c(names.params.list, "--CLIM_CHANGE_MASK--")
+    }
+    if (exists("SCENARIO.DIST"))
+    {
+      params.list = c(params.list, list(SCENARIO.DIST))
+      names.params.list = c(names.params.list, "--DIST_CHANGE_MASK--")
+    }
     
     params.list = c(params.list, list(files.PFG.SUCC, files.PFG.DISP))
     names.params.list = c(names.params.list
