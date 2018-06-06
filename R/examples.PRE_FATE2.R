@@ -20,8 +20,13 @@ PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                  , required.no_STRATA = 5
                                  , required.hs_option = 1
                                  , required.seeding_timestep = 1
-                                 , required.seeding_duration = 10
+                                 , required.seeding_duration = c(10,50)
                                  , required.simul_duration = 100)
+
+## Create a SAVE_year_maps or/and SAVE_year_objects parameter file
+PRE_FATE.params_saveYears(name.simulation = "FATE_simulation"
+                          , years.maps = c(100, 150, 200)
+                          , years.objects = 200)
 
 ## Create a Changing_times parameter file
 PRE_FATE.params_changingYears(name.simulation = "FATE_simulation"
@@ -49,6 +54,20 @@ PRE_FATE.params_PFGdispersal(name.simulation = "FATE_simulation"
                                                          , d50 = rep(c(500, 500, 100),2)
                                                          , d99 = rep(c(10000, 15000, 20000),2)
                                                          , ldd = rep(c(100000, 50000, 100000),2)))
+
+## Create PFG disturbance parameter files
+PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
+                               , mat.PFG.dist = data.frame(name = rep(c("DIST1","DIST2"), each = 4)
+                                                           , responseStage = rep(1:4, 2)
+                                                           #, KilledPropagule_H = 0
+                                                           #, KilledPropagule_C = 0
+                                                           #, KilledPropagule_P = 0
+                                                           , KilledIndiv_H = c(0,0,0,0,1,1,0,0)
+                                                           , KilledIndiv_C = c(0,10,10,10,1,1,0,0)
+                                                           , KilledIndiv_P = c(10,10,10,10,10,0,0,0)
+                                                           , ResproutIndiv_H = c(0,0,9,10,0,0,5,1)
+                                                           , ResproutIndiv_C = c(0,0,0,0,0,0,5,1)
+                                                           , ResproutIndiv_P = c(0,0,0,0,0,0,0,0)))
 
 ## Create a Simulation parameter file
 PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation")
