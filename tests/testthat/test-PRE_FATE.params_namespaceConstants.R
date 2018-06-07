@@ -249,5 +249,5 @@ test_that("PRE_FATE.params_namespaceConstants gives correct output", {
                                                     , global.max.by.cohort = 4
                                                     , global.resource.thresh.med = 100
                                                     , global.resource.thresh.low = 200)
-                 , "`params.file` already exists. It will be replaced.")
+                 , "already exists. It will be replaced.")
 })

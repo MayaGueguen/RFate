@@ -53,7 +53,7 @@ PFG abundances or simulation objects.
 ## Create a skeleton folder with the default name ('FATE_simulation')
 PRE_FATE.skeletonDirectory()
 
-## Create a Namespace_constants parameter file
+## Create a SAVE_year_maps or/and SAVE_year_objects parameter file
 PRE_FATE.params_saveYears(name.simulation = "FATE_simulation"
                           , years.maps = c(100, 150, 200)
                           , years.objects = 200)

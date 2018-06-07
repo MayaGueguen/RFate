@@ -427,7 +427,7 @@ test_that("PRE_FATE.params_globalParameters gives correct output", {
                                                   , required.seeding_timestep = 100
                                                   , required.seeding_duration = 100
                                                   , required.simul_duration = 100)
-                 , "`params.file` already exists. It will be replaced.")
+                 , "already exists. It will be replaced.")
   
   expect_message(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                   , required.no_PFG = 5

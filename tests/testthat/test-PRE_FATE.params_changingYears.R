@@ -117,7 +117,7 @@ test_that("PRE_FATE.params_changingYears gives correct output", {
                  , "The parameter file FATE_simulation/DATA/SCENARIO/DIST_changing_masks_t10.txt has been successfully created !")
   expect_warning(PRE_FATE.params_changingYears(name.simulation = "FATE_simulation", type.changing = "DIST"
                                                , mat.changing = data.frame(year = c(10,10), order = c(1,2), file.name = c("A","B")))
-                 , "`params.file` already exists. It will be replaced.")
+                 , "already exists. It will be replaced.")
   
   
   expect_warning(PRE_FATE.params_changingYears(name.simulation = "FATE_simulation", type.changing = "DIST"

@@ -13,7 +13,7 @@ test_that(".createParams gives error with wrong data", {
   expect_error(.createParams(factor("a")), "`params.file` must contain a character value of length > 0")
   expect_error(.createParams(factor(1)), "`params.file` must contain a character value of length > 0")
   expect_error(.createParams(params.file = "fake"), "`params.file` must be a file name with .txt extension")
-  expect_error(.createParams(params.file = "FAKE_dir/fake.txt"), "`params.file` directory does not exist")
+  expect_error(.createParams(params.file = "FAKE_dir/fake.txt"), "does not exist")
 
   expect_error(.createParams(params.file = "fake.txt"), "`params.list` must be a list")
   expect_error(.createParams(params.file = "fake.txt", params.list = NA), "`params.list` must be a list")
@@ -30,5 +30,5 @@ test_that(".createParams gives error with wrong data", {
 ## OUTPUTS
 test_that(".createParams gives correct output", {
   expect_message(.createParams(params.file = "fake.txt", params.list = list(A=1,B=2)), "has been successfully created !")
-  expect_warning(.createParams(params.file = "fake.txt", params.list = list(A=1,B=2)), "`params.file` already exists. It will be replaced.")
+  expect_warning(.createParams(params.file = "fake.txt", params.list = list(A=1,B=2)), "already exists. It will be replaced.")
 })

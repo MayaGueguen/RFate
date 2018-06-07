@@ -258,5 +258,5 @@ test_that("PRE_FATE.params_PFGdisturbance gives correct output", {
                                                                            , ResproutIndiv_H = 0
                                                                            , ResproutIndiv_C = 0
                                                                            , ResproutIndiv_P = 0))
-                 , "`params.file` already exists. It will be replaced.")
+                 , "already exists. It will be replaced.")
 })

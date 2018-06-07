@@ -212,5 +212,5 @@ test_that("PRE_FATE.params_PFGsuccession gives correct output", {
                                                                            , longevity = c(12, 200, 25, 4, 110, 70)
                                                                            , dispersal = 1
                                                                            , light = c(4, 6, 3, 6, 5, 5)))
-                 , "`params.file` already exists. It will be replaced.")
+                 , "already exists. It will be replaced.")
 })

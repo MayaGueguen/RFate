@@ -206,8 +206,23 @@ directory with the following parameters :</p>
                                  , <span class='kw'>required.no_STRATA</span> <span class='kw'>=</span> <span class='fl'>5</span>
                                  , <span class='kw'>required.hs_option</span> <span class='kw'>=</span> <span class='fl'>1</span>
                                  , <span class='kw'>required.seeding_timestep</span> <span class='kw'>=</span> <span class='fl'>1</span>
-                                 , <span class='kw'>required.seeding_duration</span> <span class='kw'>=</span> <span class='fl'>10</span>
+                                 , <span class='kw'>required.seeding_duration</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>10</span>,<span class='fl'>50</span>)
                                  , <span class='kw'>required.simul_duration</span> <span class='kw'>=</span> <span class='fl'>100</span>)
+
+<span class='co'>## Create a SAVE_year_maps or/and SAVE_year_objects parameter file</span>
+<span class='fu'><a href='PRE_FATE.params_saveYears.html'>PRE_FATE.params_saveYears</a></span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
+                          , <span class='kw'>years.maps</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>100</span>, <span class='fl'>150</span>, <span class='fl'>200</span>)
+                          , <span class='kw'>years.objects</span> <span class='kw'>=</span> <span class='fl'>200</span>)
+
+<span class='co'>## Create a Changing_times parameter file</span>
+<span class='fu'><a href='PRE_FATE.params_changingYears.html'>PRE_FATE.params_changingYears</a></span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
+                              , <span class='kw'>type.changing</span> <span class='kw'>=</span> <span class='st'>"DIST"</span>
+                              , <span class='kw'>mat.changing</span> <span class='kw'>=</span> <span class='fu'>data.frame</span>(<span class='kw'>year</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>50</span>,<span class='fl'>50</span>,<span class='fl'>80</span>,<span class='fl'>80</span>)
+                                                          , <span class='kw'>order</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>1</span>,<span class='fl'>2</span>)
+                                                          , <span class='kw'>file.name</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"MASK_DIST1_50.tif"</span>
+                                                                          , <span class='st'>"MASK_DIST2_50.tif"</span>
+                                                                          , <span class='st'>"MASK_DIST1_80.tif"</span>
+                                                                          , <span class='st'>"MASK_DIST2_80.tif"</span>)))
 
 <span class='co'>## Create PFG succession parameter files</span>
 <span class='fu'><a href='PRE_FATE.params_PFGsuccession.html'>PRE_FATE.params_PFGsuccession</a></span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
@@ -225,6 +240,17 @@ directory with the following parameters :</p>
                                                          , <span class='kw'>d50</span> <span class='kw'>=</span> <span class='fu'>rep</span>(<span class='fu'>c</span>(<span class='fl'>500</span>, <span class='fl'>500</span>, <span class='fl'>100</span>),<span class='fl'>2</span>)
                                                          , <span class='kw'>d99</span> <span class='kw'>=</span> <span class='fu'>rep</span>(<span class='fu'>c</span>(<span class='fl'>10000</span>, <span class='fl'>15000</span>, <span class='fl'>20000</span>),<span class='fl'>2</span>)
                                                          , <span class='kw'>ldd</span> <span class='kw'>=</span> <span class='fu'>rep</span>(<span class='fu'>c</span>(<span class='fl'>100000</span>, <span class='fl'>50000</span>, <span class='fl'>100000</span>),<span class='fl'>2</span>)))
+
+<span class='co'>## Create PFG disturbance parameter files</span>
+<span class='fu'><a href='PRE_FATE.params_PFGdisturbance.html'>PRE_FATE.params_PFGdisturbance</a></span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
+                               , <span class='kw'>mat.PFG.dist</span> <span class='kw'>=</span> <span class='fu'>data.frame</span>(<span class='kw'>name</span> <span class='kw'>=</span> <span class='fu'>rep</span>(<span class='fu'>c</span>(<span class='st'>"DIST1"</span>,<span class='st'>"DIST2"</span>), <span class='kw'>each</span> <span class='kw'>=</span> <span class='fl'>4</span>)
+                                                           , <span class='kw'>responseStage</span> <span class='kw'>=</span> <span class='fu'>rep</span>(<span class='fl'>1</span>:<span class='fl'>4</span>, <span class='fl'>2</span>)
+                                                           , <span class='kw'>KilledIndiv_H</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>0</span>,<span class='fl'>0</span>)
+                                                           , <span class='kw'>KilledIndiv_C</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>,<span class='fl'>10</span>,<span class='fl'>10</span>,<span class='fl'>10</span>,<span class='fl'>1</span>,<span class='fl'>1</span>,<span class='fl'>0</span>,<span class='fl'>0</span>)
+                                                           , <span class='kw'>KilledIndiv_P</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>10</span>,<span class='fl'>10</span>,<span class='fl'>10</span>,<span class='fl'>10</span>,<span class='fl'>10</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>)
+                                                           , <span class='kw'>ResproutIndiv_H</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>9</span>,<span class='fl'>10</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>5</span>,<span class='fl'>1</span>)
+                                                           , <span class='kw'>ResproutIndiv_C</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>5</span>,<span class='fl'>1</span>)
+                                                           , <span class='kw'>ResproutIndiv_P</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>)))
 
 <span class='co'>## Create a Simulation parameter file</span>
 <span class='fu'>PRE_FATE.params_simulParameters</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>)
