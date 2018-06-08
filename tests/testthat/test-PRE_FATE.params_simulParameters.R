@@ -59,6 +59,9 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : name.si
                , "`name.simulation` does not exist or does not contain a DATA/SAVE/ folder")
   system("mkdir FATE_simulation/DATA/SAVE")
   expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation")
+               , "`name.simulation` does not exist or does not contain a DATA/SCENARIO/ folder")
+  system("mkdir FATE_simulation/DATA/SCENARIO")
+  expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation")
                , "`name.simulation` does not exist or does not contain a DATA/MASK/ folder")
   system("mkdir FATE_simulation/DATA/MASK")
   expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation")
@@ -138,5 +141,116 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : name.si
   expect_warning(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif")
                  , "`params.file` (FATE_simulation/PARAM_SIMUL/Simul_parameters_V2.txt) already exists. It will be replaced."
                  , fixed = T)
+  
+  ## Create a SAVE_year_maps or/and SAVE_year_objects parameter file
+  PRE_FATE.params_saveYears(name.simulation = "FATE_simulation"
+                            , years.maps = c(100, 150, 200)
+                            , years.objects = 200)
+  system("cat /dev/null > FATE_simulation/DATA/SAVE/SAVE_YEARS_maps_BIS.txt")
+  expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif")
+                 , "There is too many adequate files (`.txt` file starting with `SAVE_YEARS_maps`) into the folderFATE_simulation/DATA/SAVE"
+               , fixed = T)
+  system("rm FATE_simulation/DATA/SAVE/SAVE_YEARS_maps_BIS.txt")
+  system("cat /dev/null > FATE_simulation/DATA/SAVE/SAVE_YEARS_objects_BIS.txt")
+  expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif")
+               , "There is too many adequate files (`.txt` file starting with `SAVE_YEARS_objects`) into the folderFATE_simulation/DATA/SAVE"
+               , fixed = T)
+  system("rm FATE_simulation/DATA/SAVE/SAVE_YEARS_objects_BIS.txt")
+  
+  PRE_FATE.params_saveYears(name.simulation = "FATE_simulation"
+                            , years.maps = c(100, 150, 200)
+                            , years.objects = 200
+                            , opt.folder.name = "Scen1")
+  PRE_FATE.params_saveYears(name.simulation = "FATE_simulation"
+                            , years.maps = c(100, 150, 200)
+                            , years.objects = 200
+                            , opt.folder.name = "Scen2")
+  expect_message(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif")
+                 , "The parameter file FATE_simulation/PARAM_SIMUL/Simul_parameters_V1.txt has been successfully created !")
+  
+  ## Create a Changing_times parameter file
+  PRE_FATE.params_changingYears(name.simulation = "FATE_simulation"
+                                , type.changing = "MASK"
+                                , mat.changing = data.frame(year = c(50,50,80,80)
+                                                            , order = c(1,2,1,2)
+                                                            , file.name = c("MASK_50.tif"
+                                                                            , "MASK_50.tif"
+                                                                            , "MASK_80.tif"
+                                                                            , "MASK_80.tif")))
+  system("cat /dev/null > FATE_simulation/DATA/SCENARIO/MASK_changing_times_BIS.txt")
+  expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif")
+                 , "There is too many adequate files (`.txt` file starting with `MASK_changing_times`) into the folderFATE_simulation/DATA/SCENARIO"
+                 , fixed = T) 
+  system("rm FATE_simulation/DATA/SCENARIO/MASK_changing_times_BIS.txt")
+  
+  PRE_FATE.params_changingYears(name.simulation = "FATE_simulation"
+                                , type.changing = "HS"
+                                , mat.changing = data.frame(year = c(50,50,80,80)
+                                                            , order = c(1,2,1,2)
+                                                            , file.name = c("MASK_50.tif"
+                                                                            , "MASK_50.tif"
+                                                                            , "MASK_80.tif"
+                                                                            , "MASK_80.tif")))
+  system("cat /dev/null > FATE_simulation/DATA/SCENARIO/HS_changing_times_BIS.txt")
+  expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif")
+               , "There is too many adequate files (`.txt` file starting with `HS_changing_times`) into the folderFATE_simulation/DATA/SCENARIO"
+               , fixed = T)
+  system("rm FATE_simulation/DATA/SCENARIO/HS_changing_times_BIS.txt")
+  
+  PRE_FATE.params_changingYears(name.simulation = "FATE_simulation"
+                                , type.changing = "DIST"
+                                , mat.changing = data.frame(year = c(50,50,80,80)
+                                                            , order = c(1,2,1,2)
+                                                            , file.name = c("MASK_50.tif"
+                                                                            , "MASK_50.tif"
+                                                                            , "MASK_80.tif"
+                                                                            , "MASK_80.tif")))
+  system("cat /dev/null > FATE_simulation/DATA/SCENARIO/DIST_changing_times_BIS.txt")
+  expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif")
+               , "There is too many adequate files (`.txt` file starting with `DIST_changing_times`) into the folderFATE_simulation/DATA/SCENARIO"
+               , fixed = T)
+  system("rm FATE_simulation/DATA/SCENARIO/DIST_changing_times_BIS.txt")
+  
+  system("rm FATE_simulation/DATA/SCENARIO/*")
+  # system("mkdir FATE_simulation/DATA/SCENARIO/Scen1")
+  # expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif")
+  #              , "There is too many adequate files (`.txt` file starting with `DIST_changing_times`) into the folderFATE_simulation/DATA/SCENARIO"
+  #              , fixed = T) 
+  
+  
+  PRE_FATE.params_changingYears(name.simulation = "FATE_simulation"
+                                , type.changing = "MASK"
+                                , mat.changing = data.frame(year = c(50,50,80,80)
+                                                            , order = c(1,2,1,2)
+                                                            , file.name = c("MASK_50.tif"
+                                                                            , "MASK_50.tif"
+                                                                            , "MASK_80.tif"
+                                                                            , "MASK_80.tif"))
+                                , opt.folder.name = "Scen_MASK")
+  expect_message(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif")
+                 , "The parameter file FATE_simulation/PARAM_SIMUL/Simul_parameters_V1.txt has been successfully created !")
+  PRE_FATE.params_changingYears(name.simulation = "FATE_simulation"
+                                , type.changing = "HS"
+                                , mat.changing = data.frame(year = c(50,50,80,80)
+                                                            , order = c(1,2,1,2)
+                                                            , file.name = c("MASK_50.tif"
+                                                                            , "MASK_50.tif"
+                                                                            , "MASK_80.tif"
+                                                                            , "MASK_80.tif"))
+                                , opt.folder.name = "Scen_HS")
+  expect_message(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif")
+                 , "The parameter file FATE_simulation/PARAM_SIMUL/Simul_parameters_V1.txt has been successfully created !")
+  PRE_FATE.params_changingYears(name.simulation = "FATE_simulation"
+                                , type.changing = "DIST"
+                                , mat.changing = data.frame(year = c(50,50,80,80)
+                                                            , order = c(1,2,1,2)
+                                                            , file.name = c("MASK_50.tif"
+                                                                            , "MASK_50.tif"
+                                                                            , "MASK_80.tif"
+                                                                            , "MASK_80.tif"))
+                                , opt.folder.name = "Scen_DIST")
+  expect_message(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif")
+                 , "The parameter file FATE_simulation/PARAM_SIMUL/Simul_parameters_V1.txt has been successfully created !")
+  
 })
 

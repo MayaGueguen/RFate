@@ -238,6 +238,10 @@ PRE_FATE.params_simulParameters = function(
   {
     stop("Wrong name folder given!\n `name.simulation` does not exist or does not contain a DATA/SAVE/ folder")
   }
+  if (!dir.exists(paste0(name.simulation, "/DATA/SCENARIO/")))
+  {
+    stop("Wrong name folder given!\n `name.simulation` does not exist or does not contain a DATA/SCENARIO/ folder")
+  }
   if (!dir.exists(paste0(name.simulation, "/DATA/MASK/")))
   {
     stop("Wrong name folder given!\n `name.simulation` does not exist or does not contain a DATA/MASK/ folder")
@@ -410,7 +414,7 @@ PRE_FATE.params_simulParameters = function(
       names.params.combi = c(names.params.combi, "--ARRAYS_SAVING_YEARS--")
     } else
     {
-      stop(paste0("There is to many adequate files (`.txt` file starting with `SAVE_YEARS_maps`) "
+      stop(paste0("There is too many adequate files (`.txt` file starting with `SAVE_YEARS_maps`) "
                   , "into the folder", di))
     }
     
@@ -429,7 +433,7 @@ PRE_FATE.params_simulParameters = function(
       names.params.combi = c(names.params.combi, "--OBJECTS_SAVING_YEARS--")
     } else
     {
-      stop(paste0("There is to many adequate files (`.txt` file starting with `SAVE_YEARS_objects`) "
+      stop(paste0("There is too many adequate files (`.txt` file starting with `SAVE_YEARS_objects`) "
                   , "into the folder", di))
     }
     
@@ -458,7 +462,7 @@ PRE_FATE.params_simulParameters = function(
           }
         } else
         {
-          stop(paste0("There is to many adequate files (`.txt` file starting with `", ty, "_changing_times`) "
+          stop(paste0("There is too many adequate files (`.txt` file starting with `", ty, "_changing_times`) "
                       , "into the folder", di))
         }
       }
