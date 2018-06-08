@@ -97,7 +97,11 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : name.si
                                    , required.hs_option = 1
                                    , required.seeding_timestep = 1
                                    , required.seeding_duration = c(10,50)
-                                   , required.simul_duration = 100)
+                                   , required.simul_duration = 100
+                                   , doDisturbances = TRUE
+                                   , DIST.no = 1
+                                   , DIST.no_sub = 4
+                                   , DIST.freq = 1)
   expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif")
                , "There is not the same number of files (`.txt` file starting with `SUCC`) into the DATA/PFGS/SUCC/ folder as the number of PFG indicated into the file"
                , fixed = T)
