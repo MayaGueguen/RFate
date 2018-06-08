@@ -316,7 +316,7 @@ PRE_FATE.params_simulParameters = function(
   
   if (length(dirs.SCENARIO) > 0)
   {
-    dirs.SCENARIO = paste0(name.simulation, "/DATA/SCENARIO/", dirs.SAVE)
+    dirs.SCENARIO = paste0(name.simulation, "/DATA/SCENARIO/", dirs.SCENARIO)
   } else
   {
     dirs.SCENARIO = paste0(name.simulation, "/DATA/SCENARIO")
@@ -333,6 +333,10 @@ PRE_FATE.params_simulParameters = function(
       if (length(files.ty) > 0)
       {
         eval(parse(text = paste0("dirs.SCENARIO.", ty, " = c(dirs.SCENARIO.", ty, ", di)")))
+      } else
+      {
+        warning(paste0("There is no adequate file (`.txt` file starting with `", ty, "_changing_times`) "
+                       , "into the folder ", di))
       }
     }
   }
@@ -415,7 +419,7 @@ PRE_FATE.params_simulParameters = function(
     } else
     {
       stop(paste0("There is too many adequate files (`.txt` file starting with `SAVE_YEARS_maps`) "
-                  , "into the folder", di))
+                  , "into the folder ", di))
     }
     
     ### -------------------------------------------------------------------- ###
@@ -434,7 +438,7 @@ PRE_FATE.params_simulParameters = function(
     } else
     {
       stop(paste0("There is too many adequate files (`.txt` file starting with `SAVE_YEARS_objects`) "
-                  , "into the folder", di))
+                  , "into the folder ", di))
     }
     
     #################################################################################################
@@ -448,11 +452,12 @@ PRE_FATE.params_simulParameters = function(
         files.SCENARIO.times = list.files(path = di
                                           , pattern = paste0("^", ty, "_changing_times")
                                           , full.names = TRUE)
-        if (length(files.SCENARIO.times) == 0)
-        {
-          warning(paste0("There is no adequate file (`.txt` file starting with `", ty, "_changing_times`) "
-                         , "into the folder ", di))
-        } else if (length(files.SCENARIO.times) == 1)
+        # if (length(files.SCENARIO.times) == 0)
+        # {
+        #   warning(paste0("There is no adequate file (`.txt` file starting with `", ty, "_changing_times`) "
+        #                  , "into the folder ", di))
+        # } else 
+        if (length(files.SCENARIO.times) == 1)
         {
           eval(parse(text = paste0("params.combi$SCENARIO.", ty, " = files.SCENARIO.times")))
           if (ty == "HS"){
@@ -463,7 +468,7 @@ PRE_FATE.params_simulParameters = function(
         } else
         {
           stop(paste0("There is too many adequate files (`.txt` file starting with `", ty, "_changing_times`) "
-                      , "into the folder", di))
+                      , "into the folder ", di))
         }
       }
     }
@@ -533,10 +538,10 @@ PRE_FATE.params_simulParameters = function(
                                , flag = "DO_DISTURBANCES"
                                , flag.split = " "
                                , is.num = TRUE)
-    if (doDisturbances && !dir.exists(paste0(name.simulation, "/DATA/PFGS/DIST/")))
-    {
-      stop("Wrong name folder given!\n `name.simulation` does not exist or does not contain a DATA/PFGS/DIST/ folder")
-    }
+    # if (doDisturbances && !dir.exists(paste0(name.simulation, "/DATA/PFGS/DIST/")))
+    # {
+    #   stop("Wrong name folder given!\n `name.simulation` does not exist or does not contain a DATA/PFGS/DIST/ folder")
+    # }
     files.PFG.DIST = list.files(path = paste0(name.simulation, "/DATA/PFGS/DIST")
                                 , pattern = "^DIST"
                                 , full.names = TRUE)
