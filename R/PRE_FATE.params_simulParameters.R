@@ -11,14 +11,97 @@
 ##'              
 ##' @param name.simulation a \code{string} that corresponds to the main directory
 ##' or simulation name of the \code{FATE-HD} simulation
+##' @param name.mask a \code{string} that corresponds to the file name of a raster
+##'  mask, with either 0 or 1 within each pixel, 1 corresponding to the cells of 
+##'  the studied area in which the succession module of the \code{FATE-HD} simulation
+##'  will take place
+##' 
 ##' 
 ##' 
 ##' @details 
 ##' 
+##' The \code{FATE-HD} software takes only one input parameter : a file containing
+##' links to other files containing all the parameters and data needed by the 
+##' program to run.
+##' 
+##' 
 ##' \describe{
-##'   \item{To get abundances \cr per PFG per pixel}{
+##'   \item{NAMESPACE_ \cr CONSTANTS}{file where constant parameters needed by 
+##'   the program to manage abundance values are given \cr
+##'   (see \code{\link{PRE_FATE.params_namespaceConstants}})
 ##'   }
+##'   \item{GLOBAL_PARAMS}{file where parameters related to the simulation 
+##'   definition are referred (e.g. number of PFG involved, number of height 
+##'   strata, simulation duration, computer resources, modules loaded, ...) \cr
+##'   (see \code{\link{PRE_FATE.params_globalParameters}})
+##'   }
+##'   \item{SAVE_DIR}{directory where simulation outputs will be stored}
+##'   \item{ARRAYS_SAVING_ \cr YEARS (\emph{optional})}{file containing the 
+##'   years for which simulation maps will be saved \cr
+##'   (see \code{\link{PRE_FATE.params_saveYears}})
+##'   }
+##'   \item{OBJECTS_SAVING_ \cr YEARS (\emph{optional})}{file containing the 
+##'   years for which simulation outputs will be saved \cr
+##'   (see \code{\link{PRE_FATE.params_saveYears}})
+##'   }
+##'   \item{MASK}{raster mask that will define the study area}
+##'   \item{MASK_CHANGE_TIME \cr (\emph{optional})}{file containing the years to 
+##'   change rasters for the succession module \cr
+##'   (see \code{\link{PRE_FATE.params_changingYears}})
+##'   }
+##'   \item{CLIM_CHANGE_TIME \cr (\emph{optional})}{file containing the years to 
+##'   change rasters for the habitat suitability module \cr
+##'   (see \code{\link{PRE_FATE.params_changingYears}})
+##'   }
+##'   \item{DIST_CHANGE_TIME \cr (\emph{optional})}{file containing the years to 
+##'   change rasters for the disturbance module \cr
+##'   (see \code{\link{PRE_FATE.params_changingYears}})
+##'   }
+##'   \item{MASK_CHANGE_MASK \cr (\emph{optional})}{file containing the files to 
+##'   change rasters for the succession module \cr
+##'   (see \code{\link{PRE_FATE.params_changingYears}})
+##'   }
+##'   \item{CLIM_CHANGE_MASK \cr (\emph{optional})}{file containing the files to 
+##'   change rasters for the habitat suitability module \cr
+##'   (see \code{\link{PRE_FATE.params_changingYears}})
+##'   }
+##'   \item{DIST_CHANGE_MASK \cr (\emph{optional})}{file containing the files to 
+##'   change rasters for the disturbance module \cr
+##'   (see \code{\link{PRE_FATE.params_changingYears}})
+##'   }
+##'   \item{PFG_LIFE_HISTORY_ \cr PARAMS}{PFG life history related parameters 
+##'   (one by PFG) \cr
+##'   (see \code{\link{PRE_FATE.params_PFGsuccession}})
+##'   }
+##'   \item{PFG_DISPERSAL_ \cr PARAMS}{PFG dispersal capacity related parameters 
+##'   (one by PFG) \cr
+##'   (see \code{\link{PRE_FATE.params_PFGdispersal}})
+##'   }
+##'   \item{PFG_DISTURBANCES_ \cr PARAMS (\emph{optional})}{PFG disturbance 
+##'   related parameters in terms of resprouting and mortality (one by PFG) \cr
+##'   (see \code{\link{PRE_FATE.params_PFGdisturbance}})
+##'   }
+##'   \item{PFG_ENVSUIT \cr (\emph{optional})}{PFG habitat suitability (one by PFG) 
+##'   maps for the study area}
 ##' }
+##' 
+##' 
+##' 
+##' @note 
+##' 
+##' \itemize{
+##'   \item The links to files are \strong{NOT absolute paths}. \cr
+##'   \emph{When relative paths are used}, the user should be careful of the
+##'   folder from which the simulation is launched. \cr
+##'   \emph{A function allows to transform these relative paths into absolute
+##'   ones. (!not available yet!)}
+##'   \item \strong{The order of files matters!} \cr
+##'   For instance the first link below \code{--PFG_LIFE_HISTORY_PARAMS--} flag 
+##'   has to match (the same PFG) with the first item below the 
+##'   \code{--PFG_DISPERSAL_PARAMS--} flag.
+##' }
+##' 
+##' 
 ##' 
 ##' 
 ##' @return A \code{.txt} file into the \code{name.simulation/PARAM_SIMUL/}
@@ -27,8 +110,16 @@
 ##' \itemize{
 ##'   \item --NAMESPACE_CONSTANTS--
 ##'   \item --GLOBAL_PARAMS--
+##'   \item --SAVE_DIR--
 ##'   \item --ARRAYS_SAVING_YEARS-- (\emph{optional})
 ##'   \item --OBJECTS_SAVING_YEARS-- (\emph{optional})
+##'   \item --MASK--
+##'   \item --MASK_CHANGE_TIME-- (\emph{optional})
+##'   \item --CLIM_CHANGE_TIME-- (\emph{optional})
+##'   \item --DIST_CHANGE_TIME-- (\emph{optional})
+##'   \item --MASK_CHANGE_MASK-- (\emph{optional})
+##'   \item --CLIM_CHANGE_MASK-- (\emph{optional})
+##'   \item --DIST_CHANGE_MASK-- (\emph{optional})
 ##'   \item --PFG_LIFE_HISTORY_PARAMS--
 ##'   \item --PFG_DISPERSAL_PARAMS--
 ##'   \item --PFG_DISTURBANCES_PARAMS-- (\emph{optional})
@@ -106,7 +197,15 @@
 ##'                                                            , ResproutIndiv_P = c(0,0,0,0,0,0,0,0)))
 ##' 
 ##' ## Create a Simulation parameter file
-##' PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation")
+##' system("> FATE_simulation/DATA/MASK/mask.tif")
+##' PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
+##'                                 , name.mask = "mask.tif")
+##' 
+##' for (pfg in 1:6){
+##'   system(paste0("> FATE_simulation/DATA/PFGS/ENVSUIT/mask_PFG", pfg, ".tif"))
+##' }
+##' PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
+##'                                 , name.mask = "mask.tif")
 ##'                                    
 ##' 
 ##' @export
@@ -116,6 +215,7 @@
 
 PRE_FATE.params_simulParameters = function(
   name.simulation
+  , name.mask
 ){
   
   if (missing(name.simulation) ||
@@ -138,6 +238,10 @@ PRE_FATE.params_simulParameters = function(
   {
     stop("Wrong name folder given!\n `name.simulation` does not exist or does not contain a DATA/SAVE/ folder")
   }
+  if (!dir.exists(paste0(name.simulation, "/DATA/MASK/")))
+  {
+    stop("Wrong name folder given!\n `name.simulation` does not exist or does not contain a DATA/MASK/ folder")
+  }
   if (!dir.exists(paste0(name.simulation, "/DATA/PFGS/SUCC/")))
   {
     stop("Wrong name folder given!\n `name.simulation` does not exist or does not contain a DATA/PFGS/SUCC/ folder")
@@ -146,9 +250,21 @@ PRE_FATE.params_simulParameters = function(
   {
     stop("Wrong name folder given!\n `name.simulation` does not exist or does not contain a DATA/PFGS/DISP/ folder")
   }
+  if (!dir.exists(paste0(name.simulation, "/DATA/PFGS/ENVSUIT/")))
+  {
+    stop("Wrong name folder given!\n `name.simulation` does not exist or does not contain a DATA/PFGS/ENVSUIT/ folder")
+  }
   if (!dir.exists(paste0(name.simulation, "/RESULTS/")))
   {
     stop("Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/ folder")
+  }
+  if (missing(name.mask) ||
+      is.na(name.mask) ||
+      is.null(name.mask) ||
+      !is.character(name.mask) ||
+      !file.exists(paste0(name.simulation, "/DATA/MASK/", name.mask)))
+  {
+    stop("Wrong name file given!\n `name.mask` does not exist or is not inside the DATA/MASK/ folder")
   }
   
   #################################################################################################
@@ -201,8 +317,8 @@ PRE_FATE.params_simulParameters = function(
   {
     dirs.SCENARIO = paste0(name.simulation, "/DATA/SCENARIO")
   }
-  dirs.SCENARIO.MASK = dirs.SCENARIO.HS = dirs.SCENARIO.DIST = vector()
   
+  dirs.SCENARIO.MASK = dirs.SCENARIO.HS = dirs.SCENARIO.DIST = vector()
   for (di in dirs.SCENARIO)
   {
     for (ty in c("MASK", "HS", "DIST"))
@@ -216,26 +332,49 @@ PRE_FATE.params_simulParameters = function(
       }
     }
   }
-  # } else
-  # {
-  #   dirs.SCENARIO.MASK = dirs.SCENARIO.HS = dirs.SCENARIO.DIST = paste0(name.simulation, "/DATA/SCENARIO")
-  # }
+  
+  #################################################################################################
+  
+  dirs.ENV = list.dirs(path = paste0(name.simulation, "/DATA/PFGS/ENVSUIT")
+                       , full.names = FALSE
+                       , recursive = FALSE)
+  if (length(dirs.ENV) > 0)
+  {
+    dirs.ENV = paste0(name.simulation, "/DATA/PFGS/ENVSUIT/", dirs.ENV)
+  } else
+  {
+    dirs.ENV = paste0(name.simulation, "/DATA/PFGS/ENVSUIT")
+  }
+  
+  dirs.ENVSUIT = vector()
+  for (di in dirs.ENV)
+  {
+    files.hs = list.files(path = di
+                          # , pattern = paste0("^", ty, "_changing_times")
+                          , full.names = TRUE)
+    if (length(files.hs) > 0)
+    {
+      dirs.ENVSUIT = c(dirs.ENVSUIT, di)
+    }
+  }
   
   #################################################################################################
   #################################################################################################
   
-  sce.mask = sce.hs = sce.dist = 0
+  sce.mask = sce.hs = sce.dist = ras.hs = 0
   if (length(dirs.SCENARIO.MASK) > 0) sce.mask = 1:length(dirs.SCENARIO.MASK)
   if (length(dirs.SCENARIO.HS) > 0) sce.hs = 1:length(dirs.SCENARIO.HS)
   if (length(dirs.SCENARIO.DIST) > 0) sce.dist = 1:length(dirs.SCENARIO.DIST)
+  if (length(dirs.ENVSUIT) > 0) ras.hs = 1:length(dirs.ENVSUIT)
   
   PARAMS.combi = expand.grid(NAMESPACE = 1:length(files.NAMESPACE)
                              , GLOBAL = 1:length(files.GLOBAL)
                              , SAVE = 1:length(dirs.SAVE)
                              , SCENARIO.MASK = sce.mask
                              , SCENARIO.HS = sce.hs
-                             , SCENARIO.DIST = sce.dist)
-
+                             , SCENARIO.DIST = sce.dist
+                             , PFG.ENVSUIT = ras.hs)
+  
   #################################################################################################
   #################################################################################################
   
@@ -244,11 +383,13 @@ PRE_FATE.params_simulParameters = function(
     
     params.combi = data.frame(NAMESPACE = files.NAMESPACE[PARAMS.combi$NAMESPACE[i]]
                               , GLOBAL = files.GLOBAL[PARAMS.combi$GLOBAL[i]]
-                              , SAVE.dir = paste0(name.simulation, "/DATA/RESULTS/SIMUL_V", i))
+                              , SAVE.dir = paste0(name.simulation, "/DATA/RESULTS/SIMUL_V", i)
+                              , MASK = paste0(name.simulation, "/DATA/MASK/", name.mask))
     
     names.params.combi = c("--NAMESPACE_CONSTANTS--"
                            , "--GLOBAL_PARAMS--"
-                           , "--SAVE_DIR--")
+                           , "--SAVE_DIR--"
+                           , "--MASK--")
     
     #################################################################################################
     
@@ -291,6 +432,7 @@ PRE_FATE.params_simulParameters = function(
       stop(paste0("There is to many adequate files (`.txt` file starting with `SAVE_YEARS_objects`) "
                   , "into the folder", di))
     }
+    
     #################################################################################################
     
     for (ty in c("MASK", "HS", "DIST"))
@@ -355,6 +497,8 @@ PRE_FATE.params_simulParameters = function(
                        , is.num = TRUE)
     no_PFG = as.numeric(no_PFG)
     
+    ### -------------------------------------------------------------------- ###
+    
     files.PFG.SUCC = list.files(path = paste0(name.simulation, "/DATA/PFGS/SUCC")
                                 , pattern = "^SUCC"
                                 , full.names = TRUE)
@@ -407,19 +551,38 @@ PRE_FATE.params_simulParameters = function(
                            , flag = "SUCC_MOD"
                            , flag.split = " "
                            , is.num = FALSE)
-    if (succ_model == "fateh" && !dir.exists(paste0(name.simulation, "/DATA/PFGS/ENVSUIT/")))
+    # if (succ_model == "fateh" && !dir.exists(paste0(name.simulation, "/DATA/PFGS/ENVSUIT/")))
+    # {
+    #   stop("Wrong name folder given!\n `name.simulation` does not exist or does not contain a DATA/PFGS/ENVSUIT/ folder")
+    # }
+    # files.PFG.HS = list.files(path = paste0(name.simulation, "/DATA/PFGS/ENVSUIT")
+    #                           # , pattern = "^DIST"
+    #                           , full.names = TRUE)
+    # if (length(files.PFG.HS) != no_PFG)
+    # {
+    #   warning(paste0("There is not the same number of files "
+    #                  , "into the DATA/PFGS/ENVSUIT/ folder as the number of PFG "
+    #                  , "indicated into the file "
+    #                  , globi))
+    # }
+    
+    files.PFG.HS = vector()
+    if (succ_model == "fateh")
     {
-      stop("Wrong name folder given!\n `name.simulation` does not exist or does not contain a DATA/PFGS/ENVSUIT/ folder")
-    }
-    files.PFG.HS = list.files(path = paste0(name.simulation, "/DATA/PFGS/ENVSUIT")
-                              # , pattern = "^DIST"
-                              , full.names = TRUE)
-    if (length(files.PFG.HS) != no_PFG)
-    {
-      warning(paste0("There is not the same number of files "
-                     , "into the DATA/PFGS/ENVSUIT/ folder as the number of PFG "
-                     , "indicated into the file "
-                     , globi))
+      if (PARAMS.combi[, "PFG.ENVSUIT"][i] > 0)
+      {
+        di = dirs.ENVSUIT[PARAMS.combi$PFG.ENVSUIT[i]]
+        
+        files.PFG.HS = list.files(path = di
+                                  , full.names = TRUE)
+        if (length(files.PFG.HS) != no_PFG)
+        {
+          warning(paste0("There is not the same number of files "
+                         , "into the DATA/PFGS/ENVSUIT/ folder as the number of PFG "
+                         , "indicated into the file "
+                         , globi))
+        }
+      }
     }
     
     

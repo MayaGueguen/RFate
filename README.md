@@ -135,6 +135,8 @@ with the function [PRE_FATE.params_namespaceConstants](https://mayagueguen.githu
 (number of PFG and strata, simulation duration, computer resources, modules loaded...)  
 with the function [PRE_FATE.params_globalParameters](https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_globalParameters.html)
 - **Years to save abundance rasters and simulation outputs** with the function [PRE_FATE.params_saveYears](https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_saveYears.html)
+- **Years and files to change rasters** for the succession, habitat suitability or disturbance modules  
+with the function [PRE_FATE.params_changingYears](https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_changingYears.html)
 
 *2. For each PFG : behavior and characteristics*
 - **Succession files** : related to the life history with the function [PRE_FATE.params_PFGsuccession](https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGsuccession.html)
@@ -143,7 +145,9 @@ with the function [PRE_FATE.params_globalParameters](https://mayagueguen.github.
 with the function [PRE_FATE.params_PFGdisturbance](https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGdisturbance.html)
 
 *3. Parameter management*
-- **ParamSimulation file** :
+- **ParamSimulation file** : containing all links to the files created with the previous functions.  
+This is the file that will be given as the only argument to the `FATE-HD` executable file into the command line.  
+It can be created with the function [PRE_FATE.params_simulParameters](https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_simulParameters.html)
 
 ___________________________________________________________________________________________________
 

@@ -70,4 +70,12 @@ PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                                            , ResproutIndiv_P = c(0,0,0,0,0,0,0,0)))
 
 ## Create a Simulation parameter file
-PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation")
+system("> FATE_simulation/DATA/MASK/mask.tif")
+PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
+                                , name.mask = "mask.tif")
+
+for (pfg in 1:6){
+  system(paste0("> FATE_simulation/DATA/PFGS/ENVSUIT/mask_PFG", pfg, ".tif"))
+}
+PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
+                                , name.mask = "mask.tif")

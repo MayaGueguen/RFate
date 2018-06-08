@@ -148,7 +148,7 @@ simulation</h1>
 containing <code>PARAMETER FILENAMES</code> used in <code>FATE-HD</code> model.</p>
     
 
-    <pre class="usage"><span class='fu'>PRE_FATE.params_simulParameters</span>(<span class='no'>name.simulation</span>)</pre>
+    <pre class="usage"><span class='fu'>PRE_FATE.params_simulParameters</span>(<span class='no'>name.simulation</span>, <span class='no'>name.mask</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -157,6 +157,13 @@ containing <code>PARAMETER FILENAMES</code> used in <code>FATE-HD</code> model.<
       <th>name.simulation</th>
       <td><p>a <code>string</code> that corresponds to the main directory
 or simulation name of the <code>FATE-HD</code> simulation</p></td>
+    </tr>
+    <tr>
+      <th>name.mask</th>
+      <td><p>a <code>string</code> that corresponds to the file name of a raster
+mask, with either 0 or 1 within each pixel, 1 corresponding to the cells of 
+the studied area in which the succession module of the <code>FATE-HD</code> simulation
+will take place</p></td>
     </tr>
     </table>
     
@@ -167,8 +174,16 @@ directory with the following parameters :</p>
 <ul>
 <li><p>--NAMESPACE_CONSTANTS--</p></li>
 <li><p>--GLOBAL_PARAMS--</p></li>
+<li><p>--SAVE_DIR--</p></li>
 <li><p>--ARRAYS_SAVING_YEARS-- (<em>optional</em>)</p></li>
 <li><p>--OBJECTS_SAVING_YEARS-- (<em>optional</em>)</p></li>
+<li><p>--MASK--</p></li>
+<li><p>--MASK_CHANGE_TIME-- (<em>optional</em>)</p></li>
+<li><p>--CLIM_CHANGE_TIME-- (<em>optional</em>)</p></li>
+<li><p>--DIST_CHANGE_TIME-- (<em>optional</em>)</p></li>
+<li><p>--MASK_CHANGE_MASK-- (<em>optional</em>)</p></li>
+<li><p>--CLIM_CHANGE_MASK-- (<em>optional</em>)</p></li>
+<li><p>--DIST_CHANGE_MASK-- (<em>optional</em>)</p></li>
 <li><p>--PFG_LIFE_HISTORY_PARAMS--</p></li>
 <li><p>--PFG_DISPERSAL_PARAMS--</p></li>
 <li><p>--PFG_DISTURBANCES_PARAMS-- (<em>optional</em>)</p></li>
@@ -179,9 +194,69 @@ directory with the following parameters :</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
+    <p>The <code>FATE-HD</code> software takes only one input parameter : a file containing
+links to other files containing all the parameters and data needed by the 
+program to run.</p>
     <dl class='dl-horizontal'>
-  <dt>To get abundances <br /> per PFG per pixel</dt><dd><p></p></dd>
+  <dt>NAMESPACE_ <br /> CONSTANTS</dt><dd><p>file where constant parameters needed by 
+  the program to manage abundance values are given <br />
+  (see <code><a href='PRE_FATE.params_namespaceConstants.html'>PRE_FATE.params_namespaceConstants</a></code>)</p></dd>
+  <dt>GLOBAL_PARAMS</dt><dd><p>file where parameters related to the simulation 
+  definition are referred (e.g. number of PFG involved, number of height 
+  strata, simulation duration, computer resources, modules loaded, ...) <br />
+  (see <code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>)</p></dd>
+  <dt>SAVE_DIR</dt><dd><p>directory where simulation outputs will be stored</p></dd>
+  <dt>ARRAYS_SAVING_ <br /> YEARS (<em>optional</em>)</dt><dd><p>file containing the 
+  years for which simulation maps will be saved <br />
+  (see <code><a href='PRE_FATE.params_saveYears.html'>PRE_FATE.params_saveYears</a></code>)</p></dd>
+  <dt>OBJECTS_SAVING_ <br /> YEARS (<em>optional</em>)</dt><dd><p>file containing the 
+  years for which simulation outputs will be saved <br />
+  (see <code><a href='PRE_FATE.params_saveYears.html'>PRE_FATE.params_saveYears</a></code>)</p></dd>
+  <dt>MASK</dt><dd><p>raster mask that will define the study area</p></dd>
+  <dt>MASK_CHANGE_TIME <br /> (<em>optional</em>)</dt><dd><p>file containing the years to 
+  change rasters for the succession module <br />
+  (see <code><a href='PRE_FATE.params_changingYears.html'>PRE_FATE.params_changingYears</a></code>)</p></dd>
+  <dt>CLIM_CHANGE_TIME <br /> (<em>optional</em>)</dt><dd><p>file containing the years to 
+  change rasters for the habitat suitability module <br />
+  (see <code><a href='PRE_FATE.params_changingYears.html'>PRE_FATE.params_changingYears</a></code>)</p></dd>
+  <dt>DIST_CHANGE_TIME <br /> (<em>optional</em>)</dt><dd><p>file containing the years to 
+  change rasters for the disturbance module <br />
+  (see <code><a href='PRE_FATE.params_changingYears.html'>PRE_FATE.params_changingYears</a></code>)</p></dd>
+  <dt>MASK_CHANGE_MASK <br /> (<em>optional</em>)</dt><dd><p>file containing the files to 
+  change rasters for the succession module <br />
+  (see <code><a href='PRE_FATE.params_changingYears.html'>PRE_FATE.params_changingYears</a></code>)</p></dd>
+  <dt>CLIM_CHANGE_MASK <br /> (<em>optional</em>)</dt><dd><p>file containing the files to 
+  change rasters for the habitat suitability module <br />
+  (see <code><a href='PRE_FATE.params_changingYears.html'>PRE_FATE.params_changingYears</a></code>)</p></dd>
+  <dt>DIST_CHANGE_MASK <br /> (<em>optional</em>)</dt><dd><p>file containing the files to 
+  change rasters for the disturbance module <br />
+  (see <code><a href='PRE_FATE.params_changingYears.html'>PRE_FATE.params_changingYears</a></code>)</p></dd>
+  <dt>PFG_LIFE_HISTORY_ <br /> PARAMS</dt><dd><p>PFG life history related parameters 
+  (one by PFG) <br />
+  (see <code><a href='PRE_FATE.params_PFGsuccession.html'>PRE_FATE.params_PFGsuccession</a></code>)</p></dd>
+  <dt>PFG_DISPERSAL_ <br /> PARAMS</dt><dd><p>PFG dispersal capacity related parameters 
+  (one by PFG) <br />
+  (see <code><a href='PRE_FATE.params_PFGdispersal.html'>PRE_FATE.params_PFGdispersal</a></code>)</p></dd>
+  <dt>PFG_DISTURBANCES_ <br /> PARAMS (<em>optional</em>)</dt><dd><p>PFG disturbance 
+  related parameters in terms of resprouting and mortality (one by PFG) <br />
+  (see <code><a href='PRE_FATE.params_PFGdisturbance.html'>PRE_FATE.params_PFGdisturbance</a></code>)</p></dd>
+  <dt>PFG_ENVSUIT <br /> (<em>optional</em>)</dt><dd><p>PFG habitat suitability (one by PFG) 
+  maps for the study area</p></dd>
 </dl>
+    
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <ul>
+<li><p>The links to files are <strong>NOT absolute paths</strong>. <br />
+  <em>When relative paths are used</em>, the user should be careful of the
+  folder from which the simulation is launched. <br />
+  <em>A function allows to transform these relative paths into absolute
+  ones. (!not available yet!)</em></p></li>
+<li><p><strong>The order of files matters!</strong> <br />
+  For instance the first link below <code>--PFG_LIFE_HISTORY_PARAMS--</code> flag 
+  has to match (the same PFG) with the first item below the 
+  <code>--PFG_DISPERSAL_PARAMS--</code> flag.</p></li>
+</ul>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -253,7 +328,15 @@ directory with the following parameters :</p>
                                                            , <span class='kw'>ResproutIndiv_P</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>)))
 
 <span class='co'>## Create a Simulation parameter file</span>
-<span class='fu'>PRE_FATE.params_simulParameters</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>)
+<span class='fu'>system</span>(<span class='st'>"&gt; FATE_simulation/DATA/MASK/mask.tif"</span>)
+<span class='fu'>PRE_FATE.params_simulParameters</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
+                                , <span class='kw'>name.mask</span> <span class='kw'>=</span> <span class='st'>"mask.tif"</span>)
+
+<span class='kw'>for</span> (<span class='no'>pfg</span> <span class='kw'>in</span> <span class='fl'>1</span>:<span class='fl'>6</span>){
+  <span class='fu'>system</span>(<span class='fu'>paste0</span>(<span class='st'>"&gt; FATE_simulation/DATA/PFGS/ENVSUIT/mask_PFG"</span>, <span class='no'>pfg</span>, <span class='st'>".tif"</span>))
+}
+<span class='fu'>PRE_FATE.params_simulParameters</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
+                                , <span class='kw'>name.mask</span> <span class='kw'>=</span> <span class='st'>"mask.tif"</span>)
 
 
 <span class='co'># }</span></pre>
@@ -266,6 +349,8 @@ directory with the following parameters :</p>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#details">Details</a></li>
+
+      <li><a href="#note">Note</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
