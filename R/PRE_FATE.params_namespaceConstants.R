@@ -100,18 +100,13 @@ PRE_FATE.params_namespaceConstants = function(
   , global.resource.thresh.low
 ){
   
-  if (missing(name.simulation) ||
-      is.na(name.simulation) ||
-      is.null(name.simulation) ||
-      !is.character(name.simulation) ||
+  if (.testParam_notChar(name.simulation) ||
       !dir.exists(paste0(name.simulation, "/DATA/NAMESPACE_CONSTANTS/")))
   {
     stop("Wrong name folder given!\n `name.simulation` does not exist or does not contain a DATA/NAMESPACE_CONSTANTS/ folder")
   }
-  if (missing(global.abund.low) ||
-      is.na(global.abund.low) ||
-      is.null(global.abund.low) ||
-      !is.numeric(global.abund.low)){
+  if (.testParam_notNum(global.abund.low))
+  {
     stop("Wrong type of data!\n `global.abund.low` must be an integer")
   } else
   {
@@ -120,10 +115,8 @@ PRE_FATE.params_namespaceConstants = function(
       warning("`global.abund.low` is a double. It will be converted (rounded) to an integer")
     }
   }
-  if (missing(global.abund.med) ||
-      is.na(global.abund.med) ||
-      is.null(global.abund.med) ||
-      !is.numeric(global.abund.med)){
+  if (.testParam_notNum(global.abund.med))
+  {
     stop("Wrong type of data!\n `global.abund.med` must be an integer")
   } else
   {
@@ -132,10 +125,8 @@ PRE_FATE.params_namespaceConstants = function(
       warning("`global.abund.med` is a double. It will be converted (rounded) to an integer")
     }
   }
-  if (missing(global.abund.high) ||
-      is.na(global.abund.high) ||
-      is.null(global.abund.high) ||
-      !is.numeric(global.abund.high)){
+  if (.testParam_notNum(global.abund.high))
+  {  
     stop("Wrong type of data!\n `global.abund.high` must be an integer")
   } else
   {
@@ -144,10 +135,8 @@ PRE_FATE.params_namespaceConstants = function(
       warning("`global.abund.high` is a double. It will be converted (rounded) to an integer")
     }
   }
-  if (missing(global.max.by.cohort) ||
-      is.na(global.max.by.cohort) ||
-      is.null(global.max.by.cohort) ||
-      !is.numeric(global.max.by.cohort)){
+  if (.testParam_notNum(global.max.by.cohort))
+  {
     stop("Wrong type of data!\n `global.max.by.cohort` must be an integer")
   } else
   {
@@ -156,10 +145,8 @@ PRE_FATE.params_namespaceConstants = function(
       warning("`global.max.by.cohort` is a double. It will be converted (rounded) to an integer")
     }
   }
-  if (missing(global.resource.thresh.med) ||
-      is.na(global.resource.thresh.med) ||
-      is.null(global.resource.thresh.med) ||
-      !is.numeric(global.resource.thresh.med)){
+  if (.testParam_notNum(global.resource.thresh.med))
+  {
     stop("Wrong type of data!\n `global.resource.thresh.med` must be an integer")
   } else
   {
@@ -168,10 +155,8 @@ PRE_FATE.params_namespaceConstants = function(
       warning("`global.resource.thresh.med` is a double. It will be converted (rounded) to an integer")
     }
   }
-  if (missing(global.resource.thresh.low) ||
-      is.na(global.resource.thresh.low) ||
-      is.null(global.resource.thresh.low) ||
-      !is.numeric(global.resource.thresh.low)){
+  if (.testParam_notNum(global.resource.thresh.low))
+  {
     stop("Wrong type of data!\n `global.resource.thresh.low` must be an integer")
   } else
   {
@@ -205,7 +190,7 @@ PRE_FATE.params_namespaceConstants = function(
                             , "GLOBAL_MEDIUM_RESOURCES_TRESH"
                             , "GLOBAL_LOW_RESOURCES_TRESH"
                             , "GLOBAL_FULL_SOIL_COVERAGE")
-
+  
   for (i in 1:length(params.list)){
     params = params.list[[i]]
     names(params) = names.params.list.sub

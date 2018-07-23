@@ -34,6 +34,11 @@
 ##' @param DIST.no the number of disturbances
 ##' @param DIST.no_sub the number of way a PFG could react to a disturbance
 ##' @param DIST.freq the frequency of each disturbance (\emph{in years})
+##' @param doSoil \emph{to be filled}
+##' @param doFire \emph{to be filled}
+##' @param doDrought \emph{to be filled}
+##' @param doHabStability \emph{to be filled}
+##' @param doAliens \emph{to be filled}
 ##' 
 ##' 
 ##' 
@@ -278,10 +283,7 @@ PRE_FATE.params_globalParameters = function(
   # , ALIEN.freq
 ){
   
-  if (missing(name.simulation) ||
-      is.na(name.simulation) ||
-      is.null(name.simulation) ||
-      !is.character(name.simulation) ||
+  if (.testParam_notChar(name.simulation) ||
       !dir.exists(paste0(name.simulation, "/DATA/GLOBAL_PARAMETERS/")))
   {
     stop("Wrong name folder given!\n `name.simulation` does not exist or does not contain a DATA/GLOBAL_PARAMETERS/ folder")
@@ -293,74 +295,45 @@ PRE_FATE.params_globalParameters = function(
     warning(paste0("Wrong type of data!\n `opt.no_CPU` must be an integer > 0\n"
                    , " ==> Automatically set to 1"))
   }
-  if (missing(required.no_PFG) ||
-      is.na(required.no_PFG) ||
-      is.null(required.no_PFG) ||
-      !is.numeric(required.no_PFG) ||
+  if (.testParam_notNum(required.no_PFG) ||
       required.no_PFG <= 0 ){
     stop("Wrong type of data!\n `required.no_PFG` must be an integer > 0")
   }
-  if (missing(required.no_STRATA) ||
-      is.na(required.no_STRATA) ||
-      is.null(required.no_STRATA) ||
-      !is.numeric(required.no_STRATA) ||
+  if (.testParam_notNum(required.no_STRATA) ||
       required.no_STRATA <= 0 ){
     stop("Wrong type of data!\n `required.no_STRATA` must be an integer > 0")
   }
-  if (missing(required.succ_option) ||
-      is.na(required.succ_option) ||
-      is.null(required.succ_option) ||
-      !(required.succ_option %in% c("fate", "fateh"))){
+  if (.testParam_notInChar(required.succ_option, inList = c("fate", "fateh")))
+  {
     stop("Wrong type of data!\n `required.succ_option` must be either `fate` or `fateh` (habitat suitability)")
   }
-  if (missing(required.hs_option) ||
-      is.na(required.hs_option) ||
-      is.null(required.hs_option) ||
-      !is.numeric(required.hs_option) ||
+  if (.testParam_notNum(required.hs_option) ||
       !(required.hs_option %in% c(1,2))){
     stop("Wrong type of data!\n `required.hs_option` must be either 1 (random) or 2 (distribution per PFG)")
   }
-  if (missing(required.seeding_timestep) ||
-      is.na(required.seeding_timestep) ||
-      is.null(required.seeding_timestep) ||
-      !is.numeric(required.seeding_timestep) ||
+  if (.testParam_notNum(required.seeding_timestep) ||
       required.seeding_timestep <= 0 ){
     stop("Wrong type of data!\n `required.seeding_timestep` must be an integer > 0")
   }
-  if (missing(required.seeding_duration) ||
-      is.na(required.seeding_duration) ||
-      is.null(required.seeding_duration) ||
-      !is.numeric(required.seeding_duration) ||
+  if (.testParam_notNum(required.seeding_duration) ||
       required.seeding_duration <= 0 ){
     stop("Wrong type of data!\n `required.seeding_duration` must be an integer > 0")
   }
-  if (missing(required.simul_duration) ||
-      is.na(required.simul_duration) ||
-      is.null(required.simul_duration) ||
-      !is.numeric(required.simul_duration) ||
+  if (.testParam_notNum(required.simul_duration) ||
       required.simul_duration <= 0 ){
     stop("Wrong type of data!\n `required.simul_duration` must be an integer > 0")
   }
   if (doDisturbances)
   {
-    if (missing(DIST.no) ||
-        is.na(DIST.no) ||
-        is.null(DIST.no) ||
-        !is.numeric(DIST.no) ||
+    if (.testParam_notNum(DIST.no) ||
         DIST.no <= 0 ){
       stop("Wrong type of data!\n `DIST.no` must be an integer > 0")
     }
-    if (missing(DIST.no_sub) ||
-        is.na(DIST.no_sub) ||
-        is.null(DIST.no_sub) ||
-        !is.numeric(DIST.no_sub) ||
+    if (.testParam_notNum(DIST.no_sub) ||
         DIST.no_sub <= 0 ){
       stop("Wrong type of data!\n `DIST.no_sub` must be an integer > 0")
     }
-    if (missing(DIST.freq) ||
-        is.na(DIST.freq) ||
-        is.null(DIST.freq) ||
-        !is.numeric(DIST.freq) ||
+    if (.testParam_notNum(DIST.freq) ||
         sum(DIST.freq <= 0) > 0){
       stop("Wrong type of data!\n `DIST.freq` must be a vector of integer > 0")
     } else if (length(DIST.freq) != DIST.no){
@@ -387,14 +360,14 @@ PRE_FATE.params_globalParameters = function(
   }
   if (doSoil)
   {
-    params.SOIL = list(as.numeric(doSoil)
-                       , SOIL.def_value
-                       , SOIL.no_categories
-                       , SOIL.tresh_categories)
-    names.params.list.SOIL = c("DO_SOIL_COMPETITION"
-                               , "SOIL_DEFAULT_VALUE"
-                               , "NB_SOIL_CATEGORIES"
-                               , "SOIL_CATEGORIES_TRESHOLDS")
+    # params.SOIL = list(as.numeric(doSoil)
+    #                    , SOIL.def_value
+    #                    , SOIL.no_categories
+    #                    , SOIL.tresh_categories)
+    # names.params.list.SOIL = c("DO_SOIL_COMPETITION"
+    #                            , "SOIL_DEFAULT_VALUE"
+    #                            , "NB_SOIL_CATEGORIES"
+    #                            , "SOIL_CATEGORIES_TRESHOLDS")
   } else
   {
     params.SOIL = list(as.numeric(doSoil))
@@ -402,14 +375,14 @@ PRE_FATE.params_globalParameters = function(
   }
   if (doDrought)
   {
-    params.DROUGHT = list(as.numeric(doDrought)
-                          , DROUGHT.no_sub
-                          , DROUGHT.chrono_post
-                          , DROUGHT.chrono_curr)
-    names.params.list.DROUGHT = c("DO_DROUGHT_DISTURBANCES"
-                                  , "NB_SUBDROUGHT"
-                                  , "CHRONO_POST_DROUGHT"
-                                  , "CHRONO_CURR_DROUGHT")
+    # params.DROUGHT = list(as.numeric(doDrought)
+    #                       , DROUGHT.no_sub
+    #                       , DROUGHT.chrono_post
+    #                       , DROUGHT.chrono_curr)
+    # names.params.list.DROUGHT = c("DO_DROUGHT_DISTURBANCES"
+    #                               , "NB_SUBDROUGHT"
+    #                               , "CHRONO_POST_DROUGHT"
+    #                               , "CHRONO_CURR_DROUGHT")
   } else
   {
     params.DROUGHT = list(as.numeric(doDrought))
@@ -417,10 +390,10 @@ PRE_FATE.params_globalParameters = function(
   }
   if (doHabStability)
   {
-    params.HABSTAB = list(as.numeric(doHabStability)
-                          , HABSTAB.no_hab)
-    names.params.list.HABSTAB = c("DO_HAB_STABILITY"
-                                  , "NB_HABITATS")
+    # params.HABSTAB = list(as.numeric(doHabStability)
+    #                       , HABSTAB.no_hab)
+    # names.params.list.HABSTAB = c("DO_HAB_STABILITY"
+    #                               , "NB_HABITATS")
   } else
   {
     params.HABSTAB = list(as.numeric(doHabStability))
@@ -428,10 +401,10 @@ PRE_FATE.params_globalParameters = function(
   }
   if (doAliens)
   {
-    params.ALIEN = list(as.numeric(doAliens)
-                        , ALIEN.freq)
-    names.params.list.ALIEN = c("DO_ALIENS_DISTURBANCE"
-                                , "FREQ_ALIENS")
+    # params.ALIEN = list(as.numeric(doAliens)
+    #                     , ALIEN.freq)
+    # names.params.list.ALIEN = c("DO_ALIENS_DISTURBANCE"
+    #                             , "FREQ_ALIENS")
   } else
   {
     params.ALIEN = list(as.numeric(doAliens))

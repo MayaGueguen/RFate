@@ -149,11 +149,7 @@ PRE_FATE.speciesClustering_step2 = function(clust.dendograms
                                             , mat.species.DIST
 ){
   
-  if (missing(clust.dendograms) ||
-      is.na(clust.dendograms) ||
-      is.null(clust.dendograms) ||
-      length(clust.dendograms) == 0 ||
-      !(class(clust.dendograms) %in% c("list","hclust")))
+  if (.testParam_notInClass(clust.dendograms, inList = c("list","hclust")))
   {
     stop("No data given!\n (missing `clust.dendograms` information which must be of class `hclust` or a list `hclust` objects)")
   } else
@@ -173,11 +169,7 @@ PRE_FATE.speciesClustering_step2 = function(clust.dendograms
       group_names = paste0("GROUP", 1:length(clust.dendograms))
     }
   }
-  if (missing(no.clusters) ||
-      is.na(no.clusters) ||
-      is.null(no.clusters) ||
-      length(no.clusters) == 0 ||
-      !is.numeric(no.clusters))
+  if (.testParam_notNum(no.clusters))
   {
     stop("No data given!\n (missing `no.clusters` information)")
   } else
@@ -187,10 +179,7 @@ PRE_FATE.speciesClustering_step2 = function(clust.dendograms
       stop("Wrong type of data!\n `no.clusters` must have the same length than `clust.dendograms`")
     }
   }
-  if (missing(mat.species.DIST) ||
-      is.na(mat.species.DIST) ||
-      is.null(mat.species.DIST) ||
-      !(class(mat.species.DIST) %in% c("list", "dist")))
+  if (.testParam_notInClass(mat.species.DIST, inList = c("list", "dist")))
   {
     stop("No data given!\n (missing `mat.species.DIST` information which must be a dist object, or a list of dist objects)")
   } else

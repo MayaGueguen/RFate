@@ -66,8 +66,7 @@ PRE_FATE.params_saveYears = function(
   , opt.folder.name = NULL
 ){
   
-  if (missing(name.simulation) ||
-      !is.character(name.simulation) ||
+  if (.testParam_notChar(name.simulation) ||
       !dir.exists(paste0(name.simulation, "/DATA/SAVE/")))
   {
     stop("Wrong name folder given!\n `name.simulation` does not exist or does not contain a DATA/SAVE/ folder")

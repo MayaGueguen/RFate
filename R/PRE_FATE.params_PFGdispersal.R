@@ -59,12 +59,11 @@ PRE_FATE.params_PFGdispersal = function(
   , mat.PFG.disp
 ){
   
-  if (missing(name.simulation) ||
-      !is.character(name.simulation) ||
+  if (.testParam_notChar(name.simulation) ||
       !dir.exists(paste0(name.simulation, "/DATA/PFGS/DISP/"))){
     stop("Wrong name folder given!\n `name.simulation` does not exist or does not contain a DATA/PFGS/DISP/ folder")
   }
-  if (missing(mat.PFG.disp) || !is.data.frame(mat.PFG.disp))
+  if (.testParam_notDf(mat.PFG.disp))
   {
     stop("Wrong type of data!\n `mat.PFG.disp` must be a data.frame")
   } else

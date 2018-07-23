@@ -101,19 +101,16 @@ PRE_FATE.params_changingYears = function(
   , opt.folder.name = NULL
 ){
   
-  if (missing(name.simulation) ||
-      !is.character(name.simulation) ||
+  if (.testParam_notChar(name.simulation) ||
       !dir.exists(paste0(name.simulation, "/DATA/SCENARIO/")))
   {
     stop("Wrong name folder given!\n `name.simulation` does not exist or does not contain a DATA/SCENARIO/ folder")
   }
-  if (missing(type.changing) ||
-      is.na(type.changing) ||
-      is.null(type.changing) ||
-      !(type.changing %in% c("MASK","HS","DIST"))){
+  if (.testParam_notInChar(type.changing, inList = c("MASK","HS","DIST")))
+  {
     stop("Wrong type of data!\n `type.changing` must be either `MASK`, `HS` (habitat suitability) or `DIST`")
   }
-  if (missing(mat.changing) || !is.data.frame(mat.changing))
+  if (.testParam_notDf(mat.changing))
   {
     stop("Wrong type of data!\n `mat.changing` must be a data.frame")
   }

@@ -218,10 +218,7 @@ PRE_FATE.params_simulParameters = function(
   , name.mask
 ){
   
-  if (missing(name.simulation) ||
-      is.na(name.simulation) ||
-      is.null(name.simulation) ||
-      !is.character(name.simulation) ||
+  if (.testParam_notChar(name.simulation) ||
       !dir.exists(paste0(name.simulation, "/PARAM_SIMUL/")))
   {
     stop("Wrong name folder given!\n `name.simulation` does not exist or does not contain a PARAM_SIMUL/ folder")
@@ -262,10 +259,7 @@ PRE_FATE.params_simulParameters = function(
   {
     stop("Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/ folder")
   }
-  if (missing(name.mask) ||
-      is.na(name.mask) ||
-      is.null(name.mask) ||
-      !is.character(name.mask) ||
+  if (.testParam_notChar(name.mask) ||
       !file.exists(paste0(name.simulation, "/DATA/MASK/", name.mask)))
   {
     stop("Wrong name file given!\n `name.mask` does not exist or is not inside the DATA/MASK/ folder")

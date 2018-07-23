@@ -170,8 +170,7 @@ PRE_FATE.params_PFGdisturbance = function(
   , mat.PFG.succ = paste0(name.simulation, "/DATA/PFGS/SUCC_COMPLETE_TABLE.csv")
 ){
   
-  if (missing(name.simulation) ||
-      !is.character(name.simulation) ||
+  if (.testParam_notChar(name.simulation) ||
       !dir.exists(paste0(name.simulation, "/DATA/PFGS/DIST/"))){
     stop("Wrong name folder given!\n `name.simulation` does not exist or does not contain a DATA/PFGS/DIST/ folder")
   }
@@ -232,7 +231,7 @@ PRE_FATE.params_PFGdisturbance = function(
   }
   
   ## CHECKS for mat.PFG.dist parameter
-  if (missing(mat.PFG.dist) || !is.data.frame(mat.PFG.dist))
+  if (.testParam_notDf(mat.PFG.dist))
   {
     stop("Wrong type of data!\n `mat.PFG.dist` must be a data.frame")
   }

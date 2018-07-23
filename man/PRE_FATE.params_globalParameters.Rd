@@ -50,6 +50,16 @@ are required}
 \item{DIST.no_sub}{the number of way a PFG could react to a disturbance}
 
 \item{DIST.freq}{the frequency of each disturbance (\emph{in years})}
+
+\item{doSoil}{\emph{to be filled}}
+
+\item{doFire}{\emph{to be filled}}
+
+\item{doDrought}{\emph{to be filled}}
+
+\item{doHabStability}{\emph{to be filled}}
+
+\item{doAliens}{\emph{to be filled}}
 }
 \value{
 A \code{.txt} file into the \code{name.simulation/DATA/GLOBAL_PARAMETERS}

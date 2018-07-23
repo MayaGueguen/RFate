@@ -128,6 +128,10 @@ Each line corresponds to a parameter, given by the **flag** (parameter name in c
 
 ### Which files for which settings ?
 
+The function [PRE_FATE.skeletonDirectory](https://mayagueguen.github.io/RFate/reference/PRE_FATE.skeletonDirectory.html) allows to create a user-friendly directory tree to store all parameter files and data.
+
+<br/>
+
 *1. Simulation parameterization*
 - **Namespace constants** : for the software to manage abundance values  
 with the function [PRE_FATE.params_namespaceConstants](https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_namespaceConstants.html)

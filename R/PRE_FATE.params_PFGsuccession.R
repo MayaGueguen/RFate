@@ -179,12 +179,11 @@ PRE_FATE.params_PFGsuccession = function(
   , mat.PFG.succ
 ){
   
-  if (missing(name.simulation) ||
-      !is.character(name.simulation) ||
+  if (.testParam_notChar(name.simulation) ||
       !dir.exists(paste0(name.simulation, "/DATA/PFGS/SUCC/"))){
     stop("Wrong name folder given!\n `name.simulation` does not exist or does not contain a DATA/PFGS/SUCC/ folder")
   }
-  if (missing(mat.PFG.succ) || !is.data.frame(mat.PFG.succ))
+  if (.testParam_notDf(mat.PFG.succ))
   {
     stop("Wrong type of data!\n `mat.PFG.succ` must be a data.frame")
   }
