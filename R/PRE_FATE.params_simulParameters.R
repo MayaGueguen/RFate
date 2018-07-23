@@ -197,12 +197,12 @@
 ##'                                                            , ResproutIndiv_P = c(0,0,0,0,0,0,0,0)))
 ##' 
 ##' ## Create a Simulation parameter file
-##' system("cat /dev/null > FATE_simulation/DATA/MASK/mask.tif")
+##' file.create("FATE_simulation/DATA/MASK/mask.tif")
 ##' PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
 ##'                                 , name.mask = "mask.tif")
 ##' 
 ##' for (pfg in 1:6){
-##'   system(paste0("cat /dev/null > FATE_simulation/DATA/PFGS/ENVSUIT/mask_PFG", pfg, ".tif"))
+##'   file.create(paste0("FATE_simulation/DATA/PFGS/ENVSUIT/mask_PFG", pfg, ".tif"))
 ##' }
 ##' PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
 ##'                                 , name.mask = "mask.tif")
