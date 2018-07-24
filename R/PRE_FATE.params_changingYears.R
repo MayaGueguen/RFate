@@ -105,7 +105,7 @@ PRE_FATE.params_changingYears = function(
   
   if (.testParam_notInChar(type.changing, inList = c("MASK","HS","DIST")))
   {
-    stop("Wrong type of data!\n `type.changing` must be either `MASK`, `HS` (habitat suitability) or `DIST`")
+    .stopMessage_content("type.changing", c("MASK","HS","DIST"))
   }
   if (.testParam_notDf(mat.changing))
   {

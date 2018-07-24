@@ -1,4 +1,10 @@
 
+
+.stopMessage_existFile = function(param)
+{
+  stop(paste0("Wrong name file given!\n `", param, "` does not exist"))
+}
+
 .stopMessage_existFolders = function(param1, param2)
 {
   stop(paste0("Wrong name folder given!\n `", param1, "` does not exist or does not contain a ", param2, " folder"))
@@ -12,6 +18,11 @@
 .stopMessage_beInteger = function(param)
 {
   stop(paste0("Wrong type of data!\n `", param, "` must be an integer > 0"))
+}
+
+.stopMessage_beChar = function(param)
+{
+  stop(paste0("Wrong type of data!\n `", param, "` must contain a character value of length > 0"))
 }
 
 #################################################################################################
@@ -68,4 +79,18 @@
 }
 
 
+#################################################################################################
+
+.stopMessage_content = function(param1, param2)
+{
+  if (length(param2) == 1)
+  {
+    end_message = param2
+  } else
+  {
+    end_message = paste0(paste0(param2[-length(param2)], collapse = "`, `")
+                         , "` or `", param2[length(param2)])
+  }
+  stop(paste0("Wrong type of data!\n `", param1, "` must be either `", end_message, "`"))
+}
 

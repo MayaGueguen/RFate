@@ -26,6 +26,15 @@
   }
 }
 
+.testParam_existFile = function(param)
+{
+  if (.testParam_notChar(param) ||
+      !file.exists(param))
+  {
+    .stopMessage_existFile(param)
+  }
+}
+
 .testParam_existFolder = function(param1, param2)
 {
   if (.testParam_notChar(param1) ||

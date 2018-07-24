@@ -228,11 +228,14 @@ PRE_FATE.params_simulParameters = function(
   .testParam_existFolder(name.simulation, "DATA/PFGS/DISP/")
   .testParam_existFolder(name.simulation, "DATA/PFGS/ENVSUIT/")
   .testParam_existFolder(name.simulation, "RESULTS/")
-  if (.testParam_notChar(name.mask) ||
-      !file.exists(paste0(name.simulation, "/DATA/MASK/", name.mask)))
+  if (.testParam_notChar(name.mask))
   {
-    stop("Wrong name file given!\n `name.mask` does not exist or is not inside the DATA/MASK/ folder")
+    .stopMessage_beChar("name.mask") 
+  } else
+  {
+    .testParam_existFile(paste0(name.simulation, "/DATA/MASK/", name.mask))
   }
+
   
   #################################################################################################
   
@@ -354,7 +357,7 @@ PRE_FATE.params_simulParameters = function(
     
     params.combi = data.frame(NAMESPACE = files.NAMESPACE[PARAMS.combi$NAMESPACE[i]]
                               , GLOBAL = files.GLOBAL[PARAMS.combi$GLOBAL[i]]
-                              , SAVE.dir = paste0(name.simulation, "/DATA/RESULTS/SIMUL_V", i)
+                              , SAVE.dir = paste0(name.simulation, "/RESULTS/SIMUL_V", i)
                               , MASK = paste0(name.simulation, "/DATA/MASK/", name.mask))
     
     names.params.combi = c("--NAMESPACE_CONSTANTS--"
@@ -501,10 +504,10 @@ PRE_FATE.params_simulParameters = function(
                                , flag = "DO_DISTURBANCES"
                                , flag.split = " "
                                , is.num = TRUE)
-    # if (doDisturbances && !dir.exists(paste0(name.simulation, "/DATA/PFGS/DIST/")))
-    # {
-    #   stop("Wrong name folder given!\n `name.simulation` does not exist or does not contain a DATA/PFGS/DIST/ folder")
-    # }
+    if (doDisturbances)
+    {
+      .testParam_existFolder(name.simulation, "DATA/PFGS/DIST/")
+    }
     files.PFG.DIST = list.files(path = paste0(name.simulation, "/DATA/PFGS/DIST")
                                 , pattern = "^DIST"
                                 , full.names = TRUE)
@@ -523,10 +526,10 @@ PRE_FATE.params_simulParameters = function(
                            , flag = "SUCC_MOD"
                            , flag.split = " "
                            , is.num = FALSE)
-    # if (succ_model == "fateh" && !dir.exists(paste0(name.simulation, "/DATA/PFGS/ENVSUIT/")))
-    # {
-    #   stop("Wrong name folder given!\n `name.simulation` does not exist or does not contain a DATA/PFGS/ENVSUIT/ folder")
-    # }
+    if (succ_model == "fateh")
+    {
+      .testParam_existFolder(name.simulation, "DATA/PFGS/ENVSUIT/")
+    }
     # files.PFG.HS = list.files(path = paste0(name.simulation, "/DATA/PFGS/ENVSUIT")
     #                           # , pattern = "^DIST"
     #                           , full.names = TRUE)

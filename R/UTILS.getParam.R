@@ -7,33 +7,24 @@
                      , is.num = TRUE
 ){
   
-  if (missing(params.lines) ||
-      is.na(params.lines) ||
-      is.null(length(params.lines)) ||
-      !is.character(params.lines) ||
-      length(params.lines) == 0)
+  if (.testParam_notChar(params.lines))
   {
-    stop("Wrong type of data!\n `params.lines` must contain a character value of length > 0")
+    .stopMessage_beChar("params.lines")
   } else
   {
-    if (!file.exists(params.lines))
-    {
-      stop("Wrong type of data!\n `params.lines` file does not exist")
-    }
+    .testParam_existFile(params.lines)
   }
-  if (missing(flag) ||
-      is.na(flag) ||
-      !is.character(flag) ||
+  if (.testParam_notChar(flag) ||
       nchar(flag) == 0)
   {
-    stop("Wrong type of data!\n `flag` must be a string of length > 0")
+    .stopMessage_beChar("flag")
   }
   if (missing(flag.split) ||
       is.na(flag.split) ||
       !is.character(flag.split) ||
       !(flag.split %in% c(" ", "^--.*--$")))
   {
-    stop("Wrong type of data!\n `flag.split` must be either ` ` or `^--.*--$`")
+    .stopMessage_content("flag.split", c(" ", "^--.*--$"))
   }
   if (!is.logical(is.num))
   {
@@ -54,11 +45,13 @@
     value.line = unlist(strsplit(value.line, split = flag.split))[-1]
   } else {
     ind.flag.split = grep(flag.split, params.lines)
-    ind.flag = grep(flag, params.lines)
+    ind.flag = grep(paste0("--", flag, "--"), params.lines)
     ind.start = which(ind.flag.split == ind.flag)
     
     ind1 = (ind.flag.split[ind.start] + 1)
-    ind2 = ifelse(length(ind.flag.split) == 1, max(length(params.lines), ind1), ind1 - 1)
+    ind2 = ifelse(length(ind.flag.split) == 1
+                  , max(length(params.lines), ind1)
+                  , ind.flag.split[ind.start + 1] - 1)
     value.line = params.lines[ind1:ind2]
     value.line = as.character(value.line)
   }

@@ -29,13 +29,13 @@ test_that("PRE_FATE.params_changingYears gives error with wrong data : name.simu
 test_that("PRE_FATE.params_changingYears gives error with wrong data : type.changing and mat.changing", {
   PRE_FATE.skeletonDirectory()
   expect_error(PRE_FATE.params_changingYears(name.simulation = "FATE_simulation")
-               , "`type.changing` must be either `MASK`, `HS` (habitat suitability) or `DIST`", fixed = T)
+               , "`type.changing` must be either `MASK`, `HS` or `DIST`", fixed = T)
   expect_error(PRE_FATE.params_changingYears(name.simulation = "FATE_simulation", type.changing = NULL)
-               , "`type.changing` must be either `MASK`, `HS` (habitat suitability) or `DIST`", fixed = T)
+               , "`type.changing` must be either `MASK`, `HS` or `DIST`", fixed = T)
   expect_error(PRE_FATE.params_changingYears(name.simulation = "FATE_simulation", type.changing = NA)
-               , "`type.changing` must be either `MASK`, `HS` (habitat suitability) or `DIST`", fixed = T)
+               , "`type.changing` must be either `MASK`, `HS` or `DIST`", fixed = T)
   expect_error(PRE_FATE.params_changingYears(name.simulation = "FATE_simulation", type.changing = "dist")
-               , "`type.changing` must be either `MASK`, `HS` (habitat suitability) or `DIST`", fixed = T)
+               , "`type.changing` must be either `MASK`, `HS` or `DIST`", fixed = T)
   expect_error(PRE_FATE.params_changingYears(name.simulation = "FATE_simulation", type.changing = "DIST")
                , "`mat.changing` must be a data.frame")
   

@@ -16,7 +16,7 @@ library(pkgdown)
 ## INFORMATION / PARAMETERS
 
 package_name = "RFate"
-package_version = "0.0.1.9000"
+package_version = "0.0.2.9000"
 
 #####################################################################
 
@@ -71,8 +71,8 @@ Rcmd(args = paste0("build ",package_name)) ## or with a shell : R CMD build MyPa
 ## CHECK THE PACKAGE ------------------------------------------------
 
 # Rcmd(args = paste0("check ",package_name)) ## or with a shell : R CMD check MyPackage
-devtools::check(pkg = package_name, document = FALSE)
-# devtools::check(pkg = package_name)
+# devtools::check(pkg = package_name, document = FALSE)
+devtools::check(pkg = package_name)
 
 # INSTALL THE PACKAGE ----------------------------------------------
 

@@ -302,11 +302,11 @@ PRE_FATE.params_globalParameters = function(
   }
   if (.testParam_notInChar(required.succ_option, inList = c("fate", "fateh")))
   {
-    stop("Wrong type of data!\n `required.succ_option` must be either `fate` or `fateh` (habitat suitability)")
+    .stopMessage_content("required.succ_option", c("fate", "fateh"))
   }
   if (.testParam_notNum(required.hs_option) ||
       !(required.hs_option %in% c(1,2))){
-    stop("Wrong type of data!\n `required.hs_option` must be either 1 (random) or 2 (distribution per PFG)")
+    .stopMessage_content("required.hs_option", c("1 (random)", "2 (distribution per PFG)"))
   }
   if (.testParam_notNum(required.seeding_timestep) ||
       required.seeding_timestep <= 0 ){

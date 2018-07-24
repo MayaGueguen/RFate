@@ -62,7 +62,7 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : requir
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.no_PFG = 5
                                                 , required.no_STRATA = 2)
-               , "`required.succ_option` must be either `fate` or `fateh` (habitat suitability)", fixed = T)
+               , "`required.succ_option` must be either `fate` or `fateh`", fixed = T)
 })
 
 ## INPUTS
@@ -72,27 +72,27 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : requir
                                                 , required.no_PFG = 5
                                                 , required.no_STRATA = 2
                                                 , required.succ_option = NA)
-               , "`required.succ_option` must be either `fate` or `fateh` (habitat suitability)", fixed = T)
+               , "`required.succ_option` must be either `fate` or `fateh`", fixed = T)
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.no_PFG = 5
                                                 , required.no_STRATA = 2
                                                 , required.succ_option = NULL)
-               , "`required.succ_option` must be either `fate` or `fateh` (habitat suitability)", fixed = T)
+               , "`required.succ_option` must be either `fate` or `fateh`", fixed = T)
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.no_PFG = 5
                                                 , required.no_STRATA = 2
                                                 , required.succ_option = "")
-               , "`required.succ_option` must be either `fate` or `fateh` (habitat suitability)", fixed = T)
+               , "`required.succ_option` must be either `fate` or `fateh`", fixed = T)
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.no_PFG = 5
                                                 , required.no_STRATA = 2
                                                 , required.succ_option = 10)
-               , "`required.succ_option` must be either `fate` or `fateh` (habitat suitability)", fixed = T)
+               , "`required.succ_option` must be either `fate` or `fateh`", fixed = T)
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.no_PFG = 5
                                                 , required.no_STRATA = 2
                                                 , required.succ_option = "fate")
-               , "`required.hs_option` must be either 1 (random) or 2 (distribution per PFG)", fixed = T)
+               , "`required.hs_option` must be either `1 (random)` or `2 (distribution per PFG)`", fixed = T)
 })
 
 
@@ -103,19 +103,19 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : requir
                                                 , required.no_STRATA = 2
                                                 , required.succ_option = "fate"
                                                 , required.hs_option = NA)
-               , "`required.hs_option` must be either 1 (random) or 2 (distribution per PFG)", fixed = T)
+               , "`required.hs_option` must be either `1 (random)` or `2 (distribution per PFG)`", fixed = T)
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.no_PFG = 5
                                                 , required.no_STRATA = 2
                                                 , required.succ_option = "fate"
                                                 , required.hs_option = NULL)
-               , "`required.hs_option` must be either 1 (random) or 2 (distribution per PFG)", fixed = T)
+               , "`required.hs_option` must be either `1 (random)` or `2 (distribution per PFG)`", fixed = T)
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.no_PFG = 5
                                                 , required.no_STRATA = 2
                                                 , required.succ_option = "fate"
                                                 , required.hs_option = "")
-               , "`required.hs_option` must be either 1 (random) or 2 (distribution per PFG)", fixed = T)
+               , "`required.hs_option` must be either `1 (random)` or `2 (distribution per PFG)`", fixed = T)
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.no_PFG = 5
                                                 , required.no_STRATA = 2
