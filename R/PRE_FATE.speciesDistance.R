@@ -133,7 +133,7 @@ PRE_FATE.speciesDistance = function(mat.species.traits ## data.frame with column
   ## Control form of parameters : mat.species.traits
   if (!is.data.frame(mat.species.traits))
   {
-    stop("Wrong type of data!\n `mat.species.traits` must be a data.frame")
+    .stopMessage_beDataframe("mat.species.traits")
   }
   if (ncol(mat.species.traits) <= 2 )
   {

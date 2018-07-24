@@ -101,23 +101,19 @@ PRE_FATE.params_changingYears = function(
   , opt.folder.name = NULL
 ){
   
-  if (.testParam_notChar(name.simulation) ||
-      !dir.exists(paste0(name.simulation, "/DATA/SCENARIO/")))
-  {
-    stop("Wrong name folder given!\n `name.simulation` does not exist or does not contain a DATA/SCENARIO/ folder")
-  }
+  .testParam_existFolder(name.simulation, "DATA/SCENARIO/")
+  
   if (.testParam_notInChar(type.changing, inList = c("MASK","HS","DIST")))
   {
     stop("Wrong type of data!\n `type.changing` must be either `MASK`, `HS` (habitat suitability) or `DIST`")
   }
   if (.testParam_notDf(mat.changing))
   {
-    stop("Wrong type of data!\n `mat.changing` must be a data.frame")
+    .stopMessage_beDataframe("mat.changing")
   }
   if (nrow(mat.changing) == 0 || ncol(mat.changing) != 3)
   {
-    stop(paste0("Wrong dimension(s) of data!\n `mat.changing` does not have "
-                , "the appropriate number of rows (>0) or columns (year, order, file.name)"))
+    .stopMessage_numRowCol("mat.changing", c("year", "order", "file.name"))
   }
   if (ncol(mat.changing) == 3)
   {
@@ -125,18 +121,17 @@ PRE_FATE.params_changingYears = function(
     {
       mat.changing = mat.changing[ , c("year", "order", "file.name")]
     } else {
-      stop(paste0("Wrong type of data!\n Column names of `mat.changing` must be "
-                  , "`year`, `order` and `file.name`"))
+      .stopMessage_columnNames("mat.changing", c("year", "order", "file.name"))
     }
   }
   if (!is.numeric(mat.changing$year) ||
       !is.numeric(mat.changing$order)) {
-    stop("Wrong type of data!\n Columns `year` and `order` of `mat.changing` must contain numeric values")
+    .stopMessage_columnNumeric("mat.changing", c("year", "order"))
   }
   if (length(which(is.na(mat.changing$year))) > 0 ||
       length(which(is.na(mat.changing$order))) > 0 ||
       length(which(is.na(mat.changing$file.name))) > 0) {
-    stop("Wrong type of data!\n Columns `year`, `order` and `file.name` of `mat.changing` must not contain NA values")
+    .stopMessage_columnNoNA("mat.changing", c("year", "order", "file.name"))
   }
   if (length(unique(table(mat.changing$year, mat.changing$order))) > 1) {
     stop(paste0("Wrong type of data!\n Columns `year` and `order` are not balanced\n"

@@ -100,14 +100,11 @@ PRE_FATE.params_namespaceConstants = function(
   , global.resource.thresh.low
 ){
   
-  if (.testParam_notChar(name.simulation) ||
-      !dir.exists(paste0(name.simulation, "/DATA/NAMESPACE_CONSTANTS/")))
-  {
-    stop("Wrong name folder given!\n `name.simulation` does not exist or does not contain a DATA/NAMESPACE_CONSTANTS/ folder")
-  }
+  .testParam_existFolder(name.simulation, "DATA/NAMESPACE_CONSTANTS/")
+  
   if (.testParam_notNum(global.abund.low))
   {
-    stop("Wrong type of data!\n `global.abund.low` must be an integer")
+    .stopMessage_beInteger("global.abund.low")
   } else
   {
     if (round(global.abund.low) != global.abund.low)
@@ -117,7 +114,7 @@ PRE_FATE.params_namespaceConstants = function(
   }
   if (.testParam_notNum(global.abund.med))
   {
-    stop("Wrong type of data!\n `global.abund.med` must be an integer")
+    .stopMessage_beInteger("global.abund.med")
   } else
   {
     if (round(global.abund.med) != global.abund.med)
@@ -127,7 +124,7 @@ PRE_FATE.params_namespaceConstants = function(
   }
   if (.testParam_notNum(global.abund.high))
   {  
-    stop("Wrong type of data!\n `global.abund.high` must be an integer")
+    .stopMessage_beInteger("global.abund.high")
   } else
   {
     if (round(global.abund.high) != global.abund.high)
@@ -137,7 +134,7 @@ PRE_FATE.params_namespaceConstants = function(
   }
   if (.testParam_notNum(global.max.by.cohort))
   {
-    stop("Wrong type of data!\n `global.max.by.cohort` must be an integer")
+    .stopMessage_beInteger("global.max.by.cohort")
   } else
   {
     if (round(global.max.by.cohort) != global.max.by.cohort)
@@ -147,7 +144,7 @@ PRE_FATE.params_namespaceConstants = function(
   }
   if (.testParam_notNum(global.resource.thresh.med))
   {
-    stop("Wrong type of data!\n `global.resource.thresh.med` must be an integer")
+    .stopMessage_beInteger("global.resource.thresh.med")
   } else
   {
     if (round(global.resource.thresh.med) != global.resource.thresh.med)
@@ -157,7 +154,7 @@ PRE_FATE.params_namespaceConstants = function(
   }
   if (.testParam_notNum(global.resource.thresh.low))
   {
-    stop("Wrong type of data!\n `global.resource.thresh.low` must be an integer")
+    .stopMessage_beInteger("global.resource.thresh.low")
   } else
   {
     if (round(global.resource.thresh.low) != global.resource.thresh.low)

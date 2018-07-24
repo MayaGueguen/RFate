@@ -48,7 +48,7 @@ test_that("PRE_FATE.params_PFGsuccession gives error with wrong data : mat.PFG.s
   expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation", mat.PFG.succ = data.frame(1))
                , "`mat.PFG.succ` does not have the appropriate number of rows (>0) or columns (PFG, type, height, maturity, longevity, dispersal, light)", fixed = T)
   expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation", mat.PFG.succ = data.frame(1,2,3,4,5,6,7))
-               , "Column names of `mat.PFG.succ` must be `PFG`, `type`, height`, `maturity`, `longevity`, `dispersal` and `light`")
+               , "Column names of `mat.PFG.succ` must be `PFG`, `type`, `height`, `maturity`, `longevity`, `dispersal` and `light`")
   
   expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
                                             , mat.PFG.succ = data.frame(PFG = 1, type = c(2,2), height = 3, maturity = 4

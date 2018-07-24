@@ -170,10 +170,7 @@ PRE_FATE.params_PFGdisturbance = function(
   , mat.PFG.succ = paste0(name.simulation, "/DATA/PFGS/SUCC_COMPLETE_TABLE.csv")
 ){
   
-  if (.testParam_notChar(name.simulation) ||
-      !dir.exists(paste0(name.simulation, "/DATA/PFGS/DIST/"))){
-    stop("Wrong name folder given!\n `name.simulation` does not exist or does not contain a DATA/PFGS/DIST/ folder")
-  }
+  .testParam_existFolder(name.simulation, "DATA/PFGS/DIST/")
   
   ## CHECKS for mat.PFG.succ parameter
   isDataFrame = is.data.frame(mat.PFG.succ)
@@ -196,16 +193,13 @@ PRE_FATE.params_PFGdisturbance = function(
   }
   if (nrow(mat.PFG.succ) == 0 || ncol(mat.PFG.succ) < 6)
   {
-    stop(paste0("Wrong dimension(s) of data!\n `mat.PFG.succ` does not have "
-                , "the appropriate number of rows (>0) or columns "
-                , "(at least NAME, TYPE, MATURITY, LONGEVITY, STRATA, CHANG_STR_AGES_to_str_3)"))
+    .stopMessage_numRowCol("mat.PFG.succ", c("NAME", "TYPE", "MATURITY", "LONGEVITY", "STRATA", "CHANG_STR_AGES_to_str_3"))
   }
   if (ncol(mat.PFG.succ) >= 6)
   {
     if (sum(colnames(mat.PFG.succ) %in% c("NAME", "TYPE", "MATURITY", "LONGEVITY", "STRATA", "CHANG_STR_AGES_to_str_3")) < 6)
     {
-      stop(paste0("Wrong type of data!\n Column names of `mat.PFG.succ` must contain "
-                  , "`NAME`, `TYPE`, `MATURITY`, `LONGEVITY`, `STRATA` and `CHANG_STR_AGES_to_str_3`"))
+      .stopMessage_columnNames("mat.PFG.succ", c("NAME", "TYPE", "MATURITY", "LONGEVITY", "STRATA", "CHANG_STR_AGES_to_str_3"))
     }
   }
   if (length(which(is.na(mat.PFG.succ$NAME))) > 0 ||
@@ -219,32 +213,29 @@ PRE_FATE.params_PFGdisturbance = function(
       !is.numeric(mat.PFG.succ$LONGEVITY) ||
       !is.numeric(mat.PFG.succ$STRATA) ||
       !is.numeric(mat.PFG.succ$CHANG_STR_AGES_to_str_3)) {
-    stop(paste0("Wrong type of data!\n Columns `MATURITY`, `LONGEVITY`, `STRATA` and `CHANG_STR_AGES_to_str_3` "
-                , "of `mat.PFG.succ` must contain numeric values"))
+    .stopMessage_columnNumeric("mat.PFG.succ", c("MATURITY", "LONGEVITY", "STRATA", "CHANG_STR_AGES_to_str_3"))
   }
   if (length(which(is.na(mat.PFG.succ$MATURITY))) > 0 ||
       length(which(is.na(mat.PFG.succ$LONGEVITY))) > 0 ||
       length(which(is.na(mat.PFG.succ$STRATA))) > 0 ||
       length(which(is.na(mat.PFG.succ$CHANG_STR_AGES_to_str_3))) > 0) {
-    stop(paste0("Wrong type of data!\n Columns `MATURITY`, `LONGEVITY`, `STRATA` and `CHANG_STR_AGES_to_str_3` "
-                , "of `mat.PFG.succ` must not contain NA values"))
+    .stopMessage_columnNoNA("mat.PFG.succ", c("MATURITY", "LONGEVITY", "STRATA", "CHANG_STR_AGES_to_str_3"))
   }
   
   ## CHECKS for mat.PFG.dist parameter
   if (.testParam_notDf(mat.PFG.dist))
   {
-    stop("Wrong type of data!\n `mat.PFG.dist` must be a data.frame")
+    .stopMessage_beDataframe("mat.PFG.dist")
   }
   if (nrow(mat.PFG.dist) == 0 || ncol(mat.PFG.dist) < 2)
   {
-    stop(paste0("Wrong dimension(s) of data!\n `mat.PFG.dist` does not have "
-                , "the appropriate number of rows (>0) or columns (at least `name` and `responseStage`)"))
+    .stopMessage_numRowCol("mat.PFG.dist", c("name", "responseStage"))
   }
   if (ncol(mat.PFG.dist) >= 1)
   {
     if (sum(colnames(mat.PFG.dist) %in% c("name", "responseStage")) < 2)
     {
-      stop(paste0("Wrong type of data!\n Column names of `mat.PFG.dist` must contain `name` and `responseStage`"))
+      .stopMessage_columnNames("mat.PFG.dist", c("name", "responseStage"))
     }
     # if (sum(unique(mat.PFG.dist$name) %in% mat.PFG.succ$NAME) < length(unique(mat.PFG.dist$name)))
     # {

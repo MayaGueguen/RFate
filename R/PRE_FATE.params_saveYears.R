@@ -66,12 +66,9 @@ PRE_FATE.params_saveYears = function(
   , opt.folder.name = NULL
 ){
   
-  if (.testParam_notChar(name.simulation) ||
-      !dir.exists(paste0(name.simulation, "/DATA/SAVE/")))
-  {
-    stop("Wrong name folder given!\n `name.simulation` does not exist or does not contain a DATA/SAVE/ folder")
-  }
-  if ( (!is.null(years.maps) && !is.numeric(years.maps)) ||
+  .testParam_existFolder(name.simulation, "DATA/SAVE/")
+
+    if ( (!is.null(years.maps) && !is.numeric(years.maps)) ||
        (!is.null(years.objects) && !is.numeric(years.objects))){
     stop("Wrong type of data!\n `years.maps` and/or `years.objects` must contain numeric values")
   }

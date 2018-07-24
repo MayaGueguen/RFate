@@ -59,40 +59,39 @@ PRE_FATE.params_PFGdispersal = function(
   , mat.PFG.disp
 ){
   
-  if (.testParam_notChar(name.simulation) ||
-      !dir.exists(paste0(name.simulation, "/DATA/PFGS/DISP/"))){
-    stop("Wrong name folder given!\n `name.simulation` does not exist or does not contain a DATA/PFGS/DISP/ folder")
-  }
-  if (.testParam_notDf(mat.PFG.disp))
+  .testParam_existFolder(name.simulation, "DATA/PFGS/DISP/")
+  
+    if (.testParam_notDf(mat.PFG.disp))
   {
-    stop("Wrong type of data!\n `mat.PFG.disp` must be a data.frame")
+    .stopMessage_beDataframe("mat.PFG.disp")
   } else
   {
     if (nrow(mat.PFG.disp) == 0 || ncol(mat.PFG.disp) != 4)
     {
-      stop("Wrong dimension(s) of data!\n `mat.PFG.disp` does not have the appropriate number of rows (>0) or columns (PFG, d50, d99, ldd)")
+      .stopMessage_numRowCol("mat.PFG.disp", c("PFG", "d50", "d99", "ldd"))
     }
     if (ncol(mat.PFG.disp) == 4)
     {
       if (sum(colnames(mat.PFG.disp) == c("PFG", "d50", "d99", "ldd")) == 4)
       {
         mat.PFG.disp = mat.PFG.disp[ , c("PFG", "d50", "d99", "ldd")]
-      } else {
-        stop("Wrong type of data!\n Column names of `mat.PFG.disp` must be `PFG`, `d50`, `d99` and `ldd`")
+      } else
+      {
+        .stopMessage_columnNames("mat.PFG.disp", c("PFG", "d50", "d99", "ldd"))
       }
     }
     if (length(unique(mat.PFG.disp$PFG)) < nrow(mat.PFG.disp)){
-      stop("Wrong type of data!\n Column `PFG` of mat.PFG.disp` must contain different values")
+      stop("Wrong type of data!\n Column `PFG` of `mat.PFG.disp` must contain different values")
     }
     if (!is.numeric(mat.PFG.disp$d50) ||
         !is.numeric(mat.PFG.disp$d99) ||
         !is.numeric(mat.PFG.disp$ldd)) {
-      stop("Wrong type of data!\n Columns `d50`, `d99` and `ldd` of `mat.PFG.disp` must contain numeric values")
+      .stopMessage_columnNumeric("mat.PFG.disp", c("d50", "d99", "ldd"))
     }
     if (length(which(is.na(mat.PFG.disp$d50))) > 0 ||
         length(which(is.na(mat.PFG.disp$d99))) > 0 ||
         length(which(is.na(mat.PFG.disp$ldd))) > 0) {
-      stop("Wrong type of data!\n Columns `d50`, `d99` and `ldd` of `mat.PFG.disp` must not contain NA values")
+      .stopMessage_columnNoNA("mat.PFG.disp", c("d50", "d99", "ldd"))
     }
   }
   
@@ -101,7 +100,7 @@ PRE_FATE.params_PFGdispersal = function(
   })
   names.params.list = mat.PFG.disp$PFG
   names.params.list.sub = "DISPERS_DIST"
-
+  
   for (i in 1:length(params.list)) {
     params = params.list[[i]]
     names(params) = names.params.list.sub

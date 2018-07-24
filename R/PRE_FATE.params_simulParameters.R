@@ -218,47 +218,16 @@ PRE_FATE.params_simulParameters = function(
   , name.mask
 ){
   
-  if (.testParam_notChar(name.simulation) ||
-      !dir.exists(paste0(name.simulation, "/PARAM_SIMUL/")))
-  {
-    stop("Wrong name folder given!\n `name.simulation` does not exist or does not contain a PARAM_SIMUL/ folder")
-  }
-  if (!dir.exists(paste0(name.simulation, "/DATA/NAMESPACE_CONSTANTS/")))
-  {
-    stop("Wrong name folder given!\n `name.simulation` does not exist or does not contain a DATA/NAMESPACE_CONSTANTS/ folder")
-  }
-  if (!dir.exists(paste0(name.simulation, "/DATA/GLOBAL_PARAMETERS/")))
-  {
-    stop("Wrong name folder given!\n `name.simulation` does not exist or does not contain a DATA/GLOBAL_PARAMETERS/ folder")
-  }
-  if (!dir.exists(paste0(name.simulation, "/DATA/SAVE/")))
-  {
-    stop("Wrong name folder given!\n `name.simulation` does not exist or does not contain a DATA/SAVE/ folder")
-  }
-  if (!dir.exists(paste0(name.simulation, "/DATA/SCENARIO/")))
-  {
-    stop("Wrong name folder given!\n `name.simulation` does not exist or does not contain a DATA/SCENARIO/ folder")
-  }
-  if (!dir.exists(paste0(name.simulation, "/DATA/MASK/")))
-  {
-    stop("Wrong name folder given!\n `name.simulation` does not exist or does not contain a DATA/MASK/ folder")
-  }
-  if (!dir.exists(paste0(name.simulation, "/DATA/PFGS/SUCC/")))
-  {
-    stop("Wrong name folder given!\n `name.simulation` does not exist or does not contain a DATA/PFGS/SUCC/ folder")
-  }
-  if (!dir.exists(paste0(name.simulation, "/DATA/PFGS/DISP/")))
-  {
-    stop("Wrong name folder given!\n `name.simulation` does not exist or does not contain a DATA/PFGS/DISP/ folder")
-  }
-  if (!dir.exists(paste0(name.simulation, "/DATA/PFGS/ENVSUIT/")))
-  {
-    stop("Wrong name folder given!\n `name.simulation` does not exist or does not contain a DATA/PFGS/ENVSUIT/ folder")
-  }
-  if (!dir.exists(paste0(name.simulation, "/RESULTS/")))
-  {
-    stop("Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/ folder")
-  }
+  .testParam_existFolder(name.simulation, "PARAM_SIMUL/")
+  .testParam_existFolder(name.simulation, "DATA/NAMESPACE_CONSTANTS/")
+  .testParam_existFolder(name.simulation, "DATA/GLOBAL_PARAMETERS/")
+  .testParam_existFolder(name.simulation, "DATA/SAVE/")
+  .testParam_existFolder(name.simulation, "DATA/SCENARIO/")
+  .testParam_existFolder(name.simulation, "DATA/MASK/")
+  .testParam_existFolder(name.simulation, "DATA/PFGS/SUCC/")
+  .testParam_existFolder(name.simulation, "DATA/PFGS/DISP/")
+  .testParam_existFolder(name.simulation, "DATA/PFGS/ENVSUIT/")
+  .testParam_existFolder(name.simulation, "RESULTS/")
   if (.testParam_notChar(name.mask) ||
       !file.exists(paste0(name.simulation, "/DATA/MASK/", name.mask)))
   {

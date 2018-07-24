@@ -221,23 +221,23 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
     ## CASE 1 : Control form of parameters : mat.site.species.abund
     if (!is.data.frame(mat.site.species.abund))
     {
-      stop("Wrong type of data!\n `mat.site.species.abund` must be a data.frame")
+      .stopMessage_beDataframe("mat.site.species.abund")
     }
     if (nrow(mat.site.species.abund) == 0 || ncol(mat.site.species.abund) < 3)
     {
-      stop("Wrong dimension(s) of data!\n `mat.site.species.abund` does not have the appropriate number of rows (>0) or columns (sites, species, abund, habitat - optional)")
+      .stopMessage_numRowCol("mat.site.species.abund", c("sites", "species", "abund", "(habitat)"))
     }
     if (ncol(mat.site.species.abund) == 3)
     {
       if (sum(colnames(mat.site.species.abund) %in% c("sites", "species", "abund")) < 3)
       {
-        stop("Wrong type of data!\n Column names of `mat.site.species.abund` must be `sites`, `species` and `abund`")
+        .stopMessage_columnNames("mat.site.species.abund", c("sites", "species", "abund"))
       }
     } else if (ncol(mat.site.species.abund) == 4)
     {
       if (sum(colnames(mat.site.species.abund) %in% c("sites", "species", "abund", "habitat")) < 4)
       {
-        stop("Wrong type of data!\n Column names of `mat.site.species.abund` must be `sites`, `species`, `abund` and `habitat`")
+        .stopMessage_columnNames("mat.site.species.abund", c("sites", "species", "abund", "habitat"))
       }
     }
     if (!(is.numeric(mat.site.species.abund$abund) ||is.na(mat.site.species.abund$abund)) ||

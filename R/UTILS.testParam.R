@@ -26,6 +26,15 @@
   }
 }
 
+.testParam_existFolder = function(param1, param2)
+{
+  if (.testParam_notChar(param1) ||
+      !dir.exists(paste0(param1, "/", param2)))
+  {
+    .stopMessage_existFolders(deparse(substitute(param1)), param2)
+  }
+}
+
 #################################################################################################
 .testParam_notNum = function(param)
 {

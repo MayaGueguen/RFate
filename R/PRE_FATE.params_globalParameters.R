@@ -283,11 +283,8 @@ PRE_FATE.params_globalParameters = function(
   # , ALIEN.freq
 ){
   
-  if (.testParam_notChar(name.simulation) ||
-      !dir.exists(paste0(name.simulation, "/DATA/GLOBAL_PARAMETERS/")))
-  {
-    stop("Wrong name folder given!\n `name.simulation` does not exist or does not contain a DATA/GLOBAL_PARAMETERS/ folder")
-  }
+  .testParam_existFolder(name.simulation, "DATA/GLOBAL_PARAMETERS/")
+  
   if (is.na(opt.no_CPU) ||
       is.null(opt.no_CPU) ||
       !is.numeric(opt.no_CPU) ||
@@ -297,11 +294,11 @@ PRE_FATE.params_globalParameters = function(
   }
   if (.testParam_notNum(required.no_PFG) ||
       required.no_PFG <= 0 ){
-    stop("Wrong type of data!\n `required.no_PFG` must be an integer > 0")
+    .stopMessage_beInteger("required.no_PFG")
   }
   if (.testParam_notNum(required.no_STRATA) ||
       required.no_STRATA <= 0 ){
-    stop("Wrong type of data!\n `required.no_STRATA` must be an integer > 0")
+    .stopMessage_beInteger("required.no_STRATA")
   }
   if (.testParam_notInChar(required.succ_option, inList = c("fate", "fateh")))
   {
@@ -313,25 +310,25 @@ PRE_FATE.params_globalParameters = function(
   }
   if (.testParam_notNum(required.seeding_timestep) ||
       required.seeding_timestep <= 0 ){
-    stop("Wrong type of data!\n `required.seeding_timestep` must be an integer > 0")
+    .stopMessage_beInteger("required.seeding_timestep")
   }
   if (.testParam_notNum(required.seeding_duration) ||
       required.seeding_duration <= 0 ){
-    stop("Wrong type of data!\n `required.seeding_duration` must be an integer > 0")
+    .stopMessage_beInteger("required.seeding_duration")
   }
   if (.testParam_notNum(required.simul_duration) ||
       required.simul_duration <= 0 ){
-    stop("Wrong type of data!\n `required.simul_duration` must be an integer > 0")
+    .stopMessage_beInteger("required.simul_duration")
   }
   if (doDisturbances)
   {
     if (.testParam_notNum(DIST.no) ||
         DIST.no <= 0 ){
-      stop("Wrong type of data!\n `DIST.no` must be an integer > 0")
+      .stopMessage_beInteger("DIST.no")
     }
     if (.testParam_notNum(DIST.no_sub) ||
         DIST.no_sub <= 0 ){
-      stop("Wrong type of data!\n `DIST.no_sub` must be an integer > 0")
+      .stopMessage_beInteger("DIST.no_sub")
     }
     if (.testParam_notNum(DIST.freq) ||
         sum(DIST.freq <= 0) > 0){

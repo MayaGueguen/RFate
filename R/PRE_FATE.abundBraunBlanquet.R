@@ -65,10 +65,7 @@
 
 
 PRE_FATE.abundBraunBlanquet = function(abund){
-  if (missing(abund) ||
-      is.null(abund) ||
-      length(abund) == 0 ||
-      !(class(abund) %in% c("character", "factor", "numeric", "logical")))
+  if (.testParam_notInClass(abund, inList = c("character", "factor", "numeric", "logical")))
   {
     stop("Wrong type of data!\n `abund` must be a vector with character values")
   } else
