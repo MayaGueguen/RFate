@@ -58,7 +58,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RFate</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.0.1.9000</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.0.2.9000</span>
       </span>
     </div>
 
@@ -295,11 +295,26 @@ but could be representative of a specific habitat</em> :</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
+    <pre class="examples"><div class='input'>
 <span class='co'>## Load example data</span>
 <span class='fu'>data</span>(<span class='no'>MontBlanc</span>)
-<span class='fu'>str</span>(<span class='no'>MontBlanc</span>)
-
+<span class='fu'>str</span>(<span class='no'>MontBlanc</span>)</div><div class='output co'>#&gt; List of 3
+#&gt;  $ mat.releves     :'data.frame':	12302 obs. of  4 variables:
+#&gt;   ..$ sites  : int [1:12302] 660398 662913 663085 663104 663104 664839 751362 751377 751484 922672 ...
+#&gt;   ..$ species: chr [1:12302] "Abies alba Miller" "Abies alba Miller" "Abies alba Miller" "Abies alba Miller" ...
+#&gt;   ..$ abund  : Factor w/ 7 levels "","+","1","2",..: 2 2 2 3 6 4 2 3 2 2 ...
+#&gt;   ..$ habitat: int [1:12302] 4 2 6 4 4 4 2 2 3 8 ...
+#&gt;  $ mat.traits      :'data.frame':	337 obs. of  6 variables:
+#&gt;   ..$ species     : chr [1:337] "X23" "X139" "X190" "X197" ...
+#&gt;   ..$ Disp        : num [1:337] 4 5 7 6 7 1 4 7 7 7 ...
+#&gt;   ..$ Light       : num [1:337] 2 2 3 3 5 3 5 5 5 3 ...
+#&gt;   ..$ Height      : num [1:337] 1500 50 70 11 30 ...
+#&gt;   ..$ Palatability: Factor w/ 5 levels "","0","1","2",..: 4 5 5 5 5 5 5 5 5 5 ...
+#&gt;   ..$ GROUP       : Factor w/ 3 levels "C","H","P": 3 2 2 2 2 2 2 2 2 2 ...
+#&gt;  $ mat.nicheOverlap: niolap [1:270, 1:270] NA 0.524 0.789 0.626 0.675 ...
+#&gt;   ..- attr(*, "dimnames")=List of 2
+#&gt;   .. ..$ : chr [1:270] "X10053" "X10106" "X10113" "X10182" ...
+#&gt;   .. ..$ : chr [1:270] "X10053" "X10106" "X10113" "X10182" ...</div><div class='input'>
 <span class='co'>## MontBlanc$mat.releves : data.frame</span>
 
 <span class='co'>## Transformation of Braun-Blanquet abundances</span>
@@ -311,8 +326,42 @@ but could be representative of a specific habitat</em> :</p>
 <span class='co'>## EXAMPLE 1 : With default parametrization</span>
 <span class='co'>#########################################################################################</span>
 
-<span class='no'>sp.DOM</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.selectDominant</span>(<span class='kw'>mat.site.species.abund</span> <span class='kw'>=</span> <span class='no'>MontBlanc</span>$<span class='no'>mat.releves</span>)
-
+<span class='no'>sp.DOM</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.selectDominant</span>(<span class='kw'>mat.site.species.abund</span> <span class='kw'>=</span> <span class='no'>MontBlanc</span>$<span class='no'>mat.releves</span>)</div><div class='output co'>#&gt; 
+#&gt;  ############## SAMPLING INFORMATIONS ############## 
+#&gt; 
+#&gt;  Number of releves :  12302
+#&gt;  Number of sites :  568
+#&gt;  Number of species :  1116
+#&gt; 
+#&gt;  ############## ABUNDANCE INFORMATIONS ############## 
+#&gt; 
+#&gt;  Percentage of releves with abundance information :  99.53666 %</div><div class='output co'>#&gt; <span class='warning'>Warning: Species with NO abundance information can only be selected with the criteria based on number of presences...</span></div><div class='output co'>#&gt; 
+#&gt;  Percentage of sites with abundance information :  99.82394 %
+#&gt;  Percentage of sites without abundance information :  1.232394 %
+#&gt;  Percentage of species with abundance information :  99.73118 %
+#&gt;  Percentage of species without abundance information :  4.928315 %
+#&gt; 
+#&gt;  ############## STATISTICS COMPUTATION ############## 
+#&gt; 
+#&gt;  For each species, calculate :
+#&gt;      - stat.no_sites_abund = number of sites
+#&gt;      - stat.abund_median = median abundance (coverage percentage)
+#&gt;      - stat.abund_mean = mean abundance (coverage percentage)
+#&gt;      - stat.abund_max = maximal abundance (coverage percentage)
+#&gt;      - stat.no_sites_abund_max = number of sites with maximal abundance
+#&gt;      - stat.no_sites_abund_over25 = number of sites with maximal abundance &gt;= 25%
+#&gt;   This is done over all sites, and for each habitat
+#&gt; 
+#&gt; &gt; Habitat :  all ...
+#&gt; 
+#&gt;  ############## SELECTION OF DOMINANT SPECIES ############## 
+#&gt; 
+#&gt; &gt; Over all sites...
+#&gt; &gt; Combine selections...</div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; 
+#&gt; &gt; Done!
+#&gt; 
+#&gt;   1116 species have been selected with the given criteria.
+#&gt;   Complete table of information about selected species can be find in output files.</div><div class='img'><img src='PRE_FATE.selectDominant-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='PRE_FATE.selectDominant-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'>#########################################################################################</span>
 <span class='co'>## EXAMPLE 2 : Redefinition of global selection rules</span>
 <span class='co'>#########################################################################################</span>
@@ -320,8 +369,42 @@ but could be representative of a specific habitat</em> :</p>
 <span class='no'>sp.DOM</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.selectDominant</span>(<span class='kw'>mat.site.species.abund</span> <span class='kw'>=</span> <span class='no'>MontBlanc</span>$<span class='no'>mat.releves</span>
                                  , <span class='kw'>selectionRule.quanti</span> <span class='kw'>=</span> <span class='fl'>0.9</span>
                                  , <span class='kw'>selectionRule.min_mean_abund</span> <span class='kw'>=</span> <span class='fl'>25</span>
-                                 , <span class='kw'>selectionRule.min_no_abund_over25</span> <span class='kw'>=</span> <span class='fl'>10</span>)
-
+                                 , <span class='kw'>selectionRule.min_no_abund_over25</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='output co'>#&gt; 
+#&gt;  ############## SAMPLING INFORMATIONS ############## 
+#&gt; 
+#&gt;  Number of releves :  12302
+#&gt;  Number of sites :  568
+#&gt;  Number of species :  1116
+#&gt; 
+#&gt;  ############## ABUNDANCE INFORMATIONS ############## 
+#&gt; 
+#&gt;  Percentage of releves with abundance information :  99.53666 %</div><div class='output co'>#&gt; <span class='warning'>Warning: Species with NO abundance information can only be selected with the criteria based on number of presences...</span></div><div class='output co'>#&gt; 
+#&gt;  Percentage of sites with abundance information :  99.82394 %
+#&gt;  Percentage of sites without abundance information :  1.232394 %
+#&gt;  Percentage of species with abundance information :  99.73118 %
+#&gt;  Percentage of species without abundance information :  4.928315 %
+#&gt; 
+#&gt;  ############## STATISTICS COMPUTATION ############## 
+#&gt; 
+#&gt;  For each species, calculate :
+#&gt;      - stat.no_sites_abund = number of sites
+#&gt;      - stat.abund_median = median abundance (coverage percentage)
+#&gt;      - stat.abund_mean = mean abundance (coverage percentage)
+#&gt;      - stat.abund_max = maximal abundance (coverage percentage)
+#&gt;      - stat.no_sites_abund_max = number of sites with maximal abundance
+#&gt;      - stat.no_sites_abund_over25 = number of sites with maximal abundance &gt;= 25%
+#&gt;   This is done over all sites, and for each habitat
+#&gt; 
+#&gt; &gt; Habitat :  all ...
+#&gt; 
+#&gt;  ############## SELECTION OF DOMINANT SPECIES ############## 
+#&gt; 
+#&gt; &gt; Over all sites...
+#&gt; &gt; Combine selections...</div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; 
+#&gt; &gt; Done!
+#&gt; 
+#&gt;   117 species have been selected with the given criteria.
+#&gt;   Complete table of information about selected species can be find in output files.</div><div class='img'><img src='PRE_FATE.selectDominant-3.png' alt='' width='700' height='433' /></div><div class='img'><img src='PRE_FATE.selectDominant-4.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'>#########################################################################################</span>
 <span class='co'>## EXAMPLE 3 : Add habitat selection with default parametrization</span>
 <span class='co'>#########################################################################################</span>
@@ -330,8 +413,51 @@ but could be representative of a specific habitat</em> :</p>
                                  , <span class='kw'>selectionRule.quanti</span> <span class='kw'>=</span> <span class='fl'>0.9</span>
                                  , <span class='kw'>selectionRule.min_mean_abund</span> <span class='kw'>=</span> <span class='fl'>25</span>
                                  , <span class='kw'>selectionRule.min_no_abund_over25</span> <span class='kw'>=</span> <span class='fl'>10</span>
-                                 , <span class='kw'>doHabitatSelection</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
+                                 , <span class='kw'>doHabitatSelection</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; 
+#&gt;  ############## SAMPLING INFORMATIONS ############## 
+#&gt; 
+#&gt;  Number of releves :  12302
+#&gt;  Number of sites :  568
+#&gt;  Number of species :  1116
+#&gt; 
+#&gt;  ############## ABUNDANCE INFORMATIONS ############## 
+#&gt; 
+#&gt;  Percentage of releves with abundance information :  99.53666 %</div><div class='output co'>#&gt; <span class='warning'>Warning: Species with NO abundance information can only be selected with the criteria based on number of presences...</span></div><div class='output co'>#&gt; 
+#&gt;  Percentage of sites with abundance information :  99.82394 %
+#&gt;  Percentage of sites without abundance information :  1.232394 %
+#&gt;  Percentage of species with abundance information :  99.73118 %
+#&gt;  Percentage of species without abundance information :  4.928315 %
+#&gt; 
+#&gt;  ############## STATISTICS COMPUTATION ############## 
+#&gt; 
+#&gt;  For each species, calculate :
+#&gt;      - stat.no_sites_abund = number of sites
+#&gt;      - stat.abund_median = median abundance (coverage percentage)
+#&gt;      - stat.abund_mean = mean abundance (coverage percentage)
+#&gt;      - stat.abund_max = maximal abundance (coverage percentage)
+#&gt;      - stat.no_sites_abund_max = number of sites with maximal abundance
+#&gt;      - stat.no_sites_abund_over25 = number of sites with maximal abundance &gt;= 25%
+#&gt;   This is done over all sites, and for each habitat
+#&gt; 
+#&gt; &gt; Habitat :  all ...
+#&gt; &gt; Habitat :  4 ...
+#&gt; &gt; Habitat :  2 ...
+#&gt; &gt; Habitat :  6 ...
+#&gt; &gt; Habitat :  3 ...
+#&gt; &gt; Habitat :  8 ...
+#&gt; &gt; Habitat :  5 ...
+#&gt; &gt; Habitat :  7 ...
+#&gt; &gt; Habitat :  1 ...
+#&gt; 
+#&gt;  ############## SELECTION OF DOMINANT SPECIES ############## 
+#&gt; 
+#&gt; &gt; Over all sites...
+#&gt; &gt; Over each habitat...
+#&gt; &gt; Combine selections...</div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; 
+#&gt; &gt; Done!
+#&gt; 
+#&gt;   117 species have been selected with the given criteria.
+#&gt;   Complete table of information about selected species can be find in output files.</div><div class='img'><img src='PRE_FATE.selectDominant-5.png' alt='' width='700' height='433' /></div><div class='img'><img src='PRE_FATE.selectDominant-6.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'>#########################################################################################       </span>
 <span class='co'>## EXAMPLE 4 : Redefinition of habitat selection rules</span>
 <span class='co'>#########################################################################################</span>
@@ -342,14 +468,65 @@ but could be representative of a specific habitat</em> :</p>
                                  , <span class='kw'>selectionRule.min_no_abund_over25</span> <span class='kw'>=</span> <span class='fl'>10</span>
                                  , <span class='kw'>doHabitatSelection</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
                                  , <span class='kw'>selectionRule.min_percent_habitat</span> <span class='kw'>=</span> <span class='fl'>0.05</span>
-                                 , <span class='kw'>selectionRule.min_no_habitat</span> <span class='kw'>=</span> <span class='fl'>10</span>)
-
+                                 , <span class='kw'>selectionRule.min_no_habitat</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='output co'>#&gt; 
+#&gt;  ############## SAMPLING INFORMATIONS ############## 
+#&gt; 
+#&gt;  Number of releves :  12302
+#&gt;  Number of sites :  568
+#&gt;  Number of species :  1116
+#&gt; 
+#&gt;  ############## ABUNDANCE INFORMATIONS ############## 
+#&gt; 
+#&gt;  Percentage of releves with abundance information :  99.53666 %</div><div class='output co'>#&gt; <span class='warning'>Warning: Species with NO abundance information can only be selected with the criteria based on number of presences...</span></div><div class='output co'>#&gt; 
+#&gt;  Percentage of sites with abundance information :  99.82394 %
+#&gt;  Percentage of sites without abundance information :  1.232394 %
+#&gt;  Percentage of species with abundance information :  99.73118 %
+#&gt;  Percentage of species without abundance information :  4.928315 %
+#&gt; 
+#&gt;  ############## STATISTICS COMPUTATION ############## 
+#&gt; 
+#&gt;  For each species, calculate :
+#&gt;      - stat.no_sites_abund = number of sites
+#&gt;      - stat.abund_median = median abundance (coverage percentage)
+#&gt;      - stat.abund_mean = mean abundance (coverage percentage)
+#&gt;      - stat.abund_max = maximal abundance (coverage percentage)
+#&gt;      - stat.no_sites_abund_max = number of sites with maximal abundance
+#&gt;      - stat.no_sites_abund_over25 = number of sites with maximal abundance &gt;= 25%
+#&gt;   This is done over all sites, and for each habitat
+#&gt; 
+#&gt; &gt; Habitat :  all ...
+#&gt; &gt; Habitat :  4 ...
+#&gt; &gt; Habitat :  2 ...
+#&gt; &gt; Habitat :  6 ...
+#&gt; &gt; Habitat :  3 ...
+#&gt; &gt; Habitat :  8 ...
+#&gt; &gt; Habitat :  5 ...
+#&gt; &gt; Habitat :  7 ...
+#&gt; &gt; Habitat :  1 ...
+#&gt; 
+#&gt;  ############## SELECTION OF DOMINANT SPECIES ############## 
+#&gt; 
+#&gt; &gt; Over all sites...
+#&gt; &gt; Over each habitat...
+#&gt; &gt; Combine selections...</div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; <span class='message'>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</span></div><div class='output co'>#&gt; 
+#&gt; &gt; Done!
+#&gt; 
+#&gt;   117 species have been selected with the given criteria.
+#&gt;   Complete table of information about selected species can be find in output files.</div><div class='img'><img src='PRE_FATE.selectDominant-7.png' alt='' width='700' height='433' /></div><div class='img'><img src='PRE_FATE.selectDominant-8.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'>#########################################################################################</span>
 
 <span class='co'>## 2 .csv and 2 .pdf files have been produced</span>
-<span class='fu'>str</span>(<span class='no'>sp.DOM</span>)
-
-<span class='co'># }</span></pre>
+<span class='fu'>str</span>(<span class='no'>sp.DOM</span>)</div><div class='output co'>#&gt; 'data.frame':	117 obs. of  9 variables:
+#&gt;  $ species                   : chr  "Acer pseudoplatanus L." "Achillea millefolium L." "Agrostis capillaris L." "Agrostis rupestris All." ...
+#&gt;  $ stat.abund_max            : num  87.5 15 37.5 37.5 37.5 37.5 15 37.5 15 15 ...
+#&gt;  $ stat.no_sites_abund_max   : num  2 4 10 1 3 1 1 2 8 2 ...
+#&gt;  $ stat.no_sites_abund       : num  33 61 51 29 42 37 29 111 38 32 ...
+#&gt;  $ stat.no_sites_abund_over25: num  3 0 10 1 3 1 0 2 0 0 ...
+#&gt;  $ stat.abund_median         : num  3 0.5 3 0.5 3 0.5 0.5 3 0.5 0.5 ...
+#&gt;  $ stat.abund_mean           : num  10.58 2.27 11.67 4.71 6.87 ...
+#&gt;  $ stat.no_sites_recorded    : int  33 62 51 29 42 37 29 111 38 32 ...
+#&gt;  $ SELECTION                 : chr  "all" "all_2" "all_2" "all" ...</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

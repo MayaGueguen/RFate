@@ -6,8 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create <em>Simul_parameters</em> parameter file for a <code>FATE-HD</code>
-simulation — PRE_FATE.params_simulParameters • RFate</title>
+<title>Create a graphical representation of the evolution of PFG coverage
+for a <code>FATE-HD</code> simulation — POST_FATE.graphic_evolutionCoverage • RFate</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -28,11 +28,12 @@ simulation — PRE_FATE.params_simulParameters • RFate</title>
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Create <em>Simul_parameters</em> parameter file for a <code>FATE-HD</code>
-simulation — PRE_FATE.params_simulParameters" />
+<meta property="og:title" content="Create a graphical representation of the evolution of PFG coverage
+for a <code>FATE-HD</code> simulation — POST_FATE.graphic_evolutionCoverage" />
 
-<meta property="og:description" content="This script is designed to create one (or several) parameter file
-containing PARAMETER FILENAMES used in FATE-HD model." />
+<meta property="og:description" content="This script is designed to create a parameter file containing
+simulation years at which the FATE-HD software must save rasters of
+PFG abundances or simulation objects." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -138,17 +139,19 @@ containing PARAMETER FILENAMES used in FATE-HD model." />
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create <em>Simul_parameters</em> parameter file for a <code>FATE-HD</code>
-simulation</h1>
-    <small>Source: <a href='https://github.com/MayaGueguen/RFate.git/blob/master/R/PRE_FATE.params_simulParameters.R'><code>R/PRE_FATE.params_simulParameters.R</code></a></small>
+    <h1>Create a graphical representation of the evolution of PFG coverage
+for a <code>FATE-HD</code> simulation</h1>
+    <small>Source: <a href='https://github.com/MayaGueguen/RFate.git/blob/master/R/POST_FATE.graphic_evolutionCoverage.R'><code>R/POST_FATE.graphic_evolutionCoverage.R</code></a></small>
     </div>
 
     
-    <p>This script is designed to create one (or several) parameter file
-containing <code>PARAMETER FILENAMES</code> used in <code>FATE-HD</code> model.</p>
+    <p>This script is designed to create a parameter file containing
+simulation years at which the <code>FATE-HD</code> software must save rasters of
+PFG abundances or simulation objects.</p>
     
 
-    <pre class="usage"><span class='fu'>PRE_FATE.params_simulParameters</span>(<span class='no'>name.simulation</span>, <span class='no'>name.mask</span>)</pre>
+    <pre class="usage"><span class='fu'>POST_FATE.graphic_evolutionCoverage</span>(<span class='no'>name.simulation</span>, <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -159,104 +162,23 @@ containing <code>PARAMETER FILENAMES</code> used in <code>FATE-HD</code> model.<
 or simulation name of the <code>FATE-HD</code> simulation</p></td>
     </tr>
     <tr>
-      <th>name.mask</th>
-      <td><p>a <code>string</code> that corresponds to the file name of a raster
-mask, with either 0 or 1 within each pixel, 1 corresponding to the cells of 
-the studied area in which the succession module of the <code>FATE-HD</code> simulation
-will take place</p></td>
+      <th>file.simulParam</th>
+      <td><p><em>to be filled</em></p></td>
+    </tr>
+    <tr>
+      <th>opt.no_CPU</th>
+      <td><p>default 1 (<em>optional</em>). The number of resources that 
+can be used to parallelize the <code>unzip/zip</code> of raster files</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>.txt</code> file into the <code>name.simulation/PARAM_SIMUL/</code>
-directory with the following parameters :</p>
-<ul>
-<li><p>--NAMESPACE_CONSTANTS--</p></li>
-<li><p>--GLOBAL_PARAMS--</p></li>
-<li><p>--SAVE_DIR--</p></li>
-<li><p>--ARRAYS_SAVING_YEARS-- (<em>optional</em>)</p></li>
-<li><p>--OBJECTS_SAVING_YEARS-- (<em>optional</em>)</p></li>
-<li><p>--MASK--</p></li>
-<li><p>--MASK_CHANGE_TIME-- (<em>optional</em>)</p></li>
-<li><p>--CLIM_CHANGE_TIME-- (<em>optional</em>)</p></li>
-<li><p>--DIST_CHANGE_TIME-- (<em>optional</em>)</p></li>
-<li><p>--MASK_CHANGE_MASK-- (<em>optional</em>)</p></li>
-<li><p>--CLIM_CHANGE_MASK-- (<em>optional</em>)</p></li>
-<li><p>--DIST_CHANGE_MASK-- (<em>optional</em>)</p></li>
-<li><p>--PFG_LIFE_HISTORY_PARAMS--</p></li>
-<li><p>--PFG_DISPERSAL_PARAMS--</p></li>
-<li><p>--PFG_DISTURBANCES_PARAMS-- (<em>optional</em>)</p></li>
-<li><p>--PFG_ENVSUIT-- (<em>optional</em>)</p></li>
-<li><p>--END_OF_FILE--</p></li>
-</ul>
-
+    <p>T</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The <code>FATE-HD</code> software takes only one input parameter : a file containing
-links to other files containing all the parameters and data needed by the 
-program to run.</p>
-    <dl class='dl-horizontal'>
-  <dt>NAMESPACE_ <br /> CONSTANTS</dt><dd><p>file where constant parameters needed by 
-  the program to manage abundance values are given <br />
-  (see <code><a href='PRE_FATE.params_namespaceConstants.html'>PRE_FATE.params_namespaceConstants</a></code>)</p></dd>
-  <dt>GLOBAL_PARAMS</dt><dd><p>file where parameters related to the simulation 
-  definition are referred (e.g. number of PFG involved, number of height 
-  strata, simulation duration, computer resources, modules loaded, ...) <br />
-  (see <code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>)</p></dd>
-  <dt>SAVE_DIR</dt><dd><p>directory where simulation outputs will be stored</p></dd>
-  <dt>ARRAYS_SAVING_ <br /> YEARS (<em>optional</em>)</dt><dd><p>file containing the 
-  years for which simulation maps will be saved <br />
-  (see <code><a href='PRE_FATE.params_saveYears.html'>PRE_FATE.params_saveYears</a></code>)</p></dd>
-  <dt>OBJECTS_SAVING_ <br /> YEARS (<em>optional</em>)</dt><dd><p>file containing the 
-  years for which simulation outputs will be saved <br />
-  (see <code><a href='PRE_FATE.params_saveYears.html'>PRE_FATE.params_saveYears</a></code>)</p></dd>
-  <dt>MASK</dt><dd><p>raster mask that will define the study area</p></dd>
-  <dt>MASK_CHANGE_TIME <br /> (<em>optional</em>)</dt><dd><p>file containing the years to 
-  change rasters for the succession module <br />
-  (see <code><a href='PRE_FATE.params_changingYears.html'>PRE_FATE.params_changingYears</a></code>)</p></dd>
-  <dt>CLIM_CHANGE_TIME <br /> (<em>optional</em>)</dt><dd><p>file containing the years to 
-  change rasters for the habitat suitability module <br />
-  (see <code><a href='PRE_FATE.params_changingYears.html'>PRE_FATE.params_changingYears</a></code>)</p></dd>
-  <dt>DIST_CHANGE_TIME <br /> (<em>optional</em>)</dt><dd><p>file containing the years to 
-  change rasters for the disturbance module <br />
-  (see <code><a href='PRE_FATE.params_changingYears.html'>PRE_FATE.params_changingYears</a></code>)</p></dd>
-  <dt>MASK_CHANGE_MASK <br /> (<em>optional</em>)</dt><dd><p>file containing the files to 
-  change rasters for the succession module <br />
-  (see <code><a href='PRE_FATE.params_changingYears.html'>PRE_FATE.params_changingYears</a></code>)</p></dd>
-  <dt>CLIM_CHANGE_MASK <br /> (<em>optional</em>)</dt><dd><p>file containing the files to 
-  change rasters for the habitat suitability module <br />
-  (see <code><a href='PRE_FATE.params_changingYears.html'>PRE_FATE.params_changingYears</a></code>)</p></dd>
-  <dt>DIST_CHANGE_MASK <br /> (<em>optional</em>)</dt><dd><p>file containing the files to 
-  change rasters for the disturbance module <br />
-  (see <code><a href='PRE_FATE.params_changingYears.html'>PRE_FATE.params_changingYears</a></code>)</p></dd>
-  <dt>PFG_LIFE_HISTORY_ <br /> PARAMS</dt><dd><p>PFG life history related parameters 
-  (one by PFG) <br />
-  (see <code><a href='PRE_FATE.params_PFGsuccession.html'>PRE_FATE.params_PFGsuccession</a></code>)</p></dd>
-  <dt>PFG_DISPERSAL_ <br /> PARAMS</dt><dd><p>PFG dispersal capacity related parameters 
-  (one by PFG) <br />
-  (see <code><a href='PRE_FATE.params_PFGdispersal.html'>PRE_FATE.params_PFGdispersal</a></code>)</p></dd>
-  <dt>PFG_DISTURBANCES_ <br /> PARAMS (<em>optional</em>)</dt><dd><p>PFG disturbance 
-  related parameters in terms of resprouting and mortality (one by PFG) <br />
-  (see <code><a href='PRE_FATE.params_PFGdisturbance.html'>PRE_FATE.params_PFGdisturbance</a></code>)</p></dd>
-  <dt>PFG_ENVSUIT <br /> (<em>optional</em>)</dt><dd><p>PFG habitat suitability (one by PFG) 
-  maps for the study area</p></dd>
-</dl>
-    
-    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
-
-    <ul>
-<li><p>The links to files are <strong>NOT absolute paths</strong>. <br />
-  <em>When relative paths are used</em>, the user should be careful of the
-  folder from which the simulation is launched. <br />
-  <em>A function allows to transform these relative paths into absolute
-  ones. (!not available yet!)</em></p></li>
-<li><p><strong>The order of files matters!</strong> <br />
-  For instance the first link below <code>--PFG_LIFE_HISTORY_PARAMS--</code> flag 
-  has to match (the same PFG) with the first item below the 
-  <code>--PFG_DISPERSAL_PARAMS--</code> flag.</p></li>
-</ul>
+    <p><em>to be filled</em></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -367,18 +289,10 @@ program to run.</p>
 #&gt; 
 #&gt;   Complete table of information about PFG disturbance parameters can be find in  FATE_simulation/DATA/PFGS/ folder.</div><div class='input'>
 <span class='co'>## Create a Simulation parameter file</span>
-<span class='fu'>file.create</span>(<span class='st'>"FATE_simulation/DATA/MASK/mask.tif"</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'>PRE_FATE.params_simulParameters</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
+<span class='fu'>file.create</span>(<span class='st'>"FATE_simulation/DATA/MASK/mask.tif"</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'><a href='PRE_FATE.params_simulParameters.html'>PRE_FATE.params_simulParameters</a></span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
                                 , <span class='kw'>name.mask</span> <span class='kw'>=</span> <span class='st'>"mask.tif"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: There is no adequate file (`.txt` file starting with `MASK_changing_times`) into the folder FATE_simulation/DATA/SCENARIO</span></div><div class='output co'>#&gt; <span class='warning'>Warning: There is no adequate file (`.txt` file starting with `HS_changing_times`) into the folder FATE_simulation/DATA/SCENARIO</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'> The parameter file FATE_simulation/PARAM_SIMUL/Simul_parameters_V1.txt has been successfully created !</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'> The parameter file FATE_simulation/PARAM_SIMUL/Simul_parameters_V2.txt has been successfully created !</span></div><div class='input'>
-<span class='kw'>for</span> (<span class='no'>pfg</span> <span class='kw'>in</span> <span class='fl'>1</span>:<span class='fl'>6</span>){
-  <span class='fu'>file.create</span>(<span class='fu'>paste0</span>(<span class='st'>"FATE_simulation/DATA/PFGS/ENVSUIT/mask_PFG"</span>, <span class='no'>pfg</span>, <span class='st'>".tif"</span>))
-}
-<span class='fu'>PRE_FATE.params_simulParameters</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
-                                , <span class='kw'>name.mask</span> <span class='kw'>=</span> <span class='st'>"mask.tif"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: There is no adequate file (`.txt` file starting with `MASK_changing_times`) into the folder FATE_simulation/DATA/SCENARIO</span></div><div class='output co'>#&gt; <span class='warning'>Warning: There is no adequate file (`.txt` file starting with `HS_changing_times`) into the folder FATE_simulation/DATA/SCENARIO</span></div><div class='output co'>#&gt; <span class='warning'>Warning: `params.file` (FATE_simulation/PARAM_SIMUL/Simul_parameters_V1.txt) already exists. It will be replaced.</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'> The parameter file FATE_simulation/PARAM_SIMUL/Simul_parameters_V1.txt has been successfully created !</span></div><div class='output co'>#&gt; <span class='warning'>Warning: `params.file` (FATE_simulation/PARAM_SIMUL/Simul_parameters_V2.txt) already exists. It will be replaced.</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'> The parameter file FATE_simulation/PARAM_SIMUL/Simul_parameters_V2.txt has been successfully created !</span></div><div class='input'>                                   
-
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -389,8 +303,6 @@ program to run.</p>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#details">Details</a></li>
-
-      <li><a href="#note">Note</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

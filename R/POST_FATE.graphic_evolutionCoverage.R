@@ -96,6 +96,12 @@
 ##' file.create("FATE_simulation/DATA/MASK/mask.tif")
 ##' PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
 ##'                                 , name.mask = "mask.tif")
+##'                                 
+##'                                 
+##' POST_FATE.graphic_evolutionCoverage(name.simulation
+##'                                     , file.simulParam = "Simul_parameters_V1.txt"
+##'                                     , opt.no_CPU = 1)
+##'                                     
 ##' 
 ##' @export
 ##' 
@@ -110,6 +116,11 @@
 ##' @importFrom ggrepel geom_label_repel
 ##'
 ## END OF HEADER ###############################################################
+
+setwd("~/FATE_Bauges/")
+POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_Bauges"
+                                    , file.simulParam = "paramSimul_Graz1_CA_rcp26.txt"
+                                    , opt.no_CPU = 7)
 
 
 POST_FATE.graphic_evolutionCoverage = function(
@@ -128,8 +139,8 @@ POST_FATE.graphic_evolutionCoverage = function(
     abs.simulParams = paste0(name.simulation, "/PARAM_SIMUL/", abs.simulParams)
   } else
   {
-    .testParam_existFile(file.simulParam)
     abs.simulParams = paste0(name.simulation, "/PARAM_SIMUL/", file.simulParam)
+    .testParam_existFile(abs.simulParams)
   }
   #################################################################################################
   
