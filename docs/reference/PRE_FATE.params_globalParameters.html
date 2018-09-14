@@ -392,9 +392,10 @@ if so, some additional parameters will be required :</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
 <span class='co'>## Create a skeleton folder with the default name ('FATE_simulation')</span>
-<span class='fu'><a href='PRE_FATE.skeletonDirectory.html'>PRE_FATE.skeletonDirectory</a></span>()</div><div class='output co'>#&gt; <span class='warning'>Warning: Directory already exists! (`FATE_simulation`)</span></div><div class='input'>
+<span class='fu'><a href='PRE_FATE.skeletonDirectory.html'>PRE_FATE.skeletonDirectory</a></span>()
+
 <span class='co'>## Create a Global_parameters file</span>
 <span class='fu'>PRE_FATE.params_globalParameters</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
                                  , <span class='kw'>required.no_PFG</span> <span class='kw'>=</span> <span class='fl'>3</span>
@@ -403,8 +404,8 @@ if so, some additional parameters will be required :</p>
                                  , <span class='kw'>required.hs_option</span> <span class='kw'>=</span> <span class='fl'>1</span>
                                  , <span class='kw'>required.seeding_timestep</span> <span class='kw'>=</span> <span class='fl'>1</span>
                                  , <span class='kw'>required.seeding_duration</span> <span class='kw'>=</span> <span class='fl'>10</span>
-                                 , <span class='kw'>required.simul_duration</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: `params.file` (FATE_simulation/DATA/GLOBAL_PARAMETERS/Global_parameters_V1.txt) already exists. It will be replaced.</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'> The parameter file FATE_simulation/DATA/GLOBAL_PARAMETERS/Global_parameters_V1.txt has been successfully created !</span></div><div class='input'>
+                                 , <span class='kw'>required.simul_duration</span> <span class='kw'>=</span> <span class='fl'>100</span>)
+
 <span class='co'>## Create SEVERAL Global_parameters files</span>
 <span class='fu'>PRE_FATE.params_globalParameters</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
                                  , <span class='kw'>required.no_PFG</span> <span class='kw'>=</span> <span class='fl'>3</span>
@@ -413,10 +414,9 @@ if so, some additional parameters will be required :</p>
                                  , <span class='kw'>required.hs_option</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>,<span class='fl'>2</span>)
                                  , <span class='kw'>required.seeding_timestep</span> <span class='kw'>=</span> <span class='fl'>1</span>
                                  , <span class='kw'>required.seeding_duration</span> <span class='kw'>=</span> <span class='fl'>10</span>
-                                 , <span class='kw'>required.simul_duration</span> <span class='kw'>=</span> <span class='fl'>100</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: `params.file` (FATE_simulation/DATA/GLOBAL_PARAMETERS/Global_parameters_V1.txt) already exists. It will be replaced.</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'> The parameter file FATE_simulation/DATA/GLOBAL_PARAMETERS/Global_parameters_V1.txt has been successfully created !</span></div><div class='output co'>#&gt; <span class='warning'>Warning: `params.file` (FATE_simulation/DATA/GLOBAL_PARAMETERS/Global_parameters_V2.txt) already exists. It will be replaced.</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'> The parameter file FATE_simulation/DATA/GLOBAL_PARAMETERS/Global_parameters_V2.txt has been successfully created !</span></div><div class='input'>
-</div></pre>
+                                 , <span class='kw'>required.simul_duration</span> <span class='kw'>=</span> <span class='fl'>100</span>)
+
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

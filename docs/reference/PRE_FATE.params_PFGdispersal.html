@@ -189,19 +189,18 @@ seeds dispersed into 3 different concentric circles :</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
 <span class='co'>## Create a skeleton folder with the default name ('FATE_simulation')</span>
-<span class='fu'><a href='PRE_FATE.skeletonDirectory.html'>PRE_FATE.skeletonDirectory</a></span>()</div><div class='output co'>#&gt; <span class='warning'>Warning: Directory already exists! (`FATE_simulation`)</span></div><div class='input'>
+<span class='fu'><a href='PRE_FATE.skeletonDirectory.html'>PRE_FATE.skeletonDirectory</a></span>()
+
 <span class='co'>## Create PFG dispersal parameter files</span>
 <span class='fu'>PRE_FATE.params_PFGdispersal</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
                             , <span class='kw'>mat.PFG.disp</span> <span class='kw'>=</span> <span class='fu'>data.frame</span>(<span class='kw'>PFG</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"PFG1"</span>, <span class='st'>"PFG2"</span>, <span class='st'>"PFG3"</span>)
                                                         , <span class='kw'>d50</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>500</span>, <span class='fl'>500</span>, <span class='fl'>100</span>)
                                                         , <span class='kw'>d99</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>10000</span>, <span class='fl'>15000</span>, <span class='fl'>20000</span>)
-                                                        , <span class='kw'>ldd</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>100000</span>, <span class='fl'>50000</span>, <span class='fl'>100000</span>)))</div><div class='output co'>#&gt; <span class='warning'>Warning: `params.file` (FATE_simulation/DATA/PFGS/DISP/DISP_PFG1.txt) already exists. It will be replaced.</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'> The parameter file FATE_simulation/DATA/PFGS/DISP/DISP_PFG1.txt has been successfully created !</span></div><div class='output co'>#&gt; <span class='warning'>Warning: `params.file` (FATE_simulation/DATA/PFGS/DISP/DISP_PFG2.txt) already exists. It will be replaced.</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'> The parameter file FATE_simulation/DATA/PFGS/DISP/DISP_PFG2.txt has been successfully created !</span></div><div class='output co'>#&gt; <span class='warning'>Warning: `params.file` (FATE_simulation/DATA/PFGS/DISP/DISP_PFG3.txt) already exists. It will be replaced.</span></div><div class='output co'>#&gt; <span class='message'></span>
-#&gt; <span class='message'> The parameter file FATE_simulation/DATA/PFGS/DISP/DISP_PFG3.txt has been successfully created !</span></div><div class='input'>
-</div></pre>
+                                                        , <span class='kw'>ldd</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>100000</span>, <span class='fl'>50000</span>, <span class='fl'>100000</span>)))
+
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
