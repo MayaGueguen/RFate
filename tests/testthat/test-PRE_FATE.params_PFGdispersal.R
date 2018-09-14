@@ -27,6 +27,7 @@ test_that("PRE_FATE.params_PFGdispersal gives error with wrong data : name.simul
 
 ## INPUTS
 test_that("PRE_FATE.params_PFGdispersal gives error with wrong data : mat.PFG.disp", {
+  if (dir.exists("FATE_simulation")) system("rm -r FATE_simulation/")
   PRE_FATE.skeletonDirectory()
   expect_error(PRE_FATE.params_PFGdispersal(name.simulation = "FATE_simulation")
                , "`mat.PFG.disp` must be a data.frame")

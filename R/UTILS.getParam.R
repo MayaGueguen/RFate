@@ -31,22 +31,37 @@
     stop("Wrong type of data!\n `is.num` must be logical")
   }
   
+  param.name = params.lines
   params.lines = readLines(params.lines)
+  if (flag.split == "^--.*--$")
+  {
+    if (length(grep("--END_OF_FILE--", params.lines)) == 0)
+    {
+      stop(paste0("Wrong type of data!\n `flag` (--END_OF_FILE--) is not found within `params.lines` (", param.name, ")"))
+    }
+  }
+  if (length(grep(flag.split, params.lines)) <= ifelse(flag.split == "^--.*--$", 1, 0)){
+    stop(paste0("Wrong type of data!\n `flag.split` (", flag.split, ") is not found within `params.lines` (", param.name, ")"))
+  }
   if (length(grep(flag, params.lines)) == 0){
-    stop("Wrong type of data!\n `flag` is not found within `params.lines`")
+    stop(paste0("Wrong type of data!\n `flag` (", flag, ") is not found within `params.lines` (", param.name, ")"))
   }
-  if (length(grep(flag.split, params.lines)) == 0){
-    stop("Wrong type of data!\n `flag.split` is not found within `params.lines`")
-  }
-
-
+  
   if(flag.split == " "){
     value.line = grep(flag, params.lines, value = TRUE) #params.lines[ind.flag]
     value.line = unlist(strsplit(value.line, split = flag.split))[-1]
   } else {
     ind.flag.split = grep(flag.split, params.lines)
     ind.flag = grep(paste0("--", flag, "--"), params.lines)
+    if (length(ind.flag) == 0)
+    {
+      stop(paste0("Wrong type of data!\n `flag` (", flag, ") is not found within `params.lines` (", param.name, ")"))
+    }
     ind.start = which(ind.flag.split == ind.flag)
+    if (ind.flag.split[ind.start + 1] == ind.start + 1)
+    {
+      stop(paste0("Wrong type of data!\n `flag` (", flag, ") does not contain any value"))
+    }
     
     ind1 = (ind.flag.split[ind.start] + 1)
     ind2 = ifelse(length(ind.flag.split) == 1

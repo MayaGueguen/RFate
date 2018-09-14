@@ -37,10 +37,16 @@
 ##' maps are compressed again :
 ##' 
 ##' \itemize{
-##'   \item{The evolution of \strong{space occupancy} of each Plant Functional
-##'   Group through simulation time.}
-##'   \item{The evolution of \strong{abundance} of each Plant Functional
-##'   Group through simulation time.} 
+##'   \item{the evolution of \strong{space occupancy} of each Plant Functional
+##'   Group through simulation time, with \emph{space occupancy} representing
+##'   the percentage of pixels within the mask of studied area where the PFG
+##'   is present
+##'   }
+##'   \item{the evolution of \strong{abundance} of each Plant Functional
+##'   Group through simulation time, with \emph{abundance} being the sum over
+##'   the whole studied area of the PFG abundances (\code{FATE-HD} 
+##'   \emph{arbitrary unit})
+##'   }
 ##' }
 ##' 
 ##' 
@@ -100,13 +106,17 @@ POST_FATE.graphic_evolutionCoverage = function(
   , opt.no_CPU = 1
 ){
   
-  
   .testParam_existFolder(name.simulation, "PARAM_SIMUL/")
   .testParam_existFolder(name.simulation, "RESULTS/")
+  .testParam_existFolder(name.simulation, "DATA/")
   
-  if (is.null(file.simulParam))
+  if (.testParam_notDef(file.simulParam) || nchar(file.simulParam) == 0)
   {
     abs.simulParams = list.files(paste0(name.simulation, "/PARAM_SIMUL/"))
+    if (length(abs.simulParams) == 0)
+    {
+      stop(paste0("Missing data!\n The folder ", name.simulation, "/PARAM_SIMUL/ does not contain adequate files"))
+    }
     abs.simulParams = paste0(name.simulation, "/PARAM_SIMUL/", abs.simulParams)
   } else
   {
@@ -127,7 +137,7 @@ POST_FATE.graphic_evolutionCoverage = function(
                          , flag = "SAVE_DIR"
                          , flag.split = "^--.*--$"
                          , is.num = FALSE)
-    .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save)))
+    .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/"))
     
     dir.output.perPFG.allStrata = paste0(name.simulation, "/RESULTS/", basename(dir.save), "/ABUND_perPFG_allStrata/")
     .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/ABUND_perPFG_allStrata/"))
@@ -154,7 +164,10 @@ POST_FATE.graphic_evolutionCoverage = function(
                        , flag = "NB_FG"
                        , flag.split = " "
                        , is.num = TRUE)
-    
+    if (length(no_PFG) == 0 || .testParam_notNum(no_PFG))
+    {
+      stop(paste0("Missing data!\n The number of PFG (NB_FG) within ", file.globalParam, " does not contain any value"))
+    }
     
     ## Get PFG names ---------------------------------------------------------------
     PFG = .getParam(params.lines = abs.simulParam
@@ -163,13 +176,19 @@ POST_FATE.graphic_evolutionCoverage = function(
                     , is.num = FALSE)
     pattern = paste0(name.simulation, "/DATA/PFGS/SUCC/SUCC_")
     PFG = sub(".txt", "", sub(pattern, "", PFG))
-    
+    if (length(PFG) != no_PFG)
+    {
+      stop(paste0("Missing data!\n The number of PFG (NB_FG) within ", file.globalParam
+                  , " is different from the number of PFG files contained in ", name.simulation, "/DATA/PFGS/SUCC/"))
+    }
     
     ## Get raster mask -------------------------------------------------------------
     file.mask = .getParam(params.lines = abs.simulParam
                           , flag = "MASK"
                           , flag.split = "^--.*--$"
                           , is.num = FALSE)
+    .testParam_existFile(file.mask)
+    
     ras.mask = raster(file.mask)
     ras.mask[which(ras.mask[] == 0)] = NA
     ind_1_mask = which(ras.mask[] == 1)
@@ -193,9 +212,17 @@ POST_FATE.graphic_evolutionCoverage = function(
                          "_",
                          PFG,
                          "_STRATA_all.tif")
+      if (length(which(file.exists(file_name))) == 0)
+      {
+        stop(paste0("Missing data!\n The names of PFG extracted from files within ", name.simulation, "/DATA/PFGS/SUCC/ : "
+                    , paste0("\n", PFG, collapse = "\n")
+                    , "\n is different from the files contained in ", dir.output.perPFG.allStrata
+                    , "They should be : "
+                    , paste0("\n", file_name, collapse = "\n")))
+      }
       gp = PFG[which(file.exists(file_name))]
       file_name = file_name[which(file.exists(file_name))]
-      
+
       ras = stack(file_name) * ras.mask
       ras = as.data.frame(ras)
       ## calculate the % of cover of each PPFG

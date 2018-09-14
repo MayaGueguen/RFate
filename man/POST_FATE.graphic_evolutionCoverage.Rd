@@ -53,10 +53,16 @@ Informations extracted lead to the production of two graphics before the
 maps are compressed again :
 
 \itemize{
-  \item{The evolution of \strong{space occupancy} of each Plant Functional
-  Group through simulation time.}
-  \item{The evolution of \strong{abundance} of each Plant Functional
-  Group through simulation time.} 
+  \item{the evolution of \strong{space occupancy} of each Plant Functional
+  Group through simulation time, with \emph{space occupancy} representing
+  the percentage of pixels within the mask of studied area where the PFG
+  is present
+  }
+  \item{the evolution of \strong{abundance} of each Plant Functional
+  Group through simulation time, with \emph{abundance} being the sum over
+  the whole studied area of the PFG abundances (\code{FATE-HD} 
+  \emph{arbitrary unit})
+  }
 }
 }
 \examples{
