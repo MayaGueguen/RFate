@@ -174,15 +174,15 @@ test_that("POST_FATE.graphic_evolutionCoverage gives error with wrong data : fil
                                                    , file.simulParam = "ParamSimul.txt")
                , "Wrong name file given!\n `FATE_simulation/Mask.tif` does not exist"
                , fixed = TRUE)
-  cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
-      , file = "FATE_simulation/Mask.tif")
-  expect_error(POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation"
-                                                   , file.simulParam = "ParamSimul.txt")
-               , "Missing data!\n The names of PFG extracted from files within FATE_simulation/DATA/PFGS/SUCC/"
-               , fixed = TRUE)
+  # cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
+  #     , file = "FATE_simulation/Mask.tif")
+  # expect_error(POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation"
+  #                                                  , file.simulParam = "ParamSimul.txt")
+  #              , "Missing data!\n The names of PFG extracted from files within FATE_simulation/DATA/PFGS/SUCC/"
+  #              , fixed = TRUE)
   
-  cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
-      , file = "FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_1_Hop_STRATA_all.tif")
+  # cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
+  #     , file = "FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_1_Hop_STRATA_all.tif")
   # expect_error(POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation"
   #                                                  , file.simulParam = "ParamSimul.txt")
   #              , "hop"

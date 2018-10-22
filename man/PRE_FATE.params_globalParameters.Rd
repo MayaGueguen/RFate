@@ -263,8 +263,8 @@ PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                  , required.simul_duration = 100
                                  , required.seeding_duration = 10
                                  , required.seeding_timestep = 1
-                                 , doDispersal = 1
-                                 , doHabSuitability = 1
+                                 , doDispersal = TRUE
+                                 , doHabSuitability = TRUE
                                  , HABSUIT.ref_option = 1
                                  )
                                    
@@ -275,8 +275,8 @@ PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                  , required.simul_duration = 100
                                  , required.seeding_duration = 10
                                  , required.seeding_timestep = 1
-                                 , doDispersal = 1
-                                 , doHabSuitability = 1
+                                 , doDispersal = TRUE
+                                 , doHabSuitability = TRUE
                                  , HABSUIT.ref_option = c(1,2)
                                  )
 

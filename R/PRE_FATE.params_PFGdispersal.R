@@ -12,7 +12,7 @@
 ##'              
 ##' @param name.simulation a \code{string} that corresponds to the main directory
 ##' or simulation name of the \code{FATE-HD} simulation
-##' @param mat.PFG.disp a \code{data.frame} with 4 columns : PFG, d50, d99, ldd
+##' @param mat.PFG.disp a \code{data.frame} with 5 columns : PFG, MODE, d50, d99, ldd
 ##' 
 ##' 
 ##' @details
@@ -28,11 +28,24 @@
 ##'   \item{ldd}{the long dispersal distance at which 1\% of seeds are dispersed}
 ##' }
 ##' 
+##' Three modes of dispersal are available :
+##' 
+##' \describe{
+##'   \item{uniform kernel [1]}{homogeneous dispersal within the d50, d99 and ldd circles}
+##'   \item{exponential kernel [2]}{seeds are dispersed within each concentric circle
+##'   according to a decreasing exponential density law (lambda = 1)}
+##'   \item{exponential kernel \cr with probability [3]}{seeds are dispersed within each 
+##'   concentric circle according to a decreasing exponential density law 
+##'   (lambda = 1) and a continuous decreasing probability with distance}
+##'   \item{homogeneous dispersal \cr EVERYWHERE}{\emph{(!not available YET!)}}
+##' }
+##' 
 ##' 
 ##' @return A \code{.txt} file per PFG into the \code{name.simulation/DATA/PFGS/DISP/}
 ##' directory with the following parameters :
 ##' 
 ##' \itemize{
+##'   \item MODE_DISPERS 
 ##'   \item DISPERS_DIST
 ##' }
 ##' 
@@ -45,6 +58,7 @@
 ##' ## Create PFG dispersal parameter files
 ##' PRE_FATE.params_PFGdispersal(name.simulation = "FATE_simulation"
 ##'                             , mat.PFG.disp = data.frame(PFG = c("PFG1", "PFG2", "PFG3")
+##'                                                         , MODE = 1
 ##'                                                         , d50 = c(500, 500, 100)
 ##'                                                         , d99 = c(10000, 15000, 20000)
 ##'                                                         , ldd = c(100000, 50000, 100000)))
@@ -61,45 +75,74 @@ PRE_FATE.params_PFGdispersal = function(
   
   .testParam_existFolder(name.simulation, "DATA/PFGS/DISP/")
   
-    if (.testParam_notDf(mat.PFG.disp))
+  if (.testParam_notDf(mat.PFG.disp))
   {
     .stopMessage_beDataframe("mat.PFG.disp")
   } else
   {
-    if (nrow(mat.PFG.disp) == 0 || ncol(mat.PFG.disp) != 4)
+    if (nrow(mat.PFG.disp) == 0 || ncol(mat.PFG.disp) != 5)
     {
-      .stopMessage_numRowCol("mat.PFG.disp", c("PFG", "d50", "d99", "ldd"))
+      .stopMessage_numRowCol("mat.PFG.disp", c("PFG", "MODE", "d50", "d99", "ldd"))
     }
-    if (ncol(mat.PFG.disp) == 4)
+    if (ncol(mat.PFG.disp) == 5)
     {
-      if (sum(colnames(mat.PFG.disp) == c("PFG", "d50", "d99", "ldd")) == 4)
+      if (sum(colnames(mat.PFG.disp) == c("PFG", "MODE", "d50", "d99", "ldd")) == 5)
       {
-        mat.PFG.disp = mat.PFG.disp[ , c("PFG", "d50", "d99", "ldd")]
+        mat.PFG.disp = mat.PFG.disp[ , c("PFG", "MODE", "d50", "d99", "ldd")]
       } else
       {
-        .stopMessage_columnNames("mat.PFG.disp", c("PFG", "d50", "d99", "ldd"))
+        .stopMessage_columnNames("mat.PFG.disp", c("PFG", "MODE", "d50", "d99", "ldd"))
       }
     }
     if (length(unique(mat.PFG.disp$PFG)) < nrow(mat.PFG.disp)){
       stop("Wrong type of data!\n Column `PFG` of `mat.PFG.disp` must contain different values")
     }
-    if (!is.numeric(mat.PFG.disp$d50) ||
+    if (!is.numeric(mat.PFG.disp$MODE) ||
+        !is.numeric(mat.PFG.disp$d50) ||
         !is.numeric(mat.PFG.disp$d99) ||
         !is.numeric(mat.PFG.disp$ldd)) {
-      .stopMessage_columnNumeric("mat.PFG.disp", c("d50", "d99", "ldd"))
+      .stopMessage_columnNumeric("mat.PFG.disp", c("MODE", "d50", "d99", "ldd"))
     }
-    if (length(which(is.na(mat.PFG.disp$d50))) > 0 ||
+    if (length(which(is.na(mat.PFG.disp$MODE))) > 0 ||
+        length(which(is.na(mat.PFG.disp$d50))) > 0 ||
         length(which(is.na(mat.PFG.disp$d99))) > 0 ||
         length(which(is.na(mat.PFG.disp$ldd))) > 0) {
-      .stopMessage_columnNoNA("mat.PFG.disp", c("d50", "d99", "ldd"))
+      .stopMessage_columnNoNA("mat.PFG.disp", c("MODE", "d50", "d99", "ldd"))
+    }
+    if (sum(mat.PFG.disp$MODE %in% c(1,2,3)) < nrow(mat.PFG.disp)){
+      stop("Wrong type of data!\n Column `MODE` of `mat.PFG.disp` must contain values between 1 and 3")
     }
   }
   
-  params.list = lapply(1:nrow(mat.PFG.disp), function(x) {
-    list(as.integer(mat.PFG.disp[x , c("d50", "d99", "ldd")]))
-  })
+  #################################################################################################
+  
+  ## GET DISPERSAL MODULE
+  ## 0 = no dispersal
+  ## 1 = homogeneous dispersal within the d50, d99 and ldd circles
+  ## 2 = negative exponential kernel within the d50, d99 and ldd circles
+  ## 3 = negative exponential kernel + probability decreasing with distance within the d50, d99 and ldd circles
+  ## 4 = homogeneous dispersal EVERYWHERE (!not available YET!)
+  MODE_DISPERS = mat.PFG.disp$MODE
+  
+  ## GET DISPERSAL DISTANCES
+  DISPERS_DIST = mat.PFG.disp[ , c("d50", "d99", "ldd")]
+  
+  #################################################################################################
+  
   names.params.list = mat.PFG.disp$PFG
-  names.params.list.sub = "DISPERS_DIST"
+  names.params.list.sub = c("MODE_DISPERS", "DISPERS_DIST")
+  
+  params.list = lapply(1:nrow(mat.PFG.disp), function(x) {
+    lapply(names.params.list.sub, function(y) {
+      val = get(y)
+      if (is.null(nrow(val))){
+        val = val[x]
+      } else {
+        val = as.integer(val[x, ])
+      }
+      return(val)
+    })
+  })
   
   for (i in 1:length(params.list)) {
     params = params.list[[i]]

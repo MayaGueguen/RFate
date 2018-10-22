@@ -12,8 +12,8 @@
 ##'              
 ##' @param name.simulation a \code{string} that corresponds to the main directory
 ##' or simulation name of the \code{FATE-HD} simulation
-##' @param mat.PFG.succ a \code{data.frame} with 7 columns : PFG, type, height,
-##' maturity, longevity, dispersal, light
+##' @param mat.PFG.succ a \code{data.frame} with 6 columns : PFG, type, height,
+##' maturity, longevity, light
 ##' 
 ##' 
 ##' @details
@@ -28,16 +28,6 @@
 ##'   \item{height}{the maximum or average height that reach the PFG}
 ##'   \item{maturity}{the age from which the PFG can reproduce}
 ##'   \item{longevity}{the maximum or average lifespan of the PFG}
-##'   \item{dispersal}{the method of dispersal of the PFG
-##'   \itemize{
-##'     \item 0 = no dispersal
-##'     \item 1 = homogeneous dispersal within the d50, d99 and ldd circles
-##'     \item 2 = negative exponential kernel within the d50, d99 and ldd circles
-##'     \item 3 = negative exponential kernel + probability decreasing with distance
-##'     within the d50, d99 and ldd circles
-##'     \item 4 = homogeneous dispersal EVERYWHERE \emph{(!not available YET!)}
-##'   }
-##'   }
 ##'   \item{light}{a value between 0 and 10 corresponding to the Ellenberg value
 ##'   of the PFG \cr \cr}
 ##' }
@@ -162,7 +152,6 @@
 ##'                                                         , height = c(10, 250, 36, 68, 1250, 550)
 ##'                                                         , maturity = c(5, 5, 3, 3, 8, 9)
 ##'                                                         , longevity = c(12, 200, 25, 4, 110, 70)
-##'                                                         , dispersal = 1
 ##'                                                         , light = c(4, 6, 3, 6, 5, 5)))
 ##' 
 ##' @export
@@ -183,17 +172,17 @@ PRE_FATE.params_PFGsuccession = function(
   {
     .stopMessage_beDataframe("mat.PFG.succ")
   }
-  if (nrow(mat.PFG.succ) == 0 || ncol(mat.PFG.succ) != 7)
+  if (nrow(mat.PFG.succ) == 0 || ncol(mat.PFG.succ) != 6)
   {
-    .stopMessage_numRowCol("mat.PFG.succ", c("PFG", "type","height", "maturity", "longevity", "dispersal", "light"))
+    .stopMessage_numRowCol("mat.PFG.succ", c("PFG", "type","height", "maturity", "longevity", "light"))
   }
-  if (ncol(mat.PFG.succ) == 7)
+  if (ncol(mat.PFG.succ) == 6)
   {
-    if (sum(colnames(mat.PFG.succ) == c("PFG", "type","height", "maturity", "longevity", "dispersal", "light")) == 7)
+    if (sum(colnames(mat.PFG.succ) == c("PFG", "type","height", "maturity", "longevity", "light")) == 6)
     {
-      mat.PFG.succ = mat.PFG.succ[ , c("PFG", "type","height", "maturity", "longevity", "dispersal", "light")]
+      mat.PFG.succ = mat.PFG.succ[ , c("PFG", "type","height", "maturity", "longevity", "light")]
     } else {
-      .stopMessage_columnNames("mat.PFG.succ", c("PFG", "type","height", "maturity", "longevity", "dispersal", "light"))
+      .stopMessage_columnNames("mat.PFG.succ", c("PFG", "type","height", "maturity", "longevity", "light"))
     }
   }
   if (length(which(is.na(mat.PFG.succ$PFG))) > 0 ||
@@ -206,21 +195,16 @@ PRE_FATE.params_PFGsuccession = function(
   if (!is.numeric(mat.PFG.succ$height) ||
       !is.numeric(mat.PFG.succ$maturity) ||
       !is.numeric(mat.PFG.succ$longevity) ||
-      !is.numeric(mat.PFG.succ$dispersal) ||
       !is.numeric(mat.PFG.succ$light))
   {
-    .stopMessage_columnNumeric("mat.PFG.succ", c("height", "maturity", "longevity", "dispersal", "light"))
+    .stopMessage_columnNumeric("mat.PFG.succ", c("height", "maturity", "longevity", "light"))
   }
   if (length(which(is.na(mat.PFG.succ$height))) > 0 ||
       length(which(is.na(mat.PFG.succ$maturity))) > 0 ||
       length(which(is.na(mat.PFG.succ$longevity))) > 0 ||
-      length(which(is.na(mat.PFG.succ$dispersal))) > 0 ||
       length(which(is.na(mat.PFG.succ$light))) > 0)
   {
-    .stopMessage_columnNoNA("mat.PFG.succ", c("height", "maturity", "longevity", "dispersal", "light"))
-  }
-  if (sum(mat.PFG.succ$dispersal %in% seq(0,3)) < nrow(mat.PFG.succ)){
-    stop("Wrong type of data!\n Column `dispersal` of `mat.PFG.succ` must contain values between 0 and 3")
+    .stopMessage_columnNoNA("mat.PFG.succ", c("height", "maturity", "longevity", "light"))
   }
   if (sum(mat.PFG.succ$light %in% seq(0,10)) < nrow(mat.PFG.succ)){
     stop("Wrong type of data!\n Column `light` of `mat.PFG.succ` must contain values between 0 and 10")
@@ -358,16 +342,6 @@ PRE_FATE.params_PFGsuccession = function(
   
   #################################################################################################
   
-  ## GET DISPERSAL MODULE
-  ## 0 = no dispersal
-  ## 1 = homogeneous dispersal within the d50, d99 and ldd circles
-  ## 2 = negative exponential kernel within the d50, d99 and ldd circles
-  ## 3 = negative exponential kernel + probability decreasing with distance within the d50, d99 and ldd circles
-  ## 4 = homogeneous dispersal EVERYWHERE (!not available YET!)
-  MODE_DISPERS = mat.PFG.succ$dispersal
-  
-  #################################################################################################
-  
   ## GET GERMINATION RATE depending on light conditions
   ##   = these rates should express a deviation from the
   ##     germination rate in optimal conditions (=100%)
@@ -448,7 +422,6 @@ PRE_FATE.params_PFGsuccession = function(
                             , "MAX_ABUNDANCE"
                             , "IMM_SIZE"
                             , "CHANG_STR_AGES"
-                            , "MODE_DISPERS"
                             , "ACTIVE_GERM"
                             , "SHADE_TOL"
                             , "SEED_POOL_LIFE"
@@ -465,7 +438,6 @@ PRE_FATE.params_PFGsuccession = function(
                            , "MAX_ABUNDANCE"
                            , "IMM_SIZE"
                            , paste0("CHANG_STR_AGES_to_str_", 1:length(STRATA_LIMITS))
-                           , "MODE_DISPERS"
                            , paste0("ACTIVE_GERM_for_", c("L", "M", "H"))
                            , paste0("SHADE_TOL_for_",
                                     c("GeL", "GeM", "GeH", "ImL", "ImM", "ImH", "MaL", "MaM", "MaH"))

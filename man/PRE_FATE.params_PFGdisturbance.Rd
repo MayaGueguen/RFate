@@ -140,7 +140,6 @@ PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
                                                         , height = c(10, 250, 36, 68, 1250, 550)
                                                         , maturity = c(5, 5, 3, 3, 8, 9)
                                                         , longevity = c(12, 200, 25, 4, 110, 70)
-                                                        , dispersal = 1
                                                         , light = c(4, 6, 3, 6, 5, 5)))
                                                         
 ## Create PFG disturbance parameter files

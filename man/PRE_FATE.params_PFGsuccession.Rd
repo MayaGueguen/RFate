@@ -11,8 +11,8 @@ PRE_FATE.params_PFGsuccession(name.simulation, mat.PFG.succ)
 \item{name.simulation}{a \code{string} that corresponds to the main directory
 or simulation name of the \code{FATE-HD} simulation}
 
-\item{mat.PFG.succ}{a \code{data.frame} with 7 columns : PFG, type, height,
-maturity, longevity, dispersal, light}
+\item{mat.PFG.succ}{a \code{data.frame} with 6 columns : PFG, type, height,
+maturity, longevity, light}
 }
 \value{
 A \code{.txt} file per PFG into the \code{name.simulation/DATA/PFGS/SUCC/}
@@ -67,16 +67,6 @@ Several parameters are required for each PFG in order to set up this life cycle 
   \item{height}{the maximum or average height that reach the PFG}
   \item{maturity}{the age from which the PFG can reproduce}
   \item{longevity}{the maximum or average lifespan of the PFG}
-  \item{dispersal}{the method of dispersal of the PFG
-  \itemize{
-    \item 0 = no dispersal
-    \item 1 = homogeneous dispersal within the d50, d99 and ldd circles
-    \item 2 = negative exponential kernel within the d50, d99 and ldd circles
-    \item 3 = negative exponential kernel + probability decreasing with distance
-    within the d50, d99 and ldd circles
-    \item 4 = homogeneous dispersal EVERYWHERE \emph{(!not available YET!)}
-  }
-  }
   \item{light}{a value between 0 and 10 corresponding to the Ellenberg value
   of the PFG \cr \cr}
 }
@@ -162,7 +152,6 @@ PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
                                                         , height = c(10, 250, 36, 68, 1250, 550)
                                                         , maturity = c(5, 5, 3, 3, 8, 9)
                                                         , longevity = c(12, 200, 25, 4, 110, 70)
-                                                        , dispersal = 1
                                                         , light = c(4, 6, 3, 6, 5, 5)))
 
 }
