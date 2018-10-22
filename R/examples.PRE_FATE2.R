@@ -15,13 +15,11 @@ PRE_FATE.params_namespaceConstants(name.simulation = "FATE_simulation"
 
 ## Create a Global_parameters file
 PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
-                                 , required.succ_option = "fateh"
                                  , required.no_PFG = 6
                                  , required.no_STRATA = 5
-                                 , required.hs_option = 1
-                                 , required.seeding_timestep = 1
+                                 , required.simul_duration = 100
                                  , required.seeding_duration = c(10,50)
-                                 , required.simul_duration = 100)
+                                 , required.seeding_timestep = 1)
 
 ## Create a SAVE_year_maps or/and SAVE_year_objects parameter file
 PRE_FATE.params_saveYears(name.simulation = "FATE_simulation"

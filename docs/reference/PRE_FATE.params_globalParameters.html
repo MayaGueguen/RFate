@@ -149,11 +149,11 @@ containing <code>GLOBAL PARAMETERS</code> used in <code>FATE-HD</code> model.</p
     
 
     <pre class="usage"><span class='fu'>PRE_FATE.params_globalParameters</span>(<span class='no'>name.simulation</span>, <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='no'>required.no_PFG</span>, <span class='no'>required.no_STRATA</span>, <span class='no'>required.succ_option</span>, <span class='no'>required.hs_option</span>,
-  <span class='no'>required.seeding_timestep</span>, <span class='no'>required.seeding_duration</span>, <span class='no'>required.simul_duration</span>,
-  <span class='kw'>doDisturbances</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>DIST.no</span>, <span class='no'>DIST.no_sub</span>, <span class='no'>DIST.freq</span>, <span class='kw'>doSoil</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>doFire</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>doDrought</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>doHabStability</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>doAliens</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='no'>required.no_PFG</span>, <span class='no'>required.no_STRATA</span>, <span class='no'>required.simul_duration</span>,
+  <span class='no'>required.seeding_duration</span>, <span class='no'>required.seeding_timestep</span>, <span class='kw'>doDispersal</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>doHabSuitability</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>HABSUIT.ref_option</span>, <span class='kw'>doDisturbances</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>DIST.no</span>, <span class='no'>DIST.no_sub</span>, <span class='no'>DIST.freq</span>, <span class='kw'>doSoil</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>doFire</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>doDrought</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>doHabStability</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>doAliens</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -178,15 +178,14 @@ can be used to parallelize the <code>FATE-HD</code> simulation</p></td>
 height strata</p></td>
     </tr>
     <tr>
-      <th>required.succ_option</th>
-      <td><p>a <code>string</code> to choose if the simulation will
-include habitat suitability (<em>fateh</em>) or not (<em>fate</em>)</p></td>
+      <th>required.simul_duration</th>
+      <td><p>an <code>integer</code> corresponding to the 
+duration of simulation (<em>in years</em>)</p></td>
     </tr>
     <tr>
-      <th>required.hs_option</th>
-      <td><p>an <code>integer</code> corresponding to the way of 
-simulating the habitat suitability variation between years for each PFG, 
-either random (1) or PFG specific (2)</p></td>
+      <th>required.seeding_duration</th>
+      <td><p>an <code>integer</code> corresponding to the 
+duration of seeding (<em>in years</em>)</p></td>
     </tr>
     <tr>
       <th>required.seeding_timestep</th>
@@ -195,14 +194,22 @@ time interval at which occurs the seeding, and until the seeding duration
  is not over (<em>in years</em>)</p></td>
     </tr>
     <tr>
-      <th>required.seeding_duration</th>
-      <td><p>an <code>integer</code> corresponding to the 
-duration of seeding (<em>in years</em>)</p></td>
+      <th>doDispersal</th>
+      <td><p>default <code>FALSE</code>. If <code>TRUE</code>, seed dispersal is 
+activated in the <code>FATE-HD</code> simulation, and associated parameters are 
+required</p></td>
     </tr>
     <tr>
-      <th>required.simul_duration</th>
-      <td><p>an <code>integer</code> corresponding to the 
-duration of simulation (<em>in years</em>)</p></td>
+      <th>doHabSuitability</th>
+      <td><p>default <code>FALSE</code>. If <code>TRUE</code>, habitat
+suitability is activated in the <code>FATE-HD</code> simulation, and associated 
+parameters are required</p></td>
+    </tr>
+    <tr>
+      <th>HABSUIT.ref_option</th>
+      <td><p>an <code>integer</code> corresponding to the way of 
+simulating the habitat suitability variation between years for each PFG, 
+either random (1) or PFG specific (2)</p></td>
     </tr>
     <tr>
       <th>doDisturbances</th>
@@ -252,14 +259,23 @@ directory with the following parameters :</p>
 <li><p>NB_CPUS</p></li>
 <li><p>NB_FG</p></li>
 <li><p>NB_STRATUM</p></li>
-<li><p>SUCC_MOD</p></li>
-<li><p>ENVSUIT_OPTION</p></li>
-<li><p>SEEDING_TIMESTEP</p></li>
+<li><p>SIMULATION_DURATION</p></li>
 <li><p>SEEDING_DURATION</p></li>
-<li><p>SIMULATION_TIME</p></li>
+<li><p>SEEDING_TIMESTEP <br /> <br /></p></li>
 </ul>
 
-<p>If the simulation includes disturbances :</p>
+<p>If the simulation includes <em>dispersal</em> :</p>
+<ul>
+<li><p>DO_DISPERSAL</p></li>
+</ul>
+
+<p>If the simulation includes <em>habitat suitability</em> :</p>
+<ul>
+<li><p>DO_HAB_SUITABILITY</p></li>
+<li><p>HABSUIT_OPTION</p></li>
+</ul>
+
+<p>If the simulation includes <em>disturbances</em> :</p>
 <ul>
 <li><p>DO_DISTURBANCES</p></li>
 <li><p>NB_DISTURBANCES</p></li>
@@ -267,7 +283,7 @@ directory with the following parameters :</p>
 <li><p>FREQ_DISTURBANCES</p></li>
 </ul>
 
-<p>If the simulation includes soil competition :</p>
+<p>If the simulation includes <em>soil competition</em> :</p>
 <ul>
 <li><p>DO_SOIL_COMPETITION</p></li>
 <li><p>SOIL_DEFAULT_VALUE</p></li>
@@ -275,7 +291,7 @@ directory with the following parameters :</p>
 <li><p>SOIL_CATEGORIES_TRESHOLDS</p></li>
 </ul>
 
-<p>If the simulation includes drought disturbances :</p>
+<p>If the simulation includes <em>drought disturbances</em> :</p>
 <ul>
 <li><p>DO_DROUGHT_DISTURBANCES</p></li>
 <li><p>NB_SUBDROUGHT</p></li>
@@ -283,13 +299,13 @@ directory with the following parameters :</p>
 <li><p>CHRONO_CURR_DROUGHT</p></li>
 </ul>
 
-<p>If the simulation includes habitat stability check :</p>
+<p>If the simulation includes <em>habitat stability check</em> :</p>
 <ul>
 <li><p>DO_HAB_STABILITY</p></li>
 <li><p>NB_HABITATS</p></li>
 </ul>
 
-<p>If the simulation includes aliens introduction :</p>
+<p>If the simulation includes <em>aliens introduction</em> :</p>
 <ul>
 <li><p>DO_ALIENS_DISTURBANCE</p></li>
 <li><p>FREQ_ALIENS</p></li>
@@ -309,17 +325,34 @@ general characteristics of the simulation :</p>
 <li><p><em>required.no_STRATA</em> : the number of height strata that 
     will be used into the succession module.  
     This number should match with the maximum number of strata possible
-    defined into the PFG SUCC files.</p></li>
+    defined into the PFG SUCC files. <br /> <br /></p></li>
 </ul></p></dd>
-  <dt>Habitat suitability</dt><dd><p><ul>
-<li><p><em>required.succ_option</em> : if the simulation will include 
-    habitat suitability filter (<em>fateh</em>) or not (<em>fate</em>). <br />
-    This filter is based on maps given for each PFG, with values between 
-    0 and 1 corresponding to the probability of presence of the group in 
-    each pixel. Each year (timestep), this value will be compared to a 
-    reference value, and if superior, the PFG will be able to grow and
-    survive.</p></li>
-<li><p><em>required.hs_option</em> : the habitat suitability reference
+  <dt>Simulation timing</dt><dd><p><ul>
+<li><p><em>required.simul_duration</em> : the duration of simulation 
+    (<em>in years</em>)</p></li>
+<li><p><em>required.seeding_duration</em> : the duration of seeding 
+    (<em>in years</em>)</p></li>
+<li><p><em>required.seeding_timestep</em> : the time interval at which 
+    occurs the seeding, and until the seeding duration is not over 
+    (<em>in years</em>) <br /> <br /></p></li>
+</ul></p></dd>
+</dl>
+    <p>The other modules of <code>FATE-HD</code> can be activated within this file, and
+if so, some additional parameters will be required :</p>
+<dl class='dl-horizontal'>
+  <dt>DISPERSAL</dt><dd><p><br /> <br /></p></dd>
+  <dt>HABITAT SUITABILITY</dt><dd><p>= to influence plants fecundity and seed 
+  recruitment according to PFG preferences for habitat conditions <br />
+  = filter based 
+  on maps given for each PFG within the <em>Simul_parameters</em> file 
+  with the <code>PFG_HAB_MASK</code> flag. <br /> <br />
+  These maps must contain values 
+  between 0 and 1 corresponding to the probability of presence of the 
+  group in each pixel. Each year (timestep), this value will be compared 
+  to a reference value, and if superior, the PFG will be able to grow and 
+  survive.
+  <ul>
+<li><p><em>HABSUIT.ref_option</em> : the habitat suitability reference
     value can be set in two possible ways :</p><ol>
 <li><p><em>random</em> : for each pixel, the reference value is drawn from
       a uniform distribution, and the same value is used for each PFG 
@@ -327,22 +360,10 @@ general characteristics of the simulation :</p>
 <li><p><em>PFG specific</em> : for each PFG, a mean value and a standard 
       deviation value are drawn from a uniform distribution. For each 
       pixel and for each PFG, the reference value is drawn from a normal 
-      distribution of parameters the mean and standard deviation of the PFG.</p></li>
+      distribution of parameters the mean and standard deviation of the PFG.
+       <br /> <br /></p></li>
 </ol></li>
 </ul></p></dd>
-  <dt>Simulation timing</dt><dd><p><ul>
-<li><p><em>required.seeding_timestep</em> : the time interval at which 
-    occurs the seeding, and until the seeding duration is not over 
-    (<em>in years</em>)</p></li>
-<li><p><em>required.seeding_duration</em> : the duration of seeding 
-    (<em>in years</em>)</p></li>
-<li><p><em>required.simul_duration</em> : the duration of simulation 
-    (<em>in years</em>) <br /> <br /></p></li>
-</ul></p></dd>
-</dl>
-    <p>The other modules of <code>FATE-HD</code> can be activated within this file, and
-if so, some additional parameters will be required :</p>
-<dl class='dl-horizontal'>
   <dt>DISTURBANCES</dt><dd><p>= defined for events such as mowing, grazing, but also
   urbanization, crops, etc. <br /> <br />
   The impact zone is defined with a mask (map with 0 or 1) and the user will
@@ -400,21 +421,25 @@ if so, some additional parameters will be required :</p>
 <span class='fu'>PRE_FATE.params_globalParameters</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
                                  , <span class='kw'>required.no_PFG</span> <span class='kw'>=</span> <span class='fl'>3</span>
                                  , <span class='kw'>required.no_STRATA</span> <span class='kw'>=</span> <span class='fl'>5</span>
-                                 , <span class='kw'>required.succ_option</span> <span class='kw'>=</span> <span class='st'>"fateh"</span>
-                                 , <span class='kw'>required.hs_option</span> <span class='kw'>=</span> <span class='fl'>1</span>
-                                 , <span class='kw'>required.seeding_timestep</span> <span class='kw'>=</span> <span class='fl'>1</span>
+                                 , <span class='kw'>required.simul_duration</span> <span class='kw'>=</span> <span class='fl'>100</span>
                                  , <span class='kw'>required.seeding_duration</span> <span class='kw'>=</span> <span class='fl'>10</span>
-                                 , <span class='kw'>required.simul_duration</span> <span class='kw'>=</span> <span class='fl'>100</span>)
+                                 , <span class='kw'>required.seeding_timestep</span> <span class='kw'>=</span> <span class='fl'>1</span>
+                                 , <span class='kw'>doDispersal</span> <span class='kw'>=</span> <span class='fl'>1</span>
+                                 , <span class='kw'>doHabSuitability</span> <span class='kw'>=</span> <span class='fl'>1</span>
+                                 , <span class='kw'>HABSUIT.ref_option</span> <span class='kw'>=</span> <span class='fl'>1</span>
+                                 )
 
 <span class='co'>## Create SEVERAL Global_parameters files</span>
 <span class='fu'>PRE_FATE.params_globalParameters</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
                                  , <span class='kw'>required.no_PFG</span> <span class='kw'>=</span> <span class='fl'>3</span>
                                  , <span class='kw'>required.no_STRATA</span> <span class='kw'>=</span> <span class='fl'>5</span>
-                                 , <span class='kw'>required.succ_option</span> <span class='kw'>=</span> <span class='st'>"fateh"</span>
-                                 , <span class='kw'>required.hs_option</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>,<span class='fl'>2</span>)
-                                 , <span class='kw'>required.seeding_timestep</span> <span class='kw'>=</span> <span class='fl'>1</span>
+                                 , <span class='kw'>required.simul_duration</span> <span class='kw'>=</span> <span class='fl'>100</span>
                                  , <span class='kw'>required.seeding_duration</span> <span class='kw'>=</span> <span class='fl'>10</span>
-                                 , <span class='kw'>required.simul_duration</span> <span class='kw'>=</span> <span class='fl'>100</span>)
+                                 , <span class='kw'>required.seeding_timestep</span> <span class='kw'>=</span> <span class='fl'>1</span>
+                                 , <span class='kw'>doDispersal</span> <span class='kw'>=</span> <span class='fl'>1</span>
+                                 , <span class='kw'>doHabSuitability</span> <span class='kw'>=</span> <span class='fl'>1</span>
+                                 , <span class='kw'>HABSUIT.ref_option</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>,<span class='fl'>2</span>)
+                                 )
 
 <span class='co'># }</span></pre>
   </div>

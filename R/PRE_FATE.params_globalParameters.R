@@ -16,18 +16,22 @@
 ##' @param required.no_PFG an \code{integer} corresponding to the number of PFG
 ##' @param required.no_STRATA an \code{integer} corresponding to the number of 
 ##' height strata
-##' @param required.succ_option a \code{string} to choose if the simulation will
-##'  include habitat suitability (\emph{fateh}) or not (\emph{fate})
-##' @param required.hs_option an \code{integer} corresponding to the way of 
-##' simulating the habitat suitability variation between years for each PFG, 
-##' either random (1) or PFG specific (2)
+##' @param required.simul_duration an \code{integer} corresponding to the 
+##' duration of simulation (\emph{in years})
+##' @param required.seeding_duration an \code{integer} corresponding to the 
+##' duration of seeding (\emph{in years})
 ##' @param required.seeding_timestep an \code{integer} corresponding to the 
 ##' time interval at which occurs the seeding, and until the seeding duration
 ##'  is not over (\emph{in years})
-##' @param required.seeding_duration an \code{integer} corresponding to the 
-##' duration of seeding (\emph{in years})
-##' @param required.simul_duration an \code{integer} corresponding to the 
-##' duration of simulation (\emph{in years})
+##' @param doDispersal default \code{FALSE}. If \code{TRUE}, seed dispersal is 
+##' activated in the \code{FATE-HD} simulation, and associated parameters are 
+##' required
+##' @param doHabSuitability default \code{FALSE}. If \code{TRUE}, habitat  
+##' suitability is activated in the \code{FATE-HD} simulation, and associated 
+##' parameters are required
+##' @param HABSUIT.ref_option an \code{integer} corresponding to the way of 
+##' simulating the habitat suitability variation between years for each PFG, 
+##' either random (1) or PFG specific (2)
 ##' @param doDisturbances default \code{FALSE}. If \code{TRUE}, disturbances 
 ##' are applied in the \code{FATE-HD} simulation, and associated parameters 
 ##' are required
@@ -58,39 +62,17 @@
 ##'     \item \emph{required.no_STRATA} : the number of height strata that 
 ##'     will be used into the succession module.  
 ##'     This number should match with the maximum number of strata possible
-##'     defined into the PFG SUCC files.
-##'   }
-##'   }
-##'   \item{Habitat suitability}{
-##'   \itemize{
-##'     \item \emph{required.succ_option} : if the simulation will include 
-##'     habitat suitability filter (\emph{fateh}) or not (\emph{fate}). \cr
-##'     This filter is based on maps given for each PFG, with values between 
-##'     0 and 1 corresponding to the probability of presence of the group in 
-##'     each pixel. Each year (timestep), this value will be compared to a 
-##'     reference value, and if superior, the PFG will be able to grow and
-##'     survive.
-##'     \item \emph{required.hs_option} : the habitat suitability reference
-##'     value can be set in two possible ways :
-##'     \enumerate{
-##'       \item \emph{random} : for each pixel, the reference value is drawn from
-##'       a uniform distribution, and the same value is used for each PFG 
-##'       within this pixel.
-##'       \item \emph{PFG specific} : for each PFG, a mean value and a standard 
-##'       deviation value are drawn from a uniform distribution. For each 
-##'       pixel and for each PFG, the reference value is drawn from a normal 
-##'       distribution of parameters the mean and standard deviation of the PFG.
-##'     }
+##'     defined into the PFG SUCC files. \cr \cr
 ##'   }
 ##'   }
 ##'   \item{Simulation timing}{
 ##'   \itemize{
-##'     \item \emph{required.seeding_timestep} : the time interval at which 
-##'     occurs the seeding, and until the seeding duration is not over 
+##'     \item \emph{required.simul_duration} : the duration of simulation 
 ##'     (\emph{in years})
 ##'     \item \emph{required.seeding_duration} : the duration of seeding 
 ##'     (\emph{in years})
-##'     \item \emph{required.simul_duration} : the duration of simulation 
+##'     \item \emph{required.seeding_timestep} : the time interval at which 
+##'     occurs the seeding, and until the seeding duration is not over 
 ##'     (\emph{in years}) \cr \cr
 ##'   }
 ##'   }
@@ -101,6 +83,34 @@
 ##' if so, some additional parameters will be required :
 ##' 
 ##' \describe{
+##'   \item{DISPERSAL}{
+##'   \cr \cr
+##'   }
+##'   \item{HABITAT SUITABILITY}{= to influence plants fecundity and seed 
+##'   recruitment according to PFG preferences for habitat conditions \cr
+##'   = filter based 
+##'   on maps given for each PFG within the \emph{Simul_parameters} file 
+##'   with the \code{PFG_HAB_MASK} flag. \cr \cr
+##'   These maps must contain values 
+##'   between 0 and 1 corresponding to the probability of presence of the 
+##'   group in each pixel. Each year (timestep), this value will be compared 
+##'   to a reference value, and if superior, the PFG will be able to grow and 
+##'   survive.
+##'   \itemize{
+##'     \item \emph{HABSUIT.ref_option} : the habitat suitability reference
+##'     value can be set in two possible ways :
+##'     \enumerate{
+##'       \item \emph{random} : for each pixel, the reference value is drawn from
+##'       a uniform distribution, and the same value is used for each PFG 
+##'       within this pixel.
+##'       \item \emph{PFG specific} : for each PFG, a mean value and a standard 
+##'       deviation value are drawn from a uniform distribution. For each 
+##'       pixel and for each PFG, the reference value is drawn from a normal 
+##'       distribution of parameters the mean and standard deviation of the PFG.
+##'        \cr \cr
+##'     }
+##'   }
+##'   }
 ##'   \item{DISTURBANCES}{= defined for events such as mowing, grazing, but also
 ##'   urbanization, crops, etc. \cr \cr
 ##'   The impact zone is defined with a mask (map with 0 or 1) and the user will
@@ -160,14 +170,25 @@
 ##'   \item NB_CPUS
 ##'   \item NB_FG
 ##'   \item NB_STRATUM
-##'   \item SUCC_MOD
-##'   \item ENVSUIT_OPTION
-##'   \item SEEDING_TIMESTEP
+##'   \item SIMULATION_DURATION
 ##'   \item SEEDING_DURATION
-##'   \item SIMULATION_TIME
+##'   \item SEEDING_TIMESTEP \cr \cr
 ##' }
 ##' 
-##' If the simulation includes disturbances :
+##' If the simulation includes \emph{dispersal} :
+##' 
+##' \itemize{
+##'   \item DO_DISPERSAL
+##' }
+##' 
+##' If the simulation includes \emph{habitat suitability} :
+##' 
+##' \itemize{
+##'   \item DO_HAB_SUITABILITY
+##'   \item HABSUIT_OPTION
+##' }
+##' 
+##' If the simulation includes \emph{disturbances} :
 ##' 
 ##' \itemize{
 ##'   \item DO_DISTURBANCES
@@ -176,7 +197,7 @@
 ##'   \item FREQ_DISTURBANCES
 ##' }
 ##' 
-##' If the simulation includes soil competition :
+##' If the simulation includes \emph{soil competition} :
 ##' 
 ##' \itemize{
 ##'   \item DO_SOIL_COMPETITION
@@ -185,7 +206,7 @@
 ##'   \item SOIL_CATEGORIES_TRESHOLDS
 ##' }
 ##' 
-##' If the simulation includes drought disturbances :
+##' If the simulation includes \emph{drought disturbances} :
 ##' 
 ##' \itemize{
 ##'   \item DO_DROUGHT_DISTURBANCES
@@ -194,14 +215,14 @@
 ##'   \item CHRONO_CURR_DROUGHT
 ##' }
 ##' 
-##' If the simulation includes habitat stability check :
+##' If the simulation includes \emph{habitat stability check} :
 ##' 
 ##' \itemize{
 ##'   \item DO_HAB_STABILITY
 ##'   \item NB_HABITATS
 ##' }
 ##' 
-##' If the simulation includes aliens introduction :
+##' If the simulation includes \emph{aliens introduction} :
 ##' 
 ##' \itemize{
 ##'   \item DO_ALIENS_DISTURBANCE
@@ -218,21 +239,25 @@
 ##' PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
 ##'                                  , required.no_PFG = 3
 ##'                                  , required.no_STRATA = 5
-##'                                  , required.succ_option = "fateh"
-##'                                  , required.hs_option = 1
-##'                                  , required.seeding_timestep = 1
+##'                                  , required.simul_duration = 100
 ##'                                  , required.seeding_duration = 10
-##'                                  , required.simul_duration = 100)
+##'                                  , required.seeding_timestep = 1
+##'                                  , doDispersal = 1
+##'                                  , doHabSuitability = 1
+##'                                  , HABSUIT.ref_option = 1
+##'                                  )
 ##'                                    
 ##' ## Create SEVERAL Global_parameters files
 ##' PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
 ##'                                  , required.no_PFG = 3
 ##'                                  , required.no_STRATA = 5
-##'                                  , required.succ_option = "fateh"
-##'                                  , required.hs_option = c(1,2)
-##'                                  , required.seeding_timestep = 1
+##'                                  , required.simul_duration = 100
 ##'                                  , required.seeding_duration = 10
-##'                                  , required.simul_duration = 100)
+##'                                  , required.seeding_timestep = 1
+##'                                  , doDispersal = 1
+##'                                  , doHabSuitability = 1
+##'                                  , HABSUIT.ref_option = c(1,2)
+##'                                  )
 ##' 
 ##' @export
 ##'
@@ -244,11 +269,12 @@ PRE_FATE.params_globalParameters = function(
   , opt.no_CPU = 1
   , required.no_PFG
   , required.no_STRATA
-  , required.succ_option
-  , required.hs_option
-  , required.seeding_timestep
-  , required.seeding_duration
   , required.simul_duration
+  , required.seeding_duration
+  , required.seeding_timestep
+  , doDispersal = FALSE
+  , doHabSuitability = FALSE
+  , HABSUIT.ref_option
   , doDisturbances = FALSE
   , DIST.no
   , DIST.no_sub
@@ -300,26 +326,32 @@ PRE_FATE.params_globalParameters = function(
       required.no_STRATA <= 0 ){
     .stopMessage_beInteger("required.no_STRATA")
   }
-  if (.testParam_notInChar(required.succ_option, inList = c("fate", "fateh")))
-  {
-    .stopMessage_content("required.succ_option", c("fate", "fateh"))
-  }
-  if (.testParam_notNum(required.hs_option) ||
-      !(required.hs_option %in% c(1,2))){
-    .stopMessage_content("required.hs_option", c("1 (random)", "2 (distribution per PFG)"))
-  }
-  if (.testParam_notNum(required.seeding_timestep) ||
-      required.seeding_timestep <= 0 ){
-    .stopMessage_beInteger("required.seeding_timestep")
+  if (.testParam_notNum(required.simul_duration) ||
+      required.simul_duration <= 0 ){
+    .stopMessage_beInteger("required.simul_duration")
   }
   if (.testParam_notNum(required.seeding_duration) ||
       required.seeding_duration <= 0 ){
     .stopMessage_beInteger("required.seeding_duration")
   }
-  if (.testParam_notNum(required.simul_duration) ||
-      required.simul_duration <= 0 ){
-    .stopMessage_beInteger("required.simul_duration")
+  if (.testParam_notNum(required.seeding_timestep) ||
+      required.seeding_timestep <= 0 ){
+    .stopMessage_beInteger("required.seeding_timestep")
   }
+  
+  if (doDispersal)
+  {
+    ## Nothing to do
+  }
+  
+  if (doHabSuitability)
+  {
+    if (.testParam_notNum(HABSUIT.ref_option) ||
+        !(HABSUIT.ref_option %in% c(1,2))){
+      .stopMessage_content("HABSUIT.ref_option", c("1 (random)", "2 (distribution per PFG)"))
+    }
+  }
+  
   if (doDisturbances)
   {
     if (.testParam_notNum(DIST.no) ||
@@ -337,9 +369,29 @@ PRE_FATE.params_globalParameters = function(
       stop("Wrong type of data!\n `DIST.freq` must contain as many values as the number of disturbances (`DIST.no`)")
     }
   }
-
+  
   #################################################################################################
   
+  if (doDispersal)
+  {
+    params.DISP = list(as.numeric(doDispersal))
+    names.params.list.DISP = c("DO_DISPERSAL")
+  } else
+  {
+    params.DISP = list(as.numeric(doDispersal))
+    names.params.list.DISP = "DO_DISPERSAL"
+  }
+  if (doHabSuitability)
+  {
+    params.HABSUIT = list(as.numeric(doHabSuitability)
+                          , HABSUIT.ref_option)
+    names.params.list.HABSUIT = c("DO_HAB_SUITABILITY"
+                                  , "HABSUIT_OPTION")
+  } else
+  {
+    params.HABSUIT = list(as.numeric(doHabSuitability))
+    names.params.list.HABSUIT = "DO_HAB_SUITABILITY"
+  }
   if (doDisturbances)
   {
     params.DIST = list(as.numeric(doDisturbances)
@@ -407,20 +459,21 @@ PRE_FATE.params_globalParameters = function(
     params.ALIEN = list(as.numeric(doAliens))
     names.params.list.ALIEN = "DO_ALIENS_DISTURBANCE"
   } 
-
+  
   #################################################################################################
   
   params.combi = expand.grid(opt.no_CPU
                              , required.no_PFG
                              , required.no_STRATA
-                             , required.succ_option
-                             , required.hs_option
-                             , required.seeding_timestep
+                             , required.simul_duration
                              , required.seeding_duration
-                             , required.simul_duration)
+                             , required.seeding_timestep
+  )
   
   params.list = lapply(1:nrow(params.combi), function(x) {
     res = lapply(1:ncol(params.combi), function(y) { params.combi[x, y] })
+    res = c(res, params.DISP)
+    res = c(res, params.HABSUIT)
     res = c(res, params.DIST)
     res = c(res, params.SOIL)
     res = c(res, params.DROUGHT)
@@ -431,11 +484,12 @@ PRE_FATE.params_globalParameters = function(
   names.params.list.sub = c("NB_CPUS"
                             , "NB_FG"
                             , "NB_STRATUM"
-                            , "SUCC_MOD"
-                            , "ENVSUIT_OPTION"
-                            , "SEEDING_TIMESTEP"
+                            , "SIMULATION_TIME"
                             , "SEEDING_DURATION"
-                            , "SIMULATION_TIME")
+                            , "SEEDING_TIMESTEP"
+  )
+  names.params.list.sub = c(names.params.list.sub, names.params.list.DISP)
+  names.params.list.sub = c(names.params.list.sub, names.params.list.HABSUIT)
   names.params.list.sub = c(names.params.list.sub, names.params.list.DIST)
   names.params.list.sub = c(names.params.list.sub, names.params.list.SOIL)
   names.params.list.sub = c(names.params.list.sub, names.params.list.DROUGHT)

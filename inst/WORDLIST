@@ -26,12 +26,10 @@ dominancy
 du
 el
 Ellenberg
-ENVSUIT
 essai
 Essai
 et
 évolutives
-fateh
 FG
 frequence
 fullfilled
@@ -47,10 +45,10 @@ Guéguen
 hab
 HAB
 HABSTAB
+HABSUIT
 Harabasz
 HD
 herbagères
-hs
 Im
 ImH
 ImL
@@ -80,6 +78,7 @@ parallelize
 PARAMS
 PFG
 PFGs
+PFG's
 PFGS
 phanerophyte
 phanerophytes
@@ -87,6 +86,7 @@ phytogéographique
 Phytosoc
 phytosociologique
 Plade
+preanalytical
 propagules
 Puigmal
 Pyrénées
@@ -101,6 +101,7 @@ ResproutIndiv
 resprouting
 Roussine
 sd
+SDM
 sér
 séries
 simul
@@ -110,11 +111,9 @@ str
 STR
 SUBDISTURBANCES
 SUBDROUGHT
-succ
 SUCC
 th
 TOL
-TRESH
 TRESHOLDS
 Typologie
 UPGMA

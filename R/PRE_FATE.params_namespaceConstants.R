@@ -56,8 +56,8 @@
 ##'   \item GLOBAL_MEDIUM_ABUND
 ##'   \item GLOBAL_HIGH_ABUND
 ##'   \item GLOBAL_MAX_BY_COHORT
-##'   \item GLOBAL_MEDIUM_RESOURCES_TRESH
-##'   \item GLOBAL_LOW_RESOURCES_TRESH
+##'   \item GLOBAL_MEDIUM_RESOURCES_THRESH
+##'   \item GLOBAL_LOW_RESOURCES_THRESH
 ##'   \item GLOBAL_FULL_SOIL_COVERAGE
 ##' }
 ##' 
@@ -184,8 +184,8 @@ PRE_FATE.params_namespaceConstants = function(
                             , "GLOBAL_MEDIUM_ABUND"
                             , "GLOBAL_HIGH_ABUND"
                             , "GLOBAL_MAX_BY_COHORT"
-                            , "GLOBAL_MEDIUM_RESOURCES_TRESH"
-                            , "GLOBAL_LOW_RESOURCES_TRESH"
+                            , "GLOBAL_MEDIUM_RESOURCES_THRESH"
+                            , "GLOBAL_LOW_RESOURCES_THRESH"
                             , "GLOBAL_FULL_SOIL_COVERAGE")
   
   for (i in 1:length(params.list)){

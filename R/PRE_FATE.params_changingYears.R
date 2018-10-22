@@ -27,22 +27,27 @@
 ##' changes over time :
 ##' 
 ##' \describe{
-##'   \item{succession}{the core module is based on a raster mask, with either 0
-##'   or 1 within each pixel, 1 corresponding to the cells in which the PFG
-##'   can try to colonize. \cr
-##'   The available pixels can change through time, 
-##'   to simulate habitat loss (e.g. urbanization) or gain (e.g. glacial retreat).}
-##'   \item{habitat suitability}{if the option \emph{fateh} of the \code{SUCC_MOD}
-##'   parameter within the \emph{Global_parameters} has been selected, PFG colonization 
-##'   depends on maps given for each PFG, with values between 0 and 1 corresponding 
-##'   to the probability of presence of the group in each pixel. \cr
+##'   \item{succession}{the CORE module is based on a raster mask, \strong{with 
+##'   either 0 or 1} within each pixel, 1 corresponding to the cells in which 
+##'   the PFG can try to colonize. 
+##'   The available pixels can change through time, to simulate habitat loss 
+##'   (e.g. urbanization) or gain (e.g. glacial retreat).}
+##'   \item{habitat suitability}{\strong{if this MODULE is activated} within the 
+##'   \emph{Global_parameters} file, PFG colonization depends on maps given for 
+##'   each PFG within the \emph{Simul_parameters} file with the \code{PFG_HAB_MASK}
+##'   flag. \cr These maps must contain \strong{values between 0 and 1} 
+##'   corresponding to the probability of presence of the group in each pixel. 
 ##'   These probabilities can change through time, as they often come from 
 ##'   Species Distribution Models (SDM) that can be based for example on climatic
 ##'   variables.}
-##'   \item{disturbances}{as for succession, each disturbance relies on a raster
-##'   mask with 0 or 1 to define where the perturbation occurs. \cr
-##'   The impacted pixels can also change through time (e.g. change in forestry
-##'   practices, expansion of grazing areas, etc). \cr \cr}
+##'   \item{disturbances}{\strong{if this MODULE is activated} within the 
+##'   \emph{Global_parameters} file, each disturbance relies on a raster given  
+##'   within the \emph{Simul_parameters} file with the \code{DIST_MASK}
+##'   flag. \cr
+##'   As for succession, this mask is filled \strong{with either 0 or 1} to 
+##'   define where the perturbation occurs. The impacted pixels can also change 
+##'   through time (e.g. change in forestry practices, expansion of grazing areas, 
+##'   etc). \cr \cr}
 ##' }
 ##' 
 ##' 

@@ -33,7 +33,7 @@
 ##'   \item{GLOBAL_PARAMS}{file where parameters related to the simulation 
 ##'   definition are referred (e.g. number of PFG involved, number of height 
 ##'   strata, simulation duration, computer resources, modules loaded, ...) \cr
-##'   (see \code{\link{PRE_FATE.params_globalParameters}})
+##'   (see \code{\link{PRE_FATE.params_globalParameters}}) \cr \cr
 ##'   }
 ##'   \item{SAVE_DIR}{directory where simulation outputs will be stored}
 ##'   \item{ARRAYS_SAVING_ \cr YEARS (\emph{optional})}{file containing the 
@@ -42,47 +42,49 @@
 ##'   }
 ##'   \item{OBJECTS_SAVING_ \cr YEARS (\emph{optional})}{file containing the 
 ##'   years for which simulation outputs will be saved \cr
-##'   (see \code{\link{PRE_FATE.params_saveYears}})
+##'   (see \code{\link{PRE_FATE.params_saveYears}}) \cr \cr
 ##'   }
 ##'   \item{MASK}{raster mask that will define the study area}
 ##'   \item{MASK_CHANGE_TIME \cr (\emph{optional})}{file containing the years to 
 ##'   change rasters for the succession module \cr
 ##'   (see \code{\link{PRE_FATE.params_changingYears}})
 ##'   }
-##'   \item{CLIM_CHANGE_TIME \cr (\emph{optional})}{file containing the years to 
-##'   change rasters for the habitat suitability module \cr
-##'   (see \code{\link{PRE_FATE.params_changingYears}})
-##'   }
-##'   \item{DIST_CHANGE_TIME \cr (\emph{optional})}{file containing the years to 
-##'   change rasters for the disturbance module \cr
-##'   (see \code{\link{PRE_FATE.params_changingYears}})
-##'   }
 ##'   \item{MASK_CHANGE_MASK \cr (\emph{optional})}{file containing the files to 
 ##'   change rasters for the succession module \cr
+##'   (see \code{\link{PRE_FATE.params_changingYears}}) \cr \cr
+##'   }
+##'   \item{PFG_LIFE_HISTORY_ \cr PARAMS}{PFG life history related parameters 
+##'   (one by PFG) \cr
+##'   (see \code{\link{PRE_FATE.params_PFGsuccession}}) \cr \cr
+##'   }
+##'   \item{PFG_DISPERSAL_ \cr PARAMS (\emph{optional})}{PFG dispersal capacity related parameters 
+##'   (one by PFG) \cr
+##'   (see \code{\link{PRE_FATE.params_PFGdispersal}}) \cr \cr
+##'   }
+##'   \item{PFG_HAB_MASK \cr (\emph{optional})}{raster masks (one by PFG) containing 
+##'   PFG habitat suitability for the study area}
+##'   \item{HAB_CHANGE_TIME \cr (\emph{optional})}{file containing the years to 
+##'   change rasters for the habitat suitability module \cr
 ##'   (see \code{\link{PRE_FATE.params_changingYears}})
 ##'   }
-##'   \item{CLIM_CHANGE_MASK \cr (\emph{optional})}{file containing the files to 
+##'   \item{HAB_CHANGE_MASK \cr (\emph{optional})}{file containing the files to 
 ##'   change rasters for the habitat suitability module \cr
+##'   (see \code{\link{PRE_FATE.params_changingYears}}) \cr \cr
+##'   }
+##'   \item{PFG_DISTURBANCES_ \cr PARAMS (\emph{optional})}{PFG disturbance 
+##'   related parameters in terms of resprouting and mortality (one by PFG) \cr
+##'   (see \code{\link{PRE_FATE.params_PFGdisturbance}})
+##'   }
+##'   \item{DIST_MASK \cr (\emph{optional})}{raster masks that will define the 
+##'   disturbance areas}
+##'   \item{DIST_CHANGE_TIME \cr (\emph{optional})}{file containing the years to 
+##'   change rasters for the disturbance module \cr
 ##'   (see \code{\link{PRE_FATE.params_changingYears}})
 ##'   }
 ##'   \item{DIST_CHANGE_MASK \cr (\emph{optional})}{file containing the files to 
 ##'   change rasters for the disturbance module \cr
 ##'   (see \code{\link{PRE_FATE.params_changingYears}})
 ##'   }
-##'   \item{PFG_LIFE_HISTORY_ \cr PARAMS}{PFG life history related parameters 
-##'   (one by PFG) \cr
-##'   (see \code{\link{PRE_FATE.params_PFGsuccession}})
-##'   }
-##'   \item{PFG_DISPERSAL_ \cr PARAMS}{PFG dispersal capacity related parameters 
-##'   (one by PFG) \cr
-##'   (see \code{\link{PRE_FATE.params_PFGdispersal}})
-##'   }
-##'   \item{PFG_DISTURBANCES_ \cr PARAMS (\emph{optional})}{PFG disturbance 
-##'   related parameters in terms of resprouting and mortality (one by PFG) \cr
-##'   (see \code{\link{PRE_FATE.params_PFGdisturbance}})
-##'   }
-##'   \item{PFG_ENVSUIT \cr (\emph{optional})}{PFG habitat suitability (one by PFG) 
-##'   maps for the study area}
 ##' }
 ##' 
 ##' 
@@ -108,22 +110,23 @@
 ##' directory with the following parameters :
 ##' 
 ##' \itemize{
-##'   \item --NAMESPACE_CONSTANTS--
-##'   \item --GLOBAL_PARAMS--
-##'   \item --SAVE_DIR--
+##'   \item \strong{--NAMESPACE_CONSTANTS--}
+##'   \item \strong{--GLOBAL_PARAMS--}
+##'   \item \strong{--SAVE_DIR--}
 ##'   \item --ARRAYS_SAVING_YEARS-- (\emph{optional})
 ##'   \item --OBJECTS_SAVING_YEARS-- (\emph{optional})
-##'   \item --MASK--
+##'   \item \strong{--MASK--}
 ##'   \item --MASK_CHANGE_TIME-- (\emph{optional})
-##'   \item --CLIM_CHANGE_TIME-- (\emph{optional})
-##'   \item --DIST_CHANGE_TIME-- (\emph{optional})
 ##'   \item --MASK_CHANGE_MASK-- (\emph{optional})
-##'   \item --CLIM_CHANGE_MASK-- (\emph{optional})
-##'   \item --DIST_CHANGE_MASK-- (\emph{optional})
-##'   \item --PFG_LIFE_HISTORY_PARAMS--
-##'   \item --PFG_DISPERSAL_PARAMS--
+##'   \item \strong{--PFG_LIFE_HISTORY_PARAMS--}
+##'   \item --PFG_DISPERSAL_PARAMS-- (\emph{optional})
+##'   \item --PFG_HAB_MASK-- (\emph{optional})
+##'   \item --HAB_CHANGE_TIME-- (\emph{optional})
+##'   \item --HAB_CHANGE_MASK-- (\emph{optional})
 ##'   \item --PFG_DISTURBANCES_PARAMS-- (\emph{optional})
-##'   \item --PFG_ENVSUIT-- (\emph{optional})
+##'   \item --DIST_MASK-- (\emph{optional})
+##'   \item --DIST_CHANGE_TIME-- (\emph{optional})
+##'   \item --DIST_CHANGE_MASK-- (\emph{optional})
 ##'   \item --END_OF_FILE--
 ##' }
 ##' 
@@ -145,13 +148,11 @@
 ##' 
 ##' ## Create a Global_parameters file
 ##' PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
-##'                                  , required.succ_option = "fateh"
 ##'                                  , required.no_PFG = 6
 ##'                                  , required.no_STRATA = 5
-##'                                  , required.hs_option = 1
-##'                                  , required.seeding_timestep = 1
+##'                                  , required.simul_duration = 100
 ##'                                  , required.seeding_duration = c(10,50)
-##'                                  , required.simul_duration = 100)
+##'                                  , required.seeding_timestep = 1)
 ##' 
 ##' ## Create a SAVE_year_maps or/and SAVE_year_objects parameter file
 ##' PRE_FATE.params_saveYears(name.simulation = "FATE_simulation"
@@ -226,7 +227,7 @@ PRE_FATE.params_simulParameters = function(
   .testParam_existFolder(name.simulation, "DATA/MASK/")
   .testParam_existFolder(name.simulation, "DATA/PFGS/SUCC/")
   .testParam_existFolder(name.simulation, "DATA/PFGS/DISP/")
-  .testParam_existFolder(name.simulation, "DATA/PFGS/ENVSUIT/")
+  .testParam_existFolder(name.simulation, "DATA/PFGS/HABSUIT/")
   .testParam_existFolder(name.simulation, "RESULTS/")
   if (.testParam_notChar(name.mask))
   {
@@ -235,7 +236,7 @@ PRE_FATE.params_simulParameters = function(
   {
     .testParam_existFile(paste0(name.simulation, "/DATA/MASK/", name.mask))
   }
-
+  
   
   #################################################################################################
   
@@ -309,26 +310,26 @@ PRE_FATE.params_simulParameters = function(
   
   #################################################################################################
   
-  dirs.ENV = list.dirs(path = paste0(name.simulation, "/DATA/PFGS/ENVSUIT")
+  dirs.HAB = list.dirs(path = paste0(name.simulation, "/DATA/PFGS/HABSUIT")
                        , full.names = FALSE
                        , recursive = FALSE)
-  if (length(dirs.ENV) > 0)
+  if (length(dirs.HAB) > 0)
   {
-    dirs.ENV = paste0(name.simulation, "/DATA/PFGS/ENVSUIT/", dirs.ENV)
+    dirs.HAB = paste0(name.simulation, "/DATA/PFGS/HABSUIT/", dirs.HAB)
   } else
   {
-    dirs.ENV = paste0(name.simulation, "/DATA/PFGS/ENVSUIT")
+    dirs.HAB = paste0(name.simulation, "/DATA/PFGS/HABSUIT")
   }
   
-  dirs.ENVSUIT = vector()
-  for (di in dirs.ENV)
+  dirs.HABSUIT = vector()
+  for (di in dirs.HAB)
   {
     files.hs = list.files(path = di
                           # , pattern = paste0("^", ty, "_changing_times")
                           , full.names = TRUE)
     if (length(files.hs) > 0)
     {
-      dirs.ENVSUIT = c(dirs.ENVSUIT, di)
+      dirs.HABSUIT = c(dirs.HABSUIT, di)
     }
   }
   
@@ -339,7 +340,7 @@ PRE_FATE.params_simulParameters = function(
   if (length(dirs.SCENARIO.MASK) > 0) sce.mask = 1:length(dirs.SCENARIO.MASK)
   if (length(dirs.SCENARIO.HS) > 0) sce.hs = 1:length(dirs.SCENARIO.HS)
   if (length(dirs.SCENARIO.DIST) > 0) sce.dist = 1:length(dirs.SCENARIO.DIST)
-  if (length(dirs.ENVSUIT) > 0) ras.hs = 1:length(dirs.ENVSUIT)
+  if (length(dirs.HABSUIT) > 0) ras.hs = 1:length(dirs.HABSUIT)
   
   PARAMS.combi = expand.grid(NAMESPACE = 1:length(files.NAMESPACE)
                              , GLOBAL = 1:length(files.GLOBAL)
@@ -347,7 +348,7 @@ PRE_FATE.params_simulParameters = function(
                              , SCENARIO.MASK = sce.mask
                              , SCENARIO.HS = sce.hs
                              , SCENARIO.DIST = sce.dist
-                             , PFG.ENVSUIT = ras.hs)
+                             , PFG.HABSUIT = ras.hs)
   
   #################################################################################################
   #################################################################################################
@@ -427,7 +428,7 @@ PRE_FATE.params_simulParameters = function(
         {
           eval(parse(text = paste0("params.combi$SCENARIO.", ty, " = files.SCENARIO.times")))
           if (ty == "HS"){
-            names.params.combi = c(names.params.combi, paste0("--CLIM_CHANGE_TIME--"))
+            names.params.combi = c(names.params.combi, paste0("--HAB_CHANGE_TIME--"))
           } else {
             names.params.combi = c(names.params.combi, paste0("--", ty, "_CHANGE_TIME--"))
           }
@@ -522,38 +523,38 @@ PRE_FATE.params_simulParameters = function(
     
     #################################################################################################
     
-    succ_model = .getParam(params.lines = globi
-                           , flag = "SUCC_MOD"
-                           , flag.split = " "
-                           , is.num = FALSE)
-    if (succ_model == "fateh")
+    doHabSuit = .getParam(params.lines = globi
+                          , flag = "DO_HAB_SUITABILITY"
+                          , flag.split = " "
+                          , is.num = TRUE)
+    if (doHabSuit)
     {
-      .testParam_existFolder(name.simulation, "DATA/PFGS/ENVSUIT/")
+      .testParam_existFolder(name.simulation, "DATA/PFGS/HABSUIT/")
     }
-    # files.PFG.HS = list.files(path = paste0(name.simulation, "/DATA/PFGS/ENVSUIT")
+    # files.PFG.HS = list.files(path = paste0(name.simulation, "/DATA/PFGS/HABSUIT")
     #                           # , pattern = "^DIST"
     #                           , full.names = TRUE)
     # if (length(files.PFG.HS) != no_PFG)
     # {
     #   warning(paste0("There is not the same number of files "
-    #                  , "into the DATA/PFGS/ENVSUIT/ folder as the number of PFG "
+    #                  , "into the DATA/PFGS/HABSUIT/ folder as the number of PFG "
     #                  , "indicated into the file "
     #                  , globi))
     # }
     
     files.PFG.HS = vector()
-    if (succ_model == "fateh")
+    if (doHabSuit)
     {
-      if (PARAMS.combi[, "PFG.ENVSUIT"][i] > 0)
+      if (PARAMS.combi[, "PFG.HABSUIT"][i] > 0)
       {
-        di = dirs.ENVSUIT[PARAMS.combi$PFG.ENVSUIT[i]]
+        di = dirs.HABSUIT[PARAMS.combi$PFG.HABSUIT[i]]
         
         files.PFG.HS = list.files(path = di
                                   , full.names = TRUE)
         if (length(files.PFG.HS) != no_PFG)
         {
           warning(paste0("There is not the same number of files "
-                         , "into the DATA/PFGS/ENVSUIT/ folder as the number of PFG "
+                         , "into the DATA/PFGS/HABSUIT/ folder as the number of PFG "
                          , "indicated into the file "
                          , globi))
         }
@@ -567,36 +568,40 @@ PRE_FATE.params_simulParameters = function(
     params.list = lapply(1:ncol(params.combi), function(x) { as.character(params.combi[, x]) })
     names.params.list = names.params.combi
     
+    params.list = c(params.list, list(files.PFG.SUCC))
+    names.params.list = c(names.params.list, "--PFG_LIFE_HISTORY_PARAMS--")
+    
     if (exists("SCENARIO.MASK"))
     {
       params.list = c(params.list, list(SCENARIO.MASK))
       names.params.list = c(names.params.list, "--MASK_CHANGE_MASK--")
     }
+    
+    doDispersal = .getParam(params.lines = globi
+                            , flag = "DO_DISPERSAL"
+                            , flag.split = " "
+                            , is.num = TRUE)
+    if (doDispersal){
+      params.list = c(params.list, list(files.PFG.DISP))
+      names.params.list = c(names.params.list, "--PFG_DISPERSAL_PARAMS--")
+    }
+    if (doHabSuit){
+      params.list = c(params.list, list(files.PFG.HS))
+      names.params.list = c(names.params.list, "--PFG_HAB_MASK--")
+    }
     if (exists("SCENARIO.HS"))
     {
       params.list = c(params.list, list(SCENARIO.HS))
-      names.params.list = c(names.params.list, "--CLIM_CHANGE_MASK--")
+      names.params.list = c(names.params.list, "--HAB_CHANGE_MASK--")
+    }
+    if (doDisturbances){
+      params.list = c(params.list, list(files.PFG.DIST))
+      names.params.list = c(names.params.list, "--PFG_DISTURBANCES_PARAMS--")
     }
     if (exists("SCENARIO.DIST"))
     {
       params.list = c(params.list, list(SCENARIO.DIST))
       names.params.list = c(names.params.list, "--DIST_CHANGE_MASK--")
-    }
-    
-    params.list = c(params.list, list(files.PFG.SUCC, files.PFG.DISP))
-    names.params.list = c(names.params.list
-                          , "--PFG_LIFE_HISTORY_PARAMS--"
-                          , "--PFG_DISPERSAL_PARAMS--")
-    
-    if (doDisturbances){
-      params.list = c(params.list, list(files.PFG.DIST))
-      names.params.list = c(names.params.list
-                            , "--PFG_DISTURBANCES_PARAMS--")
-    }
-    if (succ_model == "fateh"){
-      params.list = c(params.list, list(files.PFG.HS))
-      names.params.list = c(names.params.list
-                            , "--PFG_ENVSUIT--")
     }
     
     params = c(params.list, list(""))

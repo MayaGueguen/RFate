@@ -72,8 +72,8 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : name.si
                , "`name.simulation` does not exist or does not contain a DATA/PFGS/DISP/ folder")
   system("mkdir FATE_simulation/DATA/PFGS/DISP")
   expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation")
-               , "`name.simulation` does not exist or does not contain a DATA/PFGS/ENVSUIT/ folder")
-  system("mkdir FATE_simulation/DATA/PFGS/ENVSUIT")
+               , "`name.simulation` does not exist or does not contain a DATA/PFGS/HABSUIT/ folder")
+  system("mkdir FATE_simulation/DATA/PFGS/HABSUIT")
   expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation")
                , "`name.simulation` does not exist or does not contain a RESULTS/ folder")
   system("mkdir FATE_simulation/RESULTS")
@@ -91,13 +91,13 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : name.si
   
   ## Create a Global_parameters file
   PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
-                                   , required.succ_option = "fateh"
                                    , required.no_PFG = 6
                                    , required.no_STRATA = 5
-                                   , required.hs_option = 1
-                                   , required.seeding_timestep = 1
-                                   , required.seeding_duration = c(10,50)
                                    , required.simul_duration = 100
+                                   , required.seeding_duration = c(10,50)
+                                   , required.seeding_timestep = 1
+                                   , doHabSuitability = TRUE
+                                   , HABSUIT.ref_option = 1
                                    , doDisturbances = TRUE
                                    , DIST.no = 1
                                    , DIST.no_sub = 4
@@ -285,10 +285,10 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : name.si
                  , "The parameter file FATE_simulation/PARAM_SIMUL/Simul_parameters_V1.txt has been successfully created !")
   
   
-  system("mkdir FATE_simulation/DATA/PFGS/ENVSUIT/Scen1")
-  file.create("FATE_simulation/DATA/PFGS/ENVSUIT/Scen1/Mask_PFG1.tif")
+  system("mkdir FATE_simulation/DATA/PFGS/HABSUIT/Scen1")
+  file.create("FATE_simulation/DATA/PFGS/HABSUIT/Scen1/Mask_PFG1.tif")
   expect_warning(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif")
-                 , "There is not the same number of files into the DATA/PFGS/ENVSUIT/ folder as the number of PFG indicated into the file")
+                 , "There is not the same number of files into the DATA/PFGS/HABSUIT/ folder as the number of PFG indicated into the file")
   
 })
 

@@ -21,22 +21,23 @@ A \code{.txt} file into the \code{name.simulation/PARAM_SIMUL/}
 directory with the following parameters :
 
 \itemize{
-  \item --NAMESPACE_CONSTANTS--
-  \item --GLOBAL_PARAMS--
-  \item --SAVE_DIR--
+  \item \strong{--NAMESPACE_CONSTANTS--}
+  \item \strong{--GLOBAL_PARAMS--}
+  \item \strong{--SAVE_DIR--}
   \item --ARRAYS_SAVING_YEARS-- (\emph{optional})
   \item --OBJECTS_SAVING_YEARS-- (\emph{optional})
-  \item --MASK--
+  \item \strong{--MASK--}
   \item --MASK_CHANGE_TIME-- (\emph{optional})
-  \item --CLIM_CHANGE_TIME-- (\emph{optional})
-  \item --DIST_CHANGE_TIME-- (\emph{optional})
   \item --MASK_CHANGE_MASK-- (\emph{optional})
-  \item --CLIM_CHANGE_MASK-- (\emph{optional})
-  \item --DIST_CHANGE_MASK-- (\emph{optional})
-  \item --PFG_LIFE_HISTORY_PARAMS--
-  \item --PFG_DISPERSAL_PARAMS--
+  \item \strong{--PFG_LIFE_HISTORY_PARAMS--}
+  \item --PFG_DISPERSAL_PARAMS-- (\emph{optional})
+  \item --PFG_HAB_MASK-- (\emph{optional})
+  \item --HAB_CHANGE_TIME-- (\emph{optional})
+  \item --HAB_CHANGE_MASK-- (\emph{optional})
   \item --PFG_DISTURBANCES_PARAMS-- (\emph{optional})
-  \item --PFG_ENVSUIT-- (\emph{optional})
+  \item --DIST_MASK-- (\emph{optional})
+  \item --DIST_CHANGE_TIME-- (\emph{optional})
+  \item --DIST_CHANGE_MASK-- (\emph{optional})
   \item --END_OF_FILE--
 }
 }
@@ -58,7 +59,7 @@ program to run.
   \item{GLOBAL_PARAMS}{file where parameters related to the simulation 
   definition are referred (e.g. number of PFG involved, number of height 
   strata, simulation duration, computer resources, modules loaded, ...) \cr
-  (see \code{\link{PRE_FATE.params_globalParameters}})
+  (see \code{\link{PRE_FATE.params_globalParameters}}) \cr \cr
   }
   \item{SAVE_DIR}{directory where simulation outputs will be stored}
   \item{ARRAYS_SAVING_ \cr YEARS (\emph{optional})}{file containing the 
@@ -67,47 +68,49 @@ program to run.
   }
   \item{OBJECTS_SAVING_ \cr YEARS (\emph{optional})}{file containing the 
   years for which simulation outputs will be saved \cr
-  (see \code{\link{PRE_FATE.params_saveYears}})
+  (see \code{\link{PRE_FATE.params_saveYears}}) \cr \cr
   }
   \item{MASK}{raster mask that will define the study area}
   \item{MASK_CHANGE_TIME \cr (\emph{optional})}{file containing the years to 
   change rasters for the succession module \cr
   (see \code{\link{PRE_FATE.params_changingYears}})
   }
-  \item{CLIM_CHANGE_TIME \cr (\emph{optional})}{file containing the years to 
-  change rasters for the habitat suitability module \cr
-  (see \code{\link{PRE_FATE.params_changingYears}})
-  }
-  \item{DIST_CHANGE_TIME \cr (\emph{optional})}{file containing the years to 
-  change rasters for the disturbance module \cr
-  (see \code{\link{PRE_FATE.params_changingYears}})
-  }
   \item{MASK_CHANGE_MASK \cr (\emph{optional})}{file containing the files to 
   change rasters for the succession module \cr
+  (see \code{\link{PRE_FATE.params_changingYears}}) \cr \cr
+  }
+  \item{PFG_LIFE_HISTORY_ \cr PARAMS}{PFG life history related parameters 
+  (one by PFG) \cr
+  (see \code{\link{PRE_FATE.params_PFGsuccession}}) \cr \cr
+  }
+  \item{PFG_DISPERSAL_ \cr PARAMS (\emph{optional})}{PFG dispersal capacity related parameters 
+  (one by PFG) \cr
+  (see \code{\link{PRE_FATE.params_PFGdispersal}}) \cr \cr
+  }
+  \item{PFG_HAB_MASK \cr (\emph{optional})}{raster masks (one by PFG) containing 
+  PFG habitat suitability for the study area}
+  \item{HAB_CHANGE_TIME \cr (\emph{optional})}{file containing the years to 
+  change rasters for the habitat suitability module \cr
   (see \code{\link{PRE_FATE.params_changingYears}})
   }
-  \item{CLIM_CHANGE_MASK \cr (\emph{optional})}{file containing the files to 
+  \item{HAB_CHANGE_MASK \cr (\emph{optional})}{file containing the files to 
   change rasters for the habitat suitability module \cr
+  (see \code{\link{PRE_FATE.params_changingYears}}) \cr \cr
+  }
+  \item{PFG_DISTURBANCES_ \cr PARAMS (\emph{optional})}{PFG disturbance 
+  related parameters in terms of resprouting and mortality (one by PFG) \cr
+  (see \code{\link{PRE_FATE.params_PFGdisturbance}})
+  }
+  \item{DIST_MASK \cr (\emph{optional})}{raster masks that will define the 
+  disturbance areas}
+  \item{DIST_CHANGE_TIME \cr (\emph{optional})}{file containing the years to 
+  change rasters for the disturbance module \cr
   (see \code{\link{PRE_FATE.params_changingYears}})
   }
   \item{DIST_CHANGE_MASK \cr (\emph{optional})}{file containing the files to 
   change rasters for the disturbance module \cr
   (see \code{\link{PRE_FATE.params_changingYears}})
   }
-  \item{PFG_LIFE_HISTORY_ \cr PARAMS}{PFG life history related parameters 
-  (one by PFG) \cr
-  (see \code{\link{PRE_FATE.params_PFGsuccession}})
-  }
-  \item{PFG_DISPERSAL_ \cr PARAMS}{PFG dispersal capacity related parameters 
-  (one by PFG) \cr
-  (see \code{\link{PRE_FATE.params_PFGdispersal}})
-  }
-  \item{PFG_DISTURBANCES_ \cr PARAMS (\emph{optional})}{PFG disturbance 
-  related parameters in terms of resprouting and mortality (one by PFG) \cr
-  (see \code{\link{PRE_FATE.params_PFGdisturbance}})
-  }
-  \item{PFG_ENVSUIT \cr (\emph{optional})}{PFG habitat suitability (one by PFG) 
-  maps for the study area}
 }
 }
 \note{
@@ -140,13 +143,11 @@ PRE_FATE.params_namespaceConstants(name.simulation = "FATE_simulation"
 
 ## Create a Global_parameters file
 PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
-                                 , required.succ_option = "fateh"
                                  , required.no_PFG = 6
                                  , required.no_STRATA = 5
-                                 , required.hs_option = 1
-                                 , required.seeding_timestep = 1
+                                 , required.simul_duration = 100
                                  , required.seeding_duration = c(10,50)
-                                 , required.simul_duration = 100)
+                                 , required.seeding_timestep = 1)
 
 ## Create a SAVE_year_maps or/and SAVE_year_objects parameter file
 PRE_FATE.params_saveYears(name.simulation = "FATE_simulation"

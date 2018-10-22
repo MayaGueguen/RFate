@@ -172,22 +172,23 @@ will take place</p></td>
     <p>A <code>.txt</code> file into the <code>name.simulation/PARAM_SIMUL/</code>
 directory with the following parameters :</p>
 <ul>
-<li><p>--NAMESPACE_CONSTANTS--</p></li>
-<li><p>--GLOBAL_PARAMS--</p></li>
-<li><p>--SAVE_DIR--</p></li>
+<li><p><strong>--NAMESPACE_CONSTANTS--</strong></p></li>
+<li><p><strong>--GLOBAL_PARAMS--</strong></p></li>
+<li><p><strong>--SAVE_DIR--</strong></p></li>
 <li><p>--ARRAYS_SAVING_YEARS-- (<em>optional</em>)</p></li>
 <li><p>--OBJECTS_SAVING_YEARS-- (<em>optional</em>)</p></li>
-<li><p>--MASK--</p></li>
+<li><p><strong>--MASK--</strong></p></li>
 <li><p>--MASK_CHANGE_TIME-- (<em>optional</em>)</p></li>
-<li><p>--CLIM_CHANGE_TIME-- (<em>optional</em>)</p></li>
-<li><p>--DIST_CHANGE_TIME-- (<em>optional</em>)</p></li>
 <li><p>--MASK_CHANGE_MASK-- (<em>optional</em>)</p></li>
-<li><p>--CLIM_CHANGE_MASK-- (<em>optional</em>)</p></li>
-<li><p>--DIST_CHANGE_MASK-- (<em>optional</em>)</p></li>
-<li><p>--PFG_LIFE_HISTORY_PARAMS--</p></li>
-<li><p>--PFG_DISPERSAL_PARAMS--</p></li>
+<li><p><strong>--PFG_LIFE_HISTORY_PARAMS--</strong></p></li>
+<li><p>--PFG_DISPERSAL_PARAMS-- (<em>optional</em>)</p></li>
+<li><p>--PFG_HAB_MASK-- (<em>optional</em>)</p></li>
+<li><p>--HAB_CHANGE_TIME-- (<em>optional</em>)</p></li>
+<li><p>--HAB_CHANGE_MASK-- (<em>optional</em>)</p></li>
 <li><p>--PFG_DISTURBANCES_PARAMS-- (<em>optional</em>)</p></li>
-<li><p>--PFG_ENVSUIT-- (<em>optional</em>)</p></li>
+<li><p>--DIST_MASK-- (<em>optional</em>)</p></li>
+<li><p>--DIST_CHANGE_TIME-- (<em>optional</em>)</p></li>
+<li><p>--DIST_CHANGE_MASK-- (<em>optional</em>)</p></li>
 <li><p>--END_OF_FILE--</p></li>
 </ul>
 
@@ -204,44 +205,46 @@ program to run.</p>
   <dt>GLOBAL_PARAMS</dt><dd><p>file where parameters related to the simulation 
   definition are referred (e.g. number of PFG involved, number of height 
   strata, simulation duration, computer resources, modules loaded, ...) <br />
-  (see <code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>)</p></dd>
+  (see <code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>) <br /> <br /></p></dd>
   <dt>SAVE_DIR</dt><dd><p>directory where simulation outputs will be stored</p></dd>
   <dt>ARRAYS_SAVING_ <br /> YEARS (<em>optional</em>)</dt><dd><p>file containing the 
   years for which simulation maps will be saved <br />
   (see <code><a href='PRE_FATE.params_saveYears.html'>PRE_FATE.params_saveYears</a></code>)</p></dd>
   <dt>OBJECTS_SAVING_ <br /> YEARS (<em>optional</em>)</dt><dd><p>file containing the 
   years for which simulation outputs will be saved <br />
-  (see <code><a href='PRE_FATE.params_saveYears.html'>PRE_FATE.params_saveYears</a></code>)</p></dd>
+  (see <code><a href='PRE_FATE.params_saveYears.html'>PRE_FATE.params_saveYears</a></code>) <br /> <br /></p></dd>
   <dt>MASK</dt><dd><p>raster mask that will define the study area</p></dd>
   <dt>MASK_CHANGE_TIME <br /> (<em>optional</em>)</dt><dd><p>file containing the years to 
   change rasters for the succession module <br />
   (see <code><a href='PRE_FATE.params_changingYears.html'>PRE_FATE.params_changingYears</a></code>)</p></dd>
-  <dt>CLIM_CHANGE_TIME <br /> (<em>optional</em>)</dt><dd><p>file containing the years to 
-  change rasters for the habitat suitability module <br />
-  (see <code><a href='PRE_FATE.params_changingYears.html'>PRE_FATE.params_changingYears</a></code>)</p></dd>
-  <dt>DIST_CHANGE_TIME <br /> (<em>optional</em>)</dt><dd><p>file containing the years to 
-  change rasters for the disturbance module <br />
-  (see <code><a href='PRE_FATE.params_changingYears.html'>PRE_FATE.params_changingYears</a></code>)</p></dd>
   <dt>MASK_CHANGE_MASK <br /> (<em>optional</em>)</dt><dd><p>file containing the files to 
   change rasters for the succession module <br />
-  (see <code><a href='PRE_FATE.params_changingYears.html'>PRE_FATE.params_changingYears</a></code>)</p></dd>
-  <dt>CLIM_CHANGE_MASK <br /> (<em>optional</em>)</dt><dd><p>file containing the files to 
+  (see <code><a href='PRE_FATE.params_changingYears.html'>PRE_FATE.params_changingYears</a></code>) <br /> <br /></p></dd>
+  <dt>PFG_LIFE_HISTORY_ <br /> PARAMS</dt><dd><p>PFG life history related parameters 
+  (one by PFG) <br />
+  (see <code><a href='PRE_FATE.params_PFGsuccession.html'>PRE_FATE.params_PFGsuccession</a></code>) <br /> <br /></p></dd>
+  <dt>PFG_DISPERSAL_ <br /> PARAMS (<em>optional</em>)</dt><dd><p>PFG dispersal capacity related parameters 
+  (one by PFG) <br />
+  (see <code><a href='PRE_FATE.params_PFGdispersal.html'>PRE_FATE.params_PFGdispersal</a></code>) <br /> <br /></p></dd>
+  <dt>PFG_HAB_MASK <br /> (<em>optional</em>)</dt><dd><p>raster masks (one by PFG) containing 
+  PFG habitat suitability for the study area</p></dd>
+  <dt>HAB_CHANGE_TIME <br /> (<em>optional</em>)</dt><dd><p>file containing the years to 
   change rasters for the habitat suitability module <br />
+  (see <code><a href='PRE_FATE.params_changingYears.html'>PRE_FATE.params_changingYears</a></code>)</p></dd>
+  <dt>HAB_CHANGE_MASK <br /> (<em>optional</em>)</dt><dd><p>file containing the files to 
+  change rasters for the habitat suitability module <br />
+  (see <code><a href='PRE_FATE.params_changingYears.html'>PRE_FATE.params_changingYears</a></code>) <br /> <br /></p></dd>
+  <dt>PFG_DISTURBANCES_ <br /> PARAMS (<em>optional</em>)</dt><dd><p>PFG disturbance 
+  related parameters in terms of resprouting and mortality (one by PFG) <br />
+  (see <code><a href='PRE_FATE.params_PFGdisturbance.html'>PRE_FATE.params_PFGdisturbance</a></code>)</p></dd>
+  <dt>DIST_MASK <br /> (<em>optional</em>)</dt><dd><p>raster masks that will define the 
+  disturbance areas</p></dd>
+  <dt>DIST_CHANGE_TIME <br /> (<em>optional</em>)</dt><dd><p>file containing the years to 
+  change rasters for the disturbance module <br />
   (see <code><a href='PRE_FATE.params_changingYears.html'>PRE_FATE.params_changingYears</a></code>)</p></dd>
   <dt>DIST_CHANGE_MASK <br /> (<em>optional</em>)</dt><dd><p>file containing the files to 
   change rasters for the disturbance module <br />
   (see <code><a href='PRE_FATE.params_changingYears.html'>PRE_FATE.params_changingYears</a></code>)</p></dd>
-  <dt>PFG_LIFE_HISTORY_ <br /> PARAMS</dt><dd><p>PFG life history related parameters 
-  (one by PFG) <br />
-  (see <code><a href='PRE_FATE.params_PFGsuccession.html'>PRE_FATE.params_PFGsuccession</a></code>)</p></dd>
-  <dt>PFG_DISPERSAL_ <br /> PARAMS</dt><dd><p>PFG dispersal capacity related parameters 
-  (one by PFG) <br />
-  (see <code><a href='PRE_FATE.params_PFGdispersal.html'>PRE_FATE.params_PFGdispersal</a></code>)</p></dd>
-  <dt>PFG_DISTURBANCES_ <br /> PARAMS (<em>optional</em>)</dt><dd><p>PFG disturbance 
-  related parameters in terms of resprouting and mortality (one by PFG) <br />
-  (see <code><a href='PRE_FATE.params_PFGdisturbance.html'>PRE_FATE.params_PFGdisturbance</a></code>)</p></dd>
-  <dt>PFG_ENVSUIT <br /> (<em>optional</em>)</dt><dd><p>PFG habitat suitability (one by PFG) 
-  maps for the study area</p></dd>
 </dl>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
@@ -276,13 +279,11 @@ program to run.</p>
 
 <span class='co'>## Create a Global_parameters file</span>
 <span class='fu'><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
-                                 , <span class='kw'>required.succ_option</span> <span class='kw'>=</span> <span class='st'>"fateh"</span>
                                  , <span class='kw'>required.no_PFG</span> <span class='kw'>=</span> <span class='fl'>6</span>
                                  , <span class='kw'>required.no_STRATA</span> <span class='kw'>=</span> <span class='fl'>5</span>
-                                 , <span class='kw'>required.hs_option</span> <span class='kw'>=</span> <span class='fl'>1</span>
-                                 , <span class='kw'>required.seeding_timestep</span> <span class='kw'>=</span> <span class='fl'>1</span>
+                                 , <span class='kw'>required.simul_duration</span> <span class='kw'>=</span> <span class='fl'>100</span>
                                  , <span class='kw'>required.seeding_duration</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>10</span>,<span class='fl'>50</span>)
-                                 , <span class='kw'>required.simul_duration</span> <span class='kw'>=</span> <span class='fl'>100</span>)
+                                 , <span class='kw'>required.seeding_timestep</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 
 <span class='co'>## Create a SAVE_year_maps or/and SAVE_year_objects parameter file</span>
 <span class='fu'><a href='PRE_FATE.params_saveYears.html'>PRE_FATE.params_saveYears</a></span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>

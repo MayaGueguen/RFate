@@ -30,8 +30,6 @@ directory with the following parameters :
   \item CHANG_STR_AGES : the ages at which the PFG goes in the upper stratum  \cr
   \emph{(in years, put a value higher than the PFG life span if it is not supposed to
   rise a stratum)}
-  \item WIDE_DISPERS : is the PFG able to disperse everywhere (i.e. no dispersal
-  limits) \emph{(0: No 1: Yes)}
   \item ACTIVE_GERM : the germination rates depending on light conditions \cr
   \emph{(0: 0\% 1: 10\% 2: 20\% 3: 30\% 4: 40\% 5: 50\% 6: 60\% 7: 70\% 8: 80\% 9: 
   90\% 10: 100\%)}

@@ -6,11 +6,11 @@
 simulation}
 \usage{
 PRE_FATE.params_globalParameters(name.simulation, opt.no_CPU = 1,
-  required.no_PFG, required.no_STRATA, required.succ_option, required.hs_option,
-  required.seeding_timestep, required.seeding_duration, required.simul_duration,
-  doDisturbances = FALSE, DIST.no, DIST.no_sub, DIST.freq, doSoil = FALSE,
-  doFire = FALSE, doDrought = FALSE, doHabStability = FALSE,
-  doAliens = FALSE)
+  required.no_PFG, required.no_STRATA, required.simul_duration,
+  required.seeding_duration, required.seeding_timestep, doDispersal = FALSE,
+  doHabSuitability = FALSE, HABSUIT.ref_option, doDisturbances = FALSE,
+  DIST.no, DIST.no_sub, DIST.freq, doSoil = FALSE, doFire = FALSE,
+  doDrought = FALSE, doHabStability = FALSE, doAliens = FALSE)
 }
 \arguments{
 \item{name.simulation}{a \code{string} that corresponds to the main directory
@@ -24,22 +24,27 @@ can be used to parallelize the \code{FATE-HD} simulation}
 \item{required.no_STRATA}{an \code{integer} corresponding to the number of 
 height strata}
 
-\item{required.succ_option}{a \code{string} to choose if the simulation will
-include habitat suitability (\emph{fateh}) or not (\emph{fate})}
+\item{required.simul_duration}{an \code{integer} corresponding to the 
+duration of simulation (\emph{in years})}
 
-\item{required.hs_option}{an \code{integer} corresponding to the way of 
-simulating the habitat suitability variation between years for each PFG, 
-either random (1) or PFG specific (2)}
+\item{required.seeding_duration}{an \code{integer} corresponding to the 
+duration of seeding (\emph{in years})}
 
 \item{required.seeding_timestep}{an \code{integer} corresponding to the 
 time interval at which occurs the seeding, and until the seeding duration
  is not over (\emph{in years})}
 
-\item{required.seeding_duration}{an \code{integer} corresponding to the 
-duration of seeding (\emph{in years})}
+\item{doDispersal}{default \code{FALSE}. If \code{TRUE}, seed dispersal is 
+activated in the \code{FATE-HD} simulation, and associated parameters are 
+required}
 
-\item{required.simul_duration}{an \code{integer} corresponding to the 
-duration of simulation (\emph{in years})}
+\item{doHabSuitability}{default \code{FALSE}. If \code{TRUE}, habitat
+suitability is activated in the \code{FATE-HD} simulation, and associated 
+parameters are required}
+
+\item{HABSUIT.ref_option}{an \code{integer} corresponding to the way of 
+simulating the habitat suitability variation between years for each PFG, 
+either random (1) or PFG specific (2)}
 
 \item{doDisturbances}{default \code{FALSE}. If \code{TRUE}, disturbances 
 are applied in the \code{FATE-HD} simulation, and associated parameters 
@@ -69,14 +74,25 @@ directory with the following parameters :
   \item NB_CPUS
   \item NB_FG
   \item NB_STRATUM
-  \item SUCC_MOD
-  \item ENVSUIT_OPTION
-  \item SEEDING_TIMESTEP
+  \item SIMULATION_DURATION
   \item SEEDING_DURATION
-  \item SIMULATION_TIME
+  \item SEEDING_TIMESTEP \cr \cr
 }
 
-If the simulation includes disturbances :
+If the simulation includes \emph{dispersal} :
+
+\itemize{
+  \item DO_DISPERSAL
+}
+
+If the simulation includes \emph{habitat suitability} :
+
+\itemize{
+  \item DO_HAB_SUITABILITY
+  \item HABSUIT_OPTION
+}
+
+If the simulation includes \emph{disturbances} :
 
 \itemize{
   \item DO_DISTURBANCES
@@ -85,7 +101,7 @@ If the simulation includes disturbances :
   \item FREQ_DISTURBANCES
 }
 
-If the simulation includes soil competition :
+If the simulation includes \emph{soil competition} :
 
 \itemize{
   \item DO_SOIL_COMPETITION
@@ -94,7 +110,7 @@ If the simulation includes soil competition :
   \item SOIL_CATEGORIES_TRESHOLDS
 }
 
-If the simulation includes drought disturbances :
+If the simulation includes \emph{drought disturbances} :
 
 \itemize{
   \item DO_DROUGHT_DISTURBANCES
@@ -103,14 +119,14 @@ If the simulation includes drought disturbances :
   \item CHRONO_CURR_DROUGHT
 }
 
-If the simulation includes habitat stability check :
+If the simulation includes \emph{habitat stability check} :
 
 \itemize{
   \item DO_HAB_STABILITY
   \item NB_HABITATS
 }
 
-If the simulation includes aliens introduction :
+If the simulation includes \emph{aliens introduction} :
 
 \itemize{
   \item DO_ALIENS_DISTURBANCE
@@ -135,39 +151,17 @@ general characteristics of the simulation :
     \item \emph{required.no_STRATA} : the number of height strata that 
     will be used into the succession module.  
     This number should match with the maximum number of strata possible
-    defined into the PFG SUCC files.
-  }
-  }
-  \item{Habitat suitability}{
-  \itemize{
-    \item \emph{required.succ_option} : if the simulation will include 
-    habitat suitability filter (\emph{fateh}) or not (\emph{fate}). \cr
-    This filter is based on maps given for each PFG, with values between 
-    0 and 1 corresponding to the probability of presence of the group in 
-    each pixel. Each year (timestep), this value will be compared to a 
-    reference value, and if superior, the PFG will be able to grow and
-    survive.
-    \item \emph{required.hs_option} : the habitat suitability reference
-    value can be set in two possible ways :
-    \enumerate{
-      \item \emph{random} : for each pixel, the reference value is drawn from
-      a uniform distribution, and the same value is used for each PFG 
-      within this pixel.
-      \item \emph{PFG specific} : for each PFG, a mean value and a standard 
-      deviation value are drawn from a uniform distribution. For each 
-      pixel and for each PFG, the reference value is drawn from a normal 
-      distribution of parameters the mean and standard deviation of the PFG.
-    }
+    defined into the PFG SUCC files. \cr \cr
   }
   }
   \item{Simulation timing}{
   \itemize{
-    \item \emph{required.seeding_timestep} : the time interval at which 
-    occurs the seeding, and until the seeding duration is not over 
+    \item \emph{required.simul_duration} : the duration of simulation 
     (\emph{in years})
     \item \emph{required.seeding_duration} : the duration of seeding 
     (\emph{in years})
-    \item \emph{required.simul_duration} : the duration of simulation 
+    \item \emph{required.seeding_timestep} : the time interval at which 
+    occurs the seeding, and until the seeding duration is not over 
     (\emph{in years}) \cr \cr
   }
   }
@@ -178,6 +172,34 @@ The other modules of \code{FATE-HD} can be activated within this file, and
 if so, some additional parameters will be required :
 
 \describe{
+  \item{DISPERSAL}{
+  \cr \cr
+  }
+  \item{HABITAT SUITABILITY}{= to influence plants fecundity and seed 
+  recruitment according to PFG preferences for habitat conditions \cr
+  = filter based 
+  on maps given for each PFG within the \emph{Simul_parameters} file 
+  with the \code{PFG_HAB_MASK} flag. \cr \cr
+  These maps must contain values 
+  between 0 and 1 corresponding to the probability of presence of the 
+  group in each pixel. Each year (timestep), this value will be compared 
+  to a reference value, and if superior, the PFG will be able to grow and 
+  survive.
+  \itemize{
+    \item \emph{HABSUIT.ref_option} : the habitat suitability reference
+    value can be set in two possible ways :
+    \enumerate{
+      \item \emph{random} : for each pixel, the reference value is drawn from
+      a uniform distribution, and the same value is used for each PFG 
+      within this pixel.
+      \item \emph{PFG specific} : for each PFG, a mean value and a standard 
+      deviation value are drawn from a uniform distribution. For each 
+      pixel and for each PFG, the reference value is drawn from a normal 
+      distribution of parameters the mean and standard deviation of the PFG.
+       \cr \cr
+    }
+  }
+  }
   \item{DISTURBANCES}{= defined for events such as mowing, grazing, but also
   urbanization, crops, etc. \cr \cr
   The impact zone is defined with a mask (map with 0 or 1) and the user will
@@ -238,21 +260,25 @@ PRE_FATE.skeletonDirectory()
 PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                  , required.no_PFG = 3
                                  , required.no_STRATA = 5
-                                 , required.succ_option = "fateh"
-                                 , required.hs_option = 1
-                                 , required.seeding_timestep = 1
+                                 , required.simul_duration = 100
                                  , required.seeding_duration = 10
-                                 , required.simul_duration = 100)
+                                 , required.seeding_timestep = 1
+                                 , doDispersal = 1
+                                 , doHabSuitability = 1
+                                 , HABSUIT.ref_option = 1
+                                 )
                                    
 ## Create SEVERAL Global_parameters files
 PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                  , required.no_PFG = 3
                                  , required.no_STRATA = 5
-                                 , required.succ_option = "fateh"
-                                 , required.hs_option = c(1,2)
-                                 , required.seeding_timestep = 1
+                                 , required.simul_duration = 100
                                  , required.seeding_duration = 10
-                                 , required.simul_duration = 100)
+                                 , required.seeding_timestep = 1
+                                 , doDispersal = 1
+                                 , doHabSuitability = 1
+                                 , HABSUIT.ref_option = c(1,2)
+                                 )
 
 }
 \author{

@@ -196,22 +196,27 @@ to the name of the folder that will be created into the
     <p>Several modules of the <code>FATE-HD</code> software allow the user to simulate
 changes over time :</p>
 <dl class='dl-horizontal'>
-  <dt>succession</dt><dd><p>the core module is based on a raster mask, with either 0
-  or 1 within each pixel, 1 corresponding to the cells in which the PFG
-  can try to colonize. <br />
-  The available pixels can change through time, 
-  to simulate habitat loss (e.g. urbanization) or gain (e.g. glacial retreat).</p></dd>
-  <dt>habitat suitability</dt><dd><p>if the option <em>fateh</em> of the <code>SUCC_MOD</code>
-  parameter within the <em>Global_parameters</em> has been selected, PFG colonization 
-  depends on maps given for each PFG, with values between 0 and 1 corresponding 
-  to the probability of presence of the group in each pixel. <br />
+  <dt>succession</dt><dd><p>the CORE module is based on a raster mask, <strong>with 
+  either 0 or 1</strong> within each pixel, 1 corresponding to the cells in which 
+  the PFG can try to colonize. 
+  The available pixels can change through time, to simulate habitat loss 
+  (e.g. urbanization) or gain (e.g. glacial retreat).</p></dd>
+  <dt>habitat suitability</dt><dd><p><strong>if this MODULE is activated</strong> within the 
+  <em>Global_parameters</em> file, PFG colonization depends on maps given for 
+  each PFG within the <em>Simul_parameters</em> file with the <code>PFG_HAB_MASK</code>
+  flag. <br /> These maps must contain <strong>values between 0 and 1</strong> 
+  corresponding to the probability of presence of the group in each pixel. 
   These probabilities can change through time, as they often come from 
   Species Distribution Models (SDM) that can be based for example on climatic
   variables.</p></dd>
-  <dt>disturbances</dt><dd><p>as for succession, each disturbance relies on a raster
-  mask with 0 or 1 to define where the perturbation occurs. <br />
-  The impacted pixels can also change through time (e.g. change in forestry
-  practices, expansion of grazing areas, etc). <br /> <br /></p></dd>
+  <dt>disturbances</dt><dd><p><strong>if this MODULE is activated</strong> within the 
+  <em>Global_parameters</em> file, each disturbance relies on a raster given  
+  within the <em>Simul_parameters</em> file with the <code>DIST_MASK</code>
+  flag. <br />
+  As for succession, this mask is filled <strong>with either 0 or 1</strong> to 
+  define where the perturbation occurs. The impacted pixels can also change 
+  through time (e.g. change in forestry practices, expansion of grazing areas, 
+  etc). <br /> <br /></p></dd>
 </dl>
     <p>These changes require two types of information, that must be presented within
 two different files :</p>

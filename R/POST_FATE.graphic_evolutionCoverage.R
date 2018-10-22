@@ -20,7 +20,7 @@
 ##' years that will be used to extract PFG abundance maps
 ##' @param abund.fixedScale default \code{TRUE}. If \code{FALSE}, the ordinate
 ##' scale will be adapted for each PFG for the graphical representation of the 
-##' evoluation of abundances through time
+##' evolution of abundances through time
 ##' @param opt.no_CPU default 1 (\emph{optional}). The number of resources that 
 ##' can be used to parallelize the \code{unzip/zip} of raster files
 ##' 
@@ -55,7 +55,7 @@
 ##' \describe{
 ##'   \item{\file{GRAPHIC_A \cr spaceOccupancy}}{to visualize for each PFG the
 ##'   evolution of its occupation of the studied area through simulation time}
-##'   \item{\file{GRAPHIC_B \cr abundance}}{to viualize for each PFG the
+##'   \item{\file{GRAPHIC_B \cr abundance}}{to visualize for each PFG the
 ##'   evolution of its abundance within the whole studied area through
 ##'   simulation time}
 ##' }
@@ -109,6 +109,7 @@ POST_FATE.graphic_evolutionCoverage = function(
   .testParam_existFolder(name.simulation, "PARAM_SIMUL/")
   .testParam_existFolder(name.simulation, "RESULTS/")
   .testParam_existFolder(name.simulation, "DATA/")
+  name.simulation = sub("/", "", name.simulation)
   
   if (.testParam_notDef(file.simulParam) || nchar(file.simulParam) == 0)
   {
@@ -120,6 +121,7 @@ POST_FATE.graphic_evolutionCoverage = function(
     abs.simulParams = paste0(name.simulation, "/PARAM_SIMUL/", abs.simulParams)
   } else
   {
+    file.simulParam = basename(file.simulParam)
     abs.simulParams = paste0(name.simulation, "/PARAM_SIMUL/", file.simulParam)
     .testParam_existFile(abs.simulParams)
   }

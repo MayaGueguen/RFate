@@ -21,7 +21,7 @@ years that will be used to extract PFG abundance maps}
 
 \item{abund.fixedScale}{default \code{TRUE}. If \code{FALSE}, the ordinate
 scale will be adapted for each PFG for the graphical representation of the 
-evoluation of abundances through time}
+evolution of abundances through time}
 
 \item{opt.no_CPU}{default 1 (\emph{optional}). The number of resources that 
 can be used to parallelize the \code{unzip/zip} of raster files}
@@ -31,7 +31,7 @@ Two \code{POST_FATE_[...].pdf} files are created :
 \describe{
   \item{\file{GRAPHIC_A \cr spaceOccupancy}}{to visualize for each PFG the
   evolution of its occupation of the studied area through simulation time}
-  \item{\file{GRAPHIC_B \cr abundance}}{to viualize for each PFG the
+  \item{\file{GRAPHIC_B \cr abundance}}{to visualize for each PFG the
   evolution of its abundance within the whole studied area through
   simulation time}
 }
