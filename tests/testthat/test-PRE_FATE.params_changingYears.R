@@ -27,6 +27,7 @@ test_that("PRE_FATE.params_changingYears gives error with wrong data : name.simu
 
 ## INPUTS
 test_that("PRE_FATE.params_changingYears gives error with wrong data : type.changing and mat.changing", {
+  if (dir.exists("FATE_simulation")) system("rm -r FATE_simulation/")
   PRE_FATE.skeletonDirectory()
   expect_error(PRE_FATE.params_changingYears(name.simulation = "FATE_simulation")
                , "`type.changing` must be either `MASK`, `HS` or `DIST`", fixed = T)
