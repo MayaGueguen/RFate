@@ -84,7 +84,7 @@
 ##' 
 ##' @export
 ##' 
-##' @importFrom raster raster stack
+##' @importFrom raster raster stack as.data.frame
 ##' @importFrom reshape2 melt
 ##' 
 ##' @importFrom ggplot2 ggplot aes aes_string ggsave
