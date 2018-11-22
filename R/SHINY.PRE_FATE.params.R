@@ -87,12 +87,12 @@ print_messages = function(fun)
   }
 }
 
-get_files = function(path_folder)
+get_files = function(path_folder, skip.no = 2)
 {
-  tab_names = list.files(path = path_folder)
+  tab_names = list.files(path = path_folder, include.dirs = FALSE)
   tab = foreach(tab_name = tab_names, .combine = "cbind") %do%
   {
-    fread(file = paste0(path_folder, tab_name), header = FALSE, skip = 2, sep = "\t")
+    fread(file = paste0(path_folder, tab_name), header = FALSE, skip = skip.no, sep = "\t")
   }
   colnames(tab) = tab_names
   return(tab)
@@ -233,7 +233,7 @@ ui <- fluidPage(
                                  </tr>
                                  <tr>
                                  <td style='width:30%;font-family:Monospace;vertical-align:top;'>global.resource.thresh.low</td>
-                                 <td style='width:70%;'>an integer in the order of 1 000 000 to convert PFG abundances in each strata into light resources.
+                                 <td style='width:70%;'>an <span style='font-family:Monospace;'>integer</span> in the order of 1 000 000 to convert PFG abundances in each strata into light resources.
                                  It corresponds to the limit of abundances above which light resources are low.
                                  PFG abundances higher than <span style='font-family:Monospace;'>global.resource.thresh.med</span> and lower than this threshold imply medium amount of light.</td>
                                  </tr>
@@ -283,6 +283,10 @@ ui <- fluidPage(
                                          , width = "100%")
                           # , style = HTML(paste0("background-color: ", button.color, ";")))
                           , br())
+                 )
+                 , fluidRow(
+                   br(),
+                   wellPanel(dataTableOutput(outputId = "created_table.namespace"))
                  )
                  ),
         tabPanel(title = HTML("<p style='background-color:#068f96; padding:10px; margin-top:0px; border-radius:2px;
@@ -403,6 +407,10 @@ ui <- fluidPage(
                                                       , label = NULL
                                                       , icon = icon("trash")))
                             )
+                            , fluidRow(
+                              br(),
+                              wellPanel(dataTableOutput(outputId = "created_table.succ"))
+                            )
                    )
                    , tabPanel(title = "Dispersal"
                               , value = "panel.disp"
@@ -416,7 +424,8 @@ ui <- fluidPage(
                                             </tr>
                                             <tr>
                                             <td style='width:30%;font-family:Monospace;vertical-align:top;'>[1] uniform kernel</td>
-                                            <td style='width:70%;'>homogeneous dispersal within the d50, d99 and ldd circles</td>
+                                            <td style='width:70%;'>homogeneous dispersal within the <span style='font-family:Monospace;'>d50</span>,
+<span style='font-family:Monospace;'>d99</span> and <span style='font-family:Monospace;'>ldd</span> circles</td>
                                             </tr>
                                             <tr>
                                             <td style='width:30%;font-family:Monospace;vertical-align:top;'>[2] exponential kernel</td>
@@ -512,6 +521,10 @@ ui <- fluidPage(
                                                         , label = NULL
                                                         , icon = icon("trash")))
                               )
+                              , fluidRow(
+                                br(),
+                                wellPanel(dataTableOutput(outputId = "created_table.disp"))
+                              )
                               )
                               , tabPanel(title = "Disturbances"
                                          , value = "create.dist")
@@ -520,17 +533,104 @@ ui <- fluidPage(
                  tabPanel(title = HTML("<p style='background-color:#068f96; padding:10px; margin-top:0px; border-radius:2px;
                   font-family:Serif; color:#FFFFFF'>Scenario files</p>")
                           , value = "create.scenario"
+                          , br()
+                          , helpText(HTML("
+                                            <p><a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_saveYears.html' target='_blank'>
+                                            See more details on <span style='font-family:Monospace;'>RFate</span> package website.</a></p>
+                                            <table style='width:100%;'>
+                                            <tr>
+                                            <td style='width:30%;font-family:Monospace;vertical-align:top;'>years.maps</td>
+                                            <td style='width:70%;'>a <span style='font-family:Monospace;'>vector</span> of simulation years at which PFG abundance maps will be saved</td>
+                                            </tr>
+                                            <tr>
+                                            <td style='width:30%;font-family:Monospace;vertical-align:top;'>years.objects</td>
+                                            <td style='width:70%;'>a <span style='font-family:Monospace;'>vector</span> of simulation years at which FATE-HD simulation state will be saved</td>
+                                            </tr>
+                                            <tr>
+                                            <td style='width:30%;font-family:Monospace;vertical-align:top;'>opt.folder.name</td>
+                                            <td style='width:70%;'><em>(optional) a <span style='font-family:Monospace;'>string</span> that corresponds to the name of the folder that will 
+be created into the <span style='font-family:Monospace;'>name.simulation/DATA/SAVE/</span> directory to store the results</em></td>
+                                            </tr>
+                                            </table>
+                            "
+                          ))
                           , fluidRow(
                             column(6
-                                   , checkboxInput(inputId = "save.maps"
-                                                   , label = "Save maps ?"
-                                                   , value = FALSE)
+                                   , br()
+                                   , wellPanel(
+                                     HTML("<strong>Save maps ?</strong>")
+                                     , br()
+                                     , br()
+                                     , textInput(inputId = "save.maps.folder"
+                                                 , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>opt.folder.name</span>")
+                                                 , value = NULL
+                                                 , width = "100%")
+                                     , br()
+                                     , br()
+                                     , numericInput(inputId = "save.maps.year1"
+                                                    , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>years.maps.start</span>")
+                                                    , value = 0
+                                                    , min = 0
+                                                    , width = "100%")
+                                     , numericInput(inputId = "save.maps.year2"
+                                                    , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>years.maps.end</span>")
+                                                    , value = 0
+                                                    , min = 0
+                                                    , width = "100%")
+                                     , numericInput(inputId = "save.maps.no"
+                                                    , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>years.maps.number</span>")
+                                                    , value = 0
+                                                    , min = 0
+                                                    , max = 100
+                                                    , step = 10
+                                                    , width = "100%")
+                                     , br()
+                                     , br()
+                                     , actionButton(inputId = "create.save.maps"
+                                                    , label = "Create SAVE maps files"
+                                                    , icon = icon("file")
+                                                    , width = "100%")
+                                   )
                             )
                             , column(6
-                                     , checkboxInput(inputId = "save.objects"
-                                                     , label = "Save objects ?"
-                                                     , value = FALSE)
+                                     , br()
+                                     , wellPanel(
+                                       HTML("<strong>Save simulation ?</strong>")
+                                       , br()
+                                       , br()
+                                       , textInput(inputId = "save.objects.folder"
+                                                   , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>opt.folder.name</span>")
+                                                   , value = NULL
+                                                   , width = "100%")
+                                       , br()
+                                       , br()
+                                       , numericInput(inputId = "save.objects.year1"
+                                                      , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>years.objects</span>")
+                                                      , value = 0
+                                                      , min = 0
+                                                      , width = "100%")
+                                       , numericInput(inputId = "save.objects.year2"
+                                                      , label = NULL
+                                                      , value = 0
+                                                      , min = 0
+                                                      , width = "100%")
+                                       , numericInput(inputId = "save.objects.year3"
+                                                      , label = NULL
+                                                      , value = 0
+                                                      , min = 0
+                                                      , width = "100%")
+                                       , br()
+                                       , br()
+                                       , actionButton(inputId = "create.save.objects"
+                                                      , label = "Create SAVE objects files"
+                                                      , icon = icon("file")
+                                                      , width = "100%")
+                                     )
                             )
+                          )
+                          , fluidRow(
+                            br(),
+                            wellPanel(dataTableOutput(outputId = "created_table.save"))
                           )
                  ),
                  tabPanel(title = HTML("<p style='background-color:#068f96; padding:10px; margin-top:0px; border-radius:2px;
@@ -541,7 +641,7 @@ ui <- fluidPage(
         # , wellPanel(dataTableOutput(outputId = "created_table"))
           # textOutput("out_message"))
         )
-      , wellPanel(dataTableOutput(outputId = "created_table"))
+      # , wellPanel(dataTableOutput(outputId = "created_table"))
     )
   )
 )
@@ -581,7 +681,7 @@ server <- function(input, output, session) {
       
       if(get_res)
       {
-        output$created_table = renderDataTable({
+        output$created_table.namespace = renderDataTable({
           path_folder = paste0(input$name.simul, "/DATA/NAMESPACE_CONSTANTS/")
           return(get_files(path_folder))
         })
@@ -623,7 +723,7 @@ server <- function(input, output, session) {
       
       if(get_res)
       {
-        output$created_table = renderDataTable({
+        output$created_table.succ = renderDataTable({
           path_folder = paste0(input$name.simul, "/DATA/PFGS/SUCC/")
           return(get_files(path_folder))
         })
@@ -639,7 +739,7 @@ server <- function(input, output, session) {
   observeEvent(input$add.PFG.disp, {
     mat.PFG.disp <<- rbind(mat.PFG.disp
                            , data.frame(PFG = input$disp.PFG
-                                        , MODE = input$disp.mode
+                                        , MODE = as.numeric(input$disp.mode)
                                         , d50 = as.numeric(input$disp.d50)
                                         , d99 = as.numeric(input$disp.d99)
                                         , ldd = as.numeric(input$disp.ldd)))
@@ -649,6 +749,89 @@ server <- function(input, output, session) {
   observeEvent(input$delete.PFG.disp, {
     mat.PFG.disp <<- data.frame()
     output$mat.PFG.disp = renderTable({ mat.PFG.disp })
+  })
+  
+  ####################################################################
+  
+  observeEvent(input$create.disp, {
+    if (input$create.skeleton > 0)
+    {
+      get_res = print_messages(as.expression(
+        PRE_FATE.params_PFGdispersal(name.simulation = input$name.simul
+                                      , mat.PFG.disp = mat.PFG.disp
+        )
+      ))
+      
+      if(get_res)
+      {
+        output$created_table.disp = renderDataTable({
+          path_folder = paste0(input$name.simul, "/DATA/PFGS/DISP/")
+          return(get_files(path_folder))
+        })
+      }
+    } else
+    {
+      shinyalert(type = "warning", text = "You must create a simulation folder first !")
+    }
+  })
+  
+  ####################################################################
+  
+  observeEvent(input$create.save.maps, {
+    if (input$create.skeleton > 0)
+    {
+      opt.folder.name = ifelse(nchar(input$save.maps.folder) > 0, input$save.maps.folder, "")
+      get_res = print_messages(as.expression(
+        PRE_FATE.params_saveYears(name.simulation = input$name.simul
+                                  , years.maps = round(seq(input$save.maps.year1
+                                                           , input$save.maps.year2
+                                                           , length.out = input$save.maps.no))
+                                  , years.objects = NULL
+                                  , opt.folder.name = opt.folder.name
+        )
+      ))
+      
+      if(get_res)
+      {
+        output$created_table.save = renderDataTable({
+          path_folder = paste0(input$name.simul, "/DATA/SAVE/", opt.folder.name)
+          if (nchar(opt.folder.name) > 0) path_folder = paste0(path_folder, "/")
+          return(get_files(path_folder, skip.no = 0))
+        })
+      }
+    } else
+    {
+      shinyalert(type = "warning", text = "You must create a simulation folder first !")
+    }
+  })
+  
+  
+  observeEvent(input$create.save.objects, {
+    if (input$create.skeleton > 0)
+    {
+      opt.folder.name = ifelse(nchar(input$save.objects.folder) > 0, input$save.objects.folder, "")
+      get_res = print_messages(as.expression(
+        PRE_FATE.params_saveYears(name.simulation = input$name.simul
+                                  , years.maps = NULL
+                                  , years.objects = c(input$save.objects.year1
+                                                      , input$save.objects.year2
+                                                      , input$save.objects.year3)
+                                  , opt.folder.name = opt.folder.name
+        )
+      ))
+      
+      if(get_res)
+      {
+        output$created_table.save = renderDataTable({
+          path_folder = paste0(input$name.simul, "/DATA/SAVE/", opt.folder.name)
+          if (nchar(opt.folder.name) > 0) path_folder = paste0(path_folder, "/")
+          return(get_files(path_folder, skip.no = 0))
+        })
+      }
+    } else
+    {
+      shinyalert(type = "warning", text = "You must create a simulation folder first !")
+    }
   })
   
   # ####################################################################
