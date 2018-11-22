@@ -19,6 +19,7 @@ library(RFate)
 # library(RFate)
 # library(DT)
 library(data.table)
+library(foreach)
 # library(zip)
 
 ###################################################################################################################################
@@ -86,6 +87,20 @@ print_messages = function(fun)
   }
 }
 
+get_files = function(path_folder)
+{
+  tab_names = list.files(path = path_folder)
+  tab = foreach(tab_name = tab_names, .combine = "cbind") %do%
+  {
+    fread(file = paste0(path_folder, tab_name), header = FALSE, skip = 2, sep = "\t")
+  }
+  colnames(tab) = tab_names
+  return(tab)
+}
+
+
+mat.PFG.succ = data.frame()
+mat.PFG.disp = data.frame()
 
 ###################################################################################################################################
 
@@ -378,7 +393,17 @@ ui <- fluidPage(
                                                      , multiple = F
                                                      , width = "100%"))
                             )
+                            , fluidRow(
+                              column(10
+                                     , br()
+                                     , tableOutput(outputId = "mat.PFG.succ"))
+                              , column(2
+                                       , br()
+                                       , actionButton(inputId = "delete.PFG.succ"
+                                                      , label = NULL
+                                                      , icon = icon("trash")))
                             )
+                   )
                    , tabPanel(title = "Dispersal"
                               , value = "panel.disp"
                               , br()
@@ -443,7 +468,7 @@ ui <- fluidPage(
                                            , br()
                                            , br()
                                            , HTML("<strong>MODE</strong>")
-                                           , selectInput(inputId = "disp.light"
+                                           , selectInput(inputId = "disp.mode"
                                                          , label = NULL
                                                          , choices = 1:3
                                                          , selected = NULL
@@ -477,6 +502,16 @@ ui <- fluidPage(
                                                           , min = 0
                                                           , width = "100%"))
                                 )
+                              , fluidRow(
+                                column(10
+                                       , br()
+                                       , tableOutput(outputId = "mat.PFG.disp"))
+                                , column(2
+                                         , br()
+                                         , actionButton(inputId = "delete.PFG.disp"
+                                                        , label = NULL
+                                                        , icon = icon("trash")))
+                              )
                               )
                               , tabPanel(title = "Disturbances"
                                          , value = "create.dist")
@@ -517,6 +552,7 @@ cat <- message
 # Define server function required to create the scatterplot
 server <- function(input, output, session) {
   
+  # output$mat.PFG.succ = data.frame()
   session$onSessionEnded(stopApp)
   
   ####################################################################
@@ -547,15 +583,72 @@ server <- function(input, output, session) {
       {
         output$created_table = renderDataTable({
           path_folder = paste0(input$name.simul, "/DATA/NAMESPACE_CONSTANTS/")
-          tab_name = list.files(path = path_folder)
-          tab = fread(paste0(path_folder, tab_name), header = FALSE)
-          return(tab)
+          return(get_files(path_folder))
         })
       }
     } else
     {
       shinyalert(type = "warning", text = "You must create a simulation folder first !")
     }
+  })
+  
+  ####################################################################
+  
+  observeEvent(input$add.PFG.succ, {
+    mat.PFG.succ <<- rbind(mat.PFG.succ
+                         , data.frame(PFG = input$succ.PFG
+                                      , type = input$succ.type
+                                      , height = as.numeric(input$succ.height)
+                                      , maturity = as.numeric(input$succ.maturity)
+                                      , longevity = as.numeric(input$succ.longevity)
+                                      , light = as.numeric(input$succ.light)))
+    output$mat.PFG.succ = renderTable({ mat.PFG.succ })
+  })
+  
+  observeEvent(input$delete.PFG.succ, {
+    mat.PFG.succ <<- data.frame()
+    output$mat.PFG.succ = renderTable({ mat.PFG.succ })
+  })
+  
+  ####################################################################
+  
+  observeEvent(input$create.succ, {
+    if (input$create.skeleton > 0)
+    {
+      get_res = print_messages(as.expression(
+        PRE_FATE.params_PFGsuccession(name.simulation = input$name.simul
+                                      , mat.PFG.succ = mat.PFG.succ
+        )
+      ))
+      
+      if(get_res)
+      {
+        output$created_table = renderDataTable({
+          path_folder = paste0(input$name.simul, "/DATA/PFGS/SUCC/")
+          return(get_files(path_folder))
+        })
+      }
+    } else
+    {
+      shinyalert(type = "warning", text = "You must create a simulation folder first !")
+    }
+  })
+  
+  ####################################################################
+  
+  observeEvent(input$add.PFG.disp, {
+    mat.PFG.disp <<- rbind(mat.PFG.disp
+                           , data.frame(PFG = input$disp.PFG
+                                        , MODE = input$disp.mode
+                                        , d50 = as.numeric(input$disp.d50)
+                                        , d99 = as.numeric(input$disp.d99)
+                                        , ldd = as.numeric(input$disp.ldd)))
+    output$mat.PFG.disp = renderTable({ mat.PFG.disp })
+  })
+  
+  observeEvent(input$delete.PFG.disp, {
+    mat.PFG.disp <<- data.frame()
+    output$mat.PFG.disp = renderTable({ mat.PFG.disp })
   })
   
   # ####################################################################
