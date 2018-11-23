@@ -563,41 +563,14 @@ ui <- fluidPage(
                                            , br()
                                            , br()
                                            , HTML("<strong>Disturbance</strong>")
-                                           , checkboxGroupInput(inputId = "dist.grouping"
+                                           , radioButtons(inputId = "dist.grouping"
                                                                 , label = NULL
                                                                 , choices = c("by type", "by PFG")
+                                                                , selected = "by type"
                                                                 , width = "100%"))
                                 )
                                 ,fluidRow(
-                                  column(2
-                                         , br()
-                                         , br()
-                                         , HTML("<strong>Stage 1</strong>")
-                                         , br()
-                                         , br()
-                                         , HTML("<strong>Stage 2</strong>")
-                                         , br()
-                                         , br()
-                                         , HTML("<strong>Stage 3</strong>")
-                                         , br()
-                                         , br()
-                                         , HTML("<strong>Stage 4</strong>"))
-                                  , column(2
-                                         , br()
-                                         , br()
-                                         , HTML("<strong>Killed</strong>")
-                                         , HTML("<strong>Resprout</strong>")
-                                         , br()
-                                         , HTML("<strong>Killed</strong>")
-                                         , HTML("<strong>Resprout</strong>")
-                                         , br()
-                                         , HTML("<strong>Killed</strong>")
-                                         , HTML("<strong>Resprout</strong>")
-                                         , br()
-                                         , HTML("<strong>Killed</strong>")
-                                         , HTML("<strong>Resprout</strong>"))
-                                  , column(8
-                                         , uiOutput(outputId = "UI.dist.grouping"))
+                                  uiOutput(outputId = "UI.dist.grouping")
                                 )
                                 , fluidRow(
                                   column(10
@@ -614,122 +587,122 @@ ui <- fluidPage(
                                   wellPanel(dataTableOutput(outputId = "created_table.dist"))
                                 )
                                 )
-                   )
+                     )
+                     )
+          , tabPanel(title = HTML("<p style='background-color:#068f96; padding:10px; margin-top:0px; border-radius:2px;
+                                  font-family:Serif; color:#FFFFFF'>Scenario files</p>")
+                     , value = "create.scenario"
+                     , br()
+                     , helpText(HTML("
+                                     <p><a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_saveYears.html' target='_blank'>
+                                     See more details on <span style='font-family:Monospace;'>RFate</span> package website.</a></p>
+                                     <table style='width:100%;'>
+                                     <tr>
+                                     <td style='width:30%;font-family:Monospace;vertical-align:top;'>years.maps</td>
+                                     <td style='width:70%;'>a <span style='font-family:Monospace;'>vector</span> of simulation years at which PFG abundance maps will be saved</td>
+                                     </tr>
+                                     <tr>
+                                     <td style='width:30%;font-family:Monospace;vertical-align:top;'>years.objects</td>
+                                     <td style='width:70%;'>a <span style='font-family:Monospace;'>vector</span> of simulation years at which FATE-HD simulation state will be saved</td>
+                                     </tr>
+                                     <tr>
+                                     <td style='width:30%;font-family:Monospace;vertical-align:top;'>opt.folder.name</td>
+                                     <td style='width:70%;'><em>(optional) a <span style='font-family:Monospace;'>string</span> that corresponds to the name of the folder that will 
+                                     be created into the <span style='font-family:Monospace;'>name.simulation/DATA/SAVE/</span> directory to store the results</em></td>
+                                     </tr>
+                                     </table>
+                                     "
+                     ))
+                     , fluidRow(
+                       column(6
+                              , br()
+                              , wellPanel(
+                                HTML("<strong>Save maps ?</strong>")
+                                , br()
+                                , br()
+                                , textInput(inputId = "save.maps.folder"
+                                            , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>opt.folder.name</span>")
+                                            , value = NULL
+                                            , width = "100%")
+                                , br()
+                                , br()
+                                , numericInput(inputId = "save.maps.year1"
+                                               , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>years.maps.start</span>")
+                                               , value = 0
+                                               , min = 0
+                                               , width = "100%")
+                                , numericInput(inputId = "save.maps.year2"
+                                               , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>years.maps.end</span>")
+                                               , value = 0
+                                               , min = 0
+                                               , width = "100%")
+                                , numericInput(inputId = "save.maps.no"
+                                               , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>years.maps.number</span>")
+                                               , value = 0
+                                               , min = 0
+                                               , max = 100
+                                               , step = 10
+                                               , width = "100%")
+                                , br()
+                                , br()
+                                , actionButton(inputId = "create.save.maps"
+                                               , label = "Create SAVE maps files"
+                                               , icon = icon("file")
+                                               , width = "100%")
+                              )
+                       )
+                       , column(6
+                                , br()
+                                , wellPanel(
+                                  HTML("<strong>Save simulation ?</strong>")
+                                  , br()
+                                  , br()
+                                  , textInput(inputId = "save.objects.folder"
+                                              , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>opt.folder.name</span>")
+                                              , value = NULL
+                                              , width = "100%")
+                                  , br()
+                                  , br()
+                                  , numericInput(inputId = "save.objects.year1"
+                                                 , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>years.objects</span>")
+                                                 , value = 0
+                                                 , min = 0
+                                                 , width = "100%")
+                                  , numericInput(inputId = "save.objects.year2"
+                                                 , label = NULL
+                                                 , value = 0
+                                                 , min = 0
+                                                 , width = "100%")
+                                  , numericInput(inputId = "save.objects.year3"
+                                                 , label = NULL
+                                                 , value = 0
+                                                 , min = 0
+                                                 , width = "100%")
+                                  , br()
+                                  , br()
+                                  , actionButton(inputId = "create.save.objects"
+                                                 , label = "Create SAVE objects files"
+                                                 , icon = icon("file")
+                                                 , width = "100%")
+                                )
+                       )
+                     )
+                     , fluidRow(
+                       br(),
+                       wellPanel(dataTableOutput(outputId = "created_table.save"))
+                     )
+                     ),
+          tabPanel(title = HTML("<p style='background-color:#068f96; padding:10px; margin-top:0px; border-radius:2px;
+                                font-family:Serif; color:#FFFFFF'>Simulation files</p>")
+                   , value = "create.simul"
           )
-                   , tabPanel(title = HTML("<p style='background-color:#068f96; padding:10px; margin-top:0px; border-radius:2px;
-                                         font-family:Serif; color:#FFFFFF'>Scenario files</p>")
-                            , value = "create.scenario"
-                            , br()
-                            , helpText(HTML("
-                                            <p><a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_saveYears.html' target='_blank'>
-                                            See more details on <span style='font-family:Monospace;'>RFate</span> package website.</a></p>
-                                            <table style='width:100%;'>
-                                            <tr>
-                                            <td style='width:30%;font-family:Monospace;vertical-align:top;'>years.maps</td>
-                                            <td style='width:70%;'>a <span style='font-family:Monospace;'>vector</span> of simulation years at which PFG abundance maps will be saved</td>
-                                            </tr>
-                                            <tr>
-                                            <td style='width:30%;font-family:Monospace;vertical-align:top;'>years.objects</td>
-                                            <td style='width:70%;'>a <span style='font-family:Monospace;'>vector</span> of simulation years at which FATE-HD simulation state will be saved</td>
-                                            </tr>
-                                            <tr>
-                                            <td style='width:30%;font-family:Monospace;vertical-align:top;'>opt.folder.name</td>
-                                            <td style='width:70%;'><em>(optional) a <span style='font-family:Monospace;'>string</span> that corresponds to the name of the folder that will 
-                                            be created into the <span style='font-family:Monospace;'>name.simulation/DATA/SAVE/</span> directory to store the results</em></td>
-                                            </tr>
-                                            </table>
-                                            "
-                            ))
-                            , fluidRow(
-                              column(6
-                                     , br()
-                                     , wellPanel(
-                                       HTML("<strong>Save maps ?</strong>")
-                                       , br()
-                                       , br()
-                                       , textInput(inputId = "save.maps.folder"
-                                                   , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>opt.folder.name</span>")
-                                                   , value = NULL
-                                                   , width = "100%")
-                                       , br()
-                                       , br()
-                                       , numericInput(inputId = "save.maps.year1"
-                                                      , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>years.maps.start</span>")
-                                                      , value = 0
-                                                      , min = 0
-                                                      , width = "100%")
-                                       , numericInput(inputId = "save.maps.year2"
-                                                      , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>years.maps.end</span>")
-                                                      , value = 0
-                                                      , min = 0
-                                                      , width = "100%")
-                                       , numericInput(inputId = "save.maps.no"
-                                                      , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>years.maps.number</span>")
-                                                      , value = 0
-                                                      , min = 0
-                                                      , max = 100
-                                                      , step = 10
-                                                      , width = "100%")
-                                       , br()
-                                       , br()
-                                       , actionButton(inputId = "create.save.maps"
-                                                      , label = "Create SAVE maps files"
-                                                      , icon = icon("file")
-                                                      , width = "100%")
-                                     )
-                              )
-                              , column(6
-                                       , br()
-                                       , wellPanel(
-                                         HTML("<strong>Save simulation ?</strong>")
-                                         , br()
-                                         , br()
-                                         , textInput(inputId = "save.objects.folder"
-                                                     , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>opt.folder.name</span>")
-                                                     , value = NULL
-                                                     , width = "100%")
-                                         , br()
-                                         , br()
-                                         , numericInput(inputId = "save.objects.year1"
-                                                        , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>years.objects</span>")
-                                                        , value = 0
-                                                        , min = 0
-                                                        , width = "100%")
-                                         , numericInput(inputId = "save.objects.year2"
-                                                        , label = NULL
-                                                        , value = 0
-                                                        , min = 0
-                                                        , width = "100%")
-                                         , numericInput(inputId = "save.objects.year3"
-                                                        , label = NULL
-                                                        , value = 0
-                                                        , min = 0
-                                                        , width = "100%")
-                                         , br()
-                                         , br()
-                                         , actionButton(inputId = "create.save.objects"
-                                                        , label = "Create SAVE objects files"
-                                                        , icon = icon("file")
-                                                        , width = "100%")
-                                       )
-                              )
-                            )
-                            , fluidRow(
-                              br(),
-                              wellPanel(dataTableOutput(outputId = "created_table.save"))
-                            )
-                            ),
-                   tabPanel(title = HTML("<p style='background-color:#068f96; padding:10px; margin-top:0px; border-radius:2px;
-                                         font-family:Serif; color:#FFFFFF'>Simulation files</p>")
-                            , value = "create.simul"
-                   )
-                   )
-          # , wellPanel(dataTableOutput(outputId = "created_table"))
-          # textOutput("out_message"))
-                   )
+          )
         # , wellPanel(dataTableOutput(outputId = "created_table"))
+        # textOutput("out_message"))
           )
-    )
+      # , wellPanel(dataTableOutput(outputId = "created_table"))
+      )
+)
 )
 
 
@@ -880,6 +853,206 @@ server <- function(input, output, session) {
     } else
     {
       shinyalert(type = "warning", text = "You must create a simulation folder first !")
+    }
+  })
+  
+  ####################################################################
+  
+  output$UI.dist.grouping = renderUI({
+    if (input$dist.grouping == "by type")
+    {
+      fluidRow(
+        column(6
+               , br()
+               , fluidRow(
+                 column(4, HTML(""))
+                 , column(4, HTML(""))
+                 , column(4, HTML("<strong>H</strong>"))
+               )
+               , fluidRow(
+                 column(4, HTML("<strong> Stage 1</strong>"))
+                 , column(4, HTML("<strong>Killed</strong>"))
+                 , column(4
+                          , selectInput(inputId = "dist.1.kill.H"
+                                        , label = NULL
+                                        , choices = seq(0,100,10)
+                                        , multiple = FALSE
+                                        , width = "100%"))
+               )
+               , fluidRow(
+                 column(4, HTML(""))
+                 , column(4, HTML("<strong>Resprout</strong>"))
+                 , column(4
+                          , selectInput(inputId = "dist.1.resprout.H"
+                                        , label = NULL
+                                        , choices = seq(0,100,10)
+                                        , multiple = FALSE
+                                        , width = "100%"))
+               )
+               , fluidRow(
+                 column(4, HTML("<strong> Stage 2</strong>"))
+                 , column(4, HTML("<strong>Killed</strong>"))
+                 , column(4
+                          , selectInput(inputId = "dist.2.kill.H"
+                                        , label = NULL
+                                        , choices = seq(0,100,10)
+                                        , multiple = FALSE
+                                        , width = "100%"))
+               )
+               , fluidRow(
+                 column(4, HTML(""))
+                 , column(4, HTML("<strong>Resprout</strong>"))
+                 , column(4
+                          , selectInput(inputId = "dist.2.resprout.H"
+                                        , label = NULL
+                                        , choices = seq(0,100,10)
+                                        , multiple = FALSE
+                                        , width = "100%"))
+               )
+               , fluidRow(
+                 column(4, HTML("<strong> Stage 3</strong>"))
+                 , column(4, HTML("<strong>Killed</strong>"))
+                 , column(4
+                          , selectInput(inputId = "dist.3.kill.H"
+                                        , label = NULL
+                                        , choices = seq(0,100,10)
+                                        , multiple = FALSE
+                                        , width = "100%"))
+               )
+               , fluidRow(
+                 column(4, HTML(""))
+                 , column(4, HTML("<strong>Resprout</strong>"))
+                 , column(4
+                          , selectInput(inputId = "dist.3.resprout.H"
+                                        , label = NULL
+                                        , choices = seq(0,100,10)
+                                        , multiple = FALSE
+                                        , width = "100%"))
+               )
+               , fluidRow(
+                 column(4, HTML("<strong> Stage 4</strong>"))
+                 , column(4, HTML("<strong>Killed</strong>"))
+                 , column(4
+                          , selectInput(inputId = "dist.4.kill.H"
+                                        , label = NULL
+                                        , choices = seq(0,100,10)
+                                        , multiple = FALSE
+                                        , width = "100%"))
+               )
+               , fluidRow(
+                 column(4, HTML(""))
+                 , column(4, HTML("<strong>Resprout</strong>"))
+                 , column(4
+                          , selectInput(inputId = "dist.4.resprout.H"
+                                        , label = NULL
+                                        , choices = seq(0,100,10)
+                                        , multiple = FALSE
+                                        , width = "100%"))
+               ))
+        , column(2
+                 , br()
+                 , HTML("<strong>C</strong>")
+                 , selectInput(inputId = "dist.1.kill.C"
+                               , label = NULL
+                               , choices = seq(0,100,10)
+                               , multiple = FALSE
+                               , width = "100%")
+                 , selectInput(inputId = "dist.1.resprout.C"
+                               , label = NULL
+                               , choices = seq(0,100,10)
+                               , multiple = FALSE
+                               , width = "100%")
+                 , selectInput(inputId = "dist.2.kill.C"
+                               , label = NULL
+                               , choices = seq(0,100,10)
+                               , multiple = FALSE
+                               , width = "100%")
+                 , selectInput(inputId = "dist.2.resprout.C"
+                               , label = NULL
+                               , choices = seq(0,100,10)
+                               , multiple = FALSE
+                               , width = "100%")
+                 , selectInput(inputId = "dist.3.kill.C"
+                               , label = NULL
+                               , choices = seq(0,100,10)
+                               , multiple = FALSE
+                               , width = "100%")
+                 , selectInput(inputId = "dist.3.resprout.C"
+                               , label = NULL
+                               , choices = seq(0,100,10)
+                               , multiple = FALSE
+                               , width = "100%")
+                 , selectInput(inputId = "dist.4.kill.C"
+                               , label = NULL
+                               , choices = seq(0,100,10)
+                               , multiple = FALSE
+                               , width = "100%")
+                 , selectInput(inputId = "dist.4.resprout.C"
+                               , label = NULL
+                               , choices = seq(0,100,10)
+                               , multiple = FALSE
+                               , width = "100%")
+        )
+        , column(2
+                 , br()
+                 , HTML("<strong>P</strong>")
+                 , selectInput(inputId = "dist.1.kill.P"
+                               , label = NULL
+                               , choices = seq(0,100,10)
+                               , multiple = FALSE
+                               , width = "100%")
+                 , selectInput(inputId = "dist.1.resprout.P"
+                               , label = NULL
+                               , choices = seq(0,100,10)
+                               , multiple = FALSE
+                               , width = "100%")
+                 , selectInput(inputId = "dist.2.kill.P"
+                               , label = NULL
+                               , choices = seq(0,100,10)
+                               , multiple = FALSE
+                               , width = "100%")
+                 , selectInput(inputId = "dist.2.resprout.P"
+                               , label = NULL
+                               , choices = seq(0,100,10)
+                               , multiple = FALSE
+                               , width = "100%")
+                 , selectInput(inputId = "dist.3.kill.P"
+                               , label = NULL
+                               , choices = seq(0,100,10)
+                               , multiple = FALSE
+                               , width = "100%")
+                 , selectInput(inputId = "dist.3.resprout.P"
+                               , label = NULL
+                               , choices = seq(0,100,10)
+                               , multiple = FALSE
+                               , width = "100%")
+                 , selectInput(inputId = "dist.4.kill.P"
+                               , label = NULL
+                               , choices = seq(0,100,10)
+                               , multiple = FALSE
+                               , width = "100%")
+                 , selectInput(inputId = "dist.4.resprout.P"
+                               , label = NULL
+                               , choices = seq(0,100,10)
+                               , multiple = FALSE
+                               , width = "100%")
+        )
+      )
+      
+      # names.PFG = list.files(path = paste0(input$name.simul, "/DATA/PFGS/SUCC/")
+      #                        , pattern = "^SUCC_")
+      # names.PFG = sub("^SUCC_", "", names.PFG)
+      # names.PFG = sub(".txt$", "", names.PFG)
+      # selectInput(inputId = "disp.PFG"
+      #             , label = NULL
+      #             , choices = names.PFG
+      #             , multiple = FALSE
+      #             , width = "100%")
+    } else
+    {
+      # textInput(inputId = "disp.PFG"
+      #           , label = NULL
+      #           , width = "100%")
     }
   })
   
