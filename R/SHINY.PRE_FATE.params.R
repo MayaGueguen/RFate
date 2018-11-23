@@ -184,10 +184,7 @@ ui <- fluidPage(
       fluidRow(
         column(12
                , ""
-               , actionButton(inputId = "download.folder"
-                              , label = "Download folder"
-                              , icon = icon("download")
-                              , width = "100%")
+               , uiOutput(outputId = "download.folder")
         )
       )
     ),
@@ -834,42 +831,28 @@ server <- function(input, output, session) {
     }
   })
   
-  # ####################################################################
-  # output$dirRes_selector = renderUI({
-  # 
-  # })
-  # 
-  # ####################################################################
-  # get_zipfiles = eventReactive(input$refresh, {
-  #   zip(zipfile = paste0("SAUVEGARDE_ORCHAMP_selection_", Sys.Date(), ".zip")
-  #       , list.files(path = get_dirSave(), full.names = T))
-  # })
-  # 
-  # observeEvent(input$doZip, {
-  #   get_zipfiles()
-  # })
-  # 
-  # output$zip_selector = renderUI({
-  #   if (input$doZip)
-  #   {
-  #     selectInput(inputId = "zip"
-  #                 , label = "Sélectionner un dossier"
-  #                 , choices = c("",list.files(pattern = "^SAUVEGARDE_ORCHAMP_"))
-  #                 , selected = NULL
-  #                 , multiple = TRUE
-  #     )
-  #   }
-  # })
-  # 
-  # output$downloadSelection = downloadHandler(
-  #   filename = function(){
-  #     paste0("SAUVEGARDE_ORCHAMP_selection_", Sys.Date(), ".zip")
-  #   },
-  #   content = function(file){
-  #     file.copy(paste0("SAUVEGARDE_ORCHAMP_selection_", Sys.Date(), ".zip"), file)
-  #   },
-  #   contentType = "application/zip"
-  # )
+  ####################################################################
+
+  output$download.folder = renderUI({
+    if (input$create.skeleton > 0)
+    {
+      downloadButton(outputId = "FATE_simulation.zip"
+                     , label = "Download folder"
+                     , icon = icon("download")
+                     , width = "100%")
+    }
+  })
+
+  output$FATE_simulation.zip = downloadHandler(
+    filename = function(){
+      paste0(input$name.simul, "_", Sys.Date(), ".zip")
+    },
+    content = function(file){
+      zip(zipfile = file, input$name.simul)
+      file.copy(file, file)
+    },
+    contentType = "application/zip"
+  )
   
   
 }
