@@ -101,6 +101,7 @@ get_files = function(path_folder, skip.no = 2)
 
 mat.PFG.succ = data.frame()
 mat.PFG.disp = data.frame()
+mat.PFG.dist = data.frame()
 
 ###################################################################################################################################
 
@@ -1038,21 +1039,81 @@ server <- function(input, output, session) {
                                , width = "100%")
         )
       )
-      
+    } else
+    {
       # names.PFG = list.files(path = paste0(input$name.simul, "/DATA/PFGS/SUCC/")
       #                        , pattern = "^SUCC_")
       # names.PFG = sub("^SUCC_", "", names.PFG)
       # names.PFG = sub(".txt$", "", names.PFG)
-      # selectInput(inputId = "disp.PFG"
-      #             , label = NULL
-      #             , choices = names.PFG
-      #             , multiple = FALSE
-      #             , width = "100%")
+    }
+  })
+  
+  ####################################################################
+  
+  observeEvent(input$add.PFG.dist, {
+    if (input$dist.grouping == "by type")
+    {
+    mat.PFG.dist <<- rbind(mat.PFG.dist
+                           , data.frame(name = input$dist.name
+                                        , responseStage = 1:4
+                                        , KilledIndiv_H = as.numeric(c(input$dist.1.kill.H
+                                                                       , input$dist.2.kill.H
+                                                                       , input$dist.3.kill.H
+                                                                       , input$dist.4.kill.H)) / 10
+                                        , KilledIndiv_C = as.numeric(c(input$dist.1.kill.C
+                                                                       , input$dist.2.kill.C
+                                                                       , input$dist.3.kill.C
+                                                                       , input$dist.4.kill.C)) / 10
+                                        , KilledIndiv_P = as.numeric(c(input$dist.1.kill.P
+                                                                       , input$dist.2.kill.P
+                                                                       , input$dist.3.kill.P
+                                                                       , input$dist.4.kill.P)) / 10
+                                        , ResproutIndiv_H = as.numeric(c(input$dist.1.resprout.H
+                                                                       , input$dist.2.resprout.H
+                                                                       , input$dist.3.resprout.H
+                                                                       , input$dist.4.resprout.H)) / 10
+                                        , ResproutIndiv_C = as.numeric(c(input$dist.1.resprout.C
+                                                                       , input$dist.2.resprout.C
+                                                                       , input$dist.3.resprout.C
+                                                                       , input$dist.4.resprout.C)) / 10
+                                        , ResproutIndiv_P = as.numeric(c(input$dist.1.resprout.P
+                                                                       , input$dist.2.resprout.P
+                                                                       , input$dist.3.resprout.P
+                                                                       , input$dist.4.resprout.P)) / 10
+                                        ))
     } else
     {
-      # textInput(inputId = "disp.PFG"
-      #           , label = NULL
-      #           , width = "100%")
+      
+    }
+    output$mat.PFG.dist = renderTable({ mat.PFG.dist })
+  })
+  
+  observeEvent(input$delete.PFG.dist, {
+    mat.PFG.dist <<- data.frame()
+    output$mat.PFG.dist = renderTable({ mat.PFG.dist })
+  })
+  
+  ####################################################################
+  
+  observeEvent(input$create.dist, {
+    if (input$create.skeleton > 0)
+    {
+      get_res = print_messages(as.expression(
+        PRE_FATE.params_PFGdisturbance(name.simulation = input$name.simul
+                                     , mat.PFG.dist = mat.PFG.dist
+        )
+      ))
+
+      if(get_res)
+      {
+        output$created_table.dist = renderDataTable({
+          path_folder = paste0(input$name.simul, "/DATA/PFGS/DIST/")
+          return(get_files(path_folder))
+        })
+      }
+    } else
+    {
+      shinyalert(type = "warning", text = "You must create a simulation folder first !")
     }
   })
   
