@@ -184,7 +184,7 @@ ui <- fluidPage(
       fluidRow(
         column(12
                , ""
-               , uiOutput(outputId = "download.folder")
+               , uiOutput(outputId = "UI.download.folder")
         )
       )
     ),
@@ -467,9 +467,7 @@ ui <- fluidPage(
                                          , br()
                                          , br()
                                          , HTML("<strong>PFG</strong>")
-                                         , textInput(inputId = "disp.PFG"
-                                                     , label = NULL
-                                                     , width = "100%"))
+                                         , uiOutput(outputId = "UI.disp.PFG"))
                                   , column(2
                                            , br()
                                            , br()
@@ -732,6 +730,28 @@ server <- function(input, output, session) {
   })
   
   ####################################################################
+
+  output$UI.disp.PFG = renderUI({
+    if (input$create.succ > 0)
+    {
+      names.PFG = list.files(path = paste0(input$name.simul, "/DATA/PFGS/SUCC/")
+                             , pattern = "^SUCC_")
+      names.PFG = sub("^SUCC_", "", names.PFG)
+      names.PFG = sub(".txt$", "", names.PFG)
+      selectInput(inputId = "disp.PFG"
+                  , label = NULL
+                  , choices = names.PFG
+                  , multiple = FALSE
+                  , width = "100%")
+    } else
+    {
+      textInput(inputId = "disp.PFG"
+                  , label = NULL
+                  , width = "100%")
+    }
+  })
+  
+  ####################################################################
   
   observeEvent(input$add.PFG.disp, {
     mat.PFG.disp <<- rbind(mat.PFG.disp
@@ -833,7 +853,7 @@ server <- function(input, output, session) {
   
   ####################################################################
 
-  output$download.folder = renderUI({
+  output$UI.download.folder = renderUI({
     if (input$create.skeleton > 0)
     {
       downloadButton(outputId = "FATE_simulation.zip"
