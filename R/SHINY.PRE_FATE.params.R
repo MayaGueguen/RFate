@@ -156,28 +156,28 @@ ui <- fluidPage(
       ),
       br(),
       helpText(HTML("
-<ul>
-<li>DATA
-<ul>
-  <li>GLOBAL_PARAMETERS</li>
-  <li>NAMESPACE_CONSTANTS</li>
-  <li>MASK</li>
-  <li>SCENARIO</li>
-  <li>SAVE</li>
-  <li>PFGS :
-  <ul>
-    <li>SUCC</li>
-    <li>DISP</li>
-    <li>DIST</li>
-    <li>HABSUIT</li>
-  </ul>
-  </li>
-</ul>
-</li>
-<li>PARAM_SIMUL</li>
-<li>RESULTS</li>
-</ul>
-      "
+                    <ul>
+                    <li>DATA
+                    <ul>
+                    <li>GLOBAL_PARAMETERS</li>
+                    <li>NAMESPACE_CONSTANTS</li>
+                    <li>MASK</li>
+                    <li>SCENARIO</li>
+                    <li>SAVE</li>
+                    <li>PFGS :
+                    <ul>
+                    <li>SUCC</li>
+                    <li>DISP</li>
+                    <li>DIST</li>
+                    <li>HABSUIT</li>
+                    </ul>
+                    </li>
+                    </ul>
+                    </li>
+                    <li>PARAM_SIMUL</li>
+                    <li>RESULTS</li>
+                    </ul>
+                    "
       )),
       br(),
       br(),
@@ -187,280 +187,280 @@ ui <- fluidPage(
                , uiOutput(outputId = "UI.download.folder")
         )
       )
-    ),
+      ),
     
     
     
     # Output
     mainPanel(
       wellPanel(
-      style = "border-solid:solid; border-width:2px; border-color:#068f96;",
-      tabsetPanel(
-        # type = "pills",
-        tabPanel(title = HTML("<p style='background-color:#068f96; padding:10px; margin-top:0px; border-radius:2px;
-                  font-family:Serif; color:#FFFFFF'>Internal settings</p>")
-                 , value = "create.namespace"
-                 , br()
-                 , helpText(HTML("
-                                 <p><a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_namespaceConstants.html' target='_blank'>
-                                 See more details on <span style='font-family:Monospace;'>RFate</span> package website.</a></p>
-                                 <table style='width:100%;'>
-                                 <tr>
-                                 <td style='width:30%;font-family:Monospace;vertical-align:top;'>global.abund.low</td>
-                                 <td style='width:70%;'><em>Not used for now. To be removed ?</em></td>
-                                 </tr>
-                                 <tr>
-                                 <td style='width:30%;font-family:Monospace;vertical-align:top;'>global.abund.med</td>
-                                 <td style='width:70%;'><em>Not used for now. To be removed ?</em></td>
-                                 </tr>
-                                 <tr>
-                                 <td style='width:30%;font-family:Monospace;vertical-align:top;'>global.abund.high</td>
-                                 <td style='width:70%;'>an <span style='font-family:Monospace;'>integer</span> in the order of 1 000 000 to rescale abundance values in each pixel</td>
-                                 </tr>
-                                 <tr>
-                                 <td style='width:30%;font-family:Monospace;'>global.max.by.cohort</td>
-                                 <td style='width:70%;'>an <span style='font-family:Monospace;'>integer</span> in the order of 1 000 000 to rescale abundance values of each cohort in each pixel</td>
-                                 </tr>
-                                 <tr>
-                                 <td style='width:30%;font-family:Monospace;vertical-align:top;'>global.resource.thresh.med</td>
-                                 <td style='width:70%;'>an <span style='font-family:Monospace;'>integer</span> in the order of 1 000 000 to convert PFG abundances in each strata into light resources.
-                                 It corresponds to the limit of abundances above which light resources are medium.
-                                 PFG abundances lower than this threshold imply high amount of light.
-                                 It is consequently lower than <span style='font-family:Monospace;'>global.resource.thresh.low</span>.</td>
-                                 </tr>
-                                 <tr>
-                                 <td style='width:30%;font-family:Monospace;vertical-align:top;'>global.resource.thresh.low</td>
-                                 <td style='width:70%;'>an <span style='font-family:Monospace;'>integer</span> in the order of 1 000 000 to convert PFG abundances in each strata into light resources.
-                                 It corresponds to the limit of abundances above which light resources are low.
-                                 PFG abundances higher than <span style='font-family:Monospace;'>global.resource.thresh.med</span> and lower than this threshold imply medium amount of light.</td>
-                                 </tr>
-                                 </table>
-                                 " 
-                 ))
-                 , fluidRow(
-                   column(6
-                          , br()
-                          , br()
-                          , numericInput(inputId = "global.abund.low"
-                                         , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>global.abund.low</span>")
-                                         , value = 1000000
-                                         , width = "100%")
-                          , numericInput(inputId = "global.abund.med"
-                                         , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>global.abund.med</span>")
-                                         , value = 5000000
-                                         , width = "100%")
-                          , numericInput(inputId = "global.abund.high"
-                                         , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>global.abund.high</span>")
-                                         , value = 8000000
-                                         , width = "100%")
-                   )
-                   , column(6
+        style = "border-solid:solid; border-width:2px; border-color:#068f96;",
+        tabsetPanel(
+          # type = "pills",
+          tabPanel(title = HTML("<p style='background-color:#068f96; padding:10px; margin-top:0px; border-radius:2px;
+                                font-family:Serif; color:#FFFFFF'>Internal settings</p>")
+                   , value = "create.namespace"
+                   , br()
+                   , helpText(HTML("
+                                   <p><a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_namespaceConstants.html' target='_blank'>
+                                   See more details on <span style='font-family:Monospace;'>RFate</span> package website.</a></p>
+                                   <table style='width:100%;'>
+                                   <tr>
+                                   <td style='width:30%;font-family:Monospace;vertical-align:top;'>global.abund.low</td>
+                                   <td style='width:70%;'><em>Not used for now. To be removed ?</em></td>
+                                   </tr>
+                                   <tr>
+                                   <td style='width:30%;font-family:Monospace;vertical-align:top;'>global.abund.med</td>
+                                   <td style='width:70%;'><em>Not used for now. To be removed ?</em></td>
+                                   </tr>
+                                   <tr>
+                                   <td style='width:30%;font-family:Monospace;vertical-align:top;'>global.abund.high</td>
+                                   <td style='width:70%;'>an <span style='font-family:Monospace;'>integer</span> in the order of 1 000 000 to rescale abundance values in each pixel</td>
+                                   </tr>
+                                   <tr>
+                                   <td style='width:30%;font-family:Monospace;'>global.max.by.cohort</td>
+                                   <td style='width:70%;'>an <span style='font-family:Monospace;'>integer</span> in the order of 1 000 000 to rescale abundance values of each cohort in each pixel</td>
+                                   </tr>
+                                   <tr>
+                                   <td style='width:30%;font-family:Monospace;vertical-align:top;'>global.resource.thresh.med</td>
+                                   <td style='width:70%;'>an <span style='font-family:Monospace;'>integer</span> in the order of 1 000 000 to convert PFG abundances in each strata into light resources.
+                                   It corresponds to the limit of abundances above which light resources are medium.
+                                   PFG abundances lower than this threshold imply high amount of light.
+                                   It is consequently lower than <span style='font-family:Monospace;'>global.resource.thresh.low</span>.</td>
+                                   </tr>
+                                   <tr>
+                                   <td style='width:30%;font-family:Monospace;vertical-align:top;'>global.resource.thresh.low</td>
+                                   <td style='width:70%;'>an <span style='font-family:Monospace;'>integer</span> in the order of 1 000 000 to convert PFG abundances in each strata into light resources.
+                                   It corresponds to the limit of abundances above which light resources are low.
+                                   PFG abundances higher than <span style='font-family:Monospace;'>global.resource.thresh.med</span> and lower than this threshold imply medium amount of light.</td>
+                                   </tr>
+                                   </table>
+                                   " 
+                   ))
+                   , fluidRow(
+                     column(6
                             , br()
                             , br()
-                            , numericInput(inputId = "global.max.by.cohort"
-                                           , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>global.max.by.cohort</span>")
+                            , numericInput(inputId = "global.abund.low"
+                                           , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>global.abund.low</span>")
+                                           , value = 1000000
+                                           , width = "100%")
+                            , numericInput(inputId = "global.abund.med"
+                                           , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>global.abund.med</span>")
                                            , value = 5000000
                                            , width = "100%")
-                            , numericInput(inputId = "global.resource.thresh.med"
-                                           , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>global.resource.thresh.med</span>")
-                                           , value = 13000000
+                            , numericInput(inputId = "global.abund.high"
+                                           , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>global.abund.high</span>")
+                                           , value = 8000000
                                            , width = "100%")
-                            , numericInput(inputId = "global.resource.thresh.low"
-                                           , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>global.resource.thresh.low</span>")
-                                           , value = 19000000
-                                           , width = "100%")
+                     )
+                     , column(6
+                              , br()
+                              , br()
+                              , numericInput(inputId = "global.max.by.cohort"
+                                             , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>global.max.by.cohort</span>")
+                                             , value = 5000000
+                                             , width = "100%")
+                              , numericInput(inputId = "global.resource.thresh.med"
+                                             , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>global.resource.thresh.med</span>")
+                                             , value = 13000000
+                                             , width = "100%")
+                              , numericInput(inputId = "global.resource.thresh.low"
+                                             , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>global.resource.thresh.low</span>")
+                                             , value = 19000000
+                                             , width = "100%")
+                     )
                    )
-                 )
-                 , fluidRow(
-                   column(6
-                          , br()
-                          , actionButton(inputId = "create.namespaceConstants"
-                                         , label = "Create Namespace constants file"
-                                         , icon = icon("file")
-                                         , width = "100%")
-                          # , style = HTML(paste0("background-color: ", button.color, ";")))
-                          , br())
-                 )
-                 , fluidRow(
-                   br(),
-                   wellPanel(dataTableOutput(outputId = "created_table.namespace"))
-                 )
-                 ),
-        tabPanel(title = HTML("<p style='background-color:#068f96; padding:10px; margin-top:0px; border-radius:2px;
-                  font-family:Serif; color:#FFFFFF'>PFG files</p>")
-                 , value = "create.PFG"
-                 , br()
-                 , tabsetPanel(
-                   tabPanel(title = "Succession"
-                            , value = "panel.succ"
+                   , fluidRow(
+                     column(6
                             , br()
-                            , helpText(HTML("
-                                            <p><a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGsuccession.html' target='_blank'>
-                                            See more details on <span style='font-family:Monospace;'>RFate</span> package website.</a></p>
-                                            <table style='width:100%;'>
-                                            <tr>
-                                            <td style='width:30%;font-family:Monospace;vertical-align:top;'>type</td>
-                                            <td style='width:70%;'>or life-form, based on Raunkier.
-                                            It should be either <span style='font-family:Monospace;'>H</span> (herbaceous),
-                                            <span style='font-family:Monospace;'>C</span> (chamaephyte) or <span style='font-family:Monospace;'>P</span> (phanerophyte) for now</td>
-                                            </tr>
-                                            <tr>
-                                            <td style='width:30%;font-family:Monospace;vertical-align:top;'>height</td>
-                                            <td style='width:70%;'>the maximum or average height that reach the PFG</td>
-                                            </tr>
-                                            <tr>
-                                            <td style='width:30%;font-family:Monospace;vertical-align:top;'>maturity</td>
-                                            <td style='width:70%;'>the age from which the PFG can reproduce</td>
-                                            </tr>
-                                            <tr>
-                                            <td style='width:30%;font-family:Monospace;vertical-align:top;'>longevity</td>
-                                            <td style='width:70%;'>the maximum or average lifespan of the PFG</td>
-                                            </tr>
-                                            <tr>
-                                            <td style='width:30%;font-family:Monospace;vertical-align:top;'>light</td>
-                                            <td style='width:70%;'>a value between 0 and 10 corresponding to the Ellenberg value of the PFG</td>
-                                            </tr>
-                                            </table>
-                                            "
-                            ))
-                            , fluidRow(
-                              column(6
-                                     , br()
-                                     , actionButton(inputId = "add.PFG.succ"
-                                                    , label = "Add PFG"
-                                                    , icon = icon("plus")
-                                                    , width = "100%"))
-                              , column(6
-                                       , br()
-                                       , actionButton(inputId = "create.succ"
-                                                      , label = "Create PFG succession files"
-                                                      , icon = icon("file")
-                                                      , width = "100%"))
-                              # , style = HTML(paste0("background-color: ", button.color, ";")))
-                            )
-                            , fluidRow(
-                              column(2
-                                     , br()
-                                     , br()
-                                     , HTML("<strong>PFG</strong>")
-                                     , textInput(inputId = "succ.PFG"
-                                                 , label = NULL
-                                                 , width = "100%"))
-                              , column(2
-                                       , br()
-                                       , br()
-                                       , HTML("<strong>type</strong>")
-                                       , selectInput(inputId = "succ.type"
-                                                     , label = NULL
-                                                     , choices = c("H", "C", "P")
-                                                     , selected = NULL
-                                                     , multiple = F
-                                                     , width = "100%"))
-                              , column(2
-                                       , br()
-                                       , br()
-                                       , HTML("<strong>height</strong>")
-                                       , numericInput(inputId = "succ.height"
-                                                      , label = NULL
-                                                      , value = 0
-                                                      , min = 0
-                                                      , width = "100%"))
-                              , column(2
-                                       , br()
-                                       , br()
-                                       , HTML("<strong>maturity</strong>")
-                                       , numericInput(inputId = "succ.maturity"
-                                                      , label = NULL
-                                                      , value = 0
-                                                      , min = 0
-                                                      , width = "100%"))
-                              , column(2
-                                       , br()
-                                       , br()
-                                       , HTML("<strong>longevity</strong>")
-                                       , numericInput(inputId = "succ.longevity"
-                                                      , label = NULL
-                                                      , value = 0
-                                                      , min = 0
-                                                      , width = "100%"))
-                              , column(2
-                                       , br()
-                                       , br()
-                                       , HTML("<strong>light</strong>")
-                                       , selectInput(inputId = "succ.light"
-                                                     , label = NULL
-                                                     , choices = 0:10
-                                                     , selected = NULL
-                                                     , multiple = F
-                                                     , width = "100%"))
-                            )
-                            , fluidRow(
-                              column(10
-                                     , br()
-                                     , tableOutput(outputId = "mat.PFG.succ"))
-                              , column(2
-                                       , br()
-                                       , actionButton(inputId = "delete.PFG.succ"
-                                                      , label = NULL
-                                                      , icon = icon("trash")))
-                            )
-                            , fluidRow(
-                              br(),
-                              wellPanel(dataTableOutput(outputId = "created_table.succ"))
-                            )
+                            , actionButton(inputId = "create.namespaceConstants"
+                                           , label = "Create Namespace constants file"
+                                           , icon = icon("file")
+                                           , width = "100%")
+                            # , style = HTML(paste0("background-color: ", button.color, ";")))
+                            , br())
                    )
-                   , tabPanel(title = "Dispersal"
-                              , value = "panel.disp"
+                   , fluidRow(
+                     br(),
+                     wellPanel(dataTableOutput(outputId = "created_table.namespace"))
+                   )
+                   ),
+          tabPanel(title = HTML("<p style='background-color:#068f96; padding:10px; margin-top:0px; border-radius:2px;
+                                font-family:Serif; color:#FFFFFF'>PFG files</p>")
+                   , value = "create.PFG"
+                   , br()
+                   , tabsetPanel(
+                     tabPanel(title = "Succession"
+                              , value = "panel.succ"
                               , br()
                               , helpText(HTML("
-                                            <p><a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGdispersal.html' target='_blank'>
-                                            See more details on <span style='font-family:Monospace;'>RFate</span> package website.</a></p>
-                                            <table style='width:100%;'>
-                                            <tr>
-                                            <td style='width:30%;font-family:Monospace;vertical-align:top;'>MODE :</td>
-                                            </tr>
-                                            <tr>
-                                            <td style='width:30%;font-family:Monospace;vertical-align:top;'>[1] uniform kernel</td>
-                                            <td style='width:70%;'>homogeneous dispersal within the <span style='font-family:Monospace;'>d50</span>,
-<span style='font-family:Monospace;'>d99</span> and <span style='font-family:Monospace;'>ldd</span> circles</td>
-                                            </tr>
-                                            <tr>
-                                            <td style='width:30%;font-family:Monospace;vertical-align:top;'>[2] exponential kernel</td>
-                                            <td style='width:70%;'>seeds are dispersed within each concentric circle according to a decreasing exponential density law (lambda = 1)</td>
-                                            </tr>
-                                            <tr>
-                                            <td style='width:30%;font-family:Monospace;vertical-align:top;'>[3] exponential kernel <br/>with probability</td>
-                                            <td style='width:70%;'>seeds are dispersed within each concentric circle according to a decreasing exponential density law (lambda = 1) and a continuous decreasing probability with distance</td>
-                                            </tr>
-                                            <tr>
-                                            <td style='width:30%;font-family:Monospace;vertical-align:top;'>d50</td>
-                                            <td style='width:70%;'>the distance at which 50% of seeds are dispersed</td>
-                                            </tr>
-                                            <tr>
-                                            <td style='width:30%;font-family:Monospace;vertical-align:top;'>d99</td>
-                                            <td style='width:70%;'>the distance at which 49% of seeds are dispersed</td>
-                                            </tr>
-                                            <tr>
-                                            <td style='width:30%;font-family:Monospace;vertical-align:top;'>ldd</td>
-                                            <td style='width:70%;'>the long dispersal distance at which 1% of seeds are dispersed</td>
-                                            </tr>
-                                            </table>
-                               "
+                                              <p><a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGsuccession.html' target='_blank'>
+                                              See more details on <span style='font-family:Monospace;'>RFate</span> package website.</a></p>
+                                              <table style='width:100%;'>
+                                              <tr>
+                                              <td style='width:30%;font-family:Monospace;vertical-align:top;'>type</td>
+                                              <td style='width:70%;'>or life-form, based on Raunkier.
+                                              It should be either <span style='font-family:Monospace;'>H</span> (herbaceous),
+                                              <span style='font-family:Monospace;'>C</span> (chamaephyte) or <span style='font-family:Monospace;'>P</span> (phanerophyte) for now</td>
+                                              </tr>
+                                              <tr>
+                                              <td style='width:30%;font-family:Monospace;vertical-align:top;'>height</td>
+                                              <td style='width:70%;'>the maximum or average height that reach the PFG</td>
+                                              </tr>
+                                              <tr>
+                                              <td style='width:30%;font-family:Monospace;vertical-align:top;'>maturity</td>
+                                              <td style='width:70%;'>the age from which the PFG can reproduce</td>
+                                              </tr>
+                                              <tr>
+                                              <td style='width:30%;font-family:Monospace;vertical-align:top;'>longevity</td>
+                                              <td style='width:70%;'>the maximum or average lifespan of the PFG</td>
+                                              </tr>
+                                              <tr>
+                                              <td style='width:30%;font-family:Monospace;vertical-align:top;'>light</td>
+                                              <td style='width:70%;'>a value between 0 and 10 corresponding to the Ellenberg value of the PFG</td>
+                                              </tr>
+                                              </table>
+                                              "
                               ))
                               , fluidRow(
                                 column(6
                                        , br()
-                                       , actionButton(inputId = "add.PFG.disp"
+                                       , actionButton(inputId = "add.PFG.succ"
                                                       , label = "Add PFG"
                                                       , icon = icon("plus")
                                                       , width = "100%"))
                                 , column(6
                                          , br()
-                                         , actionButton(inputId = "create.disp"
-                                                        , label = "Create PFG dispersal files"
+                                         , actionButton(inputId = "create.succ"
+                                                        , label = "Create PFG succession files"
                                                         , icon = icon("file")
                                                         , width = "100%"))
-                                         # , style = HTML(paste0("background-color: ", button.color, ";")))
+                                # , style = HTML(paste0("background-color: ", button.color, ";")))
+                              )
+                              , fluidRow(
+                                column(2
+                                       , br()
+                                       , br()
+                                       , HTML("<strong>PFG</strong>")
+                                       , textInput(inputId = "succ.PFG"
+                                                   , label = NULL
+                                                   , width = "100%"))
+                                , column(2
+                                         , br()
+                                         , br()
+                                         , HTML("<strong>type</strong>")
+                                         , selectInput(inputId = "succ.type"
+                                                       , label = NULL
+                                                       , choices = c("H", "C", "P")
+                                                       , selected = NULL
+                                                       , multiple = F
+                                                       , width = "100%"))
+                                , column(2
+                                         , br()
+                                         , br()
+                                         , HTML("<strong>height</strong>")
+                                         , numericInput(inputId = "succ.height"
+                                                        , label = NULL
+                                                        , value = 0
+                                                        , min = 0
+                                                        , width = "100%"))
+                                , column(2
+                                         , br()
+                                         , br()
+                                         , HTML("<strong>maturity</strong>")
+                                         , numericInput(inputId = "succ.maturity"
+                                                        , label = NULL
+                                                        , value = 0
+                                                        , min = 0
+                                                        , width = "100%"))
+                                , column(2
+                                         , br()
+                                         , br()
+                                         , HTML("<strong>longevity</strong>")
+                                         , numericInput(inputId = "succ.longevity"
+                                                        , label = NULL
+                                                        , value = 0
+                                                        , min = 0
+                                                        , width = "100%"))
+                                , column(2
+                                         , br()
+                                         , br()
+                                         , HTML("<strong>light</strong>")
+                                         , selectInput(inputId = "succ.light"
+                                                       , label = NULL
+                                                       , choices = 0:10
+                                                       , selected = NULL
+                                                       , multiple = F
+                                                       , width = "100%"))
+                              )
+                              , fluidRow(
+                                column(10
+                                       , br()
+                                       , tableOutput(outputId = "mat.PFG.succ"))
+                                , column(2
+                                         , br()
+                                         , actionButton(inputId = "delete.PFG.succ"
+                                                        , label = NULL
+                                                        , icon = icon("trash")))
+                              )
+                              , fluidRow(
+                                br(),
+                                wellPanel(dataTableOutput(outputId = "created_table.succ"))
+                              )
+                              )
+                     , tabPanel(title = "Dispersal"
+                                , value = "panel.disp"
+                                , br()
+                                , helpText(HTML("
+                                                <p><a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGdispersal.html' target='_blank'>
+                                                See more details on <span style='font-family:Monospace;'>RFate</span> package website.</a></p>
+                                                <table style='width:100%;'>
+                                                <tr>
+                                                <td style='width:30%;font-family:Monospace;vertical-align:top;'>MODE :</td>
+                                                </tr>
+                                                <tr>
+                                                <td style='width:30%;font-family:Monospace;vertical-align:top;'>[1] uniform kernel</td>
+                                                <td style='width:70%;'>homogeneous dispersal within the <span style='font-family:Monospace;'>d50</span>,
+                                                <span style='font-family:Monospace;'>d99</span> and <span style='font-family:Monospace;'>ldd</span> circles</td>
+                                                </tr>
+                                                <tr>
+                                                <td style='width:30%;font-family:Monospace;vertical-align:top;'>[2] exponential kernel</td>
+                                                <td style='width:70%;'>seeds are dispersed within each concentric circle according to a decreasing exponential density law (lambda = 1)</td>
+                                                </tr>
+                                                <tr>
+                                                <td style='width:30%;font-family:Monospace;vertical-align:top;'>[3] exponential kernel <br/>with probability</td>
+                                                <td style='width:70%;'>seeds are dispersed within each concentric circle according to a decreasing exponential density law (lambda = 1) and a continuous decreasing probability with distance</td>
+                                                </tr>
+                                                <tr>
+                                                <td style='width:30%;font-family:Monospace;vertical-align:top;'>d50</td>
+                                                <td style='width:70%;'>the distance at which 50% of seeds are dispersed</td>
+                                                </tr>
+                                                <tr>
+                                                <td style='width:30%;font-family:Monospace;vertical-align:top;'>d99</td>
+                                                <td style='width:70%;'>the distance at which 49% of seeds are dispersed</td>
+                                                </tr>
+                                                <tr>
+                                                <td style='width:30%;font-family:Monospace;vertical-align:top;'>ldd</td>
+                                                <td style='width:70%;'>the long dispersal distance at which 1% of seeds are dispersed</td>
+                                                </tr>
+                                                </table>
+                                                "
+                                ))
+                                , fluidRow(
+                                  column(6
+                                         , br()
+                                         , actionButton(inputId = "add.PFG.disp"
+                                                        , label = "Add PFG"
+                                                        , icon = icon("plus")
+                                                        , width = "100%"))
+                                  , column(6
+                                           , br()
+                                           , actionButton(inputId = "create.disp"
+                                                          , label = "Create PFG dispersal files"
+                                                          , icon = icon("file")
+                                                          , width = "100%"))
+                                  # , style = HTML(paste0("background-color: ", button.color, ";")))
                                 )
                                 , fluidRow(
                                   column(2
@@ -506,30 +506,121 @@ ui <- fluidPage(
                                                           , min = 0
                                                           , width = "100%"))
                                 )
-                              , fluidRow(
-                                column(10
-                                       , br()
-                                       , tableOutput(outputId = "mat.PFG.disp"))
-                                , column(2
+                                , fluidRow(
+                                  column(10
                                          , br()
-                                         , actionButton(inputId = "delete.PFG.disp"
-                                                        , label = NULL
-                                                        , icon = icon("trash")))
-                              )
-                              , fluidRow(
-                                br(),
-                                wellPanel(dataTableOutput(outputId = "created_table.disp"))
-                              )
-                              )
-                              , tabPanel(title = "Disturbances"
-                                         , value = "create.dist")
+                                         , tableOutput(outputId = "mat.PFG.disp"))
+                                  , column(2
+                                           , br()
+                                           , actionButton(inputId = "delete.PFG.disp"
+                                                          , label = NULL
+                                                          , icon = icon("trash")))
+                                )
+                                , fluidRow(
+                                  br(),
+                                  wellPanel(dataTableOutput(outputId = "created_table.disp"))
+                                )
+                                )
+                     , tabPanel(title = "Disturbances"
+                                , value = "panel.dist"
+                                , br()
+                                , helpText(HTML("
+                                                <p><a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGdisturbance.html' target='_blank'>
+                                                See more details on <span style='font-family:Monospace;'>RFate</span> package website.</a></p>
+                                                <table style='width:100%;'>
+                                                <tr>
+                                                <td style='width:30%;font-family:Monospace;vertical-align:top;'>[1] uniform kernel</td>
+                                                <td style='width:70%;'>homogeneous dispersal within the <span style='font-family:Monospace;'>d50</span>,
+                                                <span style='font-family:Monospace;'>d99</span> and <span style='font-family:Monospace;'>ldd</span> circles</td>
+                                                </tr>
+                                                </table>
+                                                "
+                                ))
+                                , fluidRow(
+                                  column(6
+                                         , br()
+                                         , actionButton(inputId = "add.PFG.dist"
+                                                        , label = "Add disturbance"
+                                                        , icon = icon("plus")
+                                                        , width = "100%"))
+                                  , column(6
+                                           , br()
+                                           , actionButton(inputId = "create.dist"
+                                                          , label = "Create PFG disturbance files"
+                                                          , icon = icon("file")
+                                                          , width = "100%"))
+                                  # , style = HTML(paste0("background-color: ", button.color, ";")))
+                                )
+                                , fluidRow(
+                                  column(4
+                                         , br()
+                                         , br()
+                                         , HTML("<strong>Disturbance</strong>")
+                                         , textInput(inputId = "dist.name"
+                                                     , label = NULL
+                                                     , width = "100%"))
+                                  , column(4
+                                           , br()
+                                           , br()
+                                           , HTML("<strong>Disturbance</strong>")
+                                           , checkboxGroupInput(inputId = "dist.grouping"
+                                                                , label = NULL
+                                                                , choices = c("by type", "by PFG")
+                                                                , width = "100%"))
+                                )
+                                ,fluidRow(
+                                  column(2
+                                         , br()
+                                         , br()
+                                         , HTML("<strong>Stage 1</strong>")
+                                         , br()
+                                         , br()
+                                         , HTML("<strong>Stage 2</strong>")
+                                         , br()
+                                         , br()
+                                         , HTML("<strong>Stage 3</strong>")
+                                         , br()
+                                         , br()
+                                         , HTML("<strong>Stage 4</strong>"))
+                                  , column(2
+                                         , br()
+                                         , br()
+                                         , HTML("<strong>Killed</strong>")
+                                         , HTML("<strong>Resprout</strong>")
+                                         , br()
+                                         , HTML("<strong>Killed</strong>")
+                                         , HTML("<strong>Resprout</strong>")
+                                         , br()
+                                         , HTML("<strong>Killed</strong>")
+                                         , HTML("<strong>Resprout</strong>")
+                                         , br()
+                                         , HTML("<strong>Killed</strong>")
+                                         , HTML("<strong>Resprout</strong>"))
+                                  , column(8
+                                         , uiOutput(outputId = "UI.dist.grouping"))
+                                )
+                                , fluidRow(
+                                  column(10
+                                         , br()
+                                         , tableOutput(outputId = "mat.PFG.dist"))
+                                  , column(2
+                                           , br()
+                                           , actionButton(inputId = "delete.PFG.dist"
+                                                          , label = NULL
+                                                          , icon = icon("trash")))
+                                )
+                                , fluidRow(
+                                  br(),
+                                  wellPanel(dataTableOutput(outputId = "created_table.dist"))
+                                )
+                                )
                    )
-                   ),
-                 tabPanel(title = HTML("<p style='background-color:#068f96; padding:10px; margin-top:0px; border-radius:2px;
-                  font-family:Serif; color:#FFFFFF'>Scenario files</p>")
-                          , value = "create.scenario"
-                          , br()
-                          , helpText(HTML("
+          )
+                   , tabPanel(title = HTML("<p style='background-color:#068f96; padding:10px; margin-top:0px; border-radius:2px;
+                                         font-family:Serif; color:#FFFFFF'>Scenario files</p>")
+                            , value = "create.scenario"
+                            , br()
+                            , helpText(HTML("
                                             <p><a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_saveYears.html' target='_blank'>
                                             See more details on <span style='font-family:Monospace;'>RFate</span> package website.</a></p>
                                             <table style='width:100%;'>
@@ -544,101 +635,101 @@ ui <- fluidPage(
                                             <tr>
                                             <td style='width:30%;font-family:Monospace;vertical-align:top;'>opt.folder.name</td>
                                             <td style='width:70%;'><em>(optional) a <span style='font-family:Monospace;'>string</span> that corresponds to the name of the folder that will 
-be created into the <span style='font-family:Monospace;'>name.simulation/DATA/SAVE/</span> directory to store the results</em></td>
+                                            be created into the <span style='font-family:Monospace;'>name.simulation/DATA/SAVE/</span> directory to store the results</em></td>
                                             </tr>
                                             </table>
-                            "
-                          ))
-                          , fluidRow(
-                            column(6
-                                   , br()
-                                   , wellPanel(
-                                     HTML("<strong>Save maps ?</strong>")
-                                     , br()
-                                     , br()
-                                     , textInput(inputId = "save.maps.folder"
-                                                 , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>opt.folder.name</span>")
-                                                 , value = NULL
-                                                 , width = "100%")
-                                     , br()
-                                     , br()
-                                     , numericInput(inputId = "save.maps.year1"
-                                                    , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>years.maps.start</span>")
-                                                    , value = 0
-                                                    , min = 0
-                                                    , width = "100%")
-                                     , numericInput(inputId = "save.maps.year2"
-                                                    , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>years.maps.end</span>")
-                                                    , value = 0
-                                                    , min = 0
-                                                    , width = "100%")
-                                     , numericInput(inputId = "save.maps.no"
-                                                    , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>years.maps.number</span>")
-                                                    , value = 0
-                                                    , min = 0
-                                                    , max = 100
-                                                    , step = 10
-                                                    , width = "100%")
-                                     , br()
-                                     , br()
-                                     , actionButton(inputId = "create.save.maps"
-                                                    , label = "Create SAVE maps files"
-                                                    , icon = icon("file")
-                                                    , width = "100%")
-                                   )
-                            )
-                            , column(6
+                                            "
+                            ))
+                            , fluidRow(
+                              column(6
                                      , br()
                                      , wellPanel(
-                                       HTML("<strong>Save simulation ?</strong>")
+                                       HTML("<strong>Save maps ?</strong>")
                                        , br()
                                        , br()
-                                       , textInput(inputId = "save.objects.folder"
+                                       , textInput(inputId = "save.maps.folder"
                                                    , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>opt.folder.name</span>")
                                                    , value = NULL
                                                    , width = "100%")
                                        , br()
                                        , br()
-                                       , numericInput(inputId = "save.objects.year1"
-                                                      , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>years.objects</span>")
+                                       , numericInput(inputId = "save.maps.year1"
+                                                      , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>years.maps.start</span>")
                                                       , value = 0
                                                       , min = 0
                                                       , width = "100%")
-                                       , numericInput(inputId = "save.objects.year2"
-                                                      , label = NULL
+                                       , numericInput(inputId = "save.maps.year2"
+                                                      , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>years.maps.end</span>")
                                                       , value = 0
                                                       , min = 0
                                                       , width = "100%")
-                                       , numericInput(inputId = "save.objects.year3"
-                                                      , label = NULL
+                                       , numericInput(inputId = "save.maps.no"
+                                                      , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>years.maps.number</span>")
                                                       , value = 0
                                                       , min = 0
+                                                      , max = 100
+                                                      , step = 10
                                                       , width = "100%")
                                        , br()
                                        , br()
-                                       , actionButton(inputId = "create.save.objects"
-                                                      , label = "Create SAVE objects files"
+                                       , actionButton(inputId = "create.save.maps"
+                                                      , label = "Create SAVE maps files"
                                                       , icon = icon("file")
                                                       , width = "100%")
                                      )
+                              )
+                              , column(6
+                                       , br()
+                                       , wellPanel(
+                                         HTML("<strong>Save simulation ?</strong>")
+                                         , br()
+                                         , br()
+                                         , textInput(inputId = "save.objects.folder"
+                                                     , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>opt.folder.name</span>")
+                                                     , value = NULL
+                                                     , width = "100%")
+                                         , br()
+                                         , br()
+                                         , numericInput(inputId = "save.objects.year1"
+                                                        , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>years.objects</span>")
+                                                        , value = 0
+                                                        , min = 0
+                                                        , width = "100%")
+                                         , numericInput(inputId = "save.objects.year2"
+                                                        , label = NULL
+                                                        , value = 0
+                                                        , min = 0
+                                                        , width = "100%")
+                                         , numericInput(inputId = "save.objects.year3"
+                                                        , label = NULL
+                                                        , value = 0
+                                                        , min = 0
+                                                        , width = "100%")
+                                         , br()
+                                         , br()
+                                         , actionButton(inputId = "create.save.objects"
+                                                        , label = "Create SAVE objects files"
+                                                        , icon = icon("file")
+                                                        , width = "100%")
+                                       )
+                              )
                             )
-                          )
-                          , fluidRow(
-                            br(),
-                            wellPanel(dataTableOutput(outputId = "created_table.save"))
-                          )
-                 ),
-                 tabPanel(title = HTML("<p style='background-color:#068f96; padding:10px; margin-top:0px; border-radius:2px;
-                  font-family:Serif; color:#FFFFFF'>Simulation files</p>")
-                          , value = "create.simul"
-                 )
-        )
-        # , wellPanel(dataTableOutput(outputId = "created_table"))
+                            , fluidRow(
+                              br(),
+                              wellPanel(dataTableOutput(outputId = "created_table.save"))
+                            )
+                            ),
+                   tabPanel(title = HTML("<p style='background-color:#068f96; padding:10px; margin-top:0px; border-radius:2px;
+                                         font-family:Serif; color:#FFFFFF'>Simulation files</p>")
+                            , value = "create.simul"
+                   )
+                   )
+          # , wellPanel(dataTableOutput(outputId = "created_table"))
           # textOutput("out_message"))
-        )
-      # , wellPanel(dataTableOutput(outputId = "created_table"))
+                   )
+        # , wellPanel(dataTableOutput(outputId = "created_table"))
+          )
     )
-  )
 )
 
 
@@ -691,12 +782,12 @@ server <- function(input, output, session) {
   
   observeEvent(input$add.PFG.succ, {
     mat.PFG.succ <<- rbind(mat.PFG.succ
-                         , data.frame(PFG = input$succ.PFG
-                                      , type = input$succ.type
-                                      , height = as.numeric(input$succ.height)
-                                      , maturity = as.numeric(input$succ.maturity)
-                                      , longevity = as.numeric(input$succ.longevity)
-                                      , light = as.numeric(input$succ.light)))
+                           , data.frame(PFG = input$succ.PFG
+                                        , type = input$succ.type
+                                        , height = as.numeric(input$succ.height)
+                                        , maturity = as.numeric(input$succ.maturity)
+                                        , longevity = as.numeric(input$succ.longevity)
+                                        , light = as.numeric(input$succ.light)))
     output$mat.PFG.succ = renderTable({ mat.PFG.succ })
   })
   
@@ -730,7 +821,7 @@ server <- function(input, output, session) {
   })
   
   ####################################################################
-
+  
   output$UI.disp.PFG = renderUI({
     if (input$create.succ > 0)
     {
@@ -746,8 +837,8 @@ server <- function(input, output, session) {
     } else
     {
       textInput(inputId = "disp.PFG"
-                  , label = NULL
-                  , width = "100%")
+                , label = NULL
+                , width = "100%")
     }
   })
   
@@ -775,7 +866,7 @@ server <- function(input, output, session) {
     {
       get_res = print_messages(as.expression(
         PRE_FATE.params_PFGdispersal(name.simulation = input$name.simul
-                                      , mat.PFG.disp = mat.PFG.disp
+                                     , mat.PFG.disp = mat.PFG.disp
         )
       ))
       
@@ -852,7 +943,7 @@ server <- function(input, output, session) {
   })
   
   ####################################################################
-
+  
   output$UI.download.folder = renderUI({
     if (input$create.skeleton > 0)
     {
@@ -862,7 +953,7 @@ server <- function(input, output, session) {
                      , width = "100%")
     }
   })
-
+  
   output$FATE_simulation.zip = downloadHandler(
     filename = function(){
       paste0(input$name.simul, "_", Sys.Date(), ".zip")
