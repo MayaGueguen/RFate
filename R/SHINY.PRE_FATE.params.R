@@ -112,11 +112,44 @@ ui <- fluidPage(
   useShinyjs(),
   
   # theme = "cosmo",
-  titlePanel(HTML("<p style='background-color:#068f96; padding:10px; margin-bottom:50px; border-radius:2px;
-                  font-family:Serif; color:#FFFFFF'>
-                  FATE : create simulation folder</p>")
-             , windowTitle = "FATE"),
+  tags$body(
+    tags$style(HTML("
+      @import url('https://fonts.googleapis.com/css?family=Londrina+Solid:200,300|Medula+One');
+      h1 {
+        font-family: 'Londrina Solid', cursive;
+        font-weight: 300;
+        line-height: 1.1;
+        background-color: #068f96;
+        padding: 10px;
+        margin-bottom: 50px;
+        border-radius: 2px;
+        color: #FFFFFF;
+      }
+      p.tabPanel_title {
+        font-family: 'Londrina Solid', cursive;
+        font-size: 20px;
+        font-weight: 200;
+        background-color: #068f96;
+        padding: 10px;
+        margin-top: 0px;
+        border-radius: 2px;
+        color: #FFFFFF;
+      }
+      p.tabPanel_subtitle {
+        font-family: 'Londrina Solid', cursive;
+        font-size: 15px;
+        font-weight: 200;
+        background-color: #068f96;
+        padding: 6px;
+        margin-top: 0px;
+        border-radius: 2px;
+        color: #FFFFFF;
+      }
+    "))
+  ),
   
+  headerPanel("FATE : create simulation folder & parameter files", windowTitle = "FATE"),
+
   # Sidebar layout with a input and output definitions
   sidebarLayout(
     
@@ -199,8 +232,7 @@ ui <- fluidPage(
         style = "border-solid:solid; border-width:2px; border-color:#068f96;",
         tabsetPanel(
           # type = "pills",
-          tabPanel(title = HTML("<p style='background-color:#068f96; padding:10px; margin-top:0px; border-radius:2px;
-                                font-family:Serif; color:#FFFFFF'>Internal settings</p>")
+          tabPanel(title = HTML("<p class='tabPanel_title'>Internal settings</p>")
                    , value = "panel.namespace"
                    , br()
                    , helpText(HTML("
@@ -288,8 +320,7 @@ ui <- fluidPage(
                      wellPanel(dataTableOutput(outputId = "created_table.namespace"))
                    )
                    ) ## END tabPanel (Internal settings)
-          , tabPanel(title = HTML("<p style='background-color:#068f96; padding:10px; margin-top:0px; border-radius:2px;
-                                font-family:Serif; color:#FFFFFF'>Global parameters</p>")
+          , tabPanel(title = HTML("<p class='tabPanel_title'>Global parameters</p>")
                      , value = "panel.global"
                      , br()
                      , helpText(HTML("
@@ -433,12 +464,11 @@ ui <- fluidPage(
                      wellPanel(dataTableOutput(outputId = "created_table.global"))
                    )
                    ) ## END tabPanel (Global parameters)
-          , tabPanel(title = HTML("<p style='background-color:#068f96; padding:10px; margin-top:0px; border-radius:2px;
-                                font-family:Serif; color:#FFFFFF'>PFG files</p>")
+          , tabPanel(title = HTML("<p class='tabPanel_title'>PFG files</p>")
                    , value = "create.PFG"
                    , br()
                    , tabsetPanel(
-                     tabPanel(title = "Succession"
+                     tabPanel(title = HTML("<p class='tabPanel_subtitle'>Succession</p>")
                               , value = "panel.succ"
                               , br()
                               , helpText(HTML("
@@ -556,7 +586,7 @@ ui <- fluidPage(
                                 wellPanel(dataTableOutput(outputId = "created_table.succ"))
                               )
                               )
-                     , tabPanel(title = "Dispersal"
+                     , tabPanel(title = HTML("<p class='tabPanel_subtitle'>Dispersal</p>")
                                 , value = "panel.disp"
                                 , br()
                                 , helpText(HTML("
@@ -668,7 +698,7 @@ ui <- fluidPage(
                                   wellPanel(dataTableOutput(outputId = "created_table.disp"))
                                 )
                                 )
-                     , tabPanel(title = "Disturbances"
+                     , tabPanel(title = HTML("<p class='tabPanel_subtitle'>Disturbances</p>")
                                 , value = "panel.dist"
                                 , br()
                                 , helpText(HTML("
@@ -743,8 +773,7 @@ ui <- fluidPage(
                                 )
                      )
                      ) ## END tabPanel (PFG files)
-          , tabPanel(title = HTML("<p style='background-color:#068f96; padding:10px; margin-top:0px; border-radius:2px;
-                                  font-family:Serif; color:#FFFFFF'>Scenario files</p>")
+          , tabPanel(title = HTML("<p class='tabPanel_title'>Scenario files</p>")
                      , value = "create.scenario"
                      , br()
                      , helpText(HTML("
