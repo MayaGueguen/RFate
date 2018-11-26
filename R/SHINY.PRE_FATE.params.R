@@ -231,7 +231,9 @@ ui <- fluidPage(
                     tabPanel(title = HTML("<p class='tabPanel_title'>Internal settings</p>")
                              , value = "panel.namespace"
                              , br()
-                             , helpText(HTML("
+                             , wellPanel(
+                               style = HTML(paste0("background-color: ", button.color, ";")),
+                                helpText(HTML("
                                              <p><a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_namespaceConstants.html' target='_blank'>
                                              See more details on <span style='font-family:Monospace;'>RFate</span> package website.</a></p>
                                              <table style='width:100%;'>
@@ -266,7 +268,7 @@ ui <- fluidPage(
                                              </tr>
                                              </table>
                                              " 
-                             ))
+                             )))
                              , fluidRow(
                                column(6
                                       , br()
@@ -320,7 +322,9 @@ ui <- fluidPage(
                     , tabPanel(title = HTML("<p class='tabPanel_title'>Global parameters</p>")
                                , value = "panel.global"
                                , br()
-                               , helpText(HTML("
+                               , wellPanel(
+                                 style = HTML(paste0("background-color: ", button.color, ";")),
+                                 helpText(HTML("
                                                <p><a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_globalParameters.html' target='_blank'>
                                                See more details on <span style='font-family:Monospace;'>RFate</span> package website.</a></p>
                                                <table style='width:100%;'>
@@ -382,7 +386,7 @@ ui <- fluidPage(
                                                </tr>
                                                </table>
                                                "
-                               ))
+                               )))
                                , fluidRow(
                                  column(6
                                         , br()
@@ -465,7 +469,9 @@ ui <- fluidPage(
                     , tabPanel(title = HTML("<p class='tabPanel_title'>Scenario files</p>")
                                , value = "create.scenario"
                                , br()
-                               , helpText(HTML("
+                               , wellPanel(
+                                 style = HTML(paste0("background-color: ", button.color, ";")),
+                                 helpText(HTML("
                                                <p><a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_saveYears.html' target='_blank'>
                                                See more details on <span style='font-family:Monospace;'>RFate</span> package website.</a></p>
                                                <table style='width:100%;'>
@@ -484,7 +490,7 @@ ui <- fluidPage(
                                                </tr>
                                                </table>
                                                "
-                               ))
+                               )))
                                , fluidRow(
                                  column(6
                                         , br()
@@ -575,7 +581,9 @@ ui <- fluidPage(
                                  tabPanel(title = HTML("<p class='tabPanel_subtitle'>Succession</p>")
                                           , value = "panel.succ"
                                           , br()
-                                          , helpText(HTML("
+                                          , wellPanel(
+                                            style = HTML(paste0("background-color: ", button.color, ";")),
+                                            helpText(HTML("
                                                           <p><a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGsuccession.html' target='_blank'>
                                                           See more details on <span style='font-family:Monospace;'>RFate</span> package website.</a></p>
                                                           <table style='width:100%;'>
@@ -603,7 +611,7 @@ ui <- fluidPage(
                                                           </tr>
                                                           </table>
                                                           "
-                                          ))
+                                          )))
                                           , fluidRow(
                                             column(6
                                                    , br()
@@ -701,7 +709,9 @@ ui <- fluidPage(
                                  , tabPanel(title = HTML("<p class='tabPanel_subtitle'>Dispersal</p>")
                                             , value = "panel.disp"
                                             , br()
-                                            , helpText(HTML("
+                                            , wellPanel(
+                                              style = HTML(paste0("background-color: ", button.color, ";")),
+                                              helpText(HTML("
                                                             <p><a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGdispersal.html' target='_blank'>
                                                             See more details on <span style='font-family:Monospace;'>RFate</span> package website.</a></p>
                                                             <table style='width:100%;'>
@@ -735,7 +745,7 @@ ui <- fluidPage(
                                                             </tr>
                                                             </table>
                                                             "
-                                            ))
+                                            )))
                                             , fluidRow(
                                               column(6
                                                      , br()
@@ -821,7 +831,9 @@ ui <- fluidPage(
                                  , tabPanel(title = HTML("<p class='tabPanel_subtitle'>Disturbances</p>")
                                             , value = "panel.dist"
                                             , br()
-                                            , helpText(HTML("
+                                            , wellPanel(
+                                              style = HTML(paste0("background-color: ", button.color, ";")),
+                                              helpText(HTML("
                                                             <p><a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGdisturbance.html' target='_blank'>
                                                             See more details on <span style='font-family:Monospace;'>RFate</span> package website.</a></p>
                                                             <table style='width:100%;'>
@@ -839,7 +851,7 @@ ui <- fluidPage(
                                                             </tr>
                                                             </table>
                                                             "
-                                            ))
+                                            )))
                                             , fluidRow(
                                               column(6
                                                      , br()
@@ -904,7 +916,9 @@ ui <- fluidPage(
                     , tabPanel(title = HTML("<p class='tabPanel_title'>Raster files</p>")
                                , value = "create.spatial"
                                , br()
-                               , helpText(HTML("
+                               , wellPanel(
+                                 style = HTML(paste0("background-color: ", button.color, ";")),
+                                 helpText(HTML("
                                                <table style='width:100%;'>
                                                <tr>
                                                <td style='width:30%;font-family:Monospace;vertical-align:top;'>simul.mask</td>
@@ -930,7 +944,7 @@ will take place
                                                </tr>
                                                </table>
                                                "
-                               ))
+                               )))
                                , fluidRow(
                                  column(4
                                         , br()
