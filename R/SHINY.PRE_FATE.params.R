@@ -887,10 +887,26 @@ ui <- fluidPage(
                                , helpText(HTML("
                                                <table style='width:100%;'>
                                                <tr>
-                                               <td style='width:30%;font-family:Monospace;vertical-align:top;'>name.mask</td>
+                                               <td style='width:30%;font-family:Monospace;vertical-align:top;'>simul.mask</td>
                                                <td style='width:70%;'>a <span style='font-family:Monospace;'>string</span> that corresponds to
 the file name of a raster mask, with either 0 or 1 within each pixel, 1 corresponding to the cells of the studied area in which the succession
 module of the FATE-HD simulation will take place
+                                               </tr>
+                                               <tr>
+                                               <td style='width:30%;font-family:Monospace;vertical-align:top;'>habsuit.folder</td>
+                                               <td style='width:70%;'><em>(optional) a string that corresponds to the name of the folder
+that will be created into the <span style='font-family:Monospace;'>name.simulation/DATA/SAVE/</span> directory to store the habitat suitability maps
+                                               </tr>
+                                               <tr>
+                                               <td style='width:30%;font-family:Monospace;vertical-align:top;'>habsuit.mask</td>
+                                               <td style='width:70%;'>one or several <span style='font-family:Monospace;'>string</span> corresponding to
+the file name(s) of a raster mask, with values from 0 to 1 within each pixel, corresponding to the probability to find a specific PFG within this pixel
+                                               </tr>
+                                               <tr>
+                                               <td style='width:30%;font-family:Monospace;vertical-align:top;'>dist.mask</td>
+                                               <td style='width:70%;'>one or several <span style='font-family:Monospace;'>string</span> corresponding to
+the file name of a raster mask, with either 0 or 1 within each pixel, 1 corresponding to the cells of the studied area in which the disturbance(s)
+will take place
                                                </tr>
                                                </table>
                                                "
@@ -909,8 +925,8 @@ module of the FATE-HD simulation will take place
                                                       )
                                           , br()
                                           , br()
-                                          , actionButton(inputId = "load.mask"
-                                                         , label = HTML("Load <br/>simulation mask")
+                                          , actionButton(inputId = "upload.mask"
+                                                         , label = HTML("Upload <br/>simulation mask")
                                                          , icon = icon("upload")
                                                          , width = "100%")
                                         )
@@ -932,8 +948,8 @@ module of the FATE-HD simulation will take place
                                             )
                                             , br()
                                             , br()
-                                            , actionButton(inputId = "load.habsuit.mask"
-                                                           , label = HTML("Load habitat <br/>suitability masks")
+                                            , actionButton(inputId = "upload.habsuit.mask"
+                                                           , label = HTML("Upload habitat <br/>suitability masks")
                                                            , icon = icon("upload")
                                                            , width = "100%")
                                           )
@@ -951,8 +967,8 @@ module of the FATE-HD simulation will take place
                                             )
                                             , br()
                                             , br()
-                                            , actionButton(inputId = "load.dist.mask"
-                                                           , label = HTML("Load <br/>disturbance masks")
+                                            , actionButton(inputId = "upload.dist.mask"
+                                                           , label = HTML("Upload <br/>disturbance masks")
                                                            , icon = icon("upload")
                                                            , width = "100%")
                                           )
@@ -1002,7 +1018,7 @@ server <- function(input, output, session) {
     {
       mask.file = list.files(path = paste0(input$name.simul, "/DATA/MASK")
                               , pattern = "^MASK_")
-      if (input$load.mask > 0 && length(mask.file) > 0)
+      if (input$upload.mask > 0 && length(mask.file) > 0)
       {
         get_res = print_messages(as.expression(
           PRE_FATE.params_simulParameters(name.simulation = input$name.simul
@@ -1011,7 +1027,7 @@ server <- function(input, output, session) {
         ))
       } else
       {
-        shinyalert(type = "warning", text = "You must load a simulation mask first !")
+        shinyalert(type = "warning", text = "You must upload a simulation mask first !")
       }
     } else
     {
@@ -1572,7 +1588,7 @@ server <- function(input, output, session) {
   
   ####################################################################
   
-  observeEvent(input$load.mask, {
+  observeEvent(input$upload.mask, {
     if (input$create.skeleton > 0)
     {
       if(!is.null(input$simul.mask))
@@ -1601,7 +1617,7 @@ server <- function(input, output, session) {
   
   ####################################################################
   
-  observeEvent(input$load.habsuit.mask, {
+  observeEvent(input$upload.habsuit.mask, {
     if (input$create.skeleton > 0)
     {
       if(!is.null(input$habsuit.mask))
@@ -1638,7 +1654,7 @@ server <- function(input, output, session) {
   })
   ####################################################################
   
-  observeEvent(input$load.dist.mask, {
+  observeEvent(input$upload.dist.mask, {
     if (input$create.skeleton > 0)
     {
       if(!is.null(input$dist.mask))
