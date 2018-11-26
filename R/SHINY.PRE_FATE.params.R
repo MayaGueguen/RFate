@@ -86,6 +86,7 @@ get_files = function(path_folder, skip.no = 2)
 mat.PFG.succ = data.frame()
 mat.PFG.disp = data.frame()
 mat.PFG.dist = data.frame()
+mat.changing = data.frame()
 button.color = "#dee2e8"
 
 ###################################################################################################################################
@@ -233,7 +234,7 @@ ui <- fluidPage(
                              , br()
                              , wellPanel(
                                style = HTML(paste0("background-color: ", button.color, ";")),
-                                helpText(HTML("
+                               helpText(HTML("
                                              <p><a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_namespaceConstants.html' target='_blank'>
                                              See more details on <span style='font-family:Monospace;'>RFate</span> package website.</a></p>
                                              <table style='width:100%;'>
@@ -268,7 +269,7 @@ ui <- fluidPage(
                                              </tr>
                                              </table>
                                              " 
-                             )))
+                               )))
                              , fluidRow(
                                column(6
                                       , br()
@@ -318,7 +319,7 @@ ui <- fluidPage(
                                br(),
                                wellPanel(dataTableOutput(outputId = "created_table.namespace"))
                              )
-                             ) ## END tabPanel (Internal settings)
+                               ) ## END tabPanel (Internal settings)
                     , tabPanel(title = HTML("<p class='tabPanel_title'>Global parameters</p>")
                                , value = "panel.global"
                                , br()
@@ -386,7 +387,7 @@ ui <- fluidPage(
                                                </tr>
                                                </table>
                                                "
-                               )))
+                                 )))
                                , fluidRow(
                                  column(6
                                         , br()
@@ -465,7 +466,7 @@ ui <- fluidPage(
                                  br(),
                                  wellPanel(dataTableOutput(outputId = "created_table.global"))
                                )
-                               ) ## END tabPanel (Global parameters)
+                                 ) ## END tabPanel (Global parameters)
                     , tabPanel(title = HTML("<p class='tabPanel_title'>Scenario files</p>")
                                , value = "create.scenario"
                                , br()
@@ -490,7 +491,7 @@ ui <- fluidPage(
                                                </tr>
                                                </table>
                                                "
-                               )))
+                                 )))
                                , fluidRow(
                                  column(6
                                         , br()
@@ -573,7 +574,7 @@ ui <- fluidPage(
                                  br(),
                                  wellPanel(dataTableOutput(outputId = "created_table.save"))
                                )
-                               ) ## END tabPanel (Scenario files)
+                                 ) ## END tabPanel (Scenario files)
                     , tabPanel(title = HTML("<p class='tabPanel_title'>PFG files</p>")
                                , value = "create.PFG"
                                , br()
@@ -611,7 +612,7 @@ ui <- fluidPage(
                                                           </tr>
                                                           </table>
                                                           "
-                                          )))
+                                            )))
                                           , fluidRow(
                                             column(6
                                                    , br()
@@ -705,7 +706,7 @@ ui <- fluidPage(
                                             br(),
                                             wellPanel(dataTableOutput(outputId = "created_table.succ"))
                                           )
-                                          )
+                                            )
                                  , tabPanel(title = HTML("<p class='tabPanel_subtitle'>Dispersal</p>")
                                             , value = "panel.disp"
                                             , br()
@@ -745,7 +746,7 @@ ui <- fluidPage(
                                                             </tr>
                                                             </table>
                                                             "
-                                            )))
+                                              )))
                                             , fluidRow(
                                               column(6
                                                      , br()
@@ -827,7 +828,7 @@ ui <- fluidPage(
                                               br(),
                                               wellPanel(dataTableOutput(outputId = "created_table.disp"))
                                             )
-                                            )
+                                              )
                                  , tabPanel(title = HTML("<p class='tabPanel_subtitle'>Disturbances</p>")
                                             , value = "panel.dist"
                                             , br()
@@ -851,7 +852,7 @@ ui <- fluidPage(
                                                             </tr>
                                                             </table>
                                                             "
-                                            )))
+                                              )))
                                             , fluidRow(
                                               column(6
                                                      , br()
@@ -910,117 +911,241 @@ ui <- fluidPage(
                                               br(),
                                               wellPanel(dataTableOutput(outputId = "created_table.dist"))
                                             )
+                                              )
                                             )
-                                 )
-                                 ) ## END tabPanel (PFG files)
+                                            ) ## END tabPanel (PFG files)
                     , tabPanel(title = HTML("<p class='tabPanel_title'>Raster files</p>")
                                , value = "create.spatial"
                                , br()
-                               , wellPanel(
-                                 style = HTML(paste0("background-color: ", button.color, ";")),
-                                 helpText(HTML("
-                                               <table style='width:100%;'>
-                                               <tr>
-                                               <td style='width:30%;font-family:Monospace;vertical-align:top;'>simul.mask</td>
-                                               <td style='width:70%;'>a <span style='font-family:Monospace;'>string</span> that corresponds to
-the file name of a raster mask, with either 0 or 1 within each pixel, 1 corresponding to the cells of the studied area in which the succession
-module of the FATE-HD simulation will take place
-                                               </tr>
-                                               <tr>
-                                               <td style='width:30%;font-family:Monospace;vertical-align:top;'>habsuit.folder</td>
-                                               <td style='width:70%;'><em>(optional) a string that corresponds to the name of the folder
-that will be created into the <span style='font-family:Monospace;'>name.simulation/DATA/SAVE/</span> directory to store the habitat suitability maps
-                                               </tr>
-                                               <tr>
-                                               <td style='width:30%;font-family:Monospace;vertical-align:top;'>habsuit.mask</td>
-                                               <td style='width:70%;'>one or several <span style='font-family:Monospace;'>string</span> corresponding to
-the file name(s) of a raster mask, with values from 0 to 1 within each pixel, corresponding to the probability to find a specific PFG within this pixel
-                                               </tr>
-                                               <tr>
-                                               <td style='width:30%;font-family:Monospace;vertical-align:top;'>dist.mask</td>
-                                               <td style='width:70%;'>one or several <span style='font-family:Monospace;'>string</span> corresponding to
-the file name of a raster mask, with either 0 or 1 within each pixel, 1 corresponding to the cells of the studied area in which the disturbance(s)
-will take place
-                                               </tr>
-                                               </table>
-                                               "
-                               )))
-                               , fluidRow(
-                                 column(4
-                                        , br()
-                                        , wellPanel(
-                                          HTML("<strong>Simulation mask</strong>")
-                                          , br()
-                                          , br()
-                                          , fileInput(inputId = "simul.mask"
-                                                      , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>name.mask</span>")
-                                                      , multiple = FALSE
-                                                      , width = "100%"
-                                                      )
-                                          , br()
-                                          , br()
-                                          , actionButton(inputId = "upload.mask"
-                                                         , label = HTML("Upload <br/>simulation mask")
-                                                         , icon = icon("upload")
-                                                         , width = "100%"
-                                                         , style = HTML(paste0("background-color: ", button.color, ";"))
-                                          )
-                                        )
-                                 )
-                                 , column(4
+                               , tabsetPanel(
+                                 tabPanel(title = HTML("<p class='tabPanel_subtitle'>Initial</p>")
+                                          , value = "panel.spatial.init"
                                           , br()
                                           , wellPanel(
-                                            HTML("<strong>Habitat suitability masks</strong>")
-                                            , br()
-                                            , br()
-                                            , textInput(inputId = "habsuit.folder"
-                                                        , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>habsuit.folder</span>")
-                                                        , width = "100%"
-                                                        )
-                                            , fileInput(inputId = "habsuit.mask"
-                                                        , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>habsuit.mask</span>")
-                                                        , multiple = TRUE
-                                                        , width = "100%"
+                                            style = HTML(paste0("background-color: ", button.color, ";")),
+                                            helpText(HTML("
+                                                          <table style='width:100%;'>
+                                                          <tr>
+                                                          <td style='width:30%;font-family:Monospace;vertical-align:top;'>simul.mask</td>
+                                                          <td style='width:70%;'>a <span style='font-family:Monospace;'>string</span> that corresponds to
+                                                          the file name of a raster mask, with either 0 or 1 within each pixel, 1 corresponding to the cells of the studied area in which the succession
+                                                          module of the FATE-HD simulation will take place</td>
+                                                          </tr>
+                                                          <tr>
+                                                          <td style='width:30%;font-family:Monospace;vertical-align:top;'>habsuit.folder</td>
+                                                          <td style='width:70%;'><em>(optional) a string that corresponds to the name of the folder
+                                                          that will be created into the <span style='font-family:Monospace;'>name.simulation/DATA/SAVE/</span> directory to store the habitat suitability maps</td>
+                                                          </tr>
+                                                          <tr>
+                                                          <td style='width:30%;font-family:Monospace;vertical-align:top;'>habsuit.mask</td>
+                                                          <td style='width:70%;'>one or several <span style='font-family:Monospace;'>string</span> corresponding to
+                                                          the file name(s) of a raster mask, with values from 0 to 1 within each pixel, corresponding to the probability to find a specific PFG within this pixel</td>
+                                                          </tr>
+                                                          <tr>
+                                                          <td style='width:30%;font-family:Monospace;vertical-align:top;'>dist.mask</td>
+                                                          <td style='width:70%;'>one or several <span style='font-family:Monospace;'>string</span> corresponding to
+                                                          the file name of a raster mask, with either 0 or 1 within each pixel, 1 corresponding to the cells of the studied area in which the disturbance(s)
+                                                          will take place</td>
+                                                          </tr>
+                                                          </table>
+                                                          "
+                                            )))
+                                          , fluidRow(
+                                            column(4
+                                                   , br()
+                                                   , wellPanel(
+                                                     HTML("<strong>Simulation mask</strong>")
+                                                     , br()
+                                                     , br()
+                                                     , fileInput(inputId = "simul.mask"
+                                                                 , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>name.mask</span>")
+                                                                 , multiple = FALSE
+                                                                 , width = "100%"
+                                                     )
+                                                     , br()
+                                                     , br()
+                                                     , actionButton(inputId = "upload.mask"
+                                                                    , label = HTML("Upload <br/>simulation mask")
+                                                                    , icon = icon("upload")
+                                                                    , width = "100%"
+                                                                    , style = HTML(paste0("background-color: ", button.color, ";"))
+                                                     )
+                                                   )
                                             )
-                                            , br()
-                                            , br()
-                                            , actionButton(inputId = "upload.habsuit.mask"
-                                                           , label = HTML("Upload habitat <br/>suitability masks")
-                                                           , icon = icon("upload")
-                                                           , width = "100%"
-                                                           , style = HTML(paste0("background-color: ", button.color, ";"))
+                                            , column(4
+                                                     , br()
+                                                     , wellPanel(
+                                                       HTML("<strong>Habitat suitability masks</strong>")
+                                                       , br()
+                                                       , br()
+                                                       , textInput(inputId = "habsuit.folder"
+                                                                   , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>habsuit.folder</span>")
+                                                                   , width = "100%"
+                                                       )
+                                                       , fileInput(inputId = "habsuit.mask"
+                                                                   , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>habsuit.mask</span>")
+                                                                   , multiple = TRUE
+                                                                   , width = "100%"
+                                                       )
+                                                       , br()
+                                                       , br()
+                                                       , actionButton(inputId = "upload.habsuit.mask"
+                                                                      , label = HTML("Upload habitat <br/>suitability masks")
+                                                                      , icon = icon("upload")
+                                                                      , width = "100%"
+                                                                      , style = HTML(paste0("background-color: ", button.color, ";"))
+                                                       )
+                                                     )
+                                            )
+                                            , column(4
+                                                     , br()
+                                                     , wellPanel(
+                                                       HTML("<strong>Disturbances masks</strong>")
+                                                       , br()
+                                                       , br()
+                                                       , fileInput(inputId = "dist.mask"
+                                                                   , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>dist.mask</span>")
+                                                                   , multiple = TRUE
+                                                                   , width = "100%"
+                                                       )
+                                                       , br()
+                                                       , br()
+                                                       , actionButton(inputId = "upload.dist.mask"
+                                                                      , label = HTML("Upload <br/>disturbance masks")
+                                                                      , icon = icon("upload")
+                                                                      , width = "100%"
+                                                                      , style = HTML(paste0("background-color: ", button.color, ";"))
+                                                       )
+                                                     )
                                             )
                                           )
-                                 )
-                                 , column(4
-                                          , br()
-                                          , wellPanel(
-                                            HTML("<strong>Disturbances masks</strong>")
+                                            ) ## END tabPanel (Initial)
+                                 , tabPanel(title = HTML("<p class='tabPanel_subtitle'>Changing</p>")
+                                            , value = "panel.spatial.changing"
                                             , br()
-                                            , br()
-                                            , fileInput(inputId = "dist.mask"
-                                                        , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>dist.mask</span>")
-                                                        , multiple = TRUE
-                                                        , width = "100%"
+                                            , wellPanel(
+                                              style = HTML(paste0("background-color: ", button.color, ";")),
+                                              helpText(HTML("
+                                                            <table style='width:100%;'>
+                                                            <tr>
+                                                            <td style='width:30%;font-family:Monospace;vertical-align:top;'>opt.folder.name</td>
+                                                            <td style='width:70%;'><em>(optional) a string that corresponds to the name of the folder 
+                                                            that will be created into the <span style='font-family:Monospace;'>name.simulation/DATA/SCENARIO/</span> directory to store the results</em></td>
+                                                            </tr>
+                                                            <tr>
+                                                            <td style='width:30%;font-family:Monospace;vertical-align:top;'>type.changing</td>
+                                                            <td style='width:70%;'>a <span style='font-family:Monospace;'>string</span> to choose the concerned module :
+                                                            succession (MASK), habitat suitability (HS) or disturbances (DIST)</td>
+                                                            </tr>
+                                                            <tr>
+                                                            <td style='width:30%;font-family:Monospace;vertical-align:top;'>year.changing</td>
+                                                            <td style='width:70%;'>the simulation year at which the file will be changed</td>
+                                                            </tr>
+                                                            <tr>
+                                                            <td style='width:30%;font-family:Monospace;vertical-align:top;'>order.changing</td>
+                                                            <td style='width:70%;'>if several files given for a same year, to keep the order</td>
+                                                            </tr>
+                                                            <tr>
+                                                            <td style='width:30%;font-family:Monospace;vertical-align:top;'>file.changing</td>
+                                                            <td style='width:70%;'>the file name of the new file</td>
+                                                            </tr>
+                                                            </table>
+                                                            "
+                                              )))
+                                            , fluidRow(
+                                              column(6
+                                                     , br()
+                                                     , actionButton(inputId = "add.changing"
+                                                                    , label = "Add changing year"
+                                                                    , icon = icon("plus")
+                                                                    , width = "100%"
+                                                                    , style = HTML(paste0("background-color: ", button.color, ";"))
+                                                     )
+                                              )
+                                              , column(6
+                                                       , br()
+                                                       , actionButton(inputId = "create.changing"
+                                                                      , label = "Create Scenario files"
+                                                                      , icon = icon("file")
+                                                                      , width = "100%"
+                                                                      , style = HTML(paste0("background-color: ", button.color, ";"))
+                                                       )
+                                              )
                                             )
-                                            , br()
-                                            , br()
-                                            , actionButton(inputId = "upload.dist.mask"
-                                                           , label = HTML("Upload <br/>disturbance masks")
-                                                           , icon = icon("upload")
-                                                           , width = "100%"
-                                                           , style = HTML(paste0("background-color: ", button.color, ";"))
+                                            , fluidRow(
+                                              column(2
+                                                     , br()
+                                                     , br()
+                                                     , HTML("<em>opt.folder.name</em>")
+                                                     , textInput(inputId = "changing.folder"
+                                                                 , label = NULL
+                                                                 , width = "100%"))
+                                              , column(2
+                                                       , br()
+                                                       , br()
+                                                       , HTML("<strong>Type</strong>")
+                                                       , selectInput(inputId = "type.changing"
+                                                                     , label = NULL
+                                                                     , choices = c("MASK", "HS", "DIST")
+                                                                     , selected = "MASK"
+                                                                     , multiple = FALSE
+                                                                     , width = "100%"))
+                                              , column(2
+                                                       , br()
+                                                       , br()
+                                                       , HTML("<strong>Year</strong>")
+                                                       , numericInput(inputId = "changing.year"
+                                                                      , label = NULL
+                                                                      , value = 1
+                                                                      , min = 1
+                                                                      , width = "100%"))
+                                              , column(2
+                                                       , br()
+                                                       , br()
+                                                       , HTML("<strong>Order</strong>")
+                                                       , numericInput(inputId = "changing.order"
+                                                                      , label = NULL
+                                                                      , value = 1
+                                                                      , min = 1
+                                                                      , width = "100%"))
+                                              , column(4
+                                                       , br()
+                                                       , br()
+                                                       , HTML("<strong>File</strong>")
+                                                       , textInput(inputId = "changing.file"
+                                                                   , label = NULL
+                                                                   , width = "100%"))
+                                              # , fileInput(inputId = "changing.file"
+                                              #             , label = NULL
+                                              #             , multiple = FALSE
+                                              #             , width = "100%"))
                                             )
-                                          )
-                                 )
-                               )
-                    ) ## END tabPanel (Raster files)
-                    ) ## END tabsetPanel
-                    ) ## END wellPanel
-    )
-    ) ## END mainPanel
-  ) ## END sidebarLayout
-) ## END fluidPage
+                                            , fluidRow(
+                                              column(10
+                                                     , br()
+                                                     , tableOutput(outputId = "mat.changing"))
+                                              , column(2
+                                                       , br()
+                                                       , actionButton(inputId = "delete.changing"
+                                                                      , label = NULL
+                                                                      , icon = icon("trash")
+                                                                      , style = HTML(paste0("background-color: ", button.color, ";"))
+                                                       )
+                                              )
+                                            )
+                                            , fluidRow(
+                                              br(),
+                                              wellPanel(dataTableOutput(outputId = "created_table.changing"))
+                                            )
+                                              ) ## END tabPanel (Changing)
+                                            ) ## END tabsetPanel
+                                          ) ## END tabPanel (Raster files)
+                               ) ## END tabsetPanel
+                                          ) ## END wellPanel
+                               ) ## END hidden
+                    ) ## END mainPanel
+                  ) ## END sidebarLayout
+    ) ## END fluidPage
 
 
 ###################################################################################################################################
@@ -1059,7 +1184,7 @@ server <- function(input, output, session) {
     if (input$create.skeleton > 0)
     {
       mask.file = list.files(path = paste0(input$name.simul, "/DATA/MASK")
-                              , pattern = "^MASK_")
+                             , pattern = "^MASK_")
       if (input$upload.mask > 0 && length(mask.file) > 0)
       {
         get_res = print_messages(as.expression(
@@ -1097,7 +1222,7 @@ server <- function(input, output, session) {
     shinyjs::hide("UI.download.folder")
     shinyjs::hide("refresh")
   })
-
+  
   
   ####################################################################
   
@@ -1635,21 +1760,21 @@ server <- function(input, output, session) {
     {
       if(!is.null(input$simul.mask))
       {
-      file1 = input$simul.mask$datapath
-      file2 = input$simul.mask$name
-      file2 = paste0("MASK_", file2)
-      file2 = paste0(input$name.simul, "/DATA/MASK/", file2)
-      get_res = file.copy(from = file1, to = file2)
-      
-      if(get_res)
-      {
-        shinyalert(type = "success", text = paste0("The file ", input$simul.mask$name
-                                                   , " has been correctly uploaded and renamed as "
-                                                   , file2, " !"))
-      } else
-      {
-        shinyalert(type = "error", text = "Oops. Something went wrong !")
-      }
+        file1 = input$simul.mask$datapath
+        file2 = input$simul.mask$name
+        file2 = paste0("MASK_", file2)
+        file2 = paste0(input$name.simul, "/DATA/MASK/", file2)
+        get_res = file.copy(from = file1, to = file2)
+        
+        if(get_res)
+        {
+          shinyalert(type = "success", text = paste0("The file ", input$simul.mask$name
+                                                     , " has been correctly uploaded and renamed as "
+                                                     , file2, " !"))
+        } else
+        {
+          shinyalert(type = "error", text = "Oops. Something went wrong !")
+        }
       }
     } else
     {
@@ -1715,6 +1840,77 @@ server <- function(input, output, session) {
         } else
         {
           shinyalert(type = "error", text = "Oops. Something went wrong !")
+        }
+      }
+    } else
+    {
+      shinyalert(type = "warning", text = "You must create a simulation folder first !")
+    }
+  })
+  
+  ####################################################################
+  
+  observeEvent(input$add.changing, {
+    # if(!is.null(input$changing.file))
+    # {
+    mat.changing <<- rbind(mat.changing
+                           , data.frame(opt.folder.name = input$changing.folder
+                                        , type.changing = input$type.changing
+                                        , year = input$changing.year
+                                        , order = input$changing.order
+                                        , file.name = input$changing.file))
+    # , file.name = input$changing.file$name))
+    output$mat.changing = renderTable({ mat.changing })
+    # }
+  })
+  
+  observeEvent(input$delete.changing, {
+    mat.changing <<- data.frame()
+    output$mat.changing = renderTable({ mat.changing })
+  })
+  
+  ####################################################################
+  
+  observeEvent(input$create.changing, {
+    if (input$create.skeleton > 0)
+    {
+      if (nrow(mat.changing) > 0)
+      {
+        mat.changing.split = split(mat.changing, list(mat.changing$type.changing, mat.changing$opt.folder.name))
+        print(length(mat.changing.split))
+        for(i in 1:length(mat.changing.split))
+        {
+          print(i)
+          tab = mat.changing.split[[i]]
+          tab$opt.folder.name = as.character(tab$opt.folder.name)
+          tab$file.name = as.character(tab$file.name)
+          print(nrow(tab))
+          print(tab)
+          print(tab$opt.folder.name)
+          if (nrow(tab) > 0 && sum(nchar(tab$file.name) == 0) == 0)
+          {
+            if (nchar(tab$opt.folder.name) > 0)
+            {
+              dir.create(paste0(input$name.simul, "/DATA/scenario/", tab$opt.folder.name))
+            }
+            get_res = print_messages(as.expression(
+              PRE_FATE.params_changingYears(name.simulation = input$name.simul
+                                            , type.changing = tab$type.changing
+                                            , mat.changing = data.frame(year = tab$year
+                                                                        , order = tab$year
+                                                                        , file.name = tab$file.name)
+                                            , opt.folder.name = tab$opt.folder.name
+              )
+            ))
+            
+            if(get_res)
+            {
+              output$created_table.changing = renderDataTable({
+                path_folder = paste0(input$name.simul, "/DATA/SCENARIO/")
+                return(get_files(path_folder, skip.no = 0))
+              })
+            }
+          }
         }
       }
     } else
