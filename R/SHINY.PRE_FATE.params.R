@@ -238,7 +238,6 @@ ui <- fluidPage(
         wellPanel(id = "main.panel",
                   style = "border-solid:solid; border-width:2px; border-color:#068f96;",
                   tabsetPanel(
-                    # type = "pills",
                     tabPanel(title = HTML("<p class='tabPanel_title'>Internal settings</p>")
                              , value = "panel.namespace"
                              , br()
@@ -471,6 +470,108 @@ ui <- fluidPage(
                                  wellPanel(dataTableOutput(outputId = "created_table.global"))
                                )
                                ) ## END tabPanel (Global parameters)
+                    , tabPanel(title = HTML("<p class='tabPanel_title'>Scenario files</p>")
+                               , value = "create.scenario"
+                               , br()
+                               , helpText(HTML("
+                                               <p><a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_saveYears.html' target='_blank'>
+                                               See more details on <span style='font-family:Monospace;'>RFate</span> package website.</a></p>
+                                               <table style='width:100%;'>
+                                               <tr>
+                                               <td style='width:30%;font-family:Monospace;vertical-align:top;'>years.maps</td>
+                                               <td style='width:70%;'>a <span style='font-family:Monospace;'>vector</span> of simulation years at which PFG abundance maps will be saved</td>
+                                               </tr>
+                                               <tr>
+                                               <td style='width:30%;font-family:Monospace;vertical-align:top;'>years.objects</td>
+                                               <td style='width:70%;'>a <span style='font-family:Monospace;'>vector</span> of simulation years at which FATE-HD simulation state will be saved</td>
+                                               </tr>
+                                               <tr>
+                                               <td style='width:30%;font-family:Monospace;vertical-align:top;'>opt.folder.name</td>
+                                               <td style='width:70%;'><em>(optional) a <span style='font-family:Monospace;'>string</span> that corresponds to the name of the folder that will 
+                                               be created into the <span style='font-family:Monospace;'>name.simulation/DATA/SAVE/</span> directory to store the results</em></td>
+                                               </tr>
+                                               </table>
+                                               "
+                               ))
+                               , fluidRow(
+                                 column(6
+                                        , br()
+                                        , wellPanel(
+                                          HTML("<strong>Save maps ?</strong>")
+                                          , br()
+                                          , br()
+                                          , textInput(inputId = "save.maps.folder"
+                                                      , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>opt.folder.name</span>")
+                                                      , value = NULL
+                                                      , width = "100%")
+                                          , br()
+                                          , br()
+                                          , numericInput(inputId = "save.maps.year1"
+                                                         , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>years.maps.start</span>")
+                                                         , value = 0
+                                                         , min = 0
+                                                         , width = "100%")
+                                          , numericInput(inputId = "save.maps.year2"
+                                                         , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>years.maps.end</span>")
+                                                         , value = 0
+                                                         , min = 0
+                                                         , width = "100%")
+                                          , numericInput(inputId = "save.maps.no"
+                                                         , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>years.maps.number</span>")
+                                                         , value = 0
+                                                         , min = 0
+                                                         , max = 100
+                                                         , step = 10
+                                                         , width = "100%")
+                                          , br()
+                                          , br()
+                                          , actionButton(inputId = "create.save.maps"
+                                                         , label = "Create SAVE maps files"
+                                                         , icon = icon("file")
+                                                         , width = "100%")
+                                        )
+                                 )
+                                 , column(6
+                                          , br()
+                                          , wellPanel(
+                                            HTML("<strong>Save simulation ?</strong>")
+                                            , br()
+                                            , br()
+                                            , textInput(inputId = "save.objects.folder"
+                                                        , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>opt.folder.name</span>")
+                                                        , value = NULL
+                                                        , width = "100%")
+                                            , br()
+                                            , br()
+                                            , numericInput(inputId = "save.objects.year1"
+                                                           , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>years.objects</span>")
+                                                           , value = 0
+                                                           , min = 0
+                                                           , width = "100%")
+                                            , numericInput(inputId = "save.objects.year2"
+                                                           , label = NULL
+                                                           , value = 0
+                                                           , min = 0
+                                                           , width = "100%")
+                                            , numericInput(inputId = "save.objects.year3"
+                                                           , label = NULL
+                                                           , value = 0
+                                                           , min = 0
+                                                           , width = "100%")
+                                            , br()
+                                            , br()
+                                            , actionButton(inputId = "create.save.objects"
+                                                           , label = "Create SAVE objects files"
+                                                           , icon = icon("file")
+                                                           , width = "100%")
+                                          )
+                                 )
+                               )
+                               , fluidRow(
+                                 br(),
+                                 wellPanel(dataTableOutput(outputId = "created_table.save"))
+                               )
+                               ) ## END tabPanel (Scenario files)
                     , tabPanel(title = HTML("<p class='tabPanel_title'>PFG files</p>")
                                , value = "create.PFG"
                                , br()
@@ -780,109 +881,84 @@ ui <- fluidPage(
                                             )
                                  )
                                  ) ## END tabPanel (PFG files)
-                    , tabPanel(title = HTML("<p class='tabPanel_title'>Scenario files</p>")
-                               , value = "create.scenario"
+                    , tabPanel(title = HTML("<p class='tabPanel_title'>Raster files</p>")
+                               , value = "create.spatial"
                                , br()
                                , helpText(HTML("
-                                               <p><a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_saveYears.html' target='_blank'>
-                                               See more details on <span style='font-family:Monospace;'>RFate</span> package website.</a></p>
                                                <table style='width:100%;'>
                                                <tr>
-                                               <td style='width:30%;font-family:Monospace;vertical-align:top;'>years.maps</td>
-                                               <td style='width:70%;'>a <span style='font-family:Monospace;'>vector</span> of simulation years at which PFG abundance maps will be saved</td>
-                                               </tr>
-                                               <tr>
-                                               <td style='width:30%;font-family:Monospace;vertical-align:top;'>years.objects</td>
-                                               <td style='width:70%;'>a <span style='font-family:Monospace;'>vector</span> of simulation years at which FATE-HD simulation state will be saved</td>
-                                               </tr>
-                                               <tr>
-                                               <td style='width:30%;font-family:Monospace;vertical-align:top;'>opt.folder.name</td>
-                                               <td style='width:70%;'><em>(optional) a <span style='font-family:Monospace;'>string</span> that corresponds to the name of the folder that will 
-                                               be created into the <span style='font-family:Monospace;'>name.simulation/DATA/SAVE/</span> directory to store the results</em></td>
+                                               <td style='width:30%;font-family:Monospace;vertical-align:top;'>name.mask</td>
+                                               <td style='width:70%;'>a <span style='font-family:Monospace;'>string</span> that corresponds to
+the file name of a raster mask, with either 0 or 1 within each pixel, 1 corresponding to the cells of the studied area in which the succession
+module of the FATE-HD simulation will take place
                                                </tr>
                                                </table>
                                                "
                                ))
                                , fluidRow(
-                                 column(6
+                                 column(4
                                         , br()
                                         , wellPanel(
-                                          HTML("<strong>Save maps ?</strong>")
+                                          HTML("<strong>Simulation mask</strong>")
                                           , br()
                                           , br()
-                                          , textInput(inputId = "save.maps.folder"
-                                                      , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>opt.folder.name</span>")
-                                                      , value = NULL
-                                                      , width = "100%")
+                                          , fileInput(inputId = "name.mask"
+                                                      , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>name.mask</span>")
+                                                      , multiple = FALSE
+                                                      , width = "100%"
+                                                      )
                                           , br()
                                           , br()
-                                          , numericInput(inputId = "save.maps.year1"
-                                                         , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>years.maps.start</span>")
-                                                         , value = 0
-                                                         , min = 0
-                                                         , width = "100%")
-                                          , numericInput(inputId = "save.maps.year2"
-                                                         , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>years.maps.end</span>")
-                                                         , value = 0
-                                                         , min = 0
-                                                         , width = "100%")
-                                          , numericInput(inputId = "save.maps.no"
-                                                         , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>years.maps.number</span>")
-                                                         , value = 0
-                                                         , min = 0
-                                                         , max = 100
-                                                         , step = 10
-                                                         , width = "100%")
-                                          , br()
-                                          , br()
-                                          , actionButton(inputId = "create.save.maps"
-                                                         , label = "Create SAVE maps files"
-                                                         , icon = icon("file")
+                                          , actionButton(inputId = "load.mask"
+                                                         , label = HTML("Load <br/>simulation mask")
+                                                         , icon = icon("upload")
                                                          , width = "100%")
                                         )
                                  )
-                                 , column(6
+                                 , column(4
                                           , br()
                                           , wellPanel(
-                                            HTML("<strong>Save simulation ?</strong>")
+                                            HTML("<strong>Habitat suitability masks</strong>")
                                             , br()
                                             , br()
-                                            , textInput(inputId = "save.objects.folder"
-                                                        , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>opt.folder.name</span>")
-                                                        , value = NULL
-                                                        , width = "100%")
+                                            , textInput(inputId = "habsuit.folder"
+                                                        , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>habsuit.folder</span>")
+                                                        , width = "100%"
+                                                        )
+                                            , fileInput(inputId = "habsuit.mask"
+                                                        , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>habsuit.mask</span>")
+                                                        , multiple = TRUE
+                                                        , width = "100%"
+                                            )
                                             , br()
                                             , br()
-                                            , numericInput(inputId = "save.objects.year1"
-                                                           , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>years.objects</span>")
-                                                           , value = 0
-                                                           , min = 0
+                                            , actionButton(inputId = "load.habsuit.mask"
+                                                           , label = HTML("Load habitat <br/>suitability masks")
+                                                           , icon = icon("upload")
                                                            , width = "100%")
-                                            , numericInput(inputId = "save.objects.year2"
-                                                           , label = NULL
-                                                           , value = 0
-                                                           , min = 0
-                                                           , width = "100%")
-                                            , numericInput(inputId = "save.objects.year3"
-                                                           , label = NULL
-                                                           , value = 0
-                                                           , min = 0
-                                                           , width = "100%")
+                                          )
+                                 )
+                                 , column(4
+                                          , br()
+                                          , wellPanel(
+                                            HTML("<strong>Disturbances masks</strong>")
                                             , br()
                                             , br()
-                                            , actionButton(inputId = "create.save.objects"
-                                                           , label = "Create SAVE objects files"
-                                                           , icon = icon("file")
+                                            , fileInput(inputId = "dist.mask"
+                                                        , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>dist.mask</span>")
+                                                        , multiple = TRUE
+                                                        , width = "100%"
+                                            )
+                                            , br()
+                                            , br()
+                                            , actionButton(inputId = "load.dist.mask"
+                                                           , label = HTML("Load <br/>disturbance masks")
+                                                           , icon = icon("upload")
                                                            , width = "100%")
                                           )
                                  )
                                )
-                               , fluidRow(
-                                 br(),
-                                 wellPanel(dataTableOutput(outputId = "created_table.save"))
-                               )
-                               ) ## END tabPanel (Scenario files)
-                    
+                    ) ## END tabPanel (Raster files)
                     ) ## END tabsetPanel
                     ) ## END wellPanel
     )
