@@ -164,7 +164,6 @@ ui <- fluidPage(
       br(),
       fluidRow(
         column(12
-               , ""
                , textInput(inputId = "name.simul"
                            , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>Enter the simulation name :</span>")
                            , value = "FATE_simulation"
@@ -173,7 +172,6 @@ ui <- fluidPage(
       ),
       fluidRow(
         column(12
-               , ""
                , actionButton(inputId = "create.skeleton"
                               , label = "Create folder"
                               , icon = icon("folder")
@@ -209,15 +207,24 @@ ui <- fluidPage(
       br(),
       br(),
       fluidRow(
+        column(12
+               , shinyjs::hidden(
+                 actionButton(inputId = "create.simul"
+                              , label = "Create Simulation parameters file"
+                              , icon = icon("file")
+                              , width = "100%")
+               )
+        )
+      ),
+      br(),
+      fluidRow(
         column(6
-               , ""
                , uiOutput(outputId = "UI.download.folder")
         )
         , column(6
-                 , ""
                  , shinyjs::hidden(
                    actionButton(inputId = "refresh"
-                                , label = "Start new simulation"
+                                , label = "Start new folder"
                                 , icon = icon("refresh")
                                 , width = "100%")
                  )
@@ -901,23 +908,41 @@ server <- function(input, output, session) {
     ))
     
     shinyjs::show("main.panel")
-    shinyjs::show("UI.download.folder")
-    shinyjs::show("refresh")
-    
-    output$UI.download.folder = renderUI({
-      downloadButton(outputId = "FATE_simulation.zip"
-                     , label = "Download folder"
-                     , icon = icon("download")
-                     , width = "100%")
-    })
+    shinyjs::show("create.simul")
   })
   
-  observeEvent(input$refresh, {
-    system(command = paste0("rm -r ", input$name.simul))
-    shinyjs::hide("main.panel")
-    shinyjs::hide("UI.download.folder")
-    shinyjs::hide("refresh")
+  
+  observeEvent(input$create.simul, {
+    if (input$create.skeleton > 0)
+    {
+      get_res = print_messages(as.expression(
+        PRE_FATE.params_simulParameters(name.simulation = input$name.simul
+        )
+      ))
+      
+      shinyjs::show("UI.download.folder")
+      shinyjs::show("refresh")
+      
+      output$UI.download.folder = renderUI({
+        downloadButton(outputId = "FATE_simulation.zip"
+                       , label = "Download folder"
+                       , icon = icon("download")
+                       , width = "100%")
+      })
+      
+      # if(get_res)
+      # {
+      #   output$created_table.namespace = renderDataTable({
+      #     path_folder = paste0(input$name.simul, "/DATA/NAMESPACE_CONSTANTS/")
+      #     return(get_files(path_folder))
+      #   })
+      # }
+    } else
+    {
+      shinyalert(type = "warning", text = "You must create a simulation folder first !")
+    }
   })
+  
   
   output$FATE_simulation.zip = downloadHandler(
     filename = function(){
@@ -929,6 +954,16 @@ server <- function(input, output, session) {
     },
     contentType = "application/zip"
   )
+  
+  
+  observeEvent(input$refresh, {
+    system(command = paste0("rm -r ", input$name.simul))
+    shinyjs::hide("main.panel")
+    shinyjs::hide("create.simul")
+    shinyjs::hide("UI.download.folder")
+    shinyjs::hide("refresh")
+  })
+
   
   ####################################################################
   
