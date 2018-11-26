@@ -104,6 +104,7 @@ mat.PFG.disp = data.frame()
 mat.PFG.dist = data.frame()
 
 ###################################################################################################################################
+###################################################################################################################################
 
 # Define UI for application that plots features of movies
 ui <- fluidPage(
@@ -188,19 +189,19 @@ ui <- fluidPage(
                , uiOutput(outputId = "UI.download.folder")
         )
       )
-      ),
+      ) ## END sidebarPanel
     
     
     
     # Output
-    mainPanel(
+    , mainPanel(
       wellPanel(
         style = "border-solid:solid; border-width:2px; border-color:#068f96;",
         tabsetPanel(
           # type = "pills",
           tabPanel(title = HTML("<p style='background-color:#068f96; padding:10px; margin-top:0px; border-radius:2px;
                                 font-family:Serif; color:#FFFFFF'>Internal settings</p>")
-                   , value = "create.namespace"
+                   , value = "panel.namespace"
                    , br()
                    , helpText(HTML("
                                    <p><a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_namespaceConstants.html' target='_blank'>
@@ -286,8 +287,153 @@ ui <- fluidPage(
                      br(),
                      wellPanel(dataTableOutput(outputId = "created_table.namespace"))
                    )
-                   ),
-          tabPanel(title = HTML("<p style='background-color:#068f96; padding:10px; margin-top:0px; border-radius:2px;
+                   ) ## END tabPanel (Internal settings)
+          , tabPanel(title = HTML("<p style='background-color:#068f96; padding:10px; margin-top:0px; border-radius:2px;
+                                font-family:Serif; color:#FFFFFF'>Global parameters</p>")
+                     , value = "panel.global"
+                     , br()
+                     , helpText(HTML("
+                                     <p><a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_saveYears.html' target='_blank'>
+                                     See more details on <span style='font-family:Monospace;'>RFate</span> package website.</a></p>
+                                     <table style='width:100%;'>
+                                     <tr>
+                                     <td style='width:30%;font-family:Monospace;vertical-align:top;'>opt.no_CPU</td>
+                                     <td style='width:70%;'>default 1 <em>(optional). The number of resources that can be used to parallelize the FATE-HD simulation</em></td>
+                                     </tr>
+                                     <tr>
+                                     <td style='width:30%;font-family:Monospace;vertical-align:top;'>required.no_PFG</td>
+                                     <td style='width:70%;'>an <span style='font-family:Monospace;'>integer</span> corresponding to the number of PFG</td>
+                                     </tr>
+                                     <tr>
+                                     <td style='width:30%;font-family:Monospace;vertical-align:top;'>required.no_STRATA</td>
+                                     <td style='width:70%;'>an <span style='font-family:Monospace;'>integer</span> corresponding to the number of height strata</td>
+                                     </tr>
+                                     <tr>
+                                     <td style='width:30%;font-family:Monospace;vertical-align:top;'>required.simul_duration</td>
+                                     <td style='width:70%;'>an <span style='font-family:Monospace;'>integer</span> corresponding to the duration of simulation (in years)</td>
+                                     </tr>
+                                     <tr>
+                                     <td style='width:30%;font-family:Monospace;vertical-align:top;'>required.seeding_duration</td>
+                                     <td style='width:70%;'>an <span style='font-family:Monospace;'>integer</span> corresponding to the duration of seeding (in years)</td>
+                                     </tr>
+                                     <tr>
+                                     <td style='width:30%;font-family:Monospace;vertical-align:top;'>required.seeding_timestep</td>
+                                     <td style='width:70%;'>an <span style='font-family:Monospace;'>integer</span> corresponding to the time interval at which occurs the seeding, and until the seeding duration is not over (in years)</td>
+                                     </tr>
+                                     <tr>
+                                     <td style='width:30%;font-family:Monospace;vertical-align:top;'>doDispersal</td>
+                                     <td style='width:70%;'>default <span style='font-family:Monospace;'>FALSE</span>.
+                                     <em>If <span style='font-family:Monospace;'>TRUE</span>, seed dispersal is activated in the FATE-HD simulation, and associated parameters are required</em></td>
+                                     </tr>
+                                     <tr>
+                                     <td style='width:30%;font-family:Monospace;vertical-align:top;'>doHabSuitability</td>
+                                     <td style='width:70%;'>default <span style='font-family:Monospace;'>FALSE</span>.
+                                     <em>If <span style='font-family:Monospace;'>TRUE</span>, habitat suitability is activated in the FATE-HD simulation, and associated parameters are required<e/m></td>
+                                     </tr>
+                                     <tr>
+                                     <td style='width:30%;font-family:Monospace;vertical-align:top;'>HABSUIT.ref_option</td>
+                                     <td style='width:70%;'><em>an <span style='font-family:Monospace;'>integer</span> corresponding to the way of simulating 
+                                     the habitat suitability variation between years for each PFG, either random (1) or PFG specific (2)</em></td>
+                                     </tr>
+                                     <tr>
+                                     <td style='width:30%;font-family:Monospace;vertical-align:top;'>doDisturbances</td>
+                                     <td style='width:70%;'>default <span style='font-family:Monospace;'>FALSE</span>.
+                                     <em>If <span style='font-family:Monospace;'>TRUE</span>, disturbances are applied in the FATE-HD simulation, and associated parameters are required</em></td>
+                                     </tr>
+                                     <tr>
+                                     <td style='width:30%;font-family:Monospace;vertical-align:top;'>DIST.no</td>
+                                     <td style='width:70%;'><em>the number of disturbances</em></td>
+                                     </tr>
+                                     <tr>
+                                     <td style='width:30%;font-family:Monospace;vertical-align:top;'>DIST.no_sub</td>
+                                     <td style='width:70%;'><em>the number of way a PFG could react to a disturbance</em></td>
+                                     </tr>
+                                     <tr>
+                                     <td style='width:30%;font-family:Monospace;vertical-align:top;'>DIST.freq</td>
+                                     <td style='width:70%;'><em>the frequency of each disturbance (in years)</em></td>
+                                     </tr>
+                                     </table>
+                                     "
+                   ))
+                   , fluidRow(
+                     column(6
+                            , br()
+                            , numericInput(inputId = "opt.no_CPU"
+                                           , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>opt.no_CPU</span>")
+                                           , value = 1
+                                           , min = 1
+                                           , width = "100%")
+                            , numericInput(inputId = "required.no_PFG"
+                                           , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>required.no_PFG</span>")
+                                           , value = 1
+                                           , min = 1
+                                           , width = "100%")
+                            , numericInput(inputId = "required.no_STRATA"
+                                           , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>required.no_STRATA</span>")
+                                           , value = 1
+                                           , min = 1
+                                           , width = "100%")
+                     )
+                     , column(6
+                              , br()
+                              , numericInput(inputId = "required.simul_duration"
+                                             , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>required.simul_duration</span>")
+                                             , value = 1
+                                             , min = 1
+                                             , width = "100%")
+                              , numericInput(inputId = "required.seeding_duration"
+                                             , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>required.seeding_duration</span>")
+                                             , value = 1
+                                             , min = 1
+                                             , width = "100%")
+                              , numericInput(inputId = "required.seeding_timestep"
+                                             , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>required.seeding_timestep</span>")
+                                             , value = 1
+                                             , min = 1
+                                             , width = "100%")
+                     )
+                   )
+                   , fluidRow(
+                     column(4
+                            , br()
+                            , checkboxInput(inputId = "doDispersal"
+                                            , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>doDispersal</span>")
+                                            , value = TRUE
+                                            , width = "100%")
+                            )
+                     , column(4
+                              , br()
+                              , checkboxInput(inputId = "doHabSuitability"
+                                              , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>doHabSuitability</span>")
+                                              , value = TRUE
+                                              , width = "100%")
+                              , uiOutput(outputId = "UI.doHabSuitability")
+                     )
+                     , column(4
+                              , br()
+                              , checkboxInput(inputId = "doDisturbances"
+                                              , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>doDisturbances</span>")
+                                              , value = TRUE
+                                              , width = "100%")
+                              , uiOutput(outputId = "UI.doDisturbances")
+                     )
+                   )
+                   , fluidRow(
+                     column(6
+                            , br()
+                            , actionButton(inputId = "create.global"
+                                           , label = "Create Global parameters file"
+                                           , icon = icon("file")
+                                           , width = "100%")
+                            # , style = HTML(paste0("background-color: ", button.color, ";")))
+                            , br())
+                   )
+                   , fluidRow(
+                     br(),
+                     wellPanel(dataTableOutput(outputId = "created_table.global"))
+                   )
+                   ) ## END tabPanel (Global parameters)
+          , tabPanel(title = HTML("<p style='background-color:#068f96; padding:10px; margin-top:0px; border-radius:2px;
                                 font-family:Serif; color:#FFFFFF'>PFG files</p>")
                    , value = "create.PFG"
                    , br()
@@ -530,9 +676,16 @@ ui <- fluidPage(
                                                 See more details on <span style='font-family:Monospace;'>RFate</span> package website.</a></p>
                                                 <table style='width:100%;'>
                                                 <tr>
-                                                <td style='width:30%;font-family:Monospace;vertical-align:top;'>[1] uniform kernel</td>
-                                                <td style='width:70%;'>homogeneous dispersal within the <span style='font-family:Monospace;'>d50</span>,
-                                                <span style='font-family:Monospace;'>d99</span> and <span style='font-family:Monospace;'>ldd</span> circles</td>
+                                                <td style='width:30%;font-family:Monospace;vertical-align:top;'>dist.name</td>
+                                                <td style='width:70%;'>the name of the perturbation</td>
+                                                </tr>
+                                                <tr>
+                                                <td style='width:30%;font-family:Monospace;vertical-align:top;'>dist.kill</td>
+                                                <td style='width:70%;'>mortality percentage that the perturbation will induced for each response stage</td>
+                                                </tr>
+                                                <tr>
+                                                <td style='width:30%;font-family:Monospace;vertical-align:top;'>dist.resprout</td>
+                                                <td style='width:70%;'>resprouting percentage that the perturbation will induced for each response stage</td>
                                                 </tr>
                                                 </table>
                                                 "
@@ -565,10 +718,10 @@ ui <- fluidPage(
                                            , br()
                                            , HTML("<strong>Disturbance</strong>")
                                            , radioButtons(inputId = "dist.grouping"
-                                                                , label = NULL
-                                                                , choices = c("by type", "by PFG")
-                                                                , selected = "by type"
-                                                                , width = "100%"))
+                                                          , label = NULL
+                                                          , choices = c("by type", "by PFG")
+                                                          , selected = "by type"
+                                                          , width = "100%"))
                                 )
                                 ,fluidRow(
                                   uiOutput(outputId = "UI.dist.grouping")
@@ -589,7 +742,7 @@ ui <- fluidPage(
                                 )
                                 )
                      )
-                     )
+                     ) ## END tabPanel (PFG files)
           , tabPanel(title = HTML("<p style='background-color:#068f96; padding:10px; margin-top:0px; border-radius:2px;
                                   font-family:Serif; color:#FFFFFF'>Scenario files</p>")
                      , value = "create.scenario"
@@ -692,23 +845,18 @@ ui <- fluidPage(
                        br(),
                        wellPanel(dataTableOutput(outputId = "created_table.save"))
                      )
-                     ),
-          tabPanel(title = HTML("<p style='background-color:#068f96; padding:10px; margin-top:0px; border-radius:2px;
-                                font-family:Serif; color:#FFFFFF'>Simulation files</p>")
-                   , value = "create.simul"
-          )
-          )
-        # , wellPanel(dataTableOutput(outputId = "created_table"))
-        # textOutput("out_message"))
-          )
-      # , wellPanel(dataTableOutput(outputId = "created_table"))
-      )
-)
-)
+                     ) ## END tabPanel (Scenario files)
+          
+          ) ## END tabsetPanel
+          ) ## END wellPanel
+          ) ## END mainPanel
+          ) ## END sidebarLayout
+          ) ## END fluidPage
 
 
 ###################################################################################################################################
-cat <- message
+###################################################################################################################################
+
 # Define server function required to create the scatterplot
 server <- function(input, output, session) {
   
@@ -751,6 +899,47 @@ server <- function(input, output, session) {
       shinyalert(type = "warning", text = "You must create a simulation folder first !")
     }
   })
+  
+  ####################################################################
+  
+  output$UI.doHabSuitability = renderUI({
+    if (input$doHabSuitability)
+    {
+      selectInput(inputId = "HABSUIT.ref_option"
+                  , label = ""
+                  , choices = c("(1) random", "(2) PFG specific")
+                  , selected = "(1) random"
+                  , multiple = FALSE
+                  , width = "100%")
+    } 
+  })
+  
+  ####################################################################
+  
+  output$UI.doDisturbances = renderUI({
+    if (input$doDisturbances)
+    {
+      column(12
+             , numericInput(inputId = "DIST.no"
+                            , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>DIST.no</span>")
+                            , min = 1
+                            , value = 1
+                            , width = "100%")
+             , numericInput(inputId = "DIST.no_sub"
+                            , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>DIST.no_sub</span>")
+                            , min = 4
+                            , max = 4
+                            , value = 1
+                            , width = "100%")
+             , numericInput(inputId = "DIST.freq"
+                            , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>DIST.freq</span>")
+                            , min = 1
+                            , value = 1
+                            , width = "100%")
+      )
+    } 
+  })
+
   
   ####################################################################
   
@@ -1053,34 +1242,34 @@ server <- function(input, output, session) {
   observeEvent(input$add.PFG.dist, {
     if (input$dist.grouping == "by type")
     {
-    mat.PFG.dist <<- rbind(mat.PFG.dist
-                           , data.frame(name = input$dist.name
-                                        , responseStage = 1:4
-                                        , KilledIndiv_H = as.numeric(c(input$dist.1.kill.H
-                                                                       , input$dist.2.kill.H
-                                                                       , input$dist.3.kill.H
-                                                                       , input$dist.4.kill.H)) / 10
-                                        , KilledIndiv_C = as.numeric(c(input$dist.1.kill.C
-                                                                       , input$dist.2.kill.C
-                                                                       , input$dist.3.kill.C
-                                                                       , input$dist.4.kill.C)) / 10
-                                        , KilledIndiv_P = as.numeric(c(input$dist.1.kill.P
-                                                                       , input$dist.2.kill.P
-                                                                       , input$dist.3.kill.P
-                                                                       , input$dist.4.kill.P)) / 10
-                                        , ResproutIndiv_H = as.numeric(c(input$dist.1.resprout.H
-                                                                       , input$dist.2.resprout.H
-                                                                       , input$dist.3.resprout.H
-                                                                       , input$dist.4.resprout.H)) / 10
-                                        , ResproutIndiv_C = as.numeric(c(input$dist.1.resprout.C
-                                                                       , input$dist.2.resprout.C
-                                                                       , input$dist.3.resprout.C
-                                                                       , input$dist.4.resprout.C)) / 10
-                                        , ResproutIndiv_P = as.numeric(c(input$dist.1.resprout.P
-                                                                       , input$dist.2.resprout.P
-                                                                       , input$dist.3.resprout.P
-                                                                       , input$dist.4.resprout.P)) / 10
-                                        ))
+      mat.PFG.dist <<- rbind(mat.PFG.dist
+                             , data.frame(name = input$dist.name
+                                          , responseStage = 1:4
+                                          , KilledIndiv_H = as.numeric(c(input$dist.1.kill.H
+                                                                         , input$dist.2.kill.H
+                                                                         , input$dist.3.kill.H
+                                                                         , input$dist.4.kill.H)) / 10
+                                          , KilledIndiv_C = as.numeric(c(input$dist.1.kill.C
+                                                                         , input$dist.2.kill.C
+                                                                         , input$dist.3.kill.C
+                                                                         , input$dist.4.kill.C)) / 10
+                                          , KilledIndiv_P = as.numeric(c(input$dist.1.kill.P
+                                                                         , input$dist.2.kill.P
+                                                                         , input$dist.3.kill.P
+                                                                         , input$dist.4.kill.P)) / 10
+                                          , ResproutIndiv_H = as.numeric(c(input$dist.1.resprout.H
+                                                                           , input$dist.2.resprout.H
+                                                                           , input$dist.3.resprout.H
+                                                                           , input$dist.4.resprout.H)) / 10
+                                          , ResproutIndiv_C = as.numeric(c(input$dist.1.resprout.C
+                                                                           , input$dist.2.resprout.C
+                                                                           , input$dist.3.resprout.C
+                                                                           , input$dist.4.resprout.C)) / 10
+                                          , ResproutIndiv_P = as.numeric(c(input$dist.1.resprout.P
+                                                                           , input$dist.2.resprout.P
+                                                                           , input$dist.3.resprout.P
+                                                                           , input$dist.4.resprout.P)) / 10
+                             ))
     } else
     {
       
@@ -1100,10 +1289,10 @@ server <- function(input, output, session) {
     {
       get_res = print_messages(as.expression(
         PRE_FATE.params_PFGdisturbance(name.simulation = input$name.simul
-                                     , mat.PFG.dist = mat.PFG.dist
+                                       , mat.PFG.dist = mat.PFG.dist
         )
       ))
-
+      
       if(get_res)
       {
         output$created_table.dist = renderDataTable({
