@@ -210,7 +210,7 @@ ui <- fluidPage(
         column(12
                , shinyjs::hidden(
                  actionButton(inputId = "create.simul"
-                              , label = "Create Simulation parameters file"
+                              , label = HTML("Create Simulation <br/>parameters file")
                               , icon = icon("file")
                               , width = "100%")
                )
@@ -902,7 +902,7 @@ module of the FATE-HD simulation will take place
                                           HTML("<strong>Simulation mask</strong>")
                                           , br()
                                           , br()
-                                          , fileInput(inputId = "name.mask"
+                                          , fileInput(inputId = "simul.mask"
                                                       , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>name.mask</span>")
                                                       , multiple = FALSE
                                                       , width = "100%"
@@ -985,34 +985,34 @@ server <- function(input, output, session) {
     
     shinyjs::show("main.panel")
     shinyjs::show("create.simul")
+    shinyjs::show("UI.download.folder")
+    shinyjs::show("refresh")
+    
+    output$UI.download.folder = renderUI({
+      downloadButton(outputId = "FATE_simulation.zip"
+                     , label = "Download folder"
+                     , icon = icon("download")
+                     , width = "100%")
+    })
   })
   
   
   observeEvent(input$create.simul, {
     if (input$create.skeleton > 0)
     {
-      get_res = print_messages(as.expression(
-        PRE_FATE.params_simulParameters(name.simulation = input$name.simul
-        )
-      ))
-      
-      shinyjs::show("UI.download.folder")
-      shinyjs::show("refresh")
-      
-      output$UI.download.folder = renderUI({
-        downloadButton(outputId = "FATE_simulation.zip"
-                       , label = "Download folder"
-                       , icon = icon("download")
-                       , width = "100%")
-      })
-      
-      # if(get_res)
-      # {
-      #   output$created_table.namespace = renderDataTable({
-      #     path_folder = paste0(input$name.simul, "/DATA/NAMESPACE_CONSTANTS/")
-      #     return(get_files(path_folder))
-      #   })
-      # }
+      mask.file = list.files(path = paste0(input$name.simul, "/DATA/MASK")
+                              , pattern = "^MASK_")
+      if (input$load.mask > 0 && length(mask.file) > 0)
+      {
+        get_res = print_messages(as.expression(
+          PRE_FATE.params_simulParameters(name.simulation = input$name.simul
+                                          , name.mask = mask.file
+          )
+        ))
+      } else
+      {
+        shinyalert(type = "warning", text = "You must load a simulation mask first !")
+      }
     } else
     {
       shinyalert(type = "warning", text = "You must create a simulation folder first !")
@@ -1572,6 +1572,98 @@ server <- function(input, output, session) {
   
   ####################################################################
   
+  observeEvent(input$load.mask, {
+    if (input$create.skeleton > 0)
+    {
+      if(!is.null(input$simul.mask))
+      {
+      file1 = input$simul.mask$datapath
+      file2 = input$simul.mask$name
+      file2 = paste0("MASK_", file2)
+      file2 = paste0(input$name.simul, "/DATA/MASK/", file2)
+      get_res = file.copy(from = file1, to = file2)
+      
+      if(get_res)
+      {
+        shinyalert(type = "success", text = paste0("The file ", input$simul.mask$name
+                                                   , " has been correctly uploaded and renamed as "
+                                                   , file2, " !"))
+      } else
+      {
+        shinyalert(type = "error", text = "Oops. Something went wrong !")
+      }
+      }
+    } else
+    {
+      shinyalert(type = "warning", text = "You must create a simulation folder first !")
+    }
+  })
+  
+  ####################################################################
+  
+  observeEvent(input$load.habsuit.mask, {
+    if (input$create.skeleton > 0)
+    {
+      if(!is.null(input$habsuit.mask))
+      {
+        if (nchar(input$habsuit.folder) > 0)
+        {
+          dir.create(paste0(input$name.simul, "/DATA/PFGS/HABSUIT/", input$habsuit.folder))
+          opt.folder.name = paste0(input$habsuit.folder, "/")
+        } else
+        {
+          opt.folder.name = ""
+        }
+        
+        file1 = input$habsuit.mask$datapath
+        file2 = input$habsuit.mask$name
+        file2 = paste0("HABSUIT_", file2)
+        file2 = paste0(input$name.simul, "/DATA/PFGS/HABSUIT/", opt.folder.name, file2)
+        get_res = file.copy(from = file1, to = file2)
+        
+        if(get_res)
+        {
+          shinyalert(type = "success", text = paste0("The file ", input$habsuit.mask$name
+                                                     , " has been correctly uploaded and renamed as "
+                                                     , file2, " !"))
+        } else
+        {
+          shinyalert(type = "error", text = "Oops. Something went wrong !")
+        }
+      }
+    } else
+    {
+      shinyalert(type = "warning", text = "You must create a simulation folder first !")
+    }
+  })
+  ####################################################################
+  
+  observeEvent(input$load.dist.mask, {
+    if (input$create.skeleton > 0)
+    {
+      if(!is.null(input$dist.mask))
+      {
+        file1 = input$dist.mask$datapath
+        file2 = input$dist.mask$name
+        file2 = paste0("DIST_", file2)
+        file2 = paste0(input$name.simul, "/DATA/MASK/", file2)
+        get_res = file.copy(from = file1, to = file2)
+        
+        if(get_res)
+        {
+          shinyalert(type = "success", text = paste0("The file ", input$dist.mask$name
+                                                     , " has been correctly uploaded and renamed as "
+                                                     , file2, " !"))
+        } else
+        {
+          shinyalert(type = "error", text = "Oops. Something went wrong !")
+        }
+      }
+    } else
+    {
+      shinyalert(type = "warning", text = "You must create a simulation folder first !")
+    }
+  })
 }
 
 ###################################################################################################################################
