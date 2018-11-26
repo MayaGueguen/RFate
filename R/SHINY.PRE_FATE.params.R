@@ -293,7 +293,7 @@ ui <- fluidPage(
                      , value = "panel.global"
                      , br()
                      , helpText(HTML("
-                                     <p><a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_saveYears.html' target='_blank'>
+                                     <p><a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_globalParameters.html' target='_blank'>
                                      See more details on <span style='font-family:Monospace;'>RFate</span> package website.</a></p>
                                      <table style='width:100%;'>
                                      <tr>
@@ -940,6 +940,41 @@ server <- function(input, output, session) {
     } 
   })
 
+  ####################################################################
+  
+  observeEvent(input$create.global, {
+    if (input$create.skeleton > 0)
+    {
+      get_res = print_messages(as.expression(
+        PRE_FATE.params_globalParameters(name.simulation = input$name.simul
+                                         , opt.no_CPU = input$opt.no_CPU
+                                         , required.no_PFG = input$required.no_PFG
+                                         , required.no_STRATA = input$required.no_STRATA
+                                         , required.simul_duration = input$required.simul_duration
+                                         , required.seeding_duration = input$required.seeding_duration
+                                         , required.seeding_timestep = input$required.seeding_timestep
+                                         , doDispersal = input$doDispersal
+                                         , doHabSuitability = input$doHabSuitability
+                                         , HABSUIT.ref_option = ifelse(input$HABSUIT.ref_option == "(1) random", 1, 2)
+                                         , doDisturbances = input$doDisturbances
+                                         , DIST.no = input$DIST.no
+                                         , DIST.no_sub = input$DIST.no_sub
+                                         , DIST.freq = input$DIST.freq
+        )
+      ))
+      
+      if(get_res)
+      {
+        output$created_table.global = renderDataTable({
+          path_folder = paste0(input$name.simul, "/DATA/GLOBAL_PARAMETERS/")
+          return(get_files(path_folder))
+        })
+      }
+    } else
+    {
+      shinyalert(type = "warning", text = "You must create a simulation folder first !")
+    }
+  })
   
   ####################################################################
   
