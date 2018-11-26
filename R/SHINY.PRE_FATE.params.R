@@ -2,11 +2,6 @@
 rm(list = ls())
 
 ## load required libraries
-# library(foreach)
-# library(reshape2)
-# library(ggplot2)
-# library(ggthemes)
-# library(plotly)
 library(shiny)
 library(shinyFiles)
 library(shinythemes)
@@ -16,22 +11,11 @@ library(shinyalert)
 library(shinyjs)
 library(markdown)
 library(RFate)
-# library(RFate)
-# library(DT)
 library(data.table)
 library(foreach)
-# library(zip)
+library(zip)
 
 ###################################################################################################################################
-
-# <link rel = "stylesheet" href = "https://use.fontawesome.com/releases/v5.5.0/css/solid.css" integrity =
-#   "sha384-rdyFrfAIC05c5ph7BKz3l5NG5yEottvO/DQ0dCrwD8gzeQDjYBHNr1ucUpQuljos" crossorigin =
-#     "anonymous" >
-# < link rel = "stylesheet" href = "https://use.fontawesome.com/releases/v5.5.0/css/fontawesome.css" integrity =
-#   "sha384-u5J7JghGz0qUrmEsWzBQkfvc8nK3fUT7DCaQzNQ+q4oEXhGSx+P2OqjWsfIRB8QT" crossorigin =
-#     "anonymous" >
-
-# button.color = "#e2ac8c"
 
 get_messages = function(out_info)
 {
@@ -102,6 +86,7 @@ get_files = function(path_folder, skip.no = 2)
 mat.PFG.succ = data.frame()
 mat.PFG.disp = data.frame()
 mat.PFG.dist = data.frame()
+button.color = "#dee2e8"
 
 ###################################################################################################################################
 ###################################################################################################################################
@@ -175,8 +160,9 @@ ui <- fluidPage(
                , actionButton(inputId = "create.skeleton"
                               , label = "Create folder"
                               , icon = icon("folder")
-                              , width = "100%")
-               # , style = HTML(paste0("background-color: ", button.color, ";")))
+                              , width = "100%"
+                              , style = HTML(paste0("background-color: ", button.color, ";"))
+               )
         )
       ),
       br(),
@@ -212,7 +198,9 @@ ui <- fluidPage(
                  actionButton(inputId = "create.simul"
                               , label = HTML("Create Simulation <br/>parameters file")
                               , icon = icon("file")
-                              , width = "100%")
+                              , width = "100%"
+                              , style = HTML(paste0("background-color: ", button.color, ";"))
+                 )
                )
         )
       ),
@@ -226,7 +214,9 @@ ui <- fluidPage(
                    actionButton(inputId = "refresh"
                                 , label = "Start new folder"
                                 , icon = icon("refresh")
-                                , width = "100%")
+                                , width = "100%"
+                                , style = HTML(paste0("background-color: ", button.color, ";"))
+                   )
                  )
         )
       )
@@ -317,8 +307,9 @@ ui <- fluidPage(
                                       , actionButton(inputId = "create.namespaceConstants"
                                                      , label = "Create Namespace constants file"
                                                      , icon = icon("file")
-                                                     , width = "100%")
-                                      # , style = HTML(paste0("background-color: ", button.color, ";")))
+                                                     , width = "100%"
+                                                     , style = HTML(paste0("background-color: ", button.color, ";"))
+                                      )
                                       , br())
                              )
                              , fluidRow(
@@ -461,8 +452,9 @@ ui <- fluidPage(
                                         , actionButton(inputId = "create.global"
                                                        , label = "Create Global parameters file"
                                                        , icon = icon("file")
-                                                       , width = "100%")
-                                        # , style = HTML(paste0("background-color: ", button.color, ";")))
+                                                       , width = "100%"
+                                                       , style = HTML(paste0("background-color: ", button.color, ";"))
+                                        )
                                         , br())
                                )
                                , fluidRow(
@@ -528,7 +520,9 @@ ui <- fluidPage(
                                           , actionButton(inputId = "create.save.maps"
                                                          , label = "Create SAVE maps files"
                                                          , icon = icon("file")
-                                                         , width = "100%")
+                                                         , width = "100%"
+                                                         , style = HTML(paste0("background-color: ", button.color, ";"))
+                                          )
                                         )
                                  )
                                  , column(6
@@ -563,7 +557,9 @@ ui <- fluidPage(
                                             , actionButton(inputId = "create.save.objects"
                                                            , label = "Create SAVE objects files"
                                                            , icon = icon("file")
-                                                           , width = "100%")
+                                                           , width = "100%"
+                                                           , style = HTML(paste0("background-color: ", button.color, ";"))
+                                            )
                                           )
                                  )
                                )
@@ -614,14 +610,19 @@ ui <- fluidPage(
                                                    , actionButton(inputId = "add.PFG.succ"
                                                                   , label = "Add PFG"
                                                                   , icon = icon("plus")
-                                                                  , width = "100%"))
+                                                                  , width = "100%"
+                                                                  , style = HTML(paste0("background-color: ", button.color, ";"))
+                                                   )
+                                            )
                                             , column(6
                                                      , br()
                                                      , actionButton(inputId = "create.succ"
                                                                     , label = "Create PFG succession files"
                                                                     , icon = icon("file")
-                                                                    , width = "100%"))
-                                            # , style = HTML(paste0("background-color: ", button.color, ";")))
+                                                                    , width = "100%"
+                                                                    , style = HTML(paste0("background-color: ", button.color, ";"))
+                                                     )
+                                            )
                                           )
                                           , fluidRow(
                                             column(2
@@ -687,7 +688,10 @@ ui <- fluidPage(
                                                      , br()
                                                      , actionButton(inputId = "delete.PFG.succ"
                                                                     , label = NULL
-                                                                    , icon = icon("trash")))
+                                                                    , icon = icon("trash")
+                                                                    , style = HTML(paste0("background-color: ", button.color, ";"))
+                                                     )
+                                            )
                                           )
                                           , fluidRow(
                                             br(),
@@ -738,14 +742,19 @@ ui <- fluidPage(
                                                      , actionButton(inputId = "add.PFG.disp"
                                                                     , label = "Add PFG"
                                                                     , icon = icon("plus")
-                                                                    , width = "100%"))
+                                                                    , width = "100%"
+                                                                    , style = HTML(paste0("background-color: ", button.color, ";"))
+                                                     )
+                                              )
                                               , column(6
                                                        , br()
                                                        , actionButton(inputId = "create.disp"
                                                                       , label = "Create PFG dispersal files"
                                                                       , icon = icon("file")
-                                                                      , width = "100%"))
-                                              # , style = HTML(paste0("background-color: ", button.color, ";")))
+                                                                      , width = "100%"
+                                                                      , style = HTML(paste0("background-color: ", button.color, ";"))
+                                                       )
+                                              )
                                             )
                                             , fluidRow(
                                               column(2
@@ -799,7 +808,10 @@ ui <- fluidPage(
                                                        , br()
                                                        , actionButton(inputId = "delete.PFG.disp"
                                                                       , label = NULL
-                                                                      , icon = icon("trash")))
+                                                                      , icon = icon("trash")
+                                                                      , style = HTML(paste0("background-color: ", button.color, ";"))
+                                                       )
+                                              )
                                             )
                                             , fluidRow(
                                               br(),
@@ -834,14 +846,19 @@ ui <- fluidPage(
                                                      , actionButton(inputId = "add.PFG.dist"
                                                                     , label = "Add disturbance"
                                                                     , icon = icon("plus")
-                                                                    , width = "100%"))
+                                                                    , width = "100%"
+                                                                    , style = HTML(paste0("background-color: ", button.color, ";"))
+                                                     )
+                                              )
                                               , column(6
                                                        , br()
                                                        , actionButton(inputId = "create.dist"
                                                                       , label = "Create PFG disturbance files"
                                                                       , icon = icon("file")
-                                                                      , width = "100%"))
-                                              # , style = HTML(paste0("background-color: ", button.color, ";")))
+                                                                      , width = "100%"
+                                                                      , style = HTML(paste0("background-color: ", button.color, ";"))
+                                                       )
+                                              )
                                             )
                                             , fluidRow(
                                               column(4
@@ -872,7 +889,10 @@ ui <- fluidPage(
                                                        , br()
                                                        , actionButton(inputId = "delete.PFG.dist"
                                                                       , label = NULL
-                                                                      , icon = icon("trash")))
+                                                                      , icon = icon("trash")
+                                                                      , style = HTML(paste0("background-color: ", button.color, ";"))
+                                                       )
+                                              )
                                             )
                                             , fluidRow(
                                               br(),
@@ -928,7 +948,9 @@ will take place
                                           , actionButton(inputId = "upload.mask"
                                                          , label = HTML("Upload <br/>simulation mask")
                                                          , icon = icon("upload")
-                                                         , width = "100%")
+                                                         , width = "100%"
+                                                         , style = HTML(paste0("background-color: ", button.color, ";"))
+                                          )
                                         )
                                  )
                                  , column(4
@@ -951,7 +973,9 @@ will take place
                                             , actionButton(inputId = "upload.habsuit.mask"
                                                            , label = HTML("Upload habitat <br/>suitability masks")
                                                            , icon = icon("upload")
-                                                           , width = "100%")
+                                                           , width = "100%"
+                                                           , style = HTML(paste0("background-color: ", button.color, ";"))
+                                            )
                                           )
                                  )
                                  , column(4
@@ -970,7 +994,9 @@ will take place
                                             , actionButton(inputId = "upload.dist.mask"
                                                            , label = HTML("Upload <br/>disturbance masks")
                                                            , icon = icon("upload")
-                                                           , width = "100%")
+                                                           , width = "100%"
+                                                           , style = HTML(paste0("background-color: ", button.color, ";"))
+                                            )
                                           )
                                  )
                                )
@@ -1008,7 +1034,9 @@ server <- function(input, output, session) {
       downloadButton(outputId = "FATE_simulation.zip"
                      , label = "Download folder"
                      , icon = icon("download")
-                     , width = "100%")
+                     , width = "100%"
+                     , style = HTML(paste0("background-color: ", button.color, ";"))
+      )
     })
   })
   
