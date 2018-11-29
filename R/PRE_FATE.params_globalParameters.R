@@ -13,6 +13,9 @@
 ##' or simulation name of the \code{FATE-HD} simulation
 ##' @param opt.no_CPU default 1 (\emph{optional}). The number of resources that 
 ##' can be used to parallelize the \code{FATE-HD} simulation
+##' @param opt.replacePrevious default \code{FALSE} (\emph{optional}). If \code{TRUE},
+##' pre-existing files inside \code{name.simulation/DATA/GLOBAL_PARAMETERS} folder
+##' will be replaced
 ##' @param required.no_PFG an \code{integer} corresponding to the number of PFG
 ##' @param required.no_STRATA an \code{integer} corresponding to the number of 
 ##' height strata
@@ -267,6 +270,7 @@
 PRE_FATE.params_globalParameters = function(
   name.simulation
   , opt.no_CPU = 1
+  , opt.replacePrevious = FALSE
   , required.no_PFG
   , required.no_STRATA
   , required.simul_duration
@@ -480,7 +484,18 @@ PRE_FATE.params_globalParameters = function(
     res = c(res, params.HABSTAB)
     res = c(res, params.ALIEN)
   })
-  names.params.list = paste0("V", 1:length(params.list))
+  
+  no.start = 1
+  if (!opt.replacePrevious)
+  {
+    previous.files = list.files(path = paste0(name.simulation, "/DATA/GLOBAL_PARAMETERS/")
+                                , pattern = "^Global_parameters_")
+    if (length(previous.files) > 0) {
+      no.start = length(previous.files) + 1
+    }
+  }
+
+  names.params.list = paste0("V", no.start:length(params.list))
   names.params.list.sub = c("NB_CPUS"
                             , "NB_FG"
                             , "NB_STRATUM"

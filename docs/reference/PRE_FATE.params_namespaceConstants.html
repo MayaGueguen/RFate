@@ -60,7 +60,7 @@ containing NAMESPACE CONSTANTS used in FATE-HD model." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RFate</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.0.2.9000</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.0.3.9000</span>
       </span>
     </div>
 
@@ -148,9 +148,10 @@ simulation</h1>
 containing <code>NAMESPACE CONSTANTS</code> used in <code>FATE-HD</code> model.</p>
     
 
-    <pre class="usage"><span class='fu'>PRE_FATE.params_namespaceConstants</span>(<span class='no'>name.simulation</span>, <span class='no'>global.abund.low</span>,
-  <span class='no'>global.abund.med</span>, <span class='no'>global.abund.high</span>, <span class='no'>global.max.by.cohort</span>,
-  <span class='no'>global.resource.thresh.med</span>, <span class='no'>global.resource.thresh.low</span>)</pre>
+    <pre class="usage"><span class='fu'>PRE_FATE.params_namespaceConstants</span>(<span class='no'>name.simulation</span>,
+  <span class='kw'>opt.replacePrevious</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>global.abund.low</span>, <span class='no'>global.abund.med</span>,
+  <span class='no'>global.abund.high</span>, <span class='no'>global.max.by.cohort</span>, <span class='no'>global.resource.thresh.med</span>,
+  <span class='no'>global.resource.thresh.low</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -159,6 +160,12 @@ containing <code>NAMESPACE CONSTANTS</code> used in <code>FATE-HD</code> model.<
       <th>name.simulation</th>
       <td><p>a <code>string</code> that corresponds to the main directory
 or simulation name of the <code>FATE-HD</code> simulation</p></td>
+    </tr>
+    <tr>
+      <th>opt.replacePrevious</th>
+      <td><p>default <code>FALSE</code> (<em>optional</em>). If <code>TRUE</code>,
+pre-existing files inside <code>name.simulation/DATA/NAMESPACE_CONSTANTS</code> folder
+will be replaced</p></td>
     </tr>
     <tr>
       <th>global.abund.low</th>

@@ -27,6 +27,7 @@ test_that("PRE_FATE.params_namespaceConstants gives error with wrong data : name
 
 ## INPUTS
 test_that("PRE_FATE.params_namespaceConstants gives error with wrong data : global.abund.low", {
+  if (dir.exists("FATE_simulation")) system("rm -r FATE_simulation/")
   PRE_FATE.skeletonDirectory()
   expect_error(PRE_FATE.params_namespaceConstants(name.simulation = "FATE_simulation")
                , "`global.abund.low` must be an integer")
@@ -184,6 +185,7 @@ test_that("PRE_FATE.params_namespaceConstants gives error with wrong data : glob
 
 ## OUTPUTS
 test_that("PRE_FATE.params_namespaceConstants gives correct output", {
+  if (dir.exists("FATE_simulation")) system("rm -r FATE_simulation/")
   PRE_FATE.skeletonDirectory()
   expect_warning(PRE_FATE.params_namespaceConstants(name.simulation = "FATE_simulation"
                                                     , global.abund.low = 10.1
@@ -241,13 +243,14 @@ test_that("PRE_FATE.params_namespaceConstants gives correct output", {
                                                     , global.max.by.cohort = 4
                                                     , global.resource.thresh.med = 100
                                                     , global.resource.thresh.low = 200)
-                 , "The parameter file FATE_simulation/DATA/NAMESPACE_CONSTANTS/Namespace_constants_V1.txt has been successfully created !")
+                 , "The parameter file FATE_simulation/DATA/NAMESPACE_CONSTANTS/Namespace_constants_V7.txt has been successfully created !")
   expect_warning(PRE_FATE.params_namespaceConstants(name.simulation = "FATE_simulation"
                                                     , global.abund.low = 10
                                                     , global.abund.med = 5
                                                     , global.abund.high = 2
                                                     , global.max.by.cohort = 4
                                                     , global.resource.thresh.med = 100
-                                                    , global.resource.thresh.low = 200)
+                                                    , global.resource.thresh.low = 200
+                                                    , opt.replacePrevious = TRUE)
                  , "already exists. It will be replaced.")
 })

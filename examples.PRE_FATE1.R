@@ -1,4 +1,4 @@
-# library(RFate)
+library(RFate)
 
 ## Load example data
 data(MontBlanc)

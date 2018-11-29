@@ -11,6 +11,9 @@
 ##'              
 ##' @param name.simulation a \code{string} that corresponds to the main directory
 ##' or simulation name of the \code{FATE-HD} simulation
+##' @param opt.replacePrevious default \code{FALSE} (\emph{optional}). If \code{TRUE},
+##' pre-existing files inside \code{name.simulation/DATA/NAMESPACE_CONSTANTS} folder
+##' will be replaced
 ##' @param global.abund.low \emph{Not used for now. To be removed ?}
 ##' @param global.abund.med \emph{Not used for now. To be removed ?}
 ##' @param global.abund.high an \code{integer} in the order of 1 000 000 to rescale
@@ -92,6 +95,7 @@
 
 PRE_FATE.params_namespaceConstants = function(
   name.simulation
+  , opt.replacePrevious = FALSE
   , global.abund.low
   , global.abund.med
   , global.abund.high
@@ -179,7 +183,18 @@ PRE_FATE.params_namespaceConstants = function(
          , params.combi[x, 6]
          , params.combi[x, 7])
   })
-  names.params.list = paste0("V", 1:length(params.list))
+
+  no.start = 1
+  if (!opt.replacePrevious)
+  {
+    previous.files = list.files(path = paste0(name.simulation, "/DATA/NAMESPACE_CONSTANTS/")
+                                , pattern = "^Namespace_constants_")
+    if (length(previous.files) > 0) {
+      no.start = length(previous.files) + 1
+    }
+  }
+
+  names.params.list = paste0("V", no.start:length(params.list))
   names.params.list.sub = c("GLOBAL_LOW_ABUND"
                             , "GLOBAL_MEDIUM_ABUND"
                             , "GLOBAL_HIGH_ABUND"

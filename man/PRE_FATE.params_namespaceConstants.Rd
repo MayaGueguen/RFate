@@ -5,13 +5,18 @@
 \title{Create \emph{Namespace_constants} parameter file for a \code{FATE-HD}
 simulation}
 \usage{
-PRE_FATE.params_namespaceConstants(name.simulation, global.abund.low,
-  global.abund.med, global.abund.high, global.max.by.cohort,
-  global.resource.thresh.med, global.resource.thresh.low)
+PRE_FATE.params_namespaceConstants(name.simulation,
+  opt.replacePrevious = FALSE, global.abund.low, global.abund.med,
+  global.abund.high, global.max.by.cohort, global.resource.thresh.med,
+  global.resource.thresh.low)
 }
 \arguments{
 \item{name.simulation}{a \code{string} that corresponds to the main directory
 or simulation name of the \code{FATE-HD} simulation}
+
+\item{opt.replacePrevious}{default \code{FALSE} (\emph{optional}). If \code{TRUE},
+pre-existing files inside \code{name.simulation/DATA/NAMESPACE_CONSTANTS} folder
+will be replaced}
 
 \item{global.abund.low}{\emph{Not used for now. To be removed ?}}
 

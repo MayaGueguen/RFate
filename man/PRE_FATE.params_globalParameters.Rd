@@ -6,11 +6,12 @@
 simulation}
 \usage{
 PRE_FATE.params_globalParameters(name.simulation, opt.no_CPU = 1,
-  required.no_PFG, required.no_STRATA, required.simul_duration,
-  required.seeding_duration, required.seeding_timestep, doDispersal = FALSE,
-  doHabSuitability = FALSE, HABSUIT.ref_option, doDisturbances = FALSE,
-  DIST.no, DIST.no_sub, DIST.freq, doSoil = FALSE, doFire = FALSE,
-  doDrought = FALSE, doHabStability = FALSE, doAliens = FALSE)
+  opt.replacePrevious = FALSE, required.no_PFG, required.no_STRATA,
+  required.simul_duration, required.seeding_duration, required.seeding_timestep,
+  doDispersal = FALSE, doHabSuitability = FALSE, HABSUIT.ref_option,
+  doDisturbances = FALSE, DIST.no, DIST.no_sub, DIST.freq, doSoil = FALSE,
+  doFire = FALSE, doDrought = FALSE, doHabStability = FALSE,
+  doAliens = FALSE)
 }
 \arguments{
 \item{name.simulation}{a \code{string} that corresponds to the main directory
@@ -18,6 +19,10 @@ or simulation name of the \code{FATE-HD} simulation}
 
 \item{opt.no_CPU}{default 1 (\emph{optional}). The number of resources that 
 can be used to parallelize the \code{FATE-HD} simulation}
+
+\item{opt.replacePrevious}{default \code{FALSE} (\emph{optional}). If \code{TRUE},
+pre-existing files inside \code{name.simulation/DATA/GLOBAL_PARAMETERS} folder
+will be replaced}
 
 \item{required.no_PFG}{an \code{integer} corresponding to the number of PFG}
 

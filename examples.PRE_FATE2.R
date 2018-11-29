@@ -1,4 +1,4 @@
-# library(RFate)
+library(RFate)
 
 ## Create a skeleton folder with the default name ('FATE_simulation')
 if (dir.exists("FATE_simulation")) system("rm -r FATE_simulation/")

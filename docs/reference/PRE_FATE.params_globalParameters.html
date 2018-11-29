@@ -60,7 +60,7 @@ containing GLOBAL PARAMETERS used in FATE-HD model." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RFate</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.0.2.9000</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.0.3.9000</span>
       </span>
     </div>
 
@@ -149,11 +149,12 @@ containing <code>GLOBAL PARAMETERS</code> used in <code>FATE-HD</code> model.</p
     
 
     <pre class="usage"><span class='fu'>PRE_FATE.params_globalParameters</span>(<span class='no'>name.simulation</span>, <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='no'>required.no_PFG</span>, <span class='no'>required.no_STRATA</span>, <span class='no'>required.simul_duration</span>,
-  <span class='no'>required.seeding_duration</span>, <span class='no'>required.seeding_timestep</span>, <span class='kw'>doDispersal</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>doHabSuitability</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>HABSUIT.ref_option</span>, <span class='kw'>doDisturbances</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>DIST.no</span>, <span class='no'>DIST.no_sub</span>, <span class='no'>DIST.freq</span>, <span class='kw'>doSoil</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>doFire</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>doDrought</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>doHabStability</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>doAliens</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='kw'>opt.replacePrevious</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>required.no_PFG</span>, <span class='no'>required.no_STRATA</span>,
+  <span class='no'>required.simul_duration</span>, <span class='no'>required.seeding_duration</span>, <span class='no'>required.seeding_timestep</span>,
+  <span class='kw'>doDispersal</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>doHabSuitability</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>HABSUIT.ref_option</span>,
+  <span class='kw'>doDisturbances</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>DIST.no</span>, <span class='no'>DIST.no_sub</span>, <span class='no'>DIST.freq</span>, <span class='kw'>doSoil</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>doFire</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>doDrought</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>doHabStability</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>doAliens</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -167,6 +168,12 @@ or simulation name of the <code>FATE-HD</code> simulation</p></td>
       <th>opt.no_CPU</th>
       <td><p>default 1 (<em>optional</em>). The number of resources that 
 can be used to parallelize the <code>FATE-HD</code> simulation</p></td>
+    </tr>
+    <tr>
+      <th>opt.replacePrevious</th>
+      <td><p>default <code>FALSE</code> (<em>optional</em>). If <code>TRUE</code>,
+pre-existing files inside <code>name.simulation/DATA/GLOBAL_PARAMETERS</code> folder
+will be replaced</p></td>
     </tr>
     <tr>
       <th>required.no_PFG</th>

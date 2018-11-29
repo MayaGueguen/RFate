@@ -325,6 +325,7 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : DIST.f
 
 ## OUTPUTS
 test_that("PRE_FATE.params_globalParameters gives correct output", {
+  if (dir.exists("FATE_simulation")) system("rm -r FATE_simulation/")
   PRE_FATE.skeletonDirectory()
   expect_warning(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                   , opt.no_CPU = "a"
@@ -341,8 +342,9 @@ test_that("PRE_FATE.params_globalParameters gives correct output", {
                                                   , required.simul_duration = 100
                                                   , required.seeding_duration = 100
                                                   , required.seeding_timestep = 100)
-                 , "The parameter file FATE_simulation/DATA/GLOBAL_PARAMETERS/Global_parameters_V1.txt has been successfully created !")
+                 , "The parameter file FATE_simulation/DATA/GLOBAL_PARAMETERS/Global_parameters_V2.txt has been successfully created !")
   expect_warning(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                  , opt.replacePrevious = TRUE
                                                   , required.no_PFG = 5
                                                   , required.no_STRATA = 2
                                                   , required.simul_duration = 100
@@ -360,5 +362,5 @@ test_that("PRE_FATE.params_globalParameters gives correct output", {
                                                   , DIST.no = 2
                                                   , DIST.no_sub = 2
                                                   , DIST.freq = c(2,2))
-                 , "The parameter file FATE_simulation/DATA/GLOBAL_PARAMETERS/Global_parameters_V1.txt has been successfully created !")
+                 , "The parameter file FATE_simulation/DATA/GLOBAL_PARAMETERS/Global_parameters_V3.txt has been successfully created !")
 })
