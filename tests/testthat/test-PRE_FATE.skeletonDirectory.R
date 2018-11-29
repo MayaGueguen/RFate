@@ -3,11 +3,12 @@ context("PRE_FATE.skeletonDirectory() function")
 
 ## INPUTS
 test_that("PRE_FATE.skeletonDirectory gives message / warning / error with missing data", {
-  expect_error(PRE_FATE.skeletonDirectory(NA), "No data given!\n (missing `name.simulation`)", fixed = T)
-  expect_error(PRE_FATE.skeletonDirectory(NULL), "No data given!\n (missing `name.simulation`)", fixed = T)
-  expect_error(PRE_FATE.skeletonDirectory(1), "`name.simulation` must contain a character value")
-  expect_error(PRE_FATE.skeletonDirectory(factor("a")), "`name.simulation` must contain a character value")
-  expect_error(PRE_FATE.skeletonDirectory(factor(1)), "`name.simulation` must contain a character value")
+  if (dir.exists("FATE_simulation")) system("rm -r FATE_simulation/")
+  expect_error(PRE_FATE.skeletonDirectory(NA), "`name.simulation` must contain a character value of length > 0")
+  expect_error(PRE_FATE.skeletonDirectory(NULL), "`name.simulation` must contain a character value of length > 0")
+  expect_error(PRE_FATE.skeletonDirectory(1), "`name.simulation` must contain a character value of length > 0")
+  expect_error(PRE_FATE.skeletonDirectory(factor("a")), "`name.simulation` must contain a character value of length > 0")
+  expect_error(PRE_FATE.skeletonDirectory(factor(1)), "`name.simulation` must contain a character value of length > 0")
 })
 
 

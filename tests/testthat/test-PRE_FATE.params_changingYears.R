@@ -70,6 +70,9 @@ test_that("PRE_FATE.params_changingYears gives error with wrong data : type.chan
                , "Column names of `mat.changing` must be `year`, `order` and `file.name`")
   
   expect_error(PRE_FATE.params_changingYears(name.simulation = "FATE_simulation", type.changing = "DIST"
+                                             , mat.changing = data.frame(year = NA, order = 1, file.name = ""))
+               , "`mat.changing$file.name` must contain a character value of length > 0", fixed = T)
+  expect_error(PRE_FATE.params_changingYears(name.simulation = "FATE_simulation", type.changing = "DIST"
                                              , mat.changing = data.frame(year = NA, order = 1, file.name = "hop"))
                , "Columns `year` and `order` of `mat.changing` must contain numeric values")
   expect_error(PRE_FATE.params_changingYears(name.simulation = "FATE_simulation", type.changing = "DIST"
@@ -98,6 +101,9 @@ test_that("PRE_FATE.params_changingYears gives error with wrong data : type.chan
   
   expect_error(PRE_FATE.params_changingYears(name.simulation = "FATE_simulation", type.changing = "DIST"
                                              , mat.changing = data.frame(year = 10, order = 1, file.name = c("",NA)))
+               , "`mat.changing$file.name` must contain a character value of length > 0", fixed = T)
+  expect_error(PRE_FATE.params_changingYears(name.simulation = "FATE_simulation", type.changing = "DIST"
+                                             , mat.changing = data.frame(year = 10, order = 1, file.name = c("a",NA)))
                , "Columns `year`, `order` and `file.name` of `mat.changing` must not contain NA values")
   
   expect_error(PRE_FATE.params_changingYears(name.simulation = "FATE_simulation", type.changing = "DIST"

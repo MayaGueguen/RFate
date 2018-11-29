@@ -27,6 +27,7 @@ test_that("PRE_FATE.params_PFGsuccession gives error with wrong data : name.simu
 
 ## INPUTS
 test_that("PRE_FATE.params_PFGsuccession gives error with wrong data : mat.PFG.succ", {
+  if (dir.exists("FATE_simulation")) system("rm -r FATE_simulation/")
   PRE_FATE.skeletonDirectory()
   expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation")
                , "`mat.PFG.succ` must be a data.frame")
@@ -64,21 +65,26 @@ test_that("PRE_FATE.params_PFGsuccession gives error with wrong data : mat.PFG.s
                , "Column `PFG` of `mat.PFG.succ` must contain different values")
   
   expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
+                                             , mat.PFG.succ = data.frame(PFG = "", type = NA, height = 3, maturity = 4
+                                                                         , longevity = 10, light = 2))
+               , "`mat.PFG.succ$PFG` must contain a character value of length > 0", fixed = T)
+  
+  expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(PFG = 1, type = NA, height = 3, maturity = 4
                                                                          , longevity = 10, light = 2))
-               , "Column `type` of `mat.PFG.succ` must contain values such as `H`, `C` or `P`")
+               , "`mat.PFG.succ$type` must be either `H`, `C` or `P`", fixed = T)
   expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(PFG = 1, type = 2, height = 3, maturity = 4
                                                                          , longevity = 10, light = 2))
-               , "Column `type` of `mat.PFG.succ` must contain values such as `H`, `C` or `P`")
+               , "`mat.PFG.succ$type` must be either `H`, `C` or `P`", fixed = T)
   expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(PFG = 1, type = "", height = 3, maturity = 4
                                                                          , longevity = 10, light = 2))
-               , "Column `type` of `mat.PFG.succ` must contain values such as `H`, `C` or `P`")
+               , "`mat.PFG.succ$type` must be either `H`, `C` or `P`", fixed = T)
   expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(PFG = c(1,2), type = c(2,NA), height = 3, maturity = 4
                                                                          , longevity = 10, light = 2))
-               , "Column `type` of `mat.PFG.succ` must contain values such as `H`, `C` or `P`")
+               , "`mat.PFG.succ$type` must be either `H`, `C` or `P`", fixed = T)
   
   expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = NA, maturity = 4

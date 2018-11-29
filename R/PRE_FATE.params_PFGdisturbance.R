@@ -201,13 +201,26 @@ PRE_FATE.params_PFGdisturbance = function(
       .stopMessage_columnNames("mat.PFG.succ", c("NAME", "TYPE", "MATURITY", "LONGEVITY", "STRATA", "CHANG_STR_AGES_to_str_3"))
     }
   }
+  # if (length(which(is.na(mat.PFG.succ$NAME))) > 0 ||
+  #     length(unique(mat.PFG.succ$NAME)) < nrow(mat.PFG.succ)){
+  #   stop("Wrong type of data!\n Column `NAME` of `mat.PFG.succ` must contain different values and no NA values")
+  # }
+  mat.PFG.succ$NAME = as.character(mat.PFG.succ$NAME)
   if (length(which(is.na(mat.PFG.succ$NAME))) > 0 ||
       length(unique(mat.PFG.succ$NAME)) < nrow(mat.PFG.succ)){
-    stop("Wrong type of data!\n Column `NAME` of `mat.PFG.succ` must contain different values and no NA values")
+    stop("Wrong type of data!\n Column `NAME` of `mat.PFG.succ` must contain different values")
   }
-  if (sum(mat.PFG.succ$TYPE %in% c("H", "C", "P")) < nrow(mat.PFG.succ)){
-    stop("Wrong type of data!\n Column `TYPE` of `mat.PFG.succ` must contain values such as `H`, `C` or `P`")
+  if (.testParam_notChar(mat.PFG.succ$NAME))
+  {
+    .stopMessage_beChar("mat.PFG.succ$NAME")
   }
+  if (.testParam_notInChar(mat.PFG.succ$TYPE, inList = c("H", "C", "P")))
+  {
+    .stopMessage_content("mat.PFG.succ$TYPE", c("H", "C", "P"))
+  }
+  # if (sum(mat.PFG.succ$TYPE %in% c("H", "C", "P")) < nrow(mat.PFG.succ)){
+  #   stop("Wrong type of data!\n Column `TYPE` of `mat.PFG.succ` must contain values such as `H`, `C` or `P`")
+  # }
   if (!is.numeric(mat.PFG.succ$MATURITY) ||
       !is.numeric(mat.PFG.succ$LONGEVITY) ||
       !is.numeric(mat.PFG.succ$STRATA) ||
@@ -236,6 +249,8 @@ PRE_FATE.params_PFGdisturbance = function(
     {
       .stopMessage_columnNames("mat.PFG.dist", c("name", "responseStage"))
     }
+    mat.PFG.dist$responseStage = as.numeric(as.character(mat.PFG.dist$responseStage))
+    
     # if (sum(unique(mat.PFG.dist$name) %in% mat.PFG.succ$NAME) < length(unique(mat.PFG.dist$name)))
     # {
     #   warning(paste0("Column `name` of `mat.PFG.dist` contains values not in column `NAME` of `mat.PFG.succ`"))
@@ -411,7 +426,7 @@ PRE_FATE.params_PFGdisturbance = function(
       FATES[ind_fates, which(mat.PFG.succ$TYPE == "H")] = mat.PFG.dist[ind_dist, "KilledIndiv_H"]
       FATES[ind_fates, which(mat.PFG.succ$TYPE == "C")] = mat.PFG.dist[ind_dist, "KilledIndiv_C"]
       FATES[ind_fates, which(mat.PFG.succ$TYPE == "P")] = mat.PFG.dist[ind_dist, "KilledIndiv_P"]
-    } else if (sum(colnames(mat.PFG.dist) == paste0("KilledIndiv_", mat.PFG.succ$NAME)) == nrow(mat.PFG.succ))
+    } else if (sum(colnames(mat.PFG.dist) %in% paste0("KilledIndiv_", mat.PFG.succ$NAME)) == nrow(mat.PFG.succ))
     {
       for (pfg in mat.PFG.succ$NAME)
       {

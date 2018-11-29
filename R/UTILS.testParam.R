@@ -17,7 +17,8 @@
 .testParam_notChar = function(param)
 {
   if (.testParam_notDef(param) ||
-      !is.character(param))
+      !is.character(param) ||
+      nchar(param) == 0)
   {
     return(TRUE)
   } else

@@ -16,11 +16,11 @@ library(pkgdown)
 ## INFORMATION / PARAMETERS
 
 package_name = "RFate"
-package_version = "0.0.2.9000"
+package_version = "0.0.3.9000"
 
 #####################################################################
 
-load("RFate/data/MontBlanc")
+load("RFate/data/MontBlanc.rda")
 devtools::use_data(MontBlanc, pkg = package_name, overwrite = TRUE)
 
 setwd("RFate/")
@@ -34,6 +34,11 @@ usethis::use_coverage()
 spelling::spell_check_setup()
 
 usethis::use_pkgdown()
+
+devtools::use_build_ignore("_FUNC_createRpackage_RFate.R")
+devtools::use_build_ignore("R/examples.PRE_FATE1.R")
+devtools::use_build_ignore("R/examples.PRE_FATE2.R")
+devtools::use_build_ignore("R/SHINY.PRE_FATE.params.R")
 setwd("./../")
 
 setwd("RFate/")
@@ -71,8 +76,8 @@ Rcmd(args = paste0("build ",package_name)) ## or with a shell : R CMD build MyPa
 ## CHECK THE PACKAGE ------------------------------------------------
 
 # Rcmd(args = paste0("check ",package_name)) ## or with a shell : R CMD check MyPackage
-# devtools::check(pkg = package_name, document = FALSE)
-devtools::check(pkg = package_name)
+devtools::check(pkg = package_name, document = FALSE)
+# devtools::check(pkg = package_name)
 
 # INSTALL THE PACKAGE ----------------------------------------------
 

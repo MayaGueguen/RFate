@@ -3,12 +3,13 @@
 .gitignore
 .Rproj.user
 .git
-_FUNC_createRpackage_RFate.R
-R/examples.PRE_FATE1.R
-R/examples.PRE_FATE2.R
 ^FATE_simulation$
 ^\.travis\.yml$
 ^appveyor\.yml$
 ^codecov\.yml$
 ^_pkgdown\.yml$
 ^docs$
+^R/examples\.PRE_FATE1\.R$
+^R/examples\.PRE_FATE2\.R$
+^_FUNC_createRpackage_RFate\.R$
+^R/SHINY\.PRE_FATE\.params\.R$

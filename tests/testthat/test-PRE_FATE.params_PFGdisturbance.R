@@ -27,6 +27,7 @@ test_that("PRE_FATE.params_PFGdisturbance gives error with wrong data : name.sim
 
 ## INPUTS
 test_that("PRE_FATE.params_PFGdisturbance gives error with wrong data : mat.PFG.succ", {
+  if (dir.exists("FATE_simulation")) system("rm -r FATE_simulation/")
   PRE_FATE.skeletonDirectory()
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation")
                , "`mat.PFG.succ` must be an existing `.csv` or `.txt` filename with a header and space separator")
@@ -64,32 +65,32 @@ test_that("PRE_FATE.params_PFGdisturbance gives error with wrong data : mat.PFG.
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(NAME = 1, TYPE = c(2,2), MATURITY = 4
                                                                          , LONGEVITY = 10, STRATA = 1, CHANG_STR_AGES_to_str_3 = 1))
-               , "Column `NAME` of `mat.PFG.succ` must contain different values and no NA values")
+               , "Column `NAME` of `mat.PFG.succ` must contain different values")
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(NAME = NA, TYPE = 2, MATURITY = 4
                                                                          , LONGEVITY = 10, STRATA = 1, CHANG_STR_AGES_to_str_3 = 1))
-               , "Column `NAME` of `mat.PFG.succ` must contain different values and no NA values")
+               , "Column `NAME` of `mat.PFG.succ` must contain different values")
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(NAME = c(1,NA), TYPE = c(2,2), MATURITY = 4
                                                                          , LONGEVITY = 10, STRATA = 1, CHANG_STR_AGES_to_str_3 = 1))
-               , "Column `NAME` of `mat.PFG.succ` must contain different values and no NA values")
+               , "Column `NAME` of `mat.PFG.succ` must contain different values")
   
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(NAME = 1, TYPE = NA, MATURITY = 4
                                                                          , LONGEVITY = 10, STRATA = 1, CHANG_STR_AGES_to_str_3 = 1))
-               , "Column `TYPE` of `mat.PFG.succ` must contain values such as `H`, `C` or `P`")
+               , "`mat.PFG.succ$TYPE` must be either `H`, `C` or `P`", fixed = T)
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(NAME = 1, TYPE = 2, MATURITY = 4
                                                                          , LONGEVITY = 10, STRATA = 1, CHANG_STR_AGES_to_str_3 = 1))
-               , "Column `TYPE` of `mat.PFG.succ` must contain values such as `H`, `C` or `P`")
+               , "`mat.PFG.succ$TYPE` must be either `H`, `C` or `P`", fixed = T)
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(NAME = 1, TYPE = "", MATURITY = 4
                                                                          , LONGEVITY = 10, STRATA = 1, CHANG_STR_AGES_to_str_3 = 1))
-               , "Column `TYPE` of `mat.PFG.succ` must contain values such as `H`, `C` or `P`")
+               , "`mat.PFG.succ$TYPE` must be either `H`, `C` or `P`", fixed = T)
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(NAME = c(1,2), TYPE = c(2,NA), MATURITY = 4
                                                                          , LONGEVITY = 10, STRATA = 1, CHANG_STR_AGES_to_str_3 = 1))
-               , "Column `TYPE` of `mat.PFG.succ` must contain values such as `H`, `C` or `P`")
+               , "`mat.PFG.succ$TYPE` must be either `H`, `C` or `P`", fixed = T)
   
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(NAME = 1, TYPE = "H", MATURITY = NA

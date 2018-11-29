@@ -54,6 +54,9 @@ test_that("PRE_FATE.params_PFGdispersal gives error with wrong data : mat.PFG.di
   expect_error(PRE_FATE.params_PFGdispersal(name.simulation = "FATE_simulation"
                                             , mat.PFG.disp = data.frame(PFG = 1, MODE = 1, d50 = c(2,2), d99 = 3, ldd = 4))
                , "Column `PFG` of `mat.PFG.disp` must contain different values")
+  expect_error(PRE_FATE.params_PFGdispersal(name.simulation = "FATE_simulation"
+                                            , mat.PFG.disp = data.frame(PFG = "", MODE = NA, d50 = 2, d99 = 3, ldd = 4))
+               , "`mat.PFG.disp$PFG` must contain a character value of length > 0", fixed = T)
   
   expect_error(PRE_FATE.params_PFGdispersal(name.simulation = "FATE_simulation"
                                             , mat.PFG.disp = data.frame(PFG = 1, MODE = NA, d50 = 2, d99 = 3, ldd = 4))

@@ -94,9 +94,18 @@ PRE_FATE.params_PFGdispersal = function(
         .stopMessage_columnNames("mat.PFG.disp", c("PFG", "MODE", "d50", "d99", "ldd"))
       }
     }
-    if (length(unique(mat.PFG.disp$PFG)) < nrow(mat.PFG.disp)){
+    mat.PFG.disp$PFG = as.character(mat.PFG.disp$PFG)
+    if (length(which(is.na(mat.PFG.disp$PFG))) > 0 ||
+        length(unique(mat.PFG.disp$PFG)) < nrow(mat.PFG.disp)){
       stop("Wrong type of data!\n Column `PFG` of `mat.PFG.disp` must contain different values")
     }
+    if (.testParam_notChar(mat.PFG.disp$PFG))
+    {
+      .stopMessage_beChar("mat.PFG.disp$PFG")
+    }
+    # if (length(unique(mat.PFG.disp$PFG)) < nrow(mat.PFG.disp)){
+    #   stop("Wrong type of data!\n Column `PFG` of `mat.PFG.disp` must contain different values")
+    # }
     if (!is.numeric(mat.PFG.disp$MODE) ||
         !is.numeric(mat.PFG.disp$d50) ||
         !is.numeric(mat.PFG.disp$d99) ||
@@ -116,6 +125,9 @@ PRE_FATE.params_PFGdispersal = function(
   
   #################################################################################################
   
+  ## GET PFG NAME
+  NAME = as.character(mat.PFG.disp$PFG)
+  
   ## GET DISPERSAL MODULE
   ## 0 = no dispersal
   ## 1 = homogeneous dispersal within the d50, d99 and ldd circles
@@ -125,12 +137,25 @@ PRE_FATE.params_PFGdispersal = function(
   MODE_DISPERS = mat.PFG.disp$MODE
   
   ## GET DISPERSAL DISTANCES
-  DISPERS_DIST = mat.PFG.disp[ , c("d50", "d99", "ldd")]
+  DISPERS_DIST = mat.PFG.disp[ , c("d50", "d99", "ldd"), drop = F]
   
-  #################################################################################################
+#################################################################################################
   
   names.params.list = mat.PFG.disp$PFG
-  names.params.list.sub = c("MODE_DISPERS", "DISPERS_DIST")
+  names.params.list.sub = c("NAME", "MODE_DISPERS", "DISPERS_DIST")
+  
+  params.csv = mat.PFG.disp
+  colnames(params.csv) = c("NAME"
+                           , "MODE_DISPERS"
+                           , paste0("DISPERS_DIST_", c("d50", "d99", "ldd")))
+  for (i in grep("DIST", colnames(params.csv))) params.csv[, i] = as.integer(params.csv[,i])
+  
+  write.table(params.csv
+              , file = paste0(name.simulation, "/DATA/PFGS/DISP_COMPLETE_TABLE.csv")
+              , row.names = F
+              , col.names = T)
+  
+  #################################################################################################
   
   params.list = lapply(1:nrow(mat.PFG.disp), function(x) {
     lapply(names.params.list.sub, function(y) {
@@ -154,4 +179,9 @@ PRE_FATE.params_PFGdispersal = function(
                                        ".txt")
                   , params.list = params)
   }
+
+  cat("\n> Done!\n")
+  cat("\n  Complete table of information about PFG dispersal parameters can be find in "
+      , paste0(name.simulation, "/DATA/PFGS/"), "folder.")
+  cat("\n")
 }

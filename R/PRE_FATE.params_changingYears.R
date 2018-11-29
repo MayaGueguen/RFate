@@ -129,6 +129,11 @@ PRE_FATE.params_changingYears = function(
       .stopMessage_columnNames("mat.changing", c("year", "order", "file.name"))
     }
   }
+  mat.changing$file.name = as.character(mat.changing$file.name)
+  if (.testParam_notChar(mat.changing$file.name))
+  {
+    .stopMessage_beChar("mat.changing$file.name")
+  }
   if (!is.numeric(mat.changing$year) ||
       !is.numeric(mat.changing$order)) {
     .stopMessage_columnNumeric("mat.changing", c("year", "order"))

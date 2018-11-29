@@ -185,12 +185,19 @@ PRE_FATE.params_PFGsuccession = function(
       .stopMessage_columnNames("mat.PFG.succ", c("PFG", "type","height", "maturity", "longevity", "light"))
     }
   }
+  mat.PFG.succ$PFG = as.character(mat.PFG.succ$PFG)
+  mat.PFG.succ$type = as.character(mat.PFG.succ$type)
   if (length(which(is.na(mat.PFG.succ$PFG))) > 0 ||
       length(unique(mat.PFG.succ$PFG)) < nrow(mat.PFG.succ)){
     stop("Wrong type of data!\n Column `PFG` of `mat.PFG.succ` must contain different values")
   }
-  if (sum(mat.PFG.succ$type %in% c("H", "C", "P")) < nrow(mat.PFG.succ)){
-    stop("Wrong type of data!\n Column `type` of `mat.PFG.succ` must contain values such as `H`, `C` or `P`")
+  if (.testParam_notChar(mat.PFG.succ$PFG))
+  {
+    .stopMessage_beChar("mat.PFG.succ$PFG")
+  }
+  if (.testParam_notInChar(mat.PFG.succ$type, inList = c("H", "C", "P")))
+  {
+    .stopMessage_content("mat.PFG.succ$type", c("H", "C", "P"))
   }
   if (!is.numeric(mat.PFG.succ$height) ||
       !is.numeric(mat.PFG.succ$maturity) ||

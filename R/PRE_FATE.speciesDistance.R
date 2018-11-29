@@ -210,16 +210,15 @@ PRE_FATE.speciesDistance = function(mat.species.traits ## data.frame with column
   if (length(ind_NA_values) > 0)
   {
     stop(paste0("Missing data!\n `mat.species.traits` contain trait with too many missing values : "
-                , paste0(round(no_NA_values[ind_NA_values], 4), " % for ", traits_names[ind_NA_values]), "\n"))
+                , paste0(round(no_NA_values[ind_NA_values], 4) * 100, " % for ", traits_names[ind_NA_values]), "\n"))
   }
-  
   
   ## SPLIT INFORMATION by species type
   mat.species.traits.split = split(mat.species.traits[,traits_names], f = mat.species.traits$GROUP)
   species.split = split(as.character(mat.species.traits$species), f = mat.species.traits$GROUP)
-  
+
   ## GOWER DISSIMILARITY FOR MIXED VARIABLES
-  mat.species.gower.split = lapply(mat.species.traits.split, FD::gowdis) 
+  mat.species.gower.split = lapply(mat.species.traits.split, FD::gowdis)
   
   cat("\n ############## TRAIT INFORMATIONS ############## \n")
   cat("\n Number of species : ", nrow(mat.species.traits))

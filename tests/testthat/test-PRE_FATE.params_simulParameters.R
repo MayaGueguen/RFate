@@ -1,4 +1,4 @@
-# library(RFate)
+library(RFate)
 context("PRE_FATE.params_simulParameters() function")
 
 ## INPUTS
