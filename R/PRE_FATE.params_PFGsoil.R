@@ -14,7 +14,7 @@
 ##' or simulation name of the \code{FATE-HD} simulation
 ##' @param mat.PFG.soil a \code{data.frame} with 5 columns : PFG, soil_contrib, 
 ##' soil_tol_min, soil_tol_max
-##' @param no.strata an \code{integer} that corresponds to the number of soil
+##' @param no.class an \code{integer} that corresponds to the number of soil
 ##' classes. Default value is the maximum value of soil_tol_max in \code{mat.PFG.soil}
 ##' 
 ##' 
@@ -51,7 +51,7 @@
 PRE_FATE.params_PFGsoil = function(
   name.simulation
   , mat.PFG.soil
-  , no.strata = max(mat.PFG.soil$soil_tol_max)
+  , no.class = max(mat.PFG.soil$soil_tol_max)
 ){
   
   .testParam_existFolder(name.simulation, "DATA/PFGS/SOIL/")
@@ -117,11 +117,11 @@ PRE_FATE.params_PFGsoil = function(
   ##    = and for each class
   ## 0 = non tolerant
   ## 1 = tolerant
-  SOIL_TOL = matrix(0, nrow = 3 * no.strata, ncol = no.PFG)
+  SOIL_TOL = matrix(0, nrow = 3 * no.class, ncol = no.PFG)
   
   for (i in 1:no.PFG)
   {
-    ind_tol = seq(1, no.strata, 1)
+    ind_tol = seq(1, no.class, 1)
     ind_tol = ifelse(ind_tol >= mat.PFG.soil$soil_tol_min[i] & ind_tol <= mat.PFG.soil$soil_tol_max[i]
                      , 1, 0)
     SOIL_TOL[, i] = rep(ind_tol, 3)
@@ -139,6 +139,11 @@ PRE_FATE.params_PFGsoil = function(
   # #SOIL_TOL["Ge3",which(dat$type=="P")] <- 1
   # #SOIL_TOL["Ge3",which(dat$type=="C")] <- 1
   
+  cat("\n ############## CLASS INFORMATIONS ############## \n")
+  cat("\n Number of classes : ", no.class)
+  cat("\n Number of PFG within each class (contribution) : ", table(cut(mat.PFG.soil$soil_contrib, breaks = 1:no.class)))
+  cat("\n")
+  
   #################################################################################################
   
   names.params.list = mat.PFG.soil$PFG
@@ -151,7 +156,7 @@ PRE_FATE.params_PFGsoil = function(
                            , "MODE_DISPERS"
                            , paste0("SOIL_TOL_for_",
                                     as.vector(sapply(c("Ge", "Im", "Ma")
-                                                     , function(x) paste0(x, 1:no.strata)))
+                                                     , function(x) paste0(x, 1:no.class)))
                            ))
   
   write.table(params.csv

@@ -6,7 +6,7 @@
 simulation}
 \usage{
 PRE_FATE.params_PFGsoil(name.simulation, mat.PFG.soil,
-  no.strata = max(mat.PFG.soil$soil_tol_max))
+  no.class = max(mat.PFG.soil$soil_tol_max))
 }
 \arguments{
 \item{name.simulation}{a \code{string} that corresponds to the main directory
@@ -15,7 +15,7 @@ or simulation name of the \code{FATE-HD} simulation}
 \item{mat.PFG.soil}{a \code{data.frame} with 5 columns : PFG, soil_contrib, 
 soil_tol_min, soil_tol_max}
 
-\item{no.strata}{an \code{integer} that corresponds to the number of soil
+\item{no.class}{an \code{integer} that corresponds to the number of soil
 classes. Default value is the maximum value of soil_tol_max in \code{mat.PFG.soil}}
 }
 \value{
