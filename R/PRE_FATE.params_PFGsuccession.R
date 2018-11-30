@@ -389,7 +389,7 @@ PRE_FATE.params_PFGsuccession = function(
       SHADE_TOL[c(1, 4, 7), i] = 1
     }
     ## Medium light condition
-    if (mat.PFG.succ$light[i] <= 4)
+    if (mat.PFG.succ$light[i] <= 5)
     {
       SHADE_TOL[c(2, 5, 8), i] = 1
     }

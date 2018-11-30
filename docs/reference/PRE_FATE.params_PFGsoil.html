@@ -6,7 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create the skeleton folder for a <code>FATE-HD</code> simulation — PRE_FATE.skeletonDirectory • RFate</title>
+<title>Create <em>SOIL</em> parameter files for a <code>FATE-HD</code>
+simulation — PRE_FATE.params_PFGsoil • RFate</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -27,10 +28,12 @@
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Create the skeleton folder for a <code>FATE-HD</code> simulation — PRE_FATE.skeletonDirectory" />
+<meta property="og:title" content="Create <em>SOIL</em> parameter files for a <code>FATE-HD</code>
+simulation — PRE_FATE.params_PFGsoil" />
 
-<meta property="og:description" content="This script is designed to create a user-friendly directory
-tree to run a FATE-HD simulation." />
+<meta property="og:description" content="This script is designed to create parameter files containing 
+soil contribution and tolerance for each PFG (one file for each of them) 
+used in the soil module of FATE-HD." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -136,71 +139,66 @@ tree to run a FATE-HD simulation." />
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create the skeleton folder for a <code>FATE-HD</code> simulation</h1>
-    <small>Source: <a href='https://github.com/MayaGueguen/RFate.git/blob/master/R/PRE_FATE.skeletonDirectory.R'><code>R/PRE_FATE.skeletonDirectory.R</code></a></small>
+    <h1>Create <em>SOIL</em> parameter files for a <code>FATE-HD</code>
+simulation</h1>
+    <small>Source: <a href='https://github.com/MayaGueguen/RFate.git/blob/master/R/PRE_FATE.params_PFGsoil.R'><code>R/PRE_FATE.params_PFGsoil.R</code></a></small>
     </div>
 
     
-    <p>This script is designed to create a user-friendly directory
-tree to run a <code>FATE-HD</code> simulation.</p>
+    <p>This script is designed to create parameter files containing 
+soil contribution and tolerance for each PFG (one file for each of them) 
+used in the soil module of <code>FATE-HD</code>.</p>
     
 
-    <pre class="usage"><span class='fu'>PRE_FATE.skeletonDirectory</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>)</pre>
+    <pre class="usage"><span class='fu'>PRE_FATE.params_PFGsoil</span>(<span class='no'>name.simulation</span>, <span class='no'>mat.PFG.soil</span>,
+  <span class='kw'>no.strata</span> <span class='kw'>=</span> <span class='fu'>max</span>(<span class='no'>mat.PFG.soil</span>$<span class='no'>soil_tol_max</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>name.simulation</th>
-      <td><p>a <code>string</code> that will be used as the main directory
-and simulation name</p></td>
+      <td><p>a <code>string</code> that corresponds to the main directory
+or simulation name of the <code>FATE-HD</code> simulation</p></td>
+    </tr>
+    <tr>
+      <th>mat.PFG.soil</th>
+      <td><p>a <code>data.frame</code> with 5 columns : PFG, soil_contrib, 
+soil_tol_min, soil_tol_max</p></td>
+    </tr>
+    <tr>
+      <th>no.strata</th>
+      <td><p>an <code>integer</code> that corresponds to the number of soil
+classes. Default value is the maximum value of soil_tol_max in <code>mat.PFG.soil</code></p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A directory tree with folder to contain the parameter files, the
-simulation files and the results.</p>
+    <p>A <code>.txt</code> file per PFG into the <code>name.simulation/DATA/PFGS/SOIL/</code>
+directory with the following parameters :</p>
+<ul>
+<li><p>SOIL_CONTRIB</p></li>
+<li><p>SOIL_TOL</p></li>
+</ul>
+
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>FATE-HD</code> requires only one input parameter, which is a file containing
-the names of parameter files, which may themselves contain parameters or other
-file names. The point is : the user could give names of files stored everywhere
-on a machine, and does not have to put them all in one same place.</p>
-<p>But as this is more practical, this function proposes a way to organize all
-those files or parameter files that will or could be used by a <code>FATE-HD</code>
-simulation.</p>
-<p>The tree structure is detailed below :</p>
-<dl class='dl-horizontal'>
-  <dt>DATA</dt><dd><p>this folder will contain all the data or parameters that are
-  needed by the model
-  <ul>
-<li><p><strong>GLOBAL_PARAMETERS</strong> : files containing global parameters for the simulation</p></li>
-<li><p><strong>NAMESPACE_CONSTANTS</strong> : files containing constants used in the model</p></li>
-<li><p><strong>MASK</strong> : all maps used in the model</p></li>
-<li><p><strong>SCENARIO</strong> : files containing information about changes in
-    input data ( e.g. habitat suitability maps, disturbances maps, etc)</p></li>
-<li><p><strong>SAVE</strong> : files containing information about times to save outputs</p></li>
-<li><p><strong>PFGS</strong> :</p><ul>
-<li><p><strong>SUCC</strong> : all the PFG life history parameter files</p></li>
-<li><p><strong>DISP</strong> : all the PFG dispersal parameter files</p></li>
-<li><p><strong>DIST</strong> : all the PFG-response to disturbances parameter files</p></li>
-<li><p><strong>SOIL</strong> : all the PFG soil parameter files</p></li>
-<li><p><strong>HABSUIT</strong> : all the PFG habitat suitability maps</p></li>
-</ul></li>
-</ul></p></dd>
-  <dt>PARAM_SIMUL</dt><dd><p>this folder will contain simulation files that can be
-  given as input to the software</p></dd>
-  <dt>RESULTS</dt><dd><p>this folder will collect all the results produced by the
-  software with a folder for each simulation</p></dd>
-</dl>
+    
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
 <span class='co'>## Create a skeleton folder with the default name ('FATE_simulation')</span>
-<span class='fu'>PRE_FATE.skeletonDirectory</span>()
+<span class='fu'><a href='PRE_FATE.skeletonDirectory.html'>PRE_FATE.skeletonDirectory</a></span>()
+
+<span class='co'>## Create PFG dispersal parameter files</span>
+<span class='fu'>PRE_FATE.params_PFGsoil</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
+                        , <span class='kw'>mat.PFG.soil</span> <span class='kw'>=</span> <span class='fu'>data.frame</span>(<span class='kw'>PFG</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"PFG1"</span>, <span class='st'>"PFG2"</span>, <span class='st'>"PFG3"</span>)
+                                                    , <span class='kw'>soil_contrib</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>2.5</span>, <span class='fl'>3</span>, <span class='fl'>4.8</span>)
+                                                    , <span class='kw'>soil_tol_min</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>3</span>)
+                                                    , <span class='kw'>soil_tol_max</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>3</span>, <span class='fl'>3</span>, <span class='fl'>6</span>)))
 
 <span class='co'># }</span></pre>
   </div>

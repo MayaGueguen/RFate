@@ -103,9 +103,6 @@ PRE_FATE.params_PFGdispersal = function(
     {
       .stopMessage_beChar("mat.PFG.disp$PFG")
     }
-    # if (length(unique(mat.PFG.disp$PFG)) < nrow(mat.PFG.disp)){
-    #   stop("Wrong type of data!\n Column `PFG` of `mat.PFG.disp` must contain different values")
-    # }
     if (!is.numeric(mat.PFG.disp$MODE) ||
         !is.numeric(mat.PFG.disp$d50) ||
         !is.numeric(mat.PFG.disp$d99) ||

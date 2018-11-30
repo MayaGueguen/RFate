@@ -35,10 +35,10 @@ spelling::spell_check_setup()
 
 usethis::use_pkgdown()
 
-devtools::use_build_ignore("_FUNC_createRpackage_RFate.R")
-devtools::use_build_ignore("R/examples.PRE_FATE1.R")
-devtools::use_build_ignore("R/examples.PRE_FATE2.R")
-devtools::use_build_ignore("R/SHINY.PRE_FATE.params.R")
+# devtools::use_build_ignore("_FUNC_createRpackage_RFate.R")
+# devtools::use_build_ignore("R/examples.PRE_FATE1.R")
+# devtools::use_build_ignore("R/examples.PRE_FATE2.R")
+# devtools::use_build_ignore("SHINY.PRE_FATE.params.R")
 setwd("./../")
 
 setwd("RFate/")

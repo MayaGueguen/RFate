@@ -39,6 +39,7 @@
 ##'       \item \strong{SUCC} : all the PFG life history parameter files
 ##'       \item \strong{DISP} : all the PFG dispersal parameter files
 ##'       \item \strong{DIST} : all the PFG-response to disturbances parameter files
+##'       \item \strong{SOIL} : all the PFG soil parameter files
 ##'       \item \strong{HABSUIT} : all the PFG habitat suitability maps
 ##'     }
 ##'   }
@@ -84,9 +85,10 @@ PRE_FATE.skeletonDirectory = function(name.simulation = "FATE_simulation")
     dir.create(file.path(name.simulation, "DATA", "SAVE"), showWarnings = FALSE)
     dir.create(file.path(name.simulation, "DATA", "PFGS"), showWarnings = FALSE)
     dir.create(file.path(name.simulation, "DATA", "PFGS", "SUCC"), showWarnings = FALSE)
+    dir.create(file.path(name.simulation, "DATA", "PFGS", "DISP"), showWarnings = FALSE)
     dir.create(file.path(name.simulation, "DATA", "PFGS", "HABSUIT"), showWarnings = FALSE)
     dir.create(file.path(name.simulation, "DATA", "PFGS", "DIST"), showWarnings = FALSE)
-    dir.create(file.path(name.simulation, "DATA", "PFGS", "DISP"), showWarnings = FALSE)
+    dir.create(file.path(name.simulation, "DATA", "PFGS", "SOIL"), showWarnings = FALSE)
     ## the simulation parameters dir
     dir.create(file.path(name.simulation, "PARAM_SIMUL"), showWarnings = FALSE)
     ## the RESULTS dir
