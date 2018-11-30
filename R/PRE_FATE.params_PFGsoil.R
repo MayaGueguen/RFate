@@ -122,7 +122,7 @@ PRE_FATE.params_PFGsoil = function(
   for (i in 1:no.PFG)
   {
     ind_tol = seq(1, no.strata, 1)
-    ind_tol = ifelse(ind_tol >= mat.PFG.soil$soil_tol_min & ind_tol <= mat.PFG.soil$soil_tol_max
+    ind_tol = ifelse(ind_tol >= mat.PFG.soil$soil_tol_min[i] & ind_tol <= mat.PFG.soil$soil_tol_max[i]
                      , 1, 0)
     SOIL_TOL[, i] = rep(ind_tol, 3)
   }
