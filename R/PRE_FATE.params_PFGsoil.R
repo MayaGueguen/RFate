@@ -166,18 +166,18 @@ PRE_FATE.params_PFGsoil = function(
   
   #################################################################################################
   
-  params.list = lapply(1:nrow(mat.PFG.soil), function(x) {
+  params.list = lapply(1:no.PFG, function(x) {
     lapply(names.params.list.sub, function(y) {
       val = get(y)
       if (is.null(nrow(val))){
         val = val[x]
       } else {
-        val = as.integer(val[x, ])
+        val = val[, x]
       }
       return(val)
     })
   })
-  
+
   for (i in 1:length(params.list)) {
     params = params.list[[i]]
     names(params) = names.params.list.sub
