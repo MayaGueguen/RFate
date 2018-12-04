@@ -75,6 +75,7 @@
 ##' 
 ##' @importFrom foreach foreach
 ##' @importFrom raster raster stack as.data.frame
+##' nlayers rasterToPoints
 ##' 
 ##' @importFrom ggplot2 ggplot aes aes_string ggsave
 ##' geom_raster element_blank coord_equal
@@ -85,9 +86,6 @@
 ##'
 ## END OF HEADER ###############################################################
 
-name.simulation = "FATE_Bauges_SOIL/"
-file.simulParam = "FATE_Bauges_SOIL/PARAM_SIMUL/paramSimul_Graz1_CA_rcp26_WITHSOIL.txt"
-year = 850
 
 POST_FATE.graphic_mapPFGrichness = function(
   name.simulation

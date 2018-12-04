@@ -148,7 +148,8 @@ and abundance through time for a <code>FATE-HD</code> simulation</h1>
 for one (or several) specific <code>FATE-HD</code> simulation year.</p>
     
 
-    <pre class="usage"><span class='no'>name.simulation</span></pre>
+    <pre class="usage"><span class='fu'>POST_FATE.graphic_mapPFGrichness</span>(<span class='no'>name.simulation</span>, <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>year</span>, <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>opt.strata</span> <span class='kw'>=</span> <span class='st'>"ALL"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -180,10 +181,6 @@ can be used to parallelize the <code>unzip/zip</code> of raster files</p></td>
 which to extract PFG abundance maps</p></td>
     </tr>
     </table>
-    
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
-    <p>An object of class <code>character</code> of length 1.</p>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -240,8 +237,6 @@ maps are compressed again :</p>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#format">Format</a></li>
-
       <li><a href="#value">Value</a></li>
 
       <li><a href="#details">Details</a></li>
