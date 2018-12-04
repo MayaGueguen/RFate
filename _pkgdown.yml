@@ -72,3 +72,4 @@ reference:
     desc: Evalute predicted maps, produce summary and dynamic graphics.  <br/> ..
     contents:
       - "POST_FATE.graphic_evolutionCoverage"
+      - "POST_FATE.graphic_mapPFGrichness"

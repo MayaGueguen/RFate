@@ -136,7 +136,7 @@
 ##'     \item \emph{SOIL.no_categories} : the number of soil composition classes
 ##'     that will be used into the soil module.
 ##'     This number should match with the maximum value of contribution or
-##'     tolereance possible defined into the PFG SOIL files. \cr \cr
+##'     tolerance possible defined into the PFG SOIL files. \cr \cr
 ##'   }
 ##'   }
 ##'   \item{DROUGHT}{= to experience extreme events with a direct and a delayed

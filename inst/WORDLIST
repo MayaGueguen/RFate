@@ -13,6 +13,8 @@ chamaephytes
 chrono
 CHRONO
 CNRS
+contrib
+CONTRIB
 curr
 CURR
 de
@@ -86,6 +88,7 @@ phytogéographique
 Phytosoc
 phytosociologique
 Plade
+pre
 preanalytical
 propagules
 Puigmal
@@ -113,8 +116,9 @@ SUBDISTURBANCES
 SUBDROUGHT
 SUCC
 th
+tol
 TOL
-TRESHOLDS
+tolereance
 Typologie
 UPGMA
 UPGMC
