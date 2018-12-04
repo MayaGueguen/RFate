@@ -41,7 +41,10 @@
 ##' @param DIST.no the number of disturbances
 ##' @param DIST.no_sub the number of way a PFG could react to a disturbance
 ##' @param DIST.freq the frequency of each disturbance (\emph{in years})
-##' @param doSoil \emph{to be filled}
+##' @param doSoil default \code{FALSE}. If \code{TRUE}, soil competition is
+##' activated in the \code{FATE-HD} simulation, and associated parameters 
+##' are required
+##' @param SOIL.no_categories the number of soil composition classes
 ##' @param doFire \emph{to be filled}
 ##' @param doDrought \emph{to be filled}
 ##' @param doHabStability \emph{to be filled}
@@ -125,6 +128,17 @@
 ##'     \item \emph{DIST.freq} : the frequency of each disturbance (\emph{in years})
 ##'   }
 ##'   }
+##'   \item{SOIL}{= to influence plants mortality according to PFG preferences 
+##'   for soil conditions (fertility) \cr
+##'   = soil composition is calculated as the weighted mean of each PFG's
+##'   contribution \cr \cr
+##'   \itemize{
+##'     \item \emph{SOIL.no_categories} : the number of soil composition classes
+##'     that will be used into the soil module.
+##'     This number should match with the maximum value of contribution or
+##'     tolereance possible defined into the PFG SOIL files. \cr \cr
+##'   }
+##'   }
 ##'   \item{DROUGHT}{= to experience extreme events with a direct and a delayed
 ##'   response on PFG. \cr \cr
 ##'   The PFG's past drought exposure is compared to current moisture values as 
@@ -204,9 +218,7 @@
 ##' 
 ##' \itemize{
 ##'   \item DO_SOIL_COMPETITION
-##'   \item SOIL_DEFAULT_VALUE
 ##'   \item NB_SOIL_CATEGORIES
-##'   \item SOIL_CATEGORIES_TRESHOLDS
 ##' }
 ##' 
 ##' If the simulation includes \emph{drought disturbances} :
@@ -285,7 +297,7 @@ PRE_FATE.params_globalParameters = function(
   , DIST.freq
   , doSoil = FALSE
   # , SOIL.def_value
-  # , SOIL.no_categories
+  , SOIL.no_categories
   # , SOIL.tresh_categories
   , doFire = FALSE
   # , FIRE.no
@@ -413,14 +425,10 @@ PRE_FATE.params_globalParameters = function(
   }
   if (doSoil)
   {
-    # params.SOIL = list(as.numeric(doSoil)
-    #                    , SOIL.def_value
-    #                    , SOIL.no_categories
-    #                    , SOIL.tresh_categories)
-    # names.params.list.SOIL = c("DO_SOIL_COMPETITION"
-    #                            , "SOIL_DEFAULT_VALUE"
-    #                            , "NB_SOIL_CATEGORIES"
-    #                            , "SOIL_CATEGORIES_TRESHOLDS")
+    params.SOIL = list(as.numeric(doSoil)
+                       , SOIL.no_categories)
+    names.params.list.SOIL = c("DO_SOIL_COMPETITION"
+                               , "NB_SOIL_CATEGORIES")
   } else
   {
     params.SOIL = list(as.numeric(doSoil))

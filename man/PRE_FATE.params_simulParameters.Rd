@@ -38,6 +38,7 @@ directory with the following parameters :
   \item --DIST_MASK-- (\emph{optional})
   \item --DIST_CHANGE_TIME-- (\emph{optional})
   \item --DIST_CHANGE_MASK-- (\emph{optional})
+  \item --PFG_SOIL_PARAMS-- (\emph{optional})
   \item --END_OF_FILE--
 }
 }
@@ -110,6 +111,10 @@ program to run.
   \item{DIST_CHANGE_MASK \cr (\emph{optional})}{file containing the files to 
   change rasters for the disturbance module \cr
   (see \code{\link{PRE_FATE.params_changingYears}})
+  }
+  \item{PFG_SOIL_ \cr PARAMS (\emph{optional})}{PFG soil contribution and tolerance
+   related parameters (one by PFG) \cr
+  (see \code{\link{PRE_FATE.params_PFGsoil}}) \cr \cr
   }
 }
 }
@@ -191,6 +196,13 @@ PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                                            , ResproutIndiv_H = c(0,0,9,10,0,0,5,1)
                                                            , ResproutIndiv_C = c(0,0,0,0,0,0,5,1)
                                                            , ResproutIndiv_P = c(0,0,0,0,0,0,0,0)))
+                                                           
+## Create PFG soil parameter files
+PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                        , mat.PFG.soil = data.frame(PFG = paste0("PFG", 1:6)
+                                                    , soil_contrib = c(2.5, 3, 4.8, 2.5, 3, 4.8)
+                                                    , soil_tol_min = c(2, 3, 3, 2, 3, 3)
+                                                    , soil_tol_max = c(3, 3, 6, 3, 3, 6)))
 
 ## Create a Simulation parameter file
 file.create("FATE_simulation/DATA/MASK/mask.tif")

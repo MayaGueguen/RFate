@@ -153,8 +153,8 @@ containing <code>GLOBAL PARAMETERS</code> used in <code>FATE-HD</code> model.</p
   <span class='no'>required.simul_duration</span>, <span class='no'>required.seeding_duration</span>, <span class='no'>required.seeding_timestep</span>,
   <span class='kw'>doDispersal</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>doHabSuitability</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>HABSUIT.ref_option</span>,
   <span class='kw'>doDisturbances</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>DIST.no</span>, <span class='no'>DIST.no_sub</span>, <span class='no'>DIST.freq</span>, <span class='kw'>doSoil</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>doFire</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>doDrought</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>doHabStability</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>doAliens</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='no'>SOIL.no_categories</span>, <span class='kw'>doFire</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>doDrought</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>doHabStability</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>doAliens</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -238,7 +238,13 @@ are required</p></td>
     </tr>
     <tr>
       <th>doSoil</th>
-      <td><p><em>to be filled</em></p></td>
+      <td><p>default <code>FALSE</code>. If <code>TRUE</code>, soil competition is
+activated in the <code>FATE-HD</code> simulation, and associated parameters 
+are required</p></td>
+    </tr>
+    <tr>
+      <th>SOIL.no_categories</th>
+      <td><p>the number of soil composition classes</p></td>
     </tr>
     <tr>
       <th>doFire</th>
@@ -293,9 +299,7 @@ directory with the following parameters :</p>
 <p>If the simulation includes <em>soil competition</em> :</p>
 <ul>
 <li><p>DO_SOIL_COMPETITION</p></li>
-<li><p>SOIL_DEFAULT_VALUE</p></li>
 <li><p>NB_SOIL_CATEGORIES</p></li>
-<li><p>SOIL_CATEGORIES_TRESHOLDS</p></li>
 </ul>
 
 <p>If the simulation includes <em>drought disturbances</em> :</p>
@@ -380,6 +384,16 @@ if so, some additional parameters will be required :</p>
 <li><p><em>DIST.no_sub</em> : the number of way a PFG could react to a 
     perturbation</p></li>
 <li><p><em>DIST.freq</em> : the frequency of each disturbance (<em>in years</em>)</p></li>
+</ul></p></dd>
+  <dt>SOIL</dt><dd><p>= to influence plants mortality according to PFG preferences 
+  for soil conditions (fertility) <br />
+  = soil composition is calculated as the weighted mean of each PFG's
+  contribution <br /> <br />
+  <ul>
+<li><p><em>SOIL.no_categories</em> : the number of soil composition classes
+    that will be used into the soil module.
+    This number should match with the maximum value of contribution or
+    tolereance possible defined into the PFG SOIL files. <br /> <br /></p></li>
 </ul></p></dd>
   <dt>DROUGHT</dt><dd><p>= to experience extreme events with a direct and a delayed
   response on PFG. <br /> <br />

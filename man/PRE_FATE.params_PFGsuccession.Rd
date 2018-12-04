@@ -67,8 +67,8 @@ Several parameters are required for each PFG in order to set up this life cycle 
   \item{height}{the maximum or average height that reach the PFG}
   \item{maturity}{the age from which the PFG can reproduce}
   \item{longevity}{the maximum or average lifespan of the PFG}
-  \item{light}{a value between 0 and 10 corresponding to the Ellenberg value
-  of the PFG \cr \cr}
+  \item{light}{a value between 0 and 10 corresponding to the Ellenberg light 
+  value of the PFG \cr \cr}
 }
 
 

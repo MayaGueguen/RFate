@@ -189,6 +189,7 @@ directory with the following parameters :</p>
 <li><p>--DIST_MASK-- (<em>optional</em>)</p></li>
 <li><p>--DIST_CHANGE_TIME-- (<em>optional</em>)</p></li>
 <li><p>--DIST_CHANGE_MASK-- (<em>optional</em>)</p></li>
+<li><p>--PFG_SOIL_PARAMS-- (<em>optional</em>)</p></li>
 <li><p>--END_OF_FILE--</p></li>
 </ul>
 
@@ -245,6 +246,9 @@ program to run.</p>
   <dt>DIST_CHANGE_MASK <br /> (<em>optional</em>)</dt><dd><p>file containing the files to 
   change rasters for the disturbance module <br />
   (see <code><a href='PRE_FATE.params_changingYears.html'>PRE_FATE.params_changingYears</a></code>)</p></dd>
+  <dt>PFG_SOIL_ <br /> PARAMS (<em>optional</em>)</dt><dd><p>PFG soil contribution and tolerance
+   related parameters (one by PFG) <br />
+  (see <code><a href='PRE_FATE.params_PFGsoil.html'>PRE_FATE.params_PFGsoil</a></code>) <br /> <br /></p></dd>
 </dl>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
@@ -327,6 +331,13 @@ program to run.</p>
                                                            , <span class='kw'>ResproutIndiv_H</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>9</span>,<span class='fl'>10</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>5</span>,<span class='fl'>1</span>)
                                                            , <span class='kw'>ResproutIndiv_C</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>5</span>,<span class='fl'>1</span>)
                                                            , <span class='kw'>ResproutIndiv_P</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>)))
+
+<span class='co'>## Create PFG soil parameter files</span>
+<span class='fu'><a href='PRE_FATE.params_PFGsoil.html'>PRE_FATE.params_PFGsoil</a></span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
+                        , <span class='kw'>mat.PFG.soil</span> <span class='kw'>=</span> <span class='fu'>data.frame</span>(<span class='kw'>PFG</span> <span class='kw'>=</span> <span class='fu'>paste0</span>(<span class='st'>"PFG"</span>, <span class='fl'>1</span>:<span class='fl'>6</span>)
+                                                    , <span class='kw'>soil_contrib</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>2.5</span>, <span class='fl'>3</span>, <span class='fl'>4.8</span>, <span class='fl'>2.5</span>, <span class='fl'>3</span>, <span class='fl'>4.8</span>)
+                                                    , <span class='kw'>soil_tol_min</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>3</span>, <span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>3</span>)
+                                                    , <span class='kw'>soil_tol_max</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>3</span>, <span class='fl'>3</span>, <span class='fl'>6</span>, <span class='fl'>3</span>, <span class='fl'>3</span>, <span class='fl'>6</span>)))
 
 <span class='co'>## Create a Simulation parameter file</span>
 <span class='fu'>file.create</span>(<span class='st'>"FATE_simulation/DATA/MASK/mask.tif"</span>)

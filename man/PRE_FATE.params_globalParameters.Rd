@@ -10,8 +10,8 @@ PRE_FATE.params_globalParameters(name.simulation, opt.no_CPU = 1,
   required.simul_duration, required.seeding_duration, required.seeding_timestep,
   doDispersal = FALSE, doHabSuitability = FALSE, HABSUIT.ref_option,
   doDisturbances = FALSE, DIST.no, DIST.no_sub, DIST.freq, doSoil = FALSE,
-  doFire = FALSE, doDrought = FALSE, doHabStability = FALSE,
-  doAliens = FALSE)
+  SOIL.no_categories, doFire = FALSE, doDrought = FALSE,
+  doHabStability = FALSE, doAliens = FALSE)
 }
 \arguments{
 \item{name.simulation}{a \code{string} that corresponds to the main directory
@@ -61,7 +61,11 @@ are required}
 
 \item{DIST.freq}{the frequency of each disturbance (\emph{in years})}
 
-\item{doSoil}{\emph{to be filled}}
+\item{doSoil}{default \code{FALSE}. If \code{TRUE}, soil competition is
+activated in the \code{FATE-HD} simulation, and associated parameters 
+are required}
+
+\item{SOIL.no_categories}{the number of soil composition classes}
 
 \item{doFire}{\emph{to be filled}}
 
@@ -110,9 +114,7 @@ If the simulation includes \emph{soil competition} :
 
 \itemize{
   \item DO_SOIL_COMPETITION
-  \item SOIL_DEFAULT_VALUE
   \item NB_SOIL_CATEGORIES
-  \item SOIL_CATEGORIES_TRESHOLDS
 }
 
 If the simulation includes \emph{drought disturbances} :
@@ -214,6 +216,17 @@ if so, some additional parameters will be required :
     \item \emph{DIST.no_sub} : the number of way a PFG could react to a 
     perturbation
     \item \emph{DIST.freq} : the frequency of each disturbance (\emph{in years})
+  }
+  }
+  \item{SOIL}{= to influence plants mortality according to PFG preferences 
+  for soil conditions (fertility) \cr
+  = soil composition is calculated as the weighted mean of each PFG's
+  contribution \cr \cr
+  \itemize{
+    \item \emph{SOIL.no_categories} : the number of soil composition classes
+    that will be used into the soil module.
+    This number should match with the maximum value of contribution or
+    tolereance possible defined into the PFG SOIL files. \cr \cr
   }
   }
   \item{DROUGHT}{= to experience extreme events with a direct and a delayed

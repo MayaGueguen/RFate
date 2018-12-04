@@ -20,6 +20,16 @@
 ##' 
 ##' @details
 ##' 
+##' The soil module allows the user to simulate a primary vegetation succession 
+##' based on both light and soil competition. \cr
+##' Several parameters are required for each PFG in order to set up the soil competition :
+##' 
+##' \describe{
+##'   \item{soil_contrib}{a value between 0 and 10 corresponding to the Ellenberg 
+##'   nitrogen value of the PFG}
+##'   \item{soil_tol_min}{the minimum Ellenberg nitrogen value tolerated by the PFG}
+##'   \item{soil_tol_max}{the maximum Ellenberg nitrogen value tolerated by the PFG}
+##' }
 ##' 
 ##' 
 ##' @return A \code{.txt} file per PFG into the \code{name.simulation/DATA/PFGS/SOIL/}
@@ -36,7 +46,7 @@
 ##' ## Create a skeleton folder with the default name ('FATE_simulation')
 ##' PRE_FATE.skeletonDirectory()
 ##' 
-##' ## Create PFG dispersal parameter files
+##' ## Create PFG soil parameter files
 ##' PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
 ##'                         , mat.PFG.soil = data.frame(PFG = c("PFG1", "PFG2", "PFG3")
 ##'                                                     , soil_contrib = c(2.5, 3, 4.8)
