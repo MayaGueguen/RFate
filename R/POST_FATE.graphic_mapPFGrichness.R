@@ -1,6 +1,6 @@
 ### HEADER #####################################################################
-##' @title Create a graphical representation of the evolution of PFG coverage
-##' and abundance through time for a \code{FATE-HD} simulation
+##' @title Create a map of the Planf Functional Group richness for one (or 
+##' several) specific year of a \code{FATE-HD} simulation
 ##' 
 ##' @name POST_FATE.graphic_mapPFGrichness
 ##'
@@ -54,19 +54,20 @@
 ##' 
 ##' \dontrun{                      
 ##' POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
-##'                                     , file.simulParam = "Simul_parameters_V1.txt"
-##'                                     , opt.no_CPU = 1)
+##'                                  , file.simulParam = "Simul_parameters_V1.txt"
+##'                                  , year = 850
+##'                                  , opt.no_CPU = 1)
 ##'                                     
 ##' POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
-##'                                     , file.simulParam = "Simul_parameters_V1.txt"
-##'                                     , no.years = 50
-##'                                     , opt.no_CPU = 4)
+##'                                  , file.simulParam = "Simul_parameters_V1.txt"
+##'                                  , year = c(850, 950)
+##'                                  , opt.no_CPU = 1)
 ##'                                     
 ##' POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
-##'                                     , file.simulParam = "Simul_parameters_V1.txt"
-##'                                     , no.years = 50
-##'                                     , abund.fixedScale = FALSE
-##'                                     , opt.no_CPU = 1)
+##'                                  , file.simulParam = "Simul_parameters_V1.txt"
+##'                                  , year = 850
+##'                                  , opt.no_CPU = 1
+##'                                  , opt.strata = 2)
 ##' }
 ##'                                     
 ##'                                     
@@ -113,6 +114,10 @@ POST_FATE.graphic_mapPFGrichness = function(
     file.simulParam = basename(file.simulParam)
     abs.simulParams = paste0(name.simulation, "/PARAM_SIMUL/", file.simulParam)
     .testParam_existFile(abs.simulParams)
+  }
+  if (.testParam_notNum(year))
+  {
+    .stopMessage_beInteger("year")
   }
   #################################################################################################
   

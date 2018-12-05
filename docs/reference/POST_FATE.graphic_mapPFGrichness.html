@@ -6,8 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create a graphical representation of the evolution of PFG coverage
-and abundance through time for a <code>FATE-HD</code> simulation — POST_FATE.graphic_mapPFGrichness • RFate</title>
+<title>Create a map of the Planf Functional Group richness for one (or 
+several) specific year of a <code>FATE-HD</code> simulation — POST_FATE.graphic_mapPFGrichness • RFate</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -28,8 +28,8 @@ and abundance through time for a <code>FATE-HD</code> simulation — POST_FATE.g
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Create a graphical representation of the evolution of PFG coverage
-and abundance through time for a <code>FATE-HD</code> simulation — POST_FATE.graphic_mapPFGrichness" />
+<meta property="og:title" content="Create a map of the Planf Functional Group richness for one (or 
+several) specific year of a <code>FATE-HD</code> simulation — POST_FATE.graphic_mapPFGrichness" />
 
 <meta property="og:description" content="This script is designed to produce a raster map of PFG richness
 for one (or several) specific FATE-HD simulation year." />
@@ -138,8 +138,8 @@ for one (or several) specific FATE-HD simulation year." />
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create a graphical representation of the evolution of PFG coverage
-and abundance through time for a <code>FATE-HD</code> simulation</h1>
+    <h1>Create a map of the Planf Functional Group richness for one (or 
+several) specific year of a <code>FATE-HD</code> simulation</h1>
     <small>Source: <a href='https://github.com/MayaGueguen/RFate.git/blob/master/R/POST_FATE.graphic_mapPFGrichness.R'><code>R/POST_FATE.graphic_mapPFGrichness.R</code></a></small>
     </div>
 
@@ -212,19 +212,20 @@ maps are compressed again :</p>
 # }
 <span class='co'># NOT RUN {</span>
 <span class='fu'>POST_FATE.graphic_mapPFGrichness</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
-                                    , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
-                                    , <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+                                 , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
+                                 , <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>850</span>
+                                 , <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 
 <span class='fu'>POST_FATE.graphic_mapPFGrichness</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
-                                    , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
-                                    , <span class='kw'>no.years</span> <span class='kw'>=</span> <span class='fl'>50</span>
-                                    , <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>4</span>)
+                                 , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
+                                 , <span class='kw'>year</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>850</span>, <span class='fl'>950</span>)
+                                 , <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 
 <span class='fu'>POST_FATE.graphic_mapPFGrichness</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
-                                    , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
-                                    , <span class='kw'>no.years</span> <span class='kw'>=</span> <span class='fl'>50</span>
-                                    , <span class='kw'>abund.fixedScale</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-                                    , <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+                                 , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
+                                 , <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>850</span>
+                                 , <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>
+                                 , <span class='kw'>opt.strata</span> <span class='kw'>=</span> <span class='fl'>2</span>)
 <span class='co'># }</span># NOT RUN {
                                     
                                     
