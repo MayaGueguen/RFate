@@ -1,12 +1,12 @@
 ### HEADER #####################################################################
-##' @title Create a map of the Plant Functional Group richness for one (or 
+##' @title Create a map of the Plant Functional Group cover for one (or 
 ##' several) specific year of a \code{FATE-HD} simulation
 ##' 
-##' @name POST_FATE.graphic_mapPFGrichness
+##' @name POST_FATE.graphic_mapPFGcover
 ##'
 ##' @author Maya Guéguen
 ##' 
-##' @description This script is designed to produce a raster map of PFG richness
+##' @description This script is designed to produce a raster map of PFG cover
 ##' for one (or several) specific \code{FATE-HD} simulation year.
 ##'              
 ##' @param name.simulation a \code{string} that corresponds to the main directory
@@ -16,10 +16,10 @@
 ##' of the \code{FATE-HD} simulation
 ##' @param year an \code{integer} corresponding to the simulation year(s) that 
 ##' will be used to extract PFG abundance maps
+##' @param strata_min an \code{integer} corresponding to the lowest stratum from
+##' which PFG abundances are summed up to the highest stratum
 ##' @param opt.no_CPU default 1 (\emph{optional}). The number of resources that 
 ##' can be used to parallelize the \code{unzip/zip} of raster files
-##' @param opt.strata default ALL (\emph{optional}). The stratum number from 
-##' which to extract PFG abundance maps
 ##' 
 ##' 
 ##' @details 
@@ -29,15 +29,14 @@
 ##' graphic. \cr
 ##' 
 ##' For each PFG and each selected simulation year, raster maps are retrieved
-##' from the results folder \code{ABUND_perPFG_allStrata} (unless the 
-##' \code{opt.strata} is used, then it will be from the folder 
-##' \code{ABUND_perPFG_perStrata}) and unzipped.
+##' from the results folder \code{ABUND_perPFG_perStrata} and unzipped.
 ##' Informations extracted lead to the production of one graphic before the
 ##' maps are compressed again :
 ##' 
 ##' \itemize{
-##'   \item{the map of \strong{Plant Functional Group richness} for each selected
-##'   simulation year(s), representing the number of PFG present in each pixel
+##'   \item{the map of \strong{Plant Functional Group cover} for each selected
+##'   simulation year(s), representing the cumulated abundance of PFG present 
+##'   in each pixel above a height threshold
 ##'   }
 ##' }
 ##' 
@@ -45,7 +44,7 @@
 ##' 
 ##' @return One \code{POST_FATE_[...].pdf} file is created : 
 ##' \describe{
-##'   \item{\file{GRAPHIC_C \cr PFGrichness}}{to visualize the PFG richness
+##'   \item{\file{GRAPHIC_D \cr PFGcover}}{to visualize the PFG cover
 ##'   within the studied area}
 ##' }
 ##' 
@@ -53,21 +52,17 @@
 ##' @examples
 ##' 
 ##' \dontrun{                      
-##' POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
-##'                                  , file.simulParam = "Simul_parameters_V1.txt"
-##'                                  , year = 850
-##'                                  , opt.no_CPU = 1)
+##' POST_FATE.graphic_mapPFGcover(name.simulation = "FATE_simulation"
+##'                               , file.simulParam = "Simul_parameters_V1.txt"
+##'                               , year = 850
+##'                               , strata_min = 3
+##'                               , opt.no_CPU = 1)
 ##'                                     
-##' POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
-##'                                  , file.simulParam = "Simul_parameters_V1.txt"
-##'                                  , year = c(850, 950)
-##'                                  , opt.no_CPU = 1)
-##'                                     
-##' POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
-##'                                  , file.simulParam = "Simul_parameters_V1.txt"
-##'                                  , year = 850
-##'                                  , opt.no_CPU = 1
-##'                                  , opt.strata = 2)
+##' POST_FATE.graphic_mapPFGcover(name.simulation = "FATE_simulation"
+##'                               , file.simulParam = "Simul_parameters_V1.txt"
+##'                               , year = c(850, 950)
+##'                               , strata_min = 3
+##'                               , opt.no_CPU = 1)
 ##' }
 ##'                                     
 ##'                                     
@@ -76,25 +71,25 @@
 ##' 
 ##' @importFrom foreach foreach
 ##' @importFrom raster raster stack as.data.frame
-##' nlayers rasterToPoints
+##' rasterToPoints
 ##' @importFrom grid unit
-##'
+##' 
 ##' @importFrom ggplot2 ggplot aes aes_string ggsave
 ##' geom_raster element_blank coord_equal
 ##' scale_fill_gradientn labs theme
 ##' @importFrom ggthemes theme_fivethirtyeight
-##' @importFrom viridis viridis_pal
+##' @importFrom RColorBrewer brewer.pal
 ##' @importFrom grDevices pdf
 ##'
 ## END OF HEADER ###############################################################
 
 
-POST_FATE.graphic_mapPFGrichness = function(
+POST_FATE.graphic_mapPFGcover = function(
   name.simulation
   , file.simulParam = NULL
   , year
+  , strata_min
   , opt.no_CPU = 1
-  , opt.strata = "ALL"
 ){
   
   .testParam_existFolder(name.simulation, "PARAM_SIMUL/")
@@ -120,6 +115,10 @@ POST_FATE.graphic_mapPFGrichness = function(
   {
     .stopMessage_beInteger("year")
   }
+  if (.testParam_notNum(strata_min))
+  {
+    .stopMessage_beInteger("strata_min")
+  }
   #################################################################################################
   
   for (abs.simulParam in abs.simulParams)
@@ -136,18 +135,39 @@ POST_FATE.graphic_mapPFGrichness = function(
                          , is.num = FALSE)
     .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/"))
     
-    dir.output.perPFG.allStrata = paste0(name.simulation, "/RESULTS/", basename(dir.save), "/ABUND_perPFG_allStrata/")
-    .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/ABUND_perPFG_allStrata/"))
+    dir.output.perPFG.perStrata = paste0(name.simulation, "/RESULTS/", basename(dir.save), "/ABUND_perPFG_perStrata/")
+    .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/ABUND_perPFG_perStrata/"))
     
     
     ## Get list of arrays and extract years of simulation --------------------------
     years = sort(unique(as.numeric(year)))
     no_years = length(years)
-    raster.perPFG.allStrata = grep(paste0("Abund_YEAR_", years, "_", collapse = "|")
-                                   , list.files(dir.output.perPFG.allStrata), value = TRUE)
-    if (length(raster.perPFG.allStrata) == 0)
+    raster.perPFG.perStrata = grep(paste0("Abund_YEAR_", years, "_", collapse = "|")
+                                   , list.files(dir.output.perPFG.perStrata), value = TRUE)
+    
+    strata = sapply(sub(".*_STRATA_", "", raster.perPFG.perStrata)
+                   , function(x) strsplit(as.character(x), "[.]")[[1]][1])
+    strata = sort(unique(as.numeric(strata)))
+    no_strata = max(strata)
+    if (!(no_strata > 0) || is.infinite(no_strata) | .testParam_notDef(no_strata))
     {
-      stop(paste0("Missing data!\n The folder ", dir.output.perPFG.allStrata, " does not contain adequate files"))
+      stop(paste0("Missing data!\n The folder ", dir.output.perPFG.perStrata, " does not contain adequate files",
+                  " (number of strata null or no strata files found)"))
+    }
+    if (no_strata < strata_min)
+    {
+      stop(paste0("Wrong data given!\n `strata_min` is superior to maximum strata found (", no_strata, ")"))
+    }
+    
+    cat("\n Number of strata : ", no_strata)
+    cat("\n Selected strata : ", strata_min:no_strata)
+    cat("\n")
+    
+    raster.perPFG.perStrata = raster.perPFG.perStrata[grep(paste0("_STRATA_", strata_min:no_strata, collapse = "|")
+                                                           , raster.perPFG.perStrata)]
+    if (length(raster.perPFG.perStrata) == 0)
+    {
+      stop(paste0("Missing data!\n The folder ", dir.output.perPFG.perStrata, " does not contain adequate files"))
     }
     
     ## Get number of PFGs ----------------------------------------------------------
@@ -190,36 +210,41 @@ POST_FATE.graphic_mapPFGrichness = function(
     no_1_mask = length(ind_1_mask)
     
     ## UNZIP the raster saved ------------------------------------------------------
-    raster.perPFG.allStrata = foreach(y = years, .combine = "c") %do%
+    combi = expand.grid(year = years, stratum = strata_min:no_strata)
+    raster.perPFG.perStrata = foreach(y = combi$year, st = combi$stratum, .combine = "c") %do%
     {
-      paste0(dir.output.perPFG.allStrata,
+      paste0(dir.output.perPFG.perStrata,
              "Abund_YEAR_",
              y,
              "_",
              PFG,
-             "_STRATA_all.tif.gz")
+             "_STRATA_",
+             st,
+             ".tif.gz")
     }
-    .unzip(dir.output.perPFG.allStrata, raster.perPFG.allStrata, opt.no_CPU)
-    
-    
+    .unzip(dir.output.perPFG.perStrata, raster.perPFG.perStrata, opt.no_CPU)
+
     ## get the data inside the rasters ---------------------------------------------
-    pdf(file = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_C_map_PFGrichness_", basename(dir.save), ".pdf")
+    pdf(file = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_D_map_PFGcover_", basename(dir.save), ".pdf")
         , width = 10, height = 10)
-    cat("\n GETTING RICHNESS for year")
+    cat("\n GETTING COVER for year")
     for (y in years)
     {
       cat(" ", y)
-      file_name = paste0(dir.output.perPFG.allStrata,
+      file_name = paste0(dir.output.perPFG.perStrata,
                          "Abund_YEAR_",
                          y,
                          "_",
-                         PFG,
-                         "_STRATA_all.tif")
+                         PFG)
+      file_name = as.vector(sapply(file_name, function(x) paste0(x,
+                                                                 "_STRATA_",
+                                                                 strata_min:no_strata,
+                                                                 ".tif")))
       if (length(which(file.exists(file_name))) == 0)
       {
         stop(paste0("Missing data!\n The names of PFG extracted from files within ", name.simulation, "/DATA/PFGS/SUCC/ : "
                     , paste0("\n", PFG, collapse = "\n")
-                    , "\n is different from the files contained in ", dir.output.perPFG.allStrata
+                    , "\n is different from the files contained in ", dir.output.perPFG.perStrata
                     , "They should be : "
                     , paste0("\n", file_name, collapse = "\n")))
       }
@@ -227,29 +252,23 @@ POST_FATE.graphic_mapPFGrichness = function(
 
       ras = stack(file_name) * ras.mask
       ras_TOT = sum(ras)
-      ras_REL = ras / ras_TOT
-      for (ii in 1:nlayers(ras_REL))
-      {
-        ras_REL[[ii]][] = ifelse(ras_REL[[ii]][] > 0.05, 1, 0)
-      }
-      ras_REL = sum(ras_REL)
+      ras_REL = ras_TOT / max(ras_TOT[], na.rm = T)
       ras.pts = as.data.frame(rasterToPoints(ras_REL))
-      colnames(ras.pts) = c("X", "Y", "NB")
+      colnames(ras.pts) = c("X", "Y", "COVER")
       
       ## produce the plot ------------------------------------------------------------
-      ## Map of PFG richness
-      pp = ggplot(ras.pts, aes_string(x = "X", y = "Y", fill = "NB")) +
-        scale_fill_gradientn("Number of PFG"
-                             , colors = viridis_pal()(max(ras.pts$NB))
-                             , breaks = seq(1, max(ras.pts$NB), 2)) +
+      ## Map of PFG cover
+      pp = ggplot(ras.pts, aes_string(x = "X", y = "Y", fill = "COVER")) +
+        scale_fill_gradientn("Abundance (%)"
+                             , colors = brewer.pal(9, "Greens")
+                             , breaks = seq(0, 1, 0.2)
+                             , labels = seq(0, 100, 20)) +
         coord_equal() +
         geom_raster() +
-        labs(x = "", y = "", title = paste0("GRAPH C : map of PFG richness - Simulation year : ", y),
-             subtitle = paste0("For each pixel, first relative abundances are calculated, ",
-                               "then transformed into binary values :\n", 
-                               "1 if the PFG abundance represents more than 5 % ",
-                               "of the pixel abundance, 0 otherwise.\n",
-                               "Finally, simulated PFG occurrences are summed.\n")) +
+        labs(x = "", y = "", title = paste0("GRAPH D : map of PFG cover - Simulation year : ", y),
+             subtitle = paste0("For each pixel, PFG abundances from strata ",
+                               strata_min, " to ", no_strata, " are summed,\n",
+                               "then transformed into relative values by dividing by the maximum abundance obtained.\n")) +
         theme_fivethirtyeight() +
         theme(axis.text = element_blank()
               , legend.key.width = unit(2, "lines"))
@@ -259,7 +278,7 @@ POST_FATE.graphic_mapPFGrichness = function(
     dev.off()
     
     ## ZIP the raster saved ------------------------------------------------------
-    .zip(dir.output.perPFG.allStrata, opt.no_CPU)
+    .zip(dir.output.perPFG.perStrata, opt.no_CPU)
     
   }
 }

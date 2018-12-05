@@ -2,7 +2,7 @@
 % Please edit documentation in R/POST_FATE.graphic_mapPFGrichness.R
 \name{POST_FATE.graphic_mapPFGrichness}
 \alias{POST_FATE.graphic_mapPFGrichness}
-\title{Create a map of the Planf Functional Group richness for one (or 
+\title{Create a map of the Plant Functional Group richness for one (or 
 several) specific year of a \code{FATE-HD} simulation}
 \usage{
 POST_FATE.graphic_mapPFGrichness(name.simulation, file.simulParam = NULL,
