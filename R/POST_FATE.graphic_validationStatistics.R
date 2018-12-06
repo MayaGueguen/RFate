@@ -1,13 +1,15 @@
 ### HEADER #####################################################################
-##' @title Create a map of the Plant Functional Group richness for one (or 
-##' several) specific year of a \code{FATE-HD} simulation
+##' @title Create a graphical representation of several statistics for each PFG 
+##' to asses the quality of the model for one (or several) specific year of 
+##' a \code{FATE-HD} simulation
 ##' 
 ##' @name POST_FATE.graphic_validationStatistics
 ##'
 ##' @author Maya Guéguen
 ##' 
-##' @description This script is designed to produce a raster map of PFG richness
-##' for one (or several) specific \code{FATE-HD} simulation year.
+##' @description This script is designed to produce a graphical representation
+##' of several statistics (sensitivity, specificity, TSS, AUC) for quality
+##' assessment for one (or several) specific \code{FATE-HD} simulation year.
 ##'              
 ##' @param name.simulation a \code{string} that corresponds to the main directory
 ##' or simulation name of the \code{FATE-HD} simulation
@@ -16,10 +18,9 @@
 ##' of the \code{FATE-HD} simulation
 ##' @param year an \code{integer} corresponding to the simulation year(s) that 
 ##' will be used to extract PFG abundance maps
+##' @param mat.PFG.obs a
 ##' @param opt.no_CPU default 1 (\emph{optional}). The number of resources that 
 ##' can be used to parallelize the \code{unzip/zip} of raster files
-##' @param opt.strata default ALL (\emph{optional}). The stratum number from 
-##' which to extract PFG abundance maps
 ##' 
 ##' 
 ##' @details 
@@ -29,15 +30,14 @@
 ##' graphic. \cr
 ##' 
 ##' For each PFG and each selected simulation year, raster maps are retrieved
-##' from the results folder \code{ABUND_perPFG_allStrata} (unless the 
-##' \code{opt.strata} is used, then it will be from the folder 
-##' \code{ABUND_perPFG_perStrata}) and unzipped.
+##' from the results folder \code{ABUND_perPFG_allStrata} and unzipped.
 ##' Informations extracted lead to the production of one graphic before the
 ##' maps are compressed again :
 ##' 
 ##' \itemize{
-##'   \item{the map of \strong{Plant Functional Group richness} for each selected
-##'   simulation year(s), representing the number of PFG present in each pixel
+##'   \item{the value of \strong{several statistics for the predictive quality
+##'   of the model for each Plant Functional Group} and for each selected
+##'   simulation year(s)
 ##'   }
 ##' }
 ##' 
@@ -45,25 +45,25 @@
 ##' 
 ##' @return One \code{POST_FATE_[...].pdf} file is created : 
 ##' \describe{
-##'   \item{\file{GRAPHIC_C \cr PFGrichness}}{to visualize the PFG richness
-##'   within the studied area}
+##'   \item{\file{GRAPHIC_E \cr validationStatistics}}{to assess the modeling 
+##'   quality of each PFG based on given observations within the studied area}
 ##' }
 ##' 
 ##'  
 ##' @examples
 ##' 
 ##' \dontrun{                      
-##' POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
+##' POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
 ##'                                  , file.simulParam = "Simul_parameters_V1.txt"
 ##'                                  , year = 850
 ##'                                  , opt.no_CPU = 1)
 ##'                                     
-##' POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
+##' POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
 ##'                                  , file.simulParam = "Simul_parameters_V1.txt"
 ##'                                  , year = c(850, 950)
 ##'                                  , opt.no_CPU = 1)
 ##'                                     
-##' POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
+##' POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
 ##'                                  , file.simulParam = "Simul_parameters_V1.txt"
 ##'                                  , year = 850
 ##'                                  , opt.no_CPU = 1
@@ -75,16 +75,18 @@
 ##' @export
 ##' 
 ##' @importFrom foreach foreach
-##' @importFrom raster raster stack as.data.frame
-##' nlayers rasterToPoints
+##' @importFrom reshape2 melt
+##' @importFrom raster raster stack as.data.frame cellFromXY
 ##' @importFrom grid unit
 ##'
-##' @importFrom ggplot2 ggplot aes aes_string ggsave
-##' geom_raster element_blank coord_equal
-##' scale_fill_gradientn labs theme
+##' @importFrom ggplot2 ggplot aes aes_string geom_raster geom_bar
+##' geom_hline geom_errorbar scale_fill_gradientn facet_wrap
+##' ylim labs theme
 ##' @importFrom ggthemes theme_fivethirtyeight
-##' @importFrom viridis viridis_pal
+##' @importFrom RColorBrewer brewer.pal
 ##' @importFrom grDevices pdf
+##' 
+##' @importFrom PresenceAbsence sensitivity specificity auc cmx
 ##'
 ## END OF HEADER ###############################################################
 
@@ -98,7 +100,7 @@
 # mat.PFG.obs = mat.PFG.obs[, c("PFG", "X_ETRS89", "Y_ETRS89", "obs")]
 # colnames(mat.PFG.obs) = c("PFG", "X", "Y", "obs")
 # mat.PFG.obs$PFG = as.character(mat.PFG.obs$PFG)
-# POST_FATE.graphic_validationAUC(name.simulation = "FATE_Bauges/"
+# POST_FATE.graphic_validationStatistics(name.simulation = "FATE_Bauges/"
 #                                 , file.simulParam = "FATE_Bauges/PARAM_SIMUL/paramSimul_Graz1_CA_rcp26_TEST.txt"
 #                                 , year = 850
 #                                 , mat.PFG.obs = mat.PFG.obs
@@ -108,7 +110,7 @@
 # mat.PFG.obs = mat.PFG.obs[, c("PFG", "X_ETRS89", "Y_ETRS89", "obs")]
 # colnames(mat.PFG.obs) = c("PFG", "X", "Y", "obs")
 # mat.PFG.obs$PFG = as.character(mat.PFG.obs$PFG)
-# POST_FATE.graphic_validationAUC(name.simulation = "FATE_Bauges_SOIL/"
+# POST_FATE.graphic_validationStatistics(name.simulation = "FATE_Bauges_SOIL/"
 #                                 , file.simulParam = "FATE_Bauges_SOIL/PARAM_SIMUL/paramSimul_Graz1_CA_rcp26_WITHSOIL.txt"
 #                                 , year = 850
 #                                 , mat.PFG.obs = mat.PFG.obs

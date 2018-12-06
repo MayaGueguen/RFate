@@ -6,8 +6,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create a map of the Plant Functional Group richness for one (or 
-several) specific year of a <code>FATE-HD</code> simulation — POST_FATE.graphic_validationStatistics • RFate</title>
+<title>Create a graphical representation of several statistics for each PFG 
+to asses the quality of the model for one (or several) specific year of 
+a <code>FATE-HD</code> simulation — POST_FATE.graphic_validationStatistics • RFate</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -28,11 +29,13 @@ several) specific year of a <code>FATE-HD</code> simulation — POST_FATE.graphi
 <script src="../pkgdown.js"></script>
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Create a map of the Plant Functional Group richness for one (or 
-several) specific year of a <code>FATE-HD</code> simulation — POST_FATE.graphic_validationStatistics" />
+<meta property="og:title" content="Create a graphical representation of several statistics for each PFG 
+to asses the quality of the model for one (or several) specific year of 
+a <code>FATE-HD</code> simulation — POST_FATE.graphic_validationStatistics" />
 
-<meta property="og:description" content="This script is designed to produce a raster map of PFG richness
-for one (or several) specific FATE-HD simulation year." />
+<meta property="og:description" content="This script is designed to produce a graphical representation
+of several statistics (sensitivity, specificity, TSS, AUC) for quality
+assessment for one (or several) specific FATE-HD simulation year." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -138,14 +141,16 @@ for one (or several) specific FATE-HD simulation year." />
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create a map of the Plant Functional Group richness for one (or 
-several) specific year of a <code>FATE-HD</code> simulation</h1>
-    <small>Source: <a href='https://github.com/MayaGueguen/RFate.git/blob/master/R/POST_FATE.graphic_validationAUC.R'><code>R/POST_FATE.graphic_validationAUC.R</code></a></small>
+    <h1>Create a graphical representation of several statistics for each PFG 
+to asses the quality of the model for one (or several) specific year of 
+a <code>FATE-HD</code> simulation</h1>
+    <small>Source: <a href='https://github.com/MayaGueguen/RFate.git/blob/master/R/POST_FATE.graphic_validationStatistics.R'><code>R/POST_FATE.graphic_validationStatistics.R</code></a></small>
     </div>
 
     
-    <p>This script is designed to produce a raster map of PFG richness
-for one (or several) specific <code>FATE-HD</code> simulation year.</p>
+    <p>This script is designed to produce a graphical representation
+of several statistics (sensitivity, specificity, TSS, AUC) for quality
+assessment for one (or several) specific <code>FATE-HD</code> simulation year.</p>
     
 
     <pre class="usage"><span class='fu'>POST_FATE.graphic_validationStatistics</span>(<span class='no'>name.simulation</span>,
@@ -171,22 +176,21 @@ of the <code>FATE-HD</code> simulation</p></td>
 will be used to extract PFG abundance maps</p></td>
     </tr>
     <tr>
+      <th>mat.PFG.obs</th>
+      <td><p>a</p></td>
+    </tr>
+    <tr>
       <th>opt.no_CPU</th>
       <td><p>default 1 (<em>optional</em>). The number of resources that 
 can be used to parallelize the <code>unzip/zip</code> of raster files</p></td>
-    </tr>
-    <tr>
-      <th>opt.strata</th>
-      <td><p>default ALL (<em>optional</em>). The stratum number from 
-which to extract PFG abundance maps</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>One <code>POST_FATE_[...].pdf</code> file is created :</p><dl class='dl-horizontal'>
-  <dt><code class="file">GRAPHIC_C <br /> PFGrichness</code></dt><dd><p>to visualize the PFG richness
-  within the studied area</p></dd>
+  <dt><code class="file">GRAPHIC_E <br /> validationStatistics</code></dt><dd><p>to assess the modeling 
+  quality of each PFG based on given observations within the studied area</p></dd>
 </dl>
 
     
@@ -196,14 +200,13 @@ which to extract PFG abundance maps</p></td>
 and a specific parameter file within this simulation, one preanalytical
 graphic. <br /></p>
 <p>For each PFG and each selected simulation year, raster maps are retrieved
-from the results folder <code>ABUND_perPFG_allStrata</code> (unless the 
-<code>opt.strata</code> is used, then it will be from the folder 
-<code>ABUND_perPFG_perStrata</code>) and unzipped.
+from the results folder <code>ABUND_perPFG_allStrata</code> and unzipped.
 Informations extracted lead to the production of one graphic before the
 maps are compressed again :</p>
 <ul>
-<li><p>the map of <strong>Plant Functional Group richness</strong> for each selected
-  simulation year(s), representing the number of PFG present in each pixel</p></li>
+<li><p>the value of <strong>several statistics for the predictive quality
+  of the model for each Plant Functional Group</strong> and for each selected
+  simulation year(s)</p></li>
 </ul>
     
 
@@ -211,17 +214,17 @@ maps are compressed again :</p>
     <pre class="examples"># NOT RUN {
 # }
 <span class='co'># NOT RUN {</span>
-<span class='fu'><a href='POST_FATE.graphic_mapPFGrichness.html'>POST_FATE.graphic_mapPFGrichness</a></span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
+<span class='fu'>POST_FATE.graphic_validationStatistics</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
                                  , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
                                  , <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>850</span>
                                  , <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 
-<span class='fu'><a href='POST_FATE.graphic_mapPFGrichness.html'>POST_FATE.graphic_mapPFGrichness</a></span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
+<span class='fu'>POST_FATE.graphic_validationStatistics</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
                                  , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
                                  , <span class='kw'>year</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>850</span>, <span class='fl'>950</span>)
                                  , <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 
-<span class='fu'><a href='POST_FATE.graphic_mapPFGrichness.html'>POST_FATE.graphic_mapPFGrichness</a></span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
+<span class='fu'>POST_FATE.graphic_validationStatistics</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
                                  , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
                                  , <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>850</span>
                                  , <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>

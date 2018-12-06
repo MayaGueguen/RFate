@@ -16,7 +16,7 @@ Imports:
     graphics, grDevices, methods, stats, utils,
     ggplot2, ggthemes, ggrepel, reshape2, foreach,
     raster, phyloclim, FD, fpc, clValid, ade4,
-    viridis, RColorBrewer
+    viridis, RColorBrewer, PresenceAbsence
 Suggests:
     spelling, 
     testthat,
