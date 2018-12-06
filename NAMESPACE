@@ -3,6 +3,7 @@
 export(POST_FATE.graphic_evolutionCoverage)
 export(POST_FATE.graphic_mapPFGcover)
 export(POST_FATE.graphic_mapPFGrichness)
+export(POST_FATE.graphic_validationStatistics)
 export(PRE_FATE.abundBraunBlanquet)
 export(PRE_FATE.params_PFGdispersal)
 export(PRE_FATE.params_PFGdisturbance)

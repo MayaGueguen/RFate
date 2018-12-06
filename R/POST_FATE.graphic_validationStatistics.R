@@ -1,0 +1,392 @@
+### HEADER #####################################################################
+##' @title Create a map of the Plant Functional Group richness for one (or 
+##' several) specific year of a \code{FATE-HD} simulation
+##' 
+##' @name POST_FATE.graphic_validationStatistics
+##'
+##' @author Maya Guéguen
+##' 
+##' @description This script is designed to produce a raster map of PFG richness
+##' for one (or several) specific \code{FATE-HD} simulation year.
+##'              
+##' @param name.simulation a \code{string} that corresponds to the main directory
+##' or simulation name of the \code{FATE-HD} simulation
+##' @param file.simulParam a \code{string} that corresponds to the name of a
+##' parameter file that will be contained into the \code{PARAM_SIMUL} folder
+##' of the \code{FATE-HD} simulation
+##' @param year an \code{integer} corresponding to the simulation year(s) that 
+##' will be used to extract PFG abundance maps
+##' @param opt.no_CPU default 1 (\emph{optional}). The number of resources that 
+##' can be used to parallelize the \code{unzip/zip} of raster files
+##' @param opt.strata default ALL (\emph{optional}). The stratum number from 
+##' which to extract PFG abundance maps
+##' 
+##' 
+##' @details 
+##' 
+##' This function allows one to obtain, for a specific \code{FATE-HD} simulation
+##' and a specific parameter file within this simulation, one preanalytical
+##' graphic. \cr
+##' 
+##' For each PFG and each selected simulation year, raster maps are retrieved
+##' from the results folder \code{ABUND_perPFG_allStrata} (unless the 
+##' \code{opt.strata} is used, then it will be from the folder 
+##' \code{ABUND_perPFG_perStrata}) and unzipped.
+##' Informations extracted lead to the production of one graphic before the
+##' maps are compressed again :
+##' 
+##' \itemize{
+##'   \item{the map of \strong{Plant Functional Group richness} for each selected
+##'   simulation year(s), representing the number of PFG present in each pixel
+##'   }
+##' }
+##' 
+##' 
+##' 
+##' @return One \code{POST_FATE_[...].pdf} file is created : 
+##' \describe{
+##'   \item{\file{GRAPHIC_C \cr PFGrichness}}{to visualize the PFG richness
+##'   within the studied area}
+##' }
+##' 
+##'  
+##' @examples
+##' 
+##' \dontrun{                      
+##' POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
+##'                                  , file.simulParam = "Simul_parameters_V1.txt"
+##'                                  , year = 850
+##'                                  , opt.no_CPU = 1)
+##'                                     
+##' POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
+##'                                  , file.simulParam = "Simul_parameters_V1.txt"
+##'                                  , year = c(850, 950)
+##'                                  , opt.no_CPU = 1)
+##'                                     
+##' POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
+##'                                  , file.simulParam = "Simul_parameters_V1.txt"
+##'                                  , year = 850
+##'                                  , opt.no_CPU = 1
+##'                                  , opt.strata = 2)
+##' }
+##'                                     
+##'                                     
+##' 
+##' @export
+##' 
+##' @importFrom foreach foreach
+##' @importFrom raster raster stack as.data.frame
+##' nlayers rasterToPoints
+##' @importFrom grid unit
+##'
+##' @importFrom ggplot2 ggplot aes aes_string ggsave
+##' geom_raster element_blank coord_equal
+##' scale_fill_gradientn labs theme
+##' @importFrom ggthemes theme_fivethirtyeight
+##' @importFrom viridis viridis_pal
+##' @importFrom grDevices pdf
+##'
+## END OF HEADER ###############################################################
+
+# setwd("~/FATE_Bauges/")
+# name.simulation = "FATE_Bauges_SOIL/"
+# file.simulParam = "FATE_Bauges_SOIL/PARAM_SIMUL/paramSimul_Graz1_CA_rcp26_WITHSOIL.txt"
+# year = 850
+# opt.no_CPU = 7
+
+# load("~/Documents/_DATA/DATA_FATE_Bauges/Bauges_OccDom/mat.PFG.obs")
+# mat.PFG.obs = mat.PFG.obs[, c("PFG", "X_ETRS89", "Y_ETRS89", "obs")]
+# colnames(mat.PFG.obs) = c("PFG", "X", "Y", "obs")
+# mat.PFG.obs$PFG = as.character(mat.PFG.obs$PFG)
+# POST_FATE.graphic_validationAUC(name.simulation = "FATE_Bauges/"
+#                                 , file.simulParam = "FATE_Bauges/PARAM_SIMUL/paramSimul_Graz1_CA_rcp26_TEST.txt"
+#                                 , year = 850
+#                                 , mat.PFG.obs = mat.PFG.obs
+#                                 , opt.no_CPU = 7)
+# 
+# load("~/Documents/_DATA/DATA_FATE_Bauges/Bauges_OccDom/mat.PFG.obs_SOIL")
+# mat.PFG.obs = mat.PFG.obs[, c("PFG", "X_ETRS89", "Y_ETRS89", "obs")]
+# colnames(mat.PFG.obs) = c("PFG", "X", "Y", "obs")
+# mat.PFG.obs$PFG = as.character(mat.PFG.obs$PFG)
+# POST_FATE.graphic_validationAUC(name.simulation = "FATE_Bauges_SOIL/"
+#                                 , file.simulParam = "FATE_Bauges_SOIL/PARAM_SIMUL/paramSimul_Graz1_CA_rcp26_WITHSOIL.txt"
+#                                 , year = 850
+#                                 , mat.PFG.obs = mat.PFG.obs
+#                                 , opt.no_CPU = 7)
+
+
+POST_FATE.graphic_validationStatistics = function(
+  name.simulation
+  , file.simulParam = NULL
+  , year
+  , mat.PFG.obs
+  , opt.no_CPU = 1
+){
+  
+  .testParam_existFolder(name.simulation, "PARAM_SIMUL/")
+  .testParam_existFolder(name.simulation, "RESULTS/")
+  .testParam_existFolder(name.simulation, "DATA/")
+  name.simulation = sub("/", "", name.simulation)
+  
+  if (.testParam_notDef(file.simulParam) || nchar(file.simulParam) == 0)
+  {
+    abs.simulParams = list.files(paste0(name.simulation, "/PARAM_SIMUL/"))
+    if (length(abs.simulParams) == 0)
+    {
+      stop(paste0("Missing data!\n The folder ", name.simulation, "/PARAM_SIMUL/ does not contain adequate files"))
+    }
+    abs.simulParams = paste0(name.simulation, "/PARAM_SIMUL/", abs.simulParams)
+  } else
+  {
+    file.simulParam = basename(file.simulParam)
+    abs.simulParams = paste0(name.simulation, "/PARAM_SIMUL/", file.simulParam)
+    .testParam_existFile(abs.simulParams)
+  }
+  if (.testParam_notNum(year))
+  {
+    .stopMessage_beInteger("year")
+  }
+  if (.testParam_notDf(mat.PFG.obs))
+  {
+    .stopMessage_beDataframe("mat.PFG.obs")
+  } else
+  {
+    if (nrow(mat.PFG.obs) == 0 || ncol(mat.PFG.obs) != 4)
+    {
+      .stopMessage_numRowCol("mat.PFG.obs", c("PFG", "X", "Y", "obs"))
+    }
+    if (ncol(mat.PFG.obs) == 4)
+    {
+      if (sum(colnames(mat.PFG.obs) == c("PFG", "X", "Y", "obs")) == 4)
+      {
+        mat.PFG.obs = mat.PFG.obs[ , c("PFG", "X", "Y", "obs")]
+      } else
+      {
+        .stopMessage_columnNames("mat.PFG.obs", c("PFG", "X", "Y", "obs"))
+      }
+    }
+    if (.testParam_notChar(mat.PFG.obs$PFG))
+    {
+      .stopMessage_beChar("mat.PFG.obs$PFG")
+    }
+    if (!is.numeric(mat.PFG.obs$X) ||
+        !is.numeric(mat.PFG.obs$Y) ||
+        !is.numeric(mat.PFG.obs$obs)) {
+      .stopMessage_columnNumeric("mat.PFG.obs", c("X", "Y", "obs"))
+    }
+    if (length(which(is.na(mat.PFG.obs$PFG))) > 0 ||
+        length(which(is.na(mat.PFG.obs$X))) > 0 ||
+        length(which(is.na(mat.PFG.obs$Y))) > 0 ||
+        length(which(is.na(mat.PFG.obs$obs))) > 0) {
+      mat.PFG.obs = na.exclude(mat.PFG.obs)
+    }
+    if (sum(mat.PFG.obs$obs %in% c(0,1)) < nrow(mat.PFG.obs)){
+      stop("Wrong type of data!\n Column `MODE` of `mat.PFG.obs` must contain either 0 or 1")
+    }
+  }
+  #################################################################################################
+  
+  for (abs.simulParam in abs.simulParams)
+  {
+    
+    cat("\n ############## GRAPHIC POST FATE ############## \n")
+    cat("\n Simulation name : ", name.simulation)
+    cat("\n Simulation file : ", abs.simulParam)
+    cat("\n")
+    
+    dir.save = .getParam(params.lines = abs.simulParam
+                         , flag = "SAVE_DIR"
+                         , flag.split = "^--.*--$"
+                         , is.num = FALSE)
+    .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/"))
+    
+    dir.output.perPFG.allStrata = paste0(name.simulation, "/RESULTS/", basename(dir.save), "/ABUND_perPFG_allStrata/")
+    .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/ABUND_perPFG_allStrata/"))
+    
+    
+    ## Get list of arrays and extract years of simulation --------------------------
+    years = sort(unique(as.numeric(year)))
+    no_years = length(years)
+    raster.perPFG.allStrata = grep(paste0("Abund_YEAR_", years, "_", collapse = "|")
+                                   , list.files(dir.output.perPFG.allStrata), value = TRUE)
+    if (length(raster.perPFG.allStrata) == 0)
+    {
+      stop(paste0("Missing data!\n The folder ", dir.output.perPFG.allStrata, " does not contain adequate files"))
+    }
+    
+    ## Get number of PFGs ----------------------------------------------------------
+    file.globalParam = .getParam(params.lines = abs.simulParam
+                                 , flag = "GLOBAL_PARAMS"
+                                 , flag.split = "^--.*--$"
+                                 , is.num = FALSE)
+    no_PFG = .getParam(params.lines = file.globalParam
+                       , flag = "NB_FG"
+                       , flag.split = " "
+                       , is.num = TRUE)
+    if (length(no_PFG) == 0 || .testParam_notNum(no_PFG))
+    {
+      stop(paste0("Missing data!\n The number of PFG (NB_FG) within ", file.globalParam, " does not contain any value"))
+    }
+    
+    ## Get PFG names ---------------------------------------------------------------
+    PFG = .getParam(params.lines = abs.simulParam
+                    , flag = "PFG_LIFE_HISTORY_PARAMS"
+                    , flag.split = "^--.*--$"
+                    , is.num = FALSE)
+    pattern = paste0(name.simulation, "/DATA/PFGS/SUCC/SUCC_")
+    PFG = sub(".txt", "", sub(pattern, "", PFG))
+    if (length(PFG) != no_PFG)
+    {
+      stop(paste0("Missing data!\n The number of PFG (NB_FG) within ", file.globalParam
+                  , " is different from the number of PFG files contained in ", name.simulation, "/DATA/PFGS/SUCC/"))
+    }
+    mat.PFG.obs = mat.PFG.obs[which(mat.PFG.obs$PFG %in% PFG), ]
+    if (nrow(mat.PFG.obs) == 0)
+    {
+      stop(paste0("Missing data!\n The names of PFG within `mat.PFG.obs`"
+                  , " is different from the names of PFG contained from "
+                  , name.simulation, "/DATA/PFGS/SUCC/"))
+    }
+    
+    ## Get raster mask -------------------------------------------------------------
+    file.mask = .getParam(params.lines = abs.simulParam
+                          , flag = "MASK"
+                          , flag.split = "^--.*--$"
+                          , is.num = FALSE)
+    .testParam_existFile(file.mask)
+    
+    ras.mask = raster(file.mask)
+    ras.mask[which(ras.mask[] == 0)] = NA
+    ind_1_mask = which(ras.mask[] == 1)
+    no_1_mask = length(ind_1_mask)
+    
+    ## UNZIP the raster saved ------------------------------------------------------
+    raster.perPFG.allStrata = foreach(y = years, .combine = "c") %do%
+    {
+      paste0(dir.output.perPFG.allStrata,
+             "Abund_YEAR_",
+             y,
+             "_",
+             PFG,
+             "_STRATA_all.tif.gz")
+    }
+    .unzip(dir.output.perPFG.allStrata, raster.perPFG.allStrata, opt.no_CPU)
+    
+    
+    ## get the data inside the rasters ---------------------------------------------
+    pdf(file = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_E_validationStatistics_", basename(dir.save), ".pdf")
+        , width = 12, height = 10)
+    cat("\n GETTING STATISTICS for year")
+    for (y in years)
+    {
+      cat(" ", y)
+      file_name = paste0(dir.output.perPFG.allStrata,
+                         "Abund_YEAR_",
+                         y,
+                         "_",
+                         PFG,
+                         "_STRATA_all.tif")
+      if (length(which(file.exists(file_name))) == 0)
+      {
+        stop(paste0("Missing data!\n The names of PFG extracted from files within ", name.simulation, "/DATA/PFGS/SUCC/ : "
+                    , paste0("\n", PFG, collapse = "\n")
+                    , "\n is different from the files contained in ", dir.output.perPFG.allStrata
+                    , "They should be : "
+                    , paste0("\n", file_name, collapse = "\n")))
+      }
+      gp = PFG[which(file.exists(file_name))]
+      file_name = file_name[which(file.exists(file_name))]
+
+      ras = stack(file_name) * ras.mask
+      names(ras) = gp
+      
+      mat.PFG.obs.split = split(mat.PFG.obs, mat.PFG.obs$PFG)
+      mat.valid = foreach(i = 1:length(mat.PFG.obs.split), .combine = "rbind") %do%
+      {
+        fg = names(mat.PFG.obs.split)[i]
+        mat = mat.PFG.obs.split[[i]]
+        if (fg %in% gp)
+        {
+          mat$ID = as.numeric(as.factor(paste0(mat$X, "_", mat$Y)))
+          quanti = quantile(ras[[fg]][], sum(table(mat$obs)["0"]) / sum(table(mat$obs)), na.rm = T)
+          ras[[fg]][] = ifelse(ras[[fg]][] > quanti, 1, 0)
+          
+          mat = cbind(mat, fg = ras[[fg]][cellFromXY(ras, mat[, c("X", "Y")])])
+          mat = mat[, c("ID", "obs", "fg")]
+          mat = na.exclude(mat)
+          if (nrow(mat) == 0)
+          {
+            warning(paste0("Missing data!\n No simulation values for PFG ", fg))
+            return(data.frame(PFG = fg
+                              , AUC = NA, AUC.sd = NA
+                              , sensitivity = NA, sensitivity.sd = NA
+                              , specificity = NA, specificity.sd = NA
+                              , TSS = NA))
+          } else
+          {
+            mat.conf = cmx(mat[, c("ID", "obs", "fg")])
+            auc = auc(mat[, c("ID", "obs", "fg")])
+            sens = sensitivity(mat.conf)
+            spec = specificity(mat.conf)
+            TSS = sens$sensitivity + spec$specificity - 1
+            return(data.frame(PFG = fg, auc, sens, spec, TSS))
+          }
+        } else
+        {
+          warning(paste0("Missing data!\n No simulation values for PFG ", fg))
+          return(data.frame(PFG = fg
+                            , AUC = NA, AUC.sd = NA
+                            , sensitivity = NA, sensitivity.sd = NA
+                            , specificity = NA, specificity.sd = NA
+                            , TSS = NA))
+          }
+      }
+      mat.valid = melt(mat.valid, id.vars = c("PFG", "AUC.sd", "sensitivity.sd", "specificity.sd"))
+      mat.valid$variable = factor(mat.valid$variable, c("sensitivity", "TSS", "specificity", "AUC"))
+      
+      mat.valid$AUC.sd[which(mat.valid$variable != "AUC")] = NA
+      mat.valid$sensitivity.sd[which(mat.valid$variable != "sensitivity")] = NA
+      mat.valid$specificity.sd[which(mat.valid$variable != "specificity")] = NA
+      
+      mat.valid$hline = 0.5
+      mat.valid$hline[which(mat.valid$variable == "AUC")] = 0.8
+      mat.valid$hline[which(mat.valid$variable == "TSS")] = 0.4
+
+      ## produce the plot ------------------------------------------------------------
+      ## 
+      pp = ggplot(mat.valid, aes_string(x = "PFG", y = "value", fill = "value")) +
+        scale_fill_gradientn(""
+                             , colors = brewer.pal(9, "RdYlGn")
+                             , breaks = seq(0, 1, 0.2)
+                             , limits = c(0, 1)) +
+        geom_bar(stat = "identity") +
+        geom_hline(aes_string(yintercept = "hline"), lty = 2, color = "grey30") +
+        geom_errorbar(aes(ymin = value - sensitivity.sd, ymax = value + sensitivity.sd), color = "grey30") +
+        geom_errorbar(aes(ymin = value - specificity.sd, ymax = value + specificity.sd), color = "grey30") +
+        geom_errorbar(aes(ymin = value - AUC.sd, ymax = value + AUC.sd), color = "grey30") +
+        facet_wrap(~ variable,
+                   labeller= as_labeller(c("sensitivity" = "Sensitivity\n True positive rate"
+                                           , "specificity" = "Specificity\n True negative rate"
+                                           , "TSS" = "True Skill Statistic (TSS)"
+                                           , "AUC" = "Area Under Curve (AUC)"))) +
+        ylim(0, 1) +
+        labs(x = "", y = "", title = paste0("GRAPH E : validation statistics - Simulation year : ", y),
+             subtitle = paste0("Sensitivity (or specificity) measures the proportion of actual positives (or negatives) that are correctly identified as such.\n"
+                               , "True skill statistic (TSS) values of -1 indicate predictive abilities of not better than a random model,\n"
+                               , "0 indicates an indiscriminate model and +1 a perfect model.\n"
+                               , "AUC corresponds to the area under the ROC curve (Receiver Operating Characteristic).\n")) +
+        theme_fivethirtyeight() +
+        theme(legend.key.width = unit(2, "lines")
+              , panel.spacing.x = unit(2, "lines"))
+      plot(pp)
+
+    }
+    cat("\n")
+    dev.off()
+    
+    ## ZIP the raster saved ------------------------------------------------------
+    .zip(dir.output.perPFG.allStrata, opt.no_CPU)
+    
+  }
+}
+

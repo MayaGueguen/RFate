@@ -74,3 +74,4 @@ reference:
       - "POST_FATE.graphic_evolutionCoverage"
       - "POST_FATE.graphic_mapPFGrichness"
       - "POST_FATE.graphic_mapPFGcover"
+      - "POST_FATE.graphic_validationStatistics"
