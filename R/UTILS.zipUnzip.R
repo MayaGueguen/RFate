@@ -1,6 +1,6 @@
 ##' @importFrom parallel mclapply
 
-.unzip = function(folder_name, nb_cores)
+.unzip_ALL = function(folder_name, nb_cores)
 {
   cat("\n UNZIP RASTER FILES from repository ", folder_name, "...\n")
   list_files = list.files(folder_name, pattern = ".gz$", full.names = T)

@@ -222,7 +222,9 @@ POST_FATE.graphic_mapPFGcover = function(
              st,
              ".tif.gz")
     }
-    .unzip(dir.output.perPFG.perStrata, raster.perPFG.perStrata, opt.no_CPU)
+    .unzip(folder_name = dir.output.perPFG.perStrata
+           , list_files = raster.perPFG.perStrata
+           , nb_cores = opt.no_CPU)
 
     ## get the data inside the rasters ---------------------------------------------
     pdf(file = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_D_map_PFGcover_", basename(dir.save), ".pdf")
@@ -278,7 +280,7 @@ POST_FATE.graphic_mapPFGcover = function(
     dev.off()
     
     ## ZIP the raster saved ------------------------------------------------------
-    .zip(dir.output.perPFG.perStrata, opt.no_CPU)
+    .zip(folder_name = dir.output.perPFG.perStrata, nb_cores = opt.no_CPU)
     
   }
 }

@@ -199,7 +199,9 @@ POST_FATE.graphic_mapPFGrichness = function(
              PFG,
              "_STRATA_all.tif.gz")
     }
-    .unzip(dir.output.perPFG.allStrata, raster.perPFG.allStrata, opt.no_CPU)
+    .unzip(folder_name = dir.output.perPFG.allStrata
+           , list_files = raster.perPFG.allStrata
+           , nb_cores = opt.no_CPU)
     
     
     ## get the data inside the rasters ---------------------------------------------
@@ -259,7 +261,7 @@ POST_FATE.graphic_mapPFGrichness = function(
     dev.off()
     
     ## ZIP the raster saved ------------------------------------------------------
-    .zip(dir.output.perPFG.allStrata, opt.no_CPU)
+    .zip(folder_name = dir.output.perPFG.allStrata, nb_cores = opt.no_CPU)
     
   }
 }

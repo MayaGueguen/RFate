@@ -197,7 +197,7 @@ POST_FATE.graphic_evolutionCoverage = function(
     no_1_mask = length(ind_1_mask)
     
     ## UNZIP the raster saved ------------------------------------------------------
-    .unzip(dir.output.perPFG.allStrata, opt.no_CPU)
+    .unzip_ALL(folder_name = dir.output.perPFG.allStrata, nb_cores = opt.no_CPU)
     
     
     ## get the data inside the rasters ---------------------------------------------
@@ -264,7 +264,7 @@ POST_FATE.graphic_evolutionCoverage = function(
     
     
     ## ZIP the raster saved ------------------------------------------------------
-    .zip(dir.output.perPFG.allStrata, opt.no_CPU)
+    .zip(folder_name = dir.output.perPFG.allStrata, nb_cores= opt.no_CPU)
     
   }
 }
