@@ -1,5 +1,15 @@
-##' #@export
-## @importFrom utils install.packages
+### HEADER #####################################################################
+##' @title Create a parameters file
+##' 
+##' @param params.file a \code{string} that corresponds to the 
+##' name of the file that will be created
+##' @param params.list a \code{list} containing all the parameters
+##' that will be included into \code{params.file}, and whose names
+##' correspond to the parameter names
+##' @param separator a \code{string} to separate each parameter
+##' values within the parameter file
+##'
+## END OF HEADER ###############################################################
 
 .createParams = function(params.file, params.list, separator = " ")
 {

@@ -7,11 +7,12 @@ simulation}
 \usage{
 PRE_FATE.params_globalParameters(name.simulation, opt.no_CPU = 1,
   opt.replacePrevious = FALSE, required.no_PFG, required.no_STRATA,
-  required.simul_duration, required.seeding_duration, required.seeding_timestep,
-  doDispersal = FALSE, doHabSuitability = FALSE, HABSUIT.ref_option,
-  doDisturbances = FALSE, DIST.no, DIST.no_sub, DIST.freq, doSoil = FALSE,
-  SOIL.no_categories, doFire = FALSE, doDrought = FALSE,
-  doHabStability = FALSE, doAliens = FALSE)
+  required.simul_duration, required.seeding_duration,
+  required.seeding_timestep, doDispersal = FALSE,
+  doHabSuitability = FALSE, HABSUIT.ref_option, doDisturbances = FALSE,
+  DIST.no, DIST.no_sub, DIST.freq, doSoil = FALSE, SOIL.no_categories,
+  doFire = FALSE, doDrought = FALSE, doHabStability = FALSE,
+  doAliens = FALSE)
 }
 \arguments{
 \item{name.simulation}{a \code{string} that corresponds to the main directory

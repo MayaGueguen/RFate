@@ -6,8 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create <em>SOIL</em> parameter files for a <code>FATE-HD</code>
-simulation — PRE_FATE.params_PFGsoil • RFate</title>
+<title>Load a <code>R</code> package and install it if necessary — .loadPackage • RFate</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -33,12 +32,9 @@ simulation — PRE_FATE.params_PFGsoil • RFate</title>
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Create <em>SOIL</em> parameter files for a <code>FATE-HD</code>
-simulation — PRE_FATE.params_PFGsoil" />
+<meta property="og:title" content="Load a <code>R</code> package and install it if necessary — .loadPackage" />
 
-<meta property="og:description" content="This script is designed to create parameter files containing 
-soil contribution and tolerance for each PFG (one file for each of them) 
-used in the soil module of FATE-HD." />
+<meta property="og:description" content="Load a R package and install it if necessary" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -148,94 +144,37 @@ used in the soil module of FATE-HD." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create <em>SOIL</em> parameter files for a <code>FATE-HD</code>
-simulation</h1>
-    <small class="dont-index">Source: <a href='https://github.com/MayaGueguen/RFate.git/blob/master/R/PRE_FATE.params_PFGsoil.R'><code>R/PRE_FATE.params_PFGsoil.R</code></a></small>
-    <div class="hidden name"><code>PRE_FATE.params_PFGsoil.Rd</code></div>
+    <h1>Load a <code>R</code> package and install it if necessary</h1>
+    <small class="dont-index">Source: <a href='https://github.com/MayaGueguen/RFate.git/blob/master/R/UTILS.loadPackage.R'><code>R/UTILS.loadPackage.R</code></a></small>
+    <div class="hidden name"><code>dot-loadPackage.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>This script is designed to create parameter files containing 
-soil contribution and tolerance for each PFG (one file for each of them) 
-used in the soil module of <code>FATE-HD</code>.</p>
+    <p>Load a <code>R</code> package and install it if necessary</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>PRE_FATE.params_PFGsoil</span>(<span class='no'>name.simulation</span>, <span class='no'>mat.PFG.soil</span>,
-  <span class='kw'>no.class</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/Extremes'>max</a></span>(<span class='no'>mat.PFG.soil</span>$<span class='no'>soil_tol_max</span>))</pre>
+    <pre class="usage"><span class='fu'>.loadPackage</span>(<span class='no'>package.name</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>name.simulation</th>
-      <td><p>a <code>string</code> that corresponds to the main directory
-or simulation name of the <code>FATE-HD</code> simulation</p></td>
-    </tr>
-    <tr>
-      <th>mat.PFG.soil</th>
-      <td><p>a <code>data.frame</code> with 5 columns : PFG, soil_contrib, 
-soil_tol_min, soil_tol_max</p></td>
-    </tr>
-    <tr>
-      <th>no.class</th>
-      <td><p>an <code>integer</code> that corresponds to the number of soil
-classes. Default value is the maximum value of soil_tol_max in <code>mat.PFG.soil</code></p></td>
+      <th>package.name</th>
+      <td><p>a <code>string</code> that corresponds to the 
+name of the package that will be load or installed</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>.txt</code> file per PFG into the <code>name.simulation/DATA/PFGS/SOIL/</code>
-directory with the following parameters :</p>
-<ul>
-<li><p>SOIL_CONTRIB</p></li>
-<li><p>SOIL_TOL</p></li>
-</ul>
-
-    
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>The soil module allows the user to simulate a primary vegetation succession 
-based on both light and soil competition. <br />
-Several parameters are required for each PFG in order to set up the soil competition :</p>
-<dl class='dl-horizontal'>
-  <dt>soil_contrib</dt><dd><p>a value between 0 and 10 corresponding to the Ellenberg 
-  nitrogen value of the PFG</p></dd>
-  <dt>soil_tol_min</dt><dd><p>the minimum Ellenberg nitrogen value tolerated by the PFG</p></dd>
-  <dt>soil_tol_max</dt><dd><p>the maximum Ellenberg nitrogen value tolerated by the PFG</p></dd>
-</dl>
-    
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='co'>## Create a skeleton folder with the default name ('FATE_simulation')</span>
-<span class='fu'><a href='PRE_FATE.skeletonDirectory.html'>PRE_FATE.skeletonDirectory</a></span>()
-
-<span class='co'>## Create PFG soil parameter files</span>
-<span class='fu'>PRE_FATE.params_PFGsoil</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
-                        , <span class='kw'>mat.PFG.soil</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/data.frame'>data.frame</a></span>(<span class='kw'>PFG</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"PFG1"</span>, <span class='st'>"PFG2"</span>, <span class='st'>"PFG3"</span>)
-                                                    , <span class='kw'>soil_contrib</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>2.5</span>, <span class='fl'>3</span>, <span class='fl'>4.8</span>)
-                                                    , <span class='kw'>soil_tol_min</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>3</span>)
-                                                    , <span class='kw'>soil_tol_max</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>3</span>, <span class='fl'>3</span>, <span class='fl'>6</span>)))
-
-<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
+                </ul>
 
-      <li><a href="#details">Details</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Maya Guéguen</p>
   </div>
 </div>
 

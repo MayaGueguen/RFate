@@ -5,8 +5,9 @@
 \title{Create a graphical representation of the evolution of PFG coverage
 and abundance through time for a \code{FATE-HD} simulation}
 \usage{
-POST_FATE.graphic_evolutionCoverage(name.simulation, file.simulParam = NULL,
-  no.years = 10, abund.fixedScale = TRUE, opt.no_CPU = 1)
+POST_FATE.graphic_evolutionCoverage(name.simulation,
+  file.simulParam = NULL, no.years = 10, abund.fixedScale = TRUE,
+  opt.no_CPU = 1)
 }
 \arguments{
 \item{name.simulation}{a \code{string} that corresponds to the main directory

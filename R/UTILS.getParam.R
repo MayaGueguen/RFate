@@ -1,5 +1,19 @@
-##' #@export
-## @importFrom utils install.packages
+### HEADER #####################################################################
+##' @title Etract a parameter value(s) from a parameter file
+##' 
+##' @param params.lines a \code{string} that corresponds to the 
+##' name of the file from which to extract the parameter value
+##' @param flag a \code{string} that corresponds to the parameter
+##' name to be extracted and that must be present into the
+##' \code{param.lines} file
+##' @param flag.split either " " or "^--.*--$", depending on the
+##' type of parameter file
+##' @param is.num default \code{TRUE}. If \code{TRUE}, the 
+##' extracted parameter is considered to be \code{numeric} and 
+##' will be processed as such
+##'
+## END OF HEADER ###############################################################
+
 
 .getParam = function(params.lines
                      , flag
