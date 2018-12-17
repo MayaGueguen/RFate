@@ -18,7 +18,7 @@
 ##' of the \code{FATE-HD} simulation
 ##' @param year an \code{integer} corresponding to the simulation year(s) that 
 ##' will be used to extract PFG abundance maps
-##' @param mat.PFG.obs a
+##' @param mat.PFG.obs a \code{data.frame} with 4 columns : PFG, X, Y, obs
 ##' @param opt.no_CPU default 1 (\emph{optional}). The number of resources that 
 ##' can be used to parallelize the \code{unzip/zip} of raster files
 ##' 
@@ -41,9 +41,30 @@
 ##'   }
 ##' }
 ##' 
+##' Observation records (presences and absences) are required for each PFG 
+##' within the \code{mat.PFG.obs} obejct :
+##' 
+##' \describe{
+##'   \item{\code{PFG}}{the concerned Plant Functional Group}
+##'   \item{\code{X} and \code{Y}}{the coordinates of each observations,
+##'   matching with the projection of the mask of \code{name.simulation}}
+##'   \item{\code{obs}}{either 0 or 1 to indicate presences or absences}
+##' }
 ##' 
 ##' 
-##' @return One \code{POST_FATE_[...].pdf} file is created : 
+##' 
+##' @return A \code{data.frame} with the following columns :
+##' \describe{
+##'   \item{\code{PFG}}{the concerned Plant Functional Group}
+##'   \item{\code{AUC.sd}}{standard deviation of the AUC values}
+##'   \item{\code{sensitivity.sd}}{standard deviation of the sensitivity values}
+##'   \item{\code{specificity.sd}}{standard deviation of the specificity values}
+##'   \item{\code{variable}}{name of the calculated statistic among 'sensitivity',
+##'   'specificity', 'TSS' and 'AUC'}
+##'   \item{\code{value}}{value of the corresponding statistic}
+##' }
+##' 
+##' One \code{POST_FATE_[...].pdf} file is created : 
 ##' \describe{
 ##'   \item{\file{GRAPHIC_E \cr validationStatistics}}{to assess the modeling 
 ##'   quality of each PFG based on given observations within the studied area}
@@ -62,12 +83,6 @@
 ##'                                  , file.simulParam = "Simul_parameters_V1.txt"
 ##'                                  , year = c(850, 950)
 ##'                                  , opt.no_CPU = 1)
-##'                                     
-##' POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
-##'                                  , file.simulParam = "Simul_parameters_V1.txt"
-##'                                  , year = 850
-##'                                  , opt.no_CPU = 1
-##'                                  , opt.strata = 2)
 ##' }
 ##'                                     
 ##'                                     
@@ -438,6 +453,7 @@ POST_FATE.graphic_validationStatistics = function(
     ## ZIP the raster saved ------------------------------------------------------
     .zip(folder_name = dir.output.perPFG.allStrata, nb_cores = opt.no_CPU)
     
+    return(mat.valid)
   }
 }
 

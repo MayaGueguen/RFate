@@ -189,7 +189,7 @@ will be used to extract PFG abundance maps</p></td>
     </tr>
     <tr>
       <th>mat.PFG.obs</th>
-      <td><p>a</p></td>
+      <td><p>a <code>data.frame</code> with 4 columns : PFG, X, Y, obs</p></td>
     </tr>
     <tr>
       <th>opt.no_CPU</th>
@@ -200,7 +200,17 @@ can be used to parallelize the <code>unzip/zip</code> of raster files</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>One <code>POST_FATE_[...].pdf</code> file is created :</p><dl class='dl-horizontal'>
+    <p>A <code>data.frame</code> with the following columns :</p><dl class='dl-horizontal'>
+  <dt><code>PFG</code></dt><dd><p>the concerned Plant Functional Group</p></dd>
+  <dt><code>AUC.sd</code></dt><dd><p>standard deviation of the AUC values</p></dd>
+  <dt><code>sensitivity.sd</code></dt><dd><p>standard deviation of the sensitivity values</p></dd>
+  <dt><code>specificity.sd</code></dt><dd><p>standard deviation of the specificity values</p></dd>
+  <dt><code>variable</code></dt><dd><p>name of the calculated statistic among 'sensitivity',
+  'specificity', 'TSS' and 'AUC'</p></dd>
+  <dt><code>value</code></dt><dd><p>value of the corresponding statistic</p></dd>
+</dl>
+
+<p>One <code>POST_FATE_[...].pdf</code> file is created :</p><dl class='dl-horizontal'>
   <dt><code class="file">GRAPHIC_E <br /> validationStatistics</code></dt><dd><p>to assess the modeling 
   quality of each PFG based on given observations within the studied area</p></dd>
 </dl>
@@ -220,6 +230,14 @@ maps are compressed again :</p>
   of the model for each Plant Functional Group</strong> and for each selected
   simulation year(s)</p></li>
 </ul>
+    <p>Observation records (presences and absences) are required for each PFG 
+within the <code>mat.PFG.obs</code> obejct :</p>
+<dl class='dl-horizontal'>
+  <dt><code>PFG</code></dt><dd><p>the concerned Plant Functional Group</p></dd>
+  <dt><code>X</code> and <code>Y</code></dt><dd><p>the coordinates of each observations,
+  matching with the projection of the mask of <code>name.simulation</code></p></dd>
+  <dt><code>obs</code></dt><dd><p>either 0 or 1 to indicate presences or absences</p></dd>
+</dl>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -235,12 +253,6 @@ maps are compressed again :</p>
                                  , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
                                  , <span class='kw'>year</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>850</span>, <span class='fl'>950</span>)
                                  , <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>)
-
-<span class='fu'>POST_FATE.graphic_validationStatistics</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
-                                 , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
-                                 , <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>850</span>
-                                 , <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>
-                                 , <span class='kw'>opt.strata</span> <span class='kw'>=</span> <span class='fl'>2</span>)
 <span class='co'># }</span># NOT RUN {
                                     
                                     
