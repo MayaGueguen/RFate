@@ -81,7 +81,7 @@
 ##'
 ##' @importFrom ggplot2 ggplot aes aes_string geom_raster geom_bar
 ##' geom_hline geom_errorbar scale_fill_gradientn facet_wrap
-##' ylim labs theme
+##' ylim labs theme stat_summary
 ##' @importFrom ggthemes theme_fivethirtyeight
 ##' @importFrom RColorBrewer brewer.pal
 ##' @importFrom grDevices pdf
@@ -300,7 +300,7 @@ POST_FATE.graphic_validationStatistics = function(
       }
       gp = PFG[which(file.exists(file_name))]
       file_name = file_name[which(file.exists(file_name))]
-
+      
       ras = stack(file_name) * ras.mask
       names(ras) = gp
       
@@ -343,7 +343,7 @@ POST_FATE.graphic_validationStatistics = function(
                             , sensitivity = NA, sensitivity.sd = NA
                             , specificity = NA, specificity.sd = NA
                             , TSS = NA))
-          }
+        }
       }
       mat.valid = melt(mat.valid, id.vars = c("PFG", "AUC.sd", "sensitivity.sd", "specificity.sd"))
       mat.valid$variable = factor(mat.valid$variable, c("sensitivity", "TSS", "specificity", "AUC"))
@@ -355,35 +355,78 @@ POST_FATE.graphic_validationStatistics = function(
       mat.valid$hline = 0.5
       mat.valid$hline[which(mat.valid$variable == "AUC")] = 0.8
       mat.valid$hline[which(mat.valid$variable == "TSS")] = 0.4
-
+      
       ## produce the plot ------------------------------------------------------------
-      ## 
+      ## 1. get the legend
       pp = ggplot(mat.valid, aes_string(x = "PFG", y = "value", fill = "value")) +
         scale_fill_gradientn(""
                              , colors = brewer.pal(9, "RdYlGn")
                              , breaks = seq(0, 1, 0.2)
                              , limits = c(0, 1)) +
         geom_bar(stat = "identity") +
-        geom_hline(aes_string(yintercept = "hline"), lty = 2, color = "grey30") +
-        geom_errorbar(aes(ymin = value - sensitivity.sd, ymax = value + sensitivity.sd), color = "grey30") +
-        geom_errorbar(aes(ymin = value - specificity.sd, ymax = value + specificity.sd), color = "grey30") +
-        geom_errorbar(aes(ymin = value - AUC.sd, ymax = value + AUC.sd), color = "grey30") +
-        facet_wrap(~ variable,
-                   labeller= as_labeller(c("sensitivity" = "Sensitivity\n True positive rate"
-                                           , "specificity" = "Specificity\n True negative rate"
-                                           , "TSS" = "True Skill Statistic (TSS)"
-                                           , "AUC" = "Area Under Curve (AUC)"))) +
         ylim(0, 1) +
-        labs(x = "", y = "", title = paste0("GRAPH E : validation statistics - Simulation year : ", y),
-             subtitle = paste0("Sensitivity (or specificity) measures the proportion of actual positives (or negatives) that are correctly identified as such.\n"
-                               , "True skill statistic (TSS) values of -1 indicate predictive abilities of not better than a random model,\n"
-                               , "0 indicates an indiscriminate model and +1 a perfect model.\n"
-                               , "AUC corresponds to the area under the ROC curve (Receiver Operating Characteristic).\n")) +
         theme_fivethirtyeight() +
         theme(legend.key.width = unit(2, "lines")
-              , panel.spacing.x = unit(2, "lines"))
-      plot(pp)
-
+              , panel.background = element_rect(fill = "transparent", colour = NA)
+              , plot.background = element_rect(fill = "transparent", colour = NA)
+              , legend.background = element_rect(fill = "transparent", colour = NA)
+              , legend.box.background = element_rect(fill = "transparent", colour = NA)
+              , legend.key = element_rect(fill = "transparent", colour = NA))
+      pp_leg = get_legend(pp)
+      
+      ## 2. get one plot for the title and for each statistic
+      pp_list = foreach(vari = c("all", "sensitivity", "specificity", "TSS", "AUC")) %do%
+      {
+        if (vari == "all"){
+          pp = ggplot(mat.valid, aes_string(x = "PFG", y = "value", fill = "value")) +
+            labs(x = "", y = "", title = paste0("GRAPH E : validation statistics - Simulation year : ", y),
+                 subtitle = paste0("Sensitivity (or specificity) measures the proportion of actual positives (or negatives) that are correctly identified as such.\n"
+                                   , "True skill statistic (TSS) values of -1 indicate predictive abilities of not better than a random model,\n"
+                                   , "0 indicates an indiscriminate model and +1 a perfect model.\n"
+                                   , "AUC corresponds to the area under the ROC curve (Receiver Operating Characteristic).\n")) +
+            theme_fivethirtyeight() +
+            theme(panel.background = element_rect(fill = "transparent", colour = NA)
+                  , panel.grid = element_blank()
+                  , axis.text = element_blank()
+                  , plot.background = element_rect(fill = "transparent", colour = NA)
+                  , legend.background = element_rect(fill = "transparent", colour = NA)
+                  , legend.box.background = element_rect(fill = "transparent", colour = NA)
+                  , legend.key = element_rect(fill = "transparent", colour = NA))
+        } else {
+          if (vari == "sensitivity") subti = "Sensitivity\n True positive rate"
+          if (vari == "specificity") subti = "Specificity\n True negative rate"
+          if (vari == "TSS") subti = "True Skill Statistic (TSS)"
+          if (vari == "AUC") subti = "Area Under Curve (AUC)"
+          pp = ggplot(mat.valid[which(mat.valid$variable == vari), ]
+                      , aes_string(x = "PFG", y = "value", fill = "value")) +
+            scale_fill_gradientn(guide = F
+                                 , colors = brewer.pal(9, "RdYlGn")
+                                 , breaks = seq(0, 1, 0.2)
+                                 , limits = c(0, 1)) +
+            scale_y_continuous(breaks = seq(0, 1, 0.2), limits = c(0, 1.2)) +
+            geom_bar(stat = "identity") +
+            geom_hline(aes_string(yintercept = "hline"), lty = 2, color = "grey30") +
+            geom_errorbar(aes(ymin = value - sensitivity.sd, ymax = value + sensitivity.sd), color = "grey30") +
+            geom_errorbar(aes(ymin = value - specificity.sd, ymax = value + specificity.sd), color = "grey30") +
+            geom_errorbar(aes(ymin = value - AUC.sd, ymax = value + AUC.sd), color = "grey30") +
+            annotate(geom = "text", x = no_PFG / 2, y = 1.12, label = subti, fontface = 'italic') +
+            theme_fivethirtyeight() +
+            theme(panel.background = element_rect(fill = "transparent", colour = NA)
+                  , plot.background = element_rect(fill = "transparent", colour = NA)
+                  , legend.background = element_rect(fill = "transparent", colour = NA)
+                  , legend.box.background = element_rect(fill = "transparent", colour = NA)
+                  , legend.key = element_rect(fill = "transparent", colour = NA))
+          
+          pp = ggMarginal(pp, type = "boxplot", margins = "y")
+        }
+        
+        return(pp)
+      }
+      
+      ## 3. gather everything
+      pp_list[[6]] = pp_leg
+      grid.arrange(grobs = pp_list, layout_matrix = matrix(c(1,1,2,3,2,3,4,5,4,5,6,6), ncol = 2, byrow = TRUE))
+      
     }
     cat("\n")
     dev.off()
