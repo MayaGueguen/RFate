@@ -135,7 +135,7 @@
 ##' 
 ##' @importFrom ggplot2 ggplot aes aes_string ggsave
 ##' geom_line geom_point geom_hline geom_vline geom_label geom_errorbar geom_path
-##' element_text element_blank
+##' element_text element_blank element_rect
 ##' scale_color_discrete scale_color_manual scale_shape_manual facet_grid labs theme
 ##' @importFrom ggthemes theme_fivethirtyeight
 ##' @importFrom ggrepel geom_label_repel
@@ -284,7 +284,12 @@ PRE_FATE.speciesClustering_step2 = function(clust.dendograms
                            "Species indicated with * will be removed from PFGs.\n",
                            "Non-represented PFG might be one-species-only.")) +
     theme_fivethirtyeight() +
-    theme(axis.ticks.x = element_blank())
+    theme(axis.ticks.x = element_blank()
+          , panel.background = element_rect(fill = "transparent", colour = NA)
+          , plot.background = element_rect(fill = "transparent", colour = NA)
+          , legend.background = element_rect(fill = "transparent", colour = NA)
+          , legend.box.background = element_rect(fill = "transparent", colour = NA)
+          , legend.key = element_rect(fill = "transparent", colour = NA))
   
   plot(pp3)
   
@@ -326,7 +331,12 @@ PRE_FATE.speciesClustering_step2 = function(clust.dendograms
                              "of all PFG's species mean distances to other species are kept.\n",
                              "Species indicated with * will be removed from PFGs.\n",
                              "Inertia ellipse are represented, with (solid) and without (dashed) non-determinant species.")) +
-      theme_fivethirtyeight()
+      theme_fivethirtyeight() +
+      theme(panel.background = element_rect(fill = "transparent", colour = NA)
+            , plot.background = element_rect(fill = "transparent", colour = NA)
+            , legend.background = element_rect(fill = "transparent", colour = NA)
+            , legend.box.background = element_rect(fill = "transparent", colour = NA)
+            , legend.key = element_rect(fill = "transparent", colour = NA))
     
     plot(pp4)
   }
@@ -337,5 +347,4 @@ PRE_FATE.speciesClustering_step2 = function(clust.dendograms
   
   return(list(determ.sp = determ$sp[which(determ$toSuppr == 0)], determ.all = determ))
 }
-  
-  
+

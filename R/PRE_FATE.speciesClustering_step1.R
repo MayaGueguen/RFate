@@ -151,7 +151,7 @@
 ##' @importFrom reshape2 melt
 ##' @importFrom ggplot2 ggplot aes aes_string ggsave
 ##' geom_line geom_point geom_vline geom_label
-##' element_text element_blank
+##' element_text element_blank element_rect
 ##' scale_color_manual scale_linetype_discrete facet_grid labs theme
 ##' @importFrom ggthemes theme_fivethirtyeight
 ##' @importFrom fpc cluster.stats
@@ -292,8 +292,13 @@ PRE_FATE.speciesClustering_step1 = function(mat.species.DIST)
     labs(x="", y = "", title = "STEP A : Choice of clustering method",
          subtitle = "Similarity between input and clustering distances (must be minimized, Mouchet et al. 2008)\ndepending on clustering method.") +
     theme_fivethirtyeight() +
-    theme(axis.ticks = element_blank(),
-          axis.text.y = element_text(angle = 0))
+    theme(axis.ticks = element_blank()
+          , axis.text.y = element_text(angle = 0)
+          , panel.background = element_rect(fill = "transparent", colour = NA)
+          , plot.background = element_rect(fill = "transparent", colour = NA)
+          , legend.background = element_rect(fill = "transparent", colour = NA)
+          , legend.box.background = element_rect(fill = "transparent", colour = NA)
+          , legend.key = element_rect(fill = "transparent", colour = NA))
   
   plot(pp1)
   
@@ -402,7 +407,12 @@ PRE_FATE.speciesClustering_step1 = function(mat.species.DIST)
          subtitle = paste0("Evolution of clustering evaluation variables with the number of clusters in each group.\n",
                            "All values except that of mVI must be maximized (check function's help for more details about the measures).\n",
                            "The number of clusters with values among the 3 best are highlighted.")) +
-    theme_fivethirtyeight() 
+    theme_fivethirtyeight() +
+    theme(panel.background = element_rect(fill = "transparent", colour = NA)
+          , plot.background = element_rect(fill = "transparent", colour = NA)
+          , legend.background = element_rect(fill = "transparent", colour = NA)
+          , legend.box.background = element_rect(fill = "transparent", colour = NA)
+          , legend.key = element_rect(fill = "transparent", colour = NA))
   
   plot(pp2)
   

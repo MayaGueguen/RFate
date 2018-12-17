@@ -76,7 +76,7 @@
 ##' 
 ##' @importFrom ggplot2 ggplot aes aes_string ggsave
 ##' geom_raster element_blank coord_equal
-##' scale_fill_gradientn labs theme
+##' scale_fill_gradientn labs theme element_rect
 ##' @importFrom ggthemes theme_fivethirtyeight
 ##' @importFrom RColorBrewer brewer.pal
 ##' @importFrom grDevices pdf
@@ -273,7 +273,12 @@ POST_FATE.graphic_mapPFGcover = function(
                                "then transformed into relative values by dividing by the maximum abundance obtained.\n")) +
         theme_fivethirtyeight() +
         theme(axis.text = element_blank()
-              , legend.key.width = unit(2, "lines"))
+              , legend.key.width = unit(2, "lines")
+              , panel.background = element_rect(fill = "transparent", colour = NA)
+              , plot.background = element_rect(fill = "transparent", colour = NA)
+              , legend.background = element_rect(fill = "transparent", colour = NA)
+              , legend.box.background = element_rect(fill = "transparent", colour = NA)
+              , legend.key = element_rect(fill = "transparent", colour = NA))
       plot(pp)
     }
     cat("\n")

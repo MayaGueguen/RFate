@@ -89,7 +89,7 @@
 ##' 
 ##' @importFrom ggplot2 ggplot aes aes_string ggsave
 ##' geom_line geom_point geom_hline geom_vline geom_label geom_errorbar geom_path
-##' element_text element_blank
+##' element_text element_blank element_rect
 ##' scale_color_discrete scale_color_manual scale_shape_manual facet_grid labs theme
 ##' @importFrom ggthemes theme_fivethirtyeight
 ##' @importFrom ggrepel geom_label_repel
@@ -247,7 +247,12 @@ POST_FATE.graphic_evolutionCoverage = function(
       labs(x = "", y = "", title = paste0("GRAPH A : evolution of species' space occupation"),
            subtitle = paste0("For each PFG, the line represents the evolution through time of its space occupancy,\n",
                              "meaning the percentage of pixels in which the abundance of the species is greater than 0.\n")) +
-      theme_fivethirtyeight()
+      theme_fivethirtyeight() +
+      theme(panel.background = element_rect(fill = "transparent", colour = NA)
+            , plot.background = element_rect(fill = "transparent", colour = NA)
+            , legend.background = element_rect(fill = "transparent", colour = NA)
+            , legend.box.background = element_rect(fill = "transparent", colour = NA)
+            , legend.key = element_rect(fill = "transparent", colour = NA))
     ggsave(filename = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_A_evolution_spaceOccupancy_", basename(dir.save), ".pdf")
            , plot = pp1, width = 10, height = 8)
     
@@ -258,7 +263,12 @@ POST_FATE.graphic_evolutionCoverage = function(
       labs(x = "", y = "", title = paste0("GRAPH B : evolution of species' abundance"),
            subtitle = paste0("For each PFG, the line represents the evolution through time of its abundance\n",
                              "over the whole studied area, meaning the sum of its abundances in every pixel.\n")) +
-      theme_fivethirtyeight()
+      theme_fivethirtyeight() +
+      theme(panel.background = element_rect(fill = "transparent", colour = NA)
+            , plot.background = element_rect(fill = "transparent", colour = NA)
+            , legend.background = element_rect(fill = "transparent", colour = NA)
+            , legend.box.background = element_rect(fill = "transparent", colour = NA)
+            , legend.key = element_rect(fill = "transparent", colour = NA))
     ggsave(filename = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_B_evolution_abundance_", basename(dir.save), ".pdf")
            , plot = pp2, width = 10, height = 8)
     
