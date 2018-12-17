@@ -81,8 +81,12 @@
 ##'
 ##' @importFrom ggplot2 ggplot aes aes_string geom_raster geom_bar
 ##' geom_hline geom_errorbar scale_fill_gradientn facet_wrap
-##' ylim labs theme stat_summary
+##' ylim labs theme annotate element_rect element_blank
+##' scale_y_continuous
 ##' @importFrom ggthemes theme_fivethirtyeight
+##' @importFrom ggExtra ggMarginal
+##' @importFrom gridExtra grid.arrange
+##' @importFrom cowplot get_legend
 ##' @importFrom RColorBrewer brewer.pal
 ##' @importFrom grDevices pdf
 ##' 

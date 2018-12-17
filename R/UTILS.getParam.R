@@ -1,5 +1,5 @@
 ### HEADER #####################################################################
-##' @title Etract a parameter value(s) from a parameter file
+##' @title Extract a parameter value(s) from a parameter file
 ##' 
 ##' @param params.lines a \code{string} that corresponds to the 
 ##' name of the file from which to extract the parameter value
