@@ -444,7 +444,9 @@ POST_FATE.graphic_validationStatistics = function(
       
       ## 3. gather everything
       pp_list[[6]] = pp_leg
-      grid.arrange(grobs = pp_list, layout_matrix = matrix(c(1,1,2,3,2,3,4,5,4,5,6,6), ncol = 2, byrow = TRUE))
+      grid.arrange(grobs = pp_list
+                   , layout_matrix = matrix(c(1,1,2,3,2,3,4,5,4,5,6,6), ncol = 2, byrow = TRUE)
+                   , newpage = ifelse(y == years[1], FALSE, TRUE))
       
     }
     cat("\n")
