@@ -412,8 +412,8 @@ POST_FATE.graphic_validationStatistics = function(
                   , legend.box.background = element_rect(fill = "transparent", colour = NA)
                   , legend.key = element_rect(fill = "transparent", colour = NA))
         } else {
-          if (vari == "sensitivity") subti = "Sensitivity\n True positive rate"
-          if (vari == "specificity") subti = "Specificity\n True negative rate"
+          if (vari == "sensitivity") subti = "Sensitivity - True positive rate"
+          if (vari == "specificity") subti = "Specificity - True negative rate"
           if (vari == "TSS") subti = "True Skill Statistic (TSS)"
           if (vari == "AUC") subti = "Area Under Curve (AUC)"
           pp = ggplot(mat.valid[which(mat.valid$variable == vari), ]
@@ -422,13 +422,13 @@ POST_FATE.graphic_validationStatistics = function(
                                  , colors = brewer.pal(9, "RdYlGn")
                                  , breaks = seq(0, 1, 0.2)
                                  , limits = c(0, 1)) +
-            scale_y_continuous(breaks = seq(0, 1, 0.2), limits = c(0, 1.2)) +
+            scale_y_continuous(breaks = seq(0, 1, 0.2), limits = c(0, 1.08)) +
             geom_bar(stat = "identity") +
             geom_hline(aes_string(yintercept = "hline"), lty = 2, color = "grey30") +
             geom_errorbar(aes(ymin = value - sensitivity.sd, ymax = value + sensitivity.sd), color = "grey30") +
             geom_errorbar(aes(ymin = value - specificity.sd, ymax = value + specificity.sd), color = "grey30") +
             geom_errorbar(aes(ymin = value - AUC.sd, ymax = value + AUC.sd), color = "grey30") +
-            annotate(geom = "text", x = no_PFG / 2, y = 1.12, label = subti, fontface = 'italic') +
+            annotate(geom = "text", x = no_PFG / 2, y = 1.05, label = subti, size = 4) +
             theme_fivethirtyeight() +
             theme(panel.background = element_rect(fill = "transparent", colour = NA)
                   , plot.background = element_rect(fill = "transparent", colour = NA)
@@ -436,7 +436,7 @@ POST_FATE.graphic_validationStatistics = function(
                   , legend.box.background = element_rect(fill = "transparent", colour = NA)
                   , legend.key = element_rect(fill = "transparent", colour = NA))
           
-          pp = ggMarginal(pp, type = "boxplot", margins = "y")
+          pp = ggMarginal(pp, type = "boxplot", margins = "y", size = 7)
         }
         
         return(pp)
@@ -445,6 +445,7 @@ POST_FATE.graphic_validationStatistics = function(
       ## 3. gather everything
       pp_list[[6]] = pp_leg
       grid.arrange(grobs = pp_list
+                   # , layout_matrix = matrix(c(1,1,1,1,2,3,2,3,2,3,4,5,4,5,4,5,6,6), ncol = 2, byrow = TRUE)
                    , layout_matrix = matrix(c(1,1,2,3,2,3,4,5,4,5,6,6), ncol = 2, byrow = TRUE)
                    , newpage = ifelse(y == years[1], FALSE, TRUE))
       

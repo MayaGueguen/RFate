@@ -61,7 +61,6 @@
 ##'   \item GLOBAL_MAX_BY_COHORT
 ##'   \item GLOBAL_MEDIUM_RESOURCES_THRESH
 ##'   \item GLOBAL_LOW_RESOURCES_THRESH
-##'   \item GLOBAL_FULL_SOIL_COVERAGE
 ##' }
 ##' 
 ##' 
@@ -172,16 +171,14 @@ PRE_FATE.params_namespaceConstants = function(
                              , as.integer(global.abund.high)
                              , as.integer(global.max.by.cohort)
                              , as.integer(global.resource.thresh.med)
-                             , as.integer(global.resource.thresh.low)
-                             , as.integer(9000000))
+                             , as.integer(global.resource.thresh.low))
   params.list = lapply(1:nrow(params.combi), function(x) {
     list(params.combi[x, 1]
          , params.combi[x, 2]
          , params.combi[x, 3]
          , params.combi[x, 4]
          , params.combi[x, 5]
-         , params.combi[x, 6]
-         , params.combi[x, 7])
+         , params.combi[x, 6])
   })
 
   no.start = 1
@@ -200,8 +197,7 @@ PRE_FATE.params_namespaceConstants = function(
                             , "GLOBAL_HIGH_ABUND"
                             , "GLOBAL_MAX_BY_COHORT"
                             , "GLOBAL_MEDIUM_RESOURCES_THRESH"
-                            , "GLOBAL_LOW_RESOURCES_THRESH"
-                            , "GLOBAL_FULL_SOIL_COVERAGE")
+                            , "GLOBAL_LOW_RESOURCES_THRESH")
   
   for (i in 1:length(params.list)){
     params = params.list[[i]]

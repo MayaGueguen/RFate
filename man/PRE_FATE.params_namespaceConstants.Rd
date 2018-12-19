@@ -51,7 +51,6 @@ directory with the following parameters :
   \item GLOBAL_MAX_BY_COHORT
   \item GLOBAL_MEDIUM_RESOURCES_THRESH
   \item GLOBAL_LOW_RESOURCES_THRESH
-  \item GLOBAL_FULL_SOIL_COVERAGE
 }
 }
 \description{
