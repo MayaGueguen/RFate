@@ -26,6 +26,9 @@
 ##' @param required.seeding_timestep an \code{integer} corresponding to the 
 ##' time interval at which occurs the seeding, and until the seeding duration
 ##'  is not over (\emph{in years})
+##' @param doLight default \code{FALSE}. If \code{TRUE}, light competition is 
+##' activated in the \code{FATE-HD} simulation, and associated parameters are 
+##' required
 ##' @param doDispersal default \code{FALSE}. If \code{TRUE}, seed dispersal is 
 ##' activated in the \code{FATE-HD} simulation, and associated parameters are 
 ##' required
@@ -89,7 +92,14 @@
 ##' if so, some additional parameters will be required :
 ##' 
 ##' \describe{
-##'   \item{DISPERSAL}{
+##'   \item{LIGHT}{= to influence plants fecundity and seed 
+##'   recruitment according to PFG preferences for light conditions \cr
+##'   = light resources are calculated as a proxy of PFG abundances
+##'   within each height stratum \cr
+##'   \cr \cr
+##'   }
+##'   \item{DISPERSAL}{= to allow plants to disperse seeds according
+##'   to 3 user-defined distances \cr
 ##'   \cr \cr
 ##'   }
 ##'   \item{HABITAT SUITABILITY}{= to influence plants fecundity and seed 
@@ -192,6 +202,12 @@
 ##'   \item SEEDING_TIMESTEP \cr \cr
 ##' }
 ##' 
+##' If the simulation includes \emph{light competition} :
+##' 
+##' \itemize{
+##'   \item DO_LIGHT_COMPETITION
+##' }
+##' 
 ##' If the simulation includes \emph{dispersal} :
 ##' 
 ##' \itemize{
@@ -257,6 +273,7 @@
 ##'                                  , required.simul_duration = 100
 ##'                                  , required.seeding_duration = 10
 ##'                                  , required.seeding_timestep = 1
+##'                                  , doLightCompetition = TRUE
 ##'                                  , doDispersal = TRUE
 ##'                                  , doHabSuitability = TRUE
 ##'                                  , HABSUIT.ref_option = 1
@@ -269,6 +286,7 @@
 ##'                                  , required.simul_duration = 100
 ##'                                  , required.seeding_duration = 10
 ##'                                  , required.seeding_timestep = 1
+##'                                  , doLightCompetition = TRUE
 ##'                                  , doDispersal = TRUE
 ##'                                  , doHabSuitability = TRUE
 ##'                                  , HABSUIT.ref_option = c(1,2)
@@ -288,6 +306,7 @@ PRE_FATE.params_globalParameters = function(
   , required.simul_duration
   , required.seeding_duration
   , required.seeding_timestep
+  , doLight = FALSE
   , doDispersal = FALSE
   , doHabSuitability = FALSE
   , HABSUIT.ref_option
@@ -296,9 +315,7 @@ PRE_FATE.params_globalParameters = function(
   , DIST.no_sub
   , DIST.freq
   , doSoil = FALSE
-  # , SOIL.def_value
   , SOIL.no_categories
-  # , SOIL.tresh_categories
   , doFire = FALSE
   # , FIRE.no
   # , FIRE.no_sub
@@ -355,6 +372,11 @@ PRE_FATE.params_globalParameters = function(
     .stopMessage_beInteger("required.seeding_timestep")
   }
   
+  if (doLight)
+  {
+    ## Nothing to do
+  }
+  
   if (doDispersal)
   {
     ## Nothing to do
@@ -388,6 +410,15 @@ PRE_FATE.params_globalParameters = function(
   
   #################################################################################################
   
+  if (doLight)
+  {
+    params.LIGHT = list(as.numeric(doLight))
+    names.params.list.LIGHT = c("DO_LIGHT_COMPETITION")
+  } else
+  {
+    params.LIGHT = list(as.numeric(doLight))
+    names.params.list.LIGHT = "DO_LIGHT_COMPETITION"
+  }
   if (doDispersal)
   {
     params.DISP = list(as.numeric(doDispersal))
@@ -484,6 +515,7 @@ PRE_FATE.params_globalParameters = function(
   
   params.list = lapply(1:nrow(params.combi), function(x) {
     res = lapply(1:ncol(params.combi), function(y) { params.combi[x, y] })
+    res = c(res, params.LIGHT)
     res = c(res, params.DISP)
     res = c(res, params.HABSUIT)
     res = c(res, params.DIST)
@@ -511,6 +543,7 @@ PRE_FATE.params_globalParameters = function(
                             , "SEEDING_DURATION"
                             , "SEEDING_TIMESTEP"
   )
+  names.params.list.sub = c(names.params.list.sub, names.params.list.LIGHT)
   names.params.list.sub = c(names.params.list.sub, names.params.list.DISP)
   names.params.list.sub = c(names.params.list.sub, names.params.list.HABSUIT)
   names.params.list.sub = c(names.params.list.sub, names.params.list.DIST)

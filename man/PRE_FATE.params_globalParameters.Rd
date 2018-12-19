@@ -8,7 +8,7 @@ simulation}
 PRE_FATE.params_globalParameters(name.simulation, opt.no_CPU = 1,
   opt.replacePrevious = FALSE, required.no_PFG, required.no_STRATA,
   required.simul_duration, required.seeding_duration,
-  required.seeding_timestep, doDispersal = FALSE,
+  required.seeding_timestep, doLight = FALSE, doDispersal = FALSE,
   doHabSuitability = FALSE, HABSUIT.ref_option, doDisturbances = FALSE,
   DIST.no, DIST.no_sub, DIST.freq, doSoil = FALSE, SOIL.no_categories,
   doFire = FALSE, doDrought = FALSE, doHabStability = FALSE,
@@ -39,6 +39,10 @@ duration of seeding (\emph{in years})}
 \item{required.seeding_timestep}{an \code{integer} corresponding to the 
 time interval at which occurs the seeding, and until the seeding duration
  is not over (\emph{in years})}
+
+\item{doLight}{default \code{FALSE}. If \code{TRUE}, light competition is 
+activated in the \code{FATE-HD} simulation, and associated parameters are 
+required}
 
 \item{doDispersal}{default \code{FALSE}. If \code{TRUE}, seed dispersal is 
 activated in the \code{FATE-HD} simulation, and associated parameters are 
@@ -87,6 +91,12 @@ directory with the following parameters :
   \item SIMULATION_DURATION
   \item SEEDING_DURATION
   \item SEEDING_TIMESTEP \cr \cr
+}
+
+If the simulation includes \emph{light competition} :
+
+\itemize{
+  \item DO_LIGHT_COMPETITION
 }
 
 If the simulation includes \emph{dispersal} :
@@ -180,7 +190,14 @@ The other modules of \code{FATE-HD} can be activated within this file, and
 if so, some additional parameters will be required :
 
 \describe{
-  \item{DISPERSAL}{
+  \item{LIGHT}{= to influence plants fecundity and seed 
+  recruitment according to PFG preferences for light conditions \cr
+  = light resources are calculated as a proxy of PFG abundances
+  within each height stratum \cr
+  \cr \cr
+  }
+  \item{DISPERSAL}{= to allow plants to disperse seeds according
+  to 3 user-defined distances \cr
   \cr \cr
   }
   \item{HABITAT SUITABILITY}{= to influence plants fecundity and seed 
@@ -282,6 +299,7 @@ PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                  , required.simul_duration = 100
                                  , required.seeding_duration = 10
                                  , required.seeding_timestep = 1
+                                 , doLightCompetition = TRUE
                                  , doDispersal = TRUE
                                  , doHabSuitability = TRUE
                                  , HABSUIT.ref_option = 1
@@ -294,6 +312,7 @@ PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                  , required.simul_duration = 100
                                  , required.seeding_duration = 10
                                  , required.seeding_timestep = 1
+                                 , doLightCompetition = TRUE
                                  , doDispersal = TRUE
                                  , doHabSuitability = TRUE
                                  , HABSUIT.ref_option = c(1,2)

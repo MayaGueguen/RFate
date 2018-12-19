@@ -163,7 +163,7 @@ containing <code>GLOBAL PARAMETERS</code> used in <code>FATE-HD</code> model.</p
     <pre class="usage"><span class='fu'>PRE_FATE.params_globalParameters</span>(<span class='no'>name.simulation</span>, <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>,
   <span class='kw'>opt.replacePrevious</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>required.no_PFG</span>, <span class='no'>required.no_STRATA</span>,
   <span class='no'>required.simul_duration</span>, <span class='no'>required.seeding_duration</span>,
-  <span class='no'>required.seeding_timestep</span>, <span class='kw'>doDispersal</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>required.seeding_timestep</span>, <span class='kw'>doLight</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>doDispersal</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>doHabSuitability</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>HABSUIT.ref_option</span>, <span class='kw'>doDisturbances</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='no'>DIST.no</span>, <span class='no'>DIST.no_sub</span>, <span class='no'>DIST.freq</span>, <span class='kw'>doSoil</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>SOIL.no_categories</span>,
   <span class='kw'>doFire</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>doDrought</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>doHabStability</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
@@ -212,6 +212,12 @@ duration of seeding (<em>in years</em>)</p></td>
       <td><p>an <code>integer</code> corresponding to the 
 time interval at which occurs the seeding, and until the seeding duration
  is not over (<em>in years</em>)</p></td>
+    </tr>
+    <tr>
+      <th>doLight</th>
+      <td><p>default <code>FALSE</code>. If <code>TRUE</code>, light competition is 
+activated in the <code>FATE-HD</code> simulation, and associated parameters are 
+required</p></td>
     </tr>
     <tr>
       <th>doDispersal</th>
@@ -290,6 +296,11 @@ directory with the following parameters :</p>
 <li><p>SEEDING_TIMESTEP <br /> <br /></p></li>
 </ul>
 
+<p>If the simulation includes <em>light competition</em> :</p>
+<ul>
+<li><p>DO_LIGHT_COMPETITION</p></li>
+</ul>
+
 <p>If the simulation includes <em>dispersal</em> :</p>
 <ul>
 <li><p>DO_DISPERSAL</p></li>
@@ -364,7 +375,14 @@ general characteristics of the simulation :</p>
     <p>The other modules of <code>FATE-HD</code> can be activated within this file, and
 if so, some additional parameters will be required :</p>
 <dl class='dl-horizontal'>
-  <dt>DISPERSAL</dt><dd><p><br /> <br /></p></dd>
+  <dt>LIGHT</dt><dd><p>= to influence plants fecundity and seed 
+  recruitment according to PFG preferences for light conditions <br />
+  = light resources are calculated as a proxy of PFG abundances
+  within each height stratum <br />
+  <br /> <br /></p></dd>
+  <dt>DISPERSAL</dt><dd><p>= to allow plants to disperse seeds according
+  to 3 user-defined distances <br />
+  <br /> <br /></p></dd>
   <dt>HABITAT SUITABILITY</dt><dd><p>= to influence plants fecundity and seed 
   recruitment according to PFG preferences for habitat conditions <br />
   = filter based 
@@ -458,6 +476,7 @@ if so, some additional parameters will be required :</p>
                                  , <span class='kw'>required.simul_duration</span> <span class='kw'>=</span> <span class='fl'>100</span>
                                  , <span class='kw'>required.seeding_duration</span> <span class='kw'>=</span> <span class='fl'>10</span>
                                  , <span class='kw'>required.seeding_timestep</span> <span class='kw'>=</span> <span class='fl'>1</span>
+                                 , <span class='kw'>doLightCompetition</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
                                  , <span class='kw'>doDispersal</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
                                  , <span class='kw'>doHabSuitability</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
                                  , <span class='kw'>HABSUIT.ref_option</span> <span class='kw'>=</span> <span class='fl'>1</span>
@@ -470,6 +489,7 @@ if so, some additional parameters will be required :</p>
                                  , <span class='kw'>required.simul_duration</span> <span class='kw'>=</span> <span class='fl'>100</span>
                                  , <span class='kw'>required.seeding_duration</span> <span class='kw'>=</span> <span class='fl'>10</span>
                                  , <span class='kw'>required.seeding_timestep</span> <span class='kw'>=</span> <span class='fl'>1</span>
+                                 , <span class='kw'>doLightCompetition</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
                                  , <span class='kw'>doDispersal</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
                                  , <span class='kw'>doHabSuitability</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
                                  , <span class='kw'>HABSUIT.ref_option</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>2</span>)
