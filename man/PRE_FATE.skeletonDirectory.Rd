@@ -43,6 +43,7 @@ The tree structure is detailed below :
     \item \strong{PFGS} :
     \itemize{
       \item \strong{SUCC} : all the PFG life history parameter files
+      \item \strong{LIGHT} : all the PFG light parameter files
       \item \strong{DISP} : all the PFG dispersal parameter files
       \item \strong{DIST} : all the PFG-response to disturbances parameter files
       \item \strong{SOIL} : all the PFG soil parameter files

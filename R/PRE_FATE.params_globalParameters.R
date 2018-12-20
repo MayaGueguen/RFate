@@ -273,7 +273,7 @@
 ##'                                  , required.simul_duration = 100
 ##'                                  , required.seeding_duration = 10
 ##'                                  , required.seeding_timestep = 1
-##'                                  , doLightCompetition = TRUE
+##'                                  , doLight = TRUE
 ##'                                  , doDispersal = TRUE
 ##'                                  , doHabSuitability = TRUE
 ##'                                  , HABSUIT.ref_option = 1
@@ -286,7 +286,7 @@
 ##'                                  , required.simul_duration = 100
 ##'                                  , required.seeding_duration = 10
 ##'                                  , required.seeding_timestep = 1
-##'                                  , doLightCompetition = TRUE
+##'                                  , doLight = TRUE
 ##'                                  , doDispersal = TRUE
 ##'                                  , doHabSuitability = TRUE
 ##'                                  , HABSUIT.ref_option = c(1,2)
