@@ -9,4 +9,5 @@
 ^codecov\.yml$
 ^_pkgdown\.yml$
 ^docs$
+^R_supplements$
 ^_FUNC_createRpackage_RFate\.R$
