@@ -36,7 +36,7 @@ traits_removeUninformative = function(traits)
   ## Remove traits with no values
   ind.noValue = which(is.na(traits$valeur) & nchar(traits$nom) == 0)
   head(traits[ind.noValue, ])
-  traits = traits[-ind.noValue, ]
+  if (length(ind.noValue) > 0) traits = traits[-ind.noValue, ]
   
   ## Remove traits with unknown information
   ind.Doubt = which(is.na(traits$valeur) & traits$nom %in% c("doubtful status"
@@ -67,7 +67,7 @@ traits_removeUninformative = function(traits)
   ind.Doubt = c(ind.Doubt, which(traits$CODE_simplified == "ROOT_DEPTH_INDK" & traits$nom == "Chamaephyte"))
   ind.Doubt = c(ind.Doubt, which(is.na(traits$valeur) & traits$nom == "maximum age unknown"))
   head(traits[ind.Doubt, ])
-  traits = traits[-ind.Doubt, ]
+  if (length(ind.Doubt) > 0) traits = traits[-ind.Doubt, ]
   
   ind.DoubleVal = which(!is.na(traits$valeur) & nchar(traits$nom) > 0)
   head(traits[ind.DoubleVal, ])
@@ -90,7 +90,7 @@ trait_remove = function(traits, trait.code)
 {
   cat("\n ==> REMOVE trait ", trait.code, "\n")
   ind.trait = which(traits$CODE_simplified %in% trait.code)
-  traits = traits[-ind.trait, ]
+  if (length(ind.trait) > 0) traits = traits[-ind.trait, ]
   
   return(traits)
 }
@@ -180,9 +180,7 @@ traits_change = function(traits)
   traits$nom[which(traits$CODE_simplified %in% c("POLL_MAIN_INDK", "POLL_2ND_INDK") & traits$nom == "apogamous")] = "autogamous"
   traits$nom[which(traits$CODE_simplified %in% c("POLL_MAIN_INDK", "POLL_2ND_INDK") & traits$nom == "mostly without fruits")] = "mostly without fruits-flowers"
   traits$nom[which(traits$CODE_simplified %in% c("POLL_MAIN_INDK", "POLL_2ND_INDK") & traits$nom == "mostly without flowers")] = "mostly without fruits-flowers"
-  
-  traits$Valeur[which(traits$Valeur == "large variation (II)_small variation (I)")] = "large variation (II)"
-  
+
   return(traits)
 }
 
@@ -262,7 +260,8 @@ get_traits_quali_merged = function(traits_quali)
   traits_quali.mean$value[which(traits_quali.mean$CODE == "CHANGE_TENDENCY_INDK" & traits_quali.mean$value == "=_>")] = "=->"
   traits_quali.mean$value[which(traits_quali.mean$CODE == "DISP_VITTOZ" & traits_quali.mean$value == "3_4")] = "4"
   traits_quali.mean$value[which(traits_quali.mean$CODE == "STRAT_INDK" & traits_quali.mean$value == "crs_css")] = "crs"
-
+  traits_quali.mean$value[which(traits_quali.mean$value == "large variation (II)_small variation (I)")] = "large variation (II)"
+  
   return(traits_quali.mean)
 }
 
