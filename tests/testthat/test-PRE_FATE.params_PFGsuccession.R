@@ -45,127 +45,97 @@ test_that("PRE_FATE.params_PFGsuccession gives error with wrong data : mat.PFG.s
                , "`mat.PFG.succ` must be a data.frame")
   
   expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation", mat.PFG.succ = data.frame())
-               , "`mat.PFG.succ` does not have the appropriate number of rows (>0) or columns (PFG, type, height, maturity, longevity, light)", fixed = T)
+               , "`mat.PFG.succ` does not have the appropriate number of rows (>0) or columns (PFG, type, height, maturity, longevity)", fixed = T)
   expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation", mat.PFG.succ = data.frame(1))
-               , "`mat.PFG.succ` does not have the appropriate number of rows (>0) or columns (PFG, type, height, maturity, longevity, light)", fixed = T)
-  expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation", mat.PFG.succ = data.frame(1,2,3,4,5,6))
-               , "Column names of `mat.PFG.succ` must be `PFG`, `type`, `height`, `maturity`, `longevity` and `light`")
+               , "`mat.PFG.succ` does not have the appropriate number of rows (>0) or columns (PFG, type, height, maturity, longevity)", fixed = T)
+  expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation", mat.PFG.succ = data.frame(1,2,3,4,5))
+               , "Column names of `mat.PFG.succ` must be `PFG`, `type`, `height`, `maturity` and `longevity`")
   
   expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
                                             , mat.PFG.succ = data.frame(PFG = 1, type = c(2,2), height = 3, maturity = 4
-                                                                        , longevity = 10, light = 2))
+                                                                        , longevity = 10))
                , "Column `PFG` of `mat.PFG.succ` must contain different values")
   expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(PFG = NA, type = 2, height = 3, maturity = 4
-                                                                         , longevity = 10, light = 2))
+                                                                         , longevity = 10))
                , "Column `PFG` of `mat.PFG.succ` must contain different values")
   expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(PFG = c(1,NA), type = c(2,2), height = 3, maturity = 4
-                                                                         , longevity = 10, light = 2))
+                                                                         , longevity = 10))
                , "Column `PFG` of `mat.PFG.succ` must contain different values")
   
   expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(PFG = "", type = NA, height = 3, maturity = 4
-                                                                         , longevity = 10, light = 2))
+                                                                         , longevity = 10))
                , "`mat.PFG.succ$PFG` must contain a character value of length > 0", fixed = T)
   
   expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(PFG = 1, type = NA, height = 3, maturity = 4
-                                                                         , longevity = 10, light = 2))
+                                                                         , longevity = 10))
                , "`mat.PFG.succ$type` must be either `H`, `C` or `P`", fixed = T)
   expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(PFG = 1, type = 2, height = 3, maturity = 4
-                                                                         , longevity = 10, light = 2))
+                                                                         , longevity = 10))
                , "`mat.PFG.succ$type` must be either `H`, `C` or `P`", fixed = T)
   expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(PFG = 1, type = "", height = 3, maturity = 4
-                                                                         , longevity = 10, light = 2))
+                                                                         , longevity = 10))
                , "`mat.PFG.succ$type` must be either `H`, `C` or `P`", fixed = T)
   expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(PFG = c(1,2), type = c(2,NA), height = 3, maturity = 4
-                                                                         , longevity = 10, light = 2))
+                                                                         , longevity = 10))
                , "`mat.PFG.succ$type` must be either `H`, `C` or `P`", fixed = T)
   
   expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = NA, maturity = 4
-                                                                         , longevity = 10, light = 2))
-               , "Columns `height`, `maturity`, `longevity` and `light` of `mat.PFG.succ` must contain numeric values")
+                                                                         , longevity = 10))
+               , "Columns `height`, `maturity` and `longevity` of `mat.PFG.succ` must contain numeric values")
   expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = "a", maturity = 4
-                                                                         , longevity = 10, light = 2))
-               , "Columns `height`, `maturity`, `longevity` and `light` of `mat.PFG.succ` must contain numeric values")
+                                                                         , longevity = 10))
+               , "Columns `height`, `maturity` and `longevity` of `mat.PFG.succ` must contain numeric values")
   expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = factor(1), maturity = 4
-                                                                         , longevity = 10, light = 2))
-               , "Columns `height`, `maturity`, `longevity` and `light` of `mat.PFG.succ` must contain numeric values")
+                                                                         , longevity = 10))
+               , "Columns `height`, `maturity` and `longevity` of `mat.PFG.succ` must contain numeric values")
   expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(PFG = c(1,2), type = "H", height = c(3,NA), maturity = 4
-                                                                         , longevity = 10,  light = 2))
-               , "Columns `height`, `maturity`, `longevity` and `light` of `mat.PFG.succ` must not contain NA values")
+                                                                         , longevity = 10))
+               , "Columns `height`, `maturity` and `longevity` of `mat.PFG.succ` must not contain NA values")
 
   expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = NA
-                                                                         , longevity = 10, light = 2))
-               , "Columns `height`, `maturity`, `longevity` and `light` of `mat.PFG.succ` must contain numeric values")
+                                                                         , longevity = 10))
+               , "Columns `height`, `maturity` and `longevity` of `mat.PFG.succ` must contain numeric values")
   expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = "a"
-                                                                         , longevity = 10, light = 2))
-               , "Columns `height`, `maturity`, `longevity` and `light` of `mat.PFG.succ` must contain numeric values")
+                                                                         , longevity = 10))
+               , "Columns `height`, `maturity` and `longevity` of `mat.PFG.succ` must contain numeric values")
   expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = factor(1)
-                                                                         , longevity = 10, light = 2))
-               , "Columns `height`, `maturity`, `longevity` and `light` of `mat.PFG.succ` must contain numeric values")
+                                                                         , longevity = 10))
+               , "Columns `height`, `maturity` and `longevity` of `mat.PFG.succ` must contain numeric values")
   expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(PFG = c(1,2), type = "H", height = 3, maturity = c(4,NA)
-                                                                         , longevity = 10, light = 2))
-               , "Columns `height`, `maturity`, `longevity` and `light` of `mat.PFG.succ` must not contain NA values")
+                                                                         , longevity = 10))
+               , "Columns `height`, `maturity` and `longevity` of `mat.PFG.succ` must not contain NA values")
   
   expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
-                                                                         , longevity = NA, light = 2))
-               , "Columns `height`, `maturity`, `longevity` and `light` of `mat.PFG.succ` must contain numeric values")
+                                                                         , longevity = NA))
+               , "Columns `height`, `maturity` and `longevity` of `mat.PFG.succ` must contain numeric values")
   expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
-                                                                         , longevity = "a", light = 2))
-               , "Columns `height`, `maturity`, `longevity` and `light` of `mat.PFG.succ` must contain numeric values")
+                                                                         , longevity = "a"))
+               , "Columns `height`, `maturity` and `longevity` of `mat.PFG.succ` must contain numeric values")
   expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
-                                                                         , longevity = factor(1), light = 2))
-               , "Columns `height`, `maturity`, `longevity` and `light` of `mat.PFG.succ` must contain numeric values")
+                                                                         , longevity = factor(1)))
+               , "Columns `height`, `maturity` and `longevity` of `mat.PFG.succ` must contain numeric values")
   expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(PFG = c(1,2), type = "H", height = 3, maturity = 4
-                                                                         , longevity = c(10,NA), light = 2))
-               , "Columns `height`, `maturity`, `longevity` and `light` of `mat.PFG.succ` must not contain NA values")
-
-  
-  expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
-                                             , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
-                                                                         , longevity = 10, light = NA))
-               , "Columns `height`, `maturity`, `longevity` and `light` of `mat.PFG.succ` must contain numeric values")
-  expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
-                                             , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
-                                                                         , longevity = 10, light = "a"))
-               , "Columns `height`, `maturity`, `longevity` and `light` of `mat.PFG.succ` must contain numeric values")
-  expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
-                                             , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
-                                                                         , longevity = 10, light = factor(1)))
-               , "Columns `height`, `maturity`, `longevity` and `light` of `mat.PFG.succ` must contain numeric values")
-  expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
-                                             , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
-                                                                         , longevity = 10, light = -1))
-               , "Column `light` of `mat.PFG.succ` must contain values between 0 and 10")
-  expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
-                                             , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
-                                                                         , longevity = 10, light = 1.5))
-               , "Column `light` of `mat.PFG.succ` must contain values between 0 and 10")
-  expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
-                                             , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
-                                                                         , longevity = 10, light = 11))
-               , "Column `light` of `mat.PFG.succ` must contain values between 0 and 10")
-  expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
-                                             , mat.PFG.succ = data.frame(PFG = c(1,2), type = "H", height = 3, maturity = 4
-                                                                         , longevity = 10, light = c(2,NA)))
-               , "Columns `height`, `maturity`, `longevity` and `light` of `mat.PFG.succ` must not contain NA values")
+                                                                         , longevity = c(10,NA)))
+               , "Columns `height`, `maturity` and `longevity` of `mat.PFG.succ` must not contain NA values")
 })
 
 
@@ -178,15 +148,13 @@ test_that("PRE_FATE.params_PFGsuccession gives correct output", {
                                                                            , type = c("C", "C", "H", "H", "P", "P")
                                                                            , height = c(10, 250, 36, 68, 1250, 550)
                                                                            , maturity = c(5, 5, 3, 3, 8, 9)
-                                                                           , longevity = c(12, 200, 25, 4, 110, 70)
-                                                                           , light = c(4, 6, 3, 6, 5, 5)))
+                                                                           , longevity = c(12, 200, 25, 4, 110, 70)))
                , "The parameter file FATE_simulation/DATA/PFGS/SUCC/SUCC_PFG1.txt has been successfully created !")
   expect_warning(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
                                                , mat.PFG.succ = data.frame(PFG = paste0("PFG",1:6)
                                                                            , type = c("C", "C", "H", "H", "P", "P")
                                                                            , height = c(10, 250, 36, 68, 1250, 550)
                                                                            , maturity = c(5, 5, 3, 3, 8, 9)
-                                                                           , longevity = c(12, 200, 25, 4, 110, 70)
-                                                                           , light = c(4, 6, 3, 6, 5, 5)))
+                                                                           , longevity = c(12, 200, 25, 4, 110, 70)))
                  , "already exists. It will be replaced.")
 })

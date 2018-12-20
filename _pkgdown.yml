@@ -64,6 +64,7 @@ reference:
       - "PRE_FATE.params_saveYears"
       - "PRE_FATE.params_changingYears"
       - "PRE_FATE.params_PFGsuccession"
+      - "PRE_FATE.params_PFGlight"
       - "PRE_FATE.params_PFGdispersal"
       - "PRE_FATE.params_PFGdisturbance"
       - "PRE_FATE.params_PFGsoil"

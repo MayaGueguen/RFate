@@ -21,7 +21,7 @@
 ##' @details
 ##' 
 ##' The soil module allows the user to simulate a primary vegetation succession 
-##' based on both light and soil competition. \cr
+##' based on soil competition. \cr
 ##' Several parameters are required for each PFG in order to set up the soil competition :
 ##' 
 ##' \describe{

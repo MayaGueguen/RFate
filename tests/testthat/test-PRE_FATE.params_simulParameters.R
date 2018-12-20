@@ -112,8 +112,7 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : name.si
                                                             , type = c("C", "C", "H", "H", "P", "P")
                                                             , height = c(10, 250, 36, 68, 1250, 550)
                                                             , maturity = c(5, 5, 3, 3, 8, 9)
-                                                            , longevity = c(12, 200, 25, 4, 110, 70)
-                                                            , light = c(4, 6, 3, 6, 5, 5)))
+                                                            , longevity = c(12, 200, 25, 4, 110, 70)))
   expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif")
                , "There is not the same number of files (`.txt` file starting with `DISP`) into the DATA/PFGS/DISP/ folder as the number of PFG indicated into the file"
                , fixed = T)

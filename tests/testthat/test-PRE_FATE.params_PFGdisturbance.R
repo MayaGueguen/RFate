@@ -149,8 +149,7 @@ test_that("PRE_FATE.params_PFGdisturbance gives error with wrong data : mat.PFG.
                                                             , type = c("C", "C", "H", "H", "P", "P")
                                                             , height = c(10, 250, 36, 68, 1250, 550)
                                                             , maturity = c(5, 5, 3, 3, 8, 9)
-                                                            , longevity = c(12, 200, 25, 4, 110, 70)
-                                                            , light = c(4, 6, 3, 6, 5, 5)))
+                                                            , longevity = c(12, 200, 25, 4, 110, 70)))
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation")
                , "`mat.PFG.dist` must be a data.frame")
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation", mat.PFG.dist = NA)
@@ -237,8 +236,7 @@ test_that("PRE_FATE.params_PFGdisturbance gives correct output", {
                                                             , type = c("C", "C", "H", "H", "P", "P")
                                                             , height = c(10, 250, 36, 68, 1250, 550)
                                                             , maturity = c(5, 5, 3, 3, 8, 9)
-                                                            , longevity = c(12, 200, 25, 4, 110, 70)
-                                                            , light = c(4, 6, 3, 6, 5, 5)))
+                                                            , longevity = c(12, 200, 25, 4, 110, 70)))
   
   expect_message(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                                , mat.PFG.dist = data.frame(name = "DIST1", responseStage = 1

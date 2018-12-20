@@ -139,8 +139,7 @@ PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
                                                         , type = c("C", "C", "H", "H", "P", "P")  
                                                         , height = c(10, 250, 36, 68, 1250, 550)
                                                         , maturity = c(5, 5, 3, 3, 8, 9)
-                                                        , longevity = c(12, 200, 25, 4, 110, 70)
-                                                        , light = c(4, 6, 3, 6, 5, 5)))
+                                                        , longevity = c(12, 200, 25, 4, 110, 70)))
                                                         
 ## Create PFG disturbance parameter files
 PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
