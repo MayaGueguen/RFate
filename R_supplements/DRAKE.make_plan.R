@@ -1,0 +1,57 @@
+
+rm(list = ls())
+
+path.data = "/home/gueguen/Documents/_SCRIPTS/2018_12_AndrosaceAllTraits/"
+setwd(path.data)
+
+library(data.table)
+library(foreach)
+library(reshape2)
+library(ggplot2)
+library(ggthemes)
+library(doParallel)
+library(drake)
+
+registerDoParallel(cores = 7)
+
+source("SCRIPT_AndrosaceAllTraits.R")
+
+# clean()
+PLAN = drake_plan(traits = fread(file_in('AndrosaceAllTraits_181210.csv'))
+                  # , data_raw = view_data(traits)
+                  , data_1 = traits_merge(traits)
+                  , data_2 = traits_removeUninformative(data_1)
+                  , data_3 = traits_remove(data_2)
+                  , data_4 = traits_change(data_3)
+                  , data.split = data_split(data_4)
+                  , traits.genre = traits_genre(data_4)
+                  , traits.quant = data.split[[1]]
+                  , traits.quali = data.split[[2]]
+                  , traits.quant.med = get_traits_quant_median(traits.quant)
+                  , traits.quant.med_suppr = traits_thresholdGenus(traits.quant.med, traits.genre)
+                  , traits.quali.med = get_traits_quali_merged(traits.quali)
+                  , traits.quali.med_suppr = traits_thresholdGenus(traits.quali.med, traits.genre)
+                  , save.quant = traits_save(traits.quant.med, file_out("TRAITS_quantitative_median_181210.csv"))
+                  , save.quali = traits_save(traits.quali.med, file_out("TRAITS_qualitative_181210_VAR.csv"))
+                  , graph.quant = graph_barplot(traits.quant.med, file_out("GRAPH1_numberValuesPerTrait_quanti.pdf"))
+                  , graph.quali = graph_barplot(traits.quali.med, file_out("GRAPH2_numberValuesPerTrait_quali.pdf"))
+)
+print(PLAN)
+
+vis_drake_graph(drake_config(PLAN)
+                , targets_only = TRUE)
+make(PLAN)
+vis_drake_graph(drake_config(PLAN)
+                , targets_only = TRUE)
+
+# loadd(data_3)
+# loadd(traits.quali)
+# hop = traits.quali[grep("^POLL", traits.quali$CODE), ]
+# hop = unique(hop[, c("CODE_simplified", "nom")])
+
+loadd(traits.quali.med_suppr)
+tmp = table(traits.quali.med_suppr[, c("CODE", "value")])
+tmp = as.data.frame(tmp)
+tmp = tmp[which(tmp$Freq > 0), ]
+
+sort(table(tmp$CODE))
