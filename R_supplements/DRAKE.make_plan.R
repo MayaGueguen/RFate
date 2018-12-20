@@ -1,9 +1,7 @@
 
 rm(list = ls())
 
-path.data = "/home/gueguen/Documents/_SCRIPTS/2018_12_AndrosaceAllTraits/"
-setwd(path.data)
-
+library(RPostgreSQL)
 library(data.table)
 library(foreach)
 library(reshape2)
@@ -14,11 +12,14 @@ library(drake)
 
 registerDoParallel(cores = 7)
 
-source("SCRIPT_AndrosaceAllTraits.R")
+source("RFate/R_supplements/DRAKE.PRE_FATE.data_getDB.R")
+source("RFate/R_supplements/DRAKE.PRE_FATE.data_getTraitsPerSpecies.R")
+
+path.data = "RFate/data/"
+setwd(path.data)
 
 # clean()
-PLAN = drake_plan(traits = fread(file_in('AndrosaceAllTraits_181210.csv'))
-                  # , data_raw = view_data(traits)
+PLAN = drake_plan(traits = getDB()
                   , data_1 = traits_merge(traits)
                   , data_2 = traits_removeUninformative(data_1)
                   , data_3 = traits_remove(data_2)
@@ -31,8 +32,8 @@ PLAN = drake_plan(traits = fread(file_in('AndrosaceAllTraits_181210.csv'))
                   , traits.quant.med_suppr = traits_thresholdGenus(traits.quant.med, traits.genre)
                   , traits.quali.med = get_traits_quali_merged(traits.quali)
                   , traits.quali.med_suppr = traits_thresholdGenus(traits.quali.med, traits.genre)
-                  , save.quant = traits_save(traits.quant.med, file_out("TRAITS_quantitative_median_181210.csv"))
-                  , save.quali = traits_save(traits.quali.med, file_out("TRAITS_qualitative_181210_VAR.csv"))
+                  , save.quant = traits_save(traits.quant.med, file_out("TRAITS_quantitative_median_181220.csv"))
+                  , save.quali = traits_save(traits.quali.med, file_out("TRAITS_qualitative_181220.csv"))
                   , graph.quant = graph_barplot(traits.quant.med, file_out("GRAPH1_numberValuesPerTrait_quanti.pdf"))
                   , graph.quali = graph_barplot(traits.quali.med, file_out("GRAPH2_numberValuesPerTrait_quali.pdf"))
 )
@@ -49,9 +50,9 @@ vis_drake_graph(drake_config(PLAN)
 # hop = traits.quali[grep("^POLL", traits.quali$CODE), ]
 # hop = unique(hop[, c("CODE_simplified", "nom")])
 
-loadd(traits.quali.med_suppr)
-tmp = table(traits.quali.med_suppr[, c("CODE", "value")])
-tmp = as.data.frame(tmp)
-tmp = tmp[which(tmp$Freq > 0), ]
+# loadd(traits.quali.med_suppr)
+# tmp = table(traits.quali.med_suppr[, c("CODE", "value")])
+# tmp = as.data.frame(tmp)
+# tmp = tmp[which(tmp$Freq > 0), ]
 
-sort(table(tmp$CODE))
+# sort(table(tmp$CODE))

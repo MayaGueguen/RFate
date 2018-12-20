@@ -82,7 +82,6 @@ traits_removeUninformative = function(traits)
   # ind.VAR = grep("_INDK_VAR$", traits$CODE_simplified)
   # head(traits[ind.VAR, ])
   # traits = traits[-ind.VAR, ]
-  traits$Valeur[which(traits$Valeur == "large variation (II)_small variation (I)")] = "large variation (II)"
   
   return(traits)
 }
@@ -91,7 +90,6 @@ trait_remove = function(traits, trait.code)
 {
   cat("\n ==> REMOVE trait ", trait.code, "\n")
   ind.trait = which(traits$CODE_simplified %in% trait.code)
-  # print(head(traits[ind.trait, ]))
   traits = traits[-ind.trait, ]
   
   return(traits)
@@ -182,6 +180,9 @@ traits_change = function(traits)
   traits$nom[which(traits$CODE_simplified %in% c("POLL_MAIN_INDK", "POLL_2ND_INDK") & traits$nom == "apogamous")] = "autogamous"
   traits$nom[which(traits$CODE_simplified %in% c("POLL_MAIN_INDK", "POLL_2ND_INDK") & traits$nom == "mostly without fruits")] = "mostly without fruits-flowers"
   traits$nom[which(traits$CODE_simplified %in% c("POLL_MAIN_INDK", "POLL_2ND_INDK") & traits$nom == "mostly without flowers")] = "mostly without fruits-flowers"
+  
+  traits$Valeur[which(traits$Valeur == "large variation (II)_small variation (I)")] = "large variation (II)"
+  
   return(traits)
 }
 
