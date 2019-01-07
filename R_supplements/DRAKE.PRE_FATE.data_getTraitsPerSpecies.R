@@ -51,6 +51,7 @@ traits_removeUninformative = function(traits)
                                                              , "not observed in the area" ## POLL_MAIN_INDK
                                                              , "species hardly grows in grasslands" ## MOW_TOLERANCE_INDK
                                                              , "no indication (epiphytes)" ## ELLMOISTVAR_INDK, ELLNIT_INDK, ELLREAC_INDK
+                                                             , "no indication (indifferent taxon or epiphyte)"
                                                              , "no indication (taxa that are indifferent or do not root in the soil)" ## ELLAER_INDK
                                                              , "no indication (taxa that do not root in the soil)" ## ELLAER_INDK, ELLHUMUS_INDK
                                                              , "no roots present" ## ROOT_DEPTH_INDK
@@ -181,6 +182,36 @@ traits_change = function(traits)
   traits$nom[which(traits$CODE_simplified %in% c("POLL_MAIN_INDK", "POLL_2ND_INDK") & traits$nom == "mostly without fruits")] = "mostly without fruits-flowers"
   traits$nom[which(traits$CODE_simplified %in% c("POLL_MAIN_INDK", "POLL_2ND_INDK") & traits$nom == "mostly without flowers")] = "mostly without fruits-flowers"
 
+  ## Change qualitative classes
+  ind.LHIST = which(traits$CODE_simplified %in% c("LHIST"))
+  head(traits[ind.LHIST, ])
+  traits$nom[which(traits$CODE_simplified %in% c("LHIST") & traits$nom == "Hydrogeophyte")] = "Hydrophyte"
+  traits$nom[which(traits$CODE_simplified %in% c("LHIST") & traits$nom == "Hydrohemicryptophyte")] = "Hydrophyte"
+  
+  ind.LHIST_INDK = which(traits$CODE_simplified %in% c("LHIST_INDK"))
+  head(traits[ind.LHIST_INDK, ])
+  traits$nom[which(traits$CODE_simplified %in% c("LHIST_INDK") & traits$nom == "biennial to several-year old hapaxanthic species")] = "Geophyte_Hemicryptophyte"
+  traits$nom[which(traits$CODE_simplified %in% c("LHIST_INDK") & traits$nom == "carnivorous plants")] = "Carnivorous"
+  traits$nom[which(traits$CODE_simplified %in% c("LHIST_INDK") & traits$nom == "chamaephyte-hemicryptophyte")] = "Chamaephyte_Hemicryptophyte"
+  traits$nom[which(traits$CODE_simplified %in% c("LHIST_INDK") & traits$nom == "climber")] = "Climber"
+  traits$nom[which(traits$CODE_simplified %in% c("LHIST_INDK") & traits$nom == "epiphyte")] = "Epiphyte"
+  traits$nom[which(traits$CODE_simplified %in% c("LHIST_INDK") & traits$nom == "full parasite")] = "Parasite"
+  traits$nom[which(traits$CODE_simplified %in% c("LHIST_INDK") & traits$nom == "hemiparasite")] = "Parasite"
+  traits$nom[which(traits$CODE_simplified %in% c("LHIST_INDK") & traits$nom == "geophyte")] = "Geophyte"
+  traits$nom[which(traits$CODE_simplified %in% c("LHIST_INDK") & traits$nom == "hemicryptophyte (long-lived)")] = "Hemicryptophyte"
+  traits$nom[which(traits$CODE_simplified %in% c("LHIST_INDK") & traits$nom == "hemicryptophyte (short-lived)")] = "Hemicryptophyte"
+  traits$nom[which(traits$CODE_simplified %in% c("LHIST_INDK") & traits$nom == "herbaceous chamaephyte")] = "Chamaephyte_Hemicryptophyte"
+  traits$nom[which(traits$CODE_simplified %in% c("LHIST_INDK") & traits$nom == "hydrophyte")] = "Hydrophyte"
+  traits$nom[which(traits$CODE_simplified %in% c("LHIST_INDK") & traits$nom == "nanophanerophyte")] = "Phanerophyte"
+  traits$nom[which(traits$CODE_simplified %in% c("LHIST_INDK") & traits$nom == "nanophanerophytes-hemicryptophyte")] = "Hemicryptophyte_Phanerophyte"
+  traits$nom[which(traits$CODE_simplified %in% c("LHIST_INDK") & traits$nom == "phanerophyte")] = "Phanerophyte"
+  traits$nom[which(traits$CODE_simplified %in% c("LHIST_INDK") & traits$nom == "pleustophyte")] = "Pleustophyte"
+  traits$nom[which(traits$CODE_simplified %in% c("LHIST_INDK") & traits$nom == "saprophyte")] = "Saprophyte"
+  traits$nom[which(traits$CODE_simplified %in% c("LHIST_INDK") & traits$nom == "therophyte")] = "Therophyte"
+  traits$nom[which(traits$CODE_simplified %in% c("LHIST_INDK") & traits$nom == "woody chamaephyte")] = "Chamaephyte"
+  
+  traits$CODE_simplified[ind.LHIST_INDK] = "LHIST"
+  
   return(traits)
 }
 
@@ -244,6 +275,9 @@ get_traits_quali_merged = function(traits_quali)
       val.source = paste0(val.source, collapse = "_")
 
       val.nom = sort(unique(tab.sp$nom))
+      val.nom = sapply(val.nom, function(x) strsplit(as.character(x), "_")[[1]])
+      val.nom = unlist(val.nom)
+      val.nom = sort(unique(val.nom))
       val.nom = val.nom[which(nchar(val.nom) > 0)]
       val.nom = paste0(val.nom, collapse = "_")
       return(data.frame(CODE = unique(tab.sp$CODE_simplified)
@@ -261,6 +295,7 @@ get_traits_quali_merged = function(traits_quali)
   traits_quali.mean$value[which(traits_quali.mean$CODE == "DISP_VITTOZ" & traits_quali.mean$value == "3_4")] = "4"
   traits_quali.mean$value[which(traits_quali.mean$CODE == "STRAT_INDK" & traits_quali.mean$value == "crs_css")] = "crs"
   traits_quali.mean$value[which(traits_quali.mean$value == "large variation (II)_small variation (I)")] = "large variation (II)"
+  traits_quali.mean$value[which(traits_quali.mean$CODE == "WOODY" & traits_quali.mean$value == "Herbaceous_Suffrutescent")] = "Herbaceous"
   
   return(traits_quali.mean)
 }
