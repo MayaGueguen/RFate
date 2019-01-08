@@ -12,7 +12,7 @@ library(drake)
 
 registerDoParallel(cores = 7)
 
-source("RFate/R_supplements/DRAKE.PRE_FATE.data_getDB.R")
+source("RFate/R_supplements/DRAKE.PRE_FATE.data_getDB_traits.R")
 source("RFate/R_supplements/DRAKE.PRE_FATE.data_getTraitsPerSpecies.R")
 source("RFate/R_supplements/DRAKE.PRE_FATE.data_getTraitsFATErelated.R")
 
