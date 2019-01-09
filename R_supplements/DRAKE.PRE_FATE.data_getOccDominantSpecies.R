@@ -62,11 +62,13 @@ getOcc_3_matDom = function(sp.SELECT, observations.xy, stations.COMMUNITY, zone.
 {
   ## Get dominant species observations
   sp.SELECT.occ = merge(sp.SELECT[, c("numtaxon", "genre", "libcbna")], observations.xy, by = "numtaxon")
+  sp.SELECT.occ$numchrono = paste0("NUMCHRONO-", sp.SELECT.occ$numchrono)
   
   ## Transform into sites x species matrix
   mat.sites.species = tapply(X = sp.SELECT.occ$codecover
                              , INDEX = list(sp.SELECT.occ$numchrono, sp.SELECT.occ$numtaxon)
-                             , FUN = length)
+                             , FUN = function(x) return(1))
+  stations.COMMUNITY = paste0("NUMCHRONO-", stations.COMMUNITY)
   ind.COMMUNITY = which(rownames(mat.sites.species) %in% stations.COMMUNITY)
   for(i in ind.COMMUNITY)
   {
@@ -102,6 +104,10 @@ getOcc_3_occDom = function(mat.sites.species, species, zone.name)
   cat(" ==> No absence data for :", sp.suppr)
   dom_missing = species[which(species$numtaxon %in% sp.suppr), ]
   write.csv(dom_missing, file = paste0(zone.name, '/MISSING_dominant_species_observations.csv'), row.names = F)
+  
+  list_sp = list.files(path = paste0(zone.name, "/SP_OCC/"))
+  list_sp = sub("OCC_", "", list_sp)
+  return(list_sp)
 }
 
 ################################################################################################################
@@ -154,7 +160,7 @@ WRAPPER <- function(sp.name, zone.name, XY, zone.env.stk.CALIB, zone.env.stk.PRO
   } else
   {
     bm.mod <- BIOMOD_Modeling(data = bm.form
-                              , models = c('RF', 'MARS', 'GLM', 'GAM', 'GBM')
+                              , models = c('RF', 'GLM', 'GAM') # c('RF', 'MARS', 'GLM', 'GAM', 'GBM')
                               , models.options = bm.opt
                               , NbRunEval = 5
                               , DataSplit = 70
@@ -181,7 +187,7 @@ WRAPPER <- function(sp.name, zone.name, XY, zone.env.stk.CALIB, zone.env.stk.PRO
                                      , prob.mean = FALSE
                                      , prob.mean.weight = TRUE
                                      , prob.mean.weight.decay = 'proportional'
-                                     , committee.averaging = TRUE)
+                                     , committee.averaging = FALSE)
   }
   
   ## project ensemble models -----------------------------------------------------
@@ -207,11 +213,12 @@ WRAPPER <- function(sp.name, zone.name, XY, zone.env.stk.CALIB, zone.env.stk.PRO
 SDM_getEnv = function(zone.name, zone.env.folder, zone.env.variables, maskSimul)
 {
   env.files = list.files(path = paste0(zone.name, "/", zone.env.folder)
-                              , pattern = paste0(paste0(zone.env.variables, ".img", collapse = "|")
-                                                 , "|"
-                                                 , paste0(zone.env.variables, ".tif", collapse = "|")))
+                         , pattern = paste0(paste0(zone.env.variables, ".img", collapse = "|")
+                                            , "|"
+                                            , paste0(zone.env.variables, ".tif", collapse = "|"))
+                         , full.names = TRUE)
   zone.env.stk.CALIB = raster::stack(env.files)
-
+  
   origin(maskSimul) = origin(zone.env.stk.CALIB)
   zone.env.stk.PROJ = stack(zone.env.stk.CALIB * maskSimul)
   names(zone.env.stk.PROJ) = names(zone.env.stk.CALIB)
@@ -221,11 +228,8 @@ SDM_getEnv = function(zone.name, zone.env.folder, zone.env.variables, maskSimul)
 }
 
 
-SDM_build = function(zone.name, XY, zone.env.stk.CALIB, zone.env.stk.PROJ)
+SDM_build = function(zone.name, list_sp, XY, zone.env.stk.CALIB, zone.env.stk.PROJ)
 {
-  list_sp = list.files(path = paste0(zone.name, "/SP_OCC/"))
-  list_sp = sub("OCC_", "", list_sp)
-  
   dir.create(paste0(zone.name, "/SP_SDM"))
   
   mclapply(X = list_sp
@@ -235,7 +239,42 @@ SDM_build = function(zone.name, XY, zone.env.stk.CALIB, zone.env.stk.PROJ)
            , zone.env.stk.CALIB = zone.env.stk.CALIB
            , zone.env.stk.PROJ = zone.env.stk.PROJ
            , check.computed = TRUE
-           , mc.cores = 8)
+           , mc.cores = 6)
   
   cat("\nended at:", format(Sys.time(), "%a %d %b %Y %X"))
+}
+
+################################################################################################################
+### 5. CALCULATE DOMINANT SPECIES SDM OVERLAP
+################################################################################################################
+
+
+
+{
+  library(phyloclim)
+  zone.name = "Bauges"
+  list_sp = list.files(path = paste0(zone.name, "/SP_SDM/"))
+  setwd("Bauges/SP_SDM/")
+  proj.files = sapply(list_sp, function(x) paste0(x, "/proj_current/proj_current_", x, "_ensemble.img"))
+  names(proj.files) = list_sp
+  proj.files = proj.files[file.exists(proj.files)]
+  for(fi in proj.files)
+  {
+    ras = raster(fi)
+    # ras[] = ras[] / max(ras[], na.rm = TRUE)
+    ras[] = ras[] / 1000
+    writeRaster(ras, filename = sub(".img", ".asc", basename(fi)))
+  }
+  
+  proj.files = sapply(list_sp, function(x) paste0("proj_current_", x, "_ensemble.asc"))
+  names(proj.files) = list_sp
+  proj.files = proj.files[file.exists(proj.files)]
+  mat.overlap = niche.overlap(proj.files)
+  colnames(mat.overlap) = sub("proj_current_", "", colnames(mat.overlap))
+  colnames(mat.overlap) = sub("_ensemble.asc", "", colnames(mat.overlap))
+  rownames(mat.overlap) = sub("proj_current_", "", rownames(mat.overlap))
+  rownames(mat.overlap) = sub("_ensemble.asc", "", rownames(mat.overlap))
+  
+  setwd("./../../")
+  save(mat.overlap, file = paste0(zone.name, "/mat.overlap.DOM.RData"))
 }

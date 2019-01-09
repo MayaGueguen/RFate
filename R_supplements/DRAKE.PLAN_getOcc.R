@@ -78,8 +78,10 @@ for(ZONE in list(BAUGES))
     ## Build dominant species sdm
     , zone.env.stk = SDM_getEnv(zone.name = zone.name
                                 , zone.env.folder = zone.env.folder
-                                , zone.env.variables = zone.env.variables)
+                                , zone.env.variables = zone.env.variables
+                                , maskSimul = zone.mask)
     , sp.dom.sdm = SDM_build(zone.name = zone.name
+                             , list_sp = sp.dom.occ
                              , XY = XY
                              , zone.env.stk.CALIB = zone.env.stk$env.CALIB
                              , zone.env.stk.PROJ = zone.env.stk$env.PROJ)
@@ -94,3 +96,24 @@ for(ZONE in list(BAUGES))
                   , targets_only = TRUE)
   
 }
+
+# loadd(sp.dom)
+# sp.SELECT = sp.dom
+# loadd(observations.xy)
+# loadd(stations.COMMUNITY)
+# 
+# 
+# loadd(sp.dom.mat)
+# mat.sites.species = sp.dom.mat
+# loadd(species)
+# 
+# 
+# 
+# 
+# loadd(zone.name)
+# loadd(sp.dom.occ)
+# list_sp = sp.dom.occ
+# loadd(XY)
+# loadd(zone.env.stk)
+# zone.env.stk.CALIB = zone.env.stk$env.CALIB
+# zone.env.stk.PROJ = zone.env.stk$env.PROJ
