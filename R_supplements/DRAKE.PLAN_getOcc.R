@@ -5,6 +5,9 @@ library(RPostgreSQL)
 library(foreign)
 library(data.table)
 library(RFate)
+library(biomod2)
+library(raster)
+library(parallel)
 library(drake)
 
 source("RFate/R_supplements/DRAKE.PRE_FATE.data_getDB_occ.R")
@@ -18,7 +21,9 @@ setwd(path.data)
 
 BAUGES = list(zone.name = "Bauges"
               , zone.extent = c(910795, 983695, 6489093, 6538793)
-              , zone.selection.rules = c(0.9, 20, 20))
+              , zone.selection.rules = c(0.9, 20, 20)
+              , zone.env.folder = "ENV_VARIABLES/EOBS_1970_2005/"
+              , zone.env.variables = c("bio_1_0", "bio_8_0", "bio_12_0", "bio_19_0", "slope"))
 
 ## ECRINS
 ## MONTBLANC
@@ -36,7 +41,9 @@ for(ZONE in list(BAUGES))
     zone.name = ZONE$zone.name
     , zone.extent = ZONE$zone.extent
     , zone.selection.rules = ZONE$zone.selection.rules
-    # , create_wd = dir.create(path = zone.name)
+    , zone.env.folder = ZONE$zone.env.folder
+    , zone.env.variables = ZONE$zone.env.variables
+    , create_wd = dir.create(path = zone.name)
     ## Get DB
     , OCC.DB = getDB(x.min = zone.extent[1]
                      , x.max = zone.extent[2]
@@ -66,6 +73,13 @@ for(ZONE in list(BAUGES))
     , sp.dom.occ = getOcc_3_occDom(mat.sites.species = sp.dom.mat
                                    , species = species
                                    , zone.name = zone.name)
+    ## Build dominant species sdm
+    , zone.env.stk = SDM_getEnv(zone.name = zone.name
+                                , zone.env.folder = zone.env.folder
+                                , zone.env.variables = zone.env.variables)
+    , sp.dom.sdm = SDM_build(zone.name = zone.name
+                             , XY = XY
+                             , zone.env.stk = zone.env.stk)
     , strings_in_dots = "literals"
   )
   

@@ -108,3 +108,132 @@ getOcc_3_occDom = function(mat.sites.species, species, zone.name)
 ### 4. BUILD SDM FOR DOMINANT SPECIES
 ################################################################################################################
 
+WRAPPER <- function(sp.name, zone.name, XY, zone.env.stk, check.computed)
+{
+  load(paste0(zone.name, "/SP_OCC/OCC_",sp.name))
+  xy = XY[names(sp.occ), c("X_L93","Y_L93")]
+  
+  setwd(paste0(zone.name, "/SP_SDM"))
+  
+  
+  ## formating data in a biomod2 friendly way ------------------------------------
+  bm.form <- BIOMOD_FormatingData(resp.var = sp.occ
+                                  , expl.var = zone.env.stk
+                                  , resp.xy = xy
+                                  , resp.name = sp.name)
+  
+  ## define models options -------------------------------------------------------
+  bm.opt <- BIOMOD_ModelingOptions(GLM = list(type = "quadratic"
+                                              , interaction.level = 0
+                                              , test = "AIC")
+                                   , GBM = list(n.trees = 5000)
+                                   , GAM = list(k = 3))
+  
+  ## run single models -----------------------------------------------------------
+  
+  if (check.computed)
+  {
+    bm.mod.file <- list.files(path = sp.name
+                              , pattern = "mod1.models.out$"
+                              , full.names = TRUE)
+    bm.em.file <- list.files(path = sp.name
+                             , pattern = "ensemble.models.out$"
+                             , full.names = TRUE)
+    bm.ef.file <- list.files(path = paste0(sp.name, "/proj_current")
+                             , pattern = "ensemble.projection.out$"
+                             , full.names = TRUE)
+  } else
+  {
+    bm.mod.file <- bm.em.file <- bm.ef.file <- NULL
+  }
+  
+  if (check.computed & length(bm.mod.file))
+  {
+    cat("\n loading previous version of bm.mod..")
+    bm.mod <- get(load(bm.mod.file))
+  } else
+  {
+    bm.mod <- BIOMOD_Modeling(data = bm.form
+                              , models = c('RF', 'MARS', 'GLM', 'GAM', 'GBM')
+                              , models.options = bm.opt
+                              , NbRunEval = 5
+                              , DataSplit = 70
+                              , Prevalence = 0.5
+                              , VarImport = 5
+                              , models.eval.meth = c('TSS','ROC')
+                              , do.full.models = FALSE
+                              , modeling.id = 'mod1')
+  }
+  
+  ## run ensemble models ---------------------------------------------------------
+  if (check.computed & length(bm.em.file))
+  {
+    cat("\n loading previous version of bm.em..")
+    bm.em <- get(load(bm.em.file))
+  } else
+  {
+    bm.em <- BIOMOD_EnsembleModeling(modeling.output = bm.mod
+                                     , chosen.models = "all"
+                                     , em.by = "all"
+                                     , eval.metric = c('TSS')
+                                     , eval.metric.quality.threshold = 0.4
+                                     , models.eval.meth = c('TSS', 'ROC')
+                                     , prob.mean = FALSE
+                                     , prob.mean.weight = TRUE
+                                     , prob.mean.weight.decay = 'proportional'
+                                     , committee.averaging = TRUE)
+  }
+  
+  ## project ensemble models -----------------------------------------------------
+  if (check.computed & length(bm.ef.file))
+  {
+    cat("\n loading previous version of bm.ef..")
+    bm.ef <- get(load(bm.ef.file))
+  } else
+  {
+    bm.ef <- BIOMOD_EnsembleForecasting(EM.output = bm.em
+                                        , new.env = zone.env.stk
+                                        , output.format = ".img"
+                                        , proj.name = "current"
+                                        , selected.models = "all"
+                                        , binary.meth = c('TSS'))
+  }
+  
+  setwd("./../../")
+  cat("\n\nCompleted!")
+}
+
+
+SDM_getEnv = function(zone.name, zone.env.folder, zone.env.variables)
+{
+  env.files = list.files(path = paste0(zone.name, "/", zone.env.folder)
+                              , pattern = paste0(paste0(zone.env.variables, ".img", collapse = "|")
+                                                 , "|"
+                                                 , paste0(zone.env.variables, ".tif", collapse = "|")))
+  zone.env.stk = raster::stack(env.files)
+
+  # origin(maskSimul) = origin(env.stk)
+  # zone.env.stk = stack(env.stk * maskSimul)
+  # names(zone.env.stk) = names(env.stk)
+  
+  return(zone.env.stk)
+}
+
+
+SDM_build = function(zone.name, XY, zone.env.stk)
+{
+  list_sp = list.files(path = paste0(zone.name, "/SP_OCC/"))
+  list_sp = sub("OCC_", "", list_sp)
+  
+  dir.create(paste0(zone.name, "/SP_SDM"))
+  
+  mclapply(X = list_sp
+           , FUN = WRAPPER
+           , zone.name = zone.name
+           , XY = XY
+           , zone.env.stk = zone.env.stk
+           , check.computed = TRUE
+           , mc.cores = 8)
+  
+  cat("\nended at:", format(Sys.time(), "%a %d %b %Y %X"))
+}
