@@ -31,7 +31,7 @@ getOcc_1_obs = function(observations, stations)
 ### 2. SELECT DOMINANT SPECIES
 ################################################################################################################
 
-getOcc_2_selectDom = function(observations.xy, species, zone.name)
+getOcc_2_selectDom = function(observations.xy, species, zone.name, selRule1, selRule2, selRule3)
 {
   setwd(zone.name)
   
@@ -41,9 +41,9 @@ getOcc_2_selectDom = function(observations.xy, species, zone.name)
   
   ## SELECT DOMINANT SPECIES
   sp.SELECT = PRE_FATE.selectDominant(mat.site.species.abund = occ
-                                      , selectionRule.quanti = 0.9
-                                      , selectionRule.min_mean_abund = 20
-                                      , selectionRule.min_no_abund_over25 = 20)
+                                      , selectionRule.quanti = selRule1
+                                      , selectionRule.min_mean_abund = selRule2
+                                      , selectionRule.min_no_abund_over25 = selRule3)
   
   ## Get species names
   sp.SELECT = merge(species, sp.SELECT, by.x = "numtaxon", by.y = "species", all.y = TRUE)
