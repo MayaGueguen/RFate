@@ -244,31 +244,28 @@ SDM_build = function(zone.name, list_sp, XY, zone.env.stk.CALIB, zone.env.stk.PR
   cat("\nended at:", format(Sys.time(), "%a %d %b %Y %X"))
 }
 
+
 ################################################################################################################
 ### 5. CALCULATE DOMINANT SPECIES SDM OVERLAP
 ################################################################################################################
 
-
-
+SDM_overlap = function(zone.name, list_sp)
 {
-  library(phyloclim)
-  zone.name = "Bauges"
-  list_sp = list.files(path = paste0(zone.name, "/SP_SDM/"))
-  setwd("Bauges/SP_SDM/")
+  setwd(paste0(zone.name, "/SP_SDM/"))
+
   proj.files = sapply(list_sp, function(x) paste0(x, "/proj_current/proj_current_", x, "_ensemble.img"))
-  names(proj.files) = list_sp
   proj.files = proj.files[file.exists(proj.files)]
-  for(fi in proj.files)
+  
+  for (fi in proj.files)
   {
     ras = raster(fi)
-    # ras[] = ras[] / max(ras[], na.rm = TRUE)
     ras[] = ras[] / 1000
     writeRaster(ras, filename = sub(".img", ".asc", basename(fi)))
   }
   
   proj.files = sapply(list_sp, function(x) paste0("proj_current_", x, "_ensemble.asc"))
-  names(proj.files) = list_sp
   proj.files = proj.files[file.exists(proj.files)]
+
   mat.overlap = niche.overlap(proj.files)
   colnames(mat.overlap) = sub("proj_current_", "", colnames(mat.overlap))
   colnames(mat.overlap) = sub("_ensemble.asc", "", colnames(mat.overlap))
@@ -277,4 +274,6 @@ SDM_build = function(zone.name, list_sp, XY, zone.env.stk.CALIB, zone.env.stk.PR
   
   setwd("./../../")
   save(mat.overlap, file = paste0(zone.name, "/mat.overlap.DOM.RData"))
+  
+  return(mat.overlap)
 }

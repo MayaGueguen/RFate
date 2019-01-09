@@ -8,6 +8,7 @@ library(RFate)
 library(biomod2)
 library(raster)
 library(parallel)
+library(phyloclim)
 library(drake)
 
 source("RFate/R_supplements/DRAKE.PRE_FATE.data_getDB_occ.R")
@@ -85,6 +86,8 @@ for(ZONE in list(BAUGES))
                              , XY = XY
                              , zone.env.stk.CALIB = zone.env.stk$env.CALIB
                              , zone.env.stk.PROJ = zone.env.stk$env.PROJ)
+    , sp.dom.overlap = SDM_overlap(zone.name = zone.name
+                                   , list_sp = sp.dom.occ)
     , strings_in_dots = "literals"
   )
   
