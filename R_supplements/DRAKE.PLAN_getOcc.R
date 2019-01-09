@@ -22,6 +22,7 @@ setwd(path.data)
 BAUGES = list(zone.name = "Bauges"
               , zone.extent = c(910795, 983695, 6489093, 6538793)
               , zone.selection.rules = c(0.9, 20, 20)
+              , zone.mask = "Bauges/MASK_100m.tif"
               , zone.env.folder = "ENV_VARIABLES/EOBS_1970_2005/"
               , zone.env.variables = c("bio_1_0", "bio_8_0", "bio_12_0", "bio_19_0", "slope"))
 
@@ -43,6 +44,7 @@ for(ZONE in list(BAUGES))
     , zone.selection.rules = ZONE$zone.selection.rules
     , zone.env.folder = ZONE$zone.env.folder
     , zone.env.variables = ZONE$zone.env.variables
+    , zone.mask = raster(file_in(ZONE$zone.mask))
     , create_wd = dir.create(path = zone.name)
     ## Get DB
     , OCC.DB = getDB(x.min = zone.extent[1]
@@ -79,7 +81,8 @@ for(ZONE in list(BAUGES))
                                 , zone.env.variables = zone.env.variables)
     , sp.dom.sdm = SDM_build(zone.name = zone.name
                              , XY = XY
-                             , zone.env.stk = zone.env.stk)
+                             , zone.env.stk.CALIB = zone.env.stk$env.CALIB
+                             , zone.env.stk.PROJ = zone.env.stk$env.PROJ)
     , strings_in_dots = "literals"
   )
   

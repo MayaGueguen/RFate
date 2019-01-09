@@ -108,7 +108,7 @@ getOcc_3_occDom = function(mat.sites.species, species, zone.name)
 ### 4. BUILD SDM FOR DOMINANT SPECIES
 ################################################################################################################
 
-WRAPPER <- function(sp.name, zone.name, XY, zone.env.stk, check.computed)
+WRAPPER <- function(sp.name, zone.name, XY, zone.env.stk.CALIB, zone.env.stk.PROJ, check.computed)
 {
   load(paste0(zone.name, "/SP_OCC/OCC_",sp.name))
   xy = XY[names(sp.occ), c("X_L93","Y_L93")]
@@ -118,7 +118,7 @@ WRAPPER <- function(sp.name, zone.name, XY, zone.env.stk, check.computed)
   
   ## formating data in a biomod2 friendly way ------------------------------------
   bm.form <- BIOMOD_FormatingData(resp.var = sp.occ
-                                  , expl.var = zone.env.stk
+                                  , expl.var = zone.env.stk.CALIB
                                   , resp.xy = xy
                                   , resp.name = sp.name)
   
@@ -192,7 +192,7 @@ WRAPPER <- function(sp.name, zone.name, XY, zone.env.stk, check.computed)
   } else
   {
     bm.ef <- BIOMOD_EnsembleForecasting(EM.output = bm.em
-                                        , new.env = zone.env.stk
+                                        , new.env = zone.env.stk.PROJ
                                         , output.format = ".img"
                                         , proj.name = "current"
                                         , selected.models = "all"
@@ -204,23 +204,24 @@ WRAPPER <- function(sp.name, zone.name, XY, zone.env.stk, check.computed)
 }
 
 
-SDM_getEnv = function(zone.name, zone.env.folder, zone.env.variables)
+SDM_getEnv = function(zone.name, zone.env.folder, zone.env.variables, maskSimul)
 {
   env.files = list.files(path = paste0(zone.name, "/", zone.env.folder)
                               , pattern = paste0(paste0(zone.env.variables, ".img", collapse = "|")
                                                  , "|"
                                                  , paste0(zone.env.variables, ".tif", collapse = "|")))
-  zone.env.stk = raster::stack(env.files)
+  zone.env.stk.CALIB = raster::stack(env.files)
 
-  # origin(maskSimul) = origin(env.stk)
-  # zone.env.stk = stack(env.stk * maskSimul)
-  # names(zone.env.stk) = names(env.stk)
+  origin(maskSimul) = origin(zone.env.stk.CALIB)
+  zone.env.stk.PROJ = stack(zone.env.stk.CALIB * maskSimul)
+  names(zone.env.stk.PROJ) = names(zone.env.stk.CALIB)
   
-  return(zone.env.stk)
+  return(list(env.CALIB = zone.env.stk.CALIB
+              , env.PROJ = zone.env.stk.PROJ))
 }
 
 
-SDM_build = function(zone.name, XY, zone.env.stk)
+SDM_build = function(zone.name, XY, zone.env.stk.CALIB, zone.env.stk.PROJ)
 {
   list_sp = list.files(path = paste0(zone.name, "/SP_OCC/"))
   list_sp = sub("OCC_", "", list_sp)
@@ -231,7 +232,8 @@ SDM_build = function(zone.name, XY, zone.env.stk)
            , FUN = WRAPPER
            , zone.name = zone.name
            , XY = XY
-           , zone.env.stk = zone.env.stk
+           , zone.env.stk.CALIB = zone.env.stk.CALIB
+           , zone.env.stk.PROJ = zone.env.stk.PROJ
            , check.computed = TRUE
            , mc.cores = 8)
   
