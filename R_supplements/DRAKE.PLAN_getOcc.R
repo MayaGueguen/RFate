@@ -53,12 +53,11 @@ PLAN.getOCC = drake_plan(
 
 vis_drake_graph(drake_config(PLAN.getOCC)
                 , targets_only = TRUE)
+# outdated(drake_config(PLAN.getOCC))
 make(PLAN.getOCC)
 vis_drake_graph(drake_config(PLAN.getOCC)
                 , targets_only = TRUE)
 
-# loadd(traits.quant.med)
-# loadd(traits.quali.med)
 
 ################################################################################################################
 ### 2. KEEP ONLY TRAITS OF INTEREST FOR FATE

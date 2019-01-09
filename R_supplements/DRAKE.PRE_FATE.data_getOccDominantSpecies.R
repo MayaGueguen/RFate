@@ -41,8 +41,8 @@ getOcc_2_selectDom = function(observations.xy, species, zone.name)
   
   ## SELECT DOMINANT SPECIES
   sp.SELECT = PRE_FATE.selectDominant(mat.site.species.abund = occ
-                                      , selectionRule.quanti = 0.8
-                                      , selectionRule.min_mean_abund = 10
+                                      , selectionRule.quanti = 0.9
+                                      , selectionRule.min_mean_abund = 20
                                       , selectionRule.min_no_abund_over25 = 20)
   
   ## Get species names
@@ -75,7 +75,7 @@ getOcc_3_matDom = function(sp.SELECT, observations.xy, stations.COMMUNITY, zone.
   dim(mat.sites.species)
   mat.sites.species[1:10, 1:10]
   
-  save(mat.sites.species, file = paste0(zone.name, "/mat.sites.species.RData"))
+  save(mat.sites.species, file = paste0(zone.name, "/mat.sites.species.DOM.RData"))
   
   return(mat.sites.species)
 }
