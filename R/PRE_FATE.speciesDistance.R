@@ -263,12 +263,7 @@ PRE_FATE.speciesDistance = function(mat.species.traits ## data.frame with column
   
   # Keep only species present in both distance matrices (trait & overlap)
   mat.species.traits = mat.species.traits[which(mat.species.traits$species %in% species_names.traits_overlap), ]
-  
-  mat.species.overlap.split = lapply(1:length(group_names), function(x) {
-    tmp = as.matrix(mat.species.overlap.split[[x]])
-    ind = which(colnames(tmp) %in% species_names.traits_overlap)
-    return(as.dist(tmp[ind, ind]))
-  })
+
   
   #################################################################################################
   ### CALCULATE TRAITS DISTANCES
@@ -276,7 +271,6 @@ PRE_FATE.speciesDistance = function(mat.species.traits ## data.frame with column
   
   ## SPLIT INFORMATION by species type
   mat.species.traits.split = split(mat.species.traits[,traits_names], f = mat.species.traits$GROUP)
-  # species.split = split(as.character(mat.species.traits$species), f = mat.species.traits$GROUP)
 
   ## GOWER DISSIMILARITY FOR MIXED VARIABLES
   mat.species.gower.split = lapply(mat.species.traits.split, FD::gowdis)
@@ -294,10 +288,20 @@ PRE_FATE.speciesDistance = function(mat.species.traits ## data.frame with column
   }
   species.split = lapply(mat.species.gower.split, function(x) colnames(as.matrix(x)))
   
+  # Keep only species present in both distance matrices (trait & overlap)
+  species_names.traits_overlap = intersect(unlist(species.split), species_names.overlap)
+  
+  mat.species.overlap.split = lapply(1:length(group_names), function(x) {
+    tmp = as.matrix(mat.species.overlap.split[[x]])
+    ind = which(colnames(tmp) %in% species_names.traits_overlap)
+    return(as.dist(tmp[ind, ind]))
+  })
+  
   cat("\n ############## TRAIT INFORMATIONS ############## \n")
   cat("\n Number of species : ", nrow(mat.species.traits))
   cat("\n Measured traits : ", paste0(traits_names, collapse = ", "))
   cat("\n Groups : ", paste0(group_names, collapse = ", "))
+  cat("\n Number of NA values due to `gowdis` function : ", nrow(mat.species.traits) - sum(sapply(species.split, length)))
   cat("\n Number of species in each group : ", sapply(species.split, length))
   cat("\n")
   
