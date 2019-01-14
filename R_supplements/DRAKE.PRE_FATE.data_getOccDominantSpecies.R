@@ -23,6 +23,8 @@ getOcc_1_obs = function(observations, stations)
   observations.xy = merge(observations, stations, by = "numchrono")
   head(observations.xy)
   
+  save(observations.xy, file = paste0(zone.name, "/observations.xy.RData"))
+  
   return(observations.xy)
 }
 

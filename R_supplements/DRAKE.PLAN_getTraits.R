@@ -16,7 +16,7 @@ source("RFate/R_supplements/DRAKE.PRE_FATE.data_getDB_traits.R")
 source("RFate/R_supplements/DRAKE.PRE_FATE.data_getTraitsPerSpecies.R")
 source("RFate/R_supplements/DRAKE.PRE_FATE.data_getTraitsFATErelated.R")
 
-path.data = "RFate/data/"
+path.data = "RFate/data_supplements/"
 setwd(path.data)
 
 file_date = "190111"

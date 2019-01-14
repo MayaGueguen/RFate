@@ -14,7 +14,7 @@ library(drake)
 source("RFate/R_supplements/DRAKE.PRE_FATE.data_getDB_occ.R")
 source("RFate/R_supplements/DRAKE.PRE_FATE.data_getOccDominantSpecies.R")
 
-path.data = "RFate/data/"
+path.data = "RFate/data_supplements/"
 setwd(path.data)
 
 
@@ -22,11 +22,12 @@ setwd(path.data)
 
 BAUGES = list(zone.name = "Bauges"
               , zone.extent = c(910795, 983695, 6489093, 6538793)
-              , zone.selection.rules = c(0.9, 20, 20)
+              , zone.selection.rules = c(0.95, 20, 20)
+              # , zone.selection.rules = c(0.9, 20, 20)
               , zone.mask = "Bauges/MASK_100m.tif"
               , zone.env.folder = "ENV_VARIABLES/EOBS_1970_2005/"
               , zone.env.variables = c("bio_1_0", "bio_8_0", "bio_12_0", "bio_19_0", "slope"))
-
+ZONE = BAUGES
 ## ECRINS
 ## MONTBLANC
 ## LAUTARET
@@ -54,6 +55,7 @@ for(ZONE in list(BAUGES))
                      , y.max = zone.extent[4])
     ## Get species
     , species = OCC.DB$species[, c("numtaxon", "genre", "libcbna")]
+    , species.saved = save(species, file = paste0(zone.name, "/species.RData"))
     ## Get sites informations
     , stations = OCC.DB$stations[, c("numchrono", "coderqualif", "longitudel93_rel", "latitudel93_rel")]
     , stations.COMMUNITY = stations$numchrono[which(stations$coderqualif %in% c("R06", "R07"))]

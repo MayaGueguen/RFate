@@ -222,5 +222,9 @@ reorganize_traits_FATE = function(TAB_traits)
   TAB_traits_FATE$GRAZ_MOW_TOLERANCE = TAB_traits$MOW_TOLERANCE_INDK
   TAB_traits_FATE$PALATABILITY = TAB_traits$Palatability
   
+  
+  TAB_traits_FATE$NITROGEN = TAB_traits$ELLNIT_INDK
+  TAB_traits_FATE$MOISTURE = TAB_traits$ELLMOIST_INDK
+  
   return(TAB_traits_FATE)
 }
