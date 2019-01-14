@@ -223,7 +223,6 @@ PRE_FATE.speciesDistance = function(mat.species.traits ## data.frame with column
   # }
   
   ## SPLIT INFORMATION by species type
-  # mat.species.traits.split = split(mat.species.traits[,traits_names], f = mat.species.traits$GROUP)
   species.split = split(as.character(mat.species.traits$species), f = mat.species.traits$GROUP)
   
   ## OVERLAP ------------------------------------------------------------------------------------ #
@@ -255,7 +254,6 @@ PRE_FATE.speciesDistance = function(mat.species.traits ## data.frame with column
   cat("\n Comparison of groups' dimensions : \n")
   for(x in 1:length(group_names)){
     cat("\n Group ", x, ":\n")
-    # cat("Trait distances : ", dim(as.matrix(mat.species.gower.split[[x]])), "\n")
     cat("Trait distances : ", length(species.split[[x]]), "\n")
     cat("Overlap distances : ", dim(as.matrix(mat.species.overlap.split[[x]])), "\n")
   }
@@ -311,29 +309,6 @@ PRE_FATE.speciesDistance = function(mat.species.traits ## data.frame with column
   ## ADD OVERLAP as PART OF THE DISTANCE BETWEEN SPECIES
   ## 1 PART for each trait (Disp, Light, Height, Palatability...)
   ## 1 PART for climatic distance between species (overlap)
-  
-  # ## Check for correspondence : DIM mat.species.gower.split = DIM mat.species.overlap.split ?
-  # cat("\n Comparison of groups' dimensions : \n")
-  # for(x in 1:length(group_names)){
-  #   cat("\n Group ", x, ":\n")
-  #   cat("Trait distances : ", dim(as.matrix(mat.species.gower.split[[x]])), "\n")
-  #   cat("Overlap distances : ", dim(as.matrix(mat.species.overlap.split[[x]])), "\n")
-  # }
-  # species_names.traits_overlap = intersect(species_names.traits, species_names.overlap)
-  # cat("\n Number of species with both trait and overlap distances: ", length(species_names.traits_overlap))
-  # cat("\n")
-  
-  # # Keep only species present in both distance matrices (trait & overlap)
-  # mat.species.gower.split = lapply(1:length(group_names), function(x) {
-  #   tmp = as.matrix(mat.species.gower.split[[x]])
-  #   ind = which(colnames(tmp) %in% species_names.traits_overlap)
-  #   return(as.dist(tmp[ind, ind]))
-  # })
-  # mat.species.overlap.split = lapply(1:length(group_names), function(x) {
-  #   tmp = as.matrix(mat.species.overlap.split[[x]])
-  #   ind = which(colnames(tmp) %in% species_names.traits_overlap)
-  #   return(as.dist(tmp[ind, ind]))
-  # })
   
   ## COMBINE TRAIT & OVERLAP DISTANCES
   mat.species.DIST = lapply(1:length(group_names), function(x) {
