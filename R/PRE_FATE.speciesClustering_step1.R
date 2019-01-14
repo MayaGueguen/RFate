@@ -325,8 +325,14 @@ PRE_FATE.speciesClustering_step1 = function(mat.species.DIST)
   ## COMPUTATION OF SEVERAL INDICES TO EVALUATE THE 'QUALITY' OF CLUSTERING
   ## Calculated for each group, and varying the number of clusters
   
-  min_no_species_in_group = min(sapply(mat.species.DIST, function(x) ncol(as.matrix(x))))
-  combi = expand.grid(nb.cluster = 2:(min_no_species_in_group - 1), group = 1:length(group_names))
+  # min_no_species_in_group = min(sapply(mat.species.DIST, function(x) ncol(as.matrix(x))))
+  # combi = expand.grid(nb.cluster = 2:(min_no_species_in_group - 1), group = 1:length(group_names))
+  
+  min_no_species_in_group = sapply(mat.species.DIST, function(x) ncol(as.matrix(x)))
+  min_no_species_in_group = sapply(min_no_species_in_group, function(x) min(x, 15))
+  combi = foreach(group = 1:length(group_names), .combine = "rbind") %do% {
+    expand.grid(nb.cluster = 2:(min_no_species_in_group[group] - 1), group = group)
+  }
   
   group = nb.cluster = NULL
   clust.evaluation = foreach(group = combi$group, nb.cluster = combi$nb.cluster) %do% {
@@ -396,7 +402,7 @@ PRE_FATE.speciesClustering_step1 = function(mat.species.DIST)
   colRamp = colorRampPalette(c('#8e0152','#c51b7d','#de77ae','#7fbc41','#4d9221','#276419'))
   
   pp2 = ggplot(clust.evaluation, aes_string(x = "nb.cluster", y = "value")) +
-    facet_grid("variable ~ group", scales = "free_y") +
+    facet_grid("variable ~ group", scales = "free") +
     geom_line() + geom_point() +
     geom_vline(data = clust.evaluation.optim, aes_string(xintercept = "optim.clust", color = "group"), lwd = 4, alpha = 0.3) +
     # geom_point(data = clust.evaluation.optim, aes(x = optim.clust, y = optim.val),

@@ -110,7 +110,7 @@ reorganize_traits_FATE = function(TAB_traits)
   
   TAB_traits_FATE$HEIGHT = TAB_traits$PL_VEG_H
   
-  ## LH ---------------------------------------------------------------------------------------- ##
+  ## LH - WOODY -------------------------------------------------------------------------------- ##
   TAB_traits$WOODY = as.character(TAB_traits$WOODY)
   TAB_traits$WOODY[which(is.na(TAB_traits$WOODY))] = "unknown"
   WOODY.table = as.data.frame.matrix(table(TAB_traits$LHIST, TAB_traits$WOODY))
@@ -118,14 +118,49 @@ reorganize_traits_FATE = function(TAB_traits)
   WOODY.table = WOODY.table[which(rowSums(WOODY.table[, c("Frutescent", "Suffrutescent", "Herbaceous")]) > 0), ]
   WOODY.table = WOODY.table[which(apply(WOODY.table, 1, function(x) length(which(x == 0))) == 2), ]
   WOODY.table = WOODY.table[which(rowSums(WOODY.table[, c("Frutescent", "Suffrutescent", "Herbaceous")]) > 10), ]
-  
+
   for(i in 1:nrow(WOODY.table))
   {
     ind.i = which(TAB_traits$WOODY == "unknown" & TAB_traits$LHIST == rownames(WOODY.table)[i])
     TAB_traits$WOODY[ind.i] = colnames(WOODY.table)[1:3][which(WOODY.table[i, 1:3] > 0)]
   }
-  
+
   TAB_traits_FATE$WOODY = TAB_traits$WOODY
+  
+  ## LH - LHIST -------------------------------------------------------------------------------- ##
+  TAB_traits$LHIST = as.character(TAB_traits$LHIST)
+  
+  ## Remove non-informative subclasses for FATE PFG
+  TAB_traits$LHIST = sub("Climber_|_Climber", "", TAB_traits$LHIST)
+  TAB_traits$LHIST = sub("Carnivorous_|_Carnivorous", "", TAB_traits$LHIST)
+  TAB_traits$LHIST = sub("Saprophyte_|_Saprophyte", "", TAB_traits$LHIST)
+  TAB_traits$LHIST = sub("Parasite_|_Parasite", "", TAB_traits$LHIST)
+  TAB_traits$LHIST = sub("Therophyte_|_Therophyte", "", TAB_traits$LHIST) ## if associated, not necessarily annual
+  TAB_traits$LHIST = sub("Helophyte_|_Helophyte", "", TAB_traits$LHIST) ## if associated, not necessarily in water
+  
+  ## Remove non-informative classes for FATE PFG
+  TAB_traits$LHIST[grep("Pleustophyte", TAB_traits$LHIST)] = "" ## algae
+  TAB_traits$LHIST[grep("Epiphyte", TAB_traits$LHIST)] = "" ## not growing on soil, do not fill height strata
+  
+  ## Divide chamaephyte into 2 classes, according to WOODY trait
+  TAB_traits$LHIST[grep("Chamaephyte", TAB_traits$LHIST)] = "Chamaephyte"
+  TAB_traits$LHIST[grep("Hemicryptophyte_Phanerophyte", TAB_traits$LHIST)] = "Chamaephyte"
+  TAB_traits$LHIST[which(TAB_traits$CODE_CBNA == "16806")] = "Chamaephyte"
+  TAB_traits$LHIST[which(TAB_traits$LHIST == "Chamaephyte" & TAB_traits$WOODY == "Herbaceous")] = "Chamaephyte_H"
+  TAB_traits$LHIST[which(TAB_traits$LHIST == "Chamaephyte" & TAB_traits$WOODY == "unknown")] = "Chamaephyte_H"
+  TAB_traits$LHIST[which(TAB_traits$LHIST == "Chamaephyte" & TAB_traits$WOODY == "Suffrutescent")] = "Chamaephyte_S"
+  TAB_traits$LHIST[which(TAB_traits$LHIST == "Chamaephyte" & TAB_traits$WOODY == "Frutescent")] = "Chamaephyte_S"
+  
+  ## Gather aquatic species
+  TAB_traits$LHIST[grep("Helophyte", TAB_traits$LHIST)] = "Helophyte_Hydrophyte"
+  TAB_traits$LHIST[grep("Hydrophyte", TAB_traits$LHIST)] = "Helophyte_Hydrophyte"
+  TAB_traits$LHIST[grep("Hydrotherophyte", TAB_traits$LHIST)] = "Helophyte_Hydrophyte"
+  
+  ## Gather geophyte and/or hemicryptophyte species
+  TAB_traits$LHIST[grep("Geophyte|Geophyte_Hemicryptophyte|Hemicryptophyte", TAB_traits$LHIST)] = "Geophyte_Hemicryptophyte"
+  
+  TAB_traits_FATE$LHIST = TAB_traits$LHIST
+  TAB_traits_FATE$LHIST[which(nchar(TAB_traits_FATE$LHIST) == 0)] = NA
   
   ## Dispersal --------------------------------------------------------------------------------- ##
   TAB_traits$DISP_VITTOZ = ordered(factor(TAB_traits$DISP_VITTOZ, 1:7))

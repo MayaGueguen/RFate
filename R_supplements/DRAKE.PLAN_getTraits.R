@@ -19,6 +19,8 @@ source("RFate/R_supplements/DRAKE.PRE_FATE.data_getTraitsFATErelated.R")
 path.data = "RFate/data/"
 setwd(path.data)
 
+file_date = "190111"
+
 ################################################################################################################
 ### 1. GET DB VALUES - GATHER PER SPECIES
 ################################################################################################################
@@ -37,8 +39,10 @@ PLAN.DB = drake_plan(traits = getDB()
                   # , traits.quant.med_suppr = traits_thresholdGenus(traits.quant.med, traits.genre)
                   , traits.quali.med = get_traits_quali_merged(traits.quali)
                   # , traits.quali.med_suppr = traits_thresholdGenus(traits.quali.med, traits.genre)
-                  , save.quant = traits_save(traits.quant.med, file_out("TRAITS_quantitative_median_190107.csv"))
-                  , save.quali = traits_save(traits.quali.med, file_out("TRAITS_qualitative_190107.csv"))
+                  , name.file_quant = paste0("TRAITS_quantitative_median_", file_date, ".csv")
+                  , name.file_quali = paste0("TRAITS_qualitative_", file_date, ".csv")
+                  , save.quant = traits_save(traits.quant.med, name.file_quant)
+                  , save.quali = traits_save(traits.quali.med, name.file_quali)
                   , graph.quant = graph_barplot(traits.quant.med, file_out("GRAPH1_numberValuesPerTrait_quanti.pdf"))
                   , graph.quali = graph_barplot(traits.quali.med, file_out("GRAPH2_numberValuesPerTrait_quali.pdf"))
                   , strings_in_dots = "literals"
@@ -59,13 +63,16 @@ loadd(traits.quali.med)
 ################################################################################################################
 
 # clean()
-PLAN.FATE = drake_plan(traits.quant = read.csv(file_in("TRAITS_quantitative_median_190107.csv"), stringsAsFactors = F, sep = "\t")
-                     , traits.quali = read.csv(file_in("TRAITS_qualitative_190107.csv"), stringsAsFactors = F, sep = "\t")
-                     , traits_names = get_traits_names()
-                     , TAB_traits = keep_traits_FATE(traits.quant, traits.quali, traits_names)
-                     , TAB_traits_FATE = reorganize_traits_FATE(TAB_traits)
-                     , TAB_traits_FATE.written = fwrite(TAB_traits_FATE, file = file_out("TRAITS_FATE_190107.csv"), sep = "\t")
-                     , strings_in_dots = "literals"
+PLAN.FATE = drake_plan(name.file_quant = paste0("TRAITS_quantitative_median_", file_date, ".csv")
+                       , name.file_quali = paste0("TRAITS_qualitative_", file_date, ".csv")
+                       , traits.quant = read.csv(name.file_quant, stringsAsFactors = F, sep = "\t")
+                       , traits.quali = read.csv(name.file_quali, stringsAsFactors = F, sep = "\t")
+                       , traits_names = get_traits_names()
+                       , TAB_traits = keep_traits_FATE(traits.quant, traits.quali, traits_names)
+                       , TAB_traits_FATE = reorganize_traits_FATE(TAB_traits)
+                       , name.file_FATE = paste0("TRAITS_FATE_", file_date, ".csv")
+                       , TAB_traits_FATE.written = fwrite(TAB_traits_FATE, file = name.file_FATE, sep = "\t")
+                       , strings_in_dots = "literals"
 )
 
 vis_drake_graph(drake_config(PLAN.FATE)

@@ -260,7 +260,7 @@ SDM_overlap = function(zone.name, list_sp)
   {
     ras = raster(fi)
     ras[] = ras[] / 1000
-    writeRaster(ras, filename = sub(".img", ".asc", basename(fi)))
+    writeRaster(ras, filename = sub(".img", ".asc", basename(fi)), overwrite = TRUE)
   }
   
   proj.files = sapply(list_sp, function(x) paste0("proj_current_", x, "_ensemble.asc"))
@@ -271,6 +271,8 @@ SDM_overlap = function(zone.name, list_sp)
   colnames(mat.overlap) = sub("_ensemble.asc", "", colnames(mat.overlap))
   rownames(mat.overlap) = sub("proj_current_", "", rownames(mat.overlap))
   rownames(mat.overlap) = sub("_ensemble.asc", "", rownames(mat.overlap))
+  
+  file.remove(proj.files)
   
   setwd("./../../")
   save(mat.overlap, file = paste0(zone.name, "/mat.overlap.DOM.RData"))
