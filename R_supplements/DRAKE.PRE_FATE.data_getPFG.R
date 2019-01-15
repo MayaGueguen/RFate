@@ -319,6 +319,12 @@ create_FATE_param = function(zone.name, zone.mask, TRAITS_PFG)
   
   #################################################################################################
   
+  ras_mask = raster(paste0("./../", zone.mask))
+  ras_mask[which(is.na(ras_mask[]))] = 0
+  writeRaster(ras_mask
+              , filename = paste0(zone.name.simulation, "/DATA/MASK/", basename(zone.mask))
+              , overwrite = TRUE)
+  
   for (fg in pfg_names)
   {
     ras_from = paste0("PFG_SDM/", fg, "/proj_current/proj_current_", fg, "_ensemble.img")
@@ -327,20 +333,19 @@ create_FATE_param = function(zone.name, zone.mask, TRAITS_PFG)
     {
       ras = raster(ras_from)
       ras[] = ras[] / 1000
-      writeRaster(ras, filename = ras_to)
+      ras = projectRaster(ras, ras_mask, res = 100)
+      ras[which(is.na(ras[]))] = 0
+      ras[which(ras[] > 1)] = 1
+      writeRaster(ras, filename = ras_to, overwrite = TRUE)
     }
   }
-  
-  ras_mask = raster(paste0("./../", zone.mask))
-  writeRaster(ras_mask, filename = paste0(zone.name.simulation, "/DATA/MASK/", basename(zone.mask)))
+
   
   #################################################################################################
-  
   PRE_FATE.params_PFGsoil(name.simulation = zone.name.simulation
                           , mat.PFG.soil = TRAITS_PFG[, c("PFG", "soil_contrib", "soil_tol_min", "soil_tol_max")])
   
   #################################################################################################
-  
   PRE_FATE.params_namespaceConstants(name.simulation = zone.name.simulation
                                      , global.abund.low = 1000000
                                      , global.abund.med = 5000000
@@ -350,12 +355,17 @@ create_FATE_param = function(zone.name, zone.mask, TRAITS_PFG)
                                      , global.resource.thresh.low = 19000000)
   
   #################################################################################################
+  PRE_FATE.params_saveYears(name.simulation = zone.name.simulation
+                            , years.maps = seq(0,850,10)
+                            , years.objects = 850)
+  
+  #################################################################################################
   
   ## NOTHING (+ dispersal + HS)
   PRE_FATE.params_globalParameters(name.simulation = zone.name.simulation
                                    , opt.no_CPU = 7
                                    , required.no_PFG = nrow(TRAITS_PFG)
-                                   , required.no_STRATA = 7
+                                   , required.no_STRATA = 8
                                    , required.simul_duration = 850
                                    , required.seeding_duration = 300
                                    , required.seeding_timestep = 1
@@ -370,7 +380,7 @@ create_FATE_param = function(zone.name, zone.mask, TRAITS_PFG)
   PRE_FATE.params_globalParameters(name.simulation = zone.name.simulation
                                    , opt.no_CPU = 7
                                    , required.no_PFG = nrow(TRAITS_PFG)
-                                   , required.no_STRATA = 7
+                                   , required.no_STRATA = 8
                                    , required.simul_duration = 850
                                    , required.seeding_duration = 300
                                    , required.seeding_timestep = 1
@@ -385,7 +395,7 @@ create_FATE_param = function(zone.name, zone.mask, TRAITS_PFG)
   PRE_FATE.params_globalParameters(name.simulation = zone.name.simulation
                                    , opt.no_CPU = 7
                                    , required.no_PFG = nrow(TRAITS_PFG)
-                                   , required.no_STRATA = 7
+                                   , required.no_STRATA = 8
                                    , required.simul_duration = 850
                                    , required.seeding_duration = 300
                                    , required.seeding_timestep = 1
@@ -401,7 +411,7 @@ create_FATE_param = function(zone.name, zone.mask, TRAITS_PFG)
   PRE_FATE.params_globalParameters(name.simulation = zone.name.simulation
                                    , opt.no_CPU = 7
                                    , required.no_PFG = nrow(TRAITS_PFG)
-                                   , required.no_STRATA = 7
+                                   , required.no_STRATA = 8
                                    , required.simul_duration = 850
                                    , required.seeding_duration = 300
                                    , required.seeding_timestep = 1

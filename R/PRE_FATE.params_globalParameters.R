@@ -539,7 +539,7 @@ PRE_FATE.params_globalParameters = function(
   names.params.list.sub = c("NB_CPUS"
                             , "NB_FG"
                             , "NB_STRATUM"
-                            , "SIMULATION_TIME"
+                            , "SIMULATION_DURATION"
                             , "SEEDING_DURATION"
                             , "SEEDING_TIMESTEP"
   )

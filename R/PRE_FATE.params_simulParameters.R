@@ -239,6 +239,8 @@ PRE_FATE.params_simulParameters = function(
   .testParam_existFolder(name.simulation, "DATA/PFGS/SUCC/")
   .testParam_existFolder(name.simulation, "DATA/PFGS/DISP/")
   .testParam_existFolder(name.simulation, "DATA/PFGS/HABSUIT/")
+  .testParam_existFolder(name.simulation, "DATA/PFGS/LIGHT/")
+  .testParam_existFolder(name.simulation, "DATA/PFGS/SOIL/")
   .testParam_existFolder(name.simulation, "RESULTS/")
   if (.testParam_notChar(name.mask))
   {
@@ -534,6 +536,50 @@ PRE_FATE.params_simulParameters = function(
     
     #################################################################################################
     
+    doLight = .getParam(params.lines = globi
+                               , flag = "DO_LIGHT_COMPETITION"
+                               , flag.split = " "
+                               , is.num = TRUE)
+    if (doLight)
+    {
+      .testParam_existFolder(name.simulation, "DATA/PFGS/LIGHT/")
+    }
+    files.PFG.LIGHT = list.files(path = paste0(name.simulation, "/DATA/PFGS/LIGHT")
+                                , pattern = "^LIGHT"
+                                , full.names = TRUE)
+    if (length(files.PFG.LIGHT) != no_PFG)
+    {
+      warning(paste0("There is not the same number of files "
+                     , "(`.txt` file starting with `LIGHT`) "
+                     , "into the DATA/PFGS/LIGHT/ folder as the number of PFG "
+                     , "indicated into the file "
+                     , globi))
+    }
+    
+    #################################################################################################
+    
+    doSoil = .getParam(params.lines = globi
+                        , flag = "DO_SOIL_COMPETITION"
+                        , flag.split = " "
+                        , is.num = TRUE)
+    if (doSoil)
+    {
+      .testParam_existFolder(name.simulation, "DATA/PFGS/SOIL/")
+    }
+    files.PFG.SOIL = list.files(path = paste0(name.simulation, "/DATA/PFGS/SOIL")
+                                 , pattern = "^SOIL"
+                                 , full.names = TRUE)
+    if (length(files.PFG.SOIL) != no_PFG)
+    {
+      warning(paste0("There is not the same number of files "
+                     , "(`.txt` file starting with `SOIL`) "
+                     , "into the DATA/PFGS/SOIL/ folder as the number of PFG "
+                     , "indicated into the file "
+                     , globi))
+    }
+    
+    #################################################################################################
+    
     doHabSuit = .getParam(params.lines = globi
                           , flag = "DO_HAB_SUITABILITY"
                           , flag.split = " "
@@ -595,6 +641,14 @@ PRE_FATE.params_simulParameters = function(
     if (doDispersal){
       params.list = c(params.list, list(files.PFG.DISP))
       names.params.list = c(names.params.list, "--PFG_DISPERSAL_PARAMS--")
+    }
+    if (doLight){
+      params.list = c(params.list, list(files.PFG.LIGHT))
+      names.params.list = c(names.params.list, "--PFG_LIGHT_PARAMS--")
+    }
+    if (doSoil){
+      params.list = c(params.list, list(files.PFG.SOIL))
+      names.params.list = c(names.params.list, "--PFG_SOIL_PARAMS--")
     }
     if (doHabSuit){
       params.list = c(params.list, list(files.PFG.HS))
