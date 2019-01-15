@@ -23,7 +23,6 @@ setwd(path.data)
 BAUGES = list(zone.name = "Bauges"
               , zone.extent = c(910795, 983695, 6489093, 6538793)
               , zone.selection.rules = c(0.95, 20, 20)
-              # , zone.selection.rules = c(0.9, 20, 20)
               , zone.mask = "Bauges/MASK_100m.tif"
               , zone.env.folder = "ENV_VARIABLES/EOBS_1970_2005/"
               , zone.env.variables = c("bio_1_0", "bio_8_0", "bio_12_0", "bio_19_0", "slope"))
@@ -49,10 +48,10 @@ for(ZONE in list(BAUGES))
     , zone.mask = raster(file_in(ZONE$zone.mask))
     , create_wd = dir.create(path = zone.name)
     ## Get DB
-    , OCC.DB = getDB(x.min = zone.extent[1]
-                     , x.max = zone.extent[2]
-                     , y.min = zone.extent[3]
-                     , y.max = zone.extent[4])
+    , OCC.DB = getDB_CBNA(x.min = zone.extent[1]
+                          , x.max = zone.extent[2]
+                          , y.min = zone.extent[3]
+                          , y.max = zone.extent[4])
     ## Get species
     , species = OCC.DB$species[, c("numtaxon", "genre", "libcbna")]
     , species.saved = save(species, file = paste0(zone.name, "/species.RData"))
@@ -80,18 +79,18 @@ for(ZONE in list(BAUGES))
                                    , zone.name = zone.name
                                    , sp.type = "SP")
     ## Build dominant species sdm
-    , zone.env.stk = SDM_getEnv(zone.name = zone.name
+    , zone.env.stk = getSDM_env(zone.name = zone.name
                                 , zone.env.folder = zone.env.folder
                                 , zone.env.variables = zone.env.variables
                                 , maskSimul = zone.mask)
-    , sp.dom.sdm = SDM_build(zone.name = zone.name
-                             , list_sp = sp.dom.occ
-                             , XY = XY
-                             , zone.env.stk.CALIB = zone.env.stk$env.CALIB
-                             , zone.env.stk.PROJ = zone.env.stk$env.PROJ
-                             , sp.type = "SP")
-    , sp.dom.overlap = SDM_overlap(zone.name = zone.name
-                                   , list_sp = sp.dom.occ)
+    , sp.dom.sdm = getSDM_build(zone.name = zone.name
+                                , list_sp = sp.dom.occ
+                                , XY = XY
+                                , zone.env.stk.CALIB = zone.env.stk$env.CALIB
+                                , zone.env.stk.PROJ = zone.env.stk$env.PROJ
+                                , sp.type = "SP")
+    , sp.dom.overlap = getSDM_overlap(zone.name = zone.name
+                                      , list_sp = sp.dom.occ)
     , strings_in_dots = "literals"
   )
   

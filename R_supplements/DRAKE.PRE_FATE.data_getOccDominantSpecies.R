@@ -217,7 +217,7 @@ WRAPPER <- function(sp.name, zone.name, XY, zone.env.stk.CALIB, zone.env.stk.PRO
 }
 
 
-SDM_getEnv = function(zone.name, zone.env.folder, zone.env.variables, maskSimul)
+getSDM_env = function(zone.name, zone.env.folder, zone.env.variables, maskSimul)
 {
   env.files = list.files(path = paste0(zone.name, "/", zone.env.folder)
                          , pattern = paste0(paste0(zone.env.variables, ".img", collapse = "|")
@@ -235,7 +235,7 @@ SDM_getEnv = function(zone.name, zone.env.folder, zone.env.variables, maskSimul)
 }
 
 
-SDM_build = function(zone.name, list_sp, XY, zone.env.stk.CALIB, zone.env.stk.PROJ, sp.type)
+getSDM_build = function(zone.name, list_sp, XY, zone.env.stk.CALIB, zone.env.stk.PROJ, sp.type)
 {
   dir.create(paste0(zone.name, "/", sp.type, "_SDM"))
   
@@ -257,7 +257,7 @@ SDM_build = function(zone.name, list_sp, XY, zone.env.stk.CALIB, zone.env.stk.PR
 ### 5. CALCULATE DOMINANT SPECIES SDM OVERLAP
 ################################################################################################################
 
-SDM_overlap = function(zone.name, list_sp)
+getSDM_overlap = function(zone.name, list_sp)
 {
   setwd(paste0(zone.name, "/SP_SDM/"))
 

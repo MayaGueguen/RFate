@@ -1,5 +1,5 @@
 
-getDB = function(x.min, x.max, y.min, y.max)
+getDB_CBNA = function(x.min, x.max, y.min, y.max)
 {
   ## Create a connection : save username and password
   username <- { "r_user_cbna" }

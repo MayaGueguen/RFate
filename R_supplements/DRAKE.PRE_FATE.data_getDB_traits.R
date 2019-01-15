@@ -1,5 +1,5 @@
 
-getDB = function()
+getDB_ANDROSACE = function()
 {
   ## Create a connection : save username and password
   username <- { "r_user_androsace" }

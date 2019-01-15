@@ -1,5 +1,5 @@
 
-get_traits_names = function()
+getTraitsFATE_names = function()
 {
   ## Life history related traits
   TRAIT_names.lh = c("AGEFLOW_MIN", "AGEFLOW_MAX",
@@ -43,7 +43,7 @@ get_traits_names = function()
 }
 
 
-keep_traits_FATE = function(traits.quant, traits.quali, TRAIT_names)
+getTraitsFATE_merge = function(traits.quant, traits.quali, TRAIT_names)
 {
   ## Gather qualitative and quantitative traits
   TAB_traits.df = rbind(traits.quant, traits.quali)
@@ -69,7 +69,7 @@ keep_traits_FATE = function(traits.quant, traits.quali, TRAIT_names)
 }
 
 
-reorganize_traits_FATE = function(TAB_traits)
+getTraitsFATE_reorganize = function(TAB_traits)
 {
   TAB_traits_FATE = data.frame(CODE_CBNA = TAB_traits$CODE_CBNA)
   

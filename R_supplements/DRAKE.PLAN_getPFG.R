@@ -53,38 +53,38 @@ for(ZONE in list(BAUGES))
     , species = get(load(paste0(zone.name, "/species.RData")))
     , XY = get(load(paste0(zone.name, "/XY.RData")))
     ## Select traits
-    , mat.traits.select = select_traits(mat.traits = mat.traits)
+    , mat.traits.select = getPFG_1_selectTraits(mat.traits = mat.traits)
     ## Build PFG
-    , sp.DIST.CLUST = calc_dist_clust(zone.name = zone.name
-                                      , mat.traits.select = mat.traits.select
-                                      , mat.overlap = mat.overlap)
-    , selected.sp = calc_determ(zone.name = zone.name
-                                , sp.DIST = sp.DIST.CLUST$sp.DIST
-                                , sp.CLUST = sp.DIST.CLUST$sp.CLUST
-                                , no.clusters = ZONE$zone.clusters
-                                , species = species)
+    , sp.DIST.CLUST = getPFG_2_calcDistClust(zone.name = zone.name
+                                             , mat.traits.select = mat.traits.select
+                                             , mat.overlap = mat.overlap)
+    , selected.sp = getPFG_2_calcDeterm(zone.name = zone.name
+                                        , sp.DIST = sp.DIST.CLUST$sp.DIST
+                                        , sp.CLUST = sp.DIST.CLUST$sp.CLUST
+                                        , no.clusters = ZONE$zone.clusters
+                                        , species = species)
     ## Build PFG sdm
-    , pfg.mat = get_sites_pfg(zone.name, mat.sites.species, selected.sp)
+    , pfg.mat = getPFG_3_matSitesPFG(zone.name, mat.sites.species, selected.sp)
     , pfg.occ = getOcc_3_occDom(mat.sites.species = pfg.mat
                                 , species = species
                                 , zone.name = zone.name
                                 , sp.type = "PFG")
-    , zone.env.stk = SDM_getEnv(zone.name = zone.name
+    , zone.env.stk = getSDM_env(zone.name = zone.name
                                 , zone.env.folder = zone.env.folder
                                 , zone.env.variables = zone.env.variables
                                 , maskSimul = zone.mask)
-    , pfg.sdm = SDM_build(zone.name = zone.name
-                          , list_sp = pfg.occ
-                          , XY = XY
-                          , zone.env.stk.CALIB = zone.env.stk$env.CALIB
-                          , zone.env.stk.PROJ = zone.env.stk$env.PROJ
-                          , sp.type = "PFG")
+    , pfg.sdm = getSDM_build(zone.name = zone.name
+                             , list_sp = pfg.occ
+                             , XY = XY
+                             , zone.env.stk.CALIB = zone.env.stk$env.CALIB
+                             , zone.env.stk.PROJ = zone.env.stk$env.PROJ
+                             , sp.type = "PFG")
     ## Calculate PFG parameters
-    , mat.traits.PFG = calc_pfg_meanTraits(mat.traits = mat.traits
-                                           , selected.sp = selected.sp)
-    , param.PFG = create_FATE_param(zone.name = zone.name
-                                    , zone.mask = zone.mask.name
-                                    , TRAITS_PFG = mat.traits.PFG)
+    , mat.traits.PFG = getPFG_4_calcMeanTraits(mat.traits = mat.traits
+                                               , selected.sp = selected.sp)
+    , param.PFG = getPFG_5_FATEparam(zone.name = zone.name
+                                     , zone.mask = zone.mask.name
+                                     , TRAITS_PFG = mat.traits.PFG)
     , strings_in_dots = "literals"
   )
   

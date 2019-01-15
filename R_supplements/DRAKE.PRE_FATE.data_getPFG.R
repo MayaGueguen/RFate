@@ -5,7 +5,7 @@
 ################################################################################################################
 
 
-select_traits = function(mat.traits)
+getPFG_1_selectTraits = function(mat.traits)
 {
   mat.traits.select = data.frame(species = paste0("X", mat.traits$CODE_CBNA))
   mat.traits.select$GROUP = mat.traits$LHIST
@@ -30,7 +30,7 @@ select_traits = function(mat.traits)
 ## 2. DO CLUSTERING 
 ################################################################################################################
 
-calc_dist_clust = function(zone.name, mat.traits.select, mat.overlap)
+getPFG_2_calcDistClust = function(zone.name, mat.traits.select, mat.overlap)
 {
   setwd(zone.name)
   
@@ -54,7 +54,7 @@ calc_dist_clust = function(zone.name, mat.traits.select, mat.overlap)
 }
 
 
-calc_determ = function(zone.name, sp.DIST, sp.CLUST, no.clusters, species)
+getPFG_2_calcDeterm = function(zone.name, sp.DIST, sp.CLUST, no.clusters, species)
 {
   setwd(zone.name)
   
@@ -96,7 +96,7 @@ calc_determ = function(zone.name, sp.DIST, sp.CLUST, no.clusters, species)
 ## 3. GET SITES x PFG occurrences matrix
 ################################################################################################################
 
-get_sites_pfg = function(zone.name, mat.sites.species, selected.sp)
+getPFG_3_matSitesPFG = function(zone.name, mat.sites.species, selected.sp)
 {
   setwd(zone.name)
   
@@ -133,7 +133,7 @@ get_sites_pfg = function(zone.name, mat.sites.species, selected.sp)
 ## 4. CALCULATE MEDIAN / MEAN VALUES PER PFG
 ################################################################################################################
 
-calc_pfg_meanTraits = function(mat.traits, selected.sp)
+getPFG_4_calcMeanTraits = function(mat.traits, selected.sp)
 {
   ## GET PFG GROUPING
   tab_pfg = selected.sp[, c("CODE_CBNA", "PFG")]
@@ -206,7 +206,7 @@ calc_pfg_meanTraits = function(mat.traits, selected.sp)
 ################################################################################################################
 
 
-create_FATE_param = function(zone.name, zone.mask, TRAITS_PFG)
+getPFG_5_FATEparam = function(zone.name, zone.mask, TRAITS_PFG)
 {
   setwd(zone.name)
   zone.name.simulation = paste0("FATE_", zone.name)
@@ -225,8 +225,8 @@ create_FATE_param = function(zone.name, zone.mask, TRAITS_PFG)
   
   #################################################################################################
   PRE_FATE.params_PFGlight(name.simulation = zone.name.simulation
-                                , mat.PFG.succ = TRAITS_PFG[, c("PFG", "type", "height"
-                                                                , "maturity", "longevity", "light")])
+                           , mat.PFG.succ = TRAITS_PFG[, c("PFG", "type", "height"
+                                                           , "maturity", "longevity", "light")])
   
   #################################################################################################
   # mat.dist = data.frame()
@@ -339,7 +339,7 @@ create_FATE_param = function(zone.name, zone.mask, TRAITS_PFG)
       writeRaster(ras, filename = ras_to, overwrite = TRUE)
     }
   }
-
+  
   
   #################################################################################################
   PRE_FATE.params_PFGsoil(name.simulation = zone.name.simulation

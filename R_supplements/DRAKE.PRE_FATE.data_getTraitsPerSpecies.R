@@ -1,6 +1,6 @@
 
 
-traits_merge = function(traits)
+getTraits_1_merge = function(traits)
 {
   ## Merge together similar quantitative traits
   traits.code = data.frame(CODE = sort(unique(traits$code)), stringsAsFactors = F)
@@ -31,7 +31,7 @@ traits_genre = function(traits)
   return(traits.genre)
 }
 
-traits_removeUninformative = function(traits)
+getTraits_1_removeUninformative = function(traits)
 {
   ## Remove traits with no values
   ind.noValue = which(is.na(traits$valeur) & nchar(traits$nom) == 0)
@@ -110,7 +110,7 @@ traits_compare = function(traits, trait.code1, trait.code2)
   trait_compare(traits, trait.code2)
 }
 
-traits_remove = function(traits)
+getTraits_1_remove = function(traits)
 {
   traits = trait_remove(traits, "HABITAT")
   traits = trait_remove(traits, "GEO_DISTRIB")
@@ -136,7 +136,7 @@ traits_remove = function(traits)
   return(traits)
 }
 
-traits_change = function(traits)
+getTraits_1_change = function(traits)
 {
   ## Change from qualitative to quantitative
   ind.CLONRATE = which(traits$CODE_simplified == "CLONRATE")
@@ -217,7 +217,7 @@ traits_change = function(traits)
 
 
 
-data_split = function(traits)
+getTraits_2_split = function(traits)
 {
   traits_quant = traits[which(!is.na(traits$valeur)), ]
   traits_quali = traits[which(is.na(traits$valeur)), ]
@@ -231,7 +231,7 @@ data_split = function(traits)
   return(list(traits_quant, traits_quali))
 }
 
-get_traits_quant_median = function(traits_quant)
+getTraits_3_quantMedian = function(traits_quant)
 {
   traits_quant.split = split(traits_quant, traits_quant$CODE_simplified)
   traits_quant.median = foreach(i = 1:length(traits_quant.split), .combine = "rbind") %dopar%
@@ -259,7 +259,7 @@ get_traits_quant_median = function(traits_quant)
 }
 
 
-get_traits_quali_merged = function(traits_quali)
+getTraits_3_qualiMerged = function(traits_quali)
 {
   traits_quali.split = split(traits_quali, traits_quali$CODE_simplified)
   traits_quali.mean = foreach(i = 1:length(traits_quali.split), .combine = "rbind") %dopar%
@@ -300,7 +300,7 @@ get_traits_quali_merged = function(traits_quali)
   return(traits_quali.mean)
 }
 
-traits_thresholdGenus = function(traits, traits.genre)
+getTraits_3_thresholdGenus = function(traits, traits.genre)
 {
   tmp = table(traits$CODE, traits$genus)
   tmp = as.data.frame(tmp)
@@ -313,7 +313,7 @@ traits_thresholdGenus = function(traits, traits.genre)
   return( traits)
 }
 
-traits_save = function(traits, namefile)
+getTraits_4_save = function(traits, namefile)
 {
   table(traits$CODE)
   table(traits$source)
@@ -324,7 +324,7 @@ traits_save = function(traits, namefile)
 }
 
 
-graph_barplot = function(traits, namefile)
+getTraits_4_graphBarplot = function(traits, namefile)
 {
   tmp = table(traits$CODE)
   tmp = data.frame(tmp)
