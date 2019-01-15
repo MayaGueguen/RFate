@@ -133,7 +133,7 @@ getPFG_3_matSitesPFG = function(zone.name, mat.sites.species, selected.sp)
 ## 4. CALCULATE MEDIAN / MEAN VALUES PER PFG
 ################################################################################################################
 
-getPFG_4_calcMeanTraits = function(mat.traits, selected.sp)
+getPFG_4_calcMeanTraits = function(zone.name, mat.traits, selected.sp)
 {
   ## GET PFG GROUPING
   tab_pfg = selected.sp[, c("CODE_CBNA", "PFG")]
@@ -166,8 +166,8 @@ getPFG_4_calcMeanTraits = function(mat.traits, selected.sp)
   summary(mat.traits.SP)
   
   ## CALCULATE MEDIAN TRAIT VALUE PER PFG
-  mat.traits.PFG = split(mat.traits.SP, mat.traits.SP$PFG)
-  mat.traits.PFG = foreach(tab = mat.traits.PFG, .combine = "rbind") %do%
+  mat.traits.pfg = split(mat.traits.SP, mat.traits.SP$PFG)
+  mat.traits.pfg = foreach(tab = mat.traits.pfg, .combine = "rbind") %do%
   {
     res = data.frame(PFG = unique(tab$PFG)
                      , type = unique(tab$type)
@@ -183,22 +183,24 @@ getPFG_4_calcMeanTraits = function(mat.traits, selected.sp)
     )
     return(res)
   }
-  for (i in 1:nrow(mat.traits.PFG))
+  for (i in 1:nrow(mat.traits.pfg))
   {
-    noLongevity = is.na(mat.traits.PFG$longevity[i])
-    noMaturity = is.na(mat.traits.PFG$maturity[i])
+    noLongevity = is.na(mat.traits.pfg$longevity[i])
+    noMaturity = is.na(mat.traits.pfg$maturity[i])
     if (noLongevity && !noMaturity)
     {
-      mat.traits.PFG$longevity[i] = mat.traits.PFG$maturity[i] * 2
+      mat.traits.pfg$longevity[i] = mat.traits.pfg$maturity[i] * 2
     }
     if (!noLongevity && noMaturity)
     {
-      mat.traits.PFG$maturity[i] = round(mat.traits.PFG$longevity[i] / 2)
+      mat.traits.pfg$maturity[i] = round(mat.traits.pfg$longevity[i] / 2)
     }
   }
-  (mat.traits.PFG)
+  (mat.traits.pfg)
   
-  return(mat.traits.PFG)
+  save(mat.traits.pfg, file = paste0(zone.name, "/mat.traits.pfg.RData"))
+  
+  return(mat.traits.pfg)
 }
 
 ################################################################################################################
@@ -343,7 +345,8 @@ getPFG_5_FATEparam = function(zone.name, zone.mask, TRAITS_PFG)
   
   #################################################################################################
   PRE_FATE.params_PFGsoil(name.simulation = zone.name.simulation
-                          , mat.PFG.soil = TRAITS_PFG[, c("PFG", "soil_contrib", "soil_tol_min", "soil_tol_max")])
+                          , mat.PFG.soil = TRAITS_PFG[, c("PFG", "soil_contrib", "soil_tol_min", "soil_tol_max")]
+                          , no.class = max(TRAITS_PFG$soil_tol_max))
   
   #################################################################################################
   PRE_FATE.params_namespaceConstants(name.simulation = zone.name.simulation
@@ -405,7 +408,7 @@ getPFG_5_FATEparam = function(zone.name, zone.mask, TRAITS_PFG)
                                    , doLight = FALSE
                                    , doDisturbances = FALSE
                                    , doSoil = TRUE
-                                   , SOIL.no_categories = 10)
+                                   , SOIL.no_categories = max(TRAITS_PFG$soil_tol_max))
   
   ## LIGHT + SOIL (+ dispersal + HS)
   PRE_FATE.params_globalParameters(name.simulation = zone.name.simulation
@@ -421,10 +424,12 @@ getPFG_5_FATEparam = function(zone.name, zone.mask, TRAITS_PFG)
                                    , doLight = TRUE
                                    , doDisturbances = FALSE
                                    , doSoil = TRUE
-                                   , SOIL.no_categories = 10)
+                                   , SOIL.no_categories = max(TRAITS_PFG$soil_tol_max))
   
   #################################################################################################
   
   PRE_FATE.params_simulParameters(name.simulation = zone.name.simulation
                                   , name.mask = basename(zone.mask))
+  
+  setwd("./../")
 }

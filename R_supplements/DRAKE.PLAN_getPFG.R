@@ -80,11 +80,12 @@ for(ZONE in list(BAUGES))
                              , zone.env.stk.PROJ = zone.env.stk$env.PROJ
                              , sp.type = "PFG")
     ## Calculate PFG parameters
-    , mat.traits.PFG = getPFG_4_calcMeanTraits(mat.traits = mat.traits
+    , mat.traits.pfg = getPFG_4_calcMeanTraits(zone.name = zone.name
+                                               , mat.traits = mat.traits
                                                , selected.sp = selected.sp)
     , param.PFG = getPFG_5_FATEparam(zone.name = zone.name
                                      , zone.mask = zone.mask.name
-                                     , TRAITS_PFG = mat.traits.PFG)
+                                     , TRAITS_PFG = mat.traits.pfg)
     , strings_in_dots = "literals"
   )
   
