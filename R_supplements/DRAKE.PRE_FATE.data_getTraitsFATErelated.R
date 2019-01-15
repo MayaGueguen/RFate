@@ -167,8 +167,6 @@ reorganize_traits_FATE = function(TAB_traits)
   TAB_traits_FATE$DISPERSAL = TAB_traits$DISP_VITTOZ
   
   ## Light ------------------------------------------------------------------------------------- ##
-  # TAB_traits$ELLLITE = as.numeric(as.character(TAB_traits$ELLLITE))
-  # TAB_traits$ELLLITE_INDK = as.numeric(as.character(TAB_traits$ELLLITE_INDK))
   TAB_traits$ELLLITE_INDK = ordered(factor(TAB_traits$ELLLITE_INDK, 1:5))
   TAB_traits_FATE$LIGHT = TAB_traits$ELLLITE_INDK
   
@@ -179,12 +177,16 @@ reorganize_traits_FATE = function(TAB_traits)
   
   ## Soil contrib ------------------------------------------------------------------------------ ##
   TAB_traits$ELLNIT_INDK = ordered(factor(TAB_traits$ELLNIT_INDK, seq(1,5,0.5)))
-  TAB_traits_FATE$SOIL = TAB_traits$ELLNIT_INDK
+  TAB_traits_FATE$NITROGEN = TAB_traits$ELLNIT_INDK
   
   ## Soil tolerance ---------------------------------------------------------------------------- ##
   TAB_traits$ELLNIT_INDK_VAR = as.numeric(factor(TAB_traits$ELLNIT_INDK_VAR
                                                  , c("small variation (I)", "large variation (II)")))
-  TAB_traits_FATE$SOIL_TOLERANCE = TAB_traits$ELLNIT_INDK_VAR
+  TAB_traits_FATE$NITROGEN_TOLERANCE = TAB_traits$ELLNIT_INDK_VAR
+  
+  ## Soil moisture ----------------------------------------------------------------------------- ##
+  TAB_traits$ELLMOIST_INDK = ordered(factor(TAB_traits$ELLMOIST_INDK, seq(1,5,0.5)))
+  TAB_traits_FATE$MOISTURE = TAB_traits$ELLMOIST_INDK
   
   ## Grazing and mowing tolerance, Palatability ------------------------------------------------ ##
   TAB_traits$GRAZ = as.numeric(factor(TAB_traits$GRAZ
@@ -222,9 +224,6 @@ reorganize_traits_FATE = function(TAB_traits)
   TAB_traits_FATE$GRAZ_MOW_TOLERANCE = TAB_traits$MOW_TOLERANCE_INDK
   TAB_traits_FATE$PALATABILITY = TAB_traits$Palatability
   
-  
-  TAB_traits_FATE$NITROGEN = TAB_traits$ELLNIT_INDK
-  TAB_traits_FATE$MOISTURE = TAB_traits$ELLMOIST_INDK
   
   return(TAB_traits_FATE)
 }

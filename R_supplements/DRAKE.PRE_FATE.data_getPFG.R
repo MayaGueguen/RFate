@@ -9,7 +9,7 @@ select_traits = function(mat.traits)
 {
   mat.traits.select = data.frame(species = paste0("X", mat.traits$CODE_CBNA))
   mat.traits.select$GROUP = mat.traits$LHIST
-
+  
   ## Fix ordered factors
   mat.traits.select$DISPERSAL = ordered(factor(mat.traits$DISPERSAL))
   mat.traits.select$LIGHT = ordered(factor(mat.traits$LIGHT))
@@ -32,8 +32,6 @@ select_traits = function(mat.traits)
 
 calc_dist_clust = function(zone.name, mat.traits.select, mat.overlap)
 {
-  # dir.create(paste0(zone.name, "/PFG_withoutSoil"))
-  # setwd(paste0(zone.name, "/PFG_withoutSoil"))
   setwd(zone.name)
   
   mat.traits.DOM = mat.traits.select[which(mat.traits.select$species %in% colnames(mat.overlap)),]
@@ -51,7 +49,6 @@ calc_dist_clust = function(zone.name, mat.traits.select, mat.overlap)
   
   sp.CLUST = PRE_FATE.speciesClustering_step1(mat.species.DIST = sp.DIST)
   
-  # setwd("./../../")
   setwd("./../")
   return(list(sp.DIST = sp.DIST, sp.CLUST = sp.CLUST))
 }
@@ -59,7 +56,6 @@ calc_dist_clust = function(zone.name, mat.traits.select, mat.overlap)
 
 calc_determ = function(zone.name, sp.DIST, sp.CLUST, no.clusters, species)
 {
-  # setwd(paste0(zone.name, "/PFG_withoutSoil"))
   setwd(zone.name)
   
   sp.DETERM = PRE_FATE.speciesClustering_step2(clust.dendograms = sp.CLUST$clust.dendograms
@@ -77,25 +73,6 @@ calc_determ = function(zone.name, sp.DIST, sp.CLUST, no.clusters, species)
                                 , "sp.mean.dist", "allSp.mean", "allSp.min", "allSp.max")]
   selected.sp = selected.sp[order(selected.sp$PFG, selected.sp$SPECIES_NAME), ]
   
-  fwrite(x = selected.sp, file = "determ.all.csv")
-  
-  determinant_PFG = sp.DETERM$determ.sp
-  save(determinant_PFG, file = "determinant_PFG.RData")
-  
-  # setwd("./../../")
-  setwd("./../")
-  return(selected.sp)
-}
-
-################################################################################################################
-## 3. CALCULATE MEDIAN / MEAN VALUES PER PFG
-################################################################################################################
-
-get_sites_pfg = function(zone.name, mat.sites.species, selected.sp)
-{
-  # setwd(paste0(zone.name, "/PFG_withoutSoil"))
-  setwd(zone.name)
-  
   PFG1 = sapply(selected.sp$PFG, function(x) strsplit(x, "_")[[1]][1])
   PFG1 = sapply(PFG1, function(x) strsplit(x, "")[[1]][1])
   
@@ -106,6 +83,22 @@ get_sites_pfg = function(zone.name, mat.sites.species, selected.sp)
   PFG3 = sapply(selected.sp$PFG, function(x) strsplit(x, "[.]")[[1]][2])
   
   selected.sp$PFG = paste0(PFG1, PFG2, PFG3)
+  fwrite(x = selected.sp, file = "determ.all.csv")
+  
+  determinant_PFG = sp.DETERM$determ.sp
+  save(determinant_PFG, file = "determinant_PFG.RData")
+  
+  setwd("./../")
+  return(selected.sp)
+}
+
+################################################################################################################
+## 3. GET SITES x PFG occurrences matrix
+################################################################################################################
+
+get_sites_pfg = function(zone.name, mat.sites.species, selected.sp)
+{
+  setwd(zone.name)
   
   ind.toKeep = selected.sp$CODE_CBNA[which(selected.sp$TO_REMOVE == 0)]
   mat.sites.species = mat.sites.species[, which(colnames(mat.sites.species) %in% ind.toKeep)]
@@ -132,7 +125,6 @@ get_sites_pfg = function(zone.name, mat.sites.species, selected.sp)
   
   save(mat.sites.pfg, file = "mat.sites.pfg.RData")
   
-  # setwd("./../../")
   setwd("./../")
   return(mat.sites.pfg)
 }
@@ -141,3 +133,288 @@ get_sites_pfg = function(zone.name, mat.sites.species, selected.sp)
 ## 4. CALCULATE MEDIAN / MEAN VALUES PER PFG
 ################################################################################################################
 
+calc_pfg_meanTraits = function(mat.traits, selected.sp)
+{
+  ## GET PFG GROUPING
+  tab_pfg = selected.sp[, c("CODE_CBNA", "PFG")]
+  
+  ## GET SPECIES OF INTEREST
+  mat.traits = merge(tab_pfg, mat.traits, by = "CODE_CBNA", all.x = TRUE)
+  
+  ## GET TRAITS OF INTEREST
+  mat.traits.SP = data.frame(species = paste0("X", mat.traits$CODE_CBNA))
+  mat.traits.SP$PFG = as.character(mat.traits$PFG)
+  mat.traits.SP$type = as.character(mat.traits$LHIST)
+  mat.traits.SP$type[which(mat.traits.SP$type %in% c("Chamaephyte_H", "Chamaephyte_S"))] = "C"
+  mat.traits.SP$type[which(mat.traits.SP$type %in% c("Geophyte_Hemicryptophyte", "Therophyte", "Hydrophyte"))] = "H"
+  mat.traits.SP$type[which(mat.traits.SP$type %in% c("Phanerophyte"))] = "P"
+  
+  mat.traits.SP$height = as.numeric(as.character(mat.traits$HEIGHT))
+  mat.traits.SP$longevity = as.numeric(as.character(mat.traits$LONGEVITY))
+  mat.traits.SP$maturity = as.numeric(as.character(mat.traits$MATURITY))
+  
+  mat.traits.SP$palatability = factor(mat.traits$PALATABILITY, 1:4)
+  mat.traits.SP$dispersal = factor(mat.traits$DISPERSAL, 1:7)
+  mat.traits.SP$light = factor(mat.traits$LIGHT, 1:5)
+  mat.traits.SP$soil_contrib = as.factor(as.character(mat.traits$NITROGEN))
+  mat.traits.SP$soil_contrib = factor(c(1:9)[mat.traits.SP$soil_contrib], 1:9)
+  
+  mat.traits.SP$soil_tol_min = as.numeric(mat.traits.SP$soil_contrib) - c(0.5, 1)[as.numeric(mat.traits$NITROGEN_TOLERANCE)]
+  mat.traits.SP$soil_tol_max = as.numeric(mat.traits.SP$soil_contrib) + c(0.5, 1)[as.numeric(mat.traits$NITROGEN_TOLERANCE)]
+  
+  head(mat.traits.SP)
+  summary(mat.traits.SP)
+  
+  ## CALCULATE MEDIAN TRAIT VALUE PER PFG
+  mat.traits.PFG = split(mat.traits.SP, mat.traits.SP$PFG)
+  mat.traits.PFG = foreach(tab = mat.traits.PFG, .combine = "rbind") %do%
+  {
+    res = data.frame(PFG = unique(tab$PFG)
+                     , type = unique(tab$type)
+                     , dispersal = ceiling(median(as.numeric(tab$dispersal), na.rm = T))
+                     , light = round(median(as.numeric(tab$light), na.rm = T))
+                     , height = trunc(mean(tab$height, na.rm = T))
+                     , palatability = ceiling(median(as.numeric(tab$palatability), na.rm = T))
+                     , longevity = trunc(mean(tab$longevity, na.rm = T))
+                     , maturity = trunc(mean(tab$maturity, na.rm = T))
+                     , soil_contrib = round(mean(as.numeric(tab$soil_contrib), na.rm = T), 1)
+                     , soil_tol_min = trunc(mean(as.numeric(tab$soil_tol_min), na.rm = T))
+                     , soil_tol_max = ceiling(mean(as.numeric(tab$soil_tol_max), na.rm = T))
+    )
+    return(res)
+  }
+  for (i in 1:nrow(mat.traits.PFG))
+  {
+    noLongevity = is.na(mat.traits.PFG$longevity[i])
+    noMaturity = is.na(mat.traits.PFG$maturity[i])
+    if (noLongevity && !noMaturity)
+    {
+      mat.traits.PFG$longevity[i] = mat.traits.PFG$maturity[i] * 2
+    }
+    if (!noLongevity && noMaturity)
+    {
+      mat.traits.PFG$maturity[i] = round(mat.traits.PFG$longevity[i] / 2)
+    }
+  }
+  (mat.traits.PFG)
+  
+  return(mat.traits.PFG)
+}
+
+################################################################################################################
+## 5. CALCULATE FATE PARAMETER FILES
+################################################################################################################
+
+
+create_FATE_param = function(zone.name, zone.mask, TRAITS_PFG)
+{
+  setwd(zone.name)
+  zone.name.simulation = paste0("FATE_", zone.name)
+  
+  PRE_FATE.skeletonDirectory(name.simulation = zone.name.simulation)
+  
+  pfg_names = as.character(TRAITS_PFG$PFG)
+  pfg_H = pfg_names[grep("^H|^G|^T", pfg_names)]
+  pfg_C = pfg_names[grep("^C", pfg_names)]
+  pfg_P = pfg_names[grep("^P", pfg_names)]
+  
+  #################################################################################################
+  PRE_FATE.params_PFGsuccession(name.simulation = zone.name.simulation
+                                , mat.PFG.succ = TRAITS_PFG[, c("PFG", "type", "height"
+                                                                , "maturity", "longevity")])
+  
+  #################################################################################################
+  PRE_FATE.params_PFGlight(name.simulation = zone.name.simulation
+                                , mat.PFG.succ = TRAITS_PFG[, c("PFG", "type", "height"
+                                                                , "maturity", "longevity", "light")])
+  
+  #################################################################################################
+  # mat.dist = data.frame()
+  # mat.dist = rbind(mat.dist, data.frame(name = "mowing"
+  #                                       , responseStage = c(rep(1:4, each = length(pfg_H))
+  #                                                           , rep(1:4, each = length(pfg_C))
+  #                                                           , rep(1:4, each = length(pfg_P)))
+  #                                       , variable = c(rep(paste0("KilledIndiv_", pfg_H), 4)
+  #                                                      , rep(paste0("KilledIndiv_", pfg_C), 4)
+  #                                                      , rep(paste0("KilledIndiv_", pfg_P), 4))
+  #                                       , value = c(rep(c(0, 0, 4, 10), each = length(pfg_H))
+  #                                                   , rep(c(0, 10, 5, 10), each = length(pfg_C))
+  #                                                   , rep(c(8, 10, 10, 10), each = length(pfg_P)))))
+  # mat.dist = rbind(mat.dist, data.frame(name = "graz1"
+  #                                       , responseStage = 1
+  #                                       , variable = paste0("KilledIndiv_", TRAITS_PFG$PFG[which(TRAITS_PFG$palatability > 3)])
+  #                                       , value = 1))
+  # mat.dist = rbind(mat.dist, data.frame(name = "graz1"
+  #                                       , responseStage = 1:2
+  #                                       , variable = paste0("KilledIndiv_", pfg_P)
+  #                                       , value = c(10, 0)))
+  # mat.dist = rbind(mat.dist, data.frame(name = "graz1"
+  #                                       , responseStage = 2
+  #                                       , variable = paste0("KilledIndiv_", TRAITS_PFG$PFG[which(TRAITS_PFG$palatability > 3)])
+  #                                       , value = 1))
+  # mat.dist = rbind(mat.dist, data.frame(name = "graz1"
+  #                                       , responseStage = 3
+  #                                       , variable = paste0("ResproutIndiv_", TRAITS_PFG$PFG[which(TRAITS_PFG$palatability %in% c(4,5))])
+  #                                       , value = 1))
+  # # mat.dist = rbind(mat.dist, data.frame(name = "graz1"
+  # #                                       , responseStage = 3
+  # #                                       , variable = paste0("ResproutIndiv_", TRAITS_PFG$PFG[which(TRAITS_PFG$palatability %in% c(6,7))])
+  # #                                       , value = 5))
+  # mat.dist = rbind(mat.dist, data.frame(name = "graz1"
+  #                                       , responseStage = 3:4
+  #                                       , variable = paste0("ResproutIndiv_", pfg_P)
+  #                                       , value = 0))
+  # mat.dist = rbind(mat.dist, data.frame(name = "graz1"
+  #                                       , responseStage = 4
+  #                                       , variable = paste0("ResproutIndiv_", TRAITS_PFG$PFG[which(TRAITS_PFG$palatability > 3)])
+  #                                       , value = 1))
+  # mat.dist = tapply(X = mat.dist$value, INDEX = list(interaction(mat.dist$responseStage, mat.dist$name)
+  #                                                    , mat.dist$variable), FUN = mean)
+  # mat.dist[which(is.na(mat.dist))] = 0
+  # mat.dist = as.data.frame(mat.dist)
+  # mat.dist$name = sapply(rownames(mat.dist), function(x) strsplit(x, "[.]")[[1]][2])
+  # mat.dist$responseStage = as.numeric(sapply(rownames(mat.dist), function(x) strsplit(x, "[.]")[[1]][1]))
+  # if (sum(colnames(mat.dist) %in% paste0("ResproutIndiv_", pfg_names)) < length(pfg_names))
+  # {
+  #   for (pfg in pfg_names)
+  #   {
+  #     if(length(which(colnames(mat.dist) == paste0("ResproutIndiv_", pfg))) == 0)
+  #     {
+  #       eval(parse(text = paste0("mat.dist$ResproutIndiv_", pfg, " = 0")))
+  #     }
+  #   }
+  # }
+  # 
+  # PRE_FATE.params_PFGdisturbance(name.simulation = zone.name.simulation
+  #                                , mat.PFG.dist = mat.dist)
+  
+  #################################################################################################
+  
+  # The three lines (parameters) are : d50, d99, LD (cf. Vittoz 2007 and Engler 2009)
+  ## !  first dispersal distance has been changed from 0.1 to 1 in order to keep integers
+  # disper = matrix(c(c(1, 1, 2, 40, 100, 400, 500),
+  #                   c(2, 5, 15, 150, 500, 1500, 5000),
+  #                   c(1000, 1000, 1000, 5000, 5000, 10000, 10000))
+  #                   , 3, 7, byrow = TRUE)
+  # disper = matrix(c(c(1, 1, 2, 40, 100, 400, 500),
+  #                     c(78000,78000,78000,78000,78000,78000,78000),
+  #                     c(79000,79000,79000,79000,79000,79000,79000))
+  #                 , 3, 7, byrow = TRUE)
+  disper = matrix(c(c(1, 1, 2, 40, 100, 400, 500),
+                    c(2, 5, 15, 150, 500, 1500, 5000),
+                    c(79000,79000,79000,79000,79000,79000,79000))
+                  , 3, 7, byrow = TRUE)
+  colnames(disper) = 1:7
+  rownames(disper) = c("d50", "d99", "ldd")
+  (disper)
+  
+  mat.disp = data.frame(PFG = TRAITS_PFG$PFG
+                        , MODE = 1
+                        , d50 = disper[1, TRAITS_PFG$dispersal]
+                        , d99 = disper[2, TRAITS_PFG$dispersal]
+                        , ldd = disper[3, TRAITS_PFG$dispersal])
+  
+  PRE_FATE.params_PFGdispersal(name.simulation = zone.name.simulation
+                               , mat.PFG.disp = mat.disp)
+  
+  #################################################################################################
+  
+  for (fg in pfg_names)
+  {
+    ras_from = paste0("PFG_SDM/", fg, "/proj_current/proj_current_", fg, "_ensemble.img")
+    ras_to = paste0(zone.name.simulation, "/DATA/PFGS/HABSUIT/HS_", fg, "_0.tif")
+    if (!file.exists(ras_to))
+    {
+      ras = raster(ras_from)
+      ras[] = ras[] / 1000
+      writeRaster(ras, filename = ras_to)
+    }
+  }
+  
+  ras_mask = raster(paste0("./../", zone.mask))
+  writeRaster(ras_mask, filename = paste0(zone.name.simulation, "/DATA/MASK/", basename(zone.mask)))
+  
+  #################################################################################################
+  
+  PRE_FATE.params_PFGsoil(name.simulation = zone.name.simulation
+                          , mat.PFG.soil = TRAITS_PFG[, c("PFG", "soil_contrib", "soil_tol_min", "soil_tol_max")])
+  
+  #################################################################################################
+  
+  PRE_FATE.params_namespaceConstants(name.simulation = zone.name.simulation
+                                     , global.abund.low = 1000000
+                                     , global.abund.med = 5000000
+                                     , global.abund.high = 8000000
+                                     , global.max.by.cohort = 5000000
+                                     , global.resource.thresh.med = 13000000
+                                     , global.resource.thresh.low = 19000000)
+  
+  #################################################################################################
+  
+  ## NOTHING (+ dispersal + HS)
+  PRE_FATE.params_globalParameters(name.simulation = zone.name.simulation
+                                   , opt.no_CPU = 7
+                                   , required.no_PFG = nrow(TRAITS_PFG)
+                                   , required.no_STRATA = 7
+                                   , required.simul_duration = 850
+                                   , required.seeding_duration = 300
+                                   , required.seeding_timestep = 1
+                                   , doDispersal = TRUE
+                                   , doHabSuitability = TRUE
+                                   , HABSUIT.ref_option = 1
+                                   , doLight = FALSE
+                                   , doDisturbances = FALSE
+                                   , doSoil = FALSE)
+  
+  ## LIGHT (+ dispersal + HS)
+  PRE_FATE.params_globalParameters(name.simulation = zone.name.simulation
+                                   , opt.no_CPU = 7
+                                   , required.no_PFG = nrow(TRAITS_PFG)
+                                   , required.no_STRATA = 7
+                                   , required.simul_duration = 850
+                                   , required.seeding_duration = 300
+                                   , required.seeding_timestep = 1
+                                   , doDispersal = TRUE
+                                   , doHabSuitability = TRUE
+                                   , HABSUIT.ref_option = 1
+                                   , doLight = TRUE
+                                   , doDisturbances = FALSE
+                                   , doSoil = FALSE)
+  
+  ## SOIL (+ dispersal + HS)
+  PRE_FATE.params_globalParameters(name.simulation = zone.name.simulation
+                                   , opt.no_CPU = 7
+                                   , required.no_PFG = nrow(TRAITS_PFG)
+                                   , required.no_STRATA = 7
+                                   , required.simul_duration = 850
+                                   , required.seeding_duration = 300
+                                   , required.seeding_timestep = 1
+                                   , doDispersal = TRUE
+                                   , doHabSuitability = TRUE
+                                   , HABSUIT.ref_option = 1
+                                   , doLight = FALSE
+                                   , doDisturbances = FALSE
+                                   , doSoil = TRUE
+                                   , SOIL.no_categories = 10)
+  
+  ## LIGHT + SOIL (+ dispersal + HS)
+  PRE_FATE.params_globalParameters(name.simulation = zone.name.simulation
+                                   , opt.no_CPU = 7
+                                   , required.no_PFG = nrow(TRAITS_PFG)
+                                   , required.no_STRATA = 7
+                                   , required.simul_duration = 850
+                                   , required.seeding_duration = 300
+                                   , required.seeding_timestep = 1
+                                   , doDispersal = TRUE
+                                   , doHabSuitability = TRUE
+                                   , HABSUIT.ref_option = 1
+                                   , doLight = TRUE
+                                   , doDisturbances = FALSE
+                                   , doSoil = TRUE
+                                   , SOIL.no_categories = 10)
+  
+  #################################################################################################
+  
+  PRE_FATE.params_simulParameters(name.simulation = zone.name.simulation
+                                  , name.mask = basename(zone.mask))
+}

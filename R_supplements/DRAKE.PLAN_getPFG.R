@@ -44,11 +44,13 @@ for(ZONE in list(BAUGES))
     , zone.env.folder = ZONE$zone.env.folder
     , zone.env.variables = ZONE$zone.env.variables
     , zone.mask = raster(file_in(ZONE$zone.mask))
+    , zone.mask.name = ZONE$zone.mask
     ## Get data
-    , mat.traits = fread("TRAITS_FATE_190111.csv")
+    , mat.traits = fread(file_in("TRAITS_FATE_190111.csv"))
     , mat.overlap = get(load(paste0(zone.name, "/mat.overlap.DOM.RData")))
     , mat.sites.species = get(load(paste0(zone.name, "/mat.sites.species.DOM.RData")))
     , species = get(load(paste0(zone.name, "/species.RData")))
+    , XY = get(load(paste0(zone.name, "/XY.RData")))
     ## Select traits
     , mat.traits.select = select_traits(mat.traits = mat.traits)
     ## Build PFG
@@ -76,6 +78,12 @@ for(ZONE in list(BAUGES))
                           , zone.env.stk.CALIB = zone.env.stk$env.CALIB
                           , zone.env.stk.PROJ = zone.env.stk$env.PROJ
                           , sp.type = "PFG")
+    ## Calculate PFG parameters
+    , mat.traits.PFG = calc_pfg_meanTraits(mat.traits = mat.traits
+                                           , selected.sp = selected.sp)
+    , param.PFG = create_FATE_param(zone.name = zone.name
+                                    , zone.mask = zone.mask.name
+                                    , TRAITS_PFG = mat.traits.PFG)
     , strings_in_dots = "literals"
   )
   
@@ -88,7 +96,5 @@ for(ZONE in list(BAUGES))
   
 }
 
-loadd(zone.name)
-loadd(pfg.occ)
-loadd(XY)
-loadd(zone.env.stk)
+
+
