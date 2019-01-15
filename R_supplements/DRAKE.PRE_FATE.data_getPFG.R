@@ -1,24 +1,9 @@
 
 
 ################################################################################################################
-## GET TRAITS
+## 1. GET TRAITS
 ################################################################################################################
 
-# setwd("/home/gueguen/Documents/_TUTOS/3_R/_PACKAGES/RFate/data_supplements/")
-# zone.name = "Bauges"
-# load("/home/gueguen/Documents/_TUTOS/3_R/_PACKAGES/RFate/data_supplements/Bauges/mat.overlap.DOM.RData")
-# load("/home/gueguen/Documents/_TUTOS/3_R/_PACKAGES/RFate/data_supplements/Bauges/mat.sites.species.DOM.RData")
-# mat.traits = fread("/home/gueguen/Documents/_TUTOS/3_R/_PACKAGES/RFate/data_supplements/TRAITS_FATE_190111.csv")
- 
-# mat.traits = merge(species, mat.traits, by.x = "numtaxon", by.y = "CODE_CBNA", all.y = T)
-# table(mat.traits$LHIST, mat.traits$WOODY)
-# loadd(species)
-# 
-# head(mat.traits)
-# hop = mat.traits[, c("DISPERSAL", "LIGHT", "PALATABILITY", "HEIGHT")]
-# hop$HEIGHT = as.numeric(log(as.numeric(hop$HEIGHT)))
-# hop$DISPERSAL = exp(as.numeric(as.character(hop$DISPERSAL))) # Disp is not an ordered factor anymore!
-# boxplot(hop)
 
 select_traits = function(mat.traits)
 {
@@ -41,15 +26,15 @@ select_traits = function(mat.traits)
 }
 
 
-
 ################################################################################################################
-## DO CLUSTERING : WITHOUT SOIL
+## 2. DO CLUSTERING 
 ################################################################################################################
 
 calc_dist_clust = function(zone.name, mat.traits.select, mat.overlap)
 {
-  dir.create(paste0(zone.name, "/PFG_withoutSoil"))
-  setwd(paste0(zone.name, "/PFG_withoutSoil"))
+  # dir.create(paste0(zone.name, "/PFG_withoutSoil"))
+  # setwd(paste0(zone.name, "/PFG_withoutSoil"))
+  setwd(zone.name)
   
   mat.traits.DOM = mat.traits.select[which(mat.traits.select$species %in% colnames(mat.overlap)),]
   mat.traits.DOM = mat.traits.DOM[which(mat.traits.DOM$GROUP != ""), ]
@@ -66,14 +51,16 @@ calc_dist_clust = function(zone.name, mat.traits.select, mat.overlap)
   
   sp.CLUST = PRE_FATE.speciesClustering_step1(mat.species.DIST = sp.DIST)
   
-  setwd("./../../")
+  # setwd("./../../")
+  setwd("./../")
   return(list(sp.DIST = sp.DIST, sp.CLUST = sp.CLUST))
 }
 
 
 calc_determ = function(zone.name, sp.DIST, sp.CLUST, no.clusters, species)
 {
-  setwd(paste0(zone.name, "/PFG_withoutSoil"))
+  # setwd(paste0(zone.name, "/PFG_withoutSoil"))
+  setwd(zone.name)
   
   sp.DETERM = PRE_FATE.speciesClustering_step2(clust.dendograms = sp.CLUST$clust.dendograms
                                                , no.clusters = no.clusters
@@ -95,6 +82,62 @@ calc_determ = function(zone.name, sp.DIST, sp.CLUST, no.clusters, species)
   determinant_PFG = sp.DETERM$determ.sp
   save(determinant_PFG, file = "determinant_PFG.RData")
   
-  setwd("./../../")
+  # setwd("./../../")
+  setwd("./../")
   return(selected.sp)
 }
+
+################################################################################################################
+## 3. CALCULATE MEDIAN / MEAN VALUES PER PFG
+################################################################################################################
+
+get_sites_pfg = function(zone.name, mat.sites.species, selected.sp)
+{
+  # setwd(paste0(zone.name, "/PFG_withoutSoil"))
+  setwd(zone.name)
+  
+  PFG1 = sapply(selected.sp$PFG, function(x) strsplit(x, "_")[[1]][1])
+  PFG1 = sapply(PFG1, function(x) strsplit(x, "")[[1]][1])
+  
+  PFG2 = sapply(selected.sp$PFG, function(x) strsplit(x, "_")[[1]][2])
+  PFG2 = sapply(PFG2, function(x) strsplit(x, "")[[1]][1])
+  PFG2 = ifelse(is.na(PFG2), "", PFG2)
+  
+  PFG3 = sapply(selected.sp$PFG, function(x) strsplit(x, "[.]")[[1]][2])
+  
+  selected.sp$PFG = paste0(PFG1, PFG2, PFG3)
+  
+  ind.toKeep = selected.sp$CODE_CBNA[which(selected.sp$TO_REMOVE == 0)]
+  mat.sites.species = mat.sites.species[, which(colnames(mat.sites.species) %in% ind.toKeep)]
+  
+  mat.sites.pfg = foreach (fg = unique(selected.sp$PFG), .combine = "cbind") %do%
+  {
+    ind.fg = selected.sp$CODE_CBNA[which(selected.sp$PFG == fg)]
+    ind.fg = which(colnames(mat.sites.species) %in% ind.fg)
+    val.fg = mat.sites.species[, ind.fg, drop = FALSE]
+    val.fg = apply(val.fg, 1, function(x){
+      if (length(which(is.na(x))) == length(x)){
+        return(NA)
+      } else if (length(which(x == 1)) > 0){
+        return(1)
+      } else if (length(which(x == 0)) > 0){
+        return(0)
+      }
+    })
+    return(matrix(data = val.fg, ncol = 1, dimnames = list(rownames(mat.sites.species), fg)))
+  }
+  
+  dim(mat.sites.pfg)
+  mat.sites.pfg[1:10, 1:10]
+  
+  save(mat.sites.pfg, file = "mat.sites.pfg.RData")
+  
+  # setwd("./../../")
+  setwd("./../")
+  return(mat.sites.pfg)
+}
+
+################################################################################################################
+## 4. CALCULATE MEDIAN / MEAN VALUES PER PFG
+################################################################################################################
+

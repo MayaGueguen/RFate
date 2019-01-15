@@ -79,15 +79,16 @@ getOcc_3_matDom = function(sp.SELECT, observations.xy, stations.COMMUNITY, zone.
   dim(mat.sites.species)
   mat.sites.species[1:10, 1:10]
   
+  save(stations.COMMUNITY, file = paste0(zone.name, "/stations.COMMUNITY.RData"))
   save(mat.sites.species, file = paste0(zone.name, "/mat.sites.species.DOM.RData"))
   
   return(mat.sites.species)
 }
 
-getOcc_3_occDom = function(mat.sites.species, species, zone.name)
+getOcc_3_occDom = function(mat.sites.species, species, zone.name, sp.type)
 {
   ## Create species occurrences files
-  dir.create(paste0(zone.name, "/SP_OCC"))
+  dir.create(paste0(zone.name, "/", sp.type, "_OCC"))
   
   sp.suppr = vector()
   for(sp in colnames(mat.sites.species))
@@ -100,14 +101,18 @@ getOcc_3_occDom = function(mat.sites.species, species, zone.name)
       sp.suppr = c(sp.suppr, sp)
     } else
     {
-      save(sp.occ, file = paste0(zone.name, "/SP_OCC/OCC_X", sp))
+      if (sp.type == "SP"){
+        save(sp.occ, file = paste0(zone.name, "/", sp.type, "_OCC/OCC_X", sp))
+      } else {
+        save(sp.occ, file = paste0(zone.name, "/", sp.type, "_OCC/OCC_", sp))
+      }
     }
   }
   cat(" ==> No absence data for :", sp.suppr)
   dom_missing = species[which(species$numtaxon %in% sp.suppr), ]
-  write.csv(dom_missing, file = paste0(zone.name, '/MISSING_dominant_species_observations.csv'), row.names = F)
+  write.csv(dom_missing, file = paste0(zone.name, "/MISSING_", sp.type, "_observations.csv"), row.names = F)
   
-  list_sp = list.files(path = paste0(zone.name, "/SP_OCC/"))
+  list_sp = list.files(path = paste0(zone.name, "/", sp.type, "_OCC/"))
   list_sp = sub("OCC_", "", list_sp)
   return(list_sp)
 }
@@ -116,12 +121,12 @@ getOcc_3_occDom = function(mat.sites.species, species, zone.name)
 ### 4. BUILD SDM FOR DOMINANT SPECIES
 ################################################################################################################
 
-WRAPPER <- function(sp.name, zone.name, XY, zone.env.stk.CALIB, zone.env.stk.PROJ, check.computed)
+WRAPPER <- function(sp.name, zone.name, XY, zone.env.stk.CALIB, zone.env.stk.PROJ, check.computed, sp.type)
 {
-  load(paste0(zone.name, "/SP_OCC/OCC_",sp.name))
+  load(paste0(zone.name, "/", sp.type, "_OCC/OCC_",sp.name))
   xy = XY[names(sp.occ), c("X_L93","Y_L93")]
   
-  setwd(paste0(zone.name, "/SP_SDM"))
+  setwd(paste0(zone.name, "/", sp.type, "_SDM"))
   
   
   ## formating data in a biomod2 friendly way ------------------------------------
@@ -230,9 +235,9 @@ SDM_getEnv = function(zone.name, zone.env.folder, zone.env.variables, maskSimul)
 }
 
 
-SDM_build = function(zone.name, list_sp, XY, zone.env.stk.CALIB, zone.env.stk.PROJ)
+SDM_build = function(zone.name, list_sp, XY, zone.env.stk.CALIB, zone.env.stk.PROJ, sp.type)
 {
-  dir.create(paste0(zone.name, "/SP_SDM"))
+  dir.create(paste0(zone.name, "/", sp.type, "_SDM"))
   
   mclapply(X = list_sp
            , FUN = WRAPPER
@@ -241,6 +246,7 @@ SDM_build = function(zone.name, list_sp, XY, zone.env.stk.CALIB, zone.env.stk.PR
            , zone.env.stk.CALIB = zone.env.stk.CALIB
            , zone.env.stk.PROJ = zone.env.stk.PROJ
            , check.computed = TRUE
+           , sp.type = sp.type
            , mc.cores = 6)
   
   cat("\nended at:", format(Sys.time(), "%a %d %b %Y %X"))

@@ -77,7 +77,8 @@ for(ZONE in list(BAUGES))
                                    , zone.name = zone.name)
     , sp.dom.occ = getOcc_3_occDom(mat.sites.species = sp.dom.mat
                                    , species = species
-                                   , zone.name = zone.name)
+                                   , zone.name = zone.name
+                                   , sp.type = "SP")
     ## Build dominant species sdm
     , zone.env.stk = SDM_getEnv(zone.name = zone.name
                                 , zone.env.folder = zone.env.folder
@@ -87,7 +88,8 @@ for(ZONE in list(BAUGES))
                              , list_sp = sp.dom.occ
                              , XY = XY
                              , zone.env.stk.CALIB = zone.env.stk$env.CALIB
-                             , zone.env.stk.PROJ = zone.env.stk$env.PROJ)
+                             , zone.env.stk.PROJ = zone.env.stk$env.PROJ
+                             , sp.type = "SP")
     , sp.dom.overlap = SDM_overlap(zone.name = zone.name
                                    , list_sp = sp.dom.occ)
     , strings_in_dots = "literals"
