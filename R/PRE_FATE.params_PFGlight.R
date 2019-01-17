@@ -30,7 +30,7 @@
 ##'   \item{maturity}{the age from which the PFG can reproduce}
 ##'   \item{longevity}{the maximum or average lifespan of the PFG \cr \cr}
 ##'   \item{light}{a value between 0 and 10 corresponding to the Ellenberg light 
-##'   value of the PFG \cr \cr}
+##'   value of the PFG (or between 0 and 5 corresponding to Flora Indicativa light value)\cr \cr}
 ##' }
 ##' 
 ##' 
@@ -318,12 +318,12 @@ PRE_FATE.params_PFGlight = function(
   
   for (i in 1:no.PFG){
     ## Low light condition
-    if (mat.PFG.succ$light[i] <= 3)
+    if (mat.PFG.succ$light[i] <= 2)
     {
       SHADE_TOL[c(1, 4, 7), i] = 1
     }
     ## Medium light condition
-    if (mat.PFG.succ$light[i] <= 5)
+    if (mat.PFG.succ$light[i] <= 3)
     {
       SHADE_TOL[c(2, 5, 8), i] = 1
     }

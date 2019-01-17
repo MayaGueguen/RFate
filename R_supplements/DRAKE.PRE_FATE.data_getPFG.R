@@ -142,31 +142,50 @@ getPFG_4_calcMeanTraits = function(zone.name, mat.traits, selected.sp)
   mat.traits = merge(tab_pfg, mat.traits, by = "CODE_CBNA", all.x = TRUE)
   
   ## GET TRAITS OF INTEREST
-  mat.traits.SP = data.frame(species = paste0("X", mat.traits$CODE_CBNA))
-  mat.traits.SP$PFG = as.character(mat.traits$PFG)
-  mat.traits.SP$type = as.character(mat.traits$LHIST)
-  mat.traits.SP$type[which(mat.traits.SP$type %in% c("Chamaephyte_H", "Chamaephyte_S"))] = "C"
-  mat.traits.SP$type[which(mat.traits.SP$type %in% c("Geophyte_Hemicryptophyte", "Therophyte", "Hydrophyte"))] = "H"
-  mat.traits.SP$type[which(mat.traits.SP$type %in% c("Phanerophyte"))] = "P"
+  mat.traits.sp = data.frame(species = paste0("X", mat.traits$CODE_CBNA))
+  mat.traits.sp$PFG = as.character(mat.traits$PFG)
+  mat.traits.sp$type = as.character(mat.traits$LHIST)
+  mat.traits.sp$type[which(mat.traits.sp$type %in% c("Chamaephyte_S"))] = "C"
+  mat.traits.sp$type[which(mat.traits.sp$type %in% c("Chamaephyte_H", "Geophyte_Hemicryptophyte", "Therophyte", "Hydrophyte"))] = "H"
+  mat.traits.sp$type[which(mat.traits.sp$type %in% c("Phanerophyte"))] = "P"
   
-  mat.traits.SP$height = as.numeric(as.character(mat.traits$HEIGHT))
-  mat.traits.SP$longevity = as.numeric(as.character(mat.traits$LONGEVITY))
-  mat.traits.SP$maturity = as.numeric(as.character(mat.traits$MATURITY))
+  mat.traits.sp$height = as.numeric(as.character(mat.traits$HEIGHT))
+  mat.traits.sp$longevity = as.numeric(as.character(mat.traits$LONGEVITY))
+  mat.traits.sp$maturity = as.numeric(as.character(mat.traits$MATURITY))
   
-  mat.traits.SP$palatability = factor(mat.traits$PALATABILITY, 1:4)
-  mat.traits.SP$dispersal = factor(mat.traits$DISPERSAL, 1:7)
-  mat.traits.SP$light = factor(mat.traits$LIGHT, 1:5)
-  mat.traits.SP$soil_contrib = as.factor(as.character(mat.traits$NITROGEN))
-  mat.traits.SP$soil_contrib = factor(c(1:9)[mat.traits.SP$soil_contrib], 1:9)
+  ## Set new values for longevity
+  tab.longevity = rowSums(table(mat.traits.sp$PFG, mat.traits.sp$longevity))
+  tab.longevity.pfg = names(tab.longevity)[which(tab.longevity == 0)]
+  if (length(tab.longevity.pfg) > 0)
+  {
+    ind.pfg = which(mat.traits.sp$PFG %in% tab.longevity.pfg)
+    mat.traits.sp$longevity[ind.pfg] = mat.traits.sp$maturity[ind.pfg] * 2
+  }
+
+  ## Set new values for maturity
+  tab.maturity = rowSums(table(mat.traits.sp$PFG, mat.traits.sp$maturity))
+  tab.maturity.pfg = names(tab.maturity)[which(tab.maturity == 0)]
+  if (length(tab.maturity.pfg) > 0)
+  {
+    ind.pfg = which(mat.traits.sp$PFG %in% tab.maturity.pfg)
+    mat.traits.sp$maturity[ind.pfg] = mat.traits.sp$longevity[ind.pfg] / 2
+  }
   
-  mat.traits.SP$soil_tol_min = as.numeric(mat.traits.SP$soil_contrib) - c(0.5, 1)[as.numeric(mat.traits$NITROGEN_TOLERANCE)]
-  mat.traits.SP$soil_tol_max = as.numeric(mat.traits.SP$soil_contrib) + c(0.5, 1)[as.numeric(mat.traits$NITROGEN_TOLERANCE)]
   
-  head(mat.traits.SP)
-  summary(mat.traits.SP)
+  mat.traits.sp$palatability = factor(mat.traits$PALATABILITY, 1:4)
+  mat.traits.sp$dispersal = factor(mat.traits$DISPERSAL, 1:7)
+  mat.traits.sp$light = factor(mat.traits$LIGHT, 1:5)
+  mat.traits.sp$soil_contrib = as.factor(as.character(mat.traits$NITROGEN))
+  mat.traits.sp$soil_contrib = factor(c(1:9)[mat.traits.sp$soil_contrib], 1:9)
+  
+  mat.traits.sp$soil_tol_min = as.numeric(mat.traits.sp$soil_contrib) - c(0.5, 1)[as.numeric(mat.traits$NITROGEN_TOLERANCE)]
+  mat.traits.sp$soil_tol_max = as.numeric(mat.traits.sp$soil_contrib) + c(0.5, 1)[as.numeric(mat.traits$NITROGEN_TOLERANCE)]
+  
+  head(mat.traits.sp)
+  summary(mat.traits.sp)
   
   ## CALCULATE MEDIAN TRAIT VALUE PER PFG
-  mat.traits.pfg = split(mat.traits.SP, mat.traits.SP$PFG)
+  mat.traits.pfg = split(mat.traits.sp, mat.traits.sp$PFG)
   mat.traits.pfg = foreach(tab = mat.traits.pfg, .combine = "rbind") %do%
   {
     res = data.frame(PFG = unique(tab$PFG)
@@ -175,30 +194,42 @@ getPFG_4_calcMeanTraits = function(zone.name, mat.traits, selected.sp)
                      , light = round(median(as.numeric(tab$light), na.rm = T))
                      , height = trunc(mean(tab$height, na.rm = T))
                      , palatability = ceiling(median(as.numeric(tab$palatability), na.rm = T))
-                     , longevity = trunc(mean(tab$longevity, na.rm = T))
-                     , maturity = trunc(mean(tab$maturity, na.rm = T))
+                     , longevity = round(mean(tab$longevity, na.rm = T))
+                     , maturity = round(mean(tab$maturity, na.rm = T))
                      , soil_contrib = round(mean(as.numeric(tab$soil_contrib), na.rm = T), 1)
                      , soil_tol_min = trunc(mean(as.numeric(tab$soil_tol_min), na.rm = T))
                      , soil_tol_max = ceiling(mean(as.numeric(tab$soil_tol_max), na.rm = T))
     )
     return(res)
   }
-  for (i in 1:nrow(mat.traits.pfg))
-  {
-    noLongevity = is.na(mat.traits.pfg$longevity[i])
-    noMaturity = is.na(mat.traits.pfg$maturity[i])
-    if (noLongevity && !noMaturity)
-    {
-      mat.traits.pfg$longevity[i] = mat.traits.pfg$maturity[i] * 2
-    }
-    if (!noLongevity && noMaturity)
-    {
-      mat.traits.pfg$maturity[i] = round(mat.traits.pfg$longevity[i] / 2)
-    }
-  }
+  # for (i in 1:nrow(mat.traits.pfg))
+  # {
+  #   noLongevity = is.na(mat.traits.pfg$longevity[i])
+  #   noMaturity = is.na(mat.traits.pfg$maturity[i])
+  #   if (noLongevity && !noMaturity)
+  #   {
+  #     mat.traits.pfg$longevity[i] = mat.traits.pfg$maturity[i] * 2
+  #   }
+  #   if (!noLongevity && noMaturity)
+  #   {
+  #     mat.traits.pfg$maturity[i] = round(mat.traits.pfg$longevity[i] / 2)
+  #   }
+  # }
   (mat.traits.pfg)
-  
   save(mat.traits.pfg, file = paste0(zone.name, "/mat.traits.pfg.RData"))
+  
+  
+  mat.traits.sp.melt = melt(mat.traits.sp, id.vars = c("species", "PFG", "type"))
+  mat.traits.sp.melt$value = as.numeric(as.character(mat.traits.sp.melt$value))
+  head(mat.traits.sp.melt)
+  
+  ggplot(mat.traits.sp.melt, aes(x = PFG, y = value, fill = type)) +
+    geom_boxplot(varwidth = TRUE) +
+    facet_wrap(~ variable, scales = "free_y") +
+    scale_fill_discrete(guide = F) +
+    labs(x = "", y = "") +
+    theme_fivethirtyeight()
+  
   
   return(mat.traits.pfg)
 }
@@ -208,7 +239,7 @@ getPFG_4_calcMeanTraits = function(zone.name, mat.traits, selected.sp)
 ################################################################################################################
 
 
-getPFG_5_FATEparam = function(zone.name, zone.mask, TRAITS_PFG)
+getPFG_5_FATEparam = function(zone.name, zone.mask, zone.mask.pert, TRAITS_PFG)
 {
   setwd(zone.name)
   zone.name.simulation = paste0("FATE_", zone.name)
@@ -231,64 +262,72 @@ getPFG_5_FATEparam = function(zone.name, zone.mask, TRAITS_PFG)
                                                            , "maturity", "longevity", "light")])
   
   #################################################################################################
-  # mat.dist = data.frame()
-  # mat.dist = rbind(mat.dist, data.frame(name = "mowing"
-  #                                       , responseStage = c(rep(1:4, each = length(pfg_H))
-  #                                                           , rep(1:4, each = length(pfg_C))
-  #                                                           , rep(1:4, each = length(pfg_P)))
-  #                                       , variable = c(rep(paste0("KilledIndiv_", pfg_H), 4)
-  #                                                      , rep(paste0("KilledIndiv_", pfg_C), 4)
-  #                                                      , rep(paste0("KilledIndiv_", pfg_P), 4))
-  #                                       , value = c(rep(c(0, 0, 4, 10), each = length(pfg_H))
-  #                                                   , rep(c(0, 10, 5, 10), each = length(pfg_C))
-  #                                                   , rep(c(8, 10, 10, 10), each = length(pfg_P)))))
-  # mat.dist = rbind(mat.dist, data.frame(name = "graz1"
-  #                                       , responseStage = 1
-  #                                       , variable = paste0("KilledIndiv_", TRAITS_PFG$PFG[which(TRAITS_PFG$palatability > 3)])
-  #                                       , value = 1))
-  # mat.dist = rbind(mat.dist, data.frame(name = "graz1"
-  #                                       , responseStage = 1:2
-  #                                       , variable = paste0("KilledIndiv_", pfg_P)
-  #                                       , value = c(10, 0)))
-  # mat.dist = rbind(mat.dist, data.frame(name = "graz1"
-  #                                       , responseStage = 2
-  #                                       , variable = paste0("KilledIndiv_", TRAITS_PFG$PFG[which(TRAITS_PFG$palatability > 3)])
-  #                                       , value = 1))
+  mat.dist = data.frame()
+  mat.dist = rbind(mat.dist, data.frame(name = "mowing"
+                                        , responseStage = c(rep(1:4, each = length(pfg_H))
+                                                            , rep(1:4, each = length(pfg_C))
+                                                            , rep(1:4, each = length(pfg_P)))
+                                        , variable = c(rep(paste0("KilledIndiv_", pfg_H), 4)
+                                                       , rep(paste0("KilledIndiv_", pfg_C), 4)
+                                                       , rep(paste0("KilledIndiv_", pfg_P), 4))
+                                        , value = c(rep(c(0, 0, 4, 10), each = length(pfg_H))
+                                                    , rep(c(0, 10, 5, 10), each = length(pfg_C))
+                                                    , rep(c(8, 10, 10, 10), each = length(pfg_P)))))
+  mat.dist = rbind(mat.dist, data.frame(name = "graz1"
+                                        , responseStage = 1
+                                        , variable = paste0("KilledIndiv_", TRAITS_PFG$PFG[which(TRAITS_PFG$palatability > 3)])
+                                        , value = 1))
+  mat.dist = rbind(mat.dist, data.frame(name = "graz1"
+                                        , responseStage = 1
+                                        , variable = paste0("KilledIndiv_", pfg_P)
+                                        , value = 10))
+  mat.dist = rbind(mat.dist, data.frame(name = "graz1"
+                                        , responseStage = 2
+                                        , variable = paste0("KilledIndiv_", pfg_P)
+                                        , value = 0))
+  mat.dist = rbind(mat.dist, data.frame(name = "graz1"
+                                        , responseStage = 2
+                                        , variable = paste0("KilledIndiv_", TRAITS_PFG$PFG[which(TRAITS_PFG$palatability > 3)])
+                                        , value = 1))
+  mat.dist = rbind(mat.dist, data.frame(name = "graz1"
+                                        , responseStage = 3
+                                        , variable = paste0("ResproutIndiv_", TRAITS_PFG$PFG[which(TRAITS_PFG$palatability %in% c(4,5))])
+                                        , value = 1))
   # mat.dist = rbind(mat.dist, data.frame(name = "graz1"
   #                                       , responseStage = 3
-  #                                       , variable = paste0("ResproutIndiv_", TRAITS_PFG$PFG[which(TRAITS_PFG$palatability %in% c(4,5))])
-  #                                       , value = 1))
-  # # mat.dist = rbind(mat.dist, data.frame(name = "graz1"
-  # #                                       , responseStage = 3
-  # #                                       , variable = paste0("ResproutIndiv_", TRAITS_PFG$PFG[which(TRAITS_PFG$palatability %in% c(6,7))])
-  # #                                       , value = 5))
-  # mat.dist = rbind(mat.dist, data.frame(name = "graz1"
-  #                                       , responseStage = 3:4
-  #                                       , variable = paste0("ResproutIndiv_", pfg_P)
-  #                                       , value = 0))
-  # mat.dist = rbind(mat.dist, data.frame(name = "graz1"
-  #                                       , responseStage = 4
-  #                                       , variable = paste0("ResproutIndiv_", TRAITS_PFG$PFG[which(TRAITS_PFG$palatability > 3)])
-  #                                       , value = 1))
-  # mat.dist = tapply(X = mat.dist$value, INDEX = list(interaction(mat.dist$responseStage, mat.dist$name)
-  #                                                    , mat.dist$variable), FUN = mean)
-  # mat.dist[which(is.na(mat.dist))] = 0
-  # mat.dist = as.data.frame(mat.dist)
-  # mat.dist$name = sapply(rownames(mat.dist), function(x) strsplit(x, "[.]")[[1]][2])
-  # mat.dist$responseStage = as.numeric(sapply(rownames(mat.dist), function(x) strsplit(x, "[.]")[[1]][1]))
-  # if (sum(colnames(mat.dist) %in% paste0("ResproutIndiv_", pfg_names)) < length(pfg_names))
-  # {
-  #   for (pfg in pfg_names)
-  #   {
-  #     if(length(which(colnames(mat.dist) == paste0("ResproutIndiv_", pfg))) == 0)
-  #     {
-  #       eval(parse(text = paste0("mat.dist$ResproutIndiv_", pfg, " = 0")))
-  #     }
-  #   }
-  # }
-  # 
-  # PRE_FATE.params_PFGdisturbance(name.simulation = zone.name.simulation
-  #                                , mat.PFG.dist = mat.dist)
+  #                                       , variable = paste0("ResproutIndiv_", TRAITS_PFG$PFG[which(TRAITS_PFG$palatability %in% c(6,7))])
+  #                                       , value = 5))
+  mat.dist = rbind(mat.dist, data.frame(name = "graz1"
+                                        , responseStage = 3
+                                        , variable = paste0("ResproutIndiv_", pfg_P)
+                                        , value = 0))
+  mat.dist = rbind(mat.dist, data.frame(name = "graz1"
+                                        , responseStage = 4
+                                        , variable = paste0("ResproutIndiv_", pfg_P)
+                                        , value = 0))
+  mat.dist = rbind(mat.dist, data.frame(name = "graz1"
+                                        , responseStage = 4
+                                        , variable = paste0("ResproutIndiv_", TRAITS_PFG$PFG[which(TRAITS_PFG$palatability > 3)])
+                                        , value = 1))
+  mat.dist = tapply(X = mat.dist$value, INDEX = list(interaction(mat.dist$responseStage, mat.dist$name)
+                                                     , mat.dist$variable), FUN = mean)
+  mat.dist[which(is.na(mat.dist))] = 0
+  mat.dist = as.data.frame(mat.dist)
+  mat.dist$name = sapply(rownames(mat.dist), function(x) strsplit(x, "[.]")[[1]][2])
+  mat.dist$responseStage = as.numeric(sapply(rownames(mat.dist), function(x) strsplit(x, "[.]")[[1]][1]))
+  if (sum(colnames(mat.dist) %in% paste0("ResproutIndiv_", pfg_names)) < length(pfg_names))
+  {
+    for (pfg in pfg_names)
+    {
+      if(length(which(colnames(mat.dist) == paste0("ResproutIndiv_", pfg))) == 0)
+      {
+        eval(parse(text = paste0("mat.dist$ResproutIndiv_", pfg, " = 0")))
+      }
+    }
+  }
+
+  PRE_FATE.params_PFGdisturbance(name.simulation = zone.name.simulation
+                                 , mat.PFG.dist = mat.dist)
   
   #################################################################################################
   
@@ -342,6 +381,28 @@ getPFG_5_FATEparam = function(zone.name, zone.mask, TRAITS_PFG)
     }
   }
   
+  for (pert in zone.mask.pert)
+  {
+    ras = raster(paste0("./../", pert))
+    ras = projectRaster(ras, ras_mask, res = 100)
+    ras[which(is.na(ras[]))] = 0
+    writeRaster(ras
+                , filename = paste0(zone.name.simulation, "/DATA/MASK/DIST_", basename(pert))
+                , overwrite = TRUE)
+  }
+  
+  ras.names.dist = paste0(zone.name.simulation, "/DATA/MASK/DIST_", basename(zone.mask.pert))
+  # ras.names.mask = paste0(zone.name.simulation, "/DATA/MASK/", basename(zone.mask))
+  # ras.names = c(ras.names.dist, ras.names.mask)
+  mat.dist.change = data.frame(year = rep(c(600, 601, 800, 801), each = 2)
+                               , order = rep(1:2, 4)
+                               , file.name = rep(c(ras.names.dist, rev(ras.names.dist)), 2))
+                               # , file.name = rep(c(ras.names, rev(ras.names)), 2))
+
+  
+  PRE_FATE.params_changingYears(name.simulation = zone.name.simulation
+                                , type.changing = "DIST"
+                                , mat.changing = mat.dist.change)
   
   #################################################################################################
   PRE_FATE.params_PFGsoil(name.simulation = zone.name.simulation
@@ -359,8 +420,9 @@ getPFG_5_FATEparam = function(zone.name, zone.mask, TRAITS_PFG)
   
   #################################################################################################
   PRE_FATE.params_saveYears(name.simulation = zone.name.simulation
-                            , years.maps = seq(0,850,10)
-                            , years.objects = 850)
+                            , years.maps = c(seq(20, 500, 20), seq(510, 850, 10)))
+                            # , years.maps = seq(0,850,10)
+                            # , years.objects = 850)
   
   #################################################################################################
   
@@ -375,8 +437,11 @@ getPFG_5_FATEparam = function(zone.name, zone.mask, TRAITS_PFG)
                                    , doDispersal = TRUE
                                    , doHabSuitability = TRUE
                                    , HABSUIT.ref_option = 1
+                                   , doDisturbances = TRUE
+                                   , DIST.no = 2
+                                   , DIST.no_sub = 4
+                                   , DIST.freq = c(1, 1)
                                    , doLight = FALSE
-                                   , doDisturbances = FALSE
                                    , doSoil = FALSE)
   
   ## LIGHT (+ dispersal + HS)
@@ -390,8 +455,11 @@ getPFG_5_FATEparam = function(zone.name, zone.mask, TRAITS_PFG)
                                    , doDispersal = TRUE
                                    , doHabSuitability = TRUE
                                    , HABSUIT.ref_option = 1
+                                   , doDisturbances = TRUE
+                                   , DIST.no = 2
+                                   , DIST.no_sub = 4
+                                   , DIST.freq = c(1, 1)
                                    , doLight = TRUE
-                                   , doDisturbances = FALSE
                                    , doSoil = FALSE)
   
   ## SOIL (+ dispersal + HS)
@@ -405,8 +473,11 @@ getPFG_5_FATEparam = function(zone.name, zone.mask, TRAITS_PFG)
                                    , doDispersal = TRUE
                                    , doHabSuitability = TRUE
                                    , HABSUIT.ref_option = 1
+                                   , doDisturbances = TRUE
+                                   , DIST.no = 2
+                                   , DIST.no_sub = 4
+                                   , DIST.freq = c(1, 1)
                                    , doLight = FALSE
-                                   , doDisturbances = FALSE
                                    , doSoil = TRUE
                                    , SOIL.no_categories = max(TRAITS_PFG$soil_tol_max))
   
@@ -421,8 +492,11 @@ getPFG_5_FATEparam = function(zone.name, zone.mask, TRAITS_PFG)
                                    , doDispersal = TRUE
                                    , doHabSuitability = TRUE
                                    , HABSUIT.ref_option = 1
+                                   , doDisturbances = TRUE
+                                   , DIST.no = 2
+                                   , DIST.no_sub = 4
+                                   , DIST.freq = c(1, 1)
                                    , doLight = TRUE
-                                   , doDisturbances = FALSE
                                    , doSoil = TRUE
                                    , SOIL.no_categories = max(TRAITS_PFG$soil_tol_max))
   
