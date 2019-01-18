@@ -57,8 +57,8 @@ Two \code{PRE_FATE_CLUSTERING_[...].pdf} files are created :
 \description{
 This script is designed to obtain functional groups by : 1)
 select the number of clusters to be kept from an object obtained with the
-\code{PRE_FATE.speciesClustering_step1} function ; 2) refine these groups
-by identifying determinant species in each of them.
+\code{\link{PRE_FATE.speciesClustering_step1}} function ; 2) refine these 
+groups by identifying determinant species in each of them.
 }
 \details{
 This function allows one to obtain a classification of \emph{dominant}

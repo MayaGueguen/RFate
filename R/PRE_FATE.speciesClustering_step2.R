@@ -9,8 +9,8 @@
 ##' 
 ##' @description This script is designed to obtain functional groups by : 1)
 ##' select the number of clusters to be kept from an object obtained with the
-##' \code{PRE_FATE.speciesClustering_step1} function ; 2) refine these groups
-##' by identifying determinant species in each of them.
+##' \code{\link{PRE_FATE.speciesClustering_step1}} function ; 2) refine these 
+##' groups by identifying determinant species in each of them.
 ##'              
 ##' @param clust.dendograms a dendogram or a \code{list} of dendograms with one
 ##' for each \code{GROUP} value, as can be obtained with the 

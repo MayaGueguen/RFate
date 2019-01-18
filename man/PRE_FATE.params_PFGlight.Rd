@@ -58,7 +58,7 @@ cycle :
   \item{maturity}{the age from which the PFG can reproduce}
   \item{longevity}{the maximum or average lifespan of the PFG \cr \cr}
   \item{light}{a value between 0 and 10 corresponding to the Ellenberg light 
-  value of the PFG \cr \cr}
+  value of the PFG (or between 0 and 5 corresponding to Flora Indicativa light value)\cr \cr}
 }
 
 
