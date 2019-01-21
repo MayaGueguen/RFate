@@ -215,6 +215,10 @@ PRE_FATE.speciesClustering_step3 = function(
     }
   } else
   {
+    if (sum(colnames(mat.species.traits) == "soil_tolerance") == 1)
+    {
+      stop("Missing data!\n Column names of `mat.species.traits` must contain `soil_contrib` and `soil_tolerance`")
+    }
     isThere.soil = FALSE
   }
   isThere.dispersal = (length(which(colnames(mat.species.traits) == "dispersal")) == 1)
@@ -579,7 +583,7 @@ PRE_FATE.speciesClustering_step3 = function(
   
   #################################################################################################
   
-  if (sum(unlist(lapply(list(pp.1, pp.2, pp.3, pp.4, pp.5), is.null))) < 3)
+  if (sum(unlist(lapply(list(pp.1, pp.2, pp.3, pp.4, pp.5), is.null))) < 5)
   {
     pdf(file = "PRE_FATE_CLUSTERING_STEP_3D_PFGtraitsValues.pdf"
         , width = 10, height = 10)
