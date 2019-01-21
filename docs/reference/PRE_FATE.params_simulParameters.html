@@ -34,8 +34,8 @@ simulation — PRE_FATE.params_simulParameters • RFate</title>
 <meta property="og:title" content="Create <em>Simul_parameters</em> parameter file for a <code>FATE-HD</code>
 simulation — PRE_FATE.params_simulParameters" />
 
-<meta property="og:description" content="This script is designed to create one (or several) parameter file
-containing PARAMETER FILENAMES used in FATE-HD model." />
+<meta property="og:description" content="This script is designed to create one (or several) parameter 
+file containing PARAMETER FILENAMES used in FATE-HD model." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -153,27 +153,35 @@ simulation</h1>
 
     <div class="ref-description">
     
-    <p>This script is designed to create one (or several) parameter file
-containing <code>PARAMETER FILENAMES</code> used in <code>FATE-HD</code> model.</p>
+    <p>This script is designed to create one (or several) parameter 
+file containing <code>PARAMETER FILENAMES</code> used in <code>FATE-HD</code> model.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>PRE_FATE.params_simulParameters</span>(<span class='no'>name.simulation</span>, <span class='no'>name.mask</span>)</pre>
+    <pre class="usage"><span class='fu'>PRE_FATE.params_simulParameters</span>(<span class='no'>name.simulation</span>, <span class='no'>name.mask</span>,
+  <span class='kw'>name.dist</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>name.simulation</th>
-      <td><p>a <code>string</code> that corresponds to the main directory
-or simulation name of the <code>FATE-HD</code> simulation</p></td>
+      <td><p>a <code>string</code> that corresponds to the main 
+directory or simulation name of the <code>FATE-HD</code> simulation</p></td>
     </tr>
     <tr>
       <th>name.mask</th>
-      <td><p>a <code>string</code> that corresponds to the file name of a raster
-mask, with either 0 or 1 within each pixel, 1 corresponding to the cells of 
-the studied area in which the succession module of the <code>FATE-HD</code> simulation
-will take place</p></td>
+      <td><p>a <code>string</code> that corresponds to the file name of a 
+raster mask, with either 0 or 1 within each pixel, 1 corresponding to the 
+cells of the studied area in which the succession module of the 
+<code>FATE-HD</code> simulation will take place</p></td>
+    </tr>
+    <tr>
+      <th>name.dist</th>
+      <td><p>(<em>optional</em>) <br /> a <code>string</code> that corresponds 
+to the file name of a raster mask, with either 0 or 1 within each pixel, 
+1 corresponding to the cells of the studied area in which the succession 
+module of the <code>FATE-HD</code> simulation will take place</p></td>
     </tr>
     </table>
     

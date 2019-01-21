@@ -6,15 +6,19 @@
 ##'
 ##' @author Maya Guéguen
 ##' 
-##' @description This script is designed to create one (or several) parameter file
-##' containing \code{PARAMETER FILENAMES} used in \code{FATE-HD} model.
+##' @description This script is designed to create one (or several) parameter 
+##' file containing \code{PARAMETER FILENAMES} used in \code{FATE-HD} model.
 ##'              
-##' @param name.simulation a \code{string} that corresponds to the main directory
-##' or simulation name of the \code{FATE-HD} simulation
-##' @param name.mask a \code{string} that corresponds to the file name of a raster
-##'  mask, with either 0 or 1 within each pixel, 1 corresponding to the cells of 
-##'  the studied area in which the succession module of the \code{FATE-HD} simulation
-##'  will take place
+##' @param name.simulation a \code{string} that corresponds to the main 
+##' directory or simulation name of the \code{FATE-HD} simulation
+##' @param name.mask a \code{string} that corresponds to the file name of a 
+##' raster mask, with either 0 or 1 within each pixel, 1 corresponding to the 
+##' cells of the studied area in which the succession module of the 
+##' \code{FATE-HD} simulation will take place
+##' @param name.dist (\emph{optional}) \cr a \code{string} that corresponds 
+##' to the file name of a raster mask, with either 0 or 1 within each pixel, 
+##' 1 corresponding to the cells of the studied area in which the succession 
+##' module of the \code{FATE-HD} simulation will take place
 ##' 
 ##' 
 ##' 
@@ -228,6 +232,7 @@
 PRE_FATE.params_simulParameters = function(
   name.simulation
   , name.mask
+  , name.dist = NULL
 ){
   
   .testParam_existFolder(name.simulation, "PARAM_SIMUL/")
@@ -521,61 +526,82 @@ PRE_FATE.params_simulParameters = function(
     if (doDisturbances)
     {
       .testParam_existFolder(name.simulation, "DATA/PFGS/DIST/")
-    }
-    files.PFG.DIST = list.files(path = paste0(name.simulation, "/DATA/PFGS/DIST")
-                                , pattern = "^DIST"
-                                , full.names = TRUE)
-    if (length(files.PFG.DIST) != no_PFG)
-    {
-      warning(paste0("There is not the same number of files "
-                     , "(`.txt` file starting with `DIST`) "
-                     , "into the DATA/PFGS/DIST/ folder as the number of PFG "
-                     , "indicated into the file "
-                     , globi))
+      
+      # if (!is.null(name.dist))
+      # {
+        if (.testParam_notChar(name.dist))
+        {
+          .stopMessage_beChar("name.dist") 
+        } else
+        {
+          .testParam_existFile(paste0(name.simulation, "/DATA/MASK/", name.dist))
+        }
+      # } else
+      # {
+        # .stopMessage_beChar("name.dist") 
+      # }
+      nbDisturbances = .getParam(params.lines = globi
+                                 , flag = "NB_DISTURBANCES"
+                                 , flag.split = " "
+                                 , is.num = TRUE)
+      
+      files.PFG.DIST = list.files(path = paste0(name.simulation, "/DATA/PFGS/DIST")
+                                  , pattern = "^DIST"
+                                  , full.names = TRUE)
+      if (length(files.PFG.DIST) != no_PFG)
+      {
+        warning(paste0("There is not the same number of files "
+                       , "(`.txt` file starting with `DIST`) "
+                       , "into the DATA/PFGS/DIST/ folder as the number of PFG "
+                       , "indicated into the file "
+                       , globi))
+      }
     }
     
     #################################################################################################
     
     doLight = .getParam(params.lines = globi
-                               , flag = "DO_LIGHT_COMPETITION"
-                               , flag.split = " "
-                               , is.num = TRUE)
+                        , flag = "DO_LIGHT_COMPETITION"
+                        , flag.split = " "
+                        , is.num = TRUE)
     if (doLight)
     {
       .testParam_existFolder(name.simulation, "DATA/PFGS/LIGHT/")
-    }
-    files.PFG.LIGHT = list.files(path = paste0(name.simulation, "/DATA/PFGS/LIGHT")
-                                , pattern = "^LIGHT"
-                                , full.names = TRUE)
-    if (length(files.PFG.LIGHT) != no_PFG)
-    {
-      warning(paste0("There is not the same number of files "
-                     , "(`.txt` file starting with `LIGHT`) "
-                     , "into the DATA/PFGS/LIGHT/ folder as the number of PFG "
-                     , "indicated into the file "
-                     , globi))
+      
+      files.PFG.LIGHT = list.files(path = paste0(name.simulation, "/DATA/PFGS/LIGHT")
+                                   , pattern = "^LIGHT"
+                                   , full.names = TRUE)
+      if (length(files.PFG.LIGHT) != no_PFG)
+      {
+        warning(paste0("There is not the same number of files "
+                       , "(`.txt` file starting with `LIGHT`) "
+                       , "into the DATA/PFGS/LIGHT/ folder as the number of PFG "
+                       , "indicated into the file "
+                       , globi))
+      }
     }
     
     #################################################################################################
     
     doSoil = .getParam(params.lines = globi
-                        , flag = "DO_SOIL_COMPETITION"
-                        , flag.split = " "
-                        , is.num = TRUE)
+                       , flag = "DO_SOIL_COMPETITION"
+                       , flag.split = " "
+                       , is.num = TRUE)
     if (doSoil)
     {
       .testParam_existFolder(name.simulation, "DATA/PFGS/SOIL/")
-    }
-    files.PFG.SOIL = list.files(path = paste0(name.simulation, "/DATA/PFGS/SOIL")
-                                 , pattern = "^SOIL"
-                                 , full.names = TRUE)
-    if (length(files.PFG.SOIL) != no_PFG)
-    {
-      warning(paste0("There is not the same number of files "
-                     , "(`.txt` file starting with `SOIL`) "
-                     , "into the DATA/PFGS/SOIL/ folder as the number of PFG "
-                     , "indicated into the file "
-                     , globi))
+      
+      files.PFG.SOIL = list.files(path = paste0(name.simulation, "/DATA/PFGS/SOIL")
+                                  , pattern = "^SOIL"
+                                  , full.names = TRUE)
+      if (length(files.PFG.SOIL) != no_PFG)
+      {
+        warning(paste0("There is not the same number of files "
+                       , "(`.txt` file starting with `SOIL`) "
+                       , "into the DATA/PFGS/SOIL/ folder as the number of PFG "
+                       , "indicated into the file "
+                       , globi))
+      }
     }
     
     #################################################################################################
@@ -587,21 +613,8 @@ PRE_FATE.params_simulParameters = function(
     if (doHabSuit)
     {
       .testParam_existFolder(name.simulation, "DATA/PFGS/HABSUIT/")
-    }
-    # files.PFG.HS = list.files(path = paste0(name.simulation, "/DATA/PFGS/HABSUIT")
-    #                           # , pattern = "^DIST"
-    #                           , full.names = TRUE)
-    # if (length(files.PFG.HS) != no_PFG)
-    # {
-    #   warning(paste0("There is not the same number of files "
-    #                  , "into the DATA/PFGS/HABSUIT/ folder as the number of PFG "
-    #                  , "indicated into the file "
-    #                  , globi))
-    # }
-    
-    files.PFG.HS = vector()
-    if (doHabSuit)
-    {
+      
+      files.PFG.HS = vector()
       if (PARAMS.combi[, "PFG.HABSUIT"][i] > 0)
       {
         di = dirs.HABSUIT[PARAMS.combi$PFG.HABSUIT[i]]
@@ -660,8 +673,10 @@ PRE_FATE.params_simulParameters = function(
       names.params.list = c(names.params.list, "--HAB_CHANGE_MASK--")
     }
     if (doDisturbances){
-      params.list = c(params.list, list(files.PFG.DIST))
-      names.params.list = c(names.params.list, "--PFG_DISTURBANCES_PARAMS--")
+      params.list = c(params.list, list(files.PFG.DIST)
+                      , rep(paste0(name.simulation, "/DATA/MASK/", name.dist), nbDisturbances))
+      names.params.list = c(names.params.list, "--PFG_DISTURBANCES_PARAMS--"
+                            , "--DIST_MASK--")
     }
     if (exists("SCENARIO.DIST"))
     {

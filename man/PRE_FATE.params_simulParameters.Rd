@@ -5,16 +5,22 @@
 \title{Create \emph{Simul_parameters} parameter file for a \code{FATE-HD}
 simulation}
 \usage{
-PRE_FATE.params_simulParameters(name.simulation, name.mask)
+PRE_FATE.params_simulParameters(name.simulation, name.mask,
+  name.dist = NULL)
 }
 \arguments{
-\item{name.simulation}{a \code{string} that corresponds to the main directory
-or simulation name of the \code{FATE-HD} simulation}
+\item{name.simulation}{a \code{string} that corresponds to the main 
+directory or simulation name of the \code{FATE-HD} simulation}
 
-\item{name.mask}{a \code{string} that corresponds to the file name of a raster
-mask, with either 0 or 1 within each pixel, 1 corresponding to the cells of 
-the studied area in which the succession module of the \code{FATE-HD} simulation
-will take place}
+\item{name.mask}{a \code{string} that corresponds to the file name of a 
+raster mask, with either 0 or 1 within each pixel, 1 corresponding to the 
+cells of the studied area in which the succession module of the 
+\code{FATE-HD} simulation will take place}
+
+\item{name.dist}{(\emph{optional}) \cr a \code{string} that corresponds 
+to the file name of a raster mask, with either 0 or 1 within each pixel, 
+1 corresponding to the cells of the studied area in which the succession 
+module of the \code{FATE-HD} simulation will take place}
 }
 \value{
 A \code{.txt} file into the \code{name.simulation/PARAM_SIMUL/}
@@ -43,8 +49,8 @@ directory with the following parameters :
 }
 }
 \description{
-This script is designed to create one (or several) parameter file
-containing \code{PARAMETER FILENAMES} used in \code{FATE-HD} model.
+This script is designed to create one (or several) parameter 
+file containing \code{PARAMETER FILENAMES} used in \code{FATE-HD} model.
 }
 \details{
 The \code{FATE-HD} software takes only one input parameter : a file containing
