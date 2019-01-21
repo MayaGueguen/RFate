@@ -82,9 +82,25 @@ test_that("PRE_FATE.speciesClustering_step3 gives error with wrong data : mat.sp
                                                                                 , soil_contrib = 1, soil_tolerance = 3))
                , "Wrong type of data!\n Column `soil_tolerance` of `mat.species.traits` must contain values between 1 and 2")
 
-  
 })
 
+## OUTPUTS
+test_that("PRE_FATE.speciesClustering_step3 gives correct output", {
+  expect_output(str(PRE_FATE.speciesClustering_step3(mat.species.traits = data.frame(species = 1
+                                                                                      , PFG = "A"
+                                                                                      , type = "H"
+                                                                                      , height = 10
+                                                                                      , maturity = 5
+                                                                                      , longevity = 2
+                                                                                      , soil_contrib = 0.5, soil_tolerance = 1))), "data.frame")
+  expect_output(str(PRE_FATE.speciesClustering_step3(mat.species.traits = data.frame(species = 1
+                                                                                     , PFG = "A"
+                                                                                     , type = "H"
+                                                                                     , dispersal = 2
+                                                                                     , light = 8
+                                                                                     , palatability = 1))), "data.frame")
+  
+})
 
   
   

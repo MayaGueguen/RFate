@@ -143,10 +143,6 @@ PRE_FATE.speciesClustering_step3 = function(
   if (length(which(is.na(mat.species.traits$PFG))) > 0){
     .stopMessage_columnNoNA("mat.species.traits", c("PFG"))
   }
-  # if (.testParam_notChar(mat.species.traits$PFG))
-  # {
-  #   .stopMessage_beChar("mat.species.traits$PFG")
-  # }
   ## Test type values
   if (sum(colnames(mat.species.traits) == "type") == 1)
   {
@@ -249,15 +245,14 @@ PRE_FATE.speciesClustering_step3 = function(
     {
       ind.pfg.maturity = which(mat.species.traits$PFG %in% tab.maturity.pfg)
     }
-    
+
     ## Set new values for longevity
-    if (length(ind.pfg.longevity) > 0)
+    if (length(tab.longevity.pfg) > 0 && length(ind.pfg.longevity) > 0)
     {
       mat.species.traits$longevity[ind.pfg.longevity] = mat.species.traits$maturity[ind.pfg.longevity] * 2
     }
-    
     ## Set new values for maturity
-    if (length(ind.pfg.maturity) > 0)
+    if (length(tab.maturity.pfg) > 0 && length(ind.pfg.maturity) > 0)
     {
       mat.species.traits$maturity[ind.pfg.maturity] = mat.species.traits$longevity[ind.pfg.maturity] / 2
     }
