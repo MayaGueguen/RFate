@@ -143,10 +143,10 @@ PRE_FATE.speciesClustering_step3 = function(
   if (length(which(is.na(mat.species.traits$PFG))) > 0){
     .stopMessage_columnNoNA("mat.species.traits", c("PFG"))
   }
-  if (.testParam_notChar(mat.species.traits$PFG))
-  {
-    .stopMessage_beChar("mat.species.traits$PFG")
-  }
+  # if (.testParam_notChar(mat.species.traits$PFG))
+  # {
+  #   .stopMessage_beChar("mat.species.traits$PFG")
+  # }
   ## Test type values
   if (sum(colnames(mat.species.traits) == "type") == 1)
   {
