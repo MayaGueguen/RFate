@@ -606,6 +606,8 @@ PRE_FATE.speciesClustering_step3 = function(
               , row.names = F
               , col.names = T)
   
+  message(paste0("\n The parameter file PFG_TRAITS_TABLE.csv has been successfully created !\n"))
+  
   return(mat.traits.pfg)
 }
 

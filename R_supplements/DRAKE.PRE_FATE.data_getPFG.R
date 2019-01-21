@@ -135,6 +135,8 @@ getPFG_3_matSitesPFG = function(zone.name, mat.sites.species, selected.sp)
 
 getPFG_4_calcMeanTraits = function(zone.name, mat.traits, selected.sp)
 {
+  setwd(zone.name)
+  
   ## GET PFG GROUPING
   tab_pfg = selected.sp[, c("CODE_CBNA", "PFG")]
   
@@ -153,227 +155,17 @@ getPFG_4_calcMeanTraits = function(zone.name, mat.traits, selected.sp)
   mat.traits.sp$longevity = as.numeric(as.character(mat.traits$LONGEVITY))
   mat.traits.sp$maturity = as.numeric(as.character(mat.traits$MATURITY))
   
-  ## Set new values for longevity
-  tab.longevity = rowSums(table(mat.traits.sp$PFG, mat.traits.sp$longevity))
-  tab.longevity.pfg = names(tab.longevity)[which(tab.longevity == 0)]
-  if (length(tab.longevity.pfg) > 0)
-  {
-    ind.pfg = which(mat.traits.sp$PFG %in% tab.longevity.pfg)
-    mat.traits.sp$longevity[ind.pfg] = mat.traits.sp$maturity[ind.pfg] * 2
-  }
-
-  ## Set new values for maturity
-  tab.maturity = rowSums(table(mat.traits.sp$PFG, mat.traits.sp$maturity))
-  tab.maturity.pfg = names(tab.maturity)[which(tab.maturity == 0)]
-  if (length(tab.maturity.pfg) > 0)
-  {
-    ind.pfg = which(mat.traits.sp$PFG %in% tab.maturity.pfg)
-    mat.traits.sp$maturity[ind.pfg] = mat.traits.sp$longevity[ind.pfg] / 2
-  }
-  
   mat.traits.sp$palatability = factor(mat.traits$PALATABILITY, 1:4)
   mat.traits.sp$dispersal = factor(mat.traits$DISPERSAL, 1:7)
   mat.traits.sp$light = factor(mat.traits$LIGHT, 1:5)
-  mat.traits.sp$soil_contrib = as.factor(as.character(mat.traits$NITROGEN))
-  mat.traits.sp$soil_contrib = factor(c(1:9)[mat.traits.sp$soil_contrib], 1:9)
   
-  # mat.traits.sp$soil_tol_min = as.numeric(mat.traits.sp$soil_contrib) - c(0.5, 1)[as.numeric(mat.traits$NITROGEN_TOLERANCE)]
-  # mat.traits.sp$soil_tol_max = as.numeric(mat.traits.sp$soil_contrib) + c(0.5, 1)[as.numeric(mat.traits$NITROGEN_TOLERANCE)]
-  mat.traits.sp$soil_tol_min = as.numeric(mat.traits.sp$soil_contrib) - c(1, 2)[as.numeric(mat.traits$NITROGEN_TOLERANCE)]
-  mat.traits.sp$soil_tol_max = as.numeric(mat.traits.sp$soil_contrib) + c(1, 2)[as.numeric(mat.traits$NITROGEN_TOLERANCE)]
-  
-  head(mat.traits.sp)
-  summary(mat.traits.sp)
+  mat.traits.sp$soil_contrib = as.numeric(as.character(mat.traits$NITROGEN))
+  mat.traits.sp$soil_tolerance = as.numeric(as.character(mat.traits$NITROGEN_TOLERANCE))
   
   ## CALCULATE MEDIAN TRAIT VALUE PER PFG
-  mat.traits.pfg = split(mat.traits.sp, mat.traits.sp$PFG)
-  mat.traits.pfg = foreach(tab = mat.traits.pfg, .combine = "rbind") %do%
-  {
-    res = data.frame(PFG = unique(tab$PFG)
-                     , type = unique(tab$type)
-                     , dispersal = ceiling(median(as.numeric(tab$dispersal), na.rm = T))
-                     , light = round(median(as.numeric(tab$light), na.rm = T))
-                     , height = trunc(mean(tab$height, na.rm = T))
-                     , palatability = ceiling(median(as.numeric(tab$palatability), na.rm = T))
-                     , longevity = round(mean(tab$longevity, na.rm = T))
-                     , maturity = round(mean(tab$maturity, na.rm = T))
-                     , soil_contrib = round(mean(as.numeric(tab$soil_contrib), na.rm = T), 1)
-                     , soil_tol_min = trunc(mean(as.numeric(tab$soil_tol_min), na.rm = T))
-                     , soil_tol_max = ceiling(mean(as.numeric(tab$soil_tol_max), na.rm = T))
-    )
-    return(res)
-  }
-  # for (i in 1:nrow(mat.traits.pfg))
-  # {
-  #   noLongevity = is.na(mat.traits.pfg$longevity[i])
-  #   noMaturity = is.na(mat.traits.pfg$maturity[i])
-  #   if (noLongevity && !noMaturity)
-  #   {
-  #     mat.traits.pfg$longevity[i] = mat.traits.pfg$maturity[i] * 2
-  #   }
-  #   if (!noLongevity && noMaturity)
-  #   {
-  #     mat.traits.pfg$maturity[i] = round(mat.traits.pfg$longevity[i] / 2)
-  #   }
-  # }
-  (mat.traits.pfg)
-  save(mat.traits.pfg, file = paste0(zone.name, "/mat.traits.pfg.RData"))
+  mat.traits.pfg = PRE_FATE.speciesClustering_step3(mat.species.traits = mat.traits.sp)
   
-  
-  mat.traits.sp.melt = melt(mat.traits.sp, id.vars = c("species", "PFG", "type"))
-  mat.traits.sp.melt$value = as.numeric(as.character(mat.traits.sp.melt$value))
-  head(mat.traits.sp.melt)
-  
-  mat.traits.pfg.melt = melt(mat.traits.pfg, id.vars = c("PFG", "type"))
-  mat.traits.pfg.melt$value = as.numeric(as.character(mat.traits.pfg.melt$value))
-  head(mat.traits.pfg.melt)
-  
-  # ggplot(mat.traits.sp.melt, aes(x = PFG, y = value, fill = type)) +
-  #   geom_boxplot(varwidth = TRUE) +
-  #   geom_point(data = mat.traits.pfg.melt, color = "brown") +
-  #   facet_wrap(~ variable, scales = "free_y") +
-  #   scale_fill_discrete(guide = F) +
-  #   labs(x = "", y = "") +
-  #   theme_fivethirtyeight()
-  
-  ## Longevity - Maturity graph
-  ind.keep.sp = which(mat.traits.sp.melt$variable %in% c("longevity", "maturity"))
-  ind.keep.pfg = which(mat.traits.pfg.melt$variable %in% c("longevity", "maturity"))
-  ggplot(mat.traits.sp.melt[ind.keep.sp, ]
-         , aes(x = PFG, y = value, fill = variable)) +
-    geom_boxplot(color = "grey60") + #varwidth = TRUE) +
-    geom_segment(data = mat.traits.pfg
-                 , aes(x = PFG
-                       , xend = PFG
-                       , y = maturity
-                       , yend = longevity)
-                 , color = "#525252"
-                 , lwd = 1
-                 , inherit.aes = FALSE) +
-    geom_point(data = mat.traits.pfg.melt[ind.keep.pfg, ]
-               , aes(x = PFG
-                     , y = value
-                     , color = variable)
-               , size = 2
-               , inherit.aes = FALSE) +
-    scale_y_log10() +
-    scale_fill_manual(guide = FALSE, values = c("longevity" = "#ffffff", "maturity" = "#ffffff")) +
-    scale_color_manual("", values = c("longevity" = "#377eb8", "maturity" = "#ff7f00")) +
-    labs(x = "", y = "") +
-    theme_fivethirtyeight()
-  
-  ## Soil contribution - tolerance
-  ind.keep.sp = which(mat.traits.sp.melt$variable %in% c("soil_contrib", "soil_tol_min", "soil_tol_max"))
-  ind.keep.pfg = which(mat.traits.pfg.melt$variable %in% c("soil_contrib", "soil_tol_min", "soil_tol_max"))
-  ggplot(mat.traits.sp.melt[ind.keep.sp, ]
-         , aes(x = PFG
-               , y = value
-               , fill = factor(variable, c("soil_tol_min", "soil_contrib", "soil_tol_max")))) +
-    geom_boxplot(color = "grey60") + #varwidth = TRUE) +
-    geom_linerange(data = mat.traits.pfg
-                 , aes(x = as.numeric(PFG) + 0.5
-                       , ymin = soil_tol_min
-                       , ymax = soil_tol_max)
-                 , color = "#525252"
-                 , lwd = 1
-                 , inherit.aes = FALSE) +
-    geom_point(data = mat.traits.pfg.melt[ind.keep.pfg, ]
-               , aes(x = as.numeric(PFG) + 0.5
-                     , y = value
-                     , color = variable)
-               , size = 2
-               , inherit.aes = FALSE) +
-    scale_fill_manual(guide = FALSE
-                      , values = c("soil_tol_min" = "#ffffff"
-                                   , "soil_contrib" = "#ffffff"
-                                   , "soil_tol_max" = "#ffffff")) +
-    scale_color_manual("", values = c("soil_tol_min" = "#ec7014"
-                                      , "soil_contrib" = "#b15928"
-                                      , "soil_tol_max" = "#cb181d")) +
-    labs(x = "", y = "") +
-    theme_fivethirtyeight()
-  
-  ## Light - Height
-  ind.keep.sp = which(mat.traits.sp.melt$variable %in% c("height", "light"))
-  ind.keep.pfg = which(mat.traits.pfg.melt$variable %in% c("height", "light"))
-  # ggplot(mat.traits.sp.melt[ind.keep.sp, ]
-  #        , aes(x = PFG
-  #              , y = value
-  #              , fill = factor(variable, c("height", "light")))) +
-  #   geom_boxplot(color = "grey60") + #varwidth = TRUE) +
-  #   geom_point(data = mat.traits.pfg.melt[ind.keep.pfg, ]
-  #              , aes(x = as.numeric(PFG)
-  #                    , y = value
-  #                    , color = variable)
-  #              , size = 2
-  #              , inherit.aes = FALSE) +
-  #   facet_wrap(~ variable
-  #              , ncol = 1
-  #              , scales = "free_y"
-  #              , labeller = as_labeller(c("height" = "", "light" = ""))) +
-  #   scale_fill_manual(guide = FALSE
-  #                     , values = c("height" = "#ffffff"
-  #                                  , "light" = "#ffffff")) +
-  #   scale_color_manual("", values = c("height" = "#238b45"
-  #                                     , "light" = "#1d91c0")) +
-  #   scale_y_continuous(breaks = c(1:max(mat.traits.pfg$light), 10, 100, 1000, 5000)
-  #                      , trans = "log") +
-  #   labs(x = "", y = "") +
-  #   theme_fivethirtyeight()
-  
-  ## Height panel
-  ind.keep.sp = which(mat.traits.sp.melt$variable %in% c("height"))
-  ind.keep.pfg = which(mat.traits.pfg.melt$variable %in% c("height"))
-  pp1 = ggplot(mat.traits.sp.melt[ind.keep.sp, ]
-               , aes(x = PFG
-                     , y = value))+
-    geom_boxplot(color = "grey60") + #varwidth = TRUE) +
-    geom_point(data = mat.traits.pfg.melt[ind.keep.pfg, ]
-               , aes(x = as.numeric(PFG)
-                     , y = value
-                     , color = variable)
-               , size = 2
-               , inherit.aes = FALSE) +
-    scale_color_manual(guide = F, values = c("height" = "#238b45"
-                                             , "light" = "#1d91c0")) +
-    scale_y_continuous(breaks = c(1, 10, 100, 1000, 5000)
-                       , trans = "log") +
-    labs(x = "", y = "") +
-    theme_fivethirtyeight() +
-    theme(axis.text.x = element_blank()
-          , panel.background = element_rect(fill = "transparent", colour = NA)
-          , plot.background = element_rect(fill = "transparent", colour = NA))
-  
-  ## Light panel
-  ind.keep.sp = which(mat.traits.sp.melt$variable %in% c("light"))
-  ind.keep.pfg = which(mat.traits.pfg.melt$variable %in% c("light"))
-  pp2 = ggplot(mat.traits.sp.melt[ind.keep.sp, ]
-               , aes(x = PFG
-                     , y = value))+
-    geom_boxplot(color = "grey60") + #varwidth = TRUE) +
-    geom_point(data = mat.traits.pfg.melt[ind.keep.pfg, ]
-               , aes(x = as.numeric(PFG)
-                     , y = value
-                     , color = factor(variable, c("height", "light")))
-               , size = 2
-               , inherit.aes = FALSE) +
-    scale_color_manual("", values = c("height" = "#238b45"
-                                      , "light" = "#1d91c0")
-                       , drop = FALSE) +
-    scale_y_continuous(breaks = 1:max(mat.traits.pfg$light)) +
-    labs(x = "", y = "") +
-    theme_fivethirtyeight() +
-    theme(panel.background = element_rect(fill = "transparent", colour = NA)
-          , plot.background = element_rect(fill = "transparent", colour = NA)
-          , legend.background = element_rect(fill = "transparent", colour = NA)
-          , legend.box.background = element_rect(fill = "transparent", colour = NA)
-          , legend.key = element_rect(fill = "transparent", colour = NA)
-          , axis.text.y = element_text(margin = margin(t = 0, r = 2, b = 0, l = 0, unit = "lines")))
-  
-  grid.arrange(grobs = list(pp1, pp2)
-               , layout_matrix = matrix(c(1,1,1,2,2), ncol = 1, byrow = TRUE))
-  
-  
+  setwd("./../")
   return(mat.traits.pfg)
 }
 
@@ -395,6 +187,8 @@ getPFG_5_FATEparam = function(zone.name, zone.mask, zone.mask.pert, TRAITS_PFG)
   pfg_P = pfg_names[grep("^P", pfg_names)]
   
   #################################################################################################
+  TRAITS_PFG$light = as.numeric(as.character(TRAITS_PFG$light))
+  
   PRE_FATE.params_PFGsuccession(name.simulation = zone.name.simulation
                                 , mat.PFG.succ = TRAITS_PFG[, c("PFG", "type", "height"
                                                                 , "maturity", "longevity")])
@@ -646,7 +440,8 @@ getPFG_5_FATEparam = function(zone.name, zone.mask, zone.mask.pert, TRAITS_PFG)
   #################################################################################################
   
   PRE_FATE.params_simulParameters(name.simulation = zone.name.simulation
-                                  , name.mask = basename(zone.mask))
+                                  , name.mask = basename(zone.mask)
+                                  , name.dist = paste0("DIST_", basename(zone.mask.pert)))
   
   setwd("./../")
 }
