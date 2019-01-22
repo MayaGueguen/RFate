@@ -136,8 +136,8 @@ POST_FATE.graphic_mapPFGcover = function(
                          , is.num = FALSE)
     .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/"))
     
-    # dir.output.perPFG.allStrata.BIN = paste0(name.simulation, "/RESULTS/", basename(dir.save), "/BIN_perPFG_allStrata/")
-    # .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/BIN_perPFG_allStrata/"))
+    dir.output.perPFG.perStrata.BIN = paste0(name.simulation, "/RESULTS/", basename(dir.save), "/BIN_perPFG_perStrata/")
+    .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/BIN_perPFG_perStrata/"))
     
     dir.output.perPFG.perStrata = paste0(name.simulation, "/RESULTS/", basename(dir.save), "/ABUND_perPFG_perStrata/")
     .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/ABUND_perPFG_perStrata/"))
@@ -178,8 +178,6 @@ POST_FATE.graphic_mapPFGcover = function(
     
     ras.mask = raster(file.mask)
     ras.mask[which(ras.mask[] == 0)] = NA
-    # ind_1_mask = which(ras.mask[] == 1)
-    # no_1_mask = length(ind_1_mask)
     
     ## Get list of arrays and extract years of simulation --------------------------
     years = sort(unique(as.numeric(year)))
@@ -236,8 +234,10 @@ POST_FATE.graphic_mapPFGcover = function(
     for (y in years)
     {
       cat(" ", y)
-      file_name = paste0(dir.output.perPFG.perStrata,
-                         "Abund_YEAR_",
+      
+      ## Binary maps
+      file_name = paste0(dir.output.perPFG.perStrata.BIN,
+                         "Binary_YEAR_",
                          y,
                          "_",
                          PFG)
@@ -245,17 +245,16 @@ POST_FATE.graphic_mapPFGcover = function(
                                                                  "_STRATA_",
                                                                  strata_min:no_strata,
                                                                  ".tif")))
-      if (length(which(file.exists(file_name))) == 0)
-      {
-        stop(paste0("Missing data!\n The names of PFG extracted from files within ", name.simulation, "/DATA/PFGS/SUCC/ : "
-                    , paste0("\n", PFG, collapse = "\n")
-                    , "\n is different from the files contained in ", dir.output.perPFG.perStrata
-                    , "They should be : "
-                    , paste0("\n", file_name, collapse = "\n")))
-      }
       file_name = file_name[which(file.exists(file_name))]
+      
+      ras.BIN = stack(file_name) * ras.mask
+      
+      ## Abundance maps
+      file_name = sub("Binary_YEAR_", "Abund_YEAR_", file_name)
+      file_name = sub(dir.output.perPFG.perStrata.BIN, dir.output.perPFG.perStrata, file_name)
 
       ras = stack(file_name) * ras.mask
+      ras = ras * ras.BIN
       ras_TOT = sum(ras)
       ras_REL = ras_TOT / max(ras_TOT[], na.rm = T)
       ras.pts = as.data.frame(rasterToPoints(ras_REL))
@@ -270,7 +269,7 @@ POST_FATE.graphic_mapPFGcover = function(
                              , labels = seq(0, 100, 20)) +
         coord_equal() +
         geom_raster() +
-        labs(x = "", y = "", title = paste0("GRAPH D : map of PFG cover - Simulation year : ", y),
+        labs(x = "", y = "", title = paste0("GRAPH E : map of PFG cover - Simulation year : ", y),
              subtitle = paste0("For each pixel, PFG abundances from strata ",
                                strata_min, " to ", no_strata, " are summed,\n",
                                "then transformed into relative values by dividing by the maximum abundance obtained.\n")) +
