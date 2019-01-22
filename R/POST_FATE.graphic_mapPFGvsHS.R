@@ -2,7 +2,7 @@
 ##' @title Create a map of the Plant Functional Group richness for one (or 
 ##' several) specific year of a \code{FATE-HD} simulation
 ##' 
-##' @name POST_FATE.graphic_mapPFGrichness
+##' @name POST_FATE.graphic_mapPFGvsHS
 ##'
 ##' @author Maya Guéguen
 ##' 
@@ -53,17 +53,17 @@
 ##' @examples
 ##' 
 ##' \dontrun{                      
-##' POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
+##' POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
 ##'                                  , file.simulParam = "Simul_parameters_V1.txt"
 ##'                                  , year = 850
 ##'                                  , opt.no_CPU = 1)
 ##'                                     
-##' POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
+##' POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
 ##'                                  , file.simulParam = "Simul_parameters_V1.txt"
 ##'                                  , year = c(850, 950)
 ##'                                  , opt.no_CPU = 1)
 ##'                                     
-##' POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
+##' POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
 ##'                                  , file.simulParam = "Simul_parameters_V1.txt"
 ##'                                  , year = 850
 ##'                                  , opt.no_CPU = 1
@@ -74,22 +74,21 @@
 ##' 
 ##' @export
 ##' 
-##' @importFrom foreach foreach
 ##' @importFrom raster raster stack as.data.frame
-##' nlayers rasterToPoints
+##' rasterToPoints
 ##' @importFrom grid unit
 ##'
-##' @importFrom ggplot2 ggplot aes aes_string ggsave
+##' @importFrom ggplot2 ggplot aes aes_string facet_wrap
 ##' geom_raster element_blank coord_equal
 ##' scale_fill_gradientn labs theme element_rect
 ##' @importFrom ggthemes theme_fivethirtyeight
-##' @importFrom viridis viridis_pal
+##' @importFrom colorspace heat_hcl
 ##' @importFrom grDevices pdf
 ##'
 ## END OF HEADER ###############################################################
 
 
-POST_FATE.graphic_mapPFGrichness = function(
+POST_FATE.graphic_mapPFGvsHS = function(
   name.simulation
   , file.simulParam = NULL
   , year
@@ -130,6 +129,7 @@ POST_FATE.graphic_mapPFGrichness = function(
     cat("\n Simulation file : ", abs.simulParam)
     cat("\n")
     
+    
     ## Get results directories -----------------------------------------------------
     dir.save = .getParam(params.lines = abs.simulParam
                          , flag = "SAVE_DIR"
@@ -140,7 +140,7 @@ POST_FATE.graphic_mapPFGrichness = function(
     dir.output.perPFG.allStrata.BIN = paste0(name.simulation, "/RESULTS/", basename(dir.save), "/BIN_perPFG_allStrata/")
     .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/BIN_perPFG_allStrata/"))
     
-
+    
     ## Get number of PFGs ----------------------------------------------------------
     file.globalParam = .getParam(params.lines = abs.simulParam
                                  , flag = "GLOBAL_PARAMS"
@@ -174,10 +174,16 @@ POST_FATE.graphic_mapPFGrichness = function(
                           , flag.split = "^--.*--$"
                           , is.num = FALSE)
     .testParam_existFile(file.mask)
-    
+
     ras.mask = raster(file.mask)
     ras.mask[which(ras.mask[] == 0)] = NA
     
+    ## Get raster HS ---------------------------------------------------------------
+    file.hs = .getParam(params.lines = abs.simulParam
+                        , flag = "PFG_HAB_MASK"
+                        , flag.split = "^--.*--$"
+                        , is.num = FALSE)
+    .testParam_existFile(file.hs)
     
     ## Get list of arrays and extract years of simulation --------------------------
     years = sort(unique(as.numeric(year)))
@@ -189,16 +195,18 @@ POST_FATE.graphic_mapPFGrichness = function(
       stop(paste0("Missing data!\n The folder ", dir.output.perPFG.allStrata.BIN, " does not contain adequate files"))
     }
     
-    
     ## get the data inside the rasters ---------------------------------------------
-    pdf(file = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_D_map_PFGrichness_", basename(dir.save), ".pdf")
-        , width = 10, height = 10)
-    
-    cat("\n GETTING RICHNESS for year")
+    cat("\n GETTING PFG and SDM maps for year")
     for (y in years)
     {
       cat(" ", y)
-
+      
+      ## SDM maps ------------------------------------------------------------------
+      ras.hs = stack(file.hs) * ras.mask
+      ras.hs.pts = as.data.frame(rasterToPoints(ras.hs))
+      colnames(ras.hs.pts) = c("X", "Y", PFG)
+      
+      ## PFG maps ------------------------------------------------------------------
       file_name = paste0(dir.output.perPFG.allStrata.BIN,
                          "Binary_YEAR_",
                          y,
@@ -208,39 +216,50 @@ POST_FATE.graphic_mapPFGrichness = function(
       file_name = file_name[which(file.exists(file_name))]
 
       ras = stack(file_name) * ras.mask
-      ras_TOT = sum(ras)
-      ras.pts = as.data.frame(rasterToPoints(ras_TOT))
-      colnames(ras.pts) = c("X", "Y", "NB")
+      ras.pts = as.data.frame(rasterToPoints(ras))
+      colnames(ras.pts) = c("X", "Y", PFG)
       
-      ## produce the plot ------------------------------------------------------------
-      ## Map of PFG richness
-      pp = ggplot(ras.pts, aes_string(x = "X", y = "Y", fill = "NB")) +
-        scale_fill_gradientn("Number of PFG"
-                             , colors = viridis_pal()(max(ras.pts$NB))
-                             , breaks = seq(1, max(ras.pts$NB), 2)) +
-        coord_equal() +
-        geom_raster() +
-        labs(x = "", y = ""
-             , title = paste0("GRAPH D : map of PFG richness - Simulation year : ", y)
-             , subtitle = paste0("For each pixel and stratum, first relative abundances are calculated, "
-                                 , "then transformed into binary values :\n"
-                                 , "1 if the PFG abundance represents more than 5 % "
-                                 , "of the pixel abundance, 0 otherwise.\n"
-                                 , "If the PFG is present in one stratum, then it is considered present within the pixel.\n"
-                                 , "Finally, simulated PFG occurrences are summed.\n")) +
-        theme_fivethirtyeight() +
-        theme(axis.text = element_blank()
-              , legend.key.width = unit(2, "lines")
-              , panel.background = element_rect(fill = "transparent", colour = NA)
-              , plot.background = element_rect(fill = "transparent", colour = NA)
-              , legend.background = element_rect(fill = "transparent", colour = NA)
-              , legend.box.background = element_rect(fill = "transparent", colour = NA)
-              , legend.key = element_rect(fill = "transparent", colour = NA))
-      plot(pp)
+      
+      ## produce the plot ----------------------------------------------------------
+      pdf(file = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_C_map_PFGvsHS_", basename(dir.save), ".pdf")
+          , width = 10, height = 10)
+      cat(" PFG :")
+      for (pfg in PFG)
+      {
+        cat(" ", pfg)
+        
+        tab = rbind(data.frame(ras.hs.pts[, c("X", "Y", pfg)], TYPE = "Habitat Suitability")
+                    , data.frame(ras.pts[, c("X", "Y", pfg)], TYPE = "FATE"))
+        
+        pp = ggplot(tab, aes_string(x = "X", y = "Y", fill = pfg)) +
+          scale_fill_gradientn("Presence probability"
+                               , colors = rev(heat_hcl(9))
+                               , breaks = seq(0, 1, 0.1)) +
+          coord_equal() +
+          geom_raster() +
+          facet_wrap(~ TYPE, ncol = 2) +
+          labs(x = "", y = ""
+               , title = paste0("GRAPH C : Habitat suitability vs FATE \n"
+                                , "Simulation year : ", y, " - PFG : ", pfg)
+               , subtitle = paste0("For each pixel and stratum, first relative abundances are calculated, "
+                                   , "then transformed into binary values :\n"
+                                   , "1 if the PFG abundance represents more than 5 % "
+                                   , "of the pixel abundance, 0 otherwise.\n"
+                                   , "If the PFG is present in one stratum, then it is considered present within the pixel.\n")) +
+          theme_fivethirtyeight() +
+          theme(axis.text = element_blank()
+                , legend.key.width = unit(3, "lines")
+                , panel.background = element_rect(fill = "transparent", colour = NA)
+                , plot.background = element_rect(fill = "transparent", colour = NA)
+                , legend.background = element_rect(fill = "transparent", colour = NA)
+                , legend.box.background = element_rect(fill = "transparent", colour = NA)
+                , legend.key = element_rect(fill = "transparent", colour = NA))
+        plot(pp)
+      } ## end loop on PFG
+      cat("\n")
+      dev.off()
+      
     } ## end loop on years
-    
-    cat("\n")
-    dev.off()
     
   }
 }

@@ -62,7 +62,11 @@ test_that("POST_FATE.graphic_mapPFGrichness gives error with wrong data : file.s
   expect_error(POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
                                                 , file.simulParam = "ParamSimul.txt")
                , "Wrong type of data!\n `year` must be an integer > 0")
-  
+})
+
+
+## INPUTS
+test_that("POST_FATE.graphic_mapPFGrichness gives error with wrong data : year", {  
   expect_error(POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
                                                 , file.simulParam = "ParamSimul.txt"
                                                 , year = "a")
@@ -83,7 +87,10 @@ test_that("POST_FATE.graphic_mapPFGrichness gives error with wrong data : file.s
                                                 , file.simulParam = "ParamSimul.txt"
                                                 , year = NA)
                , "Wrong type of data!\n `year` must be an integer > 0")
+})
   
+## INPUTS
+test_that("POST_FATE.graphic_mapPFGrichness gives error with wrong data : files", {
   expect_error(POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
                                                 , file.simulParam = "ParamSimul.txt"
                                                 , year = 10)
@@ -123,14 +130,14 @@ test_that("POST_FATE.graphic_mapPFGrichness gives error with wrong data : file.s
   expect_error(POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
                                                 , file.simulParam = "ParamSimul.txt"
                                                 , year = 10)
-               , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/ABUND_perPFG_allStrata/ folder"
+               , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/BIN_perPFG_allStrata/ folder"
                , fixed = TRUE)
-  system("mkdir FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/")
-  expect_error(POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = 10)
-               , "Missing data!\n The folder FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/ does not contain adequate files")
-  file.create("FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_10_PFG1_STRATA_all.tif")
+  system("mkdir FATE_simulation/RESULTS/Hello/BIN_perPFG_allStrata/")
+  # expect_error(POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
+  #                                               , file.simulParam = "ParamSimul.txt"
+  #                                               , year = 10)
+  #              , "Missing data!\n The folder FATE_simulation/RESULTS/Hello/BIN_perPFG_allStrata/ does not contain adequate files")
+  # file.create("FATE_simulation/RESULTS/Hello/BIN_perPFG_allStrata/Binary_YEAR_10_PFG1_STRATA_all.tif")
   expect_error(POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
                                                 , file.simulParam = "ParamSimul.txt"
                                                 , year = 10)

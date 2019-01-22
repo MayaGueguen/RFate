@@ -215,24 +215,25 @@ POST_FATE.graphic_validationStatistics = function(
     cat("\n Simulation file : ", abs.simulParam)
     cat("\n")
     
+    ## Get results directories -----------------------------------------------------
     dir.save = .getParam(params.lines = abs.simulParam
                          , flag = "SAVE_DIR"
                          , flag.split = "^--.*--$"
                          , is.num = FALSE)
     .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/"))
     
-    dir.output.perPFG.allStrata = paste0(name.simulation, "/RESULTS/", basename(dir.save), "/ABUND_perPFG_allStrata/")
-    .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/ABUND_perPFG_allStrata/"))
+    dir.output.perPFG.allStrata.BIN = paste0(name.simulation, "/RESULTS/", basename(dir.save), "/BIN_perPFG_allStrata/")
+    .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/BIN_perPFG_allStrata/"))
     
     
     ## Get list of arrays and extract years of simulation --------------------------
     years = sort(unique(as.numeric(year)))
     no_years = length(years)
-    raster.perPFG.allStrata = grep(paste0("Abund_YEAR_", years, "_", collapse = "|")
-                                   , list.files(dir.output.perPFG.allStrata), value = TRUE)
+    raster.perPFG.allStrata = grep(paste0("Binary_YEAR_", years, "_", collapse = "|")
+                                   , list.files(dir.output.perPFG.allStrata.BIN), value = TRUE)
     if (length(raster.perPFG.allStrata) == 0)
     {
-      stop(paste0("Missing data!\n The folder ", dir.output.perPFG.allStrata, " does not contain adequate files"))
+      stop(paste0("Missing data!\n The folder ", dir.output.perPFG.allStrata.BIN, " does not contain adequate files"))
     }
     
     ## Get number of PFGs ----------------------------------------------------------
@@ -278,45 +279,22 @@ POST_FATE.graphic_validationStatistics = function(
     
     ras.mask = raster(file.mask)
     ras.mask[which(ras.mask[] == 0)] = NA
-    ind_1_mask = which(ras.mask[] == 1)
-    no_1_mask = length(ind_1_mask)
-    
-    ## UNZIP the raster saved ------------------------------------------------------
-    raster.perPFG.allStrata = foreach(y = years, .combine = "c") %do%
-    {
-      paste0(dir.output.perPFG.allStrata,
-             "Abund_YEAR_",
-             y,
-             "_",
-             PFG,
-             "_STRATA_all.tif.gz")
-    }
-    .unzip(folder_name = dir.output.perPFG.allStrata
-           , list_files = raster.perPFG.allStrata
-           , nb_cores = opt.no_CPU)
-    
-    
+
+        
     ## get the data inside the rasters ---------------------------------------------
-    pdf(file = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_E_validationStatistics_", basename(dir.save), ".pdf")
+    pdf(file = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_F_validationStatistics_", basename(dir.save), ".pdf")
         , width = 12, height = 10)
     cat("\n GETTING STATISTICS for year")
     for (y in years)
     {
       cat(" ", y)
-      file_name = paste0(dir.output.perPFG.allStrata,
-                         "Abund_YEAR_",
+
+      file_name = paste0(dir.output.perPFG.allStrata.BIN,
+                         "Binary_YEAR_",
                          y,
                          "_",
                          PFG,
                          "_STRATA_all.tif")
-      if (length(which(file.exists(file_name))) == 0)
-      {
-        stop(paste0("Missing data!\n The names of PFG extracted from files within ", name.simulation, "/DATA/PFGS/SUCC/ : "
-                    , paste0("\n", PFG, collapse = "\n")
-                    , "\n is different from the files contained in ", dir.output.perPFG.allStrata
-                    , "They should be : "
-                    , paste0("\n", file_name, collapse = "\n")))
-      }
       gp = PFG[which(file.exists(file_name))]
       file_name = file_name[which(file.exists(file_name))]
       
@@ -331,8 +309,6 @@ POST_FATE.graphic_validationStatistics = function(
         if (fg %in% gp)
         {
           mat$ID = as.numeric(as.factor(paste0(mat$X, "_", mat$Y)))
-          quanti = quantile(ras[[fg]][], sum(table(mat$obs)["0"]) / sum(table(mat$obs)), na.rm = T)
-          ras[[fg]][] = ifelse(ras[[fg]][] > quanti, 1, 0)
           
           mat = cbind(mat, fg = ras[[fg]][cellFromXY(ras, mat[, c("X", "Y")])])
           mat = mat[, c("ID", "obs", "fg")]
@@ -398,7 +374,7 @@ POST_FATE.graphic_validationStatistics = function(
       {
         if (vari == "all"){
           pp = ggplot(mat.valid, aes_string(x = "PFG", y = "value", fill = "value")) +
-            labs(x = "", y = "", title = paste0("GRAPH E : validation statistics - Simulation year : ", y),
+            labs(x = "", y = "", title = paste0("GRAPH F : validation statistics - Simulation year : ", y),
                  subtitle = paste0("Sensitivity (or specificity) measures the proportion of actual positives (or negatives) that are correctly identified as such.\n"
                                    , "True skill statistic (TSS) values of -1 indicate predictive abilities of not better than a random model,\n"
                                    , "0 indicates an indiscriminate model and +1 a perfect model.\n"
@@ -445,16 +421,12 @@ POST_FATE.graphic_validationStatistics = function(
       ## 3. gather everything
       pp_list[[6]] = pp_leg
       grid.arrange(grobs = pp_list
-                   # , layout_matrix = matrix(c(1,1,1,1,2,3,2,3,2,3,4,5,4,5,4,5,6,6), ncol = 2, byrow = TRUE)
                    , layout_matrix = matrix(c(1,1,2,3,2,3,4,5,4,5,6,6), ncol = 2, byrow = TRUE)
                    , newpage = ifelse(y == years[1], FALSE, TRUE))
       
     }
     cat("\n")
     dev.off()
-    
-    ## ZIP the raster saved ------------------------------------------------------
-    .zip(folder_name = dir.output.perPFG.allStrata, nb_cores = opt.no_CPU)
     
     return(mat.valid)
   }

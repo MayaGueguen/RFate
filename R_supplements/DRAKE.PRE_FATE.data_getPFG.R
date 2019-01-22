@@ -187,13 +187,13 @@ getPFG_5_FATEparam = function(zone.name, zone.mask, zone.mask.pert, TRAITS_PFG)
   pfg_P = pfg_names[grep("^P", pfg_names)]
   
   #################################################################################################
-  TRAITS_PFG$light = as.numeric(as.character(TRAITS_PFG$light))
-  
   PRE_FATE.params_PFGsuccession(name.simulation = zone.name.simulation
                                 , mat.PFG.succ = TRAITS_PFG[, c("PFG", "type", "height"
                                                                 , "maturity", "longevity")])
   
   #################################################################################################
+  TRAITS_PFG$light = as.numeric(as.character(TRAITS_PFG$light))
+  
   PRE_FATE.params_PFGlight(name.simulation = zone.name.simulation
                            , mat.PFG.succ = TRAITS_PFG[, c("PFG", "type", "height"
                                                            , "maturity", "longevity", "light")])

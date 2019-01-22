@@ -2,7 +2,7 @@
 ##' @title Create a map of the Plant Functional Group cover for one (or 
 ##' several) specific year of a \code{FATE-HD} simulation
 ##' 
-##' @name POST_FATE.graphic_mapPFGcover
+##' @name POST_FATE.relativeAbund_presenceAbsence
 ##'
 ##' @author Maya Guéguen
 ##' 
@@ -71,27 +71,18 @@
 ##' 
 ##' @importFrom foreach foreach
 ##' @importFrom raster raster stack as.data.frame
-##' rasterToPoints
-##' @importFrom grid unit
-##' 
-##' @importFrom ggplot2 ggplot aes aes_string ggsave
-##' geom_raster element_blank coord_equal
-##' scale_fill_gradientn labs theme element_rect
-##' @importFrom ggthemes theme_fivethirtyeight
-##' @importFrom RColorBrewer brewer.pal
-##' @importFrom grDevices pdf
+##' rasterToPoints writeRaster
 ##'
 ## END OF HEADER ###############################################################
 
 
-POST_FATE.graphic_mapPFGcover = function(
+POST_FATE.relativeAbund_presenceAbsence = function(
   name.simulation
   , file.simulParam = NULL
   , year
-  , strata_min
+  , strata_min = 1
   , opt.no_CPU = 1
 ){
-  
   .testParam_existFolder(name.simulation, "PARAM_SIMUL/")
   .testParam_existFolder(name.simulation, "RESULTS/")
   .testParam_existFolder(name.simulation, "DATA/")
@@ -136,11 +127,19 @@ POST_FATE.graphic_mapPFGcover = function(
                          , is.num = FALSE)
     .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/"))
     
-    # dir.output.perPFG.allStrata.BIN = paste0(name.simulation, "/RESULTS/", basename(dir.save), "/BIN_perPFG_allStrata/")
-    # .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/BIN_perPFG_allStrata/"))
-    
     dir.output.perPFG.perStrata = paste0(name.simulation, "/RESULTS/", basename(dir.save), "/ABUND_perPFG_perStrata/")
     .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/ABUND_perPFG_perStrata/"))
+    
+    dir.output.perPFG.perStrata.BIN = paste0(name.simulation, "/RESULTS/", basename(dir.save), "/BIN_perPFG_perStrata/")
+    if (!dir.exists(dir.output.perPFG.perStrata.BIN))
+    {
+      dir.create(path = dir.output.perPFG.perStrata.BIN)
+    }
+    dir.output.perPFG.allStrata.BIN = paste0(name.simulation, "/RESULTS/", basename(dir.save), "/BIN_perPFG_allStrata/")
+    if (!dir.exists(dir.output.perPFG.allStrata.BIN))
+    {
+      dir.create(path = dir.output.perPFG.allStrata.BIN)
+    }
     
     ## Get number of PFGs ----------------------------------------------------------
     file.globalParam = .getParam(params.lines = abs.simulParam
@@ -178,8 +177,6 @@ POST_FATE.graphic_mapPFGcover = function(
     
     ras.mask = raster(file.mask)
     ras.mask[which(ras.mask[] == 0)] = NA
-    # ind_1_mask = which(ras.mask[] == 1)
-    # no_1_mask = length(ind_1_mask)
     
     ## Get list of arrays and extract years of simulation --------------------------
     years = sort(unique(as.numeric(year)))
@@ -188,7 +185,7 @@ POST_FATE.graphic_mapPFGcover = function(
                                    , list.files(dir.output.perPFG.perStrata), value = TRUE)
     
     strata = sapply(sub(".*_STRATA_", "", raster.perPFG.perStrata)
-                   , function(x) strsplit(as.character(x), "[.]")[[1]][1])
+                    , function(x) strsplit(as.character(x), "[.]")[[1]][1])
     strata = sort(unique(as.numeric(strata)))
     no_strata = max(strata)
     if (!(no_strata > 0) || is.infinite(no_strata) | .testParam_notDef(no_strata))
@@ -228,64 +225,79 @@ POST_FATE.graphic_mapPFGcover = function(
     .unzip(folder_name = dir.output.perPFG.perStrata
            , list_files = raster.perPFG.perStrata
            , nb_cores = opt.no_CPU)
-
+    
+    
     ## get the data inside the rasters ---------------------------------------------
-    pdf(file = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_E_map_PFGcover_", basename(dir.save), ".pdf")
-        , width = 10, height = 10)
-    cat("\n GETTING COVER for year")
+    cat("\n GETTING RELATIVE ABUNDANCES and PRESENCE/ABSENCE for year")
     for (y in years)
     {
       cat(" ", y)
-      file_name = paste0(dir.output.perPFG.perStrata,
-                         "Abund_YEAR_",
-                         y,
-                         "_",
-                         PFG)
-      file_name = as.vector(sapply(file_name, function(x) paste0(x,
-                                                                 "_STRATA_",
-                                                                 strata_min:no_strata,
-                                                                 ".tif")))
-      if (length(which(file.exists(file_name))) == 0)
-      {
-        stop(paste0("Missing data!\n The names of PFG extracted from files within ", name.simulation, "/DATA/PFGS/SUCC/ : "
-                    , paste0("\n", PFG, collapse = "\n")
-                    , "\n is different from the files contained in ", dir.output.perPFG.perStrata
-                    , "They should be : "
-                    , paste0("\n", file_name, collapse = "\n")))
-      }
-      file_name = file_name[which(file.exists(file_name))]
-
-      ras = stack(file_name) * ras.mask
-      ras_TOT = sum(ras)
-      ras_REL = ras_TOT / max(ras_TOT[], na.rm = T)
-      ras.pts = as.data.frame(rasterToPoints(ras_REL))
-      colnames(ras.pts) = c("X", "Y", "COVER")
       
-      ## produce the plot ------------------------------------------------------------
-      ## Map of PFG cover
-      pp = ggplot(ras.pts, aes_string(x = "X", y = "Y", fill = "COVER")) +
-        scale_fill_gradientn("Abundance (%)"
-                             , colors = brewer.pal(9, "Greens")
-                             , breaks = seq(0, 1, 0.2)
-                             , labels = seq(0, 100, 20)) +
-        coord_equal() +
-        geom_raster() +
-        labs(x = "", y = "", title = paste0("GRAPH D : map of PFG cover - Simulation year : ", y),
-             subtitle = paste0("For each pixel, PFG abundances from strata ",
-                               strata_min, " to ", no_strata, " are summed,\n",
-                               "then transformed into relative values by dividing by the maximum abundance obtained.\n")) +
-        theme_fivethirtyeight() +
-        theme(axis.text = element_blank()
-              , legend.key.width = unit(2, "lines")
-              , panel.background = element_rect(fill = "transparent", colour = NA)
-              , plot.background = element_rect(fill = "transparent", colour = NA)
-              , legend.background = element_rect(fill = "transparent", colour = NA)
-              , legend.box.background = element_rect(fill = "transparent", colour = NA)
-              , legend.key = element_rect(fill = "transparent", colour = NA))
-      plot(pp)
-    }
-    cat("\n")
-    dev.off()
+      for (st in strata_min:no_strata)
+      {
+        file_name = paste0(dir.output.perPFG.perStrata
+                           , "Abund_YEAR_"
+                           , y
+                           , "_"
+                           , PFG
+                           , "_STRATA_"
+                           , st
+                           , ".tif")
+        
+        gp = PFG[which(file.exists(file_name))]
+        file_name = file_name[which(file.exists(file_name))]
+        
+        if (length(file_name) > 0)
+        {
+          ras = stack(file_name) * ras.mask
+          names(ras) = gp
+          
+          ras_TOT = sum(ras, na.rm = TRUE)
+          ras_REL = ras / ras_TOT
+          ras_BIN = ras_REL
+          for (ii in 1:nlayers(ras_REL))
+          {
+            ras_BIN[[ii]][] = ifelse(ras_REL[[ii]][] > 0.05, 1, 0)
+          }
+          
+          writeRaster(x = ras_BIN
+                      , filename = paste0(dir.output.perPFG.perStrata.BIN
+                                          , sub("^Abund", "Binary", basename(file_name)))
+                      , overwrite = TRUE
+                      , bylayer = TRUE)
+        }
+      } ## end loop on strata
+      
+      for (pfg in PFG)
+      {
+        file_name = paste0(dir.output.perPFG.perStrata.BIN
+                           , "Binary_YEAR_"
+                           , y
+                           , "_"
+                           , pfg
+                           , "_STRATA_"
+                           , strata_min:no_strata
+                           , ".tif")
+        
+        if (length(file_name) > 0)
+        {
+          file_name = file_name[which(file.exists(file_name))]
+          
+          ras = stack(file_name) * ras.mask
+          ras_TOT = sum(ras, na.rm = TRUE)
+          ras_TOT[] = ifelse(ras_TOT[] > 0, 1, 0)
+          
+          writeRaster(x = ras_TOT
+                      , filename = paste0(dir.output.perPFG.allStrata.BIN
+                                          , "Binary_YEAR_"
+                                          , y
+                                          , "_"
+                                          , pfg
+                                          , "_STRATA_all.tif")
+                      , overwrite = TRUE)
+        }
+      } ## end loop on PFG
+    } ## end loop on years
     
     ## ZIP the raster saved ------------------------------------------------------
     .zip(folder_name = dir.output.perPFG.perStrata, nb_cores = opt.no_CPU)
