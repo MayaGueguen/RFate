@@ -140,7 +140,7 @@ POST_FATE.graphic_mapPFGrichness = function(
     dir.output.perPFG.allStrata.BIN = paste0(name.simulation, "/RESULTS/", basename(dir.save), "/BIN_perPFG_allStrata/")
     .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/BIN_perPFG_allStrata/"))
     
-
+    
     ## Get number of PFGs ----------------------------------------------------------
     file.globalParam = .getParam(params.lines = abs.simulParam
                                  , flag = "GLOBAL_PARAMS"
@@ -198,45 +198,51 @@ POST_FATE.graphic_mapPFGrichness = function(
     for (y in years)
     {
       cat(" ", y)
-
+      
       file_name = paste0(dir.output.perPFG.allStrata.BIN,
                          "Binary_YEAR_",
                          y,
                          "_",
                          PFG,
                          "_STRATA_all.tif")
+      gp = PFG[which(file.exists(file_name))]
       file_name = file_name[which(file.exists(file_name))]
-
-      ras = stack(file_name) * ras.mask
-      ras_TOT = sum(ras)
-      ras.pts = as.data.frame(rasterToPoints(ras_TOT))
-      colnames(ras.pts) = c("X", "Y", "NB")
       
-      ## produce the plot ------------------------------------------------------------
-      ## Map of PFG richness
-      pp = ggplot(ras.pts, aes_string(x = "X", y = "Y", fill = "NB")) +
-        scale_fill_gradientn("Number of PFG"
-                             , colors = viridis_pal()(max(ras.pts$NB))
-                             , breaks = seq(1, max(ras.pts$NB), 2)) +
-        coord_equal() +
-        geom_raster() +
-        labs(x = "", y = ""
-             , title = paste0("GRAPH D : map of PFG richness - Simulation year : ", y)
-             , subtitle = paste0("For each pixel and stratum, first relative abundances are calculated, "
-                                 , "then transformed into binary values :\n"
-                                 , "1 if the PFG abundance represents more than 5 % "
-                                 , "of the pixel abundance, 0 otherwise.\n"
-                                 , "If the PFG is present in one stratum, then it is considered present within the pixel.\n"
-                                 , "Finally, simulated PFG occurrences are summed.\n")) +
-        theme_fivethirtyeight() +
-        theme(axis.text = element_blank()
-              , legend.key.width = unit(2, "lines")
-              , panel.background = element_rect(fill = "transparent", colour = NA)
-              , plot.background = element_rect(fill = "transparent", colour = NA)
-              , legend.background = element_rect(fill = "transparent", colour = NA)
-              , legend.box.background = element_rect(fill = "transparent", colour = NA)
-              , legend.key = element_rect(fill = "transparent", colour = NA))
-      plot(pp)
+      if (length(file_name) > 0)
+      {
+        ras = stack(file_name) * ras.mask
+        names(ras) = gp
+        
+        ras_TOT = sum(ras)
+        ras.pts = as.data.frame(rasterToPoints(ras_TOT))
+        colnames(ras.pts) = c("X", "Y", "NB")
+        
+        ## produce the plot ------------------------------------------------------------
+        ## Map of PFG richness
+        pp = ggplot(ras.pts, aes_string(x = "X", y = "Y", fill = "NB")) +
+          scale_fill_gradientn("Number of PFG"
+                               , colors = viridis_pal()(max(ras.pts$NB))
+                               , breaks = seq(1, max(ras.pts$NB), 2)) +
+          coord_equal() +
+          geom_raster() +
+          labs(x = "", y = ""
+               , title = paste0("GRAPH D : map of PFG richness - Simulation year : ", y)
+               , subtitle = paste0("For each pixel and stratum, first relative abundances are calculated, "
+                                   , "then transformed into binary values :\n"
+                                   , "1 if the PFG abundance represents more than 5 % "
+                                   , "of the pixel abundance, 0 otherwise.\n"
+                                   , "If the PFG is present in one stratum, then it is considered present within the pixel.\n"
+                                   , "Finally, simulated PFG occurrences are summed.\n")) +
+          theme_fivethirtyeight() +
+          theme(axis.text = element_blank()
+                , legend.key.width = unit(2, "lines")
+                , panel.background = element_rect(fill = "transparent", colour = NA)
+                , plot.background = element_rect(fill = "transparent", colour = NA)
+                , legend.background = element_rect(fill = "transparent", colour = NA)
+                , legend.box.background = element_rect(fill = "transparent", colour = NA)
+                , legend.key = element_rect(fill = "transparent", colour = NA))
+        plot(pp)
+      }
     } ## end loop on years
     
     cat("\n")

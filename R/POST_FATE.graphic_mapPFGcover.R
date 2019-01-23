@@ -186,7 +186,7 @@ POST_FATE.graphic_mapPFGcover = function(
                                    , list.files(dir.output.perPFG.perStrata), value = TRUE)
     
     strata = sapply(sub(".*_STRATA_", "", raster.perPFG.perStrata)
-                   , function(x) strsplit(as.character(x), "[.]")[[1]][1])
+                    , function(x) strsplit(as.character(x), "[.]")[[1]][1])
     strata = sort(unique(as.numeric(strata)))
     no_strata = max(strata)
     if (!(no_strata > 0) || is.infinite(no_strata) | .testParam_notDef(no_strata))
@@ -226,7 +226,7 @@ POST_FATE.graphic_mapPFGcover = function(
     .unzip(folder_name = dir.output.perPFG.perStrata
            , list_files = raster.perPFG.perStrata
            , nb_cores = opt.no_CPU)
-
+    
     ## get the data inside the rasters ---------------------------------------------
     pdf(file = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_E_map_PFGcover_", basename(dir.save), ".pdf")
         , width = 10, height = 10)
@@ -245,44 +245,50 @@ POST_FATE.graphic_mapPFGcover = function(
                                                                  "_STRATA_",
                                                                  strata_min:no_strata,
                                                                  ".tif")))
+      gp_st = sapply(PFG, function(x) paste0(x, "_STRATA_", strata_min:no_strata))
+      gp_st = gp_st[which(file.exists(file_name))]
       file_name = file_name[which(file.exists(file_name))]
       
-      ras.BIN = stack(file_name) * ras.mask
-      
-      ## Abundance maps
-      file_name = sub("Binary_YEAR_", "Abund_YEAR_", file_name)
-      file_name = sub(dir.output.perPFG.perStrata.BIN, dir.output.perPFG.perStrata, file_name)
-
-      ras = stack(file_name) * ras.mask
-      ras = ras * ras.BIN
-      ras_TOT = sum(ras)
-      ras_REL = ras_TOT / max(ras_TOT[], na.rm = T)
-      ras.pts = as.data.frame(rasterToPoints(ras_REL))
-      colnames(ras.pts) = c("X", "Y", "COVER")
-      
-      ## produce the plot ------------------------------------------------------------
-      ## Map of PFG cover
-      pp = ggplot(ras.pts, aes_string(x = "X", y = "Y", fill = "COVER")) +
-        scale_fill_gradientn("Abundance (%)"
-                             , colors = brewer.pal(9, "Greens")
-                             , breaks = seq(0, 1, 0.2)
-                             , labels = seq(0, 100, 20)) +
-        coord_equal() +
-        geom_raster() +
-        labs(x = "", y = "", title = paste0("GRAPH E : map of PFG cover - Simulation year : ", y),
-             subtitle = paste0("For each pixel, PFG abundances from strata ",
-                               strata_min, " to ", no_strata, " are summed,\n",
-                               "then transformed into relative values by dividing by the maximum abundance obtained.\n")) +
-        theme_fivethirtyeight() +
-        theme(axis.text = element_blank()
-              , legend.key.width = unit(2, "lines")
-              , panel.background = element_rect(fill = "transparent", colour = NA)
-              , plot.background = element_rect(fill = "transparent", colour = NA)
-              , legend.background = element_rect(fill = "transparent", colour = NA)
-              , legend.box.background = element_rect(fill = "transparent", colour = NA)
-              , legend.key = element_rect(fill = "transparent", colour = NA))
-      plot(pp)
-    }
+      if (length(file_name) > 0)
+      {
+        ras.BIN = stack(file_name) * ras.mask
+        names(ras.BIN) = gp_st
+        
+        ## Abundance maps
+        file_name = sub("Binary_YEAR_", "Abund_YEAR_", file_name)
+        file_name = sub(dir.output.perPFG.perStrata.BIN, dir.output.perPFG.perStrata, file_name)
+        
+        ras = stack(file_name) * ras.mask
+        ras = ras * ras.BIN
+        ras_TOT = sum(ras)
+        ras_REL = ras_TOT / max(ras_TOT[], na.rm = T)
+        ras.pts = as.data.frame(rasterToPoints(ras_REL))
+        colnames(ras.pts) = c("X", "Y", "COVER")
+        
+        ## produce the plot ------------------------------------------------------------
+        ## Map of PFG cover
+        pp = ggplot(ras.pts, aes_string(x = "X", y = "Y", fill = "COVER")) +
+          scale_fill_gradientn("Abundance (%)"
+                               , colors = brewer.pal(9, "Greens")
+                               , breaks = seq(0, 1, 0.2)
+                               , labels = seq(0, 100, 20)) +
+          coord_equal() +
+          geom_raster() +
+          labs(x = "", y = "", title = paste0("GRAPH E : map of PFG cover - Simulation year : ", y),
+               subtitle = paste0("For each pixel, PFG abundances from strata ",
+                                 strata_min, " to ", no_strata, " are summed,\n",
+                                 "then transformed into relative values by dividing by the maximum abundance obtained.\n")) +
+          theme_fivethirtyeight() +
+          theme(axis.text = element_blank()
+                , legend.key.width = unit(2, "lines")
+                , panel.background = element_rect(fill = "transparent", colour = NA)
+                , plot.background = element_rect(fill = "transparent", colour = NA)
+                , legend.background = element_rect(fill = "transparent", colour = NA)
+                , legend.box.background = element_rect(fill = "transparent", colour = NA)
+                , legend.key = element_rect(fill = "transparent", colour = NA))
+        plot(pp)
+      }
+    } ## end loop on years
     cat("\n")
     dev.off()
     

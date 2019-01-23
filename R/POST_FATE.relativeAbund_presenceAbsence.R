@@ -233,8 +233,10 @@ POST_FATE.relativeAbund_presenceAbsence = function(
     {
       cat(" ", y)
       
+      cat("\n stratum ")
       for (st in strata_min:no_strata)
       {
+        cat(" ", st)
         file_name = paste0(dir.output.perPFG.perStrata
                            , "Abund_YEAR_"
                            , y
@@ -247,7 +249,9 @@ POST_FATE.relativeAbund_presenceAbsence = function(
         gp = PFG[which(file.exists(file_name))]
         file_name = file_name[which(file.exists(file_name))]
         
-        if (length(file_name) > 0)
+        new_name = paste0(dir.output.perPFG.perStrata.BIN
+                          , sub("^Abund", "Binary", basename(file_name)))
+        if (length(file_name) > 0 && !file.exists(new_name))
         {
           ras = stack(file_name) * ras.mask
           names(ras) = gp
@@ -261,15 +265,16 @@ POST_FATE.relativeAbund_presenceAbsence = function(
           }
           
           writeRaster(x = ras_BIN
-                      , filename = paste0(dir.output.perPFG.perStrata.BIN
-                                          , sub("^Abund", "Binary", basename(file_name)))
+                      , filename = new_name
                       , overwrite = TRUE
                       , bylayer = TRUE)
         }
       } ## end loop on strata
       
+      cat("\n PFG ")
       for (pfg in PFG)
       {
+        cat(" ", pfg)
         file_name = paste0(dir.output.perPFG.perStrata.BIN
                            , "Binary_YEAR_"
                            , y
@@ -278,22 +283,25 @@ POST_FATE.relativeAbund_presenceAbsence = function(
                            , "_STRATA_"
                            , strata_min:no_strata
                            , ".tif")
+        st = (strata_min:no_strata)[which(file.exists(file_name))]
+        file_name = file_name[which(file.exists(file_name))]
         
-        if (length(file_name) > 0)
+        new_name = paste0(dir.output.perPFG.allStrata.BIN
+                          , "Binary_YEAR_"
+                          , y
+                          , "_"
+                          , pfg
+                          , "_STRATA_all.tif")
+        if (length(file_name) > 0 && !file.exists(new_name))
         {
-          file_name = file_name[which(file.exists(file_name))]
-          
           ras = stack(file_name) * ras.mask
+          names(ras) = paste0("STRATUM_", st)
+          
           ras_TOT = sum(ras, na.rm = TRUE)
           ras_TOT[] = ifelse(ras_TOT[] > 0, 1, 0)
           
           writeRaster(x = ras_TOT
-                      , filename = paste0(dir.output.perPFG.allStrata.BIN
-                                          , "Binary_YEAR_"
-                                          , y
-                                          , "_"
-                                          , pfg
-                                          , "_STRATA_all.tif")
+                      , filename = new_name
                       , overwrite = TRUE)
         }
       } ## end loop on PFG

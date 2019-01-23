@@ -174,7 +174,7 @@ POST_FATE.graphic_mapPFGvsHS = function(
                           , flag.split = "^--.*--$"
                           , is.num = FALSE)
     .testParam_existFile(file.mask)
-
+    
     ras.mask = raster(file.mask)
     ras.mask[which(ras.mask[] == 0)] = NA
     
@@ -213,49 +213,61 @@ POST_FATE.graphic_mapPFGvsHS = function(
                          "_",
                          PFG,
                          "_STRATA_all.tif")
+      gp = PFG[which(file.exists(file_name))]
       file_name = file_name[which(file.exists(file_name))]
-
-      ras = stack(file_name) * ras.mask
-      ras.pts = as.data.frame(rasterToPoints(ras))
-      colnames(ras.pts) = c("X", "Y", PFG)
       
-      
-      ## produce the plot ----------------------------------------------------------
-      pdf(file = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_C_map_PFGvsHS_", basename(dir.save), ".pdf")
-          , width = 10, height = 10)
-      cat(" PFG :")
-      for (pfg in PFG)
+      if (length(file_name) > 0)
       {
-        cat(" ", pfg)
+        ras = stack(file_name) * ras.mask
+        names(ras) = gp
         
-        tab = rbind(data.frame(ras.hs.pts[, c("X", "Y", pfg)], TYPE = "Habitat Suitability")
-                    , data.frame(ras.pts[, c("X", "Y", pfg)], TYPE = "FATE"))
+        ras.pts = as.data.frame(rasterToPoints(ras))
+        colnames(ras.pts) = c("X", "Y", gp)
         
-        pp = ggplot(tab, aes_string(x = "X", y = "Y", fill = pfg)) +
-          scale_fill_gradientn("Presence probability"
-                               , colors = rev(heat_hcl(9))
-                               , breaks = seq(0, 1, 0.1)) +
-          coord_equal() +
-          geom_raster() +
-          facet_wrap(~ TYPE, ncol = 2) +
-          labs(x = "", y = ""
-               , title = paste0("GRAPH C : Habitat suitability vs FATE \n"
-                                , "Simulation year : ", y, " - PFG : ", pfg)
-               , subtitle = paste0("For each pixel and stratum, first relative abundances are calculated, "
-                                   , "then transformed into binary values :\n"
-                                   , "1 if the PFG abundance represents more than 5 % "
-                                   , "of the pixel abundance, 0 otherwise.\n"
-                                   , "If the PFG is present in one stratum, then it is considered present within the pixel.\n")) +
-          theme_fivethirtyeight() +
-          theme(axis.text = element_blank()
-                , legend.key.width = unit(3, "lines")
-                , panel.background = element_rect(fill = "transparent", colour = NA)
-                , plot.background = element_rect(fill = "transparent", colour = NA)
-                , legend.background = element_rect(fill = "transparent", colour = NA)
-                , legend.box.background = element_rect(fill = "transparent", colour = NA)
-                , legend.key = element_rect(fill = "transparent", colour = NA))
-        plot(pp)
-      } ## end loop on PFG
+        
+        ## produce the plot ----------------------------------------------------------
+        pdf(file = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_C_map_PFGvsHS_", basename(dir.save), ".pdf")
+            , width = 10, height = 10)
+        cat(" PFG :")
+        for (pfg in PFG)
+        {
+          cat(" ", pfg)
+          
+          if (pfg %in% colnames(ras.hs.pts))
+          {
+            tab = data.frame(ras.hs.pts[, c("X", "Y", pfg)], TYPE = "Habitat Suitability")
+            if (pfg %in% colnames(ras.pts))
+            {
+              tab = rbind(tab, data.frame(ras.pts[, c("X", "Y", pfg)], TYPE = "FATE"))
+              
+              pp = ggplot(tab, aes_string(x = "X", y = "Y", fill = pfg)) +
+                scale_fill_gradientn("Presence probability"
+                                     , colors = rev(heat_hcl(9))
+                                     , breaks = seq(0, 1, 0.1)) +
+                coord_equal() +
+                geom_raster() +
+                facet_wrap(~ TYPE, ncol = 2) +
+                labs(x = "", y = ""
+                     , title = paste0("GRAPH C : Habitat suitability vs FATE \n"
+                                      , "Simulation year : ", y, " - PFG : ", pfg)
+                     , subtitle = paste0("For each pixel and stratum, first relative abundances are calculated, "
+                                         , "then transformed into binary values :\n"
+                                         , "1 if the PFG abundance represents more than 5 % "
+                                         , "of the pixel abundance, 0 otherwise.\n"
+                                         , "If the PFG is present in one stratum, then it is considered present within the pixel.\n")) +
+                theme_fivethirtyeight() +
+                theme(axis.text = element_blank()
+                      , legend.key.width = unit(3, "lines")
+                      , panel.background = element_rect(fill = "transparent", colour = NA)
+                      , plot.background = element_rect(fill = "transparent", colour = NA)
+                      , legend.background = element_rect(fill = "transparent", colour = NA)
+                      , legend.box.background = element_rect(fill = "transparent", colour = NA)
+                      , legend.key = element_rect(fill = "transparent", colour = NA))
+              plot(pp)
+            }
+          }
+        } ## end loop on PFG
+      }
       cat("\n")
       dev.off()
       
