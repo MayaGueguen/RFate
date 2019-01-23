@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Create a graphical representation of several statistics for each PFG 
-to asses the quality of the model for one (or several) specific year of 
-a <code>FATE-HD</code> simulation — POST_FATE.graphic_validationStatistics • RFate</title>
+to asses the quality of the model 
+ <br /> for one (or several) specific year of a <code>FATE-HD</code> simulation — POST_FATE.graphic_validationStatistics • RFate</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -33,8 +33,8 @@ a <code>FATE-HD</code> simulation — POST_FATE.graphic_validationStatistics •
 
 
 <meta property="og:title" content="Create a graphical representation of several statistics for each PFG 
-to asses the quality of the model for one (or several) specific year of 
-a <code>FATE-HD</code> simulation — POST_FATE.graphic_validationStatistics" />
+to asses the quality of the model 
+ <br /> for one (or several) specific year of a <code>FATE-HD</code> simulation — POST_FATE.graphic_validationStatistics" />
 
 <meta property="og:description" content="This script is designed to produce a graphical representation
 of several statistics (sensitivity, specificity, TSS, AUC) for quality
@@ -69,7 +69,7 @@ assessment for one (or several) specific FATE-HD simulation year." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RFate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.4.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.5.9000</span>
       </span>
     </div>
 
@@ -149,8 +149,8 @@ assessment for one (or several) specific FATE-HD simulation year." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Create a graphical representation of several statistics for each PFG 
-to asses the quality of the model for one (or several) specific year of 
-a <code>FATE-HD</code> simulation</h1>
+to asses the quality of the model 
+ <br /> for one (or several) specific year of a <code>FATE-HD</code> simulation</h1>
     <small class="dont-index">Source: <a href='https://github.com/MayaGueguen/RFate.git/blob/master/R/POST_FATE.graphic_validationStatistics.R'><code>R/POST_FATE.graphic_validationStatistics.R</code></a></small>
     <div class="hidden name"><code>POST_FATE.graphic_validationStatistics.Rd</code></div>
     </div>
@@ -183,7 +183,7 @@ of the <code>FATE-HD</code> simulation</p></td>
     <tr>
       <th>year</th>
       <td><p>an <code>integer</code> corresponding to the simulation year(s) that 
-will be used to extract PFG abundance maps</p></td>
+will be used to extract PFG binary maps</p></td>
     </tr>
     <tr>
       <th>mat.PFG.obs</th>
@@ -220,7 +220,7 @@ can be used to parallelize the <code>unzip/zip</code> of raster files</p></td>
 and a specific parameter file within this simulation, one preanalytical
 graphic. <br /></p>
 <p>For each PFG and each selected simulation year, raster maps are retrieved
-from the results folder <code>ABUND_perPFG_allStrata</code> and unzipped.
+from the results folder <code>BIN_perPFG_allStrata</code> and unzipped.
 Informations extracted lead to the production of one graphic before the
 maps are compressed again :</p>
 <ul>
@@ -243,14 +243,14 @@ within the <code>mat.PFG.obs</code> obejct :</p>
 # }
 <span class='co'># NOT RUN {</span>
 <span class='fu'>POST_FATE.graphic_validationStatistics</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
-                                 , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
-                                 , <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>850</span>
-                                 , <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+                                       , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
+                                       , <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>850</span>
+                                       , <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 
 <span class='fu'>POST_FATE.graphic_validationStatistics</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
-                                 , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
-                                 , <span class='kw'>year</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>850</span>, <span class='fl'>950</span>)
-                                 , <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+                                       , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
+                                       , <span class='kw'>year</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>850</span>, <span class='fl'>950</span>)
+                                       , <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='co'># }</span># NOT RUN {
                                     
                                     

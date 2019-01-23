@@ -1,7 +1,7 @@
 ### HEADER #####################################################################
 ##' @title Create a graphical representation of several statistics for each PFG 
-##' to asses the quality of the model for one (or several) specific year of 
-##' a \code{FATE-HD} simulation
+##' to asses the quality of the model 
+##'  \cr for one (or several) specific year of a \code{FATE-HD} simulation
 ##' 
 ##' @name POST_FATE.graphic_validationStatistics
 ##'
@@ -17,7 +17,7 @@
 ##' parameter file that will be contained into the \code{PARAM_SIMUL} folder
 ##' of the \code{FATE-HD} simulation
 ##' @param year an \code{integer} corresponding to the simulation year(s) that 
-##' will be used to extract PFG abundance maps
+##' will be used to extract PFG binary maps
 ##' @param mat.PFG.obs a \code{data.frame} with 4 columns : PFG, X, Y, obs
 ##' @param opt.no_CPU default 1 (\emph{optional}). The number of resources that 
 ##' can be used to parallelize the \code{unzip/zip} of raster files
@@ -30,7 +30,7 @@
 ##' graphic. \cr
 ##' 
 ##' For each PFG and each selected simulation year, raster maps are retrieved
-##' from the results folder \code{ABUND_perPFG_allStrata} and unzipped.
+##' from the results folder \code{BIN_perPFG_allStrata} and unzipped.
 ##' Informations extracted lead to the production of one graphic before the
 ##' maps are compressed again :
 ##' 
@@ -75,14 +75,14 @@
 ##' 
 ##' \dontrun{                      
 ##' POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
-##'                                  , file.simulParam = "Simul_parameters_V1.txt"
-##'                                  , year = 850
-##'                                  , opt.no_CPU = 1)
+##'                                        , file.simulParam = "Simul_parameters_V1.txt"
+##'                                        , year = 850
+##'                                        , opt.no_CPU = 1)
 ##'                                     
 ##' POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
-##'                                  , file.simulParam = "Simul_parameters_V1.txt"
-##'                                  , year = c(850, 950)
-##'                                  , opt.no_CPU = 1)
+##'                                        , file.simulParam = "Simul_parameters_V1.txt"
+##'                                        , year = c(850, 950)
+##'                                        , opt.no_CPU = 1)
 ##' }
 ##'                                     
 ##'                                     

@@ -1,13 +1,14 @@
 ### HEADER #####################################################################
-##' @title Create a map of the Plant Functional Group cover for one (or 
-##' several) specific year of a \code{FATE-HD} simulation
+##' @title Create presence / absence (binary) maps for each Plant Functional
+##' Group \cr for one (or several) specific year of a \code{FATE-HD} simulation
 ##' 
 ##' @name POST_FATE.relativeAbund_presenceAbsence
 ##'
 ##' @author Maya Guéguen
 ##' 
-##' @description This script is designed to produce a raster map of PFG cover
-##' for one (or several) specific \code{FATE-HD} simulation year.
+##' @description This script is designed to produce raster maps of PFG simulated
+##' presences and absences for one (or several) specific \code{FATE-HD} 
+##' simulation year.
 ##'              
 ##' @param name.simulation a \code{string} that corresponds to the main directory
 ##' or simulation name of the \code{FATE-HD} simulation
@@ -16,8 +17,9 @@
 ##' of the \code{FATE-HD} simulation
 ##' @param year an \code{integer} corresponding to the simulation year(s) that 
 ##' will be used to extract PFG abundance maps
-##' @param strata_min an \code{integer} corresponding to the lowest stratum from
-##' which PFG abundances are summed up to the highest stratum
+##' @param strata_min an \code{integer} corresponding to the lowest stratum for
+##' which PFG relative abundances are calculated and then transformed into
+##' binary results
 ##' @param opt.no_CPU default 1 (\emph{optional}). The number of resources that 
 ##' can be used to parallelize the \code{unzip/zip} of raster files
 ##' 
@@ -25,44 +27,52 @@
 ##' @details 
 ##' 
 ##' This function allows one to obtain, for a specific \code{FATE-HD} simulation
-##' and a specific parameter file within this simulation, one preanalytical
-##' graphic. \cr
+##' and a specific parameter file within this simulation, raster maps of PFG
+##' presence/absence. \cr
 ##' 
 ##' For each PFG and each selected simulation year, raster maps are retrieved
 ##' from the results folder \code{ABUND_perPFG_perStrata} and unzipped.
-##' Informations extracted lead to the production of one graphic before the
-##' maps are compressed again :
+##' Informations extracted lead to the production of the same number of raster
+##' before the maps are compressed again :
 ##' 
-##' \itemize{
-##'   \item{the map of \strong{Plant Functional Group cover} for each selected
-##'   simulation year(s), representing the cumulated abundance of PFG present 
-##'   in each pixel above a height threshold
-##'   }
+##' \enumerate{
+##'   \item{for each selected simulation year(s), \strong{relative abundances} 
+##'   within each stratum are calculated :
+##'   \deqn{\frac{\text{Abund } PFG_i \text{ } Stratum_j}
+##'   {\Sigma \text{ Abund } PFG_{all} \text{ } Stratum_j}}}
+##'   \item{\strong{binary maps for each PFG within each stratum} are obtained
+##'   by converting relative abundances \strong{in 0 if < 5 \%, in 1 otherwise}.}
+##'   \item{\strong{binary maps for each PFG within each pixel} are obtained
+##'   from all binary maps of a PFG within all strata : \cr
+##'   \strong{if the PFG is present within one stratum, it is considered as 
+##'   present (1) within the pixel ; \cr it is considered absent otherwise (0)}.}
 ##' }
 ##' 
 ##' 
 ##' 
-##' @return One \code{POST_FATE_[...].pdf} file is created : 
+##' @return Two result folders are created :
 ##' \describe{
-##'   \item{\file{GRAPHIC_D \cr PFGcover}}{to visualize the PFG cover
-##'   within the studied area}
+##'   \item{\code{BIN_perPFG \cr_perStrata}}{containing presence/absence raster maps
+##'   for each PFG within each stratum}
+##'   \item{\code{BIN_perPFG \cr_allStrata}}{containing presence/absence raster maps
+##'   for each PFG across all strata}
 ##' }
 ##' 
 ##'  
 ##' @examples
 ##' 
 ##' \dontrun{                      
-##' POST_FATE.graphic_mapPFGcover(name.simulation = "FATE_simulation"
-##'                               , file.simulParam = "Simul_parameters_V1.txt"
-##'                               , year = 850
-##'                               , strata_min = 3
-##'                               , opt.no_CPU = 1)
+##' POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
+##'                                         , file.simulParam = "Simul_parameters_V1.txt"
+##'                                         , year = 850
+##'                                         , strata_min = 1
+##'                                         , opt.no_CPU = 1)
 ##'                                     
-##' POST_FATE.graphic_mapPFGcover(name.simulation = "FATE_simulation"
-##'                               , file.simulParam = "Simul_parameters_V1.txt"
-##'                               , year = c(850, 950)
-##'                               , strata_min = 3
-##'                               , opt.no_CPU = 1)
+##' POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
+##'                                         , file.simulParam = "Simul_parameters_V1.txt"
+##'                                         , year = c(850, 950)
+##'                                         , strata_min = 1
+##'                                         , opt.no_CPU = 1)
 ##' }
 ##'                                     
 ##'                                     

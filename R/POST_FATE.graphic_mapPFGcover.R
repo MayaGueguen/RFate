@@ -1,6 +1,6 @@
 ### HEADER #####################################################################
-##' @title Create a map of the Plant Functional Group cover for one (or 
-##' several) specific year of a \code{FATE-HD} simulation
+##' @title Create a map of the Plant Functional Group cover 
+##'  \cr for one (or several) specific year of a \code{FATE-HD} simulation
 ##' 
 ##' @name POST_FATE.graphic_mapPFGcover
 ##'
@@ -15,7 +15,7 @@
 ##' parameter file that will be contained into the \code{PARAM_SIMUL} folder
 ##' of the \code{FATE-HD} simulation
 ##' @param year an \code{integer} corresponding to the simulation year(s) that 
-##' will be used to extract PFG abundance maps
+##' will be used to extract PFG abundance and binary maps
 ##' @param strata_min an \code{integer} corresponding to the lowest stratum from
 ##' which PFG abundances are summed up to the highest stratum
 ##' @param opt.no_CPU default 1 (\emph{optional}). The number of resources that 
@@ -29,14 +29,15 @@
 ##' graphic. \cr
 ##' 
 ##' For each PFG and each selected simulation year, raster maps are retrieved
-##' from the results folder \code{ABUND_perPFG_perStrata} and unzipped.
+##' from the results folders \code{ABUND_perPFG_perStrata} and 
+##' \code{BIN_perPFG_perStrata} and unzipped.
 ##' Informations extracted lead to the production of one graphic before the
 ##' maps are compressed again :
 ##' 
 ##' \itemize{
 ##'   \item{the map of \strong{Plant Functional Group cover} for each selected
-##'   simulation year(s), representing the cumulated abundance of PFG present 
-##'   in each pixel above a height threshold
+##'   simulation year(s), representing the relative cumulated abundance of PFG 
+##'   present in each pixel above a height threshold
 ##'   }
 ##' }
 ##' 

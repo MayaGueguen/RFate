@@ -2,11 +2,12 @@
 % Please edit documentation in R/POST_FATE.graphic_mapPFGvsHS.R
 \name{POST_FATE.graphic_mapPFGvsHS}
 \alias{POST_FATE.graphic_mapPFGvsHS}
-\title{Create a map of the Plant Functional Group richness for one (or 
-several) specific year of a \code{FATE-HD} simulation}
+\title{Create maps of both Habitat suitability and simulated occurrences
+of each Plant Functional Group \cr for one (or several) specific year of a 
+\code{FATE-HD} simulation}
 \usage{
 POST_FATE.graphic_mapPFGvsHS(name.simulation, file.simulParam = NULL,
-  year, opt.no_CPU = 1, opt.strata = "ALL")
+  year, opt.no_CPU = 1, opt.strata = "all")
 }
 \arguments{
 \item{name.simulation}{a \code{string} that corresponds to the main directory
@@ -17,24 +18,25 @@ parameter file that will be contained into the \code{PARAM_SIMUL} folder
 of the \code{FATE-HD} simulation}
 
 \item{year}{an \code{integer} corresponding to the simulation year(s) that 
-will be used to extract PFG abundance maps}
+will be used to extract PFG binary maps}
 
 \item{opt.no_CPU}{default 1 (\emph{optional}). The number of resources that 
 can be used to parallelize the \code{unzip/zip} of raster files}
 
 \item{opt.strata}{default ALL (\emph{optional}). The stratum number from 
-which to extract PFG abundance maps}
+which to extract PFG binary maps}
 }
 \value{
 One \code{POST_FATE_[...].pdf} file is created : 
 \describe{
-  \item{\file{GRAPHIC_C \cr PFGrichness}}{to visualize the PFG richness
-  within the studied area}
+  \item{\file{GRAPHIC_C \cr PFGvsHS}}{to visualize the PFG presence
+  within the studied area (probability and simulated occurrence)}
 }
 }
 \description{
-This script is designed to produce a raster map of PFG richness
-for one (or several) specific \code{FATE-HD} simulation year.
+This script is designed to produce raster maps of PFG habitat
+suitability and simulated occurrences for one (or several) specific 
+\code{FATE-HD} simulation year.
 }
 \details{
 This function allows one to obtain, for a specific \code{FATE-HD} simulation
@@ -42,15 +44,17 @@ and a specific parameter file within this simulation, one preanalytical
 graphic. \cr
 
 For each PFG and each selected simulation year, raster maps are retrieved
-from the results folder \code{ABUND_perPFG_allStrata} (unless the 
+from the results folder \code{BIN_perPFG_allStrata} (unless the 
 \code{opt.strata} is used, then it will be from the folder 
-\code{ABUND_perPFG_perStrata}) and unzipped.
+\code{BIN_perPFG_perStrata}) and unzipped.
 Informations extracted lead to the production of one graphic before the
 maps are compressed again :
 
 \itemize{
-  \item{the map of \strong{Plant Functional Group richness} for each selected
-  simulation year(s), representing the number of PFG present in each pixel
+  \item{the maps of \strong{Plant Functional Group habitat suitability and
+  occurrences} for each selected simulation year(s), representing the 
+  probability of presence of each PFG in each pixel compared to its
+  simulated presence
   }
 }
 }
@@ -58,20 +62,20 @@ maps are compressed again :
 
 \dontrun{                      
 POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
-                                 , file.simulParam = "Simul_parameters_V1.txt"
-                                 , year = 850
-                                 , opt.no_CPU = 1)
+                             , file.simulParam = "Simul_parameters_V1.txt"
+                             , year = 850
+                             , opt.no_CPU = 1)
                                     
 POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
-                                 , file.simulParam = "Simul_parameters_V1.txt"
-                                 , year = c(850, 950)
-                                 , opt.no_CPU = 1)
+                             , file.simulParam = "Simul_parameters_V1.txt"
+                             , year = c(850, 950)
+                             , opt.no_CPU = 1)
                                     
 POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
-                                 , file.simulParam = "Simul_parameters_V1.txt"
-                                 , year = 850
-                                 , opt.no_CPU = 1
-                                 , opt.strata = 2)
+                             , file.simulParam = "Simul_parameters_V1.txt"
+                             , year = 850
+                             , opt.no_CPU = 1
+                             , opt.strata = 2)
 }
                                     
                                     

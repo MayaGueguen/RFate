@@ -6,8 +6,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create a map of the Plant Functional Group richness for one (or 
-several) specific year of a <code>FATE-HD</code> simulation — POST_FATE.graphic_mapPFGvsHS • RFate</title>
+<title>Create maps of both Habitat suitability and simulated occurrences
+of each Plant Functional Group <br /> for one (or several) specific year of a 
+<code>FATE-HD</code> simulation — POST_FATE.graphic_mapPFGvsHS • RFate</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -31,11 +32,13 @@ several) specific year of a <code>FATE-HD</code> simulation — POST_FATE.graphi
 
 
 
-<meta property="og:title" content="Create a map of the Plant Functional Group richness for one (or 
-several) specific year of a <code>FATE-HD</code> simulation — POST_FATE.graphic_mapPFGvsHS" />
+<meta property="og:title" content="Create maps of both Habitat suitability and simulated occurrences
+of each Plant Functional Group <br /> for one (or several) specific year of a 
+<code>FATE-HD</code> simulation — POST_FATE.graphic_mapPFGvsHS" />
 
-<meta property="og:description" content="This script is designed to produce a raster map of PFG richness
-for one (or several) specific FATE-HD simulation year." />
+<meta property="og:description" content="This script is designed to produce raster maps of PFG habitat
+suitability and simulated occurrences for one (or several) specific 
+FATE-HD simulation year." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -66,7 +69,7 @@ for one (or several) specific FATE-HD simulation year." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RFate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.4.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.5.9000</span>
       </span>
     </div>
 
@@ -145,21 +148,23 @@ for one (or several) specific FATE-HD simulation year." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create a map of the Plant Functional Group richness for one (or 
-several) specific year of a <code>FATE-HD</code> simulation</h1>
+    <h1>Create maps of both Habitat suitability and simulated occurrences
+of each Plant Functional Group <br /> for one (or several) specific year of a 
+<code>FATE-HD</code> simulation</h1>
     <small class="dont-index">Source: <a href='https://github.com/MayaGueguen/RFate.git/blob/master/R/POST_FATE.graphic_mapPFGvsHS.R'><code>R/POST_FATE.graphic_mapPFGvsHS.R</code></a></small>
     <div class="hidden name"><code>POST_FATE.graphic_mapPFGvsHS.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>This script is designed to produce a raster map of PFG richness
-for one (or several) specific <code>FATE-HD</code> simulation year.</p>
+    <p>This script is designed to produce raster maps of PFG habitat
+suitability and simulated occurrences for one (or several) specific 
+<code>FATE-HD</code> simulation year.</p>
     
     </div>
 
     <pre class="usage"><span class='fu'>POST_FATE.graphic_mapPFGvsHS</span>(<span class='no'>name.simulation</span>, <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>year</span>, <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>opt.strata</span> <span class='kw'>=</span> <span class='st'>"ALL"</span>)</pre>
+  <span class='no'>year</span>, <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>opt.strata</span> <span class='kw'>=</span> <span class='st'>"all"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -178,7 +183,7 @@ of the <code>FATE-HD</code> simulation</p></td>
     <tr>
       <th>year</th>
       <td><p>an <code>integer</code> corresponding to the simulation year(s) that 
-will be used to extract PFG abundance maps</p></td>
+will be used to extract PFG binary maps</p></td>
     </tr>
     <tr>
       <th>opt.no_CPU</th>
@@ -188,15 +193,15 @@ can be used to parallelize the <code>unzip/zip</code> of raster files</p></td>
     <tr>
       <th>opt.strata</th>
       <td><p>default ALL (<em>optional</em>). The stratum number from 
-which to extract PFG abundance maps</p></td>
+which to extract PFG binary maps</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>One <code>POST_FATE_[...].pdf</code> file is created :</p><dl class='dl-horizontal'>
-  <dt><code class="file">GRAPHIC_C <br /> PFGrichness</code></dt><dd><p>to visualize the PFG richness
-  within the studied area</p></dd>
+  <dt><code class="file">GRAPHIC_C <br /> PFGvsHS</code></dt><dd><p>to visualize the PFG presence
+  within the studied area (probability and simulated occurrence)</p></dd>
 </dl>
 
     
@@ -206,14 +211,16 @@ which to extract PFG abundance maps</p></td>
 and a specific parameter file within this simulation, one preanalytical
 graphic. <br /></p>
 <p>For each PFG and each selected simulation year, raster maps are retrieved
-from the results folder <code>ABUND_perPFG_allStrata</code> (unless the 
+from the results folder <code>BIN_perPFG_allStrata</code> (unless the 
 <code>opt.strata</code> is used, then it will be from the folder 
-<code>ABUND_perPFG_perStrata</code>) and unzipped.
+<code>BIN_perPFG_perStrata</code>) and unzipped.
 Informations extracted lead to the production of one graphic before the
 maps are compressed again :</p>
 <ul>
-<li><p>the map of <strong>Plant Functional Group richness</strong> for each selected
-  simulation year(s), representing the number of PFG present in each pixel</p></li>
+<li><p>the maps of <strong>Plant Functional Group habitat suitability and
+  occurrences</strong> for each selected simulation year(s), representing the 
+  probability of presence of each PFG in each pixel compared to its
+  simulated presence</p></li>
 </ul>
     
 
@@ -222,20 +229,20 @@ maps are compressed again :</p>
 # }
 <span class='co'># NOT RUN {</span>
 <span class='fu'>POST_FATE.graphic_mapPFGvsHS</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
-                                 , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
-                                 , <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>850</span>
-                                 , <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+                             , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
+                             , <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>850</span>
+                             , <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 
 <span class='fu'>POST_FATE.graphic_mapPFGvsHS</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
-                                 , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
-                                 , <span class='kw'>year</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>850</span>, <span class='fl'>950</span>)
-                                 , <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+                             , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
+                             , <span class='kw'>year</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>850</span>, <span class='fl'>950</span>)
+                             , <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 
 <span class='fu'>POST_FATE.graphic_mapPFGvsHS</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
-                                 , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
-                                 , <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>850</span>
-                                 , <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>
-                                 , <span class='kw'>opt.strata</span> <span class='kw'>=</span> <span class='fl'>2</span>)
+                             , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
+                             , <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>850</span>
+                             , <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>
+                             , <span class='kw'>opt.strata</span> <span class='kw'>=</span> <span class='fl'>2</span>)
 <span class='co'># }</span># NOT RUN {
                                     
                                     
