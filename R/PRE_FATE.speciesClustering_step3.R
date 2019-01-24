@@ -72,6 +72,10 @@
 ##' into the \code{name.simulation/DATA/PFGS/} directory.  
 ##' This file can be used to parameterize the disturbance files.
 ##' 
+##' @keywords functional group, traits
+##' 
+##' @seealso \code{\link{PRE_FATE.speciesClustering_step1}},
+##' \code{\link{PRE_FATE.speciesClustering_step2}}
 ##' 
 ##' @examples
 ##' 

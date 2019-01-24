@@ -60,7 +60,11 @@
 ##'   simulation time}
 ##' }
 ##' 
-##'  
+##' 
+##' @keywords FATE, outputs, abundance through time
+##' 
+##' @seealso \code{\link{POST_FATE.relativeAbund_presenceAbsence}}
+##' 
 ##' @examples
 ##' 
 ##' \dontrun{                      

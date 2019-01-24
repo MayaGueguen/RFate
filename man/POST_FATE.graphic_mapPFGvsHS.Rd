@@ -81,6 +81,14 @@ POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
                                     
 
 }
+\seealso{
+\code{\link{POST_FATE.relativeAbund_presenceAbsence}}
+}
 \author{
 Maya Guéguen
 }
+\keyword{FATE,}
+\keyword{binary}
+\keyword{habitat}
+\keyword{outputs,}
+\keyword{suitability,}

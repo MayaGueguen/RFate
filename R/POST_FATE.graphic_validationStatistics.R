@@ -70,7 +70,12 @@
 ##'   quality of each PFG based on given observations within the studied area}
 ##' }
 ##' 
-##'  
+##' 
+##' @keywords FATE, outputs, binary, area under curve, sensitivity, specificity,
+##' true skill statistic
+##' 
+##' @seealso \code{\link{POST_FATE.relativeAbund_presenceAbsence}}
+##' 
 ##' @examples
 ##' 
 ##' \dontrun{                      
@@ -202,7 +207,7 @@ POST_FATE.graphic_validationStatistics = function(
       mat.PFG.obs = na.exclude(mat.PFG.obs)
     }
     if (sum(mat.PFG.obs$obs %in% c(0,1)) < nrow(mat.PFG.obs)){
-      stop("Wrong type of data!\n Column `MODE` of `mat.PFG.obs` must contain either 0 or 1")
+      stop("Wrong type of data!\n Column `obs` of `mat.PFG.obs` must contain either 0 or 1")
     }
   }
   #################################################################################################
@@ -340,6 +345,8 @@ POST_FATE.graphic_validationStatistics = function(
                             , TSS = NA))
         }
       }
+      ## SAVE mat.valid
+      
       mat.valid = melt(mat.valid, id.vars = c("PFG", "AUC.sd", "sensitivity.sd", "specificity.sd"))
       mat.valid$variable = factor(mat.valid$variable, c("sensitivity", "TSS", "specificity", "AUC"))
       

@@ -140,6 +140,19 @@
 ##' }
 ##' 
 ##' 
+##' @keywords FATE, simulation
+##' 
+##' @seealso \code{\link{PRE_FATE.skeletonDirectory}},
+##' \code{\link{PRE_FATE.params_namespaceConstants}},
+##' \code{\link{PRE_FATE.params_globalParameters}},
+##' \code{\link{PRE_FATE.params_PFGsuccession}},
+##' \code{\link{PRE_FATE.params_PFGlight}},
+##' \code{\link{PRE_FATE.params_PFGdispersal}},
+##' \code{\link{PRE_FATE.params_PFGdisturbance}},
+##' \code{\link{PRE_FATE.params_PFGsoil}},
+##' \code{\link{PRE_FATE.params_saveYears}},
+##' \code{\link{PRE_FATE.params_changingYears}}
+##' 
 ##' @examples
 ##' 
 ##' ## Create a skeleton folder with the default name ('FATE_simulation')

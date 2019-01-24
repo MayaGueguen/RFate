@@ -105,6 +105,14 @@ PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
                                                         , light = c(4, 6, 3, 6, 5, 5)))
 
 }
+\seealso{
+\code{\link{PRE_FATE.skeletonDirectory}}
+}
 \author{
 Maya Guéguen
 }
+\keyword{FATE,}
+\keyword{light,}
+\keyword{shade}
+\keyword{simulation,}
+\keyword{tolerance}

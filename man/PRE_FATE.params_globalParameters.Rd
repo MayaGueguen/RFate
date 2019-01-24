@@ -319,6 +319,16 @@ PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                  )
 
 }
+\seealso{
+\code{\link{PRE_FATE.skeletonDirectory}},
+\code{\link{PRE_FATE.params_PFGsuccession}},
+\code{\link{PRE_FATE.params_PFGlight}},
+\code{\link{PRE_FATE.params_PFGdispersal}},
+\code{\link{PRE_FATE.params_PFGdisturbance}},
+\code{\link{PRE_FATE.params_PFGsoil}}
+}
 \author{
 Maya Guéguen
 }
+\keyword{FATE,}
+\keyword{simulation}

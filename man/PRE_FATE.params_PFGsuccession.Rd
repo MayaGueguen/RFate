@@ -137,6 +137,14 @@ PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
                                                         , longevity = c(12, 200, 25, 4, 110, 70)))
 
 }
+\seealso{
+\code{\link{PRE_FATE.skeletonDirectory}}
+}
 \author{
 Maya Guéguen
 }
+\keyword{FATE,}
+\keyword{height,}
+\keyword{longevity,}
+\keyword{maturity}
+\keyword{simulation,}

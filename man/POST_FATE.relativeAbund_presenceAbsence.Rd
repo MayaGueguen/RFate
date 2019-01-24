@@ -82,6 +82,17 @@ POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
                                     
 
 }
+\seealso{
+\code{\link{POST_FATE.graphic_evolutionCoverage}},
+\code{\link{POST_FATE.graphic_mapPFGvsHS}},
+\code{\link{POST_FATE.graphic_mapPFGrichness}},
+\code{\link{POST_FATE.graphic_mapPFGcover}},
+\code{\link{POST_FATE.graphic_validationStatistics}}
+}
 \author{
 Maya Guéguen
 }
+\keyword{FATE,}
+\keyword{abundances,}
+\keyword{binary}
+\keyword{outputs,}

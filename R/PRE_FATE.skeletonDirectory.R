@@ -55,6 +55,18 @@
 ##' @return A directory tree with folder to contain the parameter files, the
 ##' simulation files and the results.
 ##' 
+##' @keywords tree structure
+##' 
+##' @seealso \code{\link{PRE_FATE.params_namespaceConstants}},
+##' \code{\link{PRE_FATE.params_globalParameters}},
+##' \code{\link{PRE_FATE.params_PFGsuccession}},
+##' \code{\link{PRE_FATE.params_PFGlight}},
+##' \code{\link{PRE_FATE.params_PFGdispersal}},
+##' \code{\link{PRE_FATE.params_PFGdisturbance}},
+##' \code{\link{PRE_FATE.params_PFGsoil}},
+##' \code{\link{PRE_FATE.params_saveYears}},
+##' \code{\link{PRE_FATE.params_changingYears}},
+##' \code{\link{PRE_FATE.params_simulParameters}}
 ##' 
 ##' @examples
 ##' 

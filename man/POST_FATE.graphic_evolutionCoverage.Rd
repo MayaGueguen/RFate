@@ -88,6 +88,14 @@ POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation"
                                     
 
 }
+\seealso{
+\code{\link{POST_FATE.relativeAbund_presenceAbsence}}
+}
 \author{
 Maya Guéguen
 }
+\keyword{FATE,}
+\keyword{abundance}
+\keyword{outputs,}
+\keyword{through}
+\keyword{time}

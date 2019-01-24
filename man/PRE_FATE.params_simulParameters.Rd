@@ -222,6 +222,20 @@ PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
                                    
 
 }
+\seealso{
+\code{\link{PRE_FATE.skeletonDirectory}},
+\code{\link{PRE_FATE.params_namespaceConstants}},
+\code{\link{PRE_FATE.params_globalParameters}},
+\code{\link{PRE_FATE.params_PFGsuccession}},
+\code{\link{PRE_FATE.params_PFGlight}},
+\code{\link{PRE_FATE.params_PFGdispersal}},
+\code{\link{PRE_FATE.params_PFGdisturbance}},
+\code{\link{PRE_FATE.params_PFGsoil}},
+\code{\link{PRE_FATE.params_saveYears}},
+\code{\link{PRE_FATE.params_changingYears}}
+}
 \author{
 Maya Guéguen
 }
+\keyword{FATE,}
+\keyword{simulation}

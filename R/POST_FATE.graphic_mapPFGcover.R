@@ -49,7 +49,12 @@
 ##'   within the studied area}
 ##' }
 ##' 
-##'  
+##' 
+##' @keywords FATE, outputs, relative abundance, forest cover, area under curve,
+##' sensitivity, specificity, true skill statistic, correct classification rate
+##' 
+##' @seealso \code{\link{POST_FATE.relativeAbund_presenceAbsence}}
+##' 
 ##' @examples
 ##' 
 ##' \dontrun{                      
@@ -91,6 +96,8 @@ POST_FATE.graphic_mapPFGcover = function(
   , year
   , strata_min
   , opt.no_CPU = 1
+  , opt.mat.cover.obs = NULL
+  , opt.ras.cover.obs = NULL
 ){
   
   .testParam_existFolder(name.simulation, "PARAM_SIMUL/")
@@ -120,6 +127,48 @@ POST_FATE.graphic_mapPFGcover = function(
   {
     .stopMessage_beInteger("strata_min")
   }
+  if (!.testParam_notDef(opt.mat.cover.obs))
+  {
+    if (.testParam_notDf(opt.mat.cover.obs))
+    {
+      .stopMessage_beDataframe("opt.mat.cover.obs")
+    } else
+    {
+      if (nrow(opt.mat.cover.obs) == 0 || ncol(opt.mat.cover.obs) != 3)
+      {
+        .stopMessage_numRowCol("opt.mat.cover.obs", c("X", "Y", "obs"))
+      }
+      if (ncol(opt.mat.cover.obs) == 3)
+      {
+        if (sum(colnames(opt.mat.cover.obs) == c("X", "Y", "obs")) == 3)
+        {
+          opt.mat.cover.obs = opt.mat.cover.obs[ , c("X", "Y", "obs")]
+        } else
+        {
+          .stopMessage_columnNames("opt.mat.cover.obs", c("X", "Y", "obs"))
+        }
+      }
+      if (!is.numeric(opt.mat.cover.obs$X) ||
+          !is.numeric(opt.mat.cover.obs$Y) ||
+          !is.numeric(opt.mat.cover.obs$obs)) {
+        .stopMessage_columnNumeric("opt.mat.cover.obs", c("X", "Y", "obs"))
+      }
+      if (length(which(is.na(opt.mat.cover.obs$X))) > 0 ||
+          length(which(is.na(opt.mat.cover.obs$Y))) > 0 ||
+          length(which(is.na(opt.mat.cover.obs$obs))) > 0) {
+        opt.mat.cover.obs = na.exclude(opt.mat.cover.obs)
+      }
+      if (sum(opt.mat.cover.obs$obs %in% c(0,1)) < nrow(opt.mat.cover.obs)){
+        stop("Wrong type of data!\n Column `obs` of `opt.mat.cover.obs` must contain either 0 or 1")
+      }
+    }
+  } else if (!.testParam_notDef(opt.ras.cover.obs) || nchar(opt.ras.cover.obs) > 0)
+  {
+    .testParam_existFile(opt.ras.cover.obs)
+    ras.cover = raster(opt.ras.cover.obs)
+  }
+  
+  
   #################################################################################################
   
   for (abs.simulParam in abs.simulParams)
@@ -179,6 +228,7 @@ POST_FATE.graphic_mapPFGcover = function(
     
     ras.mask = raster(file.mask)
     ras.mask[which(ras.mask[] == 0)] = NA
+    xy.1 = xyFromCell(ras.mask, which(ras.mask[] == 1))
     
     ## Get list of arrays and extract years of simulation --------------------------
     years = sort(unique(as.numeric(year)))
@@ -252,6 +302,7 @@ POST_FATE.graphic_mapPFGcover = function(
       
       if (length(file_name) > 0)
       {
+        ## Binary maps
         ras.BIN = stack(file_name) * ras.mask
         names(ras.BIN) = gp_st
         
@@ -288,6 +339,80 @@ POST_FATE.graphic_mapPFGcover = function(
                 , legend.box.background = element_rect(fill = "transparent", colour = NA)
                 , legend.key = element_rect(fill = "transparent", colour = NA))
         plot(pp)
+        
+        
+        ## Observed cover maps ------------------------------------------------------------
+        if (!is.null(opt.mat.cover.obs))
+        {
+          opt.mat.cover.obs$ID = cellFromXY(ras.mask, opt.mat.cover.obs[, c("X", "Y")])
+        } else if (exists("ras.cover"))
+        {
+          ras.cover = ras.cover * ras.mask
+          opt.mat.cover.obs = data.frame(ID = cellFromXY(ras.cover, xy.1))
+          opt.mat.cover.obs$obs = ras.cover[opt.mat.cover.obs$ID]
+        }
+        
+        if (!is.null(opt.mat.cover.obs))
+        {
+          opt.mat.cover.sim = ras.pts
+          colnames(opt.mat.cover.sim) = c("X", "Y", "sim")
+          opt.mat.cover.sim$ID = cellFromXY(ras.mask, opt.mat.cover.sim[, c("X", "Y")])
+          
+          mat.cover = merge(opt.mat.cover.obs[, c("ID", "obs")]
+                            , opt.mat.cover.sim[, c("ID", "sim")]
+                            , by = "ID")
+          mat.cover = na.exclude(mat.cover)
+          
+          ## calculate evaluation statistics ---------------------------------------------
+          getEval = function(xx, mat)
+          {
+            mat$sim = ifelse(mat$sim < xx, 0, 1)
+            mat.conf = cmx(mat)
+            auc = auc(mat)
+            sens = sensitivity(mat.conf)
+            spec = specificity(mat.conf)
+            TSS = sens$sensitivity + spec$specificity - 1
+            CCR = sum(diag(mat.conf)) / sum(mat.conf) ## Correct Classification Rate
+            return(data.frame(thresh = xx, auc, sens, spec, TSS, CCR))
+          }
+          
+          EVAL.cover = foreach(xx = seq(0, 1, 0.1), .combine = "rbind") %do% { getEval(xx, mat = mat.cover) }
+          EVAL.cover.melt = melt(EVAL.cover, id.vars = "thresh")
+          
+          ## produce the plot ------------------------------------------------------------
+          tab = EVAL.cover.melt[which(EVAL.cover.melt$variable %in% c("AUC", "TSS", "CCR")), ]
+          tab.max.auc = EVAL.cover.melt[which(EVAL.cover.melt$variable == "AUC"), ]
+          tab.max.auc = tab.max.auc[which.max(tab.max.auc$value), ]
+          tab.max.tss = EVAL.cover.melt[which(EVAL.cover.melt$variable == "TSS"), ]
+          tab.max.tss = tab.max.tss[which.max(tab.max.tss$value), ]
+          tab.max.ccr = EVAL.cover.melt[which(EVAL.cover.melt$variable == "CCR"), ]
+          tab.max.ccr = tab.max.ccr[which.max(tab.max.ccr$value), ]
+          
+          pp = ggplot(tab, aes(x = thresh, y = value)) +
+            geom_vline(data = tab.max.auc, aes(xintercept = thresh)
+                       , color = "brown", lwd = 5, alpha = 0.5) +
+            geom_vline(data = tab.max.tss, aes(xintercept = thresh)
+                       , color = "brown", lwd = 5, alpha = 0.5) +
+            geom_vline(data = tab.max.ccr, aes(xintercept = thresh)
+                       , color = "brown", lwd = 5, alpha = 0.5) +
+            geom_line(color = "grey60", lwd = 1) +
+            geom_point() +
+            facet_wrap(~ variable, scales = "free_y") +
+            labs(x = "", y = "", title = paste0("GRAPH E : validation statistics of PFG cover - Simulation year : ", y)
+                 , subtitle = paste0("Correct classification rate (CCR) measures the proportion of actual positives (or negatives) that are correctly identified as such.\n"
+                                   , "True skill statistic (TSS) values of -1 indicate predictive abilities of not better than a random model,\n"
+                                   , "0 indicates an indiscriminate model and +1 a perfect model.\n"
+                                   , "AUC corresponds to the area under the ROC curve (Receiver Operating Characteristic).\n\n"
+                                   , "Statistics are calculated for different thresholds for converting coverage to binary values (x-axis).\n")) +
+            theme_fivethirtyeight() +
+            theme(legend.key.width = unit(2, "lines")
+                  , panel.background = element_rect(fill = "transparent", colour = NA)
+                  , plot.background = element_rect(fill = "transparent", colour = NA)
+                  , legend.background = element_rect(fill = "transparent", colour = NA)
+                  , legend.box.background = element_rect(fill = "transparent", colour = NA)
+                  , legend.key = element_rect(fill = "transparent", colour = NA))
+          plot(pp)
+        }
       }
     } ## end loop on years
     cat("\n")

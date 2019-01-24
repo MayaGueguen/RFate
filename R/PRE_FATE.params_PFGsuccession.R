@@ -123,6 +123,10 @@
 ##' This file can be used to parameterize the disturbance files.
 ##' 
 ##' 
+##' @keywords FATE, simulation, height, longevity, maturity
+##' 
+##' @seealso \code{\link{PRE_FATE.skeletonDirectory}}
+##' 
 ##' @examples
 ##' 
 ##' ## Create a skeleton folder with the default name ('FATE_simulation')

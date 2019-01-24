@@ -157,6 +157,14 @@ PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                                            
 
 }
+\seealso{
+\code{\link{PRE_FATE.skeletonDirectory}}
+}
 \author{
 Maya Guéguen
 }
+\keyword{FATE,}
+\keyword{disturbance,}
+\keyword{killing,}
+\keyword{resprouting}
+\keyword{simulation,}

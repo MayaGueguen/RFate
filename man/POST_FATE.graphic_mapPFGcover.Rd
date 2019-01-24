@@ -6,7 +6,8 @@
  \cr for one (or several) specific year of a \code{FATE-HD} simulation}
 \usage{
 POST_FATE.graphic_mapPFGcover(name.simulation, file.simulParam = NULL,
-  year, strata_min, opt.no_CPU = 1)
+  year, strata_min, opt.no_CPU = 1, opt.mat.cover.obs = NULL,
+  opt.ras.cover.obs = NULL)
 }
 \arguments{
 \item{name.simulation}{a \code{string} that corresponds to the main directory
@@ -73,6 +74,26 @@ POST_FATE.graphic_mapPFGcover(name.simulation = "FATE_simulation"
                                     
 
 }
+\seealso{
+\code{\link{POST_FATE.relativeAbund_presenceAbsence}}
+}
 \author{
 Maya Guéguen
 }
+\keyword{FATE,}
+\keyword{abundance,}
+\keyword{area}
+\keyword{classification}
+\keyword{correct}
+\keyword{cover,}
+\keyword{curve,}
+\keyword{forest}
+\keyword{outputs,}
+\keyword{rate}
+\keyword{relative}
+\keyword{sensitivity,}
+\keyword{skill}
+\keyword{specificity,}
+\keyword{statistic,}
+\keyword{true}
+\keyword{under}

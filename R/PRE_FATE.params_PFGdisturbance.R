@@ -125,6 +125,10 @@
 ##' \code{name.simulation/DATA/PFGS/} directory.
 ##' 
 ##' 
+##' @keywords FATE, simulation, disturbance, killing, resprouting
+##' 
+##' @seealso \code{\link{PRE_FATE.skeletonDirectory}}
+##' 
 ##' @examples
 ##' 
 ##' ## Create a skeleton folder with the default name ('FATE_simulation')

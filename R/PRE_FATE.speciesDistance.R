@@ -83,6 +83,7 @@
 ##'  
 ##' @keywords Gower distance
 ##' 
+##' @seealso \code{\link[FD]{gowdis}}
 ##' 
 ##' @examples
 ##' ## Load example data

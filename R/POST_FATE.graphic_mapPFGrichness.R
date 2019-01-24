@@ -49,6 +49,10 @@
 ##'   within the studied area}
 ##' }
 ##' 
+##' 
+##' @keywords FATE, outputs, PFG richness
+##' 
+##' @seealso \code{\link{POST_FATE.relativeAbund_presenceAbsence}}
 ##'  
 ##' @examples
 ##' 

@@ -54,8 +54,6 @@
 ##' @param doAliens \emph{to be filled}
 ##' 
 ##' 
-##' 
-##' 
 ##' @details 
 ##' 
 ##' The core module of \code{FATE-HD} requires several parameters to define 
@@ -260,6 +258,15 @@
 ##'   \item FREQ_ALIENS
 ##' }
 ##' 
+##' 
+##' @keywords FATE, simulation
+##' 
+##' @seealso \code{\link{PRE_FATE.skeletonDirectory}},
+##' \code{\link{PRE_FATE.params_PFGsuccession}},
+##' \code{\link{PRE_FATE.params_PFGlight}},
+##' \code{\link{PRE_FATE.params_PFGdispersal}},
+##' \code{\link{PRE_FATE.params_PFGdisturbance}},
+##' \code{\link{PRE_FATE.params_PFGsoil}}
 ##' 
 ##' @examples
 ##' 

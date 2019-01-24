@@ -77,6 +77,13 @@ POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
                                     
 
 }
+\seealso{
+\code{\link{POST_FATE.relativeAbund_presenceAbsence}}
+}
 \author{
 Maya Guéguen
 }
+\keyword{FATE,}
+\keyword{PFG}
+\keyword{outputs,}
+\keyword{richness}

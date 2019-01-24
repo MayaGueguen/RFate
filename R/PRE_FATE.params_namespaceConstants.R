@@ -63,6 +63,9 @@
 ##'   \item GLOBAL_LOW_RESOURCES_THRESH
 ##' }
 ##' 
+##' @keywords FATE, simulation, ressources thresholds
+##' 
+##' @seealso \code{\link{PRE_FATE.skeletonDirectory}}
 ##' 
 ##' @examples
 ##' 

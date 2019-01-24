@@ -41,6 +41,10 @@
 ##' }
 ##' 
 ##' 
+##' @keywords FATE, simulation, soil tolerance, nitrogen
+##' 
+##' @seealso \code{\link{PRE_FATE.skeletonDirectory}}
+##' 
 ##' @examples
 ##' 
 ##' ## Create a skeleton folder with the default name ('FATE_simulation')

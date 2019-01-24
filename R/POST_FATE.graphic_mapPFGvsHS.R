@@ -53,7 +53,11 @@
 ##'   within the studied area (probability and simulated occurrence)}
 ##' }
 ##' 
-##'  
+##' 
+##' @keywords FATE, outputs, habitat suitability, binary
+##' 
+##' @seealso \code{\link{POST_FATE.relativeAbund_presenceAbsence}}
+##' 
 ##' @examples
 ##' 
 ##' \dontrun{                      

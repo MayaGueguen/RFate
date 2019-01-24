@@ -58,7 +58,15 @@
 ##'   for each PFG across all strata}
 ##' }
 ##' 
-##'  
+##' @keywords FATE, outputs, abundances, binary
+##' 
+##' @seealso \code{\link{POST_FATE.graphic_evolutionCoverage}},
+##' \code{\link{POST_FATE.graphic_mapPFGvsHS}},
+##' \code{\link{POST_FATE.graphic_mapPFGrichness}},
+##' \code{\link{POST_FATE.graphic_mapPFGcover}},
+##' \code{\link{POST_FATE.graphic_validationStatistics}}
+##' 
+##' 
 ##' @examples
 ##' 
 ##' \dontrun{                      

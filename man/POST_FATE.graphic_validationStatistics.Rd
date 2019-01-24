@@ -92,6 +92,20 @@ POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
                                     
 
 }
+\seealso{
+\code{\link{POST_FATE.relativeAbund_presenceAbsence}}
+}
 \author{
 Maya Guéguen
 }
+\keyword{FATE,}
+\keyword{area}
+\keyword{binary,}
+\keyword{curve,}
+\keyword{outputs,}
+\keyword{sensitivity,}
+\keyword{skill}
+\keyword{specificity,}
+\keyword{statistic}
+\keyword{true}
+\keyword{under}

@@ -79,6 +79,11 @@
 ##' \code{name.simulation/DATA/SCENARIO/opt.folder.name/}
 ##' 
 ##' 
+##' @keywords FATE, simulation
+##' 
+##' @seealso \code{\link{PRE_FATE.skeletonDirectory}},
+##' \code{\link{PRE_FATE.params_PFGdisturbance}}
+##' 
 ##' @examples
 ##' 
 ##' ## Create a skeleton folder with the default name ('FATE_simulation')

@@ -76,6 +76,13 @@ Those functional traits can be :
 
 
 }
+\seealso{
+\code{\link{PRE_FATE.speciesClustering_step1}},
+\code{\link{PRE_FATE.speciesClustering_step2}}
+}
 \author{
 Maya Guéguen
 }
+\keyword{functional}
+\keyword{group,}
+\keyword{traits}

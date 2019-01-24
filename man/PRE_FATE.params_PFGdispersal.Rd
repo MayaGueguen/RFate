@@ -65,6 +65,13 @@ PRE_FATE.params_PFGdispersal(name.simulation = "FATE_simulation"
                                                         , ldd = c(100000, 50000, 100000)))
 
 }
+\seealso{
+\code{\link{PRE_FATE.skeletonDirectory}}
+}
 \author{
 Maya Guéguen
 }
+\keyword{FATE,}
+\keyword{dispersal}
+\keyword{distance}
+\keyword{simulation,}

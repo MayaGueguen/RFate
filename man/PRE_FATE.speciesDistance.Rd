@@ -97,6 +97,9 @@ sp.DIST = PRE_FATE.speciesDistance(mat.species.traits = MontBlanc$mat.traits
 str(sp.DIST)
 
 }
+\seealso{
+\code{\link[FD]{gowdis}}
+}
 \author{
 Maya Guéguen
 }

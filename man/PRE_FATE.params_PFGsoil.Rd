@@ -57,6 +57,14 @@ PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
                                                     , soil_tol_max = c(3, 3, 6)))
 
 }
+\seealso{
+\code{\link{PRE_FATE.skeletonDirectory}}
+}
 \author{
 Maya Guéguen
 }
+\keyword{FATE,}
+\keyword{nitrogen}
+\keyword{simulation,}
+\keyword{soil}
+\keyword{tolerance,}

@@ -126,8 +126,11 @@ str(sp.DETERM)
 
 }
 \seealso{
+\code{\link[stats]{cutree}},
+\code{\link[ade4]{dudi.pco}},
 \code{\link{PRE_FATE.speciesDistance}},
-\code{\link{PRE_FATE.speciesClustering_step1}}
+\code{\link{PRE_FATE.speciesClustering_step1}},
+\code{\link{PRE_FATE.speciesClustering_step3}}
 }
 \author{
 Maya Guéguen

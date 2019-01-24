@@ -59,6 +59,11 @@ PRE_FATE.params_saveYears(name.simulation = "FATE_simulation"
                           , years.objects = 200)
 
 }
+\seealso{
+\code{\link{PRE_FATE.skeletonDirectory}}
+}
 \author{
 Maya Guéguen
 }
+\keyword{FATE,}
+\keyword{simulation}

@@ -98,6 +98,13 @@ PRE_FATE.params_namespaceConstants(name.simulation = "FATE_simulation"
                                    , global.resource.thresh.low = 19000000)
 
 }
+\seealso{
+\code{\link{PRE_FATE.skeletonDirectory}}
+}
 \author{
 Maya Guéguen
 }
+\keyword{FATE,}
+\keyword{ressources}
+\keyword{simulation,}
+\keyword{thresholds}

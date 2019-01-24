@@ -99,6 +99,12 @@ PRE_FATE.params_changingYears(name.simulation = "FATE_simulation"
                                                                           , "MASK_DIST2_80.tif")))
 
 }
+\seealso{
+\code{\link{PRE_FATE.skeletonDirectory}},
+\code{\link{PRE_FATE.params_PFGdisturbance}}
+}
 \author{
 Maya Guéguen
 }
+\keyword{FATE,}
+\keyword{simulation}
