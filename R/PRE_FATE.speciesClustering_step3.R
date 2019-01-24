@@ -82,7 +82,7 @@
 ##' 
 ##' @export
 ##' 
-##' @importFrom utils write.table
+##' @importFrom utils write.csv
 ##' @importFrom reshape2 melt
 ##' @importFrom foreach foreach
 ##' @importFrom ggplot2 aes_string labs theme element_text element_rect margin
@@ -605,12 +605,12 @@ PRE_FATE.speciesClustering_step3 = function(
   
   #################################################################################################
   
-  write.table(mat.traits.pfg
-              , file = "PFG_TRAITS_TABLE.csv"
-              , row.names = F
-              , col.names = T)
+  write.csv(mat.traits.pfg
+            , file = "PRE_FATE_PFG_TRAITS_TABLE.csv"
+            , row.names = F
+            , col.names = T)
   
-  message(paste0("\n The parameter file PFG_TRAITS_TABLE.csv has been successfully created !\n"))
+  message(paste0("\n The parameter file PRE_FATE_PFG_TRAITS_TABLE.csv has been successfully created !\n"))
   
   return(mat.traits.pfg)
 }

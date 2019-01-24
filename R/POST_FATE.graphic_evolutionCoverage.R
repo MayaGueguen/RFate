@@ -88,6 +88,7 @@
 ##' 
 ##' @export
 ##' 
+##' @importFrom utils write.csv
 ##' @importFrom raster raster stack as.data.frame
 ##' @importFrom reshape2 melt
 ##' 
@@ -231,6 +232,7 @@ POST_FATE.graphic_evolutionCoverage = function(
 
       ras = stack(file_name) * ras.mask
       ras = as.data.frame(ras)
+      
       ## calculate the % of cover of each PPFG
       distri[as.character(y), gp] = apply(ras, 2, function(x) length(which(x[ind_1_mask] > 0)) / no_1_mask)
       distriAbund[as.character(y), gp] = apply(ras, 2, function(x) sum(x[ind_1_mask], na.rm = T))
@@ -279,6 +281,24 @@ POST_FATE.graphic_evolutionCoverage = function(
     
     ## ZIP the raster saved ------------------------------------------------------
     .zip(folder_name = dir.output.perPFG.allStrata, nb_cores= opt.no_CPU)
+    
+    write.csv(distri
+              , file = paste0(name.simulation, "/RESULTS/POST_FATE_evolution_coverage_SPACE_OCCUPANCY.csv")
+              , row.names = TRUE
+              , col.names = TRUE)
+    
+    write.csv(distriAbund
+              , file = paste0(name.simulation, "/RESULTS/POST_FATE_evolution_coverage_ABUNDANCE.csv")
+              , row.names = TRUE
+              , col.names = TRUE)
+    
+    cat("\n> Done!\n")
+    cat("\n")
+    
+    message(paste0("\n The output files \n"
+                   , " > POST_FATE_evolution_coverage_SPACE_OCCUPANCY.csv \n"
+                   , " > POST_FATE_evolution_coverage_ABUNDANCE.csv \n"
+                   , "have been successfully created !\n"))
     
   }
 }

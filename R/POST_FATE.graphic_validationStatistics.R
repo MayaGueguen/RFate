@@ -345,7 +345,13 @@ POST_FATE.graphic_validationStatistics = function(
                             , TSS = NA))
         }
       }
-      ## SAVE mat.valid
+      write.csv(mat.valid
+                , file = paste0(name.simulation, "/RESULTS/POST_FATE_prediction_VALIDATION_STATISTICS.csv")
+                , row.names = TRUE
+                , col.names = TRUE)
+      
+      message(paste0("\n The output file POST_FATE_prediction_VALIDATION_STATISTICS.csv has been successfully created !\n"))
+      
       
       mat.valid = melt(mat.valid, id.vars = c("PFG", "AUC.sd", "sensitivity.sd", "specificity.sd"))
       mat.valid$variable = factor(mat.valid$variable, c("sensitivity", "TSS", "specificity", "AUC"))

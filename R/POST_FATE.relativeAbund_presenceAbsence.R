@@ -52,9 +52,9 @@
 ##' 
 ##' @return Two result folders are created :
 ##' \describe{
-##'   \item{\code{BIN_perPFG \cr_perStrata}}{containing presence/absence raster maps
+##'   \item{\file{BIN_perPFG \cr_perStrata}}{containing presence/absence raster maps
 ##'   for each PFG within each stratum}
-##'   \item{\code{BIN_perPFG \cr_allStrata}}{containing presence/absence raster maps
+##'   \item{\file{BIN_perPFG \cr_allStrata}}{containing presence/absence raster maps
 ##'   for each PFG across all strata}
 ##' }
 ##' 

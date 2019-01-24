@@ -162,10 +162,13 @@ POST_FATE.graphic_mapPFGcover = function(
         stop("Wrong type of data!\n Column `obs` of `opt.mat.cover.obs` must contain either 0 or 1")
       }
     }
-  } else if (!.testParam_notDef(opt.ras.cover.obs) || nchar(opt.ras.cover.obs) > 0)
+  } else if (!.testParam_notDef(opt.ras.cover.obs))
   {
-    .testParam_existFile(opt.ras.cover.obs)
-    ras.cover = raster(opt.ras.cover.obs)
+    if (nchar(opt.ras.cover.obs) > 0)
+    {
+      .testParam_existFile(opt.ras.cover.obs)
+      ras.cover = raster(opt.ras.cover.obs)
+    }
   }
   
   
@@ -317,6 +320,22 @@ POST_FATE.graphic_mapPFGcover = function(
         ras.pts = as.data.frame(rasterToPoints(ras_REL))
         colnames(ras.pts) = c("X", "Y", "COVER")
         
+        output.name = paste0(name.simulation
+                             , "/RESULTS/"
+                             , basename(dir.save)
+                             , "/PFGcover_YEAR_"
+                             , y
+                             , "_STRATA_"
+                             , opt.strata
+                             , ".tif")
+        writeRaster(ras_REL
+                    , filename = output.name
+                    , overwrite = TRUE)
+        
+        message(paste0("\n The output file \n"
+                       , " > ", output.name, " \n"
+                       , "has been successfully created !\n"))
+        
         ## produce the plot ------------------------------------------------------------
         ## Map of PFG cover
         pp = ggplot(ras.pts, aes_string(x = "X", y = "Y", fill = "COVER")) +
@@ -378,6 +397,13 @@ POST_FATE.graphic_mapPFGcover = function(
           
           EVAL.cover = foreach(xx = seq(0, 1, 0.1), .combine = "rbind") %do% { getEval(xx, mat = mat.cover) }
           EVAL.cover.melt = melt(EVAL.cover, id.vars = "thresh")
+          
+          write.csv(distriAbund
+                    , file = paste0(name.simulation, "/RESULTS/POST_FATE_PFGcover_VALIDATION_STATISTICS.csv")
+                    , row.names = TRUE
+                    , col.names = TRUE)
+          
+          message(paste0("\n The output file POST_FATE_PFGcover_VALIDATION_STATISTICS.csv has been successfully created !\n"))
           
           ## produce the plot ------------------------------------------------------------
           tab = EVAL.cover.melt[which(EVAL.cover.melt$variable %in% c("AUC", "TSS", "CCR")), ]

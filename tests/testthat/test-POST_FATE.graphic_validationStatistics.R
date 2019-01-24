@@ -214,7 +214,7 @@ test_that("POST_FATE.graphic_validationStatistics gives error with wrong data : 
                                                       , file.simulParam = "ParamSimul.txt"
                                                       , year = 10
                                                       , mat.PFG.obs = data.frame(PFG = "A", X = 2, Y = 3, obs = 4, stringsAsFactors = F))
-               , "Column `MODE` of `mat.PFG.obs` must contain either 0 or 1", fixed = T)
+               , "Column `obs` of `mat.PFG.obs` must contain either 0 or 1", fixed = T)
 })
 
 ## INPUTS

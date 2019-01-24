@@ -80,7 +80,7 @@
 ##' 
 ##' @importFrom foreach foreach
 ##' @importFrom raster raster stack as.data.frame
-##' nlayers rasterToPoints
+##' nlayers rasterToPoints writeRaster
 ##' @importFrom grid unit
 ##'
 ##' @importFrom ggplot2 ggplot aes aes_string ggsave
@@ -230,6 +230,22 @@ POST_FATE.graphic_mapPFGrichness = function(
         ras_TOT = sum(ras)
         ras.pts = as.data.frame(rasterToPoints(ras_TOT))
         colnames(ras.pts) = c("X", "Y", "NB")
+        
+        output.name = paste0(name.simulation
+                             , "/RESULTS/"
+                             , basename(dir.save)
+                             , "/PFGrichness_YEAR_"
+                             , y
+                             , "_STRATA_"
+                             , opt.strata
+                             , ".tif")
+        writeRaster(ras_TOT
+                    , filename = output.name
+                    , overwrite = TRUE)
+        
+        message(paste0("\n The output file \n"
+                       , " > ", output.name, " \n"
+                       , "has been successfully created !\n"))
         
         ## produce the plot ------------------------------------------------------------
         ## Map of PFG richness
