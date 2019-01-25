@@ -60,13 +60,17 @@ for(ZONE in list(BAUGES))
     , sp.DIST.CLUST = getPFG_2_calcDistClust(zone.name = zone.name
                                              , mat.traits.select = mat.traits.select
                                              , mat.overlap = mat.overlap)
-    , selected.sp = getPFG_2_calcDeterm(zone.name = zone.name
+    , selected.sp.all = getPFG_2_calcDeterm(zone.name = zone.name
                                         , sp.DIST = sp.DIST.CLUST$sp.DIST
                                         , sp.CLUST = sp.DIST.CLUST$sp.CLUST
                                         , no.clusters = ZONE$zone.clusters
                                         , species = species)
+    , selected.sp = getPFG_2_keepDeterm(zone.name = zone.name
+                                        , selected.sp = selected.sp.all)
     ## Build PFG sdm
-    , pfg.mat = getPFG_3_matSitesPFG(zone.name, mat.sites.species, selected.sp)
+    , pfg.mat = getPFG_3_matSitesPFG(zone.name = zone.name
+                                     , mat.sites.species = mat.sites.species
+                                     , selected.sp = selected.sp)
     , pfg.occ = getOcc_3_occDom(mat.sites.species = pfg.mat
                                 , species = species
                                 , zone.name = zone.name

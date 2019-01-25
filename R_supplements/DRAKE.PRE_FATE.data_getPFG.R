@@ -83,12 +83,19 @@ getPFG_2_calcDeterm = function(zone.name, sp.DIST, sp.CLUST, no.clusters, specie
   PFG3 = sapply(selected.sp$PFG, function(x) strsplit(x, "[.]")[[1]][2])
   
   selected.sp$PFG = paste0(PFG1, PFG2, PFG3)
-  fwrite(x = selected.sp, file = "determ.all.csv")
+  fwrite(x = selected.sp, file = "PRE_FATE_PFG_selection_PFG_ALL.csv")
   
-  determinant_PFG = sp.DETERM$determ.sp
-  save(determinant_PFG, file = "determinant_PFG.RData")
+  determinant_PFG = selected.sp[which(selected.sp$CODE_CBNA %in% sp.DETERM$determ.sp), ]
+  fwrite(x = determinant_PFG, file = "PRE_FATE_PFG_selection_PFG_DETERMINANT.csv")
   
   setwd("./../")
+  return(selected.sp)
+}
+
+getPFG_2_keepDeterm = function(zone.name, selected.sp)
+{
+  selected.sp = selected.sp[which(selected.sp$TO_REMOVE == 0), ]
+  
   return(selected.sp)
 }
 

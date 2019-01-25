@@ -11,6 +11,7 @@ library(parallel)
 library(phyloclim)
 library(drake)
 
+setwd("/home/gueguen/Documents/_TUTOS/3_R/_PACKAGES")
 source("RFate/R_supplements/DRAKE.PRE_FATE.data_getDB_occ.R")
 source("RFate/R_supplements/DRAKE.PRE_FATE.data_getOccDominantSpecies.R")
 
