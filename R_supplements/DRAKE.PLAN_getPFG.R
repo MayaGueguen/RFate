@@ -28,7 +28,8 @@ setwd(path.data)
 BAUGES = list(zone.name = "Bauges"
               , zone.clusters = c(4, 4, 6, 5)
               , zone.mask = "Bauges/MASK_100m.tif"
-              , zone.mask.pert = c("Bauges/MASK_grazing.tif", "Bauges/MASK_noPerturb.tif")
+              , zone.mask.pert.all = c("Bauges/MASK_grazing.tif", "Bauges/MASK_noPerturb.tif")
+              , zone.mask.pert.def = "Bauges/MASK_noPerturb.tif"
               , zone.env.folder = "ENV_VARIABLES/EOBS_1970_2005/"
               , zone.env.variables = c("bio_1_0", "bio_8_0", "bio_12_0", "bio_19_0", "slope"))
 ZONE = BAUGES
@@ -91,7 +92,8 @@ for(ZONE in list(BAUGES))
                                                , selected.sp = selected.sp)
     , param.PFG = getPFG_5_FATEparam(zone.name = zone.name
                                      , zone.mask = ZONE$zone.mask
-                                     , zone.mask.pert = ZONE$zone.mask.pert
+                                     , zone.mask.pert.all = ZONE$zone.mask.pert.all
+                                     , zone.mask.pert.def = ZONE$zone.mask.pert.def
                                      , TRAITS_PFG = mat.traits.pfg)
     , strings_in_dots = "literals"
   )
@@ -105,5 +107,12 @@ for(ZONE in list(BAUGES))
   
 }
 
+
+zone.name = ZONE$zone.name
+loadd(mat.traits.pfg)
+param.PFG = getPFG_5_FATEparam(zone.name = zone.name
+                               , zone.mask = ZONE$zone.mask
+                               , zone.mask.pert = ZONE$zone.mask.pert
+                               , TRAITS_PFG = mat.traits.pfg)
 
 

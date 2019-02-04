@@ -181,7 +181,7 @@ getPFG_4_calcMeanTraits = function(zone.name, mat.traits, selected.sp)
 ################################################################################################################
 
 
-getPFG_5_FATEparam = function(zone.name, zone.mask, zone.mask.pert, TRAITS_PFG)
+getPFG_5_FATEparam = function(zone.name, zone.mask, zone.mask.pert.all, zone.mask.pert.def, TRAITS_PFG)
 {
   setwd(zone.name)
   zone.name.simulation = paste0("FATE_", zone.name)
@@ -204,6 +204,10 @@ getPFG_5_FATEparam = function(zone.name, zone.mask, zone.mask.pert, TRAITS_PFG)
   PRE_FATE.params_PFGlight(name.simulation = zone.name.simulation
                            , mat.PFG.succ = TRAITS_PFG[, c("PFG", "type", "height"
                                                            , "maturity", "longevity", "light")])
+  
+  mat.PFG.succ = paste0(zone.name.simulation, "/DATA/PFGS/SUCC_COMPLETE_TABLE.csv")
+  mat.PFG.succ = fread(mat.PFG.succ)
+  no.strata = max(mat.PFG.succ$STRATA)
   
   #################################################################################################
   mat.dist = data.frame()
@@ -325,7 +329,7 @@ getPFG_5_FATEparam = function(zone.name, zone.mask, zone.mask.pert, TRAITS_PFG)
     }
   }
   
-  for (pert in zone.mask.pert)
+  for (pert in zone.mask.pert.all)
   {
     ras = raster(paste0("./../", pert))
     ras = projectRaster(ras, ras_mask, res = 100)
@@ -335,7 +339,7 @@ getPFG_5_FATEparam = function(zone.name, zone.mask, zone.mask.pert, TRAITS_PFG)
                 , overwrite = TRUE)
   }
   
-  ras.names.dist = paste0(zone.name.simulation, "/DATA/MASK/DIST_", basename(zone.mask.pert))
+  ras.names.dist = paste0(zone.name.simulation, "/DATA/MASK/DIST_", basename(zone.mask.pert.all))
   # ras.names.mask = paste0(zone.name.simulation, "/DATA/MASK/", basename(zone.mask))
   # ras.names = c(ras.names.dist, ras.names.mask)
   mat.dist.change = data.frame(year = rep(c(600, 601, 800, 801), each = 2)
@@ -374,7 +378,7 @@ getPFG_5_FATEparam = function(zone.name, zone.mask, zone.mask.pert, TRAITS_PFG)
   PRE_FATE.params_globalParameters(name.simulation = zone.name.simulation
                                    , opt.no_CPU = 7
                                    , required.no_PFG = nrow(TRAITS_PFG)
-                                   , required.no_STRATA = 8
+                                   , required.no_STRATA = no.strata
                                    , required.simul_duration = 850
                                    , required.seeding_duration = 300
                                    , required.seeding_timestep = 1
@@ -392,7 +396,7 @@ getPFG_5_FATEparam = function(zone.name, zone.mask, zone.mask.pert, TRAITS_PFG)
   PRE_FATE.params_globalParameters(name.simulation = zone.name.simulation
                                    , opt.no_CPU = 7
                                    , required.no_PFG = nrow(TRAITS_PFG)
-                                   , required.no_STRATA = 8
+                                   , required.no_STRATA = no.strata
                                    , required.simul_duration = 850
                                    , required.seeding_duration = 300
                                    , required.seeding_timestep = 1
@@ -410,7 +414,7 @@ getPFG_5_FATEparam = function(zone.name, zone.mask, zone.mask.pert, TRAITS_PFG)
   PRE_FATE.params_globalParameters(name.simulation = zone.name.simulation
                                    , opt.no_CPU = 7
                                    , required.no_PFG = nrow(TRAITS_PFG)
-                                   , required.no_STRATA = 8
+                                   , required.no_STRATA = no.strata
                                    , required.simul_duration = 850
                                    , required.seeding_duration = 300
                                    , required.seeding_timestep = 1
@@ -429,7 +433,7 @@ getPFG_5_FATEparam = function(zone.name, zone.mask, zone.mask.pert, TRAITS_PFG)
   PRE_FATE.params_globalParameters(name.simulation = zone.name.simulation
                                    , opt.no_CPU = 7
                                    , required.no_PFG = nrow(TRAITS_PFG)
-                                   , required.no_STRATA = 8
+                                   , required.no_STRATA = no.strata
                                    , required.simul_duration = 850
                                    , required.seeding_duration = 300
                                    , required.seeding_timestep = 1
@@ -448,7 +452,7 @@ getPFG_5_FATEparam = function(zone.name, zone.mask, zone.mask.pert, TRAITS_PFG)
   
   PRE_FATE.params_simulParameters(name.simulation = zone.name.simulation
                                   , name.mask = basename(zone.mask)
-                                  , name.dist = paste0("DIST_", basename(zone.mask.pert)))
+                                  , name.dist = paste0("DIST_", basename(zone.mask.pert.def)))
   
   setwd("./../")
 }
