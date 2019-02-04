@@ -186,8 +186,9 @@ parameters :</p>
 <li><p>NAME : name of the PFG</p></li>
 <li><p>MATURITY : the maturity age of the PFG <em>(in years)</em></p></li>
 <li><p>LONGEVITY : the PFG life span <em>(in years)</em></p></li>
-<li><p>MAX_ABUNDANCE : the maximal (qualitative) shade that the PFG is able
-  to produce <br /> <em>(1: Low 2: Medium 3: High)</em></p></li>
+<li><p>MAX_ABUNDANCE : the maximal (qualitative) abundance / space that 
+  the PFG is able to produce / occupy <br /> (qualitative) 
+  <em>(1: Low 2: Medium 3: High)</em></p></li>
 <li><p>IMM_SIZE : the relative size of the immature PFG <br />
   <em>(0: 0% 1: 10% 2: 20% 3: 30% 4: 40% 5: 50% 6: 60% 7: 70% 
   8: 80% 9: 90% 10: 100%)</em></p></li>
@@ -234,33 +235,40 @@ each PFG :</p>
 </ul></p></dd>
   <dt>STRATA</dt><dd><p>the maximum stratum that each PFG can reach</p></dd>
   <dt>MAX_ABUNDANCE</dt><dd><p>= maximum abundance of mature PFG in favorable 
-  conditions <br />
-  = maximum shade a PFG can make in a pixel corresponding to a number of 
-  individuals <br /> <br />
-  It can be seen as a proxy of maximum carrying capacity, and it is defined 
-  according to the number of strata potentially occupied by a PFG :
+  conditions <br /> <br />
+  It can be seen as a proxy of maximum carrying capacity (<em>and 
+  therefore as a proxy a quantity of shade produced as well, if the light
+  module is activated</em>), and it is defined according to the number of strata 
+  potentially occupied by a PFG and its life form :
   <ul>
-<li><p>herbaceous make little shade (1), chamaephytes make medium shade
-    (2) and phanerophytes make lot of shade (3)</p></li>
-<li><p>all plants in first stratum make little shade (1)</p></li>
-<li><p>plants other than herbaceous in stratum 2 make medium shade (2)</p></li>
-<li><p>herbaceous in stratum &gt; 2 make medium shade (2)</p></li>
-<li><p>chamaephytes in stratum &gt; 3 make lot of shade (3)</p></li>
+<li><p>herbaceous take little place (<em>and make little shade</em>) (1),
+    <br /> chamaephytes take medium place (<em>and make medium shade</em>) (2)
+    <br /> and phanerophytes take a lot of place (<em>and make lot of shade</em>)
+    (3)</p></li>
+<li><p>all plants in first stratum take little place (<em>and make 
+    little shade</em>) (1)</p></li>
+<li><p>plants other than herbaceous in stratum 2 take medium place 
+    (<em>and make medium shade</em>) (2)</p></li>
+<li><p>herbaceous in stratum &gt; 2 take medium place (<em>and make 
+    medium shade</em>) (2)</p></li>
+<li><p>chamaephytes in stratum &gt; 3 take lot of place (<em>and make 
+    lot of shade</em>) (3)</p></li>
 </ul></p></dd>
-  <dt>IMM_SIZE</dt><dd><p>= relative shade of immature plants <br />
+  <dt>IMM_SIZE</dt><dd><p>= relative size of immature versus mature plants <br />
   <ul>
-<li><p>immature herbaceous contribute to shade in the same way than 
-    mature herbaceous (100 %)</p></li>
-<li><p>immature chamaephytes contribute to shade half less than mature
-    herbaceous (50 %)</p></li>
-<li><p>immature phanerophytes contribute to shade only by 10 % of their
-     full capacity</p></li>
+<li><p>immature herbaceous take as much space as mature herbaceous <br />
+    (<em>and contribute to shade in the same way</em>) (100 %)</p></li>
+<li><p>immature chamaephytes take two times less space than mature
+    chamaephytes <br /> (<em>and contribute to shade half less</em>) (50 %)</p></li>
+<li><p>immature phanerophytes take only 10 % of their full space
+    (<em>and shade</em>) capacity</p></li>
 <li><p>intermediate percentages for herbaceous in stratum 2 (80 %) and 
     in stratum &gt; 2 (50 %)</p></li>
-<li><p>immature chamaephytes in 1st stratum contribute to shade in the 
-    same way than mature chamaephytes (100 %)</p></li>
-<li><p>immature phanerophytes with height &lt; 10m contribute to shade half
-    less than mature phanerophytes (50 %)</p></li>
+<li><p>immature chamaephytes in 1st stratum take as much space as mature
+    chamaephytes <br /> (<em>and contribute to shade in the same way</em>) (100 %)</p></li>
+<li><p>immature phanerophytes with height &lt; 10m take two times less space
+    than mature phanerophytes <br /> (<em>and contribute to shade half less</em>) 
+    (50 %)</p></li>
 </ul></p></dd>
   <dt>CHANG_STR_AGES</dt><dd><p>= at what age each PFG goes into the upper stratum.
   <br /> <br />

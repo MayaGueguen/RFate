@@ -16,7 +16,8 @@ or simulation name of the \code{FATE-HD} simulation}
 soil_tol_min, soil_tol_max}
 
 \item{no.class}{an \code{integer} that corresponds to the number of soil
-classes. Default value is the maximum value of soil_tol_max in \code{mat.PFG.soil}}
+classes. Default value is the maximum value of soil_tol_max in
+\code{mat.PFG.soil}}
 }
 \value{
 A \code{.txt} file per PFG into the \code{name.simulation/DATA/PFGS/SOIL/}
@@ -35,13 +36,14 @@ used in the soil module of \code{FATE-HD}.
 \details{
 The soil module allows the user to simulate a primary vegetation succession 
 based on soil competition. \cr
-Several parameters are required for each PFG in order to set up the soil competition :
+Several parameters are required for each PFG in order to set up the soil 
+competition :
 
 \describe{
-  \item{soil_contrib}{a value between 0 and 10 corresponding to the Ellenberg 
-  nitrogen value of the PFG}
-  \item{soil_tol_min}{the minimum Ellenberg nitrogen value tolerated by the PFG}
-  \item{soil_tol_max}{the maximum Ellenberg nitrogen value tolerated by the PFG}
+  \item{soil_contrib}{a value between 0 and X corresponding to the nitrogen 
+  value of the PFG (e.g. from Ellenberg)}
+  \item{soil_tol_min}{the minimum nitrogen value tolerated by the PFG}
+  \item{soil_tol_max}{the maximum nitrogen value tolerated by the PFG}
 }
 }
 \examples{

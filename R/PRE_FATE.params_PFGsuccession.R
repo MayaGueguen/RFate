@@ -53,34 +53,42 @@
 ##'   }
 ##'   \item{STRATA}{the maximum stratum that each PFG can reach}
 ##'   \item{MAX_ABUNDANCE}{= maximum abundance of mature PFG in favorable 
-##'   conditions \cr
-##'   = maximum shade a PFG can make in a pixel corresponding to a number of 
-##'   individuals \cr \cr
-##'   It can be seen as a proxy of maximum carrying capacity, and it is defined 
-##'   according to the number of strata potentially occupied by a PFG :
+##'   conditions \cr \cr
+##'   It can be seen as a proxy of maximum carrying capacity (\emph{and 
+##'   therefore as a proxy a quantity of shade produced as well, if the light
+##'   module is activated}), and it is defined according to the number of strata 
+##'   potentially occupied by a PFG and its life form :
 ##'   \itemize{
-##'     \item herbaceous make little shade (1), chamaephytes make medium shade
-##'     (2) and phanerophytes make lot of shade (3)
-##'     \item all plants in first stratum make little shade (1)
-##'     \item plants other than herbaceous in stratum 2 make medium shade (2)
-##'     \item herbaceous in stratum > 2 make medium shade (2)
-##'     \item chamaephytes in stratum > 3 make lot of shade (3)
+##'     \item herbaceous take little place (\emph{and make little shade}) (1),
+##'     \cr chamaephytes take medium place (\emph{and make medium shade}) (2)
+##'     \cr and phanerophytes take a lot of place (\emph{and make lot of shade})
+##'     (3)
+##'     \item all plants in first stratum take little place (\emph{and make 
+##'     little shade}) (1)
+##'     \item plants other than herbaceous in stratum 2 take medium place 
+##'     (\emph{and make medium shade}) (2)
+##'     \item herbaceous in stratum > 2 take medium place (\emph{and make 
+##'     medium shade}) (2)
+##'     \item chamaephytes in stratum > 3 take lot of place (\emph{and make 
+##'     lot of shade}) (3)
 ##'   }
 ##'   }
-##'   \item{IMM_SIZE}{= relative shade of immature plants \cr
+##'   \item{IMM_SIZE}{= relative size of immature versus mature plants \cr
 ##'   \itemize{
-##'     \item immature herbaceous contribute to shade in the same way than 
-##'     mature herbaceous (100 \%)
-##'     \item immature chamaephytes contribute to shade half less than mature
-##'     herbaceous (50 \%)
-##'     \item immature phanerophytes contribute to shade only by 10 \% of their
-##'      full capacity
+##'     \item immature herbaceous take as much space as mature herbaceous \cr
+##'     (\emph{and contribute to shade in the same way}) (100 \%)
+##'     \item immature chamaephytes take two times less space than mature
+##'     chamaephytes \cr (\emph{and contribute to shade half less}) (50 \%)
+##'     \item immature phanerophytes take only 10 \% of their full space
+##'     (\emph{and shade}) capacity
+##'     
 ##'     \item intermediate percentages for herbaceous in stratum 2 (80 \%) and 
 ##'     in stratum > 2 (50 \%)
-##'     \item immature chamaephytes in 1st stratum contribute to shade in the 
-##'     same way than mature chamaephytes (100 \%)
-##'     \item immature phanerophytes with height < 10m contribute to shade half
-##'     less than mature phanerophytes (50 \%)
+##'     \item immature chamaephytes in 1st stratum take as much space as mature
+##'     chamaephytes \cr (\emph{and contribute to shade in the same way}) (100 \%)
+##'     \item immature phanerophytes with height < 10m take two times less space
+##'     than mature phanerophytes \cr (\emph{and contribute to shade half less}) 
+##'     (50 \%)
 ##'   }
 ##'   }
 ##'   \item{CHANG_STR_AGES}{= at what age each PFG goes into the upper stratum.
@@ -104,8 +112,9 @@
 ##'   \item NAME : name of the PFG
 ##'   \item MATURITY : the maturity age of the PFG \emph{(in years)}
 ##'   \item LONGEVITY : the PFG life span \emph{(in years)}
-##'   \item MAX_ABUNDANCE : the maximal (qualitative) shade that the PFG is able
-##'   to produce \cr \emph{(1: Low 2: Medium 3: High)}
+##'   \item MAX_ABUNDANCE : the maximal (qualitative) abundance / space that 
+##'   the PFG is able to produce / occupy \cr (qualitative) 
+##'   \emph{(1: Low 2: Medium 3: High)}
 ##'   \item IMM_SIZE : the relative size of the immature PFG \cr
 ##'   \emph{(0: 0\% 1: 10\% 2: 20\% 3: 30\% 4: 40\% 5: 50\% 6: 60\% 7: 70\% 
 ##'   8: 80\% 9: 90\% 10: 100\%)}
@@ -246,16 +255,18 @@ PRE_FATE.params_PFGsuccession = function(
   }
   # barplot(table(cut(mat.PFG.succ$height, breaks = STRATA_LIMITS)))
   
-  cat("\n ############## STRATA INFORMATIONS ############## \n")
-  cat("\n Number of strata : ", length(STRATA_LIMITS))
-  cat("\n Height limits of selected strata : ", STRATA_LIMITS)
-  cat("\n Number of PFG within each stratum : ", table(cut(mat.PFG.succ$height, breaks = STRATA_LIMITS)))
-  cat("\n")
-  
   ## GET STRATA attribution
   STRATA = sapply(mat.PFG.succ$height, function(h) {
     max(which(STRATA_LIMITS < h), na.rm = T)
   })
+  
+  no.strata = max(STRATA)
+  
+  cat("\n ############## STRATA INFORMATIONS ############## \n")
+  cat("\n Number of strata : ", no.strata)
+  cat("\n Height limits of selected strata : ", STRATA_LIMITS)
+  cat("\n Number of PFG within each stratum : ", table(cut(mat.PFG.succ$height, breaks = STRATA_LIMITS)))
+  cat("\n")
   
   #################################################################################################
   
@@ -303,8 +314,8 @@ PRE_FATE.params_PFGsuccession = function(
   ## Logistic growth curve with 2 points to parameterize it :
   ## at age = maturity/2, height = IMM_SIZE * height	
   ## at age = longevity, height = height
-  CHANG_STR_AGES = matrix(0, nrow = length(STRATA_LIMITS), ncol = no.PFG)
-  CHANG_STR_AGES[2:length(STRATA_LIMITS), ] = 10000
+  CHANG_STR_AGES = matrix(0, nrow = no.strata, ncol = no.PFG)
+  CHANG_STR_AGES[2:no.strata, ] = 10000
   for (i in 1:no.PFG)
   {
     ## If not in first stratum / herbaceous (or potentially chamaephytes) :
@@ -317,7 +328,7 @@ PRE_FATE.params_PFGsuccession = function(
       H = mat.PFG.succ$height[i] * (1 - exp(-k * A))
       
       # calculation of transition ages depending on strata heights
-      for (str in 2:length(STRATA_LIMITS)) {
+      for (str in 2:no.strata) {
         age.brk = A[which(H >= STRATA_LIMITS[str])][1]
         CHANG_STR_AGES[str, i] = ifelse(is.na(age.brk), CHANG_STR_AGES[str, i], age.brk)
       }
@@ -363,7 +374,7 @@ PRE_FATE.params_PFGsuccession = function(
                            , "STRATA"
                            , "MAX_ABUNDANCE"
                            , "IMM_SIZE"
-                           , paste0("CHANG_STR_AGES_to_str_", 1:length(STRATA_LIMITS))
+                           , paste0("CHANG_STR_AGES_to_str_", 1:no.strata)
                            , paste0("SEED_POOL_LIFE_", c("active", "dormant"))
                            , "SEED_DORMANCY")
   

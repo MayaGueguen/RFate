@@ -686,9 +686,12 @@ PRE_FATE.params_simulParameters = function(
       names.params.list = c(names.params.list, "--HAB_CHANGE_MASK--")
     }
     if (doDisturbances){
-      params.list = c(params.list, list(files.PFG.DIST)
-                      , rep(paste0(name.simulation, "/DATA/MASK/", name.dist), nbDisturbances))
-      names.params.list = c(names.params.list, "--PFG_DISTURBANCES_PARAMS--"
+      params.list = c(params.list
+                      , list(files.PFG.DIST)
+                      , list(rep(paste0(name.simulation, "/DATA/MASK/", name.dist)
+                                 , nbDisturbances)))
+      names.params.list = c(names.params.list
+                            , "--PFG_DISTURBANCES_PARAMS--"
                             , "--DIST_MASK--")
     }
     if (exists("SCENARIO.DIST"))

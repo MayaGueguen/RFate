@@ -29,8 +29,8 @@
 ##'   \item{height}{the maximum or average height that reach the PFG}
 ##'   \item{maturity}{the age from which the PFG can reproduce}
 ##'   \item{longevity}{the maximum or average lifespan of the PFG \cr \cr}
-##'   \item{light}{a value between 0 and 10 corresponding to the Ellenberg light 
-##'   value of the PFG (or between 0 and 5 corresponding to Flora Indicativa light value)\cr \cr}
+##'   \item{light}{a value between 0 and 5 corresponding to the light value of
+##'   the PFG (e.g. from Flora Indicativa)\cr \cr}
 ##' }
 ##' 
 ##' 
@@ -50,12 +50,11 @@
 ##'   \item{SHADE_TOL}{ defined for each life stage (Germinant, Immature, 
 ##'   Mature) and each light condition (Low, Medium, High) :
 ##'   \itemize{
-##'     \item PFG are tolerant to low light if \code{light <= 3}
-##'     \item PFG are tolerant to medium light if \code{light <= 4}
+##'     \item PFG are tolerant to low light if \code{light <= 2}
+##'     \item PFG are tolerant to medium light if \code{2 <= light <= 4}
 ##'     \item PFG are tolerant to high light if \code{light >= 3}
-##'     \item all germinants are assumed to be tolerant to Low and Medium light
-##'     \item all mature trees are assumed to be tolerant to High light in the 
-##'     upper strata
+##'     \item all germinants are assumed to be tolerant to Low light
+##'     \item all mature trees are assumed to be tolerant to all light conditions
 ##'     \item all immature trees that grow in the penultimate stratum are 
 ##'     assumed to be tolerant to High light
 ##'   }
@@ -219,16 +218,18 @@ PRE_FATE.params_PFGlight = function(
   }
   # barplot(table(cut(mat.PFG.succ$height, breaks = STRATA_LIMITS)))
   
-  cat("\n ############## STRATA INFORMATIONS ############## \n")
-  cat("\n Number of strata : ", length(STRATA_LIMITS))
-  cat("\n Height limits of selected strata : ", STRATA_LIMITS)
-  cat("\n Number of PFG within each stratum : ", table(cut(mat.PFG.succ$height, breaks = STRATA_LIMITS)))
-  cat("\n")
-  
   ## GET STRATA attribution
   STRATA = sapply(mat.PFG.succ$height, function(h) {
     max(which(STRATA_LIMITS < h), na.rm = T)
   })
+  
+  no.strata = max(STRATA)
+  
+  cat("\n ############## STRATA INFORMATIONS ############## \n")
+  cat("\n Number of strata : ", no.strata)
+  cat("\n Height limits of selected strata : ", STRATA_LIMITS)
+  cat("\n Number of PFG within each stratum : ", table(cut(mat.PFG.succ$height, breaks = STRATA_LIMITS)))
+  cat("\n")
   
   #################################################################################################
   
@@ -260,8 +261,8 @@ PRE_FATE.params_PFGlight = function(
   ## Logistic growth curve with 2 points to parameterize it :
   ## at age = maturity/2, height = IMM_SIZE * height	
   ## at age = longevity, height = height
-  CHANG_STR_AGES = matrix(0, nrow = length(STRATA_LIMITS), ncol = no.PFG)
-  CHANG_STR_AGES[2:length(STRATA_LIMITS), ] = 10000
+  CHANG_STR_AGES = matrix(0, nrow = no.strata, ncol = no.PFG)
+  CHANG_STR_AGES[2:no.strata, ] = 10000
   for (i in 1:no.PFG)
   {
     ## If not in first stratum / herbaceous (or potentially chamaephytes) :
@@ -274,7 +275,7 @@ PRE_FATE.params_PFGlight = function(
       H = mat.PFG.succ$height[i] * (1 - exp(-k * A))
       
       # calculation of transition ages depending on strata heights
-      for (str in 2:length(STRATA_LIMITS)) {
+      for (str in 2:no.strata) {
         age.brk = A[which(H >= STRATA_LIMITS[str])][1]
         CHANG_STR_AGES[str, i] = ifelse(is.na(age.brk), CHANG_STR_AGES[str, i], age.brk)
       }
@@ -318,6 +319,21 @@ PRE_FATE.params_PFGlight = function(
   ##    = and for each light condition (Low, Medium, High)
   ## 0 = non tolerant
   ## 1 = tolerant
+
+  ## FLORA INDICATIVA
+  ##   1 = deep shade (tolerate light < 3 %)
+  ##   2 = shade (rarely tolerate light < 3%, often light < 10%)
+  ##   3 = semi-shade (rarely tolerate light < 10%)
+  ##   4 = well lit places (tolerate low shade only occasionally)
+  ##   5 = full light (only open and sunny)
+
+  ## ELLENBERG
+  ##   1 = deep shade
+  ##   3 = shade (mostly tolerate light < 5%, often light < 30%, more for grown trees)
+  ##   5 = semi-shade (rarely tolerate light < 10%)
+  ##   7 = well lit places (tolerate partial shade occasionally)
+  ##   9 = full light (only open and sunny)
+
   SHADE_TOL = matrix(0, nrow = 3 * 3, ncol = no.PFG)
   
   for (i in 1:no.PFG){
@@ -327,7 +343,7 @@ PRE_FATE.params_PFGlight = function(
       SHADE_TOL[c(1, 4, 7), i] = 1
     }
     ## Medium light condition
-    if (mat.PFG.succ$light[i] <= 3)
+    if (mat.PFG.succ$light[i] >= 2 && mat.PFG.succ$light[i] <= 4)
     {
       SHADE_TOL[c(2, 5, 8), i] = 1
     }
@@ -338,10 +354,10 @@ PRE_FATE.params_PFGlight = function(
     }
   }
   
-  ## All germinants are assumed to be tolerant to Low and Medium light
-  SHADE_TOL[c(1, 2),] = 1
-  ## All mature trees are assumed to be tolerant to High light in the upper strata
-  SHADE_TOL[c(9), which(mat.PFG.succ$type == "P")] = 1
+  ## All germinants are assumed to be tolerant to Low (and Medium ?) light
+  SHADE_TOL[c(1),] = 1
+  ## All mature trees and shrubs are assumed to be tolerant to all conditions
+  SHADE_TOL[c(7, 8, 9), which(mat.PFG.succ$type %in% c("C", "P"))] = 1
   ## All immature trees that grow in the penultimate stratum are assumed to be tolerant to High light
   SHADE_TOL[c(6), which(mat.PFG.succ$type == "P" & CHANG_STR_AGES[nrow(CHANG_STR_AGES) - 1,] < MATURITY)] = 1
   

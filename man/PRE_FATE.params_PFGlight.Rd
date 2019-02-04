@@ -57,8 +57,8 @@ cycle :
   \item{height}{the maximum or average height that reach the PFG}
   \item{maturity}{the age from which the PFG can reproduce}
   \item{longevity}{the maximum or average lifespan of the PFG \cr \cr}
-  \item{light}{a value between 0 and 10 corresponding to the Ellenberg light 
-  value of the PFG (or between 0 and 5 corresponding to Flora Indicativa light value)\cr \cr}
+  \item{light}{a value between 0 and 5 corresponding to the light value of
+  the PFG (e.g. from Flora Indicativa)\cr \cr}
 }
 
 
@@ -78,12 +78,11 @@ each PFG :
   \item{SHADE_TOL}{ defined for each life stage (Germinant, Immature, 
   Mature) and each light condition (Low, Medium, High) :
   \itemize{
-    \item PFG are tolerant to low light if \code{light <= 3}
-    \item PFG are tolerant to medium light if \code{light <= 4}
+    \item PFG are tolerant to low light if \code{light <= 2}
+    \item PFG are tolerant to medium light if \code{2 <= light <= 4}
     \item PFG are tolerant to high light if \code{light >= 3}
-    \item all germinants are assumed to be tolerant to Low and Medium light
-    \item all mature trees are assumed to be tolerant to High light in the 
-    upper strata
+    \item all germinants are assumed to be tolerant to Low light
+    \item all mature trees are assumed to be tolerant to all light conditions
     \item all immature trees that grow in the penultimate stratum are 
     assumed to be tolerant to High light
   }
