@@ -283,21 +283,29 @@ POST_FATE.graphic_evolutionCoverage = function(
     .zip(folder_name = dir.output.perPFG.allStrata, nb_cores= opt.no_CPU)
     
     write.csv(distri
-              , file = paste0(name.simulation, "/RESULTS/POST_FATE_evolution_coverage_SPACE_OCCUPANCY.csv")
-              , row.names = TRUE
-              , col.names = TRUE)
+              , file = paste0(name.simulation
+                              , "/RESULTS/POST_FATE_evolution_coverage_SPACE_OCCUPANCY"
+                              , basename(dir.save)
+                              , ".csv")
+              , row.names = TRUE)
     
     write.csv(distriAbund
-              , file = paste0(name.simulation, "/RESULTS/POST_FATE_evolution_coverage_ABUNDANCE.csv")
-              , row.names = TRUE
-              , col.names = TRUE)
+              , file = paste0(name.simulation
+                              , "/RESULTS/POST_FATE_evolution_coverage_ABUNDANCE"
+                              , basename(dir.save)
+                              , ".csv")
+              , row.names = TRUE)
     
     cat("\n> Done!\n")
     cat("\n")
     
     message(paste0("\n The output files \n"
-                   , " > POST_FATE_evolution_coverage_SPACE_OCCUPANCY.csv \n"
-                   , " > POST_FATE_evolution_coverage_ABUNDANCE.csv \n"
+                   , " > POST_FATE_evolution_coverage_SPACE_OCCUPANCY"
+                   , basename(dir.save)
+                   , ".csv \n"
+                   , " > POST_FATE_evolution_coverage_ABUNDANCE"
+                   , basename(dir.save)
+                   , ".csv \n"
                    , "have been successfully created !\n"))
     
   }

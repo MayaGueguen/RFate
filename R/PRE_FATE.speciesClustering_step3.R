@@ -607,8 +607,7 @@ PRE_FATE.speciesClustering_step3 = function(
   
   write.csv(mat.traits.pfg
             , file = "PRE_FATE_PFG_TRAITS_TABLE.csv"
-            , row.names = F
-            , col.names = T)
+            , row.names = F)
   
   message(paste0("\n The parameter file PRE_FATE_PFG_TRAITS_TABLE.csv has been successfully created !\n"))
   

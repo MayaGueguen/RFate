@@ -346,11 +346,15 @@ POST_FATE.graphic_validationStatistics = function(
         }
       }
       write.csv(mat.valid
-                , file = paste0(name.simulation, "/RESULTS/POST_FATE_prediction_VALIDATION_STATISTICS.csv")
-                , row.names = TRUE
-                , col.names = TRUE)
+                , file = paste0(name.simulation
+                                , "/RESULTS/POST_FATE_prediction_VALIDATION_STATISTICS"
+                                , basename(dir.save)
+                                , ".csv")
+                , row.names = TRUE)
       
-      message(paste0("\n The output file POST_FATE_prediction_VALIDATION_STATISTICS.csv has been successfully created !\n"))
+      message(paste0("\n The output file POST_FATE_prediction_VALIDATION_STATISTICS"
+                     , basename(dir.save)
+                     , ".csv has been successfully created !\n"))
       
       
       mat.valid = melt(mat.valid, id.vars = c("PFG", "AUC.sd", "sensitivity.sd", "specificity.sd"))

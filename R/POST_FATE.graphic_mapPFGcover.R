@@ -326,7 +326,9 @@ POST_FATE.graphic_mapPFGcover = function(
                              , "/PFGcover_YEAR_"
                              , y
                              , "_STRATA_"
-                             , opt.strata
+                             , strata_min
+                             , "_"
+                             , no_strata
                              , ".tif")
         writeRaster(ras_REL
                     , filename = output.name
@@ -398,12 +400,16 @@ POST_FATE.graphic_mapPFGcover = function(
           EVAL.cover = foreach(xx = seq(0, 1, 0.1), .combine = "rbind") %do% { getEval(xx, mat = mat.cover) }
           EVAL.cover.melt = melt(EVAL.cover, id.vars = "thresh")
           
-          write.csv(distriAbund
-                    , file = paste0(name.simulation, "/RESULTS/POST_FATE_PFGcover_VALIDATION_STATISTICS.csv")
-                    , row.names = TRUE
-                    , col.names = TRUE)
+          write.csv(EVAL.cover
+                    , file = paste0(name.simulation
+                                    , "/RESULTS/POST_FATE_PFGcover_VALIDATION_STATISTICS"
+                                    , basename(dir.save)
+                                    , ".csv")
+                    , row.names = TRUE)
           
-          message(paste0("\n The output file POST_FATE_PFGcover_VALIDATION_STATISTICS.csv has been successfully created !\n"))
+          message(paste0("\n The output file POST_FATE_PFGcover_VALIDATION_STATISTICS"
+                         , basename(dir.save)
+                         , ".csv has been successfully created !\n"))
           
           ## produce the plot ------------------------------------------------------------
           tab = EVAL.cover.melt[which(EVAL.cover.melt$variable %in% c("AUC", "TSS", "CCR")), ]
