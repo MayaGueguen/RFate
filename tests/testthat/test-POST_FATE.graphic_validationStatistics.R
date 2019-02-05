@@ -391,12 +391,16 @@ test_that("POST_FATE.graphic_validationStatistics gives error with wrong data : 
   
 })
 
-## INPUTS
-test_that("POST_FATE.graphic_validationStatistics gives error with wrong data : rasters", {
+## OUTPUTS
+test_that("POST_FATE.graphic_validationStatistics gives error with wrong data : outputs", {
   cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
       , file = "FATE_simulation/Mask.asc")
   expect_output(str(POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
                                                            , file.simulParam = "ParamSimul.txt"
+                                                           , year = 10
+                                                           , mat.PFG.obs = data.frame(PFG = "A", X = 2, Y = 3, obs = 0, stringsAsFactors = F)))
+                , "List")
+  expect_output(str(POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
                                                            , year = 10
                                                            , mat.PFG.obs = data.frame(PFG = "A", X = 2, Y = 3, obs = 0, stringsAsFactors = F)))
                 , "List")

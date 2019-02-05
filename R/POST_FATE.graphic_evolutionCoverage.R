@@ -230,13 +230,16 @@ POST_FATE.graphic_evolutionCoverage = function(
       gp = PFG[which(file.exists(file_name))]
       file_name = file_name[which(file.exists(file_name))]
 
-      ras = stack(file_name) * ras.mask
-      ras = as.data.frame(ras)
-      
-      ## calculate the % of cover of each PPFG
-      distri[as.character(y), gp] = apply(ras, 2, function(x) length(which(x[ind_1_mask] > 0)) / no_1_mask)
-      distriAbund[as.character(y), gp] = apply(ras, 2, function(x) sum(x[ind_1_mask], na.rm = T))
-    }
+      if (length(file_name) > 0)
+      {
+        ras = stack(file_name) * ras.mask
+        ras = as.data.frame(ras)
+        
+        ## calculate the % of cover of each PPFG
+        distri[as.character(y), gp] = apply(ras, 2, function(x) length(which(x[ind_1_mask] > 0)) / no_1_mask)
+        distriAbund[as.character(y), gp] = apply(ras, 2, function(x) sum(x[ind_1_mask], na.rm = T))
+      }
+    } ## end loop on years
     cat("\n")
     
     distri.melt = melt(distri)

@@ -168,59 +168,44 @@ test_that("POST_FATE.graphic_evolutionCoverage gives error with wrong data : fil
                , "Wrong type of data!\n `flag` (MASK) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"
                , fixed = TRUE)
   
-  cat("--MASK--\nFATE_simulation/Mask.tif\n--PFG_LIFE_HISTORY_PARAMS--\nHop\n--GLOBAL_PARAMS--\nFATE_simulation/GlobalParam.txt\n--SAVE_DIR--\nHello\n--END_OF_FILE--\n"
+  cat("--MASK--\nFATE_simulation/Mask.asc\n--PFG_LIFE_HISTORY_PARAMS--\nHop\n--GLOBAL_PARAMS--\nFATE_simulation/GlobalParam.txt\n--SAVE_DIR--\nHello\n--END_OF_FILE--\n"
       , file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   expect_error(POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation"
                                                    , file.simulParam = "ParamSimul.txt")
-               , "Wrong name file given!\n `FATE_simulation/Mask.tif` does not exist"
+               , "Wrong name file given!\n `FATE_simulation/Mask.asc` does not exist"
                , fixed = TRUE)
-  # cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
-  #     , file = "FATE_simulation/Mask.tif")
-  # expect_error(POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation"
-  #                                                  , file.simulParam = "ParamSimul.txt")
-  #              , "Missing data!\n The names of PFG extracted from files within FATE_simulation/DATA/PFGS/SUCC/"
-  #              , fixed = TRUE)
-  
-  # cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
-  #     , file = "FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_1_Hop_STRATA_all.tif")
-  # expect_error(POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation"
-  #                                                  , file.simulParam = "ParamSimul.txt")
-  #              , "hop"
-  #              , fixed = TRUE)
 })
 
 
+## INPUTS
+test_that("POST_FATE.graphic_evolutionCoverage gives error with wrong data : rasters", {
+  cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
+      , file = "FATE_simulation/Mask.asc")
+  expect_error(POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation"
+                                                   , file.simulParam = "ParamSimul.txt")
+               , "Missing data!\n The names of PFG extracted from files within FATE_simulation/DATA/PFGS/SUCC/"
+               , fixed = TRUE)
 
+  cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
+      , file = "FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_1_Hop_STRATA_all.tif")
+  expect_error(POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation"
+                                                   , file.simulParam = "ParamSimul.txt")
+               , "objet 'distri' introuvable"
+               , fixed = TRUE)
+  
+  expect_error(POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation")
+               , "objet 'distri' introuvable"
+               , fixed = TRUE)
+  
+  
+  # expect_output(str(POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
+  #                                                          , file.simulParam = "ParamSimul.txt"
+  #                                                          , year = 10
+  #                                                          , mat.PFG.obs = data.frame(PFG = "A", X = 2, Y = 3, obs = 0, stringsAsFactors = F)))
+  #               , "List")
+  # expect_output(str(POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
+  #                                                          , year = 10
+  #                                                          , mat.PFG.obs = data.frame(PFG = "A", X = 2, Y = 3, obs = 0, stringsAsFactors = F)))
+  #               , "List")
+})
 
-
-
-
-
-## OUTPUTS
-# test_that("POST_FATE.graphic_evolutionCoverage gives right output", {
-#   data(MontBlanc)
-#   sp.DIST = PRE_FATE.speciesDistance(mat.species.traits = MontBlanc$mat.traits
-#                                      , mat.species.overlap = MontBlanc$mat.nicheOverlap
-#                                      , min.info.thresh = 0.9)
-#   sp.CLUST = PRE_FATE.speciesClustering_step1(mat.species.DIST = sp.DIST)
-# 
-#   expect_output(str(POST_FATE.graphic_evolutionCoverage(clust.dendograms = sp.CLUST$clust.dendograms[[1]]
-#                                                 , no.clusters = 11
-#                                                 , mat.species.DIST = sp.DIST[[1]])), "List")
-#   expect_output(str(POST_FATE.graphic_evolutionCoverage(clust.dendograms = sp.CLUST$clust.dendograms[[1]]
-#                                                      , no.clusters = 11
-#                                                      , mat.species.DIST = sp.DIST[[1]])[[2]]), "10 variables")
-#   expect_equal(length(POST_FATE.graphic_evolutionCoverage(clust.dendograms = sp.CLUST$clust.dendograms[[1]]
-#                                                      , no.clusters = 11
-#                                                      , mat.species.DIST = sp.DIST[[1]])), 2)
-#   
-#   expect_output(str(POST_FATE.graphic_evolutionCoverage(clust.dendograms = sp.CLUST$clust.dendograms
-#                                                      , no.clusters = c(11, 7, 8)
-#                                                      , mat.species.DIST = sp.DIST)), "List")
-#   expect_output(str(POST_FATE.graphic_evolutionCoverage(clust.dendograms = sp.CLUST$clust.dendograms
-#                                                      , no.clusters = c(11, 7, 8)
-#                                                      , mat.species.DIST = sp.DIST)[[2]]), "10 variables")
-#   expect_equal(length(POST_FATE.graphic_evolutionCoverage(clust.dendograms = sp.CLUST$clust.dendograms
-#                                                        , no.clusters = c(11, 7, 8)
-#                                                        , mat.species.DIST = sp.DIST)), 2)
-# })

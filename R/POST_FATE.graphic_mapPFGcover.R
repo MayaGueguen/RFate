@@ -77,7 +77,7 @@
 ##' 
 ##' @importFrom foreach foreach
 ##' @importFrom raster raster stack as.data.frame
-##' rasterToPoints
+##' rasterToPoints xyFromCell
 ##' @importFrom grid unit
 ##' 
 ##' @importFrom ggplot2 ggplot aes aes_string ggsave
