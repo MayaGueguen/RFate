@@ -6,7 +6,7 @@
 and abundance through time for a \code{FATE-HD} simulation}
 \usage{
 POST_FATE.graphic_evolutionCoverage(name.simulation,
-  file.simulParam = NULL, no.years = 10, abund.fixedScale = TRUE,
+  file.simulParam = NULL, no.years = 10, opt.abund_fixedScale = TRUE,
   opt.no_CPU = 1)
 }
 \arguments{
@@ -20,7 +20,7 @@ of the \code{FATE-HD} simulation}
 \item{no.years}{an \code{integer} corresponding to the number of simulation
 years that will be used to extract PFG abundance maps}
 
-\item{abund.fixedScale}{default \code{TRUE}. If \code{FALSE}, the ordinate
+\item{opt.abund_fixedScale}{default \code{TRUE}. If \code{FALSE}, the ordinate
 scale will be adapted for each PFG for the graphical representation of the 
 evolution of abundances through time}
 
@@ -81,7 +81,7 @@ POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation"
 POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation"
                                     , file.simulParam = "Simul_parameters_V1.txt"
                                     , no.years = 50
-                                    , abund.fixedScale = FALSE
+                                    , opt.abund_fixedScale = FALSE
                                     , opt.no_CPU = 1)
 }
                                     

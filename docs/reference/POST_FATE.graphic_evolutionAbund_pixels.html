@@ -6,8 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create a map of the Plant Functional Group cover 
- <br /> for one (or several) specific year of a <code>FATE-HD</code> simulation — POST_FATE.graphic_mapPFGcover • RFate</title>
+<title>Create a graphical representation of the evolution of PFG abundance
+through time for 5 (or more) pixels of a <code>FATE-HD</code> simulation — POST_FATE.graphic_evolutionAbund_pixels • RFate</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -31,11 +31,13 @@
 
 
 
-<meta property="og:title" content="Create a map of the Plant Functional Group cover 
- <br /> for one (or several) specific year of a <code>FATE-HD</code> simulation — POST_FATE.graphic_mapPFGcover" />
+<meta property="og:title" content="Create a graphical representation of the evolution of PFG abundance
+through time for 5 (or more) pixels of a <code>FATE-HD</code> simulation — POST_FATE.graphic_evolutionAbund_pixels" />
 
-<meta property="og:description" content="This script is designed to produce a raster map of PFG cover
-for one (or several) specific FATE-HD simulation year." />
+<meta property="og:description" content="This script is designed to produce one graphical 
+representations for a FATE-HD simulation : the evolution through time
+of the abundance of each PFG for 5 (or more) randomly selected cells of the
+studied area." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -145,22 +147,24 @@ for one (or several) specific FATE-HD simulation year." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create a map of the Plant Functional Group cover 
- <br /> for one (or several) specific year of a <code>FATE-HD</code> simulation</h1>
-    <small class="dont-index">Source: <a href='https://github.com/MayaGueguen/RFate.git/blob/master/R/POST_FATE.graphic_mapPFGcover.R'><code>R/POST_FATE.graphic_mapPFGcover.R</code></a></small>
-    <div class="hidden name"><code>POST_FATE.graphic_mapPFGcover.Rd</code></div>
+    <h1>Create a graphical representation of the evolution of PFG abundance
+through time for 5 (or more) pixels of a <code>FATE-HD</code> simulation</h1>
+    <small class="dont-index">Source: <a href='https://github.com/MayaGueguen/RFate.git/blob/master/R/POST_FATE.graphic_evolutionAbund_pixels.R'><code>R/POST_FATE.graphic_evolutionAbund_pixels.R</code></a></small>
+    <div class="hidden name"><code>POST_FATE.graphic_evolutionAbund_pixels.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>This script is designed to produce a raster map of PFG cover
-for one (or several) specific <code>FATE-HD</code> simulation year.</p>
+    <p>This script is designed to produce one graphical 
+representations for a <code>FATE-HD</code> simulation : the evolution through time
+of the abundance of each PFG for 5 (or more) randomly selected cells of the
+studied area.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>POST_FATE.graphic_mapPFGcover</span>(<span class='no'>name.simulation</span>, <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>year</span>, <span class='no'>strata_min</span>, <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>opt.mat.cover.obs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>opt.ras.cover.obs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>POST_FATE.graphic_evolutionAbund_pixels</span>(<span class='no'>name.simulation</span>,
+  <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>no.years</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>opt.abund_fixedScale</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>opt.cells_ID</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -177,14 +181,15 @@ parameter file that will be contained into the <code>PARAM_SIMUL</code> folder
 of the <code>FATE-HD</code> simulation</p></td>
     </tr>
     <tr>
-      <th>year</th>
-      <td><p>an <code>integer</code> corresponding to the simulation year(s) that 
-will be used to extract PFG abundance and binary maps</p></td>
+      <th>no.years</th>
+      <td><p>an <code>integer</code> corresponding to the number of simulation
+years that will be used to extract PFG abundance maps</p></td>
     </tr>
     <tr>
-      <th>strata_min</th>
-      <td><p>an <code>integer</code> corresponding to the lowest stratum from
-which PFG abundances are summed up to the highest stratum</p></td>
+      <th>opt.abund_fixedScale</th>
+      <td><p>default <code>TRUE</code>. If <code>FALSE</code>, the ordinate
+scale will be adapted for each PFG for the graphical representation of the 
+evolution of abundances through time</p></td>
     </tr>
     <tr>
       <th>opt.no_CPU</th>
@@ -192,23 +197,20 @@ which PFG abundances are summed up to the highest stratum</p></td>
 can be used to parallelize the <code>unzip/zip</code> of raster files</p></td>
     </tr>
     <tr>
-      <th>opt.mat.cover.obs</th>
-      <td><p>default NULL (<em>optional</em>). A <code>data.frame</code>
-with 3 columns : X, Y, obs</p></td>
-    </tr>
-    <tr>
-      <th>opt.ras.cover.obs</th>
-      <td><p>default NULL (<em>optional</em>). A <code>string</code> that
-corresponds to the file name of a raster containing observed values for 
-vegetation cover</p></td>
+      <th>opt.cells_ID</th>
+      <td><p>default NULL (<em>optional</em>). The cells ID of the 
+studied area for which PFG abundances will be extracted.
+number of resources that 
+can be used to parallelize the <code>unzip/zip</code> of raster files</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>One <code>POST_FATE_[...].pdf</code> file is created :</p><dl class='dl-horizontal'>
-  <dt><code class="file">GRAPHIC_D <br /> PFGcover</code></dt><dd><p>to visualize the PFG cover
-  within the studied area</p></dd>
+  <dt><code class="file">GRAPHIC_B <br /> abundance</code></dt><dd><p>to visualize for each PFG the
+  evolution of its abundance within each selected pixel through
+  simulation time</p></dd>
 </dl>
 
     
@@ -216,16 +218,15 @@ vegetation cover</p></td>
 
     <p>This function allows one to obtain, for a specific <code>FATE-HD</code> simulation
 and a specific parameter file within this simulation, one preanalytical
-graphic. <br /></p>
+graphics. <br /></p>
 <p>For each PFG and each selected simulation year, raster maps are retrieved
-from the results folders <code>ABUND_perPFG_perStrata</code> and 
-<code>BIN_perPFG_perStrata</code> and unzipped.
+from the results folder <code>ABUND_perPFG_allStrata</code> and unzipped.
 Informations extracted lead to the production of one graphic before the
 maps are compressed again :</p>
 <ul>
-<li><p>the map of <strong>Plant Functional Group cover</strong> for each selected
-  simulation year(s), representing the relative cumulated abundance of PFG 
-  present in each pixel above a height threshold</p></li>
+<li><p>the evolution of <strong>abundance</strong> of each Plant Functional
+  Group through simulation time, within 5 (or more) randomly selected pixels
+  of the studied area (<code>FATE-HD</code> <em>arbitrary unit</em>)</p></li>
 </ul>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
@@ -237,17 +238,20 @@ maps are compressed again :</p>
     <pre class="examples"># NOT RUN {
 # }
 <span class='co'># NOT RUN {</span>
-<span class='fu'>POST_FATE.graphic_mapPFGcover</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
-                              , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
-                              , <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>850</span>
-                              , <span class='kw'>strata_min</span> <span class='kw'>=</span> <span class='fl'>3</span>
-                              , <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+<span class='fu'>POST_FATE.graphic_evolutionAbund_pixels</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
+                                    , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
+                                    , <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 
-<span class='fu'>POST_FATE.graphic_mapPFGcover</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
-                              , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
-                              , <span class='kw'>year</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>850</span>, <span class='fl'>950</span>)
-                              , <span class='kw'>strata_min</span> <span class='kw'>=</span> <span class='fl'>3</span>
-                              , <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+<span class='fu'>POST_FATE.graphic_evolutionAbund_pixels</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
+                                    , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
+                                    , <span class='kw'>no.years</span> <span class='kw'>=</span> <span class='fl'>50</span>
+                                    , <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>4</span>)
+
+<span class='fu'>POST_FATE.graphic_evolutionAbund_pixels</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
+                                    , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
+                                    , <span class='kw'>no.years</span> <span class='kw'>=</span> <span class='fl'>50</span>
+                                    , <span class='kw'>opt.abund_fixedScale</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+                                    , <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='co'># }</span># NOT RUN {
                                     
                                     

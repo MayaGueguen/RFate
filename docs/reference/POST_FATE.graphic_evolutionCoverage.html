@@ -163,7 +163,7 @@ of the abundance of each PFG.</p>
     </div>
 
     <pre class="usage"><span class='fu'>POST_FATE.graphic_evolutionCoverage</span>(<span class='no'>name.simulation</span>,
-  <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>no.years</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>abund.fixedScale</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>no.years</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>opt.abund_fixedScale</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -186,7 +186,7 @@ of the <code>FATE-HD</code> simulation</p></td>
 years that will be used to extract PFG abundance maps</p></td>
     </tr>
     <tr>
-      <th>abund.fixedScale</th>
+      <th>opt.abund_fixedScale</th>
       <td><p>default <code>TRUE</code>. If <code>FALSE</code>, the ordinate
 scale will be adapted for each PFG for the graphical representation of the 
 evolution of abundances through time</p></td>
@@ -250,7 +250,7 @@ maps are compressed again :</p>
 <span class='fu'>POST_FATE.graphic_evolutionCoverage</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
                                     , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
                                     , <span class='kw'>no.years</span> <span class='kw'>=</span> <span class='fl'>50</span>
-                                    , <span class='kw'>abund.fixedScale</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+                                    , <span class='kw'>opt.abund_fixedScale</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
                                     , <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='co'># }</span># NOT RUN {
                                     

@@ -25,6 +25,13 @@ which PFG abundances are summed up to the highest stratum}
 
 \item{opt.no_CPU}{default 1 (\emph{optional}). The number of resources that 
 can be used to parallelize the \code{unzip/zip} of raster files}
+
+\item{opt.mat.cover.obs}{default NULL (\emph{optional}). A \code{data.frame}
+with 3 columns : X, Y, obs}
+
+\item{opt.ras.cover.obs}{default NULL (\emph{optional}). A \code{string} that
+corresponds to the file name of a raster containing observed values for 
+vegetation cover}
 }
 \value{
 One \code{POST_FATE_[...].pdf} file is created : 

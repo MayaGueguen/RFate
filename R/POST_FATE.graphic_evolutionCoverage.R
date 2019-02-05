@@ -18,7 +18,7 @@
 ##' of the \code{FATE-HD} simulation
 ##' @param no.years an \code{integer} corresponding to the number of simulation
 ##' years that will be used to extract PFG abundance maps
-##' @param abund.fixedScale default \code{TRUE}. If \code{FALSE}, the ordinate
+##' @param opt.abund_fixedScale default \code{TRUE}. If \code{FALSE}, the ordinate
 ##' scale will be adapted for each PFG for the graphical representation of the 
 ##' evolution of abundances through time
 ##' @param opt.no_CPU default 1 (\emph{optional}). The number of resources that 
@@ -80,7 +80,7 @@
 ##' POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation"
 ##'                                     , file.simulParam = "Simul_parameters_V1.txt"
 ##'                                     , no.years = 50
-##'                                     , abund.fixedScale = FALSE
+##'                                     , opt.abund_fixedScale = FALSE
 ##'                                     , opt.no_CPU = 1)
 ##' }
 ##'                                     
@@ -107,7 +107,7 @@ POST_FATE.graphic_evolutionCoverage = function(
   name.simulation
   , file.simulParam = NULL
   , no.years = 10
-  , abund.fixedScale = TRUE
+  , opt.abund_fixedScale = TRUE
   , opt.no_CPU = 1
 ){
   
@@ -268,7 +268,7 @@ POST_FATE.graphic_evolutionCoverage = function(
     ## Evolution of abundance
     pp2 = ggplot(distriAbund.melt, aes_string(x = "YEAR", y = "Abund", group = "PFG")) +
       geom_line() +
-      facet_wrap("~ PFG", scales = ifelse(abund.fixedScale, "fixed", "free_y")) +
+      facet_wrap("~ PFG", scales = ifelse(opt.abund_fixedScale, "fixed", "free_y")) +
       labs(x = "", y = "", title = paste0("GRAPH B : evolution of species' abundance"),
            subtitle = paste0("For each PFG, the line represents the evolution through time of its abundance\n",
                              "over the whole studied area, meaning the sum of its abundances in every pixel.\n")) +

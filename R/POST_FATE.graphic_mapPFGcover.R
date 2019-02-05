@@ -20,6 +20,11 @@
 ##' which PFG abundances are summed up to the highest stratum
 ##' @param opt.no_CPU default 1 (\emph{optional}). The number of resources that 
 ##' can be used to parallelize the \code{unzip/zip} of raster files
+##' @param opt.mat.cover.obs default NULL (\emph{optional}). A \code{data.frame}
+##' with 3 columns : X, Y, obs
+##' @param opt.ras.cover.obs default NULL (\emph{optional}). A \code{string} that
+##' corresponds to the file name of a raster containing observed values for 
+##' vegetation cover
 ##' 
 ##' 
 ##' @details 

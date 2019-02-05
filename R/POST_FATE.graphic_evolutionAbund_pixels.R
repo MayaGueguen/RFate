@@ -1,15 +1,15 @@
 ### HEADER #####################################################################
-##' @title Create a graphical representation of the evolution of PFG coverage
-##' and abundance through time for a \code{FATE-HD} simulation
+##' @title Create a graphical representation of the evolution of PFG abundance
+##' through time for 5 (or more) pixels of a \code{FATE-HD} simulation
 ##' 
-##' @name POST_FATE.graphic_evolutionCoverage_pixels
+##' @name POST_FATE.graphic_evolutionAbund_pixels
 ##'
 ##' @author Maya Guéguen
 ##' 
-##' @description This script is designed to produce two graphical 
-##' representations for a \code{FATE-HD} simulation : 1) the evolution through
-##' time of the space occupation of each PFG ; 2) the evolution through time
-##' of the abundance of each PFG.
+##' @description This script is designed to produce one graphical 
+##' representations for a \code{FATE-HD} simulation : the evolution through time
+##' of the abundance of each PFG for 5 (or more) randomly selected cells of the
+##' studied area.
 ##'              
 ##' @param name.simulation a \code{string} that corresponds to the main directory
 ##' or simulation name of the \code{FATE-HD} simulation
@@ -23,40 +23,36 @@
 ##' evolution of abundances through time
 ##' @param opt.no_CPU default 1 (\emph{optional}). The number of resources that 
 ##' can be used to parallelize the \code{unzip/zip} of raster files
+##' @param opt.cells_ID default NULL (\emph{optional}). The cells ID of the 
+##' studied area for which PFG abundances will be extracted.
+##' number of resources that 
+##' can be used to parallelize the \code{unzip/zip} of raster files
 ##' 
 ##' 
 ##' @details 
 ##' 
 ##' This function allows one to obtain, for a specific \code{FATE-HD} simulation
-##' and a specific parameter file within this simulation, two preanalytical
+##' and a specific parameter file within this simulation, one preanalytical
 ##' graphics. \cr
 ##' 
 ##' For each PFG and each selected simulation year, raster maps are retrieved
 ##' from the results folder \code{ABUND_perPFG_allStrata} and unzipped.
-##' Informations extracted lead to the production of two graphics before the
+##' Informations extracted lead to the production of one graphic before the
 ##' maps are compressed again :
 ##' 
 ##' \itemize{
-##'   \item{the evolution of \strong{space occupancy} of each Plant Functional
-##'   Group through simulation time, with \emph{space occupancy} representing
-##'   the percentage of pixels within the mask of studied area where the PFG
-##'   is present
-##'   }
 ##'   \item{the evolution of \strong{abundance} of each Plant Functional
-##'   Group through simulation time, with \emph{abundance} being the sum over
-##'   the whole studied area of the PFG abundances (\code{FATE-HD} 
-##'   \emph{arbitrary unit})
+##'   Group through simulation time, within 5 (or more) randomly selected pixels
+##'   of the studied area (\code{FATE-HD} \emph{arbitrary unit})
 ##'   }
 ##' }
 ##' 
 ##' 
 ##' 
-##' @return Two \code{POST_FATE_[...].pdf} files are created : 
+##' @return One \code{POST_FATE_[...].pdf} file is created : 
 ##' \describe{
-##'   \item{\file{GRAPHIC_A \cr spaceOccupancy}}{to visualize for each PFG the
-##'   evolution of its occupation of the studied area through simulation time}
 ##'   \item{\file{GRAPHIC_B \cr abundance}}{to visualize for each PFG the
-##'   evolution of its abundance within the whole studied area through
+##'   evolution of its abundance within each selected pixel through
 ##'   simulation time}
 ##' }
 ##' 
@@ -68,16 +64,16 @@
 ##' @examples
 ##' 
 ##' \dontrun{                      
-##' POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation"
+##' POST_FATE.graphic_evolutionAbund_pixels(name.simulation = "FATE_simulation"
 ##'                                     , file.simulParam = "Simul_parameters_V1.txt"
 ##'                                     , opt.no_CPU = 1)
 ##'                                     
-##' POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation"
+##' POST_FATE.graphic_evolutionAbund_pixels(name.simulation = "FATE_simulation"
 ##'                                     , file.simulParam = "Simul_parameters_V1.txt"
 ##'                                     , no.years = 50
 ##'                                     , opt.no_CPU = 4)
 ##'                                     
-##' POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation"
+##' POST_FATE.graphic_evolutionAbund_pixels(name.simulation = "FATE_simulation"
 ##'                                     , file.simulParam = "Simul_parameters_V1.txt"
 ##'                                     , no.years = 50
 ##'                                     , opt.abund_fixedScale = FALSE
@@ -105,7 +101,7 @@
 
 
 
-POST_FATE.graphic_evolutionCoverage_pixels = function(
+POST_FATE.graphic_evolutionAbund_pixels = function(
   name.simulation
   , file.simulParam = NULL
   , no.years = 10
