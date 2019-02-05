@@ -222,11 +222,7 @@ POST_FATE.relativeAbund_presenceAbsence = function(
     
     raster.perPFG.perStrata = raster.perPFG.perStrata[grep(paste0("_STRATA_", strata_min:no_strata, collapse = "|")
                                                            , raster.perPFG.perStrata)]
-    if (length(raster.perPFG.perStrata) == 0)
-    {
-      stop(paste0("Missing data!\n The folder ", dir.output.perPFG.perStrata, " does not contain adequate files"))
-    }
-    
+
     ## UNZIP the raster saved ------------------------------------------------------
     combi = expand.grid(year = years, stratum = strata_min:no_strata)
     raster.perPFG.perStrata = foreach(y = combi$year, st = combi$stratum, .combine = "c") %do%

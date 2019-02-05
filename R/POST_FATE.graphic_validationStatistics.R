@@ -284,16 +284,17 @@ POST_FATE.graphic_validationStatistics = function(
     
     ras.mask = raster(file.mask)
     ras.mask[which(ras.mask[] == 0)] = NA
-
-        
+    
+    
     ## get the data inside the rasters ---------------------------------------------
     pdf(file = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_F_validationStatistics_", basename(dir.save), ".pdf")
         , width = 12, height = 10)
     cat("\n GETTING STATISTICS for year")
+    mat.valid_list = list(length(years))
     for (y in years)
     {
       cat(" ", y)
-
+      
       file_name = paste0(dir.output.perPFG.allStrata.BIN,
                          "Binary_YEAR_",
                          y,
@@ -303,22 +304,41 @@ POST_FATE.graphic_validationStatistics = function(
       gp = PFG[which(file.exists(file_name))]
       file_name = file_name[which(file.exists(file_name))]
       
-      ras = stack(file_name) * ras.mask
-      names(ras) = gp
-      
-      mat.PFG.obs.split = split(mat.PFG.obs, mat.PFG.obs$PFG)
-      mat.valid = foreach(i = 1:length(mat.PFG.obs.split), .combine = "rbind") %do%
+      if (length(file_name) > 0)
       {
-        fg = names(mat.PFG.obs.split)[i]
-        mat = mat.PFG.obs.split[[i]]
-        if (fg %in% gp)
+        ras = stack(file_name) * ras.mask
+        names(ras) = gp
+        
+        mat.PFG.obs.split = split(mat.PFG.obs, mat.PFG.obs$PFG)
+        mat.valid = foreach(i = 1:length(mat.PFG.obs.split), .combine = "rbind") %do%
         {
-          mat$ID = as.numeric(as.factor(paste0(mat$X, "_", mat$Y)))
-          
-          mat = cbind(mat, fg = ras[[fg]][cellFromXY(ras, mat[, c("X", "Y")])])
-          mat = mat[, c("ID", "obs", "fg")]
-          mat = na.exclude(mat)
-          if (nrow(mat) == 0)
+          fg = names(mat.PFG.obs.split)[i]
+          mat = mat.PFG.obs.split[[i]]
+          if (fg %in% gp)
+          {
+            mat$ID = as.numeric(as.factor(paste0(mat$X, "_", mat$Y)))
+            
+            mat = cbind(mat, fg = ras[[fg]][cellFromXY(ras, mat[, c("X", "Y")])])
+            mat = mat[, c("ID", "obs", "fg")]
+            mat = na.exclude(mat)
+            if (nrow(mat) == 0)
+            {
+              warning(paste0("Missing data!\n No simulation values for PFG ", fg))
+              return(data.frame(PFG = fg
+                                , AUC = NA, AUC.sd = NA
+                                , sensitivity = NA, sensitivity.sd = NA
+                                , specificity = NA, specificity.sd = NA
+                                , TSS = NA))
+            } else
+            {
+              mat.conf = cmx(mat[, c("ID", "obs", "fg")])
+              auc = auc(mat[, c("ID", "obs", "fg")])
+              sens = sensitivity(mat.conf)
+              spec = specificity(mat.conf)
+              TSS = sens$sensitivity + spec$specificity - 1
+              return(data.frame(PFG = fg, auc, sens, spec, TSS))
+            }
+          } else
           {
             warning(paste0("Missing data!\n No simulation values for PFG ", fg))
             return(data.frame(PFG = fg
@@ -326,126 +346,112 @@ POST_FATE.graphic_validationStatistics = function(
                               , sensitivity = NA, sensitivity.sd = NA
                               , specificity = NA, specificity.sd = NA
                               , TSS = NA))
-          } else
-          {
-            mat.conf = cmx(mat[, c("ID", "obs", "fg")])
-            auc = auc(mat[, c("ID", "obs", "fg")])
-            sens = sensitivity(mat.conf)
-            spec = specificity(mat.conf)
-            TSS = sens$sensitivity + spec$specificity - 1
-            return(data.frame(PFG = fg, auc, sens, spec, TSS))
           }
-        } else
-        {
-          warning(paste0("Missing data!\n No simulation values for PFG ", fg))
-          return(data.frame(PFG = fg
-                            , AUC = NA, AUC.sd = NA
-                            , sensitivity = NA, sensitivity.sd = NA
-                            , specificity = NA, specificity.sd = NA
-                            , TSS = NA))
         }
-      }
-      write.csv(mat.valid
-                , file = paste0(name.simulation
-                                , "/RESULTS/POST_FATE_prediction_VALIDATION_STATISTICS"
-                                , basename(dir.save)
-                                , ".csv")
-                , row.names = TRUE)
-      
-      message(paste0("\n The output file POST_FATE_prediction_VALIDATION_STATISTICS"
-                     , basename(dir.save)
-                     , ".csv has been successfully created !\n"))
-      
-      
-      mat.valid = melt(mat.valid, id.vars = c("PFG", "AUC.sd", "sensitivity.sd", "specificity.sd"))
-      mat.valid$variable = factor(mat.valid$variable, c("sensitivity", "TSS", "specificity", "AUC"))
-      
-      mat.valid$AUC.sd[which(mat.valid$variable != "AUC")] = NA
-      mat.valid$sensitivity.sd[which(mat.valid$variable != "sensitivity")] = NA
-      mat.valid$specificity.sd[which(mat.valid$variable != "specificity")] = NA
-      
-      mat.valid$hline = 0.5
-      mat.valid$hline[which(mat.valid$variable == "AUC")] = 0.8
-      mat.valid$hline[which(mat.valid$variable == "TSS")] = 0.4
-      
-      ## produce the plot ------------------------------------------------------------
-      ## 1. get the legend
-      pp = ggplot(mat.valid, aes_string(x = "PFG", y = "value", fill = "value")) +
-        scale_fill_gradientn(""
-                             , colors = brewer.pal(9, "RdYlGn")
-                             , breaks = seq(0, 1, 0.2)
-                             , limits = c(0, 1)) +
-        geom_bar(stat = "identity") +
-        ylim(0, 1) +
-        theme_fivethirtyeight() +
-        theme(legend.key.width = unit(2, "lines")
-              , panel.background = element_rect(fill = "transparent", colour = NA)
-              , plot.background = element_rect(fill = "transparent", colour = NA)
-              , legend.background = element_rect(fill = "transparent", colour = NA)
-              , legend.box.background = element_rect(fill = "transparent", colour = NA)
-              , legend.key = element_rect(fill = "transparent", colour = NA))
-      pp_leg = get_legend(pp)
-      
-      ## 2. get one plot for the title and for each statistic
-      pp_list = foreach(vari = c("all", "sensitivity", "specificity", "TSS", "AUC")) %do%
-      {
-        if (vari == "all"){
-          pp = ggplot(mat.valid, aes_string(x = "PFG", y = "value", fill = "value")) +
-            labs(x = "", y = "", title = paste0("GRAPH F : validation statistics - Simulation year : ", y),
-                 subtitle = paste0("Sensitivity (or specificity) measures the proportion of actual positives (or negatives) that are correctly identified as such.\n"
-                                   , "True skill statistic (TSS) values of -1 indicate predictive abilities of not better than a random model,\n"
-                                   , "0 indicates an indiscriminate model and +1 a perfect model.\n"
-                                   , "AUC corresponds to the area under the ROC curve (Receiver Operating Characteristic).\n")) +
-            theme_fivethirtyeight() +
-            theme(panel.background = element_rect(fill = "transparent", colour = NA)
-                  , panel.grid = element_blank()
-                  , axis.text = element_blank()
-                  , plot.background = element_rect(fill = "transparent", colour = NA)
-                  , legend.background = element_rect(fill = "transparent", colour = NA)
-                  , legend.box.background = element_rect(fill = "transparent", colour = NA)
-                  , legend.key = element_rect(fill = "transparent", colour = NA))
-        } else {
-          if (vari == "sensitivity") subti = "Sensitivity - True positive rate"
-          if (vari == "specificity") subti = "Specificity - True negative rate"
-          if (vari == "TSS") subti = "True Skill Statistic (TSS)"
-          if (vari == "AUC") subti = "Area Under Curve (AUC)"
-          pp = ggplot(mat.valid[which(mat.valid$variable == vari), ]
-                      , aes_string(x = "PFG", y = "value", fill = "value")) +
-            scale_fill_gradientn(guide = F
-                                 , colors = brewer.pal(9, "RdYlGn")
-                                 , breaks = seq(0, 1, 0.2)
-                                 , limits = c(0, 1)) +
-            scale_y_continuous(breaks = seq(0, 1, 0.2), limits = c(0, 1.08)) +
-            geom_bar(stat = "identity") +
-            geom_hline(aes_string(yintercept = "hline"), lty = 2, color = "grey30") +
-            geom_errorbar(aes(ymin = value - sensitivity.sd, ymax = value + sensitivity.sd), color = "grey30") +
-            geom_errorbar(aes(ymin = value - specificity.sd, ymax = value + specificity.sd), color = "grey30") +
-            geom_errorbar(aes(ymin = value - AUC.sd, ymax = value + AUC.sd), color = "grey30") +
-            annotate(geom = "text", x = no_PFG / 2, y = 1.05, label = subti, size = 4) +
-            theme_fivethirtyeight() +
-            theme(panel.background = element_rect(fill = "transparent", colour = NA)
-                  , plot.background = element_rect(fill = "transparent", colour = NA)
-                  , legend.background = element_rect(fill = "transparent", colour = NA)
-                  , legend.box.background = element_rect(fill = "transparent", colour = NA)
-                  , legend.key = element_rect(fill = "transparent", colour = NA))
+        write.csv(mat.valid
+                  , file = paste0(name.simulation
+                                  , "/RESULTS/POST_FATE_prediction_VALIDATION_STATISTICS"
+                                  , basename(dir.save)
+                                  , ".csv")
+                  , row.names = TRUE)
+        
+        message(paste0("\n The output file POST_FATE_prediction_VALIDATION_STATISTICS"
+                       , basename(dir.save)
+                       , ".csv has been successfully created !\n"))
+        
+        
+        mat.valid = melt(mat.valid, id.vars = c("PFG", "AUC.sd", "sensitivity.sd", "specificity.sd"))
+        mat.valid$variable = factor(mat.valid$variable, c("sensitivity", "TSS", "specificity", "AUC"))
+        
+        mat.valid$AUC.sd[which(mat.valid$variable != "AUC")] = NA
+        mat.valid$sensitivity.sd[which(mat.valid$variable != "sensitivity")] = NA
+        mat.valid$specificity.sd[which(mat.valid$variable != "specificity")] = NA
+        
+        mat.valid_list[[y]] = mat.valid
+        
+        mat.valid$hline = 0.5
+        mat.valid$hline[which(mat.valid$variable == "AUC")] = 0.8
+        mat.valid$hline[which(mat.valid$variable == "TSS")] = 0.4
+        
+        ## produce the plot ------------------------------------------------------------
+        ## 1. get the legend
+        pp = ggplot(mat.valid, aes_string(x = "PFG", y = "value", fill = "value")) +
+          scale_fill_gradientn(""
+                               , colors = brewer.pal(9, "RdYlGn")
+                               , breaks = seq(0, 1, 0.2)
+                               , limits = c(0, 1)) +
+          geom_bar(stat = "identity") +
+          ylim(0, 1) +
+          theme_fivethirtyeight() +
+          theme(legend.key.width = unit(2, "lines")
+                , panel.background = element_rect(fill = "transparent", colour = NA)
+                , plot.background = element_rect(fill = "transparent", colour = NA)
+                , legend.background = element_rect(fill = "transparent", colour = NA)
+                , legend.box.background = element_rect(fill = "transparent", colour = NA)
+                , legend.key = element_rect(fill = "transparent", colour = NA))
+        pp_leg = get_legend(pp)
+        
+        ## 2. get one plot for the title and for each statistic
+        pp_list = foreach(vari = c("all", "sensitivity", "specificity", "TSS", "AUC")) %do%
+        {
+          if (vari == "all"){
+            pp = ggplot(mat.valid, aes_string(x = "PFG", y = "value", fill = "value")) +
+              labs(x = "", y = "", title = paste0("GRAPH F : validation statistics - Simulation year : ", y),
+                   subtitle = paste0("Sensitivity (or specificity) measures the proportion of actual positives (or negatives) that are correctly identified as such.\n"
+                                     , "True skill statistic (TSS) values of -1 indicate predictive abilities of not better than a random model,\n"
+                                     , "0 indicates an indiscriminate model and +1 a perfect model.\n"
+                                     , "AUC corresponds to the area under the ROC curve (Receiver Operating Characteristic).\n")) +
+              theme_fivethirtyeight() +
+              theme(panel.background = element_rect(fill = "transparent", colour = NA)
+                    , panel.grid = element_blank()
+                    , axis.text = element_blank()
+                    , plot.background = element_rect(fill = "transparent", colour = NA)
+                    , legend.background = element_rect(fill = "transparent", colour = NA)
+                    , legend.box.background = element_rect(fill = "transparent", colour = NA)
+                    , legend.key = element_rect(fill = "transparent", colour = NA))
+          } else {
+            if (vari == "sensitivity") subti = "Sensitivity - True positive rate"
+            if (vari == "specificity") subti = "Specificity - True negative rate"
+            if (vari == "TSS") subti = "True Skill Statistic (TSS)"
+            if (vari == "AUC") subti = "Area Under Curve (AUC)"
+            pp = ggplot(mat.valid[which(mat.valid$variable == vari), ]
+                        , aes_string(x = "PFG", y = "value", fill = "value")) +
+              scale_fill_gradientn(guide = F
+                                   , colors = brewer.pal(9, "RdYlGn")
+                                   , breaks = seq(0, 1, 0.2)
+                                   , limits = c(0, 1)) +
+              scale_y_continuous(breaks = seq(0, 1, 0.2), limits = c(0, 1.08)) +
+              geom_bar(stat = "identity") +
+              geom_hline(aes_string(yintercept = "hline"), lty = 2, color = "grey30") +
+              geom_errorbar(aes(ymin = value - sensitivity.sd, ymax = value + sensitivity.sd), color = "grey30") +
+              geom_errorbar(aes(ymin = value - specificity.sd, ymax = value + specificity.sd), color = "grey30") +
+              geom_errorbar(aes(ymin = value - AUC.sd, ymax = value + AUC.sd), color = "grey30") +
+              annotate(geom = "text", x = no_PFG / 2, y = 1.05, label = subti, size = 4) +
+              theme_fivethirtyeight() +
+              theme(panel.background = element_rect(fill = "transparent", colour = NA)
+                    , plot.background = element_rect(fill = "transparent", colour = NA)
+                    , legend.background = element_rect(fill = "transparent", colour = NA)
+                    , legend.box.background = element_rect(fill = "transparent", colour = NA)
+                    , legend.key = element_rect(fill = "transparent", colour = NA))
+            
+            pp = ggMarginal(pp, type = "boxplot", margins = "y", size = 7)
+          }
           
-          pp = ggMarginal(pp, type = "boxplot", margins = "y", size = 7)
+          return(pp)
         }
         
-        return(pp)
+        ## 3. gather everything
+        pp_list[[6]] = pp_leg
+        grid.arrange(grobs = pp_list
+                     , layout_matrix = matrix(c(1,1,2,3,2,3,4,5,4,5,6,6), ncol = 2, byrow = TRUE)
+                     , newpage = ifelse(y == years[1], FALSE, TRUE))
+        
       }
+      cat("\n")
+      dev.off()
       
-      ## 3. gather everything
-      pp_list[[6]] = pp_leg
-      grid.arrange(grobs = pp_list
-                   , layout_matrix = matrix(c(1,1,2,3,2,3,4,5,4,5,6,6), ncol = 2, byrow = TRUE)
-                   , newpage = ifelse(y == years[1], FALSE, TRUE))
-      
-    }
-    cat("\n")
-    dev.off()
-    
-    return(mat.valid)
+    } ## end loop on years
+    return(mat.valid_list)
   }
 }
 
