@@ -133,11 +133,13 @@ test_that("POST_FATE.graphic_mapPFGvsHS gives error with wrong data : files", {
                , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/BIN_perPFG_allStrata/ folder"
                , fixed = TRUE)
   system("mkdir FATE_simulation/RESULTS/Hello/BIN_perPFG_allStrata/")
-  # expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
-  #                                               , file.simulParam = "ParamSimul.txt"
-  #                                               , year = 10)
-  #              , "Missing data!\n The folder FATE_simulation/RESULTS/Hello/BIN_perPFG_allStrata/ does not contain adequate files")
-  # file.create("FATE_simulation/RESULTS/Hello/BIN_perPFG_allStrata/Binary_YEAR_10_PFG1_STRATA_all.tif")
+  
+  expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
+                                            , file.simulParam = "ParamSimul.txt"
+                                            , year = 10
+                                            , opt.strata = 1)
+               , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/BIN_perPFG_perStrata/ folder")
+
   expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
                                                 , file.simulParam = "ParamSimul.txt"
                                                 , year = 10)
@@ -220,25 +222,55 @@ test_that("POST_FATE.graphic_mapPFGvsHS gives error with wrong data : files", {
                , "Wrong type of data!\n `flag` (MASK) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"
                , fixed = TRUE)
   
-  cat("--MASK--\nFATE_simulation/Mask.tif\n--PFG_LIFE_HISTORY_PARAMS--\nHop\n--GLOBAL_PARAMS--\nFATE_simulation/GlobalParam.txt\n--SAVE_DIR--\nHello\n--END_OF_FILE--\n"
+  cat("--MASK--\nFATE_simulation/Mask.asc\n--PFG_LIFE_HISTORY_PARAMS--\nHop\n--GLOBAL_PARAMS--\nFATE_simulation/GlobalParam.txt\n--SAVE_DIR--\nHello\n--END_OF_FILE--\n"
       , file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
                                                 , file.simulParam = "ParamSimul.txt"
                                                 , year = 10)
-               , "Wrong name file given!\n `FATE_simulation/Mask.tif` does not exist"
+               , "Wrong name file given!\n `FATE_simulation/Mask.asc` does not exist"
                , fixed = TRUE)
-  # cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
-  #     , file = "FATE_simulation/Mask.tif")
-  # expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
-  #                                                  , file.simulParam = "ParamSimul.txt")
-  #              , "Missing data!\n The names of PFG extracted from files within FATE_simulation/DATA/PFGS/SUCC/"
-  #              , fixed = TRUE)
-  
-  # cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
-  #     , file = "FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_1_Hop_STRATA_all.tif")
-  # expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
-  #                                                  , file.simulParam = "ParamSimul.txt")
-  #              , "hop"
-  #              , fixed = TRUE)
 })
 
+
+## INPUTS
+test_that("POST_FATE.graphic_mapPFGvsHS gives error with wrong data : rasters", {
+  cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
+      , file = "FATE_simulation/Mask.asc")
+  expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
+                                            , file.simulParam = "ParamSimul.txt"
+                                            , year = 10)
+               , "Wrong type of data!\n `flag` (PFG_HAB_MASK) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"
+               , fixed = TRUE)
+  
+  cat("--PFG_HAB_MASK--\nFATE_simulation/PFG1.asc\n--MASK--\nFATE_simulation/Mask.asc\n--PFG_LIFE_HISTORY_PARAMS--\nHop\n--GLOBAL_PARAMS--\nFATE_simulation/GlobalParam.txt\n--SAVE_DIR--\nHello\n--END_OF_FILE--\n"
+      , file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
+  expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
+                                            , file.simulParam = "ParamSimul.txt"
+                                            , year = 10)
+               , "Wrong name file given!\n `FATE_simulation/PFG1.asc` does not exist"
+               , fixed = TRUE)
+  cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
+      , file = "FATE_simulation/PFG1.asc")
+  expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
+                                            , file.simulParam = "ParamSimul.txt"
+                                            , year = 10)
+               , "Missing data!\n The folder FATE_simulation/RESULTS/Hello/BIN_perPFG_allStrata/ does not contain adequate files"
+               , fixed = TRUE)
+  
+  file.create("FATE_simulation/RESULTS/Hello/BIN_perPFG_allStrata/Binary_YEAR_10_PFG1_STRATA_all.txt")
+})
+
+
+## OUTPUTS
+test_that("POST_FATE.graphic_mapPFGvsHS gives error with wrong data : outputs", {
+  # expect_output_file(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
+  #                                                 , file.simulParam = "ParamSimul.txt"
+  #                                                 , year = 10)
+  #                    , "FATE_simulation/RESULTS/POST_FATE_GRAPHIC_C_map_PFGvsHS_Hello.pdf"
+  #                    , fixed = TRUE)
+  
+  # expect_message(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
+  #                                             , year = 10)
+  #                , "has been successfully created !"
+  #                , fixed = TRUE)
+})

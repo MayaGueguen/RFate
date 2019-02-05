@@ -41,22 +41,22 @@ test_that("POST_FATE.graphic_mapPFGrichness gives error with wrong data : name.s
 ## INPUTS
 test_that("POST_FATE.graphic_mapPFGrichness gives error with wrong data : file.simulParam", {
   expect_error(POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
-                                                   , file.simulParam = NULL)
+                                                , file.simulParam = NULL)
                , "Missing data!\n The folder FATE_simulation/PARAM_SIMUL/ does not contain adequate files")
   expect_error(POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
-                                                   , file.simulParam = NA)
-               , "Missing data!\n The folder FATE_simulation/PARAM_SIMUL/ does not contain adequate files")
-  
-  expect_error(POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
-                                                   , file.simulParam = "")
-               , "Missing data!\n The folder FATE_simulation/PARAM_SIMUL/ does not contain adequate files")
-  expect_error(POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
-                                                   , file.simulParam = "")
+                                                , file.simulParam = NA)
                , "Missing data!\n The folder FATE_simulation/PARAM_SIMUL/ does not contain adequate files")
   
+  expect_error(POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
+                                                , file.simulParam = "")
+               , "Missing data!\n The folder FATE_simulation/PARAM_SIMUL/ does not contain adequate files")
+  expect_error(POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
+                                                , file.simulParam = "")
+               , "Missing data!\n The folder FATE_simulation/PARAM_SIMUL/ does not contain adequate files")
+  
   
   expect_error(POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
-                                                   , file.simulParam = "toto")
+                                                , file.simulParam = "toto")
                , "Wrong name file given!\n `FATE_simulation/PARAM_SIMUL/toto` does not exist")
   file.create("FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   expect_error(POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
@@ -88,7 +88,8 @@ test_that("POST_FATE.graphic_mapPFGrichness gives error with wrong data : year",
                                                 , year = NA)
                , "Wrong type of data!\n `year` must be an integer > 0")
 })
-  
+
+
 ## INPUTS
 test_that("POST_FATE.graphic_mapPFGrichness gives error with wrong data : files", {
   expect_error(POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
@@ -133,11 +134,14 @@ test_that("POST_FATE.graphic_mapPFGrichness gives error with wrong data : files"
                , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/BIN_perPFG_allStrata/ folder"
                , fixed = TRUE)
   system("mkdir FATE_simulation/RESULTS/Hello/BIN_perPFG_allStrata/")
-  # expect_error(POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
-  #                                               , file.simulParam = "ParamSimul.txt"
-  #                                               , year = 10)
-  #              , "Missing data!\n The folder FATE_simulation/RESULTS/Hello/BIN_perPFG_allStrata/ does not contain adequate files")
-  # file.create("FATE_simulation/RESULTS/Hello/BIN_perPFG_allStrata/Binary_YEAR_10_PFG1_STRATA_all.tif")
+  
+  expect_error(POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
+                                                , file.simulParam = "ParamSimul.txt"
+                                                , year = 10
+                                                , opt.strata = 1)
+               , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/BIN_perPFG_perStrata/ folder")
+  
+  
   expect_error(POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
                                                 , file.simulParam = "ParamSimul.txt"
                                                 , year = 10)
@@ -220,60 +224,39 @@ test_that("POST_FATE.graphic_mapPFGrichness gives error with wrong data : files"
                , "Wrong type of data!\n `flag` (MASK) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"
                , fixed = TRUE)
   
-  cat("--MASK--\nFATE_simulation/Mask.tif\n--PFG_LIFE_HISTORY_PARAMS--\nHop\n--GLOBAL_PARAMS--\nFATE_simulation/GlobalParam.txt\n--SAVE_DIR--\nHello\n--END_OF_FILE--\n"
+  cat("--MASK--\nFATE_simulation/Mask.asc\n--PFG_LIFE_HISTORY_PARAMS--\nHop\n--GLOBAL_PARAMS--\nFATE_simulation/GlobalParam.txt\n--SAVE_DIR--\nHello\n--END_OF_FILE--\n"
       , file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   expect_error(POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
                                                 , file.simulParam = "ParamSimul.txt"
                                                 , year = 10)
-               , "Wrong name file given!\n `FATE_simulation/Mask.tif` does not exist"
+               , "Wrong name file given!\n `FATE_simulation/Mask.asc` does not exist"
                , fixed = TRUE)
-  # cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
-  #     , file = "FATE_simulation/Mask.tif")
-  # expect_error(POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
-  #                                                  , file.simulParam = "ParamSimul.txt")
-  #              , "Missing data!\n The names of PFG extracted from files within FATE_simulation/DATA/PFGS/SUCC/"
-  #              , fixed = TRUE)
+})
+
+## INPUTS
+test_that("POST_FATE.graphic_mapPFGrichness gives error with wrong data : rasters", {
+  cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
+      , file = "FATE_simulation/Mask.asc")
+  expect_error(POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
+                                                , file.simulParam = "ParamSimul.txt"
+                                                , year = 10)
+               , "Missing data!\n The folder FATE_simulation/RESULTS/Hello/BIN_perPFG_allStrata/ does not contain adequate files"
+               , fixed = TRUE)
   
-  # cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
-  #     , file = "FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_1_Hop_STRATA_all.tif")
-  # expect_error(POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
-  #                                                  , file.simulParam = "ParamSimul.txt")
-  #              , "hop"
-  #              , fixed = TRUE)
+  file.create("FATE_simulation/RESULTS/Hello/BIN_perPFG_allStrata/Binary_YEAR_10_PFG1_STRATA_all.txt")
 })
 
 
-
-
-
-
-
-
 ## OUTPUTS
-# test_that("POST_FATE.graphic_mapPFGrichness gives right output", {
-#   data(MontBlanc)
-#   sp.DIST = PRE_FATE.speciesDistance(mat.species.traits = MontBlanc$mat.traits
-#                                      , mat.species.overlap = MontBlanc$mat.nicheOverlap
-#                                      , min.info.thresh = 0.9)
-#   sp.CLUST = PRE_FATE.speciesClustering_step1(mat.species.DIST = sp.DIST)
-# 
-#   expect_output(str(POST_FATE.graphic_mapPFGrichness(clust.dendograms = sp.CLUST$clust.dendograms[[1]]
-#                                                 , no.clusters = 11
-#                                                 , mat.species.DIST = sp.DIST[[1]])), "List")
-#   expect_output(str(POST_FATE.graphic_mapPFGrichness(clust.dendograms = sp.CLUST$clust.dendograms[[1]]
-#                                                      , no.clusters = 11
-#                                                      , mat.species.DIST = sp.DIST[[1]])[[2]]), "10 variables")
-#   expect_equal(length(POST_FATE.graphic_mapPFGrichness(clust.dendograms = sp.CLUST$clust.dendograms[[1]]
-#                                                      , no.clusters = 11
-#                                                      , mat.species.DIST = sp.DIST[[1]])), 2)
-#   
-#   expect_output(str(POST_FATE.graphic_mapPFGrichness(clust.dendograms = sp.CLUST$clust.dendograms
-#                                                      , no.clusters = c(11, 7, 8)
-#                                                      , mat.species.DIST = sp.DIST)), "List")
-#   expect_output(str(POST_FATE.graphic_mapPFGrichness(clust.dendograms = sp.CLUST$clust.dendograms
-#                                                      , no.clusters = c(11, 7, 8)
-#                                                      , mat.species.DIST = sp.DIST)[[2]]), "10 variables")
-#   expect_equal(length(POST_FATE.graphic_mapPFGrichness(clust.dendograms = sp.CLUST$clust.dendograms
-#                                                        , no.clusters = c(11, 7, 8)
-#                                                        , mat.species.DIST = sp.DIST)), 2)
-# })
+test_that("POST_FATE.graphic_mapPFGrichness gives error with wrong data : outputs", {
+  # expect_equal(POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
+  #                                               , file.simulParam = "ParamSimul.txt"
+  #                                               , year = 10)
+  #              , file.exists("FATE_simulation/RESULTS/POST_FATE_GRAPHIC_D_map_PFGrichness_Hello.pdf")
+  #              , expected = TRUE)
+  # 
+  # expect_message(POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
+  #                                                 , year = 10)
+  #                , "has been successfully created !"
+  #                , fixed = TRUE)
+})
