@@ -41,26 +41,26 @@ test_that("POST_FATE.relativeAbund_presenceAbsence gives error with wrong data :
 ## INPUTS
 test_that("POST_FATE.relativeAbund_presenceAbsence gives error with wrong data : file.simulParam", {
   expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
-                                                   , file.simulParam = NULL)
+                                                       , file.simulParam = NULL)
                , "Missing data!\n The folder FATE_simulation/PARAM_SIMUL/ does not contain adequate files")
   expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
-                                                   , file.simulParam = NA)
-               , "Missing data!\n The folder FATE_simulation/PARAM_SIMUL/ does not contain adequate files")
-  
-  expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
-                                                   , file.simulParam = "")
-               , "Missing data!\n The folder FATE_simulation/PARAM_SIMUL/ does not contain adequate files")
-  expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
-                                                   , file.simulParam = "")
+                                                       , file.simulParam = NA)
                , "Missing data!\n The folder FATE_simulation/PARAM_SIMUL/ does not contain adequate files")
   
+  expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
+                                                       , file.simulParam = "")
+               , "Missing data!\n The folder FATE_simulation/PARAM_SIMUL/ does not contain adequate files")
+  expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
+                                                       , file.simulParam = "")
+               , "Missing data!\n The folder FATE_simulation/PARAM_SIMUL/ does not contain adequate files")
+  
   
   expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
-                                                   , file.simulParam = "toto")
+                                                       , file.simulParam = "toto")
                , "Wrong name file given!\n `FATE_simulation/PARAM_SIMUL/toto` does not exist")
   file.create("FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt")
+                                                       , file.simulParam = "ParamSimul.txt")
                , "Wrong type of data!\n `year` must be an integer > 0")
 })
 
@@ -68,68 +68,97 @@ test_that("POST_FATE.relativeAbund_presenceAbsence gives error with wrong data :
 ## INPUTS
 test_that("POST_FATE.relativeAbund_presenceAbsence gives error with wrong data : year", {  
   expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = "a")
+                                                       , file.simulParam = "ParamSimul.txt"
+                                                       , year = "a")
                , "Wrong type of data!\n `year` must be an integer > 0")
   expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = factor("a"))
+                                                       , file.simulParam = "ParamSimul.txt"
+                                                       , year = factor("a"))
                , "Wrong type of data!\n `year` must be an integer > 0")
   expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = factor(1))
+                                                       , file.simulParam = "ParamSimul.txt"
+                                                       , year = factor(1))
                , "Wrong type of data!\n `year` must be an integer > 0")
   expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = NULL)
+                                                       , file.simulParam = "ParamSimul.txt"
+                                                       , year = NULL)
                , "Wrong type of data!\n `year` must be an integer > 0")
   expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = NA)
+                                                       , file.simulParam = "ParamSimul.txt"
+                                                       , year = NA)
                , "Wrong type of data!\n `year` must be an integer > 0")
 })
-  
+
+## INPUTS
+test_that("POST_FATE.relativeAbund_presenceAbsence gives error with wrong data : strata_min", {  
+  expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
+                                                       , file.simulParam = "ParamSimul.txt"
+                                                       , year = 10
+                                                       , strata_min = "a")
+               , "Wrong type of data!\n `strata_min` must be an integer > 0")
+  expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
+                                                       , file.simulParam = "ParamSimul.txt"
+                                                       , year = 10
+                                                       , strata_min = factor("a"))
+               , "Wrong type of data!\n `strata_min` must be an integer > 0")
+  expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
+                                                       , file.simulParam = "ParamSimul.txt"
+                                                       , year = 10
+                                                       , strata_min = factor(1))
+               , "Wrong type of data!\n `strata_min` must be an integer > 0")
+  expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
+                                                       , file.simulParam = "ParamSimul.txt"
+                                                       , year = 10
+                                                       , strata_min = NULL)
+               , "Wrong type of data!\n `strata_min` must be an integer > 0")
+  expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
+                                                       , file.simulParam = "ParamSimul.txt"
+                                                       , year = 10
+                                                       , strata_min = NA)
+               , "Wrong type of data!\n `strata_min` must be an integer > 0")
+})
+
 ## INPUTS
 test_that("POST_FATE.relativeAbund_presenceAbsence gives error with wrong data : files", {
   expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = 10)
+                                                       , file.simulParam = "ParamSimul.txt"
+                                                       , year = 10)
                , "Wrong type of data!\n `flag` (--END_OF_FILE--) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"
                , fixed = TRUE)
   cat("--END_OF_FILE--\n", file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = 10)
+                                                       , file.simulParam = "ParamSimul.txt"
+                                                       , year = 10)
                , "Wrong type of data!\n `flag.split` (^--.*--$) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"
                , fixed = TRUE)  
   cat("--T--\n--END_OF_FILE--\n", file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = 10)
+                                                       , file.simulParam = "ParamSimul.txt"
+                                                       , year = 10)
                , "Wrong type of data!\n `flag` (SAVE_DIR) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"
                , fixed = TRUE)
   cat("SAVE_DIR\n--END_OF_FILE--\n", file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = 10)
+                                                       , file.simulParam = "ParamSimul.txt"
+                                                       , year = 10)
                , "Wrong type of data!\n `flag.split` (^--.*--$) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"
                , fixed = TRUE)
   cat("--SAVE_DIR--\n--END_OF_FILE--\n", file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = 10)
+                                                       , file.simulParam = "ParamSimul.txt"
+                                                       , year = 10)
                , "Wrong type of data!\n `flag` (SAVE_DIR) does not contain any value"
                , fixed = TRUE)
   cat("--SAVE_DIR--\nHello\n--END_OF_FILE--\n", file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = 10)
+                                                       , file.simulParam = "ParamSimul.txt"
+                                                       , year = 10)
                , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/ folder"
                , fixed = TRUE)
   system("mkdir FATE_simulation/RESULTS/Hello/")
   expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = 10)
+                                                       , file.simulParam = "ParamSimul.txt"
+                                                       , year = 10)
                , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/ABUND_perPFG_perStrata/ folder"
                , fixed = TRUE)
   system("mkdir FATE_simulation/RESULTS/Hello/ABUND_perPFG_perStrata/")
@@ -145,8 +174,8 @@ test_that("POST_FATE.relativeAbund_presenceAbsence gives error with wrong data :
   #              , "Missing data!\n The folder FATE_simulation/RESULTS/Hello/BIN_perPFG_allStrata/ does not contain adequate files")
   # file.create("FATE_simulation/RESULTS/Hello/BIN_perPFG_allStrata/Binary_YEAR_10_PFG1_STRATA_all.tif")
   expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = 10)
+                                                       , file.simulParam = "ParamSimul.txt"
+                                                       , year = 10)
                , "Wrong type of data!\n `flag` (GLOBAL_PARAMS) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"
                , fixed = TRUE)
   
@@ -155,90 +184,104 @@ test_that("POST_FATE.relativeAbund_presenceAbsence gives error with wrong data :
   file.create("FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   cat("GLOBAL_PARAMS\n--SAVE_DIR--\nHello\n--END_OF_FILE--\n", file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = 10)
+                                                       , file.simulParam = "ParamSimul.txt"
+                                                       , year = 10)
                , "Wrong type of data!\n `flag` (GLOBAL_PARAMS) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"
                , fixed = TRUE)
   
   cat("--GLOBAL_PARAMS--\n--SAVE_DIR--\nHello\n--END_OF_FILE--\n"
       , file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = 10)
+                                                       , file.simulParam = "ParamSimul.txt"
+                                                       , year = 10)
                , "Wrong type of data!\n `flag` (GLOBAL_PARAMS) does not contain any value"
                , fixed = TRUE)
   cat("--GLOBAL_PARAMS--\nFATE_simulation/GlobalParam.txt\n--SAVE_DIR--\nHello\n--END_OF_FILE--\n"
       , file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = 10)
+                                                       , file.simulParam = "ParamSimul.txt"
+                                                       , year = 10)
                , "Wrong name file given!\n `FATE_simulation/GlobalParam.txt` does not exist"
                , fixed = TRUE)
   
   file.create("FATE_simulation/GlobalParam.txt")
   expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = 10)
+                                                       , file.simulParam = "ParamSimul.txt"
+                                                       , year = 10)
                , "Wrong type of data!\n `flag.split` ( ) is not found within `params.lines` (FATE_simulation/GlobalParam.txt)"
                , fixed = TRUE)
   cat("HOP \n", file = "FATE_simulation/GlobalParam.txt")
   expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = 10)
+                                                       , file.simulParam = "ParamSimul.txt"
+                                                       , year = 10)
                , "Wrong type of data!\n `flag` (NB_FG) is not found within `params.lines` (FATE_simulation/GlobalParam.txt)"
                , fixed = TRUE)
   cat("NB_FG \n", file = "FATE_simulation/GlobalParam.txt")
   expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = 10)
+                                                       , file.simulParam = "ParamSimul.txt"
+                                                       , year = 10)
                , "Missing data!\n The number of PFG (NB_FG) within FATE_simulation/GlobalParam.txt does not contain any value"
                , fixed = TRUE)
   cat("NB_FG a\n", file = "FATE_simulation/GlobalParam.txt")
   expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = 10)
+                                                       , file.simulParam = "ParamSimul.txt"
+                                                       , year = 10)
                , "Missing data!\n The number of PFG (NB_FG) within FATE_simulation/GlobalParam.txt does not contain any value"
                , fixed = TRUE)
   cat("NB_FG 3\n", file = "FATE_simulation/GlobalParam.txt")
   expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = 10)
+                                                       , file.simulParam = "ParamSimul.txt"
+                                                       , year = 10)
                , "Wrong type of data!\n `flag` (PFG_LIFE_HISTORY_PARAMS) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"
                , fixed = TRUE)
   cat("--PFG_LIFE_HISTORY_PARAMS--\n--GLOBAL_PARAMS--\nFATE_simulation/GlobalParam.txt\n--SAVE_DIR--\nHello\n--END_OF_FILE--\n"
       , file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = 10)
+                                                       , file.simulParam = "ParamSimul.txt"
+                                                       , year = 10)
                , "Wrong type of data!\n `flag` (PFG_LIFE_HISTORY_PARAMS) does not contain any value"
                , fixed = TRUE)
   cat("--PFG_LIFE_HISTORY_PARAMS--\nHop\n--GLOBAL_PARAMS--\nFATE_simulation/GlobalParam.txt\n--SAVE_DIR--\nHello\n--END_OF_FILE--\n"
       , file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = 10)
+                                                       , file.simulParam = "ParamSimul.txt"
+                                                       , year = 10)
                , "Missing data!\n The number of PFG (NB_FG) within FATE_simulation/GlobalParam.txt is different from the number of PFG files contained in FATE_simulation/DATA/PFGS/SUCC/"
                , fixed = TRUE)
   cat("NB_FG 1\n", file = "FATE_simulation/GlobalParam.txt")
   expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = 10)
+                                                       , file.simulParam = "ParamSimul.txt"
+                                                       , year = 10)
                , "Wrong type of data!\n `flag` (MASK) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"
                , fixed = TRUE)
   
   cat("--MASK--\nFATE_simulation/Mask.tif\n--PFG_LIFE_HISTORY_PARAMS--\nHop\n--GLOBAL_PARAMS--\nFATE_simulation/GlobalParam.txt\n--SAVE_DIR--\nHello\n--END_OF_FILE--\n"
       , file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = 10)
+                                                       , file.simulParam = "ParamSimul.txt"
+                                                       , year = 10)
                , "Wrong name file given!\n `FATE_simulation/Mask.tif` does not exist"
                , fixed = TRUE)
-  # cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
-  #     , file = "FATE_simulation/Mask.tif")
-  # expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
-  #                                                  , file.simulParam = "ParamSimul.txt")
-  #              , "Missing data!\n The names of PFG extracted from files within FATE_simulation/DATA/PFGS/SUCC/"
-  #              , fixed = TRUE)
+})
+
+## INPUTS
+test_that("POST_FATE.relativeAbund_presenceAbsence gives error with wrong data : rasters", {
+  cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
+      , file = "FATE_simulation/Mask.tif")
+  expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
+                                                       , file.simulParam = "ParamSimul.txt"
+                                                       , year = 10)
+               # , "Missing data!\n The names of PFG extracted from files within FATE_simulation/DATA/PFGS/SUCC/"
+               , "Missing data!\n The folder FATE_simulation/RESULTS/Hello/ABUND_perPFG_perStrata/ does not contain adequate files"
+               , fixed = TRUE)
+  
+  file.create("FATE_simulation/RESULTS/Hello/ABUND_perPFG_perStrata/Abund_YEAR_10_PFG1_STRATA_1.txt")
+  expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
+                                                       , file.simulParam = "ParamSimul.txt"
+                                                       , year = 10
+                                                       , strata_min = 3)
+               , "Wrong data given!\n `strata_min` is superior to maximum strata found (1)"
+               , fixed = TRUE)
   
   # cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
   #     , file = "FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_1_Hop_STRATA_all.tif")
@@ -246,5 +289,14 @@ test_that("POST_FATE.relativeAbund_presenceAbsence gives error with wrong data :
   #                                                  , file.simulParam = "ParamSimul.txt")
   #              , "hop"
   #              , fixed = TRUE)
+})
+
+## OUTPUTS
+test_that("POST_FATE.relativeAbund_presenceAbsence gives error with wrong data : rasters", {
+  expect_output_file(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
+                                                             , file.simulParam = "ParamSimul.txt"
+                                                             , year = 10)
+                     , "FATE_simulation/RESULTS/Hello/BIN_perPFG_allStrata/Binary_YEAR_10_PFG1_STRATA_all.txt"
+                     , fixed = TRUE)
 })
 
