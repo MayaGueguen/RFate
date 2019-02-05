@@ -255,23 +255,25 @@ test_that("POST_FATE.relativeAbund_presenceAbsence gives error with wrong data :
                , "Wrong type of data!\n `flag` (MASK) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"
                , fixed = TRUE)
   
-  cat("--MASK--\nFATE_simulation/Mask.tif\n--PFG_LIFE_HISTORY_PARAMS--\nHop\n--GLOBAL_PARAMS--\nFATE_simulation/GlobalParam.txt\n--SAVE_DIR--\nHello\n--END_OF_FILE--\n"
+  cat("--MASK--\nFATE_simulation/Mask.asc\n--PFG_LIFE_HISTORY_PARAMS--\nHop\n--GLOBAL_PARAMS--\nFATE_simulation/GlobalParam.txt\n--SAVE_DIR--\nHello\n--END_OF_FILE--\n"
       , file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
                                                        , file.simulParam = "ParamSimul.txt"
                                                        , year = 10)
-               , "Wrong name file given!\n `FATE_simulation/Mask.tif` does not exist"
+               , "Wrong name file given!\n `FATE_simulation/Mask.asc` does not exist"
                , fixed = TRUE)
 })
 
 ## INPUTS
 test_that("POST_FATE.relativeAbund_presenceAbsence gives error with wrong data : rasters", {
+  # cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
+  #     , file = "FATE_simulation/Mask.tif")
+  # file.create("FATE_simulation/Mask.tif")
   cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
-      , file = "FATE_simulation/Mask.tif")
+      , file = "FATE_simulation/Mask.asc")
   expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
                                                        , file.simulParam = "ParamSimul.txt"
                                                        , year = 10)
-               # , "Missing data!\n The names of PFG extracted from files within FATE_simulation/DATA/PFGS/SUCC/"
                , "Missing data!\n The folder FATE_simulation/RESULTS/Hello/ABUND_perPFG_perStrata/ does not contain adequate files"
                , fixed = TRUE)
   
@@ -282,19 +284,17 @@ test_that("POST_FATE.relativeAbund_presenceAbsence gives error with wrong data :
                                                        , strata_min = 3)
                , "Wrong data given!\n `strata_min` is superior to maximum strata found (1)"
                , fixed = TRUE)
-  
-  # cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
-  #     , file = "FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_1_Hop_STRATA_all.tif")
-  # expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
-  #                                                  , file.simulParam = "ParamSimul.txt")
-  #              , "hop"
-  #              , fixed = TRUE)
 })
 
 ## OUTPUTS
 test_that("POST_FATE.relativeAbund_presenceAbsence gives error with wrong data : rasters", {
   expect_output_file(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
                                                              , file.simulParam = "ParamSimul.txt"
+                                                             , year = 10)
+                     , "FATE_simulation/RESULTS/Hello/BIN_perPFG_allStrata/Binary_YEAR_10_PFG1_STRATA_all.txt"
+                     , fixed = TRUE)
+  
+  expect_output_file(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
                                                              , year = 10)
                      , "FATE_simulation/RESULTS/Hello/BIN_perPFG_allStrata/Binary_YEAR_10_PFG1_STRATA_all.txt"
                      , fixed = TRUE)
