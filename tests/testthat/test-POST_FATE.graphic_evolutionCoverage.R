@@ -190,11 +190,13 @@ test_that("POST_FATE.graphic_evolutionCoverage gives error with wrong data : ras
       , file = "FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_1_Hop_STRATA_all.tif")
   expect_error(POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation"
                                                    , file.simulParam = "ParamSimul.txt")
-               , "objet 'distri' introuvable"
+               # , "objet 'distri' introuvable"
+               , "Cannot create RasterLayer object from this file"
                , fixed = TRUE)
   
   expect_error(POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation")
-               , "objet 'distri' introuvable"
+               # , "objet 'distri' introuvable"
+               , "Cannot create RasterLayer object from this file"
                , fixed = TRUE)
   
   
