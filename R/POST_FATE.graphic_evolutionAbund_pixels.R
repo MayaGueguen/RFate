@@ -6,9 +6,9 @@
 ##'
 ##' @author Maya Guéguen
 ##' 
-##' @description This script is designed to produce one graphical 
-##' representations for a \code{FATE-HD} simulation : the evolution through time
-##' of the abundance of each PFG for 5 (or more) randomly selected cells of the
+##' @description This script is designed to produce one graphical representation
+##' for a \code{FATE-HD} simulation : the evolution through time of the 
+##' abundance of each PFG for 5 (or more) randomly selected cells of the
 ##' studied area.
 ##'              
 ##' @param name.simulation a \code{string} that corresponds to the main directory
@@ -25,8 +25,6 @@
 ##' can be used to parallelize the \code{unzip/zip} of raster files
 ##' @param opt.cells_ID default NULL (\emph{optional}). The cells ID of the 
 ##' studied area for which PFG abundances will be extracted.
-##' number of resources that 
-##' can be used to parallelize the \code{unzip/zip} of raster files
 ##' 
 ##' 
 ##' @details 
