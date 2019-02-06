@@ -76,6 +76,7 @@ reference:
       - "POST_FATE.relativeAbund_presenceAbsence"
       - "POST_FATE.graphic_evolutionCoverage"
       - "POST_FATE.graphic_evolutionAbund_pixels"
+      - "POST_FATE.graphic_evolutionLight_pixels"
       - "POST_FATE.graphic_mapPFGvsHS"
       - "POST_FATE.graphic_mapPFGrichness"
       - "POST_FATE.graphic_mapPFGcover"

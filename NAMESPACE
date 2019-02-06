@@ -2,6 +2,7 @@
 
 export(POST_FATE.graphic_evolutionAbund_pixels)
 export(POST_FATE.graphic_evolutionCoverage)
+export(POST_FATE.graphic_evolutionLight_pixels)
 export(POST_FATE.graphic_mapPFGcover)
 export(POST_FATE.graphic_mapPFGrichness)
 export(POST_FATE.graphic_mapPFGvsHS)
