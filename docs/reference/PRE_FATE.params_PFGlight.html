@@ -229,15 +229,30 @@ each PFG :</p>
   <dt>SHADE_TOL</dt><dd><p>defined for each life stage (Germinant, Immature, 
   Mature) and each light condition (Low, Medium, High) :
   <ul>
-<li><p>PFG are tolerant to low light if <code>light &lt;= 2</code></p></li>
-<li><p>PFG are tolerant to medium light if <code>2 &lt;= light &lt;= 4</code></p></li>
-<li><p>PFG are tolerant to high light if <code>light &gt;= 3</code></p></li>
-<li><p>all germinants are assumed to be tolerant to Low light</p></li>
-<li><p>all mature trees are assumed to be tolerant to all light conditions</p></li>
-<li><p>all immature trees that grow in the penultimate stratum are 
+<li><p>(A) PFG are tolerant to low light if <code>light &lt;= 2</code></p></li>
+<li><p>(A) PFG are tolerant to medium light if <code>2 &lt;= light &lt;= 4</code></p></li>
+<li><p>(A) PFG are tolerant to high light if <code>light &gt;= 3</code></p></li>
+<li><p>(B) all germinants are assumed to be tolerant to Low light</p></li>
+<li><p>(C) all mature trees or chamaephytes are assumed to be tolerant to
+    all light conditions</p></li>
+<li><p>(D) all immature trees that grow in the penultimate stratum are 
     assumed to be tolerant to High light</p></li>
 </ul></p></dd>
 </dl>
+    <p><em>Summary table of 'basic' parametrisation of SHADE_TOL :</em></p><ul>
+<li><p><code>.</code> means <em>Not tolerant</em></p></li>
+<li><p><code>A, B, C, D</code> mean <em>Tolerant</em> according to one of the rule
+  defined above</p></li>
+<li><p>with <code>g</code>: Germinant, <code>i</code>: Immature, <code>m</code>: Mature <br /> <br /></p></li>
+</ul>
+    <p>| <code>.</code>  <code>D</code>  <code>C</code>  |  <code>.</code>  <code>D</code>  <code>C</code>  |  <code>.</code>  <code>D</code>  <code>C</code>  |  <code>A</code> <code>A</code> <code>A</code>  |  <code>A</code>  <code>A</code>  <code>A</code>  | <strong>HIGH</strong> <br />
+ | <code>.</code>  <code>.</code>  <code>C</code>  |  <code>A</code>  <code>A</code>  <code>A</code>  |  <code>A</code>  <code>A</code>  <code>A</code>  |  <code>A</code> <code>A</code> <code>A</code>  |  <code>.</code>  <code>.</code>  <code>C</code>  | <strong>MEDIUM</strong> <br />
+ | <code>A</code>  <code>A</code>  <code>A</code>  |  <code>A</code>  <code>A</code>  <code>A</code>  |  <code>B</code>  <code>.</code>  <code>.</code>  |  <code>B</code> <code>.</code> <code>.</code>  |  <code>B</code>  <code>.</code>  <code>.</code>  | <strong>LOW</strong> <br />
+__________________________________________________ <br />
+ | <code>g</code>  <code>i</code>  <code>m</code>  |  <code>g</code>  <code>i</code>  <code>m</code>  |  <code>g</code>  <code>i</code>  <code>m</code>  |  <code>g</code>  <code>i</code>  <code>m</code>  |  <code>g</code>  <code>i</code>  <code>m</code>  | <strong>Life stage</strong> <br />
+__________________________________________________ <br />
+ | <code>_</code>  <code>1</code>  <code>_</code>  |  <code>_</code>  <code>2</code>  <code>_</code>  |  <code>_</code>  <code>3</code>  <code>_</code>  |  <code>_</code> <code>4</code> <code>_</code>  |  <code>_</code>  <code>5</code>  <code>_</code>  | <strong>Light</strong> <br />
+<br /></p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 

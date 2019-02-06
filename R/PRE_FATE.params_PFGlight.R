@@ -50,17 +50,34 @@
 ##'   \item{SHADE_TOL}{ defined for each life stage (Germinant, Immature, 
 ##'   Mature) and each light condition (Low, Medium, High) :
 ##'   \itemize{
-##'     \item PFG are tolerant to low light if \code{light <= 2}
-##'     \item PFG are tolerant to medium light if \code{2 <= light <= 4}
-##'     \item PFG are tolerant to high light if \code{light >= 3}
-##'     \item all germinants are assumed to be tolerant to Low light
-##'     \item all mature trees are assumed to be tolerant to all light conditions
-##'     \item all immature trees that grow in the penultimate stratum are 
+##'     \item (A) PFG are tolerant to low light if \code{light <= 2}
+##'     \item (A) PFG are tolerant to medium light if \code{2 <= light <= 4}
+##'     \item (A) PFG are tolerant to high light if \code{light >= 3}
+##'     \item (B) all germinants are assumed to be tolerant to Low light
+##'     \item (C) all mature trees or chamaephytes are assumed to be tolerant to
+##'     all light conditions
+##'     \item (D) all immature trees that grow in the penultimate stratum are 
 ##'     assumed to be tolerant to High light
 ##'   }
 ##'   }
 ##' }
 ##' 
+##' \emph{Summary table of 'basic' parametrisation of SHADE_TOL :}
+##' \itemize{
+##'   \item \code{.} means \emph{Not tolerant}
+##'   \item \code{A, B, C, D} mean \emph{Tolerant} according to one of the rule
+##'   defined above
+##'   \item with \code{g}: Germinant, \code{i}: Immature, \code{m}: Mature \cr \cr
+##' }
+##' 
+##' \tab | \code{.} \tab \code{D} \tab \code{C} \tab | \tab \code{.} \tab \code{D} \tab \code{C} \tab | \tab \code{.} \tab \code{D} \tab \code{C} \tab | \tab \code{A}\tab \code{A}\tab \code{A} \tab | \tab \code{A} \tab \code{A} \tab \code{A} \tab | \strong{HIGH} \cr
+##' \tab | \code{.} \tab \code{.} \tab \code{C} \tab | \tab \code{A} \tab \code{A} \tab \code{A} \tab | \tab \code{A} \tab \code{A} \tab \code{A} \tab | \tab \code{A}\tab \code{A}\tab \code{A} \tab | \tab \code{.} \tab \code{.} \tab \code{C} \tab | \strong{MEDIUM} \cr
+##' \tab | \code{A} \tab \code{A} \tab \code{A} \tab | \tab \code{A} \tab \code{A} \tab \code{A} \tab | \tab \code{B} \tab \code{.} \tab \code{.} \tab | \tab \code{B}\tab \code{.}\tab \code{.} \tab | \tab \code{B} \tab \code{.} \tab \code{.} \tab | \strong{LOW} \cr
+##' __________________________________________________ \cr
+##' \tab | \code{g} \tab \code{i} \tab \code{m} \tab | \tab \code{g} \tab \code{i} \tab \code{m} \tab | \tab \code{g} \tab \code{i} \tab \code{m} \tab | \tab \code{g} \tab \code{i} \tab \code{m} \tab | \tab \code{g} \tab \code{i} \tab \code{m} \tab | \strong{Life stage} \cr
+##' __________________________________________________ \cr
+##' \tab | \code{_} \tab \code{1} \tab \code{_} \tab | \tab \code{_} \tab \code{2} \tab \code{_} \tab | \tab \code{_} \tab \code{3} \tab \code{_} \tab | \tab \code{_}\tab \code{4}\tab \code{_} \tab | \tab \code{_} \tab \code{5} \tab \code{_} \tab | \strong{Light} \cr
+##' \cr
 ##' 
 ##' 
 ##' @return A \code{.txt} file per PFG into the 
@@ -354,12 +371,15 @@ PRE_FATE.params_PFGlight = function(
     }
   }
   
-  ## All germinants are assumed to be tolerant to Low (and Medium ?) light
+  ## All germinants are assumed to be tolerant to Low light
   SHADE_TOL[c(1),] = 1
-  ## All mature trees and shrubs are assumed to be tolerant to all conditions
-  SHADE_TOL[c(7, 8, 9), which(mat.PFG.succ$type %in% c("C", "P"))] = 1
+  ## All mature trees and shrubs are assumed to be tolerant to Low and Medium Light
+  SHADE_TOL[c(8, 9), which(mat.PFG.succ$type %in% c("C", "P"))] = 1
   ## All immature trees that grow in the penultimate stratum are assumed to be tolerant to High light
   SHADE_TOL[c(6), which(mat.PFG.succ$type == "P" & CHANG_STR_AGES[nrow(CHANG_STR_AGES) - 1,] < MATURITY)] = 1
+  
+  ## What about all germinant tolerant to Medium light ?
+  ## What about all mature trees and shrubs tolerant to Low light ?
   
   #################################################################################################
 

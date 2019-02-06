@@ -23,14 +23,15 @@ Braun-Blanquet values allow to estimate the abundance-dominance of a species
 based on an estimation of the number of individuals and the covering surface.
 A correspondence has been defined between this index and average recovery values :
 
-\tabular{ccrrrr}{
-   \tab \strong{Braun-Blanquet} \tab ..... \tab \strong{Recovery class (\%)} \tab ..... \tab \strong{Average recovery (\%)} \cr
-   \tab + \tab  \tab <1 \tab  \tab 0.5 \cr
-   \tab 1 \tab  \tab 1-5 \tab  \tab 3 \cr
-   \tab 2 \tab  \tab 5-25 \tab  \tab 15 \cr
-   \tab 3 \tab  \tab 25-50 \tab  \tab 37.5 \cr
-   \tab 4 \tab  \tab 50-75 \tab  \tab 62.5 \cr
-   \tab 5 \tab  \tab 75-100 \tab  \tab 87.5 \cr
+
+\tabular{crr}{
+\strong{Braun-Blanquet} \tab \strong{Recovery class (\%)} \tab \strong{Average recovery (\%)}\cr
++ \tab     <1 \tab  0.5\cr
+1 \tab    1-5 \tab    3\cr
+2 \tab   5-25 \tab   15\cr
+3 \tab  25-50 \tab 37.5\cr
+4 \tab  50-75 \tab 62.5\cr
+5 \tab 75-100 \tab 87.5
 }
 
 
