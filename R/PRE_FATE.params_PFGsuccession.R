@@ -374,7 +374,7 @@ PRE_FATE.params_PFGsuccession = function(
                            , "STRATA"
                            , "MAX_ABUNDANCE"
                            , "IMM_SIZE"
-                           , paste0("CHANG_STR_AGES_to_str_", 1:no.strata)
+                           , paste0("CHANG_STR_AGES_to_str_", 1:no.strata, "_", STRATA_LIMITS[1:no.strata])
                            , paste0("SEED_POOL_LIFE_", c("active", "dormant"))
                            , "SEED_DORMANCY")
   

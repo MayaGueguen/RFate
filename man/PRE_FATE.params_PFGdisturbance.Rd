@@ -10,8 +10,8 @@ PRE_FATE.params_PFGdisturbance(name.simulation, mat.PFG.dist,
   "/DATA/PFGS/SUCC_COMPLETE_TABLE.csv"))
 }
 \arguments{
-\item{name.simulation}{a \code{string} that corresponds to the main directory
-or simulation name of the \code{FATE-HD} simulation}
+\item{name.simulation}{a \code{string} that corresponds to the main
+directory or simulation name of the \code{FATE-HD} simulation}
 
 \item{mat.PFG.dist}{a \code{data.frame} with at least 4 columns : \cr name, 
 responseStage, KilledIndiv_[...], ResproutIndiv_[...] (see \code{Details})}
@@ -63,9 +63,11 @@ used in the disturbance module of \code{FATE-HD}.
 }
 \details{
 The disturbance module of \code{FATE-HD} allows the user to simulate spatial
-perturbation(s) that will impact each PFG in terms of resprouting and mortality
-on the different response stages \emph{(!currently 4, not yet editable!)}. \cr
-Several parameters are required for each PFG in order to set up these responses :
+perturbation(s) that will impact each PFG in terms of resprouting and
+mortality on the different response stages \emph{(!currently 4, not yet
+editable!)}. \cr
+Several parameters are required for each PFG in order to set up these
+responses :
 
 \describe{
   \item{type}{or life-form, based on Raunkier. It should be either \code{H} 
@@ -77,8 +79,8 @@ Several parameters are required for each PFG in order to set up these responses 
 }
 
 
-These values will allow to calculate or define a set of characteristics for each
-PFG :
+These values will allow to calculate or define a set of characteristics for
+each PFG :
 
 \describe{
   \item{PROP_KILLED}{ = the proportion of propagules killed by each 
@@ -90,34 +92,47 @@ PFG :
   on the PFG age \cr
    = ages at which each PFG changes of response stage \cr \cr
    
-   These response classes are the same for all disturbances for each PFG. \cr
-   These ages are defined according to the maturity and longevity of the PFG,
-   its life form and its ability to reach the 3rd height stratum :
+   These response classes are the same for all disturbances for each PFG.
+   \cr These ages are defined according to the maturity and longevity of the
+   PFG, its life form and its ability to grow above 1.5 meter :
    \itemize{
      \item age from class 1 to 2 :
      \itemize{
        \item \code{maturity - 2} for herbaceous
        \item \code{1} for chamaephytes and phanerophytes
      }
-     \item age from class 2 to 3 : \code{min(CHANG_STR_AGES_to_str_3, maturity)}
-     \item age from class 3 to 4 : \code{min(CHANG_STR_AGES_to_str_3, longevity - 2)}
+     \item age from class 2 to 3 :
+     \itemize{
+       \item \code{maturity} for herbaceous
+       \item \code{min(maturity - 2 , age_above_150cm)} for chamaephytes 
+       and phanerophytes
+     }
+     \item age from class 3 to 4 :
+     \itemize{
+       \item \code{longevity - 2} for herbaceous
+       \item \code{min(longevity - 2 , age_above_150cm)} for chamaephytes 
+       and phanerophytes
+     }
    }
-   Some corrections are made for short-living plants (annuals, biennials...) :
-   as they die after 1 or 2 years, they are not affected differently according
-   to life stages. All ages are the same and correspond to their longevity.
+   Some corrections are made for short-living plants (annuals, biennials...)
+   : as they die after 1 or 2 years, they are not affected differently 
+   according to life stages. Break ages from class 1 to 3 are set to 1, and
+   break age from 3 to 4 is set to their longevity (1 or 2).
   }
-  \item{RESPR_AGE}{ = when subject to a perturbation, each PFG can either stay 
-  undisturbed, be killed, or resprout \emph{(in years)} \cr
+  \item{RESPR_AGE}{ = when subject to a perturbation, each PFG can either
+  stay undisturbed, be killed, or resprout \emph{(in years)} \cr
    = ages at which each PFG will be rejuvenated by a disturbance \cr \cr
   It does not impact dead inviduals, only living ones. \cr
   It is defined according to the maturity and longevity of the PFG, and its 
-  ability to reach the 3rd height stratum :
+  ability to grow above 1.5 meter :
   \itemize{
-    \item individuals within 1st and 2nd response stage are too young to resprout
+    \item individuals within 1st and 2nd response stage are too young to 
+    resprout
     \item individuals within 3rd response stage : \cr
-    \code{min(CHANG_STR_AGES_to_str_3, maturity - 2)}
+    \code{min(maturity - 2, age_above_150cm)}
     \item individuals within 4th response stage : \code{longevity - 2}
-    \item short-living plants (annuals, biennials...) always start back at 0
+    \item short-living plants (annuals, biennials...) always start back 
+    at 0
   }
   }
   \item{FATES}{ = proportion of killed or resprouting individuals \cr

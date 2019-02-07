@@ -169,8 +169,8 @@ used in the disturbance module of <code>FATE-HD</code>.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>name.simulation</th>
-      <td><p>a <code>string</code> that corresponds to the main directory
-or simulation name of the <code>FATE-HD</code> simulation</p></td>
+      <td><p>a <code>string</code> that corresponds to the main
+directory or simulation name of the <code>FATE-HD</code> simulation</p></td>
     </tr>
     <tr>
       <th>mat.PFG.dist</th>
@@ -222,9 +222,11 @@ directory with the following parameters :</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The disturbance module of <code>FATE-HD</code> allows the user to simulate spatial
-perturbation(s) that will impact each PFG in terms of resprouting and mortality
-on the different response stages <em>(!currently 4, not yet editable!)</em>. <br />
-Several parameters are required for each PFG in order to set up these responses :</p>
+perturbation(s) that will impact each PFG in terms of resprouting and
+mortality on the different response stages <em>(!currently 4, not yet
+editable!)</em>. <br />
+Several parameters are required for each PFG in order to set up these
+responses :</p>
 <dl class='dl-horizontal'>
   <dt>type</dt><dd><p>or life-form, based on Raunkier. It should be either <code>H</code> 
   (herbaceous), <code>C</code> (chamaephyte) or <code>P</code> (phanerophyte) for now</p></dd>
@@ -233,8 +235,8 @@ Several parameters are required for each PFG in order to set up these responses 
   <dt>STRATA</dt><dd><p>the maximum height stratum that the PFG can reach</p></dd>
   <dt>CHANG_STR_AGES</dt><dd><p>at what age each PFG goes into the upper stratum</p></dd>
 </dl>
-    <p>These values will allow to calculate or define a set of characteristics for each
-PFG :</p>
+    <p>These values will allow to calculate or define a set of characteristics for
+each PFG :</p>
 <dl class='dl-horizontal'>
   <dt>PROP_KILLED</dt><dd><p>= the proportion of propagules killed by each 
   disturbance <br /> <br />
@@ -243,32 +245,43 @@ PFG :</p>
   different ways <br /> <em>(!currently 4, not yet editable!)</em> that depend 
   on the PFG age <br />
    = ages at which each PFG changes of response stage <br /> <br />
-    These response classes are the same for all disturbances for each PFG. <br />
-   These ages are defined according to the maturity and longevity of the PFG,
-   its life form and its ability to reach the 3rd height stratum :
+    These response classes are the same for all disturbances for each PFG.
+   <br /> These ages are defined according to the maturity and longevity of the
+   PFG, its life form and its ability to grow above 1.5 meter :
    <ul>
 <li><p>age from class 1 to 2 :</p><ul>
 <li><p><code>maturity - 2</code> for herbaceous</p></li>
 <li><p><code>1</code> for chamaephytes and phanerophytes</p></li>
 </ul></li>
-<li><p>age from class 2 to 3 : <code><a href='https://www.rdocumentation.org/packages/base/topics/Extremes'>min(CHANG_STR_AGES_to_str_3, maturity)</a></code></p></li>
-<li><p>age from class 3 to 4 : <code><a href='https://www.rdocumentation.org/packages/base/topics/Extremes'>min(CHANG_STR_AGES_to_str_3, longevity - 2)</a></code></p></li>
+<li><p>age from class 2 to 3 :</p><ul>
+<li><p><code>maturity</code> for herbaceous</p></li>
+<li><p><code><a href='https://www.rdocumentation.org/packages/base/topics/Extremes'>min(maturity - 2 , age_above_150cm)</a></code> for chamaephytes 
+       and phanerophytes</p></li>
+</ul></li>
+<li><p>age from class 3 to 4 :</p><ul>
+<li><p><code>longevity - 2</code> for herbaceous</p></li>
+<li><p><code><a href='https://www.rdocumentation.org/packages/base/topics/Extremes'>min(longevity - 2 , age_above_150cm)</a></code> for chamaephytes 
+       and phanerophytes</p></li>
+</ul></li>
 </ul>
-   Some corrections are made for short-living plants (annuals, biennials...) :
-   as they die after 1 or 2 years, they are not affected differently according
-   to life stages. All ages are the same and correspond to their longevity.</p></dd>
-  <dt>RESPR_AGE</dt><dd><p>= when subject to a perturbation, each PFG can either stay 
-  undisturbed, be killed, or resprout <em>(in years)</em> <br />
+   Some corrections are made for short-living plants (annuals, biennials...)
+   : as they die after 1 or 2 years, they are not affected differently 
+   according to life stages. Break ages from class 1 to 3 are set to 1, and
+   break age from 3 to 4 is set to their longevity (1 or 2).</p></dd>
+  <dt>RESPR_AGE</dt><dd><p>= when subject to a perturbation, each PFG can either
+  stay undisturbed, be killed, or resprout <em>(in years)</em> <br />
    = ages at which each PFG will be rejuvenated by a disturbance <br /> <br />
   It does not impact dead inviduals, only living ones. <br />
   It is defined according to the maturity and longevity of the PFG, and its 
-  ability to reach the 3rd height stratum :
+  ability to grow above 1.5 meter :
   <ul>
-<li><p>individuals within 1st and 2nd response stage are too young to resprout</p></li>
+<li><p>individuals within 1st and 2nd response stage are too young to 
+    resprout</p></li>
 <li><p>individuals within 3rd response stage : <br />
-    <code><a href='https://www.rdocumentation.org/packages/base/topics/Extremes'>min(CHANG_STR_AGES_to_str_3, maturity - 2)</a></code></p></li>
+    <code><a href='https://www.rdocumentation.org/packages/base/topics/Extremes'>min(maturity - 2, age_above_150cm)</a></code></p></li>
 <li><p>individuals within 4th response stage : <code>longevity - 2</code></p></li>
-<li><p>short-living plants (annuals, biennials...) always start back at 0</p></li>
+<li><p>short-living plants (annuals, biennials...) always start back 
+    at 0</p></li>
 </ul></p></dd>
   <dt>FATES</dt><dd><p>= proportion of killed or resprouting individuals <br />
    = for each disturbance and for each response stage</p></dd>

@@ -46,104 +46,107 @@ test_that("PRE_FATE.params_PFGdisturbance gives error with wrong data : mat.PFG.
   
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                               , mat.PFG.succ = data.frame())
-               , "`mat.PFG.succ` does not have the appropriate number of rows (>0) or columns (NAME, TYPE, MATURITY, LONGEVITY, STRATA, CHANG_STR_AGES_to_str_3)"
+               , "`mat.PFG.succ` does not have the appropriate number of rows (>0) or columns (NAME, TYPE, MATURITY, LONGEVITY, STRATA, CHANG_STR_AGES_to_str_...)"
                , fixed = T)
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                               , mat.PFG.succ = data.frame(1))
-               , "`mat.PFG.succ` does not have the appropriate number of rows (>0) or columns (NAME, TYPE, MATURITY, LONGEVITY, STRATA, CHANG_STR_AGES_to_str_3)"
+               , "`mat.PFG.succ` does not have the appropriate number of rows (>0) or columns (NAME, TYPE, MATURITY, LONGEVITY, STRATA, CHANG_STR_AGES_to_str_...)"
                , fixed = T)
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                               , mat.PFG.succ = data.frame(NAME = 1))
-               , "`mat.PFG.succ` does not have the appropriate number of rows (>0) or columns (NAME, TYPE, MATURITY, LONGEVITY, STRATA, CHANG_STR_AGES_to_str_3)"
+               , "`mat.PFG.succ` does not have the appropriate number of rows (>0) or columns (NAME, TYPE, MATURITY, LONGEVITY, STRATA, CHANG_STR_AGES_to_str_...)"
                , fixed = T)
   
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                               , mat.PFG.succ = data.frame(NAME = 1, TYPE = 2, MATURITY = 4
                                                                           , LONGEVITY = 10, STRATA = 1, HOP = 1))
-               , "Column names of `mat.PFG.succ` must be `NAME`, `TYPE`, `MATURITY`, `LONGEVITY`, `STRATA` and `CHANG_STR_AGES_to_str_3`")
+               , "Column names of `mat.PFG.succ` must be `NAME`, `TYPE`, `MATURITY`, `LONGEVITY`, `STRATA` and `CHANG_STR_AGES_to_str_...`")
   
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(NAME = 1, TYPE = c(2,2), MATURITY = 4
-                                                                         , LONGEVITY = 10, STRATA = 1, CHANG_STR_AGES_to_str_3 = 1))
+                                                                         , LONGEVITY = 10, STRATA = 1, CHANG_STR_AGES_to_str_1 = 1))
                , "Column `NAME` of `mat.PFG.succ` must contain different values")
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(NAME = NA, TYPE = 2, MATURITY = 4
-                                                                         , LONGEVITY = 10, STRATA = 1, CHANG_STR_AGES_to_str_3 = 1))
+                                                                         , LONGEVITY = 10, STRATA = 1, CHANG_STR_AGES_to_str_1 = 1))
                , "Column `NAME` of `mat.PFG.succ` must contain different values")
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(NAME = c(1,NA), TYPE = c(2,2), MATURITY = 4
-                                                                         , LONGEVITY = 10, STRATA = 1, CHANG_STR_AGES_to_str_3 = 1))
+                                                                         , LONGEVITY = 10, STRATA = 1, CHANG_STR_AGES_to_str_1 = 1))
                , "Column `NAME` of `mat.PFG.succ` must contain different values")
   
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(NAME = 1, TYPE = NA, MATURITY = 4
-                                                                         , LONGEVITY = 10, STRATA = 1, CHANG_STR_AGES_to_str_3 = 1))
+                                                                         , LONGEVITY = 10, STRATA = 1, CHANG_STR_AGES_to_str_1 = 1))
                , "`mat.PFG.succ$TYPE` must be either `H`, `C` or `P`", fixed = T)
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(NAME = 1, TYPE = 2, MATURITY = 4
-                                                                         , LONGEVITY = 10, STRATA = 1, CHANG_STR_AGES_to_str_3 = 1))
+                                                                         , LONGEVITY = 10, STRATA = 1, CHANG_STR_AGES_to_str_1 = 1))
                , "`mat.PFG.succ$TYPE` must be either `H`, `C` or `P`", fixed = T)
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(NAME = 1, TYPE = "", MATURITY = 4
-                                                                         , LONGEVITY = 10, STRATA = 1, CHANG_STR_AGES_to_str_3 = 1))
+                                                                         , LONGEVITY = 10, STRATA = 1, CHANG_STR_AGES_to_str_1 = 1))
                , "`mat.PFG.succ$TYPE` must be either `H`, `C` or `P`", fixed = T)
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(NAME = c(1,2), TYPE = c(2,NA), MATURITY = 4
-                                                                         , LONGEVITY = 10, STRATA = 1, CHANG_STR_AGES_to_str_3 = 1))
+                                                                         , LONGEVITY = 10, STRATA = 1, CHANG_STR_AGES_to_str_1 = 1))
                , "`mat.PFG.succ$TYPE` must be either `H`, `C` or `P`", fixed = T)
   
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(NAME = 1, TYPE = "H", MATURITY = NA
-                                                                         , LONGEVITY = 10, STRATA = 1, CHANG_STR_AGES_to_str_3 = 1))
-               , "Columns `MATURITY`, `LONGEVITY`, `STRATA` and `CHANG_STR_AGES_to_str_3` of `mat.PFG.succ` must contain numeric values")
+                                                                         , LONGEVITY = 10, STRATA = 1, CHANG_STR_AGES_to_str_1 = 1))
+               , "Columns `MATURITY`, `LONGEVITY`, `STRATA` and `CHANG_STR_AGES_to_str_...` of `mat.PFG.succ` must contain numeric values")
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(NAME = 1, TYPE = "H", MATURITY = "a"
-                                                                         , LONGEVITY = 10, STRATA = 1, CHANG_STR_AGES_to_str_3 = 1))
-               , "Columns `MATURITY`, `LONGEVITY`, `STRATA` and `CHANG_STR_AGES_to_str_3` of `mat.PFG.succ` must contain numeric values")
+                                                                         , LONGEVITY = 10, STRATA = 1, CHANG_STR_AGES_to_str_1 = 1))
+               , "Columns `MATURITY`, `LONGEVITY`, `STRATA` and `CHANG_STR_AGES_to_str_...` of `mat.PFG.succ` must contain numeric values")
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(NAME = 1, TYPE = "H", MATURITY = factor(1)
-                                                                         , LONGEVITY = 10, STRATA = 1, CHANG_STR_AGES_to_str_3 = 1))
-               , "Columns `MATURITY`, `LONGEVITY`, `STRATA` and `CHANG_STR_AGES_to_str_3` of `mat.PFG.succ` must contain numeric values")
+                                                                         , LONGEVITY = 10, STRATA = 1, CHANG_STR_AGES_to_str_1 = 1))
+               , "Columns `MATURITY`, `LONGEVITY`, `STRATA` and `CHANG_STR_AGES_to_str_...` of `mat.PFG.succ` must contain numeric values")
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(NAME = c(1,2), TYPE = "H", MATURITY = c(4,NA)
-                                                                         , LONGEVITY = 10, STRATA = 1, CHANG_STR_AGES_to_str_3 = 1))
-               , "Columns `MATURITY`, `LONGEVITY`, `STRATA` and `CHANG_STR_AGES_to_str_3` of `mat.PFG.succ` must not contain NA values")
+                                                                         , LONGEVITY = 10, STRATA = 1, CHANG_STR_AGES_to_str_1 = 1))
+               , "Columns `MATURITY`, `LONGEVITY`, `STRATA` and `CHANG_STR_AGES_to_str_...` of `mat.PFG.succ` must not contain NA values")
   
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(NAME = 1, TYPE = "H", MATURITY = 4
-                                                                         , LONGEVITY = NA, STRATA = 1, CHANG_STR_AGES_to_str_3 = 1))
-               , "Columns `MATURITY`, `LONGEVITY`, `STRATA` and `CHANG_STR_AGES_to_str_3` of `mat.PFG.succ` must contain numeric values")
+                                                                         , LONGEVITY = NA, STRATA = 1, CHANG_STR_AGES_to_str_1 = 1))
+               , "Columns `MATURITY`, `LONGEVITY`, `STRATA` and `CHANG_STR_AGES_to_str_...` of `mat.PFG.succ` must contain numeric values")
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(NAME = 1, TYPE = "H", MATURITY = 4
-                                                                         , LONGEVITY = "a", STRATA = 1, CHANG_STR_AGES_to_str_3 = 1))
-               , "Columns `MATURITY`, `LONGEVITY`, `STRATA` and `CHANG_STR_AGES_to_str_3` of `mat.PFG.succ` must contain numeric values")
+                                                                         , LONGEVITY = "a", STRATA = 1, CHANG_STR_AGES_to_str_1 = 1))
+               , "Columns `MATURITY`, `LONGEVITY`, `STRATA` and `CHANG_STR_AGES_to_str_...` of `mat.PFG.succ` must contain numeric values")
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(NAME = 1, TYPE = "H", MATURITY = 4
-                                                                         , LONGEVITY = factor(1), STRATA = 1, CHANG_STR_AGES_to_str_3 = 1))
-               , "Columns `MATURITY`, `LONGEVITY`, `STRATA` and `CHANG_STR_AGES_to_str_3` of `mat.PFG.succ` must contain numeric values")
+                                                                         , LONGEVITY = factor(1), STRATA = 1, CHANG_STR_AGES_to_str_1 = 1))
+               , "Columns `MATURITY`, `LONGEVITY`, `STRATA` and `CHANG_STR_AGES_to_str_...` of `mat.PFG.succ` must contain numeric values")
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(NAME = c(1,2), TYPE = "H", MATURITY = 4
-                                                                         , LONGEVITY = c(10,NA), STRATA = 1, CHANG_STR_AGES_to_str_3 = 1))
-               , "Columns `MATURITY`, `LONGEVITY`, `STRATA` and `CHANG_STR_AGES_to_str_3` of `mat.PFG.succ` must not contain NA values")
+                                                                         , LONGEVITY = c(10,NA), STRATA = 1, CHANG_STR_AGES_to_str_1 = 1))
+               , "Columns `MATURITY`, `LONGEVITY`, `STRATA` and `CHANG_STR_AGES_to_str_...` of `mat.PFG.succ` must not contain NA values")
   
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(NAME = 1, TYPE = "H", MATURITY = 4
-                                                                         , LONGEVITY = 10, STRATA = 1, CHANG_STR_AGES_to_str_3 = NA))
-               , "Columns `MATURITY`, `LONGEVITY`, `STRATA` and `CHANG_STR_AGES_to_str_3` of `mat.PFG.succ` must contain numeric values")
+                                                                         , LONGEVITY = 10, STRATA = 1, CHANG_STR_AGES_to_str_1 = NA))
+               , "Columns `MATURITY`, `LONGEVITY`, `STRATA` and `CHANG_STR_AGES_to_str_...` of `mat.PFG.succ` must contain numeric values")
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(NAME = 1, TYPE = "H", MATURITY = 4
-                                                                         , LONGEVITY = 10, STRATA = 1, CHANG_STR_AGES_to_str_3 = "a"))
-               , "Columns `MATURITY`, `LONGEVITY`, `STRATA` and `CHANG_STR_AGES_to_str_3` of `mat.PFG.succ` must contain numeric values")
+                                                                         , LONGEVITY = 10, STRATA = 1, CHANG_STR_AGES_to_str_1 = "a"))
+               , "Columns `MATURITY`, `LONGEVITY`, `STRATA` and `CHANG_STR_AGES_to_str_...` of `mat.PFG.succ` must contain numeric values")
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(NAME = 1, TYPE = "H", MATURITY = 4
-                                                                         , LONGEVITY = 10, STRATA = 1, CHANG_STR_AGES_to_str_3 = factor(1)))
-               , "Columns `MATURITY`, `LONGEVITY`, `STRATA` and `CHANG_STR_AGES_to_str_3` of `mat.PFG.succ` must contain numeric values")
+                                                                         , LONGEVITY = 10, STRATA = 1, CHANG_STR_AGES_to_str_1 = factor(1)))
+               , "Columns `MATURITY`, `LONGEVITY`, `STRATA` and `CHANG_STR_AGES_to_str_...` of `mat.PFG.succ` must contain numeric values")
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(NAME = c(1,2), TYPE = "H", MATURITY = 4
-                                                                         , LONGEVITY = 10, STRATA = 1, CHANG_STR_AGES_to_str_3 = c(1,NA)))
-               , "Columns `MATURITY`, `LONGEVITY`, `STRATA` and `CHANG_STR_AGES_to_str_3` of `mat.PFG.succ` must not contain NA values")
-  
+                                                                         , LONGEVITY = 10, STRATA = 1, CHANG_STR_AGES_to_str_1 = c(1,NA)))
+               , "Columns `MATURITY`, `LONGEVITY`, `STRATA` and `CHANG_STR_AGES_to_str_...` of `mat.PFG.succ` must not contain NA values")
+})
 
+
+## INPUTS
+test_that("PRE_FATE.params_PFGdisturbance gives error with wrong data : mat.PFG.dist", {
   PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
                                 , mat.PFG.succ = data.frame(PFG = paste0("PFG",1:6)
                                                             , type = c("C", "C", "H", "H", "P", "P")

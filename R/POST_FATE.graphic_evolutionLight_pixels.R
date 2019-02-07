@@ -159,51 +159,19 @@ POST_FATE.graphic_evolutionLight_pixels = function(
     no_years = length(years)
     
     ## Get number of strata --------------------------------------------------------
-    # file.globalParam = .getParam(params.lines = abs.simulParam
-    #                              , flag = "GLOBAL_PARAMS"
-    #                              , flag.split = "^--.*--$"
-    #                              , is.num = FALSE)
-    # no_strata = .getParam(params.lines = file.globalParam
-    #                       , flag = "NB_STRATUM"
-    #                       , flag.split = " "
-    #                       , is.num = TRUE)
-    # if (length(no_strata) == 0 || .testParam_notNum(no_strata))
-    # {
-    #   stop(paste0("Missing data!\n The number of strata (NB_STRATUM) within ", file.globalParam, " does not contain any value"))
-    # }
-    
     strata = sapply(sub(".*_STRATA_", "", raster.light.perStrata)
                     , function(x) strsplit(as.character(x), "[.]")[[1]][1])
     strata = sort(unique(as.numeric(strata)))
     no_strata = max(strata)
     if (!(no_strata > 0) || is.infinite(no_strata) | .testParam_notDef(no_strata))
     {
-      stop(paste0("Missing data!\n The folder ", dir.output.perPFG.perStrata, " does not contain adequate files",
+      stop(paste0("Missing data!\n The folder ", dir.output.light, " does not contain adequate files",
                   " (number of strata null or no strata files found)"))
     }
-    # if (no_strata < strata_min)
-    # {
-    #   stop(paste0("Wrong data given!\n `strata_min` is superior to maximum strata found (", no_strata, ")"))
-    # }
-    
-    cat("\n Number of strata : ", no_strata)
-    # cat("\n Selected strata : ", strata_min:no_strata)
-    cat("\n")
-    
 
-    
-    ## Get PFG names ---------------------------------------------------------------
-    # PFG = .getParam(params.lines = abs.simulParam
-    #                 , flag = "PFG_LIFE_HISTORY_PARAMS"
-    #                 , flag.split = "^--.*--$"
-    #                 , is.num = FALSE)
-    # pattern = paste0(name.simulation, "/DATA/PFGS/SUCC/SUCC_")
-    # PFG = sub(".txt", "", sub(pattern, "", PFG))
-    # if (length(PFG) != no_PFG)
-    # {
-    #   stop(paste0("Missing data!\n The number of PFG (NB_FG) within ", file.globalParam
-    #               , " is different from the number of PFG files contained in ", name.simulation, "/DATA/PFGS/SUCC/"))
-    # }
+    cat("\n Number of strata : ", no_strata)
+    cat("\n")
+
     
     ## Get raster mask -------------------------------------------------------------
     file.mask = .getParam(params.lines = abs.simulParam
@@ -251,27 +219,7 @@ POST_FATE.graphic_evolutionLight_pixels = function(
                          "_STRATA_",
                          1:no_strata,
                          ".tif")
-      # file_name = paste0(dir.output.light,
-      #                    "Light_Resources_YEAR_",
-      #                    y,
-      #                    "_",
-      #                    PFG)
-      # file_name = as.vector(sapply(file_name, function(x) paste0(x,
-      #                                                            "_STRATA_",
-      #                                                            strata_min:no_strata,
-      #                                                            ".tif")))
-      # gp_st = sapply(PFG, function(x) paste0(x, "_STRATA_", strata_min:no_strata))
-      # gp_st = gp_st[which(file.exists(file_name))]
-      # file_name = file_name[which(file.exists(file_name))]
-      
-      # if (length(which(file.exists(file_name))) == 0)
-      # {
-      #   stop(paste0("Missing data!\n The names of PFG extracted from files within ", name.simulation, "/DATA/PFGS/SUCC/ : "
-      #               , paste0("\n", PFG, collapse = "\n")
-      #               , "\n is different from the files contained in ", dir.output.light
-      #               , "They should be : "
-      #               , paste0("\n", file_name, collapse = "\n")))
-      # }
+
       st = paste0("STRATUM_", c(1:no_strata))[which(file.exists(file_name))]
       file_name = file_name[which(file.exists(file_name))]
 
@@ -343,7 +291,5 @@ POST_FATE.graphic_evolutionLight_pixels = function(
                    , basename(dir.save)
                    , ".csv \n"
                    , "has been successfully created !\n"))
-    
   }
 }
-
