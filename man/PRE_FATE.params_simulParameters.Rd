@@ -205,6 +205,7 @@ PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
 ## Create PFG soil parameter files
 PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
                         , mat.PFG.soil = data.frame(PFG = paste0("PFG", 1:6)
+                                                    , type = c("C", "C", "H", "H", "P", "P")
                                                     , soil_contrib = c(2.5, 3, 4.8, 2.5, 3, 4.8)
                                                     , soil_tol_min = c(2, 3, 3, 2, 3, 3)
                                                     , soil_tol_max = c(3, 3, 6, 3, 3, 6)))

@@ -5,28 +5,46 @@
 \title{Create \emph{SOIL} parameter files for a \code{FATE-HD}
 simulation}
 \usage{
-PRE_FATE.params_PFGsoil(name.simulation, mat.PFG.soil,
-  no.class = max(mat.PFG.soil$soil_tol_max))
+PRE_FATE.params_PFGsoil(name.simulation, mat.PFG.soil)
 }
 \arguments{
-\item{name.simulation}{a \code{string} that corresponds to the main directory
-or simulation name of the \code{FATE-HD} simulation}
+\item{name.simulation}{a \code{string} that corresponds to the main
+directory or simulation name of the \code{FATE-HD} simulation}
 
-\item{mat.PFG.soil}{a \code{data.frame} with 5 columns : PFG, soil_contrib, 
-soil_tol_min, soil_tol_max}
-
-\item{no.class}{an \code{integer} that corresponds to the number of soil
-classes. Default value is the maximum value of soil_tol_max in
-\code{mat.PFG.soil}}
+\item{mat.PFG.soil}{a \code{data.frame} with 5 columns : PFG, type,
+soil_contrib, soil_tol_min, soil_tol_max}
 }
 \value{
-A \code{.txt} file per PFG into the \code{name.simulation/DATA/PFGS/SOIL/}
-directory with the following parameters :
+A \code{.txt} file per PFG into the 
+\code{name.simulation/DATA/PFGS/SOIL/} directory with the following 
+parameters :
 
 \itemize{
-  \item SOIL_CONTRIB
-  \item SOIL_TOL
+  \item NAME : name of the PFG
+  \item SOIL_CONTRIB : the contribution (influence) of the PFG on the
+  nitrogen soil value of the pixel
+  \item SOIL_LOW : the lower value of nitrogen supported by the PFG
+  \item SOIL_HIGH : the upper value of nitrogen supported by the PFG
+  \item ACTIVE_GERM : the germination rates depending on soil conditions
+  \cr \emph{(0: 0\% 1: 10\% 2: 20\% 3: 30\% 4: 40\% 5: 50\% 6: 60\% 7: 70\% 
+  8: 80\% 9: 90\% 10: 100\%)}
+  \item SOIL_TOL : the PFG soil tolerance table (in a single row). \cr 
+  This is a vector of 9 numbers corresponding to the ability of the PFG to
+  survive or not :
+  \itemize{
+    \item at different life stages \emph{(Germinant (Ge), Immature (Im), 
+    Mature (Ma))}
+    \item under different soil conditions \emph{(Low (L), Medium (M) or 
+    High (H))}.
+  }
+  These parameters should be given in this order : GeL, GeM, GeH, ImL, ImM,
+  ImH, MaL, MaM, MaH.
+  \cr \emph{(0: 0\% 1: 10\% 2: 20\% 3: 30\% 4: 40\% 5: 50\% 6: 60\% 7: 70\% 
+  8: 80\% 9: 90\% 10: 100\%)}
 }
+
+A \code{SOIL_COMPLETE_TABLE.csv} file summarizing information for all groups
+into the \code{name.simulation/DATA/PFGS/} directory.
 }
 \description{
 This script is designed to create parameter files containing 
@@ -40,24 +58,45 @@ Several parameters are required for each PFG in order to set up the soil
 competition :
 
 \describe{
+  \item{type}{or life-form, based on Raunkier. It should be either \code{H} 
+  (herbaceous), \code{C} (chamaephyte) or \code{P} (phanerophyte) for now}
   \item{soil_contrib}{a value between 0 and X corresponding to the nitrogen 
   value of the PFG (e.g. from Ellenberg)}
   \item{soil_tol_min}{the minimum nitrogen value tolerated by the PFG}
   \item{soil_tol_max}{the maximum nitrogen value tolerated by the PFG}
 }
+
+
+These values will allow to calculate or define a set of characteristics for 
+each PFG :
+
+\describe{
+  \item{SOIL_CONTRIB}{}
+  \item{SOIL_LOW}{}
+  \item{SOIL_HIGH}{}
+  \item{ACTIVE_GERM}{proportion of seeds that will germinate for each soil
+  condition (Low, Medium, High)}
+  \item{SOIL_TOL}{ defined for each life stage (Germinant, Immature, 
+  Mature) and each soil condition (Low, Medium, High) :
+  \itemize{
+    \item (A) germinants are severely impacted by wrong soil conditions :
+    \itemize{
+      \item only 10\% of the cohorts survive in Low soil condition
+      \item all cohorts die in High soil condition
+    }
+    \item (B) immatures are half impacted by wrong soil conditions :
+    \itemize{
+      \item 50\% of the cohorts survive in Low soil condition
+      \item 40\% of the cohorts survive in High soil condition
+    }
+    \item (C) matures are little affected by wrong soil conditions :
+    \itemize{
+      \item 90\% of the cohorts survive in Low soil condition
+      \item 80\% of the cohorts survive in High soil condition
+    }
+  }
+  }
 }
-\examples{
-
-## Create a skeleton folder with the default name ('FATE_simulation')
-PRE_FATE.skeletonDirectory()
-
-## Create PFG soil parameter files
-PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                        , mat.PFG.soil = data.frame(PFG = c("PFG1", "PFG2", "PFG3")
-                                                    , soil_contrib = c(2.5, 3, 4.8)
-                                                    , soil_tol_min = c(2, 3, 3)
-                                                    , soil_tol_max = c(3, 3, 6)))
-
 }
 \seealso{
 \code{\link{PRE_FATE.skeletonDirectory}}

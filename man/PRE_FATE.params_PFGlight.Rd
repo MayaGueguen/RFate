@@ -83,7 +83,7 @@ each PFG :
     \item (A) PFG are tolerant to high light if \code{light >= 3}
     \item (B) all germinants are assumed to be tolerant to Low light
     \item (C) all mature trees or chamaephytes are assumed to be tolerant to
-    all light conditions
+    Medium and High light conditions
     \item (D) all immature trees that grow in the penultimate stratum are 
     assumed to be tolerant to High light
   }

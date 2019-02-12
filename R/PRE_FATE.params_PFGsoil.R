@@ -10,13 +10,10 @@
 ##' soil contribution and tolerance for each PFG (one file for each of them) 
 ##' used in the soil module of \code{FATE-HD}.
 ##'              
-##' @param name.simulation a \code{string} that corresponds to the main directory
-##' or simulation name of the \code{FATE-HD} simulation
-##' @param mat.PFG.soil a \code{data.frame} with 5 columns : PFG, soil_contrib, 
-##' soil_tol_min, soil_tol_max
-##' @param no.class an \code{integer} that corresponds to the number of soil
-##' classes. Default value is the maximum value of soil_tol_max in
-##' \code{mat.PFG.soil}
+##' @param name.simulation a \code{string} that corresponds to the main
+##' directory or simulation name of the \code{FATE-HD} simulation
+##' @param mat.PFG.soil a \code{data.frame} with 5 columns : PFG, type,
+##' soil_contrib, soil_tol_min, soil_tol_max
 ##' 
 ##' 
 ##' @details
@@ -27,6 +24,8 @@
 ##' competition :
 ##' 
 ##' \describe{
+##'   \item{type}{or life-form, based on Raunkier. It should be either \code{H} 
+##'   (herbaceous), \code{C} (chamaephyte) or \code{P} (phanerophyte) for now}
 ##'   \item{soil_contrib}{a value between 0 and X corresponding to the nitrogen 
 ##'   value of the PFG (e.g. from Ellenberg)}
 ##'   \item{soil_tol_min}{the minimum nitrogen value tolerated by the PFG}
@@ -34,13 +33,68 @@
 ##' }
 ##' 
 ##' 
-##' @return A \code{.txt} file per PFG into the \code{name.simulation/DATA/PFGS/SOIL/}
-##' directory with the following parameters :
+##' These values will allow to calculate or define a set of characteristics for 
+##' each PFG :
+##' 
+##' \describe{
+##'   \item{SOIL_CONTRIB}{}
+##'   \item{SOIL_LOW}{}
+##'   \item{SOIL_HIGH}{}
+##'   \item{ACTIVE_GERM}{proportion of seeds that will germinate for each soil
+##'   condition (Low, Medium, High)}
+##'   \item{SOIL_TOL}{ defined for each life stage (Germinant, Immature, 
+##'   Mature) and each soil condition (Low, Medium, High) :
+##'   \itemize{
+##'     \item (A) germinants are severely impacted by wrong soil conditions :
+##'     \itemize{
+##'       \item only 10\% of the cohorts survive in Low soil condition
+##'       \item all cohorts die in High soil condition
+##'     }
+##'     \item (B) immatures are half impacted by wrong soil conditions :
+##'     \itemize{
+##'       \item 50\% of the cohorts survive in Low soil condition
+##'       \item 40\% of the cohorts survive in High soil condition
+##'     }
+##'     \item (C) matures are little affected by wrong soil conditions :
+##'     \itemize{
+##'       \item 90\% of the cohorts survive in Low soil condition
+##'       \item 80\% of the cohorts survive in High soil condition
+##'     }
+##'   }
+##'   }
+##' }
+##' 
+##' 
+##' @return A \code{.txt} file per PFG into the 
+##' \code{name.simulation/DATA/PFGS/SOIL/} directory with the following 
+##' parameters :
 ##' 
 ##' \itemize{
-##'   \item SOIL_CONTRIB
-##'   \item SOIL_TOL
+##'   \item NAME : name of the PFG
+##'   \item SOIL_CONTRIB : the contribution (influence) of the PFG on the
+##'   nitrogen soil value of the pixel
+##'   \item SOIL_LOW : the lower value of nitrogen supported by the PFG
+##'   \item SOIL_HIGH : the upper value of nitrogen supported by the PFG
+##'   \item ACTIVE_GERM : the germination rates depending on soil conditions
+##'   \cr \emph{(0: 0\% 1: 10\% 2: 20\% 3: 30\% 4: 40\% 5: 50\% 6: 60\% 7: 70\% 
+##'   8: 80\% 9: 90\% 10: 100\%)}
+##'   \item SOIL_TOL : the PFG soil tolerance table (in a single row). \cr 
+##'   This is a vector of 9 numbers corresponding to the ability of the PFG to
+##'   survive or not :
+##'   \itemize{
+##'     \item at different life stages \emph{(Germinant (Ge), Immature (Im), 
+##'     Mature (Ma))}
+##'     \item under different soil conditions \emph{(Low (L), Medium (M) or 
+##'     High (H))}.
+##'   }
+##'   These parameters should be given in this order : GeL, GeM, GeH, ImL, ImM,
+##'   ImH, MaL, MaM, MaH.
+##'   \cr \emph{(0: 0\% 1: 10\% 2: 20\% 3: 30\% 4: 40\% 5: 50\% 6: 60\% 7: 70\% 
+##'   8: 80\% 9: 90\% 10: 100\%)}
 ##' }
+##' 
+##' A \code{SOIL_COMPLETE_TABLE.csv} file summarizing information for all groups
+##' into the \code{name.simulation/DATA/PFGS/} directory.  
 ##' 
 ##' 
 ##' @keywords FATE, simulation, soil tolerance, nitrogen
@@ -55,6 +109,7 @@
 ##' ## Create PFG soil parameter files
 ##' PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
 ##'                         , mat.PFG.soil = data.frame(PFG = c("PFG1", "PFG2", "PFG3")
+##'                                                     , type = c("H", "H", "C)
 ##'                                                     , soil_contrib = c(2.5, 3, 4.8)
 ##'                                                     , soil_tol_min = c(2, 3, 3)
 ##'                                                     , soil_tol_max = c(3, 3, 6)))
@@ -67,7 +122,7 @@
 PRE_FATE.params_PFGsoil = function(
   name.simulation
   , mat.PFG.soil
-  , no.class = max(mat.PFG.soil$soil_tol_max)
+  # , no.class = max(mat.PFG.soil$soil_tol_max)
 ){
   
   .testParam_existFolder(name.simulation, "DATA/PFGS/SOIL/")
@@ -77,18 +132,18 @@ PRE_FATE.params_PFGsoil = function(
     .stopMessage_beDataframe("mat.PFG.soil")
   } else
   {
-    if (nrow(mat.PFG.soil) == 0 || ncol(mat.PFG.soil) != 4)
+    if (nrow(mat.PFG.soil) == 0 || ncol(mat.PFG.soil) != 5)
     {
-      .stopMessage_numRowCol("mat.PFG.soil", c("PFG", "soil_contrib", "soil_tol_min", "soil_tol_max"))
+      .stopMessage_numRowCol("mat.PFG.soil", c("PFG", "type", "soil_contrib", "soil_tol_min", "soil_tol_max"))
     }
-    if (ncol(mat.PFG.soil) == 4)
+    if (ncol(mat.PFG.soil) == 5)
     {
-      if (sum(colnames(mat.PFG.soil) == c("PFG", "soil_contrib", "soil_tol_min", "soil_tol_max")) == 4)
+      if (sum(colnames(mat.PFG.soil) == c("PFG", "type", "soil_contrib", "soil_tol_min", "soil_tol_max")) == 5)
       {
-        mat.PFG.soil = mat.PFG.soil[ , c("PFG", "soil_contrib", "soil_tol_min", "soil_tol_max")]
+        mat.PFG.soil = mat.PFG.soil[ , c("PFG", "type", "soil_contrib", "soil_tol_min", "soil_tol_max")]
       } else
       {
-        .stopMessage_columnNames("mat.PFG.soil", c("PFG", "soil_contrib", "soil_tol_min", "soil_tol_max"))
+        .stopMessage_columnNames("mat.PFG.soil", c("PFG", "type", "soil_contrib", "soil_tol_min", "soil_tol_max"))
       }
     }
     mat.PFG.soil$PFG = as.character(mat.PFG.soil$PFG)
@@ -99,6 +154,10 @@ PRE_FATE.params_PFGsoil = function(
     if (.testParam_notChar(mat.PFG.soil$PFG))
     {
       .stopMessage_beChar("mat.PFG.soil$PFG")
+    }
+    if (.testParam_notInChar(mat.PFG.soil$type, inList = c("H", "C", "P")))
+    {
+      .stopMessage_content("mat.PFG.soil$type", c("H", "C", "P"))
     }
     if (!is.numeric(mat.PFG.soil$soil_contrib) ||
         !is.numeric(mat.PFG.soil$soil_tol_min) ||
@@ -128,52 +187,91 @@ PRE_FATE.params_PFGsoil = function(
   ## GET SOIL CONTRIBUTION
   SOIL_CONTRIB = as.numeric(mat.PFG.soil$soil_contrib)
   
-  ## GET SOIL TOLERANCE
-  ##    = for each life stage (Germinant, Immature, Mature)
-  ##    = and for each class
-  ## 0 = non tolerant
-  ## 1 = tolerant
-  SOIL_TOL = matrix(0, nrow = 3 * no.class, ncol = no.PFG)
-  
-  for (i in 1:no.PFG)
-  {
-    ind_tol = seq(1, no.class, 1)
-    ind_tol = ifelse(ind_tol >= mat.PFG.soil$soil_tol_min[i] & ind_tol <= mat.PFG.soil$soil_tol_max[i]
-                     , 1, 0)
-    SOIL_TOL[, i] = rep(ind_tol, 3)
-  }
-  
-  # ### All woody PFGs are tolerant to rich soils when they are mature
-  # #SOIL_TOL["Ma3",which(dat$type=="P")] <- 1
-  # #SOIL_TOL["Ma3",which(dat$type=="C")] <- 1
-  
-  # ### All woody PFGs are ALSO tolerant to rich soils when they are Immature
-  # #SOIL_TOL["Im3",which(dat$type=="P")] <- 1
-  # #SOIL_TOL["Im3",which(dat$type=="C")] <- 1
-  
-  # ### All woody PFGs are ALWAYS tolerant to rich soils 
-  # #SOIL_TOL["Ge3",which(dat$type=="P")] <- 1
-  # #SOIL_TOL["Ge3",which(dat$type=="C")] <- 1
+  ## GET SOIL TOLERANCE LIMITS
+  SOIL_LOW = as.numeric(mat.PFG.soil$soil_tol_min)
+  SOIL_HIGH = as.numeric(mat.PFG.soil$soil_tol_max)
+
+    
+  no.class = seq(min(round(mat.PFG.soil$soil_contrib))
+                 , max(round(mat.PFG.soil$soil_contrib))
+                 , 1)
   
   cat("\n ############## CLASS INFORMATIONS ############## \n")
-  cat("\n Number of classes : ", no.class)
-  cat("\n Number of PFG within each class (contribution) : ", table(cut(mat.PFG.soil$soil_contrib, breaks = 1:no.class)))
+  cat("\n Classes : ", no.class)
+  cat("\n Number of classes : ", max(no.class))
+  cat("\n Number of PFG within each class (contribution) : ", table(cut(mat.PFG.soil$soil_contrib
+                                                                        , breaks = 1:max(no.class))))
   cat("\n")
   
   #################################################################################################
   
+  ## GET GERMINATION RATE depending on soil conditions
+  ##   = these rates should express a deviation from the
+  ##     germination rate in optimal conditions (=100%)
+  ##   = for each soil condition (Low, Medium, High)
+  ## 11 levels : 0 = 0 %
+  ##             1 = 10 %
+  ##             2 = 20 %
+  ##             3 = 30 %
+  ##             4 = 40 %
+  ##             5 = 50 %
+  ##             6 = 60 %
+  ##             7 = 70 %
+  ##             8 = 80 %
+  ##             9 = 90 %
+  ##             10 = 100 %
+  ACTIVE_GERM = matrix(10, nrow = 3, ncol = no.PFG)
+  ## woody species have little variation in germination rate depending on soil conditions
+  ACTIVE_GERM[c(1,2), which(mat.PFG.soil$type %in% c("C", "P"))] = 9
+  ## herbaceous germinate less in the shadow
+  ACTIVE_GERM[1, which(mat.PFG.soil$type == "H")] = 8 ## low soil conditions
+  ACTIVE_GERM[3, which(mat.PFG.soil$type == "H")] = 5 ## high soil conditions
+  
+  #################################################################################################
+  
+  ## GET SOIL TOLERANCE
+  ##    = for each life stage (Germinant, Immature, Mature)
+  ##    = for each soil condition (Low, Medium, High)
+  ## 11 levels : 0 = 0 %
+  ##             1 = 10 %
+  ##             2 = 20 %
+  ##             3 = 30 %
+  ##             4 = 40 %
+  ##             5 = 50 %
+  ##             6 = 60 %
+  ##             7 = 70 %
+  ##             8 = 80 %
+  ##             9 = 90 %
+  ##             10 = 100 %
+  SOIL_TOL = matrix(100, nrow = 3 * 3, ncol = no.PFG)
+
+  SOIL_TOL[1, ] = 1 ## Germinant - Low soil conditions
+  SOIL_TOL[3, ] = 0 ## Germinant - High soil conditions
+ 
+  SOIL_TOL[4, ] = 5 ## Immature - Low soil conditions
+  SOIL_TOL[6, ] = 4 ## Immature - High soil conditions
+  
+  SOIL_TOL[7, ] = 9 ## Mature - Low soil conditions
+  SOIL_TOL[9, ] = 8 ## Mature - High soil conditions
+  
+  #################################################################################################
+  
   names.params.list = mat.PFG.soil$PFG
-  names.params.list.sub = c("NAME", "SOIL_CONTRIB", "SOIL_TOL")
+  names.params.list.sub = c("NAME", "SOIL_CONTRIB"
+                            , "SOIL_LOW", "SOIL_HIGH"
+                            , "ACTIVE_GERM", "SOIL_TOL")
 
   params.list = lapply(names.params.list.sub, function(x) { return(get(x)) })
   
   params.csv = t(do.call(rbind, params.list))
   colnames(params.csv) = c("NAME"
                            , "SOIL_CONTRIB"
+                           , "SOIL_LOW"
+                           , "SOIL_HIGH"
+                           , paste0("ACTIVE_GERM_for_", c("L", "M", "H"))
                            , paste0("SOIL_TOL_for_",
-                                    as.vector(sapply(c("Ge", "Im", "Ma")
-                                                     , function(x) paste0(x, 1:no.class)))
-                           ))
+                                    c("GeL", "GeM", "GeH", "ImL", "ImM", "ImH", "MaL", "MaM", "MaH"))
+                           )
   
   write.table(params.csv
               , file = paste0(name.simulation, "/DATA/PFGS/SOIL_COMPLETE_TABLE.csv")
