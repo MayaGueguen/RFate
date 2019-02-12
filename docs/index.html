@@ -9,8 +9,7 @@
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
-<meta property="og:title" content="Vegetation modelling with the FATE-HD model">
+<script src="pkgdown.js"></script><meta property="og:title" content="Vegetation modelling with the FATE-HD model">
 <meta property="og:description" content="FATE-HD is a vegetation model based on Plant Functional Groups (PFG)
     that aims to simulate primary ecological succession.
     RFate is a package which provides functions to :
@@ -35,7 +34,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">RFate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.4.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.5.9000</span>
       </span>
     </div>
 
@@ -299,6 +298,12 @@ with the function <a href="https://mayagueguen.github.io/RFate/reference/PRE_FAT
 <strong>Dispersal files</strong> : related to the dispersal ability with the function <a href="https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGdispersal.html">PRE_FATE.params_PFGdispersal</a>
 </li>
 <li>
+<strong>Light files</strong> : related to the light competition with the function <a href="https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGlight.html">PRE_FATE.params_PFGlight</a>
+</li>
+<li>
+<strong>Soil files</strong> : related to the soil competition with the function <a href="https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGsoil.html">PRE_FATE.params_PFGsoil</a>
+</li>
+<li>
 <strong>Disturbance files</strong> : related to the response to perturbations in terms of resprouting and mortality<br>
 with the function <a href="https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGdisturbance.html">PRE_FATE.params_PFGdisturbance</a>
 </li>
@@ -319,6 +324,44 @@ It can be created with the function <a href="https://mayagueguen.github.io/RFate
 <h2 class="hasAnchor">
 <a href="#post_fate---evaluation-of-simulation" class="anchor"></a><font color="#068f96"> <i class="fa fa-battery-three-quarters"></i> <code>POST_FATE</code> - evaluation of simulation </font>
 </h2>
+<p><br></p>
+<p><em>1. Transformation of outputs</em></p>
+<ul>
+<li>
+<strong>Create binary maps</strong> : transform abundance values into presence / absence with the function <a href="https://mayagueguen.github.io/RFate/reference/POST_FATE.relativeAbund_presenceAbsence.html">POST_FATE.relativeAbund_presenceAbsence</a>
+</li>
+</ul>
+<p><em>2. Evolution of simulation through time</em></p>
+<ul>
+<li>
+<strong>Abundance over all studied area</strong> : with the function <a href="https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_evolutionCoverage.html">POST_FATE.graphic_evolutionCoverage</a>
+</li>
+<li>
+<strong>Abundance within some pixels</strong> : with the function <a href="https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_evolutionAbund_pixels.html">POST_FATE.graphic_evolutionAbund_pixels</a>
+</li>
+<li>
+<strong>Light within some pixels over all studied area</strong> : with the function <a href="https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_evolutionLight_pixels.html">POST_FATE.graphic_evolutionLight_pixels</a>
+</li>
+</ul>
+<p><em>3. Evaluation of outputs</em></p>
+<ul>
+<li>
+<strong>PFG outputs vs Habitat suitability</strong> : compare binary maps (outputs) with habitat suitability maps (inputs)<br>
+with the function <a href="https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFGvsHS.html">POST_FATE.graphic_mapPFGvsHS</a>
+</li>
+<li>
+<strong>PFG richness</strong> : create map of number of PFG alive within each pixel<br>
+with the function <a href="https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFGrichness.html">POST_FATE.graphic_mapPFGrichness</a>
+</li>
+<li>
+<strong>PFG cover</strong> : create map of PFG abundance above 1.5 meters within each pixel<br>
+with the function <a href="https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFGcover.html">POST_FATE.graphic_mapPFGcover</a>
+</li>
+<li>
+<strong>Validation statistics</strong> : calculate evaluation metrics (TSS, AUC) for each PFG<br>
+with the function <a href="https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_validationStatistics.html">POST_FATE.graphic_validationStatistics</a>
+</li>
+</ul>
 </div>
 </div>
 

@@ -145,6 +145,8 @@ with the function [PRE_FATE.params_changingYears](https://mayagueguen.github.io/
 *2. For each PFG : behavior and characteristics*
 - **Succession files** : related to the life history with the function [PRE_FATE.params_PFGsuccession](https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGsuccession.html)
 - **Dispersal files** : related to the dispersal ability with the function [PRE_FATE.params_PFGdispersal](https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGdispersal.html)
+- **Light files** : related to the light competition with the function [PRE_FATE.params_PFGlight](https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGlight.html)
+- **Soil files** : related to the soil competition with the function [PRE_FATE.params_PFGsoil](https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGsoil.html)
 - **Disturbance files** : related to the response to perturbations in terms of resprouting and mortality  
 with the function [PRE_FATE.params_PFGdisturbance](https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGdisturbance.html)
 
@@ -159,3 +161,23 @@ ________________________________________________________________________________
 
 ## <font color="#068f96"> <i class="fa fa-battery-three-quarters"></i> `POST_FATE` - evaluation of simulation </font>
 
+<br/>
+
+*1. Transformation of outputs*
+- **Create binary maps** : transform abundance values into presence / absence
+with the function [POST_FATE.relativeAbund_presenceAbsence](https://mayagueguen.github.io/RFate/reference/POST_FATE.relativeAbund_presenceAbsence.html)
+
+*2. Evolution of simulation through time*
+- **Abundance over all studied area** : with the function [POST_FATE.graphic_evolutionCoverage](https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_evolutionCoverage.html)
+- **Abundance within some pixels** : with the function [POST_FATE.graphic_evolutionAbund_pixels](https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_evolutionAbund_pixels.html)
+- **Light within some pixels over all studied area** : with the function [POST_FATE.graphic_evolutionLight_pixels](https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_evolutionLight_pixels.html)
+
+*3. Evaluation of outputs*
+- **PFG outputs vs Habitat suitability** : compare binary maps (outputs) with habitat suitability maps (inputs)  
+with the function [POST_FATE.graphic_mapPFGvsHS](https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFGvsHS.html)
+- **PFG richness** : create map of number of PFG alive within each pixel  
+with the function [POST_FATE.graphic_mapPFGrichness](https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFGrichness.html)
+- **PFG cover** : create map of PFG abundance above 1.5 meters within each pixel  
+with the function [POST_FATE.graphic_mapPFGcover](https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFGcover.html)
+- **Validation statistics** : calculate evaluation metrics (TSS, AUC) for each PFG  
+with the function [POST_FATE.graphic_validationStatistics](https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_validationStatistics.html)
