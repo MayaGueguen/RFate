@@ -35,7 +35,6 @@ The tree structure is detailed below :
   needed by the model
   \itemize{
     \item \strong{GLOBAL_PARAMETERS} : files containing global parameters for the simulation
-    \item \strong{NAMESPACE_CONSTANTS} : files containing constants used in the model
     \item \strong{MASK} : all maps used in the model
     \item \strong{SCENARIO} : files containing information about changes in
     input data ( e.g. habitat suitability maps, disturbances maps, etc) 
@@ -64,7 +63,6 @@ PRE_FATE.skeletonDirectory()
 
 }
 \seealso{
-\code{\link{PRE_FATE.params_namespaceConstants}},
 \code{\link{PRE_FATE.params_globalParameters}},
 \code{\link{PRE_FATE.params_PFGsuccession}},
 \code{\link{PRE_FATE.params_PFGlight}},

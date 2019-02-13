@@ -145,6 +145,289 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : requir
                , "`required.seeding_timestep` must be an integer > 0")
 })
 
+## INPUTS
+test_that("PRE_FATE.params_globalParameters gives error with wrong data : required.max_by_cohort", {
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.simul_duration = 100
+                                                , required.seeding_duration = 100
+                                                , required.seeding_timestep = 100
+                                                , required.max_by_cohort = NA)
+               , "`required.max_by_cohort` must be an integer > 0")
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.simul_duration = 100
+                                                , required.seeding_duration = 100
+                                                , required.seeding_timestep = 100
+                                                , required.max_by_cohort = NULL)
+               , "`required.max_by_cohort` must be an integer > 0")
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.simul_duration = 100
+                                                , required.seeding_duration = 100
+                                                , required.seeding_timestep = 100
+                                                , required.max_by_cohort = "")
+               , "`required.max_by_cohort` must be an integer > 0")
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.simul_duration = 100
+                                                , required.seeding_duration = 100
+                                                , required.seeding_timestep = 100
+                                                , required.max_by_cohort = -1)
+               , "`required.max_by_cohort` must be an integer > 0")
+})
+
+## INPUTS
+test_that("PRE_FATE.params_globalParameters gives error with wrong data : required.max_abund_low", {
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.simul_duration = 100
+                                                , required.seeding_duration = 100
+                                                , required.seeding_timestep = 100
+                                                , required.max_by_cohort = 5000000
+                                                , required.max_abund_low = NA)
+               , "`required.max_abund_low` must be an integer > 0")
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.simul_duration = 100
+                                                , required.seeding_duration = 100
+                                                , required.seeding_timestep = 100
+                                                , required.max_by_cohort = 5000000
+                                                , required.max_abund_low = NULL)
+               , "`required.max_abund_low` must be an integer > 0")
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.simul_duration = 100
+                                                , required.seeding_duration = 100
+                                                , required.seeding_timestep = 100
+                                                , required.max_by_cohort = 5000000
+                                                , required.max_abund_low = "")
+               , "`required.max_abund_low` must be an integer > 0")
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.simul_duration = 100
+                                                , required.seeding_duration = 100
+                                                , required.seeding_timestep = 100
+                                                , required.max_by_cohort = 5000000
+                                                , required.max_abund_low = -1)
+               , "`required.max_abund_low` must be an integer > 0")
+})
+
+## INPUTS
+test_that("PRE_FATE.params_globalParameters gives error with wrong data : required.max_abund_medium", {
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.simul_duration = 100
+                                                , required.seeding_duration = 100
+                                                , required.seeding_timestep = 100
+                                                , required.max_by_cohort = 5000000
+                                                , required.max_abund_low = 3000000
+                                                , required.max_abund_medium = NA)
+               , "`required.max_abund_medium` must be an integer > 0")
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.simul_duration = 100
+                                                , required.seeding_duration = 100
+                                                , required.seeding_timestep = 100
+                                                , required.max_by_cohort = 5000000
+                                                , required.max_abund_low = 3000000
+                                                , required.max_abund_medium = NULL)
+               , "`required.max_abund_medium` must be an integer > 0")
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.simul_duration = 100
+                                                , required.seeding_duration = 100
+                                                , required.seeding_timestep = 100
+                                                , required.max_by_cohort = 5000000
+                                                , required.max_abund_low = 3000000
+                                                , required.max_abund_medium = "")
+               , "`required.max_abund_medium` must be an integer > 0")
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.simul_duration = 100
+                                                , required.seeding_duration = 100
+                                                , required.seeding_timestep = 100
+                                                , required.max_by_cohort = 5000000
+                                                , required.max_abund_low = 3000000
+                                                , required.max_abund_medium = -1)
+               , "`required.max_abund_medium` must be an integer > 0")
+})
+
+## INPUTS
+test_that("PRE_FATE.params_globalParameters gives error with wrong data : required.max_abund_high", {
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.simul_duration = 100
+                                                , required.seeding_duration = 100
+                                                , required.seeding_timestep = 100
+                                                , required.max_by_cohort = 5000000
+                                                , required.max_abund_low = 3000000
+                                                , required.max_abund_medium = 5000000
+                                                , required.max_abund_high = NA)
+               , "`required.max_abund_high` must be an integer > 0")
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.simul_duration = 100
+                                                , required.seeding_duration = 100
+                                                , required.seeding_timestep = 100
+                                                , required.max_by_cohort = 5000000
+                                                , required.max_abund_low = 3000000
+                                                , required.max_abund_medium = 5000000
+                                                , required.max_abund_high = NULL)
+               , "`required.max_abund_high` must be an integer > 0")
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.simul_duration = 100
+                                                , required.seeding_duration = 100
+                                                , required.seeding_timestep = 100
+                                                , required.max_by_cohort = 5000000
+                                                , required.max_abund_low = 3000000
+                                                , required.max_abund_medium = 5000000
+                                                , required.max_abund_high = "")
+               , "`required.max_abund_high` must be an integer > 0")
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.simul_duration = 100
+                                                , required.seeding_duration = 100
+                                                , required.seeding_timestep = 100
+                                                , required.max_by_cohort = 5000000
+                                                , required.max_abund_low = 3000000
+                                                , required.max_abund_medium = 5000000
+                                                , required.max_abund_high = -1)
+               , "`required.max_abund_high` must be an integer > 0")
+})
+
+## INPUTS
+test_that("PRE_FATE.params_globalParameters gives error with wrong data : LIGHT.thresh_medium", {
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.simul_duration = 100
+                                                , required.seeding_duration = 100
+                                                , required.seeding_timestep = 100
+                                                , required.max_by_cohort = 5000000
+                                                , required.max_abund_low = 3000000
+                                                , required.max_abund_medium = 5000000
+                                                , required.max_abund_high = 9000000
+                                                , doLight = T
+                                                , LIGHT.thresh_medium = NA)
+               , "`LIGHT.thresh_medium` must be an integer > 0")
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.simul_duration = 100
+                                                , required.seeding_duration = 100
+                                                , required.seeding_timestep = 100
+                                                , required.max_by_cohort = 5000000
+                                                , required.max_abund_low = 3000000
+                                                , required.max_abund_medium = 5000000
+                                                , required.max_abund_high = 9000000
+                                                , doLight = T
+                                                , LIGHT.thresh_medium = NULL)
+               , "`LIGHT.thresh_medium` must be an integer > 0")
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.simul_duration = 100
+                                                , required.seeding_duration = 100
+                                                , required.seeding_timestep = 100
+                                                , required.max_by_cohort = 5000000
+                                                , required.max_abund_low = 3000000
+                                                , required.max_abund_medium = 5000000
+                                                , required.max_abund_high = 9000000
+                                                , doLight = T
+                                                , LIGHT.thresh_medium = "")
+               , "`LIGHT.thresh_medium` must be an integer > 0")
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.simul_duration = 100
+                                                , required.seeding_duration = 100
+                                                , required.seeding_timestep = 100
+                                                , required.max_by_cohort = 5000000
+                                                , required.max_abund_low = 3000000
+                                                , required.max_abund_medium = 5000000
+                                                , required.max_abund_high = 9000000
+                                                , doLight = T
+                                                , LIGHT.thresh_medium = -1)
+               , "`LIGHT.thresh_medium` must be an integer > 0")
+})
+
+## INPUTS
+test_that("PRE_FATE.params_globalParameters gives error with wrong data : LIGHT.thresh_low", {
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.simul_duration = 100
+                                                , required.seeding_duration = 100
+                                                , required.seeding_timestep = 100
+                                                , required.max_by_cohort = 5000000
+                                                , required.max_abund_low = 3000000
+                                                , required.max_abund_medium = 5000000
+                                                , required.max_abund_high = 9000000
+                                                , doLight = T
+                                                , LIGHT.thresh_medium = 13000000
+                                                , LIGHT.thresh_low = NA)
+               , "`LIGHT.thresh_low` must be an integer > 0")
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.simul_duration = 100
+                                                , required.seeding_duration = 100
+                                                , required.seeding_timestep = 100
+                                                , required.max_by_cohort = 5000000
+                                                , required.max_abund_low = 3000000
+                                                , required.max_abund_medium = 5000000
+                                                , required.max_abund_high = 9000000
+                                                , doLight = T
+                                                , LIGHT.thresh_medium = 13000000
+                                                , LIGHT.thresh_low = NULL)
+               , "`LIGHT.thresh_low` must be an integer > 0")
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.simul_duration = 100
+                                                , required.seeding_duration = 100
+                                                , required.seeding_timestep = 100
+                                                , required.max_by_cohort = 5000000
+                                                , required.max_abund_low = 3000000
+                                                , required.max_abund_medium = 5000000
+                                                , required.max_abund_high = 9000000
+                                                , doLight = T
+                                                , LIGHT.thresh_medium = 13000000
+                                                , LIGHT.thresh_low = "")
+               , "`LIGHT.thresh_low` must be an integer > 0")
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.simul_duration = 100
+                                                , required.seeding_duration = 100
+                                                , required.seeding_timestep = 100
+                                                , required.max_by_cohort = 5000000
+                                                , required.max_abund_low = 3000000
+                                                , required.max_abund_medium = 5000000
+                                                , required.max_abund_high = 9000000
+                                                , doLight = T
+                                                , LIGHT.thresh_medium = 13000000
+                                                , LIGHT.thresh_low = -1)
+               , "`LIGHT.thresh_low` must be an integer > 0")
+})
 
 ## INPUTS
 test_that("PRE_FATE.params_globalParameters gives error with wrong data : HABSUIT.ref_option", {
@@ -154,6 +437,10 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : HABSUI
                                                 , required.simul_duration = 100
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
+                                                , required.max_by_cohort = 5000000
+                                                , required.max_abund_low = 3000000
+                                                , required.max_abund_medium = 5000000
+                                                , required.max_abund_high = 9000000
                                                 , doHabSuitability = T
                                                 , HABSUIT.ref_option = NA)
                , "`HABSUIT.ref_option` must be either `1 (random)` or `2 (distribution per PFG)`", fixed = T)
@@ -163,6 +450,10 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : HABSUI
                                                 , required.simul_duration = 100
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
+                                                , required.max_by_cohort = 5000000
+                                                , required.max_abund_low = 3000000
+                                                , required.max_abund_medium = 5000000
+                                                , required.max_abund_high = 9000000
                                                 , doHabSuitability = T
                                                 , HABSUIT.ref_option = NULL)
                , "`HABSUIT.ref_option` must be either `1 (random)` or `2 (distribution per PFG)`", fixed = T)
@@ -172,6 +463,10 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : HABSUI
                                                 , required.simul_duration = 100
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
+                                                , required.max_by_cohort = 5000000
+                                                , required.max_abund_low = 3000000
+                                                , required.max_abund_medium = 5000000
+                                                , required.max_abund_high = 9000000
                                                 , doHabSuitability = T
                                                 , HABSUIT.ref_option = "")
                , "`HABSUIT.ref_option` must be either `1 (random)` or `2 (distribution per PFG)`", fixed = T)
@@ -187,6 +482,10 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : DIST.n
                                                 , required.simul_duration = 100
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
+                                                , required.max_by_cohort = 5000000
+                                                , required.max_abund_low = 3000000
+                                                , required.max_abund_medium = 5000000
+                                                , required.max_abund_high = 9000000
                                                 , doDisturbances = T
                                                 , DIST.no = NA)
                , "`DIST.no` must be an integer > 0")
@@ -196,6 +495,10 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : DIST.n
                                                 , required.simul_duration = 100
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
+                                                , required.max_by_cohort = 5000000
+                                                , required.max_abund_low = 3000000
+                                                , required.max_abund_medium = 5000000
+                                                , required.max_abund_high = 9000000
                                                 , doDisturbances = T
                                                 , DIST.no = NULL)
                , "`DIST.no` must be an integer > 0")
@@ -205,6 +508,10 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : DIST.n
                                                 , required.simul_duration = 100
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
+                                                , required.max_by_cohort = 5000000
+                                                , required.max_abund_low = 3000000
+                                                , required.max_abund_medium = 5000000
+                                                , required.max_abund_high = 9000000
                                                 , doDisturbances = T
                                                 , DIST.no = "")
                , "`DIST.no` must be an integer > 0")
@@ -214,6 +521,10 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : DIST.n
                                                 , required.simul_duration = 100
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
+                                                , required.max_by_cohort = 5000000
+                                                , required.max_abund_low = 3000000
+                                                , required.max_abund_medium = 5000000
+                                                , required.max_abund_high = 9000000
                                                 , doDisturbances = T
                                                 , DIST.no = 2)
                , "`DIST.no_sub` must be an integer > 0")
@@ -227,6 +538,10 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : DIST.n
                                                 , required.simul_duration = 100
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
+                                                , required.max_by_cohort = 5000000
+                                                , required.max_abund_low = 3000000
+                                                , required.max_abund_medium = 5000000
+                                                , required.max_abund_high = 9000000
                                                 , doDisturbances = T
                                                 , DIST.no = 2
                                                 , DIST.no_sub = NA)
@@ -237,6 +552,10 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : DIST.n
                                                 , required.simul_duration = 100
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
+                                                , required.max_by_cohort = 5000000
+                                                , required.max_abund_low = 3000000
+                                                , required.max_abund_medium = 5000000
+                                                , required.max_abund_high = 9000000
                                                 , doDisturbances = T
                                                 , DIST.no = 2
                                                 , DIST.no_sub = NULL)
@@ -247,6 +566,10 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : DIST.n
                                                 , required.simul_duration = 100
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
+                                                , required.max_by_cohort = 5000000
+                                                , required.max_abund_low = 3000000
+                                                , required.max_abund_medium = 5000000
+                                                , required.max_abund_high = 9000000
                                                 , doDisturbances = T
                                                 , DIST.no = 2
                                                 , DIST.no_sub = "")
@@ -257,6 +580,10 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : DIST.n
                                                 , required.simul_duration = 100
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
+                                                , required.max_by_cohort = 5000000
+                                                , required.max_abund_low = 3000000
+                                                , required.max_abund_medium = 5000000
+                                                , required.max_abund_high = 9000000
                                                 , doDisturbances = T
                                                 , DIST.no = 2
                                                 , DIST.no_sub = 2)
@@ -271,6 +598,10 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : DIST.f
                                                 , required.simul_duration = 100
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
+                                                , required.max_by_cohort = 5000000
+                                                , required.max_abund_low = 3000000
+                                                , required.max_abund_medium = 5000000
+                                                , required.max_abund_high = 9000000
                                                 , doDisturbances = T
                                                 , DIST.no = 2
                                                 , DIST.no_sub = 2
@@ -282,6 +613,10 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : DIST.f
                                                 , required.simul_duration = 100
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
+                                                , required.max_by_cohort = 5000000
+                                                , required.max_abund_low = 3000000
+                                                , required.max_abund_medium = 5000000
+                                                , required.max_abund_high = 9000000
                                                 , doDisturbances = T
                                                 , DIST.no = 2
                                                 , DIST.no_sub = 2
@@ -293,6 +628,10 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : DIST.f
                                                 , required.simul_duration = 100
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
+                                                , required.max_by_cohort = 5000000
+                                                , required.max_abund_low = 3000000
+                                                , required.max_abund_medium = 5000000
+                                                , required.max_abund_high = 9000000
                                                 , doDisturbances = T
                                                 , DIST.no = 2
                                                 , DIST.no_sub = 2
@@ -304,6 +643,10 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : DIST.f
                                                 , required.simul_duration = 100
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
+                                                , required.max_by_cohort = 5000000
+                                                , required.max_abund_low = 3000000
+                                                , required.max_abund_medium = 5000000
+                                                , required.max_abund_high = 9000000
                                                 , doDisturbances = T
                                                 , DIST.no = 2
                                                 , DIST.no_sub = 2
@@ -315,6 +658,10 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : DIST.f
                                                 , required.simul_duration = 100
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
+                                                , required.max_by_cohort = 5000000
+                                                , required.max_abund_low = 3000000
+                                                , required.max_abund_medium = 5000000
+                                                , required.max_abund_high = 9000000
                                                 , doDisturbances = T
                                                 , DIST.no = 2
                                                 , DIST.no_sub = 2
@@ -333,7 +680,11 @@ test_that("PRE_FATE.params_globalParameters gives correct output", {
                                                   , required.no_STRATA = 2
                                                   , required.simul_duration = 100
                                                   , required.seeding_duration = 100
-                                                  , required.seeding_timestep = 100)
+                                                  , required.seeding_timestep = 100
+                                                  , required.max_by_cohort = 5000000
+                                                  , required.max_abund_low = 3000000
+                                                  , required.max_abund_medium = 5000000
+                                                  , required.max_abund_high = 9000000)
                  , "`opt.no_CPU` must be an integer > 0", fixed = T)
   
   expect_message(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
@@ -341,7 +692,11 @@ test_that("PRE_FATE.params_globalParameters gives correct output", {
                                                   , required.no_STRATA = 2
                                                   , required.simul_duration = 100
                                                   , required.seeding_duration = 100
-                                                  , required.seeding_timestep = 100)
+                                                  , required.seeding_timestep = 100
+                                                  , required.max_by_cohort = 5000000
+                                                  , required.max_abund_low = 3000000
+                                                  , required.max_abund_medium = 5000000
+                                                  , required.max_abund_high = 9000000)
                  , "The parameter file FATE_simulation/DATA/GLOBAL_PARAMETERS/Global_parameters_V2.txt has been successfully created !")
   expect_warning(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                   , opt.replacePrevious = TRUE
@@ -349,7 +704,11 @@ test_that("PRE_FATE.params_globalParameters gives correct output", {
                                                   , required.no_STRATA = 2
                                                   , required.simul_duration = 100
                                                   , required.seeding_duration = 100
-                                                  , required.seeding_timestep = 100)
+                                                  , required.seeding_timestep = 100
+                                                  , required.max_by_cohort = 5000000
+                                                  , required.max_abund_low = 3000000
+                                                  , required.max_abund_medium = 5000000
+                                                  , required.max_abund_high = 9000000)
                  , "already exists. It will be replaced.")
   
   expect_message(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
@@ -358,6 +717,10 @@ test_that("PRE_FATE.params_globalParameters gives correct output", {
                                                   , required.simul_duration = 100
                                                   , required.seeding_duration = 100
                                                   , required.seeding_timestep = 100
+                                                  , required.max_by_cohort = 5000000
+                                                  , required.max_abund_low = 3000000
+                                                  , required.max_abund_medium = 5000000
+                                                  , required.max_abund_high = 9000000
                                                   , doDisturbances = T
                                                   , DIST.no = 2
                                                   , DIST.no_sub = 2

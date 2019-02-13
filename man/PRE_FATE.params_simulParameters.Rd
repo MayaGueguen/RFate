@@ -27,7 +27,6 @@ A \code{.txt} file into the \code{name.simulation/PARAM_SIMUL/}
 directory with the following parameters :
 
 \itemize{
-  \item \strong{--NAMESPACE_CONSTANTS--}
   \item \strong{--GLOBAL_PARAMS--}
   \item \strong{--SAVE_DIR--}
   \item --ARRAYS_SAVING_YEARS-- (\emph{optional})
@@ -59,10 +58,6 @@ program to run.
 
 
 \describe{
-  \item{NAMESPACE_ \cr CONSTANTS}{file where constant parameters needed by 
-  the program to manage abundance values are given \cr
-  (see \code{\link{PRE_FATE.params_namespaceConstants}})
-  }
   \item{GLOBAL_PARAMS}{file where parameters related to the simulation 
   definition are referred (e.g. number of PFG involved, number of height 
   strata, simulation duration, computer resources, modules loaded, ...) \cr
@@ -143,22 +138,17 @@ program to run.
 if (dir.exists("FATE_simulation")) system("rm -r FATE_simulation/")
 PRE_FATE.skeletonDirectory()
 
-## Create a Namespace_constants parameter file
-PRE_FATE.params_namespaceConstants(name.simulation = "FATE_simulation"
-                                   , global.abund.low = 1000000
-                                   , global.abund.med = 5000000
-                                   , global.abund.high = 8000000
-                                   , global.max.by.cohort = 5000000
-                                   , global.resource.thresh.med = 13000000
-                                   , global.resource.thresh.low = 19000000)
-
 ## Create a Global_parameters file
 PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                  , required.no_PFG = 6
                                  , required.no_STRATA = 5
                                  , required.simul_duration = 100
                                  , required.seeding_duration = c(10,50)
-                                 , required.seeding_timestep = 1)
+                                 , required.seeding_timestep = 1
+                                 , required.max_by_cohort = 5000000
+                                 , required.max_abund_low = 3000000
+                                 , required.max_abund_medium = 5000000
+                                 , required.max_abund_high = 9000000)
 
 ## Create a SAVE_year_maps or/and SAVE_year_objects parameter file
 PRE_FATE.params_saveYears(name.simulation = "FATE_simulation"
@@ -225,7 +215,6 @@ PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
 }
 \seealso{
 \code{\link{PRE_FATE.skeletonDirectory}},
-\code{\link{PRE_FATE.params_namespaceConstants}},
 \code{\link{PRE_FATE.params_globalParameters}},
 \code{\link{PRE_FATE.params_PFGsuccession}},
 \code{\link{PRE_FATE.params_PFGlight}},

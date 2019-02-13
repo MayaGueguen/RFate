@@ -25,10 +25,29 @@
 ##' duration of seeding (\emph{in years})
 ##' @param required.seeding_timestep an \code{integer} corresponding to the 
 ##' time interval at which occurs the seeding, and until the seeding duration
-##'  is not over (\emph{in years})
+##' is not over (\emph{in years})
+##' @param required.max_by_cohort an \code{integer} in the order of 1 000 000
+##' to rescale abundance values of each cohort in each pixel (carrying capacity
+##' equivalent)
+##' @param required.max_abund_low an \code{integer} in the order of 1 000 000
+##' to rescale abundance values of small PFG
+##' @param required.max_abund_medium an \code{integer} in the order of 1 000 000
+##' to rescale abundance values of intermediate PFG
+##' @param required.max_abund_high an \code{integer} in the order of 1 000 000
+##' to rescale abundance values of tall PFG
 ##' @param doLight default \code{FALSE}. If \code{TRUE}, light competition is 
 ##' activated in the \code{FATE-HD} simulation, and associated parameters are 
 ##' required
+##' @param LIGHT.thresh_medium an \code{integer} in the order of 1 000 000
+##' to convert PFG abundances in each strata into light resources. It corresponds
+##' to the limit of abundances above which light resources are \code{medium}.
+##' PFG abundances lower than this threshold imply \strong{high amount of light}.
+##' Is is consequently lower than \code{LIGHT.thresh_low}.
+##' @param LIGHT.thresh_low an \code{integer} in the order of 1 000 000
+##' to convert PFG abundances in each strata into light resources. It corresponds
+##' to the limit of abundances above which light resources are \code{low}.
+##' PFG abundances higher than \code{LIGHT.thresh_medium} and lower than this
+##' threshold imply \strong{medium amount of light}.
 ##' @param doDispersal default \code{FALSE}. If \code{TRUE}, seed dispersal is 
 ##' activated in the \code{FATE-HD} simulation, and associated parameters are 
 ##' required
@@ -47,7 +66,6 @@
 ##' @param doSoil default \code{FALSE}. If \code{TRUE}, soil competition is
 ##' activated in the \code{FATE-HD} simulation, and associated parameters 
 ##' are required
-##' @param SOIL.no_categories the number of soil composition classes
 ##' @param doFire \emph{to be filled}
 ##' @param doDrought \emph{to be filled}
 ##' @param doHabStability \emph{to be filled}
@@ -83,6 +101,13 @@
 ##'     (\emph{in years}) \cr \cr
 ##'   }
 ##'   }
+##'   \item{To get abundances \cr per PFG per pixel}{
+##'   \itemize{
+##'     \item per strata
+##'     \item for all strata
+##'   }
+##'   \deqn{abund = 10 000 * \frac{totalAbund}{\text{required.max_abund_[low/medium/high]}}}
+##'   }
 ##' }
 ##' 
 ##' 
@@ -94,6 +119,14 @@
 ##'   recruitment according to PFG preferences for light conditions \cr
 ##'   = light resources are calculated as a proxy of PFG abundances
 ##'   within each height stratum \cr
+##'   \itemize{
+##'   \item{To transform PFG \cr abundances into \cr light resources}{
+##'     \deqn{abund < \text{LIGHT.thresh_medium} \Leftrightarrow Light = High}
+##'     \deqn{abund > \text{LIGHT.thresh_medium } \& \\
+##'     abund < \text{LIGHT.thresh_low} \Leftrightarrow Light = Medium}
+##'     \deqn{abund > \text{LIGHT.thresh_low} \Leftrightarrow Light = Low}
+##'   }
+##'   }
 ##'   \cr \cr
 ##'   }
 ##'   \item{DISPERSAL}{= to allow plants to disperse seeds according
@@ -140,12 +173,6 @@
 ##'   for soil conditions (fertility) \cr
 ##'   = soil composition is calculated as the weighted mean of each PFG's
 ##'   contribution \cr \cr
-##'   \itemize{
-##'     \item \emph{SOIL.no_categories} : the number of soil composition classes
-##'     that will be used into the soil module.
-##'     This number should match with the maximum value of contribution or
-##'     tolerance possible defined into the PFG SOIL files. \cr \cr
-##'   }
 ##'   }
 ##'   \item{DROUGHT}{= to experience extreme events with a direct and a delayed
 ##'   response on PFG. \cr \cr
@@ -168,9 +195,9 @@
 ##'   corresponding to a specific habitat. Every year, the abundance of each PFG
 ##'   within each habitat is recorded, as well as the evenness of the habitat :
 ##'   \deqn{
-##'   \text{evenness} = - SUM(\text{PFG.proportion} * log(\text{PFG.proportion})) / log(\text{no.PFG} - 1)
+##'   \text{evenness} = - \frac{\Sigma(\text{PFG.proportion} * log(\text{PFG.proportion}))}{log(\text{no.PFG} - 1)}
 ##'   }
-##'   \deqn{\text{with PFG.proportion} = \text{abund.PFG.in.Habitat} / \text{abund.allPFG.in.Habitat}}
+##'   \deqn{\text{with PFG.proportion} = \frac{\text{abund.PFG.in.Habitat}}{\text{abund.allPFG.in.Habitat}}}
 ##'   Every 5 years, a stability check is done to see if the abundance or the
 ##'   evenness have values out of the usual distribution.
 ##'   \itemize{
@@ -197,13 +224,19 @@
 ##'   \item NB_STRATUM
 ##'   \item SIMULATION_DURATION
 ##'   \item SEEDING_DURATION
-##'   \item SEEDING_TIMESTEP \cr \cr
+##'   \item SEEDING_TIMESTEP
+##'   \item MAX_BY_COHORT
+##'   \item MAX_ABUND_LOW
+##'   \item MAX_ABUND_MEDIUM 
+##'   \item MAX_ABUND_HIGH \cr \cr
 ##' }
 ##' 
 ##' If the simulation includes \emph{light competition} :
 ##' 
 ##' \itemize{
 ##'   \item DO_LIGHT_COMPETITION
+##'   \item LIGHT_THRESH_MEDIUM
+##'   \item LIGHT_THRESH_LOW
 ##' }
 ##' 
 ##' If the simulation includes \emph{dispersal} :
@@ -232,7 +265,6 @@
 ##' 
 ##' \itemize{
 ##'   \item DO_SOIL_COMPETITION
-##'   \item NB_SOIL_CATEGORIES
 ##' }
 ##' 
 ##' If the simulation includes \emph{drought disturbances} :
@@ -280,7 +312,13 @@
 ##'                                  , required.simul_duration = 100
 ##'                                  , required.seeding_duration = 10
 ##'                                  , required.seeding_timestep = 1
+##'                                  , required.max_by_cohort = 5000000
+##'                                  , required.max_abund_low = 3000000
+##'                                  , required.max_abund_medium = 5000000
+##'                                  , required.max_abund_high = 9000000
 ##'                                  , doLight = TRUE
+##'                                  , LIGHT.thresh_medium = 13000000
+##'                                  , LIGHT.thresh_low = 19000000
 ##'                                  , doDispersal = TRUE
 ##'                                  , doHabSuitability = TRUE
 ##'                                  , HABSUIT.ref_option = 1
@@ -293,7 +331,13 @@
 ##'                                  , required.simul_duration = 100
 ##'                                  , required.seeding_duration = 10
 ##'                                  , required.seeding_timestep = 1
+##'                                  , required.max_by_cohort = 5000000
+##'                                  , required.max_abund_low = 3000000
+##'                                  , required.max_abund_medium = 5000000
+##'                                  , required.max_abund_high = 9000000
 ##'                                  , doLight = TRUE
+##'                                  , LIGHT.thresh_medium = 13000000
+##'                                  , LIGHT.thresh_low = 19000000
 ##'                                  , doDispersal = TRUE
 ##'                                  , doHabSuitability = TRUE
 ##'                                  , HABSUIT.ref_option = c(1,2)
@@ -313,7 +357,13 @@ PRE_FATE.params_globalParameters = function(
   , required.simul_duration
   , required.seeding_duration
   , required.seeding_timestep
+  , required.max_by_cohort
+  , required.max_abund_low
+  , required.max_abund_medium
+  , required.max_abund_high
   , doLight = FALSE
+  , LIGHT.thresh_medium
+  , LIGHT.thresh_low
   , doDispersal = FALSE
   , doHabSuitability = FALSE
   , HABSUIT.ref_option
@@ -322,7 +372,6 @@ PRE_FATE.params_globalParameters = function(
   , DIST.no_sub
   , DIST.freq
   , doSoil = FALSE
-  , SOIL.no_categories
   , doFire = FALSE
   # , FIRE.no
   # , FIRE.no_sub
@@ -367,7 +416,7 @@ PRE_FATE.params_globalParameters = function(
     .stopMessage_beInteger("required.no_STRATA")
   }
   if (.testParam_notNum(required.simul_duration) ||
-      required.simul_duration <= 0 ){
+      required.simul_duration <= 0 ) {
     .stopMessage_beInteger("required.simul_duration")
   }
   if (.testParam_notNum(required.seeding_duration) ||
@@ -378,10 +427,57 @@ PRE_FATE.params_globalParameters = function(
       required.seeding_timestep <= 0 ){
     .stopMessage_beInteger("required.seeding_timestep")
   }
+  if (.testParam_notNum(required.max_by_cohort) ||
+      required.max_by_cohort <= 0 )
+  {
+    .stopMessage_beInteger("required.max_by_cohort")
+  } else if (round(required.max_by_cohort) != required.max_by_cohort)
+  {
+    warning("`required.max_by_cohort` is a double. It will be converted (rounded) to an integer")
+  }
+  if (.testParam_notNum(required.max_abund_low) ||
+      required.max_abund_low <= 0 )
+  {
+    .stopMessage_beInteger("required.max_abund_low")
+  } else if (round(required.max_abund_low) != required.max_abund_low)
+  {
+    warning("`required.max_abund_low` is a double. It will be converted (rounded) to an integer")
+  }
+  if (.testParam_notNum(required.max_abund_medium) ||
+      required.max_abund_medium <= 0 )
+  {
+    .stopMessage_beInteger("required.max_abund_medium")
+  } else if (round(required.max_abund_medium) != required.max_abund_medium)
+  {
+    warning("`required.max_abund_medium` is a double. It will be converted (rounded) to an integer")
+  }
+  if (.testParam_notNum(required.max_abund_high) ||
+      required.max_abund_high <= 0 )
+  {
+    .stopMessage_beInteger("required.max_abund_high")
+  } else if (round(required.max_abund_high) != required.max_abund_high)
+  {
+    warning("`required.max_abund_high` is a double. It will be converted (rounded) to an integer")
+  }
   
   if (doLight)
   {
-    ## Nothing to do
+    if (.testParam_notNum(LIGHT.thresh_medium) ||
+        LIGHT.thresh_medium <= 0 )
+    {
+      .stopMessage_beInteger("LIGHT.thresh_medium")
+    } else if (round(LIGHT.thresh_medium) != LIGHT.thresh_medium)
+    {
+      warning("`LIGHT.thresh_medium` is a double. It will be converted (rounded) to an integer")
+    }
+    if (.testParam_notNum(LIGHT.thresh_low) ||
+        LIGHT.thresh_low <= 0 )
+    {
+      .stopMessage_beInteger("LIGHT.thresh_low")
+    } else if (round(LIGHT.thresh_low) != LIGHT.thresh_low)
+    {
+      warning("`LIGHT.thresh_low` is a double. It will be converted (rounded) to an integer")
+    }
   }
   
   if (doDispersal)
@@ -419,8 +515,12 @@ PRE_FATE.params_globalParameters = function(
   
   if (doLight)
   {
-    params.LIGHT = list(as.numeric(doLight))
-    names.params.list.LIGHT = c("DO_LIGHT_COMPETITION")
+    params.LIGHT = list(as.numeric(doLight)
+                        , LIGHT.thresh_medium
+                        , LIGHT.thresh_low)
+    names.params.list.LIGHT = c("DO_LIGHT_COMPETITION"
+                                , "LIGHT_THRESH_MEDIUM"
+                                , "LIGHT_THRESH_LOW")
   } else
   {
     params.LIGHT = list(as.numeric(doLight))
@@ -463,10 +563,8 @@ PRE_FATE.params_globalParameters = function(
   }
   if (doSoil)
   {
-    params.SOIL = list(as.numeric(doSoil)
-                       , SOIL.no_categories)
-    names.params.list.SOIL = c("DO_SOIL_COMPETITION"
-                               , "NB_SOIL_CATEGORIES")
+    params.SOIL = list(as.numeric(doSoil))
+    names.params.list.SOIL = c("DO_SOIL_COMPETITION")
   } else
   {
     params.SOIL = list(as.numeric(doSoil))
@@ -518,6 +616,10 @@ PRE_FATE.params_globalParameters = function(
                              , required.simul_duration
                              , required.seeding_duration
                              , required.seeding_timestep
+                             , required.max_by_cohort
+                             , required.max_abund_low
+                             , required.max_abund_medium
+                             , required.max_abund_high
   )
   
   params.list = lapply(1:nrow(params.combi), function(x) {
@@ -549,6 +651,10 @@ PRE_FATE.params_globalParameters = function(
                             , "SIMULATION_DURATION"
                             , "SEEDING_DURATION"
                             , "SEEDING_TIMESTEP"
+                            , "MAX_BY_COHORT"
+                            , "MAX_ABUND_LOW"
+                            , "MAX_ABUND_MEDIUM"
+                            , "MAX_ABUND_HIGH"
   )
   names.params.list.sub = c(names.params.list.sub, names.params.list.LIGHT)
   names.params.list.sub = c(names.params.list.sub, names.params.list.DISP)

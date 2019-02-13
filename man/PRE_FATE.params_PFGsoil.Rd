@@ -71,9 +71,9 @@ These values will allow to calculate or define a set of characteristics for
 each PFG :
 
 \describe{
-  \item{SOIL_CONTRIB}{}
-  \item{SOIL_LOW}{}
-  \item{SOIL_HIGH}{}
+  \item{SOIL_CONTRIB}{nitrogen contribution to the soil value of the PFG}
+  \item{SOIL_LOW}{minimum nitrogen value tolerated by the PFG}
+  \item{SOIL_HIGH}{maximum nitrogen value tolerated by the PFG}
   \item{ACTIVE_GERM}{proportion of seeds that will germinate for each soil
   condition (Low, Medium, High)}
   \item{SOIL_TOL}{ defined for each life stage (Germinant, Immature, 
@@ -97,6 +97,20 @@ each PFG :
   }
   }
 }
+}
+\examples{
+
+## Create a skeleton folder with the default name ('FATE_simulation')
+PRE_FATE.skeletonDirectory()
+
+## Create PFG soil parameter files
+PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                        , mat.PFG.soil = data.frame(PFG = c("PFG1", "PFG2", "PFG3")
+                                                    , type = c("H", "H", "C")
+                                                    , soil_contrib = c(2.5, 3, 4.8)
+                                                    , soil_tol_min = c(2, 3, 3)
+                                                    , soil_tol_max = c(3, 3, 6)))
+
 }
 \seealso{
 \code{\link{PRE_FATE.skeletonDirectory}}

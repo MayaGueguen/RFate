@@ -49,11 +49,8 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : name.si
                , "`name.simulation` does not exist or does not contain a PARAM_SIMUL/ folder")
   system("mkdir FATE_simulation/PARAM_SIMUL")
   expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation")
-               , "`name.simulation` does not exist or does not contain a DATA/NAMESPACE_CONSTANTS/ folder")
-  system("mkdir FATE_simulation/DATA")
-  system("mkdir FATE_simulation/DATA/NAMESPACE_CONSTANTS")
-  expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation")
                , "`name.simulation` does not exist or does not contain a DATA/GLOBAL_PARAMETERS/ folder")
+  system("mkdir FATE_simulation/DATA")
   system("mkdir FATE_simulation/DATA/GLOBAL_PARAMETERS")
   expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation")
                , "`name.simulation` does not exist or does not contain a DATA/SAVE/ folder")
@@ -88,10 +85,6 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : name.si
   
   file.create("FATE_simulation/DATA/MASK/mask.tif")
   expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif")
-               , "There is no adequate file (`.txt` file starting with `Namespace_constants`) into the DATA/NAMESPACE_CONSTANTS/ folder"
-               , fixed = T)
-  file.create("FATE_simulation/DATA/NAMESPACE_CONSTANTS/Namespace_constants.txt")
-  expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif")
                , "There is no adequate file (`.txt` file starting with `Global_parameters`) into the DATA/GLOBAL_PARAMETERS/ folder"
                , fixed = T)
   
@@ -102,6 +95,10 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : name.si
                                    , required.simul_duration = 100
                                    , required.seeding_duration = c(10,50)
                                    , required.seeding_timestep = 1
+                                   , required.max_by_cohort = 5000000
+                                   , required.max_abund_low = 3000000
+                                   , required.max_abund_medium = 5000000
+                                   , required.max_abund_high = 9000000
                                    , doHabSuitability = TRUE
                                    , HABSUIT.ref_option = 1
                                    , doDisturbances = TRUE
@@ -110,8 +107,9 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : name.si
                                    , DIST.freq = 1
                                    , doDispersal = TRUE
                                    , doLight = TRUE
-                                   , doSoil = TRUE
-                                   , SOIL.no_categories = 5)
+                                   , LIGHT.thresh_medium = 13000000
+                                   , LIGHT.thresh_low = 19000000
+                                   , doSoil = TRUE)
   expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif")
                , "There is not the same number of files (`.txt` file starting with `SUCC`) into the DATA/PFGS/SUCC/ folder as the number of PFG indicated into the file"
                , fixed = T)
@@ -148,11 +146,9 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : name.si
   file.create("FATE_simulation/DATA/MASK/dist.tif")
   
   expect_warning(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif", name.dist = "dist.tif")
-                 # , "There is no adequate file (`.txt` file starting with `SAVE_YEARS_maps`) into the folder FATE_simulation/DATA/SAVE"
                  , "There is no adequate file (`.txt` file starting with `MASK_changing_times`) into the folder FATE_simulation/DATA/SCENARIO"
                  , fixed = T)
   expect_warning(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif", name.dist = "dist.tif")
-                 # , "There is no adequate file (`.txt` file starting with `SAVE_YEARS_objects`) into the folder FATE_simulation/DATA/SAVE"
                  , "There is no adequate file (`.txt` file starting with `HS_changing_times`) into the folder FATE_simulation/DATA/SCENARIO"
                  , fixed = T)
   expect_warning(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif", name.dist = "dist.tif")

@@ -66,7 +66,7 @@ file containing PARAMETER FILENAMES used in FATE-HD model." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RFate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.5.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.6.9000</span>
       </span>
     </div>
 
@@ -190,7 +190,6 @@ module of the <code>FATE-HD</code> simulation will take place</p></td>
     <p>A <code>.txt</code> file into the <code>name.simulation/PARAM_SIMUL/</code>
 directory with the following parameters :</p>
 <ul>
-<li><p><strong>--NAMESPACE_CONSTANTS--</strong></p></li>
 <li><p><strong>--GLOBAL_PARAMS--</strong></p></li>
 <li><p><strong>--SAVE_DIR--</strong></p></li>
 <li><p>--ARRAYS_SAVING_YEARS-- (<em>optional</em>)</p></li>
@@ -218,9 +217,6 @@ directory with the following parameters :</p>
 links to other files containing all the parameters and data needed by the 
 program to run.</p>
     <dl class='dl-horizontal'>
-  <dt>NAMESPACE_ <br /> CONSTANTS</dt><dd><p>file where constant parameters needed by 
-  the program to manage abundance values are given <br />
-  (see <code><a href='PRE_FATE.params_namespaceConstants.html'>PRE_FATE.params_namespaceConstants</a></code>)</p></dd>
   <dt>GLOBAL_PARAMS</dt><dd><p>file where parameters related to the simulation 
   definition are referred (e.g. number of PFG involved, number of height 
   strata, simulation duration, computer resources, modules loaded, ...) <br />
@@ -286,7 +282,6 @@ program to run.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='PRE_FATE.skeletonDirectory.html'>PRE_FATE.skeletonDirectory</a></code>,
-<code><a href='PRE_FATE.params_namespaceConstants.html'>PRE_FATE.params_namespaceConstants</a></code>,
 <code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>,
 <code><a href='PRE_FATE.params_PFGsuccession.html'>PRE_FATE.params_PFGsuccession</a></code>,
 <code><a href='PRE_FATE.params_PFGlight.html'>PRE_FATE.params_PFGlight</a></code>,
@@ -303,22 +298,17 @@ program to run.</p>
 <span class='kw'>if</span> (<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/files2'>dir.exists</a></span>(<span class='st'>"FATE_simulation"</span>)) <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system'>system</a></span>(<span class='st'>"rm -r FATE_simulation/"</span>)
 <span class='fu'><a href='PRE_FATE.skeletonDirectory.html'>PRE_FATE.skeletonDirectory</a></span>()
 
-<span class='co'>## Create a Namespace_constants parameter file</span>
-<span class='fu'><a href='PRE_FATE.params_namespaceConstants.html'>PRE_FATE.params_namespaceConstants</a></span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
-                                   , <span class='kw'>global.abund.low</span> <span class='kw'>=</span> <span class='fl'>1000000</span>
-                                   , <span class='kw'>global.abund.med</span> <span class='kw'>=</span> <span class='fl'>5000000</span>
-                                   , <span class='kw'>global.abund.high</span> <span class='kw'>=</span> <span class='fl'>8000000</span>
-                                   , <span class='kw'>global.max.by.cohort</span> <span class='kw'>=</span> <span class='fl'>5000000</span>
-                                   , <span class='kw'>global.resource.thresh.med</span> <span class='kw'>=</span> <span class='fl'>13000000</span>
-                                   , <span class='kw'>global.resource.thresh.low</span> <span class='kw'>=</span> <span class='fl'>19000000</span>)
-
 <span class='co'>## Create a Global_parameters file</span>
 <span class='fu'><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
                                  , <span class='kw'>required.no_PFG</span> <span class='kw'>=</span> <span class='fl'>6</span>
                                  , <span class='kw'>required.no_STRATA</span> <span class='kw'>=</span> <span class='fl'>5</span>
                                  , <span class='kw'>required.simul_duration</span> <span class='kw'>=</span> <span class='fl'>100</span>
                                  , <span class='kw'>required.seeding_duration</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>10</span>,<span class='fl'>50</span>)
-                                 , <span class='kw'>required.seeding_timestep</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+                                 , <span class='kw'>required.seeding_timestep</span> <span class='kw'>=</span> <span class='fl'>1</span>
+                                 , <span class='kw'>required.max_by_cohort</span> <span class='kw'>=</span> <span class='fl'>5000000</span>
+                                 , <span class='kw'>required.max_abund_low</span> <span class='kw'>=</span> <span class='fl'>3000000</span>
+                                 , <span class='kw'>required.max_abund_medium</span> <span class='kw'>=</span> <span class='fl'>5000000</span>
+                                 , <span class='kw'>required.max_abund_high</span> <span class='kw'>=</span> <span class='fl'>9000000</span>)
 
 <span class='co'>## Create a SAVE_year_maps or/and SAVE_year_objects parameter file</span>
 <span class='fu'><a href='PRE_FATE.params_saveYears.html'>PRE_FATE.params_saveYears</a></span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>

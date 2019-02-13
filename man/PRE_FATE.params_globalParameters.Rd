@@ -8,11 +8,13 @@ simulation}
 PRE_FATE.params_globalParameters(name.simulation, opt.no_CPU = 1,
   opt.replacePrevious = FALSE, required.no_PFG, required.no_STRATA,
   required.simul_duration, required.seeding_duration,
-  required.seeding_timestep, doLight = FALSE, doDispersal = FALSE,
-  doHabSuitability = FALSE, HABSUIT.ref_option, doDisturbances = FALSE,
-  DIST.no, DIST.no_sub, DIST.freq, doSoil = FALSE, SOIL.no_categories,
-  doFire = FALSE, doDrought = FALSE, doHabStability = FALSE,
-  doAliens = FALSE)
+  required.seeding_timestep, required.max_by_cohort,
+  required.max_abund_low, required.max_abund_medium,
+  required.max_abund_high, doLight = FALSE, LIGHT.thresh_medium,
+  LIGHT.thresh_low, doDispersal = FALSE, doHabSuitability = FALSE,
+  HABSUIT.ref_option, doDisturbances = FALSE, DIST.no, DIST.no_sub,
+  DIST.freq, doSoil = FALSE, doFire = FALSE, doDrought = FALSE,
+  doHabStability = FALSE, doAliens = FALSE)
 }
 \arguments{
 \item{name.simulation}{a \code{string} that corresponds to the main directory
@@ -38,11 +40,36 @@ duration of seeding (\emph{in years})}
 
 \item{required.seeding_timestep}{an \code{integer} corresponding to the 
 time interval at which occurs the seeding, and until the seeding duration
- is not over (\emph{in years})}
+is not over (\emph{in years})}
+
+\item{required.max_by_cohort}{an \code{integer} in the order of 1 000 000
+to rescale abundance values of each cohort in each pixel (carrying capacity
+equivalent)}
+
+\item{required.max_abund_low}{an \code{integer} in the order of 1 000 000
+to rescale abundance values of small PFG}
+
+\item{required.max_abund_medium}{an \code{integer} in the order of 1 000 000
+to rescale abundance values of intermediate PFG}
+
+\item{required.max_abund_high}{an \code{integer} in the order of 1 000 000
+to rescale abundance values of tall PFG}
 
 \item{doLight}{default \code{FALSE}. If \code{TRUE}, light competition is 
 activated in the \code{FATE-HD} simulation, and associated parameters are 
 required}
+
+\item{LIGHT.thresh_medium}{an \code{integer} in the order of 1 000 000
+to convert PFG abundances in each strata into light resources. It corresponds
+to the limit of abundances above which light resources are \code{medium}.
+PFG abundances lower than this threshold imply \strong{high amount of light}.
+Is is consequently lower than \code{LIGHT.thresh_low}.}
+
+\item{LIGHT.thresh_low}{an \code{integer} in the order of 1 000 000
+to convert PFG abundances in each strata into light resources. It corresponds
+to the limit of abundances above which light resources are \code{low}.
+PFG abundances higher than \code{LIGHT.thresh_medium} and lower than this
+threshold imply \strong{medium amount of light}.}
 
 \item{doDispersal}{default \code{FALSE}. If \code{TRUE}, seed dispersal is 
 activated in the \code{FATE-HD} simulation, and associated parameters are 
@@ -70,8 +97,6 @@ are required}
 activated in the \code{FATE-HD} simulation, and associated parameters 
 are required}
 
-\item{SOIL.no_categories}{the number of soil composition classes}
-
 \item{doFire}{\emph{to be filled}}
 
 \item{doDrought}{\emph{to be filled}}
@@ -90,13 +115,19 @@ directory with the following parameters :
   \item NB_STRATUM
   \item SIMULATION_DURATION
   \item SEEDING_DURATION
-  \item SEEDING_TIMESTEP \cr \cr
+  \item SEEDING_TIMESTEP
+  \item MAX_BY_COHORT
+  \item MAX_ABUND_LOW
+  \item MAX_ABUND_MEDIUM 
+  \item MAX_ABUND_HIGH \cr \cr
 }
 
 If the simulation includes \emph{light competition} :
 
 \itemize{
   \item DO_LIGHT_COMPETITION
+  \item LIGHT_THRESH_MEDIUM
+  \item LIGHT_THRESH_LOW
 }
 
 If the simulation includes \emph{dispersal} :
@@ -125,7 +156,6 @@ If the simulation includes \emph{soil competition} :
 
 \itemize{
   \item DO_SOIL_COMPETITION
-  \item NB_SOIL_CATEGORIES
 }
 
 If the simulation includes \emph{drought disturbances} :
@@ -183,6 +213,13 @@ general characteristics of the simulation :
     (\emph{in years}) \cr \cr
   }
   }
+  \item{To get abundances \cr per PFG per pixel}{
+  \itemize{
+    \item per strata
+    \item for all strata
+  }
+  \deqn{abund = 10 000 * \frac{totalAbund}{\text{required.max_abund_[low/medium/high]}}}
+  }
 }
 
 
@@ -194,6 +231,14 @@ if so, some additional parameters will be required :
   recruitment according to PFG preferences for light conditions \cr
   = light resources are calculated as a proxy of PFG abundances
   within each height stratum \cr
+  \itemize{
+  \item{To transform PFG \cr abundances into \cr light resources}{
+    \deqn{abund < \text{LIGHT.thresh_medium} \Leftrightarrow Light = High}
+    \deqn{abund > \text{LIGHT.thresh_medium } \& \\
+    abund < \text{LIGHT.thresh_low} \Leftrightarrow Light = Medium}
+    \deqn{abund > \text{LIGHT.thresh_low} \Leftrightarrow Light = Low}
+  }
+  }
   \cr \cr
   }
   \item{DISPERSAL}{= to allow plants to disperse seeds according
@@ -240,12 +285,6 @@ if so, some additional parameters will be required :
   for soil conditions (fertility) \cr
   = soil composition is calculated as the weighted mean of each PFG's
   contribution \cr \cr
-  \itemize{
-    \item \emph{SOIL.no_categories} : the number of soil composition classes
-    that will be used into the soil module.
-    This number should match with the maximum value of contribution or
-    tolerance possible defined into the PFG SOIL files. \cr \cr
-  }
   }
   \item{DROUGHT}{= to experience extreme events with a direct and a delayed
   response on PFG. \cr \cr
@@ -268,9 +307,9 @@ if so, some additional parameters will be required :
   corresponding to a specific habitat. Every year, the abundance of each PFG
   within each habitat is recorded, as well as the evenness of the habitat :
   \deqn{
-  \text{evenness} = - SUM(\text{PFG.proportion} * log(\text{PFG.proportion})) / log(\text{no.PFG} - 1)
+  \text{evenness} = - \frac{\Sigma(\text{PFG.proportion} * log(\text{PFG.proportion}))}{log(\text{no.PFG} - 1)}
   }
-  \deqn{\text{with PFG.proportion} = \text{abund.PFG.in.Habitat} / \text{abund.allPFG.in.Habitat}}
+  \deqn{\text{with PFG.proportion} = \frac{\text{abund.PFG.in.Habitat}}{\text{abund.allPFG.in.Habitat}}}
   Every 5 years, a stability check is done to see if the abundance or the
   evenness have values out of the usual distribution.
   \itemize{
@@ -299,7 +338,13 @@ PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                  , required.simul_duration = 100
                                  , required.seeding_duration = 10
                                  , required.seeding_timestep = 1
+                                 , required.max_by_cohort = 5000000
+                                 , required.max_abund_low = 3000000
+                                 , required.max_abund_medium = 5000000
+                                 , required.max_abund_high = 9000000
                                  , doLight = TRUE
+                                 , LIGHT.thresh_medium = 13000000
+                                 , LIGHT.thresh_low = 19000000
                                  , doDispersal = TRUE
                                  , doHabSuitability = TRUE
                                  , HABSUIT.ref_option = 1
@@ -312,7 +357,13 @@ PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                  , required.simul_duration = 100
                                  , required.seeding_duration = 10
                                  , required.seeding_timestep = 1
+                                 , required.max_by_cohort = 5000000
+                                 , required.max_abund_low = 3000000
+                                 , required.max_abund_medium = 5000000
+                                 , required.max_abund_high = 9000000
                                  , doLight = TRUE
+                                 , LIGHT.thresh_medium = 13000000
+                                 , LIGHT.thresh_low = 19000000
                                  , doDispersal = TRUE
                                  , doHabSuitability = TRUE
                                  , HABSUIT.ref_option = c(1,2)

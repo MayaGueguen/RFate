@@ -29,7 +29,6 @@
 ##'   needed by the model
 ##'   \itemize{
 ##'     \item \strong{GLOBAL_PARAMETERS} : files containing global parameters for the simulation
-##'     \item \strong{NAMESPACE_CONSTANTS} : files containing constants used in the model
 ##'     \item \strong{MASK} : all maps used in the model
 ##'     \item \strong{SCENARIO} : files containing information about changes in
 ##'     input data ( e.g. habitat suitability maps, disturbances maps, etc) 
@@ -57,8 +56,7 @@
 ##' 
 ##' @keywords tree structure
 ##' 
-##' @seealso \code{\link{PRE_FATE.params_namespaceConstants}},
-##' \code{\link{PRE_FATE.params_globalParameters}},
+##' @seealso \code{\link{PRE_FATE.params_globalParameters}},
 ##' \code{\link{PRE_FATE.params_PFGsuccession}},
 ##' \code{\link{PRE_FATE.params_PFGlight}},
 ##' \code{\link{PRE_FATE.params_PFGdispersal}},
@@ -92,7 +90,6 @@ PRE_FATE.skeletonDirectory = function(name.simulation = "FATE_simulation")
     ## the DATA dir
     dir.create(file.path(name.simulation, "DATA"), showWarnings = FALSE)
     dir.create(file.path(name.simulation, "DATA", "GLOBAL_PARAMETERS"), showWarnings = FALSE)
-    dir.create(file.path(name.simulation, "DATA", "NAMESPACE_CONSTANTS"), showWarnings = FALSE)
     dir.create(file.path(name.simulation, "DATA", "MASK"), showWarnings = FALSE)
     dir.create(file.path(name.simulation, "DATA", "SCENARIO"), showWarnings = FALSE)
     dir.create(file.path(name.simulation, "DATA", "SAVE"), showWarnings = FALSE)

@@ -37,9 +37,9 @@
 ##' each PFG :
 ##' 
 ##' \describe{
-##'   \item{SOIL_CONTRIB}{}
-##'   \item{SOIL_LOW}{}
-##'   \item{SOIL_HIGH}{}
+##'   \item{SOIL_CONTRIB}{nitrogen contribution to the soil value of the PFG}
+##'   \item{SOIL_LOW}{minimum nitrogen value tolerated by the PFG}
+##'   \item{SOIL_HIGH}{maximum nitrogen value tolerated by the PFG}
 ##'   \item{ACTIVE_GERM}{proportion of seeds that will germinate for each soil
 ##'   condition (Low, Medium, High)}
 ##'   \item{SOIL_TOL}{ defined for each life stage (Germinant, Immature, 
@@ -109,7 +109,7 @@
 ##' ## Create PFG soil parameter files
 ##' PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
 ##'                         , mat.PFG.soil = data.frame(PFG = c("PFG1", "PFG2", "PFG3")
-##'                                                     , type = c("H", "H", "C)
+##'                                                     , type = c("H", "H", "C")
 ##'                                                     , soil_contrib = c(2.5, 3, 4.8)
 ##'                                                     , soil_tol_min = c(2, 3, 3)
 ##'                                                     , soil_tol_max = c(3, 3, 6)))
@@ -122,7 +122,6 @@
 PRE_FATE.params_PFGsoil = function(
   name.simulation
   , mat.PFG.soil
-  # , no.class = max(mat.PFG.soil$soil_tol_max)
 ){
   
   .testParam_existFolder(name.simulation, "DATA/PFGS/SOIL/")
@@ -190,8 +189,8 @@ PRE_FATE.params_PFGsoil = function(
   ## GET SOIL TOLERANCE LIMITS
   SOIL_LOW = as.numeric(mat.PFG.soil$soil_tol_min)
   SOIL_HIGH = as.numeric(mat.PFG.soil$soil_tol_max)
-
-    
+  
+  
   no.class = seq(min(round(mat.PFG.soil$soil_contrib))
                  , max(round(mat.PFG.soil$soil_contrib))
                  , 1)
@@ -244,10 +243,10 @@ PRE_FATE.params_PFGsoil = function(
   ##             9 = 90 %
   ##             10 = 100 %
   SOIL_TOL = matrix(100, nrow = 3 * 3, ncol = no.PFG)
-
+  
   SOIL_TOL[1, ] = 1 ## Germinant - Low soil conditions
   SOIL_TOL[3, ] = 0 ## Germinant - High soil conditions
- 
+  
   SOIL_TOL[4, ] = 5 ## Immature - Low soil conditions
   SOIL_TOL[6, ] = 4 ## Immature - High soil conditions
   
@@ -260,7 +259,7 @@ PRE_FATE.params_PFGsoil = function(
   names.params.list.sub = c("NAME", "SOIL_CONTRIB"
                             , "SOIL_LOW", "SOIL_HIGH"
                             , "ACTIVE_GERM", "SOIL_TOL")
-
+  
   params.list = lapply(names.params.list.sub, function(x) { return(get(x)) })
   
   params.csv = t(do.call(rbind, params.list))
@@ -271,7 +270,7 @@ PRE_FATE.params_PFGsoil = function(
                            , paste0("ACTIVE_GERM_for_", c("L", "M", "H"))
                            , paste0("SOIL_TOL_for_",
                                     c("GeL", "GeM", "GeH", "ImL", "ImM", "ImH", "MaL", "MaM", "MaH"))
-                           )
+  )
   
   write.table(params.csv
               , file = paste0(name.simulation, "/DATA/PFGS/SOIL_COMPLETE_TABLE.csv")
@@ -291,7 +290,7 @@ PRE_FATE.params_PFGsoil = function(
       return(val)
     })
   })
-
+  
   for (i in 1:length(params.list)) {
     params = params.list[[i]]
     names(params) = names.params.list.sub
@@ -302,7 +301,7 @@ PRE_FATE.params_PFGsoil = function(
                                        ".txt")
                   , params.list = params)
   }
-
+  
   cat("\n> Done!\n")
   cat("\n  Complete table of information about PFG soil parameters can be find in "
       , paste0(name.simulation, "/DATA/PFGS/"), "folder.")

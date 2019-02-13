@@ -16,7 +16,7 @@ library(pkgdown)
 ## INFORMATION / PARAMETERS
 
 package_name = "RFate"
-package_version = "0.0.5.9000"
+package_version = "0.0.6.9000"
 
 #####################################################################
 

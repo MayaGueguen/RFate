@@ -30,10 +30,6 @@
 ##' 
 ##' 
 ##' \describe{
-##'   \item{NAMESPACE_ \cr CONSTANTS}{file where constant parameters needed by 
-##'   the program to manage abundance values are given \cr
-##'   (see \code{\link{PRE_FATE.params_namespaceConstants}})
-##'   }
 ##'   \item{GLOBAL_PARAMS}{file where parameters related to the simulation 
 ##'   definition are referred (e.g. number of PFG involved, number of height 
 ##'   strata, simulation duration, computer resources, modules loaded, ...) \cr
@@ -118,7 +114,6 @@
 ##' directory with the following parameters :
 ##' 
 ##' \itemize{
-##'   \item \strong{--NAMESPACE_CONSTANTS--}
 ##'   \item \strong{--GLOBAL_PARAMS--}
 ##'   \item \strong{--SAVE_DIR--}
 ##'   \item --ARRAYS_SAVING_YEARS-- (\emph{optional})
@@ -143,7 +138,6 @@
 ##' @keywords FATE, simulation
 ##' 
 ##' @seealso \code{\link{PRE_FATE.skeletonDirectory}},
-##' \code{\link{PRE_FATE.params_namespaceConstants}},
 ##' \code{\link{PRE_FATE.params_globalParameters}},
 ##' \code{\link{PRE_FATE.params_PFGsuccession}},
 ##' \code{\link{PRE_FATE.params_PFGlight}},
@@ -159,22 +153,17 @@
 ##' if (dir.exists("FATE_simulation")) system("rm -r FATE_simulation/")
 ##' PRE_FATE.skeletonDirectory()
 ##' 
-##' ## Create a Namespace_constants parameter file
-##' PRE_FATE.params_namespaceConstants(name.simulation = "FATE_simulation"
-##'                                    , global.abund.low = 1000000
-##'                                    , global.abund.med = 5000000
-##'                                    , global.abund.high = 8000000
-##'                                    , global.max.by.cohort = 5000000
-##'                                    , global.resource.thresh.med = 13000000
-##'                                    , global.resource.thresh.low = 19000000)
-##' 
 ##' ## Create a Global_parameters file
 ##' PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
 ##'                                  , required.no_PFG = 6
 ##'                                  , required.no_STRATA = 5
 ##'                                  , required.simul_duration = 100
 ##'                                  , required.seeding_duration = c(10,50)
-##'                                  , required.seeding_timestep = 1)
+##'                                  , required.seeding_timestep = 1
+##'                                  , required.max_by_cohort = 5000000
+##'                                  , required.max_abund_low = 3000000
+##'                                  , required.max_abund_medium = 5000000
+##'                                  , required.max_abund_high = 9000000)
 ##' 
 ##' ## Create a SAVE_year_maps or/and SAVE_year_objects parameter file
 ##' PRE_FATE.params_saveYears(name.simulation = "FATE_simulation"
@@ -250,7 +239,6 @@ PRE_FATE.params_simulParameters = function(
 ){
   
   .testParam_existFolder(name.simulation, "PARAM_SIMUL/")
-  .testParam_existFolder(name.simulation, "DATA/NAMESPACE_CONSTANTS/")
   .testParam_existFolder(name.simulation, "DATA/GLOBAL_PARAMETERS/")
   .testParam_existFolder(name.simulation, "DATA/SAVE/")
   .testParam_existFolder(name.simulation, "DATA/SCENARIO/")
@@ -268,19 +256,7 @@ PRE_FATE.params_simulParameters = function(
   {
     .testParam_existFile(paste0(name.simulation, "/DATA/MASK/", name.mask))
   }
-  
-  
-  #################################################################################################
-  
-  files.NAMESPACE = list.files(path = paste0(name.simulation, "/DATA/NAMESPACE_CONSTANTS")
-                               , pattern = "^Namespace_constants.*.txt"
-                               , full.names = TRUE)
-  if (length(files.NAMESPACE) == 0)
-  {
-    stop(paste0("Wrong number of files!\n There is no adequate file "
-                , "(`.txt` file starting with `Namespace_constants`) "
-                , "into the DATA/NAMESPACE_CONSTANTS/ folder"))
-  }
+
   
   #################################################################################################
   
@@ -374,8 +350,7 @@ PRE_FATE.params_simulParameters = function(
   if (length(dirs.SCENARIO.DIST) > 0) sce.dist = 1:length(dirs.SCENARIO.DIST)
   if (length(dirs.HABSUIT) > 0) ras.hs = 1:length(dirs.HABSUIT)
   
-  PARAMS.combi = expand.grid(NAMESPACE = 1:length(files.NAMESPACE)
-                             , GLOBAL = 1:length(files.GLOBAL)
+  PARAMS.combi = expand.grid(GLOBAL = 1:length(files.GLOBAL)
                              , SAVE = 1:length(dirs.SAVE)
                              , SCENARIO.MASK = sce.mask
                              , SCENARIO.HS = sce.hs
@@ -388,13 +363,11 @@ PRE_FATE.params_simulParameters = function(
   for (i in 1:nrow(PARAMS.combi))
   {
     
-    params.combi = data.frame(NAMESPACE = files.NAMESPACE[PARAMS.combi$NAMESPACE[i]]
-                              , GLOBAL = files.GLOBAL[PARAMS.combi$GLOBAL[i]]
+    params.combi = data.frame(GLOBAL = files.GLOBAL[PARAMS.combi$GLOBAL[i]]
                               , SAVE.dir = paste0(name.simulation, "/RESULTS/SIMUL_V", i)
                               , MASK = paste0(name.simulation, "/DATA/MASK/", name.mask))
     
-    names.params.combi = c("--NAMESPACE_CONSTANTS--"
-                           , "--GLOBAL_PARAMS--"
+    names.params.combi = c("--GLOBAL_PARAMS--"
                            , "--SAVE_DIR--"
                            , "--MASK--")
     

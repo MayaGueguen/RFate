@@ -60,7 +60,6 @@ reference:
     desc: Create user-friendly directory tree, parameter and simulation files for FATE-HD simulation.  <br/> ..
     contents:
       - "PRE_FATE.skeletonDirectory"
-      - "PRE_FATE.params_namespaceConstants"
       - "PRE_FATE.params_globalParameters"
       - "PRE_FATE.params_saveYears"
       - "PRE_FATE.params_changingYears"
