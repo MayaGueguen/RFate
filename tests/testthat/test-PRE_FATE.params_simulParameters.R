@@ -95,6 +95,7 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : name.si
                                    , required.simul_duration = 100
                                    , required.seeding_duration = c(10,50)
                                    , required.seeding_timestep = 1
+                                   , required.seeding_input = 100
                                    , required.max_by_cohort = 5000000
                                    , required.max_abund_low = 3000000
                                    , required.max_abund_medium = 5000000

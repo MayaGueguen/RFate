@@ -198,7 +198,8 @@ parameters :</p>
 <li><p>SEED_POOL_LIFE : the maximal number of years seeds are able to
   survive (for active and dormant pool)</p></li>
 <li><p>SEED_DORMANCY : are the seeds dormant or not <em>(0: No 1: Yes)
-  <br /> <br /></em></p></li>
+   POTENTIAL_FECUNDITY : the maximum number of seeds produced by the
+  PFG <br /> <br /></em></p></li>
 </ul>
 
 <p>A <code>SUCC_COMPLETE_TABLE.csv</code> file summarizing information for all groups
@@ -238,8 +239,8 @@ each PFG :</p>
   conditions <br /> <br />
   It can be seen as a proxy of maximum carrying capacity (<em>and 
   therefore as a proxy a quantity of shade produced as well, if the light
-  module is activated</em>), and it is defined according to the number of strata 
-  potentially occupied by a PFG and its life form :
+  module is activated</em>), and it is defined according to the number of
+  strata potentially occupied by a PFG and its life form :
   <ul>
 <li><p>herbaceous take little place (<em>and make little shade</em>) (1),
     <br /> chamaephytes take medium place (<em>and make medium shade</em>) (2)
@@ -265,9 +266,10 @@ each PFG :</p>
 <li><p>intermediate percentages for herbaceous in stratum 2 (80 %) and 
     in stratum &gt; 2 (50 %)</p></li>
 <li><p>immature chamaephytes in 1st stratum take as much space as mature
-    chamaephytes <br /> (<em>and contribute to shade in the same way</em>) (100 %)</p></li>
+    chamaephytes <br /> (<em>and contribute to shade in the same way</em>)
+    (100 %)</p></li>
 <li><p>immature phanerophytes with height &lt; 10m take two times less space
-    than mature phanerophytes <br /> (<em>and contribute to shade half less</em>) 
+    than mature phanerophytes <br /> (<em>and contribute to shade half less</em>)
     (50 %)</p></li>
 </ul></p></dd>
   <dt>CHANG_STR_AGES</dt><dd><p>= at what age each PFG goes into the upper stratum.
@@ -278,6 +280,10 @@ each PFG :</p>
 <li><p>at <code>age = maturity/2</code>, <code>height = IMM_SIZE * height</code></p></li>
 <li><p>at <code>age = longevity</code>, <code>height = height</code></p></li>
 </ol></p></dd>
+  <dt>POTENTIAL_FECUNDITY</dt><dd><p>= maximum number of seeds produced by the PFG.
+  <br /> <br />
+  By default, defined to the same value for all PFG (100), but can be
+  changed by hand directly into the produced files.</p></dd>
 </dl>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>

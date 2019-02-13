@@ -8,24 +8,24 @@ simulation}
 PRE_FATE.params_globalParameters(name.simulation, opt.no_CPU = 1,
   opt.replacePrevious = FALSE, required.no_PFG, required.no_STRATA,
   required.simul_duration, required.seeding_duration,
-  required.seeding_timestep, required.max_by_cohort,
-  required.max_abund_low, required.max_abund_medium,
-  required.max_abund_high, doLight = FALSE, LIGHT.thresh_medium,
-  LIGHT.thresh_low, doDispersal = FALSE, doHabSuitability = FALSE,
-  HABSUIT.ref_option, doDisturbances = FALSE, DIST.no, DIST.no_sub,
-  DIST.freq, doSoil = FALSE, doFire = FALSE, doDrought = FALSE,
-  doHabStability = FALSE, doAliens = FALSE)
+  required.seeding_timestep, required.seeding_input,
+  required.max_by_cohort, required.max_abund_low,
+  required.max_abund_medium, required.max_abund_high, doLight = FALSE,
+  LIGHT.thresh_medium, LIGHT.thresh_low, doDispersal = FALSE,
+  doHabSuitability = FALSE, HABSUIT.ref_option, doDisturbances = FALSE,
+  DIST.no, DIST.no_sub, DIST.freq, doSoil = FALSE, doFire = FALSE,
+  doDrought = FALSE, doHabStability = FALSE, doAliens = FALSE)
 }
 \arguments{
-\item{name.simulation}{a \code{string} that corresponds to the main directory
-or simulation name of the \code{FATE-HD} simulation}
+\item{name.simulation}{a \code{string} that corresponds to the main
+directory or simulation name of the \code{FATE-HD} simulation}
 
 \item{opt.no_CPU}{default 1 (\emph{optional}). The number of resources that 
 can be used to parallelize the \code{FATE-HD} simulation}
 
-\item{opt.replacePrevious}{default \code{FALSE} (\emph{optional}). If \code{TRUE},
-pre-existing files inside \code{name.simulation/DATA/GLOBAL_PARAMETERS} folder
-will be replaced}
+\item{opt.replacePrevious}{default \code{FALSE} (\emph{optional}). If 
+\code{TRUE}, pre-existing files inside
+\code{name.simulation/DATA/GLOBAL_PARAMETERS} folder will be replaced}
 
 \item{required.no_PFG}{an \code{integer} corresponding to the number of PFG}
 
@@ -41,6 +41,10 @@ duration of seeding (\emph{in years})}
 \item{required.seeding_timestep}{an \code{integer} corresponding to the 
 time interval at which occurs the seeding, and until the seeding duration
 is not over (\emph{in years})}
+
+\item{required.seeding_input}{an \code{integer} corresponding to the 
+number of seeds attributed to each PFG at each time step, and until the
+seeding duration is not over}
 
 \item{required.max_by_cohort}{an \code{integer} in the order of 1 000 000
 to rescale abundance values of each cohort in each pixel (carrying capacity
@@ -60,16 +64,16 @@ activated in the \code{FATE-HD} simulation, and associated parameters are
 required}
 
 \item{LIGHT.thresh_medium}{an \code{integer} in the order of 1 000 000
-to convert PFG abundances in each strata into light resources. It corresponds
-to the limit of abundances above which light resources are \code{medium}.
-PFG abundances lower than this threshold imply \strong{high amount of light}.
-Is is consequently lower than \code{LIGHT.thresh_low}.}
+to convert PFG abundances in each strata into light resources. It
+corresponds to the limit of abundances above which light resources are
+\code{medium}. PFG abundances lower than this threshold imply \strong{high
+amount of light}. It is consequently lower than \code{LIGHT.thresh_low}.}
 
 \item{LIGHT.thresh_low}{an \code{integer} in the order of 1 000 000
-to convert PFG abundances in each strata into light resources. It corresponds
-to the limit of abundances above which light resources are \code{low}.
-PFG abundances higher than \code{LIGHT.thresh_medium} and lower than this
-threshold imply \strong{medium amount of light}.}
+to convert PFG abundances in each strata into light resources. It
+corresponds to the limit of abundances above which light resources are 
+\code{low}. PFG abundances higher than \code{LIGHT.thresh_medium} and lower
+than this threshold imply \strong{medium amount of light}.}
 
 \item{doDispersal}{default \code{FALSE}. If \code{TRUE}, seed dispersal is 
 activated in the \code{FATE-HD} simulation, and associated parameters are 
@@ -116,6 +120,7 @@ directory with the following parameters :
   \item SIMULATION_DURATION
   \item SEEDING_DURATION
   \item SEEDING_TIMESTEP
+  \item SEEDING_INPUT
   \item MAX_BY_COHORT
   \item MAX_ABUND_LOW
   \item MAX_ABUND_MEDIUM 
@@ -210,7 +215,10 @@ general characteristics of the simulation :
     (\emph{in years})
     \item \emph{required.seeding_timestep} : the time interval at which 
     occurs the seeding, and until the seeding duration is not over 
-    (\emph{in years}) \cr \cr
+    (\emph{in years})
+    \item \emph{required.seeding_input} : the number of seeds dispersed
+    for each PFG at each time step, and until the seeding duration is
+    not over \cr \cr
   }
   }
   \item{To get abundances \cr per PFG per pixel}{
@@ -338,6 +346,7 @@ PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                  , required.simul_duration = 100
                                  , required.seeding_duration = 10
                                  , required.seeding_timestep = 1
+                                 , required.seeding_input = 100
                                  , required.max_by_cohort = 5000000
                                  , required.max_abund_low = 3000000
                                  , required.max_abund_medium = 5000000
@@ -357,6 +366,7 @@ PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                  , required.simul_duration = 100
                                  , required.seeding_duration = 10
                                  , required.seeding_timestep = 1
+                                 , required.seeding_input = 100
                                  , required.max_by_cohort = 5000000
                                  , required.max_abund_low = 3000000
                                  , required.max_abund_medium = 5000000

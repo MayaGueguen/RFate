@@ -35,7 +35,8 @@ parameters :
   \item SEED_POOL_LIFE : the maximal number of years seeds are able to
   survive (for active and dormant pool)
   \item SEED_DORMANCY : are the seeds dormant or not \emph{(0: No 1: Yes)
-  \cr \cr}
+  \item POTENTIAL_FECUNDITY : the maximum number of seeds produced by the
+  PFG \cr \cr}
 }
 
 A \code{SUCC_COMPLETE_TABLE.csv} file summarizing information for all groups
@@ -86,8 +87,8 @@ each PFG :
   conditions \cr \cr
   It can be seen as a proxy of maximum carrying capacity (\emph{and 
   therefore as a proxy a quantity of shade produced as well, if the light
-  module is activated}), and it is defined according to the number of strata 
-  potentially occupied by a PFG and its life form :
+  module is activated}), and it is defined according to the number of
+  strata potentially occupied by a PFG and its life form :
   \itemize{
     \item herbaceous take little place (\emph{and make little shade}) (1),
     \cr chamaephytes take medium place (\emph{and make medium shade}) (2)
@@ -115,9 +116,10 @@ each PFG :
     \item intermediate percentages for herbaceous in stratum 2 (80 \%) and 
     in stratum > 2 (50 \%)
     \item immature chamaephytes in 1st stratum take as much space as mature
-    chamaephytes \cr (\emph{and contribute to shade in the same way}) (100 \%)
+    chamaephytes \cr (\emph{and contribute to shade in the same way})
+    (100 \%)
     \item immature phanerophytes with height < 10m take two times less space
-    than mature phanerophytes \cr (\emph{and contribute to shade half less}) 
+    than mature phanerophytes \cr (\emph{and contribute to shade half less})
     (50 \%)
   }
   }
@@ -129,6 +131,11 @@ each PFG :
     \item at \code{age = maturity/2}, \code{height = IMM_SIZE * height}
     \item at \code{age = longevity}, \code{height = height}
   }
+  }
+  \item{POTENTIAL_FECUNDITY}{= maximum number of seeds produced by the PFG.
+  \cr \cr
+  By default, defined to the same value for all PFG (100), but can be
+  changed by hand directly into the produced files.
   }
 }
 }

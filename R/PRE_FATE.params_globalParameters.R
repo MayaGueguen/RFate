@@ -9,13 +9,13 @@
 ##' @description This script is designed to create one parameter file
 ##' containing \code{GLOBAL PARAMETERS} used in \code{FATE-HD} model.
 ##'              
-##' @param name.simulation a \code{string} that corresponds to the main directory
-##' or simulation name of the \code{FATE-HD} simulation
+##' @param name.simulation a \code{string} that corresponds to the main
+##' directory or simulation name of the \code{FATE-HD} simulation
 ##' @param opt.no_CPU default 1 (\emph{optional}). The number of resources that 
 ##' can be used to parallelize the \code{FATE-HD} simulation
-##' @param opt.replacePrevious default \code{FALSE} (\emph{optional}). If \code{TRUE},
-##' pre-existing files inside \code{name.simulation/DATA/GLOBAL_PARAMETERS} folder
-##' will be replaced
+##' @param opt.replacePrevious default \code{FALSE} (\emph{optional}). If 
+##' \code{TRUE}, pre-existing files inside
+##' \code{name.simulation/DATA/GLOBAL_PARAMETERS} folder will be replaced
 ##' @param required.no_PFG an \code{integer} corresponding to the number of PFG
 ##' @param required.no_STRATA an \code{integer} corresponding to the number of 
 ##' height strata
@@ -26,6 +26,9 @@
 ##' @param required.seeding_timestep an \code{integer} corresponding to the 
 ##' time interval at which occurs the seeding, and until the seeding duration
 ##' is not over (\emph{in years})
+##' @param required.seeding_input an \code{integer} corresponding to the 
+##' number of seeds attributed to each PFG at each time step, and until the
+##' seeding duration is not over
 ##' @param required.max_by_cohort an \code{integer} in the order of 1 000 000
 ##' to rescale abundance values of each cohort in each pixel (carrying capacity
 ##' equivalent)
@@ -39,15 +42,15 @@
 ##' activated in the \code{FATE-HD} simulation, and associated parameters are 
 ##' required
 ##' @param LIGHT.thresh_medium an \code{integer} in the order of 1 000 000
-##' to convert PFG abundances in each strata into light resources. It corresponds
-##' to the limit of abundances above which light resources are \code{medium}.
-##' PFG abundances lower than this threshold imply \strong{high amount of light}.
-##' Is is consequently lower than \code{LIGHT.thresh_low}.
+##' to convert PFG abundances in each strata into light resources. It
+##' corresponds to the limit of abundances above which light resources are
+##' \code{medium}. PFG abundances lower than this threshold imply \strong{high
+##' amount of light}. It is consequently lower than \code{LIGHT.thresh_low}.
 ##' @param LIGHT.thresh_low an \code{integer} in the order of 1 000 000
-##' to convert PFG abundances in each strata into light resources. It corresponds
-##' to the limit of abundances above which light resources are \code{low}.
-##' PFG abundances higher than \code{LIGHT.thresh_medium} and lower than this
-##' threshold imply \strong{medium amount of light}.
+##' to convert PFG abundances in each strata into light resources. It
+##' corresponds to the limit of abundances above which light resources are 
+##' \code{low}. PFG abundances higher than \code{LIGHT.thresh_medium} and lower
+##' than this threshold imply \strong{medium amount of light}.
 ##' @param doDispersal default \code{FALSE}. If \code{TRUE}, seed dispersal is 
 ##' activated in the \code{FATE-HD} simulation, and associated parameters are 
 ##' required
@@ -98,7 +101,10 @@
 ##'     (\emph{in years})
 ##'     \item \emph{required.seeding_timestep} : the time interval at which 
 ##'     occurs the seeding, and until the seeding duration is not over 
-##'     (\emph{in years}) \cr \cr
+##'     (\emph{in years})
+##'     \item \emph{required.seeding_input} : the number of seeds dispersed
+##'     for each PFG at each time step, and until the seeding duration is
+##'     not over \cr \cr
 ##'   }
 ##'   }
 ##'   \item{To get abundances \cr per PFG per pixel}{
@@ -225,6 +231,7 @@
 ##'   \item SIMULATION_DURATION
 ##'   \item SEEDING_DURATION
 ##'   \item SEEDING_TIMESTEP
+##'   \item SEEDING_INPUT
 ##'   \item MAX_BY_COHORT
 ##'   \item MAX_ABUND_LOW
 ##'   \item MAX_ABUND_MEDIUM 
@@ -312,6 +319,7 @@
 ##'                                  , required.simul_duration = 100
 ##'                                  , required.seeding_duration = 10
 ##'                                  , required.seeding_timestep = 1
+##'                                  , required.seeding_input = 100
 ##'                                  , required.max_by_cohort = 5000000
 ##'                                  , required.max_abund_low = 3000000
 ##'                                  , required.max_abund_medium = 5000000
@@ -331,6 +339,7 @@
 ##'                                  , required.simul_duration = 100
 ##'                                  , required.seeding_duration = 10
 ##'                                  , required.seeding_timestep = 1
+##'                                  , required.seeding_input = 100
 ##'                                  , required.max_by_cohort = 5000000
 ##'                                  , required.max_abund_low = 3000000
 ##'                                  , required.max_abund_medium = 5000000
@@ -357,6 +366,7 @@ PRE_FATE.params_globalParameters = function(
   , required.simul_duration
   , required.seeding_duration
   , required.seeding_timestep
+  , required.seeding_input
   , required.max_by_cohort
   , required.max_abund_low
   , required.max_abund_medium
@@ -426,6 +436,10 @@ PRE_FATE.params_globalParameters = function(
   if (.testParam_notNum(required.seeding_timestep) ||
       required.seeding_timestep <= 0 ){
     .stopMessage_beInteger("required.seeding_timestep")
+  }
+  if (.testParam_notNum(required.seeding_input) ||
+      required.seeding_input <= 0 ){
+    .stopMessage_beInteger("required.seeding_input")
   }
   if (.testParam_notNum(required.max_by_cohort) ||
       required.max_by_cohort <= 0 )
@@ -616,6 +630,7 @@ PRE_FATE.params_globalParameters = function(
                              , required.simul_duration
                              , required.seeding_duration
                              , required.seeding_timestep
+                             , required.seeding_input
                              , required.max_by_cohort
                              , required.max_abund_low
                              , required.max_abund_medium
@@ -651,6 +666,7 @@ PRE_FATE.params_globalParameters = function(
                             , "SIMULATION_DURATION"
                             , "SEEDING_DURATION"
                             , "SEEDING_TIMESTEP"
+                            , "SEEDING_INPUT"
                             , "MAX_BY_COHORT"
                             , "MAX_ABUND_LOW"
                             , "MAX_ABUND_MEDIUM"

@@ -169,6 +169,8 @@ getPFG_4_calcMeanTraits = function(zone.name, mat.traits, selected.sp)
   mat.traits.sp$soil_contrib = as.numeric(as.character(mat.traits$NITROGEN))
   mat.traits.sp$soil_tolerance = as.numeric(as.character(mat.traits$NITROGEN_TOLERANCE))
   
+  save(mat.traits.sp, file = "mat.traits.sp.RData")
+  
   ## CALCULATE MEDIAN TRAIT VALUE PER PFG
   mat.traits.pfg = PRE_FATE.speciesClustering_step3(mat.species.traits = mat.traits.sp)
   
@@ -340,13 +342,9 @@ getPFG_5_FATEparam = function(zone.name, zone.mask, zone.mask.pert.all, zone.mas
   }
   
   ras.names.dist = paste0(zone.name.simulation, "/DATA/MASK/DIST_", basename(zone.mask.pert.all))
-  # ras.names.mask = paste0(zone.name.simulation, "/DATA/MASK/", basename(zone.mask))
-  # ras.names = c(ras.names.dist, ras.names.mask)
   mat.dist.change = data.frame(year = rep(c(600, 601, 800, 801), each = 2)
                                , order = rep(1:2, 4)
                                , file.name = rep(c(ras.names.dist, rev(ras.names.dist)), 2))
-                               # , file.name = rep(c(ras.names, rev(ras.names)), 2))
-
   
   PRE_FATE.params_changingYears(name.simulation = zone.name.simulation
                                 , type.changing = "DIST"
@@ -426,8 +424,8 @@ getPFG_5_FATEparam = function(zone.name, zone.mask, zone.mask.pert.all, zone.mas
                                    , DIST.no_sub = 4
                                    , DIST.freq = c(1, 1)
                                    , doLight = FALSE
-                                   , doSoil = TRUE
-                                   , SOIL.no_categories = max(TRAITS_PFG$soil_tol_max))
+                                   , doSoil = TRUE)
+                                   # , SOIL.no_categories = max(TRAITS_PFG$soil_tol_max))
   
   ## LIGHT + SOIL (+ dispersal + HS)
   PRE_FATE.params_globalParameters(name.simulation = zone.name.simulation
@@ -445,8 +443,8 @@ getPFG_5_FATEparam = function(zone.name, zone.mask, zone.mask.pert.all, zone.mas
                                    , DIST.no_sub = 4
                                    , DIST.freq = c(1, 1)
                                    , doLight = TRUE
-                                   , doSoil = TRUE
-                                   , SOIL.no_categories = max(TRAITS_PFG$soil_tol_max))
+                                   , doSoil = TRUE)
+                                   # , SOIL.no_categories = max(TRAITS_PFG$soil_tol_max))
   
   #################################################################################################
   
