@@ -212,6 +212,8 @@ getPFG_5_FATEparam = function(zone.name, zone.mask, zone.mask.pert.all, zone.mas
   no.strata = max(mat.PFG.succ$STRATA)
   
   #################################################################################################
+  TRAITS_PFG$palatability = as.numeric(as.character(TRAITS_PFG$palatability))
+  
   mat.dist = data.frame()
   mat.dist = rbind(mat.dist, data.frame(name = "mowing"
                                         , responseStage = c(rep(1:4, each = length(pfg_H))
@@ -352,17 +354,8 @@ getPFG_5_FATEparam = function(zone.name, zone.mask, zone.mask.pert.all, zone.mas
   
   #################################################################################################
   PRE_FATE.params_PFGsoil(name.simulation = zone.name.simulation
-                          , mat.PFG.soil = TRAITS_PFG[, c("PFG", "soil_contrib", "soil_tol_min", "soil_tol_max")]
-                          , no.class = max(TRAITS_PFG$soil_tol_max))
-  
-  #################################################################################################
-  PRE_FATE.params_namespaceConstants(name.simulation = zone.name.simulation
-                                     , global.abund.low = 1000000
-                                     , global.abund.med = 5000000
-                                     , global.abund.high = 8000000
-                                     , global.max.by.cohort = 5000000
-                                     , global.resource.thresh.med = 13000000
-                                     , global.resource.thresh.low = 19000000)
+                          , mat.PFG.soil = TRAITS_PFG[, c("PFG", "type", "soil_contrib"
+                                                          , "soil_tol_min", "soil_tol_max")])
   
   #################################################################################################
   PRE_FATE.params_saveYears(name.simulation = zone.name.simulation
@@ -380,6 +373,11 @@ getPFG_5_FATEparam = function(zone.name, zone.mask, zone.mask.pert.all, zone.mas
                                    , required.simul_duration = 850
                                    , required.seeding_duration = 300
                                    , required.seeding_timestep = 1
+                                   , required.seeding_input = 100
+                                   , required.max_by_cohort = 5000000
+                                   , required.max_abund_low = 10000000
+                                   , required.max_abund_medium = 50000000
+                                   , required.max_abund_high = 80000000
                                    , doDispersal = TRUE
                                    , doHabSuitability = TRUE
                                    , HABSUIT.ref_option = 1
@@ -398,7 +396,14 @@ getPFG_5_FATEparam = function(zone.name, zone.mask, zone.mask.pert.all, zone.mas
                                    , required.simul_duration = 850
                                    , required.seeding_duration = 300
                                    , required.seeding_timestep = 1
+                                   , required.seeding_input = 100
+                                   , required.max_by_cohort = 5000000
+                                   , required.max_abund_low = 10000000
+                                   , required.max_abund_medium = 50000000
+                                   , required.max_abund_high = 80000000
                                    , doDispersal = TRUE
+                                   , LIGHT.thresh_medium = 95000000
+                                   , LIGHT.thresh_low = 190000000
                                    , doHabSuitability = TRUE
                                    , HABSUIT.ref_option = 1
                                    , doDisturbances = TRUE
@@ -416,6 +421,11 @@ getPFG_5_FATEparam = function(zone.name, zone.mask, zone.mask.pert.all, zone.mas
                                    , required.simul_duration = 850
                                    , required.seeding_duration = 300
                                    , required.seeding_timestep = 1
+                                   , required.seeding_input = 100
+                                   , required.max_by_cohort = 5000000
+                                   , required.max_abund_low = 10000000
+                                   , required.max_abund_medium = 50000000
+                                   , required.max_abund_high = 80000000
                                    , doDispersal = TRUE
                                    , doHabSuitability = TRUE
                                    , HABSUIT.ref_option = 1
@@ -425,7 +435,6 @@ getPFG_5_FATEparam = function(zone.name, zone.mask, zone.mask.pert.all, zone.mas
                                    , DIST.freq = c(1, 1)
                                    , doLight = FALSE
                                    , doSoil = TRUE)
-                                   # , SOIL.no_categories = max(TRAITS_PFG$soil_tol_max))
   
   ## LIGHT + SOIL (+ dispersal + HS)
   PRE_FATE.params_globalParameters(name.simulation = zone.name.simulation
@@ -435,6 +444,11 @@ getPFG_5_FATEparam = function(zone.name, zone.mask, zone.mask.pert.all, zone.mas
                                    , required.simul_duration = 850
                                    , required.seeding_duration = 300
                                    , required.seeding_timestep = 1
+                                   , required.seeding_input = 100
+                                   , required.max_by_cohort = 5000000
+                                   , required.max_abund_low = 10000000
+                                   , required.max_abund_medium = 50000000
+                                   , required.max_abund_high = 80000000
                                    , doDispersal = TRUE
                                    , doHabSuitability = TRUE
                                    , HABSUIT.ref_option = 1
@@ -443,8 +457,9 @@ getPFG_5_FATEparam = function(zone.name, zone.mask, zone.mask.pert.all, zone.mas
                                    , DIST.no_sub = 4
                                    , DIST.freq = c(1, 1)
                                    , doLight = TRUE
+                                   , LIGHT.thresh_medium = 95000000
+                                   , LIGHT.thresh_low = 190000000
                                    , doSoil = TRUE)
-                                   # , SOIL.no_categories = max(TRAITS_PFG$soil_tol_max))
   
   #################################################################################################
   
