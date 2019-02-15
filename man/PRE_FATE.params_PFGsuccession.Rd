@@ -34,9 +34,9 @@ parameters :
   not supposed to rise a stratum)}
   \item SEED_POOL_LIFE : the maximal number of years seeds are able to
   survive (for active and dormant pool)
-  \item SEED_DORMANCY : are the seeds dormant or not \emph{(0: No 1: Yes)
+  \item SEED_DORMANCY : are the seeds dormant or not \emph{(0: No 1: Yes)}
   \item POTENTIAL_FECUNDITY : the maximum number of seeds produced by the
-  PFG \cr \cr}
+  PFG \cr \cr
 }
 
 A \code{SUCC_COMPLETE_TABLE.csv} file summarizing information for all groups

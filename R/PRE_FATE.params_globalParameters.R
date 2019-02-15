@@ -530,8 +530,8 @@ PRE_FATE.params_globalParameters = function(
   if (doLight)
   {
     params.LIGHT = list(as.numeric(doLight)
-                        , LIGHT.thresh_medium
-                        , LIGHT.thresh_low)
+                        , as.integer(LIGHT.thresh_medium)
+                        , as.integer(LIGHT.thresh_low))
     names.params.list.LIGHT = c("DO_LIGHT_COMPETITION"
                                 , "LIGHT_THRESH_MEDIUM"
                                 , "LIGHT_THRESH_LOW")
@@ -631,10 +631,10 @@ PRE_FATE.params_globalParameters = function(
                              , required.seeding_duration
                              , required.seeding_timestep
                              , required.seeding_input
-                             , required.max_by_cohort
-                             , required.max_abund_low
-                             , required.max_abund_medium
-                             , required.max_abund_high
+                             , as.integer(required.max_by_cohort)
+                             , as.integer(required.max_abund_low)
+                             , as.integer(required.max_abund_medium)
+                             , as.integer(required.max_abund_high)
   )
   
   params.list = lapply(1:nrow(params.combi), function(x) {

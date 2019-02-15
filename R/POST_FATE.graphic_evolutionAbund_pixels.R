@@ -299,7 +299,7 @@ POST_FATE.graphic_evolutionAbund_pixels = function(
                               , "_"
                               , basename(dir.save)
                               , ".csv")
-              , row.names = TRUE)
+              , row.names = FALSE)
     
     cat("\n> Done!\n")
     cat("\n")

@@ -242,7 +242,7 @@ PRE_FATE.params_PFGsoil = function(
   ##             8 = 80 %
   ##             9 = 90 %
   ##             10 = 100 %
-  SOIL_TOL = matrix(100, nrow = 3 * 3, ncol = no.PFG)
+  SOIL_TOL = matrix(10, nrow = 3 * 3, ncol = no.PFG)
   
   SOIL_TOL[1, ] = 1 ## Germinant - Low soil conditions
   SOIL_TOL[3, ] = 0 ## Germinant - High soil conditions

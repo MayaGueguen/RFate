@@ -311,6 +311,17 @@ POST_FATE.relativeAbund_presenceAbsence = function(
           ras = stack(file_name) * ras.mask
           names(ras) = paste0("STRATUM_", st)
           
+          if (nlayers(ras) > 1)
+          {
+            for (ll1 in 1:(nlayers(ras)-1))
+            {
+              ind.0 = which(ras[[ll1]][] == 0)
+              for (ll2 in (ll1+1):nlayers(ras))
+              {
+                ras[[ll2]][ind.0] = 0
+              }
+            }
+          }
           ras_TOT = sum(ras, na.rm = TRUE)
           ras_TOT[] = ifelse(ras_TOT[] > 0, 1, 0)
           
