@@ -264,6 +264,14 @@ PRE_FATE.speciesClustering_step3 = function(
     {
       mat.species.traits$maturity[ind.pfg.maturity] = mat.species.traits$longevity[ind.pfg.maturity] / 2
     }
+    ## Set new values for both
+    if (length(tab.longevity.pfg) > 0 && length(tab.maturity.pfg) &&
+        length(intersect(ind.pfg.longevity, ind.pfg.maturity)) > 0)
+    {
+      ind.pfg.longevity.maturity = intersect(ind.pfg.longevity, ind.pfg.maturity)
+      mat.species.traits$longevity[ind.pfg.longevity.maturity] = 5
+      mat.species.traits$maturity[ind.pfg.longevity.maturity] = 2
+    }
   }
   
   if (isThere.soil)
@@ -292,12 +300,12 @@ PRE_FATE.speciesClustering_step3 = function(
       } else
       {
         res = mean(as.numeric(val), na.rm = TRUE)
-        if (colnames(tab.val)[i] == "soil_contrib")
+        if (colnames(tab.val)[i] %in% c("soil_contrib", "soil_tol_min", "soil_tol_max"))
         {
           res = round(res, 1)
-        } else if (colnames(tab.val)[i] == "soil_tol_max")
-        {
-          res = ceiling(res)
+        # } else if (colnames(tab.val)[i] == "soil_tol_max")
+        # {
+        #   res = ceiling(res)
         } else
         {
           res = round(res)
