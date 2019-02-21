@@ -47,7 +47,7 @@ for(ZONE in list(BAUGES))
     , zone.env.folder = ZONE$zone.env.folder
     , zone.env.variables = ZONE$zone.env.variables
     , zone.mask = raster(file_in(ZONE$zone.mask))
-    , create_wd = dir.create(path = zone.name)
+    # , create_wd = dir.create(path = zone.name)
     ## Get DB
     , OCC.DB = getDB_CBNA(x.min = zone.extent[1]
                           , x.max = zone.extent[2]
@@ -55,7 +55,7 @@ for(ZONE in list(BAUGES))
                           , y.max = zone.extent[4])
     ## Get species
     , species = OCC.DB$species[, c("numtaxon", "genre", "libcbna")]
-    , species.saved = save(species, file = paste0(zone.name, "/species.RData"))
+    , species.saved = save(species, file = paste0(zone.name, "/DB.species.RData"))
     ## Get sites informations
     , stations = OCC.DB$stations[, c("numchrono", "coderqualif", "longitudel93_rel", "latitudel93_rel")]
     , stations.COMMUNITY = stations$numchrono[which(stations$coderqualif %in% c("R06", "R07"))]

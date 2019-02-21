@@ -12,7 +12,7 @@ getOcc_1_XY = function(stations, zone.name)
                   , row.names = paste0("NUMCHRONO-", stations.XY$numchrono))
   colnames(XY) = c("X_L93", "Y_L93")
   
-  save(XY, file = paste0(zone.name, "/XY.RData"))
+  save(XY, file = paste0(zone.name, "/DB.XY.RData"))
   
   return(XY)
 }
@@ -23,7 +23,7 @@ getOcc_1_obs = function(observations, stations)
   observations.xy = merge(observations, stations, by = "numchrono")
   head(observations.xy)
   
-  save(observations.xy, file = paste0(zone.name, "/observations.xy.RData"))
+  save(observations.xy, file = paste0(zone.name, "/DB.observations.xy.RData"))
   
   return(observations.xy)
 }
@@ -79,8 +79,8 @@ getOcc_3_matDom = function(sp.SELECT, observations.xy, stations.COMMUNITY, zone.
   dim(mat.sites.species)
   mat.sites.species[1:10, 1:10]
   
-  save(stations.COMMUNITY, file = paste0(zone.name, "/stations.COMMUNITY.RData"))
-  save(mat.sites.species, file = paste0(zone.name, "/mat.sites.species.DOM.RData"))
+  save(stations.COMMUNITY, file = paste0(zone.name, "/DOM.stations.COMMUNITY.RData"))
+  save(mat.sites.species, file = paste0(zone.name, "/DOM.mat.sites.species.RData"))
   
   return(mat.sites.species)
 }
@@ -109,8 +109,11 @@ getOcc_3_occDom = function(mat.sites.species, species, zone.name, sp.type)
     }
   }
   cat(" ==> No absence data for :", sp.suppr)
-  dom_missing = species[which(species$numtaxon %in% sp.suppr), ]
-  write.csv(dom_missing, file = paste0(zone.name, "/MISSING_", sp.type, "_observations.csv"), row.names = F)
+  dom_missing = species[which(species$numtaxon %in% sp.suppr), , drop = FALSE]
+  if (nrow(dom_missing) > 0)
+  {
+    write.csv(dom_missing, file = paste0(zone.name, "/MISSING_", sp.type, "_observations.csv"), row.names = F)
+  }
   
   list_sp = list.files(path = paste0(zone.name, "/", sp.type, "_OCC/"))
   list_sp = sub("OCC_", "", list_sp)
@@ -230,6 +233,9 @@ getSDM_env = function(zone.name, zone.env.folder, zone.env.variables, maskSimul)
   zone.env.stk.PROJ = stack(zone.env.stk.CALIB * maskSimul)
   names(zone.env.stk.PROJ) = names(zone.env.stk.CALIB)
   
+  save(zone.env.stk.CALIB, file = paste0(zone.name, "/", zone.name, ".zone.env.stk.CALIB.RData"))
+  save(zone.env.stk.PROJ, file = paste0(zone.name, "/", zone.name, ".zone.env.stk.PROJ.RData"))
+  
   return(list(env.CALIB = zone.env.stk.CALIB
               , env.PROJ = zone.env.stk.PROJ))
 }
@@ -283,7 +289,7 @@ getSDM_overlap = function(zone.name, list_sp)
   file.remove(proj.files)
   
   setwd("./../../")
-  save(mat.overlap, file = paste0(zone.name, "/mat.overlap.DOM.RData"))
+  save(mat.overlap, file = paste0(zone.name, "/DOM.mat.overlap.RData"))
   
   return(mat.overlap)
 }
