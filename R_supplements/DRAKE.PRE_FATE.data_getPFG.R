@@ -130,7 +130,7 @@ getPFG_3_matSitesPFG = function(zone.name, mat.sites.species, selected.sp)
   dim(mat.sites.pfg)
   mat.sites.pfg[1:10, 1:10]
   
-  save(mat.sites.pfg, file = "mat.sites.pfg.RData")
+  save(mat.sites.pfg, file = "PFG.mat.sites.pfg.RData")
   
   setwd("./../")
   return(mat.sites.pfg)
@@ -169,10 +169,11 @@ getPFG_4_calcMeanTraits = function(zone.name, mat.traits, selected.sp)
   mat.traits.sp$soil_contrib = as.numeric(as.character(mat.traits$NITROGEN))
   mat.traits.sp$soil_tolerance = as.numeric(as.character(mat.traits$NITROGEN_TOLERANCE))
   
-  save(mat.traits.sp, file = "mat.traits.sp.RData")
+  save(mat.traits.sp, file = "PFG.mat.traits.sp.RData")
   
   ## CALCULATE MEDIAN TRAIT VALUE PER PFG
   mat.traits.pfg = PRE_FATE.speciesClustering_step3(mat.species.traits = mat.traits.sp)
+  save(mat.traits.pfg, file = "PFG.mat.traits.pfg.RData")
   
   setwd("./../")
   return(mat.traits.pfg)

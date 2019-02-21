@@ -34,6 +34,8 @@ BAUGES = list(zone.name = "Bauges"
               , zone.env.variables = c("bio_1_0", "bio_8_0", "bio_12_0", "bio_19_0", "slope"))
 ZONE = BAUGES
 
+file_date = "190221"
+
 ## ECRINS
 ## MONTBLANC
 ## LAUTARET
@@ -50,11 +52,11 @@ for(ZONE in list(BAUGES))
     zone.name = ZONE$zone.name
     , zone.mask = raster(file_in(ZONE$zone.mask))
     ## Get data
-    , mat.traits = fread(file_in("TRAITS_FATE_190111.csv"))
-    , mat.overlap = get(load(paste0(zone.name, "/mat.overlap.DOM.RData")))
-    , mat.sites.species = get(load(paste0(zone.name, "/mat.sites.species.DOM.RData")))
-    , species = get(load(paste0(zone.name, "/species.RData")))
-    , XY = get(load(paste0(zone.name, "/XY.RData")))
+    , mat.traits = fread(file_in(paste0("TRAITS_FATE_", file_date, ".csv")))
+    , mat.overlap = get(load(paste0(zone.name, "/DOM.mat.overlap.RData")))
+    , mat.sites.species = get(load(paste0(zone.name, "/DOM.mat.sites.species.RData")))
+    , species = get(load(paste0(zone.name, "/DB.species.RData")))
+    , XY = get(load(paste0(zone.name, "/DB.XY.RData")))
     ## Select traits
     , mat.traits.select = getPFG_1_selectTraits(mat.traits = mat.traits)
     ## Build PFG
