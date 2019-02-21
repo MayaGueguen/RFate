@@ -4,4 +4,6 @@
 .Ruserdata
 RFate.Rproj
 *~$
-FATE_simulation
+^FATE_simulation$
+^data_supplements/Bauges/SP_OCC$
+^data_supplements/Bauges/SP_SDM$
