@@ -14,14 +14,17 @@
 ##' directory or simulation name of the \code{FATE-HD} simulation
 ##' @param mat.PFG.soil a \code{data.frame} with 5 columns : PFG, type,
 ##' soil_contrib, soil_tol_min, soil_tol_max
+##' @param mat.PFG.tol a \code{data.frame} with 5 columns : PFG, lifeStage,
+##' soilResources, soil_tol
 ##' 
 ##' 
 ##' @details
 ##' 
 ##' The soil module allows the user to simulate a primary vegetation succession 
 ##' based on soil competition. \cr
-##' Several parameters are required for each PFG in order to set up the soil 
-##' competition :
+##' 
+##' Several parameters, given within \code{mat.PFG.soil}, are required for each
+##' PFG in order to set up the soil competition :
 ##' 
 ##' \describe{
 ##'   \item{type}{or life-form, based on Raunkier. It should be either \code{H} 
@@ -41,7 +44,29 @@
 ##'   \item{SOIL_LOW}{minimum nitrogen value tolerated by the PFG}
 ##'   \item{SOIL_HIGH}{maximum nitrogen value tolerated by the PFG}
 ##'   \item{ACTIVE_GERM}{proportion of seeds that will germinate for each soil
-##'   condition (Low, Medium, High)}
+##'   condition (Low, Medium, High) :
+##'   \itemize{
+##'     \item woody species have little variation in germination rate : 90\% for
+##'     Low and High conditions, 100\% for Medium condition
+##'     \item herbaceous germinate less in richer soil : 80\% for Low, 100\% for
+##'     Medium and 50\% for High conditions
+##'   }
+##'   }
+##' }
+##' 
+##' A second file, \code{mat.PFG.tol}, can be given to define the importance of
+##' the response of each PFG to each soil condition :
+##' 
+##' \describe{
+##'   \item{PFG}{the name of the PFG concerned}
+##'   \item{lifeStage}{the concerned life stage (Germinant, Immature, Mature)}
+##'   \item{soilResources}{the concerned soil condition (Low, Medium, High)}
+##'   \item{soil_tol}{the proportion of surviving individuals}
+##' }
+##' 
+##' If these values are not given by the user, default rules are defined below :
+##' 
+##' \describe{
 ##'   \item{SOIL_TOL}{ defined for each life stage (Germinant, Immature, 
 ##'   Mature) and each soil condition (Low, Medium, High) :
 ##'   \itemize{
@@ -221,8 +246,8 @@ PRE_FATE.params_PFGsoil = function(
   ##             10 = 100 %
   ACTIVE_GERM = matrix(10, nrow = 3, ncol = no.PFG)
   ## woody species have little variation in germination rate depending on soil conditions
-  ACTIVE_GERM[c(1,2), which(mat.PFG.soil$type %in% c("C", "P"))] = 9
-  ## herbaceous germinate less in the shadow
+  ACTIVE_GERM[c(1,3), which(mat.PFG.soil$type %in% c("C", "P"))] = 9
+  ## herbaceous germinate less in richer soil
   ACTIVE_GERM[1, which(mat.PFG.soil$type == "H")] = 8 ## low soil conditions
   ACTIVE_GERM[3, which(mat.PFG.soil$type == "H")] = 5 ## high soil conditions
   

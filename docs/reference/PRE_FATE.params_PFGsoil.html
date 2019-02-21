@@ -175,6 +175,11 @@ directory or simulation name of the <code>FATE-HD</code> simulation</p></td>
       <td><p>a <code>data.frame</code> with 5 columns : PFG, type,
 soil_contrib, soil_tol_min, soil_tol_max</p></td>
     </tr>
+    <tr>
+      <th>mat.PFG.tol</th>
+      <td><p>a <code>data.frame</code> with 5 columns : PFG, lifeStage,
+soilResources, soil_tol</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -210,9 +215,9 @@ into the <code>name.simulation/DATA/PFGS/</code> directory.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The soil module allows the user to simulate a primary vegetation succession 
-based on soil competition. <br />
-Several parameters are required for each PFG in order to set up the soil 
-competition :</p>
+based on soil competition. <br /></p>
+<p>Several parameters, given within <code>mat.PFG.soil</code>, are required for each
+PFG in order to set up the soil competition :</p>
 <dl class='dl-horizontal'>
   <dt>type</dt><dd><p>or life-form, based on Raunkier. It should be either <code>H</code> 
   (herbaceous), <code>C</code> (chamaephyte) or <code>P</code> (phanerophyte) for now</p></dd>
@@ -228,7 +233,24 @@ each PFG :</p>
   <dt>SOIL_LOW</dt><dd><p>minimum nitrogen value tolerated by the PFG</p></dd>
   <dt>SOIL_HIGH</dt><dd><p>maximum nitrogen value tolerated by the PFG</p></dd>
   <dt>ACTIVE_GERM</dt><dd><p>proportion of seeds that will germinate for each soil
-  condition (Low, Medium, High)</p></dd>
+  condition (Low, Medium, High) :
+  <ul>
+<li><p>woody species have little variation in germination rate : 90% for
+    Low and High conditions, 100% for Medium condition</p></li>
+<li><p>herbaceous germinate less in richer soil : 80% for Low, 100% for
+    Medium and 50% for High conditions</p></li>
+</ul></p></dd>
+</dl>
+    <p>A second file, <code>mat.PFG.tol</code>, can be given to define the importance of
+the response of each PFG to each soil condition :</p>
+<dl class='dl-horizontal'>
+  <dt>PFG</dt><dd><p>the name of the PFG concerned</p></dd>
+  <dt>lifeStage</dt><dd><p>the concerned life stage (Germinant, Immature, Mature)</p></dd>
+  <dt>soilResources</dt><dd><p>the concerned soil condition (Low, Medium, High)</p></dd>
+  <dt>soil_tol</dt><dd><p>the proportion of surviving individuals</p></dd>
+</dl>
+    <p>If these values are not given by the user, default rules are defined below :</p>
+<dl class='dl-horizontal'>
   <dt>SOIL_TOL</dt><dd><p>defined for each life stage (Germinant, Immature, 
   Mature) and each soil condition (Low, Medium, High) :
   <ul>
