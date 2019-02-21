@@ -5,7 +5,8 @@
 \title{Create \emph{SOIL} parameter files for a \code{FATE-HD}
 simulation}
 \usage{
-PRE_FATE.params_PFGsoil(name.simulation, mat.PFG.soil)
+PRE_FATE.params_PFGsoil(name.simulation, mat.PFG.soil,
+  mat.PFG.tol = NULL)
 }
 \arguments{
 \item{name.simulation}{a \code{string} that corresponds to the main

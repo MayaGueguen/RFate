@@ -147,10 +147,12 @@
 PRE_FATE.params_PFGsoil = function(
   name.simulation
   , mat.PFG.soil
+  , mat.PFG.tol = NULL
 ){
   
   .testParam_existFolder(name.simulation, "DATA/PFGS/SOIL/")
   
+  ## CHECKS for parameter mat.PFG.soil
   if (.testParam_notDf(mat.PFG.soil))
   {
     .stopMessage_beDataframe("mat.PFG.soil")
@@ -198,6 +200,52 @@ PRE_FATE.params_PFGsoil = function(
     }
     if (sum(mat.PFG.soil$soil_tol_max < mat.PFG.soil$soil_contrib) > 0){
       stop("Wrong type of data!\n Column `soil_tol_max` of `mat.PFG.soil` must contain values equal or superior to `soil_contrib`")
+    }
+  }
+  ## CHECKS for parameter mat.PFG.tol
+  if (!is.null(mat.PFG.tol))
+  {
+    if (.testParam_notDf(mat.PFG.tol))
+    {
+      .stopMessage_beDataframe("mat.PFG.tol")
+    } else
+    {
+      if (nrow(mat.PFG.tol) == 0 || ncol(mat.PFG.tol) != 4)
+      {
+        .stopMessage_numRowCol("mat.PFG.tol", c("PFG", "lifeStage", "soilResources", "soil_tol"))
+      }
+      if (ncol(mat.PFG.tol) == 4)
+      {
+        if (sum(colnames(mat.PFG.tol) == c("PFG", "lifeStage", "soilResources", "soil_tol")) == 4)
+        {
+          mat.PFG.tol = mat.PFG.tol[ , c("PFG", "lifeStage", "soilResources", "soil_tol")]
+        } else
+        {
+          .stopMessage_columnNames("mat.PFG.tol", c("PFG", "lifeStage", "soilResources", "soil_tol"))
+        }
+      }
+      mat.PFG.tol$PFG = as.character(mat.PFG.tol$PFG)
+      if (.testParam_notChar(mat.PFG.tol$PFG))
+      {
+        .stopMessage_beChar("mat.PFG.tol$PFG")
+      }
+      if (.testParam_notInChar(mat.PFG.tol$lifeStage, inList = c("Germinant", "Immature", "Mature")))
+      {
+        .stopMessage_content("mat.PFG.tol$lifeStage", c("Germinant", "Immature", "Mature"))
+      }
+      if (.testParam_notInChar(mat.PFG.tol$soilResources, inList = c("Low", "Medium", "High")))
+      {
+        .stopMessage_content("mat.PFG.tol$soilResources", c("Low", "Medium", "High"))
+      }
+      if (!is.numeric(mat.PFG.tol$soil_tol)) {
+        .stopMessage_columnNumeric("mat.PFG.tol", c("soil_tol"))
+      }
+      if (length(which(is.na(mat.PFG.tol$soil_tol))) > 0) {
+        .stopMessage_columnNoNA("mat.PFG.tol", c("soil_tol"))
+      }
+      if (sum(mat.PFG.tol$soil_tol %in% seq(0,10)) < nrow(mat.PFG.tol)){
+        stop("Wrong type of data!\n Column `soil_tol` of `mat.PFG.tol` must contain values between 0 and 10")
+      }
     }
   }
   
@@ -269,14 +317,35 @@ PRE_FATE.params_PFGsoil = function(
   ##             10 = 100 %
   SOIL_TOL = matrix(10, nrow = 3 * 3, ncol = no.PFG)
   
-  SOIL_TOL[1, ] = 1 ## Germinant - Low soil conditions
-  SOIL_TOL[3, ] = 0 ## Germinant - High soil conditions
-  
-  SOIL_TOL[4, ] = 5 ## Immature - Low soil conditions
-  SOIL_TOL[6, ] = 4 ## Immature - High soil conditions
-  
-  SOIL_TOL[7, ] = 9 ## Mature - Low soil conditions
-  SOIL_TOL[9, ] = 8 ## Mature - High soil conditions
+  if (is.null(mat.PFG.tol))
+  {
+    SOIL_TOL[1, ] = 1 ## Germinant - Low soil conditions
+    SOIL_TOL[3, ] = 0 ## Germinant - High soil conditions
+    
+    SOIL_TOL[4, ] = 5 ## Immature - Low soil conditions
+    SOIL_TOL[6, ] = 4 ## Immature - High soil conditions
+    
+    SOIL_TOL[7, ] = 9 ## Mature - Low soil conditions
+    SOIL_TOL[9, ] = 8 ## Mature - High soil conditions
+  } else
+  {
+    for (ii in 1:nrow(mat.PFG.tol))
+    {
+      LS_res = paste0(mat.PFG.tol$lifeStage[ii], "_", mat.PFG.tol$soilResources[ii])
+      ind_ii = switch(LS_res
+                      , Germinant_Low = 1
+                      , Germinant_Medium = 2
+                      , Germinant_High = 3
+                      , Immature_Low = 4
+                      , Immature_Medium = 5
+                      , Immature_High = 6
+                      , Mature_Low = 7
+                      , Mature_Medium = 8
+                      , Mature_High = 9
+      )
+      SOIL_TOL[ind_ii, which(NAME == mat.PFG.tol$PFG[ii])] = mat.PFG.tol$soil_tol[ii]
+    }
+  }
   
   #################################################################################################
   
