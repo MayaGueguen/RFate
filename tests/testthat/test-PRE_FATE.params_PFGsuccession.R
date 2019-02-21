@@ -52,8 +52,8 @@ test_that("PRE_FATE.params_PFGsuccession gives error with wrong data : mat.PFG.s
                , "Column names of `mat.PFG.succ` must be `PFG`, `type`, `height`, `maturity` and `longevity`")
   
   expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
-                                            , mat.PFG.succ = data.frame(PFG = 1, type = c(2,2), height = 3, maturity = 4
-                                                                        , longevity = 10))
+                                             , mat.PFG.succ = data.frame(PFG = 1, type = c(2,2), height = 3, maturity = 4
+                                                                         , longevity = 10))
                , "Column `PFG` of `mat.PFG.succ` must contain different values")
   expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(PFG = NA, type = 2, height = 3, maturity = 4
@@ -102,7 +102,7 @@ test_that("PRE_FATE.params_PFGsuccession gives error with wrong data : mat.PFG.s
                                              , mat.PFG.succ = data.frame(PFG = c(1,2), type = "H", height = c(3,NA), maturity = 4
                                                                          , longevity = 10))
                , "Columns `height`, `maturity` and `longevity` of `mat.PFG.succ` must not contain NA values")
-
+  
   expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = NA
                                                                          , longevity = 10))
@@ -149,7 +149,7 @@ test_that("PRE_FATE.params_PFGsuccession gives correct output", {
                                                                            , height = c(10, 250, 36, 68, 1250, 550)
                                                                            , maturity = c(5, 5, 3, 3, 8, 9)
                                                                            , longevity = c(12, 200, 25, 4, 110, 70)))
-               , "The parameter file FATE_simulation/DATA/PFGS/SUCC/SUCC_PFG1.txt has been successfully created !")
+                 , "The parameter file FATE_simulation/DATA/PFGS/SUCC/SUCC_PFG1.txt has been successfully created !")
   expect_warning(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
                                                , mat.PFG.succ = data.frame(PFG = paste0("PFG",1:6)
                                                                            , type = c("C", "C", "H", "H", "P", "P")
@@ -157,4 +157,30 @@ test_that("PRE_FATE.params_PFGsuccession gives correct output", {
                                                                            , maturity = c(5, 5, 3, 3, 8, 9)
                                                                            , longevity = c(12, 200, 25, 4, 110, 70)))
                  , "already exists. It will be replaced.")
+  
+  expect_warning(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
+                                               , mat.PFG.succ = data.frame(PFG = paste0("PFG",1:6)
+                                                                           , type = c("C", "C", "H", "H", "P", "P")
+                                                                           , height = c(10, 250, 36, 68, 1250, 550)
+                                                                           , maturity = c(5, 5, 3, 3, 8, 9)
+                                                                           , longevity = c(12, 200, 25, 4, 110, 70))
+                                               , opt.folder.name = NA)
+                 , "As `opt.folder.name` does not contain character value, it will be ignored")
+  expect_warning(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
+                                               , mat.PFG.succ = data.frame(PFG = paste0("PFG",1:6)
+                                                                           , type = c("C", "C", "H", "H", "P", "P")
+                                                                           , height = c(10, 250, 36, 68, 1250, 550)
+                                                                           , maturity = c(5, 5, 3, 3, 8, 9)
+                                                                           , longevity = c(12, 200, 25, 4, 110, 70))
+                                               , opt.folder.name = 1)
+                 , "As `opt.folder.name` does not contain character value, it will be ignored")
+  
+  expect_message(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
+                                               , mat.PFG.succ = data.frame(PFG = paste0("PFG",1:6)
+                                                                           , type = c("C", "C", "H", "H", "P", "P")
+                                                                           , height = c(10, 250, 36, 68, 1250, 550)
+                                                                           , maturity = c(5, 5, 3, 3, 8, 9)
+                                                                           , longevity = c(12, 200, 25, 4, 110, 70))
+                                               , opt.folder.name = "scen1")
+                 , "The parameter file FATE_simulation/DATA/PFGS/SUCC/scen1/SUCC_PFG1.txt has been successfully created !")
 })

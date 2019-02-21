@@ -160,7 +160,8 @@ dispersal module of <code>FATE-HD</code>.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>PRE_FATE.params_PFGdispersal</span>(<span class='no'>name.simulation</span>, <span class='no'>mat.PFG.disp</span>)</pre>
+    <pre class="usage"><span class='fu'>PRE_FATE.params_PFGdispersal</span>(<span class='no'>name.simulation</span>, <span class='no'>mat.PFG.disp</span>,
+  <span class='kw'>opt.folder.name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -172,7 +173,14 @@ or simulation name of the <code>FATE-HD</code> simulation</p></td>
     </tr>
     <tr>
       <th>mat.PFG.disp</th>
-      <td><p>a <code>data.frame</code> with 5 columns : PFG, MODE, d50, d99, ldd</p></td>
+      <td><p>a <code>data.frame</code> with 5 columns : PFG, MODE, d50, d99,
+ldd</p></td>
+    </tr>
+    <tr>
+      <th>opt.folder.name</th>
+      <td><p>(<em>optional</em>) <br /> a <code>string</code> that
+corresponds to the name of the folder that will be created into the 
+<code>name.simulation/DATA/PFGS/DISP/</code> directory to store the results</p></td>
     </tr>
     </table>
     
@@ -185,6 +193,8 @@ directory with the following parameters :</p>
 <li><p>DISPERS_DIST</p></li>
 </ul>
 
+<p>If the <code>opt.folder.name</code> has been used, the files will be into the folder
+<code>name.simulation/DATA/PFGS/DISP/opt.folder.name/</code></p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 

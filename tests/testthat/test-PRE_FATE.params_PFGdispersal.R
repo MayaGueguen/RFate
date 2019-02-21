@@ -128,4 +128,18 @@ test_that("PRE_FATE.params_PFGdispersal gives correct output", {
   expect_warning(PRE_FATE.params_PFGdispersal(name.simulation = "FATE_simulation"
                                               , mat.PFG.disp = data.frame(PFG = 1, MODE = 1, d50 = 2, d99 = 3, ldd = 4))
                  , "already exists. It will be replaced.")
+  
+  expect_warning(PRE_FATE.params_PFGdispersal(name.simulation = "FATE_simulation"
+                                              , mat.PFG.disp = data.frame(PFG = 1, MODE = 1, d50 = 2, d99 = 3, ldd = 4)
+                                              , opt.folder.name = NA)
+                 , "As `opt.folder.name` does not contain character value, it will be ignored")
+  expect_warning(PRE_FATE.params_PFGdispersal(name.simulation = "FATE_simulation"
+                                              , mat.PFG.disp = data.frame(PFG = 1, MODE = 1, d50 = 2, d99 = 3, ldd = 4)
+                                              , opt.folder.name = 1)
+                 , "As `opt.folder.name` does not contain character value, it will be ignored")
+  
+  expect_message(PRE_FATE.params_PFGdispersal(name.simulation = "FATE_simulation"
+                                              , mat.PFG.disp = data.frame(PFG = 1, MODE = 1, d50 = 2, d99 = 3, ldd = 4)
+                                              , opt.folder.name = "scen1")
+                 , "The parameter file FATE_simulation/DATA/PFGS/DISP/scen1/DISP_1.txt has been successfully created !")
 })

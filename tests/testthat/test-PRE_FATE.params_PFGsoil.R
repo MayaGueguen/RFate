@@ -52,10 +52,10 @@ test_that("PRE_FATE.params_PFGsoil gives error with wrong data : mat.PFG.soil", 
                , "Column names of `mat.PFG.soil` must be `PFG`, `type`, `soil_contrib`, `soil_tol_min` and `soil_tol_max`")
   
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                            , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 1, soil_tol_min = c(2,2), soil_tol_max = 3))
+                                       , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 1, soil_tol_min = c(2,2), soil_tol_max = 3))
                , "Column `PFG` of `mat.PFG.soil` must contain different values")
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                            , mat.PFG.soil = data.frame(PFG = "", type = "H", soil_contrib = 1, soil_tol_min = 2, soil_tol_max = 3))
+                                       , mat.PFG.soil = data.frame(PFG = "", type = "H", soil_contrib = 1, soil_tol_min = 2, soil_tol_max = 3))
                , "`mat.PFG.soil$PFG` must contain a character value of length > 0", fixed = T)
   
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
@@ -69,7 +69,7 @@ test_that("PRE_FATE.params_PFGsoil gives error with wrong data : mat.PFG.soil", 
                , "`mat.PFG.soil$type` must be either `H`, `C` or `P`", fixed = T)
   
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                            , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = NA, soil_tol_min = 2, soil_tol_max = 3))
+                                       , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = NA, soil_tol_min = 2, soil_tol_max = 3))
                , "Wrong type of data!\n Columns `soil_contrib`, `soil_tol_min` and `soil_tol_max` of `mat.PFG.soil` must contain numeric values")
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
                                        , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = "a", soil_tol_min = 2, soil_tol_max = 3))
@@ -212,7 +212,7 @@ test_that("PRE_FATE.params_PFGsoil gives error with wrong data : mat.PFG.tol", {
                                        , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 2, soil_tol_min = 1, soil_tol_max = 3)
                                        , mat.PFG.tol = data.frame(PFG = 1, lifeStage = "Germinant", soilResources = "Low", soil_tol = c(2,NA)))
                , "Columns `soil_tol` of `mat.PFG.tol` must not contain NA values")
-
+  
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
                                        , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 2, soil_tol_min = 1, soil_tol_max = 3)
                                        , mat.PFG.tol = data.frame(PFG = 1, lifeStage = "Germinant", soilResources = "Low", soil_tol = -1))
@@ -243,4 +243,18 @@ test_that("PRE_FATE.params_PFGsoil gives correct output", {
                                          , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 2, soil_tol_min = 2, soil_tol_max = 3)
                                          , mat.PFG.tol = data.frame(PFG = 1, lifeStage = "Germinant", soilResources = "Low", soil_tol = 9))
                  , "The parameter file FATE_simulation/DATA/PFGS/SOIL/SOIL_1.txt has been successfully created !")
+  
+  expect_warning(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                         , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 2, soil_tol_min = 2, soil_tol_max = 3)
+                                         , opt.folder.name = NA)
+                 , "As `opt.folder.name` does not contain character value, it will be ignored")
+  expect_warning(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                         , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 2, soil_tol_min = 2, soil_tol_max = 3)
+                                         , opt.folder.name = 1)
+                 , "As `opt.folder.name` does not contain character value, it will be ignored")
+  
+  expect_message(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                         , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 2, soil_tol_min = 2, soil_tol_max = 3)
+                                         , opt.folder.name = "scen1")
+                 , "The parameter file FATE_simulation/DATA/PFGS/SOIL/scen1/SOIL_1.txt has been successfully created !")
 })

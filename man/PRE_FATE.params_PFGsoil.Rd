@@ -6,7 +6,7 @@
 simulation}
 \usage{
 PRE_FATE.params_PFGsoil(name.simulation, mat.PFG.soil,
-  mat.PFG.tol = NULL)
+  mat.PFG.tol = NULL, opt.folder.name = NULL)
 }
 \arguments{
 \item{name.simulation}{a \code{string} that corresponds to the main
@@ -17,6 +17,10 @@ soil_contrib, soil_tol_min, soil_tol_max}
 
 \item{mat.PFG.tol}{a \code{data.frame} with 5 columns : PFG, lifeStage,
 soilResources, soil_tol}
+
+\item{opt.folder.name}{(\emph{optional}) \cr a \code{string} that
+corresponds to the name of the folder that will be created into the 
+\code{name.simulation/DATA/PFGS/SOIL/} directory to store the results}
 }
 \value{
 A \code{.txt} file per PFG into the 
@@ -49,6 +53,9 @@ parameters :
 
 A \code{SOIL_COMPLETE_TABLE.csv} file summarizing information for all groups
 into the \code{name.simulation/DATA/PFGS/} directory.
+
+If the \code{opt.folder.name} has been used, the files will be into the folder
+\code{name.simulation/DATA/PFGS/SOIL/opt.folder.name/}
 }
 \description{
 This script is designed to create parameter files containing 

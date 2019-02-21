@@ -5,13 +5,19 @@
 \title{Create \emph{DISPERSAL} parameter files for a \code{FATE-HD}
 simulation}
 \usage{
-PRE_FATE.params_PFGdispersal(name.simulation, mat.PFG.disp)
+PRE_FATE.params_PFGdispersal(name.simulation, mat.PFG.disp,
+  opt.folder.name = NULL)
 }
 \arguments{
 \item{name.simulation}{a \code{string} that corresponds to the main directory
 or simulation name of the \code{FATE-HD} simulation}
 
-\item{mat.PFG.disp}{a \code{data.frame} with 5 columns : PFG, MODE, d50, d99, ldd}
+\item{mat.PFG.disp}{a \code{data.frame} with 5 columns : PFG, MODE, d50, d99,
+ldd}
+
+\item{opt.folder.name}{(\emph{optional}) \cr a \code{string} that
+corresponds to the name of the folder that will be created into the 
+\code{name.simulation/DATA/PFGS/DISP/} directory to store the results}
 }
 \value{
 A \code{.txt} file per PFG into the \code{name.simulation/DATA/PFGS/DISP/}
@@ -21,6 +27,9 @@ directory with the following parameters :
   \item MODE_DISPERS 
   \item DISPERS_DIST
 }
+
+If the \code{opt.folder.name} has been used, the files will be into the folder
+\code{name.simulation/DATA/PFGS/DISP/opt.folder.name/}
 }
 \description{
 This script is designed to create parameter files containing 

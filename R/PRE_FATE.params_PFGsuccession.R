@@ -14,6 +14,9 @@
 ##' directory or simulation name of the \code{FATE-HD} simulation
 ##' @param mat.PFG.succ a \code{data.frame} with 5 columns : PFG, type, height,
 ##' maturity, longevity
+##' @param opt.folder.name (\emph{optional}) \cr a \code{string} that
+##' corresponds to the name of the folder that will be created into the 
+##' \code{name.simulation/DATA/PFGS/SUCC/} directory to store the results
 ##' 
 ##' 
 ##' @details
@@ -138,6 +141,9 @@
 ##' into the \code{name.simulation/DATA/PFGS/} directory.  
 ##' This file can be used to parameterize the disturbance files.
 ##' 
+##' If the \code{opt.folder.name} has been used, the files will be into the folder
+##' \code{name.simulation/DATA/PFGS/SUCC/opt.folder.name/}
+##' 
 ##' 
 ##' @keywords FATE, simulation, height, longevity, maturity
 ##' 
@@ -166,6 +172,7 @@
 PRE_FATE.params_PFGsuccession = function(
   name.simulation
   , mat.PFG.succ
+  , opt.folder.name = NULL
 ){
   
   .testParam_existFolder(name.simulation, "DATA/PFGS/SUCC/")
@@ -212,6 +219,18 @@ PRE_FATE.params_PFGsuccession = function(
       length(which(is.na(mat.PFG.succ$longevity))) > 0)
   {
     .stopMessage_columnNoNA("mat.PFG.succ", c("height", "maturity", "longevity"))
+  }
+  ## CHECKS for parameter opt.folder.name
+  if (is.null(opt.folder.name)){
+    opt.folder.name = ""
+  } else if (!is.null(opt.folder.name) && !is.character(opt.folder.name)){
+    warning("As `opt.folder.name` does not contain character value, it will be ignored")
+    opt.folder.name = ""
+  } else if (nchar(opt.folder.name) > 0){
+    opt.folder.name = paste0(opt.folder.name, "/")
+    dir.create(paste0(name.simulation, "/DATA/PFGS/SUCC/", opt.folder.name))
+  } else {
+    opt.folder.name = ""
   }
   
   #################################################################################################
@@ -391,7 +410,10 @@ PRE_FATE.params_PFGsuccession = function(
                            , "POTENTIAL_FECUNDITY")
   
   write.table(params.csv
-            , file = paste0(name.simulation, "/DATA/PFGS/SUCC_COMPLETE_TABLE.csv")
+            , file = paste0(name.simulation
+                            , "/DATA/PFGS/"
+                            , ifelse(opt.folder.name == "", "", sub("/$", "_", opt.folder.name))
+                            , "SUCC_COMPLETE_TABLE.csv")
             , row.names = F
             , col.names = T)
   
@@ -413,9 +435,11 @@ PRE_FATE.params_PFGsuccession = function(
     params = params.list[[i]]
     names(params) = names.params.list.sub
 
-    .createParams(params.file = paste0(name.simulation,
-                                       "/DATA/PFGS/SUCC/SUCC_",
-                                       names.params.list[i],
+    .createParams(params.file = paste0(name.simulation
+                                       , "/DATA/PFGS/SUCC/"
+                                       , opt.folder.name
+                                       , "SUCC_"
+                                       , names.params.list[i],
                                        ".txt")
                   , params.list = params)
   }

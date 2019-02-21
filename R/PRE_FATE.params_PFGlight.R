@@ -14,6 +14,10 @@
 ##' directory or simulation name of the \code{FATE-HD} simulation
 ##' @param mat.PFG.succ a \code{data.frame} with 6 columns : PFG, type, height,
 ##' maturity, longevity, light
+##' @param opt.folder.name (\emph{optional}) \cr a \code{string} that
+##' corresponds to the name of the folder that will be created into the 
+##' \code{name.simulation/DATA/PFGS/LIGHT/} directory to store the results
+##' 
 ##' 
 ##' 
 ##' @details
@@ -104,6 +108,10 @@
 ##' 
 ##' A \code{LIGHT_COMPLETE_TABLE.csv} file summarizing information for all groups into the
 ##' \code{name.simulation/DATA/PFGS/} directory.  
+##'
+##' If the \code{opt.folder.name} has been used, the files will be into the folder
+##' \code{name.simulation/DATA/PFGS/LIGHT/opt.folder.name/}
+##' 
 ##' 
 ##' 
 ##' @keywords FATE, simulation, light, shade tolerance
@@ -134,6 +142,7 @@
 PRE_FATE.params_PFGlight = function(
   name.simulation
   , mat.PFG.succ
+  , opt.folder.name = NULL
 ){
   
   .testParam_existFolder(name.simulation, "DATA/PFGS/LIGHT/")
@@ -185,6 +194,18 @@ PRE_FATE.params_PFGlight = function(
   }
   if (sum(mat.PFG.succ$light %in% seq(0,10)) < nrow(mat.PFG.succ)){
     stop("Wrong type of data!\n Column `light` of `mat.PFG.succ` must contain values between 0 and 10")
+  }
+  ## CHECKS for parameter opt.folder.name
+  if (is.null(opt.folder.name)){
+    opt.folder.name = ""
+  } else if (!is.null(opt.folder.name) && !is.character(opt.folder.name)){
+    warning("As `opt.folder.name` does not contain character value, it will be ignored")
+    opt.folder.name = ""
+  } else if (nchar(opt.folder.name) > 0){
+    opt.folder.name = paste0(opt.folder.name, "/")
+    dir.create(paste0(name.simulation, "/DATA/PFGS/LIGHT/", opt.folder.name))
+  } else {
+    opt.folder.name = ""
   }
   
   #################################################################################################
@@ -396,7 +417,10 @@ PRE_FATE.params_PFGlight = function(
                                     c("GeL", "GeM", "GeH", "ImL", "ImM", "ImH", "MaL", "MaM", "MaH")))
   
   write.table(params.csv
-            , file = paste0(name.simulation, "/DATA/PFGS/LIGHT_COMPLETE_TABLE.csv")
+            , file = paste0(name.simulation
+                            , "/DATA/PFGS/"
+                            , ifelse(opt.folder.name == "", "", sub("/$", "_", opt.folder.name))
+                            , "LIGHT_COMPLETE_TABLE.csv")
             , row.names = F
             , col.names = T)
   
@@ -418,9 +442,11 @@ PRE_FATE.params_PFGlight = function(
     params = params.list[[i]]
     names(params) = names.params.list.sub
 
-    .createParams(params.file = paste0(name.simulation,
-                                       "/DATA/PFGS/LIGHT/LIGHT_",
-                                       names.params.list[i],
+    .createParams(params.file = paste0(name.simulation
+                                       , "/DATA/PFGS/LIGHT/"
+                                       , opt.folder.name
+                                       , "LIGHT_"
+                                       , names.params.list[i],
                                        ".txt")
                   , params.list = params)
   }

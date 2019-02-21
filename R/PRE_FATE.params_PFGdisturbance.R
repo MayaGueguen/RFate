@@ -18,7 +18,9 @@
 ##' function.
 ##' @param mat.PFG.dist a \code{data.frame} with at least 4 columns : \cr name, 
 ##' responseStage, KilledIndiv_[...], ResproutIndiv_[...] (see \code{Details})
-##' 
+##' @param opt.folder.name (\emph{optional}) \cr a \code{string} that
+##' corresponds to the name of the folder that will be created into the 
+##' \code{name.simulation/DATA/PFGS/DIST/} directory to store the results
 ##' 
 ##' 
 ##' @details
@@ -170,6 +172,8 @@
 ##' A \code{DIST_COMPLETE_TABLE.csv} file summarizing information for all groups into the
 ##' \code{name.simulation/DATA/PFGS/} directory.
 ##' 
+##' If the \code{opt.folder.name} has been used, the files will be into the folder
+##' \code{name.simulation/DATA/PFGS/DIST/opt.folder.name/}
 ##' 
 ##' @keywords FATE, simulation, disturbance, killing, resprouting
 ##' 
@@ -216,6 +220,7 @@ PRE_FATE.params_PFGdisturbance = function(
   name.simulation
   , mat.PFG.dist
   , mat.PFG.succ = paste0(name.simulation, "/DATA/PFGS/SUCC_COMPLETE_TABLE.csv")
+  , opt.folder.name = NULL
 ){
   
   .testParam_existFolder(name.simulation, "DATA/PFGS/DIST/")
@@ -333,6 +338,18 @@ PRE_FATE.params_PFGdisturbance = function(
                   , " ==> `ResproutIndiv_H`, `ResproutIndiv_C`, `ResproutIndiv_P`\n"
                   , " ==> ", paste0("`ResproutIndiv_", mat.PFG.succ$NAME, collapse = "`, ")))
     }
+  }
+  ## CHECKS for parameter opt.folder.name
+  if (is.null(opt.folder.name)){
+    opt.folder.name = ""
+  } else if (!is.null(opt.folder.name) && !is.character(opt.folder.name)){
+    warning("As `opt.folder.name` does not contain character value, it will be ignored")
+    opt.folder.name = ""
+  } else if (nchar(opt.folder.name) > 0){
+    opt.folder.name = paste0(opt.folder.name, "/")
+    dir.create(paste0(name.simulation, "/DATA/PFGS/DIST/", opt.folder.name))
+  } else {
+    opt.folder.name = ""
   }
 
     
@@ -541,7 +558,10 @@ PRE_FATE.params_PFGdisturbance = function(
                            , paste0("ACTIVATED_SEED_", DIST_NAME))
   
   write.table(params.csv
-              , file = paste0(name.simulation, "/DATA/PFGS/DIST_COMPLETE_TABLE.csv")
+              , file = paste0(name.simulation
+                              , "/DATA/PFGS/"
+                              , ifelse(opt.folder.name == "", "", sub("/$", "_", opt.folder.name))
+                              , "DIST_COMPLETE_TABLE.csv")
               , row.names = T
               , col.names = F)
   
@@ -563,9 +583,11 @@ PRE_FATE.params_PFGdisturbance = function(
     params = params.list[[i]]
     names(params) = names.params.list.sub
     
-    .createParams(params.file = paste0(name.simulation,
-                                       "/DATA/PFGS/DIST/DIST_",
-                                       names.params.list[i],
+    .createParams(params.file = paste0(name.simulation
+                                       , "/DATA/PFGS/DIST/"
+                                       , opt.folder.name
+                                       , "DIST_"
+                                       , names.params.list[i],
                                        ".txt")
                   , params.list = params)
   }

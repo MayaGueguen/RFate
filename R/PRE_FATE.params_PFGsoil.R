@@ -16,6 +16,9 @@
 ##' soil_contrib, soil_tol_min, soil_tol_max
 ##' @param mat.PFG.tol a \code{data.frame} with 5 columns : PFG, lifeStage,
 ##' soilResources, soil_tol
+##' @param opt.folder.name (\emph{optional}) \cr a \code{string} that
+##' corresponds to the name of the folder that will be created into the 
+##' \code{name.simulation/DATA/PFGS/SOIL/} directory to store the results
 ##' 
 ##' 
 ##' @details
@@ -119,7 +122,10 @@
 ##' }
 ##' 
 ##' A \code{SOIL_COMPLETE_TABLE.csv} file summarizing information for all groups
-##' into the \code{name.simulation/DATA/PFGS/} directory.  
+##' into the \code{name.simulation/DATA/PFGS/} directory.
+##' 
+##' If the \code{opt.folder.name} has been used, the files will be into the folder
+##' \code{name.simulation/DATA/PFGS/SOIL/opt.folder.name/}
 ##' 
 ##' 
 ##' @keywords FATE, simulation, soil tolerance, nitrogen
@@ -148,6 +154,7 @@ PRE_FATE.params_PFGsoil = function(
   name.simulation
   , mat.PFG.soil
   , mat.PFG.tol = NULL
+  , opt.folder.name = NULL
 ){
   
   .testParam_existFolder(name.simulation, "DATA/PFGS/SOIL/")
@@ -247,6 +254,18 @@ PRE_FATE.params_PFGsoil = function(
         stop("Wrong type of data!\n Column `soil_tol` of `mat.PFG.tol` must contain values between 0 and 10")
       }
     }
+  }
+  ## CHECKS for parameter opt.folder.name
+  if (is.null(opt.folder.name)){
+    opt.folder.name = ""
+  } else if (!is.null(opt.folder.name) && !is.character(opt.folder.name)){
+    warning("As `opt.folder.name` does not contain character value, it will be ignored")
+    opt.folder.name = ""
+  } else if (nchar(opt.folder.name) > 0){
+    opt.folder.name = paste0(opt.folder.name, "/")
+    dir.create(paste0(name.simulation, "/DATA/PFGS/SOIL/", opt.folder.name))
+  } else {
+    opt.folder.name = ""
   }
   
   #################################################################################################
@@ -367,7 +386,10 @@ PRE_FATE.params_PFGsoil = function(
   )
   
   write.table(params.csv
-              , file = paste0(name.simulation, "/DATA/PFGS/SOIL_COMPLETE_TABLE.csv")
+              , file = paste0(name.simulation
+                              , "/DATA/PFGS/"
+                              , ifelse(opt.folder.name == "", "", sub("/$", "_", opt.folder.name))
+                              , "SOIL_COMPLETE_TABLE.csv")
               , row.names = F
               , col.names = T)
   
@@ -389,9 +411,11 @@ PRE_FATE.params_PFGsoil = function(
     params = params.list[[i]]
     names(params) = names.params.list.sub
     
-    .createParams(params.file = paste0(name.simulation,
-                                       "/DATA/PFGS/SOIL/SOIL_",
-                                       names.params.list[i],
+    .createParams(params.file = paste0(name.simulation
+                                       , "/DATA/PFGS/SOIL/"
+                                       , opt.folder.name
+                                       , "SOIL_"
+                                       , names.params.list[i],
                                        ".txt")
                   , params.list = params)
   }

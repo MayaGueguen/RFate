@@ -7,7 +7,7 @@ simulation}
 \usage{
 PRE_FATE.params_PFGdisturbance(name.simulation, mat.PFG.dist,
   mat.PFG.succ = paste0(name.simulation,
-  "/DATA/PFGS/SUCC_COMPLETE_TABLE.csv"))
+  "/DATA/PFGS/SUCC_COMPLETE_TABLE.csv"), opt.folder.name = NULL)
 }
 \arguments{
 \item{name.simulation}{a \code{string} that corresponds to the main
@@ -20,6 +20,10 @@ responseStage, KilledIndiv_[...], ResproutIndiv_[...] (see \code{Details})}
 PFG, type, MATURITY, LONGEVITY, STRATA and CHANG_STR_AGES_to_str_3. \cr
 Such an object can be obtained with the \code{PRE_FATE.params_PFGsuccession}
 function.}
+
+\item{opt.folder.name}{(\emph{optional}) \cr a \code{string} that
+corresponds to the name of the folder that will be created into the 
+\code{name.simulation/DATA/PFGS/DIST/} directory to store the results}
 }
 \value{
 A \code{.txt} file per PFG into the \code{name.simulation/DATA/PFGS/DIST/}
@@ -55,6 +59,9 @@ directory with the following parameters :
 
 A \code{DIST_COMPLETE_TABLE.csv} file summarizing information for all groups into the
 \code{name.simulation/DATA/PFGS/} directory.
+
+If the \code{opt.folder.name} has been used, the files will be into the folder
+\code{name.simulation/DATA/PFGS/DIST/opt.folder.name/}
 }
 \description{
 This script is designed to create parameter files containing 

@@ -160,7 +160,8 @@ core module of <code>FATE-HD</code>.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>PRE_FATE.params_PFGsuccession</span>(<span class='no'>name.simulation</span>, <span class='no'>mat.PFG.succ</span>)</pre>
+    <pre class="usage"><span class='fu'>PRE_FATE.params_PFGsuccession</span>(<span class='no'>name.simulation</span>, <span class='no'>mat.PFG.succ</span>,
+  <span class='kw'>opt.folder.name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -174,6 +175,12 @@ directory or simulation name of the <code>FATE-HD</code> simulation</p></td>
       <th>mat.PFG.succ</th>
       <td><p>a <code>data.frame</code> with 5 columns : PFG, type, height,
 maturity, longevity</p></td>
+    </tr>
+    <tr>
+      <th>opt.folder.name</th>
+      <td><p>(<em>optional</em>) <br /> a <code>string</code> that
+corresponds to the name of the folder that will be created into the 
+<code>name.simulation/DATA/PFGS/SUCC/</code> directory to store the results</p></td>
     </tr>
     </table>
     
@@ -205,6 +212,8 @@ parameters :</p>
 <p>A <code>SUCC_COMPLETE_TABLE.csv</code> file summarizing information for all groups
 into the <code>name.simulation/DATA/PFGS/</code> directory.  
 This file can be used to parameterize the disturbance files.</p>
+<p>If the <code>opt.folder.name</code> has been used, the files will be into the folder
+<code>name.simulation/DATA/PFGS/SUCC/opt.folder.name/</code></p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 

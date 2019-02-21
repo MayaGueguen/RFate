@@ -162,7 +162,7 @@ used in the disturbance module of <code>FATE-HD</code>.</p>
 
     <pre class="usage"><span class='fu'>PRE_FATE.params_PFGdisturbance</span>(<span class='no'>name.simulation</span>, <span class='no'>mat.PFG.dist</span>,
   <span class='kw'>mat.PFG.succ</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='no'>name.simulation</span>,
-  <span class='st'>"/DATA/PFGS/SUCC_COMPLETE_TABLE.csv"</span>))</pre>
+  <span class='st'>"/DATA/PFGS/SUCC_COMPLETE_TABLE.csv"</span>), <span class='kw'>opt.folder.name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -183,6 +183,12 @@ responseStage, KilledIndiv_[...], ResproutIndiv_[...] (see <code>Details</code>)
 PFG, type, MATURITY, LONGEVITY, STRATA and CHANG_STR_AGES_to_str_3. <br />
 Such an object can be obtained with the <code>PRE_FATE.params_PFGsuccession</code>
 function.</p></td>
+    </tr>
+    <tr>
+      <th>opt.folder.name</th>
+      <td><p>(<em>optional</em>) <br /> a <code>string</code> that
+corresponds to the name of the folder that will be created into the 
+<code>name.simulation/DATA/PFGS/DIST/</code> directory to store the results</p></td>
     </tr>
     </table>
     
@@ -218,6 +224,8 @@ directory with the following parameters :</p>
 
 <p>A <code>DIST_COMPLETE_TABLE.csv</code> file summarizing information for all groups into the
 <code>name.simulation/DATA/PFGS/</code> directory.</p>
+<p>If the <code>opt.folder.name</code> has been used, the files will be into the folder
+<code>name.simulation/DATA/PFGS/DIST/opt.folder.name/</code></p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 

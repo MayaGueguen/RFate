@@ -5,7 +5,8 @@
 \title{Create \emph{SUCCESSION} parameter files for a \code{FATE-HD}
 simulation}
 \usage{
-PRE_FATE.params_PFGsuccession(name.simulation, mat.PFG.succ)
+PRE_FATE.params_PFGsuccession(name.simulation, mat.PFG.succ,
+  opt.folder.name = NULL)
 }
 \arguments{
 \item{name.simulation}{a \code{string} that corresponds to the main 
@@ -13,6 +14,10 @@ directory or simulation name of the \code{FATE-HD} simulation}
 
 \item{mat.PFG.succ}{a \code{data.frame} with 5 columns : PFG, type, height,
 maturity, longevity}
+
+\item{opt.folder.name}{(\emph{optional}) \cr a \code{string} that
+corresponds to the name of the folder that will be created into the 
+\code{name.simulation/DATA/PFGS/SUCC/} directory to store the results}
 }
 \value{
 A \code{.txt} file per PFG into the 
@@ -42,6 +47,9 @@ parameters :
 A \code{SUCC_COMPLETE_TABLE.csv} file summarizing information for all groups
 into the \code{name.simulation/DATA/PFGS/} directory.  
 This file can be used to parameterize the disturbance files.
+
+If the \code{opt.folder.name} has been used, the files will be into the folder
+\code{name.simulation/DATA/PFGS/SUCC/opt.folder.name/}
 }
 \description{
 This script is designed to create parameter files containing 

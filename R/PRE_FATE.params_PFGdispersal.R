@@ -12,7 +12,11 @@
 ##'              
 ##' @param name.simulation a \code{string} that corresponds to the main directory
 ##' or simulation name of the \code{FATE-HD} simulation
-##' @param mat.PFG.disp a \code{data.frame} with 5 columns : PFG, MODE, d50, d99, ldd
+##' @param mat.PFG.disp a \code{data.frame} with 5 columns : PFG, MODE, d50, d99,
+##' ldd
+##' @param opt.folder.name (\emph{optional}) \cr a \code{string} that
+##' corresponds to the name of the folder that will be created into the 
+##' \code{name.simulation/DATA/PFGS/DISP/} directory to store the results
 ##' 
 ##' 
 ##' @details
@@ -49,6 +53,9 @@
 ##'   \item DISPERS_DIST
 ##' }
 ##' 
+##' If the \code{opt.folder.name} has been used, the files will be into the folder
+##' \code{name.simulation/DATA/PFGS/DISP/opt.folder.name/}
+##' 
 ##' 
 ##' @keywords FATE, simulation, dispersal distance
 ##' 
@@ -75,6 +82,7 @@
 PRE_FATE.params_PFGdispersal = function(
   name.simulation
   , mat.PFG.disp
+  , opt.folder.name = NULL
 ){
   
   .testParam_existFolder(name.simulation, "DATA/PFGS/DISP/")
@@ -123,6 +131,18 @@ PRE_FATE.params_PFGdispersal = function(
       stop("Wrong type of data!\n Column `MODE` of `mat.PFG.disp` must contain values between 1 and 3")
     }
   }
+  ## CHECKS for parameter opt.folder.name
+  if (is.null(opt.folder.name)){
+    opt.folder.name = ""
+  } else if (!is.null(opt.folder.name) && !is.character(opt.folder.name)){
+    warning("As `opt.folder.name` does not contain character value, it will be ignored")
+    opt.folder.name = ""
+  } else if (nchar(opt.folder.name) > 0){
+    opt.folder.name = paste0(opt.folder.name, "/")
+    dir.create(paste0(name.simulation, "/DATA/PFGS/DISP/", opt.folder.name))
+  } else {
+    opt.folder.name = ""
+  }
   
   #################################################################################################
   
@@ -152,7 +172,10 @@ PRE_FATE.params_PFGdispersal = function(
   for (i in grep("DIST", colnames(params.csv))) params.csv[, i] = as.integer(params.csv[,i])
   
   write.table(params.csv
-              , file = paste0(name.simulation, "/DATA/PFGS/DISP_COMPLETE_TABLE.csv")
+              , file = paste0(name.simulation
+                              , "/DATA/PFGS/"
+                              , ifelse(opt.folder.name == "", "", sub("/$", "_", opt.folder.name))
+                              , "DISP_COMPLETE_TABLE.csv")
               , row.names = F
               , col.names = T)
   
@@ -175,7 +198,9 @@ PRE_FATE.params_PFGdispersal = function(
     names(params) = names.params.list.sub
     
     .createParams(params.file = paste0(name.simulation,
-                                       "/DATA/PFGS/DISP/DISP_",
+                                       "/DATA/PFGS/DISP/"
+                                       , opt.folder.name
+                                       , "DISP_",
                                        names.params.list[i],
                                        ".txt")
                   , params.list = params)
