@@ -1,0 +1,8 @@
+## File automatically generated 
+## Date : Thu Feb 21 16:41:41 2019
+NAME P3
+BREAK_AGE 1 8 8 1 8 8
+RESPR_AGE 0 0 8 248 0 0 8 248
+FATES 8 0 10 0 10 0 10 0 10 0 0 0 0 0 0 0
+PROP_KILLED 0 0
+ACTIVATED_SEED 0 0

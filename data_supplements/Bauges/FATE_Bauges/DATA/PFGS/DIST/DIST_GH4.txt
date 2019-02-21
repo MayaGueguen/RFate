@@ -1,0 +1,8 @@
+## File automatically generated 
+## Date : Thu Feb 21 16:41:41 2019
+NAME GH4
+BREAK_AGE 273 3 5 273 3 5
+RESPR_AGE 0 0 1 5 0 0 1 5
+FATES 0 0 0 0 4 0 10 0 1 0 1 0 0 0 0 0
+PROP_KILLED 0 0
+ACTIVATED_SEED 0 0

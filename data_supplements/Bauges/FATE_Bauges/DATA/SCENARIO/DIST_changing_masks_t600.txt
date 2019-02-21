@@ -1,0 +1,2 @@
+FATE_Bauges/DATA/MASK/DIST_MASK_grazing.tif
+FATE_Bauges/DATA/MASK/DIST_MASK_noPerturb.tif

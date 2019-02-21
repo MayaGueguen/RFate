@@ -1,0 +1,5 @@
+## File automatically generated 
+## Date : Thu Feb 21 16:41:41 2019
+NAME P4
+MODE_DISPERS 1
+DISPERS_DIST 100 500 79000

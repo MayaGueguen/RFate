@@ -1,0 +1,8 @@
+## File automatically generated 
+## Date : Thu Feb 21 16:42:18 2019
+NAME GH5
+SOIL_CONTRIB 4
+SOIL_LOW 3
+SOIL_HIGH 5
+ACTIVE_GERM 8 10 5
+SOIL_TOL 1 10 0 5 10 4 9 10 8
