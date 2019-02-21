@@ -182,7 +182,7 @@ responseStage, KilledIndiv_[...], ResproutIndiv_[...] (see <code>Details</code>)
       <td><p>a <code>data.frame</code> with at least 6 columns : <br />
 PFG, type, MATURITY, LONGEVITY, STRATA and CHANG_STR_AGES_to_str_3. <br />
 Such an object can be obtained with the <code>PRE_FATE.params_PFGsuccession</code>
- function.</p></td>
+function.</p></td>
     </tr>
     </table>
     
@@ -191,9 +191,6 @@ Such an object can be obtained with the <code>PRE_FATE.params_PFGsuccession</cod
     <p>A <code>.txt</code> file per PFG into the <code>name.simulation/DATA/PFGS/DIST/</code>
 directory with the following parameters :</p>
 <ul>
-<li><p>PROP_KILLED : the proportion of propagules killed by each disturbance <br />
-  <em>(0: 0% 1: 10% 2: 20% 3: 30% 4: 40% 5: 50% 6: 60% 7: 70% 8: 80% 9: 
-  90% 10: 100%)</em></p></li>
 <li><p>BREAK_AGE : the age when each PFG changes of response stage <em>(in years)</em></p></li>
 <li><p>RESPR_AGE : the PFG resprouting age table (in a single row) <br />
   This is a vector of <code>no.DIST * no.responseStages</code> numbers <em>(in years)</em>
@@ -211,6 +208,9 @@ directory with the following parameters :</p>
 <li><p>at different response stages <em>(!currently 4, not yet editable!)</em></p></li>
 <li><p>for each disturbance.</p></li>
 </ul></li>
+<li><p>PROP_KILLED : the proportion of propagules killed by each disturbance <br />
+  <em>(0: 0% 1: 10% 2: 20% 3: 30% 4: 40% 5: 50% 6: 60% 7: 70% 8: 80% 9: 
+  90% 10: 100%)</em></p></li>
 <li><p>ACTIVATED_SEED : the proportion of seeds activated by each disturbance <br />
   <em>(0: 0% 1: 10% 2: 20% 3: 30% 4: 40% 5: 50% 6: 60% 7: 70% 8: 80% 9: 
   90% 10: 100%)</em> <br /> <br /></p></li>
@@ -224,9 +224,9 @@ directory with the following parameters :</p>
     <p>The disturbance module of <code>FATE-HD</code> allows the user to simulate spatial
 perturbation(s) that will impact each PFG in terms of resprouting and
 mortality on the different response stages <em>(!currently 4, not yet
-editable!)</em>. <br />
-Several parameters are required for each PFG in order to set up these
-responses :</p>
+editable!)</em>. <br /></p>
+<p>Several parameters, given within <code>mat.PFG.succ</code>, are required for each
+PFG in order to set up these responses :</p>
 <dl class='dl-horizontal'>
   <dt>type</dt><dd><p>or life-form, based on Raunkier. It should be either <code>H</code> 
   (herbaceous), <code>C</code> (chamaephyte) or <code>P</code> (phanerophyte) for now</p></dd>
@@ -238,9 +238,6 @@ responses :</p>
     <p>These values will allow to calculate or define a set of characteristics for
 each PFG :</p>
 <dl class='dl-horizontal'>
-  <dt>PROP_KILLED</dt><dd><p>= the proportion of propagules killed by each 
-  disturbance <br /> <br />
-  It is currently set to 0 for all PFG and disturbances.</p></dd>
   <dt>BREAK_AGE</dt><dd><p>= each PFG can respond to a disturbance in several 
   different ways <br /> <em>(!currently 4, not yet editable!)</em> that depend 
   on the PFG age <br />
@@ -283,8 +280,34 @@ each PFG :</p>
 <li><p>short-living plants (annuals, biennials...) always start back 
     at 0</p></li>
 </ul></p></dd>
+</dl>
+    <p>A second file, <code>mat.PFG.dist</code>, is required to define the importance of
+the response of each PFG to each disturbance :</p>
+<dl class='dl-horizontal'>
+  <dt>name</dt><dd><p>the name of each perturbation (several can be defined at the
+  same time)</p></dd>
+  <dt>responseStage</dt><dd><p>the concerned response class <em>(!currently 4,
+  not yet editable!)</em></p></dd>
+  <dt>KilledIndiv_[...]</dt><dd><p>the proportion of killed individuals</p></dd>
+  <dt>ResproutIndiv_[...]</dt><dd><p>the proportion of resprouting individuals</p></dd>
+</dl>
+    <p>These values will allow to define a third parameter for each PFG :</p>
+<dl class='dl-horizontal'>
   <dt>FATES</dt><dd><p>= proportion of killed or resprouting individuals <br />
-   = for each disturbance and for each response stage</p></dd>
+   = for each disturbance and for each response stage <br />
+   Two methods are available to give the proportion of killed and
+   resprouting individuals :
+   <ul>
+<li><p>for each life form : <code>H</code> (herbaceous), <code>C</code>
+     (chamaephyte) or <code>P</code> (phanerophyte)</p></li>
+<li><p>for each PFG</p></li>
+</ul></p></dd>
+</dl>
+    <p>Two parameters are also defined, but currently set to 0 :</p>
+<dl class='dl-horizontal'>
+  <dt>PROP_KILLED</dt><dd><p>= the proportion of propagules killed by each 
+  disturbance <br /> <br />
+  It is currently set to 0 for all PFG and disturbances.</p></dd>
   <dt>ACTIVATED_SEED</dt><dd><p>= the proportion of seeds activated by each 
   disturbance <br /> <br />
   It is currently set to 0 for all PFG and disturbances.</p></dd>

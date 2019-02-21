@@ -12,12 +12,13 @@
 ##'              
 ##' @param name.simulation a \code{string} that corresponds to the main
 ##' directory or simulation name of the \code{FATE-HD} simulation
-##' @param mat.PFG.dist a \code{data.frame} with at least 4 columns : \cr name, 
-##' responseStage, KilledIndiv_[...], ResproutIndiv_[...] (see \code{Details})
 ##' @param mat.PFG.succ a \code{data.frame} with at least 6 columns : \cr
 ##' PFG, type, MATURITY, LONGEVITY, STRATA and CHANG_STR_AGES_to_str_3. \cr
 ##' Such an object can be obtained with the \code{PRE_FATE.params_PFGsuccession}
-##'  function.
+##' function.
+##' @param mat.PFG.dist a \code{data.frame} with at least 4 columns : \cr name, 
+##' responseStage, KilledIndiv_[...], ResproutIndiv_[...] (see \code{Details})
+##' 
 ##' 
 ##' 
 ##' @details
@@ -26,8 +27,9 @@
 ##' perturbation(s) that will impact each PFG in terms of resprouting and
 ##' mortality on the different response stages \emph{(!currently 4, not yet
 ##' editable!)}. \cr
-##' Several parameters are required for each PFG in order to set up these
-##' responses :
+##' 
+##' Several parameters, given within \code{mat.PFG.succ}, are required for each
+##' PFG in order to set up these responses :
 ##' 
 ##' \describe{
 ##'   \item{type}{or life-form, based on Raunkier. It should be either \code{H} 
@@ -43,10 +45,6 @@
 ##' each PFG :
 ##' 
 ##' \describe{
-##'   \item{PROP_KILLED}{ = the proportion of propagules killed by each 
-##'   disturbance \cr \cr
-##'   It is currently set to 0 for all PFG and disturbances.
-##'   }
 ##'   \item{BREAK_AGE}{ = each PFG can respond to a disturbance in several 
 ##'   different ways \cr \emph{(!currently 4, not yet editable!)} that depend 
 ##'   on the PFG age \cr
@@ -95,8 +93,41 @@
 ##'     at 0
 ##'   }
 ##'   }
+##' }
+##' 
+##' A second file, \code{mat.PFG.dist}, is required to define the importance of
+##' the response of each PFG to each disturbance :
+##' 
+##' \describe{
+##'   \item{name}{the name of each perturbation (several can be defined at the
+##'   same time)}
+##'   \item{responseStage}{the concerned response class \emph{(!currently 4,
+##'   not yet editable!)}}
+##'   \item{KilledIndiv_[...]}{the proportion of killed individuals}
+##'   \item{ResproutIndiv_[...]}{the proportion of resprouting individuals}
+##' }
+##' 
+##' These values will allow to define a third parameter for each PFG :
+##' 
+##' \describe{
 ##'   \item{FATES}{ = proportion of killed or resprouting individuals \cr
-##'    = for each disturbance and for each response stage   
+##'    = for each disturbance and for each response stage \cr
+##'    Two methods are available to give the proportion of killed and
+##'    resprouting individuals :
+##'    \itemize{
+##'      \item for each life form : \code{H} (herbaceous), \code{C}
+##'      (chamaephyte) or \code{P} (phanerophyte)
+##'      \item for each PFG
+##'    }
+##'   }
+##' }
+##' 
+##' Two parameters are also defined, but currently set to 0 :
+##' 
+##' \describe{
+##'   \item{PROP_KILLED}{ = the proportion of propagules killed by each 
+##'   disturbance \cr \cr
+##'   It is currently set to 0 for all PFG and disturbances.
 ##'   }
 ##'   \item{ACTIVATED_SEED}{ = the proportion of seeds activated by each 
 ##'   disturbance \cr \cr
@@ -109,9 +140,6 @@
 ##' directory with the following parameters :
 ##' 
 ##' \itemize{
-##'   \item PROP_KILLED : the proportion of propagules killed by each disturbance \cr
-##'   \emph{(0: 0\% 1: 10\% 2: 20\% 3: 30\% 4: 40\% 5: 50\% 6: 60\% 7: 70\% 8: 80\% 9: 
-##'   90\% 10: 100\%)}
 ##'   \item BREAK_AGE : the age when each PFG changes of response stage \emph{(in years)}
 ##'   \item RESPR_AGE : the PFG resprouting age table (in a single row) \cr
 ##'   This is a vector of \code{no.DIST * no.responseStages} numbers \emph{(in years)}
@@ -131,6 +159,9 @@
 ##'     \item at different response stages \emph{(!currently 4, not yet editable!)}
 ##'     \item for each disturbance.
 ##'   }
+##'   \item PROP_KILLED : the proportion of propagules killed by each disturbance \cr
+##'   \emph{(0: 0\% 1: 10\% 2: 20\% 3: 30\% 4: 40\% 5: 50\% 6: 60\% 7: 70\% 8: 80\% 9: 
+##'   90\% 10: 100\%)}
 ##'   \item ACTIVATED_SEED : the proportion of seeds activated by each disturbance \cr
 ##'   \emph{(0: 0\% 1: 10\% 2: 20\% 3: 30\% 4: 40\% 5: 50\% 6: 60\% 7: 70\% 8: 80\% 9: 
 ##'   90\% 10: 100\%)} \cr \cr
@@ -331,23 +362,6 @@ PRE_FATE.params_PFGdisturbance = function(
   cat("\n Names of disturbances : ", DIST_NAME)
   cat("\n")
 
-
-  #################################################################################################
-  
-  ## GET PROPORTION OF KILLED PROPAGULES
-  ## 0 for all PFG and disturbances
-  # if (sum(colnames(mat.PFG.dist) == paste0("KilledPropagule_", c("H", "C", "P"))) == 3)
-  # {
-  #   PROP_KILLED = mat.PFG.dist[, paste0("KilledPropagule_", c("H", "C", "P"))]
-  # } else if (sum(colnames(mat.PFG.dist) == paste0("KilledPropagule_", mat.PFG.succ$NAME)) == nrow(mat.PFG.succ))
-  # {
-  #   PROP_KILLED = mat.PFG.dist[, paste0("KilledPropagule_", mat.PFG.succ$NAME)]
-  # } else
-  # {
-  #   PROP_KILLED = matrix(0, nrow = no.DIST, ncol = no.PFG)
-  # }
-  PROP_KILLED = matrix(0, nrow = no.DIST, ncol = no.PFG)
-  
   
   #################################################################################################
   
@@ -473,6 +487,23 @@ PRE_FATE.params_PFGdisturbance = function(
   }
   
   #################################################################################################
+  
+  ## GET PROPORTION OF KILLED PROPAGULES
+  ## 0 for all PFG and disturbances
+  # if (sum(colnames(mat.PFG.dist) == paste0("KilledPropagule_", c("H", "C", "P"))) == 3)
+  # {
+  #   PROP_KILLED = mat.PFG.dist[, paste0("KilledPropagule_", c("H", "C", "P"))]
+  # } else if (sum(colnames(mat.PFG.dist) == paste0("KilledPropagule_", mat.PFG.succ$NAME)) == nrow(mat.PFG.succ))
+  # {
+  #   PROP_KILLED = mat.PFG.dist[, paste0("KilledPropagule_", mat.PFG.succ$NAME)]
+  # } else
+  # {
+  #   PROP_KILLED = matrix(0, nrow = no.DIST, ncol = no.PFG)
+  # }
+  PROP_KILLED = matrix(0, nrow = no.DIST, ncol = no.PFG)
+  
+  
+  #################################################################################################
   ## GET END OF SEED DORMANCY : % of seeds activated by the perturbation
   ## 11 levels : 0 = 0 %
   ##             1 = 10 %
@@ -492,21 +523,21 @@ PRE_FATE.params_PFGdisturbance = function(
   
   names.params.list = get("NAME")
   names.params.list.sub = c("NAME"
-                            , "PROP_KILLED"
                             , "BREAK_AGE"
                             , "RESPR_AGE"
                             , "FATES"
+                            , "PROP_KILLED"
                             , "ACTIVATED_SEED")
   
   params.list = lapply(names.params.list.sub, function(x) { return(get(x)) })
   
   params.csv = do.call(rbind, params.list)
   rownames(params.csv) = c("NAME"
-                           , paste0("PROP_KILLED_", DIST_NAME)
                            , paste0("BREAK_AGE_", rep(DIST_NAME, each = 3), c("_1to2", "_2to3", "_3to4"))
                            , paste0("RESPR_AGE_", rep(DIST_NAME, each = no.STAGES), "_", 1:no.STAGES)
                            , paste0("FATES_", rep(DIST_NAME, each = no.STAGES * 2), "_"
                                     , paste0(rep(1:no.STAGES, each = 2), c("_kill","_respr")))
+                           , paste0("PROP_KILLED_", DIST_NAME)
                            , paste0("ACTIVATED_SEED_", DIST_NAME))
   
   write.table(params.csv
