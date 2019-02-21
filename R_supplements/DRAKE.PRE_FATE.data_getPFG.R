@@ -184,7 +184,7 @@ getPFG_4_calcMeanTraits = function(zone.name, mat.traits, selected.sp)
 ################################################################################################################
 
 
-getPFG_5_FATEparam = function(zone.name, zone.mask, zone.mask.pert.all, zone.mask.pert.def, TRAITS_PFG)
+getPFG_5_FATEparam = function(zone.name, zone.mask, zone.mask.pert.all, zone.mask.pert.def, TRAITS_PFG, pfg.sdm)
 {
   setwd(zone.name)
   zone.name.simulation = paste0("FATE_", zone.name)

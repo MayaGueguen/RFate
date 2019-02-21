@@ -96,7 +96,8 @@ for(ZONE in list(BAUGES))
                                      , zone.mask = ZONE$zone.mask
                                      , zone.mask.pert.all = ZONE$zone.mask.pert.all
                                      , zone.mask.pert.def = ZONE$zone.mask.pert.def
-                                     , TRAITS_PFG = mat.traits.pfg)
+                                     , TRAITS_PFG = mat.traits.pfg
+                                     , pfg.sdm = pfg.sdm)
     , strings_in_dots = "literals"
   )
   
@@ -109,12 +110,22 @@ for(ZONE in list(BAUGES))
   
 }
 
+# zone.name = ZONE$zone.name
+# loadd(pfg.occ)
+# XY = get(load(paste0(zone.name, "/DB.XY.RData")))
+# loadd(zone.env.stk)
+# pfg.sdm = getSDM_build(zone.name = zone.name
+#                        , list_sp = pfg.occ
+#                        , XY = XY
+#                        , zone.env.stk.CALIB = zone.env.stk$env.CALIB
+#                        , zone.env.stk.PROJ = zone.env.stk$env.PROJ
+#                        , sp.type = "PFG")
 
-zone.name = ZONE$zone.name
-loadd(mat.traits.pfg)
-param.PFG = getPFG_5_FATEparam(zone.name = zone.name
-                               , zone.mask = ZONE$zone.mask
-                               , zone.mask.pert = ZONE$zone.mask.pert
-                               , TRAITS_PFG = mat.traits.pfg)
+# zone.name = ZONE$zone.name
+# loadd(mat.traits.pfg)
+# param.PFG = getPFG_5_FATEparam(zone.name = zone.name
+#                                , zone.mask = ZONE$zone.mask
+#                                , zone.mask.pert = ZONE$zone.mask.pert
+#                                , TRAITS_PFG = mat.traits.pfg)
 
 
