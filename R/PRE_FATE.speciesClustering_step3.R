@@ -271,6 +271,10 @@ PRE_FATE.speciesClustering_step3 = function(
       ind.pfg.longevity.maturity = intersect(ind.pfg.longevity, ind.pfg.maturity)
       mat.species.traits$longevity[ind.pfg.longevity.maturity] = 5
       mat.species.traits$maturity[ind.pfg.longevity.maturity] = 2
+      warning(paste0("No trait values are available for `longevity` and `maturity` for the PFG "
+                     , paste0(mat.species.traits$PFG[ind.pfg.longevity.maturity], collapse = ", ")
+                     , ".\n Default values have been set to 5 (`longevity`) and 2 (`maturity`), but YOU BETTER CHECK THAT !"
+      ))
     }
   }
   

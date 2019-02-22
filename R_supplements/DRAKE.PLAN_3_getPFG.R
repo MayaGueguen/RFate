@@ -121,11 +121,18 @@ for(ZONE in list(BAUGES))
 #                        , zone.env.stk.PROJ = zone.env.stk$env.PROJ
 #                        , sp.type = "PFG")
 
+# mat.traits = fread(file_in(paste0("TRAITS_FATE_", file_date, ".csv")))
+# loadd(selected.sp)
+# mat.traits.pfg = getPFG_4_calcMeanTraits(zone.name = zone.name
+#                                          , mat.traits = mat.traits
+#                                          , selected.sp = selected.sp)
+
 # zone.name = ZONE$zone.name
 # loadd(mat.traits.pfg)
 # param.PFG = getPFG_5_FATEparam(zone.name = zone.name
 #                                , zone.mask = ZONE$zone.mask
-#                                , zone.mask.pert = ZONE$zone.mask.pert
-#                                , TRAITS_PFG = mat.traits.pfg)
-
+#                                , zone.mask.pert.all = ZONE$zone.mask.pert.all
+#                                , zone.mask.pert.def = ZONE$zone.mask.pert.def
+#                                , TRAITS_PFG = mat.traits.pfg
+#                                , pfg.sdm = pfg.sdm)
 
