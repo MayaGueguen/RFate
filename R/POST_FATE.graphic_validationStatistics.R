@@ -66,7 +66,7 @@
 ##' 
 ##' One \code{POST_FATE_[...].pdf} file is created : 
 ##' \describe{
-##'   \item{\file{GRAPHIC_E \cr validationStatistics}}{to assess the modeling 
+##'   \item{\file{GRAPHIC_C \cr validationStatistics}}{to assess the modeling 
 ##'   quality of each PFG based on given observations within the studied area}
 ##' }
 ##' 
@@ -287,7 +287,7 @@ POST_FATE.graphic_validationStatistics = function(
     
     
     ## get the data inside the rasters ---------------------------------------------
-    pdf(file = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_F_validationStatistics_", basename(dir.save), ".pdf")
+    pdf(file = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_C_validationStatistics_", basename(dir.save), ".pdf")
         , width = 12, height = 10)
     cat("\n GETTING STATISTICS for year")
     mat.valid_list = list(length(years))

@@ -29,7 +29,7 @@ studied area for which soil resources will be extracted.}
 \value{
 One \code{POST_FATE_[...].pdf} file is created : 
 \describe{
-  \item{\file{GRAPHIC_B \cr soil resources}}{to visualize 
+  \item{\file{GRAPHIC_A \cr soil resources}}{to visualize 
   the evolution of its soil resource within each selected pixel through
   simulation time}
 }

@@ -49,7 +49,7 @@
 ##' 
 ##' @return One \code{POST_FATE_[...].pdf} file is created : 
 ##' \describe{
-##'   \item{\file{GRAPHIC_B \cr abundance}}{to visualize for each PFG the
+##'   \item{\file{GRAPHIC_A \cr abundance}}{to visualize for each PFG the
 ##'   evolution of its abundance within each selected pixel through
 ##'   simulation time}
 ##' }
@@ -269,7 +269,7 @@ POST_FATE.graphic_evolutionAbund_pixels = function(
       scale_color_manual("", values = fun_col(no_PFG)) +
       geom_line() + ## lwd = 0.8 ?
       facet_grid("TYPE ~ ID", scales = ifelse(opt.abund_fixedScale, "fixed", "free_y")) +
-      labs(x = "", y = "", title = paste0("GRAPH B : evolution of species' abundance"),
+      labs(x = "", y = "", title = paste0("GRAPH A : evolution of species' abundance"),
            subtitle = paste0("For each PFG, the line represents the evolution through time of its abundance\n",
                              "for 5 randomly selected pixels within the studied area.\n")) +
       # xlim(0, 400) + ??
@@ -281,7 +281,7 @@ POST_FATE.graphic_evolutionAbund_pixels = function(
             , legend.key = element_rect(fill = "transparent", colour = NA))
     
     ggsave(filename = paste0(name.simulation
-                             , "/RESULTS/POST_FATE_GRAPHIC_B_evolution_abundance_pixels_"
+                             , "/RESULTS/POST_FATE_GRAPHIC_A_evolution_abundance_pixels_"
                              , paste0(IDS, collapse = "_")
                              , "_"
                              , basename(dir.save)

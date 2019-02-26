@@ -50,7 +50,7 @@
 ##' 
 ##' @return One \code{POST_FATE_[...].pdf} file is created : 
 ##' \describe{
-##'   \item{\file{GRAPHIC_D \cr PFGcover}}{to visualize the PFG cover
+##'   \item{\file{GRAPHIC_B \cr PFGcover}}{to visualize the PFG cover
 ##'   within the studied area}
 ##' }
 ##' 
@@ -287,7 +287,7 @@ POST_FATE.graphic_mapPFGcover = function(
            , nb_cores = opt.no_CPU)
     
     ## get the data inside the rasters ---------------------------------------------
-    pdf(file = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_E_map_PFGcover_", basename(dir.save), ".pdf")
+    pdf(file = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_B_map_PFGcover_", basename(dir.save), ".pdf")
         , width = 10, height = 10)
     cat("\n GETTING COVER for year")
     for (y in years)

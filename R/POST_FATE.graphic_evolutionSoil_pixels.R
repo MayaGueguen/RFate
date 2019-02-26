@@ -45,7 +45,7 @@
 ##' 
 ##' @return One \code{POST_FATE_[...].pdf} file is created : 
 ##' \describe{
-##'   \item{\file{GRAPHIC_B \cr soil resources}}{to visualize 
+##'   \item{\file{GRAPHIC_A \cr soil resources}}{to visualize 
 ##'   the evolution of its soil resource within each selected pixel through
 ##'   simulation time}
 ##' }
@@ -259,7 +259,7 @@ POST_FATE.graphic_evolutionSoil_pixels = function(
             , legend.key = element_rect(fill = "transparent", colour = NA))
     
     ggsave(filename = paste0(name.simulation
-                             , "/RESULTS/POST_FATE_GRAPHIC_B_evolution_soil_pixels_"
+                             , "/RESULTS/POST_FATE_GRAPHIC_A_evolution_soil_pixels_"
                              , paste0(IDS, collapse = "_")
                              , "_"
                              , basename(dir.save)

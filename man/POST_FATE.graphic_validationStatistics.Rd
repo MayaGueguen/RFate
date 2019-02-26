@@ -39,7 +39,7 @@ A \code{data.frame} with the following columns :
 
 One \code{POST_FATE_[...].pdf} file is created : 
 \describe{
-  \item{\file{GRAPHIC_E \cr validationStatistics}}{to assess the modeling 
+  \item{\file{GRAPHIC_C \cr validationStatistics}}{to assess the modeling 
   quality of each PFG based on given observations within the studied area}
 }
 }

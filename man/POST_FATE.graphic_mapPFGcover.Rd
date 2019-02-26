@@ -36,7 +36,7 @@ vegetation cover}
 \value{
 One \code{POST_FATE_[...].pdf} file is created : 
 \describe{
-  \item{\file{GRAPHIC_D \cr PFGcover}}{to visualize the PFG cover
+  \item{\file{GRAPHIC_B \cr PFGcover}}{to visualize the PFG cover
   within the studied area}
 }
 }

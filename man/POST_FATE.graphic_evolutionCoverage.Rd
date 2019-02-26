@@ -32,7 +32,7 @@ Two \code{POST_FATE_[...].pdf} files are created :
 \describe{
   \item{\file{GRAPHIC_A \cr spaceOccupancy}}{to visualize for each PFG the
   evolution of its occupation of the studied area through simulation time}
-  \item{\file{GRAPHIC_B \cr abundance}}{to visualize for each PFG the
+  \item{\file{GRAPHIC_A \cr abundance}}{to visualize for each PFG the
   evolution of its abundance within the whole studied area through
   simulation time}
 }

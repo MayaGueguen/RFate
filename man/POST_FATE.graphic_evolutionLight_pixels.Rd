@@ -33,7 +33,7 @@ studied area for which light resources will be extracted.}
 \value{
 One \code{POST_FATE_[...].pdf} file is created : 
 \describe{
-  \item{\file{GRAPHIC_B \cr light resources}}{to visualize for each stratum
+  \item{\file{GRAPHIC_A \cr light resources}}{to visualize for each stratum
   the evolution of its light resource within each selected pixel through
   simulation time}
 }

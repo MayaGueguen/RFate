@@ -33,7 +33,7 @@ studied area for which PFG abundances will be extracted.}
 \value{
 One \code{POST_FATE_[...].pdf} file is created : 
 \describe{
-  \item{\file{GRAPHIC_B \cr abundance}}{to visualize for each PFG the
+  \item{\file{GRAPHIC_A \cr abundance}}{to visualize for each PFG the
   evolution of its abundance within each selected pixel through
   simulation time}
 }

@@ -28,7 +28,7 @@ which to extract PFG binary maps}
 \value{
 One \code{POST_FATE_[...].pdf} file is created : 
 \describe{
-  \item{\file{GRAPHIC_D \cr PFGrichness}}{to visualize the PFG richness
+  \item{\file{GRAPHIC_B \cr PFGrichness}}{to visualize the PFG richness
   within the studied area}
 }
 }

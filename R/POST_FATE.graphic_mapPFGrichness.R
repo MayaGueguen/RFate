@@ -45,7 +45,7 @@
 ##' 
 ##' @return One \code{POST_FATE_[...].pdf} file is created : 
 ##' \describe{
-##'   \item{\file{GRAPHIC_D \cr PFGrichness}}{to visualize the PFG richness
+##'   \item{\file{GRAPHIC_B \cr PFGrichness}}{to visualize the PFG richness
 ##'   within the studied area}
 ##' }
 ##' 
@@ -202,7 +202,7 @@ POST_FATE.graphic_mapPFGrichness = function(
     
     
     ## get the data inside the rasters ---------------------------------------------
-    pdf(file = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_D_map_PFGrichness_", basename(dir.save), ".pdf")
+    pdf(file = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_B_map_PFGrichness_", basename(dir.save), ".pdf")
         , width = 10, height = 10)
     
     cat("\n GETTING RICHNESS for year")

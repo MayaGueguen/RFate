@@ -48,7 +48,7 @@
 ##' 
 ##' @return One \code{POST_FATE_[...].pdf} file is created : 
 ##' \describe{
-##'   \item{\file{GRAPHIC_B \cr light resources}}{to visualize for each stratum
+##'   \item{\file{GRAPHIC_A \cr light resources}}{to visualize for each stratum
 ##'   the evolution of its light resource within each selected pixel through
 ##'   simulation time}
 ##' }
@@ -261,7 +261,7 @@ POST_FATE.graphic_evolutionLight_pixels = function(
             , legend.key = element_rect(fill = "transparent", colour = NA))
     
     ggsave(filename = paste0(name.simulation
-                             , "/RESULTS/POST_FATE_GRAPHIC_B_evolution_light_pixels_"
+                             , "/RESULTS/POST_FATE_GRAPHIC_A_evolution_light_pixels_"
                              , paste0(IDS, collapse = "_")
                              , "_"
                              , basename(dir.save)
