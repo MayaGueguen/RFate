@@ -292,7 +292,8 @@ PRE_FATE.speciesClustering_step2 = function(clust.dendograms
           , plot.background = element_rect(fill = "transparent", colour = NA)
           , legend.background = element_rect(fill = "transparent", colour = NA)
           , legend.box.background = element_rect(fill = "transparent", colour = NA)
-          , legend.key = element_rect(fill = "transparent", colour = NA))
+          , legend.key = element_rect(fill = "transparent", colour = NA)
+          , axis.text.x = element_text(angle = 90))
   
   plot(pp3)
   

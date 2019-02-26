@@ -102,7 +102,7 @@
 ##' @importFrom ggplot2 ggplot aes aes_string geom_raster geom_bar
 ##' geom_hline geom_errorbar scale_fill_gradientn facet_wrap
 ##' ylim labs theme annotate element_rect element_blank
-##' scale_y_continuous
+##' scale_y_continuous element_text
 ##' @importFrom ggthemes theme_fivethirtyeight
 ##' @importFrom ggExtra ggMarginal
 ##' @importFrom gridExtra grid.arrange
@@ -432,7 +432,8 @@ POST_FATE.graphic_validationStatistics = function(
                     , plot.background = element_rect(fill = "transparent", colour = NA)
                     , legend.background = element_rect(fill = "transparent", colour = NA)
                     , legend.box.background = element_rect(fill = "transparent", colour = NA)
-                    , legend.key = element_rect(fill = "transparent", colour = NA))
+                    , legend.key = element_rect(fill = "transparent", colour = NA)
+                    , axis.text.x = element_text(angle = 90))
             
             pp = ggMarginal(pp, type = "boxplot", margins = "y", size = 7)
           }
