@@ -294,7 +294,7 @@ POST_FATE.graphic_evolutionAbund_pixels = function(
     
     write.csv(distriAbund
               , file = paste0(name.simulation
-                              , "/RESULTS/POST_FATE_evolution_coverage_ABUNDANCE_PIXELS_"
+                              , "/RESULTS/POST_FATE_evolution_abundance_pixels_"
                               , paste0(IDS, collapse = "_")
                               , "_"
                               , basename(dir.save)
@@ -305,7 +305,7 @@ POST_FATE.graphic_evolutionAbund_pixels = function(
     cat("\n")
     
     message(paste0("\n The output file \n"
-                   , " > POST_FATE_evolution_coverage_ABUNDANCE_PIXELS_"
+                   , " > POST_FATE_evolution_abundance_pixels_"
                    , paste0(IDS, collapse = "_")
                    , "_"
                    , basename(dir.save)

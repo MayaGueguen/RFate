@@ -287,14 +287,14 @@ POST_FATE.graphic_evolutionCoverage = function(
     
     write.csv(distri
               , file = paste0(name.simulation
-                              , "/RESULTS/POST_FATE_evolution_coverage_SPACE_OCCUPANCY"
+                              , "/RESULTS/POST_FATE_evolution_spaceOccupancy_"
                               , basename(dir.save)
                               , ".csv")
               , row.names = TRUE)
     
     write.csv(distriAbund
               , file = paste0(name.simulation
-                              , "/RESULTS/POST_FATE_evolution_coverage_ABUNDANCE"
+                              , "/RESULTS/POST_FATE_evolution_abundance_"
                               , basename(dir.save)
                               , ".csv")
               , row.names = TRUE)
@@ -303,10 +303,10 @@ POST_FATE.graphic_evolutionCoverage = function(
     cat("\n")
     
     message(paste0("\n The output files \n"
-                   , " > POST_FATE_evolution_coverage_SPACE_OCCUPANCY"
+                   , " > POST_FATE_evolution_spaceOccupancy_"
                    , basename(dir.save)
                    , ".csv \n"
-                   , " > POST_FATE_evolution_coverage_ABUNDANCE"
+                   , " > POST_FATE_evolution_abundance_"
                    , basename(dir.save)
                    , ".csv \n"
                    , "have been successfully created !\n"))
