@@ -161,21 +161,28 @@ ________________________________________________________________________________
 
 <br/>
 
-*1. Transformation of outputs*
+*0. Transformation of outputs*
 - **Create binary maps** : transform abundance values into presence / absence
 with the function [POST_FATE.relativeAbund_presenceAbsence](https://mayagueguen.github.io/RFate/reference/POST_FATE.relativeAbund_presenceAbsence.html)
 
-*2. Evolution of simulation through time*
+*A. Evolution of simulation through time*
 - **Abundance over all studied area** : with the function [POST_FATE.graphic_evolutionCoverage](https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_evolutionCoverage.html)
 - **Abundance within some pixels** : with the function [POST_FATE.graphic_evolutionAbund_pixels](https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_evolutionAbund_pixels.html)
 - **Light within some pixels over all studied area** : with the function [POST_FATE.graphic_evolutionLight_pixels](https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_evolutionLight_pixels.html)
+- **Soil within some pixels over all studied area** : with the function [POST_FATE.graphic_evolutionSoil_pixels](https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_evolutionSoil_pixels.html)
 
-*3. Evaluation of outputs*
-- **PFG outputs vs Habitat suitability** : compare binary maps (outputs) with habitat suitability maps (inputs)  
-with the function [POST_FATE.graphic_mapPFGvsHS](https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFGvsHS.html)
+*B. Visualization of outputs*
 - **PFG richness** : create map of number of PFG alive within each pixel  
 with the function [POST_FATE.graphic_mapPFGrichness](https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFGrichness.html)
 - **PFG cover** : create map of PFG abundance above 1.5 meters within each pixel  
 with the function [POST_FATE.graphic_mapPFGcover](https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFGcover.html)
+- **PFG CWM of light** : create map of light community weighted mean within each pixel  
+with the function [POST_FATE.graphic_mapPFGlight](https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFGlight.html)
+- **PFG CWM of soil** : create map of soil community weighted mean within each pixel  
+with the function [POST_FATE.graphic_mapPFGsoil](https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFGsoil.html)
+
+*C. Evaluation of outputs*
+- **PFG outputs vs Habitat suitability** : compare binary maps (outputs) with habitat suitability maps (inputs)  
+with the function [POST_FATE.graphic_mapPFGvsHS](https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFGvsHS.html)
 - **Validation statistics** : calculate evaluation metrics (TSS, AUC) for each PFG  
 with the function [POST_FATE.graphic_validationStatistics](https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_validationStatistics.html)

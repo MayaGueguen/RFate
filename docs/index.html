@@ -88,7 +88,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="archive/RFate_0.0.1.9000.tar.gz">
+  <a href="archive/RFate_0.0.6.9000.tar.gz">
     <span class="fa fa-rocket fa-lg"></span>
      
     Download Current Version
@@ -321,13 +321,13 @@ It can be created with the function <a href="https://mayagueguen.github.io/RFate
 <a href="#post_fate---evaluation-of-simulation" class="anchor"></a><font color="#068f96"> <i class="fa fa-battery-three-quarters"></i> <code>POST_FATE</code> - evaluation of simulation </font>
 </h2>
 <p><br></p>
-<p><em>1. Transformation of outputs</em></p>
+<p><em>0. Transformation of outputs</em></p>
 <ul>
 <li>
 <strong>Create binary maps</strong> : transform abundance values into presence / absence with the function <a href="https://mayagueguen.github.io/RFate/reference/POST_FATE.relativeAbund_presenceAbsence.html">POST_FATE.relativeAbund_presenceAbsence</a>
 </li>
 </ul>
-<p><em>2. Evolution of simulation through time</em></p>
+<p><em>A. Evolution of simulation through time</em></p>
 <ul>
 <li>
 <strong>Abundance over all studied area</strong> : with the function <a href="https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_evolutionCoverage.html">POST_FATE.graphic_evolutionCoverage</a>
@@ -338,13 +338,12 @@ It can be created with the function <a href="https://mayagueguen.github.io/RFate
 <li>
 <strong>Light within some pixels over all studied area</strong> : with the function <a href="https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_evolutionLight_pixels.html">POST_FATE.graphic_evolutionLight_pixels</a>
 </li>
-</ul>
-<p><em>3. Evaluation of outputs</em></p>
-<ul>
 <li>
-<strong>PFG outputs vs Habitat suitability</strong> : compare binary maps (outputs) with habitat suitability maps (inputs)<br>
-with the function <a href="https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFGvsHS.html">POST_FATE.graphic_mapPFGvsHS</a>
+<strong>Soil within some pixels over all studied area</strong> : with the function <a href="https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_evolutionSoil_pixels.html">POST_FATE.graphic_evolutionSoil_pixels</a>
 </li>
+</ul>
+<p><em>B. Visualization of outputs</em></p>
+<ul>
 <li>
 <strong>PFG richness</strong> : create map of number of PFG alive within each pixel<br>
 with the function <a href="https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFGrichness.html">POST_FATE.graphic_mapPFGrichness</a>
@@ -352,6 +351,21 @@ with the function <a href="https://mayagueguen.github.io/RFate/reference/POST_FA
 <li>
 <strong>PFG cover</strong> : create map of PFG abundance above 1.5 meters within each pixel<br>
 with the function <a href="https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFGcover.html">POST_FATE.graphic_mapPFGcover</a>
+</li>
+<li>
+<strong>PFG CWM of light</strong> : create map of light community weighted mean within each pixel<br>
+with the function <a href="https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFGlight.html">POST_FATE.graphic_mapPFGlight</a>
+</li>
+<li>
+<strong>PFG CWM of soil</strong> : create map of soil community weighted mean within each pixel<br>
+with the function <a href="https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFGsoil.html">POST_FATE.graphic_mapPFGsoil</a>
+</li>
+</ul>
+<p><em>C. Evaluation of outputs</em></p>
+<ul>
+<li>
+<strong>PFG outputs vs Habitat suitability</strong> : compare binary maps (outputs) with habitat suitability maps (inputs)<br>
+with the function <a href="https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFGvsHS.html">POST_FATE.graphic_mapPFGvsHS</a>
 </li>
 <li>
 <strong>Validation statistics</strong> : calculate evaluation metrics (TSS, AUC) for each PFG<br>
