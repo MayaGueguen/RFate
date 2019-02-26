@@ -36,7 +36,7 @@ navbar:
     download:
       text: 'Download Current Version'
       icon: fa-rocket fa-lg
-      href: archive/RFate_0.0.1.9000.tar.gz
+      href: archive/RFate_0.0.6.9000.tar.gz
     github:
       icon: fa-github fa-lg
       href: https://github.com/MayaGueguen/RFate.git
@@ -76,6 +76,7 @@ reference:
       - "POST_FATE.graphic_evolutionCoverage"
       - "POST_FATE.graphic_evolutionAbund_pixels"
       - "POST_FATE.graphic_evolutionLight_pixels"
+      - "POST_FATE.graphic_evolutionSoil_pixels"
       - "POST_FATE.graphic_mapPFGvsHS"
       - "POST_FATE.graphic_mapPFGrichness"
       - "POST_FATE.graphic_mapPFGcover"
