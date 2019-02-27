@@ -72,7 +72,7 @@
 ##' 
 ##' @export
 ##' 
-##' @importFrom utils write.csv
+##' @importFrom utils read.csv write.csv
 ##' @importFrom grDevices colorRampPalette
 ##' @importFrom raster raster stack 
 ##' @importFrom reshape2 melt
