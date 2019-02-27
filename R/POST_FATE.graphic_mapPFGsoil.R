@@ -1,13 +1,13 @@
 ### HEADER #####################################################################
-##' @title Create a map of the community weighted mean (CWM) of light
+##' @title Create a map of the community weighted mean (CWM) of soil
 ##'  \cr for one (or several) specific year of a \code{FATE-HD} simulation
 ##' 
-##' @name POST_FATE.graphic_mapPFGlight
+##' @name POST_FATE.graphic_mapPFGsoil
 ##'
 ##' @author Maya Guéguen
 ##' 
 ##' @description This script is designed to produce a raster map of community
-##' weighted mean (CWM) of light for one (or several) specific \code{FATE-HD}
+##' weighted mean (CWM) of soil for one (or several) specific \code{FATE-HD}
 ##' simulation year.
 ##'              
 ##' @param name.simulation a \code{string} that corresponds to the main directory
@@ -19,14 +19,14 @@
 ##' will be used to extract PFG abundance and binary maps
 ##' @param strata_min an \code{integer} corresponding to the lowest stratum from
 ##' which PFG abundances are summed up to the highest stratum
-##' @param mat.PFG.succ a \code{data.frame} with 2 columns : PFG, light
+##' @param mat.PFG.succ a \code{data.frame} with 2 columns : PFG, soil_contrib
 ##' @param opt.no_CPU default 1 (\emph{optional}). The number of resources that 
 ##' can be used to parallelize the \code{unzip/zip} of raster files
-##' @param opt.mat.light.obs default NULL (\emph{optional}). A \code{data.frame}
+##' @param opt.mat.soil.obs default NULL (\emph{optional}). A \code{data.frame}
 ##' with 3 columns : X, Y, obs
-##' @param opt.ras.light.obs default NULL (\emph{optional}). A \code{string} that
+##' @param opt.ras.soil.obs default NULL (\emph{optional}). A \code{string} that
 ##' corresponds to the file name of a raster containing observed values for 
-##' community weighted mean of light
+##' community weighted mean of soil
 ##' 
 ##' 
 ##' @details 
@@ -42,9 +42,9 @@
 ##' maps are compressed again :
 ##' 
 ##' \itemize{
-##'   \item{the map of \strong{light Community Weighted Mean} for each selected
-##'   simulation year(s), representing the simulated value of light (Landolt)
-##'   within each pixel above a height threshold
+##'   \item{the map of \strong{soil Community Weighted Mean} for each selected
+##'   simulation year(s), representing the simulated value of soil (Landolt)
+##'   within each pixel
 ##'   }
 ##' }
 ##' 
@@ -52,32 +52,32 @@
 ##' 
 ##' @return One \code{POST_FATE_[...].pdf} file is created : 
 ##' \describe{
-##'   \item{\file{GRAPHIC_B \cr PFGlight}}{to visualize the light CWM
+##'   \item{\file{GRAPHIC_B \cr PFGlsoil}}{to visualize the soil CWM
 ##'   within the studied area}
 ##' }
 ##' 
 ##' 
-##' @keywords FATE, outputs, relative abundance, light, community weighted mean,
+##' @keywords FATE, outputs, relative abundance, soil, community weighted mean,
 ##' 
 ##' @seealso \code{\link{POST_FATE.relativeAbund_presenceAbsence}}
 ##' 
 ##' @examples
 ##' 
 ##' \dontrun{                      
-##' POST_FATE.graphic_mapPFGlight(name.simulation = "FATE_simulation"
+##' POST_FATE.graphic_mapPFGsoil(name.simulation = "FATE_simulation"
 ##'                               , file.simulParam = "Simul_parameters_V1.txt"
 ##'                               , year = 850
 ##'                               , strata_min = 1
 ##'                               , mat.PFG.succ = data.frame(PFG = paste0("PFG", 1:3)
-##'                                                           , light = c(5, 2, 3))
+##'                                                           , soil_contrib = c(1.8, 2, 3.1))
 ##'                               , opt.no_CPU = 1)
 ##'                                     
-##' POST_FATE.graphic_mapPFGlight(name.simulation = "FATE_simulation"
+##' POST_FATE.graphic_mapPFGsoil(name.simulation = "FATE_simulation"
 ##'                               , file.simulParam = "Simul_parameters_V1.txt"
 ##'                               , year = c(850, 950)
 ##'                               , strata_min = 1
 ##'                               , mat.PFG.succ = data.frame(PFG = paste0("PFG", 1:3)
-##'                                                           , light = c(5, 2, 3))
+##'                                                           , soil_contrib = c(1.8, 2, 3.1))
 ##'                               , opt.no_CPU = 1)
 ##' }
 ##'                                     
@@ -100,15 +100,15 @@
 ## END OF HEADER ###############################################################
 
 
-POST_FATE.graphic_mapPFGlight = function(
+POST_FATE.graphic_mapPFGsoil = function(
   name.simulation
   , file.simulParam = NULL
   , year
   , strata_min = 1
   , mat.PFG.succ
   , opt.no_CPU = 1
-  , opt.mat.light.obs = NULL
-  , opt.ras.light.obs = NULL
+  , opt.mat.soil.obs = NULL
+  , opt.ras.soil.obs = NULL
 ){
   
   .testParam_existFolder(name.simulation, "PARAM_SIMUL/")
@@ -144,15 +144,15 @@ POST_FATE.graphic_mapPFGlight = function(
   }
   if (nrow(mat.PFG.succ) == 0 || ncol(mat.PFG.succ) != 2)
   {
-    .stopMessage_numRowCol("mat.PFG.succ", c("PFG", "light"))
+    .stopMessage_numRowCol("mat.PFG.succ", c("PFG", "soil_contrib"))
   }
   if (ncol(mat.PFG.succ) == 2)
   {
-    if (sum(colnames(mat.PFG.succ) == c("PFG", "light")) == 2)
+    if (sum(colnames(mat.PFG.succ) == c("PFG", "soil_contrib")) == 2)
     {
-      mat.PFG.succ = mat.PFG.succ[ , c("PFG", "light")]
+      mat.PFG.succ = mat.PFG.succ[ , c("PFG", "soil_contrib")]
     } else {
-      .stopMessage_columnNames("mat.PFG.succ", c("PFG", "light"))
+      .stopMessage_columnNames("mat.PFG.succ", c("PFG", "soil_contrib"))
     }
   }
   mat.PFG.succ$PFG = as.character(mat.PFG.succ$PFG)
@@ -164,52 +164,52 @@ POST_FATE.graphic_mapPFGlight = function(
   {
     .stopMessage_beChar("mat.PFG.succ$PFG")
   }
-  if (!is.numeric(mat.PFG.succ$light))
+  if (!is.numeric(mat.PFG.succ$soil_contrib))
   {
-    .stopMessage_columnNumeric("mat.PFG.succ", c("light"))
+    .stopMessage_columnNumeric("mat.PFG.succ", c("soil_contrib"))
   }
-  if (length(which(is.na(mat.PFG.succ$light))) > 0)
+  if (length(which(is.na(mat.PFG.succ$soil_contrib))) > 0)
   {
-    .stopMessage_columnNoNA("mat.PFG.succ", c("light"))
+    .stopMessage_columnNoNA("mat.PFG.succ", c("soil_contrib"))
   }
-  if (!.testParam_notDef(opt.mat.light.obs))
+  if (!.testParam_notDef(opt.mat.soil.obs))
   {
-    if (.testParam_notDf(opt.mat.light.obs))
+    if (.testParam_notDf(opt.mat.soil.obs))
     {
-      .stopMessage_beDataframe("opt.mat.light.obs")
+      .stopMessage_beDataframe("opt.mat.soil.obs")
     } else
     {
-      if (nrow(opt.mat.light.obs) == 0 || ncol(opt.mat.light.obs) != 3)
+      if (nrow(opt.mat.soil.obs) == 0 || ncol(opt.mat.soil.obs) != 3)
       {
-        .stopMessage_numRowCol("opt.mat.light.obs", c("X", "Y", "obs"))
+        .stopMessage_numRowCol("opt.mat.soil.obs", c("X", "Y", "obs"))
       }
-      if (ncol(opt.mat.light.obs) == 3)
+      if (ncol(opt.mat.soil.obs) == 3)
       {
-        if (sum(colnames(opt.mat.light.obs) == c("X", "Y", "obs")) == 3)
+        if (sum(colnames(opt.mat.soil.obs) == c("X", "Y", "obs")) == 3)
         {
-          opt.mat.light.obs = opt.mat.light.obs[ , c("X", "Y", "obs")]
+          opt.mat.soil.obs = opt.mat.soil.obs[ , c("X", "Y", "obs")]
         } else
         {
-          .stopMessage_columnNames("opt.mat.light.obs", c("X", "Y", "obs"))
+          .stopMessage_columnNames("opt.mat.soil.obs", c("X", "Y", "obs"))
         }
       }
-      if (!is.numeric(opt.mat.light.obs$X) ||
-          !is.numeric(opt.mat.light.obs$Y) ||
-          !is.numeric(opt.mat.light.obs$obs)) {
-        .stopMessage_columnNumeric("opt.mat.light.obs", c("X", "Y", "obs"))
+      if (!is.numeric(opt.mat.soil.obs$X) ||
+          !is.numeric(opt.mat.soil.obs$Y) ||
+          !is.numeric(opt.mat.soil.obs$obs)) {
+        .stopMessage_columnNumeric("opt.mat.soil.obs", c("X", "Y", "obs"))
       }
-      if (length(which(is.na(opt.mat.light.obs$X))) > 0 ||
-          length(which(is.na(opt.mat.light.obs$Y))) > 0 ||
-          length(which(is.na(opt.mat.light.obs$obs))) > 0) {
-        opt.mat.light.obs = na.exclude(opt.mat.light.obs)
+      if (length(which(is.na(opt.mat.soil.obs$X))) > 0 ||
+          length(which(is.na(opt.mat.soil.obs$Y))) > 0 ||
+          length(which(is.na(opt.mat.soil.obs$obs))) > 0) {
+        opt.mat.soil.obs = na.exclude(opt.mat.soil.obs)
       }
     }
-  } else if (!.testParam_notDef(opt.ras.light.obs))
+  } else if (!.testParam_notDef(opt.ras.soil.obs))
   {
-    if (nchar(opt.ras.light.obs) > 0)
+    if (nchar(opt.ras.soil.obs) > 0)
     {
-      .testParam_existFile(opt.ras.light.obs)
-      ras.light = raster(opt.ras.light.obs)
+      .testParam_existFile(opt.ras.soil.obs)
+      ras.soil = raster(opt.ras.soil.obs)
     }
   }
   
@@ -324,14 +324,12 @@ POST_FATE.graphic_mapPFGlight = function(
            , nb_cores = opt.no_CPU)
     
     ## get the data inside the rasters ---------------------------------------------
-    pdf(file = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_E_map_PFGlight_", basename(dir.save), ".pdf")
+    pdf(file = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_E_map_PFGsoil_", basename(dir.save), ".pdf")
         , width = 10, height = 10)
-    cat("\n GETTING LIGHT for year")
+    cat("\n GETTING SOIL for year")
     for (y in years)
     {
       cat(" ", y)
-      
-      # foreach (pfg = PFG, .combine = 'rbind') %do%
       cat("\n PFG ")
       ras_TOT.list = foreach (pfg = PFG) %do%
       {
@@ -380,31 +378,31 @@ POST_FATE.graphic_mapPFGlight = function(
       
       for (i in 1:nlayers(ras_REL.list))
       {
-        i_light = mat.PFG.succ$light[which(mat.PFG.succ$PFG == names(ras_REL.list)[i])]
-        if (is.null(i_light) || length(i_light) == 0)
+        i_soil = mat.PFG.succ$soil_contrib[which(mat.PFG.succ$PFG == names(ras_REL.list)[i])]
+        if (is.null(i_soil) || length(i_soil) == 0)
         {
-          stop(paste0("Missing data!\n `mat.PFG.succ` does not contain light value for the PFG `"
+          stop(paste0("Missing data!\n `mat.PFG.succ` does not contain soil value for the PFG `"
                       , names(ras_REL.list)[i]
                       , "`. Please check."))
         }
-        ras_REL.list[[i]] = ras_REL.list[[i]] * i_light
+        ras_REL.list[[i]] = ras_REL.list[[i]] * i_soil
       }
       
-      ras_light = sum(ras_REL.list)# / nlayers(ras_REL.list)
-      ras.pts = as.data.frame(rasterToPoints(ras_light))
-      colnames(ras.pts) = c("X", "Y", "LIGHT")
+      ras_soil = sum(ras_REL.list)# / nlayers(ras_REL.list)
+      ras.pts = as.data.frame(rasterToPoints(ras_soil))
+      colnames(ras.pts) = c("X", "Y", "SOIL")
       
       output.name = paste0(name.simulation
                            , "/RESULTS/"
                            , basename(dir.save)
-                           , "/PFGlight_YEAR_"
+                           , "/PFGsoil_YEAR_"
                            , y
                            , "_STRATA_"
                            , strata_min
                            , "_"
                            , no_strata
                            , ".tif")
-      writeRaster(ras_light
+      writeRaster(ras_soil
                   , filename = output.name
                   , overwrite = TRUE)
       
@@ -413,19 +411,19 @@ POST_FATE.graphic_mapPFGlight = function(
                      , "has been successfully created !\n"))
       
       ## produce the plot ------------------------------------------------------------
-      ## Map of light CWM
-      pp = ggplot(ras.pts, aes_string(x = "X", y = "Y", fill = "LIGHT")) +
-        scale_fill_gradientn("Light (Landolt)"
+      ## Map of soil CWM
+      pp = ggplot(ras.pts, aes_string(x = "X", y = "Y", fill = "SOIL")) +
+        scale_fill_gradientn("Soil (Landolt)"
                              , colors = (brewer.pal(9, "Oranges"))) +
                              # , breaks = seq(1, 5, 0.2)
                              # , labels = seq(1, 5, 0.2)) +
         coord_equal() +
         geom_raster() +
-        labs(x = "", y = "", title = paste0("GRAPH E : map of light CWM - Simulation year : ", y),
+        labs(x = "", y = "", title = paste0("GRAPH E : map of soil CWM - Simulation year : ", y),
              subtitle = paste0("For each pixel, PFG abundances from strata "
                                , strata_min, " to ", no_strata, " are summed,\n"
                                , "then transformed into relative values by dividing by the maximum abundance obtained.\n"
-                               , "Community Weighted Mean is then calculated with observed values of light\n"
+                               , "Community Weighted Mean is then calculated with observed values of soil\n"
                                , "(Landolt - Flora Indicativa) for each PFG.")) +
         theme_fivethirtyeight() +
         theme(axis.text = element_blank()
@@ -439,26 +437,26 @@ POST_FATE.graphic_mapPFGlight = function(
       
       
       ## Observed cover maps ------------------------------------------------------------
-      if (!is.null(opt.mat.light.obs))
+      if (!is.null(opt.mat.soil.obs))
       {
-        opt.mat.light.obs$ID = cellFromXY(ras.mask, opt.mat.light.obs[, c("X", "Y")])
-      } else if (exists("ras.light"))
+        opt.mat.soil.obs$ID = cellFromXY(ras.mask, opt.mat.soil.obs[, c("X", "Y")])
+      } else if (exists("ras.soil"))
       {
-        ras.light = ras.light * ras.mask
-        opt.mat.light.obs = data.frame(ID = cellFromXY(ras.light, xy.1))
-        opt.mat.light.obs$obs = ras.light[opt.mat.light.obs$ID]
+        ras.soil = ras.soil * ras.mask
+        opt.mat.soil.obs = data.frame(ID = cellFromXY(ras.soil, xy.1))
+        opt.mat.soil.obs$obs = ras.soil[opt.mat.soil.obs$ID]
       }
       
-      if (!is.null(opt.mat.light.obs))
+      if (!is.null(opt.mat.soil.obs))
       {
-        opt.mat.light.sim = ras.pts
-        colnames(opt.mat.light.sim) = c("X", "Y", "sim")
-        opt.mat.light.sim$ID = cellFromXY(ras.mask, opt.mat.light.sim[, c("X", "Y")])
+        opt.mat.soil.sim = ras.pts
+        colnames(opt.mat.soil.sim) = c("X", "Y", "sim")
+        opt.mat.soil.sim$ID = cellFromXY(ras.mask, opt.mat.soil.sim[, c("X", "Y")])
         
-        mat.light = merge(opt.mat.light.obs[, c("ID", "obs")]
-                          , opt.mat.light.sim[, c("ID", "sim")]
+        mat.soil = merge(opt.mat.soil.obs[, c("ID", "obs")]
+                          , opt.mat.soil.sim[, c("ID", "sim")]
                           , by = "ID")
-        mat.light = na.exclude(mat.light)
+        mat.soil = na.exclude(mat.soil)
         
         ## calculate evaluation statistics ---------------------------------------------
         # getEval = function(xx, mat)
@@ -473,7 +471,7 @@ POST_FATE.graphic_mapPFGlight = function(
         #   return(data.frame(thresh = xx, auc, sens, spec, TSS, CCR))
         # }
         # 
-        # EVAL.cover = foreach(xx = seq(0, 1, 0.1), .combine = "rbind") %do% { getEval(xx, mat = mat.light) }
+        # EVAL.cover = foreach(xx = seq(0, 1, 0.1), .combine = "rbind") %do% { getEval(xx, mat = mat.soil) }
         # EVAL.cover.melt = melt(EVAL.cover, id.vars = "thresh")
         # 
         # write.csv(EVAL.cover

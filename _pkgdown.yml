@@ -80,5 +80,6 @@ reference:
       - "POST_FATE.graphic_mapPFGrichness"
       - "POST_FATE.graphic_mapPFGcover"
       - "POST_FATE.graphic_mapPFGlight"
+      - "POST_FATE.graphic_mapPFGsoil"
       - "POST_FATE.graphic_mapPFGvsHS"
       - "POST_FATE.graphic_validationStatistics"

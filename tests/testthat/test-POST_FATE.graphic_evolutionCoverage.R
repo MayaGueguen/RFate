@@ -193,13 +193,11 @@ test_that("POST_FATE.graphic_evolutionCoverage gives error with wrong data : ras
 
   cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
       , file = "FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_1_Hop_STRATA_all.asc")
-  # ras = raster(matrix(c(0, 0, 1, 0, 1, 1, 1, 1, 1), byrow = T, ncol = 3))
-  # writeRaster(ras, filename = "FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_1_Hop_STRATA_all.tif", overwrite = TRUE)
   
-  expect_message(POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation"
-                                                     , file.simulParam = "ParamSimul.txt")
-                 , "have been successfully created !")
-  expect_message(POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation")
-                 , "have been successfully created !")
+  # expect_message(POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation"
+  #                                                    , file.simulParam = "ParamSimul.txt")
+  #                , "have been successfully created !")
+  # expect_message(POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation")
+  #                , "have been successfully created !")
 })
 
