@@ -179,6 +179,7 @@ test_that("POST_FATE.graphic_evolutionCoverage gives error with wrong data : fil
 
 ## INPUTS
 test_that("POST_FATE.graphic_evolutionCoverage gives error with wrong data : rasters", {
+  require(raster)
   cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
       , file = "FATE_simulation/Mask.tif")
   ras = raster(matrix(c(0, 0, 1, 0, 1, 1, 1, 1, 1), byrow = T, ncol = 3))
