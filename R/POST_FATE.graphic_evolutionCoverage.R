@@ -218,7 +218,17 @@ POST_FATE.graphic_evolutionCoverage = function(
                          y,
                          "_",
                          PFG,
-                         "_STRATA_all.tif|_STRATA_all.img|_STRATA_all.asc")
+                         "_STRATA_all")
+      if (length(which(file.exists(paste0(file_name, ".tif")))) > 0)
+      {
+        file_name = paste0(file_name, ".tif")
+      } else if (length(which(file.exists(paste0(file_name, ".img")))) > 0)
+      {
+        file_name = paste0(file_name, ".img")
+      } else if (length(which(file.exists(paste0(file_name, ".asc")))) > 0)
+      {
+        file_name = paste0(file_name, ".asc")
+      }
       if (length(which(file.exists(file_name))) == 0)
       {
         stop(paste0("Missing data!\n The names of PFG extracted from files within ", name.simulation, "/DATA/PFGS/SUCC/ : "
