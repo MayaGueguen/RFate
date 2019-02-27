@@ -218,7 +218,7 @@ POST_FATE.graphic_evolutionCoverage = function(
                          y,
                          "_",
                          PFG,
-                         "_STRATA_all.tif")
+                         "_STRATA_all.tif|_STRATA_all.img|_STRATA_all.asc")
       if (length(which(file.exists(file_name))) == 0)
       {
         stop(paste0("Missing data!\n The names of PFG extracted from files within ", name.simulation, "/DATA/PFGS/SUCC/ : "
