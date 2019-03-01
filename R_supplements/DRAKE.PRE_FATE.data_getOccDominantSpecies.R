@@ -62,28 +62,68 @@ getOcc_2_selectDom = function(observations.xy, species, zone.name, selRule1, sel
 
 getOcc_3_matDom = function(sp.SELECT, observations.xy, stations.COMMUNITY, zone.name)
 {
+  ## Get all species observations
+  occ = observations.xy[, c("numchrono", "numtaxon", "codecover", "longitudel93_rel", "latitudel93_rel")]
+  occ = unique(occ) ## remove strata redundancy
+  occ$numchrono = paste0("NUMCHRONO-", occ$numchrono)
+  
   ## Get dominant species observations
   sp.SELECT.occ = merge(sp.SELECT[, c("numtaxon", "genre", "libcbna")], observations.xy, by = "numtaxon")
   sp.SELECT.occ$numchrono = paste0("NUMCHRONO-", sp.SELECT.occ$numchrono)
   
+  ## Get information about community plots
+  stations.COMMUNITY = paste0("NUMCHRONO-", stations.COMMUNITY)
+  save(stations.COMMUNITY, file = paste0(zone.name, "/DOM.stations.COMMUNITY.RData"))
+  
+  ## For relative abundances -----------------------------------------------------
+
   ## Transform into sites x species matrix
-  mat.sites.species = tapply(X = sp.SELECT.occ$codecover
+  mat.sites.species.abund = tapply(X = occ$codecover
+                             , INDEX = list(occ$numchrono, occ$numtaxon)
+                             , FUN = function(x) return(sum(x, na.rm = TRUE)))
+  dim(mat.sites.species.abund)
+  mat.sites.species.abund = mat.sites.species.abund[, which(colSums(mat.sites.species.abund, na.rm = TRUE) > 0)]
+  mat.sites.species.abund = mat.sites.species.abund[which(rowSums(mat.sites.species.abund, na.rm = TRUE) > 0), ]
+  dim(mat.sites.species.abund)
+  
+  mat.sites.species.abund = apply(mat.sites.species.abund, 2, function(x) x / sum(x, na.rm = TRUE))
+  
+  ## Add information of absences from community plots
+  ind.COMMUNITY.abund = which(rownames(mat.sites.species.abund) %in% stations.COMMUNITY)
+  for(i in ind.COMMUNITY.abund)
+  {
+    mat.sites.species.abund[i, ] = ifelse(is.na(mat.sites.species.abund[i, ]), 0, mat.sites.species.abund[i, ])
+  }
+  
+  ## Keep only dominant species
+  dim(mat.sites.species.abund)
+  ind_dom = which(colnames(mat.sites.species.abund) %in% sp.SELECT$numtaxon)
+  mat.sites.species.abund = mat.sites.species.abund[, ind_dom]
+  dim(mat.sites.species.abund)
+  
+  save(mat.sites.species.abund, file = paste0(zone.name, "/DOM.mat.sites.species.abund.RData"))
+  
+  ## For presence / absence ------------------------------------------------------
+
+  ## Transform into sites x species matrix
+  mat.sites.species.PA = tapply(X = sp.SELECT.occ$codecover
                              , INDEX = list(sp.SELECT.occ$numchrono, sp.SELECT.occ$numtaxon)
                              , FUN = function(x) return(1))
-  stations.COMMUNITY = paste0("NUMCHRONO-", stations.COMMUNITY)
-  ind.COMMUNITY = which(rownames(mat.sites.species) %in% stations.COMMUNITY)
-  for(i in ind.COMMUNITY)
+  
+  ## Add information of absences from community plots
+  ind.COMMUNITY.PA = which(rownames(mat.sites.species.PA) %in% stations.COMMUNITY)
+  for(i in ind.COMMUNITY.PA)
   {
-    mat.sites.species[i, ] = ifelse(is.na(mat.sites.species[i, ]), 0, 1)
+    mat.sites.species.PA[i, ] = ifelse(is.na(mat.sites.species.PA[i, ]), 0, 1)
   }
-  dim(mat.sites.species)
-  mat.sites.species[1:10, 1:10]
+  dim(mat.sites.species.PA)
+  mat.sites.species.PA[1:10, 1:10]
   
-  save(stations.COMMUNITY, file = paste0(zone.name, "/DOM.stations.COMMUNITY.RData"))
-  save(mat.sites.species, file = paste0(zone.name, "/DOM.mat.sites.species.RData"))
+  save(mat.sites.species.PA, file = paste0(zone.name, "/DOM.mat.sites.species.PA.RData"))
   
-  return(mat.sites.species)
+  return(mat.sites.species.PA)
 }
+
 
 getOcc_3_occDom = function(mat.sites.species, species, zone.name, sp.type)
 {
