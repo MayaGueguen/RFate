@@ -4,7 +4,7 @@
 ##' @param package.name a \code{string} that corresponds to the 
 ##' name of the package that will be load or installed
 ##'
-##' @importFrom utils install.packages
+##' @importFrom utils install.packages packageDescription read.delim
 ##'
 ## END OF HEADER ###############################################################
 
@@ -30,4 +30,43 @@
       }
     }
   }
+}
+
+
+.onAttach = function(libname, pkgname)
+{
+  actual = packageDescription(pkgname)[["Version"]]
+  previouswarn = getOption("warn")
+  options(warn = 2)
+  webpage = "https://mayagueguen.github.io/RFate/authors.html"
+  description = try(read.delim(webpage, header = F, stringsAsFactors = F), silent = TRUE)
+  
+  m = paste("Welcome in package", pkgname, "!")
+  
+  if (!inherits(description, "try-error"))
+  {
+    recent = description[grep("version =", description[, 1]), 1]
+    recent = sub("},$", "", recent)
+    recent = sub(".* = ", "", recent)
+    recent = sub("[{]", "", recent)
+    
+    m = paste0(m, "\n Your version is ", actual, ".")
+    if (recent != "" && actual != recent)
+    {
+      m = paste0(m, " Most recent is ", recent, ".")
+    } else
+    {
+      # m = paste0(m, "\n No internet connection is available to check for update.")
+    }
+  } else
+  {
+    # m = paste0(m, "\n No internet connection is available to check for update.")
+  }
+  m = paste0(m, "\n Support functions for the software FATE.")
+  m = paste0(m, "\n More informations can be find here :")
+  m = paste0(m, "\n - https://mayagueguen.github.io/RFate/")
+  m = paste0(m, "\n - https://mayagueguen.github.io/FATE-WEBSITE/")
+  
+  packageStartupMessage(m)
+  options(warn = previouswarn)
 }
