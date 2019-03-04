@@ -34,7 +34,7 @@ BAUGES = list(zone.name = "Bauges"
               , zone.env.variables = c("bio_1_0", "bio_8_0", "bio_12_0", "bio_19_0", "slope"))
 ZONE = BAUGES
 
-file_date = "190221"
+file_date = "190304"
 
 ## ECRINS
 ## MONTBLANC
@@ -54,7 +54,7 @@ for(ZONE in list(BAUGES))
     ## Get data
     , mat.traits = fread(file_in(paste0("TRAITS_FATE_", file_date, ".csv")))
     , mat.overlap = get(load(paste0(zone.name, "/DOM.mat.overlap.RData")))
-    , mat.sites.species = get(load(paste0(zone.name, "/DOM.mat.sites.species.RData")))
+    , mat.sites.species = get(load(paste0(zone.name, "/DOM.mat.sites.species.PA.RData")))
     , species = get(load(paste0(zone.name, "/DB.species.RData")))
     , XY = get(load(paste0(zone.name, "/DB.XY.RData")))
     ## Select traits
