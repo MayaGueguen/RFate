@@ -1,8 +1,0 @@
-## File automatically generated 
-## Date : Thu Feb 21 16:41:41 2019
-NAME CS2
-BREAK_AGE 1 1 1 1 1 1
-RESPR_AGE 0 0 1 71 0 0 1 71
-FATES 0 0 10 0 5 0 10 0 0 0 0 0 0 0 0 0
-PROP_KILLED 0 0
-ACTIVATED_SEED 0 0

@@ -1,8 +1,0 @@
-## File automatically generated 
-## Date : Thu Feb 21 16:41:41 2019
-NAME CS4
-BREAK_AGE 1 7 7 1 7 7
-RESPR_AGE 0 0 7 308 0 0 7 308
-FATES 0 0 10 0 5 0 10 0 0 0 0 0 0 0 0 0
-PROP_KILLED 0 0
-ACTIVATED_SEED 0 0

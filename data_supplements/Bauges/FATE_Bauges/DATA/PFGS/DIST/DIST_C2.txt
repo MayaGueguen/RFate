@@ -1,0 +1,8 @@
+## File automatically generated 
+## Date : Thu Mar  7 11:52:28 2019
+NAME C2
+BREAK_AGE 1 6 87 1 6 87
+RESPR_AGE 0 0 298 87 0 0 298 87
+FATES 0 0 10 0 5 0 10 0 0 0 0 0 0 0 0 0
+PROP_KILLED 0 0
+ACTIVATED_SEED 0 0

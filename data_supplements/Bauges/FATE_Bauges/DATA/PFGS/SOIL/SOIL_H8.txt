@@ -1,0 +1,8 @@
+## File automatically generated 
+## Date : Thu Mar  7 11:52:55 2019
+NAME H8
+SOIL_CONTRIB 2.7
+SOIL_LOW 1.7
+SOIL_HIGH 3.7
+ACTIVE_GERM 8 10 5
+SOIL_TOL 1 10 0 5 10 4 9 10 8

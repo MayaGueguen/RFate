@@ -1,8 +1,0 @@
-## File automatically generated 
-## Date : Thu Feb 21 16:42:18 2019
-NAME CS2
-SOIL_CONTRIB 2.6
-SOIL_LOW 1.5
-SOIL_HIGH 3.8
-ACTIVE_GERM 9 10 9
-SOIL_TOL 1 10 0 5 10 4 9 10 8

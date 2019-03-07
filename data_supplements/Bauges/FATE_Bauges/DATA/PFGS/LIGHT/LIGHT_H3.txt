@@ -1,0 +1,5 @@
+## File automatically generated 
+## Date : Thu Mar  7 11:52:27 2019
+NAME H3
+ACTIVE_GERM 5 8 9
+SHADE_TOL 1 1 1 0 1 1 0 1 1

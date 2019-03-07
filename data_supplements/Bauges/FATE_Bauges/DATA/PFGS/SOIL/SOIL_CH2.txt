@@ -1,8 +1,0 @@
-## File automatically generated 
-## Date : Thu Feb 21 16:42:18 2019
-NAME CH2
-SOIL_CONTRIB 1.8
-SOIL_LOW 0.8
-SOIL_HIGH 2.8
-ACTIVE_GERM 8 10 5
-SOIL_TOL 1 10 0 5 10 4 9 10 8
