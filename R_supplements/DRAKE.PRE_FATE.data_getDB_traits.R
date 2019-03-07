@@ -32,7 +32,8 @@ getDB_ANDROSACE = function()
                                   clean_personne.nom AS expert,
                                   clean_bibliographie.reference AS bibliographie,
                                   clean_mesure_traits.commentaire,
-                                  taxons.libelle
+                                  taxons.libelle,
+                                  taxons.rattach
                           FROM taxons
                           JOIN clean_mesure_traits ON clean_mesure_traits.code_cbna = taxons.code_cbna
                           JOIN clean_modalite ON clean_mesure_traits.ref_modalite = clean_modalite.id

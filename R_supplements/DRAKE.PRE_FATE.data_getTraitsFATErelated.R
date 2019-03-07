@@ -142,6 +142,9 @@ getTraitsFATE_reorganize = function(TAB_traits)
   TAB_traits$LHIST[grep("Pleustophyte", TAB_traits$LHIST)] = "" ## algae
   TAB_traits$LHIST[grep("Epiphyte", TAB_traits$LHIST)] = "" ## not growing on soil, do not fill height strata
   
+  ## Species above 4 meters : phanerophyte
+  TAB_traits$LHIST[which(TAB_traits_FATE$HEIGHT >= 400)] = "Phanerophyte"
+  
   ## Divide chamaephyte into 2 classes, according to WOODY trait
   TAB_traits$LHIST[grep("Chamaephyte", TAB_traits$LHIST)] = "Chamaephyte"
   TAB_traits$LHIST[grep("Hemicryptophyte_Phanerophyte", TAB_traits$LHIST)] = "Chamaephyte"

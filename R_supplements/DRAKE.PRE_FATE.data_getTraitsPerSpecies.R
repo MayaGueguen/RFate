@@ -1,6 +1,25 @@
 
+getTraits_1_merge.species = function(traits)
+{
+  ## Merge together similar species
+  ind_rattach = which(traits$code_cbna != traits$rattach)
+  for (i in ind_rattach)
+  {
+    ind_i = which(traits$rattach == traits$rattach[i])
+    ind_j = which(traits$code_cbna[ind_i] == traits$rattach[ind_i])
+    if (length(ind_j) > 0)
+    {
+      new_name = unique(traits$libelle[ind_i[ind_j]])
+      traits$libelle[i] = new_name
+    }
+    traits$code_cbna[i] = traits$rattach[i]
+  }
+  
+  return(traits)
+}
 
-getTraits_1_merge = function(traits)
+
+getTraits_1_merge.traits = function(traits)
 {
   ## Merge together similar quantitative traits
   traits.code = data.frame(CODE = sort(unique(traits$code)), stringsAsFactors = F)
@@ -234,7 +253,7 @@ getTraits_2_split = function(traits)
 getTraits_3_quantMedian = function(traits_quant)
 {
   traits_quant.split = split(traits_quant, traits_quant$CODE_simplified)
-  traits_quant.median = foreach(i = 1:length(traits_quant.split), .combine = "rbind") %dopar%
+  traits_quant.median = foreach(i = 1:length(traits_quant.split), .combine = "rbind") %do%
   {
     cat(" ====> Calculating for trait :", names(traits_quant.split)[i], "\n")
     tab = traits_quant.split[[i]]
@@ -262,7 +281,7 @@ getTraits_3_quantMedian = function(traits_quant)
 getTraits_3_qualiMerged = function(traits_quali)
 {
   traits_quali.split = split(traits_quali, traits_quali$CODE_simplified)
-  traits_quali.mean = foreach(i = 1:length(traits_quali.split), .combine = "rbind") %dopar%
+  traits_quali.mean = foreach(i = 1:length(traits_quali.split), .combine = "rbind") %do%
   {
     cat(" ====> Calculating for trait :", names(traits_quali.split)[i], "\n")
     tab = traits_quali.split[[i]]
@@ -275,6 +294,11 @@ getTraits_3_qualiMerged = function(traits_quali)
       val.source = paste0(val.source, collapse = "_")
 
       val.nom = sort(unique(tab.sp$nom))
+      # if ((unique(tab.sp$CODE_simplified) == "AGEFLOW_MIN") &&
+      #     nchar(val.nom) == 0)
+      # {
+      #   val.nom = unique(tab.sp$commentaire)
+      # }
       val.nom = sapply(val.nom, function(x) strsplit(as.character(x), "_")[[1]])
       val.nom = unlist(val.nom)
       val.nom = sort(unique(val.nom))
@@ -289,6 +313,7 @@ getTraits_3_qualiMerged = function(traits_quali)
     }
     return(tab.mean)
   }
+  traits_quali.mean$value = as.character(traits_quali.mean$value)
   
   ## Specific changes
   traits_quali.mean$value[which(traits_quali.mean$CODE == "CHANGE_TENDENCY_INDK" & traits_quali.mean$value == "=_>")] = "=->"

@@ -17,10 +17,18 @@ getOcc_1_XY = function(stations, zone.name)
   return(XY)
 }
 
-getOcc_1_obs = function(observations, stations)
+getOcc_1_obs = function(observations, stations, maskSimul, maskDem, zone.name)
 {
   observations$codecover = PRE_FATE.abundBraunBlanquet(observations$codecover)
   observations.xy = merge(observations, stations, by = "numchrono")
+  head(observations.xy)
+  
+  min.dem = maskSimul * maskDem
+  min.dem[which(maskSimul[] == 0)] = NA
+  min.dem = min(min.dem[], na.rm = TRUE)
+  
+  observations.xy$dem = extract(maskDem, observations.xy[, c("longitudel93_rel", "latitudel93_rel")])
+  observations.xy = observations.xy[which(observations.xy$dem >= min.dem), ]
   head(observations.xy)
   
   save(observations.xy, file = paste0(zone.name, "/DB.observations.xy.RData"))
@@ -33,7 +41,8 @@ getOcc_1_obs = function(observations, stations)
 ### 2. SELECT DOMINANT SPECIES
 ################################################################################################################
 
-getOcc_2_selectDom = function(observations.xy, species, zone.name, selRule1, selRule2, selRule3)
+getOcc_2_selectDom = function(observations.xy, species, zone.name
+                              , selRule1, selRule2, selRule3, selRule4, selRule5)
 {
   setwd(zone.name)
   
@@ -41,11 +50,17 @@ getOcc_2_selectDom = function(observations.xy, species, zone.name, selRule1, sel
   occ = unique(occ) ## remove strata redundancy
   colnames(occ) = c("sites", "species", "abund", "X", "Y")
   
+  # hab = raster("/home/gueguen/Documents/_DATA/DATA_FATE_Bauges/Bauges_Habitats/habitats_simple.img")
+  # occ$habitat = extract(hab, occ[, c("X", "Y")])
+  
   ## SELECT DOMINANT SPECIES
   sp.SELECT = PRE_FATE.selectDominant(mat.site.species.abund = occ
                                       , selectionRule.quanti = selRule1
                                       , selectionRule.min_mean_abund = selRule2
-                                      , selectionRule.min_no_abund_over25 = selRule3)
+                                      , selectionRule.min_no_abund_over25 = selRule3
+                                      , doHabitatSelection = FALSE
+                                      , selectionRule.min_percent_habitat = selRule4
+                                      , selectionRule.min_no_habitat = selRule5)
   
   ## Get species names
   sp.SELECT = merge(species, sp.SELECT, by.x = "numtaxon", by.y = "species", all.y = TRUE)
@@ -303,7 +318,7 @@ getSDM_build = function(zone.name, list_sp, XY, zone.env.stk.CALIB, zone.env.stk
 ### 5. CALCULATE DOMINANT SPECIES SDM OVERLAP
 ################################################################################################################
 
-getSDM_overlap = function(zone.name, list_sp)
+getSDM_overlap = function(zone.name, list_sp, maskSimul)
 {
   setwd(paste0(zone.name, "/SP_SDM/"))
 
@@ -313,6 +328,8 @@ getSDM_overlap = function(zone.name, list_sp)
   for (fi in proj.files)
   {
     ras = raster(fi)
+    # ras[] = ras[] * maskSimul
+    ras[which(maskSimul[] == 0)] = NA
     ras[] = ras[] / 1000
     writeRaster(ras, filename = sub(".img", ".asc", basename(fi)), overwrite = TRUE)
   }

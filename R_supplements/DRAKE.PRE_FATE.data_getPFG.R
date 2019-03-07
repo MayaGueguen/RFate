@@ -8,15 +8,29 @@
 getPFG_1_selectTraits = function(mat.traits)
 {
   mat.traits.select = data.frame(species = paste0("X", mat.traits$CODE_CBNA))
-  mat.traits.select$GROUP = mat.traits$LHIST
+  mat.traits.select$GROUP = NA
+  mat.traits.select$GROUP[which(mat.traits$LHIST == "Phanerophyte")] = "Phanerophyte"
+  mat.traits.select$GROUP[which(mat.traits$LHIST == "Chamaephyte_S")] = "Chamaephyte"
+  mat.traits.select$GROUP[which(mat.traits$LHIST == "Chamaephyte_H")] = "Herbaceous"
+  mat.traits.select$GROUP[which(mat.traits$LHIST == "Geophyte_Hemicryptophyte")] = "Herbaceous"
+  mat.traits.select$GROUP[which(mat.traits$LHIST == "Helophyte_Hydrophyte")] = "Herbaceous"
+  mat.traits.select$GROUP[which(mat.traits$LHIST == "Therophyte")] = "Herbaceous"
   
   ## Fix ordered factors
   mat.traits.select$DISPERSAL = ordered(factor(mat.traits$DISPERSAL))
   mat.traits.select$LIGHT = ordered(factor(mat.traits$LIGHT))
   mat.traits.select$NITROGEN = ordered(factor(mat.traits$NITROGEN))
   mat.traits.select$MOISTURE = ordered(factor(mat.traits$MOISTURE))
+  
+  # mat.traits.select$DISPERSAL = as.numeric(as.character(mat.traits$DISPERSAL))
+  # mat.traits.select$LIGHT = as.numeric(as.character(mat.traits$LIGHT))
+  # mat.traits.select$NITROGEN = as.numeric(as.character(mat.traits$NITROGEN))
+  # mat.traits.select$MOISTURE = as.numeric(as.character(mat.traits$MOISTURE))
   # mat.traits.select$PALATABILITY = ifelse(is.na(mat.traits$PALATABILITY), NA, paste0("pal", mat.traits$PALATABILITY))
   # mat.traits.select$PALATABILITY = ordered(factor(mat.traits.select$PALATABILITY))
+  # mat.traits.select$GRAZ_MOW_TOLERANCE = ifelse(is.na(mat.traits$GRAZ_MOW_TOLERANCE)
+  #                                               , NA, paste0("pal", mat.traits$GRAZ_MOW_TOLERANCE))
+  # mat.traits.select$GRAZ_MOW_TOLERANCE = ordered(factor(mat.traits.select$GRAZ_MOW_TOLERANCE))
   
   ## Take the root square of height:
   mat.traits.select$HEIGHT = as.numeric(log(as.numeric(mat.traits$HEIGHT)))
@@ -30,9 +44,14 @@ getPFG_1_selectTraits = function(mat.traits)
 ## 2. DO CLUSTERING 
 ################################################################################################################
 
-getPFG_2_calcDistClust = function(zone.name, mat.traits.select, mat.overlap)
+getPFG_2_calcDistClust = function(zone.name, sp.dom, mat.traits.select, mat.overlap)
 {
   setwd(zone.name)
+  mat.overlap = as.matrix(mat.overlap)
+  ind_sp = which(colnames(mat.overlap) %in% paste0("X", sp.dom$numtaxon))
+  names_sp = colnames(mat.overlap)[ind_sp]
+  mat.overlap = mat.overlap[ind_sp, ind_sp]
+  colnames(mat.overlap) = rownames(mat.overlap) = names_sp
   
   mat.traits.DOM = mat.traits.select[which(mat.traits.select$species %in% colnames(mat.overlap)),]
   mat.traits.DOM = mat.traits.DOM[which(mat.traits.DOM$GROUP != ""), ]
@@ -42,10 +61,13 @@ getPFG_2_calcDistClust = function(zone.name, mat.traits.select, mat.overlap)
   {
     mat.traits.DOM = mat.traits.DOM[-which(mat.traits.DOM$GROUP %in% ind.GROUP), ]
   }
+  # mat.traits.DOM$GROUP[which(mat.traits.DOM$species %in% c("X8207", "X12696"))] = "Geophyte_Hemicryptophyte"
+  print(summary(mat.traits.DOM))
   
   sp.DIST = PRE_FATE.speciesDistance(mat.species.traits = mat.traits.DOM
                                      , mat.species.overlap = mat.overlap
-                                     , min.info.thresh = 0.3)
+                                     , min.info.thresh = 0.3
+                                     , opt.traits.selection = c(0.25, 0.20))
   
   sp.CLUST = PRE_FATE.speciesClustering_step1(mat.species.DIST = sp.DIST)
   

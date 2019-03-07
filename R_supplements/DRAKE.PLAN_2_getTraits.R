@@ -20,8 +20,7 @@ source("RFate/R_supplements/DRAKE.PRE_FATE.data_getTraitsFATErelated.R")
 path.data = "RFate/data_supplements/"
 setwd(path.data)
 
-file_date = "190111"
-file_date = "190304"
+file_date = "190307"
 
 ################################################################################################################
 ### 1. GET DB VALUES - GATHER PER SPECIES
@@ -29,11 +28,12 @@ file_date = "190304"
 
 # clean()
 PLAN.DB = drake_plan(traits = getDB_ANDROSACE()
-                     , data_1 = getTraits_1_merge(traits = traits)
-                     , data_2 = getTraits_1_removeUninformative(traits = data_1)
-                     , data_3 = getTraits_1_remove(traits = data_2)
-                     , data_4 = getTraits_1_change(traits = data_3)
-                     , data.split = getTraits_2_split(traits = data_4)
+                     , data_1 = getTraits_1_merge.species(traits = traits)
+                     , data_2 = getTraits_1_merge.traits(traits = data_1)
+                     , data_3 = getTraits_1_removeUninformative(traits = data_2)
+                     , data_4 = getTraits_1_remove(traits = data_3)
+                     , data_5 = getTraits_1_change(traits = data_4)
+                     , data.split = getTraits_2_split(traits = data_5)
                      # , traits.genre = traits_genre(data_4)
                      , traits.quant = data.split[[1]]
                      , traits.quali = data.split[[2]]
@@ -82,6 +82,15 @@ PLAN.FATE = drake_plan(name.file_quant = paste0("TRAITS_quantitative_median_", f
                        , TAB_traits_FATE.written = fwrite(TAB_traits_FATE, file = name.file_FATE, sep = "\t")
                        , strings_in_dots = "literals"
 )
+
+# name.file_quant = paste0("TRAITS_quantitative_median_", file_date, ".csv")
+# name.file_quali = paste0("TRAITS_qualitative_", file_date, ".csv")
+# traits.quant = read.csv(name.file_quant, stringsAsFactors = F, sep = "\t")
+# traits.quali = read.csv(name.file_quali, stringsAsFactors = F, sep = "\t")
+# traits_names = getTraitsFATE_names()
+# TAB_traits = getTraitsFATE_merge(traits.quant = traits.quant
+#                                    , traits.quali = traits.quali
+#                                    , TRAIT_names = traits_names)
 
 vis_drake_graph(drake_config(PLAN.FATE)
                 , targets_only = TRUE)

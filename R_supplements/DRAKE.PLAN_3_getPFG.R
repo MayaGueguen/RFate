@@ -26,7 +26,8 @@ setwd(path.data)
 ################################################################################################################
 
 BAUGES = list(zone.name = "Bauges"
-              , zone.clusters = c(4, 4, 6, 5)
+              # , zone.clusters = c(4, 4, 8, 4)
+              # , zone.clusters = c(4, 5, 4)
               , zone.mask = "Bauges/MASK_100m.tif"
               , zone.mask.pert.all = c("Bauges/MASK_grazing.tif", "Bauges/MASK_noPerturb.tif")
               , zone.mask.pert.def = "Bauges/MASK_noPerturb.tif"
@@ -34,11 +35,13 @@ BAUGES = list(zone.name = "Bauges"
               , zone.env.variables = c("bio_1_0", "bio_8_0", "bio_12_0", "bio_19_0", "slope"))
 ZONE = BAUGES
 
-file_date = "190304"
+file_date = "190307"
 
 ## ECRINS
 ## MONTBLANC
 ## LAUTARET
+
+################################################################################################################
 
 for(ZONE in list(BAUGES))
 {
@@ -53,23 +56,13 @@ for(ZONE in list(BAUGES))
     , zone.mask = raster(file_in(ZONE$zone.mask))
     ## Get data
     , mat.traits = fread(file_in(paste0("TRAITS_FATE_", file_date, ".csv")))
-    , mat.overlap = get(load(paste0(zone.name, "/DOM.mat.overlap.RData")))
     , mat.sites.species = get(load(paste0(zone.name, "/DOM.mat.sites.species.PA.RData")))
     , species = get(load(paste0(zone.name, "/DB.species.RData")))
     , XY = get(load(paste0(zone.name, "/DB.XY.RData")))
     ## Select traits
     , mat.traits.select = getPFG_1_selectTraits(mat.traits = mat.traits)
     ## Build PFG
-    , sp.DIST.CLUST = getPFG_2_calcDistClust(zone.name = zone.name
-                                             , mat.traits.select = mat.traits.select
-                                             , mat.overlap = mat.overlap)
-    , selected.sp.all = getPFG_2_calcDeterm(zone.name = zone.name
-                                        , sp.DIST = sp.DIST.CLUST$sp.DIST
-                                        , sp.CLUST = sp.DIST.CLUST$sp.CLUST
-                                        , no.clusters = ZONE$zone.clusters
-                                        , species = species)
-    , selected.sp = getPFG_2_keepDeterm(zone.name = zone.name
-                                        , selected.sp = selected.sp.all)
+    , selected.sp = fread(file_in(paste0(zone.name, "/PFG_Bauges_Description_2017.csv")))
     ## Build PFG sdm
     , pfg.mat = getPFG_3_matSitesPFG(zone.name = zone.name
                                      , mat.sites.species = mat.sites.species
@@ -109,6 +102,85 @@ for(ZONE in list(BAUGES))
                   , targets_only = TRUE)
   
 }
+
+################################################################################################################
+
+# for(ZONE in list(BAUGES))
+# {
+#   
+#   ################################################################################################################
+#   ### 1. GET DB VALUES - SELECT DOMINANT SPECIES
+#   ################################################################################################################
+#   
+#   clean()
+#   PLAN.getPFG = drake_plan(
+#     zone.name = ZONE$zone.name
+#     , zone.mask = raster(file_in(ZONE$zone.mask))
+#     ## Get data
+#     , species.dom = fread(file_in(paste0(zone.name, "/DOM_species_", zone.name, ".csv")))
+#     , mat.traits = fread(file_in(paste0("TRAITS_FATE_", file_date, ".csv")))
+#     , mat.overlap = get(load(paste0(zone.name, "/DOM.mat.overlap.RData")))
+#     , mat.sites.species = get(load(paste0(zone.name, "/DOM.mat.sites.species.PA.RData")))
+#     , species = get(load(paste0(zone.name, "/DB.species.RData")))
+#     , XY = get(load(paste0(zone.name, "/DB.XY.RData")))
+#     ## Select traits
+#     , mat.traits.select = getPFG_1_selectTraits(mat.traits = mat.traits)
+#     ## Build PFG
+#     , sp.DIST.CLUST = getPFG_2_calcDistClust(zone.name = zone.name
+#                                              , sp.dom = species.dom
+#                                              , mat.traits.select = mat.traits.select
+#                                              , mat.overlap = mat.overlap)
+#     # loadd(zone.name)
+#     # loadd(species.dom)
+#     # sp.dom = species.dom
+#     # loadd(mat.traits.select)
+#     # loadd(mat.overlap)
+#     , selected.sp.all = getPFG_2_calcDeterm(zone.name = zone.name
+#                                         , sp.DIST = sp.DIST.CLUST$sp.DIST
+#                                         , sp.CLUST = sp.DIST.CLUST$sp.CLUST
+#                                         , no.clusters = ZONE$zone.clusters
+#                                         , species = species)
+#     , selected.sp = getPFG_2_keepDeterm(zone.name = zone.name
+#                                         , selected.sp = selected.sp.all)
+#     ## Build PFG sdm
+#     # , pfg.mat = getPFG_3_matSitesPFG(zone.name = zone.name
+#     #                                  , mat.sites.species = mat.sites.species
+#     #                                  , selected.sp = selected.sp)
+#     # , pfg.occ = getOcc_3_occDom(mat.sites.species = pfg.mat
+#     #                             , species = species
+#     #                             , zone.name = zone.name
+#     #                             , sp.type = "PFG")
+#     # , zone.env.stk = getSDM_env(zone.name = zone.name
+#     #                             , zone.env.folder = ZONE$zone.env.folder
+#     #                             , zone.env.variables = ZONE$zone.env.variables
+#     #                             , maskSimul = zone.mask)
+#     # , pfg.sdm = getSDM_build(zone.name = zone.name
+#     #                          , list_sp = pfg.occ
+#     #                          , XY = XY
+#     #                          , zone.env.stk.CALIB = zone.env.stk$env.CALIB
+#     #                          , zone.env.stk.PROJ = zone.env.stk$env.PROJ
+#     #                          , sp.type = "PFG")
+#     ## Calculate PFG parameters
+#     # , mat.traits.pfg = getPFG_4_calcMeanTraits(zone.name = zone.name
+#     #                                            , mat.traits = mat.traits
+#     #                                            , selected.sp = selected.sp)
+#     # , param.PFG = getPFG_5_FATEparam(zone.name = zone.name
+#     #                                  , zone.mask = ZONE$zone.mask
+#     #                                  , zone.mask.pert.all = ZONE$zone.mask.pert.all
+#     #                                  , zone.mask.pert.def = ZONE$zone.mask.pert.def
+#     #                                  , TRAITS_PFG = mat.traits.pfg
+#     #                                  , pfg.sdm = pfg.sdm)
+#     , strings_in_dots = "literals"
+#   )
+#   
+#   vis_drake_graph(drake_config(PLAN.getPFG)
+#                   , targets_only = TRUE)
+#   # outdated(drake_config(PLAN.getOCC))
+#   make(PLAN.getPFG)
+#   vis_drake_graph(drake_config(PLAN.getPFG)
+#                   , targets_only = TRUE)
+#   
+# }
 
 # zone.name = ZONE$zone.name
 # loadd(pfg.occ)
