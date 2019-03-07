@@ -116,6 +116,7 @@
 PRE_FATE.speciesDistance = function(mat.species.traits ## data.frame with columns : species, GROUP and one for each trait
                                     , mat.species.overlap ## species x species matrix / or table with raster file names
                                     , min.info.thresh = 1
+                                    , opt.traits.selection = c(0.25, 0.30)
 ){
   
   #################################################################################################
@@ -270,8 +271,41 @@ PRE_FATE.speciesDistance = function(mat.species.traits ## data.frame with column
   ### CALCULATE TRAITS DISTANCES
   #################################################################################################
   
+  ## CHOOSE which traits to keep by species type
+  traits_toKeep = foreach(tr = traits_names, .combine = "rbind") %do%
+  {
+    mat.species.traits.split = split(mat.species.traits[, tr, drop = FALSE], f = mat.species.traits$GROUP)
+    mat.species.gower.split = lapply(mat.species.traits.split, FD::gowdis)
+    res = foreach(x = names(mat.species.gower.split), .combine = "rbind") %do%
+    {
+      mat = as.matrix(mat.species.gower.split[[x]])
+      mat[upper.tri(mat, diag = TRUE)] = NA
+      mat = as.vector(mat)
+      std.dev = sqrt(var(na.exclude(mat)))
+      percent.0 = length(which(mat == 0)) / length(which(!is.na(mat)))
+      return(data.frame(GROUP = x, TRAIT = tr, std.dev, percent.0))
+    }
+    return(res)
+  }
+  traits_toKeep$toKeep1 = (traits_toKeep$percent.0 < opt.traits.selection[1])
+  traits_toKeep$toKeep2 = (traits_toKeep$std.dev > opt.traits.selection[2])
+  traits_toKeep$toKeep = ifelse(traits_toKeep$toKeep1 == TRUE
+                                , TRUE
+                                , ifelse(traits_toKeep$toKeep2 == TRUE, TRUE, FALSE))
+  # traits_toKeep$toKeep = ifelse((traits_toKeep$toKeep1 + traits_toKeep$toKeep2) > 0, TRUE, FALSE)
+  # traits_toKeep$toKeep = ifelse((traits_toKeep$toKeep1 + traits_toKeep$toKeep2) == 2, TRUE, FALSE)
+  
   ## SPLIT INFORMATION by species type
-  mat.species.traits.split = split(mat.species.traits[,traits_names], f = mat.species.traits$GROUP)
+  cat("\n Traits used to calculate functional distances : \n")
+  mat.species.traits.split = split(mat.species.traits[,traits_names, drop = FALSE], f = mat.species.traits$GROUP)
+  for (gp in 1:length(mat.species.traits.split))
+  {
+    tmp = traits_toKeep[which(traits_toKeep$GROUP == names(mat.species.traits.split)[gp]), ]
+    tmp = tmp$TRAIT[which(tmp$toKeep == TRUE)]
+    mat.species.traits.split[[gp]] = mat.species.traits.split[[gp]][, tmp, drop = FALSE]
+    cat("\n Group ", names(mat.species.traits.split)[gp], ":\n")
+    cat("Traits : ", as.character(tmp), "\n")
+  }
 
   ## GOWER DISSIMILARITY FOR MIXED VARIABLES
   mat.species.gower.split = lapply(mat.species.traits.split, FD::gowdis)
@@ -283,7 +317,8 @@ PRE_FATE.speciesDistance = function(mat.species.traits ## data.frame with column
       ## remove NA values
       mat.species.gower.split[[gp]] = as.matrix(mat.species.gower.split[[gp]])
       nn = apply(mat.species.gower.split[[gp]], 2, function(x) length(which(is.na(x))))
-      mat.species.gower.split[[gp]] = mat.species.gower.split[[gp]][which(nn == 0), which(nn == 0)]
+      nn = which(nn == 0)
+      mat.species.gower.split[[gp]] = mat.species.gower.split[[gp]][nn, nn]
       mat.species.gower.split[[gp]] = as.dist(mat.species.gower.split[[gp]])
     }
   }
@@ -319,7 +354,8 @@ PRE_FATE.speciesDistance = function(mat.species.traits ## data.frame with column
   mat.species.DIST = lapply(1:length(group_names), function(x) {
     tmp.gower = as.matrix(mat.species.gower.split[[x]])
     tmp.overlap = as.matrix(mat.species.overlap.split[[x]])
-    mat = (tmp.overlap + length(traits_names) * tmp.gower) / (length(traits_names) + 1)
+    n.traits = ncol(mat.species.traits.split[[x]])
+    mat = (tmp.overlap + n.traits * tmp.gower) / (n.traits + 1)
     return(as.dist(mat))
   })
   names(mat.species.DIST) = group_names
