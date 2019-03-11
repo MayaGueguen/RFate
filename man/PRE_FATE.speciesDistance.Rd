@@ -6,7 +6,7 @@
 based on traits and niche overlap}
 \usage{
 PRE_FATE.speciesDistance(mat.species.traits, mat.species.overlap,
-  min.info.thresh = 1)
+  min.info.thresh = 1, opt.traits.selection = c(0.25, 0.3))
 }
 \arguments{
 \item{mat.species.traits}{A \code{data.frame} with at least 3 columns :

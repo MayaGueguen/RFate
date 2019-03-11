@@ -90,15 +90,39 @@ test_that("PRE_FATE.speciesDistance gives error with missing data : mat.species.
 
 ## OUTPUTS
 test_that("PRE_FATE.speciesDistance gives correct output", {
-  expect_output(str(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("A", "B"), 2, 3)
-                                             , mat.species.overlap = matrix(1))), "dist")
-  expect_output(str(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("A", "B"), 2, 3)
-                                             , mat.species.overlap = as.dist(matrix(seq(4), ncol=2)))), "dist")
-
-  expect_output(str(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("A", "B"), 2, 3, GROUP = c("A", "B"))
-                                             , mat.species.overlap = matrix(1))), "dist")
-  expect_output(str(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("A", "B"), 2, 3, GROUP = c("A", "B"))
-                                             , mat.species.overlap = matrix(1))), "List")
-  expect_equal(length(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("A", "B"), 2, 3, GROUP = c("A", "B"))
-                                             , mat.species.overlap = matrix(1))), 2)
+  expect_output(str(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("a", "b", "c")
+                                                                             , TRAIT_1 = 1:3
+                                                                             , TRAIT_2 = 5:7
+                                                                             , GROUP = c("A", "A", "A"))
+                                             , mat.species.overlap = matrix(runif(9)
+                                                                            , ncol = 3
+                                                                            , dimnames = list(c("a", "b", "c"), c("a", "b", "c")))
+                                             , opt.traits.selection = c(1, 0))), "dist")
+  expect_output(str(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("a", "b", "c")
+                                                                             , TRAIT_1 = 1:3
+                                                                             , TRAIT_2 = 5:7
+                                                                             , GROUP = c("A", "A", "A"))
+                                             , mat.species.overlap = as.dist(matrix(runif(9)
+                                                                            , ncol = 3
+                                                                            , dimnames = list(c("a", "b", "c"), c("a", "b", "c"))))
+                                             , opt.traits.selection = c(1, 0))), "dist")
+  
+  expect_output(str(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("a", "b", "c", "d", "e")
+                                                                             , TRAIT_1 = 1:5
+                                                                             , TRAIT_2 = 5:9
+                                                                             , GROUP = c("A", "A", "A", "B", "B"))
+                                             , mat.species.overlap = matrix(runif(25)
+                                                                            , ncol = 5
+                                                                            , dimnames = list(c("a", "b", "c", "d", "e")
+                                                                                              , c("a", "b", "c", "d", "e")))
+                                             , opt.traits.selection = c(1, 0))), "List")
+  expect_equal(length(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("a", "b", "c", "d", "e")
+                                                                             , TRAIT_1 = 1:5
+                                                                             , TRAIT_2 = 5:9
+                                                                             , GROUP = c("A", "A", "A", "B", "B"))
+                                             , mat.species.overlap = matrix(runif(25)
+                                                                            , ncol = 5
+                                                                            , dimnames = list(c("a", "b", "c", "d", "e")
+                                                                                              , c("a", "b", "c", "d", "e")))
+                                             , opt.traits.selection = c(1, 0))), 2)
 })

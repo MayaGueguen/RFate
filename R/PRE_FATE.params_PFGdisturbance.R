@@ -494,7 +494,7 @@ PRE_FATE.params_PFGdisturbance = function(
       FATES[ind_fates, which(mat.PFG.succ$TYPE == "H")] = mat.PFG.dist[ind_dist, "ResproutIndiv_H"]
       FATES[ind_fates, which(mat.PFG.succ$TYPE == "C")] = mat.PFG.dist[ind_dist, "ResproutIndiv_C"]
       FATES[ind_fates, which(mat.PFG.succ$TYPE == "P")] = mat.PFG.dist[ind_dist, "ResproutIndiv_P"]
-    } else if (sum(colnames(mat.PFG.dist) == paste0("ResproutIndiv_", mat.PFG.succ$NAME)) == nrow(mat.PFG.succ))
+    } else if (sum(colnames(mat.PFG.dist) %in% paste0("ResproutIndiv_", mat.PFG.succ$NAME)) == nrow(mat.PFG.succ))
     {
       for (pfg in mat.PFG.succ$NAME)
       {

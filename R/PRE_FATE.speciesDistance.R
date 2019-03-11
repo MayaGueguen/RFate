@@ -35,6 +35,7 @@
 ##' }
 ##' 
 ##' @param min.info.thresh minimum percentage of values for each trait (between 0 and 1)
+##' @param opt.traits.selection 
 ##' 
 ##' @details 
 ##' 
@@ -104,7 +105,7 @@
 ##' 
 ##' @export
 ##' 
-##' @importFrom stats as.dist na.exclude
+##' @importFrom stats as.dist na.exclude var
 ##' 
 ##' @importFrom raster raster
 ##' @importFrom phyloclim niche.overlap
