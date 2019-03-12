@@ -232,6 +232,13 @@
 ##'
 ## END OF HEADER ###############################################################
 
+# setwd("/Users/gueguen/Documents/PACKAGES/RFate/data_supplements/Bauges/")
+# name.simulation = "FATE_Bauges_TEST"
+# name.mask = "MASK_100m.tif"
+# 
+# PRE_FATE.params_simulParameters(name.simulation = name.simulation
+#                                 , name.mask = name.mask
+#                                 , name.dist = name.mask)
 
 PRE_FATE.params_simulParameters = function(
   name.simulation
@@ -257,7 +264,7 @@ PRE_FATE.params_simulParameters = function(
   {
     .testParam_existFile(paste0(name.simulation, "/DATA/MASK/", name.mask))
   }
-
+  
   
   #################################################################################################
   
@@ -378,40 +385,30 @@ PRE_FATE.params_simulParameters = function(
     
     ### -------------------------------------------------------------------- ###
     
-    files.SAVE.maps = list.files(path = di
-                                 , pattern = "^SAVE_YEARS_maps"
-                                 , full.names = TRUE)
-    if (length(files.SAVE.maps) == 0)
-    {
-      warning(paste0("There is no adequate file (`.txt` file starting with `SAVE_YEARS_maps`) "
-                     , "into the folder ", di))
-    } else if (length(files.SAVE.maps) == 1)
-    {
-      params.combi$SAVE.maps = files.SAVE.maps
-      names.params.combi = c(names.params.combi, "--ARRAYS_SAVING_YEARS--")
-    } else
-    {
-      stop(paste0("There is too many adequate files (`.txt` file starting with `SAVE_YEARS_maps`) "
-                  , "into the folder ", di))
-    }
+    di.opt = data.frame(pat = c("SAVE_YEARS_maps", "SAVE_YEARS_objects")
+                        , nam = c("SAVE.maps", "SAVE.obj")
+                        , param = c("ARRAYS_SAVING_YEARS", "OBJECTS_SAVING_YEARS"))
     
-    ### -------------------------------------------------------------------- ###
-    
-    files.SAVE.objects = list.files(path = di
-                                    , pattern = "^SAVE_YEARS_objects"
-                                    , full.names = TRUE)
-    if (length(files.SAVE.objects) == 0)
+    for (ii in 1:nrow(di.opt))
     {
-      warning(paste0("There is no adequate file (`.txt` file starting with `SAVE_YEARS_objects`) "
-                     , "into the folder ", di))
-    } else if (length(files.SAVE.objects) == 1)
-    {
-      params.combi$SAVE.obj = files.SAVE.objects
-      names.params.combi = c(names.params.combi, "--OBJECTS_SAVING_YEARS--")
-    } else
-    {
-      stop(paste0("There is too many adequate files (`.txt` file starting with `SAVE_YEARS_objects`) "
-                  , "into the folder ", di))
+      files.found = list.files(path = di
+                               , pattern = paste0("^", di.opt$pat[ii])
+                               , full.names = TRUE)
+      if (length(files.found) == 0)
+      {
+        warning(paste0("There is no adequate file (`.txt` file starting with `"
+                       , di.opt$pat[ii], "`) "
+                       , "into the folder ", di))
+      } else if (length(files.found) == 1)
+      {
+        eval(parse(text = paste0("params.combi$", di.opt$nam[ii], " = files.found")))
+        names.params.combi = c(names.params.combi, paste0("--", di.opt$param[ii], "--"))
+      } else
+      {
+        stop(paste0("There is too many adequate files (`.txt` file starting with `"
+                    , di.opt$pat[ii], "`) "
+                    , "into the folder ", di))
+      }
     }
     
     #################################################################################################
@@ -479,117 +476,98 @@ PRE_FATE.params_simulParameters = function(
                        , is.num = TRUE)
     no_PFG = as.numeric(no_PFG)
     
+    do.SUCC = 1
+    do.DISP = .getParam(params.lines = globi
+                        , flag = "DO_DISPERSAL"
+                        , flag.split = " "
+                        , is.num = TRUE)
+    do.DIST = .getParam(params.lines = globi
+                        , flag = "DO_DISTURBANCES"
+                        , flag.split = " "
+                        , is.num = TRUE)
+    do.LIGHT = .getParam(params.lines = globi
+                         , flag = "DO_LIGHT_COMPETITION"
+                         , flag.split = " "
+                         , is.num = TRUE)
+    do.SOIL = .getParam(params.lines = globi
+                        , flag = "DO_SOIL_COMPETITION"
+                        , flag.split = " "
+                        , is.num = TRUE)
+    
     ### -------------------------------------------------------------------- ###
     
-    files.PFG.SUCC = list.files(path = paste0(name.simulation, "/DATA/PFGS/SUCC")
-                                , pattern = "^SUCC"
-                                , full.names = TRUE)
-    if (length(files.PFG.SUCC) != no_PFG)
+    MODULES = c("SUCC", "DISP", "LIGHT", "SOIL", "DIST")
+    
+    for (mod in MODULES)
     {
-      stop(paste0("There is not the same number of files "
-                  , "(`.txt` file starting with `SUCC`) "
-                  , "into the DATA/PFGS/SUCC/ folder as the number of PFG "
-                  , "indicated into the file "
-                  , globi))
+      if (get(paste0("do.", mod)))
+      {
+        .testParam_existFolder(name.simulation, paste0("DATA/PFGS/", mod, "/"))
+        
+        ## Get folders
+        dirs.mod = list.dirs(path = paste0(name.simulation, "/DATA/PFGS/", mod)
+                             , full.names = FALSE
+                             , recursive = FALSE)
+        if (length(dirs.mod) > 0)
+        {
+          dirs.mod = paste0(name.simulation, "/DATA/PFGS/", mod, "/", dirs.mod)
+        } else
+        {
+          dirs.mod = paste0(name.simulation, "/DATA/PFGS/", mod)
+        }
+        # assign(x = paste0("dirs.", mod), value = dirs.mod)
+        
+        ## Get files
+        files.PFG = foreach (di.mod = dirs.mod, .combine = "cbind") %do%
+        {
+          files.PFG = list.files(path = di.mod #paste0(name.simulation, "/DATA/PFGS/", mod)
+                                 , pattern = paste0("^", mod)
+                                 , full.names = TRUE)
+          if (length(files.PFG) != no_PFG)
+          {
+            stop(paste0("There is not the same number of files "
+                        , "(`.txt` file starting with `", mod, "`) "
+                        , "into the DATA/PFGS/", mod, "/ folder as the number of PFG "
+                        , "indicated into the file "
+                        , globi))
+          }
+          return(data.frame(files.PFG))
+        }
+        assign(x = paste0("files.PFG.", mod)
+               , value = files.PFG)
+        assign(x = paste0("no_files.PFG.", mod)
+               , value = ncol(get(paste0("files.PFG.", mod))))
+      } else
+      {
+        assign(x = paste0("no_files.PFG.", mod), value = 0)
+      }
     }
     
-    files.PFG.DISP = list.files(path = paste0(name.simulation, "/DATA/PFGS/DISP")
-                                , pattern = "^DISP"
-                                , full.names = TRUE)
-    if (length(files.PFG.DISP) != no_PFG)
-    {
-      stop(paste0("There is not the same number of files "
-                  , "(`.txt` file starting with `DISP`) "
-                  , "into the DATA/PFGS/DISP/ folder as the number of PFG "
-                  , "indicated into the file "
-                  , globi))
-    }
+    no_files.PFG = sapply(MODULES, function(x) get(paste0("no_files.PFG.", x)))
+    no_files.PFG = no_files.PFG[which(no_files.PFG > 0)]
+    PFG.combi = expand.grid(sapply(no_files.PFG, function(x) 1:x))
     
     #################################################################################################
     
-    doDisturbances = .getParam(params.lines = globi
-                               , flag = "DO_DISTURBANCES"
-                               , flag.split = " "
-                               , is.num = TRUE)
-    if (doDisturbances)
+    if (do.DIST)
     {
-      .testParam_existFolder(name.simulation, "DATA/PFGS/DIST/")
-      
       # if (!is.null(name.dist))
       # {
-        if (.testParam_notChar(name.dist))
-        {
-          .stopMessage_beChar("name.dist") 
-        } else
-        {
-          .testParam_existFile(paste0(name.simulation, "/DATA/MASK/", name.dist))
-        }
+      if (.testParam_notChar(name.dist))
+      {
+        .stopMessage_beChar("name.dist") 
+      } else
+      {
+        .testParam_existFile(paste0(name.simulation, "/DATA/MASK/", name.dist))
+      }
       # } else
       # {
-        # .stopMessage_beChar("name.dist") 
+      # .stopMessage_beChar("name.dist") 
       # }
       nbDisturbances = .getParam(params.lines = globi
                                  , flag = "NB_DISTURBANCES"
                                  , flag.split = " "
                                  , is.num = TRUE)
-      
-      files.PFG.DIST = list.files(path = paste0(name.simulation, "/DATA/PFGS/DIST")
-                                  , pattern = "^DIST"
-                                  , full.names = TRUE)
-      if (length(files.PFG.DIST) != no_PFG)
-      {
-        warning(paste0("There is not the same number of files "
-                       , "(`.txt` file starting with `DIST`) "
-                       , "into the DATA/PFGS/DIST/ folder as the number of PFG "
-                       , "indicated into the file "
-                       , globi))
-      }
-    }
-    
-    #################################################################################################
-    
-    doLight = .getParam(params.lines = globi
-                        , flag = "DO_LIGHT_COMPETITION"
-                        , flag.split = " "
-                        , is.num = TRUE)
-    if (doLight)
-    {
-      .testParam_existFolder(name.simulation, "DATA/PFGS/LIGHT/")
-      
-      files.PFG.LIGHT = list.files(path = paste0(name.simulation, "/DATA/PFGS/LIGHT")
-                                   , pattern = "^LIGHT"
-                                   , full.names = TRUE)
-      if (length(files.PFG.LIGHT) != no_PFG)
-      {
-        warning(paste0("There is not the same number of files "
-                       , "(`.txt` file starting with `LIGHT`) "
-                       , "into the DATA/PFGS/LIGHT/ folder as the number of PFG "
-                       , "indicated into the file "
-                       , globi))
-      }
-    }
-    
-    #################################################################################################
-    
-    doSoil = .getParam(params.lines = globi
-                       , flag = "DO_SOIL_COMPETITION"
-                       , flag.split = " "
-                       , is.num = TRUE)
-    if (doSoil)
-    {
-      .testParam_existFolder(name.simulation, "DATA/PFGS/SOIL/")
-      
-      files.PFG.SOIL = list.files(path = paste0(name.simulation, "/DATA/PFGS/SOIL")
-                                  , pattern = "^SOIL"
-                                  , full.names = TRUE)
-      if (length(files.PFG.SOIL) != no_PFG)
-      {
-        warning(paste0("There is not the same number of files "
-                       , "(`.txt` file starting with `SOIL`) "
-                       , "into the DATA/PFGS/SOIL/ folder as the number of PFG "
-                       , "indicated into the file "
-                       , globi))
-      }
     }
     
     #################################################################################################
@@ -623,67 +601,65 @@ PRE_FATE.params_simulParameters = function(
     #################################################################################################
     #################################################################################################    
     
-    params.list = lapply(1:ncol(params.combi), function(x) { as.character(params.combi[, x]) })
-    names.params.list = names.params.combi
-    
-    params.list = c(params.list, list(files.PFG.SUCC))
-    names.params.list = c(names.params.list, "--PFG_LIFE_HISTORY_PARAMS--")
-    
-    if (exists("SCENARIO.MASK"))
+    for (ii in 1:nrow(PFG.combi))
     {
-      params.list = c(params.list, list(SCENARIO.MASK))
-      names.params.list = c(names.params.list, "--MASK_CHANGE_MASK--")
+      params.list = lapply(1:ncol(params.combi), function(x) { as.character(params.combi[, x]) })
+      names.params.list = names.params.combi
+      
+      params.list = c(params.list, list(files.PFG.SUCC[, PFG.combi$SUCC[ii]]))
+      names.params.list = c(names.params.list, "--PFG_LIFE_HISTORY_PARAMS--")
+      
+      if (exists("SCENARIO.MASK"))
+      {
+        params.list = c(params.list, list(SCENARIO.MASK))
+        names.params.list = c(names.params.list, "--MASK_CHANGE_MASK--")
+      }
+      
+      if (do.DISP){
+        params.list = c(params.list, list(files.PFG.DISP[, PFG.combi$DISP[ii]]))
+        names.params.list = c(names.params.list, "--PFG_DISPERSAL_PARAMS--")
+      }
+      if (do.LIGHT){
+        params.list = c(params.list, list(files.PFG.LIGHT[, PFG.combi$LIGHT[ii]]))
+        names.params.list = c(names.params.list, "--PFG_LIGHT_PARAMS--")
+      }
+      if (do.SOIL){
+        params.list = c(params.list, list(files.PFG.SOIL[, PFG.combi$SOIL[ii]]))
+        names.params.list = c(names.params.list, "--PFG_SOIL_PARAMS--")
+      }
+      if (doHabSuit){
+        params.list = c(params.list, list(files.PFG.HS))
+        names.params.list = c(names.params.list, "--PFG_HAB_MASK--")
+      }
+      if (exists("SCENARIO.HS"))
+      {
+        params.list = c(params.list, list(SCENARIO.HS))
+        names.params.list = c(names.params.list, "--HAB_CHANGE_MASK--")
+      }
+      if (do.DIST){
+        params.list = c(params.list
+                        , list(files.PFG.DIST[, PFG.combi$DIST[ii]])
+                        , list(rep(paste0(name.simulation, "/DATA/MASK/", name.dist)
+                                   , nbDisturbances)))
+        names.params.list = c(names.params.list
+                              , "--PFG_DISTURBANCES_PARAMS--"
+                              , "--DIST_MASK--")
+      }
+      if (exists("SCENARIO.DIST"))
+      {
+        params.list = c(params.list, list(SCENARIO.DIST))
+        names.params.list = c(names.params.list, "--DIST_CHANGE_MASK--")
+      }
+      
+      params = c(params.list, list(""))
+      names(params) = c(names.params.list, "--END_OF_FILE--")
+      
+      .createParams(params.file = paste0(name.simulation
+                                         , "/PARAM_SIMUL/Simul_parameters_V"
+                                         , i, ".", ii
+                                         , ".txt")
+                    , params.list = params
+                    , separator = "\n")
     }
-    
-    doDispersal = .getParam(params.lines = globi
-                            , flag = "DO_DISPERSAL"
-                            , flag.split = " "
-                            , is.num = TRUE)
-    if (doDispersal){
-      params.list = c(params.list, list(files.PFG.DISP))
-      names.params.list = c(names.params.list, "--PFG_DISPERSAL_PARAMS--")
-    }
-    if (doLight){
-      params.list = c(params.list, list(files.PFG.LIGHT))
-      names.params.list = c(names.params.list, "--PFG_LIGHT_PARAMS--")
-    }
-    if (doSoil){
-      params.list = c(params.list, list(files.PFG.SOIL))
-      names.params.list = c(names.params.list, "--PFG_SOIL_PARAMS--")
-    }
-    if (doHabSuit){
-      params.list = c(params.list, list(files.PFG.HS))
-      names.params.list = c(names.params.list, "--PFG_HAB_MASK--")
-    }
-    if (exists("SCENARIO.HS"))
-    {
-      params.list = c(params.list, list(SCENARIO.HS))
-      names.params.list = c(names.params.list, "--HAB_CHANGE_MASK--")
-    }
-    if (doDisturbances){
-      params.list = c(params.list
-                      , list(files.PFG.DIST)
-                      , list(rep(paste0(name.simulation, "/DATA/MASK/", name.dist)
-                                 , nbDisturbances)))
-      names.params.list = c(names.params.list
-                            , "--PFG_DISTURBANCES_PARAMS--"
-                            , "--DIST_MASK--")
-    }
-    if (exists("SCENARIO.DIST"))
-    {
-      params.list = c(params.list, list(SCENARIO.DIST))
-      names.params.list = c(names.params.list, "--DIST_CHANGE_MASK--")
-    }
-    
-    params = c(params.list, list(""))
-    names(params) = c(names.params.list, "--END_OF_FILE--")
-    
-    .createParams(params.file = paste0(name.simulation,
-                                       "/PARAM_SIMUL/Simul_parameters_V",
-                                       i,
-                                       ".txt")
-                  , params.list = params
-                  , separator = "\n")
-    
   }
 }
