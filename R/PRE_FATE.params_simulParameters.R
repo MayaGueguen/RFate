@@ -552,7 +552,9 @@ PRE_FATE.params_simulParameters = function(
       PFG.combi = expand.grid(sapply(no_files.PFG, function(x) 1:x))
     } else
     {
-      PFG.combi = data.frame()
+      PFG.combi = as.data.frame(matrix(rep(0, length(no_files.PFG) * unique(no_files.PFG))
+                                       , ncol = length(no_files.PFG)))
+      colnames(PFG.combi) = names(no_files.PFG)
       for (mod in 1:length(no_files.PFG))
       {
         eval(parse(text = paste0("PFG.combi$", names(no_files.PFG)[mod], " = 1:no_files.PFG[mod]")))
