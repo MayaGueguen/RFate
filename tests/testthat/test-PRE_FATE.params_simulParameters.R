@@ -134,9 +134,49 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : name.si
                                                            , d99 = rep(c(10000, 15000, 20000),2)
                                                            , ldd = rep(c(100000, 50000, 100000),2)))
   expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif")
+               , "There is not the same number of files (`.txt` file starting with `LIGHT`) into the DATA/PFGS/LIGHT/ folder as the number of PFG indicated into the file"
+               , fixed = T)
+  
+  ## Create PFG light parameter files
+  PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
+                           , mat.PFG.succ = data.frame(PFG = paste0("PFG",1:6)
+                                                       , type = c("C", "C", "H", "H", "P", "P")
+                                                       , height = c(10, 250, 36, 68, 1250, 550)
+                                                       , maturity = c(5, 5, 3, 3, 8, 9)
+                                                       , longevity = c(12, 200, 25, 4, 110, 70)
+                                                       , light = c(1, 1, 1, 2, 2, 3)))
+  
+  expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif")
+               , "There is not the same number of files (`.txt` file starting with `SOIL`) into the DATA/PFGS/SOIL/ folder as the number of PFG indicated into the file"
+               , fixed = T)
+  
+  ## Create PFG soil parameter files
+  PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                           , mat.PFG.soil = data.frame(PFG = paste0("PFG",1:6)
+                                                       , type = c("C", "C", "H", "H", "P", "P")
+                                                       , soil_contrib = c(1.5, 1.2, 1, 2.6, 2.3, 3.9)
+                                                       , soil_tol_min = c(1, 1, 1, 2, 2, 3)
+                                                       , soil_tol_max = c(3, 3, 3, 3, 3, 4)))
+  
+  expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif")
                  , "`name.simulation` does not exist or does not contain a DATA/PFGS/DIST/ folder"
                  , fixed = T)
   system("mkdir FATE_simulation/DATA/PFGS/DIST")
+  
+  expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif")
+               , "There is not the same number of files (`.txt` file starting with `DIST`) into the DATA/PFGS/DIST/ folder as the number of PFG indicated into the file"
+               , fixed = T)
+  
+  ## Create PFG dist parameter files
+  PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
+                                 , mat.PFG.dist = data.frame(name = "graz"
+                                                             , responseStage = c(1,2)
+                                                             , KilledIndiv_C = c(1,3)
+                                                             , KilledIndiv_H = c(1,3)
+                                                             , KilledIndiv_P = c(1,3)
+                                                             , ResproutIndiv_C = c(4,9)
+                                                             , ResproutIndiv_H = c(4,9)
+                                                             , ResproutIndiv_P = c(4,9)))
   
   expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif")
                  , "`name.dist` must contain a character value of length > 0"
@@ -152,19 +192,19 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : name.si
   expect_warning(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif", name.dist = "dist.tif")
                  , "There is no adequate file (`.txt` file starting with `HS_changing_times`) into the folder FATE_simulation/DATA/SCENARIO"
                  , fixed = T)
-  expect_warning(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif", name.dist = "dist.tif")
-                 , "There is not the same number of files (`.txt` file starting with `DIST`) into the DATA/PFGS/DIST/ folder as the number of PFG indicated into the file"
-                 , fixed = T)
+  # expect_warning(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif", name.dist = "dist.tif")
+  #                , "There is not the same number of files (`.txt` file starting with `DIST`) into the DATA/PFGS/DIST/ folder as the number of PFG indicated into the file"
+  #                , fixed = T)
   
   expect_message(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif", name.dist = "dist.tif")
-                 , "The parameter file FATE_simulation/PARAM_SIMUL/Simul_parameters_V1.txt has been successfully created !")
+                 , "The parameter file FATE_simulation/PARAM_SIMUL/Simul_parameters_V1.1.txt has been successfully created !")
   expect_message(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif", name.dist = "dist.tif")
-                 , "The parameter file FATE_simulation/PARAM_SIMUL/Simul_parameters_V2.txt has been successfully created !")
+                 , "The parameter file FATE_simulation/PARAM_SIMUL/Simul_parameters_V2.1.txt has been successfully created !")
   expect_warning(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif", name.dist = "dist.tif")
-                 , "`params.file` (FATE_simulation/PARAM_SIMUL/Simul_parameters_V1.txt) already exists. It will be replaced."
+                 , "`params.file` (FATE_simulation/PARAM_SIMUL/Simul_parameters_V1.1.txt) already exists. It will be replaced."
                  , fixed = T)
   expect_warning(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif", name.dist = "dist.tif")
-                 , "`params.file` (FATE_simulation/PARAM_SIMUL/Simul_parameters_V2.txt) already exists. It will be replaced."
+                 , "`params.file` (FATE_simulation/PARAM_SIMUL/Simul_parameters_V2.1.txt) already exists. It will be replaced."
                  , fixed = T)
   
   ## Create a SAVE_year_maps or/and SAVE_year_objects parameter file
@@ -191,7 +231,7 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : name.si
                             , years.objects = 200
                             , opt.folder.name = "Scen2")
   expect_message(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif", name.dist = "dist.tif")
-                 , "The parameter file FATE_simulation/PARAM_SIMUL/Simul_parameters_V1.txt has been successfully created !")
+                 , "The parameter file FATE_simulation/PARAM_SIMUL/Simul_parameters_V1.1.txt has been successfully created !")
   
   ## Create a Changing_times parameter file
   PRE_FATE.params_changingYears(name.simulation = "FATE_simulation"
@@ -274,7 +314,7 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : name.si
                                                                             , "MASK_80.tif"))
                                 , opt.folder.name = "Scen_MASK")
   expect_message(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif", name.dist = "dist.tif")
-                 , "The parameter file FATE_simulation/PARAM_SIMUL/Simul_parameters_V1.txt has been successfully created !")
+                 , "The parameter file FATE_simulation/PARAM_SIMUL/Simul_parameters_V1.1.txt has been successfully created !")
   PRE_FATE.params_changingYears(name.simulation = "FATE_simulation"
                                 , type.changing = "HS"
                                 , mat.changing = data.frame(year = c(50,50,80,80)
@@ -285,7 +325,7 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : name.si
                                                                             , "MASK_80.tif"))
                                 , opt.folder.name = "Scen_HS")
   expect_message(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif", name.dist = "dist.tif")
-                 , "The parameter file FATE_simulation/PARAM_SIMUL/Simul_parameters_V1.txt has been successfully created !")
+                 , "The parameter file FATE_simulation/PARAM_SIMUL/Simul_parameters_V1.1.txt has been successfully created !")
   PRE_FATE.params_changingYears(name.simulation = "FATE_simulation"
                                 , type.changing = "DIST"
                                 , mat.changing = data.frame(year = c(50,50,80,80)
@@ -296,7 +336,7 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : name.si
                                                                             , "MASK_80.tif"))
                                 , opt.folder.name = "Scen_DIST")
   expect_message(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif", name.dist = "dist.tif")
-                 , "The parameter file FATE_simulation/PARAM_SIMUL/Simul_parameters_V1.txt has been successfully created !")
+                 , "The parameter file FATE_simulation/PARAM_SIMUL/Simul_parameters_V1.1.txt has been successfully created !")
   
   
   system("mkdir FATE_simulation/DATA/PFGS/HABSUIT/Scen1")
