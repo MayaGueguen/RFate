@@ -229,6 +229,8 @@
 ##'                                    
 ##' 
 ##' @export
+##' 
+##' @importFrom foreach foreach
 ##'
 ## END OF HEADER ###############################################################
 
@@ -545,7 +547,17 @@ PRE_FATE.params_simulParameters = function(
     
     no_files.PFG = sapply(MODULES, function(x) get(paste0("no_files.PFG.", x)))
     no_files.PFG = no_files.PFG[which(no_files.PFG > 0)]
-    PFG.combi = expand.grid(sapply(no_files.PFG, function(x) 1:x))
+    if (length(unique(no_files.PFG)) > 1)
+    {
+      PFG.combi = expand.grid(sapply(no_files.PFG, function(x) 1:x))
+    } else
+    {
+      PFG.combi = data.frame()
+      for (mod in 1:length(no_files.PFG))
+      {
+        eval(parse(text = paste0("PFG.combi$", names(no_files.PFG)[mod], " = 1:no_files.PFG[mod]")))
+      }
+    }
     
     #################################################################################################
     
