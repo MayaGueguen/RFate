@@ -18,8 +18,6 @@
 ##' will be used to extract PFG binary maps
 ##' @param opt.no_CPU default 1 (\emph{optional}). The number of resources that 
 ##' can be used to parallelize the \code{unzip/zip} of raster files
-##' @param opt.strata default ALL (\emph{optional}). The stratum number from 
-##' which to extract PFG binary maps
 ##' 
 ##' 
 ##' @details 
@@ -29,9 +27,7 @@
 ##' graphic. \cr
 ##' 
 ##' For each PFG and each selected simulation year, raster maps are retrieved
-##' from the results folder \code{BIN_perPFG_allStrata} (unless the 
-##' \code{opt.strata} is used, then it will be from the folder 
-##' \code{BIN_perPFG_perStrata}) and unzipped.
+##' from the results folder \code{BIN_perPFG_allStrata} and unzipped.
 ##' Informations extracted lead to the production of one graphic before the
 ##' maps are compressed again :
 ##' 
@@ -66,12 +62,6 @@
 ##'                                  , file.simulParam = "Simul_parameters_V1.txt"
 ##'                                  , year = c(850, 950)
 ##'                                  , opt.no_CPU = 1)
-##'                                     
-##' POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
-##'                                  , file.simulParam = "Simul_parameters_V1.txt"
-##'                                  , year = 850
-##'                                  , opt.no_CPU = 1
-##'                                  , opt.strata = 2)
 ##' }
 ##'                                     
 ##'                                     
@@ -98,7 +88,6 @@ POST_FATE.graphic_mapPFGrichness = function(
   , file.simulParam = NULL
   , year
   , opt.no_CPU = 1
-  , opt.strata = "all"
 ){
   
   .testParam_existFolder(name.simulation, "PARAM_SIMUL/")
@@ -141,15 +130,8 @@ POST_FATE.graphic_mapPFGrichness = function(
                          , is.num = FALSE)
     .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/"))
     
-    if (opt.strata == "all")
-    {
-      dir.output.perPFG.allStrata.BIN = paste0(name.simulation, "/RESULTS/", basename(dir.save), "/BIN_perPFG_allStrata/")
-      .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/BIN_perPFG_allStrata/"))
-    } else
-    {
-      dir.output.perPFG.allStrata.BIN = paste0(name.simulation, "/RESULTS/", basename(dir.save), "/BIN_perPFG_perStrata/")
-      .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/BIN_perPFG_perStrata/"))
-    }
+    dir.output.perPFG.allStrata.BIN = paste0(name.simulation, "/RESULTS/", basename(dir.save), "/BIN_perPFG_allStrata/")
+    .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/BIN_perPFG_allStrata/"))
     
     
     ## Get number of PFGs ----------------------------------------------------------
@@ -215,9 +197,7 @@ POST_FATE.graphic_mapPFGrichness = function(
                          , y
                          , "_"
                          , PFG
-                         , "_STRATA_"
-                         , opt.strata
-                         , ".tif")
+                         , "_STRATA_all.tif")
         
       gp = PFG[which(file.exists(file_name))]
       file_name = file_name[which(file.exists(file_name))]

@@ -231,8 +231,8 @@ POST_FATE.graphic_mapPFGsoil = function(
                          , is.num = FALSE)
     .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/"))
     
-    dir.output.perPFG.perStrata.BIN = paste0(name.simulation, "/RESULTS/", basename(dir.save), "/BIN_perPFG_perStrata/")
-    .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/BIN_perPFG_perStrata/"))
+    dir.output.perPFG.allStrata.BIN = paste0(name.simulation, "/RESULTS/", basename(dir.save), "/BIN_perPFG_allStrata/")
+    .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/BIN_perPFG_allStrata/"))
     
     dir.output.perPFG.perStrata = paste0(name.simulation, "/RESULTS/", basename(dir.save), "/ABUND_perPFG_perStrata/")
     .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/ABUND_perPFG_perStrata/"))
@@ -335,9 +335,9 @@ POST_FATE.graphic_mapPFGsoil = function(
       {
         cat(" ", pfg)
         
-        ## Binary maps
-        file_name = paste0(dir.output.perPFG.perStrata.BIN,
-                           "Binary_YEAR_",
+        ## Abundance maps
+        file_name = paste0(dir.output.perPFG.perStrata,
+                           "Abund_YEAR_",
                            y,
                            "_",
                            pfg)
@@ -349,22 +349,27 @@ POST_FATE.graphic_mapPFGsoil = function(
         gp_st = gp_st[which(file.exists(file_name))]
         file_name = file_name[which(file.exists(file_name))]
         
+        ## Binary map
+        bin_name = paste0(dir.output.perPFG.allStrata.BIN
+                          , "Binary_YEAR_"
+                          , y
+                          , "_"
+                          , pfg
+                          , "_STRATA_all.tif")
+        
         if (length(file_name) > 0)
         {
-          ## Binary maps
-          ras.BIN = stack(file_name) * ras.mask
-          names(ras.BIN) = gp_st
+          ## Binary map
+          ras.BIN = stack(bin_name) * ras.mask
+          names(ras.BIN) = pfg
           
           ## Abundance maps
-          file_name = sub("Binary_YEAR_", "Abund_YEAR_", file_name)
-          file_name = sub(dir.output.perPFG.perStrata.BIN, dir.output.perPFG.perStrata, file_name)
-          
           ras = stack(file_name) * ras.mask
           ras = ras * ras.BIN
           ras_TOT = ras
           if (nlayers(ras) > 1)
           {
-            ras_TOT = sum(ras)
+            ras_TOT = sum(ras, na.rm = TRUE)
           }
           
           return(ras_TOT)
