@@ -29,7 +29,13 @@ PRE_FATE.speciesDistance(mat.species.traits, mat.species.overlap,
   object, or simply a \code{matrix}.
 }}
 
-\item{min.info.thresh}{minimum percentage of values for each trait (between 0 and 1)}
+\item{min.info.thresh}{minimum percentage of values for each trait (between
+0 and 1)}
+
+\item{opt.traits.selection}{(\emph{optional}) \cr a \code{vector} containing
+2 values to select traits used to form species clusters : the maximum
+percentage of null distances between pairs of species (between 0 and 1), and
+the standard deviation (between 0 and 1)}
 }
 \value{
 A \code{dist} object corresponding to the distance between each pair

@@ -34,8 +34,12 @@
 ##'   object, or simply a \code{matrix}.
 ##' }
 ##' 
-##' @param min.info.thresh minimum percentage of values for each trait (between 0 and 1)
-##' @param opt.traits.selection 
+##' @param min.info.thresh minimum percentage of values for each trait (between
+##' 0 and 1)
+##' @param opt.traits.selection (\emph{optional}) \cr a \code{vector} containing
+##' 2 values to select traits used to form species clusters : the maximum
+##' percentage of null distances between pairs of species (between 0 and 1), and
+##' the standard deviation (between 0 and 1)
 ##' 
 ##' @details 
 ##' 

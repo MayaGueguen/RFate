@@ -374,11 +374,9 @@ PRE_FATE.params_simulParameters = function(
   {
     
     params.combi = data.frame(GLOBAL = files.GLOBAL[PARAMS.combi$GLOBAL[i]]
-                              , SAVE.dir = paste0(name.simulation, "/RESULTS/SIMUL_V", i)
                               , MASK = paste0(name.simulation, "/DATA/MASK/", name.mask))
     
     names.params.combi = c("--GLOBAL_PARAMS--"
-                           , "--SAVE_DIR--"
                            , "--MASK--")
     
     #################################################################################################
@@ -517,7 +515,6 @@ PRE_FATE.params_simulParameters = function(
         {
           dirs.mod = paste0(name.simulation, "/DATA/PFGS/", mod)
         }
-        # assign(x = paste0("dirs.", mod), value = dirs.mod)
         
         ## Get files
         files.PFG = foreach (di.mod = dirs.mod, .combine = "cbind") %do%
@@ -619,6 +616,9 @@ PRE_FATE.params_simulParameters = function(
     {
       params.list = lapply(1:ncol(params.combi), function(x) { as.character(params.combi[, x]) })
       names.params.list = names.params.combi
+      
+      params.list = c(params.list, list(paste0(name.simulation, "/RESULTS/SIMUL_V", i, ".", ii)))
+      names.params.list = c(names.params.list, "--SAVE_DIR--")
       
       params.list = c(params.list, list(files.PFG.SUCC[, PFG.combi$SUCC[ii]]))
       names.params.list = c(names.params.list, "--PFG_LIFE_HISTORY_PARAMS--")
