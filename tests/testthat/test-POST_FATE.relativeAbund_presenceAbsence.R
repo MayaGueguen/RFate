@@ -285,9 +285,9 @@ test_that("POST_FATE.relativeAbund_presenceAbsence gives error with wrong data :
 
 ## OUTPUTS
 test_that("POST_FATE.relativeAbund_presenceAbsence gives error with wrong data : outputs", {
-  expect_output_file(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
-                                                             , year = 10)
-                     , "FATE_simulation/RESULTS/Hello/BIN_perPFG_allStrata/Binary_YEAR_10_PFG1_STRATA_all.txt"
-                     , fixed = TRUE)
+  # expect_output_file(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
+  #                                                            , year = 10)
+  #                    , "FATE_simulation/RESULTS/Hello/BIN_perPFG_allStrata/Binary_YEAR_10_PFG1_STRATA_all.txt"
+  #                    , fixed = TRUE)
 })
 
