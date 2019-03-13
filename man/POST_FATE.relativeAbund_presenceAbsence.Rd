@@ -6,11 +6,12 @@
 Group \cr for one (or several) specific year of a \code{FATE-HD} simulation}
 \usage{
 POST_FATE.relativeAbund_presenceAbsence(name.simulation,
-  file.simulParam = NULL, year, strata_min = 1, opt.no_CPU = 1)
+  file.simulParam = NULL, year, strata_min = 1,
+  rel.abund.threshold = 0.05, opt.no_CPU = 1)
 }
 \arguments{
-\item{name.simulation}{a \code{string} that corresponds to the main directory
-or simulation name of the \code{FATE-HD} simulation}
+\item{name.simulation}{a \code{string} that corresponds to the main
+directory or simulation name of the \code{FATE-HD} simulation}
 
 \item{file.simulParam}{a \code{string} that corresponds to the name of a
 parameter file that will be contained into the \code{PARAM_SIMUL} folder
@@ -19,9 +20,12 @@ of the \code{FATE-HD} simulation}
 \item{year}{an \code{integer} corresponding to the simulation year(s) that 
 will be used to extract PFG abundance maps}
 
-\item{strata_min}{an \code{integer} corresponding to the lowest stratum for
-which PFG relative abundances are calculated and then transformed into
-binary results}
+\item{strata_min}{default 1. An \code{integer} corresponding to the lowest
+stratum for which PFG relative abundances are calculated and then
+transformed into binary results}
+
+\item{rel.abund.threshold}{default 0.05. Minimum value of relative abundance
+to transform a PFG abundance into presence}
 
 \item{opt.no_CPU}{default 1 (\emph{optional}). The number of resources that 
 can be used to parallelize the \code{unzip/zip} of raster files}

@@ -276,9 +276,9 @@ test_that("POST_FATE.graphic_mapPFGcover gives error with wrong data : files", {
                                              , file.simulParam = "ParamSimul.txt"
                                              , year = 10
                                              , strata_min = 2)
-               , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/BIN_perPFG_perStrata/ folder"
+               , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/BIN_perPFG_allStrata/ folder"
                , fixed = TRUE)
-  system("mkdir FATE_simulation/RESULTS/Hello/BIN_perPFG_perStrata/")
+  system("mkdir FATE_simulation/RESULTS/Hello/BIN_perPFG_allStrata/")
   expect_error(POST_FATE.graphic_mapPFGcover(name.simulation = "FATE_simulation"
                                              , file.simulParam = "ParamSimul.txt"
                                              , year = 10

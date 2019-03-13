@@ -161,15 +161,16 @@ simulation year.</p>
     </div>
 
     <pre class="usage"><span class='fu'>POST_FATE.relativeAbund_presenceAbsence</span>(<span class='no'>name.simulation</span>,
-  <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>year</span>, <span class='kw'>strata_min</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
+  <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>year</span>, <span class='kw'>strata_min</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>rel.abund.threshold</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>name.simulation</th>
-      <td><p>a <code>string</code> that corresponds to the main directory
-or simulation name of the <code>FATE-HD</code> simulation</p></td>
+      <td><p>a <code>string</code> that corresponds to the main
+directory or simulation name of the <code>FATE-HD</code> simulation</p></td>
     </tr>
     <tr>
       <th>file.simulParam</th>
@@ -184,9 +185,14 @@ will be used to extract PFG abundance maps</p></td>
     </tr>
     <tr>
       <th>strata_min</th>
-      <td><p>an <code>integer</code> corresponding to the lowest stratum for
-which PFG relative abundances are calculated and then transformed into
-binary results</p></td>
+      <td><p>default 1. An <code>integer</code> corresponding to the lowest
+stratum for which PFG relative abundances are calculated and then
+transformed into binary results</p></td>
+    </tr>
+    <tr>
+      <th>rel.abund.threshold</th>
+      <td><p>default 0.05. Minimum value of relative abundance
+to transform a PFG abundance into presence</p></td>
     </tr>
     <tr>
       <th>opt.no_CPU</th>

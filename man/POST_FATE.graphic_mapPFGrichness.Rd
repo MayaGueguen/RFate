@@ -6,7 +6,7 @@
  \cr for one (or several) specific year of a \code{FATE-HD} simulation}
 \usage{
 POST_FATE.graphic_mapPFGrichness(name.simulation, file.simulParam = NULL,
-  year, opt.no_CPU = 1, opt.strata = "all")
+  year, opt.no_CPU = 1)
 }
 \arguments{
 \item{name.simulation}{a \code{string} that corresponds to the main directory
@@ -21,9 +21,6 @@ will be used to extract PFG binary maps}
 
 \item{opt.no_CPU}{default 1 (\emph{optional}). The number of resources that 
 can be used to parallelize the \code{unzip/zip} of raster files}
-
-\item{opt.strata}{default ALL (\emph{optional}). The stratum number from 
-which to extract PFG binary maps}
 }
 \value{
 One \code{POST_FATE_[...].pdf} file is created : 
@@ -42,9 +39,7 @@ and a specific parameter file within this simulation, one preanalytical
 graphic. \cr
 
 For each PFG and each selected simulation year, raster maps are retrieved
-from the results folder \code{BIN_perPFG_allStrata} (unless the 
-\code{opt.strata} is used, then it will be from the folder 
-\code{BIN_perPFG_perStrata}) and unzipped.
+from the results folder \code{BIN_perPFG_allStrata} and unzipped.
 Informations extracted lead to the production of one graphic before the
 maps are compressed again :
 
@@ -66,12 +61,6 @@ POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
                                  , file.simulParam = "Simul_parameters_V1.txt"
                                  , year = c(850, 950)
                                  , opt.no_CPU = 1)
-                                    
-POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
-                                 , file.simulParam = "Simul_parameters_V1.txt"
-                                 , year = 850
-                                 , opt.no_CPU = 1
-                                 , opt.strata = 2)
 }
                                     
                                     

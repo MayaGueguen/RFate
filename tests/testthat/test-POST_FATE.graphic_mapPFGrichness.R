@@ -137,13 +137,6 @@ test_that("POST_FATE.graphic_mapPFGrichness gives error with wrong data : files"
   
   expect_error(POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
                                                 , file.simulParam = "ParamSimul.txt"
-                                                , year = 10
-                                                , opt.strata = 1)
-               , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/BIN_perPFG_perStrata/ folder")
-  
-  
-  expect_error(POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
                                                 , year = 10)
                , "Wrong type of data!\n `flag` (GLOBAL_PARAMS) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"
                , fixed = TRUE)
