@@ -370,7 +370,7 @@ PRE_FATE.params_PFGdisturbance = function(
   ## GET STRATUM NUMBER whose height >= 150
   names.strata = colnames(mat.PFG.succ)[grep("^CHANG_STR_AGES_to_str_", colnames(mat.PFG.succ))]
   strata.150 = sapply(names.strata, function(x) tail(strsplit(as.character(x), "_")[[1]], 1))
-  strata.150 = min(which(strata.150 >= 150))
+  strata.150 = min(which(as.numeric(strata.150) >= 150))
   strata.150 = names.strata[strata.150]
   
   
@@ -394,7 +394,7 @@ PRE_FATE.params_PFGdisturbance = function(
   brk_ages_tmp = matrix(0, nrow = no.STAGES - 1, ncol = no.PFG)
   
   ## A12 = for herbaceous : maturity - 2 / for chamaephyte and phanerophyte : 1
-  brk_ages_tmp[1, ] = ifelse(mat.PFG.succ$TYPE == "H", max(mat.PFG.succ$MATURITY - 2, 0), 1)
+  brk_ages_tmp[1, ] = ifelse(mat.PFG.succ$TYPE == "H", apply(cbind(mat.PFG.succ$MATURITY - 2, 0), 1, max), 1)
   
   ## A23 = min(CHANG_STR_AGES_to_str_3, maturity)
   brk_ages_tmp[2, ind.H] = mat.PFG.succ$MATURITY[ind.H]
@@ -435,7 +435,7 @@ PRE_FATE.params_PFGdisturbance = function(
   ## stage 2 : too young to resprout
   RESPR_AGE[seq(2, nrow(RESPR_AGE), by = no.STAGES), ] = 0
   ## stage 3 : juveniles are not affected, matures resprout at maturity - 2
-  val.tmp = apply(cbind(max(mat.PFG.succ$MATURITY - 2, 0)
+  val.tmp = apply(cbind(apply(cbind(mat.PFG.succ$MATURITY - 2, 0), 1, max)
                         , mat.PFG.succ[, strata.150]), 1, min)
   RESPR_AGE[seq(3, nrow(RESPR_AGE), by = no.STAGES), ] = rep(val.tmp, each = no.DIST)
   ## stage 4 : resprout at longevity - 2
