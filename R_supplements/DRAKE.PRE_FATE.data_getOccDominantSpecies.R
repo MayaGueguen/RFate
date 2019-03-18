@@ -101,7 +101,7 @@ getOcc_3_matDom = function(sp.SELECT, observations.xy, stations.COMMUNITY, zone.
   mat.sites.species.abund = mat.sites.species.abund[which(rowSums(mat.sites.species.abund, na.rm = TRUE) > 0), ]
   dim(mat.sites.species.abund)
   
-  mat.sites.species.abund = apply(mat.sites.species.abund, 1, function(x) x / sum(x, na.rm = TRUE))
+  mat.sites.species.abund = t(apply(mat.sites.species.abund, 1, function(x) x / sum(x, na.rm = TRUE)))
   
   ## Add information of absences from community plots
   ind.COMMUNITY.abund = which(rownames(mat.sites.species.abund) %in% stations.COMMUNITY)
