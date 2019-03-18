@@ -260,7 +260,7 @@ POST_FATE.graphic_validationStatistics = function(
                     , flag = "PFG_LIFE_HISTORY_PARAMS"
                     , flag.split = "^--.*--$"
                     , is.num = FALSE)
-    pattern = paste0(name.simulation, "/DATA/PFGS/SUCC/SUCC_")
+    pattern = ".*SUCC_"
     PFG = sub(".txt", "", sub(pattern, "", PFG))
     if (length(PFG) != no_PFG)
     {
