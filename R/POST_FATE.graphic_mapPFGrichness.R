@@ -216,9 +216,7 @@ POST_FATE.graphic_mapPFGrichness = function(
                              , basename(dir.save)
                              , "/PFGrichness_YEAR_"
                              , y
-                             , "_STRATA_"
-                             , opt.strata
-                             , ".tif")
+                             , "_STRATA_all.tif")
         writeRaster(ras_TOT
                     , filename = output.name
                     , overwrite = TRUE)
