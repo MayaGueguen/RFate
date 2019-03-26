@@ -178,6 +178,14 @@ test_that("POST_FATE.graphic_evolutionCoverage gives error with wrong data : fil
                , fixed = TRUE)
 })
 
+## INPUTS
+test_that("POST_FATE.graphic_evolutionCoverage gives error with wrong data : opt.ras_habitat", {
+  if (file.exists("aaa")) file.remove("aaa")
+  expect_error(POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation"
+                                                   , file.simulParam = "ParamSimul.txt"
+                                                   , opt.ras_habitat = "aaa")
+               , "Wrong name file given!\n `aaa` does not exist")
+})
 
 ## INPUTS
 test_that("POST_FATE.graphic_evolutionCoverage gives error with wrong data : rasters", {

@@ -164,7 +164,7 @@ of the abundance of each PFG.</p>
 
     <pre class="usage"><span class='fu'>POST_FATE.graphic_evolutionCoverage</span>(<span class='no'>name.simulation</span>,
   <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>no.years</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>opt.abund_fixedScale</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
+  <span class='kw'>opt.ras_habitat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -187,9 +187,15 @@ years that will be used to extract PFG abundance maps</p></td>
     </tr>
     <tr>
       <th>opt.abund_fixedScale</th>
-      <td><p>default <code>TRUE</code>. If <code>FALSE</code>, the ordinate
-scale will be adapted for each PFG for the graphical representation of the 
-evolution of abundances through time</p></td>
+      <td><p>default <code>TRUE</code>. If <code>FALSE</code>, the
+ordinate scale will be adapted for each PFG for the graphical representation
+of the  evolution of abundances through time</p></td>
+    </tr>
+    <tr>
+      <th>opt.ras_habitat</th>
+      <td><p>default NULL (<em>optional</em>). A <code>string</code> that
+corresponds to the file name of a raster mask, with an <code>integer</code> value
+within each pixel, corresponding to a specific habitat</p></td>
     </tr>
     <tr>
       <th>opt.no_CPU</th>
@@ -228,6 +234,8 @@ maps are compressed again :</p>
   the whole studied area of the PFG abundances (<code>FATE-HD</code> 
   <em>arbitrary unit</em>)</p></li>
 </ul>
+    <p>If a raster mask for habitat has been provided, the graphics will be also
+done per habitat.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 

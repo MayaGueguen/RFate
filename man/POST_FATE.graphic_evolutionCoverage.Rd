@@ -7,7 +7,7 @@ and abundance through time for a \code{FATE-HD} simulation}
 \usage{
 POST_FATE.graphic_evolutionCoverage(name.simulation,
   file.simulParam = NULL, no.years = 10, opt.abund_fixedScale = TRUE,
-  opt.no_CPU = 1)
+  opt.ras_habitat = NULL, opt.no_CPU = 1)
 }
 \arguments{
 \item{name.simulation}{a \code{string} that corresponds to the main directory
@@ -20,9 +20,13 @@ of the \code{FATE-HD} simulation}
 \item{no.years}{an \code{integer} corresponding to the number of simulation
 years that will be used to extract PFG abundance maps}
 
-\item{opt.abund_fixedScale}{default \code{TRUE}. If \code{FALSE}, the ordinate
-scale will be adapted for each PFG for the graphical representation of the 
-evolution of abundances through time}
+\item{opt.abund_fixedScale}{default \code{TRUE}. If \code{FALSE}, the
+ordinate scale will be adapted for each PFG for the graphical representation
+of the  evolution of abundances through time}
+
+\item{opt.ras_habitat}{default NULL (\emph{optional}). A \code{string} that
+corresponds to the file name of a raster mask, with an \code{integer} value
+within each pixel, corresponding to a specific habitat}
 
 \item{opt.no_CPU}{default 1 (\emph{optional}). The number of resources that 
 can be used to parallelize the \code{unzip/zip} of raster files}
@@ -65,6 +69,9 @@ maps are compressed again :
   \emph{arbitrary unit})
   }
 }
+
+If a raster mask for habitat has been provided, the graphics will be also
+done per habitat.
 }
 \examples{
 

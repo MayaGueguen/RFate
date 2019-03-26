@@ -18,9 +18,12 @@
 ##' of the \code{FATE-HD} simulation
 ##' @param no.years an \code{integer} corresponding to the number of simulation
 ##' years that will be used to extract PFG abundance maps
-##' @param opt.abund_fixedScale default \code{TRUE}. If \code{FALSE}, the ordinate
-##' scale will be adapted for each PFG for the graphical representation of the 
-##' evolution of abundances through time
+##' @param opt.abund_fixedScale default \code{TRUE}. If \code{FALSE}, the
+##' ordinate scale will be adapted for each PFG for the graphical representation
+##' of the  evolution of abundances through time
+##' @param opt.ras_habitat default NULL (\emph{optional}). A \code{string} that
+##' corresponds to the file name of a raster mask, with an \code{integer} value
+##' within each pixel, corresponding to a specific habitat
 ##' @param opt.no_CPU default 1 (\emph{optional}). The number of resources that 
 ##' can be used to parallelize the \code{unzip/zip} of raster files
 ##' 
@@ -48,6 +51,9 @@
 ##'   \emph{arbitrary unit})
 ##'   }
 ##' }
+##' 
+##' If a raster mask for habitat has been provided, the graphics will be also
+##' done per habitat.
 ##' 
 ##' 
 ##' 
@@ -108,6 +114,7 @@ POST_FATE.graphic_evolutionCoverage = function(
   , file.simulParam = NULL
   , no.years = 10
   , opt.abund_fixedScale = TRUE
+  , opt.ras_habitat = NULL
   , opt.no_CPU = 1
 ){
   
@@ -130,6 +137,15 @@ POST_FATE.graphic_evolutionCoverage = function(
     abs.simulParams = paste0(name.simulation, "/PARAM_SIMUL/", file.simulParam)
     .testParam_existFile(abs.simulParams)
   }
+  if (!.testParam_notDef(opt.ras_habitat))
+  {
+    if (nchar(opt.ras_habitat) > 0)
+    {
+      .testParam_existFile(opt.ras_habitat)
+      ras.habitat = raster(opt.ras_habitat)
+    }
+  }
+  
   #################################################################################################
   
   for (abs.simulParam in abs.simulParams)
@@ -200,6 +216,19 @@ POST_FATE.graphic_evolutionCoverage = function(
     ras.mask[which(ras.mask[] == 0)] = NA
     ind_1_mask = which(ras.mask[] == 1)
     no_1_mask = length(ind_1_mask)
+    xy.1 = xyFromCell(ras.mask, ind_1_mask)
+    
+    no_hab = 1
+    hab_names = "ALL"
+    if (exists("ras.habitat"))
+    {
+      ras.habitat = ras.habitat * ras.mask
+      df.habitat = data.frame(ID = cellFromXY(ras.habitat, xy.1))
+      df.habitat$HAB = ras.habitat[df.habitat$ID]
+      hab_names = c(hab_names, unique(df.habitat$HAB))
+      hab_names = hab_names[which(!is.na(hab_names))]
+      no_hab = length(hab_names)
+    }
     
     ## UNZIP the raster saved ------------------------------------------------------
     .unzip_ALL(folder_name = dir.output.perPFG.allStrata, nb_cores = opt.no_CPU)
@@ -207,8 +236,8 @@ POST_FATE.graphic_evolutionCoverage = function(
     
     ## get the data inside the rasters ---------------------------------------------
     distri = distriAbund = array(0,
-                                 dim = c(no_years, no_PFG),
-                                 dimnames = list(years, PFG))
+                                 dim = c(no_years, no_PFG, no_hab),
+                                 dimnames = list(years, PFG, hab_names))
     cat("\n GETTING COVERAGE for year")
     for (y in years)
     {
@@ -245,24 +274,49 @@ POST_FATE.graphic_evolutionCoverage = function(
         ras = stack(file_name) * ras.mask
         ras = as.data.frame(ras)
         
-        ## calculate the % of cover of each PPFG
-        distri[as.character(y), gp] = apply(ras, 2, function(x) length(which(x[ind_1_mask] > 0)) / no_1_mask)
-        distriAbund[as.character(y), gp] = apply(ras, 2, function(x) sum(x[ind_1_mask], na.rm = T))
+        if (!is.null(df.habitat))
+        {
+          ras = merge(ras, df.habitat, by.x = "row.names", by.y = "ID")
+        } else
+        {
+          ras$HAB = "all"
+        }
+        ras.split = split(ras, ras$HAB)
+        
+        for (habi in hab_names)
+        {
+          if (habi == "ALL")
+          {
+            tmp = ras
+          } else
+          {
+            tmp = ras.split[[as.character(habi)]]
+          }
+          tmp = tmp[, -which(colnames(tmp) %in% c("Row.names", "HAB"))]
+          
+          ## calculate the % of cover of each PPFG
+          distri[as.character(y), gp, as.character(habi)] = apply(tmp, 2, function(x) length(which(x[ind_1_mask] > 0)) / no_1_mask)
+          distriAbund[as.character(y), gp, as.character(habi)] = apply(tmp, 2, function(x) sum(x[ind_1_mask], na.rm = T))
+        }
       }
     } ## end loop on years
     cat("\n")
     
     distri.melt = melt(distri)
-    colnames(distri.melt) = c("YEAR", "PFG", "Abund")
+    colnames(distri.melt) = c("YEAR", "PFG", "HAB", "Abund")
     distriAbund.melt = melt(distriAbund)
-    colnames(distriAbund.melt) = c("YEAR", "PFG", "Abund")
+    colnames(distriAbund.melt) = c("YEAR", "PFG", "HAB", "Abund")
     
     ## produce the plot ------------------------------------------------------------
     
+    col_vec = c('#6da34d', '#297373', '#58a4b0', '#5c4742', '#3f334d')
+    col_fun = colorRampPalette(col_vec)
+    
     ## Evolution of space occupation
-    pp1 = ggplot(distri.melt, aes_string(x = "YEAR", y = "Abund * 100", group = "PFG")) +
-      geom_line() +
+    pp1 = ggplot(distri.melt, aes_string(x = "YEAR", y = "Abund * 100", color = "factor(HAB)")) +
+      geom_line(lwd = 1) +
       facet_wrap("~ PFG") +
+      scale_color_manual("Habitat", values = col_fun(no_hab)) +
       labs(x = "", y = "", title = paste0("GRAPH A : evolution of species' space occupation"),
            subtitle = paste0("For each PFG, the line represents the evolution through time of its space occupancy,\n",
                              "meaning the percentage of pixels in which the abundance of the species is greater than 0.\n")) +
@@ -276,9 +330,10 @@ POST_FATE.graphic_evolutionCoverage = function(
            , plot = pp1, width = 10, height = 8)
     
     ## Evolution of abundance
-    pp2 = ggplot(distriAbund.melt, aes_string(x = "YEAR", y = "Abund", group = "PFG")) +
-      geom_line() +
+    pp2 = ggplot(distriAbund.melt, aes_string(x = "YEAR", y = "Abund", color = "HAB")) +
+      geom_line(lwd = 1) +
       facet_wrap("~ PFG", scales = ifelse(opt.abund_fixedScale, "fixed", "free_y")) +
+      scale_color_manual("Habitat", values = col_fun(no_hab)) +
       labs(x = "", y = "", title = paste0("GRAPH A : evolution of species' abundance"),
            subtitle = paste0("For each PFG, the line represents the evolution through time of its abundance\n",
                              "over the whole studied area, meaning the sum of its abundances in every pixel.\n")) +
@@ -295,14 +350,14 @@ POST_FATE.graphic_evolutionCoverage = function(
     ## ZIP the raster saved ------------------------------------------------------
     .zip(folder_name = dir.output.perPFG.allStrata, nb_cores= opt.no_CPU)
     
-    write.csv(distri
+    write.csv(distri.melt
               , file = paste0(name.simulation
                               , "/RESULTS/POST_FATE_evolution_spaceOccupancy_"
                               , basename(dir.save)
                               , ".csv")
               , row.names = TRUE)
     
-    write.csv(distriAbund
+    write.csv(distriAbund.melt
               , file = paste0(name.simulation
                               , "/RESULTS/POST_FATE_evolution_abundance_"
                               , basename(dir.save)
