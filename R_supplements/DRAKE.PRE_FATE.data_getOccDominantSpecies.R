@@ -83,7 +83,12 @@ getOcc_3_matDom = function(sp.SELECT, observations.xy, stations.COMMUNITY, zone.
   occ$numchrono = paste0("NUMCHRONO-", occ$numchrono)
   
   ## Get dominant species observations
-  sp.SELECT.occ = merge(sp.SELECT[, c("numtaxon", "genre", "libcbna")], observations.xy, by = "numtaxon")
+  # sp.SELECT.occ = merge(sp.SELECT[, c("numtaxon", "genre", "libcbna")], observations.xy, by = "numtaxon")
+  # sp.SELECT.occ$numchrono = paste0("NUMCHRONO-", sp.SELECT.occ$numchrono)
+  
+  selected.sp = fread(file_in(paste0(zone.name, "/PFG_Bauges_Description_2017.csv")))
+  colnames(selected.sp) = c("numtaxon", "PFG", "libcbna", "TO_REMOVE")
+  sp.SELECT.occ = merge(selected.sp[, c("numtaxon", "libcbna")], observations.xy, by = "numtaxon")
   sp.SELECT.occ$numchrono = paste0("NUMCHRONO-", sp.SELECT.occ$numchrono)
   
   ## Get information about community plots
@@ -110,9 +115,12 @@ getOcc_3_matDom = function(sp.SELECT, observations.xy, stations.COMMUNITY, zone.
     mat.sites.species.abund[i, ] = ifelse(is.na(mat.sites.species.abund[i, ]), 0, mat.sites.species.abund[i, ])
   }
   
+  save(mat.sites.species.abund, file = paste0(zone.name, "/FULL.mat.sites.species.abund.RData"))
+  
   ## Keep only dominant species
   dim(mat.sites.species.abund)
-  ind_dom = which(colnames(mat.sites.species.abund) %in% sp.SELECT$numtaxon)
+  # ind_dom = which(colnames(mat.sites.species.abund) %in% sp.SELECT$numtaxon)
+  ind_dom = which(colnames(mat.sites.species.abund) %in% selected.sp$numtaxon)
   mat.sites.species.abund = mat.sites.species.abund[, ind_dom]
   dim(mat.sites.species.abund)
   
