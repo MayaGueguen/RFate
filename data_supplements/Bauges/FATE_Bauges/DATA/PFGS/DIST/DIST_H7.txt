@@ -1,8 +1,8 @@
 ## File automatically generated 
-## Date : Thu Mar  7 11:52:28 2019
+## Date : Mon Apr  8 18:29:56 2019
 NAME H7
-BREAK_AGE 298 2 8 298 2 8
-RESPR_AGE 0 0 298 8 0 0 298 8
-FATES 0 0 0 0 4 0 10 0 1 0 1 0 0 0 0 0
+BREAK_AGE 0 2 8 0 2 8
+RESPR_AGE 0 0 0 8 0 0 0 8
+FATES 0 0 0 0 4 0 10 0 1 0 1 0 0 1 0 1
 PROP_KILLED 0 0
 ACTIVATED_SEED 0 0

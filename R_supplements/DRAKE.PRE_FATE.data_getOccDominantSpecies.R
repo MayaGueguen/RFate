@@ -316,7 +316,7 @@ getSDM_build = function(zone.name, list_sp, XY, zone.env.stk.CALIB, zone.env.stk
            , zone.env.stk.PROJ = zone.env.stk.PROJ
            , check.computed = TRUE
            , sp.type = sp.type
-           , mc.cores = 6)
+           , mc.cores = )
   
   cat("\nended at:", format(Sys.time(), "%a %d %b %Y %X"))
 }

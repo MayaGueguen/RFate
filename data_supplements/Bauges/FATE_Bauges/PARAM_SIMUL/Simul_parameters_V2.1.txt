@@ -1,15 +1,15 @@
 ## File automatically generated 
-## Date : Thu Mar  7 11:52:55 2019
+## Date : Mon Apr  8 18:30:23 2019
 --GLOBAL_PARAMS--
 FATE_Bauges/DATA/GLOBAL_PARAMETERS/Global_parameters_V2.txt
---SAVE_DIR--
-FATE_Bauges/RESULTS/SIMUL_V2
 --MASK--
 FATE_Bauges/DATA/MASK/MASK_100m.tif
 --ARRAYS_SAVING_YEARS--
 FATE_Bauges/DATA/SAVE/SAVE_YEARS_maps.txt
 --DIST_CHANGE_TIME--
 FATE_Bauges/DATA/SCENARIO/DIST_changing_times.txt
+--SAVE_DIR--
+FATE_Bauges/RESULTS/SIMUL_V2.1
 --PFG_LIFE_HISTORY_PARAMS--
 FATE_Bauges/DATA/PFGS/SUCC/SUCC_C1.txt
 FATE_Bauges/DATA/PFGS/SUCC/SUCC_C2.txt

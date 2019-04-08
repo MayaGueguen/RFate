@@ -1,175 +1,126 @@
-numtaxon	libcbna	genre	stat.abund_max	stat.no_sites_abund_max	stat.no_sites_abund	stat.no_sites_abund_over25	stat.abund_median	stat.abund_mean	stat.no_sites_recorded	SELECTION
-23	Acer pseudoplatanus L.	Acer	87.5	5	597	43	0.5	6.88274706867672	1143	all
-190	Astrantia major L.									
-294	Chaerophyllum hirsutum L.									
-323	Daucus carota L. subsp. carota	Daucus	15	6	67	0	0.5	2.24626865671642	682	all
-419	Heracleum sphondylium L.									
-449	Laserpitium latifolium L.									
-497	Oenanthe lachenalii C.C. Gmelin	Oenanthe	15	6	82	0	0.5	2.26219512195122	629	all
-561	Pimpinella major (L.) Hudson									
-711	Vinca minor L.	Vinca	87.5	5	53	25	15	31.9433962264151	206	all
-715	Ilex aquifolium L.	Ilex	37.5	2	258	2	0.5	2.5562015503876	514	all
-721	Hedera helix L.	Hedera	87.5	1	415	76	3	12.9771084337349	967	all
-786	Achillea millefolium L.	Achillea	15	6	112	0	0.5	2.10267857142857	487	all
-902	Arnica montana L.									
-1269	Centaurea jacea L.	Centaurea	15	13	96	0	0.5	3.32291666666667	711	all
-1357	Centaurea scabiosa L.	Centaurea	15	3	96	0	0.5	1.890625	515	all
-1388	Centaurea uniflora Turra subsp. nervosa (Willd.) Bonnier & Layens									
-1535	Cirsium palustre (L.) Scop.	Cirsium	37.5	1	264	1	0.5	1.32007575757576	795	all
-1742	Eupatorium cannabinum L. subsp. cannabinum	Eupatorium	62.5	1	156	3	0.5	3.06730769230769	531	all
-2144	Hieracium murorum L.	Hieracium	37.5	8	382	8	0.5	4.12303664921466	763	all
-2393	Homogyne alpina (L.) Cass.									
-2509	Leontodon hispidus L.	Leontodon	62.5	2	194	7	3	6.60051546391753	659	all
-2548	Leucanthemum adustum (Koch) Gremli									
-2740	Prenanthes purpurea L.	Prenanthes	87.5	1	446	13	3	4.87107623318386	914	all
-2942	Serratula tinctoria L.									
-2957	Solidago gigantea Aiton	Solidago	87.5	1	223	40	3	11.280269058296	654	all
-3317	Alnus alnobetula (Ehrh.) C. Koch subsp. alnobetula									
-3320	Alnus glutinosa (L.) Gaertn.	Alnus	87.5	18	175	68	3	25.9142857142857	480	all
-3340	Betula pendula Roth	Betula	37.5	2	142	2	0.5	2.88380281690141	503	all
-4565	Buxus sempervirens L.	Buxus	87.5	6	115	38	15	20.9695652173913	444	all
-4691	Campanula rhomboidalis L.	Campanula	37.5	3	185	3	3	3.48378378378378	469	all
-4692	Campanula rotundifolia L.	Campanula	37.5	1	94	1	0.5	1.9468085106383	533	all
-4776	Phyteuma spicatum L.	Phyteuma	15	17	384	0	0.5	2.01432291666667	803	all
-4837	Lonicera xylosteum L.	Lonicera	62.5	1	391	9	0.5	4.05242966751918	894	all
-4847	Viburnum lantana L.	Viburnum	37.5	1	334	1	0.5	1.65718562874252	978	all
-5090	Dianthus carthusianorum L.	Dianthus	3	6	26	0	0.5	1.07692307692308	580	all
-5456	Silene nutans L. subsp. nutans	Silene	15	3	92	0	0.5	1.46195652173913	535	all
-5924	Helianthemum nummularium (L.) Miller									
-5990	Calystegia sepium (L.) R. Br. subsp. sepium	Calystegia	37.5	2	154	2	0.5	2.42532467532468	462	all
-6075	Carpinus betulus L.	Carpinus	87.5	6	279	52	3	14.1594982078853	632	all
-6077	Corylus avellana L.	Corylus	87.5	9	565	63	3	9.88761061946903	1246	all
-6104	Sedum album L.	Sedum	37.5	2	68	2	0.5	3.60294117647059	484	all
-6273	Knautia arvensis (L.) Coulter	Knautia	37.5	1	70	1	0.5	2.29285714285714	709	all
-6333	Scabiosa columbaria L.	Scabiosa	15	3	99	0	0.5	1.44444444444444	562	all
-6490	Vaccinium myrtillus L.	Vaccinium	87.5	15	352	85	3	17.21875	1025	all
-6492	Vaccinium uliginosum L.									
-6529	Euphorbia cyparissias L.	Euphorbia	37.5	3	201	3	0.5	3.32835820895522	994	all
-6684	Anthyllis vulneraria L.	Anthyllis	15	19	188	0	3	2.97606382978723	1062	all
-6989	Genista tinctoria L.	Genista	37.5	1	100	1	0.5	2.525	715	all
-7033	Hippocrepis comosa L.	Hippocrepis	62.5	1	210	3	3	4.42142857142857	1079	all
-7035	Hippocrepis emerus (L.) P. Lassen	Hippocrepis	62.5	1	197	4	0.5	3.67005076142132	668	all
-7107	Lathyrus pratensis L.	Lathyrus	15	9	248	0	0.5	1.68145161290323	957	all
-7147	Lotus corniculatus L.	Lotus	37.5	6	405	6	0.5	3.28271604938272	1843	all
-7270	Medicago lupulina L.	Medicago	37.5	1	105	1	0.5	2.22380952380952	791	all
-7378	Onobrychis montana DC.									
-7387	Onobrychis viciifolia Scop.	Onobrychis	37.5	6	59	6	0.5	7.59322033898305	637	all
-7551	Securigera varia (L.) P. Lassen	Securigera	37.5	1	45	1	0.5	4.13333333333333	463	all
-7660	Trifolium montanum L.	Trifolium	15	12	96	0	0.5	2.91145833333333	725	all
-7680	Trifolium pratense L.	Trifolium	62.5	2	326	15	3	5.76533742331288	1160	all
-7696	Trifolium repens L.	Trifolium	37.5	5	119	5	3	5.61344537815126	613	all
-7867	Vicia sepium L.	Vicia	15	12	173	0	3	2.58959537572254	499	all
-7895	Fagus sylvatica L.	Fagus	87.5	64	988	258	3	19.3092105263158	1633	all
-7916	Quercus petraea (Mattuschka) Liebl.	Quercus	87.5	4	232	53	3	15.4741379310345	478	all
-7920	Quercus pubescens Willd. [1805]	Quercus	87.5	4	138	28	3	16.3405797101449	741	all
-8059	Gentiana lutea L.	Gentiana	62.5	1	238	2	1.75	4.0609243697479	621	all
-8207	Geranium robertianum L.	Geranium	37.5	2	200	2	0.5	3.145	745	all
-8218	Geranium sylvaticum L.	Geranium	62.5	2	265	10	3	5.45471698113208	679	all
-8238	Globularia bisnagarica L.	Globularia	15	8	114	0	0.5	2.19736842105263	599	all
-8244	Globularia nudicaulis L.									
-8331	Hypericum maculatum Crantz subsp. maculatum	Hypericum	87.5	1	170	7	3	5.57058823529412	506	all
-8339	Hypericum perforatum L.	Hypericum	15	4	89	0	0.5	1.57303370786517	636	all
-8351	Hypericum richeri Vill.									
-8459	Ajuga reptans L.	Ajuga	15	7	237	0	0.5	1.39240506329114	777	all
-8563	Lamium galeobdolon (L.) L. subsp. montanum (Pers.) Hayek	Lamium	62.5	3	270	7	3	4.83148148148148	537	all
-8613	Mentha aquatica L. subsp. aquatica	Mentha	37.5	9	303	9	3	5.83168316831683	691	all
-8697	Origanum vulgare L. subsp. vulgare	Origanum	37.5	2	100	2	0.5	3.175	935	all
-8706	Prunella grandiflora (L.) Scholler	Prunella	37.5	1	117	1	3	4.82051282051282	465	all
-8712	Prunella vulgaris L.	Prunella	37.5	1	142	1	0.5	2.44014084507042	507	all
-8742	Salvia pratensis L.	Salvia	37.5	7	121	7	3	6.55371900826446	1299	all
-8849	Stachys recta L.	Stachys	15	2	109	0	0.5	1.5	603	all
-8863	Teucrium chamaedrys L.	Teucrium	62.5	1	230	8	3	5.62173913043478	1379	all
-9042	Linum catharticum L.	Linum	3	55	177	0	0.5	1.27683615819209	668	all
-9089	Lythrum salicaria L.	Lythrum	37.5	2	306	2	0.5	2.24346405228758	692	all
-9271	Epilobium angustifolium L.									
-9369	Fraxinus excelsior L.	Fraxinus	87.5	11	855	114	3	10.5771929824561	2026	all
-9387	Ligustrum vulgare L.	Ligustrum	62.5	1	282	7	0.5	3.6968085106383	1091	all
-9402	Oxalis acetosella L.	Oxalis	62.5	3	260	9	3	7.72307692307692	578	all
-9655	Plantago lanceolata L.	Plantago	37.5	1	195	1	0.5	2.55128205128205	807	all
-9670	Plantago media L.	Plantago	15	7	114	0	0.5	2.07017543859649	491	all
-9982	Polygala vulgaris L.	Polygala	37.5	1	91	1	0.5	1.74725274725275	548	all
-10106	Polygonum viviparum L.									
-10113	Rumex acetosa L.	Rumex	15	4	158	0	0.5	1.24683544303797	770	all
-10182	Rumex pseudalpinus HÃ¶fft									
-10328	Lysimachia vulgaris L.	Lysimachia	62.5	2	416	14	1.75	4.70432692307692	958	all
-10502	Caltha palustris L.	Caltha	87.5	1	166	8	3	6.49096385542169	605	all
-10512	Clematis vitalba L.	Clematis	15	3	85	0	0.5	1.39411764705882	548	all
-10646	Ranunculus bulbosus L.	Ranunculus	37.5	1	89	1	0.5	2.39887640449438	804	all
-10799	Ranunculus tuberosus Lapeyr.	Ranunculus	15	14	196	0	3	2.74744897959184	511	all
-10889	Frangula alnus Miller	Frangula	87.5	2	239	8	0.5	3.93305439330544	574	all
-11057	Aruncus dioicus (Walter) Fernald									
-11102	Crataegus monogyna Jacq.	Crataegus	37.5	1	231	1	0.5	2.4047619047619	658	all
-11139	Filipendula ulmaria (L.) Maxim.	Filipendula	87.5	11	377	86	3	14.8249336870027	1067	all
-11151	Fragaria vesca L.	Fragaria	37.5	1	356	1	0.5	2.50140449438202	863	all
-11225	Potentilla erecta (L.) Räuschel	Potentilla	37.5	5	517	5	3	4.23887814313346	1514	all
-11225	Potentilla erecta (L.) RÃ¤uschel									
-11256	Potentilla neumanniana Reichenb.	Potentilla	37.5	1	124	1	0.5	2.51612903225806	749	all
-11313	Prunus avium L.	Prunus	15	2	128	0	0.5	1.1171875	480	all
-11354	Prunus spinosa L.	Prunus	15	2	36	0	0.5	1.65277777777778	489	all
-11573	Rubus idaeus L.	Rubus	87.5	1	215	17	0.5	6.53953488372093	550	all
-11710	Sanguisorba minor Scop.									
-11726	Sorbus aria (L.) Crantz	Sorbus	37.5	7	494	7	0.5	3.18927125506073	1041	all
-11729	Sorbus aucuparia L.									
-11730	Sorbus aucuparia L. subsp. aucuparia	Sorbus	37.5	6	318	6	0.5	2.79088050314465	560	all
-11732	Sorbus chamaemespilus (L.) Crantz									
-11864	Galium mollugo L. subsp. erectum Syme	Galium	37.5	1	180	1	0.5	2.85833333333333	721	all
-11874	Galium odoratum (L.) Scop.	Galium	62.5	3	343	18	3	7.95772594752187	591	all
-12010	Populus tremula L.	Populus	87.5	1	155	5	0.5	4.6741935483871	471	all
-12043	Salix cinerea L.	Salix	87.5	8	154	27	0.5	13.0422077922078	541	all
-12845	Veronica chamaedrys L.	Veronica	15	5	133	0	0.5	1.7406015037594	563	all
-13120	Urtica dioica L.	Urtica	87.5	5	131	19	3	11.6984732824427	664	all
-13146	Valeriana dioica L.	Valeriana	62.5	1	182	4	3	4.91483516483517	526	all
-13783	Colchicum autumnale L.	Colchicum	15	4	85	0	0.5	1.68235294117647	598	all
-13814	Polygonatum verticillatum (L.) All.	Polygonatum	37.5	4	272	4	3	4.32352941176471	478	all
-13838	Carex acutiformis Ehrh.	Carex	87.5	8	171	54	15	20.4883040935673	569	all
-13872	Carex caryophyllea Latourr.	Carex	62.5	1	68	2	3	5.71323529411765	673	all
-13892	Carex davalliana Sm.	Carex	62.5	1	124	13	3	7.68145161290323	519	all
-13900	Carex digitata L.	Carex	37.5	2	169	2	0.5	2.58579881656805	463	all
-13933	Carex flacca Schreber	Carex	62.5	1	397	13	3	4.47607052896725	1818	all
-14009	Carex montana L.	Carex	62.5	3	236	13	3	7.37076271186441	615	all
-14054	Carex panicea L.	Carex	62.5	5	303	35	3	9.74092409240924	812	all
-14098	Carex sempervirens Vill. subsp. sempervirens	Carex	87.5	2	181	71	15	22.4585635359116	465	all
-14114	Carex sylvatica Hudson	Carex	62.5	1	217	4	0.5	2.57834101382489	644	all
-14144	Cladium mariscus (L.) Pohl	Cladium	87.5	8	97	33	3	22.5051546391753	246	all
-14249	Schoenus nigricans L.	Schoenus	62.5	16	128	55	15	22.87890625	359	all
-14607	Juncus filiformis L.	Juncus	62.5	1	35	3	3	7.24285714285714	557	all
-14645	Juncus subnodulosus Schrank	Juncus	87.5	7	214	90	15	25.3411214953271	535	all
-14863	Aceras anthropophorum (L.) Aiton fil.	Aceras	3	27	51	0	3	1.82352941176471	553	all
-14871	Cephalanthera longifolia (L.) Fritsch	Cephalanthera	37.5	1	84	1	0.5	1.4702380952381	744	all
-14950	Epipactis palustris (L.) Crantz	Epipactis	15	10	118	0	0.5	2.53389830508475	615	all
-14965	Gymnadenia conopsea (L.) R. Br. in Aiton fil.	Gymnadenia	15	1	150	0	0.5	1.26333333333333	1079	all
-14982	Listera ovata (L.) R. Br.	Listera	15	1	105	0	0.5	1.35238095238095	936	all
-15156	Orchis mascula (L.) L.	Orchis	3	13	33	0	0.5	1.48484848484848	587	all
-15162	Orchis militaris L.	Orchis	3	40	45	0	3	2.72222222222222	547	all
-15195	Orchis simia Lam.	Orchis	3	7	29	0	0.5	1.10344827586207	563	all
-15208	Platanthera bifolia (L.) L.C.M. Richard	Platanthera	3	8	96	0	0.5	0.708333333333333	556	all
-15316	Agrostis capillaris L.	Agrostis	62.5	2	140	14	3	8.3	569	all
-15482	Arrhenatherum elatius (L.) P. Beauv. ex J. & C. Presl subsp. elatius	Arrhenatherum	87.5	1	76	15	3	12.7828947368421	553	all
-15624	Brachypodium rupestre (Host) Roemer & Schultes	Brachypodium	87.5	1	222	38	3	12.5157657657658	727	all
-15627	Brachypodium sylvaticum (Hudson) P. Beauv. subsp. sylvaticum	Brachypodium	62.5	1	204	8	0.5	4.50735294117647	567	all
-15630	Briza media L.	Briza	37.5	4	345	4	0.5	3.03478260869565	1252	all
-15654	Bromus erectus Hudson	Bromus	87.5	8	385	166	15	23.7922077922078	2043	all
-15813	Dactylis glomerata L.	Dactylis	62.5	6	223	22	3	7.98654708520179	968	all
-15840	Deschampsia cespitosa (L.) P. Beauv. subsp. cespitosa	Deschampsia	62.5	4	181	13	0.5	5.93093922651934	628	all
-15851	Deschampsia flexuosa (L.) Trin.	Deschampsia	62.5	2	127	12	3	8.98031496062992	593	all
-16368	Holcus lanatus L.	Holcus	62.5	2	201	22	3	8.70398009950249	548	all
-16522	Molinia caerulea (L.) Moench	Molinia	87.5	10	222	74	15	19.9301801801802	664	all
-16524	Molinia caerulea (L.) Moench subsp. arundinacea (Schrank) K. Richter	Molinia	87.5	2	156	61	15	22.1634615384615	439	all
-16538	Nardus stricta L.	Nardus	87.5	2	126	31	3	14.8968253968254	594	all
-16676	Phragmites australis (Cav.) Steudel	Phragmites	87.5	28	448	146	15	22.890625	1051	all
-16786	Poa trivialis L.	Poa	62.5	2	171	20	3	8.26608187134503	472	all
-16860	Sesleria caerulea (L.) Ard., non sensu 4	Sesleria	62.5	9	265	42	3	11.7622641509434	737	all
-17297	Juniperus communis L.	Juniperus	15	14	146	0	0.5	2.3013698630137	700	all
-17343	Abies alba Miller	Abies	87.5	12	675	130	3	13.3874074074074	1074	all
-17363	Picea abies (L.) Karsten	Picea	87.5	31	867	163	3	14.1239907727797	1744	all
-17589	Dryopteris filix-mas (L.) Schott	Dryopteris	37.5	14	392	14	3	5.10714285714286	899	all
-17798	Athyrium filix-femina (L.) Roth	Athyrium	87.5	3	257	34	3	9.97665369649805	672	all
-40190	Carduus defloratus L. subsp. defloratus									
-40496	Acer campestre L., 1753	Acer	37.5	1	267	1	0.5	2.44194756554307	731	all
-40501	Allium ursinum L., 1753	Allium	87.5	4	71	29	15	24.6619718309859	224	all
-40514	Carex elata All., 1785	Carex	87.5	7	274	84	15	19.4817518248175	592	all
-40623	Rubus fruticosus groupe									
-41178	Pilosella officinarum F.W.Schultz & Sch.Bip., 1862	Pilosella	15	6	68	0	0.5	2.11029411764706	748	all
-41214	Cornus sanguinea L. subsp. sanguinea	Cornus	62.5	5	320	14	0.5	5.23125	1343	all
-41290	Acer opalus Mill. subsp. opalus	Acer	62.5	3	258	10	3	5.67054263565892	594	all
-41294	Euphorbia amygdaloides L. subsp. amygdaloides	Euphorbia                                         	15	1	143	0	0.5	1.26573426573427	471	all
+CODE_CBNA	PFG	species	TO_REMOVE
+10512	C1	Clematis vitalba L.	0
+11102	C1	Crataegus monogyna Jacq.	0
+40623	C1	Rubus fruticosus groupe	0
+4837	C1	Lonicera xylosteum L.	0
+6073	C1	Cornus sanguinea L.	0
+721	C1	Hedera helix L.	0
+9387	C1	Ligustrum vulgare L.	0
+40566	C2	Vaccinium vitis-idaea L.	0
+5924	C2	Helianthemum nummularium (L.) Miller	0
+6422	C2	Arctostaphylos uva-ursi (L.) Sprengel	0
+6483	C2	Rhododendron ferrugineum L.	0
+6490	C2	Vaccinium myrtillus L.	0
+6492	C2	Vaccinium uliginosum L.	0
+9962	C2	Polygala chamaebuxus L.	0
+10106	H1	Polygonum viviparum L.	0
+11139	H1	Filipendula ulmaria (L.) Maxim.	0
+11225	H1	Potentilla erecta (L.) RÃ¤uschel	0
+11710	H1	Sanguisorba minor Scop.	0
+14054	H1	Carex panicea L.	0
+14797	H1	Gagea villosa (M. Bieb.) Sweet	0
+14965	H1	Gymnadenia conopsea (L.) R. Br. in Aiton fil.	0
+15630	H1	Briza media L.	0
+15654	H1	Bromus erectus Hudson	0
+2509	H1	Leontodon hispidus L.	0
+8207	H1	Geranium robertianum L.	0
+8459	H1	Ajuga reptans L.	0
+8742	H1	Salvia pratensis L.	0
+8863	H1	Teucrium chamaedrys L.	0
+10130	H2	Rumex arifolius All.	0
+10845	H2	Trollius europaeus L.	0
+12696	H2	Rhinanthus alectorolophus (Scop.) Pollich	0
+14098	H2	Carex sempervirens Vill. subsp. sempervirens	0
+15465	H2	Anthoxanthum odoratum L.	0
+16219	H2	Festuca rubra L.	0
+16538	H2	Nardus stricta L.	0
+190	H2	Astrantia major L.	0
+419	H2	Heracleum sphondylium L.	0
+4759	H2	Phyteuma orbiculare L.	0
+5399	H2	Silene dioica (L.) Clairv.	0
+561	H2	Pimpinella major (L.) Hudson	0
+6273	H2	Knautia arvensis (L.) Coulter	0
+7378	H2	Onobrychis montana DC.	0
+8218	H2	Geranium sylvaticum L.	0
+10182	H3	Rumex pseudalpinus	0
+13924	H3	Carex ferruginea Scop.	0
+16860	H3	Sesleria caerulea (L.) Ard.	0
+2548	H3	Leucanthemum adustum (Koch) Gremli	0
+7590	H3	Trifolium badium Schreber	0
+8059	H3	Gentiana lutea L.	0
+9618	H3	Plantago atrata Hoppe subsp. atrata	0
+10328	H4	Lysimachia vulgaris L.	0
+1535	H4	Cirsium palustre (L.) Scop.	0
+15624	H4	Brachypodium rupestre (Host) Roemer & Schultes	0
+16676	H4	Phragmites australis (Cav.) Steudel	0
+2957	H4	Solidago gigantea Aiton	0
+8613	H4	Mentha aquatica L. subsp. aquatica	0
+8697	H4	Origanum vulgare L. subsp. vulgare	0
+10590	H5	Pulsatilla alpina (L.) Delarbre	0
+10799	H5	Ranunculus tuberosus Lapeyr.	0
+13153	H5	Valeriana montana L.	0
+1388	H5	Centaurea uniflora Turra subsp. nervosa (Willd.) Bonnier & Layens	0
+14607	H5	Juncus filiformis L.	0
+14713	H5	Luzula sieberi Tausch	0
+15246	H5	Traunsteinera globosa (L.) Reichenb.	0
+15851	H5	Deschampsia flexuosa (L.) Trin.	0
+2393	H5	Homogyne alpina (L.) Cass.	0
+294	H5	Chaerophyllum hirsutum L.	0
+2942	H5	Serratula tinctoria L.	0
+40190	H5	Carduus defloratus L. subsp. defloratus	0
+449	H5	Laserpitium latifolium L.	0
+4691	H5	Campanula rhomboidalis L.	0
+6207	H5	Sempervivum tectorum L.	0
+6285	H5	Knautia dipsacifolia Kreutzer	0
+8077	H5	Gentiana purpurea L.	0
+8244	H5	Globularia nudicaulis L.	0
+8351	H5	Hypericum richeri Vill.	0
+902	H5	Arnica montana L.	0
+9021	H5	Linum alpinum Jacq.	0
+9271	H5	Epilobium angustifolium L.	0
+11057	H6	Aruncus dioicus (Walter) Fernald	0
+11874	H6	Galium odoratum (L.) Scop.	0
+12264	H6	Saxifraga rotundifolia L.	0
+16372	H6	Hordelymus europaeus (L.) C.O. Harz	0
+16504	H6	Melica uniflora Retz.	0
+17589	H6	Dryopteris filix-mas (L.) Schott	0
+17798	H6	Athyrium filix-femina (L.) Roth	0
+2144	H6	Hieracium murorum L.	0
+2740	H6	Prenanthes purpurea L.	0
+3941	H6	Cardamine pentaphyllos (L.) Crantz	0
+4776	H6	Phyteuma spicatum L.	0
+6653	H6	Mercurialis perennis L.	0
+8563	H6	Lamium galeobdolon (L.) L. subsp. montanum (Pers.) Hayek	0
+11151	H7	Fragaria vesca L.	0
+13120	H7	Urtica dioica L.	0
+15813	H7	Dactylis glomerata L.	0
+15840	H7	Deschampsia cespitosa (L.) P. Beauv. subsp. cespitosa	0
+16368	H7	Holcus lanatus L.	0
+40514	H7	Carex elata All.	0
+4692	H7	Campanula rotundifolia L.	0
+6529	H7	Euphorbia cyparissias L.	0
+6684	H7	Anthyllis vulneraria L.	0
+7033	H7	Hippocrepis comosa L.	0
+7107	H7	Lathyrus pratensis L.	0
+7147	H7	Lotus corniculatus L.	0
+7680	H7	Trifolium pratense L.	0
+9042	H7	Linum catharticum L.	0
+9655	H7	Plantago lanceolata L.	0
+13933	H8	Carex flacca Schreber	0
+14114	H8	Carex sylvatica Hudson	0
+14982	H8	Listera ovata (L.) R. Br.	0
+40603	H8	Thymus serpyllum groupe	0
+11726	P1	Sorbus aria (L.) Crantz	0
+11729	P1	Sorbus aucuparia L.	0
+40496	P1	Acer campestre L.	0
+11732	P2	Sorbus chamaemespilus (L.) Crantz	0
+17297	P2	Juniperus communis L.	0
+4839	P2	Sambucus nigra L.	0
+4847	P2	Viburnum lantana L.	0
+6077	P2	Corylus avellana L.	0
+17343	P3	Abies alba Miller	0
+23	P3	Acer pseudoplatanus L.	0
+17363	P4	Picea abies (L.) Karsten	0
+7895	P4	Fagus sylvatica L.	0
+3317	P5	Alnus alnobetula (Ehrh.) C. Koch subsp. alnobetula	0
+9369	P6	Fraxinus excelsior L.	0

@@ -1,8 +1,8 @@
 ## File automatically generated 
-## Date : Thu Mar  7 11:52:28 2019
+## Date : Mon Apr  8 18:29:56 2019
 NAME C1
-BREAK_AGE 1 1 1 1 1 1
-RESPR_AGE 0 0 1 149 0 0 1 149
+BREAK_AGE 1 4 4 1 4 4
+RESPR_AGE 0 0 4 149 0 0 4 149
 FATES 0 0 10 0 5 0 10 0 0 0 0 0 0 0 0 0
 PROP_KILLED 0 0
 ACTIVATED_SEED 0 0

@@ -91,20 +91,20 @@ for(ZONE in list(BAUGES))
                                    , observations.xy = observations.xy
                                    , stations.COMMUNITY = stations.COMMUNITY
                                    , zone.name = zone.name)
-    # , sp.dom.occ = getOcc_3_occDom(mat.sites.species = sp.dom.mat
-    #                                , species = species
-    #                                , zone.name = zone.name
-    #                                , sp.type = "SP")
+    , sp.dom.occ = getOcc_3_occDom(mat.sites.species = sp.dom.mat
+                                   , species = species
+                                   , zone.name = zone.name
+                                   , sp.type = "SP")
     ## Build dominant species sdm
-    # , sp.dom.sdm = getSDM_build(zone.name = zone.name
-    #                             , list_sp = sp.dom.occ
-    #                             , XY = XY
-    #                             , zone.env.stk.CALIB = zone.env.stk$env.CALIB
-    #                             , zone.env.stk.PROJ = zone.env.stk$env.PROJ
-    #                             , sp.type = "SP")
-    # , sp.dom.overlap = getSDM_overlap(zone.name = zone.name
-    #                                   , list_sp = sp.dom.occ
-    #                                   , maskSimul = zone.mask)
+    , sp.dom.sdm = getSDM_build(zone.name = zone.name
+                                , list_sp = sp.dom.occ
+                                , XY = XY
+                                , zone.env.stk.CALIB = zone.env.stk$env.CALIB
+                                , zone.env.stk.PROJ = zone.env.stk$env.PROJ
+                                , sp.type = "SP")
+    , sp.dom.overlap = getSDM_overlap(zone.name = zone.name
+                                      , list_sp = sp.dom.occ
+                                      , maskSimul = zone.mask)
     , strings_in_dots = "literals"
   )
   
@@ -135,3 +135,4 @@ for(ZONE in list(BAUGES))
 # sp.dom.overlap = getSDM_overlap(zone.name = zone.name
 #                                 , list_sp = sp.dom.occ
 #                                 , maskSimul = zone.mask)
+
