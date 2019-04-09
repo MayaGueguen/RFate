@@ -3,7 +3,7 @@ CODE_CBNA	PFG	species	TO_REMOVE
 11102	C1	Crataegus monogyna Jacq.	0
 40623	C1	Rubus fruticosus groupe	0
 4837	C1	Lonicera xylosteum L.	0
-41214	C1	Cornus sanguinea L.	0
+6073	C1	Cornus sanguinea L.	0
 721	C1	Hedera helix L.	0
 9387	C1	Ligustrum vulgare L.	0
 40566	C2	Vaccinium vitis-idaea L.	0
@@ -74,7 +74,7 @@ CODE_CBNA	PFG	species	TO_REMOVE
 6285	H5	Knautia dipsacifolia Kreutzer	0
 8077	H5	Gentiana purpurea L.	0
 8244	H5	Globularia nudicaulis L.	0
-8353	H5	Hypericum richeri Vill.	0
+8351	H5	Hypericum richeri Vill.	0
 902	H5	Arnica montana L.	0
 9021	H5	Linum alpinum Jacq.	0
 9271	H5	Epilobium angustifolium L.	0
@@ -111,7 +111,7 @@ CODE_CBNA	PFG	species	TO_REMOVE
 14982	H8	Listera ovata (L.) R. Br.	0
 40603	H8	Thymus serpyllum groupe	0
 11726	P1	Sorbus aria (L.) Crantz	0
-11730	P1	Sorbus aucuparia L.	0
+11729	P1	Sorbus aucuparia L.	0
 40496	P1	Acer campestre L.	0
 11732	P2	Sorbus chamaemespilus (L.) Crantz	0
 17297	P2	Juniperus communis L.	0

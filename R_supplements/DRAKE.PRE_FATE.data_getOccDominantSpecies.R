@@ -28,7 +28,7 @@ getOcc_1_obs = function(observations, stations, maskSimul, maskDem, zone.name)
   min.dem = min(min.dem[], na.rm = TRUE)
   
   observations.xy$dem = extract(maskDem, observations.xy[, c("longitudel93_rel", "latitudel93_rel")])
-  observations.xy = observations.xy[which(observations.xy$dem >= min.dem), ]
+  # observations.xy = observations.xy[which(observations.xy$dem >= min.dem), ]
   head(observations.xy)
   
   save(observations.xy, file = paste0(zone.name, "/DB.observations.xy.RData"))
@@ -316,7 +316,7 @@ getSDM_build = function(zone.name, list_sp, XY, zone.env.stk.CALIB, zone.env.stk
            , zone.env.stk.PROJ = zone.env.stk.PROJ
            , check.computed = TRUE
            , sp.type = sp.type
-           , mc.cores = )
+           , mc.cores = 4)
   
   cat("\nended at:", format(Sys.time(), "%a %d %b %Y %X"))
 }

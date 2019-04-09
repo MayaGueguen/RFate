@@ -50,7 +50,7 @@ for(ZONE in list(BAUGES))
   ### 1. GET DB VALUES - SELECT DOMINANT SPECIES
   ################################################################################################################
   
-  clean()
+  # clean()
   PLAN.getPFG = drake_plan(
     zone.name = ZONE$zone.name
     , zone.mask = raster(file_in(ZONE$zone.mask))
@@ -62,7 +62,7 @@ for(ZONE in list(BAUGES))
     ## Select traits
     , mat.traits.select = getPFG_1_selectTraits(mat.traits = mat.traits)
     ## Build PFG
-    , selected.sp = fread(file_in(paste0(zone.name, "/PFG_Bauges_Description_2017.csv")))
+    , selected.sp = fread(file_in(paste0(zone.name, "/PFG_Bauges_Description_2017_BIS.csv")))
     # Build PFG sdm
     , pfg.mat = getPFG_3_matSitesPFG(zone.name = zone.name
                                      , mat.sites.species = mat.sites.species

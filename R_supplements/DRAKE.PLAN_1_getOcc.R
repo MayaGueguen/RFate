@@ -39,7 +39,7 @@ for(ZONE in list(BAUGES))
   ### 1. GET DB VALUES - SELECT DOMINANT SPECIES
   ################################################################################################################
   
-  clean()
+  # clean()
   PLAN.getOCC = drake_plan(
     zone.name = ZONE$zone.name
     , zone.extent = ZONE$zone.extent
@@ -86,7 +86,7 @@ for(ZONE in list(BAUGES))
                              , fileEncoding = "windows-1252", header = TRUE, sep = "\t")[,1:2])
     , sp.dom.updated = merge(sp.dom, sp.dom.Marj, by = c("numtaxon", "libcbna"), all = TRUE)
     , name.file_DOM = paste0(zone.name, "/DOM_species_", zone.name, ".csv")
-    , sp.dom.updated.written = fwrite(sp.dom.updated, file = name.file_DOM, sep = "\t")
+    # , sp.dom.updated.written = fwrite(sp.dom.updated, file = name.file_DOM, sep = "\t")
     , sp.dom.mat = getOcc_3_matDom(sp.SELECT = sp.dom.updated
                                    , observations.xy = observations.xy
                                    , stations.COMMUNITY = stations.COMMUNITY
