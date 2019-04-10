@@ -19,6 +19,7 @@ library(zip)
 
 source("R_supplements/SHINY.PRE_FATE.params_FUNCTIONS.R", local = TRUE)
 
+names.PFG = c()
 mat.PFG.succ = data.frame()
 mat.PFG.disp = data.frame()
 mat.PFG.dist = data.frame()
@@ -259,35 +260,6 @@ server <- function(input, output, session) {
   
   ####################################################################
   
-  observeEvent(input$create.namespaceConstants, {
-    if (input$create.skeleton > 0)
-    {
-      get_res = print_messages(as.expression(
-        PRE_FATE.params_namespaceConstants(name.simulation = input$name.simul
-                                           , global.abund.low = input$global.abund.low
-                                           , global.abund.med = input$global.abund.med
-                                           , global.abund.high = input$global.abund.high
-                                           , global.max.by.cohort = input$global.max.by.cohort
-                                           , global.resource.thresh.med = input$global.resource.thresh.med
-                                           , global.resource.thresh.low = input$global.resource.thresh.low
-        )
-      ))
-      
-      if(get_res)
-      {
-        output$created_table.namespace = renderDataTable({
-          path_folder = paste0(input$name.simul, "/DATA/NAMESPACE_CONSTANTS/")
-          return(get_files(path_folder))
-        })
-      }
-    } else
-    {
-      shinyalert(type = "warning", text = "You must create a simulation folder first !")
-    }
-  })
-  
-  ####################################################################
-  
   output$UI.doHabSuitability = renderUI({
     if (input$doHabSuitability)
     {
@@ -328,6 +300,27 @@ server <- function(input, output, session) {
   
   ####################################################################
   
+  output$UI.doLight = renderUI({
+    if (input$doLight)
+    {
+      column(12
+             , numericInput(inputId = "LIGHT.thresh_medium"
+                            , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>LIGHT.thresh_medium</span>")
+                            , min = 1
+                            , value = 1
+                            , width = "100%")
+             , numericInput(inputId = "LIGHT.thresh_low"
+                            , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>LIGHT.thresh_low</span>")
+                            , min = 4
+                            , max = 4
+                            , value = 1
+                            , width = "100%")
+      )
+    }
+  })
+  
+  ####################################################################
+  
   observeEvent(input$create.global, {
     if (input$create.skeleton > 0)
     {
@@ -339,9 +332,18 @@ server <- function(input, output, session) {
                                          , required.simul_duration = input$required.simul_duration
                                          , required.seeding_duration = input$required.seeding_duration
                                          , required.seeding_timestep = input$required.seeding_timestep
+                                         , required.seeding_input = input$required.seeding_input
+                                         , required.max_by_cohort = input$required.max_by_cohort
+                                         , required.max_abund_low = input$required.max_abund_low
+                                         , required.max_abund_medium = input$required.max_abund_medium
+                                         , required.max_abund_high = input$required.max_abund_high
                                          , doDispersal = input$doDispersal
                                          , doHabSuitability = input$doHabSuitability
                                          , HABSUIT.ref_option = ifelse(input$HABSUIT.ref_option == "(1) random", 1, 2)
+                                         , doLight = input$doLight
+                                         , LIGHT.thresh_medium = input$LIGHT.thresh_medium
+                                         , LIGHT.thresh_low = input$LIGHT.thresh_low
+                                         , doSoil = input$doSoil
                                          , doDisturbances = input$doDisturbances
                                          , DIST.no = input$DIST.no
                                          , DIST.no_sub = input$DIST.no_sub
@@ -363,6 +365,45 @@ server <- function(input, output, session) {
   })
   
   ####################################################################
+  
+  observeEvent(input$add.PFG.name, {
+    names.PFG <<- c(names.PFG, input$name.PFG)
+    output$names.PFG = renderText({
+      paste0("PFG list : ", paste0(names.PFG, collapse = " "))
+    })
+    shinyjs::show("add.PFG.succ")
+    shinyjs::show("create.succ")
+  })
+  
+  output$UI.succ.PFG = renderUI({
+    if (input$add.PFG.name || input$delete.names.PFG)
+    {
+      selectInput(inputId = "succ.PFG"
+                  , label = NULL
+                  , choices = names.PFG
+                  , selected = NULL
+                  , multiple = F
+                  , width = "100%"
+      )
+    }
+  })
+  
+  observeEvent(input$delete.names.PFG, {
+    names.PFG <<- c()
+    output$names.PFG = renderText({ names.PFG })
+    shinyjs::hide("add.PFG.succ")
+    shinyjs::hide("create.succ")
+  })
+  
+  ####################################################################
+  
+  # observeEvent(input$refresh, {
+  #   system(command = paste0("rm -r ", input$name.simul))
+  #   shinyjs::hide("main.panel")
+  #   shinyjs::hide("create.simul")
+  #   shinyjs::hide("UI.download.folder")
+  #   shinyjs::hide("refresh")
+  # })
   
   observeEvent(input$add.PFG.succ, {
     mat.PFG.succ <<- rbind(mat.PFG.succ

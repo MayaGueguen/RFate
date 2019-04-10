@@ -204,6 +204,23 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Global parameters</p>")
            )
          )
          , fluidRow(
+           column(4
+                    , br()
+                    , checkboxInput(inputId = "doLight"
+                                    , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>doLight</span>")
+                                    , value = TRUE
+                                    , width = "100%")
+                    , uiOutput(outputId = "UI.doLight")
+           )
+           , column(4
+                  , br()
+                  , checkboxInput(inputId = "doSoil"
+                                  , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>doSoil</span>")
+                                  , value = TRUE
+                                  , width = "100%")
+           )
+         )
+         , fluidRow(
            column(6
                   , br()
                   , actionButton(inputId = "create.global"
