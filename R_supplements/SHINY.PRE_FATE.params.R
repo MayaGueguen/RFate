@@ -5,8 +5,8 @@ rm(list = ls())
 library(shiny)
 library(shinyFiles)
 library(shinythemes)
-library(shinycssloaders)
-library(shinydashboard)
+# library(shinycssloaders)
+# library(shinydashboard)
 library(shinyalert)
 library(shinyjs)
 library(markdown)
@@ -172,7 +172,6 @@ ui <- fluidPage(
                     <li>DATA
                     <ul>
                     <li>GLOBAL_PARAMETERS</li>
-                    <li>NAMESPACE_CONSTANTS</li>
                     <li>MASK</li>
                     <li>SCENARIO</li>
                     <li>SAVE</li>
@@ -180,8 +179,10 @@ ui <- fluidPage(
                     <ul>
                     <li>SUCC</li>
                     <li>DISP</li>
-                    <li>DIST</li>
                     <li>HABSUIT</li>
+                    <li>LIGHT</li>
+                    <li>SOIL</li>
+                    <li>DIST</li>
                     </ul>
                     </li>
                     </ul>
@@ -229,98 +230,98 @@ ui <- fluidPage(
         wellPanel(id = "main.panel",
                   style = "border-solid:solid; border-width:2px; border-color:#068f96;",
                   tabsetPanel(
-                    tabPanel(title = HTML("<p class='tabPanel_title'>Internal settings</p>")
-                             , value = "panel.namespace"
-                             , br()
-                             , wellPanel(
-                               style = HTML(paste0("background-color: ", button.color, ";")),
-                               helpText(HTML("
-                                             <p><a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_namespaceConstants.html' target='_blank'>
-                                             See more details on <span style='font-family:Monospace;'>RFate</span> package website.</a></p>
-                                             <table style='width:100%;'>
-                                             <tr>
-                                             <td style='width:30%;font-family:Monospace;vertical-align:top;'>global.abund.low</td>
-                                             <td style='width:70%;'><em>Not used for now. To be removed ?</em></td>
-                                             </tr>
-                                             <tr>
-                                             <td style='width:30%;font-family:Monospace;vertical-align:top;'>global.abund.med</td>
-                                             <td style='width:70%;'><em>Not used for now. To be removed ?</em></td>
-                                             </tr>
-                                             <tr>
-                                             <td style='width:30%;font-family:Monospace;vertical-align:top;'>global.abund.high</td>
-                                             <td style='width:70%;'>an <span style='font-family:Monospace;'>integer</span> in the order of 1 000 000 to rescale abundance values in each pixel</td>
-                                             </tr>
-                                             <tr>
-                                             <td style='width:30%;font-family:Monospace;'>global.max.by.cohort</td>
-                                             <td style='width:70%;'>an <span style='font-family:Monospace;'>integer</span> in the order of 1 000 000 to rescale abundance values of each cohort in each pixel</td>
-                                             </tr>
-                                             <tr>
-                                             <td style='width:30%;font-family:Monospace;vertical-align:top;'>global.resource.thresh.med</td>
-                                             <td style='width:70%;'>an <span style='font-family:Monospace;'>integer</span> in the order of 1 000 000 to convert PFG abundances in each strata into light resources.
-                                             It corresponds to the limit of abundances above which light resources are medium.
-                                             PFG abundances lower than this threshold imply high amount of light.
-                                             It is consequently lower than <span style='font-family:Monospace;'>global.resource.thresh.low</span>.</td>
-                                             </tr>
-                                             <tr>
-                                             <td style='width:30%;font-family:Monospace;vertical-align:top;'>global.resource.thresh.low</td>
-                                             <td style='width:70%;'>an <span style='font-family:Monospace;'>integer</span> in the order of 1 000 000 to convert PFG abundances in each strata into light resources.
-                                             It corresponds to the limit of abundances above which light resources are low.
-                                             PFG abundances higher than <span style='font-family:Monospace;'>global.resource.thresh.med</span> and lower than this threshold imply medium amount of light.</td>
-                                             </tr>
-                                             </table>
-                                             " 
-                               )))
-                             , fluidRow(
-                               column(6
-                                      , br()
-                                      , br()
-                                      , numericInput(inputId = "global.abund.low"
-                                                     , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>global.abund.low</span>")
-                                                     , value = 1000000
-                                                     , width = "100%")
-                                      , numericInput(inputId = "global.abund.med"
-                                                     , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>global.abund.med</span>")
-                                                     , value = 5000000
-                                                     , width = "100%")
-                                      , numericInput(inputId = "global.abund.high"
-                                                     , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>global.abund.high</span>")
-                                                     , value = 8000000
-                                                     , width = "100%")
-                               )
-                               , column(6
-                                        , br()
-                                        , br()
-                                        , numericInput(inputId = "global.max.by.cohort"
-                                                       , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>global.max.by.cohort</span>")
-                                                       , value = 5000000
-                                                       , width = "100%")
-                                        , numericInput(inputId = "global.resource.thresh.med"
-                                                       , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>global.resource.thresh.med</span>")
-                                                       , value = 13000000
-                                                       , width = "100%")
-                                        , numericInput(inputId = "global.resource.thresh.low"
-                                                       , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>global.resource.thresh.low</span>")
-                                                       , value = 19000000
-                                                       , width = "100%")
-                               )
-                             )
-                             , fluidRow(
-                               column(6
-                                      , br()
-                                      , actionButton(inputId = "create.namespaceConstants"
-                                                     , label = "Create Namespace constants file"
-                                                     , icon = icon("file")
-                                                     , width = "100%"
-                                                     , style = HTML(paste0("background-color: ", button.color, ";"))
-                                      )
-                                      , br())
-                             )
-                             , fluidRow(
-                               br(),
-                               wellPanel(dataTableOutput(outputId = "created_table.namespace"))
-                             )
-                               ) ## END tabPanel (Internal settings)
-                    , tabPanel(title = HTML("<p class='tabPanel_title'>Global parameters</p>")
+                    # tabPanel(title = HTML("<p class='tabPanel_title'>Internal settings</p>")
+                    #          , value = "panel.namespace"
+                    #          , br()
+                    #          , wellPanel(
+                    #            style = HTML(paste0("background-color: ", button.color, ";")),
+                    #            helpText(HTML("
+                    #                          <p><a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_namespaceConstants.html' target='_blank'>
+                    #                          See more details on <span style='font-family:Monospace;'>RFate</span> package website.</a></p>
+                    #                          <table style='width:100%;'>
+                    #                          <tr>
+                    #                          <td style='width:30%;font-family:Monospace;vertical-align:top;'>global.abund.low</td>
+                    #                          <td style='width:70%;'><em>Not used for now. To be removed ?</em></td>
+                    #                          </tr>
+                    #                          <tr>
+                    #                          <td style='width:30%;font-family:Monospace;vertical-align:top;'>global.abund.med</td>
+                    #                          <td style='width:70%;'><em>Not used for now. To be removed ?</em></td>
+                    #                          </tr>
+                    #                          <tr>
+                    #                          <td style='width:30%;font-family:Monospace;vertical-align:top;'>global.abund.high</td>
+                    #                          <td style='width:70%;'>an <span style='font-family:Monospace;'>integer</span> in the order of 1 000 000 to rescale abundance values in each pixel</td>
+                    #                          </tr>
+                    #                          <tr>
+                    #                          <td style='width:30%;font-family:Monospace;'>global.max.by.cohort</td>
+                    #                          <td style='width:70%;'>an <span style='font-family:Monospace;'>integer</span> in the order of 1 000 000 to rescale abundance values of each cohort in each pixel</td>
+                    #                          </tr>
+                    #                          <tr>
+                    #                          <td style='width:30%;font-family:Monospace;vertical-align:top;'>global.resource.thresh.med</td>
+                    #                          <td style='width:70%;'>an <span style='font-family:Monospace;'>integer</span> in the order of 1 000 000 to convert PFG abundances in each strata into light resources.
+                    #                          It corresponds to the limit of abundances above which light resources are medium.
+                    #                          PFG abundances lower than this threshold imply high amount of light.
+                    #                          It is consequently lower than <span style='font-family:Monospace;'>global.resource.thresh.low</span>.</td>
+                    #                          </tr>
+                    #                          <tr>
+                    #                          <td style='width:30%;font-family:Monospace;vertical-align:top;'>global.resource.thresh.low</td>
+                    #                          <td style='width:70%;'>an <span style='font-family:Monospace;'>integer</span> in the order of 1 000 000 to convert PFG abundances in each strata into light resources.
+                    #                          It corresponds to the limit of abundances above which light resources are low.
+                    #                          PFG abundances higher than <span style='font-family:Monospace;'>global.resource.thresh.med</span> and lower than this threshold imply medium amount of light.</td>
+                    #                          </tr>
+                    #                          </table>
+                    #                          " 
+                    #            )))
+                    #          , fluidRow(
+                    #            column(6
+                    #                   , br()
+                    #                   , br()
+                    #                   , numericInput(inputId = "global.abund.low"
+                    #                                  , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>global.abund.low</span>")
+                    #                                  , value = 1000000
+                    #                                  , width = "100%")
+                    #                   , numericInput(inputId = "global.abund.med"
+                    #                                  , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>global.abund.med</span>")
+                    #                                  , value = 5000000
+                    #                                  , width = "100%")
+                    #                   , numericInput(inputId = "global.abund.high"
+                    #                                  , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>global.abund.high</span>")
+                    #                                  , value = 8000000
+                    #                                  , width = "100%")
+                    #            )
+                    #            , column(6
+                    #                     , br()
+                    #                     , br()
+                    #                     , numericInput(inputId = "global.max.by.cohort"
+                    #                                    , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>global.max.by.cohort</span>")
+                    #                                    , value = 5000000
+                    #                                    , width = "100%")
+                    #                     , numericInput(inputId = "global.resource.thresh.med"
+                    #                                    , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>global.resource.thresh.med</span>")
+                    #                                    , value = 13000000
+                    #                                    , width = "100%")
+                    #                     , numericInput(inputId = "global.resource.thresh.low"
+                    #                                    , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>global.resource.thresh.low</span>")
+                    #                                    , value = 19000000
+                    #                                    , width = "100%")
+                    #            )
+                    #          )
+                    #          , fluidRow(
+                    #            column(6
+                    #                   , br()
+                    #                   , actionButton(inputId = "create.namespaceConstants"
+                    #                                  , label = "Create Namespace constants file"
+                    #                                  , icon = icon("file")
+                    #                                  , width = "100%"
+                    #                                  , style = HTML(paste0("background-color: ", button.color, ";"))
+                    #                   )
+                    #                   , br())
+                    #          )
+                    #          , fluidRow(
+                    #            br(),
+                    #            wellPanel(dataTableOutput(outputId = "created_table.namespace"))
+                    #          )
+                    #            ) ## END tabPanel (Internal settings)
+                    tabPanel(title = HTML("<p class='tabPanel_title'>Global parameters</p>")
                                , value = "panel.global"
                                , br()
                                , wellPanel(
@@ -354,10 +355,33 @@ ui <- fluidPage(
                                                <td style='width:70%;'>an <span style='font-family:Monospace;'>integer</span> corresponding to the time interval at which occurs the seeding, and until the seeding duration is not over (in years)</td>
                                                </tr>
                                                <tr>
+                                               <td style='width:30%;font-family:Monospace;vertical-align:top;'>required.seeding_input</td>
+                                               <td style='width:70%;'>an <span style='font-family:Monospace;'>integer</span> corresponding to the number of seeds attributed to each PFG at each time step, and until the seeding duration is not over</td>
+                                               </tr>
+
+                                               <tr>
+                                               <td style='width:30%;font-family:Monospace;vertical-align:top;'>required.max_by_cohort</td>
+                                               <td style='width:70%;'>an <span style='font-family:Monospace;'>integer</span> in the order of 1 000 000 to rescale abundance values of each cohort in each pixel (carrying capacity equivalent)</td>
+                                               </tr>
+                                               <tr>
+                                               <td style='width:30%;font-family:Monospace;vertical-align:top;'>required.max_abund_low</td>
+                                               <td style='width:70%;'>an <span style='font-family:Monospace;'>integer</span> in the order of 1 000 000 to rescale abundance values of small PFG</td>
+                                               </tr>
+                                               <tr>
+                                               <td style='width:30%;font-family:Monospace;vertical-align:top;'>required.max_abund_medium</td>
+                                               <td style='width:70%;'>an <span style='font-family:Monospace;'>integer</span> in the order of 1 000 000 to rescale abundance values of intermediate PFG</td>
+                                               </tr>
+                                               <tr>
+                                               <td style='width:30%;font-family:Monospace;vertical-align:top;'>required.max_abund_high</td>
+                                               <td style='width:70%;'>an <span style='font-family:Monospace;'>integer</span> in the order of 1 000 000 to rescale abundance values of tall PFG</td>
+                                               </tr>
+                                               <tr><td><br/></td></tr>
+                                               <tr>
                                                <td style='width:30%;font-family:Monospace;vertical-align:top;'>doDispersal</td>
                                                <td style='width:70%;'>default <span style='font-family:Monospace;'>FALSE</span>.
                                                <em>If <span style='font-family:Monospace;'>TRUE</span>, seed dispersal is activated in the FATE-HD simulation, and associated parameters are required</em></td>
                                                </tr>
+                                               <tr><td><br/></td></tr>
                                                <tr>
                                                <td style='width:30%;font-family:Monospace;vertical-align:top;'>doHabSuitability</td>
                                                <td style='width:70%;'>default <span style='font-family:Monospace;'>FALSE</span>.
@@ -368,6 +392,31 @@ ui <- fluidPage(
                                                <td style='width:70%;'><em>an <span style='font-family:Monospace;'>integer</span> corresponding to the way of simulating 
                                                the habitat suitability variation between years for each PFG, either random (1) or PFG specific (2)</em></td>
                                                </tr>
+                                               <tr><td><br/></td></tr>
+                                               <tr>
+                                               <td style='width:30%;font-family:Monospace;vertical-align:top;'>doLight</td>
+                                               <td style='width:70%;'>default <span style='font-family:Monospace;'>FALSE</span>.
+                                               <em>If <span style='font-family:Monospace;'>TRUE</span>, light competition is activated in the FATE-HD simulation, and associated parameters are required</em></td>
+                                               </tr>
+                                               <tr>
+                                               <td style='width:30%;font-family:Monospace;vertical-align:top;'>LIGHT.thresh_medium</td>
+                                               <td style='width:70%;'><em>an <span style='font-family:Monospace;'>integer</span> in the order of 1 000 000 to convert PFG abundances in each strata into light resources.
+                                               It corresponds to the limit of abundances above which light resources are <span style='font-family:Monospace;'>medium</span>. PFG abundances lower than this threshold
+                                               imply high amount of light. It is consequently lower than <span style='font-family:Monospace;'>LIGHT.thresh_low</span>.</em></td>
+                                               </tr>
+                                               <tr>
+                                               <td style='width:30%;font-family:Monospace;vertical-align:top;'>LIGHT.thresh_low</td>
+                                               <td style='width:70%;'><em>an <span style='font-family:Monospace;'>integer</span> in the order of 1 000 000 to convert PFG abundances in each strata into light resources. 
+                                               It corresponds to the limit of abundances above which light resources are <span style='font-family:Monospace;'>low</span>. PFG abundances higher than 
+                                               <span style='font-family:Monospace;'>LIGHT.thresh_medium</span> and lower than this threshold imply medium amount of light.</em></td>
+                                               </tr>
+                                               <tr><td><br/></td></tr>
+                                               <tr>
+                                               <td style='width:30%;font-family:Monospace;vertical-align:top;'>doSoil</td>
+                                               <td style='width:70%;'>default <span style='font-family:Monospace;'>FALSE</span>.
+                                               <em>If <span style='font-family:Monospace;'>TRUE</span>, soil competiion is activated in the FATE-HD simulation, and associated parameters are required</em></td>
+                                               </tr>
+                                               <tr><td><br/></td></tr>
                                                <tr>
                                                <td style='width:30%;font-family:Monospace;vertical-align:top;'>doDisturbances</td>
                                                <td style='width:70%;'>default <span style='font-family:Monospace;'>FALSE</span>.
@@ -391,11 +440,6 @@ ui <- fluidPage(
                                , fluidRow(
                                  column(6
                                         , br()
-                                        , numericInput(inputId = "opt.no_CPU"
-                                                       , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>opt.no_CPU</span>")
-                                                       , value = 1
-                                                       , min = 1
-                                                       , width = "100%")
                                         , numericInput(inputId = "required.no_PFG"
                                                        , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>required.no_PFG</span>")
                                                        , value = 1
@@ -406,21 +450,51 @@ ui <- fluidPage(
                                                        , value = 1
                                                        , min = 1
                                                        , width = "100%")
+                                        , numericInput(inputId = "required.simul_duration"
+                                                       , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>required.simul_duration</span>")
+                                                       , value = 1
+                                                       , min = 1
+                                                       , width = "100%")
+                                        , numericInput(inputId = "required.seeding_duration"
+                                                       , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>required.seeding_duration</span>")
+                                                       , value = 1
+                                                       , min = 1
+                                                       , width = "100%")
+                                        , numericInput(inputId = "required.seeding_timestep"
+                                                       , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>required.seeding_timestep</span>")
+                                                       , value = 1
+                                                       , min = 1
+                                                       , width = "100%")
+                                        , numericInput(inputId = "required.seeding_input"
+                                                       , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>required.seeding_input</span>")
+                                                       , value = 1
+                                                       , min = 1
+                                                       , width = "100%")
                                  )
                                  , column(6
                                           , br()
-                                          , numericInput(inputId = "required.simul_duration"
-                                                         , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>required.simul_duration</span>")
+                                          , numericInput(inputId = "required.max_by_cohort"
+                                                         , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>required.max_by_cohort</span>")
                                                          , value = 1
                                                          , min = 1
                                                          , width = "100%")
-                                          , numericInput(inputId = "required.seeding_duration"
-                                                         , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>required.seeding_duration</span>")
+                                          , numericInput(inputId = "required.max_abund_low"
+                                                         , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>required.max_abund_low</span>")
                                                          , value = 1
                                                          , min = 1
                                                          , width = "100%")
-                                          , numericInput(inputId = "required.seeding_timestep"
-                                                         , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>required.seeding_timestep</span>")
+                                          , numericInput(inputId = "required.max_abund_medium"
+                                                         , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>required.max_abund_medium</span>")
+                                                         , value = 1
+                                                         , min = 1
+                                                         , width = "100%")
+                                          , numericInput(inputId = "required.max_abund_high"
+                                                         , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>required.max_abund_high</span>")
+                                                         , value = 1
+                                                         , min = 1
+                                                         , width = "100%")
+                                          , numericInput(inputId = "opt.no_CPU"
+                                                         , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>opt.no_CPU</span>")
                                                          , value = 1
                                                          , min = 1
                                                          , width = "100%")
