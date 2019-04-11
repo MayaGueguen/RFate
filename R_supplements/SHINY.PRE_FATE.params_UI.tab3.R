@@ -15,11 +15,13 @@ tabPanel(title = HTML("<p class='tabPanel_title'>PFG files</p>")
            )
            , column(2
                     , br()
-                    , actionButton(inputId = "add.PFG.name"
+                    , shinyjs::disabled(
+                      actionButton(inputId = "add.PFG.name"
                                    , label = "Add PFG"
                                    , icon = icon("plus")
                                    , width = "100%"
                                    , style = HTML(paste0("background-color: ", button.color, ";"))
+                      )
                     )
            )
            , column(5
@@ -73,7 +75,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>PFG files</p>")
                     , fluidRow(
                       column(6
                              , br()
-                             , shinyjs::hidden(
+                             , shinyjs::disabled(
                                actionButton(inputId = "add.PFG.succ"
                                             , label = "Add PFG"
                                             , icon = icon("plus")
@@ -84,7 +86,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>PFG files</p>")
                       )
                       , column(6
                                , br()
-                               , shinyjs::hidden(
+                               , shinyjs::disabled(
                                  actionButton(inputId = "create.succ"
                                               , label = "Create PFG succession files"
                                               , icon = icon("file")
@@ -99,16 +101,14 @@ tabPanel(title = HTML("<p class='tabPanel_title'>PFG files</p>")
                              , br()
                              , br()
                              , HTML("<strong>PFG</strong>")
-                             # , textInput(inputId = "succ.PFG"
-                             #             , label = NULL
-                             #             , width = "100%"))
-                             # , selectInput(inputId = "succ.PFG"
-                             #               , label = NULL
-                             #               , choices = names.PFG
-                             #               , selected = NULL
-                             #               , multiple = F
-                             #               , width = "100%"))
-                             , uiOutput(outputId = "UI.succ.PFG"))
+                             , shinyjs::disabled(
+                               selectInput(inputId = "succ.PFG"
+                                           , label = NULL
+                                           , choices = NULL
+                                           , selected = NULL
+                                           , multiple = F
+                                           , width = "100%")
+                             ))
                       , column(2
                                , br()
                                , br()

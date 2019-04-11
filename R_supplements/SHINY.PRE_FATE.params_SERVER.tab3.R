@@ -1,44 +1,52 @@
 
 ####################################################################
 
-observeEvent(input$add.PFG.name, {
-  names.PFG <<- c(names.PFG, input$name.PFG)
-  output$names.PFG = renderText({
-    paste0("PFG list : ", paste0(names.PFG, collapse = " "))
-  })
-  shinyjs::show("add.PFG.succ")
-  shinyjs::show("create.succ")
+observeEvent(input$name.PFG, {
+  if (nchar(input$name.PFG) > 0)
+  {
+    shinyjs::enable("add.PFG.name")
+  } else
+  {
+    shinyjs::disable("add.PFG.name")
+  }
 })
 
-output$UI.succ.PFG = renderUI({
-  if (input$add.PFG.name || input$delete.names.PFG)
+observeEvent(input$add.PFG.name, {
+  if (input$name.PFG %in% names.PFG)
   {
-    selectInput(inputId = "succ.PFG"
-                , label = NULL
-                , choices = names.PFG
-                , selected = NULL
-                , multiple = F
-                , width = "100%"
-    )
+    shinyalert(type = "warning", text = "You must give different PFG names !")
+    shinyjs::reset("name.PFG")
+  } else
+  {
+    names.PFG <<- c(names.PFG, input$name.PFG)
+    output$names.PFG = renderText({
+      paste0("PFG list : ", paste0(names.PFG, collapse = " "))
+    })
+    updateSelectInput(session
+                      , inputId = "succ.PFG"
+                      , choices = names.PFG
+                      , selected = names.PFG[1])
+    
+    shinyjs::reset("name.PFG")
+    shinyjs::enable("succ.PFG")
+    shinyjs::enable("add.PFG.succ")
   }
 })
 
 observeEvent(input$delete.names.PFG, {
   names.PFG <<- c()
   output$names.PFG = renderText({ names.PFG })
-  shinyjs::hide("add.PFG.succ")
-  shinyjs::hide("create.succ")
+  updateSelectInput(session
+                    , inputId = "succ.PFG"
+                    , choices = names.PFG
+                    , selected = NULL)
+  
+  shinyjs::reset("name.PFG")
+  shinyjs::disable("succ.PFG")
+  shinyjs::disable("add.PFG.succ")
 })
 
 ####################################################################
-
-# observeEvent(input$refresh, {
-#   system(command = paste0("rm -r ", input$name.simul))
-#   shinyjs::hide("main.panel")
-#   shinyjs::hide("create.simul")
-#   shinyjs::hide("UI.download.folder")
-#   shinyjs::hide("refresh")
-# })
 
 observeEvent(input$add.PFG.succ, {
   mat.PFG.succ <<- rbind(mat.PFG.succ
@@ -49,11 +57,15 @@ observeEvent(input$add.PFG.succ, {
                                       , longevity = as.numeric(input$succ.longevity)
                                       , light = as.numeric(input$succ.light)))
   output$mat.PFG.succ = renderTable({ mat.PFG.succ })
+  
+  shinyjs::enable("create.succ")
 })
 
 observeEvent(input$delete.PFG.succ, {
   mat.PFG.succ <<- data.frame()
   output$mat.PFG.succ = renderTable({ mat.PFG.succ })
+  
+  shinyjs::disable("create.succ")
 })
 
 ####################################################################

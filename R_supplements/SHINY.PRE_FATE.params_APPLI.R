@@ -141,17 +141,18 @@ ui <- fluidPage(
                               , style = HTML(paste0("background-color: ", button.color, ";"))
                  )
                )
-        )
-      ),
-      br(),
-      fluidRow(
-        column(12
-               , uiOutput(outputId = "UI.download.folder")
-        )
-      ),
-      br(),
-      fluidRow(
-        column(12
+               , br()
+               , br()
+               , shinyjs::hidden(
+                 downloadButton(outputId = "FATE_simulation.zip"
+                                , label = "Download folder"
+                                , icon = icon("download")
+                                , width = "100%"
+                                , style = HTML(paste0("background-color: ", button.color, ";"))
+                 )
+               )
+               , br()
+               , br()
                , shinyjs::hidden(
                  actionButton(inputId = "refresh"
                               , label = "Start new folder"
@@ -166,6 +167,7 @@ ui <- fluidPage(
     
     # Output
     , mainPanel(
+      width = 9,
       shinyjs::hidden(
         wellPanel(id = "main.panel",
                   style = "border-solid:solid; border-width:2px; border-color:#068f96;",
@@ -197,22 +199,12 @@ server <- function(input, output, session) {
     print_messages(as.expression(
       PRE_FATE.skeletonDirectory(name.simulation = input$name.simul)
     ))
-    
+
     shinyjs::show("main.panel")
     shinyjs::show("create.simul")
-    shinyjs::show("UI.download.folder")
+    shinyjs::show("FATE_simulation.zip")
     shinyjs::show("refresh")
-    
-    output$UI.download.folder = renderUI({
-      downloadButton(outputId = "FATE_simulation.zip"
-                     , label = "Download folder"
-                     , icon = icon("download")
-                     , width = "100%"
-                     , style = HTML(paste0("background-color: ", button.color, ";"))
-      )
-    })
   })
-  
   
   observeEvent(input$create.simul, {
     if (input$create.skeleton > 0)
@@ -253,7 +245,7 @@ server <- function(input, output, session) {
     system(command = paste0("rm -r ", input$name.simul))
     shinyjs::hide("main.panel")
     shinyjs::hide("create.simul")
-    shinyjs::hide("UI.download.folder")
+    shinyjs::hide("FATE_simulation.zip")
     shinyjs::hide("refresh")
   })
   
