@@ -4,7 +4,7 @@ rm(list = ls())
 ## load required libraries
 library(shiny)
 library(shinyFiles)
-library(shinythemes)
+# library(shinythemes)
 # library(shinycssloaders)
 # library(shinydashboard)
 library(shinyalert)

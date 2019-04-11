@@ -26,24 +26,28 @@ observeEvent(input$add.PFG.name, {
                       , inputId = "succ.PFG"
                       , choices = names.PFG
                       , selected = names.PFG[1])
+    updateSelectInput(session
+                      , inputId = "disp.PFG"
+                      , choices = names.PFG
+                      , selected = names.PFG[1])
     
     shinyjs::reset("name.PFG")
     shinyjs::enable("succ.PFG")
     shinyjs::enable("add.PFG.succ")
+    shinyjs::enable("disp.PFG")
+    shinyjs::enable("add.PFG.disp")
   }
 })
 
 observeEvent(input$delete.names.PFG, {
   names.PFG <<- c()
   output$names.PFG = renderText({ names.PFG })
-  updateSelectInput(session
-                    , inputId = "succ.PFG"
-                    , choices = names.PFG
-                    , selected = NULL)
   
   shinyjs::reset("name.PFG")
   shinyjs::disable("succ.PFG")
   shinyjs::disable("add.PFG.succ")
+  shinyjs::disable("disp.PFG")
+  shinyjs::disable("add.PFG.disp")
 })
 
 ####################################################################
@@ -55,7 +59,8 @@ observeEvent(input$add.PFG.succ, {
                                       , height = as.numeric(input$succ.height)
                                       , maturity = as.numeric(input$succ.maturity)
                                       , longevity = as.numeric(input$succ.longevity)
-                                      , light = as.numeric(input$succ.light)))
+                         ))
+                                      # , light = as.numeric(input$succ.light)))
   output$mat.PFG.succ = renderTable({ mat.PFG.succ })
   
   shinyjs::enable("create.succ")
@@ -94,25 +99,25 @@ observeEvent(input$create.succ, {
 
 ####################################################################
 
-output$UI.disp.PFG = renderUI({
-  if (input$create.succ > 0)
-  {
-    names.PFG = list.files(path = paste0(input$name.simul, "/DATA/PFGS/SUCC/")
-                           , pattern = "^SUCC_")
-    names.PFG = sub("^SUCC_", "", names.PFG)
-    names.PFG = sub(".txt$", "", names.PFG)
-    selectInput(inputId = "disp.PFG"
-                , label = NULL
-                , choices = names.PFG
-                , multiple = FALSE
-                , width = "100%")
-  } else
-  {
-    textInput(inputId = "disp.PFG"
-              , label = NULL
-              , width = "100%")
-  }
-})
+# output$UI.disp.PFG = renderUI({
+#   if (input$create.succ > 0)
+#   {
+#     names.PFG = list.files(path = paste0(input$name.simul, "/DATA/PFGS/SUCC/")
+#                            , pattern = "^SUCC_")
+#     names.PFG = sub("^SUCC_", "", names.PFG)
+#     names.PFG = sub(".txt$", "", names.PFG)
+#     selectInput(inputId = "disp.PFG"
+#                 , label = NULL
+#                 , choices = names.PFG
+#                 , multiple = FALSE
+#                 , width = "100%")
+#   } else
+#   {
+#     textInput(inputId = "disp.PFG"
+#               , label = NULL
+#               , width = "100%")
+#   }
+# })
 
 ####################################################################
 
@@ -124,11 +129,15 @@ observeEvent(input$add.PFG.disp, {
                                       , d99 = as.numeric(input$disp.d99)
                                       , ldd = as.numeric(input$disp.ldd)))
   output$mat.PFG.disp = renderTable({ mat.PFG.disp })
+  
+  shinyjs::enable("create.disp")
 })
 
 observeEvent(input$delete.PFG.disp, {
   mat.PFG.disp <<- data.frame()
   output$mat.PFG.disp = renderTable({ mat.PFG.disp })
+  
+  shinyjs::disable("create.disp")
 })
 
 ####################################################################

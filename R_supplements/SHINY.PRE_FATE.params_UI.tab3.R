@@ -218,20 +218,24 @@ tabPanel(title = HTML("<p class='tabPanel_title'>PFG files</p>")
                       , fluidRow(
                         column(6
                                , br()
-                               , actionButton(inputId = "add.PFG.disp"
+                               , shinyjs::disabled(
+                                 actionButton(inputId = "add.PFG.disp"
                                               , label = "Add PFG"
                                               , icon = icon("plus")
                                               , width = "100%"
                                               , style = HTML(paste0("background-color: ", button.color, ";"))
+                                 )
                                )
                         )
                         , column(6
                                  , br()
-                                 , actionButton(inputId = "create.disp"
+                                 , shinyjs::disabled(
+                                   actionButton(inputId = "create.disp"
                                                 , label = "Create PFG dispersal files"
                                                 , icon = icon("file")
                                                 , width = "100%"
                                                 , style = HTML(paste0("background-color: ", button.color, ";"))
+                                   )
                                  )
                         )
                       )
@@ -240,7 +244,14 @@ tabPanel(title = HTML("<p class='tabPanel_title'>PFG files</p>")
                                , br()
                                , br()
                                , HTML("<strong>PFG</strong>")
-                               , uiOutput(outputId = "UI.disp.PFG"))
+                               , shinyjs::disabled(
+                                 selectInput(inputId = "disp.PFG"
+                                             , label = NULL
+                                             , choices = NULL
+                                             , selected = NULL
+                                             , multiple = F
+                                             , width = "100%")
+                               ))
                         , column(2
                                  , br()
                                  , br()
