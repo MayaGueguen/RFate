@@ -1,0 +1,406 @@
+
+####################################################################
+
+observeEvent(input$add.PFG.name, {
+  names.PFG <<- c(names.PFG, input$name.PFG)
+  output$names.PFG = renderText({
+    paste0("PFG list : ", paste0(names.PFG, collapse = " "))
+  })
+  shinyjs::show("add.PFG.succ")
+  shinyjs::show("create.succ")
+})
+
+output$UI.succ.PFG = renderUI({
+  if (input$add.PFG.name || input$delete.names.PFG)
+  {
+    selectInput(inputId = "succ.PFG"
+                , label = NULL
+                , choices = names.PFG
+                , selected = NULL
+                , multiple = F
+                , width = "100%"
+    )
+  }
+})
+
+observeEvent(input$delete.names.PFG, {
+  names.PFG <<- c()
+  output$names.PFG = renderText({ names.PFG })
+  shinyjs::hide("add.PFG.succ")
+  shinyjs::hide("create.succ")
+})
+
+####################################################################
+
+# observeEvent(input$refresh, {
+#   system(command = paste0("rm -r ", input$name.simul))
+#   shinyjs::hide("main.panel")
+#   shinyjs::hide("create.simul")
+#   shinyjs::hide("UI.download.folder")
+#   shinyjs::hide("refresh")
+# })
+
+observeEvent(input$add.PFG.succ, {
+  mat.PFG.succ <<- rbind(mat.PFG.succ
+                         , data.frame(PFG = input$succ.PFG
+                                      , type = input$succ.type
+                                      , height = as.numeric(input$succ.height)
+                                      , maturity = as.numeric(input$succ.maturity)
+                                      , longevity = as.numeric(input$succ.longevity)
+                                      , light = as.numeric(input$succ.light)))
+  output$mat.PFG.succ = renderTable({ mat.PFG.succ })
+})
+
+observeEvent(input$delete.PFG.succ, {
+  mat.PFG.succ <<- data.frame()
+  output$mat.PFG.succ = renderTable({ mat.PFG.succ })
+})
+
+####################################################################
+
+observeEvent(input$create.succ, {
+  if (input$create.skeleton > 0)
+  {
+    get_res = print_messages(as.expression(
+      PRE_FATE.params_PFGsuccession(name.simulation = input$name.simul
+                                    , mat.PFG.succ = mat.PFG.succ
+      )
+    ))
+    
+    if(get_res)
+    {
+      output$created_table.succ = renderDataTable({
+        path_folder = paste0(input$name.simul, "/DATA/PFGS/SUCC/")
+        return(get_files(path_folder))
+      })
+    }
+  } else
+  {
+    shinyalert(type = "warning", text = "You must create a simulation folder first !")
+  }
+})
+
+####################################################################
+
+output$UI.disp.PFG = renderUI({
+  if (input$create.succ > 0)
+  {
+    names.PFG = list.files(path = paste0(input$name.simul, "/DATA/PFGS/SUCC/")
+                           , pattern = "^SUCC_")
+    names.PFG = sub("^SUCC_", "", names.PFG)
+    names.PFG = sub(".txt$", "", names.PFG)
+    selectInput(inputId = "disp.PFG"
+                , label = NULL
+                , choices = names.PFG
+                , multiple = FALSE
+                , width = "100%")
+  } else
+  {
+    textInput(inputId = "disp.PFG"
+              , label = NULL
+              , width = "100%")
+  }
+})
+
+####################################################################
+
+observeEvent(input$add.PFG.disp, {
+  mat.PFG.disp <<- rbind(mat.PFG.disp
+                         , data.frame(PFG = input$disp.PFG
+                                      , MODE = as.numeric(input$disp.mode)
+                                      , d50 = as.numeric(input$disp.d50)
+                                      , d99 = as.numeric(input$disp.d99)
+                                      , ldd = as.numeric(input$disp.ldd)))
+  output$mat.PFG.disp = renderTable({ mat.PFG.disp })
+})
+
+observeEvent(input$delete.PFG.disp, {
+  mat.PFG.disp <<- data.frame()
+  output$mat.PFG.disp = renderTable({ mat.PFG.disp })
+})
+
+####################################################################
+
+observeEvent(input$create.disp, {
+  if (input$create.skeleton > 0)
+  {
+    get_res = print_messages(as.expression(
+      PRE_FATE.params_PFGdispersal(name.simulation = input$name.simul
+                                   , mat.PFG.disp = mat.PFG.disp
+      )
+    ))
+    
+    if(get_res)
+    {
+      output$created_table.disp = renderDataTable({
+        path_folder = paste0(input$name.simul, "/DATA/PFGS/DISP/")
+        return(get_files(path_folder))
+      })
+    }
+  } else
+  {
+    shinyalert(type = "warning", text = "You must create a simulation folder first !")
+  }
+})
+
+####################################################################
+
+output$UI.dist.grouping = renderUI({
+  if (input$dist.grouping == "by type")
+  {
+    fluidRow(
+      column(6
+             , br()
+             , fluidRow(
+               column(4, HTML(""))
+               , column(4, HTML(""))
+               , column(4, HTML("<strong>H</strong>"))
+             )
+             , fluidRow(
+               column(4, HTML("<strong> Stage 1</strong>"))
+               , column(4, HTML("<strong>Killed</strong>"))
+               , column(4
+                        , selectInput(inputId = "dist.1.kill.H"
+                                      , label = NULL
+                                      , choices = seq(0,100,10)
+                                      , multiple = FALSE
+                                      , width = "100%"))
+             )
+             , fluidRow(
+               column(4, HTML(""))
+               , column(4, HTML("<strong>Resprout</strong>"))
+               , column(4
+                        , selectInput(inputId = "dist.1.resprout.H"
+                                      , label = NULL
+                                      , choices = seq(0,100,10)
+                                      , multiple = FALSE
+                                      , width = "100%"))
+             )
+             , fluidRow(
+               column(4, HTML("<strong> Stage 2</strong>"))
+               , column(4, HTML("<strong>Killed</strong>"))
+               , column(4
+                        , selectInput(inputId = "dist.2.kill.H"
+                                      , label = NULL
+                                      , choices = seq(0,100,10)
+                                      , multiple = FALSE
+                                      , width = "100%"))
+             )
+             , fluidRow(
+               column(4, HTML(""))
+               , column(4, HTML("<strong>Resprout</strong>"))
+               , column(4
+                        , selectInput(inputId = "dist.2.resprout.H"
+                                      , label = NULL
+                                      , choices = seq(0,100,10)
+                                      , multiple = FALSE
+                                      , width = "100%"))
+             )
+             , fluidRow(
+               column(4, HTML("<strong> Stage 3</strong>"))
+               , column(4, HTML("<strong>Killed</strong>"))
+               , column(4
+                        , selectInput(inputId = "dist.3.kill.H"
+                                      , label = NULL
+                                      , choices = seq(0,100,10)
+                                      , multiple = FALSE
+                                      , width = "100%"))
+             )
+             , fluidRow(
+               column(4, HTML(""))
+               , column(4, HTML("<strong>Resprout</strong>"))
+               , column(4
+                        , selectInput(inputId = "dist.3.resprout.H"
+                                      , label = NULL
+                                      , choices = seq(0,100,10)
+                                      , multiple = FALSE
+                                      , width = "100%"))
+             )
+             , fluidRow(
+               column(4, HTML("<strong> Stage 4</strong>"))
+               , column(4, HTML("<strong>Killed</strong>"))
+               , column(4
+                        , selectInput(inputId = "dist.4.kill.H"
+                                      , label = NULL
+                                      , choices = seq(0,100,10)
+                                      , multiple = FALSE
+                                      , width = "100%"))
+             )
+             , fluidRow(
+               column(4, HTML(""))
+               , column(4, HTML("<strong>Resprout</strong>"))
+               , column(4
+                        , selectInput(inputId = "dist.4.resprout.H"
+                                      , label = NULL
+                                      , choices = seq(0,100,10)
+                                      , multiple = FALSE
+                                      , width = "100%"))
+             ))
+      , column(2
+               , br()
+               , HTML("<strong>C</strong>")
+               , selectInput(inputId = "dist.1.kill.C"
+                             , label = NULL
+                             , choices = seq(0,100,10)
+                             , multiple = FALSE
+                             , width = "100%")
+               , selectInput(inputId = "dist.1.resprout.C"
+                             , label = NULL
+                             , choices = seq(0,100,10)
+                             , multiple = FALSE
+                             , width = "100%")
+               , selectInput(inputId = "dist.2.kill.C"
+                             , label = NULL
+                             , choices = seq(0,100,10)
+                             , multiple = FALSE
+                             , width = "100%")
+               , selectInput(inputId = "dist.2.resprout.C"
+                             , label = NULL
+                             , choices = seq(0,100,10)
+                             , multiple = FALSE
+                             , width = "100%")
+               , selectInput(inputId = "dist.3.kill.C"
+                             , label = NULL
+                             , choices = seq(0,100,10)
+                             , multiple = FALSE
+                             , width = "100%")
+               , selectInput(inputId = "dist.3.resprout.C"
+                             , label = NULL
+                             , choices = seq(0,100,10)
+                             , multiple = FALSE
+                             , width = "100%")
+               , selectInput(inputId = "dist.4.kill.C"
+                             , label = NULL
+                             , choices = seq(0,100,10)
+                             , multiple = FALSE
+                             , width = "100%")
+               , selectInput(inputId = "dist.4.resprout.C"
+                             , label = NULL
+                             , choices = seq(0,100,10)
+                             , multiple = FALSE
+                             , width = "100%")
+      )
+      , column(2
+               , br()
+               , HTML("<strong>P</strong>")
+               , selectInput(inputId = "dist.1.kill.P"
+                             , label = NULL
+                             , choices = seq(0,100,10)
+                             , multiple = FALSE
+                             , width = "100%")
+               , selectInput(inputId = "dist.1.resprout.P"
+                             , label = NULL
+                             , choices = seq(0,100,10)
+                             , multiple = FALSE
+                             , width = "100%")
+               , selectInput(inputId = "dist.2.kill.P"
+                             , label = NULL
+                             , choices = seq(0,100,10)
+                             , multiple = FALSE
+                             , width = "100%")
+               , selectInput(inputId = "dist.2.resprout.P"
+                             , label = NULL
+                             , choices = seq(0,100,10)
+                             , multiple = FALSE
+                             , width = "100%")
+               , selectInput(inputId = "dist.3.kill.P"
+                             , label = NULL
+                             , choices = seq(0,100,10)
+                             , multiple = FALSE
+                             , width = "100%")
+               , selectInput(inputId = "dist.3.resprout.P"
+                             , label = NULL
+                             , choices = seq(0,100,10)
+                             , multiple = FALSE
+                             , width = "100%")
+               , selectInput(inputId = "dist.4.kill.P"
+                             , label = NULL
+                             , choices = seq(0,100,10)
+                             , multiple = FALSE
+                             , width = "100%")
+               , selectInput(inputId = "dist.4.resprout.P"
+                             , label = NULL
+                             , choices = seq(0,100,10)
+                             , multiple = FALSE
+                             , width = "100%")
+      )
+    )
+  } else
+  {
+    # names.PFG = list.files(path = paste0(input$name.simul, "/DATA/PFGS/SUCC/")
+    #                        , pattern = "^SUCC_")
+    # names.PFG = sub("^SUCC_", "", names.PFG)
+    # names.PFG = sub(".txt$", "", names.PFG)
+  }
+})
+
+####################################################################
+
+observeEvent(input$add.PFG.dist, {
+  if (input$dist.grouping == "by type")
+  {
+    mat.PFG.dist <<- rbind(mat.PFG.dist
+                           , data.frame(name = input$dist.name
+                                        , responseStage = 1:4
+                                        , KilledIndiv_H = as.numeric(c(input$dist.1.kill.H
+                                                                       , input$dist.2.kill.H
+                                                                       , input$dist.3.kill.H
+                                                                       , input$dist.4.kill.H)) / 10
+                                        , KilledIndiv_C = as.numeric(c(input$dist.1.kill.C
+                                                                       , input$dist.2.kill.C
+                                                                       , input$dist.3.kill.C
+                                                                       , input$dist.4.kill.C)) / 10
+                                        , KilledIndiv_P = as.numeric(c(input$dist.1.kill.P
+                                                                       , input$dist.2.kill.P
+                                                                       , input$dist.3.kill.P
+                                                                       , input$dist.4.kill.P)) / 10
+                                        , ResproutIndiv_H = as.numeric(c(input$dist.1.resprout.H
+                                                                         , input$dist.2.resprout.H
+                                                                         , input$dist.3.resprout.H
+                                                                         , input$dist.4.resprout.H)) / 10
+                                        , ResproutIndiv_C = as.numeric(c(input$dist.1.resprout.C
+                                                                         , input$dist.2.resprout.C
+                                                                         , input$dist.3.resprout.C
+                                                                         , input$dist.4.resprout.C)) / 10
+                                        , ResproutIndiv_P = as.numeric(c(input$dist.1.resprout.P
+                                                                         , input$dist.2.resprout.P
+                                                                         , input$dist.3.resprout.P
+                                                                         , input$dist.4.resprout.P)) / 10
+                           ))
+  } else
+  {
+    
+  }
+  output$mat.PFG.dist = renderTable({ mat.PFG.dist })
+})
+
+observeEvent(input$delete.PFG.dist, {
+  mat.PFG.dist <<- data.frame()
+  output$mat.PFG.dist = renderTable({ mat.PFG.dist })
+})
+
+####################################################################
+
+observeEvent(input$create.dist, {
+  if (input$create.skeleton > 0)
+  {
+    get_res = print_messages(as.expression(
+      PRE_FATE.params_PFGdisturbance(name.simulation = input$name.simul
+                                     , mat.PFG.dist = mat.PFG.dist
+      )
+    ))
+    
+    if(get_res)
+    {
+      output$created_table.dist = renderDataTable({
+        path_folder = paste0(input$name.simul, "/DATA/PFGS/DIST/")
+        return(get_files(path_folder))
+      })
+    }
+  } else
+  {
+    shinyalert(type = "warning", text = "You must create a simulation folder first !")
+  }
+})
+
+
