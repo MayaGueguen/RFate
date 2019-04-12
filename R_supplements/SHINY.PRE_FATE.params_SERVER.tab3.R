@@ -60,7 +60,6 @@ observeEvent(input$add.PFG.succ, {
                                       , maturity = as.numeric(input$succ.maturity)
                                       , longevity = as.numeric(input$succ.longevity)
                          ))
-                                      # , light = as.numeric(input$succ.light)))
   output$mat.PFG.succ = renderTable({ mat.PFG.succ })
   
   shinyjs::enable("create.succ")
@@ -96,28 +95,6 @@ observeEvent(input$create.succ, {
     shinyalert(type = "warning", text = "You must create a simulation folder first !")
   }
 })
-
-####################################################################
-
-# output$UI.disp.PFG = renderUI({
-#   if (input$create.succ > 0)
-#   {
-#     names.PFG = list.files(path = paste0(input$name.simul, "/DATA/PFGS/SUCC/")
-#                            , pattern = "^SUCC_")
-#     names.PFG = sub("^SUCC_", "", names.PFG)
-#     names.PFG = sub(".txt$", "", names.PFG)
-#     selectInput(inputId = "disp.PFG"
-#                 , label = NULL
-#                 , choices = names.PFG
-#                 , multiple = FALSE
-#                 , width = "100%")
-#   } else
-#   {
-#     textInput(inputId = "disp.PFG"
-#               , label = NULL
-#               , width = "100%")
-#   }
-# })
 
 ####################################################################
 
@@ -393,11 +370,15 @@ observeEvent(input$add.PFG.dist, {
     
   }
   output$mat.PFG.dist = renderTable({ mat.PFG.dist })
+  
+  shinyjs::enable("create.dist")
 })
 
 observeEvent(input$delete.PFG.dist, {
   mat.PFG.dist <<- data.frame()
   output$mat.PFG.dist = renderTable({ mat.PFG.dist })
+  
+  shinyjs::disable("create.dist")
 })
 
 ####################################################################

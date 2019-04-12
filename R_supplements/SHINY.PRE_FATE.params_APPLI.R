@@ -24,7 +24,8 @@ mat.PFG.succ = data.frame()
 mat.PFG.disp = data.frame()
 mat.PFG.dist = data.frame()
 mat.changing = data.frame()
-button.color = "#dee2e8"
+button.color = "rgba(96, 129, 150, 0.5)"
+help.color = "#dee2e8"
 
 ###################################################################################################################################
 ###################################################################################################################################
@@ -34,44 +35,53 @@ ui <- fluidPage(
   useShinyalert(),
   useShinyjs(),
   
-  # theme = "cosmo",
   tags$body(
     tags$style(HTML("
-                    @import url('https://fonts.googleapis.com/css?family=Londrina+Solid:200,300|Medula+One');
+                    @import url('https://fonts.googleapis.com/css?family=Londrina+Solid:200,300|Medula+One|Slabo+27px');
                     h1 {
                     font-family: 'Londrina Solid', cursive;
                     font-weight: 300;
                     line-height: 1.1;
-                    background-color: #068f96;
-                    padding: 10px;
-                    margin-bottom: 50px;
-                    border-radius: 2px;
+                    background-color: #3a7da8;
+                    padding: 20px;
+                    margin-top: 20px;
+                    margin-bottom: 20px;
+                    border-radius: 0px;
                     color: #FFFFFF;
+                    }
+                    .tabbable > .nav > li > a {
+                    background-color: rgba(96, 129, 150, 0.5);
+                    color: #FFFFFF;
+                    border-radius: 0px;
+                    }
+                    .tabbable > .nav > li > a:hover {
+                    background-color: #3a7da8;
+                    color:#FFFFFF;
+                    border-radius: 0px;
+                    }
+                    .tabbable > .nav > li[class=active] > a {
+                    background-color: #3a7da8;
+                    color:#FFFFFF;
+                    border-radius: 0px;
                     }
                     p.tabPanel_title {
                     font-family: 'Londrina Solid', cursive;
                     font-size: 20px;
                     font-weight: 200;
-                    background-color: #068f96;
                     padding: 10px;
                     margin-top: 0px;
-                    border-radius: 2px;
-                    color: #FFFFFF;
                     }
                     p.tabPanel_subtitle {
                     font-family: 'Londrina Solid', cursive;
-                    font-size: 15px;
+                    font-size: 18px;
                     font-weight: 200;
-                    background-color: #068f96;
-                    padding: 6px;
+                    padding: 0px;
                     margin-top: 0px;
-                    border-radius: 2px;
-                    color: #FFFFFF;
                     }
                     "))
     ),
   
-  headerPanel("FATE : create simulation folder & parameter files", windowTitle = "FATE"),
+  headerPanel("FATE", windowTitle = "FATE"),
   
   # Sidebar layout with a input and output definitions
   sidebarLayout(
@@ -79,7 +89,7 @@ ui <- fluidPage(
     # Inputs
     sidebarPanel(
       width = 3,
-      style = "border-solid:solid; border-width:2px; border-color:#068f96;",
+      style = "border-width:0px; background-color:#dee2e8; margin-left:15px; margin-top:18px;",
       withMathJax(),
       
       br(),
@@ -170,7 +180,7 @@ ui <- fluidPage(
       width = 9,
       shinyjs::hidden(
         wellPanel(id = "main.panel",
-                  style = "border-solid:solid; border-width:2px; border-color:#068f96;",
+                  style = "border-solid:solid; border-width:0px; border-color:#068f96;",
                   tabsetPanel(
                     source("R_supplements/SHINY.PRE_FATE.params_UI.tab1.R", local = TRUE)$value,
                     source("R_supplements/SHINY.PRE_FATE.params_UI.tab2.R", local = TRUE)$value,

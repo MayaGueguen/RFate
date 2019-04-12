@@ -42,7 +42,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>PFG files</p>")
                     , value = "panel.succ"
                     , br()
                     , wellPanel(
-                      style = HTML(paste0("background-color: ", button.color, ";")),
+                      style = HTML(paste0("background-color: ", help.color, ";")),
                       helpText(HTML("
                                     <p><a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGsuccession.html' target='_blank'>
                                     See more details on <span style='font-family:Monospace;'>RFate</span> package website.</a></p>
@@ -67,7 +67,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>PFG files</p>")
                                     </tr>
                                     <tr>
                                     <td style='width:30%;font-family:Monospace;vertical-align:top;'>light</td>
-                                    <td style='width:70%;'>a value between 0 and 10 corresponding to the Ellenberg value of the PFG</td>
+                                    <td style='width:70%;'>a value between 0 and 5 corresponding to the light value of the PFG (e.g. from Flora Indicativa)</td>
                                     </tr>
                                     </table>
                                     "
@@ -152,7 +152,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>PFG files</p>")
                                , HTML("<strong>light</strong>")
                                , selectInput(inputId = "succ.light"
                                              , label = NULL
-                                             , choices = 0:10
+                                             , choices = 0:5
                                              , selected = NULL
                                              , multiple = F
                                              , width = "100%"))
@@ -179,7 +179,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>PFG files</p>")
                       , value = "panel.disp"
                       , br()
                       , wellPanel(
-                        style = HTML(paste0("background-color: ", button.color, ";")),
+                        style = HTML(paste0("background-color: ", help.color, ";")),
                         helpText(HTML("
                                       <p><a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGdispersal.html' target='_blank'>
                                       See more details on <span style='font-family:Monospace;'>RFate</span> package website.</a></p>
@@ -312,7 +312,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>PFG files</p>")
                       , value = "panel.dist"
                       , br()
                       , wellPanel(
-                        style = HTML(paste0("background-color: ", button.color, ";")),
+                        style = HTML(paste0("background-color: ", help.color, ";")),
                         helpText(HTML("
                                       <p><a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGdisturbance.html' target='_blank'>
                                       See more details on <span style='font-family:Monospace;'>RFate</span> package website.</a></p>
@@ -344,11 +344,13 @@ tabPanel(title = HTML("<p class='tabPanel_title'>PFG files</p>")
                         )
                         , column(6
                                  , br()
-                                 , actionButton(inputId = "create.dist"
+                                 , shinyjs::disabled(
+                                   actionButton(inputId = "create.dist"
                                                 , label = "Create PFG disturbance files"
                                                 , icon = icon("file")
                                                 , width = "100%"
                                                 , style = HTML(paste0("background-color: ", button.color, ";"))
+                                   )
                                  )
                         )
                       )

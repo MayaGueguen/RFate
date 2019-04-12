@@ -3,7 +3,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Global parameters</p>")
          , value = "panel.global"
          , br()
          , wellPanel(
-           style = HTML(paste0("background-color: ", button.color, ";")),
+           style = HTML(paste0("background-color: ", help.color, ";")),
            helpText(HTML("
                          <p><a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_globalParameters.html' target='_blank'>
                          See more details on <span style='font-family:Monospace;'>RFate</span> package website.</a></p>

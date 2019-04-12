@@ -7,7 +7,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Raster files</p>")
                     , value = "panel.spatial.init"
                     , br()
                     , wellPanel(
-                      style = HTML(paste0("background-color: ", button.color, ";")),
+                      style = HTML(paste0("background-color: ", help.color, ";")),
                       helpText(HTML("
                                     <table style='width:100%;'>
                                     <tr>
@@ -109,7 +109,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Raster files</p>")
                       , value = "panel.spatial.changing"
                       , br()
                       , wellPanel(
-                        style = HTML(paste0("background-color: ", button.color, ";")),
+                        style = HTML(paste0("background-color: ", help.color, ";")),
                         helpText(HTML("
                                       <table style='width:100%;'>
                                       <tr>
