@@ -26,7 +26,8 @@ tabPanel(title = HTML("<p class='tabPanel_title'>PFG files</p>")
            )
            , column(5
                     , br()
-                    , wellPanel(textOutput(outputId = "names.PFG"))
+                    , wellPanel(style = "overflow-x:scroll;"
+                                , textOutput(outputId = "names.PFG"))
            )
            , column(2
                     , br()
@@ -38,7 +39,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>PFG files</p>")
            )
          )
          , tabsetPanel(
-           tabPanel(title = HTML("<p class='tabPanel_subtitle'>Succession</p>")
+           tabPanel(title = HTML("<p class='tabPanel_subtitle'>Succession - Light</p>")
                     , value = "panel.succ"
                     , br()
                     , wellPanel(
@@ -92,8 +93,16 @@ tabPanel(title = HTML("<p class='tabPanel_title'>PFG files</p>")
                                               , icon = icon("file")
                                               , width = "100%"
                                               , style = HTML(button.style)
-                                 )
-                               )
+                                 ))
+                               , br()
+                               , br()
+                               , shinyjs::disabled(
+                                 actionButton(inputId = "create.light"
+                                              , label = "Create PFG light files"
+                                              , icon = icon("file")
+                                              , width = "100%"
+                                              , style = HTML(button.style)
+                                 ))
                       )
                     )
                     , fluidRow(
@@ -158,12 +167,12 @@ tabPanel(title = HTML("<p class='tabPanel_title'>PFG files</p>")
                                              , width = "100%"))
                     )
                     , fluidRow(
-                      column(10
+                      column(11
                              , br()
-                             , tableOutput(outputId = "mat.PFG.succ"))
-                      , column(2
+                             , tableOutput(outputId = "mat.PFG.ALL"))
+                      , column(1
                                , br()
-                               , actionButton(inputId = "delete.PFG.succ"
+                               , actionButton(inputId = "delete.PFG.ALL"
                                               , label = NULL
                                               , icon = icon("trash")
                                               , style = HTML(button.style)
@@ -172,9 +181,15 @@ tabPanel(title = HTML("<p class='tabPanel_title'>PFG files</p>")
                     )
                     , fluidRow(
                       br(),
-                      wellPanel(dataTableOutput(outputId = "created_table.succ"))
+                      wellPanel(style = "overflow-x:scroll;"
+                                , dataTableOutput(outputId = "created_table.succ"))
                     )
-                      )
+                    , fluidRow(
+                      br(),
+                      wellPanel(style = "overflow-x:scroll;"
+                                , dataTableOutput(outputId = "created_table.light"))
+                    )
+                      ) ## END tabPanel (succ)
            , tabPanel(title = HTML("<p class='tabPanel_subtitle'>Dispersal</p>")
                       , value = "panel.disp"
                       , br()
@@ -305,9 +320,10 @@ tabPanel(title = HTML("<p class='tabPanel_title'>PFG files</p>")
                       )
                       , fluidRow(
                         br(),
-                        wellPanel(dataTableOutput(outputId = "created_table.disp"))
+                        wellPanel(style = "overflow-x:scroll;"
+                                  , dataTableOutput(outputId = "created_table.disp"))
                       )
-                        )
+                        ) ## END tabPanel (dispersal)
            , tabPanel(title = HTML("<p class='tabPanel_subtitle'>Disturbances</p>")
                       , value = "panel.dist"
                       , br()
@@ -378,7 +394,8 @@ tabPanel(title = HTML("<p class='tabPanel_title'>PFG files</p>")
                       , fluidRow(
                         column(10
                                , br()
-                               , tableOutput(outputId = "mat.PFG.dist"))
+                               , wellPanel(style = "overflow-x:scroll;"
+                                           , tableOutput(outputId = "mat.PFG.dist")))
                         , column(2
                                  , br()
                                  , actionButton(inputId = "delete.PFG.dist"
@@ -390,8 +407,204 @@ tabPanel(title = HTML("<p class='tabPanel_title'>PFG files</p>")
                       )
                       , fluidRow(
                         br(),
-                        wellPanel(dataTableOutput(outputId = "created_table.dist"))
+                        wellPanel(style = "overflow-x:scroll;"
+                                  , dataTableOutput(outputId = "created_table.dist"))
                       )
+                        ) ## END tabPanel (disturbances)
+           , tabPanel(title = HTML("<p class='tabPanel_subtitle'>Soil</p>")
+                      , value = "panel.soil"
+                      , br()
+                      , wellPanel(
+                        style = HTML(paste0("background-color: ", help.color, ";")),
+                        helpText(HTML("
+                                      <p><a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGsoil.html' target='_blank'>
+                                      See more details on <span style='font-family:Monospace;'>RFate</span> package website.</a></p>
+                                      <table style='width:100%;'>
+                                      <tr>
+                                      <td style='width:30%;font-family:Monospace;vertical-align:top;'>soil contrib</td>
+                                      <td style='width:70%;'>the contribution (influence) of the PFG on the nitrogen soil value of the pixel</td>
+                                      </tr>
+                                      <tr>
+                                      <td style='width:30%;font-family:Monospace;vertical-align:top;'>soil min tolerance</td>
+                                      <td style='width:70%;'>the lower value of nitrogen supported by the PFG</td>
+                                      </tr>
+                                      <tr>
+                                      <td style='width:30%;font-family:Monospace;vertical-align:top;'>soil max tolerance</td>
+                                      <td style='width:70%;'>the upper value of nitrogen supported by the PFG</td>
+                                      </tr>
+                                      </table>
+                                      "
+                        )))
+                      , fluidRow(
+                        column(6
+                               , br()
+                               , shinyjs::disabled(
+                                 actionButton(inputId = "add.PFG.soil"
+                                              , label = "Add PFG"
+                                              , icon = icon("plus")
+                                              , width = "100%"
+                                              , style = HTML(button.style)
+                                 )
+                               )
                         )
+                        , column(6
+                                 , br()
+                                 , shinyjs::disabled(
+                                   actionButton(inputId = "create.soil"
+                                                , label = "Create PFG soil files"
+                                                , icon = icon("file")
+                                                , width = "100%"
+                                                , style = HTML(button.style)
+                                   )
+                                 )
+                        )
+                      )
+                      , fluidRow(
+                        column(2
+                               , br()
+                               , br()
+                               , HTML("<strong>PFG</strong>")
+                               , shinyjs::disabled(
+                                 selectInput(inputId = "soil.PFG"
+                                             , label = NULL
+                                             , choices = NULL
+                                             , selected = NULL
+                                             , multiple = F
+                                             , width = "100%")
+                               ))
+                        , column(2
+                                 , br()
+                                 , br()
+                                 , HTML("<strong>type</strong>")
+                                 , selectInput(inputId = "soil.type"
+                                               , label = NULL
+                                               , choices = c("H", "C", "P")
+                                               , selected = NULL
+                                               , multiple = F
+                                               , width = "100%"))
+                          , column(2
+                                   , br()
+                                   , br()
+                                   , HTML("<strong>soil contribution</strong>")
+                                   , numericInput(inputId = "soil.contrib"
+                                                  , label = NULL
+                                                  , value = 0
+                                                  , min = 0
+                                                  , max = 5
+                                                  , width = "100%"))
+                          , column(2
+                                   , br()
+                                   , br()
+                                   , HTML("<strong>soil min tolerance</strong>")
+                                   , numericInput(inputId = "soil.tol_min"
+                                                  , label = NULL
+                                                  , value = 0
+                                                  , min = 0
+                                                  , max = 5
+                                                  , width = "100%"))
+                          , column(2
+                                   , br()
+                                   , br()
+                                   , HTML("<strong>soil max tolerance</strong>")
+                                   , numericInput(inputId = "soil.tol_max"
+                                                  , label = NULL
+                                                  , value = 0
+                                                  , min = 0
+                                                  , max = 5
+                                                  , width = "100%"))
+                      )
+                      , fluidRow(
+                        column(2, br())
+                        , column(2
+                               , br()
+                               , br()
+                               , br()
+                               , br()
+                               , HTML("<strong>Germinant</strong>")
+                               , br()
+                               , br()
+                               , HTML("<strong>Immature</strong>")
+                               , br()
+                               , br()
+                               , HTML("<strong>Mature</strong>")
+                               )
+                        , column(2
+                                 , br()
+                                 , br()
+                                 , HTML("<strong>Low</strong>")
+                                 , selectInput(inputId = "soil.Ge.L"
+                                               , label = NULL
+                                               , choices = seq(0,100,10)
+                                               , multiple = FALSE
+                                               , width = "100%")
+                                 , selectInput(inputId = "soil.Im.L"
+                                               , label = NULL
+                                               , choices = seq(0,100,10)
+                                               , multiple = FALSE
+                                               , width = "100%")
+                                 , selectInput(inputId = "soil.Ma.L"
+                                               , label = NULL
+                                               , choices = seq(0,100,10)
+                                               , multiple = FALSE
+                                               , width = "100%"))
+                        , column(2
+                                 , br()
+                                 , br()
+                                 , HTML("<strong>Medium</strong>")
+                                 , selectInput(inputId = "soil.Ge.M"
+                                               , label = NULL
+                                               , choices = seq(0,100,10)
+                                               , multiple = FALSE
+                                               , width = "100%")
+                                 , selectInput(inputId = "soil.Im.M"
+                                               , label = NULL
+                                               , choices = seq(0,100,10)
+                                               , multiple = FALSE
+                                               , width = "100%")
+                                 , selectInput(inputId = "soil.Ma.M"
+                                               , label = NULL
+                                               , choices = seq(0,100,10)
+                                               , multiple = FALSE
+                                               , width = "100%"))
+                        , column(2
+                                 , br()
+                                 , br()
+                                 , HTML("<strong>High</strong>")
+                                 , selectInput(inputId = "soil.Ge.H"
+                                               , label = NULL
+                                               , choices = seq(0,100,10)
+                                               , multiple = FALSE
+                                               , width = "100%")
+                                 , selectInput(inputId = "soil.Im.H"
+                                               , label = NULL
+                                               , choices = seq(0,100,10)
+                                               , multiple = FALSE
+                                               , width = "100%")
+                                 , selectInput(inputId = "soil.Ma.H"
+                                               , label = NULL
+                                               , choices = seq(0,100,10)
+                                               , multiple = FALSE
+                                               , width = "100%"))
+                      )
+                      , fluidRow(
+                        column(10
+                               , br()
+                               , wellPanel(style = "overflow-x:scroll;"
+                                           , tableOutput(outputId = "mat.PFG.soil")))
+                        , column(2
+                                 , br()
+                                 , actionButton(inputId = "delete.PFG.soil"
+                                                , label = NULL
+                                                , icon = icon("trash")
+                                                , style = HTML(button.style)
+                                 )
+                        )
+                      )
+                      , fluidRow(
+                        br(),
+                        wellPanel(style = "overflow-x:scroll;"
+                                  , dataTableOutput(outputId = "created_table.soil"))
+                      )
+                        ) ## END tabPanel (soil)
                       ) ## END tabSetPanel
                       ) ## END tabPanel (PFG files)

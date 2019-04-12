@@ -34,12 +34,18 @@ observeEvent(input$add.PFG.name, {
                       , inputId = "disp.PFG"
                       , choices = names.PFG
                       , selected = names.PFG[1])
+    updateSelectInput(session
+                      , inputId = "soil.PFG"
+                      , choices = names.PFG
+                      , selected = names.PFG[1])
     
     shinyjs::reset("name.PFG")
     shinyjs::enable("succ.PFG")
     shinyjs::enable("add.PFG.succ")
     shinyjs::enable("disp.PFG")
     shinyjs::enable("add.PFG.disp")
+    shinyjs::enable("soil.PFG")
+    shinyjs::enable("add.PFG.soil")
   }
 })
 
@@ -52,38 +58,48 @@ observeEvent(input$delete.names.PFG, {
   shinyjs::disable("add.PFG.succ")
   shinyjs::disable("disp.PFG")
   shinyjs::disable("add.PFG.disp")
+  shinyjs::disable("soil.PFG")
+  shinyjs::disable("add.PFG.soil")
 })
 
 ####################################################################
 
 observeEvent(input$add.PFG.succ, {
-  mat.PFG.succ <<- rbind(mat.PFG.succ
-                         , data.frame(PFG = input$succ.PFG
-                                      , type = input$succ.type
-                                      , height = as.numeric(input$succ.height)
-                                      , maturity = as.numeric(input$succ.maturity)
-                                      , longevity = as.numeric(input$succ.longevity)
-                         ))
-  output$mat.PFG.succ = renderTable({ mat.PFG.succ })
+  mat.PFG.ALL <<- rbind(mat.PFG.ALL
+                        , data.frame(PFG = input$succ.PFG
+                                     , type = input$succ.type
+                                     , height = as.numeric(input$succ.height)
+                                     , maturity = as.numeric(input$succ.maturity)
+                                     , longevity = as.numeric(input$succ.longevity)
+                                     , light = as.numeric(input$succ.light)
+                        ))
+  output$mat.PFG.ALL = renderTable({ mat.PFG.ALL })
   
   shinyjs::enable("create.succ")
+  shinyjs::enable("create.light")
 })
 
-observeEvent(input$delete.PFG.succ, {
-  mat.PFG.succ <<- data.frame()
-  output$mat.PFG.succ = renderTable({ mat.PFG.succ })
+observeEvent(input$delete.PFG.ALL, {
+  mat.PFG.ALL <<- data.frame()
+  output$mat.PFG.ALL = renderTable({ mat.PFG.ALL })
   
   shinyjs::disable("create.succ")
+  shinyjs::disable("create.light")
 })
 
 ####################################################################
+
+output$created_table.succ = renderDataTable({
+  path_folder = paste0(input$name.simul, "/DATA/PFGS/SUCC/")
+  return(get_files(path_folder))
+})
 
 observeEvent(input$create.succ, {
   if (input$create.skeleton > 0)
   {
     get_res = print_messages(as.expression(
       PRE_FATE.params_PFGsuccession(name.simulation = input$name.simul
-                                    , mat.PFG.succ = mat.PFG.succ
+                                    , mat.PFG.succ = mat.PFG.ALL[, c("PFG", "type", "height", "maturity", "longevity")]
       )
     ))
     
@@ -91,6 +107,35 @@ observeEvent(input$create.succ, {
     {
       output$created_table.succ = renderDataTable({
         path_folder = paste0(input$name.simul, "/DATA/PFGS/SUCC/")
+        return(get_files(path_folder))
+      })
+    }
+  } else
+  {
+    shinyalert(type = "warning", text = "You must create a simulation folder first !")
+  }
+})
+
+####################################################################
+
+output$created_table.light = renderDataTable({
+  path_folder = paste0(input$name.simul, "/DATA/PFGS/LIGHT/")
+  return(get_files(path_folder))
+})
+
+observeEvent(input$create.light, {
+  if (input$create.skeleton > 0)
+  {
+    get_res = print_messages(as.expression(
+      PRE_FATE.params_PFGlight(name.simulation = input$name.simul
+                               , mat.PFG.succ = mat.PFG.ALL[, c("PFG", "type", "height", "maturity", "longevity", "light")]
+      )
+    ))
+    
+    if(get_res)
+    {
+      output$created_table.light = renderDataTable({
+        path_folder = paste0(input$name.simul, "/DATA/PFGS/LIGHT/")
         return(get_files(path_folder))
       })
     }
@@ -122,6 +167,11 @@ observeEvent(input$delete.PFG.disp, {
 })
 
 ####################################################################
+
+output$created_table.disp = renderDataTable({
+  path_folder = paste0(input$name.simul, "/DATA/PFGS/DISP/")
+  return(get_files(path_folder))
+})
 
 observeEvent(input$create.disp, {
   if (input$create.skeleton > 0)
@@ -387,6 +437,11 @@ observeEvent(input$delete.PFG.dist, {
 
 ####################################################################
 
+output$created_table.dist = renderDataTable({
+  path_folder = paste0(input$name.simul, "/DATA/PFGS/DIST/")
+  return(get_files(path_folder))
+})
+
 observeEvent(input$create.dist, {
   if (input$create.skeleton > 0)
   {
@@ -409,4 +464,65 @@ observeEvent(input$create.dist, {
   }
 })
 
+####################################################################
 
+observeEvent(input$add.PFG.soil, {
+  mat.PFG.soil <<- rbind(mat.PFG.soil
+                        , data.frame(PFG = input$soil.PFG
+                                     , type = input$soil.type
+                                     , soil_contrib = as.numeric(input$soil.contrib)
+                                     , soil_tol_min = as.numeric(input$soil.tol_min)
+                                     , soil_tol_max = as.numeric(input$soil.tol_max)
+                                     , lifeStage = rep(c("Germinant", "Immature", "Mature"), each = 3)
+                                     , soilResources = rep(c("Low", "Medium", "High"), 3)
+                                     , soil_tol = c(as.numeric(input$soil.Ge.L)
+                                                    , as.numeric(input$soil.Ge.M)
+                                                    , as.numeric(input$soil.Ge.H)
+                                                    , as.numeric(input$soil.Im.L)
+                                                    , as.numeric(input$soil.Im.M)
+                                                    , as.numeric(input$soil.Im.H)
+                                                    , as.numeric(input$soil.Ma.L)
+                                                    , as.numeric(input$soil.Ma.M)
+                                                    , as.numeric(input$soil.Ma.H))
+                        ))
+  output$mat.PFG.soil = renderTable({ mat.PFG.soil })
+  
+  shinyjs::enable("create.soil")
+})
+
+observeEvent(input$delete.PFG.soil, {
+  mat.PFG.soil <<- data.frame()
+  output$mat.PFG.soil = renderTable({ mat.PFG.soil })
+  
+  shinyjs::disable("create.soil")
+})
+
+####################################################################
+
+output$created_table.soil = renderDataTable({
+  path_folder = paste0(input$name.simul, "/DATA/PFGS/SOIL/")
+  return(get_files(path_folder))
+})
+
+observeEvent(input$create.soil, {
+  if (input$create.skeleton > 0)
+  {
+    get_res = print_messages(as.expression(
+      PRE_FATE.params_PFGsoil(name.simulation = input$name.simul
+                              , mat.PFG.soil = unique(mat.PFG.soil[, c("PFG", "type", "soil_contrib", "soil_tol_min", "soil_tol_max")])
+                              , mat.PFG.tol = mat.PFG.soil[, c("PFG", "lifeStage", "soilResources", "soil_tol")]
+      )
+    ), cut_pattern = paste0(input$name.simul, "/DATA/PFGS/SOIL/"))
+    
+    if(get_res)
+    {
+      output$created_table.soil = renderDataTable({
+        path_folder = paste0(input$name.simul, "/DATA/PFGS/SOIL/")
+        return(get_files(path_folder))
+      })
+    }
+  } else
+  {
+    shinyalert(type = "warning", text = "You must create a simulation folder first !")
+  }
+})

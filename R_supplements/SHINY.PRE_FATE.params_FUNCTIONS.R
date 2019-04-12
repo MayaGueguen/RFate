@@ -66,28 +66,31 @@ get_files = function(path_folder, skip.no = 2, opt.sub_folder = FALSE)
                          , include.dirs = FALSE
                          , full.names = TRUE
                          , recursive = opt.sub_folder)
-  tab = foreach(tab_name = tab_names) %do%
+  if (length(tab_names) > 0)
   {
-    fread(file = tab_name, header = FALSE, skip = skip.no, sep = "\t")
-  }
-  if (length(tab) > 1)
-  {
-    nrows = sapply(tab, nrow)
-    nrow_max = max(nrows)
-    if (length(which(nrows < nrow_max)) > 0)
+    tab = foreach(tab_name = tab_names) %do%
     {
-      for (i in which(nrows < nrow_max))
-      {
-        tab[[i]] = rbind(tab[[i]], data.frame(V1 = rep("", nrow_max - nrows[i])))
-      }
+      fread(file = tab_name, header = FALSE, skip = skip.no, sep = "\t")
     }
-    tab = do.call(cbind, tab)
-  } else
-  {
-    tab = tab[[1]]
+    if (length(tab) > 1)
+    {
+      nrows = sapply(tab, nrow)
+      nrow_max = max(nrows)
+      if (length(which(nrows < nrow_max)) > 0)
+      {
+        for (i in which(nrows < nrow_max))
+        {
+          tab[[i]] = rbind(tab[[i]], data.frame(V1 = rep("", nrow_max - nrows[i])))
+        }
+      }
+      tab = do.call(cbind, tab)
+    } else
+    {
+      tab = tab[[1]]
+    }
+    tab_names = sub("//", "/", tab_names)
+    tab_names = sub(path_folder, "", tab_names)
+    colnames(tab) = tab_names
+    return(tab)
   }
-  tab_names = sub("//", "/", tab_names)
-  tab_names = sub(path_folder, "", tab_names)
-  colnames(tab) = tab_names
-  return(tab)
 }
