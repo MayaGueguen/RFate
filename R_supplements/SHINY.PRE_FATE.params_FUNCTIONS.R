@@ -34,7 +34,7 @@ get_messages = function(out_info)
 
 ###################################################################################################################################
 
-print_messages = function(fun)
+print_messages = function(fun, cut_pattern = "STUPID")
 {
   out_fun = tryCatch(
     capture.output(type = "message", expr = { fun })
@@ -52,7 +52,7 @@ print_messages = function(fun)
     }
     if (length(out_info$message) > 0)
     {
-      shinyalert(type = "success", text = out_info$message)
+      shinyalert(type = "success", text = sub(cut_pattern, paste0(cut_pattern, " "), out_info$message))
     }
     return(1)
   }
@@ -60,13 +60,34 @@ print_messages = function(fun)
 
 ###################################################################################################################################
 
-get_files = function(path_folder, skip.no = 2)
+get_files = function(path_folder, skip.no = 2, opt.sub_folder = FALSE)
 {
-  tab_names = list.files(path = path_folder, include.dirs = FALSE)
-  tab = foreach(tab_name = tab_names, .combine = "cbind") %do%
+  tab_names = list.files(path = path_folder
+                         , include.dirs = FALSE
+                         , full.names = TRUE
+                         , recursive = opt.sub_folder)
+  tab = foreach(tab_name = tab_names) %do%
   {
-    fread(file = paste0(path_folder, tab_name), header = FALSE, skip = skip.no, sep = "\t")
+    fread(file = tab_name, header = FALSE, skip = skip.no, sep = "\t")
   }
+  if (length(tab) > 1)
+  {
+    nrows = sapply(tab, nrow)
+    nrow_max = max(nrows)
+    if (length(which(nrows < nrow_max)) > 0)
+    {
+      for (i in which(nrows < nrow_max))
+      {
+        tab[[i]] = rbind(tab[[i]], data.frame(V1 = rep("", nrow_max - nrows[i])))
+      }
+    }
+    tab = do.call(cbind, tab)
+  } else
+  {
+    tab = tab[[1]]
+  }
+  tab_names = sub("//", "/", tab_names)
+  tab_names = sub(path_folder, "", tab_names)
   colnames(tab) = tab_names
   return(tab)
 }

@@ -53,7 +53,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Raster files</p>")
                                               , label = HTML("Upload <br/>simulation mask")
                                               , icon = icon("upload")
                                               , width = "100%"
-                                              , style = HTML(paste0("background-color: ", button.color, ";"))
+                                              , style = HTML(button.style)
                                )
                              )
                       )
@@ -78,7 +78,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Raster files</p>")
                                                 , label = HTML("Upload habitat <br/>suitability masks")
                                                 , icon = icon("upload")
                                                 , width = "100%"
-                                                , style = HTML(paste0("background-color: ", button.color, ";"))
+                                                , style = HTML(button.style)
                                  )
                                )
                       )
@@ -99,7 +99,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Raster files</p>")
                                                 , label = HTML("Upload <br/>disturbance masks")
                                                 , icon = icon("upload")
                                                 , width = "100%"
-                                                , style = HTML(paste0("background-color: ", button.color, ";"))
+                                                , style = HTML(button.style)
                                  )
                                )
                       )
@@ -144,16 +144,18 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Raster files</p>")
                                               , label = "Add changing year"
                                               , icon = icon("plus")
                                               , width = "100%"
-                                              , style = HTML(paste0("background-color: ", button.color, ";"))
+                                              , style = HTML(button.style)
                                )
                         )
                         , column(6
                                  , br()
-                                 , actionButton(inputId = "create.changing"
+                                 , shinyjs::disabled(
+                                   actionButton(inputId = "create.changing"
                                                 , label = "Create Scenario files"
                                                 , icon = icon("file")
                                                 , width = "100%"
-                                                , style = HTML(paste0("background-color: ", button.color, ";"))
+                                                , style = HTML(button.style)
+                                   )
                                  )
                         )
                       )
@@ -214,7 +216,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Raster files</p>")
                                  , actionButton(inputId = "delete.changing"
                                                 , label = NULL
                                                 , icon = icon("trash")
-                                                , style = HTML(paste0("background-color: ", button.color, ";"))
+                                                , style = HTML(button.style)
                                  )
                         )
                       )

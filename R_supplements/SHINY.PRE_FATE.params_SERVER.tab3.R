@@ -9,6 +9,10 @@ observeEvent(input$name.PFG, {
   {
     shinyjs::disable("add.PFG.name")
   }
+  if (length(names.PFG) == 0)
+  {
+    output$names.PFG = renderText({ "PFG list : " })
+  }
 })
 
 observeEvent(input$add.PFG.name, {
@@ -41,7 +45,7 @@ observeEvent(input$add.PFG.name, {
 
 observeEvent(input$delete.names.PFG, {
   names.PFG <<- c()
-  output$names.PFG = renderText({ names.PFG })
+  output$names.PFG = renderText({ "PFG list : " })
   
   shinyjs::reset("name.PFG")
   shinyjs::disable("succ.PFG")

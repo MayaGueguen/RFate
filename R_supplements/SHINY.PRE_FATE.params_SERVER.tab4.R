@@ -108,11 +108,15 @@ observeEvent(input$add.changing, {
   # , file.name = input$changing.file$name))
   output$mat.changing = renderTable({ mat.changing })
   # }
+  
+  shinyjs::enable("create.changing")
 })
 
 observeEvent(input$delete.changing, {
   mat.changing <<- data.frame()
   output$mat.changing = renderTable({ mat.changing })
+  
+  shinyjs::disable("create.changing")
 })
 
 ####################################################################

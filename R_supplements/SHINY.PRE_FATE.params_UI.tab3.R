@@ -20,7 +20,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>PFG files</p>")
                                    , label = "Add PFG"
                                    , icon = icon("plus")
                                    , width = "100%"
-                                   , style = HTML(paste0("background-color: ", button.color, ";"))
+                                   , style = HTML(button.style)
                       )
                     )
            )
@@ -33,7 +33,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>PFG files</p>")
                     , actionButton(inputId = "delete.names.PFG"
                                    , label = NULL
                                    , icon = icon("trash")
-                                   , style = HTML(paste0("background-color: ", button.color, ";"))
+                                   , style = HTML(button.style)
                     )
            )
          )
@@ -80,7 +80,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>PFG files</p>")
                                             , label = "Add PFG"
                                             , icon = icon("plus")
                                             , width = "100%"
-                                            , style = HTML(paste0("background-color: ", button.color, ";"))
+                                            , style = HTML(button.style)
                                )
                              )
                       )
@@ -91,7 +91,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>PFG files</p>")
                                               , label = "Create PFG succession files"
                                               , icon = icon("file")
                                               , width = "100%"
-                                              , style = HTML(paste0("background-color: ", button.color, ";"))
+                                              , style = HTML(button.style)
                                  )
                                )
                       )
@@ -166,7 +166,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>PFG files</p>")
                                , actionButton(inputId = "delete.PFG.succ"
                                               , label = NULL
                                               , icon = icon("trash")
-                                              , style = HTML(paste0("background-color: ", button.color, ";"))
+                                              , style = HTML(button.style)
                                )
                       )
                     )
@@ -223,7 +223,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>PFG files</p>")
                                               , label = "Add PFG"
                                               , icon = icon("plus")
                                               , width = "100%"
-                                              , style = HTML(paste0("background-color: ", button.color, ";"))
+                                              , style = HTML(button.style)
                                  )
                                )
                         )
@@ -234,7 +234,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>PFG files</p>")
                                                 , label = "Create PFG dispersal files"
                                                 , icon = icon("file")
                                                 , width = "100%"
-                                                , style = HTML(paste0("background-color: ", button.color, ";"))
+                                                , style = HTML(button.style)
                                    )
                                  )
                         )
@@ -299,7 +299,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>PFG files</p>")
                                  , actionButton(inputId = "delete.PFG.disp"
                                                 , label = NULL
                                                 , icon = icon("trash")
-                                                , style = HTML(paste0("background-color: ", button.color, ";"))
+                                                , style = HTML(button.style)
                                  )
                         )
                       )
@@ -339,7 +339,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>PFG files</p>")
                                               , label = "Add disturbance"
                                               , icon = icon("plus")
                                               , width = "100%"
-                                              , style = HTML(paste0("background-color: ", button.color, ";"))
+                                              , style = HTML(button.style)
                                )
                         )
                         , column(6
@@ -349,7 +349,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>PFG files</p>")
                                                 , label = "Create PFG disturbance files"
                                                 , icon = icon("file")
                                                 , width = "100%"
-                                                , style = HTML(paste0("background-color: ", button.color, ";"))
+                                                , style = HTML(button.style)
                                    )
                                  )
                         )
@@ -384,7 +384,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>PFG files</p>")
                                  , actionButton(inputId = "delete.PFG.dist"
                                                 , label = NULL
                                                 , icon = icon("trash")
-                                                , style = HTML(paste0("background-color: ", button.color, ";"))
+                                                , style = HTML(button.style)
                                  )
                         )
                       )

@@ -63,6 +63,11 @@ output$UI.doLight = renderUI({
 
 ####################################################################
 
+output$created_table.global = renderDataTable({
+  path_folder = paste0(input$name.simul, "/DATA/GLOBAL_PARAMETERS/")
+  return(get_files(path_folder))
+})
+
 observeEvent(input$create.global, {
   if (input$create.skeleton > 0)
   {
@@ -89,9 +94,9 @@ observeEvent(input$create.global, {
                                        , doDisturbances = input$doDisturbances
                                        , DIST.no = input$DIST.no
                                        , DIST.no_sub = input$DIST.no_sub
-                                       , DIST.freq = input$DIST.freq
+                                       , DIST.freq = rep(input$DIST.freq, input$DIST.no)
       )
-    ))
+    ), cut_pattern = paste0(input$name.simul, "/DATA/GLOBAL_PARAMETERS/"))
     
     if(get_res)
     {

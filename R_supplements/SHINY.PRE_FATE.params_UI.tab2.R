@@ -60,7 +60,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Scenario files</p>")
                                    , label = "Create SAVE maps files"
                                    , icon = icon("file")
                                    , width = "100%"
-                                   , style = HTML(paste0("background-color: ", button.color, ";"))
+                                   , style = HTML(button.style)
                     )
                   )
            )
@@ -97,13 +97,14 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Scenario files</p>")
                                      , label = "Create SAVE objects files"
                                      , icon = icon("file")
                                      , width = "100%"
-                                     , style = HTML(paste0("background-color: ", button.color, ";"))
+                                     , style = HTML(button.style)
                       )
                     )
            )
          )
          , fluidRow(
            br(),
-           wellPanel(dataTableOutput(outputId = "created_table.save"))
+           wellPanel(style = "overflow-x:scroll;"
+                     , dataTableOutput(outputId = "created_table.save"))
          )
 ) ## END tabPanel (Scenario files)

@@ -25,6 +25,7 @@ mat.PFG.disp = data.frame()
 mat.PFG.dist = data.frame()
 mat.changing = data.frame()
 button.color = "rgba(96, 129, 150, 0.5)"
+button.style = paste0("background-color: ", button.color, "; border-width:0px;")
 help.color = "#dee2e8"
 
 ###################################################################################################################################
@@ -109,7 +110,7 @@ ui <- fluidPage(
                               , label = "Create folder"
                               , icon = icon("folder")
                               , width = "100%"
-                              , style = HTML(paste0("background-color: ", button.color, ";"))
+                              , style = HTML(button.style)
                )
         )
       ),
@@ -148,7 +149,7 @@ ui <- fluidPage(
                               , label = HTML("Create Simulation <br/>parameters file")
                               , icon = icon("file")
                               , width = "100%"
-                              , style = HTML(paste0("background-color: ", button.color, ";"))
+                              , style = HTML(button.style)
                  )
                )
                , br()
@@ -158,7 +159,7 @@ ui <- fluidPage(
                                 , label = "Download folder"
                                 , icon = icon("download")
                                 , width = "100%"
-                                , style = HTML(paste0("background-color: ", button.color, ";"))
+                                , style = HTML(button.style)
                  )
                )
                , br()
@@ -168,7 +169,7 @@ ui <- fluidPage(
                               , label = "Start new folder"
                               , icon = icon("refresh")
                               , width = "100%"
-                              , style = HTML(paste0("background-color: ", button.color, ";"))
+                              , style = HTML(button.style)
                  )
                )
         )

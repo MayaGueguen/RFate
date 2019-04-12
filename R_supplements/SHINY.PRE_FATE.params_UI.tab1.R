@@ -116,7 +116,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Global parameters</p>")
                          "
            )))
          , fluidRow(
-           column(6
+           column(4
                   , br()
                   , numericInput(inputId = "required.no_PFG"
                                  , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>required.no_PFG</span>")
@@ -133,23 +133,31 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Global parameters</p>")
                                  , value = 1
                                  , min = 1
                                  , width = "100%")
-                  , numericInput(inputId = "required.seeding_duration"
-                                 , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>required.seeding_duration</span>")
-                                 , value = 1
-                                 , min = 1
-                                 , width = "100%")
-                  , numericInput(inputId = "required.seeding_timestep"
-                                 , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>required.seeding_timestep</span>")
-                                 , value = 1
-                                 , min = 1
-                                 , width = "100%")
-                  , numericInput(inputId = "required.seeding_input"
-                                 , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>required.seeding_input</span>")
+                  , numericInput(inputId = "opt.no_CPU"
+                                 , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>opt.no_CPU</span>")
                                  , value = 1
                                  , min = 1
                                  , width = "100%")
            )
-           , column(6
+           , column(4
+                    , br()
+                    , numericInput(inputId = "required.seeding_duration"
+                                   , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>required.seeding_duration</span>")
+                                   , value = 1
+                                   , min = 1
+                                   , width = "100%")
+                    , numericInput(inputId = "required.seeding_timestep"
+                                   , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>required.seeding_timestep</span>")
+                                   , value = 1
+                                   , min = 1
+                                   , width = "100%")
+                    , numericInput(inputId = "required.seeding_input"
+                                   , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>required.seeding_input</span>")
+                                   , value = 1
+                                   , min = 1
+                                   , width = "100%")
+           )
+           , column(4
                     , br()
                     , numericInput(inputId = "required.max_by_cohort"
                                    , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>required.max_by_cohort</span>")
@@ -171,11 +179,6 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Global parameters</p>")
                                    , value = 1
                                    , min = 1
                                    , width = "100%")
-                    , numericInput(inputId = "opt.no_CPU"
-                                   , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>opt.no_CPU</span>")
-                                   , value = 1
-                                   , min = 1
-                                   , width = "100%")
            )
          )
          , fluidRow(
@@ -190,7 +193,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Global parameters</p>")
                     , br()
                     , checkboxInput(inputId = "doHabSuitability"
                                     , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>doHabSuitability</span>")
-                                    , value = TRUE
+                                    , value = FALSE
                                     , width = "100%")
                     , uiOutput(outputId = "UI.doHabSuitability")
            )
@@ -198,7 +201,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Global parameters</p>")
                     , br()
                     , checkboxInput(inputId = "doDisturbances"
                                     , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>doDisturbances</span>")
-                                    , value = TRUE
+                                    , value = FALSE
                                     , width = "100%")
                     , uiOutput(outputId = "UI.doDisturbances")
            )
@@ -208,7 +211,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Global parameters</p>")
                     , br()
                     , checkboxInput(inputId = "doLight"
                                     , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>doLight</span>")
-                                    , value = TRUE
+                                    , value = FALSE
                                     , width = "100%")
                     , uiOutput(outputId = "UI.doLight")
            )
@@ -216,7 +219,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Global parameters</p>")
                   , br()
                   , checkboxInput(inputId = "doSoil"
                                   , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>doSoil</span>")
-                                  , value = TRUE
+                                  , value = FALSE
                                   , width = "100%")
            )
          )
@@ -227,12 +230,13 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Global parameters</p>")
                                  , label = "Create Global parameters file"
                                  , icon = icon("file")
                                  , width = "100%"
-                                 , style = HTML(paste0("background-color: ", button.color, ";"))
+                                 , style = HTML(button.style)
                   )
                   , br())
          )
          , fluidRow(
            br(),
-           wellPanel(dataTableOutput(outputId = "created_table.global"))
+           wellPanel(style = "overflow-x:scroll;"
+                     , dataTableOutput(outputId = "created_table.global"))
          )
 ) ## END tabPanel (Global parameters)
