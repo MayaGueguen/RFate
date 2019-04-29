@@ -98,10 +98,10 @@ tabPanel(title = HTML("<p class='panel_title'>A. Create simulation folder & para
                wellPanel(id = "main.panel",
                          style = "border-solid:solid; border-width:0px; border-color:#068f96;",
                          tabsetPanel(
-                           source("R_supplements/SHINY.PRE_FATE.params_UI.tab1.R", local = TRUE)$value,
-                           source("R_supplements/SHINY.PRE_FATE.params_UI.tab2.R", local = TRUE)$value,
-                           source("R_supplements/SHINY.PRE_FATE.params_UI.tab3.R", local = TRUE)$value,
-                           source("R_supplements/SHINY.PRE_FATE.params_UI.tab4.R", local = TRUE)$value
+                           source("R_supplements/SHINY.PRE_FATE.params_UI.panel1.tab1.R", local = TRUE)$value,
+                           source("R_supplements/SHINY.PRE_FATE.params_UI.panel1.tab2.R", local = TRUE)$value,
+                           source("R_supplements/SHINY.PRE_FATE.params_UI.panel1.tab3.R", local = TRUE)$value,
+                           source("R_supplements/SHINY.PRE_FATE.params_UI.panel1.tab4.R", local = TRUE)$value
                          ) ## END tabsetPanel
                ) ## END wellPanel
              ) ## END hidden

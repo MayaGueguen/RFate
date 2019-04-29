@@ -113,6 +113,7 @@ server <- function(input, output, session) {
   session$onSessionEnded(stopApp)
   
   ####################################################################
+  ### PANEL 1
   
   observeEvent(input$create.skeleton, {
     print_messages(as.expression(
@@ -168,6 +169,8 @@ server <- function(input, output, session) {
     shinyjs::hide("refresh")
   })
   
+  ####################################################################
+  ### PANEL 3
   
   observeEvent(input$folder.simul, {
     if (input$folder.simul > 0) {
@@ -179,10 +182,10 @@ server <- function(input, output, session) {
   
   ####################################################################
   
-  source("R_supplements/SHINY.PRE_FATE.params_SERVER.tab1.R", local = TRUE)$value
-  source("R_supplements/SHINY.PRE_FATE.params_SERVER.tab2.R", local = TRUE)$value
-  source("R_supplements/SHINY.PRE_FATE.params_SERVER.tab3.R", local = TRUE)$value
-  source("R_supplements/SHINY.PRE_FATE.params_SERVER.tab4.R", local = TRUE)$value
+  source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel1.tab1.R", local = TRUE)$value
+  source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel1.tab2.R", local = TRUE)$value
+  source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel1.tab3.R", local = TRUE)$value
+  source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel1.tab4.R", local = TRUE)$value
   
   ####################################################################
 }
