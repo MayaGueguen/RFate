@@ -176,6 +176,27 @@ server <- function(input, output, session) {
     if (input$folder.simul > 0) {
       path = choose.dir(default = readDirectoryInput(session, 'folder.simul'))
       updateDirectoryInput(session, 'folder.simul', value = path)
+      
+      names.simulParam = list.files(path = paste0(path, "/PARAM_SIMUL")
+                                    , pattern = ".txt$"
+                                    , all.files = FALSE
+                                    , full.names = FALSE)
+      if (length(names.simulParam) > 0)
+      {
+        updateSelectInput(session
+                          , inputId = "graph.simulParam"
+                          , choices = names.simulParam
+                          , selected = names.simulParam[1])
+        shinyjs::enable("graph.simulParam")
+      } else
+      {
+        shinyjs::reset("graph.simulParam")
+        shinyjs::disable("graph.simulParam")
+      }
+    } else
+    {
+      shinyjs::reset("graph.simulParam")
+      shinyjs::disable("graph.simulParam")
     }
   })
   
