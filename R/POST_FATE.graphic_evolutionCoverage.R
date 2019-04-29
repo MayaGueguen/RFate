@@ -274,12 +274,12 @@ POST_FATE.graphic_evolutionCoverage = function(
         ras = stack(file_name) * ras.mask
         ras = as.data.frame(ras)
         
-        if (!is.null(df.habitat))
+        if (exists("df.habitat"))
         {
           ras = merge(ras, df.habitat, by.x = "row.names", by.y = "ID")
         } else
         {
-          ras$HAB = "all"
+          ras$HAB = "ALL"
         }
         ras.split = split(ras, ras$HAB)
         
@@ -292,11 +292,14 @@ POST_FATE.graphic_evolutionCoverage = function(
           {
             tmp = ras.split[[as.character(habi)]]
           }
-          tmp = tmp[, -which(colnames(tmp) %in% c("Row.names", "HAB"))]
+          tmp = tmp[, -which(colnames(tmp) %in% c("Row.names", "HAB")), drop= FALSE]
           
-          ## calculate the % of cover of each PPFG
-          distri[as.character(y), gp, as.character(habi)] = apply(tmp, 2, function(x) length(which(x[ind_1_mask] > 0)) / no_1_mask)
-          distriAbund[as.character(y), gp, as.character(habi)] = apply(tmp, 2, function(x) sum(x[ind_1_mask], na.rm = T))
+          if (nrow(tmp) >0)
+          {
+            ## calculate the % of cover of each PPFG
+            distri[as.character(y), gp, as.character(habi)] = apply(tmp, 2, function(x) length(which(x[ind_1_mask] > 0)) / no_1_mask)
+            distriAbund[as.character(y), gp, as.character(habi)] = apply(tmp, 2, function(x) sum(x[ind_1_mask], na.rm = T))
+          }
         }
       }
     } ## end loop on years
