@@ -292,9 +292,15 @@ POST_FATE.graphic_evolutionCoverage = function(
           {
             tmp = ras.split[[as.character(habi)]]
           }
+<<<<<<< HEAD
           tmp = tmp[, -which(colnames(tmp) %in% c("Row.names", "HAB")), drop= FALSE]
           
           if (nrow(tmp) >0)
+=======
+          tmp = tmp[, -which(colnames(tmp) %in% c("Row.names", "HAB")), drop = FALSE]
+          
+          if (nrow(tmp) > 0)
+>>>>>>> d245b1c2f0f4518e9501e90b1a63896acf3a7710
           {
             ## calculate the % of cover of each PPFG
             distri[as.character(y), gp, as.character(habi)] = apply(tmp, 2, function(x) length(which(x[ind_1_mask] > 0)) / no_1_mask)

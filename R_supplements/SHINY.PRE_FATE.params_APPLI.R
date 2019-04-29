@@ -94,7 +94,8 @@ ui <- fluidPage(
     width = 12,
     tabsetPanel(
       source("R_supplements/SHINY.PRE_FATE.params_UI.panel1.R", local = TRUE)$value,
-      tabPanel(title =  HTML("<p class='panel_title'>B. Create simulation ouputs & graphics</p>"))
+      tabPanel(title =  HTML("<p class='panel_title'>B. Run simulation</p>")),
+      tabPanel(title =  HTML("<p class='panel_title'>C. Create simulation ouputs & graphics</p>"))
     )
   )
 ) ## END fluidPage
