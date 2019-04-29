@@ -5,6 +5,7 @@ rm(list = ls())
 library(shiny)
 library(shinyFiles)
 library(shinyalert)
+library(shinyDirectoryInput)
 library(shinyjs)
 library(markdown)
 library(RFate)
@@ -95,10 +96,11 @@ ui <- fluidPage(
     tabsetPanel(
       source("R_supplements/SHINY.PRE_FATE.params_UI.panel1.R", local = TRUE)$value,
       tabPanel(title =  HTML("<p class='panel_title'>B. Run simulation</p>")),
-      tabPanel(title =  HTML("<p class='panel_title'>C. Create simulation ouputs & graphics</p>"))
+      # tabPanel(title =  HTML("<p class='panel_title'>C. Create simulation ouputs & graphics</p>"))
+      source("R_supplements/SHINY.PRE_FATE.params_UI.panel3.R", local = TRUE)$value
     )
   )
-) ## END fluidPage
+    ) ## END fluidPage
 
 
 ###################################################################################################################################
@@ -164,6 +166,14 @@ server <- function(input, output, session) {
     shinyjs::hide("create.simul")
     shinyjs::hide("FATE_simulation.zip")
     shinyjs::hide("refresh")
+  })
+  
+  
+  observeEvent(input$folder.simul, {
+    if (input$folder.simul > 0) {
+      path = choose.dir(default = readDirectoryInput(session, 'folder.simul'))
+      updateDirectoryInput(session, 'folder.simul', value = path)
+    }
   })
   
   
