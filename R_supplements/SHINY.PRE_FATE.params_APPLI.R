@@ -37,7 +37,7 @@ help.color = "#dee2e8"
 ui <- fluidPage(
   useShinyalert(),
   useShinyjs(),
-
+  
   tags$body(
     tags$style(HTML("
                     @import url('https://fonts.googleapis.com/css?family=Londrina+Solid:200,300|Medula+One|Slabo+27px|Francois+One');
@@ -52,7 +52,7 @@ ui <- fluidPage(
                     border-radius: 0px;
                     color: #FFFFFF;
                     }
-
+                    
                     .tabbable > .nav > li > a {
                     background-color: rgba(96, 129, 150, 0.5);
                     color: #FFFFFF;
@@ -212,6 +212,47 @@ server <- function(input, output, session) {
       shinyjs::disable("show.evolutionAbund")
       shinyjs::disable("show.evolutionLight")
       shinyjs::disable("show.evolutionSoil")
+    }
+  })
+  
+  observeEvent(input$graph.simulParam, {
+    if (nchar(input$graph.simulParam) > 0)
+    {
+      file.globalParam = .getParam(params.lines = input$graph.simulParam
+                                   , flag = "GLOBAL_PARAMS"
+                                   , flag.split = "^--.*--$"
+                                   , is.num = FALSE)
+      file.globalParam = paste0(dirname(sub("/PARAM_SIMUL", "", dirname(input$graph.simulParam)))
+                                , "/", file.globalParam)
+      
+      doLight = doSoil = FALSE
+      if (file.exists(file.globalParam))
+      {
+        doLight = .getParam(params.lines = file.globalParam
+                            , flag = "DO_LIGHT_COMPETITION"
+                            , flag.split = " "
+                            , is.num = TRUE)
+        doSoil = .getParam(params.lines = file.globalParam
+                           , flag = "DO_SOIL_COMPETITION"
+                           , flag.split = " "
+                           , is.num = TRUE)
+      }
+      
+      if (doLight)
+      {
+        shinyjs::enable("show.evolutionLight")
+      } else
+      {
+        shinyjs::disable("show.evolutionLight")
+      }
+      
+      if (doSoil)
+      {
+        shinyjs::enable("show.evolutionSoil")
+      } else
+      {
+        shinyjs::disable("show.evolutionSoil")
+      }
     }
   })
   

@@ -154,7 +154,9 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Through time...</p>")
                                        , icon = icon("play")
                                        , width = "100%"
                                        , style = HTML(button.style)
-                        ))
+                        )
+                        , br()
+                        , textOutput(outputId = "output.evolutionLight"))
              ))
            , shinyjs::hidden(
              fluidRow(
