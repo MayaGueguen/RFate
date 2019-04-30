@@ -105,13 +105,12 @@
 # #  opt.abund_fixedScale = TRUE
 # #  opt.no_CPU = 5
 # #  opt.cells_ID = NULL
-# RFate::POST_FATE.graphic_evolutionAbund_pixels(
-#   name.simulation = "FATEGLOBAL"
-#   , file.simulParam = "FATEGLOBAL/PARAM_SIMUL/Simul_parameters_V2515.txt"
-#   , no.years = 10
-#   , opt.abund_fixedScale = TRUE
-#   , opt.no_CPU = 5
-#   , opt.cells_ID = NULL
+# POST_FATE.graphic_evolutionAbund_pixels(name.simulation = "FATEGLOBAL"
+#                                         , file.simulParam = "FATEGLOBAL/PARAM_SIMUL/Simul_parameters_V2515.txt"
+#                                         , no.years = 10
+#                                         , opt.abund_fixedScale = TRUE
+#                                         , opt.no_CPU = 5
+#                                         , opt.cells_ID = NULL
 # )
 
 POST_FATE.graphic_evolutionAbund_pixels = function(
