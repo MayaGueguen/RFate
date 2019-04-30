@@ -32,7 +32,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Through time...</p>")
                          </tr>
                          </table>
                          "
-           )))
+           ))) ## END wellPanel
          , fluidRow(
            column(3
                   , br()
@@ -69,8 +69,8 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Through time...</p>")
            column(3
                   , br()
                   , shinyjs::disabled(
-                    actionButton(inputId = "create.evolutionCoverage"
-                                 , label = "Abund & coverage"
+                    actionButton(inputId = "show.evolutionCoverage"
+                                 , label = "Abundance & coverage"
                                  , icon = icon("chart-bar")
                                  , width = "100%"
                                  , style = HTML(button.style)
@@ -80,8 +80,8 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Through time...</p>")
            , column(3
                   , br()
                   , shinyjs::disabled(
-                    actionButton(inputId = "create.abundPixels"
-                                 , label = "Abund (PIXELS) "
+                    actionButton(inputId = "show.evolutionAbund"
+                                 , label = "Abundance (PIXELS) "
                                  , icon = icon("chart-bar")
                                  , width = "100%"
                                  , style = HTML(button.style)
@@ -91,7 +91,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Through time...</p>")
            , column(3
                     , br()
                     , shinyjs::disabled(
-                      actionButton(inputId = "create.lightPixels"
+                      actionButton(inputId = "show.evolutionLight"
                                    , label = "Light (PIXELS) "
                                    , icon = icon("chart-bar")
                                    , width = "100%"
@@ -102,7 +102,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Through time...</p>")
            , column(3
                     , br()
                     , shinyjs::disabled(
-                      actionButton(inputId = "create.soilPixels"
+                      actionButton(inputId = "show.evolutionSoil"
                                    , label = "Soil (PIXELS) "
                                    , icon = icon("chart-bar")
                                    , width = "100%"
@@ -113,8 +113,62 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Through time...</p>")
          )
          , fluidRow(
            br()
-           , withSpinner(plotOutput(outputId = "plot.evolutionCoverage1", width = "100%", height = "600px"), type = 4)
-           , withSpinner(plotOutput(outputId = "plot.evolutionCoverage2", width = "100%", height = "600px"), type = 1)
-           # plotOutput(outputId = "plot.evolutionCoverage")
+           , shinyjs::hidden(
+             fluidRow(
+               id = "panel.evolutionCoverage"
+               , column(8
+                        , plotOutput(outputId = "plot.evolutionCoverage1", width = "100%", height = "600px")
+                        , plotOutput(outputId = "plot.evolutionCoverage2", width = "100%", height = "600px")
+               )
+               , column(4
+                        , actionButton(inputId = "create.evolutionCoverage"
+                                       , label = "Run plot"
+                                       , icon = icon("play")
+                                       , width = "100%"
+                                       , style = HTML(button.style)
+                        ))
+             ))
+           , shinyjs::hidden(
+             fluidRow(
+               id = "panel.evolutionAbund"
+               , column(8
+                        , plotOutput(outputId = "plot.evolutionAbund", width = "100%", height = "600px")
+               )
+               , column(4
+                        , actionButton(inputId = "create.evolutionAbund"
+                                       , label = "Run plot"
+                                       , icon = icon("play")
+                                       , width = "100%"
+                                       , style = HTML(button.style)
+                        ))
+             ))
+           , shinyjs::hidden(
+             fluidRow(
+               id = "panel.evolutionLight"
+               , column(8
+                        , plotOutput(outputId = "plot.evolutionLight", width = "100%", height = "600px")
+               )
+               , column(4
+                        , actionButton(inputId = "create.evolutionLight"
+                                       , label = "Run plot"
+                                       , icon = icon("play")
+                                       , width = "100%"
+                                       , style = HTML(button.style)
+                        ))
+             ))
+           , shinyjs::hidden(
+             fluidRow(
+               id = "panel.evolutionSoil"
+               , column(8
+                        , plotOutput(outputId = "plot.evolutionSoil", width = "100%", height = "600px")
+               )
+               , column(4
+                        , actionButton(inputId = "create.evolutionSoil"
+                                       , label = "Run plot"
+                                       , icon = icon("play")
+                                       , width = "100%"
+                                       , style = HTML(button.style)
+                        ))
+             ))
          )
 ) ## END tabPanel (Global parameters)

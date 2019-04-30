@@ -37,7 +37,7 @@ help.color = "#dee2e8"
 ui <- fluidPage(
   useShinyalert(),
   useShinyjs(),
-  
+
   tags$body(
     tags$style(HTML("
                     @import url('https://fonts.googleapis.com/css?family=Londrina+Solid:200,300|Medula+One|Slabo+27px|Francois+One');
@@ -52,6 +52,7 @@ ui <- fluidPage(
                     border-radius: 0px;
                     color: #FFFFFF;
                     }
+
                     .tabbable > .nav > li > a {
                     background-color: rgba(96, 129, 150, 0.5);
                     color: #FFFFFF;
@@ -68,17 +69,17 @@ ui <- fluidPage(
                     border-radius: 0px;
                     }
                     p.panel_title {
-                    font-family: 'Francois One', cursive;
+                    font-family: 'Londrina Solid', cursive;
                     font-size: 20px;
                     font-weight: 200;
-                    padding: 00px;
+                    padding: 0px;
                     margin-top: 0px;
                     }
                     p.tabPanel_title {
                     font-family: 'Londrina Solid', cursive;
                     font-size: 20px;
                     font-weight: 200;
-                    padding: 10px;
+                    padding: 0px;
                     margin-top: 0px;
                     }
                     p.tabPanel_subtitle {
@@ -99,7 +100,6 @@ ui <- fluidPage(
     tabsetPanel(
       source("R_supplements/SHINY.PRE_FATE.params_UI.panel1.R", local = TRUE)$value,
       tabPanel(title =  HTML("<p class='panel_title'>B. Run simulation</p>")),
-      # tabPanel(title =  HTML("<p class='panel_title'>C. Create simulation ouputs & graphics</p>"))
       source("R_supplements/SHINY.PRE_FATE.params_UI.panel3.R", local = TRUE)$value
     )
   )
@@ -112,7 +112,6 @@ ui <- fluidPage(
 # Define server function required to create the scatterplot
 server <- function(input, output, session) {
   
-  # output$mat.PFG.succ = data.frame()
   session$onSessionEnded(stopApp)
   
   ####################################################################
@@ -191,19 +190,28 @@ server <- function(input, output, session) {
                           , choices = names.simulParam
                           , selected = names.simulParam[1])
         shinyjs::enable("graph.simulParam")
-        shinyjs::enable("create.evolutionCoverage")
+        shinyjs::enable("show.evolutionCoverage")
+        shinyjs::enable("show.evolutionAbund")
+        shinyjs::enable("show.evolutionLight")
+        shinyjs::enable("show.evolutionSoil")
       } else
       {
         shinyjs::reset("graph.simulParam")
         shinyjs::disable("graph.simulParam")
-        shinyjs::disable("create.evolutionCoverage")
+        shinyjs::disable("show.evolutionCoverage")
+        shinyjs::disable("show.evolutionAbund")
+        shinyjs::disable("show.evolutionLight")
+        shinyjs::disable("show.evolutionSoil")
       }
       return(path)
     } else
     {
       shinyjs::reset("graph.simulParam")
       shinyjs::disable("graph.simulParam")
-      shinyjs::disable("create.evolutionCoverage")
+      shinyjs::disable("show.evolutionCoverage")
+      shinyjs::disable("show.evolutionAbund")
+      shinyjs::disable("show.evolutionLight")
+      shinyjs::disable("show.evolutionSoil")
     }
   })
   
