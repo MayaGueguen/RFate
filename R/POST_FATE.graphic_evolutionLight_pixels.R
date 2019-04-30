@@ -226,7 +226,8 @@ POST_FATE.graphic_evolutionLight_pixels = function(
       if (length(file_name) > 0)
       {
         ras = stack(file_name) * ras.mask
-        res = ras[IDS]
+        res = as.data.frame(ras)
+        res = res[IDS, , drop = FALSE]
         colnames(res) = st
         rownames(res) = IDS
         res = melt(res)

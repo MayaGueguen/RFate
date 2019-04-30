@@ -97,7 +97,22 @@
 ##'
 ## END OF HEADER ###############################################################
 
-
+# library(RFate)
+# setwd("~")
+# # name.simulation = "FATEGLOBAL"
+# #  file.simulParam = "FATEGLOBAL/PARAM_SIMUL/Simul_parameters_V2515.txt"
+# #  no.years = 10
+# #  opt.abund_fixedScale = TRUE
+# #  opt.no_CPU = 5
+# #  opt.cells_ID = NULL
+# RFate::POST_FATE.graphic_evolutionAbund_pixels(
+#   name.simulation = "FATEGLOBAL"
+#   , file.simulParam = "FATEGLOBAL/PARAM_SIMUL/Simul_parameters_V2515.txt"
+#   , no.years = 10
+#   , opt.abund_fixedScale = TRUE
+#   , opt.no_CPU = 5
+#   , opt.cells_ID = NULL
+# )
 
 POST_FATE.graphic_evolutionAbund_pixels = function(
   name.simulation
@@ -246,7 +261,8 @@ POST_FATE.graphic_evolutionAbund_pixels = function(
       if (length(file_name) > 0)
       {
         ras = stack(file_name) * ras.mask
-        res = ras[IDS]
+        res = as.data.frame(ras)
+        res = res[IDS, , drop = FALSE]
         colnames(res) = gp
         rownames(res) = IDS
         res = melt(res)

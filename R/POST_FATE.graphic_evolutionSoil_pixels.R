@@ -206,7 +206,8 @@ POST_FATE.graphic_evolutionSoil_pixels = function(
       if (length(file_name) > 0)
       {
         ras = raster(file_name) * ras.mask
-        res = as.data.frame(ras)[IDS, , drop = FALSE]
+        res = as.data.frame(ras)
+        res = res[IDS, , drop = FALSE]
         colnames(res) = "SOIL"
         rownames(res) = IDS
         res$ID = IDS
