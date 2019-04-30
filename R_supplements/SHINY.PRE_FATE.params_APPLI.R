@@ -7,11 +7,14 @@ library(shinyFiles)
 library(shinyalert)
 library(shinyDirectoryInput)
 library(shinyjs)
+library(shinycssloaders)
 library(markdown)
 library(RFate)
 library(data.table)
 library(foreach)
 library(zip)
+library(ggplot2)
+library(ggthemes)
 
 ###################################################################################################################################
 
@@ -180,7 +183,7 @@ server <- function(input, output, session) {
       names.simulParam = list.files(path = paste0(path, "/PARAM_SIMUL")
                                     , pattern = ".txt$"
                                     , all.files = FALSE
-                                    , full.names = FALSE)
+                                    , full.names = TRUE)
       if (length(names.simulParam) > 0)
       {
         updateSelectInput(session
@@ -188,15 +191,19 @@ server <- function(input, output, session) {
                           , choices = names.simulParam
                           , selected = names.simulParam[1])
         shinyjs::enable("graph.simulParam")
+        shinyjs::enable("create.evolutionCoverage")
       } else
       {
         shinyjs::reset("graph.simulParam")
         shinyjs::disable("graph.simulParam")
+        shinyjs::disable("create.evolutionCoverage")
       }
+      return(path)
     } else
     {
       shinyjs::reset("graph.simulParam")
       shinyjs::disable("graph.simulParam")
+      shinyjs::disable("create.evolutionCoverage")
     }
   })
   
@@ -209,6 +216,9 @@ server <- function(input, output, session) {
   source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel1.tab4.R", local = TRUE)$value
   
   ####################################################################
+  
+  source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel3.tab1.R", local = TRUE)$value
+  
 }
 
 ###################################################################################################################################
