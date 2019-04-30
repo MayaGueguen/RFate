@@ -97,21 +97,6 @@
 ##'
 ## END OF HEADER ###############################################################
 
-# library(RFate)
-# setwd("~")
-# # name.simulation = "FATEGLOBAL"
-# #  file.simulParam = "FATEGLOBAL/PARAM_SIMUL/Simul_parameters_V2515.txt"
-# #  no.years = 10
-# #  opt.abund_fixedScale = TRUE
-# #  opt.no_CPU = 5
-# #  opt.cells_ID = NULL
-# POST_FATE.graphic_evolutionAbund_pixels(name.simulation = "FATEGLOBAL"
-#                                         , file.simulParam = "FATEGLOBAL/PARAM_SIMUL/Simul_parameters_V2515.txt"
-#                                         , no.years = 10
-#                                         , opt.abund_fixedScale = TRUE
-#                                         , opt.no_CPU = 5
-#                                         , opt.cells_ID = NULL
-# )
 
 POST_FATE.graphic_evolutionAbund_pixels = function(
   name.simulation
@@ -263,8 +248,8 @@ POST_FATE.graphic_evolutionAbund_pixels = function(
         res = as.data.frame(ras)
         res = res[IDS, , drop = FALSE]
         colnames(res) = gp
-        rownames(res) = IDS
-        res = melt(res)
+        res$ID = IDS
+        res = melt(res, id.vars = "ID")
         colnames(res) = c("ID", "PFG", "Abund")
         res$TYPE = sub("[0123456789]", "", res$PFG)
         return(data.frame(YEAR = y, res))

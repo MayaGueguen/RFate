@@ -229,8 +229,8 @@ POST_FATE.graphic_evolutionLight_pixels = function(
         res = as.data.frame(ras)
         res = res[IDS, , drop = FALSE]
         colnames(res) = st
-        rownames(res) = IDS
-        res = melt(res)
+        res$ID = IDS
+        res = melt(res, id.vars = "ID")
         colnames(res) = c("ID", "STRATUM", "Abund")
         res$TYPE = sub("STRATUM_", "", res$STRATUM)
         return(data.frame(YEAR = y, res))
