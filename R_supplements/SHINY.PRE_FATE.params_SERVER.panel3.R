@@ -1,5 +1,4 @@
 
-
 ####################################################################
 
 observeEvent(input$folder.simul, {
@@ -56,6 +55,39 @@ observeEvent(input$folder.simul, {
     shinyjs::disable("show.PFGsoil")
   }
 })
+
+####################################################################
+
+get_path.simul = eventReactive(input$graph.simulParam, {
+  return(sub("PARAM_SIMUL", "", dirname(input$graph.simulParam)))
+})
+
+get_name.simul = eventReactive(input$graph.simulParam, {
+  return(basename(get_path.simul()))
+})
+
+get_path.folder = eventReactive(input$graph.simulParam, {
+  return(dirname(get_path.simul()))
+})
+
+
+get_last.createdFiles1 = eventReactive(input$graph.simulParam, {
+  system(command = paste0("ls -lat "
+                          , get_path.simul()
+                          , "/RESULTS/"
+                          , " | awk '{print $9}'")
+         , intern = TRUE)
+})
+
+get_last.createdFiles2 = function(pattern_head, pattern_tail)
+{
+  last.createdFiles = get_last.createdFiles1()
+  last.createdFiles = last.createdFiles[grep(pattern = pattern_head, last.createdFiles)]
+  last.createdFiles = last.createdFiles[grep(pattern = pattern_tail, last.createdFiles)]
+  return(paste0(get_path.simul()
+                , "/RESULTS/"
+                , last.createdFiles[1]))
+}
 
 ####################################################################
 
@@ -163,7 +195,7 @@ output$show.PFGsoil = renderUI({
 
 ####################################################################
 
-observeEvent(input$graph.simulParam, {
+observeEvent(input$graph.simulParam, { ## eventReactive ??
   if (nchar(input$graph.simulParam) > 0)
   {
     file.globalParam = .getParam(params.lines = input$graph.simulParam

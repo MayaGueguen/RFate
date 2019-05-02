@@ -75,64 +75,89 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Specific year</p>")
          )
          , fluidRow(
            br()
-           # , shinyjs::hidden(
-           #   fluidRow(
-           #     id = "panel.evolutionCoverage"
-           #     , column(8
-           #              , plotOutput(outputId = "plot.evolutionCoverage1", width = "100%", height = "600px")
-           #              , plotOutput(outputId = "plot.evolutionCoverage2", width = "100%", height = "600px")
-           #     )
-           #     , column(4
-           #              , actionButton(inputId = "create.evolutionCoverage"
-           #                             , label = "Run plot"
-           #                             , icon = icon("play")
-           #                             , width = "100%"
-           #                             , style = HTML(button.style)
-           #              ))
-           #   ))
-           # , shinyjs::hidden(
-           #   fluidRow(
-           #     id = "panel.evolutionAbund"
-           #     , column(8
-           #              , plotOutput(outputId = "plot.evolutionAbund", width = "100%", height = "600px")
-           #     )
-           #     , column(4
-           #              , actionButton(inputId = "create.evolutionAbund"
-           #                             , label = "Run plot"
-           #                             , icon = icon("play")
-           #                             , width = "100%"
-           #                             , style = HTML(button.style)
-           #              ))
-           #   ))
-           # , shinyjs::hidden(
-           #   fluidRow(
-           #     id = "panel.evolutionLight"
-           #     , column(8
-           #              , plotOutput(outputId = "plot.evolutionLight", width = "100%", height = "600px")
-           #     )
-           #     , column(4
-           #              , actionButton(inputId = "create.evolutionLight"
-           #                             , label = "Run plot"
-           #                             , icon = icon("play")
-           #                             , width = "100%"
-           #                             , style = HTML(button.style)
-           #              )
-           #              , br()
-           #              , textOutput(outputId = "output.evolutionLight"))
-           #   ))
-           # , shinyjs::hidden(
-           #   fluidRow(
-           #     id = "panel.evolutionSoil"
-           #     , column(8
-           #              , plotOutput(outputId = "plot.evolutionSoil", width = "100%", height = "600px")
-           #     )
-           #     , column(4
-           #              , actionButton(inputId = "create.evolutionSoil"
-           #                             , label = "Run plot"
-           #                             , icon = icon("play")
-           #                             , width = "100%"
-           #                             , style = HTML(button.style)
-           #              ))
-           #   ))
+           , shinyjs::hidden(
+             fluidRow(
+               id = "panel.PFGvsHS"
+               , column(8
+                        , plotOutput(outputId = "plot.PFGvsHS", width = "100%", height = "600px")
+               )
+               , column(4
+                        , actionButton(inputId = "create.PFGvsHS"
+                                       , label = "Run plot"
+                                       , icon = icon("play")
+                                       , width = "100%"
+                                       , style = HTML(button.style)
+                        ))
+             ))
+           , shinyjs::hidden(
+             fluidRow(
+               id = "panel.validationStat"
+               , column(8
+                        , plotOutput(outputId = "plot.validationStat", width = "100%", height = "600px")
+               )
+               , column(4
+                        , actionButton(inputId = "create.validationStat"
+                                       , label = "Run plot"
+                                       , icon = icon("play")
+                                       , width = "100%"
+                                       , style = HTML(button.style)
+                        ))
+             ))
+           , shinyjs::hidden(
+             fluidRow(
+               id = "panel.PFGrichness"
+               , column(8
+                        , plotOutput(outputId = "plot.PFGrichness", width = "100%", height = "600px")
+               )
+               , column(4
+                        , actionButton(inputId = "create.PFGrichness"
+                                       , label = "Run plot"
+                                       , icon = icon("play")
+                                       , width = "100%"
+                                       , style = HTML(button.style)
+                        ))
+             ))
+           , shinyjs::hidden(
+             fluidRow(
+               id = "panel.PFGcover"
+               , column(8
+                        , plotOutput(outputId = "plot.PFGcover", width = "100%", height = "600px")
+               )
+               , column(4
+                        , actionButton(inputId = "create.PFGcover"
+                                       , label = "Run plot"
+                                       , icon = icon("play")
+                                       , width = "100%"
+                                       , style = HTML(button.style)
+                        ))
+             ))
+           , shinyjs::hidden(
+             fluidRow(
+               id = "panel.PFGlight"
+               , column(8
+                        , plotOutput(outputId = "plot.PFGlight", width = "100%", height = "600px")
+               )
+               , column(4
+                        , actionButton(inputId = "create.PFGlight"
+                                       , label = "Run plot"
+                                       , icon = icon("play")
+                                       , width = "100%"
+                                       , style = HTML(button.style)
+                        ))
+             ))
+           , shinyjs::hidden(
+             fluidRow(
+               id = "panel.PFGsoil"
+               , column(8
+                        , plotOutput(outputId = "plot.PFGsoil", width = "100%", height = "600px")
+               )
+               , column(4
+                        , actionButton(inputId = "create.PFGsoil"
+                                       , label = "Run plot"
+                                       , icon = icon("play")
+                                       , width = "100%"
+                                       , style = HTML(button.style)
+                        ))
+             ))
          )
 ) ## END tabPanel (Global parameters)
