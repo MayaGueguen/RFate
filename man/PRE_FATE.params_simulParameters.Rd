@@ -178,11 +178,9 @@ PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
 PRE_FATE.params_PFGdispersal(name.simulation = "FATE_simulation"
                             , mat.PFG.disp = data.frame(PFG = paste0("PFG", 1:6)
                                                         , MODE = 1
-                                                        , d50 = rep(c(500, 500, 100),2)
-                                                        , d99 = rep(c(10000, 15000, 20000),2)
-                                                        , ldd = rep(c(as.integer(100000)
-                                                                      , as.integer(50000)
-                                                                      , as.integer(100000)), 2)))
+                                                        , d50 = rep(c(50, 50, 10),2)
+                                                        , d99 = rep(c(1000, 1500, 2000),2)
+                                                        , ldd = rep(c(10000, 5000, 10000), 2)))
 
 ## Create PFG disturbance parameter files
 PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"

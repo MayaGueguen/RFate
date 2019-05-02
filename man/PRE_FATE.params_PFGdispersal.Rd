@@ -69,11 +69,9 @@ PRE_FATE.skeletonDirectory()
 PRE_FATE.params_PFGdispersal(name.simulation = "FATE_simulation"
                             , mat.PFG.disp = data.frame(PFG = c("PFG1", "PFG2", "PFG3")
                                                         , MODE = 1
-                                                        , d50 = c(500, 500, 100)
-                                                        , d99 = c(10000, 15000, 20000)
-                                                        , ldd = c(as.integer(100000)
-                                                                  , as.integer(50000)
-                                                                  , as.integer(100000))))
+                                                        , d50 = c(50, 50, 10)
+                                                        , d99 = c(1000, 1500, 2000)
+                                                        , ldd = c(10000, 5000, 10000)))
 
 }
 \seealso{
