@@ -73,7 +73,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Through time...</p>")
                                  , label = "Abundance & coverage"
                                  , icon = icon("chart-bar")
                                  , width = "100%"
-                                 , style = HTML(button.style)
+                                 , style = HTML("color:#FFFFFF; background-color:#3a7da8; border-width:0px;")
                     )
                   )
            )
@@ -84,7 +84,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Through time...</p>")
                                  , label = "Abundance (PIXELS) "
                                  , icon = icon("chart-bar")
                                  , width = "100%"
-                                 , style = HTML(button.style)
+                                 , style = HTML("color:#FFFFFF; background-color:#3a7da8; border-width:0px;")
                     )
                   )
            )
@@ -95,7 +95,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Through time...</p>")
                                    , label = "Light (PIXELS) "
                                    , icon = icon("chart-bar")
                                    , width = "100%"
-                                   , style = HTML(button.style)
+                                   , style = HTML("color:#FFFFFF; background-color:#3a7da8; border-width:0px;")
                       )
                     )
            )
@@ -106,7 +106,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Through time...</p>")
                                    , label = "Soil (PIXELS) "
                                    , icon = icon("chart-bar")
                                    , width = "100%"
-                                   , style = HTML(button.style)
+                                   , style = HTML("color:#FFFFFF; background-color:#3a7da8; border-width:0px;")
                       )
                     )
            )
