@@ -41,6 +41,35 @@ observeEvent(input$show.evolutionCoverage, {
   shinyjs::hide("panel.evolutionAbund")
   shinyjs::hide("panel.evolutionLight")
   shinyjs::hide("panel.evolutionSoil")
+  
+  output$show.evolutionCoverage = renderUI({
+    actionButton(inputId = "show.evolutionCoverage"
+                 , label = "Abundance & coverage"
+                 , icon = icon("chart-bar")
+                 , width = "100%"
+                 , style = HTML(panel.style.hover))
+  })
+  output$show.evolutionAbund = renderUI({
+    actionButton(inputId = "show.evolutionAbund"
+                 , label = "Abundance (PIXELS)"
+                 , icon = icon("chart-bar")
+                 , width = "100%"
+                 , style = HTML(panel.style))
+  })
+  output$show.evolutionLight = renderUI({
+    actionButton(inputId = "show.evolutionLight"
+                 , label = "Light (PIXELS)"
+                 , icon = icon("chart-bar")
+                 , width = "100%"
+                 , style = HTML(panel.style))
+  })
+  output$show.evolutionSoil = renderUI({
+    actionButton(inputId = "show.evolutionSoil"
+                 , label = "Soil (PIXELS)"
+                 , icon = icon("chart-bar")
+                 , width = "100%"
+                 , style = HTML(panel.style))
+  })
 })
 
 observeEvent(input$create.evolutionCoverage, {
@@ -119,6 +148,35 @@ observeEvent(input$show.evolutionAbund, {
   shinyjs::show("panel.evolutionAbund")
   shinyjs::hide("panel.evolutionLight")
   shinyjs::hide("panel.evolutionSoil")
+  
+  output$show.evolutionCoverage = renderUI({
+    actionButton(inputId = "show.evolutionCoverage"
+                 , label = "Abundance & coverage"
+                 , icon = icon("chart-bar")
+                 , width = "100%"
+                 , style = HTML(panel.style))
+  })
+  output$show.evolutionAbund = renderUI({
+    actionButton(inputId = "show.evolutionAbund"
+                 , label = "Abundance (PIXELS)"
+                 , icon = icon("chart-bar")
+                 , width = "100%"
+                 , style = HTML(panel.style.hover))
+  })
+  output$show.evolutionLight = renderUI({
+    actionButton(inputId = "show.evolutionLight"
+                 , label = "Light (PIXELS)"
+                 , icon = icon("chart-bar")
+                 , width = "100%"
+                 , style = HTML(panel.style))
+  })
+  output$show.evolutionSoil = renderUI({
+    actionButton(inputId = "show.evolutionSoil"
+                 , label = "Soil (PIXELS)"
+                 , icon = icon("chart-bar")
+                 , width = "100%"
+                 , style = HTML(panel.style))
+  })
 })
 
 observeEvent(input$create.evolutionAbund, {
@@ -176,6 +234,35 @@ observeEvent(input$show.evolutionLight, {
   shinyjs::hide("panel.evolutionAbund")
   shinyjs::show("panel.evolutionLight")
   shinyjs::hide("panel.evolutionSoil")
+  
+  output$show.evolutionCoverage = renderUI({
+    actionButton(inputId = "show.evolutionCoverage"
+                 , label = "Abundance & coverage"
+                 , icon = icon("chart-bar")
+                 , width = "100%"
+                 , style = HTML(panel.style))
+  })
+  output$show.evolutionAbund = renderUI({
+    actionButton(inputId = "show.evolutionAbund"
+                 , label = "Abundance (PIXELS)"
+                 , icon = icon("chart-bar")
+                 , width = "100%"
+                 , style = HTML(panel.style))
+  })
+  output$show.evolutionLight = renderUI({
+    actionButton(inputId = "show.evolutionLight"
+                 , label = "Light (PIXELS)"
+                 , icon = icon("chart-bar")
+                 , width = "100%"
+                 , style = HTML(panel.style.hover))
+  })
+  output$show.evolutionSoil = renderUI({
+    actionButton(inputId = "show.evolutionSoil"
+                 , label = "Soil (PIXELS)"
+                 , icon = icon("chart-bar")
+                 , width = "100%"
+                 , style = HTML(panel.style))
+  })
 })
 
 observeEvent(input$create.evolutionLight, {
@@ -237,6 +324,35 @@ observeEvent(input$show.evolutionSoil, {
   shinyjs::hide("panel.evolutionAbund")
   shinyjs::hide("panel.evolutionLight")
   shinyjs::show("panel.evolutionSoil")
+  
+  output$show.evolutionCoverage = renderUI({
+    actionButton(inputId = "show.evolutionCoverage"
+                 , label = "Abundance & coverage"
+                 , icon = icon("chart-bar")
+                 , width = "100%"
+                 , style = HTML(panel.style))
+  })
+  output$show.evolutionAbund = renderUI({
+    actionButton(inputId = "show.evolutionAbund"
+                 , label = "Abundance (PIXELS)"
+                 , icon = icon("chart-bar")
+                 , width = "100%"
+                 , style = HTML(panel.style))
+  })
+  output$show.evolutionLight = renderUI({
+    actionButton(inputId = "show.evolutionLight"
+                 , label = "Light (PIXELS)"
+                 , icon = icon("chart-bar")
+                 , width = "100%"
+                 , style = HTML(panel.style))
+  })
+  output$show.evolutionSoil = renderUI({
+    actionButton(inputId = "show.evolutionSoil"
+                 , label = "Soil (PIXELS)"
+                 , icon = icon("chart-bar")
+                 , width = "100%"
+                 , style = HTML(panel.style.hover))
+  })
 })
 
 observeEvent(input$create.evolutionSoil, {

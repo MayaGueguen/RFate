@@ -1,5 +1,5 @@
 
-tabPanel(title = HTML("<p class='panel_title'>A. Create simulation folder & parameter files</p>"),
+tabPanel(title = HTML("<p class='panel_title'>A. Simulation folder & parameter files</p>"),
          sidebarLayout(
            
            # Inputs

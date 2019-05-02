@@ -8,6 +8,7 @@ library(shinyalert)
 library(shinyDirectoryInput)
 library(shinyjs)
 library(shinycssloaders)
+library(shinyBS)
 library(markdown)
 library(RFate)
 library(data.table)
@@ -28,6 +29,8 @@ mat.PFG.soil = data.frame()
 mat.changing = data.frame()
 button.color = "rgba(96, 129, 150, 0.5)"
 button.style = paste0("background-color: ", button.color, "; border-width:0px;")
+panel.style = "color:#FFFFFF; background-color:rgba(96, 129, 150, 0.5); border-width:0px;"
+panel.style.hover = "color:#FFFFFF; background-color:#3a7da8; border-width:0px;"
 help.color = "#dee2e8"
 
 ###################################################################################################################################
@@ -113,152 +116,10 @@ ui <- fluidPage(
 server <- function(input, output, session) {
   
   session$onSessionEnded(stopApp)
-  
-  ####################################################################
-  ### PANEL 1
-  
-  observeEvent(input$create.skeleton, {
-    print_messages(as.expression(
-      PRE_FATE.skeletonDirectory(name.simulation = input$name.simul)
-    ))
-    
-    shinyjs::show("main.panel")
-    shinyjs::show("create.simul")
-    shinyjs::show("FATE_simulation.zip")
-    shinyjs::show("refresh")
-  })
-  
-  observeEvent(input$create.simul, {
-    if (input$create.skeleton > 0)
-    {
-      mask.file = list.files(path = paste0(input$name.simul, "/DATA/MASK")
-                             , pattern = "^MASK_")
-      if (input$upload.mask > 0 && length(mask.file) > 0)
-      {
-        get_res = print_messages(as.expression(
-          PRE_FATE.params_simulParameters(name.simulation = input$name.simul
-                                          , name.mask = mask.file
-          )
-        ))
-      } else
-      {
-        shinyalert(type = "warning", text = "You must upload a simulation mask first !")
-      }
-    } else
-    {
-      shinyalert(type = "warning", text = "You must create a simulation folder first !")
-    }
-  })
-  
-  
-  output$FATE_simulation.zip = downloadHandler(
-    filename = function(){
-      paste0(input$name.simul, "_", Sys.Date(), ".zip")
-    },
-    content = function(file){
-      zip(zipfile = file, input$name.simul)
-      file.copy(file, file)
-    },
-    contentType = "application/zip"
-  )
-  
-  
-  observeEvent(input$refresh, {
-    system(command = paste0("rm -r ", input$name.simul))
-    shinyjs::hide("main.panel")
-    shinyjs::hide("create.simul")
-    shinyjs::hide("FATE_simulation.zip")
-    shinyjs::hide("refresh")
-  })
-  
-  ####################################################################
-  ### PANEL 3
-  
-  observeEvent(input$folder.simul, {
-    if (input$folder.simul > 0) {
-      path = choose.dir(default = readDirectoryInput(session, 'folder.simul'))
-      updateDirectoryInput(session, 'folder.simul', value = path)
-      
-      names.simulParam = list.files(path = paste0(path, "/PARAM_SIMUL")
-                                    , pattern = ".txt$"
-                                    , all.files = FALSE
-                                    , full.names = TRUE)
-      if (length(names.simulParam) > 0)
-      {
-        updateSelectInput(session
-                          , inputId = "graph.simulParam"
-                          , choices = names.simulParam
-                          , selected = names.simulParam[1])
-        shinyjs::enable("graph.simulParam")
-        shinyjs::enable("show.evolutionCoverage")
-        shinyjs::enable("show.evolutionAbund")
-        shinyjs::enable("show.evolutionLight")
-        shinyjs::enable("show.evolutionSoil")
-      } else
-      {
-        shinyjs::reset("graph.simulParam")
-        shinyjs::disable("graph.simulParam")
-        shinyjs::disable("show.evolutionCoverage")
-        shinyjs::disable("show.evolutionAbund")
-        shinyjs::disable("show.evolutionLight")
-        shinyjs::disable("show.evolutionSoil")
-      }
-      return(path)
-    } else
-    {
-      shinyjs::reset("graph.simulParam")
-      shinyjs::disable("graph.simulParam")
-      shinyjs::disable("show.evolutionCoverage")
-      shinyjs::disable("show.evolutionAbund")
-      shinyjs::disable("show.evolutionLight")
-      shinyjs::disable("show.evolutionSoil")
-    }
-  })
-  
-  observeEvent(input$graph.simulParam, {
-    if (nchar(input$graph.simulParam) > 0)
-    {
-      file.globalParam = .getParam(params.lines = input$graph.simulParam
-                                   , flag = "GLOBAL_PARAMS"
-                                   , flag.split = "^--.*--$"
-                                   , is.num = FALSE)
-      file.globalParam = paste0(dirname(sub("/PARAM_SIMUL", "", dirname(input$graph.simulParam)))
-                                , "/", file.globalParam)
-      
-      doLight = doSoil = FALSE
-      if (file.exists(file.globalParam))
-      {
-        doLight = .getParam(params.lines = file.globalParam
-                            , flag = "DO_LIGHT_COMPETITION"
-                            , flag.split = " "
-                            , is.num = TRUE)
-        doSoil = .getParam(params.lines = file.globalParam
-                           , flag = "DO_SOIL_COMPETITION"
-                           , flag.split = " "
-                           , is.num = TRUE)
-      }
-      
-      if (doLight)
-      {
-        shinyjs::enable("show.evolutionLight")
-      } else
-      {
-        shinyjs::disable("show.evolutionLight")
-      }
-      
-      if (doSoil)
-      {
-        shinyjs::enable("show.evolutionSoil")
-      } else
-      {
-        shinyjs::disable("show.evolutionSoil")
-      }
-    }
-  })
-  
-  
+
   ####################################################################
   
+  source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel1.R", local = TRUE)$value
   source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel1.tab1.R", local = TRUE)$value
   source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel1.tab2.R", local = TRUE)$value
   source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel1.tab3.R", local = TRUE)$value
@@ -266,7 +127,8 @@ server <- function(input, output, session) {
   
   ####################################################################
   
-  source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel3.tab1.R", local = TRUE)$value
+  source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel3.R", local = TRUE)$value
+  source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel3.tab2.R", local = TRUE)$value
   
 }
 

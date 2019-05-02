@@ -1,5 +1,5 @@
 
-tabPanel(title = HTML("<p class='panel_title'>C. Create simulation ouputs & graphics</p>"),
+tabPanel(title = HTML("<p class='panel_title'>C. Simulation outputs & graphics</p>"),
          sidebarLayout(
            
            # Inputs
@@ -40,7 +40,8 @@ tabPanel(title = HTML("<p class='panel_title'>C. Create simulation ouputs & grap
                        style = "border-solid:solid; border-width:0px; border-color:#068f96;",
                        tabsetPanel(
                          source("R_supplements/SHINY.PRE_FATE.params_UI.panel3.tab1.R", local = TRUE)$value
-                         # source("R_supplements/SHINY.PRE_FATE.params_UI.panel3.tab2.R", local = TRUE)$value
+                         , source("R_supplements/SHINY.PRE_FATE.params_UI.panel3.tab2.R", local = TRUE)$value
+                         , source("R_supplements/SHINY.PRE_FATE.params_UI.panel3.tab3.R", local = TRUE)$value
                        ) ## END tabsetPanel
              ) ## END wellPanel
            ) ## END mainPanel
