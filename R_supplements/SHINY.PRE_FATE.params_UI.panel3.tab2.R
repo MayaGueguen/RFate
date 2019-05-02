@@ -5,7 +5,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Through time</p>")
          , wellPanel(
            style = HTML(paste0("background-color: ", help.color, ";")),
            helpText(HTML("
-                         <p><a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_evolutionCoverage.html' target='_blank'>
+                         <p><a href='https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_evolutionCoverage.html' target='_blank'>
                          See more details on <span style='font-family:Monospace;'>RFate</span> package website.</a></p>
                          <table style='width:100%;'>
                          <tr>
