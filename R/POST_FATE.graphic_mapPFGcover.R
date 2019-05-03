@@ -294,38 +294,58 @@ POST_FATE.graphic_mapPFGcover = function(
     {
       cat(" ", y)
       
-      ## Abundance maps
-      file_name = paste0(dir.output.perPFG.perStrata,
-                         "Abund_YEAR_",
-                         y,
-                         "_",
-                         pfg)
-      file_name = as.vector(sapply(file_name, function(x) paste0(x,
-                                                                 "_STRATA_",
-                                                                 strata_min:no_strata,
-                                                                 ".tif")))
-      gp_st = paste0(pfg, "_STRATA_", strata_min:no_strata)
-      gp_st = gp_st[which(file.exists(file_name))]
-      file_name = file_name[which(file.exists(file_name))]
-      
-      ## Binary maps
-      bin_name = paste0(dir.output.perPFG.allStrata.BIN
-                        , "Binary_YEAR_"
-                        , y
-                        , "_"
-                        , pfg
-                        , "_STRATA_all.tif")
-      
-      if (length(file_name) > 0)
+      cat("\n PFG ")
+      ras_TOT.list = foreach (pfg = PFG) %do%
       {
-        ## Binary map
-        ras.BIN = stack(bin_name) * ras.mask
-        names(ras.BIN) = pfg
+        cat(" ", pfg)
         
         ## Abundance maps
-        ras = stack(file_name) * ras.mask
-        ras = ras * ras.BIN
-        ras_TOT = sum(ras)
+        file_name = paste0(dir.output.perPFG.perStrata,
+                           "Abund_YEAR_",
+                           y,
+                           "_",
+                           pfg)
+        file_name = as.vector(sapply(file_name, function(x) paste0(x,
+                                                                   "_STRATA_",
+                                                                   strata_min:no_strata,
+                                                                   ".tif")))
+        gp_st = paste0(pfg, "_STRATA_", strata_min:no_strata)
+        gp_st = gp_st[which(file.exists(file_name))]
+        file_name = file_name[which(file.exists(file_name))]
+        
+        ## Binary map
+        bin_name = paste0(dir.output.perPFG.allStrata.BIN
+                          , "Binary_YEAR_"
+                          , y
+                          , "_"
+                          , pfg
+                          , "_STRATA_all.tif")
+        
+        if (length(file_name) > 0)
+        {
+          ## Binary map
+          ras.BIN = stack(bin_name) * ras.mask
+          names(ras.BIN) = pfg
+          
+          ## Abundance maps
+          ras = stack(file_name) * ras.mask
+          ras = ras * ras.BIN
+          ras_TOT = ras
+          if (nlayers(ras) > 1)
+          {
+            ras_TOT = sum(ras, na.rm = TRUE)
+          }
+          
+          return(ras_TOT)
+        }
+      }
+      if (length(ras_TOT.list) > 0)
+      {
+        names(ras_TOT.list) = PFG
+        ras_TOT.list = ras_TOT.list[!sapply(ras_TOT.list, is.null)]
+        ras_TOT.list = stack(ras_TOT.list)
+        
+        ras_TOT = sum(ras_TOT.list)
         ras_REL = ras_TOT / max(ras_TOT[], na.rm = T)
         ras.pts = as.data.frame(rasterToPoints(ras_REL))
         colnames(ras.pts) = c("X", "Y", "COVER")
@@ -353,6 +373,7 @@ POST_FATE.graphic_mapPFGcover = function(
         pp = ggplot(ras.pts, aes_string(x = "X", y = "Y", fill = "COVER")) +
           scale_fill_gradientn("Abundance (%)"
                                , colors = brewer.pal(9, "Greens")
+                               , limits = c(0, 1)
                                , breaks = seq(0, 1, 0.2)
                                , labels = seq(0, 100, 20)) +
           coord_equal() +
@@ -442,10 +463,10 @@ POST_FATE.graphic_mapPFGcover = function(
             facet_wrap(~ variable, scales = "free_y") +
             labs(x = "", y = "", title = paste0("GRAPH E : validation statistics of PFG cover - Simulation year : ", y)
                  , subtitle = paste0("Correct classification rate (CCR) measures the proportion of actual positives (or negatives) that are correctly identified as such.\n"
-                                   , "True skill statistic (TSS) values of -1 indicate predictive abilities of not better than a random model,\n"
-                                   , "0 indicates an indiscriminate model and +1 a perfect model.\n"
-                                   , "AUC corresponds to the area under the ROC curve (Receiver Operating Characteristic).\n\n"
-                                   , "Statistics are calculated for different thresholds for converting coverage to binary values (x-axis).\n")) +
+                                     , "True skill statistic (TSS) values of -1 indicate predictive abilities of not better than a random model,\n"
+                                     , "0 indicates an indiscriminate model and +1 a perfect model.\n"
+                                     , "AUC corresponds to the area under the ROC curve (Receiver Operating Characteristic).\n\n"
+                                     , "Statistics are calculated for different thresholds for converting coverage to binary values (x-axis).\n")) +
             theme_fivethirtyeight() +
             theme(legend.key.width = unit(2, "lines")
                   , panel.background = element_rect(fill = "transparent", colour = NA)
@@ -465,4 +486,3 @@ POST_FATE.graphic_mapPFGcover = function(
     
   }
 }
-
