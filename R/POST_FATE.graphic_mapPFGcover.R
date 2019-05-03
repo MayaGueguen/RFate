@@ -299,12 +299,13 @@ POST_FATE.graphic_mapPFGcover = function(
                          "Abund_YEAR_",
                          y,
                          "_",
-                         pfg)
+                         PFG)
       file_name = as.vector(sapply(file_name, function(x) paste0(x,
                                                                  "_STRATA_",
                                                                  strata_min:no_strata,
                                                                  ".tif")))
-      gp_st = paste0(pfg, "_STRATA_", strata_min:no_strata)
+      gp_st = paste0(PFG, "_STRATA_")
+      gp_st = paste0(gp_st, strata_min:no_strata)
       gp_st = gp_st[which(file.exists(file_name))]
       file_name = file_name[which(file.exists(file_name))]
       
@@ -313,14 +314,14 @@ POST_FATE.graphic_mapPFGcover = function(
                         , "Binary_YEAR_"
                         , y
                         , "_"
-                        , pfg
+                        , PFG
                         , "_STRATA_all.tif")
       
       if (length(file_name) > 0)
       {
         ## Binary map
         ras.BIN = stack(bin_name) * ras.mask
-        names(ras.BIN) = pfg
+        names(ras.BIN) = PFG
         
         ## Abundance maps
         ras = stack(file_name) * ras.mask
