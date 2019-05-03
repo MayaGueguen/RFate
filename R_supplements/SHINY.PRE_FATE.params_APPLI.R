@@ -18,6 +18,7 @@ library(ggplot2)
 library(ggthemes)
 library(raster)
 library(viridis)
+library(RColorBrewer)
 
 ###################################################################################################################################
 

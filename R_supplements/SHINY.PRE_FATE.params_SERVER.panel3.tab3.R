@@ -294,4 +294,64 @@ observeEvent(input$create.PFGrichness, {
   setwd(path.init)
 })
 
+####################################################################
 
+observeEvent(input$create.PFGcover, {
+  
+  path.init = getwd()
+  setwd(get_path.folder())
+  
+  get_res = print_messages(as.expression(
+    POST_FATE.graphic_mapPFGcover(name.simulation = get_name.simul()
+                                 , file.simulParam = input$graph.simulParam
+                                 , year = as.numeric(input$graph.year)
+                                 , strata_min = as.numeric(input$graph.strata_min)
+                                 , opt.no_CPU = input$graph.opt.no_CPU
+                                 , opt.mat.cover.obs = NULL
+                                 , opt.ras.cover.obs = NULL
+    )
+  ))
+  
+  if(get_res)
+  {
+    ras_REL = raster(get_last.createdFiles2(pattern_path = paste0(basename(get_dir.save()), "/")
+                                            , pattern_head = "PFGcover_YEAR_"
+                                            , pattern_tail = ".tif$"))
+    
+    ras.pts = as.data.frame(rasterToPoints(ras_REL))
+    colnames(ras.pts) = c("X", "Y", "COVER")
+    
+    strata.available = list.files(paste0(get_dir.save(), "/ABUND_perPFG_perStrata"))
+    strata.available = sapply(sub(".*_STRATA_", "", strata.available)
+                              , function(x) strsplit(as.character(x), "[.]")[[1]][1])
+    strata.available = sort(unique(as.numeric(strata.available)))
+    
+    output$plot.PFGcover = renderPlot({
+
+      ## Map of PFG cover
+      pp = ggplot(ras.pts, aes_string(x = "X", y = "Y", fill = "COVER")) +
+        scale_fill_gradientn("Abundance (%)"
+                             , colors = brewer.pal(9, "Greens")
+                             , limits = c(0, 1)
+                             , breaks = seq(0, 1, 0.2)
+                             , labels = seq(0, 100, 20)) +
+        coord_equal() +
+        geom_raster() +
+        labs(x = "", y = "", title = paste0("GRAPH E : map of PFG cover - Simulation year : ", as.numeric(input$graph.year)),
+             subtitle = paste0("For each pixel, PFG abundances from strata ",
+                               as.numeric(input$opt.strata_min), " to ", max(strata.available), " are summed,\n",
+                               "then transformed into relative values by dividing by the maximum abundance obtained.\n")) +
+        theme_fivethirtyeight() +
+        theme(axis.text = element_blank()
+              , legend.key.width = unit(2, "lines")
+              , panel.background = element_rect(fill = "transparent", colour = NA)
+              , plot.background = element_rect(fill = "transparent", colour = NA)
+              , legend.background = element_rect(fill = "transparent", colour = NA)
+              , legend.box.background = element_rect(fill = "transparent", colour = NA)
+              , legend.key = element_rect(fill = "transparent", colour = NA))
+
+      print(pp)
+    })
+  }
+  setwd(path.init)
+})
