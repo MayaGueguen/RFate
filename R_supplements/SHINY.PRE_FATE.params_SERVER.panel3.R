@@ -184,6 +184,8 @@ get_enableLightSoil = eventReactive(input$graph.simulParam, {
   }
 })
 
+####################################################################
+
 observeEvent(input$graph.simulParam, {
   
   get_enableLightSoil()
