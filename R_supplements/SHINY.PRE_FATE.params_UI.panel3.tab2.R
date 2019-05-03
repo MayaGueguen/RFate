@@ -65,23 +65,17 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Through time</p>")
                                 , width = "100%")
            )
          )
-         , fluidRow(
-           column(3
-                  , br()
-                  , uiOutput(outputId = "show.evolutionCoverage")
-           )
-           , column(3
-                  , br()
-                  , uiOutput(outputId = "show.evolutionAbund")
-           )
-           , column(3
-                    , br()
-                    , uiOutput(outputId = "show.evolutionLight")
-           )
-           , column(3
-                    , br()
-                    , uiOutput(outputId = "show.evolutionSoil")
-           )
+         , radioGroupButtons(inputId = "show.through_time"
+                             , label = ""
+                             , choices = c("Abundance & coverage"
+                                           , "Abundance (PIXELS)"
+                                           , "Light (PIXELS)"
+                                           , "Soil (PIXELS)")
+                             , selected = 0
+                             , justified = TRUE
+                             , status = "panelgraph"
+                             , checkIcon = list(yes = icon("ok", lib = "glyphicon")
+                                                , no = icon("remove", lib = "glyphicon"))
          )
          , fluidRow(
            br()

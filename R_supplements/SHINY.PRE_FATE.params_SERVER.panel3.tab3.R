@@ -1,5 +1,68 @@
 
 ####################################################################
+
+output$show.PFGvsHS = renderUI({
+  shinyjs::disabled(
+    actionButton(inputId = "show.PFGvsHS"
+                 , label = "PFG vs Habsuit"
+                 , icon = icon("chart-bar")
+                 , width = "100%"
+                 , style = HTML(panel.style))
+  )
+})
+
+output$show.validationStat = renderUI({
+  shinyjs::disabled(
+    actionButton(inputId = "show.validationStat"
+                 , label = "Validation statistics"
+                 , icon = icon("chart-bar")
+                 , width = "100%"
+                 , style = HTML(panel.style))
+  )
+})
+
+output$show.PFGrichness = renderUI({
+  shinyjs::disabled(
+    actionButton(inputId = "show.PFGrichness"
+                 , label = "PFG richness"
+                 , icon = icon("chart-bar")
+                 , width = "100%"
+                 , style = HTML(panel.style))
+  )
+})
+
+output$show.PFGcover = renderUI({
+  shinyjs::disabled(
+    actionButton(inputId = "show.PFGcover"
+                 , label = "PFG cover"
+                 , icon = icon("chart-bar")
+                 , width = "100%"
+                 , style = HTML(panel.style))
+  )
+})
+
+output$show.PFGlight = renderUI({
+  shinyjs::disabled(
+    actionButton(inputId = "show.PFGlight"
+                 , label = "Light (MAP)"
+                 , icon = icon("chart-bar")
+                 , width = "100%"
+                 , style = HTML(panel.style))
+  )
+})
+
+output$show.PFGsoil = renderUI({
+  shinyjs::disabled(
+    actionButton(inputId = "show.PFGsoil"
+                 , label = "Soil (MAP)"
+                 , icon = icon("chart-bar")
+                 , width = "100%"
+                 , style = HTML(panel.style))
+  )
+})
+
+
+####################################################################
 ## PFGvsHS
 
 observeEvent(input$show.PFGvsHS, {

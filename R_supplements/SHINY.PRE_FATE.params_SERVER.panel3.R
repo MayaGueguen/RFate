@@ -17,42 +17,42 @@ observeEvent(input$folder.simul, {
                         , choices = names.simulParam
                         , selected = names.simulParam[1])
       shinyjs::enable("graph.simulParam")
-      shinyjs::enable("show.evolutionCoverage")
-      shinyjs::enable("show.evolutionAbund")
-      shinyjs::enable("show.PFGvsHS")
-      shinyjs::enable("show.validationStat")
-      shinyjs::enable("show.PFGrichness")
-      shinyjs::enable("show.PFGcover")
+      shinyjs::enable("create.evolutionCoverage")
+      shinyjs::enable("create.evolutionAbund")
+      shinyjs::enable("create.PFGvsHS")
+      shinyjs::enable("create.validationStat")
+      shinyjs::enable("create.PFGrichness")
+      shinyjs::enable("create.PFGcover")
     } else
     {
       shinyjs::reset("graph.simulParam")
       shinyjs::disable("graph.simulParam")
-      shinyjs::disable("show.evolutionCoverage")
-      shinyjs::disable("show.evolutionAbund")
-      shinyjs::disable("show.evolutionLight")
-      shinyjs::disable("show.evolutionSoil")
-      shinyjs::disable("show.PFGvsHS")
-      shinyjs::disable("show.validationStat")
-      shinyjs::disable("show.PFGrichness")
-      shinyjs::disable("show.PFGcover")
-      shinyjs::disable("show.PFGlight")
-      shinyjs::disable("show.PFGsoil")
+      shinyjs::disable("create.evolutionCoverage")
+      shinyjs::disable("create.evolutionAbund")
+      shinyjs::disable("create.evolutionLight")
+      shinyjs::disable("create.evolutionSoil")
+      shinyjs::disable("create.PFGvsHS")
+      shinyjs::disable("create.validationStat")
+      shinyjs::disable("create.PFGrichness")
+      shinyjs::disable("create.PFGcover")
+      shinyjs::disable("create.PFGlight")
+      shinyjs::disable("create.PFGsoil")
     }
     return(path)
   } else
   {
     shinyjs::reset("graph.simulParam")
     shinyjs::disable("graph.simulParam")
-    shinyjs::disable("show.evolutionCoverage")
-    shinyjs::disable("show.evolutionAbund")
-    shinyjs::disable("show.evolutionLight")
-    shinyjs::disable("show.evolutionSoil")
-    shinyjs::disable("show.PFGvsHS")
-    shinyjs::disable("show.validationStat")
-    shinyjs::disable("show.PFGrichness")
-    shinyjs::disable("show.PFGcover")
-    shinyjs::disable("show.PFGlight")
-    shinyjs::disable("show.PFGsoil")
+    shinyjs::disable("create.evolutionCoverage")
+    shinyjs::disable("create.evolutionAbund")
+    shinyjs::disable("create.evolutionLight")
+    shinyjs::disable("create.evolutionSoil")
+    shinyjs::disable("create.PFGvsHS")
+    shinyjs::disable("create.validationStat")
+    shinyjs::disable("create.PFGrichness")
+    shinyjs::disable("create.PFGcover")
+    shinyjs::disable("create.PFGlight")
+    shinyjs::disable("create.PFGsoil")
   }
 })
 
@@ -69,7 +69,6 @@ get_name.simul = eventReactive(input$graph.simulParam, {
 get_path.folder = eventReactive(input$graph.simulParam, {
   return(dirname(get_path.simul()))
 })
-
 
 get_last.createdFiles1 = eventReactive(input$graph.simulParam, {
   system(command = paste0("ls -lat "
@@ -91,198 +90,139 @@ get_last.createdFiles2 = function(pattern_head, pattern_tail)
 
 ####################################################################
 
-output$show.evolutionCoverage = renderUI({
-  shinyjs::disabled(
-    actionButton(inputId = "show.evolutionCoverage"
-                 , label = "Abundance & coverage"
-                 , icon = icon("chart-bar")
-                 , width = "100%"
-                 , style = HTML(panel.style))
-  )
-})
-
-output$show.evolutionAbund = renderUI({
-  shinyjs::disabled(
-    actionButton(inputId = "show.evolutionAbund"
-                 , label = "Abundance (PIXELS)"
-                 , icon = icon("chart-bar")
-                 , width = "100%"
-                 , style = HTML(panel.style))
-  )
-})
-
-output$show.evolutionLight = renderUI({
-  shinyjs::disabled(
-    actionButton(inputId = "show.evolutionLight"
-                 , label = "Light (PIXELS)"
-                 , icon = icon("chart-bar")
-                 , width = "100%"
-                 , style = HTML(panel.style))
-  )
-})
-
-output$show.evolutionSoil = renderUI({
-  shinyjs::disabled(
-    actionButton(inputId = "show.evolutionSoil"
-                 , label = "Soil (PIXELS)"
-                 , icon = icon("chart-bar")
-                 , width = "100%"
-                 , style = HTML(panel.style))
-  )
-})
-
-####################################################################
-
-output$show.PFGvsHS = renderUI({
-  shinyjs::disabled(
-    actionButton(inputId = "show.PFGvsHS"
-                 , label = "PFG vs Habsuit"
-                 , icon = icon("chart-bar")
-                 , width = "100%"
-                 , style = HTML(panel.style))
-  )
-})
-
-output$show.validationStat = renderUI({
-  shinyjs::disabled(
-    actionButton(inputId = "show.validationStat"
-                 , label = "Validation statistics"
-                 , icon = icon("chart-bar")
-                 , width = "100%"
-                 , style = HTML(panel.style))
-  )
-})
-
-output$show.PFGrichness = renderUI({
-  shinyjs::disabled(
-    actionButton(inputId = "show.PFGrichness"
-                 , label = "PFG richness"
-                 , icon = icon("chart-bar")
-                 , width = "100%"
-                 , style = HTML(panel.style))
-  )
-})
-
-output$show.PFGcover = renderUI({
-  shinyjs::disabled(
-    actionButton(inputId = "show.PFGcover"
-                 , label = "PFG cover"
-                 , icon = icon("chart-bar")
-                 , width = "100%"
-                 , style = HTML(panel.style))
-  )
-})
-
-output$show.PFGlight = renderUI({
-  shinyjs::disabled(
-    actionButton(inputId = "show.PFGlight"
-                 , label = "Light (MAP)"
-                 , icon = icon("chart-bar")
-                 , width = "100%"
-                 , style = HTML(panel.style))
-  )
-})
-
-output$show.PFGsoil = renderUI({
-  shinyjs::disabled(
-    actionButton(inputId = "show.PFGsoil"
-                 , label = "Soil (MAP)"
-                 , icon = icon("chart-bar")
-                 , width = "100%"
-                 , style = HTML(panel.style))
-  )
-})
-
-####################################################################
-
-observeEvent(input$graph.simulParam, { ## eventReactive ??
+get_globalParam = eventReactive(input$graph.simulParam, {
   if (nchar(input$graph.simulParam) > 0)
   {
+    shinyjs::enable("create.evolutionCoverage")
+    shinyjs::enable("create.evolutionAbund")
+    shinyjs::enable("create.PFGvsHS")
+    shinyjs::enable("create.validationStat")
+    shinyjs::enable("create.PFGrichness")
+    shinyjs::enable("create.PFGcover")
+    
     file.globalParam = .getParam(params.lines = input$graph.simulParam
                                  , flag = "GLOBAL_PARAMS"
                                  , flag.split = "^--.*--$"
                                  , is.num = FALSE)
-    file.globalParam = paste0(dirname(sub("/PARAM_SIMUL", "", dirname(input$graph.simulParam)))
-                              , "/", file.globalParam)
-    
-    ## -------------------------------------------------------------
-    doLight = doSoil = FALSE
-    if (file.exists(file.globalParam))
-    {
-      doLight = .getParam(params.lines = file.globalParam
-                          , flag = "DO_LIGHT_COMPETITION"
-                          , flag.split = " "
-                          , is.num = TRUE)
-      doSoil = .getParam(params.lines = file.globalParam
-                         , flag = "DO_SOIL_COMPETITION"
-                         , flag.split = " "
-                         , is.num = TRUE)
-    }
-    
-    if (doLight)
-    {
-      shinyjs::enable("show.evolutionLight")
-      shinyjs::enable("show.PFGlight")
-    } else
-    {
-      shinyjs::disable("show.evolutionLight")
-      shinyjs::disable("show.PFGlight")
-    }
-    
-    if (doSoil)
-    {
-      shinyjs::enable("show.evolutionSoil")
-      shinyjs::enable("show.PFGsoil")
-    } else
-    {
-      shinyjs::disable("show.evolutionSoil")
-      shinyjs::disable("show.PFGsoil")
-    }
-    
-    ## -------------------------------------------------------------
+    file.globalParam = paste0(get_path.folder(), "/", file.globalParam)
+    file.globalParam
+  } else
+  {
+    shinyjs::disable("create.evolutionCoverage")
+    shinyjs::disable("create.evolutionAbund")
+    shinyjs::disable("create.evolutionLight")
+    shinyjs::disable("create.evolutionSoil")
+    shinyjs::disable("create.PFGvsHS")
+    shinyjs::disable("create.validationStat")
+    shinyjs::disable("create.PFGrichness")
+    shinyjs::disable("create.PFGcover")
+    shinyjs::disable("create.PFGlight")
+    shinyjs::disable("create.PFGsoil")
+    return("")
+  }
+})
+
+get_doLight = eventReactive(input$graph.simulParam, {
+  file.globalParam = get_globalParam()
+  doLight = FALSE
+  if (file.exists(file.globalParam))
+  {
+    doLight = .getParam(params.lines = file.globalParam
+                        , flag = "DO_LIGHT_COMPETITION"
+                        , flag.split = " "
+                        , is.num = TRUE)
+  }
+  doLight
+})
+
+get_doSoil = eventReactive(input$graph.simulParam, {
+  file.globalParam = get_globalParam()
+  doSoil = FALSE
+  if (file.exists(file.globalParam))
+  {
+    doSoil = .getParam(params.lines = file.globalParam
+                       , flag = "DO_SOIL_COMPETITION"
+                       , flag.split = " "
+                       , is.num = TRUE)
+  }
+  doSoil
+})
+
+get_dir.save = eventReactive(input$graph.simulParam, {
+  if (nchar(input$graph.simulParam) > 0)
+  {
     dir.save = .getParam(params.lines = input$graph.simulParam
-                                 , flag = "SAVE_DIR"
-                                 , flag.split = "^--.*--$"
-                                 , is.num = FALSE)
-    dir.save = paste0(dirname(sub("/PARAM_SIMUL", "", dirname(input$graph.simulParam)))
-                              , "/", dir.save)
+                         , flag = "SAVE_DIR"
+                         , flag.split = "^--.*--$"
+                         , is.num = FALSE)
+    dir.save = paste0(get_path.folder(), "/", dir.save)
+    dir.save
+  }
+})
+
+####################################################################
+
+get_enableLightSoil = eventReactive(input$graph.simulParam, {
+  if (get_doLight())
+  {
+    shinyjs::enable("create.evolutionLight")
+    shinyjs::enable("create.PFGlight")
+  } else
+  {
+    shinyjs::disable("create.evolutionLight")
+    shinyjs::disable("create.PFGlight")
+  }
+  
+  if (get_doSoil())
+  {
+    shinyjs::enable("create.evolutionSoil")
+    shinyjs::enable("create.PFGsoil")
+  } else
+  {
+    shinyjs::disable("create.evolutionSoil")
+    shinyjs::disable("create.PFGsoil")
+  }
+})
+
+observeEvent(input$graph.simulParam, {
+  
+  get_enableLightSoil()
     
-    ## -------------------------------------------------------------    
-    years.available = list.files(paste0(dir.save, "/ABUND_perPFG_allStrata"))
-    years.available = sapply(sub("Abund_YEAR_", "", years.available)
-                             , function(x) strsplit(as.character(x), "_")[[1]][1])
-    years.available = rev(sort(unique(as.numeric(years.available))))
-    
-    if (length(years.available) > 0)
-    {
-      updateSelectInput(session
-                        , inputId = "graph.year"
-                        , choices = years.available
-                        , selected = max(years.available))
-      shinyjs::enable("graph.year")
-    } else
-    {
-      shinyjs::reset("graph.year")
-      shinyjs::disable("graph.year")
-    }
-    
-    ## -------------------------------------------------------------    
-    strata.available = list.files(paste0(dir.save, "/ABUND_perPFG_perStrata"))
-    strata.available = sapply(sub(".*_STRATA_", "", strata.available)
-                              , function(x) strsplit(as.character(x), "[.]")[[1]][1])
-    strata.available = sort(unique(as.numeric(strata.available)))
-    
-    if (length(strata.available) > 0)
-    {
-      updateSelectInput(session
-                        , inputId = "graph.strata_min"
-                        , choices = strata.available
-                        , selected = min(strata.available))
-      shinyjs::enable("graph.strata_min")
-    } else
-    {
-      shinyjs::reset("graph.strata_min")
-      shinyjs::disable("graph.strata_min")
-    }
+  ## -------------------------------------------------------------    
+  years.available = list.files(paste0(get_dir.save(), "/ABUND_perPFG_allStrata"))
+  years.available = sapply(sub("Abund_YEAR_", "", years.available)
+                           , function(x) strsplit(as.character(x), "_")[[1]][1])
+  years.available = rev(sort(unique(as.numeric(years.available))))
+  
+  if (length(years.available) > 0)
+  {
+    updateSelectInput(session
+                      , inputId = "graph.year"
+                      , choices = years.available
+                      , selected = max(years.available))
+    shinyjs::enable("graph.year")
+  } else
+  {
+    shinyjs::reset("graph.year")
+    shinyjs::disable("graph.year")
+  }
+  
+  ## -------------------------------------------------------------    
+  strata.available = list.files(paste0(get_dir.save(), "/ABUND_perPFG_perStrata"))
+  strata.available = sapply(sub(".*_STRATA_", "", strata.available)
+                            , function(x) strsplit(as.character(x), "[.]")[[1]][1])
+  strata.available = sort(unique(as.numeric(strata.available)))
+  
+  if (length(strata.available) > 0)
+  {
+    updateSelectInput(session
+                      , inputId = "graph.strata_min"
+                      , choices = strata.available
+                      , selected = min(strata.available))
+    shinyjs::enable("graph.strata_min")
+  } else
+  {
+    shinyjs::reset("graph.strata_min")
+    shinyjs::disable("graph.strata_min")
   }
 })

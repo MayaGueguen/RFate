@@ -8,7 +8,8 @@ library(shinyalert)
 library(shinyDirectoryInput)
 library(shinyjs)
 library(shinycssloaders)
-library(shinyBS)
+# library(shinyBS)
+library(shinyWidgets)
 library(markdown)
 library(RFate)
 library(data.table)
@@ -91,6 +92,17 @@ ui <- fluidPage(
                     font-weight: 200;
                     padding: 0px;
                     margin-top: 0px;
+                    }
+                    .radioGroupButtons .btn {
+                    background-color: rgba(96, 129, 150, 0.5);
+                    color: #FFFFFF;
+                    border-radius: 5px;
+                    }
+                    .radioGroupButtons .btn:hover {
+                    background-color: #3a7da8;
+                    }
+                    .radioGroupButtons .btn-panelgraph.active {
+                    background-color: #3a7da8;
                     }
                     "))
     ),
