@@ -20,7 +20,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Specific year</p>")
                                 , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>year(s)</span>")
                                 , choices = NULL
                                 , selected = NULL
-                                , multiple = T
+                                , multiple = FALSE
                                 , width = "100%")
                   )
            )
@@ -55,10 +55,71 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Specific year</p>")
          )
          , fluidRow(
            column(3
+                  , br()
+                  , shinyjs::disabled(
+                    actionButton(inputId = "create.relativeAbund"
+                                 , label = "Run relative & binary abund"
+                                 , icon = icon("play")
+                                 , width = "100%"
+                                 , style = HTML(button.style)
+                    )
+                  )
+           )
+           , column(9
+                    , wellPanel(
+                      style = HTML(paste0("background-color: ", help.color, ";")),
+                      helpText(HTML("
+                         <p><a href='https://mayagueguen.github.io/RFate/reference/POST_FATE.relativeAbund_presenceAbsence.html' target='_blank'>
+                         See more details on <span style='font-family:Monospace;'>RFate</span> package website.</a></p>
+                         <table style='width:100%;'>
+                         
+                         </table>
+                         "
+                      ))) ## END wellPanel
+           )
+         )
+         , fluidRow(
+           column(6
+                  , br()
+                  , fileInput(inputId = "graph.mat.PFG.obs"
+                              , label = NULL
+                              , buttonLabel = HTML("<span style = 'font-style: italic; font-weight: normal;'>mat.PFG.obs</span>")
+                              , multiple = FALSE
+                              , width = "100%")
+           )
+           # , column(4
+           #          , br()
+           #          , fileInput(inputId = "graph.mat.PFG.succ"
+           #                      , label = NULL
+           #                      , buttonLabel = HTML("<span style = 'font-style: italic; font-weight: normal;'>mat.PFG.succ</span>")
+           #                      , multiple = FALSE
+           #                      , width = "100%")
+           # )
+           , column(6
+                    , br()
+                    , fileInput(inputId = "graph.opt.cover.obs"
+                                , label = NULL
+                                , buttonLabel = HTML("<span style = 'font-style: italic; font-weight: normal;'>opt.cover.obs</span>")
+                                , multiple = FALSE
+                                , width = "100%")
+                    # , fileInput(inputId = "graph.opt.light.obs"
+                    #             , label = NULL
+                    #             , buttonLabel = HTML("<span style = 'font-style: italic; font-weight: normal;'>opt.light.obs</span>")
+                    #             , multiple = FALSE
+                    #             , width = "100%")
+                    # , fileInput(inputId = "graph.opt.soil.obs"
+                    #             , label = NULL
+                    #             , buttonLabel = HTML("<span style = 'font-style: italic; font-weight: normal;'>opt.soil.obs</span>")
+                    #             , multiple = FALSE
+                    #             , width = "100%")
+           )
+         )
+         , fluidRow(
+           column(3
                   , radioGroupButtons(inputId = "show.specific_year"
                                       , label = ""
                                       , choices = c("PFG vs Habsuit"
-                                                    , "Validation Stat"
+                                                    , "Validation stat"
                                                     , "PFG richness"
                                                     , "PFG cover"
                                                     , "Light CWM (MAP)"

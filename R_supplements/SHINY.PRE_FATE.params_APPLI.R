@@ -8,7 +8,6 @@ library(shinyalert)
 library(shinyDirectoryInput)
 library(shinyjs)
 library(shinycssloaders)
-# library(shinyBS)
 library(shinyWidgets)
 library(markdown)
 library(RFate)
@@ -17,6 +16,8 @@ library(foreach)
 library(zip)
 library(ggplot2)
 library(ggthemes)
+library(raster)
+library(viridis)
 
 ###################################################################################################################################
 

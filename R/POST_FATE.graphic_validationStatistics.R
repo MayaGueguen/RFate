@@ -114,32 +114,6 @@
 ##'
 ## END OF HEADER ###############################################################
 
-# setwd("~/FATE_Bauges/")
-# name.simulation = "FATE_Bauges_SOIL/"
-# file.simulParam = "FATE_Bauges_SOIL/PARAM_SIMUL/paramSimul_Graz1_CA_rcp26_WITHSOIL.txt"
-# year = 850
-# opt.no_CPU = 7
-
-# load("~/Documents/_DATA/DATA_FATE_Bauges/Bauges_OccDom/mat.PFG.obs")
-# mat.PFG.obs = mat.PFG.obs[, c("PFG", "X_ETRS89", "Y_ETRS89", "obs")]
-# colnames(mat.PFG.obs) = c("PFG", "X", "Y", "obs")
-# mat.PFG.obs$PFG = as.character(mat.PFG.obs$PFG)
-# POST_FATE.graphic_validationStatistics(name.simulation = "FATE_Bauges/"
-#                                 , file.simulParam = "FATE_Bauges/PARAM_SIMUL/paramSimul_Graz1_CA_rcp26_TEST.txt"
-#                                 , year = 850
-#                                 , mat.PFG.obs = mat.PFG.obs
-#                                 , opt.no_CPU = 7)
-# 
-# load("~/Documents/_DATA/DATA_FATE_Bauges/Bauges_OccDom/mat.PFG.obs_SOIL")
-# mat.PFG.obs = mat.PFG.obs[, c("PFG", "X_ETRS89", "Y_ETRS89", "obs")]
-# colnames(mat.PFG.obs) = c("PFG", "X", "Y", "obs")
-# mat.PFG.obs$PFG = as.character(mat.PFG.obs$PFG)
-# POST_FATE.graphic_validationStatistics(name.simulation = "FATE_Bauges_SOIL/"
-#                                 , file.simulParam = "FATE_Bauges_SOIL/PARAM_SIMUL/paramSimul_Graz1_CA_rcp26_WITHSOIL.txt"
-#                                 , year = 850
-#                                 , mat.PFG.obs = mat.PFG.obs
-#                                 , opt.no_CPU = 7)
-
 
 POST_FATE.graphic_validationStatistics = function(
   name.simulation
