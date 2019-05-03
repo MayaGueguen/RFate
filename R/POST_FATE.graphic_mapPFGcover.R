@@ -298,7 +298,7 @@ POST_FATE.graphic_mapPFGcover = function(
       ras_TOT.list = foreach (pfg = PFG) %do%
       {
         cat(" ", pfg)
-        
+
         ## Abundance maps
         file_name = paste0(dir.output.perPFG.perStrata,
                            "Abund_YEAR_",
