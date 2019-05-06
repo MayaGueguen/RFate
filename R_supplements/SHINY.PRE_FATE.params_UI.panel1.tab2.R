@@ -1,5 +1,5 @@
 
-tabPanel(title = HTML("<p class='tabPanel_title'>Scenario files</p>")
+tabPanel(title = HTML("<span class='tabPanel_title'>Scenario files</span>")
          , value = "create.scenario"
          , fluidRow(
            column(6

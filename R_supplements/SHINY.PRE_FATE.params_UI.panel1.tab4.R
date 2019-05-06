@@ -1,5 +1,5 @@
 
-tabPanel(title = HTML("<p class='tabPanel_title'>Raster files</p>")
+tabPanel(title = HTML("<span class='tabPanel_title'>Raster files</span>")
          , value = "create.spatial"
          , br()
          , tabsetPanel(

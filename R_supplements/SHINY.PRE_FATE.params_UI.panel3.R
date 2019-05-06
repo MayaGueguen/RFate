@@ -1,5 +1,6 @@
 
-tabPanel(title = HTML("<p class='panel_title'>C. Simulation outputs & graphics</p>"),
+tabPanel(title = HTML("<span class='panel_title'><i class='fa fa-chart-bar'></i> Simulation outputs & graphics</span>"),
+         id = "step3",
          sidebarLayout(
            
            # Inputs
@@ -13,10 +14,7 @@ tabPanel(title = HTML("<p class='panel_title'>C. Simulation outputs & graphics</
                column(5
                       , directoryInput(inputId = "folder.simul"
                                        , label = param.style("Select the simulation folder :")
-                                       , value = '~')# %>% helper(type = "inline"
-                                                                 # , title = "Plot"
-                                                                 # , content = c("This is a <b>plot</b>.",
-                                                                 #               "This is on a new line."))
+                                       , value = '~')
                )
                , column(7
                         , shinyjs::disabled(
@@ -44,4 +42,4 @@ tabPanel(title = HTML("<p class='panel_title'>C. Simulation outputs & graphics</
              ) ## END wellPanel
            ) ## END mainPanel
          ) ## END sidebarLayout
-)
+) ## tabPanel

@@ -33,71 +33,73 @@ observeEvent(input$show.through_time, {
 
 observeEvent(input$create.evolutionCoverage, {
   
-  path.init = getwd()
-  setwd(get_path.folder())
-  
-  get_res = print_messages(as.expression(
-    POST_FATE.graphic_evolutionCoverage(name.simulation = get_name.simul()
-                                        , file.simulParam = input$graph.simulParam
-                                        , no.years = input$graph.no.years
-                                        , opt.abund_fixedScale = input$graph.opt.fixedScale
-                                        , opt.ras_habitat = input$graph.opt.ras_habitat
-                                        , opt.no_CPU = input$graph.opt.no_CPU
-    )
-  ))
-  
-  if(get_res)
-  {
-    col_vec = c('#6da34d', '#297373', '#58a4b0', '#5c4742', '#3f334d')
-    col_fun = colorRampPalette(col_vec)
+  withBusyIndicatorServer("create.evolutionCoverage", {
+    path.init = getwd()
+    setwd(get_path.folder())
     
-    distri.melt = fread(get_last.createdFiles2(pattern_head = "POST_FATE_evolution_spaceOccupancy_"
-                                               , pattern_tail = ".csv$"))
+    get_res = print_messages(as.expression(
+      POST_FATE.graphic_evolutionCoverage(name.simulation = get_name.simul()
+                                          , file.simulParam = input$graph.simulParam
+                                          , no.years = input$graph.no.years
+                                          , opt.abund_fixedScale = input$graph.opt.fixedScale
+                                          , opt.ras_habitat = input$graph.opt.ras_habitat
+                                          , opt.no_CPU = input$graph.opt.no_CPU
+      )
+    ))
     
-    distriAbund.melt = fread(get_last.createdFiles2(pattern_head = "POST_FATE_evolution_abundance_"
-                                                    , pattern_tail = ".csv$"))
-    
-    output$plot.evolutionCoverage1 = renderPlot({
+    if(get_res)
+    {
+      col_vec = c('#6da34d', '#297373', '#58a4b0', '#5c4742', '#3f334d')
+      col_fun = colorRampPalette(col_vec)
       
-      ## Evolution of space occupation
-      pp1 = ggplot(distri.melt, aes_string(x = "YEAR", y = "Abund * 100", color = "factor(HAB)")) +
-        geom_line(lwd = 1) +
-        facet_wrap("~ PFG") +
-        scale_color_manual("Habitat", values = col_fun(length(unique(distri.melt$HAB)))) +
-        labs(x = "", y = "", title = paste0("GRAPH A : evolution of species' space occupation"),
-             subtitle = paste0("For each PFG, the line represents the evolution through time of its space occupancy,\n",
-                               "meaning the percentage of pixels in which the abundance of the species is greater than 0.\n")) +
-        theme_fivethirtyeight() +
-        theme(panel.background = element_rect(fill = "transparent", colour = NA)
-              , plot.background = element_rect(fill = "transparent", colour = NA)
-              , legend.background = element_rect(fill = "transparent", colour = NA)
-              , legend.box.background = element_rect(fill = "transparent", colour = NA)
-              , legend.key = element_rect(fill = "transparent", colour = NA))
+      distri.melt = fread(get_last.createdFiles2(pattern_head = "POST_FATE_evolution_spaceOccupancy_"
+                                                 , pattern_tail = ".csv$"))
       
-      print(pp1)
-    })
-    
-    output$plot.evolutionCoverage2 = renderPlot({
+      distriAbund.melt = fread(get_last.createdFiles2(pattern_head = "POST_FATE_evolution_abundance_"
+                                                      , pattern_tail = ".csv$"))
       
-      ## Evolution of abundance
-      pp2 = ggplot(distriAbund.melt, aes_string(x = "YEAR", y = "Abund", color = "HAB")) +
-        geom_line(lwd = 1) +
-        facet_wrap("~ PFG", scales = ifelse(input$graph.opt.fixedScale, "fixed", "free_y")) +
-        scale_color_manual("Habitat", values = col_fun(length(unique(distri.melt$HAB)))) +
-        labs(x = "", y = "", title = paste0("GRAPH A : evolution of species' abundance"),
-             subtitle = paste0("For each PFG, the line represents the evolution through time of its abundance\n",
-                               "over the whole studied area, meaning the sum of its abundances in every pixel.\n")) +
-        theme_fivethirtyeight() +
-        theme(panel.background = element_rect(fill = "transparent", colour = NA)
-              , plot.background = element_rect(fill = "transparent", colour = NA)
-              , legend.background = element_rect(fill = "transparent", colour = NA)
-              , legend.box.background = element_rect(fill = "transparent", colour = NA)
-              , legend.key = element_rect(fill = "transparent", colour = NA))
+      output$plot.evolutionCoverage1 = renderPlot({
+        
+        ## Evolution of space occupation
+        pp1 = ggplot(distri.melt, aes_string(x = "YEAR", y = "Abund * 100", color = "factor(HAB)")) +
+          geom_line(lwd = 1) +
+          facet_wrap("~ PFG") +
+          scale_color_manual("Habitat", values = col_fun(length(unique(distri.melt$HAB)))) +
+          labs(x = "", y = "", title = paste0("GRAPH A : evolution of species' space occupation"),
+               subtitle = paste0("For each PFG, the line represents the evolution through time of its space occupancy,\n",
+                                 "meaning the percentage of pixels in which the abundance of the species is greater than 0.\n")) +
+          theme_fivethirtyeight() +
+          theme(panel.background = element_rect(fill = "transparent", colour = NA)
+                , plot.background = element_rect(fill = "transparent", colour = NA)
+                , legend.background = element_rect(fill = "transparent", colour = NA)
+                , legend.box.background = element_rect(fill = "transparent", colour = NA)
+                , legend.key = element_rect(fill = "transparent", colour = NA))
+        
+        print(pp1)
+      })
       
-      print(pp2)
-    })
-  }
-  setwd(path.init)
+      output$plot.evolutionCoverage2 = renderPlot({
+        
+        ## Evolution of abundance
+        pp2 = ggplot(distriAbund.melt, aes_string(x = "YEAR", y = "Abund", color = "HAB")) +
+          geom_line(lwd = 1) +
+          facet_wrap("~ PFG", scales = ifelse(input$graph.opt.fixedScale, "fixed", "free_y")) +
+          scale_color_manual("Habitat", values = col_fun(length(unique(distri.melt$HAB)))) +
+          labs(x = "", y = "", title = paste0("GRAPH A : evolution of species' abundance"),
+               subtitle = paste0("For each PFG, the line represents the evolution through time of its abundance\n",
+                                 "over the whole studied area, meaning the sum of its abundances in every pixel.\n")) +
+          theme_fivethirtyeight() +
+          theme(panel.background = element_rect(fill = "transparent", colour = NA)
+                , plot.background = element_rect(fill = "transparent", colour = NA)
+                , legend.background = element_rect(fill = "transparent", colour = NA)
+                , legend.box.background = element_rect(fill = "transparent", colour = NA)
+                , legend.key = element_rect(fill = "transparent", colour = NA))
+        
+        print(pp2)
+      })
+    }
+    setwd(path.init)
+  })
 })
 
 ####################################################################
@@ -182,7 +184,7 @@ observeEvent(input$create.evolutionLight, {
       no_strata = sub("STRATUM_", "", unique(distriAbund$STRATUM))
       no_strata = max(as.numeric(no_strata), na.rm = TRUE)
       no_strata = max(1, no_strata)
-        
+      
       ## Evolution of abundance
       pp = ggplot(distriAbund, aes_string(x = "YEAR", y = "Abund", color = "STRATUM")) +
         scale_color_manual("", values = fun_col(no_strata)) +
@@ -213,10 +215,10 @@ observeEvent(input$create.evolutionSoil, {
   
   get_res = print_messages(as.expression(
     POST_FATE.graphic_evolutionSoil_pixels(name.simulation = get_name.simul()
-                                            , file.simulParam = input$graph.simulParam
-                                            , no.years = input$graph.no.years
-                                            , opt.cells_ID = NULL
-                                            , opt.no_CPU = input$graph.opt.no_CPU
+                                           , file.simulParam = input$graph.simulParam
+                                           , no.years = input$graph.no.years
+                                           , opt.cells_ID = NULL
+                                           , opt.no_CPU = input$graph.opt.no_CPU
     )
   ))
   
@@ -228,7 +230,7 @@ observeEvent(input$create.evolutionSoil, {
     fun_col = colorRampPalette(vec_col)
     
     distriSoil = fread(get_last.createdFiles2(pattern_head = "POST_FATE_evolution_soil_pixels_"
-                                               , pattern_tail = ".csv$"))
+                                              , pattern_tail = ".csv$"))
     
     # abund.file = get_last.createdFiles2(pattern_head = "POST_FATE_evolution_abundance_pixels_"
     #                                     , pattern_tail = ".csv$")

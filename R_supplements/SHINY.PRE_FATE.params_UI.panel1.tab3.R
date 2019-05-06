@@ -1,5 +1,5 @@
 
-tabPanel(title = HTML("<p class='tabPanel_title'>PFG files</p>")
+tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
          , value = "create.PFG"
          , br()
          , wellPanel(

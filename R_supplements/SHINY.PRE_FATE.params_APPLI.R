@@ -20,11 +20,11 @@ library(ggthemes)
 library(raster)
 library(viridis)
 library(RColorBrewer)
-library(dplyr)
 
 ###################################################################################################################################
 
 source("R_supplements/SHINY.PRE_FATE.params_FUNCTIONS.R", local = TRUE)
+source("R_supplements/SHINY.PRE_FATE.params_FUNCTIONS.extern.R", local = TRUE)
 
 names.PFG = c()
 mat.PFG.ALL = data.frame()
@@ -45,7 +45,7 @@ help.color = "#dee2e8"
 ui <- fluidPage(
   useShinyalert(),
   useShinyjs(),
-  
+
   tags$body(
     tags$style(HTML("
                     @import url('https://fonts.googleapis.com/css?family=Londrina+Solid:200,300|Medula+One|Slabo+27px|Francois+One');
@@ -60,10 +60,9 @@ ui <- fluidPage(
                     border-radius: 0px;
                     color: #FFFFFF;
                     }
-                    
                     .tabbable > .nav > li > a {
-                    background-color: rgba(96, 129, 150, 0.5);
-                    color: #FFFFFF;
+                    background-color: #e0dbd9;
+                    color: #8c8582;
                     border-radius: 0px;
                     }
                     .tabbable > .nav > li > a:hover {
@@ -76,21 +75,29 @@ ui <- fluidPage(
                     color:#FFFFFF;
                     border-radius: 0px;
                     }
-                    p.panel_title {
+                    .navbar-default .navbar-nav > not(.active) > a {
+                    color: #8c8582;
+                    }
+                    .navbar-default .navbar-nav > .active > a, 
+                    .navbar-default .navbar-nav > .active > a:focus, 
+                    .navbar-default .navbar-nav > .active > a:hover {
+                    background-color: #e0dbd9;
+                    }
+                    .panel_title {
                     font-family: 'Londrina Solid', cursive;
                     font-size: 20px;
                     font-weight: 200;
                     padding: 0px;
                     margin-top: 0px;
                     }
-                    p.tabPanel_title {
+                    .tabPanel_title {
                     font-family: 'Londrina Solid', cursive;
                     font-size: 20px;
                     font-weight: 200;
                     padding: 0px;
                     margin-top: 0px;
                     }
-                    p.tabPanel_subtitle {
+                    .tabPanel_subtitle {
                     font-family: 'Londrina Solid', cursive;
                     font-size: 18px;
                     font-weight: 200;
@@ -116,20 +123,12 @@ ui <- fluidPage(
   # Sidebar layout with a input and output definitions
   mainPanel(
     width = 12,
-    # radioGroupButtons(inputId = "show.panels"
-    #                   , label = ""
-    #                   , choices = c("A. Simulation folder & parameter files"
-    #                                 , "B. Run simulation"
-    #                                 , "C. Simulation outputs & graphics")
-    #                   , selected = 0
-    #                   , justified = TRUE
-    #                   , status = "panelgraph"
-    #                   , checkIcon = NULL
-    # )
-    tabsetPanel(
-      source("R_supplements/SHINY.PRE_FATE.params_UI.panel1.R", local = TRUE)$value,
-      tabPanel(title =  HTML("<p class='panel_title'>B. Run simulation</p>")),
-      source("R_supplements/SHINY.PRE_FATE.params_UI.panel3.R", local = TRUE)$value
+    navbarPage("",
+               navbarMenu(title = HTML("<span class='panel_title'><i class='fa fa-copy'></i> Simulation parameter files</span>"),
+                          source("R_supplements/SHINY.PRE_FATE.params_UI.panel1.R", local = TRUE)$value,
+                          tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-folder-open'></i> Open</span>"))),
+               tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-cogs'></i> Run simulation</span>")),
+               source("R_supplements/SHINY.PRE_FATE.params_UI.panel3.R", local = TRUE)$value
     )
   )
     ) ## END fluidPage
@@ -144,7 +143,18 @@ server <- function(input, output, session) {
   session$onSessionEnded(stopApp)
   
   observe_helpers(withMathJax = TRUE)
-
+  
+  # initIntroJS(session = session, dfIntro = read.csv("R_supplements/help.csv"))
+  
+  # session$sendCustomMessage(type = 'setHelpContent', message = list(steps = toJSON(steps) ))
+  # 
+  # # listen to the action button
+  # observeEvent(input$startHelp,{
+  #   
+  #   # on click, send custom message to start help
+  #   session$sendCustomMessage(type = 'startHelp', message = list(""))
+  # })
+  
   ####################################################################
   
   source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel1.R", local = TRUE)$value

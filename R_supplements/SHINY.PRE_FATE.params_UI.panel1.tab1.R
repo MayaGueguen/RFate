@@ -1,5 +1,5 @@
 
-tabPanel(title = HTML("<p class='tabPanel_title'>Global parameters</p>")
+tabPanel(title = HTML("<span class='tabPanel_title'>Global parameters</span>")
          , value = "panel.global"
          # , br()
          , fluidRow(

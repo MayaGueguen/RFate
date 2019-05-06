@@ -1,5 +1,7 @@
 
-tabPanel(title = HTML("<p class='panel_title'>A. Simulation folder & parameter files</p>"),
+tabPanel(title = HTML("<p class='panel_title'><i class='fa fa-folder-plus'></i> New</p>"),
+        # icon = "question",
+         id = "step1",
          sidebarLayout(
            
            # Inputs
@@ -107,4 +109,4 @@ tabPanel(title = HTML("<p class='panel_title'>A. Simulation folder & parameter f
              ) ## END hidden
            ) ## END mainPanel
              ) ## END sidebarLayout
-           )
+           ) ## END tabPanel
