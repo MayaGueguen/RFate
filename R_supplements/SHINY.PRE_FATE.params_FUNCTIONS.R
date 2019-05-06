@@ -1,4 +1,54 @@
 
+###################################################################################################################################
+
+param.style = function(param.text)
+{
+  return(HTML(paste0("<span style = 'font-style: italic; font-weight: normal;'>"
+                     , param.text
+                     , "</span>")))
+}
+
+help.web = function(web.address)
+{
+  return(paste0("<a href='"
+                , web.address
+                , "' target='_blank'>See more details on <span style='font-family:Monospace;'>RFate</span> package website.</a>"))
+}
+
+help.param.name = function(param.text)
+{
+  return(paste0("<tr><td style='width:30%;font-weight:bold;font-family:Monospace;vertical-align:top;'>"
+                , param.text
+                , "</td>"))
+}
+help.param.desc = function(param.text)
+{
+  return(paste0("<td style='width:70%;'>"
+                , param.text
+                , "</td></tr>"))
+}
+help.full = function(param.web = NULL, param.name.vec, param.desc.vec)
+{
+  TEXT.full = foreach(i = 1:length(param.name.vec), .combine = "c") %do%
+  {
+    text.name = help.param.name(param.name.vec[i])
+    text.desc = help.param.desc(param.desc.vec[i])
+    return(paste0(text.name, text.desc))
+  }
+  TEXT.full = paste0(TEXT.full, collapse = "")
+
+  TEXT = paste0("<table style='width:100%;'>"
+                , TEXT.full
+                , "</table>")
+  if (!is.null(param.web))
+  {
+    TEXT = paste0(help.web(param.web), TEXT)
+  }
+  return(HTML(TEXT))
+}
+
+
+
 
 ###################################################################################################################################
 

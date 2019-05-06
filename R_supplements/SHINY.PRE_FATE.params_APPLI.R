@@ -9,6 +9,7 @@ library(shinyDirectoryInput)
 library(shinyjs)
 library(shinycssloaders)
 library(shinyWidgets)
+library(shinyhelper)
 library(markdown)
 library(RFate)
 library(data.table)
@@ -19,6 +20,7 @@ library(ggthemes)
 library(raster)
 library(viridis)
 library(RColorBrewer)
+library(dplyr)
 
 ###################################################################################################################################
 
@@ -114,6 +116,16 @@ ui <- fluidPage(
   # Sidebar layout with a input and output definitions
   mainPanel(
     width = 12,
+    # radioGroupButtons(inputId = "show.panels"
+    #                   , label = ""
+    #                   , choices = c("A. Simulation folder & parameter files"
+    #                                 , "B. Run simulation"
+    #                                 , "C. Simulation outputs & graphics")
+    #                   , selected = 0
+    #                   , justified = TRUE
+    #                   , status = "panelgraph"
+    #                   , checkIcon = NULL
+    # )
     tabsetPanel(
       source("R_supplements/SHINY.PRE_FATE.params_UI.panel1.R", local = TRUE)$value,
       tabPanel(title =  HTML("<p class='panel_title'>B. Run simulation</p>")),
@@ -130,6 +142,8 @@ ui <- fluidPage(
 server <- function(input, output, session) {
   
   session$onSessionEnded(stopApp)
+  
+  observe_helpers(withMathJax = TRUE)
 
   ####################################################################
   

@@ -1,29 +1,6 @@
 
 tabPanel(title = HTML("<p class='tabPanel_title'>Scenario files</p>")
          , value = "create.scenario"
-         , br()
-         , wellPanel(
-           style = HTML(paste0("background-color: ", help.color, ";")),
-           helpText(HTML("
-                         <p><a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_saveYears.html' target='_blank'>
-                         See more details on <span style='font-family:Monospace;'>RFate</span> package website.</a></p>
-                         <table style='width:100%;'>
-                         <tr>
-                         <td style='width:30%;font-family:Monospace;vertical-align:top;'>years.maps</td>
-                         <td style='width:70%;'>a <span style='font-family:Monospace;'>vector</span> of simulation years at which PFG abundance maps will be saved</td>
-                         </tr>
-                         <tr>
-                         <td style='width:30%;font-family:Monospace;vertical-align:top;'>years.objects</td>
-                         <td style='width:70%;'>a <span style='font-family:Monospace;'>vector</span> of simulation years at which FATE-HD simulation state will be saved</td>
-                         </tr>
-                         <tr>
-                         <td style='width:30%;font-family:Monospace;vertical-align:top;'>opt.folder.name</td>
-                         <td style='width:70%;'><em>(optional) a <span style='font-family:Monospace;'>string</span> that corresponds to the name of the folder that will 
-                         be created into the <span style='font-family:Monospace;'>name.simulation/DATA/SAVE/</span> directory to store the results</em></td>
-                         </tr>
-                         </table>
-                         "
-           )))
          , fluidRow(
            column(6
                   , br()
@@ -62,8 +39,19 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Scenario files</p>")
                                    , width = "100%"
                                    , style = HTML(button.style)
                     )
-                  )
-           )
+                  ) %>% helper(type = "inline"
+                               , title = "Create SAVE maps files"
+                               , size = "l"
+                               , content = help.full(param.web = "https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_saveYears.html"
+                                                     , param.name.vec = c("<hr/>"
+                                                                          , "years.maps"
+                                                                          , "opt.folder.name")
+                                                     , param.desc.vec = c("<hr/>"
+                                                                          , "a <span style='font-family:Monospace;'>vector</span> of simulation years at which PFG abundance maps will be saved"
+                                                                          , "<em>(optional) a <span style='font-family:Monospace;'>string</span> that corresponds to the name of the folder that will
+                                                                          be created into the <span style='font-family:Monospace;'>name.simulation/DATA/SAVE/</span> directory to store the results</em>")
+                                                     ))
+                               )
            , column(6
                     , br()
                     , wellPanel(
@@ -99,12 +87,23 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Scenario files</p>")
                                      , width = "100%"
                                      , style = HTML(button.style)
                       )
-                    )
+                    ) %>% helper(type = "inline"
+                                 , title = "Create SAVE objects files"
+                                 , size = "l"
+                                 , content = help.full(param.web = "https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_saveYears.html"
+                                                       , param.name.vec = c("<hr/>"
+                                                                            , "years.objects"
+                                                                            , "opt.folder.name")
+                                                       , param.desc.vec = c("<hr/>"
+                                                                            , "a <span style='font-family:Monospace;'>vector</span> of simulation years at which FATE-HD simulation state will be saved"
+                                                                            , "<em>(optional) a <span style='font-family:Monospace;'>string</span> that corresponds to the name of the folder that will
+                                                                          be created into the <span style='font-family:Monospace;'>name.simulation/DATA/SAVE/</span> directory to store the results</em>")
+                                 ))
            )
-         )
+           )
          , fluidRow(
            br(),
            wellPanel(style = "overflow-x:scroll;"
                      , dataTableOutput(outputId = "created_table.save"))
          )
-) ## END tabPanel (Scenario files)
+         ) ## END tabPanel (Scenario files)

@@ -11,19 +11,17 @@ tabPanel(title = HTML("<p class='panel_title'>C. Simulation outputs & graphics</
              br(),
              fluidRow(
                column(5
-                      , HTML("<span style = 'font-style: italic; font-weight: normal;'>Select the simulation folder :</span>")
-                      , br()
                       , directoryInput(inputId = "folder.simul"
-                                       , label = ""
-                                       , value = '~')
+                                       , label = param.style("Select the simulation folder :")
+                                       , value = '~')# %>% helper(type = "inline"
+                                                                 # , title = "Plot"
+                                                                 # , content = c("This is a <b>plot</b>.",
+                                                                 #               "This is on a new line."))
                )
                , column(7
-                        , HTML("<span style = 'font-style: italic; font-weight: normal;'>Select the simulation parameters file :</span>")
-                        , br()
-                        , br()
                         , shinyjs::disabled(
                           selectInput(inputId = "graph.simulParam"
-                                      , label = NULL
+                                      , label = param.style("Select the simulation parameters file :")
                                       , choices = NULL
                                       , selected = NULL
                                       , multiple = F
