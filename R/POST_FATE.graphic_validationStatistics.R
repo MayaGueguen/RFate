@@ -324,12 +324,16 @@ POST_FATE.graphic_validationStatistics = function(
         }
         write.csv(mat.valid
                   , file = paste0(name.simulation
-                                  , "/RESULTS/POST_FATE_prediction_VALIDATION_STATISTICS_"
+                                  , "/RESULTS/POST_FATE_prediction_YEAR_"
+                                  , y
+                                  , "_VALIDATION_STATISTICS_"
                                   , basename(dir.save)
                                   , ".csv")
                   , row.names = TRUE)
         
-        message(paste0("\n The output file POST_FATE_prediction_VALIDATION_STATISTICS_"
+        message(paste0("\n The output file POST_FATE_prediction_YEAR_"
+                       , y
+                       , "_VALIDATION_STATISTICS_"
                        , basename(dir.save)
                        , ".csv has been successfully created !\n"))
         

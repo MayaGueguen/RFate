@@ -433,12 +433,16 @@ POST_FATE.graphic_mapPFGcover = function(
           
           write.csv(EVAL.cover
                     , file = paste0(name.simulation
-                                    , "/RESULTS/POST_FATE_PFGcover_VALIDATION_STATISTICS"
+                                    , "/RESULTS/POST_FATE_PFGcover_YEAR_"
+                                    , y
+                                    , "_VALIDATION_STATISTICS"
                                     , basename(dir.save)
                                     , ".csv")
                     , row.names = TRUE)
           
-          message(paste0("\n The output file POST_FATE_PFGcover_VALIDATION_STATISTICS"
+          message(paste0("\n The output file POST_FATE_PFGcover_YEAR_"
+                         , y
+                         , "_VALIDATION_STATISTICS"
                          , basename(dir.save)
                          , ".csv has been successfully created !\n"))
           
