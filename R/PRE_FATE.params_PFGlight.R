@@ -215,6 +215,9 @@ PRE_FATE.params_PFGlight = function(
   ## GET PFG NAME
   NAME = as.character(mat.PFG.succ$PFG)
   
+  ## GET LIGHT
+  LIGHT = mat.PFG.succ$light
+  
   ## GET PFG TYPE
   TYPE = as.character(mat.PFG.succ$type)
 
@@ -405,6 +408,7 @@ PRE_FATE.params_PFGlight = function(
 
   names.params.list = get("NAME")
   names.params.list.sub = c("NAME"
+                            , "LIGHT"
                             , "ACTIVE_GERM"
                             , "SHADE_TOL")
   
@@ -412,6 +416,7 @@ PRE_FATE.params_PFGlight = function(
   
   params.csv = t(do.call(rbind, params.list))
   colnames(params.csv) = c("NAME"
+                           , "LIGHT"
                            , paste0("ACTIVE_GERM_for_", c("L", "M", "H"))
                            , paste0("SHADE_TOL_for_",
                                     c("GeL", "GeM", "GeH", "ImL", "ImM", "ImH", "MaL", "MaM", "MaH")))
