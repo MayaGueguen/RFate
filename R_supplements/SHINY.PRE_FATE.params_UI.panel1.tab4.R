@@ -1,6 +1,6 @@
 
 tabPanel(title = HTML("<span class='tabPanel_title'>Raster files</span>")
-         , value = "create.spatial"
+         , value = "panel.raster"
          , sidebarLayout(
            sidebarPanel = NULL,
            mainPanel = mainPanel(

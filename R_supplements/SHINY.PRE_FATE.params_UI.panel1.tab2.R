@@ -1,6 +1,6 @@
 
 tabPanel(title = HTML("<span class='tabPanel_title'>Scenario files</span>")
-         , value = "create.scenario"
+         , value = "panel.scenario"
          , sidebarLayout(
            sidebarPanel = NULL,
            mainPanel = mainPanel(

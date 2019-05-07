@@ -1,7 +1,7 @@
 
-tabPanel(title = HTML("<span class='panel_title'><i class='fa fa-chart-bar'></i> Simulation outputs & graphics</span>"),
-         id = "step3",
-         sidebarLayout(
+tabPanel(title = HTML("<span class='panel_title'><i class='fa fa-chart-bar'></i> Simulation outputs & graphics</span>")
+         , value = "panel3"
+         , sidebarLayout(
            
            # Inputs
            sidebarPanel(
@@ -12,11 +12,20 @@ tabPanel(title = HTML("<span class='panel_title'><i class='fa fa-chart-bar'></i>
              br(),
              fluidRow(
                column(5
-                      , directoryInput(inputId = "folder.simul"
+                      , id = "help3_1"
+                      # , introBox(
+                        , div(id = "help3_1"
+                              , directoryInput(inputId = "folder.simul"
                                        , label = param.style("Select the simulation folder :")
                                        , value = '~')
+                        )
+                      #   , data.step = 6
+                      #   , data.position = "bottom"
+                      #   , data.intro = "
+                      #       Coucou!"
+                      # )
                )
-               , column(7
+               , column(5
                         , shinyjs::disabled(
                           selectInput(inputId = "graph.simulParam"
                                       , label = param.style("Select the simulation parameters file :")
@@ -26,6 +35,13 @@ tabPanel(title = HTML("<span class='panel_title'><i class='fa fa-chart-bar'></i>
                                       , width = "100%")
                         )
                )
+               , column(2
+                        , br()
+                        , actionButton(inputId = "HELP.panel3"
+                                       , label = "Need some help"
+                                       , icon = icon("question-circle", class = "icon-help")
+                                       , width = "100%"
+                                       , style = HTML(button.style.help)))
              ) ## END fluidRow
            ) ## END sidebarPanel
            
@@ -41,5 +57,11 @@ tabPanel(title = HTML("<span class='panel_title'><i class='fa fa-chart-bar'></i>
                        ) ## END tabsetPanel
              ) ## END wellPanel
            ) ## END mainPanel
+         ) %>% helper(type = "inline"
+                      , title = "Evaluate FATE-HD simulation outputs"
+                      , size = "l"
+                      , content = help.HTML(html.file = "docs/index.html"
+                                            , target.anchor = '<div '
+                                            , target.class = "post_fate---evaluation-of-simulation")
          ) ## END sidebarLayout
 ) ## tabPanel

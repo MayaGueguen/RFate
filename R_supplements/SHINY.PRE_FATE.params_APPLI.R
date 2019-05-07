@@ -44,7 +44,7 @@ ui <- fluidPage(
   useShinyalert(),
   useShinyjs(),
   introjsUI(),
-
+  
   tags$body(
     tags$style(HTML("
                     @import url('https://fonts.googleapis.com/css?family=Londrina+Solid:200,300|Medula+One|Slabo+27px|Francois+One');
@@ -123,12 +123,13 @@ ui <- fluidPage(
   # Sidebar layout with a input and output definitions
   mainPanel(
     width = 12,
-    navbarPage("",
-               navbarMenu(title = HTML("<span class='panel_title'><i class='fa fa-copy'></i> Simulation parameter files</span>"),
-                          source("R_supplements/SHINY.PRE_FATE.params_UI.panel1.R", local = TRUE)$value,
-                          tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-folder-open'></i> Open</span>"))),
-               tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-cogs'></i> Run simulation</span>")),
-               source("R_supplements/SHINY.PRE_FATE.params_UI.panel3.R", local = TRUE)$value
+    navbarPage(""
+               , id = "navbar"
+               , navbarMenu(title = HTML("<span class='panel_title'><i class='fa fa-copy'></i> Simulation parameter files</span>")
+                            , source("R_supplements/SHINY.PRE_FATE.params_UI.panel1.R", local = TRUE)$value
+                            , tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-folder-open'></i> Open</span>")))
+               , tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-cogs'></i> Run simulation</span>"))
+               , source("R_supplements/SHINY.PRE_FATE.params_UI.panel3.R", local = TRUE)$value
     )
   )
     ) ## END fluidPage
@@ -144,19 +145,7 @@ server <- function(input, output, session) {
   
   observe_helpers(withMathJax = TRUE)
   
-  # initiate hints on startup with custom button and event
-  # hintjs(session,
-  #        options = list("hintButtonLabel" = "Hope this hint was helpful"),
-  #        events = list("onhintclose" = I('alert("Wasn\'t that hint helpful")'))
-  # )
-  
-  observeEvent(input$help0, {
-    introjs(session = session
-            , options = list("nextLabel"="Next"
-                             , "prevLabel"="Prev"
-                             , "skipLabel"="Close"))
-  })
-  
+ 
   ####################################################################
   
   source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel1.R", local = TRUE)$value

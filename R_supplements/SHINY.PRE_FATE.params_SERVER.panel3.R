@@ -1,6 +1,21 @@
 
 ####################################################################
 
+observeEvent(input$HELP.panel3, {
+  introjs(session = session
+          , options = list("nextLabel" = "Next"
+                           , "prevLabel" = "Prev"
+                           , "skipLabel" = "Close"
+                           , steps = data.frame(element = paste0("#help3_", 1)
+                                                , intro = c("COUCOU")
+                           )
+          )
+  )
+})
+
+
+####################################################################
+
 observeEvent(input$folder.simul, {
   if (input$folder.simul > 0) {
     path = choose.dir(default = readDirectoryInput(session, 'folder.simul'))
