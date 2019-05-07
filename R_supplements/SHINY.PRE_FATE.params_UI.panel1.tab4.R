@@ -130,24 +130,11 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Raster files</span>")
                                        ) %>% helper(type = "inline"
                                                     , title = "Create Scenario files"
                                                     , size = "l"
-                                                    , content = help.full(param.name.vec = c("<hr/>"
-                                                                                             , "opt.folder.name"
-                                                                                             , "type.changing"
-                                                                                             , "year.changing"
-                                                                                             , "order.changing"
-                                                                                             , "file.changing")
-                                                                          , param.desc.vec = c("<hr/>"
-                                                                                               , "<em>(optional) a string that corresponds to the name of the folder 
-                                                                                               that will be created into the <span style='font-family:Monospace;'>name.simulation/DATA/SCENARIO/</span> directory to store the results</em>"
-                                                                                               , "a <span style='font-family:Monospace;'>string</span> to choose the concerned module :
-                                                                                               succession (MASK), habitat suitability (HS) or disturbances (DIST)"
-                                                                                               , "the simulation year at which the file will be changed"
-                                                                                               , "if several files given for a same year, to keep the order"
-                                                                                               , "the file name of the new file")
-                                                    ))
+                                                    , content = help.HTML("docs/reference/PRE_FATE.params_changingYears.html")
+                                       )
                                      )
                             )
-                            )
+                          )
                           , fluidRow(
                             column(2
                                    , br()
@@ -215,8 +202,8 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Raster files</span>")
                                    wellPanel(dataTableOutput(outputId = "created_table.changing"))
                             )
                           )
-                            ) ## END tabPanel (Changing)
-                          ) ## END tabsetPanel
+               ) ## END tabPanel (Changing)
+                                   ) ## END tabsetPanel
                           ) ## END mainPanel
-                                   ) ## END sidebarLayout
-               ) ## END tabPanel (Raster files)
+         ) ## END sidebarLayout
+         ) ## END tabPanel (Raster files)

@@ -8,7 +8,7 @@ introBox(
                width = 3,
                style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px;")),
                withMathJax(),
-               
+
                fluidRow(
                  column(12
                         , actionButton(inputId = "help0"
@@ -99,7 +99,7 @@ introBox(
                         )
                  )
                )
-               ) ## END sidebarPanel
+             ) ## END sidebarPanel
              
              # Output
              , mainPanel(
@@ -117,6 +117,13 @@ introBox(
                ) ## END hidden
              ) ## END mainPanel
                ) ## END sidebarLayout
+                        ) %>% helper(type = "inline"
+                                     , title = "Create FATE-HD parameter files"
+                                     , size = "l"
+                                     , content = help.HTML(html.file = "docs/index.html"
+                                                           , target.anchor = '<div id='
+                                                           , target.class = c("the-different-type-of-parameters-and-flags"
+                                                                              , "which-files-for-which-settings"))
                         ), ## END tabPanel
   data.step = 1,
   data.position = "auto",

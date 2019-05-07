@@ -69,20 +69,8 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                      ) %>% helper(type = "inline"
                                                   , title = "Create PFG succession files"
                                                   , size = "l"
-                                                  , content = help.full(param.web = "https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGsuccession.html"
-                                                                        , param.name.vec = c("<hr/>"
-                                                                                             , "type"
-                                                                                             , "height"
-                                                                                             , "maturity"
-                                                                                             , "longevity")
-                                                                        , param.desc.vec = c("<hr/>"
-                                                                                             , "or life-form, based on Raunkier.
-                                                                                             It should be either <span style='font-family:Monospace;'>H</span> (herbaceous),
-                                                                                             <span style='font-family:Monospace;'>C</span> (chamaephyte) or <span style='font-family:Monospace;'>P</span> (phanerophyte)"
-                                                                                             , "the maximum or average height that reach the PFG"
-                                                                                             , "the age from which the PFG can reproduce"
-                                                                                             , "the maximum or average lifespan of the PFG")
-                                                  ))
+                                                  , content = help.HTML("docs/reference/PRE_FATE.params_PFGsuccession.html")
+                                     )
                                    )
                                    , br()
                                    , br()
@@ -95,15 +83,11 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                      ) %>% helper(type = "inline"
                                                   , title = "Create PFG light files"
                                                   , size = "l"
-                                                  , content = help.full(param.web = "https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGsuccession.html"
-                                                                        , param.name.vec = c("<hr/>"
-                                                                                             , "light")
-                                                                        , param.desc.vec = c("<hr/>"
-                                                                                             , "a value between 0 and 5 corresponding to the light value of the PFG (e.g. from Flora Indicativa)")
-                                                  ))
+                                                  , content = help.HTML("docs/reference/PRE_FATE.params_PFGlight.html")
+                                     )
                                    )
                           )
-                          )
+                        )
                         , fluidRow(
                           column(2
                                  , br()
@@ -188,7 +172,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                              , dataTableOutput(outputId = "created_table.light"))
                           )
                         )
-                                   ) ## END tabPanel (succ)
+               ) ## END tabPanel (succ)
                , tabPanel(title = HTML("<span class='tabPanel_subtitle'>Dispersal</span>")
                           , value = "panel.disp"
                           , fluidRow(
@@ -214,25 +198,8 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                        ) %>% helper(type = "inline"
                                                     , title = "Create PFG dispersal files"
                                                     , size = "l"
-                                                    , content = help.full(param.web = "https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGdispersal.html"
-                                                                          , param.name.vec = c("<hr/>"
-                                                                                               , "MODE :"
-                                                                                               , "[1] uniform kernel"
-                                                                                               , "[2] exponential kernel"
-                                                                                               , "[3] exponential kernel <br/>with probability"
-                                                                                               , "d50"
-                                                                                               , "d99"
-                                                                                               , "ldd")
-                                                                          , param.desc.vec = c("<hr/>"
-                                                                                               , ""
-                                                                                               , "homogeneous dispersal within the <span style='font-family:Monospace;'>d50</span>,
-                                                                                               <span style='font-family:Monospace;'>d99</span> and <span style='font-family:Monospace;'>ldd</span> circles"
-                                                                                               , "seeds are dispersed within each concentric circle according to a decreasing exponential density law (lambda = 1)"
-                                                                                               , "seeds are dispersed within each concentric circle according to a decreasing exponential density law (lambda = 1) and a continuous decreasing probability with distance"
-                                                                                               , "the distance at which 50% of seeds are dispersed"
-                                                                                               , "the distance at which 49% of seeds are dispersed"
-                                                                                               , "the long dispersal distance at which 1% of seeds are dispersed")
-                                                    ))
+                                                    , content = help.HTML("docs/reference/PRE_FATE.params_PFGdispersal.html")
+                                       )
                                      )
                             )
                           )
@@ -331,16 +298,8 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                        ) %>% helper(type = "inline"
                                                     , title = "Create PFG disturbance files"
                                                     , size = "l"
-                                                    , content = help.full(param.web = "https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGdisturbance.html"
-                                                                          , param.name.vec = c("<hr/>"
-                                                                                               , "dist.name"
-                                                                                               , "dist.kill"
-                                                                                               , "dist.resprout")
-                                                                          , param.desc.vec = c("<hr/>"
-                                                                                               , "the name of the perturbation"
-                                                                                               , "mortality percentage that the perturbation will induced for each response stage"
-                                                                                               , "resprouting percentage that the perturbation will induced for each response stage")
-                                                    ))
+                                                    , content = help.HTML("docs/reference/PRE_FATE.params_PFGdisturbance.html")
+                                       )
                                      )
                             )
                           )
@@ -412,16 +371,8 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                        ) %>% helper(type = "inline"
                                                     , title = "Create PFG soil files"
                                                     , size = "l"
-                                                    , content = help.full(param.web = "https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGsoil.html"
-                                                                          , param.name.vec = c("<hr/>"
-                                                                                               , "soil contrib"
-                                                                                               , "soil min tolerance"
-                                                                                               , "soil max tolerance")
-                                                                          , param.desc.vec = c("<hr/>"
-                                                                                               , "the contribution (influence) of the PFG on the nitrogen soil value of the pixel"
-                                                                                               , "the lower value of nitrogen supported by the PFG"
-                                                                                               , "the upper value of nitrogen supported by the PFG")
-                                                    ))
+                                                    , content = help.HTML("docs/reference/PRE_FATE.params_PFGsoil.html")
+                                       )
                                      )
                             )
                           )
@@ -574,7 +525,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                             )
                           )
                ) ## END tabPanel (soil)
-               ) ## END tabSetPanel
-               ) ## END mainPanel
-                        ) ## END sidebarLayout
-           ) ## END tabPanel (PFG files)
+             ) ## END tabSetPanel
+           ) ## END mainPanel
+         ) ## END sidebarLayout
+) ## END tabPanel (PFG files)

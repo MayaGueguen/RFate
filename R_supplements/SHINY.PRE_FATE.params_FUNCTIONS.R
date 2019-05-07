@@ -21,6 +21,8 @@ param.style = function(param.text)
                      , "</span>")))
 }
 
+###################################################################################################################################
+
 help.web = function(web.address)
 {
   return(paste0("<a href='"
@@ -60,7 +62,35 @@ help.full = function(param.web = NULL, param.name.vec, param.desc.vec)
   return(HTML(TEXT))
 }
 
+###################################################################################################################################
 
+help.HTML = function(html.file, target.anchor = 'class="hasAnchor"', target.class = '#arguments')
+{
+  TEXT = readLines(html.file)
+  TEXT.keep = help.web(web.address = paste0("https://mayagueguen.github.io/RFate/reference/", basename(html.file)))
+
+  ind.anchor = grep(target.anchor, TEXT)
+  # ind.anchor = c(ind.anchor, length(TEXT))
+  for (targ in target.class)
+  {
+    ind.class = grep(targ, TEXT[ind.anchor])
+    TEXT.keep = c(TEXT.keep
+                  , "<hr>"
+                  , TEXT[(ind.anchor[ind.class] + 1):(ind.anchor[min(ind.class + 1, length(ind.anchor))] - 1)]
+    )
+    no_div_beg = grep("<div", TEXT.keep)
+    no_div_end = grep("</div", TEXT.keep)
+    while (length(no_div_end) > length(no_div_beg))
+    {
+      TEXT.keep = TEXT.keep[-no_div_end[length(no_div_end)]]
+      no_div_end = no_div_end[-length(no_div_end)]
+    }
+  }
+  
+  TEXT.keep = paste0(TEXT.keep, collapse = "")
+  TEXT.keep = gsub("\"", "\'", TEXT.keep)
+  return(TEXT.keep)
+}
 
 
 ###################################################################################################################################
