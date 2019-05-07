@@ -1,10 +1,11 @@
 
 tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
-         , value = "create.PFG"
+         , value = "panel.PFG"
          , sidebarLayout(
            sidebarPanel = NULL,
            mainPanel = mainPanel(
              width = 12,
+             br(),
              wellPanel(
                fluidRow(
                  column(1

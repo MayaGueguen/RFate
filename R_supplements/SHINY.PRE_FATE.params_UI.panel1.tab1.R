@@ -1,5 +1,4 @@
 
-# introBox(
 tabPanel(title = HTML("<span class='tabPanel_title'>Global parameters</span>")
          , value = "panel.global"
          , sidebarLayout(
@@ -139,9 +138,3 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Global parameters</span>")
            ) ## END mainPanel
          ) ## END sidebarLayout
 ) ## END tabPanel (Global parameters)
-#   data.step = 3,
-#   data.position = "auto",
-#   data.intro = "<strong>Step 2</strong><hr>
-#            <p><code>PRE_FATE.params_globalParameters</code> function creates a <code>.txt</code> file into the
-#            <code>name.simulation/DATA/GLOBAL_PARAMETERS</code> directory."
-# ) ## END introBox

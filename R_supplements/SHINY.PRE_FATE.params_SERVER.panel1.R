@@ -8,9 +8,9 @@ observeEvent(input$create.skeleton, {
   ))
   
   shinyjs::show("main.panel")
-  shinyjs::show("create.simul")
-  shinyjs::show("FATE_simulation.zip")
-  shinyjs::show("refresh")
+  shinyjs::enable("create.simul")
+  shinyjs::enable("FATE_simulation.zip")
+  shinyjs::enable("refresh")
 })
 
 ####################################################################
@@ -55,8 +55,8 @@ output$FATE_simulation.zip = downloadHandler(
 observeEvent(input$refresh, {
   system(command = paste0("rm -r ", input$name.simul))
   shinyjs::hide("main.panel")
-  shinyjs::hide("create.simul")
-  shinyjs::hide("FATE_simulation.zip")
-  shinyjs::hide("refresh")
+  shinyjs::disable("create.simul")
+  shinyjs::disable("FATE_simulation.zip")
+  shinyjs::disable("refresh")
 })
 

@@ -87,7 +87,7 @@ help.HTML = function(html.file, target.anchor = 'class="hasAnchor"', target.clas
     }
   }
   
-  TEXT.keep = paste0(TEXT.keep, collapse = "")
+  TEXT.keep = paste0(TEXT.keep, collapse = "\n")
   TEXT.keep = gsub("\"", "\'", TEXT.keep)
   return(TEXT.keep)
 }

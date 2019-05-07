@@ -5,6 +5,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Raster files</span>")
            sidebarPanel = NULL,
            mainPanel = mainPanel(
              width = 12,
+             br(),
              tabsetPanel(
                tabPanel(title = HTML("<span class='tabPanel_subtitle'>Initial</span>")
                         , value = "panel.spatial.init"
