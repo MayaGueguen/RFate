@@ -1,11 +1,11 @@
 
-tabPanel(title = HTML("<p class='tabPanel_title'>Through time</p>")
+tabPanel(title = HTML("<span class='tabPanel_title'>Through time</span>")
          , value = "panel.through_time"
          , fluidRow(
            column(3
                   , br()
                   , numericInput(inputId = "graph.no.years"
-                                 , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>no.years</span>")
+                                 , label = param.style("no.years")
                                  , value = 10
                                  , min = 1
                                  , width = "100%")
@@ -13,7 +13,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Through time</p>")
            , column(3
                     , br()
                     , numericInput(inputId = "graph.opt.no_CPU"
-                                   , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>opt.no_CPU</span>")
+                                   , label = param.style("opt.no_CPU")
                                    , value = 1
                                    , min = 1
                                    , width = "100%")
@@ -21,14 +21,14 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Through time</p>")
            , column(3
                     , br()
                     , checkboxInput(inputId = "graph.opt.fixedScale"
-                                    , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>opt.fixedScale</span>")
+                                    , label = param.style("opt.fixedScale")
                                     , value = TRUE
                                     , width = "100%")
            )
            , column(3
                     , br()
                     , fileInput(inputId = "graph.opt.ras_habitat"
-                                , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>opt.ras_habitat</span>")
+                                , label = param.style("opt.ras_habitat")
                                 , multiple = FALSE
                                 , width = "100%")
            )
@@ -54,7 +54,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Through time</p>")
                         , plotOutput(outputId = "plot.evolutionCoverage1", width = "100%", height = "600px")
                         , plotOutput(outputId = "plot.evolutionCoverage2", width = "100%", height = "600px")
                )
-               , column(2
+               , column(4
                         , withBusyIndicatorUI(
                           actionButton(inputId = "create.evolutionCoverage"
                                        , label = "Run plot"

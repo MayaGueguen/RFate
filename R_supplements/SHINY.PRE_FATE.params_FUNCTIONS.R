@@ -1,6 +1,19 @@
 
 ###################################################################################################################################
 
+theme.color = "#3a7da8"
+navbar.color = "#e0dbd9"
+navbar.color.text = "#8c8582"
+
+button.color = "rgba(96, 129, 150, 0.5)"
+button.style = paste0("background-color: ", button.color, "; border-width:0px;")
+button.style.help = paste0("color:#FFFFFF; font-family: 'Londrina Solid', cursive; font-size: 18px; background-color: rgba(10, 58, 135, 0.8); border-width:0px;")
+
+panel.style = paste0("color:#FFFFFF; background-color:", button.color, "; border-width:0px;")
+panel.style.hover = paste0("color:#FFFFFF; background-color:", theme.color, "; border-width:0px;")
+
+help.color = "#dee2e8"
+
 param.style = function(param.text)
 {
   return(HTML(paste0("<span style = 'font-style: italic; font-weight: normal;'>"

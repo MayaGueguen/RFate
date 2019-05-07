@@ -20,6 +20,8 @@ library(ggthemes)
 library(raster)
 library(viridis)
 library(RColorBrewer)
+library(rintrojs)
+library(dplyr)
 
 ###################################################################################################################################
 
@@ -32,11 +34,7 @@ mat.PFG.disp = data.frame()
 mat.PFG.dist = data.frame()
 mat.PFG.soil = data.frame()
 mat.changing = data.frame()
-button.color = "rgba(96, 129, 150, 0.5)"
-button.style = paste0("background-color: ", button.color, "; border-width:0px;")
-panel.style = "color:#FFFFFF; background-color:rgba(96, 129, 150, 0.5); border-width:0px;"
-panel.style.hover = "color:#FFFFFF; background-color:#3a7da8; border-width:0px;"
-help.color = "#dee2e8"
+
 
 ###################################################################################################################################
 ###################################################################################################################################
@@ -45,10 +43,12 @@ help.color = "#dee2e8"
 ui <- fluidPage(
   useShinyalert(),
   useShinyjs(),
+  introjsUI(),
 
   tags$body(
     tags$style(HTML("
                     @import url('https://fonts.googleapis.com/css?family=Londrina+Solid:200,300|Medula+One|Slabo+27px|Francois+One');
+                    .icon-helpd { color: Darkblue; }
                     h1 {
                     font-family: 'Londrina Solid', cursive;
                     font-weight: 300;
@@ -144,16 +144,18 @@ server <- function(input, output, session) {
   
   observe_helpers(withMathJax = TRUE)
   
-  # initIntroJS(session = session, dfIntro = read.csv("R_supplements/help.csv"))
+  # initiate hints on startup with custom button and event
+  # hintjs(session,
+  #        options = list("hintButtonLabel" = "Hope this hint was helpful"),
+  #        events = list("onhintclose" = I('alert("Wasn\'t that hint helpful")'))
+  # )
   
-  # session$sendCustomMessage(type = 'setHelpContent', message = list(steps = toJSON(steps) ))
-  # 
-  # # listen to the action button
-  # observeEvent(input$startHelp,{
-  #   
-  #   # on click, send custom message to start help
-  #   session$sendCustomMessage(type = 'startHelp', message = list(""))
-  # })
+  observeEvent(input$help0, {
+    introjs(session = session
+            , options = list("nextLabel"="Next"
+                             , "prevLabel"="Prev"
+                             , "skipLabel"="Close"))
+  })
   
   ####################################################################
   

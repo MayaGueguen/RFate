@@ -1,5 +1,5 @@
 
-tabPanel(title = HTML("<p class='tabPanel_title'>BROWSER</p>")
+tabPanel(title = HTML("<span class='tabPanel_title'>BROWSER</span>")
          , value = "panel.browser"
          , br()
         

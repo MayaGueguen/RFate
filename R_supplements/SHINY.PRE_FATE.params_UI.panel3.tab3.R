@@ -1,23 +1,12 @@
 
-tabPanel(title = HTML("<p class='tabPanel_title'>Specific year</p>")
+tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
          , value = "panel.specific_year"
-         , br()
-         , wellPanel(
-           style = HTML(paste0("background-color: ", help.color, ";")),
-           helpText(HTML("
-                         <p><a href='https://mayagueguen.github.io/RFate/reference/POST_FATE.relativeAbund_presenceAbsence.html' target='_blank'>
-                         See more details on <span style='font-family:Monospace;'>RFate</span> package website.</a></p>
-                         <table style='width:100%;'>
-                         
-                         </table>
-                         "
-           ))) ## END wellPanel
          , fluidRow(
            column(3
                   , br()
                   , shinyjs::disabled(
                     selectInput(inputId = "graph.year"
-                                , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>year(s)</span>")
+                                , label = param.style("year(s)")
                                 , choices = NULL
                                 , selected = NULL
                                 , multiple = FALSE
@@ -28,7 +17,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Specific year</p>")
                     , br()
                     , shinyjs::disabled(
                       selectInput(inputId = "graph.strata_min"
-                                  , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>strata_min</span>")
+                                  , label = param.style("strata_min")
                                   , choices = NULL
                                   , selected = NULL
                                   , multiple = F
@@ -38,7 +27,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Specific year</p>")
            , column(3
                     , br()
                     , numericInput(inputId = "graph.rel_abund_thresh"
-                                   , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>opt.rel_abund_thresh</span>")
+                                   , label = param.style("opt.rel_abund_thresh")
                                    , value = 0.05
                                    , min = 0
                                    , max = 1
@@ -47,7 +36,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Specific year</p>")
            , column(3
                     , br()
                     , numericInput(inputId = "graph.opt.no_CPU"
-                                   , label = HTML("<span style = 'font-style: italic; font-weight: normal;'>opt.no_CPU</span>")
+                                   , label = param.style("opt.no_CPU")
                                    , value = 1
                                    , min = 1
                                    , width = "100%")
@@ -69,21 +58,21 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Specific year</p>")
                     , wellPanel(
                       style = HTML(paste0("background-color: ", help.color, ";")),
                       helpText(HTML("
-                         <p><a href='https://mayagueguen.github.io/RFate/reference/POST_FATE.relativeAbund_presenceAbsence.html' target='_blank'>
-                         See more details on <span style='font-family:Monospace;'>RFate</span> package website.</a></p>
-                         <table style='width:100%;'>
-                         
-                         </table>
-                         "
+                                    <p><a href='https://mayagueguen.github.io/RFate/reference/POST_FATE.relativeAbund_presenceAbsence.html' target='_blank'>
+                                    See more details on <span style='font-family:Monospace;'>RFate</span> package website.</a></p>
+                                    <table style='width:100%;'>
+                                    
+                                    </table>
+                                    "
                       ))) ## END wellPanel
-           )
-         )
+                      )
+                      )
          , fluidRow(
            column(6
                   , br()
                   , fileInput(inputId = "graph.mat.PFG.obs"
                               , label = NULL
-                              , buttonLabel = HTML("<span style = 'font-style: italic; font-weight: normal;'>mat.PFG.obs</span>")
+                              , buttonLabel = param.style("mat.PFG.obs")
                               , multiple = FALSE
                               , width = "100%")
            )
@@ -91,7 +80,7 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Specific year</p>")
            #          , br()
            #          , fileInput(inputId = "graph.mat.PFG.succ"
            #                      , label = NULL
-           #                      , buttonLabel = HTML("<span style = 'font-style: italic; font-weight: normal;'>mat.PFG.succ</span>")
+           #                      , buttonLabel = param.style("mat.PFG.succ")
            #                      , multiple = FALSE
            #                      , width = "100%")
            # )
@@ -99,17 +88,17 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Specific year</p>")
                     , br()
                     , fileInput(inputId = "graph.opt.cover.obs"
                                 , label = NULL
-                                , buttonLabel = HTML("<span style = 'font-style: italic; font-weight: normal;'>opt.cover.obs</span>")
+                                , buttonLabel = param.style("opt.cover.obs")
                                 , multiple = FALSE
                                 , width = "100%")
                     # , fileInput(inputId = "graph.opt.light.obs"
                     #             , label = NULL
-                    #             , buttonLabel = HTML("<span style = 'font-style: italic; font-weight: normal;'>opt.light.obs</span>")
+                    #             , buttonLabel = param.style("opt.light.obs")
                     #             , multiple = FALSE
                     #             , width = "100%")
                     # , fileInput(inputId = "graph.opt.soil.obs"
                     #             , label = NULL
-                    #             , buttonLabel = HTML("<span style = 'font-style: italic; font-weight: normal;'>opt.soil.obs</span>")
+                    #             , buttonLabel = param.style("opt.soil.obs")
                     #             , multiple = FALSE
                     #             , width = "100%")
            )
@@ -219,4 +208,4 @@ tabPanel(title = HTML("<p class='tabPanel_title'>Specific year</p>")
                       ))
            )
          )
-) ## END tabPanel (Global parameters)
+                      ) ## END tabPanel (Global parameters)
