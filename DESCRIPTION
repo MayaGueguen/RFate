@@ -1,5 +1,5 @@
 Package: RFate
-Version: 0.0.6.9000
+Version: 0.0.7.9000
 Date: 2018-03-27
 Type: Package
 Encoding: UTF-8
@@ -17,7 +17,7 @@ Imports:
     ggplot2, ggthemes, ggrepel, ggExtra, gridExtra, cowplot,
     reshape2, foreach,
     raster,
-    phyloclim, FD, fpc, clValid, ade4, PresenceAbsence,
+    phyloclim, FD, fpc, clValid, ade4, PresenceAbsence, Hmisc,
     viridis, RColorBrewer, colorspace
 Suggests:
     spelling, 
