@@ -30,9 +30,9 @@
 ##' graphic. \cr
 ##' 
 ##' For each PFG and each selected simulation year, raster maps are retrieved
-##' from the results folder \code{BIN_perPFG_allStrata} and unzipped.
-##' Informations extracted lead to the production of one graphic before the
-##' maps are compressed again :
+##' from the results folder \code{ABUND_REL_perPFG_allStrata} and unzipped.
+##' Informations extracted lead to the production of presence/absence maps and 
+##' one graphic before the maps are compressed again :
 ##' 
 ##' \itemize{
 ##'   \item{the value of \strong{several statistics for the predictive quality
@@ -42,7 +42,7 @@
 ##' }
 ##' 
 ##' Observation records (presences and absences) are required for each PFG 
-##' within the \code{mat.PFG.obs} obejct :
+##' within the \code{mat.PFG.obs} object :
 ##' 
 ##' \describe{
 ##'   \item{\code{PFG}}{the concerned Plant Functional Group}
@@ -62,6 +62,12 @@
 ##'   \item{\code{variable}}{name of the calculated statistic among 'sensitivity',
 ##'   'specificity', 'TSS' and 'AUC'}
 ##'   \item{\code{value}}{value of the corresponding statistic}
+##' }
+##' 
+##' One folder is created :
+##' \describe{
+##'   \item{\file{BIN_perPFG \cr_allStrata}}{containing presence / absence  
+##'   raster maps for each PFG across all strata}
 ##' }
 ##' 
 ##' One \code{POST_FATE_[...].pdf} file is created : 
@@ -98,6 +104,7 @@
 ##' @importFrom reshape2 melt
 ##' @importFrom raster raster stack as.data.frame cellFromXY
 ##' @importFrom grid unit
+##' @importFrom Hmisc somers2
 ##'
 ##' @importFrom ggplot2 ggplot aes aes_string geom_raster geom_bar
 ##' geom_hline geom_errorbar scale_fill_gradientn facet_wrap
@@ -201,18 +208,23 @@ POST_FATE.graphic_validationStatistics = function(
                          , is.num = FALSE)
     .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/"))
     
-    dir.output.perPFG.allStrata.BIN = paste0(name.simulation, "/RESULTS/", basename(dir.save), "/BIN_perPFG_allStrata/")
-    .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/BIN_perPFG_allStrata/"))
+    dir.output.perPFG.allStrata.REL = paste0(name.simulation, "/RESULTS/", basename(dir.save), "/ABUND_REL_perPFG_allStrata/")
+    .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/ABUND_REL_perPFG_allStrata/"))
     
+    dir.output.perPFG.allStrata.BIN = paste0(name.simulation, "/RESULTS/", basename(dir.save), "/BIN_perPFG_allStrata/")
+    if (!dir.exists(dir.output.perPFG.allStrata.BIN))
+    {
+      dir.create(path = dir.output.perPFG.allStrata.BIN)
+    }
     
     ## Get list of arrays and extract years of simulation --------------------------
     years = sort(unique(as.numeric(year)))
     no_years = length(years)
-    raster.perPFG.allStrata = grep(paste0("Binary_YEAR_", years, "_", collapse = "|")
-                                   , list.files(dir.output.perPFG.allStrata.BIN), value = TRUE)
+    raster.perPFG.allStrata = grep(paste0("Abund_relative_YEAR_", years, "_", collapse = "|")
+                                   , list.files(dir.output.perPFG.allStrata.REL), value = TRUE)
     if (length(raster.perPFG.allStrata) == 0)
     {
-      stop(paste0("Missing data!\n The folder ", dir.output.perPFG.allStrata.BIN, " does not contain adequate files"))
+      stop(paste0("Missing data!\n The folder ", dir.output.perPFG.allStrata.REL, " does not contain adequate files"))
     }
     
     ## Get number of PFGs ----------------------------------------------------------
@@ -263,14 +275,14 @@ POST_FATE.graphic_validationStatistics = function(
     ## get the data inside the rasters ---------------------------------------------
     pdf(file = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_C_validationStatistics_", basename(dir.save), ".pdf")
         , width = 12, height = 10)
-    cat("\n GETTING STATISTICS for year")
+    cat("\n GETTING STATISTICS and PRESENCE/ABSENCE maps for year")
     mat.valid_list = list(length(years))
     for (y in years)
     {
       cat(" ", y)
       
-      file_name = paste0(dir.output.perPFG.allStrata.BIN,
-                         "Binary_YEAR_",
+      file_name = paste0(dir.output.perPFG.allStrata.REL,
+                         "Abund_relative_YEAR_",
                          y,
                          "_",
                          PFG,
@@ -284,10 +296,14 @@ POST_FATE.graphic_validationStatistics = function(
         names(ras) = gp
         
         mat.PFG.obs.split = split(mat.PFG.obs, mat.PFG.obs$PFG)
+        
+        cat("\n PFG ")
         mat.valid = foreach(i = 1:length(mat.PFG.obs.split), .combine = "rbind") %do%
         {
           fg = names(mat.PFG.obs.split)[i]
           mat = mat.PFG.obs.split[[i]]
+          
+          cat(" ", fg)
           if (fg %in% gp)
           {
             mat$ID = as.numeric(as.factor(paste0(mat$X, "_", mat$Y)))
@@ -305,11 +321,35 @@ POST_FATE.graphic_validationStatistics = function(
                                 , TSS = NA))
             } else
             {
-              mat.conf = cmx(mat[, c("ID", "obs", "fg")])
-              auc = auc(mat[, c("ID", "obs", "fg")])
+              # auc = unname(somers2(x = mat[, "fg"], y = mat[, "obs"])["C"])
+              cutoff = .getCutoff(Obs = mat[, "obs"], Fit = mat[, "fg"])
+              mat.bin = mat
+              mat.bin$fg = ifelse(mat.bin$fg >= cutoff$Cut, 1, 0)
+              mat.conf = cmx(mat.bin[, c("ID", "obs", "fg")])
               sens = sensitivity(mat.conf)
               spec = specificity(mat.conf)
               TSS = sens$sensitivity + spec$specificity - 1
+              auc = auc(mat.bin[, c("ID", "obs", "fg")])
+              # sens = cutoff$Sensitivity
+              # spec = cutoff$Specificity
+              # TSS = sens + spec - 1
+              
+              new_name = paste0(dir.output.perPFG.allStrata.BIN
+                                , "Binary_YEAR_"
+                                , y
+                                , "_"
+                                , fg
+                                , "_STRATA_all.tif")
+              if (!file.exists(new_name))
+              {
+                ras.bin = ras[[fg]]
+                ras.bin[] = ifelse(ras.bin[] >= cutoff$Cut, 1, 0)
+                
+                writeRaster(x = ras.bin
+                            , filename = new_name
+                            , overwrite = TRUE)
+              }
+              
               return(data.frame(PFG = fg, auc, sens, spec, TSS))
             }
           } else

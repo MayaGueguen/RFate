@@ -37,6 +37,12 @@ A \code{data.frame} with the following columns :
   \item{\code{value}}{value of the corresponding statistic}
 }
 
+One folder is created :
+\describe{
+  \item{\file{BIN_perPFG \cr_allStrata}}{containing presence / absence  
+  raster maps for each PFG across all strata}
+}
+
 One \code{POST_FATE_[...].pdf} file is created : 
 \describe{
   \item{\file{GRAPHIC_C \cr validationStatistics}}{to assess the modeling 
@@ -54,9 +60,9 @@ and a specific parameter file within this simulation, one preanalytical
 graphic. \cr
 
 For each PFG and each selected simulation year, raster maps are retrieved
-from the results folder \code{BIN_perPFG_allStrata} and unzipped.
-Informations extracted lead to the production of one graphic before the
-maps are compressed again :
+from the results folder \code{ABUND_REL_perPFG_allStrata} and unzipped.
+Informations extracted lead to the production of presence/absence maps and 
+one graphic before the maps are compressed again :
 
 \itemize{
   \item{the value of \strong{several statistics for the predictive quality
@@ -66,7 +72,7 @@ maps are compressed again :
 }
 
 Observation records (presences and absences) are required for each PFG 
-within the \code{mat.PFG.obs} obejct :
+within the \code{mat.PFG.obs} object :
 
 \describe{
   \item{\code{PFG}}{the concerned Plant Functional Group}
