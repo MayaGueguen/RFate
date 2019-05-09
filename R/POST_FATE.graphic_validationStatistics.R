@@ -219,6 +219,9 @@ POST_FATE.graphic_validationStatistics = function(
       dir.create(path = dir.output.perPFG.allStrata.BIN)
     }
     
+    dir.output.perPFG.perStrata = paste0(name.simulation, "/RESULTS/", basename(dir.save), "/ABUND_perPFG_perStrata/")
+    .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/ABUND_perPFG_perStrata/"))
+    
     dir.output.perPFG.perStrata.BIN = paste0(name.simulation, "/RESULTS/", basename(dir.save), "/BIN_perPFG_perStrata/")
     if (!dir.exists(dir.output.perPFG.perStrata.BIN))
     {
@@ -234,6 +237,16 @@ POST_FATE.graphic_validationStatistics = function(
     {
       stop(paste0("Missing data!\n The folder ", dir.output.perPFG.allStrata.REL, " does not contain adequate files"))
     }
+    raster.perPFG.perStrata = grep(paste0("Abund_YEAR_", years, "_", collapse = "|")
+                                   , list.files(dir.output.perPFG.perStrata, full.names = TRUE)
+                                   , value = TRUE)
+    if (length(raster.perPFG.perStrata) == 0)
+    {
+      stop(paste0("Missing data!\n The folder ", dir.output.perPFG.perStrata, " does not contain adequate files"))
+    }
+    .unzip(folder_name = dir.output.perPFG.perStrata
+           , list_files = raster.perPFG.perStrata
+           , nb_cores = opt.no_CPU)
     
     ## Get number of PFGs ----------------------------------------------------------
     file.globalParam = .getParam(params.lines = abs.simulParam
@@ -281,13 +294,12 @@ POST_FATE.graphic_validationStatistics = function(
     
     
     ## get the data inside the rasters ---------------------------------------------
-    pdf(file = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_C_validationStatistics_", basename(dir.save), ".pdf")
-        , width = 12, height = 10)
-    cat("\n GETTING STATISTICS and PRESENCE/ABSENCE maps for year")
+    cat("\n GETTING STATISTICS and PRESENCE/ABSENCE maps for")
     mat.valid_list = list(length(years))
+    plot_list = list(length(years))
     for (y in years)
     {
-      cat(" ", y)
+      cat("\n > year", y)
       
       file_name = paste0(dir.output.perPFG.allStrata.REL,
                          "Abund_relative_YEAR_",
@@ -358,25 +370,30 @@ POST_FATE.graphic_validationStatistics = function(
               
               ## SEPARATED STRATA
               prev_names = list.files(path = dir.output.perPFG.perStrata
-                                     , pattern = paste0("Abund_YEAR_",
-                                                        y,
-                                                        "_",
-                                                        fg,
-                                                        "_STRATA"))
-              for (prev_name in prev_names)
+                                      , pattern = paste0("Abund_YEAR_",
+                                                         y,
+                                                         "_",
+                                                         fg,
+                                                         "_STRATA")
+                                      , full.names = TRUE)
+              prev_names = prev_names[grep(".tif$", prev_names)]
+              if (length(prev_names) > 0)
               {
-                new_name = sub(dir.output.perPFG.perStrata
-                               , dir.output.perPFG.perStrata.BIN
-                               , prev_name)
-                new_name = sub("Abund_YEAR_", "Binary_YEAR_", new_name)
-                if (!file.exists(new_name))
+                for (prev_name in prev_names)
                 {
-                  ras.bin = raster(prev_name)
-                  ras.bin[] = ifelse(ras.bin[] >= cutoff$Cut, 1, 0)
-                  
-                  writeRaster(x = ras.bin
-                              , filename = new_name
-                              , overwrite = TRUE)
+                  new_name = sub(dir.output.perPFG.perStrata
+                                 , dir.output.perPFG.perStrata.BIN
+                                 , prev_name)
+                  new_name = sub("Abund_YEAR_", "Binary_YEAR_", new_name)
+                  if (!file.exists(new_name))
+                  {
+                    ras.bin = raster(prev_name)
+                    ras.bin[] = ifelse(ras.bin[] >= cutoff$Cut, 1, 0)
+                    
+                    writeRaster(x = ras.bin
+                                , filename = new_name
+                                , overwrite = TRUE)
+                  }
                 }
               }
               
@@ -491,16 +508,25 @@ POST_FATE.graphic_validationStatistics = function(
         
         ## 3. gather everything
         pp_list[[6]] = pp_leg
-        grid.arrange(grobs = pp_list
-                     , layout_matrix = matrix(c(1,1,2,3,2,3,4,5,4,5,6,6), ncol = 2, byrow = TRUE)
-                     , newpage = ifelse(y == years[1], FALSE, TRUE))
+        plot_list[[y]] = grid.arrange(grobs = pp_list
+                                      , layout_matrix = matrix(c(1,1,2,3,2,3,4,5,4,5,6,6), ncol = 2, byrow = TRUE)
+                                      , newpage = ifelse(y == years[1], FALSE, TRUE))
         
       }
-      cat("\n")
-      dev.off()
-      
     } ## end loop on years
-    return(mat.valid_list)
+    
+    pdf(file = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_C_validationStatistics_", basename(dir.save), ".pdf")
+        , width = 12, height = 10)
+    for (y in years)
+    {
+      plot(plot_list[[y]])
+    }
+    dev.off()
+    
+    ## ZIP the raster saved ------------------------------------------------------
+    .zip(folder_name = dir.output.perPFG.perStrata, nb_cores = opt.no_CPU)
+    
+    return(list(tab = mat.valid_list, plot = plot_list))
   }
 }
 

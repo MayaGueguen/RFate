@@ -179,7 +179,17 @@ POST_FATE.relativeAbund = function(
     no_years = length(years)
     
     ## UNZIP the raster saved ------------------------------------------------------
-    .unzip_ALL(folder_name = dir.output.perPFG.allStrata, nb_cores = opt.no_CPU)
+    raster.perPFG.allStrata = grep(paste0("Abund_YEAR_", years, "_", collapse = "|")
+                                   , list.files(dir.output.perPFG.allStrata, full.names = TRUE)
+                                   , value = TRUE)
+    if (length(raster.perPFG.allStrata) == 0)
+    {
+      stop(paste0("Missing data!\n The folder ", dir.output.perPFG.allStrata, " does not contain adequate files"))
+    }
+
+    .unzip(folder_name = dir.output.perPFG.allStrata
+           , list_files = raster.perPFG.allStrata
+           , nb_cores = opt.no_CPU)
     
     
     ## get the data inside the rasters ---------------------------------------------

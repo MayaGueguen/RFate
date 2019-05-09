@@ -322,7 +322,7 @@ POST_FATE.graphic_mapPFGcover = function(
                           , pfg
                           , "_STRATA_all.tif")
         
-        if (length(file_name) > 0)
+        if (length(file_name) > 0 && file.exists(bin_name))
         {
           ## Binary map
           ras.BIN = stack(bin_name) * ras.mask
