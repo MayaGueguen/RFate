@@ -90,33 +90,33 @@ test_that("POST_FATE.relativeAbund_presenceAbsence gives error with wrong data :
 })
 
 ## INPUTS
-test_that("POST_FATE.relativeAbund_presenceAbsence gives error with wrong data : strata_min", {  
-  expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
-                                                       , file.simulParam = "ParamSimul.txt"
-                                                       , year = 10
-                                                       , strata_min = "a")
-               , "Wrong type of data!\n `strata_min` must be an integer > 0")
-  expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
-                                                       , file.simulParam = "ParamSimul.txt"
-                                                       , year = 10
-                                                       , strata_min = factor("a"))
-               , "Wrong type of data!\n `strata_min` must be an integer > 0")
-  expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
-                                                       , file.simulParam = "ParamSimul.txt"
-                                                       , year = 10
-                                                       , strata_min = factor(1))
-               , "Wrong type of data!\n `strata_min` must be an integer > 0")
-  expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
-                                                       , file.simulParam = "ParamSimul.txt"
-                                                       , year = 10
-                                                       , strata_min = NULL)
-               , "Wrong type of data!\n `strata_min` must be an integer > 0")
-  expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
-                                                       , file.simulParam = "ParamSimul.txt"
-                                                       , year = 10
-                                                       , strata_min = NA)
-               , "Wrong type of data!\n `strata_min` must be an integer > 0")
-})
+# test_that("POST_FATE.relativeAbund_presenceAbsence gives error with wrong data : strata_min", {  
+#   expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
+#                                                        , file.simulParam = "ParamSimul.txt"
+#                                                        , year = 10
+#                                                        , strata_min = "a")
+#                , "Wrong type of data!\n `strata_min` must be an integer > 0")
+#   expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
+#                                                        , file.simulParam = "ParamSimul.txt"
+#                                                        , year = 10
+#                                                        , strata_min = factor("a"))
+#                , "Wrong type of data!\n `strata_min` must be an integer > 0")
+#   expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
+#                                                        , file.simulParam = "ParamSimul.txt"
+#                                                        , year = 10
+#                                                        , strata_min = factor(1))
+#                , "Wrong type of data!\n `strata_min` must be an integer > 0")
+#   expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
+#                                                        , file.simulParam = "ParamSimul.txt"
+#                                                        , year = 10
+#                                                        , strata_min = NULL)
+#                , "Wrong type of data!\n `strata_min` must be an integer > 0")
+#   expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
+#                                                        , file.simulParam = "ParamSimul.txt"
+#                                                        , year = 10
+#                                                        , strata_min = NA)
+#                , "Wrong type of data!\n `strata_min` must be an integer > 0")
+# })
 
 ## INPUTS
 test_that("POST_FATE.relativeAbund_presenceAbsence gives error with wrong data : files", {
@@ -156,18 +156,18 @@ test_that("POST_FATE.relativeAbund_presenceAbsence gives error with wrong data :
                , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/ folder"
                , fixed = TRUE)
   system("mkdir FATE_simulation/RESULTS/Hello/")
-  expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
-                                                       , file.simulParam = "ParamSimul.txt"
-                                                       , year = 10)
-               , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/ABUND_perPFG_perStrata/ folder"
-               , fixed = TRUE)
-  system("mkdir FATE_simulation/RESULTS/Hello/ABUND_perPFG_perStrata/")
   # expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
-  #                                               , file.simulParam = "ParamSimul.txt"
-  #                                               , year = 10)
-  #              , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/BIN_perPFG_allStrata/ folder"
+  #                                                      , file.simulParam = "ParamSimul.txt"
+  #                                                      , year = 10)
+  #              , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/ABUND_perPFG_perStrata/ folder"
   #              , fixed = TRUE)
-  # system("mkdir FATE_simulation/RESULTS/Hello/BIN_perPFG_allStrata/")
+  # system("mkdir FATE_simulation/RESULTS/Hello/ABUND_perPFG_perStrata/")
+  expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
+                                                , file.simulParam = "ParamSimul.txt"
+                                                , year = 10)
+               , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/ABUND_perPFG_allStrata/ folder"
+               , fixed = TRUE)
+  system("mkdir FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/")
   # expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
   #                                               , file.simulParam = "ParamSimul.txt"
   #                                               , year = 10)
@@ -271,16 +271,17 @@ test_that("POST_FATE.relativeAbund_presenceAbsence gives error with wrong data :
   expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
                                                        , file.simulParam = "ParamSimul.txt"
                                                        , year = 10)
-               , "Missing data!\n The folder FATE_simulation/RESULTS/Hello/ABUND_perPFG_perStrata/ does not contain adequate files"
+               , "Missing data!\n The names of PFG extracted from files within FATE_simulation/DATA/PFGS/SUCC/"
+               # , "Missing data!\n The folder FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/ does not contain adequate files"
                , fixed = TRUE)
   
-  file.create("FATE_simulation/RESULTS/Hello/ABUND_perPFG_perStrata/Abund_YEAR_10_PFG1_STRATA_1.txt")
-  expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
-                                                       , file.simulParam = "ParamSimul.txt"
-                                                       , year = 10
-                                                       , strata_min = 3)
-               , "Wrong data given!\n `strata_min` is superior to maximum strata found (1)"
-               , fixed = TRUE)
+  # file.create("FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_10_PFG1_STRATA_all.txt")
+  # expect_error(POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
+  #                                                      , file.simulParam = "ParamSimul.txt"
+  #                                                      , year = 10
+  #                                                      , strata_min = 3)
+  #              , "Wrong data given!\n `strata_min` is superior to maximum strata found (1)"
+  #              , fixed = TRUE)
 })
 
 ## OUTPUTS

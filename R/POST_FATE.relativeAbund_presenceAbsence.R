@@ -1,5 +1,5 @@
 ### HEADER #####################################################################
-##' @title Create presence / absence (binary) maps for each Plant Functional
+##' @title Create relative abundance maps for each Plant Functional
 ##' Group \cr for one (or several) specific year of a \code{FATE-HD} simulation
 ##' 
 ##' @name POST_FATE.relativeAbund_presenceAbsence
@@ -7,7 +7,7 @@
 ##' @author Maya Guéguen
 ##' 
 ##' @description This script is designed to produce raster maps of PFG simulated
-##' presences and absences for one (or several) specific \code{FATE-HD} 
+##' relative abundances for one (or several) specific \code{FATE-HD} 
 ##' simulation year.
 ##'              
 ##' @param name.simulation a \code{string} that corresponds to the main
@@ -17,11 +17,6 @@
 ##' of the \code{FATE-HD} simulation
 ##' @param year an \code{integer} corresponding to the simulation year(s) that 
 ##' will be used to extract PFG abundance maps
-##' @param strata_min default 1. An \code{integer} corresponding to the lowest
-##' stratum for which PFG relative abundances are calculated and then
-##' transformed into binary results
-##' @param rel.abund.threshold default 0.05. Minimum value of relative abundance
-##' to transform a PFG abundance into presence
 ##' @param opt.no_CPU default 1 (\emph{optional}). The number of resources that 
 ##' can be used to parallelize the \code{unzip/zip} of raster files
 ##' 
@@ -30,7 +25,7 @@
 ##' 
 ##' This function allows one to obtain, for a specific \code{FATE-HD} simulation
 ##' and a specific parameter file within this simulation, raster maps of PFG
-##' presence/absence. \cr
+##' relative abundance. \cr
 ##' 
 ##' For each PFG and each selected simulation year, raster maps are retrieved
 ##' from the results folder \code{ABUND_perPFG_perStrata} and unzipped.
@@ -42,25 +37,17 @@
 ##'   within each stratum are calculated :
 ##'   \deqn{\frac{\text{Abund } PFG_i \text{ } Stratum_j}
 ##'   {\Sigma \text{ Abund } PFG_{all} \text{ } Stratum_j}}}
-##'   \item{\strong{binary maps for each PFG within each stratum} are obtained
-##'   by converting relative abundances \strong{in 0 if < 5 \%, in 1 otherwise}.}
-##'   \item{\strong{binary maps for each PFG within each pixel} are obtained
-##'   from all binary maps of a PFG within all strata : \cr
-##'   \strong{if the PFG is present within one stratum, it is considered as 
-##'   present (1) within the pixel ; \cr it is considered absent otherwise (0)}.}
 ##' }
 ##' 
 ##' 
-##' 
-##' @return Two result folders are created :
+##' @return One result folder is created :
 ##' \describe{
-##'   \item{\file{BIN_perPFG \cr_perStrata}}{containing presence/absence raster maps
-##'   for each PFG within each stratum}
-##'   \item{\file{BIN_perPFG \cr_allStrata}}{containing presence/absence raster maps
-##'   for each PFG across all strata}
+##'   \item{\file{ABUND_REL_perPFG \cr_allStrata}}{containing relative abundance 
+##'   raster maps for each PFG across all strata}
 ##' }
 ##' 
-##' @keywords FATE, outputs, abundances, binary
+##' 
+##' @keywords FATE, outputs, relative abundance
 ##' 
 ##' @seealso \code{\link{POST_FATE.graphic_evolutionCoverage}},
 ##' \code{\link{POST_FATE.graphic_mapPFGvsHS}},
@@ -75,13 +62,11 @@
 ##' POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
 ##'                                         , file.simulParam = "Simul_parameters_V1.txt"
 ##'                                         , year = 850
-##'                                         , strata_min = 1
 ##'                                         , opt.no_CPU = 1)
 ##'                                     
 ##' POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
 ##'                                         , file.simulParam = "Simul_parameters_V1.txt"
 ##'                                         , year = c(850, 950)
-##'                                         , strata_min = 1
 ##'                                         , opt.no_CPU = 1)
 ##' }
 ##'                                     
@@ -100,7 +85,6 @@ POST_FATE.relativeAbund_presenceAbsence = function(
   name.simulation
   , file.simulParam = NULL
   , year
-  , strata_min = 1
   , rel.abund.threshold = 0.05
   , opt.no_CPU = 1
 ){
@@ -127,10 +111,7 @@ POST_FATE.relativeAbund_presenceAbsence = function(
   {
     .stopMessage_beInteger("year")
   }
-  if (.testParam_notNum(strata_min))
-  {
-    .stopMessage_beInteger("strata_min")
-  }
+
   #################################################################################################
   
   for (abs.simulParam in abs.simulParams)
@@ -148,18 +129,13 @@ POST_FATE.relativeAbund_presenceAbsence = function(
                          , is.num = FALSE)
     .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/"))
     
-    dir.output.perPFG.perStrata = paste0(name.simulation, "/RESULTS/", basename(dir.save), "/ABUND_perPFG_perStrata/")
-    .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/ABUND_perPFG_perStrata/"))
+    dir.output.perPFG.allStrata = paste0(name.simulation, "/RESULTS/", basename(dir.save), "/ABUND_perPFG_allStrata/")
+    .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/ABUND_perPFG_allStrata/"))
     
     dir.output.perPFG.allStrata.REL = paste0(name.simulation, "/RESULTS/", basename(dir.save), "/ABUND_REL_perPFG_allStrata/")
     if (!dir.exists(dir.output.perPFG.allStrata.REL))
     {
       dir.create(path = dir.output.perPFG.allStrata.REL)
-    }
-    dir.output.perPFG.allStrata.BIN = paste0(name.simulation, "/RESULTS/", basename(dir.save), "/BIN_perPFG_allStrata/")
-    if (!dir.exists(dir.output.perPFG.allStrata.BIN))
-    {
-      dir.create(path = dir.output.perPFG.allStrata.BIN)
     }
     
     ## Get number of PFGs ----------------------------------------------------------
@@ -202,127 +178,66 @@ POST_FATE.relativeAbund_presenceAbsence = function(
     ## Get list of arrays and extract years of simulation --------------------------
     years = sort(unique(as.numeric(year)))
     no_years = length(years)
-    raster.perPFG.perStrata = grep(paste0("Abund_YEAR_", years, "_", collapse = "|")
-                                   , list.files(dir.output.perPFG.perStrata), value = TRUE)
     
-    strata = sapply(sub(".*_STRATA_", "", raster.perPFG.perStrata)
-                    , function(x) strsplit(as.character(x), "[.]")[[1]][1])
-    strata = sort(unique(as.numeric(strata)))
-    no_strata = max(strata)
-    if (!(no_strata > 0) || is.infinite(no_strata) | .testParam_notDef(no_strata))
-    {
-      stop(paste0("Missing data!\n The folder ", dir.output.perPFG.perStrata, " does not contain adequate files",
-                  " (number of strata null or no strata files found)"))
-    }
-    if (no_strata < strata_min)
-    {
-      stop(paste0("Wrong data given!\n `strata_min` is superior to maximum strata found (", no_strata, ")"))
-    }
-    
-    cat("\n Number of strata : ", no_strata)
-    cat("\n Selected strata : ", strata_min:no_strata)
-    cat("\n")
-    
-    raster.perPFG.perStrata = raster.perPFG.perStrata[grep(paste0("_STRATA_", strata_min:no_strata, collapse = "|")
-                                                           , raster.perPFG.perStrata)]
-
     ## UNZIP the raster saved ------------------------------------------------------
-    combi = expand.grid(year = years, stratum = strata_min:no_strata)
-    raster.perPFG.perStrata = foreach(y = combi$year, st = combi$stratum, .combine = "c") %do%
-    {
-      paste0(dir.output.perPFG.perStrata,
-             "Abund_YEAR_",
-             y,
-             "_",
-             PFG,
-             "_STRATA_",
-             st,
-             ".tif.gz")
-    }
-    .unzip(folder_name = dir.output.perPFG.perStrata
-           , list_files = raster.perPFG.perStrata
-           , nb_cores = opt.no_CPU)
+    .unzip_ALL(folder_name = dir.output.perPFG.allStrata, nb_cores = opt.no_CPU)
     
     
     ## get the data inside the rasters ---------------------------------------------
-    cat("\n GETTING RELATIVE ABUNDANCES and PRESENCE/ABSENCE for year")
+    cat("\n GETTING RELATIVE ABUNDANCES for year")
     for (y in years)
     {
       cat(" ", y)
       
-      cat("\n Relative abundances... ")
-      cat("\n PFG ")
-      ras_SUM.list = foreach (pfg = PFG) %do%
+      file_name = paste0(dir.output.perPFG.allStrata,
+                         "Abund_YEAR_",
+                         y,
+                         "_",
+                         PFG,
+                         "_STRATA_all")
+      if (length(which(file.exists(paste0(file_name, ".tif")))) > 0)
       {
-        cat(" ", pfg)
-        file_name = paste0(dir.output.perPFG.perStrata
-                           , "Abund_YEAR_"
-                           , y
-                           , "_"
-                           , pfg
-                           , "_STRATA_"
-                           , strata_min:no_strata
-                           , ".tif")
-        st = (strata_min:no_strata)[which(file.exists(file_name))]
-        file_name = file_name[which(file.exists(file_name))]
-        
-        if (length(file_name) > 0)
-        {
-          ras = stack(file_name) * ras.mask
-          names(ras) = paste0("STRATUM_", st)
-          
-          ras_SUM = ras
-          if (nlayers(ras) > 1)
-          {
-            ras_SUM = sum(ras, na.rm = TRUE)
-          }
-          return(ras_SUM)
-        }
-      } ## end loop on PFG
-      names(ras_SUM.list) = PFG
+        file_name = paste0(file_name, ".tif")
+      } else if (length(which(file.exists(paste0(file_name, ".img")))) > 0)
+      {
+        file_name = paste0(file_name, ".img")
+      } else if (length(which(file.exists(paste0(file_name, ".asc")))) > 0)
+      {
+        file_name = paste0(file_name, ".asc")
+      }
+      if (length(which(file.exists(file_name))) == 0)
+      {
+        stop(paste0("Missing data!\n The names of PFG extracted from files within ", name.simulation, "/DATA/PFGS/SUCC/ : "
+                    , paste0("\n", PFG, collapse = "\n")
+                    , "\n is different from the files contained in ", dir.output.perPFG.allStrata
+                    , "They should be : "
+                    , paste0("\n", file_name, collapse = "\n")))
+      }
+      gp = PFG[which(file.exists(file_name))]
+      file_name = file_name[which(file.exists(file_name))]
       
-      ras_SUM.list = ras_SUM.list[!sapply(ras_SUM.list, is.null)]
-      ras_SUM.list = stack(ras_SUM.list)
-      ras_REL.list = ras_SUM.list / sum(ras_SUM.list)
-      names(ras_REL.list) = names(ras_SUM.list)
-
-      new_name = paste0(dir.output.perPFG.allStrata.REL
-                        , "Abund_relative_YEAR_"
-                        , y
-                        , "_"
-                        , names(ras_REL.list)
-                        , "_STRATA_all.tif")
-      writeRaster(x = ras_REL.list
-                  , filename = new_name
-                  , overwrite = TRUE
-                  , bylayer = TRUE)
-
-      cat("\n Presence/absence... ")
-      cat("\n PFG ")
-      for (pfg in names(ras_REL.list))
+      if (length(file_name) > 0)
       {
-        cat(" ", pfg)
+        ras = stack(file_name) * ras.mask
+        ras_REL = ras / sum(ras)
+        names(ras_REL) = gp
         
-        new_name = paste0(dir.output.perPFG.allStrata.BIN
-                          , "Binary_YEAR_"
+        new_name = paste0(dir.output.perPFG.allStrata.REL
+                          , "Abund_relative_YEAR_"
                           , y
                           , "_"
-                          , pfg
+                          , names(ras_REL)
                           , "_STRATA_all.tif")
-        if (!file.exists(new_name))
-        {
-          ras = ras_REL.list[[pfg]]
-          ras[] = ifelse(ras[] > rel.abund.threshold, 1, 0)
-          
-          writeRaster(x = ras
-                      , filename = new_name
-                      , overwrite = TRUE)
-        }
-      } ## end loop on PFG
+        
+        writeRaster(x = ras_REL
+                    , filename = new_name
+                    , overwrite = TRUE
+                    , bylayer = TRUE)
+      }
     } ## end loop on years
     
     ## ZIP the raster saved ------------------------------------------------------
-    .zip(folder_name = dir.output.perPFG.perStrata, nb_cores = opt.no_CPU)
+    .zip(folder_name = dir.output.perPFG.allStrata, nb_cores = opt.no_CPU)
     
   }
 }

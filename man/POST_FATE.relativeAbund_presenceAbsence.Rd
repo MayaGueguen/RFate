@@ -2,12 +2,12 @@
 % Please edit documentation in R/POST_FATE.relativeAbund_presenceAbsence.R
 \name{POST_FATE.relativeAbund_presenceAbsence}
 \alias{POST_FATE.relativeAbund_presenceAbsence}
-\title{Create presence / absence (binary) maps for each Plant Functional
+\title{Create relative abundance maps for each Plant Functional
 Group \cr for one (or several) specific year of a \code{FATE-HD} simulation}
 \usage{
 POST_FATE.relativeAbund_presenceAbsence(name.simulation,
-  file.simulParam = NULL, year, strata_min = 1,
-  rel.abund.threshold = 0.05, opt.no_CPU = 1)
+  file.simulParam = NULL, year, rel.abund.threshold = 0.05,
+  opt.no_CPU = 1)
 }
 \arguments{
 \item{name.simulation}{a \code{string} that corresponds to the main
@@ -20,34 +20,25 @@ of the \code{FATE-HD} simulation}
 \item{year}{an \code{integer} corresponding to the simulation year(s) that 
 will be used to extract PFG abundance maps}
 
-\item{strata_min}{default 1. An \code{integer} corresponding to the lowest
-stratum for which PFG relative abundances are calculated and then
-transformed into binary results}
-
-\item{rel.abund.threshold}{default 0.05. Minimum value of relative abundance
-to transform a PFG abundance into presence}
-
 \item{opt.no_CPU}{default 1 (\emph{optional}). The number of resources that 
 can be used to parallelize the \code{unzip/zip} of raster files}
 }
 \value{
-Two result folders are created :
+One result folder is created :
 \describe{
-  \item{\file{BIN_perPFG \cr_perStrata}}{containing presence/absence raster maps
-  for each PFG within each stratum}
-  \item{\file{BIN_perPFG \cr_allStrata}}{containing presence/absence raster maps
-  for each PFG across all strata}
+  \item{\file{ABUND_REL_perPFG \cr_allStrata}}{containing relative abundance 
+  raster maps for each PFG across all strata}
 }
 }
 \description{
 This script is designed to produce raster maps of PFG simulated
-presences and absences for one (or several) specific \code{FATE-HD} 
+relative abundances for one (or several) specific \code{FATE-HD} 
 simulation year.
 }
 \details{
 This function allows one to obtain, for a specific \code{FATE-HD} simulation
 and a specific parameter file within this simulation, raster maps of PFG
-presence/absence. \cr
+relative abundance. \cr
 
 For each PFG and each selected simulation year, raster maps are retrieved
 from the results folder \code{ABUND_perPFG_perStrata} and unzipped.
@@ -59,12 +50,6 @@ before the maps are compressed again :
   within each stratum are calculated :
   \deqn{\frac{\text{Abund } PFG_i \text{ } Stratum_j}
   {\Sigma \text{ Abund } PFG_{all} \text{ } Stratum_j}}}
-  \item{\strong{binary maps for each PFG within each stratum} are obtained
-  by converting relative abundances \strong{in 0 if < 5 \%, in 1 otherwise}.}
-  \item{\strong{binary maps for each PFG within each pixel} are obtained
-  from all binary maps of a PFG within all strata : \cr
-  \strong{if the PFG is present within one stratum, it is considered as 
-  present (1) within the pixel ; \cr it is considered absent otherwise (0)}.}
 }
 }
 \examples{
@@ -73,13 +58,11 @@ before the maps are compressed again :
 POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
                                         , file.simulParam = "Simul_parameters_V1.txt"
                                         , year = 850
-                                        , strata_min = 1
                                         , opt.no_CPU = 1)
                                     
 POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
                                         , file.simulParam = "Simul_parameters_V1.txt"
                                         , year = c(850, 950)
-                                        , strata_min = 1
                                         , opt.no_CPU = 1)
 }
                                     
@@ -97,6 +80,6 @@ POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
 Maya Guéguen
 }
 \keyword{FATE,}
-\keyword{abundances,}
-\keyword{binary}
+\keyword{abundance}
 \keyword{outputs,}
+\keyword{relative}

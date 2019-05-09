@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create presence / absence (binary) maps for each Plant Functional
+<title>Create relative abundance maps for each Plant Functional
 Group <br /> for one (or several) specific year of a <code>FATE-HD</code> simulation — POST_FATE.relativeAbund_presenceAbsence • RFate</title>
 
 <!-- jquery -->
@@ -31,11 +31,11 @@ Group <br /> for one (or several) specific year of a <code>FATE-HD</code> simula
 
 
 
-<meta property="og:title" content="Create presence / absence (binary) maps for each Plant Functional
+<meta property="og:title" content="Create relative abundance maps for each Plant Functional
 Group <br /> for one (or several) specific year of a <code>FATE-HD</code> simulation — POST_FATE.relativeAbund_presenceAbsence" />
 
 <meta property="og:description" content="This script is designed to produce raster maps of PFG simulated
-presences and absences for one (or several) specific FATE-HD 
+relative abundances for one (or several) specific FATE-HD 
 simulation year." />
 <meta name="twitter:card" content="summary" />
 
@@ -146,7 +146,7 @@ simulation year." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create presence / absence (binary) maps for each Plant Functional
+    <h1>Create relative abundance maps for each Plant Functional
 Group <br /> for one (or several) specific year of a <code>FATE-HD</code> simulation</h1>
     <small class="dont-index">Source: <a href='https://github.com/MayaGueguen/RFate.git/blob/master/R/POST_FATE.relativeAbund_presenceAbsence.R'><code>R/POST_FATE.relativeAbund_presenceAbsence.R</code></a></small>
     <div class="hidden name"><code>POST_FATE.relativeAbund_presenceAbsence.Rd</code></div>
@@ -155,7 +155,7 @@ Group <br /> for one (or several) specific year of a <code>FATE-HD</code> simula
     <div class="ref-description">
     
     <p>This script is designed to produce raster maps of PFG simulated
-presences and absences for one (or several) specific <code>FATE-HD</code> 
+relative abundances for one (or several) specific <code>FATE-HD</code> 
 simulation year.</p>
     
     </div>
@@ -184,30 +184,17 @@ of the <code>FATE-HD</code> simulation</p></td>
 will be used to extract PFG abundance maps</p></td>
     </tr>
     <tr>
-      <th>rel.abund.threshold</th>
-      <td><p>default 0.05. Minimum value of relative abundance
-to transform a PFG abundance into presence</p></td>
-    </tr>
-    <tr>
       <th>opt.no_CPU</th>
       <td><p>default 1 (<em>optional</em>). The number of resources that 
 can be used to parallelize the <code>unzip/zip</code> of raster files</p></td>
-    </tr>
-    <tr>
-      <th>strata_min</th>
-      <td><p>default 1. An <code>integer</code> corresponding to the lowest
-stratum for which PFG relative abundances are calculated and then
-transformed into binary results</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Two result folders are created :</p><dl class='dl-horizontal'>
-  <dt><code class="file">BIN_perPFG <br />_perStrata</code></dt><dd><p>containing presence/absence raster maps
-  for each PFG within each stratum</p></dd>
-  <dt><code class="file">BIN_perPFG <br />_allStrata</code></dt><dd><p>containing presence/absence raster maps
-  for each PFG across all strata</p></dd>
+    <p>One result folder is created :</p><dl class='dl-horizontal'>
+  <dt><code class="file">ABUND_REL_perPFG <br />_allStrata</code></dt><dd><p>containing relative abundance 
+  raster maps for each PFG across all strata</p></dd>
 </dl>
 
     
@@ -215,7 +202,7 @@ transformed into binary results</p></td>
 
     <p>This function allows one to obtain, for a specific <code>FATE-HD</code> simulation
 and a specific parameter file within this simulation, raster maps of PFG
-presence/absence. <br /></p>
+relative abundance. <br /></p>
 <p>For each PFG and each selected simulation year, raster maps are retrieved
 from the results folder <code>ABUND_perPFG_perStrata</code> and unzipped.
 Informations extracted lead to the production of the same number of raster
@@ -225,12 +212,6 @@ before the maps are compressed again :</p>
   within each stratum are calculated :
   $$\frac{\text{Abund } PFG_i \text{ } Stratum_j}
   {\Sigma \text{ Abund } PFG_{all} \text{ } Stratum_j}$$</p></li>
-<li><p><strong>binary maps for each PFG within each stratum</strong> are obtained
-  by converting relative abundances <strong>in 0 if &lt; 5 %, in 1 otherwise</strong>.</p></li>
-<li><p><strong>binary maps for each PFG within each pixel</strong> are obtained
-  from all binary maps of a PFG within all strata : <br />
-  <strong>if the PFG is present within one stratum, it is considered as 
-  present (1) within the pixel ; <br /> it is considered absent otherwise (0)</strong>.</p></li>
 </ol>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
@@ -249,13 +230,11 @@ before the maps are compressed again :</p>
 <span class='fu'>POST_FATE.relativeAbund_presenceAbsence</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
                                         , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
                                         , <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>850</span>
-                                        , <span class='kw'>strata_min</span> <span class='kw'>=</span> <span class='fl'>1</span>
                                         , <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 
 <span class='fu'>POST_FATE.relativeAbund_presenceAbsence</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
                                         , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
                                         , <span class='kw'>year</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>850</span>, <span class='fl'>950</span>)
-                                        , <span class='kw'>strata_min</span> <span class='kw'>=</span> <span class='fl'>1</span>
                                         , <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 <span class='co'># }</span># NOT RUN {
                                     
