@@ -199,7 +199,7 @@ POST_FATE.graphic_evolutionAbund_pixels = function(
     IDS = sample(ind_1_mask, 5)
     if (!is.null(opt.cells_ID))
     {
-      if (opt.cells_ID %in% ind_1_mask)
+      if (sum(opt.cells_ID %in% ind_1_mask) == length(opt.cells_ID))
       {
         IDS = opt.cells_ID
       } else
@@ -282,7 +282,7 @@ POST_FATE.graphic_evolutionAbund_pixels = function(
     
     ggsave(filename = paste0(name.simulation
                              , "/RESULTS/POST_FATE_GRAPHIC_A_evolution_abundance_pixels_"
-                             , paste0(IDS, collapse = "_")
+                             , ifelse(length(IDS) <= 5, paste0(IDS, collapse = "_"), length(IDS))
                              , "_"
                              , basename(dir.save)
                              , ".pdf")
@@ -295,7 +295,7 @@ POST_FATE.graphic_evolutionAbund_pixels = function(
     write.csv(distriAbund
               , file = paste0(name.simulation
                               , "/RESULTS/POST_FATE_evolution_abundance_pixels_"
-                              , paste0(IDS, collapse = "_")
+                              , ifelse(length(IDS) <= 5, paste0(IDS, collapse = "_"), length(IDS))
                               , "_"
                               , basename(dir.save)
                               , ".csv")
@@ -306,7 +306,7 @@ POST_FATE.graphic_evolutionAbund_pixels = function(
     
     message(paste0("\n The output file \n"
                    , " > POST_FATE_evolution_abundance_pixels_"
-                   , paste0(IDS, collapse = "_")
+                   , ifelse(length(IDS) <= 5, paste0(IDS, collapse = "_"), length(IDS))
                    , "_"
                    , basename(dir.save)
                    , ".csv \n"

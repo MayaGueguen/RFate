@@ -169,7 +169,7 @@ POST_FATE.graphic_evolutionSoil_pixels = function(
         IDS = opt.cells_ID
         abund.file = paste0(name.simulation
                             , "/RESULTS/POST_FATE_evolution_abundance_pixels_"
-                            , paste0(IDS, collapse = "_")
+                            , ifelse(length(IDS) <= 5, paste0(IDS, collapse = "_"), length(IDS))
                             , "_"
                             , basename(dir.save)
                             , ".csv")
@@ -261,7 +261,7 @@ POST_FATE.graphic_evolutionSoil_pixels = function(
     
     ggsave(filename = paste0(name.simulation
                              , "/RESULTS/POST_FATE_GRAPHIC_A_evolution_soil_pixels_"
-                             , paste0(IDS, collapse = "_")
+                             , ifelse(length(IDS) <= 5, paste0(IDS, collapse = "_"), length(IDS))
                              , "_"
                              , basename(dir.save)
                              , ".pdf")
@@ -274,7 +274,7 @@ POST_FATE.graphic_evolutionSoil_pixels = function(
     write.csv(distriSoil
               , file = paste0(name.simulation
                               , "/RESULTS/POST_FATE_evolution_soil_pixels_"
-                              , paste0(IDS, collapse = "_")
+                              , ifelse(length(IDS) <= 5, paste0(IDS, collapse = "_"), length(IDS))
                               , "_"
                               , basename(dir.save)
                               , ".csv")
@@ -285,7 +285,7 @@ POST_FATE.graphic_evolutionSoil_pixels = function(
     
     message(paste0("\n The output file \n"
                    , " > POST_FATE_evolution_soil_pixels_"
-                   , paste0(IDS, collapse = "_")
+                   , ifelse(length(IDS) <= 5, paste0(IDS, collapse = "_"), length(IDS))
                    , "_"
                    , basename(dir.save)
                    , ".csv \n"
