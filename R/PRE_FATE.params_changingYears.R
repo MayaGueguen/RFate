@@ -6,11 +6,11 @@
 ##'
 ##' @author Maya Guéguen
 ##' 
-##' @description This script is designed to create a parameter file containing
-##' simulation years at which the \code{FATE-HD} software must save rasters of
+##' @description This script is designed to create a parameter file containing 
+##' simulation years at which the \code{FATE-HD} software must save rasters of 
 ##' PFG abundances or simulation objects.
 ##'              
-##' @param name.simulation a \code{string} that corresponds to the main directory
+##' @param name.simulation a \code{string} that corresponds to the main directory 
 ##' or simulation name of the \code{FATE-HD} simulation
 ##' @param type.changing a \code{string} to choose the concerned module : \cr
 ##' succession (\emph{MASK}), habitat suitability (\emph{HS}) or disturbances 
@@ -23,7 +23,7 @@
 ##' 
 ##' @details 
 ##' 
-##' Several modules of the \code{FATE-HD} software allow the user to simulate
+##' Several modules of the \code{FATE-HD} software allow the user to simulate 
 ##' changes over time :
 ##' 
 ##' \describe{

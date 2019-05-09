@@ -13,7 +13,7 @@
 ##' @param name.simulation a \code{string} that corresponds to the main directory
 ##' or simulation name of the \code{FATE-HD} simulation
 ##' @param mat.PFG.disp a \code{data.frame} with 5 columns : PFG, MODE, d50, d99,
-##' ldd
+##'  ldd
 ##' @param opt.folder.name (\emph{optional}) \cr a \code{string} that
 ##' corresponds to the name of the folder that will be created into the 
 ##' \code{name.simulation/DATA/PFGS/DISP/} directory to store the results

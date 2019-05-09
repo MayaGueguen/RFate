@@ -9,7 +9,7 @@ PRE_FATE.params_changingYears(name.simulation, type.changing, mat.changing,
   opt.folder.name = NULL)
 }
 \arguments{
-\item{name.simulation}{a \code{string} that corresponds to the main directory
+\item{name.simulation}{a \code{string} that corresponds to the main directory 
 or simulation name of the \code{FATE-HD} simulation}
 
 \item{type.changing}{a \code{string} to choose the concerned module : \cr
@@ -35,12 +35,12 @@ If the \code{opt.folder.name} has been used, the files will be into the folder
 \code{name.simulation/DATA/SCENARIO/opt.folder.name/}
 }
 \description{
-This script is designed to create a parameter file containing
-simulation years at which the \code{FATE-HD} software must save rasters of
+This script is designed to create a parameter file containing 
+simulation years at which the \code{FATE-HD} software must save rasters of 
 PFG abundances or simulation objects.
 }
 \details{
-Several modules of the \code{FATE-HD} software allow the user to simulate
+Several modules of the \code{FATE-HD} software allow the user to simulate 
 changes over time :
 
 \describe{
