@@ -37,10 +37,12 @@ A \code{data.frame} with the following columns :
   \item{\code{value}}{value of the corresponding statistic}
 }
 
-One folder is created :
+Two folders are created :
 \describe{
   \item{\file{BIN_perPFG \cr_allStrata}}{containing presence / absence  
   raster maps for each PFG across all strata}
+  \item{\file{BIN_perPFG \cr_perStrata}}{containing presence / absence  
+  raster maps for each PFG for each stratum}
 }
 
 One \code{POST_FATE_[...].pdf} file is created : 
@@ -99,7 +101,7 @@ POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
 
 }
 \seealso{
-\code{\link{POST_FATE.relativeAbund_presenceAbsence}}
+\code{\link{POST_FATE.relativeAbund}}
 }
 \author{
 Maya Guéguen

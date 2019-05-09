@@ -2,7 +2,7 @@
 ##' @title Create relative abundance maps for each Plant Functional
 ##' Group \cr for one (or several) specific year of a \code{FATE-HD} simulation
 ##' 
-##' @name POST_FATE.relativeAbund_presenceAbsence
+##' @name POST_FATE.relativeAbund
 ##'
 ##' @author Maya Guéguen
 ##' 
@@ -59,12 +59,12 @@
 ##' @examples
 ##' 
 ##' \dontrun{                      
-##' POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
+##' POST_FATE.relativeAbund(name.simulation = "FATE_simulation"
 ##'                                         , file.simulParam = "Simul_parameters_V1.txt"
 ##'                                         , year = 850
 ##'                                         , opt.no_CPU = 1)
 ##'                                     
-##' POST_FATE.relativeAbund_presenceAbsence(name.simulation = "FATE_simulation"
+##' POST_FATE.relativeAbund(name.simulation = "FATE_simulation"
 ##'                                         , file.simulParam = "Simul_parameters_V1.txt"
 ##'                                         , year = c(850, 950)
 ##'                                         , opt.no_CPU = 1)
@@ -81,11 +81,10 @@
 ## END OF HEADER ###############################################################
 
 
-POST_FATE.relativeAbund_presenceAbsence = function(
+POST_FATE.relativeAbund = function(
   name.simulation
   , file.simulParam = NULL
   , year
-  , rel.abund.threshold = 0.05
   , opt.no_CPU = 1
 ){
   .testParam_existFolder(name.simulation, "PARAM_SIMUL/")

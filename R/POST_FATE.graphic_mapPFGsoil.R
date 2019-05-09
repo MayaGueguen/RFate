@@ -59,7 +59,8 @@
 ##' 
 ##' @keywords FATE, outputs, relative abundance, soil, community weighted mean,
 ##' 
-##' @seealso \code{\link{POST_FATE.relativeAbund_presenceAbsence}}
+##' @seealso \code{\link{POST_FATE.relativeAbund}}, 
+##' \code{\link{POST_FATE.graphic_validationStatistics}}
 ##' 
 ##' @examples
 ##' 

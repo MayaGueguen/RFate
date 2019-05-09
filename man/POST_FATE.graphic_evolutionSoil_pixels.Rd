@@ -73,7 +73,8 @@ POST_FATE.graphic_evolutionSoil_pixels(name.simulation = "FATE_simulation"
 
 }
 \seealso{
-\code{\link{POST_FATE.relativeAbund_presenceAbsence}}
+\code{\link{POST_FATE.relativeAbund}}, 
+\code{\link{POST_FATE.graphic_validationStatistics}}
 }
 \author{
 Maya Guéguen

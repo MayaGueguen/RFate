@@ -64,10 +64,12 @@
 ##'   \item{\code{value}}{value of the corresponding statistic}
 ##' }
 ##' 
-##' One folder is created :
+##' Two folders are created :
 ##' \describe{
 ##'   \item{\file{BIN_perPFG \cr_allStrata}}{containing presence / absence  
 ##'   raster maps for each PFG across all strata}
+##'   \item{\file{BIN_perPFG \cr_perStrata}}{containing presence / absence  
+##'   raster maps for each PFG for each stratum}
 ##' }
 ##' 
 ##' One \code{POST_FATE_[...].pdf} file is created : 
@@ -80,7 +82,7 @@
 ##' @keywords FATE, outputs, binary, area under curve, sensitivity, specificity,
 ##' true skill statistic
 ##' 
-##' @seealso \code{\link{POST_FATE.relativeAbund_presenceAbsence}}
+##' @seealso \code{\link{POST_FATE.relativeAbund}}
 ##' 
 ##' @examples
 ##' 
@@ -217,6 +219,12 @@ POST_FATE.graphic_validationStatistics = function(
       dir.create(path = dir.output.perPFG.allStrata.BIN)
     }
     
+    dir.output.perPFG.perStrata.BIN = paste0(name.simulation, "/RESULTS/", basename(dir.save), "/BIN_perPFG_perStrata/")
+    if (!dir.exists(dir.output.perPFG.perStrata.BIN))
+    {
+      dir.create(path = dir.output.perPFG.perStrata.BIN)
+    }
+    
     ## Get list of arrays and extract years of simulation --------------------------
     years = sort(unique(as.numeric(year)))
     no_years = length(years)
@@ -330,10 +338,8 @@ POST_FATE.graphic_validationStatistics = function(
               spec = specificity(mat.conf)
               TSS = sens$sensitivity + spec$specificity - 1
               auc = auc(mat.bin[, c("ID", "obs", "fg")])
-              # sens = cutoff$Sensitivity
-              # spec = cutoff$Specificity
-              # TSS = sens + spec - 1
               
+              ## ALL STRATA
               new_name = paste0(dir.output.perPFG.allStrata.BIN
                                 , "Binary_YEAR_"
                                 , y
@@ -348,6 +354,30 @@ POST_FATE.graphic_validationStatistics = function(
                 writeRaster(x = ras.bin
                             , filename = new_name
                             , overwrite = TRUE)
+              }
+              
+              ## SEPARATED STRATA
+              prev_names = list.files(path = dir.output.perPFG.perStrata
+                                     , pattern = paste0("Abund_YEAR_",
+                                                        y,
+                                                        "_",
+                                                        fg,
+                                                        "_STRATA"))
+              for (prev_name in prev_names)
+              {
+                new_name = sub(dir.output.perPFG.perStrata
+                               , dir.output.perPFG.perStrata.BIN
+                               , prev_name)
+                new_name = sub("Abund_YEAR_", "Binary_YEAR_", new_name)
+                if (!file.exists(new_name))
+                {
+                  ras.bin = raster(prev_name)
+                  ras.bin[] = ifelse(ras.bin[] >= cutoff$Cut, 1, 0)
+                  
+                  writeRaster(x = ras.bin
+                              , filename = new_name
+                              , overwrite = TRUE)
+                }
               }
               
               return(data.frame(PFG = fg, auc, sens, spec, TSS))

@@ -58,7 +58,8 @@
 ##' @keywords FATE, outputs, relative abundance, forest cover, area under curve,
 ##' sensitivity, specificity, true skill statistic, correct classification rate
 ##' 
-##' @seealso \code{\link{POST_FATE.relativeAbund_presenceAbsence}}
+##' @seealso \code{\link{POST_FATE.relativeAbund}}, 
+##' \code{\link{POST_FATE.graphic_validationStatistics}}
 ##' 
 ##' @examples
 ##' 

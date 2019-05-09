@@ -82,7 +82,8 @@ POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
 
 }
 \seealso{
-\code{\link{POST_FATE.relativeAbund_presenceAbsence}}
+\code{\link{POST_FATE.relativeAbund}}, 
+\code{\link{POST_FATE.graphic_validationStatistics}}
 }
 \author{
 Maya Guéguen
