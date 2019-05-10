@@ -137,6 +137,13 @@ test_that("POST_FATE.relativeAbund gives error with wrong data : files", {
                , fixed = TRUE)
   system("mkdir FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/")
   expect_error(POST_FATE.relativeAbund(name.simulation = "FATE_simulation"
+                                       , file.simulParam = "ParamSimul.txt"
+                                       , year = 10)
+               , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/ABUND_perPFG_perStrata/ folder"
+               , fixed = TRUE)
+  system("mkdir FATE_simulation/RESULTS/Hello/ABUND_perPFG_perStrata/")
+  
+  expect_error(POST_FATE.relativeAbund(name.simulation = "FATE_simulation"
                                                        , file.simulParam = "ParamSimul.txt"
                                                        , year = 10)
                , "Wrong type of data!\n `flag` (GLOBAL_PARAMS) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"
