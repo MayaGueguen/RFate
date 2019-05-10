@@ -131,9 +131,15 @@ test_that("POST_FATE.graphic_mapPFGrichness gives error with wrong data : files"
   expect_error(POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
                                                 , file.simulParam = "ParamSimul.txt"
                                                 , year = 10)
-               , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/BIN_perPFG_allStrata/ folder"
+               , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/ABUND_perPFG_allStrata/ folder"
                , fixed = TRUE)
-  system("mkdir FATE_simulation/RESULTS/Hello/BIN_perPFG_allStrata/")
+  system("mkdir FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/")
+  expect_error(POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
+                                                , file.simulParam = "ParamSimul.txt"
+                                                , year = 10)
+               , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/ABUND_perPFG_perStrata/ folder"
+               , fixed = TRUE)
+  system("mkdir FATE_simulation/RESULTS/Hello/ABUND_perPFG_perStrata/")
   
   expect_error(POST_FATE.graphic_mapPFGrichness(name.simulation = "FATE_simulation"
                                                 , file.simulParam = "ParamSimul.txt"

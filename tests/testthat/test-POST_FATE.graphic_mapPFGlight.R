@@ -377,9 +377,9 @@ test_that("POST_FATE.graphic_mapPFGlight gives error with wrong data : files", {
                                              , year = 10
                                              , strata_min = 2
                                              , mat.PFG.succ = data.frame(PFG = 1, light = 1))
-               , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/BIN_perPFG_allStrata/ folder"
+               , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/ABUND_perPFG_allStrata/ folder"
                , fixed = TRUE)
-  system("mkdir FATE_simulation/RESULTS/Hello/BIN_perPFG_allStrata/")
+  system("mkdir FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/")
   expect_error(POST_FATE.graphic_mapPFGlight(name.simulation = "FATE_simulation"
                                              , file.simulParam = "ParamSimul.txt"
                                              , year = 10

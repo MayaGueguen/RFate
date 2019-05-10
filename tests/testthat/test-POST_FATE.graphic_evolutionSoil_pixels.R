@@ -59,6 +59,10 @@ test_that("POST_FATE.graphic_evolutionSoil_pixels gives error with wrong data : 
                                                           , file.simulParam = "toto")
                , "Wrong name file given!\n `FATE_simulation/PARAM_SIMUL/toto` does not exist")
   file.create("FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
+})
+
+## INPUTS
+test_that("POST_FATE.graphic_evolutionSoil_pixels gives error with wrong data : files", {
   expect_error(POST_FATE.graphic_evolutionSoil_pixels(name.simulation = "FATE_simulation"
                                                           , file.simulParam = "ParamSimul.txt")
                , "Wrong type of data!\n `flag` (--END_OF_FILE--) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"
@@ -89,15 +93,23 @@ test_that("POST_FATE.graphic_evolutionSoil_pixels gives error with wrong data : 
                , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/ folder"
                , fixed = TRUE)
   system("mkdir FATE_simulation/RESULTS/Hello/")
+  
+  expect_error(POST_FATE.graphic_evolutionSoil_pixels(name.simulation = "FATE_simulation"
+                                                      , file.simulParam = "ParamSimul.txt")
+               , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/ABUND_perPFG_allStrata/ folder"
+               , fixed = TRUE)
+  system("mkdir FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/")
+  expect_error(POST_FATE.graphic_evolutionSoil_pixels(name.simulation = "FATE_simulation"
+                                                      , file.simulParam = "ParamSimul.txt")
+               , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/ABUND_perPFG_perStrata/ folder"
+               , fixed = TRUE)
+  system("mkdir FATE_simulation/RESULTS/Hello/ABUND_perPFG_perStrata/")
+  
   expect_error(POST_FATE.graphic_evolutionSoil_pixels(name.simulation = "FATE_simulation"
                                                           , file.simulParam = "ParamSimul.txt")
                , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/SOIL/ folder"
                , fixed = TRUE)
   system("mkdir FATE_simulation/RESULTS/Hello/SOIL/")
-  expect_error(POST_FATE.graphic_evolutionSoil_pixels(name.simulation = "FATE_simulation"
-                                                          , file.simulParam = "ParamSimul.txt")
-               , "Missing data!\n The folder FATE_simulation/RESULTS/Hello/SOIL/ does not contain adequate files")
-  file.create("FATE_simulation/RESULTS/Hello/SOIL/Soil_Resources_YEAR_1.tif")
 
   expect_error(POST_FATE.graphic_evolutionSoil_pixels(name.simulation = "FATE_simulation"
                                                           , file.simulParam = "ParamSimul.txt")
@@ -110,13 +122,18 @@ test_that("POST_FATE.graphic_evolutionSoil_pixels gives error with wrong data : 
                                                           , file.simulParam = "ParamSimul.txt")
                , "Wrong name file given!\n `FATE_simulation/Mask.asc` does not exist"
                , fixed = TRUE)
+  
+  cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
+      , file = "FATE_simulation/Mask.asc")
+  expect_error(POST_FATE.graphic_evolutionSoil_pixels(name.simulation = "FATE_simulation"
+                                                          , file.simulParam = "ParamSimul.txt")
+               , "Missing data!\n The folder FATE_simulation/RESULTS/Hello/SOIL/ does not contain adequate files")
+  file.create("FATE_simulation/RESULTS/Hello/SOIL/Soil_Resources_YEAR_1.tif")
 })
 
 
 ## INPUTS
 test_that("POST_FATE.graphic_evolutionSoil_pixels gives error with wrong data : rasters", {
-  cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
-      , file = "FATE_simulation/Mask.asc")
   # expect_error(POST_FATE.graphic_evolutionSoil_pixels(name.simulation = "FATE_simulation"
   #                                                         , file.simulParam = "ParamSimul.txt")
   #              # , "objet 'distri' introuvable"

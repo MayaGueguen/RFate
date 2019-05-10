@@ -71,7 +71,7 @@
 .getGraphics_mask = function(abs.simulParam)
 {
   ## Get raster mask -------------------------------------------------------------
-  file.mask = .getParam(params.lines = abs.simulParam
+  file.mask <<- .getParam(params.lines = abs.simulParam
                         , flag = "MASK"
                         , flag.split = "^--.*--$"
                         , is.num = FALSE)

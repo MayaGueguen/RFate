@@ -276,9 +276,9 @@ test_that("POST_FATE.graphic_validationStatistics gives error with wrong data : 
                                                       , file.simulParam = "ParamSimul.txt"
                                                       , year = 10
                                                       , mat.PFG.obs = data.frame(PFG = "A", X = 2, Y = 3, obs = 0, stringsAsFactors = F))
-               , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/ABUND_REL_perPFG_allStrata/ folder"
+               , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/ABUND_perPFG_allStrata/ folder"
                , fixed = TRUE)
-  system("mkdir FATE_simulation/RESULTS/Hello/ABUND_REL_perPFG_allStrata/")
+  system("mkdir FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/")
   expect_error(POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
                                                       , file.simulParam = "ParamSimul.txt"
                                                       , year = 10
@@ -291,23 +291,10 @@ test_that("POST_FATE.graphic_validationStatistics gives error with wrong data : 
                                                       , file.simulParam = "ParamSimul.txt"
                                                       , year = 10
                                                       , mat.PFG.obs = data.frame(PFG = "A", X = 2, Y = 3, obs = 0, stringsAsFactors = F))
-               , "Missing data!\n The folder FATE_simulation/RESULTS/Hello/ABUND_REL_perPFG_allStrata/ does not contain adequate files")
-  file.create("FATE_simulation/RESULTS/Hello/ABUND_REL_perPFG_allStrata/Abund_relative_YEAR_10_PFG1_STRATA_all.tif")
-  expect_error(POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
-                                                      , file.simulParam = "ParamSimul.txt"
-                                                      , year = 10
-                                                      , mat.PFG.obs = data.frame(PFG = "A", X = 2, Y = 3, obs = 0, stringsAsFactors = F))
-               , "Missing data!\n The folder FATE_simulation/RESULTS/Hello/ABUND_perPFG_perStrata/ does not contain adequate files")
-  file.create("FATE_simulation/RESULTS/Hello/ABUND_perPFG_perStrata/Abund_YEAR_10_PFG1_STRATA_1.tif")
-  
-  expect_error(POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
-                                                      , file.simulParam = "ParamSimul.txt"
-                                                      , year = 10
-                                                      , mat.PFG.obs = data.frame(PFG = "A", X = 2, Y = 3, obs = 0, stringsAsFactors = F))
                , "Wrong type of data!\n `flag` (GLOBAL_PARAMS) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"
                , fixed = TRUE)
   
-  
+
   if (file.exists("FATE_simulation/PARAM_SIMUL/ParamSimul.txt")) system("rm FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   file.create("FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   cat("GLOBAL_PARAMS\n--SAVE_DIR--\nHello\n--END_OF_FILE--\n", file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
@@ -387,18 +374,7 @@ test_that("POST_FATE.graphic_validationStatistics gives error with wrong data : 
                , "Missing data!\n The number of PFG (NB_FG) within FATE_simulation/GlobalParam.txt is different from the number of PFG files contained in FATE_simulation/DATA/PFGS/SUCC/"
                , fixed = TRUE)
   cat("NB_FG 1\n", file = "FATE_simulation/GlobalParam.txt")
-  expect_error(POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
-                                                      , file.simulParam = "ParamSimul.txt"
-                                                      , year = 10
-                                                      , mat.PFG.obs = data.frame(PFG = "A", X = 2, Y = 3, obs = 0, stringsAsFactors = F))
-               , "Missing data!\n The names of PFG within `mat.PFG.obs` is different from the names of PFG contained from FATE_simulation/DATA/PFGS/SUCC/"
-               , fixed = TRUE)
-  cat("--PFG_LIFE_HISTORY_PARAMS--\nFATE_simulation/DATA/PFGS/SUCC/SUCC_A.txt\n--GLOBAL_PARAMS--\nFATE_simulation/GlobalParam.txt\n--SAVE_DIR--\nHello\n--END_OF_FILE--\n"
-      , file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
-  
-  cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
-      , file = "FATE_simulation/RESULTS/Hello/BIN_perPFG_allStrata/Binary_YEAR_10_A_STRATA_all.asc")
-  
+
   expect_error(POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
                                                       , file.simulParam = "ParamSimul.txt"
                                                       , year = 10
@@ -415,12 +391,25 @@ test_that("POST_FATE.graphic_validationStatistics gives error with wrong data : 
                , "Wrong name file given!\n `FATE_simulation/Mask.asc` does not exist"
                , fixed = TRUE)
   
+  cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
+      , file = "FATE_simulation/Mask.asc")
+
+  expect_error(POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
+                                                      , file.simulParam = "ParamSimul.txt"
+                                                      , year = 10
+                                                      , mat.PFG.obs = data.frame(PFG = "A", X = 2, Y = 3, obs = 0, stringsAsFactors = F))
+               , "Missing data!\n The folder FATE_simulation/RESULTS/Hello/ABUND_REL_perPFG_allStrata/ does not contain adequate files")
+  file.create("FATE_simulation/RESULTS/Hello/ABUND_REL_perPFG_allStrata/Abund_relative_YEAR_10_PFG1_STRATA_all.tif")
+  expect_error(POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
+                                                      , file.simulParam = "ParamSimul.txt"
+                                                      , year = 10
+                                                      , mat.PFG.obs = data.frame(PFG = "A", X = 2, Y = 3, obs = 0, stringsAsFactors = F))
+               , "Missing data!\n The folder FATE_simulation/RESULTS/Hello/ABUND_perPFG_perStrata/ does not contain adequate files")
+  file.create("FATE_simulation/RESULTS/Hello/ABUND_perPFG_perStrata/Abund_YEAR_10_PFG1_STRATA_1.tif")
 })
 
 ## OUTPUTS
 test_that("POST_FATE.graphic_validationStatistics gives error with wrong data : outputs", {
-  cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
-      , file = "FATE_simulation/Mask.asc")
   expect_output(str(POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
                                                            , file.simulParam = "ParamSimul.txt"
                                                            , year = 10
