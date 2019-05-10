@@ -220,33 +220,44 @@ POST_FATE.graphic_validationStatistics = function(
     cat("\n")
     
     ## Get results directories -----------------------------------------------------
-    dir.save = .getParam(params.lines = abs.simulParam
-                         , flag = "SAVE_DIR"
-                         , flag.split = "^--.*--$"
-                         , is.num = FALSE)
-    .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/"))
+    .getGraphics_results(name.simulation  = name.simulation
+                         , abs.simulParam = abs.simulParam)
     
-    dir.output.perPFG.allStrata.REL = paste0(name.simulation, "/RESULTS/", basename(dir.save), "/ABUND_REL_perPFG_allStrata/")
-    .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/ABUND_REL_perPFG_allStrata/"))
+    ## Get number of PFGs ----------------------------------------------------------
+    ## Get PFG names ---------------------------------------------------------------
+    .getGraphics_PFG(name.simulation  = name.simulation
+                     , abs.simulParam = abs.simulParam)
+
+    ## Get raster mask -------------------------------------------------------------
+    .getGraphics_mask(abs.simulParam = abs.simulParam)
     
-    dir.output.perPFG.allStrata.BIN = paste0(name.simulation, "/RESULTS/", basename(dir.save), "/BIN_perPFG_allStrata/")
-    if (!dir.exists(dir.output.perPFG.allStrata.BIN))
+    ## Get PFG observations --------------------------------------------------------
+    mat.PFG.obs = mat.PFG.obs[which(mat.PFG.obs$PFG %in% PFG), ]
+    if (nrow(mat.PFG.obs) == 0)
     {
-      dir.create(path = dir.output.perPFG.allStrata.BIN)
+      stop(paste0("Missing data!\n The names of PFG within `mat.PFG.obs`"
+                  , " is different from the names of PFG contained from "
+                  , name.simulation, "/DATA/PFGS/SUCC/"))
     }
     
-    dir.output.perPFG.perStrata = paste0(name.simulation, "/RESULTS/", basename(dir.save), "/ABUND_perPFG_perStrata/")
-    .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/ABUND_perPFG_perStrata/"))
-    
-    dir.output.perPFG.perStrata.BIN = paste0(name.simulation, "/RESULTS/", basename(dir.save), "/BIN_perPFG_perStrata/")
-    if (!dir.exists(dir.output.perPFG.perStrata.BIN))
+    ## Get habitat information -----------------------------------------------------
+    no_hab = 1
+    hab_names = "ALL"
+    if (exists("ras.habitat"))
     {
-      dir.create(path = dir.output.perPFG.perStrata.BIN)
+      ras.habitat = ras.habitat * ras.mask
+      df.habitat = data.frame(ID = cellFromXY(ras.habitat, xy.1))
+      df.habitat$HAB = ras.habitat[df.habitat$ID]
+      hab_names = c(hab_names, unique(df.habitat$HAB))
+      hab_names = hab_names[which(!is.na(hab_names))]
+      no_hab = length(hab_names)
     }
     
     ## Get list of arrays and extract years of simulation --------------------------
     years = sort(unique(as.numeric(year)))
     no_years = length(years)
+    
+    ## UNZIP the raster saved ------------------------------------------------------
     raster.perPFG.allStrata = grep(paste0("Abund_relative_YEAR_", years, "_", collapse = "|")
                                    , list.files(dir.output.perPFG.allStrata.REL), value = TRUE)
     if (length(raster.perPFG.allStrata) == 0)
@@ -264,64 +275,6 @@ POST_FATE.graphic_validationStatistics = function(
            , list_files = raster.perPFG.perStrata
            , nb_cores = opt.no_CPU)
     
-    ## Get number of PFGs ----------------------------------------------------------
-    file.globalParam = .getParam(params.lines = abs.simulParam
-                                 , flag = "GLOBAL_PARAMS"
-                                 , flag.split = "^--.*--$"
-                                 , is.num = FALSE)
-    no_PFG = .getParam(params.lines = file.globalParam
-                       , flag = "NB_FG"
-                       , flag.split = " "
-                       , is.num = TRUE)
-    if (length(no_PFG) == 0 || .testParam_notNum(no_PFG))
-    {
-      stop(paste0("Missing data!\n The number of PFG (NB_FG) within ", file.globalParam, " does not contain any value"))
-    }
-    
-    ## Get PFG names ---------------------------------------------------------------
-    PFG = .getParam(params.lines = abs.simulParam
-                    , flag = "PFG_LIFE_HISTORY_PARAMS"
-                    , flag.split = "^--.*--$"
-                    , is.num = FALSE)
-    pattern = ".*SUCC_"
-    PFG = sub(".txt", "", sub(pattern, "", PFG))
-    if (length(PFG) != no_PFG)
-    {
-      stop(paste0("Missing data!\n The number of PFG (NB_FG) within ", file.globalParam
-                  , " is different from the number of PFG files contained in ", name.simulation, "/DATA/PFGS/SUCC/"))
-    }
-    mat.PFG.obs = mat.PFG.obs[which(mat.PFG.obs$PFG %in% PFG), ]
-    if (nrow(mat.PFG.obs) == 0)
-    {
-      stop(paste0("Missing data!\n The names of PFG within `mat.PFG.obs`"
-                  , " is different from the names of PFG contained from "
-                  , name.simulation, "/DATA/PFGS/SUCC/"))
-    }
-    
-    ## Get raster mask -------------------------------------------------------------
-    file.mask = .getParam(params.lines = abs.simulParam
-                          , flag = "MASK"
-                          , flag.split = "^--.*--$"
-                          , is.num = FALSE)
-    .testParam_existFile(file.mask)
-    
-    ras.mask = raster(file.mask)
-    ras.mask[which(ras.mask[] == 0)] = NA
-    ind_1_mask = which(ras.mask[] == 1)
-    no_1_mask = length(ind_1_mask)
-    xy.1 = xyFromCell(ras.mask, ind_1_mask)
-    
-    no_hab = 1
-    hab_names = "ALL"
-    if (exists("ras.habitat"))
-    {
-      ras.habitat = ras.habitat * ras.mask
-      df.habitat = data.frame(ID = cellFromXY(ras.habitat, xy.1))
-      df.habitat$HAB = ras.habitat[df.habitat$ID]
-      hab_names = c(hab_names, unique(df.habitat$HAB))
-      hab_names = hab_names[which(!is.na(hab_names))]
-      no_hab = length(hab_names)
-    }
     
     
     ## get the data inside the rasters ---------------------------------------------

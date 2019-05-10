@@ -226,55 +226,16 @@ POST_FATE.graphic_mapPFGlight = function(
     cat("\n")
     
     ## Get results directories -----------------------------------------------------
-    dir.save = .getParam(params.lines = abs.simulParam
-                         , flag = "SAVE_DIR"
-                         , flag.split = "^--.*--$"
-                         , is.num = FALSE)
-    .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/"))
-    
-    dir.output.perPFG.allStrata.BIN = paste0(name.simulation, "/RESULTS/", basename(dir.save), "/BIN_perPFG_allStrata/")
-    .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/BIN_perPFG_allStrata/"))
-    
-    dir.output.perPFG.perStrata = paste0(name.simulation, "/RESULTS/", basename(dir.save), "/ABUND_perPFG_perStrata/")
-    .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/ABUND_perPFG_perStrata/"))
+    .getGraphics_results(name.simulation  = name.simulation
+                         , abs.simulParam = abs.simulParam)
     
     ## Get number of PFGs ----------------------------------------------------------
-    file.globalParam = .getParam(params.lines = abs.simulParam
-                                 , flag = "GLOBAL_PARAMS"
-                                 , flag.split = "^--.*--$"
-                                 , is.num = FALSE)
-    no_PFG = .getParam(params.lines = file.globalParam
-                       , flag = "NB_FG"
-                       , flag.split = " "
-                       , is.num = TRUE)
-    if (length(no_PFG) == 0 || .testParam_notNum(no_PFG))
-    {
-      stop(paste0("Missing data!\n The number of PFG (NB_FG) within ", file.globalParam, " does not contain any value"))
-    }
-    
     ## Get PFG names ---------------------------------------------------------------
-    PFG = .getParam(params.lines = abs.simulParam
-                    , flag = "PFG_LIFE_HISTORY_PARAMS"
-                    , flag.split = "^--.*--$"
-                    , is.num = FALSE)
-    pattern = ".*SUCC_"
-    PFG = sub(".txt", "", sub(pattern, "", PFG))
-    if (length(PFG) != no_PFG)
-    {
-      stop(paste0("Missing data!\n The number of PFG (NB_FG) within ", file.globalParam
-                  , " is different from the number of PFG files contained in ", name.simulation, "/DATA/PFGS/SUCC/"))
-    }
+    .getGraphics_PFG(name.simulation  = name.simulation
+                     , abs.simulParam = abs.simulParam)
     
     ## Get raster mask -------------------------------------------------------------
-    file.mask = .getParam(params.lines = abs.simulParam
-                          , flag = "MASK"
-                          , flag.split = "^--.*--$"
-                          , is.num = FALSE)
-    .testParam_existFile(file.mask)
-    
-    ras.mask = raster(file.mask)
-    ras.mask[which(ras.mask[] == 0)] = NA
-    xy.1 = xyFromCell(ras.mask, which(ras.mask[] == 1))
+    .getGraphics_mask(abs.simulParam = abs.simulParam)
     
     ## Get list of arrays and extract years of simulation --------------------------
     years = sort(unique(as.numeric(year)))
@@ -323,6 +284,7 @@ POST_FATE.graphic_mapPFGlight = function(
     .unzip(folder_name = dir.output.perPFG.perStrata
            , list_files = raster.perPFG.perStrata
            , nb_cores = opt.no_CPU)
+    
     
     ## get the data inside the rasters ---------------------------------------------
     pdf(file = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_E_map_PFGlight_", basename(dir.save), ".pdf")

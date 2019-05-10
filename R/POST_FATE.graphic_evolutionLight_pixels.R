@@ -137,15 +137,32 @@ POST_FATE.graphic_evolutionLight_pixels = function(
     cat("\n Simulation file : ", abs.simulParam)
     cat("\n")
     
-    dir.save = .getParam(params.lines = abs.simulParam
-                         , flag = "SAVE_DIR"
-                         , flag.split = "^--.*--$"
-                         , is.num = FALSE)
-    .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/"))
+    ## Get results directories -----------------------------------------------------
+    .getGraphics_results(name.simulation  = name.simulation
+                         , abs.simulParam = abs.simulParam)
     
     dir.output.light = paste0(name.simulation, "/RESULTS/", basename(dir.save), "/LIGHT/")
     .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/LIGHT/"))
+
+    ## Get raster mask -------------------------------------------------------------
+    .getGraphics_mask(abs.simulParam = abs.simulParam)
     
+    ## Get concerned cells id ------------------------------------------------------
+    IDS = sample(ind_1_mask, 5)
+    if (!is.null(opt.cells_ID))
+    {
+      if (sum(opt.cells_ID %in% ind_1_mask) == length(opt.cells_ID))
+      {
+        IDS = opt.cells_ID
+      } else
+      {
+        warning(paste0("The values given in `opt.cells_ID` do not match with any cells of the studied area \n"
+                       , "(obtained from the raster file `"
+                       , file.mask
+                       , "`)\n"
+                       , "They will be replaced by randomly selected cells."))
+      }
+    }
     
     ## Get list of arrays and extract years of simulation --------------------------
     raster.light.perStrata = grep("Light_Resources_", list.files(dir.output.light), value = TRUE)
@@ -173,34 +190,6 @@ POST_FATE.graphic_evolutionLight_pixels = function(
     cat("\n Number of strata : ", no_strata)
     cat("\n")
 
-    
-    ## Get raster mask -------------------------------------------------------------
-    file.mask = .getParam(params.lines = abs.simulParam
-                          , flag = "MASK"
-                          , flag.split = "^--.*--$"
-                          , is.num = FALSE)
-    .testParam_existFile(file.mask)
-    
-    ras.mask = raster(file.mask)
-    ras.mask[which(ras.mask[] == 0)] = NA
-    ind_1_mask = which(ras.mask[] == 1)
-    
-    IDS = sample(ind_1_mask, 5)
-    if (!is.null(opt.cells_ID))
-    {
-      if (sum(opt.cells_ID %in% ind_1_mask) == length(opt.cells_ID))
-      {
-        IDS = opt.cells_ID
-      } else
-      {
-        warning(paste0("The values given in `opt.cells_ID` do not match with any cells of the studied area \n"
-                       , "(obtained from the raster file `"
-                       , file.mask
-                       , "`)\n"
-                       , "They will be replaced by randomly selected cells."))
-      }
-    }
-    
     ## UNZIP the raster saved ------------------------------------------------------
     .unzip_ALL(folder_name = dir.output.light, nb_cores = opt.no_CPU)
     
@@ -208,6 +197,7 @@ POST_FATE.graphic_evolutionLight_pixels = function(
     cat("\n Selected years : ", years)
     cat("\n Selected cells : ", IDS)
     cat("\n")
+    
     
     ## get the data inside the rasters ---------------------------------------------
     cat("\n GETTING LIGHT for year")

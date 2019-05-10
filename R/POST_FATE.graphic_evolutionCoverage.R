@@ -156,15 +156,30 @@ POST_FATE.graphic_evolutionCoverage = function(
     cat("\n Simulation file : ", abs.simulParam)
     cat("\n")
     
-    dir.save = .getParam(params.lines = abs.simulParam
-                         , flag = "SAVE_DIR"
-                         , flag.split = "^--.*--$"
-                         , is.num = FALSE)
-    .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/"))
+    ## Get results directories -----------------------------------------------------
+    .getGraphics_results(name.simulation  = name.simulation
+                         , abs.simulParam = abs.simulParam)
     
-    dir.output.perPFG.allStrata = paste0(name.simulation, "/RESULTS/", basename(dir.save), "/ABUND_perPFG_allStrata/")
-    .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/ABUND_perPFG_allStrata/"))
+    ## Get number of PFGs ----------------------------------------------------------
+    ## Get PFG names ---------------------------------------------------------------
+    .getGraphics_PFG(name.simulation  = name.simulation
+                     , abs.simulParam = abs.simulParam)
     
+    ## Get raster mask -------------------------------------------------------------
+    .getGraphics_mask(abs.simulParam = abs.simulParam)
+    
+    ## Get habitat information -----------------------------------------------------
+    no_hab = 1
+    hab_names = "ALL"
+    if (exists("ras.habitat"))
+    {
+      ras.habitat = ras.habitat * ras.mask
+      df.habitat = data.frame(ID = cellFromXY(ras.habitat, xy.1))
+      df.habitat$HAB = ras.habitat[df.habitat$ID]
+      hab_names = c(hab_names, unique(df.habitat$HAB))
+      hab_names = hab_names[which(!is.na(hab_names))]
+      no_hab = length(hab_names)
+    }
     
     ## Get list of arrays and extract years of simulation --------------------------
     raster.perPFG.allStrata = grep("Abund_", list.files(dir.output.perPFG.allStrata), value = TRUE)
@@ -177,58 +192,6 @@ POST_FATE.graphic_evolutionCoverage = function(
     years = sort(unique(as.numeric(years)))
     years = years[round(seq(1, length(years), length.out = min(no.years, length(years))))]
     no_years = length(years)
-    
-    ## Get number of PFGs ----------------------------------------------------------
-    file.globalParam = .getParam(params.lines = abs.simulParam
-                                 , flag = "GLOBAL_PARAMS"
-                                 , flag.split = "^--.*--$"
-                                 , is.num = FALSE)
-    no_PFG = .getParam(params.lines = file.globalParam
-                       , flag = "NB_FG"
-                       , flag.split = " "
-                       , is.num = TRUE)
-    if (length(no_PFG) == 0 || .testParam_notNum(no_PFG))
-    {
-      stop(paste0("Missing data!\n The number of PFG (NB_FG) within ", file.globalParam, " does not contain any value"))
-    }
-    
-    ## Get PFG names ---------------------------------------------------------------
-    PFG = .getParam(params.lines = abs.simulParam
-                    , flag = "PFG_LIFE_HISTORY_PARAMS"
-                    , flag.split = "^--.*--$"
-                    , is.num = FALSE)
-    pattern = ".*SUCC_"
-    PFG = sub(".txt", "", sub(pattern, "", PFG))
-    if (length(PFG) != no_PFG)
-    {
-      stop(paste0("Missing data!\n The number of PFG (NB_FG) within ", file.globalParam
-                  , " is different from the number of PFG files contained in ", name.simulation, "/DATA/PFGS/SUCC/"))
-    }
-    
-    ## Get raster mask -------------------------------------------------------------
-    file.mask = .getParam(params.lines = abs.simulParam
-                          , flag = "MASK"
-                          , flag.split = "^--.*--$"
-                          , is.num = FALSE)
-    .testParam_existFile(file.mask)
-    
-    ras.mask = raster(file.mask)
-    ras.mask[which(ras.mask[] == 0)] = NA
-    ind_1_mask = which(ras.mask[] == 1)
-    no_1_mask = length(ind_1_mask)
-    xy.1 = xyFromCell(ras.mask, ind_1_mask)
-    
-    no_hab = 1
-    hab_names = "ALL"
-    if (exists("ras.habitat"))
-    {
-      ras.habitat = ras.habitat * ras.mask
-      df.habitat = data.frame(ID = cellFromXY(ras.habitat, xy.1))
-      df.habitat$HAB = ras.habitat[df.habitat$ID]
-      hab_names = c(hab_names, unique(df.habitat$HAB))
-      hab_names = hab_names[which(!is.na(hab_names))]
-      no_hab = length(hab_names)
-    }
     
     ## UNZIP the raster saved ------------------------------------------------------
     .unzip_ALL(folder_name = dir.output.perPFG.allStrata, nb_cores = opt.no_CPU)

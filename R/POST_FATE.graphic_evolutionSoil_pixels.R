@@ -126,41 +126,18 @@ POST_FATE.graphic_evolutionSoil_pixels = function(
     cat("\n Simulation name : ", name.simulation)
     cat("\n Simulation file : ", abs.simulParam)
     cat("\n")
-    
-    dir.save = .getParam(params.lines = abs.simulParam
-                         , flag = "SAVE_DIR"
-                         , flag.split = "^--.*--$"
-                         , is.num = FALSE)
-    .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/"))
+
+    ## Get results directories -----------------------------------------------------
+    .getGraphics_results(name.simulation  = name.simulation
+                         , abs.simulParam = abs.simulParam)
     
     dir.output.soil = paste0(name.simulation, "/RESULTS/", basename(dir.save), "/SOIL/")
     .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/SOIL/"))
-    
-    
-    ## Get list of arrays and extract years of simulation --------------------------
-    raster.soil = grep("Soil_Resources_", list.files(dir.output.soil), value = TRUE)
-    if (length(raster.soil) == 0)
-    {
-      stop(paste0("Missing data!\n The folder ", dir.output.soil, " does not contain adequate files"))
-    }
-    years = sapply(sub("Soil_Resources_YEAR_", "", raster.soil)
-                   , function(x) strsplit(as.character(x), "[.]")[[1]][1])
-    years = sort(unique(as.numeric(years)))
-    years = years[round(seq(1, length(years), length.out = min(no.years, length(years))))]
-    no_years = length(years)
 
-    
     ## Get raster mask -------------------------------------------------------------
-    file.mask = .getParam(params.lines = abs.simulParam
-                          , flag = "MASK"
-                          , flag.split = "^--.*--$"
-                          , is.num = FALSE)
-    .testParam_existFile(file.mask)
+    .getGraphics_mask(abs.simulParam = abs.simulParam)
     
-    ras.mask = raster(file.mask)
-    ras.mask[which(ras.mask[] == 0)] = NA
-    ind_1_mask = which(ras.mask[] == 1)
-    
+    ## Get concerned cells id ------------------------------------------------------
     IDS = sample(ind_1_mask, 5)
     abund.file = NULL
     if (!is.null(opt.cells_ID))
@@ -184,6 +161,18 @@ POST_FATE.graphic_evolutionSoil_pixels = function(
       }
     }
     
+    ## Get list of arrays and extract years of simulation --------------------------
+    raster.soil = grep("Soil_Resources_", list.files(dir.output.soil), value = TRUE)
+    if (length(raster.soil) == 0)
+    {
+      stop(paste0("Missing data!\n The folder ", dir.output.soil, " does not contain adequate files"))
+    }
+    years = sapply(sub("Soil_Resources_YEAR_", "", raster.soil)
+                   , function(x) strsplit(as.character(x), "[.]")[[1]][1])
+    years = sort(unique(as.numeric(years)))
+    years = years[round(seq(1, length(years), length.out = min(no.years, length(years))))]
+    no_years = length(years)
+
     ## UNZIP the raster saved ------------------------------------------------------
     .unzip_ALL(folder_name = dir.output.soil, nb_cores = opt.no_CPU)
     
@@ -191,6 +180,7 @@ POST_FATE.graphic_evolutionSoil_pixels = function(
     cat("\n Selected years : ", years)
     cat("\n Selected cells : ", IDS)
     cat("\n")
+    
     
     ## get the data inside the rasters ---------------------------------------------
     cat("\n GETTING SOIL for year")

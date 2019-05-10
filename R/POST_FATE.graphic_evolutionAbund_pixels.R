@@ -137,66 +137,19 @@ POST_FATE.graphic_evolutionAbund_pixels = function(
     cat("\n Simulation file : ", abs.simulParam)
     cat("\n")
     
-    dir.save = .getParam(params.lines = abs.simulParam
-                         , flag = "SAVE_DIR"
-                         , flag.split = "^--.*--$"
-                         , is.num = FALSE)
-    .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/"))
-    
-    dir.output.perPFG.allStrata = paste0(name.simulation, "/RESULTS/", basename(dir.save), "/ABUND_perPFG_allStrata/")
-    .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/ABUND_perPFG_allStrata/"))
-    
-    
-    ## Get list of arrays and extract years of simulation --------------------------
-    raster.perPFG.allStrata = grep("Abund_", list.files(dir.output.perPFG.allStrata), value = TRUE)
-    if (length(raster.perPFG.allStrata) == 0)
-    {
-      stop(paste0("Missing data!\n The folder ", dir.output.perPFG.allStrata, " does not contain adequate files"))
-    }
-    years = sapply(sub("Abund_YEAR_", "", raster.perPFG.allStrata)
-                   , function(x) strsplit(as.character(x), "_")[[1]][1])
-    years = sort(unique(as.numeric(years)))
-    years = years[round(seq(1, length(years), length.out = min(no.years, length(years))))]
-    no_years = length(years)
+    ## Get results directories -----------------------------------------------------
+    .getGraphics_results(name.simulation  = name.simulation
+                         , abs.simulParam = abs.simulParam)
     
     ## Get number of PFGs ----------------------------------------------------------
-    file.globalParam = .getParam(params.lines = abs.simulParam
-                                 , flag = "GLOBAL_PARAMS"
-                                 , flag.split = "^--.*--$"
-                                 , is.num = FALSE)
-    no_PFG = .getParam(params.lines = file.globalParam
-                       , flag = "NB_FG"
-                       , flag.split = " "
-                       , is.num = TRUE)
-    if (length(no_PFG) == 0 || .testParam_notNum(no_PFG))
-    {
-      stop(paste0("Missing data!\n The number of PFG (NB_FG) within ", file.globalParam, " does not contain any value"))
-    }
-    
     ## Get PFG names ---------------------------------------------------------------
-    PFG = .getParam(params.lines = abs.simulParam
-                    , flag = "PFG_LIFE_HISTORY_PARAMS"
-                    , flag.split = "^--.*--$"
-                    , is.num = FALSE)
-    pattern = ".*SUCC_"
-    PFG = sub(".txt", "", sub(pattern, "", PFG))
-    if (length(PFG) != no_PFG)
-    {
-      stop(paste0("Missing data!\n The number of PFG (NB_FG) within ", file.globalParam
-                  , " is different from the number of PFG files contained in ", name.simulation, "/DATA/PFGS/SUCC/"))
-    }
+    .getGraphics_PFG(name.simulation  = name.simulation
+                     , abs.simulParam = abs.simulParam)
     
     ## Get raster mask -------------------------------------------------------------
-    file.mask = .getParam(params.lines = abs.simulParam
-                          , flag = "MASK"
-                          , flag.split = "^--.*--$"
-                          , is.num = FALSE)
-    .testParam_existFile(file.mask)
+    .getGraphics_mask(abs.simulParam = abs.simulParam)
     
-    ras.mask = raster(file.mask)
-    ras.mask[which(ras.mask[] == 0)] = NA
-    ind_1_mask = which(ras.mask[] == 1)
-    
+    ## Get concerned cells id ------------------------------------------------------
     IDS = sample(ind_1_mask, 5)
     if (!is.null(opt.cells_ID))
     {
@@ -212,7 +165,19 @@ POST_FATE.graphic_evolutionAbund_pixels = function(
                        , "They will be replaced by randomly selected cells."))
       }
     }
-    
+
+    ## Get list of arrays and extract years of simulation --------------------------
+    raster.perPFG.allStrata = grep("Abund_", list.files(dir.output.perPFG.allStrata), value = TRUE)
+    if (length(raster.perPFG.allStrata) == 0)
+    {
+      stop(paste0("Missing data!\n The folder ", dir.output.perPFG.allStrata, " does not contain adequate files"))
+    }
+    years = sapply(sub("Abund_YEAR_", "", raster.perPFG.allStrata)
+                   , function(x) strsplit(as.character(x), "_")[[1]][1])
+    years = sort(unique(as.numeric(years)))
+    years = years[round(seq(1, length(years), length.out = min(no.years, length(years))))]
+    no_years = length(years)
+
     ## UNZIP the raster saved ------------------------------------------------------
     .unzip_ALL(folder_name = dir.output.perPFG.allStrata, nb_cores = opt.no_CPU)
     
@@ -220,6 +185,7 @@ POST_FATE.graphic_evolutionAbund_pixels = function(
     cat("\n Selected years : ", years)
     cat("\n Selected cells : ", IDS)
     cat("\n")
+    
     
     ## get the data inside the rasters ---------------------------------------------
     cat("\n GETTING ABUNDANCE for year")
