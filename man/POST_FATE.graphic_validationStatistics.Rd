@@ -7,7 +7,8 @@ to asses the quality of the model
  \cr for one (or several) specific year of a \code{FATE-HD} simulation}
 \usage{
 POST_FATE.graphic_validationStatistics(name.simulation,
-  file.simulParam = NULL, year, mat.PFG.obs, opt.no_CPU = 1)
+  file.simulParam = NULL, year, mat.PFG.obs, opt.ras_habitat = NULL,
+  opt.no_CPU = 1)
 }
 \arguments{
 \item{name.simulation}{a \code{string} that corresponds to the main directory
@@ -21,6 +22,10 @@ of the \code{FATE-HD} simulation}
 will be used to extract PFG binary maps}
 
 \item{mat.PFG.obs}{a \code{data.frame} with 4 columns : PFG, X, Y, obs}
+
+\item{opt.ras_habitat}{default NULL (\emph{optional}). A \code{string} that
+corresponds to the file name of a raster mask, with an \code{integer} value
+within each pixel, corresponding to a specific habitat}
 
 \item{opt.no_CPU}{default 1 (\emph{optional}). The number of resources that 
 can be used to parallelize the \code{unzip/zip} of raster files}
@@ -82,6 +87,9 @@ within the \code{mat.PFG.obs} object :
   matching with the projection of the mask of \code{name.simulation}}
   \item{\code{obs}}{either 0 or 1 to indicate presences or absences}
 }
+
+If a raster mask for habitat has been provided, the graphics will be also
+done per habitat.
 }
 \examples{
 

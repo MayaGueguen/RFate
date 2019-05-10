@@ -276,7 +276,7 @@ POST_FATE.graphic_evolutionCoverage = function(
         
         if (exists("df.habitat"))
         {
-          ras = merge(ras, df.habitat, by.x = "row.names", by.y = "ID")
+          ras = merge(ras, df.habitat, by.x = "row.names", by.y = "ID", all.x = TRUE)
         } else
         {
           ras$HAB = "ALL"

@@ -122,15 +122,20 @@ POST_FATE.relativeAbund = function(
     cat("\n")
     
     ## Get results directories -----------------------------------------------------
+    # .getGraphics_results(name.simulation, abs.simulParam)
+    # 
+    # ## Get number of PFGs ----------------------------------------------------------
+    # ## Get PFG names ---------------------------------------------------------------
+    # .getGraphics_PFG(name.simulation, abs.simulParam)
     dir.save = .getParam(params.lines = abs.simulParam
                          , flag = "SAVE_DIR"
                          , flag.split = "^--.*--$"
                          , is.num = FALSE)
     .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/"))
-    
+
     dir.output.perPFG.allStrata = paste0(name.simulation, "/RESULTS/", basename(dir.save), "/ABUND_perPFG_allStrata/")
     .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/ABUND_perPFG_allStrata/"))
-    
+
     dir.output.perPFG.allStrata.REL = paste0(name.simulation, "/RESULTS/", basename(dir.save), "/ABUND_REL_perPFG_allStrata/")
     if (!dir.exists(dir.output.perPFG.allStrata.REL))
     {
@@ -150,7 +155,7 @@ POST_FATE.relativeAbund = function(
     {
       stop(paste0("Missing data!\n The number of PFG (NB_FG) within ", file.globalParam, " does not contain any value"))
     }
-    
+
     ## Get PFG names ---------------------------------------------------------------
     PFG = .getParam(params.lines = abs.simulParam
                     , flag = "PFG_LIFE_HISTORY_PARAMS"

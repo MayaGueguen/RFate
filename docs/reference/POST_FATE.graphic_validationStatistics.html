@@ -164,7 +164,8 @@ assessment for one (or several) specific <code>FATE-HD</code> simulation year.</
     </div>
 
     <pre class="usage"><span class='fu'>POST_FATE.graphic_validationStatistics</span>(<span class='no'>name.simulation</span>,
-  <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>year</span>, <span class='no'>mat.PFG.obs</span>, <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
+  <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>year</span>, <span class='no'>mat.PFG.obs</span>, <span class='kw'>opt.ras_habitat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -188,6 +189,12 @@ will be used to extract PFG binary maps</p></td>
     <tr>
       <th>mat.PFG.obs</th>
       <td><p>a <code>data.frame</code> with 4 columns : PFG, X, Y, obs</p></td>
+    </tr>
+    <tr>
+      <th>opt.ras_habitat</th>
+      <td><p>default NULL (<em>optional</em>). A <code>string</code> that
+corresponds to the file name of a raster mask, with an <code>integer</code> value
+within each pixel, corresponding to a specific habitat</p></td>
     </tr>
     <tr>
       <th>opt.no_CPU</th>
@@ -243,6 +250,8 @@ within the <code>mat.PFG.obs</code> object :</p>
   matching with the projection of the mask of <code>name.simulation</code></p></dd>
   <dt><code>obs</code></dt><dd><p>either 0 or 1 to indicate presences or absences</p></dd>
 </dl>
+    <p>If a raster mask for habitat has been provided, the graphics will be also
+done per habitat.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
