@@ -276,7 +276,8 @@ POST_FATE.graphic_mapPFGcover = function(
         } else
         {
           ras.BIN = ras.mask
-          warning(paste0("Missing data!\n No binary map for PFG ", fg
+          names(ras.BIN) = pfg
+          warning(paste0("Missing data!\n No binary map for PFG ", pfg
                          , "\n No abundance filtering for this PFG."
                          , "\n Binary are created with the POST_FATE.graphic_validationStatistics function. Please check!"))
         }
