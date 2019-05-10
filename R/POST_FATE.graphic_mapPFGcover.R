@@ -261,7 +261,26 @@ POST_FATE.graphic_mapPFGcover = function(
       ras_TOT.list = foreach (pfg = PFG) %do%
       {
         cat(" ", pfg)
-
+        
+        ## Binary map
+        bin_name = paste0(dir.output.perPFG.allStrata.BIN
+                          , "Binary_YEAR_"
+                          , y
+                          , "_"
+                          , pfg
+                          , "_STRATA_all.tif")
+        if (file.exists(bin_name))
+        {
+          ras.BIN = stack(bin_name) * ras.mask
+          names(ras.BIN) = pfg
+        } else
+        {
+          ras.BIN = ras.mask
+          warning(paste0("Missing data!\n No binary map for PFG ", fg
+                         , "\n No abundance filtering for this PFG."
+                         , "\n Binary are created with the POST_FATE.graphic_validationStatistics function. Please check!"))
+        }
+        
         ## Abundance maps
         file_name = paste0(dir.output.perPFG.perStrata,
                            "Abund_YEAR_",
@@ -276,21 +295,8 @@ POST_FATE.graphic_mapPFGcover = function(
         gp_st = gp_st[which(file.exists(file_name))]
         file_name = file_name[which(file.exists(file_name))]
         
-        ## Binary map
-        bin_name = paste0(dir.output.perPFG.allStrata.BIN
-                          , "Binary_YEAR_"
-                          , y
-                          , "_"
-                          , pfg
-                          , "_STRATA_all.tif")
-        
-        if (length(file_name) > 0 && file.exists(bin_name))
+        if (length(file_name) > 0)
         {
-          ## Binary map
-          ras.BIN = stack(bin_name) * ras.mask
-          names(ras.BIN) = pfg
-          
-          ## Abundance maps
           ras = stack(file_name) * ras.mask
           ras = ras * ras.BIN
           ras_TOT = ras
