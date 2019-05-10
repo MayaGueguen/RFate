@@ -11,7 +11,7 @@ getDB_ANDROSACE = function()
   ## Create a connection to the postgres database
   ## note that "con" will be used later in each connection to the database
   con <- dbConnect(drv,
-                   dbname = "androsace_v2",
+                   dbname = "androsace_v3",
                    host = "152.77.214.210",
                    port = 5432,
                    user = username,

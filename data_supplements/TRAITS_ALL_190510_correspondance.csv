@@ -1,0 +1,4478 @@
+code_cbna	libelle
+23	Acer pseudoplatanus L.
+586	Sanicula europaea L.
+7895	Fagus sylvatica L.
+8218	Geranium sylvaticum L.
+9369	Fraxinus excelsior L.
+11729	Sorbus aucuparia L.
+13039	Daphne mezereum L.
+13100	Ulmus glabra Hudson
+14321	Cypripedium calceolus L.
+14989	Neottia nidus-avis (L.) L.C.M. Richard
+15851	Deschampsia flexuosa (L.) Trin.
+1409	Chondrilla juncea L.
+1706	Erigeron annuus (L.) Pers.
+1865	Hieracium alpinum L. gr.
+1869	Hieracium amplexicaule L. gr.
+1887	Hieracium aurantiacum L.
+1921	Hieracium bupleuroides C.C. Gmelin gr.
+1977	Hieracium cydonifolium Vill. gr.
+1978	Hieracium cymosum L.
+2034	Hieracium glabratum Hoppe ex Willd. gr.
+2042	Hieracium glaucopsis Gren. & Godron gr.
+2044	Hieracium glaucum All. gr.
+2060	Hieracium humile Jacq. gr.
+2066	Hieracium intybaceum All.
+2074	Hieracium juraniforme Zahn gr.
+2080	Hieracium lachenalii C.C. Gmelin, sensu 3, 5, 6 gr. ar
+2083	Hieracium lactucella Wallr.
+2092	Hieracium laevigatum Willd. gr. gothicum
+2124	Hieracium lycopsifolium Froelich gr.
+2126	Hieracium maculatum Schrank [1789], non Sm. in Sowerby
+2144	Hieracium murorum L.
+2172	Hieracium pallidiflorum Jordan ex Ascherson gr.
+2180	Hieracium peleterianum MÚrat
+2197	Hieracium piliferum Hoppe gr.
+2199	Hieracium pilosella L.
+2209	Hieracium piloselloides Vill.
+2225	Hieracium prenanthoides Vill. gr.
+2253	Hieracium racemosum Waldst. & Kit. ex Willd. gr.
+2256	Hieracium rapunculoides Arvet-Touvet gr.
+2263	Hieracium rionii Gremli gr. caesioides
+2279	Hieracium schmidtii Tausch gr.
+2280	Hieracium scorzonerifolium Vill. gr.
+2333	Hieracium umbellatum L. gr.
+2334	Hieracium umbrosum Jordan gr.
+2338	Hieracium valdepilosum Vill. gr.
+2343	Hieracium villosum Jacq. gr.
+2346	Hieracium virgultorum Jordan gr. sabaudum
+2379	Hieracium x-niphostribes Peter
+3076	Taraxacum erythrospermum Andrz. ex Besser gr.
+3128	Taraxacum palustre (Lyons) Symons gr.
+3733	Arabis hirsuta (L.) Scop.
+6540	Euphorbia esula L.
+8339	Hypericum perforatum L.
+9409	Oxalis corniculata L.
+9419	Oxalis fontana Bunge
+10638	Ranunculus auricomus L.
+10920	Alchemilla alpina L.
+10942	Alchemilla conjuncta Bab.
+10943	Alchemilla connivens Buser
+10944	Alchemilla coriacea Buser
+10947	Alchemilla crinita Buser
+10952	Alchemilla fallax Buser
+10953	Alchemilla filicaulis Buser
+10956	Alchemilla firma Buser in Magnier
+10957	Alchemilla fissa G³nther & Schummel
+10958	Alchemilla flabellata Buser
+10967	Alchemilla glabra Neygenf., non Poiret
+10969	Alchemilla glaucescens Wallr.
+10973	Alchemilla grossidens Buser
+10982	Alchemilla incisa Buser
+10998	Alchemilla monticola Opiz
+11003	Alchemilla pallens Buser
+11026	Alchemilla trunciloba Buser
+11035	Alchemilla xanthochlora Rothm.
+11075	Cotoneaster integerrimus Medik.
+11082	Cotoneaster tomentosus Lindley
+11200	Potentilla argentea L.
+11202	Potentilla aurea L.
+11219	Potentilla crantzii (Crantz) G. Beck ex Fritsch
+11241	Potentilla inclinata Vill.
+11491	Rubus caesius L.
+11495	Rubus canescens DC.
+11509	Rubus corylifolius Sm. gr.
+11541	Rubus fruticosus L.
+11565	Rubus hirtus Waldst. & Kit.
+11666	Rubus scaber Weihe & Nees in Bluff & Fingerh.
+11736	Sorbus mougeotii Soyer-Willemet & Godron
+15949	Eragrostis cilianensis (All.) Janchen
+15959	Eragrostis minor Host
+15964	Eragrostis pilosa (L.)P. Beauv.
+16538	Nardus stricta L.
+16696	Poa alpina L.
+16728	Poa compressa L.
+16744	Poa glauca Vahl
+16746	Poa humilis Ehrh. ex Hoffm.
+16758	Poa nemoralis L.
+16763	Poa palustris L.
+16767	Poa pratensis L.
+17570	Dryopteris affinis (Lowe) Fraser-Jenkins
+17778	Phegopteris connectilis (Michaux) Watt
+40028	Taraxacum alpinum (Hoppe) Hegetschw.
+40244	Alchemilla alpigena Buser
+40420	Hieracium pilosum Schleicher ex Froel. gr.
+40444	Euphorbia dulcis subsp. incompta (Ces.) Nyman, 1890
+40608	Alchemilla vulgaris groupe
+139	Aegopodium podagraria L.
+171	Anthriscus sylvestris (L.) Hoffm. subsp. sylvestris
+193	Astrantia major L. subsp. major
+237	Bupleurum falcatum L. subsp. falcatum
+256	Bupleurum ranunculoides L. subsp. ranunculoides
+272	Carum carvi L.
+290	Chaerophyllum aureum L.
+294	Chaerophyllum hirsutum L.
+321	Daucus carota L.
+365	Eryngium campestre L.
+419	Heracleum sphondylium L.
+479	Meum athamanticum Jacq.
+515	Pastinaca sativa L.
+561	Pimpinella major (L.) Hudson
+564	Pimpinella saxifraga L.
+609	Selinum carvifolium (L.) L.
+618	Seseli annuum L. subsp. annuum
+647	Silaum silaus (L.) Schinz & Thell.
+846	Antennaria dioica (L.) Gaertner
+883	Anthemis tinctoria L.
+902	Arnica montana L.
+980	Artemisia vulgaris L.
+987	Aster amellus L.
+1046	Bellis perennis L.
+1076	Buphthalmum salicifolium L.
+1124	Carduus crispus L. subsp. multiflorus (Gaudin) Gremli
+1163	Carduus personata (L.) Jacq. subsp. personata
+1198	Carlina vulgaris L. subsp. vulgaris
+1269	Centaurea jacea L.
+1294	Centaurea montana L.
+1303	Centaurea nigra L.
+1357	Centaurea scabiosa L.
+1467	Cichorium intybus L.
+1489	Cirsium acaule Scop.
+1492	Cirsium arvense (L.) Scop.
+1510	Cirsium eriophorum (L.) Scop.
+1534	Cirsium oleraceum (L.) Scop.
+1535	Cirsium palustre (L.) Scop.
+1541	Cirsium rivulare (Jacq.) All.
+1546	Cirsium tuberosum (L.) All.
+1568	Conyza canadensis (L.) Cronq.
+1591	Crepis aurea (L.) Cass.
+1595	Crepis biennis L.
+1601	Crepis capillaris (L.) Wallr.
+1611	Crepis mollis (Jacq.) Ascherson
+1615	Crepis paludosa (L.) Moench
+1835	Helianthus tuberosus L.
+2407	Hypochaeris maculata L.
+2410	Hypochaeris radicata L.
+2419	Inula conyza DC.
+2430	Inula hirta L.
+2435	Inula salicina L.
+2501	Leontodon autumnalis L. subsp. autumnalis
+2509	Leontodon hispidus L.
+2532	Leontodon saxatilis Lam. subsp. saxatilis
+2593	Leucanthemum vulgare Lam.
+2620	Matricaria discoidea DC.
+2718	Picris hieracioides L.
+2749	Pulicaria dysenterica (L.) Bernh.
+2805	Scorzonera humilis L.
+2846	Senecio erraticus Bertol.
+2929	Senecio vulgaris L. subsp. vulgaris
+2942	Serratula tinctoria L.
+2954	Solidago canadensis L.
+2957	Solidago gigantea Aiton
+2974	Solidago virgaurea L. subsp. virgaurea
+2993	Sonchus palustris L.
+3027	Tanacetum vulgare L.
+3215	Tragopogon dubius Scop.
+3233	Tragopogon pratensis L.
+3244	Tussilago farfara L.
+3317	Alnus alnobetula (Ehrh.) C. Koch subsp. alnobetula
+3446	Echium vulgare L.
+3475	Lithospermum officinale L.
+3495	Myosotis arvensis Hill
+3525	Myosotis laxa Lehm. subsp. cespitosa (C.F. Schultz) Hyl. ex Nordh.
+3530	Myosotis nemorosa Besser
+3546	Myosotis scorpioides L.
+3641	Symphytum officinale L.
+3707	Arabidopsis thaliana (L.) Heynh.
+3727	Arabis ciliata Clairv.
+3781	Barbarea vulgaris R. Br.
+3917	Capsella bursa-pastoris (L.) Medik.
+3964	Cardaria draba (L.) Desv.
+4011	Coronopus squamatus (Forsskål) Ascherson
+4142	Hesperis matronalis L.
+4271	Lepidium ruderale L.
+4399	Rorippa palustris (L.) Besser
+4461	Sisymbrium officinale (L.) Scop.
+4509	Thlaspi arvense L.
+4630	Campanula barbata L.
+4651	Campanula glomerata L.
+4676	Campanula patula L.
+4680	Campanula persicifolia L.
+4692	Campanula rotundifolia L.
+4700	Campanula scheuchzeri Vill. subsp. scheuchzeri
+4709	Campanula trachelium L.
+4758	Phyteuma nigrum F.W. Schmidt
+4759	Phyteuma orbiculare L.
+4776	Phyteuma spicatum L.
+4838	Sambucus ebulus L.
+4839	Sambucus nigra L.
+4977	Cerastium arvense L.
+5012	Cerastium fontanum Baumg. subsp. vulgare (Hartm.) Greuter & Burdet
+5090	Dianthus carthusianorum L.
+5163	Dianthus superbus L.
+5263	Minuartia sedoides (L.) Hiern
+5295	Myosoton aquaticum (L.) Moench
+5336	Sagina procumbens L.
+5399	Silene dioica (L.) Clairv.
+5456	Silene nutans L. subsp. nutans
+5514	Silene vulgaris (Moench) Garcke subsp. vulgaris
+5554	Spergularia rubra (L.) J. & C. Presl
+5564	Stellaria alsine Grimm
+5571	Stellaria graminea L.
+5573	Stellaria media (L.) Vill.
+5580	Stellaria nemorum L.
+5585	Stellaria palustris Retz.
+5687	Chenopodium bonus-henricus L.
+5924	Helianthemum nummularium (L.) Miller
+5990	Calystegia sepium (L.) R. Br. subsp. sepium
+5997	Convolvulus arvensis L.
+6073	Cornus sanguinea L.
+6077	Corylus avellana L.
+6101	Sedum acre L.
+6104	Sedum album L.
+6273	Knautia arvensis (L.) Coulter
+6333	Scabiosa columbaria L.
+6349	Scabiosa lucida Vill.
+6375	Succisa pratensis Moench
+6427	Calluna vulgaris (L.) Hull
+6490	Vaccinium myrtillus L.
+6684	Anthyllis vulneraria L.
+6736	Astragalus danicus Retz.
+6744	Astragalus frigidus (L.) A. Gray
+6747	Astragalus glycyphyllos L.
+6887	Cytisus scoparius (L.) Link subsp. scoparius
+6932	Genista anglica L.
+6950	Genista germanica L.
+6966	Genista pilosa L.
+6979	Genista sagittalis L.
+6989	Genista tinctoria L.
+7033	Hippocrepis comosa L.
+7107	Lathyrus pratensis L.
+7147	Lotus corniculatus L.
+7181	Lotus pedunculatus Cav.
+7236	Medicago falcata L.
+7270	Medicago lupulina L.
+7348	Melilotus altissimus Thuill.
+7387	Onobrychis viciifolia Scop.
+7431	Ononis spinosa L.
+7579	Trifolium alpestre L.
+7586	Trifolium arvense L.
+7589	Trifolium aureum Pollich
+7590	Trifolium badium Schreber
+7599	Trifolium campestre Schreber
+7609	Trifolium dubium Sm.
+7618	Trifolium fragiferum L.
+7623	Trifolium hybridum L.
+7651	Trifolium medium L.
+7660	Trifolium montanum L.
+7668	Trifolium ochroleucon Hudson
+7680	Trifolium pratense L.
+7696	Trifolium repens L.
+7702	Trifolium resupinatum L.
+7709	Trifolium rubens L.
+7719	Trifolium spadiceum L.
+7770	Ulex europaeus L. subsp. europaeus
+7796	Vicia cracca L.
+7817	Vicia hirsuta (L.) S.F. Gray
+7867	Vicia sepium L.
+7875	Vicia tenuifolia Roth subsp. tenuifolia
+7951	Centaurium erythraea Rafn subsp. erythraea
+8023	Gentiana asclepiadea L.
+8048	Gentiana cruciata L.
+8059	Gentiana lutea L.
+8069	Gentiana pneumonanthe L.
+8090	Gentiana verna L.
+8097	Gentianella campestris (L.) B÷rner
+8100	Gentianella ciliata (L.) Borckh.
+8101	Gentianella germanica (Willd.) B÷rner
+8108	Swertia perennis L.
+8175	Geranium dissectum L.
+8190	Geranium molle L.
+8194	Geranium palustre L.
+8200	Geranium pratense L.
+8203	Geranium pusillum L.
+8204	Geranium pyrenaicum Burm. fil.
+8214	Geranium sanguineum L.
+8238	Globularia bisnagarica L.
+8239	Globularia cordifolia L.
+8331	Hypericum maculatum Crantz subsp. maculatum
+8356	Hypericum tetrapterum Fries
+8441	Acinos alpinus (L.) Moench subsp. alpinus
+8459	Ajuga reptans L.
+8501	Clinopodium vulgare L.
+8525	Galeopsis pubescens Besser
+8533	Galeopsis tetrahit L.
+8539	Glechoma hederacea L.
+8555	Lamium album L.
+8576	Lamium maculatum L.
+8577	Lamium purpureum L.
+8595	Lycopus europaeus L.
+8613	Mentha aquatica L. subsp. aquatica
+8620	Mentha arvensis L.
+8627	Mentha longifolia (L.) Hudson
+8630	Mentha pulegium L.
+8697	Origanum vulgare L. subsp. vulgare
+8706	Prunella grandiflora (L.) Scholler
+8712	Prunella vulgaris L.
+8742	Salvia pratensis L.
+8782	Scutellaria galericulata L.
+8847	Stachys palustris L.
+8849	Stachys recta L.
+8863	Teucrium chamaedrys L.
+8885	Teucrium montanum L.
+8905	Teucrium scorodonia L.
+8948	Thymus pulegioides L.
+8985	Pinguicula alpina L.
+9042	Linum catharticum L.
+9070	Linum tenuifolium L.
+9089	Lythrum salicaria L.
+9144	Malva alcea L.
+9157	Malva moschata L.
+9159	Malva neglecta Wallr.
+9271	Epilobium angustifolium L.
+9280	Epilobium hirsutum L.
+9283	Epilobium montanum L.
+9290	Epilobium palustre L.
+9291	Epilobium parviflorum Schreber
+9297	Epilobium tetragonum L.
+9387	Ligustrum vulgare L.
+9655	Plantago lanceolata L.
+9663	Plantago major L.
+9670	Plantago media L.
+9955	Polygala amarella Crantz
+9963	Polygala comosa Schkuhr
+9981	Polygala serpyllifolia J.A.C. Hose
+9982	Polygala vulgaris L.
+10042	Polygonum aviculare L.
+10113	Rumex acetosa L.
+10119	Rumex acetosella L. subsp. acetosella
+10147	Rumex crispus L.
+10169	Rumex obtusifolius L.
+10324	Lysimachia nummularia L.
+10328	Lysimachia vulgaris L.
+10339	Primula elatior (L.) Hill
+10342	Primula farinosa L.
+10362	Primula veris L.
+10459	Anemone narcissifolia L.
+10578	Myosurus minimus L.
+10611	Pulsatilla vernalis (L.) Miller
+10615	Pulsatilla vulgaris Miller
+10620	Ranunculus aconitifolius L.
+10622	Ranunculus acris L.
+10642	Ranunculus breyninus Crantz
+10646	Ranunculus bulbosus L.
+10764	Ranunculus repens L.
+10889	Frangula alnus Miller
+10896	Rhamnus cathartica L.
+10912	Agrimonia eupatoria L.
+11102	Crataegus monogyna Jacq.
+11139	Filipendula ulmaria (L.) Maxim.
+11142	Filipendula vulgaris Moench
+11154	Fragaria viridis Weston
+11163	Geum rivale L.
+11225	Potentilla erecta (L.) Rõuschel
+11266	Potentilla palustris (L.) Scop.
+11277	Potentilla reptans L.
+11354	Prunus spinosa L.
+11388	Rosa canina L.
+11710	Sanguisorba minor Scop.
+11718	Sanguisorba officinalis L.
+11769	Asperula cynanchica L.
+11793	Cruciata laevipes Opiz
+11803	Galium aparine L.
+11818	Galium boreale L.
+11845	Galium glaucum L.
+11860	Galium mollugo L.
+11875	Galium palustre L.
+11889	Galium pumilum Murray
+11933	Galium uliginosum L.
+11942	Galium verum L.
+12030	Salix aurita L.
+12043	Salix cinerea L.
+12083	Salix repens L.
+12117	Thesium linophyllon L.
+12120	Thesium pyrenaicum Pourret
+12194	Saxifraga granulata L.
+12231	Saxifraga mutata L.
+12345	Bartsia alpina L.
+12511	Linaria vulgaris Miller
+12525	Melampyrum cristatum L.
+12529	Melampyrum pratense L.
+12560	Odontites luteus (L.) Clairv.
+12586	Orobanche caryophyllacea Sm.
+12629	Orobanche purpurea Jacq.
+12651	Orobanche teucrii Holandre
+12800	Verbascum lychnitis L.
+12814	Verbascum thapsus L.
+12833	Veronica arvensis L.
+12840	Veronica beccabunga L.
+12841	Veronica bellidioides L.
+12845	Veronica chamaedrys L.
+12851	Veronica filiformis Sm.
+12870	Veronica officinalis L.
+12879	Veronica prostrata L.
+12887	Veronica serpyllifolia L.
+13120	Urtica dioica L.
+13127	Urtica urens L.
+13146	Valeriana dioica L.
+13157	Valeriana officinalis L.
+13238	Viola arvensis Murray
+13250	Viola canina L. subsp. canina
+13273	Viola elatior Fries
+13276	Viola hirta L.
+13304	Viola palustris L.
+13312	Viola pumila Chaix
+13322	Viola saxatilis F.W. Schmidt
+13596	Leucojum vernum L.
+13639	Narcissus pseudonarcissus L.
+13828	Blysmus compressus (L.) Panzer ex Link
+13835	Carex acuta L.
+13838	Carex acutiformis Ehrh.
+13863	Carex brizoides L.
+13872	Carex caryophyllea Latourr.
+13892	Carex davalliana Sm.
+13899	Carex diandra Schrank
+13902	Carex dioica L.
+13904	Carex distans L.
+13906	Carex disticha Hudson
+13916	Carex echinata Murray
+13933	Carex flacca Schreber
+13938	Carex flava L.
+13967	Carex hirta L.
+13971	Carex hordeistichos Vill.
+13973	Carex hostiana DC.
+13976	Carex humilis Leysser
+13985	Carex lasiocarpa Ehrh.
+14009	Carex montana L.
+14024	Carex nigra (L.) Reichard
+14048	Carex ovalis Good.
+14052	Carex pallescens L.
+14054	Carex panicea L.
+14056	Carex paniculata L.
+14064	Carex pilulifera L.
+14077	Carex pulicaris L.
+14085	Carex remota L.
+14088	Carex riparia Curtis
+14090	Carex rostrata Stokes
+14119	Carex tomentosa L.
+14126	Carex vesicaria L.
+14132	Carex viridula Michaux subsp. viridula
+14136	Carex vulpina L.
+14188	Eleocharis palustris (L.) Roemer & Schultes
+14193	Eleocharis quinqueflora (F.X. Hartmann) O. Schwarz
+14194	Eleocharis uniglumis (Link) Schultes
+14204	Eriophorum latifolium Hoppe
+14210	Eriophorum vaginatum L.
+14234	Rhynchospora alba (L.) Vahl
+14235	Rhynchospora fusca (L.) Aiton fil.
+14246	Schoenus ferrugineus L.
+14249	Schoenus nigricans L.
+14307	Scirpus sylvaticus L.
+14316	Trichophorum cespitosum (L.) Hartman subsp. cespitosum
+14367	Muscari botryoides (L.) Miller
+14399	Ornithogalum umbellatum L.
+14513	Iris pseudacorus L.
+14566	Juncus acutiflorus Enrh. ex Hoffm.
+14576	Juncus articulatus L.
+14585	Juncus bufonius L.
+14600	Juncus compressus Jacq.
+14603	Juncus conglomeratus L.
+14605	Juncus effusus L.
+14607	Juncus filiformis L.
+14616	Juncus inflexus L.
+14642	Juncus squarrosus L.
+14645	Juncus subnodulosus Schrank
+14655	Juncus tenuis Willd.
+14671	Luzula campestris (Ehrh.) Lej.
+14697	Luzula multiflora (Ehrh.) Lej.
+14722	Luzula sylvatica (Hudson) Gaudin
+14755	Fritillaria meleagris L.
+14854	Tofieldia calyculata (L.) Wahlenb.
+14864	Anacamptis pyramidalis (L.) L.C.M. Richard
+14877	Coeloglossum viride (L.) Hartman
+14894	Dactylorhiza incarnata (L.) Soó
+14908	Dactylorhiza maculata (L.) Soó
+14938	Epipactis helleborine (L.) Crantz
+14950	Epipactis palustris (L.) Crantz
+14965	Gymnadenia conopsea (L.) R. Br. in Aiton fil.
+14969	Gymnadenia odoratissima (L.) L.C.M. Richard
+14973	Herminium monorchis (L.) R. Br.
+14974	Himantoglossum hircinum (L.) Sprengel
+14980	Liparis loeselii (L.) L.C.M. Richard
+14982	Listera ovata (L.) R. Br.
+15012	Ophrys apifera Hudson
+15022	Ophrys aranifera Hudson
+15057	Ophrys insectifera L.
+15156	Orchis mascula (L.) L.
+15162	Orchis militaris L.
+15187	Orchis purpurea Hudson
+15208	Platanthera bifolia (L.) L.C.M. Richard
+15211	Platanthera chlorantha (Custer) Reichenb.
+15243	Spiranthes aestivalis (Poiret) L.C.M. Richard
+15245	Spiranthes spiralis (L.) Chevall.
+15351	Agrostis rupestris All.
+15363	Agrostis stolonifera L.
+15431	Alopecurus geniculatus L.
+15437	Alopecurus pratensis L.
+15465	Anthoxanthum odoratum L.
+15482	Arrhenatherum elatius (L.) P. Beauv. ex J. & C. Presl subsp. elatius
+15627	Brachypodium sylvaticum (Hudson) P. Beauv. subsp. sylvaticum
+15630	Briza media L.
+15654	Bromus erectus Hudson
+15666	Bromus hordeaceus L. subsp. hordeaceus
+15674	Bromus inermis Leyss.
+15695	Bromus racemosus L.
+15698	Bromus ramosus Hudson
+15725	Calamagrostis epigejos (L.) Roth
+15780	Corynephorus canescens (L.) P. Beauv.
+15794	Cynosurus cristatus L.
+15813	Dactylis glomerata L.
+15840	Deschampsia cespitosa (L.) P. Beauv. subsp. cespitosa
+15944	Elytrigia repens (L.) Desv. ex Nevski
+15993	Festuca arundinacea Schreber
+16136	Festuca nigrescens Lam.
+16151	Festuca ovina L.
+16159	Festuca ovina L. subsp. guestfalica (Reichenb.) K. Richter
+16203	Festuca pratensis Hudson subsp. pratensis
+16219	Festuca rubra L.
+16317	Glyceria fluitans (L.) R. Br.
+16325	Glyceria maxima (Hartman) Holmberg
+16368	Holcus lanatus L.
+16396	Hordeum murinum L.
+16403	Hordeum secalinum Schreber
+16434	Koeleria pyramidata (Lam.) P. Beauv.
+16461	Lolium multiflorum Lam.
+16465	Lolium perenne L.
+16625	Phalaris arundinacea L. subsp. arundinacea
+16662	Phleum phleoides (L.) Karsten
+16663	Phleum pratense L.
+16676	Phragmites australis (Cav.) Steudel
+16701	Poa angustifolia L.
+16702	Poa annua L.
+16725	Poa chaixii Vill. in Gilib.
+16786	Poa trivialis L.
+16928	Stipa capillata L.
+16975	Trisetum flavescens (L.) P. Beauv. subsp. flavescens
+17137	Scheuchzeria palustris L.
+17171	Typha minima Funck
+17641	Equisetum arvense L.
+17655	Equisetum telmateia Ehrh.
+17656	Equisetum variegatum Schleicher
+17703	Lycopodiella inundata (L.) Holub
+17737	Ophioglossum vulgatum L.
+40190	Carduus defloratus L. subsp. defloratus
+40352	Anacamptis morio (L.) R.M.Bateman, Pridgeon & M.W.Chase
+40355	Neotinea ustula (L.) R.M.Bateman, Pridgeon & M.W.Cha.
+40413	Anacamptis palustris (Jacq.) R.M.Bateman, Pridgeon & M.W
+40415	Angelica sylvestris L. subsp. sylvestris
+40447	Cirsium vulgare (Savi) Ten. subsp. vulgare
+40514	Carex elata All., 1785
+40517	Dactylorhiza traunsteineri (Saut.) So¾, 1962
+40520	Dianthus deltoides L., 1753
+40523	Hierochloe odorata (L.) P.Beauv., 1812
+40527	Gnaphalium uliginosum L., 1753
+40529	Holcus mollis L., 1759
+40551	Parnassia palustris L., 1753
+40553	Petasites hybridus (L.) P.Gaertn., B.Mey. & Scherb. , 1801
+40556	Potentilla anserina L., 1753
+40560	Rorippa sylvestris (L.) Besser, 1821
+40566	Vaccinium vitis-idaea L., 1753
+40592	Lathyrus palustris L., 1753
+40602	Thymus praecox Opiz subsp. praecox
+40603	Thymus serpyllum groupe
+40655	Erica herbacea L.
+13	Acer monspessulanum L.
+15	Acer monspessulanum L. subsp. martinii (Jordan) P. Fourn.
+16	Acer monspessulanum L. subsp. monspessulanum
+19	Acer opalus Miller
+22	Acer platanoides L.
+24	Acer saccharinum L.
+26	Actinidia chinensis Planch.
+28	Adoxa moschatellina L.
+60	Tetragonia tetragonoides (Pallas) O. Kuntze
+66	Amaranthus albus L.
+70	Amaranthus blitoides S. Watson
+71	Amaranthus blitum L.
+73	Amaranthus blitum L. subsp. emarginatus (Moq. ex Uline & Bray) Carreter
+77	Amaranthus caudatus L.
+80	Amaranthus crispus (Lesp. & ThÚv.) N. Terrac.
+81	Amaranthus cruentus L.
+83	Amaranthus deflexus L.
+85	Amaranthus graecizans L.
+87	Amaranthus graecizans L. subsp. silvestris (Vill.) Brenan
+88	Amaranthus hybridus L.
+91	Amaranthus hybridus L. var. erythrostachys Moq.
+93	Amaranthus hybridus L. var. pseudoretroflexus (Thell.) Carretero
+98	Amaranthus palmeri S. Watson
+104	Amaranthus retroflexus L.
+108	Amaranthus spinosus L.
+109	Amaranthus standleyanus Parodi ex Covas
+111	Amaranthus viridis L.
+118	Cotinus coggygria Scop.
+120	Pistacia lentiscus L.
+122	Pistacia terebinthus L.
+127	Rhus hirta (L.) Sudworth
+140	Aethusa cynapium L.
+144	Aethusa cynapium L. subsp. elata Hoffm. ex Sch³bl. & Martens
+149	Ammi majus L.
+154	Anethum graveolens L.
+156	Angelica archangelica L.
+162	Anthriscus caucalis M. Bieb.
+163	Anthriscus cerefolium (L.) Hoffm.
+167	Anthriscus nitida (Wahlenb.) Garcke
+170	Anthriscus sylvestris (L.) Hoffm. subsp. alpina (Vill.) Gremli [1874]
+178	Apium graveolens L.
+182	Apium inundatum (L.) Reichenb. fil.
+184	Apium nodiflorum (L.) Lag.
+188	Apium repens (Jacq.) Lag.
+192	Astrantia major L. subsp. involucrata (Koch) Cesati
+197	Astrantia minor L.
+199	Athamanta cretensis L.
+205	Berula erecta (Hudson) Coville
+208	Bifora radians M. Bieb.
+209	Bifora testiculata (L.) Sprengel in Schultes
+215	Bunium bulbocastanum L.
+226	Bupleurum alpigenum Jordan & Fourr.
+229	Bupleurum baldense Turra
+233	Bupleurum falcatum L.
+234	Bupleurum falcatum L. subsp. cernuum (Ten) Arcangeli
+240	Bupleurum fruticosum L.
+249	Bupleurum longifolium L.
+251	Bupleurum petraeum L.
+252	Bupleurum praealtum L.
+257	Bupleurum ranunculoides L. subsp. telonense (Gren. ex Timb.-Lagr.) Bonnier
+258	Bupleurum rigidum L.
+259	Bupleurum rotundifolium L.
+262	Bupleurum stellatum L.
+268	Cachrys trifida Miller
+273	Carum verticillatum (L.) Koch
+284	Caucalis platycarpos L. [1753]
+291	Chaerophyllum bulbosum L.
+293	Chaerophyllum elegans Gaudin
+301	Chaerophyllum temulum L.
+302	Chaerophyllum villarsii Koch
+308	Conium maculatum L.
+310	Conopodium majus (Gouan) Loret
+315	Coriandrum sativum L.
+362	Eryngium alpinum L.
+368	Eryngium spinalba Vill.
+372	Falcaria vulgaris Bernh.
+384	Ferulago campestris (Besser) Grec.
+390	Foeniculum vulgare Miller subsp. piperitum (Ucria) Coutinho
+391	Foeniculum vulgare Miller subsp. vulgare
+410	Heracleum mantegazzianum Sommier & Levier
+414	Heracleum pumilum Vill.
+420	Heracleum sphondylium L. subsp. alpinum (L.) Bonnier & Layens
+423	Heracleum sphondylium L. subsp. elegans (Crantz) Sch³bler & Martens
+426	Heracleum sphondylium L. subsp. pyrenaicum (Lam.) Bonnier & Layens
+428	Heracleum sphondylium L. subsp. sibiricum (L.) Simonkai
+433	Hydrocotyle ranunculoides L. fil.
+437	Hydrocotyle vulgaris L.
+438	Imperatoria ostruthium L. (b.)
+442	Laser trilobum (L.) Borckh.
+445	Laserpitium gallicum L.
+446	Laserpitium halleri Crantz
+449	Laserpitium latifolium L.
+455	Laserpitium prutenicum L. subsp. prutenicum
+457	Laserpitium siler L.
+459	Levisticum officinale Koch
+484	Molopospermum peloponnesiacum (L.) Koch
+487	Myrrhis odorata (L.) Scop.
+488	Myrrhoides nodosa (L.) Cannon
+490	Oenanthe aquatica (L.) Poiret
+492	Oenanthe fistulosa L.
+497	Oenanthe lachenalii C.C. Gmelin
+499	Oenanthe peucedanifolia Pollich
+503	Oenanthe pimpinelloides L.
+504	Oenanthe silaifolia M. Bieb.
+506	Opopanax chironium (L.) Koch
+507	Orlaya daucoides (L.) W. Greuter
+508	Orlaya grandiflora (L.) Hoffm.
+518	Pastinaca sativa L. subsp. sylvestris (Miller) Rouy & Camus
+519	Pastinaca sativa L. subsp. urens (Req. ex Godron) Celak.
+522	Petroselinum crispum (Miller) A.W. Hill
+554	Physospermum cornubiense (L.) DC.
+555	Pimpinella anisum L.
+563	Pimpinella peregrina L.
+571	Pimpinella tragium Vill.
+572	Pleurospermum austriacum (L.) Hoffm.
+579	Ptychotis saxifraga (L.) Loret & Barrandon
+584	Ridolfia segetum Moris
+590	Scandix australis L. subsp. australis
+603	Scandix pecten-veneris L. subsp. hispanica (Boiss.) Bonnier & Layens
+605	Scandix pecten-veneris L. subsp. pecten-veneris
+606	Scandix stellata Banks & Solander
+617	Seseli annuum L.
+619	Seseli annuum L. subsp. carvifolium (Vill.) P. Fourn.
+627	Seseli galloprovinciale Reduron [1993]
+633	Seseli montanum L.
+645	Seseli tortuosum L.
+652	Sison amomum L.
+659	Sium latifolium L.
+663	Smyrnium perfoliatum L.
+672	Tordylium maximum L.
+678	Torilis arvensis (Hudson) Link subsp. arvensis
+683	Torilis arvensis (Hudson) Link subsp. purpurea (Ten.) Hayek
+691	Torilis japonica (Houtt.) DC.
+692	Torilis leptophylla (L.) Reichenb. fil.
+701	Trinia glauca (L.) Dumort.
+703	Trochiscanthes nodiflora (All.) Koch
+704	Turgenia latifolia (L.) Hoffm.
+708	Nerium oleander L.
+710	Vinca major L.
+711	Vinca minor L.
+715	Ilex aquifolium L.
+721	Hedera helix L.
+732	Aristolochia clematitis L.
+737	Aristolochia paucinervis Pomel
+738	Aristolochia pistolochia L.
+742	Aristolochia rotunda L. subsp. rotunda
+745	Asarum europaeum L.
+754	Asclepias syriaca L.
+761	Vincetoxicum hirundinaria Medik.
+771	Achillea ageratum L.
+772	Achillea atrata L.
+774	Achillea crithmifolia Waldst. & Kit.
+776	Achillea distans Waldst. & Kit. ex Willd.
+781	Achillea erba-rotta All. subsp. erba-rotta
+782	Achillea erba-rotta All. subsp. moschata (Wulfen) Vaccari
+784	Achillea ligustica All.
+785	Achillea macrophylla L.
+786	Achillea millefolium L.
+788	Achillea millefolium L. subsp. alpestris (Wimm. & Grab.) Gremli
+789	Achillea millefolium L. subsp. ceretana Sennen
+796	Achillea nana L.
+797	Achillea nobilis L.
+799	Achillea odorata L.
+802	Achillea ptarmica L. subsp. ptarmica
+809	Achillea tomentosa L.
+810	Achillea virescens (Fenzl) Heimerl
+828	Ambrosia artemisiifolia L.
+834	Ambrosia trifida L.
+839	Anaphalis margaritacea (L.) Benth.
+841	Andryala integrifolia L.
+845	Antennaria carpatica (Wahlenb.) Bluff & Fingerh.
+847	Anthemis altissima L. emend Sprengel, 1826
+848	Anthemis arvensis L.
+849	Anthemis arvensis L. subsp. incrassata (Loisel.) Nyman
+853	Anthemis carpatica Willd.
+858	Anthemis cotula L.
+861	Anthemis cretica L. subsp. columnae (Ten.) R. FranzÚn
+865	Anthemis gerardiana Jordan
+887	Anthemis triumfetti (L.) DC.
+889	Aposeris foetida (L.) Less.
+891	Arctium lappa L.
+893	Arctium minus (J. Hill) Bernh.
+895	Arctium nemorosum Lej.
+897	Arctium pubens Bab.
+898	Arctium tomentosum Miller
+906	Arnoseris minima (L.) Schweigger & Koerte
+911	Artemisia abrotanum L.
+912	Artemisia absinthium L.
+913	Artemisia alba Turra
+917	Artemisia annua L.
+920	Artemisia atrata Lam.
+923	Artemisia biennis Willd.
+932	Artemisia campestris L. subsp. alpina (DC.) Arcangeli
+933	Artemisia campestris L. subsp. borealis (Pallas) H.M. Hall & Clements
+934	Artemisia campestris L.
+944	Artemisia dracunculus L.
+945	Artemisia eriantha Ten. (b.)
+948	Artemisia genipi Weber
+950	Artemisia glacialis L.
+955	Artemisia insipida Vill.
+968	Artemisia pontica L.
+974	Artemisia umbelliformis Lam.
+977	Artemisia vallesiaca All.
+978	Artemisia verlotiorum Lamotte
+984	Aster alpinus L.
+989	Aster bellidiastrum (L.) Scop.
+994	Aster laevis L.
+1001	Aster linosyris (L.) Bernh. subsp. linosyris
+1002	Aster novae-angliae L.
+1011	Aster sedifolius L. subsp. sedifolius
+1013	Aster squamatus (Sprengel) Hieron.
+1019	Aster x-salignus Willd.
+1043	Bellis annua L.
+1050	Bellis sylvestris Cyr.
+1056	Berardia subacaulis Vill.
+1057	Bidens aurea (Aiton) Sherff
+1058	Bidens bipinnata L.
+1060	Bidens cernua L.
+1062	Bidens connata Willd.
+1063	Bidens frondosa L.
+1066	Bidens radiata Thuill.
+1067	Bidens subalternans DC.
+1068	Bidens tripartita L.
+1071	Bombycilaena discolor (Pers.) Laínz
+1072	Bombycilaena erecta (L.) Smolj.
+1081	Cacalia alliariae Gouan subsp. alliariae
+1085	Cacalia alpina L.
+1087	Cacalia leucophylla Willd.
+1089	Calendula arvensis L.
+1093	Calendula officinalis L.
+1098	Callistephus chinensis (L.) Nees
+1102	Carduncellus monspelliensium All.
+1112	Carduus aurosicus Chaix
+1128	Carduus defloratus L. subsp. carlinifolius (Lam.) Cesati
+1140	Carduus litigiosus Nocca & Balbis
+1151	Carduus nigrescens Vill. subsp. nigrescens
+1153	Carduus nigrescens Vill. subsp. vivariensis (Jordan) Bonnier & Layens
+1154	Carduus nutans L.
+1156	Carduus nutans L. subsp. alpicola (Gillot) Chassagne & J. ArÞnes
+1161	Carduus nutans L. subsp. platylepis (Reichenb. & Sauter) Nyman
+1165	Carduus pycnocephalus L.
+1173	Carduus tenuiflorus Curtis
+1181	Carlina acanthifolia All. subsp. acanthifolia
+1185	Carlina acaulis L. subsp. caulescens (Lam.) Sch³bl. & Martens
+1191	Carlina lanata L.
+1199	Carlina vulgaris L. subsp. longifolia Nyman
+1201	Carpesium cernuum L.
+1204	Carthamus lanatus L.
+1207	Catananche caerulea L.
+1212	Centaurea alpestris Hegetschw.
+1221	Centaurea aspera L.
+1226	Centaurea balbisiana Soldano subsp. aemilii (Briq.) KerguÚlen
+1233	Centaurea calcitrapa L.
+1241	Centaurea collina L.
+1246	Centaurea cyanus L.
+1255	Centaurea diffusa Lam.
+1276	Centaurea leucophaea Jordan
+1313	Centaurea paniculata L.
+1331	Centaurea pectinata L.
+1368	Centaurea solstitialis L.
+1373	Centaurea stoebe L. [1753]
+1376	Centaurea thuillieri J. Duvigneaud & J. Lambinon
+1377	Centaurea timbalii Martrin-Donos
+1379	Centaurea triumfetti All.
+1382	Centaurea triumfetti All. subsp. semidecurrens (Jordan) Dostál
+1384	Centaurea triumfetti All. subsp. triumfetti
+1386	Centaurea uniflora Turra
+1387	Centaurea uniflora Turra subsp. ferdinandii (Gren.) Bonnier
+1388	Centaurea uniflora Turra subsp. nervosa (Willd.) Bonnier & Layens
+1389	Centaurea uniflora Turra subsp. uniflora
+1391	Centaurea vallesiaca (DC.) Jordan
+1450	Chrysanthemum segetum L.
+1455	Cicerbita alpina (L.) Wallr.
+1456	Cicerbita macrophylla (Willd.) Wallr.
+1459	Cicerbita plumieri (L.) Kirschleger
+1462	Cichorium endivia L.
+1496	Cirsium carniolicum Scop.
+1497	Cirsium carniolicum Scop. subsp. rufescens (Ramond ex DC.) P. Fourn.
+1514	Cirsium erisithales (Jacq.) Scop.
+1516	Cirsium ferox (L.) DC.
+1523	Cirsium heterophyllum (L.) Hill
+1527	Cirsium monspessulanum (L.) Hill
+1531	Cirsium montanum (Waldst. & Kit. ex Willd.) Sprengel
+1532	Cirsium morisianum Reichenb. fil.
+1544	Cirsium spinosissimum (L.) Scop.
+1555	Cnicus benedictus L.
+1563	Coleostephus myconis (L.) Reichenb. fil.
+1567	Conyza bonariensis (L.) Cronq.
+1574	Conyza sumatrensis (Retz.) E. Walker
+1581	Coreopsis lanceolata L.
+1582	Coreopsis tinctoria Nutt.
+1583	Cosmos bipinnatus Cav.
+1589	Crepis albida Vill.
+1597	Crepis bocconi P.D. Sell
+1602	Crepis conyzifolia (Gouan) A. Kerner
+1604	Crepis foetida L.
+1606	Crepis foetida L. subsp. rhoeadifolia (M. Bieb.) Celak.
+1610	Crepis leontodontoides All.
+1614	Crepis nicaeensis Balbis
+1619	Crepis praemorsa (L.) F.L. Walther
+1620	Crepis pulchra L.
+1622	Crepis pyrenaica (L.) W. Greuter
+1623	Crepis rhaetica Hegetschw.
+1626	Crepis sancta (L.) Bornm.
+1627	Crepis sancta (L.) Bornm. subsp. nemausensis (Gouan) Babc.
+1629	Crepis setosa Haller fil.
+1634	Crepis tectorum L.
+1638	Crepis vesicaria L. subsp. taraxacifolia (Thuill.) Schinz & R. Keller
+1643	Crepis zacintha (L.) Babcock
+1647	Crupina vulgaris Cass.
+1651	Cyclachaena xanthiifolia (Nutt.) Fresen.
+1652	Cynara cardunculus L.
+1654	Cynara scolymus L.
+1656	Dahlia pinnata Cav.
+1668	Dittrichia graveolens (L.) W. Greuter
+1669	Dittrichia viscosa (L.) W. Greuter
+1671	Doronicum austriacum Jacq.
+1680	Doronicum grandiflorum Lam.
+1684	Doronicum pardalianches L.
+1685	Doronicum plantagineum L.
+1690	Doronicum willdenowii (Rouy) A.W. Hill
+1691	Echinops exaltatus Schrader
+1692	Echinops ritro L.
+1693	Echinops sphaerocephalus L.
+1695	Erigeron acer L.
+1699	Erigeron alpinus L.
+1711	Erigeron atticus Vill.
+1719	Erigeron gaudinii Br³gger
+1720	Erigeron glabratus Bluff & Fingerh.
+1726	Erigeron neglectus A. Kerner
+1735	Erigeron uniflorus L.
+1742	Eupatorium cannabinum L. subsp. cannabinum
+1766	Filago lutescens Jordan
+1773	Filago pyramidata L.
+1775	Filago vulgaris Lam.
+1782	Galinsoga parviflora Cav.
+1783	Galinsoga quadriradiata Ruiz & Pavon
+1793	Geropogon hybridus (L.) Schultz Bip.
+1824	Guizotia abyssinica (L. fil.) Cass.
+1830	Hedypnois rhagadioloides (L.) F.W. Schmidt
+1831	Helenium autumnale L.
+1832	Helianthus annuus L.
+1850	Helichrysum stoechas (L.) Moench
+2017	Hieracium farinulentum Jordan gr. pictum
+2035	Hieracium glaciale Reyn.
+2039	Hieracium glanduliferum Hoppe gr. piliferum
+2040	Hieracium glaucinum Jordan gr.
+2105	Hieracium lawsonii Vill. gr.
+2117	Hieracium longifolium Schleicher ex Froelich
+2306	Hieracium subnivale Gren. & Godron gr. piliferum
+2323	Hieracium tenuiflorum Arvet-Touvet ex C. Bicknell gr.
+2327	Hieracium tomentosum L. [1755]
+2349	Hieracium vogesiacum (Kirschl.) Fries
+2393	Homogyne alpina (L.) Cass.
+2402	Hypochaeris achyrophorus L.
+2406	Hypochaeris glabra L.
+2415	Hypochaeris uniflora Vill.
+2418	Inula britannica L.
+2428	Inula helenium L.
+2429	Inula helvetica Weber
+2431	Inula montana L.
+2440	Inula spiraeifolia L.
+2463	Lactuca perennis L.
+2465	Lactuca quercina L.
+2469	Lactuca saligna L.
+2470	Lactuca sativa L.
+2474	Lactuca serriola L.
+2475	Lactuca tenerrima Pourret
+2477	Lactuca viminea (L.) J. & C. Presl subsp. chondrilliflora (Boreau) Bonnier
+2478	Lactuca viminea (L.) J. & C. Presl subsp. ramosissima (All.) Arcangeli
+2480	Lactuca virosa L.
+2491	Lapsana communis L.
+2492	Lapsana communis L. subsp. communis
+2493	Lapsana communis L. subsp. intermedia (M. Bieb.) Hayek
+2504	Leontodon crispus Vill.
+2508	Leontodon hirtus L.
+2518	Leontodon hyoseroides Welw. ex Reichenb.
+2522	Leontodon montanus Lam.
+2527	Leontodon pyrenaicus Gouan subsp. helveticus (MÚrat) Finch & P.D. Sell
+2539	Leontodon tuberosus L.
+2541	Leontopodium alpinum Cass.
+2542	Leucanthemella serotina (L.) Tzvelev
+2543	Leucanthemopsis alpina (L.) Heywood
+2546	Leucanthemopsis minima (Vill.) Marchi in Pignatti
+2548	Leucanthemum adustum (Koch) Gremli
+2552	Leucanthemum atratum (Jacq.) DC. subsp. coronopifolium (Vill.) Horvatic
+2553	Leucanthemum burnatii Briq. & Cavillier
+2565	Leucanthemum gaudinii Dalla-Torre & Sarnth.
+2570	Leucanthemum ircutianum DC.
+2576	Leucanthemum maximum (Ramond) DC.
+2590	Leucanthemum subglaucum De Laramb.
+2592	Leucanthemum virgatum (Desr.) Clos
+2611	Logfia arvensis (L.) J. Holub
+2612	Logfia gallica (L.) Cosson & Germ.
+2613	Logfia minima (Sm.) Dumort.
+2626	Matricaria perforata MÚrat
+2627	Matricaria recutita L.
+2638	Mycelis muralis (L.) Dumort.
+2646	Omalotheca hoppeana (Koch) Schultz Bip. & F.W. Schulz
+2647	Omalotheca norvegica (Gunn.) Schultz Bip. & F.W. Schul
+2648	Omalotheca supina (L.) DC.
+2649	Omalotheca sylvatica (L.) Schultz Bip. & F.W. Schultz
+2651	Onopordum acanthium L.
+2665	Onopordum illyricum L.
+2685	Petasites albus (L.) Gaertner
+2692	Petasites paradoxus (Retz.) Baumg.
+2701	Phagnalon rupestre (L.) DC. subsp. annoticum (Jordan ex Burnat) Pignatti
+2705	Phagnalon saxatile (L.) Cass.
+2706	Phagnalon sordidum (L.) Reichenb.
+2714	Picnomon acarna (L.) Cass.
+2716	Picris altissima Delile
+2717	Picris echioides L.
+2723	Picris hieracioides L. subsp. spinulosa (Bertol. ex Guss.) Arcangeli
+2724	Picris hieracioides L. subsp. villarsii (Jordan) Nyman
+2725	Picris pauciflora Willd.
+2740	Prenanthes purpurea L.
+2743	Pseudognaphalium luteo-album (L.) Hilliard & Burtt
+2750	Pulicaria odora (L.) Reichenb.
+2751	Pulicaria sicula (L.) Moris
+2752	Pulicaria vulgaris Gaertn.
+2755	Reichardia picroides (L.) Roth
+2756	Rhagadiolus edulis Gaertner
+2757	Rhagadiolus stellatus (L.) Gaertner
+2768	Rudbeckia hirta L.
+2769	Rudbeckia laciniata L.
+2770	Santolina chamaecyparissus L.
+2783	Saussurea alpina (L.) DC.
+2784	Saussurea alpina (L.) DC. subsp. alpina
+2785	Saussurea alpina (L.) DC. subsp. depressa (Gren.) Gremli
+2787	Saussurea discolor (Willd.) DC.
+2789	Scolymus hispanicus L.
+2793	Scorzonera austriaca Willd.
+2801	Scorzonera hirsuta L.
+2802	Scorzonera hispanica L.
+2807	Scorzonera laciniata L.
+2813	Senecio adonidifolius Loisel.
+2816	Senecio alpinus (L.) Scop.
+2817	Senecio angulatus L. fil.
+2818	Senecio aquaticus Hill
+2827	Senecio cacaliaster Lam.
+2835	Senecio cineraria DC. subsp. cineraria
+2843	Senecio doronicum (L.) L.
+2847	Senecio erucifolius L.
+2852	Senecio gallicus Chaix
+2856	Senecio halleri Dandy
+2865	Senecio hercynicus J. Herborg
+2866	Senecio inaequidens DC.
+2867	Senecio incanus L.
+2870	Senecio jacobaea L.
+2898	Senecio ovatus (G. Gaertner, B. Meyer & Scherb.) Will subsp. alpestris (Gaudin) J. Herborg
+2902	Senecio paludosus L.
+2904	Senecio persoonii De Not.
+2905	Senecio provincialis (L.) Druce
+2912	Senecio rupestris Waldst. & Kit.
+2918	Senecio squalidus L.
+2919	Senecio sylvaticus L.
+2925	Senecio viscosus L.
+2938	Serratula lycopifolia (Vill.) A. Kerner
+2940	Serratula nudicaulis (L.) DC.
+2950	Silybum marianum (L.) Gaertner
+2961	Solidago graminifolia (L.) Salisb.
+2967	Solidago virgaurea L.
+2969	Solidago virgaurea L. subsp. alpestris (Waldst. & Kit. ex Walld.) Gremli
+2973	Solidago virgaurea L. subsp. rupicola (Rouy) Lambinon
+2979	Sonchus arvensis L.
+2983	Sonchus asper (L.) Hill
+2985	Sonchus asper (L.) Hill subsp. glaucescens (Jordan) Ball
+2992	Sonchus oleraceus L.
+2995	Sonchus tenerrimus L.
+3006	Staehelina dubia L.
+3010	Stemmacantha heleniifolia (Godron & Gren.) Dittr. subsp. heleniifolia
+3012	Stemmacantha rhapontica (L.) Dittr. subsp. lamarckii Dittr.
+3017	Tagetes patula L.
+3022	Tanacetum cinerariifolium (Trev.) Schultz Bip.
+3023	Tanacetum corymbosum (L.) Schultz Bip.
+3025	Tanacetum parthenium (L.) Schultz Bip.
+3036	Taraxacum aquilonare Hand.-Mazz. gr. hoppeanum
+3064	Taraxacum cucullatum Dahlst. gr.
+3100	Taraxacum leucospermum Jordan gr. obovatum
+3115	Taraxacum obovatum (Willd.) DC. aggr.
+3116	Taraxacum officinale Weber
+3126	Taraxacum pacheri gr.
+3157	Taraxacum schroeterianum Hand.-Mazz.
+3177	Telekia speciosa (Schreber) Baumg.
+3178	Tephroseris balbisiana (DC.) Holub
+3179	Tephroseris helenitis (L.) B. Nordenstam
+3182	Tephroseris helenitis (L.) B. Nordenstam subsp. helenitis
+3187	Tephroseris integrifolia (L.) Holub subsp. capitata (Wahlenb.) B. Nordenstam
+3188	Tephroseris integrifolia (L.) Holub subsp. integrifolia
+3191	Tephroseris longifolia (Jacq.) Griseb. & Schenk subsp. gaudinii (Gremli) KerguÚlen
+3196	Tephroseris palustris (L.) Fourr.
+3208	Tolpis barbata (L.) Gaertner
+3209	Tolpis staticifolia (All.) Schultz Bip.
+3211	Tragopogon angustifolius Willd.
+3213	Tragopogon crocifolius L.
+3228	Tragopogon porrifolius L.
+3235	Tragopogon pratensis L. subsp. orientalis (L.) Celak.
+3236	Tragopogon pratensis L. subsp. pratensis
+3252	Urospermum dalechampii (L.) Scop. ex F.W. Schmidt
+3253	Urospermum picroides (L.) Scop. ex F.W. Schmidt
+3265	Xanthium italicum Moretti
+3270	Xanthium orientale L.
+3276	Xanthium spinosum L.
+3277	Xanthium strumarium L.
+3282	Xeranthemum cylindraceum Sibth. & Sm.
+3285	Xeranthemum inapertum (L.) Moench
+3288	Zinnia elegans Jacq.
+3292	Aucuba japonica Thunb.
+3294	Impatiens balfouri Hooker fil.
+3298	Impatiens glandulifera Royle
+3299	Impatiens noli-tangere L.
+3300	Impatiens parviflora DC.
+3310	Berberis vulgaris L.
+3313	Epimedium alpinum L.
+3314	Mahonia aquifolium (Pursh) Nutt.
+3319	Alnus cordata (Loisel.) Duby
+3320	Alnus glutinosa (L.) Gaertn.
+3321	Alnus incana (L.) Moench
+3326	Betula alba L. subsp. alba
+3340	Betula pendula Roth
+3348	Catalpa bignonioides Walt.
+3360	Anchusa arvensis (L.) M. Bieb.
+3365	Anchusa italica Retz.
+3366	Anchusa ochroleuca M. Bieb.
+3367	Anchusa officinalis L.
+3371	Anchusa undulata L.
+3372	Anchusa undulata L. subsp. hybrida (Ten.) Coutinho
+3374	Asperugo procumbens L.
+3376	Borago officinalis L.
+3392	Cerinthe glabra Miller subsp. glabra
+3397	Cerinthe major L.
+3401	Cerinthe minor L. subsp. auriculata (Ten.) Rouy
+3406	Cynoglossum creticum Miller
+3407	Cynoglossum dioscoridis Vill.
+3408	Cynoglossum germanicum Jacq.
+3414	Cynoglossum officinale L.
+3430	Echium italicum L.
+3443	Echium plantagineum L.
+3453	Heliotropium europaeum L.
+3457	Lappula deflexa (Lehm.) Cesati
+3460	Lappula squarrosa (Retz.) Dumort.
+3462	Lithodora fruticosa (L.) Griseb.
+3466	Lithospermum arvense L.
+3477	Lithospermum permixtum Jordan in F.W. Schultz
+3479	Lithospermum purpureocaeruleum L.
+3490	Myosotis alpestris F.W. Schmidt
+3508	Myosotis decumbens Host
+3512	Myosotis discolor Pers.
+3529	Myosotis minutiflora Boiss. & Reut.
+3543	Myosotis ramosissima Rochel subsp. ramosissima
+3552	Myosotis secunda A. Murray
+3555	Myosotis speluncicola (Boiss.) Rouy
+3558	Myosotis stricta Link ex Roemer & Schultes
+3559	Myosotis sylvatica Hoffm.
+3574	Omphalodes linifolia (L.) Moench
+3576	Omphalodes verna Moench
+3581	Onosma arenaria Waldst. & Kit. subsp. vaudensis (Gremli) KerguÚlen
+3588	Onosma fastigiata (Br.-Bl.) Lacaita subsp. fastigiata
+3591	Onosma pseudoarenaria Schur
+3598	Pardoglossum cheirifolium (L.) Barbier & Mathez
+3604	Pulmonaria angustifolia L.
+3619	Pulmonaria montana Lej.
+3623	Pulmonaria obscura Dumort.
+3624	Pulmonaria officinalis L.
+3629	Pulmonaria saccharata Miller
+3636	Symphytum asperum Lepechin
+3637	Symphytum bulbosum C. Schimper
+3645	Symphytum tuberosum L.
+3649	Trachystemon orientalis (L.) G. Don fil.
+3657	Aethionema saxatile (L.) R. Br. subsp. saxatile
+3661	Aethionema thomasianum Gay
+3663	Alliaria petiolata (M. Bieb.) Cavara & Grande
+3664	Alyssoides utriculata (L.) Medik.
+3665	Alyssum alpestre L.
+3668	Alyssum alyssoides (L.) L.
+3692	Alyssum montanum L. subsp. collicola (Rouy & Fouc.) P. Fourn.
+3695	Alyssum montanum L. subsp. gmelinii (Jordan) Hegi & E. Schmid
+3696	Alyssum montanum L.
+3703	Alyssum serpyllifolium Desf. subsp. serpyllifolium
+3704	Alyssum simplex Rudolphi in Schrader
+3708	Arabis allionii DC.
+3709	Arabis alpina L.
+3715	Arabis auriculata Lam.
+3717	Arabis bellidifolia Crantz subsp. stellulata (Bertol.) Greuter & Burdet
+3722	Arabis caerulea (All.) Haenke
+3723	Arabis caucasica Willd. ex Schlecht.
+3728	Arabis collina Ten.
+3743	Arabis nova Vill.
+3749	Arabis planisiliqua (Pers.) Reichenb.
+3752	Arabis rosea DC.
+3753	Arabis sagittata (Bertol.) DC.
+3755	Arabis scabra All.
+3760	Arabis soyeri Reuter & Huet subsp. subcoriacea (Gren.) Breistr.
+3765	Arabis turrita L.
+3766	Arabis verna (L.) R. Br.
+3768	Armoracia rusticana G. Gaertner, B. Meyer & Scherb.
+3769	Aubrieta deltoidea (L.) DC.
+3770	Aurinia petraea (Ard.) Schur
+3771	Aurinia saxatilis (L.) Desv.
+3772	Barbarea bracteosa Guss.
+3774	Barbarea intermedia Boreau
+3779	Barbarea stricta Andrz.
+3780	Barbarea verna (Miller) Ascherson
+3785	Berteroa incana (L.) DC.
+3791	Biscutella brevicaulis Jordan
+3793	Biscutella cichoriifolia Loisel.
+3808	Biscutella laevigata L.
+3834	Brassica elongata Ehrh.
+3839	Brassica fruticulosa Cyr.
+3848	Brassica napus L.
+3852	Brassica nigra (L.) Koch
+3853	Brassica oleracea L.
+3879	Brassica repanda (Willd.) DC. subsp. repanda
+3880	Brassica repanda (Willd.) DC. subsp. saxatilis (DC.) Heywood
+3894	Bunias erucago L.
+3895	Bunias orientalis L.
+3905	Calepina irregularis (Asso) Thell.
+3908	Camelina microcarpa Andrz. ex DC.
+3912	Camelina sativa (L.) Crantz
+3920	Capsella rubella Reuter
+3923	Cardamine asarifolia L.
+3925	Cardamine bellidifolia L. subsp. alpina (Willd.) B.M.G. Jones
+3926	Cardamine bulbifera (L.) Crantz
+3930	Cardamine flexuosa With.
+3932	Cardamine heptaphylla (Vill.) O.E. Schulz
+3933	Cardamine hirsuta L.
+3941	Cardamine pentaphyllos (L.) Crantz
+3942	Cardamine plumieri Vill.
+3943	Cardamine pratensis L.
+3955	Cardamine resedifolia L.
+3958	Cardamine trifolia L.
+3959	Cardaminopsis arenosa (L.) Hayek
+3962	Cardaminopsis halleri (L.) Hayek
+3981	Clypeola jonthlaspi L.
+3990	Cochlearia danica L.
+4000	Coincya cheiranthos (Vill.) Greuter & Burdet
+4002	Brassica montana DC. in Lam. & DC. [1805], non Pourret
+4007	Coincya richeri (Vill.) Greuter & Burdet
+4008	Conringia orientalis (L.) Dumort.
+4009	Coronopus didymus (L.) Sm.
+4019	Descurainia sophia (L.) Webb ex Prantl
+4023	Diplotaxis erucoides (L.) DC.
+4028	Diplotaxis muralis (L.) DC.
+4031	Diplotaxis tenuifolia (L.) DC.
+4032	Diplotaxis viminea (L.) DC.
+4033	Draba aizoides L.
+4034	Draba aspera Bertol.
+4038	Draba dubia Suter
+4041	Draba fladnizensis Wulfen
+4042	Draba hoppeana Reichenb. in Moessler
+4043	Draba incana L.
+4049	Draba muralis L.
+4050	Draba nemorosa L.
+4054	Draba siliquosa M. Bieb.
+4058	Draba tomentosa Clairv.
+4061	Draba tomentosa Clairv. subsp. tomentosa
+4065	Erophila praecox (Steven) DC.
+4067	Erophila verna (L.) Chevall.
+4072	Eruca sativa Miller
+4079	Erucastrum gallicum (Willd.) O.E. Schulz
+4081	Erucastrum nasturtiifolium (Poiret) O.E. Schulz subsp. nasturtiifolium
+4091	Erysimum cheiranthoides L.
+4093	Erysimum cheiri (L.) Crantz
+4114	Erysimum jugicola Jordan
+4117	Erysimum nevadense Reuter
+4119	Erysimum ochroleucum (Schleicher) DC.
+4127	Erysimum rhaeticum (Hornem.) DC.
+4132	Erysimum virgatum Roth
+4135	Fibigia clypeata (L.) Medik.
+4136	Fourraea alpina (L.) Greuter & Burdet
+4138	Hesperis inodora L.
+4139	Hesperis laciniata All.
+4151	Hirschfeldia incana (L.) LagrÞze-Fossat
+4152	Hormathophylla halimifolia (Boiss.) K³pfer
+4157	Hornungia petraea (L.) Reichenb.
+4160	Hugueninia tanacetifolia (L.) Reichenb. subsp. tanacetifolia
+4171	Hymenolobus procumbens (L.) Torrey & A. Gray
+4176	Iberis amara L.
+4195	Iberis linifolia L.
+4201	Iberis linifolia L. subsp. stricta (Jordan) Rouy & Fouc.
+4203	Iberis linifolia L. subsp. violettii (Godron) ValdÚs
+4207	Iberis pinnata L.
+4212	Iberis saxatilis L.
+4227	Iberis umbellata L.
+4231	Isatis allionii P.W. Ball
+4234	Isatis tinctoria L.
+4238	Kandis perfoliata (L.) KerguÚlen
+4240	Kernera saxatilis (L.) Sweet
+4243	Lepidium campestre (L.) R. Br.
+4247	Lepidium densiflorum Schrader
+4252	Lepidium graminifolium L.
+4256	Lepidium heterophyllum Bentham
+4257	Lepidium hirtum (L.) Sm.
+4262	Lepidium latifolium L.
+4264	Lepidium neglectum Thell.
+4272	Lepidium sativum L.
+4277	Lepidium virginicum L.
+4278	Lobularia maritima (L.) Desv.
+4279	Lunaria annua L.
+4281	Lunaria rediviva L.
+4282	Malcolmia africana (L.) R. Br.
+4307	Matthiola valesiaca Boiss.
+4318	Myagrum perfoliatum L.
+4328	Nasturtium officinale R. Br.
+4334	Neslia apiculata Fischer & al.
+4335	Neslia paniculata (L.) Desv.
+4341	Noccaea alpestris (Jacq.) KerguÚlen subsp. sylvium (Gaudin) KerguÚlen
+4343	Noccaea brachypetala (Jordan) F.K. Meyer
+4345	Noccaea caerulescens (J. & C. Presl) F.K. Meyer
+4349	Noccaea caerulescens (J. & C. Presl) F.K. Meyer subsp. virens (Jordan) KerguÚlen
+4350	Noccaea corymbosa (Gay) F.K. Meyer
+4352	Noccaea montana (L.) F.K. Meyer
+4356	Noccaea rotundifolia (L.) Moench
+4359	Petrocallis pyrenaica (L.) R. Br.
+4360	Pritzelago alpina (L.) O. Kuntze
+4361	Pritzelago alpina (L.) O. Kuntze subsp. alpina
+4362	Pritzelago alpina (L.) O. Kuntze subsp. brevicaulis (Sprengel) Greuter & Burdet
+4374	Raphanus raphanistrum L. subsp. raphanistrum
+4375	Raphanus sativus L.
+4378	Rapistrum perenne (L.) All.
+4379	Rapistrum rugosum (L.) All. [1785]
+4390	Rorippa amphibia (L.) Besser
+4393	Rorippa austriaca (Crantz) Besser
+4395	Rorippa islandica (Oeder ex Gunn.) Borbás
+4412	Sinapis alba L.
+4414	Sinapis alba L. subsp. dissecta (Lag.) Simonkai [1887]
+4416	Sinapis arvensis L.
+4429	Sisymbrella aspera (L.) Spach
+4434	Sisymbrium altissimum L.
+4439	Sisymbrium austriacum Jacq.
+4453	Sisymbrium irio L.
+4455	Sisymbrium loeselii L.
+4465	Sisymbrium orientale L. subsp. orientale
+4470	Sisymbrium polyceratium L.
+4480	Sisymbrium strictissimum L.
+4481	Sisymbrium supinum L.
+4490	Sisymbrium volgense M. Bieb. ex E. Fourn.
+4493	Teesdalia coronopifolia (J.P. Bergeret) Thell.
+4495	Teesdalia nudicaulis (L.) R. Br.
+4497	Thlaspi alliaceum L.
+4518	Thlaspi cepaeifolium (Wulfen) Koch
+4548	Turritis glabra L.
+4558	Buddleja davidii Franchet
+4565	Buxus sempervirens L.
+4584	Opuntia humifusa (Rafin.) Rafin.
+4589	Opuntia stricta (Haw.) Haw.
+4596	Cassia obtusifolia L.
+4599	Cercis siliquastrum L.
+4600	Gleditsia triacanthos L.
+4608	Callitriche brutia Petagna
+4609	Callitriche cophocarpa Sendtner
+4610	Callitriche hamulata Koch
+4612	Callitriche obtusangula Le Gall
+4613	Callitriche palustris L.
+4615	Callitriche platycarpa K³tz. in Reichenb.
+4617	Callitriche stagnalis Scop.
+4625	Campanula albicans (Buser) Engler
+4626	Campanula alliariifolia Willd.
+4628	Campanula alpestris All.
+4632	Campanula bononiensis L.
+4633	Campanula carpatica Jacq.
+4634	Campanula cenisia L.
+4637	Campanula cochleariifolia Lam.
+4641	Campanula elatines L.
+4643	Campanula erinus L.
+4644	Campanula excisa Schleich. ex Murith
+4649	Campanula fritschii Witasek
+4652	Campanula glomerata L. subsp. cervicarioides (Schultes) Arcangeli
+4666	Campanula latifolia L.
+4671	Campanula longisepala Podl.
+4672	Campanula macrorhiza Gay ex A. DC.
+4673	Campanula medium L.
+4687	Campanula pyramidalis L.
+4688	Campanula rapunculoides L.
+4689	Campanula rapunculus L.
+4691	Campanula rhomboidalis L.
+4705	Campanula spicata L.
+4706	Campanula stenocodon Boiss. & Reuter
+4718	Jasione montana L.
+4733	Legousia falcata (Ten.) Fritsch
+4734	Legousia hybrida (L.) Delarbre
+4736	Legousia scabra (Lowe) Gamisans
+4737	Legousia speculum-veneris (L.) Chaix
+4739	Lobelia erinus L.
+4743	Phyteuma betonicifolium Vill.
+4744	Phyteuma charmelii Vill.
+4745	Phyteuma cordatum Balbis
+4750	Phyteuma globulariifolium Sternb. & Hoppe subsp. pedemontanum (R. Schulz) Becherer
+4752	Phyteuma hemisphaericum L.
+4753	Phyteuma humile Schleicher ex Gaudin
+4754	Phyteuma michelii All.
+4763	Phyteuma ovatum Honckeny
+4772	Phyteuma scheuchzeri All.
+4773	Phyteuma scorzonerifolium Vill.
+4787	Phyteuma villarsii R. Schulz
+4799	Trachelium caeruleum L.
+4805	Cannabis sativa L.
+4806	Humulus lupulus L.
+4814	Capparis spinosa L.
+4817	Capparis spinosa L. subsp. rupestris (Sibth. & Sm.) Nyman
+4823	Linnaea borealis L.
+4824	Lonicera alpigena L.
+4826	Lonicera caerulea L.
+4827	Lonicera caprifolium L.
+4829	Lonicera etrusca G. Santi
+4830	Lonicera implexa Aiton
+4831	Lonicera japonica Thunb.
+4832	Lonicera nigra L.
+4833	Lonicera periclymenum L.
+4836	Lonicera tatarica L.
+4837	Lonicera xylosteum L.
+4842	Sambucus racemosa L.
+4843	Symphoricarpos alba (L.) S.F. Blake
+4847	Viburnum lantana L.
+4849	Viburnum opulus L.
+4850	Viburnum tinus L.
+4854	Agrostemma githago L.
+4880	Arenaria aggregata (L.) Loisel.
+4885	Arenaria biflora L.
+4890	Arenaria ciliata L.
+4893	Arenaria cinerea DC.
+4903	Arenaria gothica Fries 3, 4
+4907	Arenaria gothica Fries 3, 4 subsp. moehringioides (J. Murr) Wyse Jackson & Par
+4909	Arenaria grandiflora L.
+4943	Arenaria purpurascens Ramond ex DC.
+4949	Arenaria serpyllifolia L. subsp. leptoclados (Reichenb.) Nyman
+4952	Arenaria serpyllifolia L. subsp. serpyllifolia
+4968	Bufonia tenuifolia L.
+4969	Cerastium alpinum L.
+4978	Cerastium arvense L. subsp. arvense
+4981	Cerastium arvense L. subsp. strictum (Koch) Gremli
+4982	Cerastium arvense L. subsp. suffruticosum (L.) Cesati
+4990	Cerastium brachypetalum Desportes ex Pers.
+4999	Cerastium cerastoides (L.) Britton
+5016	Cerastium glomeratum Thuill.
+5025	Cerastium latifolium L.
+5027	Cerastium lineare All.
+5029	Cerastium pedunculatum Gaudin
+5031	Cerastium pumilum Curtis
+5041	Cerastium semidecandrum L.
+5056	Cerastium tomentosum L.
+5059	Cerastium uniflorum Clairv.
+5070	Cucubalus baccifer L.
+5083	Dianthus balbisii Ser. in DC.
+5084	Dianthus barbatus L.
+5091	Dianthus carthusianorum L. subsp. atrorubens (All.) Hegi
+5095	Dianthus caryophyllus L.
+5114	Dianthus furcatus Balbis
+5124	Dianthus gratianopolitanus Vill.
+5130	Dianthus hyssopifolius L.
+5139	Dianthus pavonius Tausch
+5140	Dianthus plumarius L.
+5156	Dianthus seguieri Vill. subsp. seguieri
+5171	Dianthus sylvestris Wulfen subsp. longicaulis (Ten.) Greuter & Burdet
+5174	Dianthus sylvestris Wulfen subsp. sylvestris
+5181	Gypsophila elegans M. Bieb.
+5182	Gypsophila muralis L.
+5184	Gypsophila paniculata L.
+5185	Gypsophila repens L.
+5190	Holosteum umbellatum L. subsp. hirsutum (Mutel) Breistr.
+5191	Holosteum umbellatum L. subsp. umbellatum
+5223	Minuartia capillacea (All.) Graebner
+5232	Minuartia hybrida (Vill.) Schischkin
+5233	Minuartia hybrida (Vill.) Schischkin subsp. hybrida
+5234	Minuartia hybrida (Vill.) Schischkin subsp. mediterranea (Link) O. Bolòs & Vigo
+5235	Minuartia hybrida (Vill.) Schischkin subsp. tenuifolia (L.) KerguÚlen
+5242	Minuartia laricifolia (L.) Schinz & Thell. subsp. laricifolia
+5253	Minuartia recurva (All.) Schinz & Thell. subsp. recurva
+5254	Minuartia rostrata (Pers.) Reichenb.
+5256	Minuartia rubra (Scop.) McNeill
+5261	Minuartia rupestris (Scop.) Schinz & Thell. subsp. clementei (Huter) Greuter & Burdet
+5262	Minuartia rupestris (Scop.) Schinz & Thell. subsp. rupestris
+5268	Minuartia verna (L.) Hiern
+5269	Minuartia villarii (Balbis) Wicz. & Chenevard
+5272	Moehringia ciliata (Scop.) Dalla Torre
+5278	Moehringia intermedia Loisel. ex Panizzi
+5279	Moehringia lebrunii Merxm.
+5280	Moehringia muscosa L.
+5283	Moehringia pentandra Gay
+5287	Moehringia sedoides (Pers.) Loisel.
+5288	Moehringia trinervia (L.) Clairv.
+5290	Moenchia erecta (L.) G. Gaertner, B. Meyer & Scherb.
+5299	Petrorhagia prolifera (L.) P.W. Ball & Heywood
+5302	Petrorhagia saxifraga (L.) Link subsp. saxifraga
+5315	Polycarpon tetraphyllum (L.) L. subsp. tetraphyllum
+5317	Sagina apetala Ard.
+5327	Sagina glabra (Willd.) Fenzl
+5345	Sagina saginoides (L.) Karsten subsp. saginoides
+5347	Sagina subulata (Swartz) C. Presl
+5353	Saponaria lutea L.
+5354	Saponaria ocymoides L.
+5357	Saponaria officinalis L.
+5361	Silene acaulis (L.) Jacq.
+5362	Silene acaulis (L.) Jacq. subsp. acaulis
+5363	Silene acaulis (L.) Jacq. subsp. bryoides (Jordan) Nyman
+5373	Silene armeria L.
+5379	Silene campanula Pers.
+5385	Silene colpophylla Wrigley
+5392	Silene cordifolia All.
+5393	Silene coronaria (L.) Clairv.
+5396	Silene cretica L.
+5405	Silene flos-cuculi (L.) Greuter & Burdet
+5406	Silene flos-jovis (L.) Greuter & Burdet
+5408	Silene gallica L.
+5423	Silene italica (L.) Pers.
+5428	Silene latifolia Poiret
+5443	Silene nemoralis Waldst. & Kit.
+5445	Silene noctiflora L.
+5446	Silene nocturna L.
+5464	Silene otites (L.) Wibel
+5466	Silene paradoxa L.
+5468	Silene pendula L.
+5473	Silene pusilla Waldst. & Kit.
+5479	Silene rupestris L.
+5482	Silene saxifraga L.
+5490	Silene suecica (Lodd.) Greuter & Burdet
+5499	Silene vallesia L. subsp. graminea (Reichenb.) Nyman [1878]
+5500	Silene vallesia L. subsp. vallesia
+5503	Silene viscaria (L.) Jessen
+5504	Silene vulgaris (Moench) Garcke
+5507	Silene vulgaris (Moench) Garcke subsp. glareosa (Jordan) Marsden-Jones & Turrill
+5512	Silene vulgaris (Moench) Garcke subsp. prostrata (Gaudin) Chater & Walters
+5517	Spergula arvensis L.
+5526	Spergula pentandra L.
+5549	Spergularia media (L.) C. Presl
+5562	Spergularia segetalis (L.) G. Don fil.
+5572	Stellaria holostea L.
+5579	Stellaria neglecta Weihe
+5582	Stellaria nemorum L. subsp. montana (Pierrat) Berher
+5583	Stellaria nemorum L. subsp. nemorum
+5584	Stellaria pallida (Dumort.) PirÚ
+5593	Vaccaria hispanica (Miller) Rauschert
+5598	Velezia rigida L.
+5605	Evonymus europaeus L.
+5608	Evonymus latifolius (L.) Miller
+5611	Ceratophyllum demersum L.
+5615	Ceratophyllum submersum L. subsp. submersum
+5631	Atriplex hortensis L.
+5637	Atriplex micrantha Ledeb.
+5640	Atriplex patula L.
+5645	Atriplex prostrata DC.
+5650	Atriplex rosea L.
+5651	Atriplex sagittata Borckh.
+5653	Atriplex tatarica L.
+5658	Bassia laniflora (S.G. Gmel.) A.J. Scott.
+5659	Bassia prostrata (L.) G. Beck
+5660	Bassia scoparia (L.) Voss
+5667	Beta vulgaris L.
+5672	Blitum capitatum (L.) Ascherson
+5674	Blitum virgatum L.
+5678	Chenopodium album L. subsp. album
+5683	Chenopodium ambrosioides L.
+5689	Chenopodium botrys L.
+5692	Chenopodium chenopodioides (L.) Aellen
+5693	Chenopodium ficifolium Sm.
+5696	Chenopodium glaucum L.
+5698	Chenopodium hybridum L.
+5704	Chenopodium murale L.
+5707	Chenopodium polyspermum L.
+5708	Chenopodium pumilio R. Br.
+5710	Chenopodium rubrum L.
+5716	Chenopodium strictum Roth
+5719	Chenopodium suecicum J. Murr
+5721	Chenopodium urbicum L.
+5723	Chenopodium vulvaria L.
+5725	Corispermum leptopterum (Ascherson) Iljin
+5742	Polycnemum majus A. Braun
+5792	Spinacia oleracea L.
+5804	Cistus albidus L.
+5830	Cistus monspeliensis L.
+5840	Cistus salviifolius L.
+5853	Fumana ericoides (Cav.) Gandoger subsp. montana (Pomel) G³emes & Muñoz-Garmendia
+5861	Fumana procumbens (Dunal) Gren. & Godron
+5863	Fumana thymifolia (L.) Spach ex Webb
+5883	Helianthemum apenninum (L.) Miller
+5907	Helianthemum hirtum (L.) Miller
+5917	Helianthemum lunulatum (All.) DC.
+5937	Helianthemum oelandicum (L.) DC.
+5940	Helianthemum oelandicum (L.) DC. subsp. incanum (Willk.) López-González
+5941	Helianthemum oelandicum (L.) DC. subsp. italicum (L.) Cesati
+5960	Helianthemum salicifolium (L.) Miller
+5979	Xolantha guttata (L.) Rafin.
+5986	Calystegia pulchra Brummitt & Heywood
+5992	Calystegia silvatica (Kit.) Griseb.
+5999	Convolvulus cantabricus L.
+6020	Cuscuta approximata Bab.
+6032	Cuscuta epithymum (L.) L.
+6041	Cuscuta europaea L.
+6043	Cuscuta gronovii Schultes
+6045	Cuscuta monogyna Vahl
+6047	Cuscuta planiflora Ten.
+6050	Cuscuta scandens Brot.
+6051	Cuscuta scandens Brot. subsp. cesatiana (Bertol.) Soó
+6055	Cuscuta suaveolens Ser.
+6058	Dichondra micrantha Urb.
+6062	Ipomoea lacunosa L.
+6064	Ipomoea purpurea (L.) Roth
+6070	Coriaria myrtifolia L.
+6072	Cornus mas L.
+6075	Carpinus betulus L.
+6078	Ostrya carpinifolia Scop.
+6096	Jovibarba allionii (Jordan & Fourr.) D.A. Webb
+6097	Jovibarba globifera (L.) J. Parnell
+6100	Rhodiola rosea L.
+6107	Sedum alpestre Vill.
+6111	Sedum anacampseros L.
+6116	Sedum annuum L.
+6124	Sedum cepaea L.
+6126	Sedum dasyphyllum L.
+6130	Sedum forsterianum Sm.
+6131	Sedum fragrans 't Hart
+6133	Sedum hirsutum All.
+6134	Sedum hispanicum L.
+6135	Sedum hybridum L.
+6141	Sedum monregalense Balbis
+6142	Sedum montanum Perrier & Song.
+6146	Sedum ochroleucum Chaix
+6158	Sedum rubens L.
+6162	Sedum rupestre L.
+6169	Sedum sediforme (Jacq.) Pau
+6170	Sedum sexangulare L.
+6172	Sedum spurium M. Bieb.
+6175	Sedum telephium L.
+6178	Sedum telephium L. subsp. maximum (L.) Rouy & Camus [1901]
+6187	Sedum villosum L. subsp. villosum
+6190	Sempervivum arachnoideum L.
+6192	Sempervivum arachnoideum L. subsp. tomentosum (C.B. Lehm. & Schnittspahn) Schi
+6198	Sempervivum calcareum Jordan
+6201	Sempervivum montanum L.
+6207	Sempervivum tectorum L.
+6220	Umbilicus rupestris (Salisb.) Dandy
+6227	Bryonia dioica Jacq.
+6229	Citrullus lanatus (Thunb.) Matsumara & Nakai
+6231	Cucumis melo L.
+6232	Cucumis sativus L.
+6235	Cucurbita maxima Duchesne ex Lam.
+6236	Cucurbita pepo L.
+6237	Ecballium elaterium (L.) A. Richard
+6238	Echinocystis lobata (Michaux) Torrey & A. Gray
+6247	Cytinus hypocistis (L.) L.
+6252	Cephalaria alpina (L.) Roemer & Schultes
+6253	Cephalaria leucantha (L.) Roemer & Schultes
+6257	Cephalaria transsylvanica (L.) Roemer & Schultes
+6259	Dipsacus fullonum L.
+6266	Dipsacus laciniatus L.
+6267	Dipsacus pilosus L.
+6268	Dipsacus sativus (L.) Honckeny
+6285	Knautia dipsacifolia Kreutzer
+6295	Knautia integrifolia (L.) Bertol.
+6312	Knautia timeroyi Jordan subsp. collina (Sch³bl. & Martens) Breistr.
+6313	Knautia timeroyi Jordan subsp. timeroyi
+6317	Lomelosia simplex (Desf.) Rafin.
+6320	Lomelosia stellata (L.) Rafin.
+6331	Scabiosa canescens Waldst. & Kit.
+6366	Scabiosa triandra L.
+6371	Sixalix atropurpurea (L.) Greuter & Burdet subsp. maritima (L.) Greuter & Burdet
+6378	Aldrovanda vesiculosa L.
+6380	Drosera intermedia Hayne
+6381	Drosera longifolia L.
+6382	Drosera rotundifolia L.
+6384	Diospyros kaki L. fil.
+6385	Diospyros lotus L.
+6389	HippophaÙ rhamnoides L. subsp. fluviatilis van Soest
+6392	Elatine alsinastrum L.
+6394	Elatine hexandra (Lapierre) DC.
+6396	Elatine hydropiper L.
+6413	Empetrum nigrum L. subsp. hermaphroditum (Hagerup) B÷cher
+6417	Andromeda polifolia L.
+6419	Arbutus unedo L.
+6421	Arctostaphylos alpinus (L.) Sprengel
+6422	Arctostaphylos uva-ursi (L.) Sprengel
+6432	Erica arborea L.
+6439	Erica cinerea L.
+6447	Erica multiflora L.
+6448	Erica scoparia L.
+6451	Erica tetralix L.
+6452	Erica vagans L.
+6456	Loiseleuria procumbens (L.) Desv.
+6457	Moneses uniflora (L.) A. Gray
+6459	Monotropa hypopitys L.
+6463	Orthilia secunda (L.) House
+6470	Pyrola chlorantha Swartz
+6472	Pyrola media Swartz
+6473	Pyrola minor L.
+6477	Pyrola rotundifolia L. subsp. rotundifolia
+6483	Rhododendron ferrugineum L.
+6484	Rhododendron hirsutum L.
+6489	Vaccinium microcarpum (Turcz. ex Rupr.) Schmalh.
+6491	Vaccinium oxycoccos L.
+6492	Vaccinium uliginosum L.
+6493	Vaccinium uliginosum L. subsp. microphyllum (Lange) Tolm.
+6509	Euphorbia amygdaloides L.
+6514	Euphorbia brittingeri Opiz ex Samp.
+6518	Euphorbia chamaesyce L. subsp. chamaesyce
+6522	Euphorbia characias L.
+6529	Euphorbia cyparissias L.
+6547	Euphorbia falcata L.
+6548	Euphorbia flavicoma DC. 2, 3, 4, 5
+6558	Euphorbia graminifolia Vill.
+6559	Euphorbia helioscopia L.
+6563	Euphorbia humifusa Willd.
+6565	Euphorbia hyberna L. subsp. canutii (Parl.) Tutin
+6570	Euphorbia lathyris L.
+6573	Euphorbia maculata L.
+6578	Euphorbia myrsinites L., sensu 2, 3
+6579	Euphorbia nicaeensis All.
+6580	Euphorbia nutans Lag.
+6581	Euphorbia palustris L.
+6586	Euphorbia peplus L.
+6595	Euphorbia platyphyllos L.
+6603	Euphorbia prostrata Aiton
+6607	Euphorbia purpurata Thuill. (b.)
+6610	Euphorbia segetalis L.
+6613	Euphorbia seguieriana Necker
+6614	Euphorbia seguieriana Necker subsp. loiseleurii (Rouy) P. Fourn.
+6615	Euphorbia seguieriana Necker subsp. seguieriana
+6617	Euphorbia serpens Kunth
+6623	Euphorbia stricta L.
+6624	Euphorbia sulcata De Lens ex Loisel.
+6625	Euphorbia taurinensis All.
+6631	Euphorbia variabilis Cesati
+6632	Euphorbia variabilis Cesati subsp. valliniana (Belli) Jauzein
+6634	Euphorbia veneta Willd.
+6637	Euphorbia villosa Kit. ex Willd.
+6641	Euphorbia x-pseudovirgata (Schur) Soó
+6644	Mercurialis annua L.
+6653	Mercurialis perennis L.
+6656	Ricinus communis L.
+6671	Amorpha fruticosa L.
+6681	Anthyllis montana L.
+6686	Anthyllis vulneraria L. subsp. alpestris (Kit.) Ascherson & Graebner
+6690	Anthyllis vulneraria L. subsp. carpatica (Pant.) Nyman
+6693	Anthyllis vulneraria L. subsp. forondae (Sennen) Cullen
+6697	Anthyllis vulneraria L. subsp. polyphylla (DC.) Nyman
+6698	Anthyllis vulneraria L. subsp. praepropera (A. Kerner) Bornm.
+6710	Anthyllis vulneraria L. subsp. vulnerarioides (All.) Arcangeli
+6717	Apios americana Medik.
+6720	Argyrolobium zanonii (Turra) P.W. Ball
+6724	Astragalus alopecurus Pallas
+6725	Astragalus alpinus L.
+6727	Astragalus australis (L.) Lam.
+6730	Astragalus austriacus Jacq.
+6735	Astragalus cicer L.
+6740	Astragalus exscapus L.
+6749	Astragalus hamosus L.
+6751	Astragalus hypoglottis L.
+6752	Astragalus hypoglottis L. subsp. gremlii (Burnat) Greuter & Burdet
+6755	Astragalus incanus L.
+6757	Astragalus leontinus Wulfen
+6759	Astragalus monspessulanus L.
+6765	Astragalus onobrychis L.
+6770	Astragalus penduliflorus Lam.
+6777	Astragalus sempervirens Lam.
+6788	Astragalus stella Gouan
+6793	Astragalus vesicarius L. subsp. pastellianus (Pollini) Arcangeli
+6794	Astragalus vesicarius L. subsp. vesicarius
+6798	Bituminaria bituminosa (L.) E.H. Stirton
+6801	Calicotome spinosa (L.) Link
+6805	Caragana arborescens Lam.
+6820	Colutea arborescens L.
+6823	Coronilla coronata L.
+6826	Coronilla juncea L.
+6830	Coronilla minima L. subsp. minima
+6833	Coronilla scorpioides (L.) Koch
+6835	Coronilla vaginalis Lam.
+6865	Cytisus hirsutus L. (b.)
+6877	Cytisus polytrichus M. Bieb. (b.)
+6881	Cytisus ratisbonnensis Schaeff
+6883	Cytisus sauzeanus Burnat & Briq.
+6895	Cytisus villosus Pourret
+6901	Dorycnium herbaceum Vill. subsp. herbaceum
+6903	Dorycnium hirsutum (L.) Ser.
+6908	Dorycnium pentaphyllum Scop.
+6912	Dorycnium rectum (L.) Ser.
+6928	Galega officinalis L.
+6929	Galega orientalis Lam.
+6944	Genista delphinensis Verlot (b.)
+6955	Genista hispanica L. subsp. hispanica
+6973	Genista pulchella Vis.
+6978	Genista radiata (L.) Scop.
+6987	Genista scorpius (L.) DC.
+6996	Genista villarsii G.C. Clementi (b.)
+7001	Glycine max (L.) Merr.
+7006	Hedysarum boutignyanum (Camus) Alleiz.
+7010	Hedysarum brigantiacum BournÚrias, Chas & KerguÚlen
+7014	Hedysarum coronarium L.
+7017	Hedysarum hedysaroides (L.) Schinz & Thell.
+7035	Hippocrepis emerus (L.) P. Lassen
+7042	Laburnum alpinum (Miller) Berchtold & J. Presl
+7043	Laburnum anagyroides Medik.
+7046	Lathyrus angulatus L.
+7047	Lathyrus annuus L.
+7048	Lathyrus aphaca L.
+7053	Lathyrus cicera L.
+7061	Lathyrus filiformis (Lam.) Gay
+7063	Lathyrus heterophyllus L.
+7064	Lathyrus hirsutus L.
+7065	Lathyrus inconspicuus L.
+7074	Lathyrus latifolius L.
+7077	Lathyrus linifolius (Reichard) Bõssler
+7089	Lathyrus niger (L.) Bernh.
+7092	Lathyrus nissolia L.
+7096	Lathyrus occidentalis (Fisch. & C.A. Meyer) Fritsch
+7100	Lathyrus odoratus L.
+7103	Lathyrus pannonicus (Jacq.) Garcke subsp. asphodeloides (Gouan) Bõssler
+7113	Lathyrus sativus L.
+7115	Lathyrus setifolius L.
+7116	Lathyrus sphaericus Retz.
+7117	Lathyrus sylvestris L.
+7125	Lathyrus tuberosus L.
+7127	Lathyrus venetus (Miller) Wohlf.
+7128	Lathyrus vernus (L.) Bernh.
+7136	Lens nigricans (M. Bieb.) Godron
+7139	Lotus alpinus (DC.) Schleicher ex Ramond
+7140	Lotus angustissimus L.
+7154	Lotus corniculatus L. subsp. valdepilosus (Schur) KerguÚlen
+7167	Lotus delortii Timb.-Lagr. ex F.W. Schultz
+7171	Lotus glaber Miller
+7174	Lotus longisiliquosus R. de Roemer
+7175	Lotus maritimus L.
+7179	Lotus ornithopodioides L.
+7212	Lupinus polyphyllus Lindley
+7220	Medicago arabica (L.) Hudson
+7227	Medicago coronata (L.) Bartal.
+7251	Medicago intertexta (L.) Miller
+7276	Medicago minima (L.) L.
+7292	Medicago orbicularis (L.) Bartal.
+7297	Medicago polymorpha L.
+7316	Medicago rigidula (L.) All.
+7319	Medicago sativa L.
+7324	Medicago scutellata (L.) Miller
+7347	Melilotus albus Medik.
+7352	Melilotus indicus (L.) All.
+7354	Melilotus italicus (L.) Lam.
+7357	Melilotus neapolitanus Ten.
+7358	Melilotus officinalis Lam.
+7363	Melilotus sulcatus Desf.
+7369	Onobrychis arenaria (Kit.) DC.
+7378	Onobrychis montana DC.
+7384	Onobrychis saxatilis (L.) Lam.
+7386	Onobrychis supina (Chaix) DC.
+7410	Ononis minutissima L.
+7414	Ononis natrix L. subsp. natrix
+7419	Ononis pusilla L.
+7422	Ononis reclinata L.
+7423	Ononis repens L.
+7427	Ononis rotundifolia L.
+7441	Ononis striata Gouan
+7444	Ononis viscosa L. subsp. breviflora (DC.) Nyman
+7449	Ornithopus perpusillus L.
+7453	Ornithopus sativus Brot.
+7478	Oxytropis amethystea Arvet-Touvet
+7479	Oxytropis campestris (L.) DC.
+7480	Oxytropis fetida (Vill.) DC.
+7486	Oxytropis halleri Bunge ex Koch
+7488	Oxytropis halleri Bunge ex Koch subsp. velutina (Schur) O. Schwarz
+7489	Oxytropis helvetica Scheele
+7490	Oxytropis jacquinii Bunge
+7491	Oxytropis lapponica (Wahlenb.) Gay
+7498	Oxytropis neglecta Ten.
+7500	Oxytropis pilosa (L.) DC.
+7511	Phaseolus coccineus L.
+7513	Phaseolus vulgaris L.
+7524	Pisum sativum L.
+7526	Pisum sativum L. subsp. elatius (M. Bieb.) Ascherson & Graebner
+7534	Robinia pseudoacacia L.
+7551	Securigera varia (L.) P. Lassen
+7554	Sophora japonica L.
+7561	Spartium junceum L.
+7580	Trifolium alpinum L.
+7582	Trifolium angustifolium L.
+7588	Trifolium arvense L. subsp. gracile (Thuill.) Nyman
+7612	Trifolium filiforme L.
+7620	Trifolium glomeratum L.
+7622	Trifolium hirtum All.
+7624	Trifolium hybridum L. subsp. elegans (Savi) Ascherson & Graebner
+7625	Trifolium hybridum L. subsp. hybridum
+7626	Trifolium incarnatum L.
+7628	Trifolium incarnatum L. subsp. molinerii (Balbis ex Hornem) Cesati
+7666	Trifolium nigrescens Viv.
+7672	Trifolium pallescens Schreber
+7677	Trifolium patens Schreber
+7705	Trifolium resupinatum L. subsp. suaveolens (Willd.) Ponert
+7712	Trifolium saxatile All.
+7713	Trifolium scabrum L.
+7725	Trifolium stellatum L.
+7726	Trifolium striatum L.
+7730	Trifolium strictum L.
+7732	Trifolium subterraneum L.
+7737	Trifolium sylvaticum Loisel.
+7739	Trifolium thalii Vill.
+7754	Trigonella esculenta Willd.
+7757	Trigonella gladiata M. Bieb.
+7759	Trigonella monspeliaca L.
+7778	Ulex parviflorus Pourret
+7786	Vicia articulata Hornem.
+7791	Vicia bithynica (L.) L.
+7801	Vicia cracca L. subsp. incana Rouy
+7803	Vicia cusnae Foggi & Ricceri
+7807	Vicia dumetorum L.
+7809	Vicia ervilia (L.) Willd.
+7815	Vicia grandiflora Scop.
+7819	Vicia hybrida L.
+7824	Vicia lathyroides L.
+7828	Vicia lutea L.
+7832	Vicia melanops Sibth. & Sm.
+7836	Vicia narbonensis L.
+7840	Vicia onobrychioides L.
+7842	Vicia pannonica Crantz
+7845	Vicia pannonica Crantz subsp. striata (M. Bieb.) Nyman
+7846	Vicia parviflora Cav.
+7847	Vicia peregrina L.
+7848	Vicia pisiformis L.
+7852	Vicia pyrenaica Pourret
+7854	Vicia sativa L.
+7857	Vicia sativa L. subsp. cordata (Wulfen ex Hoppe) Batt.
+7859	Vicia sativa L. subsp. nigra (L.) Ehrh.
+7861	Vicia sativa L. subsp. sativa
+7862	Vicia sativa L. subsp. segetalis (Thuill.) Celak.
+7868	Vicia serratifolia Jacq.
+7871	Vicia sylvatica L.
+7874	Vicia tenuifolia Roth subsp. dalmatica (A. Kerner) Ascherson & Graebner
+7877	Vicia tetrasperma (L.) Schreber
+7883	Vicia villosa Roth
+7888	Vicia villosa Roth subsp. varia (Host) Corb.
+7889	Vicia villosa Roth subsp. villosa
+7890	Wisteria sinensis (Sims) Sweet
+7892	Castanea sativa Miller
+7898	Quercus cerris L.
+7899	Quercus coccifera L.
+7900	Quercus coccinea Munchh.
+7902	Quercus crenata Lam.
+7907	Quercus ilex L.
+7914	Quercus palustris Munchh.
+7916	Quercus petraea (Mattuschka) Liebl.
+7920	Quercus pubescens Willd. [1805]
+7923	Quercus robur L.
+7927	Quercus rubra L.
+7932	Quercus virgiliana (Ten.) Ten.
+7947	Blackstonia perfoliata (L.) Hudson subsp. perfoliata
+7950	Centaurium erythraea Rafn
+7958	Centaurium favargeri Zeltner
+7964	Centaurium pulchellum (Swartz) Druce
+7971	Centaurium spicatum (L.) Fritsch
+7974	Centaurium tenuiflorum (Hoffmanns. & Link) Fritsch subsp. acutiflorum (Schott) Zeltner
+8013	Gentiana acaulis L.
+8017	Gentiana alpina Vill.
+8022	Gentiana angustifolia Vill.
+8026	Gentiana bavarica L. subsp. bavarica
+8028	Gentiana bavarica L. subsp. subacaulis (Schleich.) G. M³ller
+8031	Gentiana brachyphylla Vill.
+8035	Gentiana burseri Lapeyr. subsp. villarsii (Griseb.) Rouy
+8043	Gentiana clusii Perr. & Song.
+8058	Gentiana ligustica R. de Vilmorin & Chopinet
+8061	Gentiana nivalis L.
+8066	Gentiana orbicularis Schur
+8067	Gentiana pannonica Scop.
+8075	Gentiana punctata L.
+8077	Gentiana purpurea L.
+8080	Gentiana rostanii Verlot
+8081	Gentiana schleicheri (Vacc.) H. Kunz
+8087	Gentiana terglouensis Hacq.
+8089	Gentiana utriculosa L.
+8103	Gentianella ramosa (Hegetschw.) Holub
+8104	Gentianella tenella (Rottb.) B÷rner
+8117	Erodium botrys (Cav.) Bertol.
+8122	Erodium ciconium (L.) L'HÚrit.
+8124	Erodium cicutarium (L.) L'HÚrit. subsp. cicutarium
+8129	Erodium cicutarium (L.) L'HÚrit. subsp. romanum (Burm. fil.) Bonnier & Layens
+8145	Erodium malacoides (L.) L'HÚrit.
+8159	Erodium rodiei (Br.-Bl.) Poirion
+8166	Geranium argenteum L.
+8174	Geranium columbinum L.
+8177	Geranium endressii Gay
+8185	Geranium lucidum L.
+8186	Geranium macrorrhizum L.
+8193	Geranium nodosum L.
+8197	Geranium phaeum L.
+8206	Geranium rivulare Vill.
+8207	Geranium robertianum L.
+8209	Geranium robertianum L. subsp. purpureum (Vill.) Nyman
+8213	Geranium rotundifolium L.
+8215	Geranium sibiricum L. ?
+8235	Globularia alypum L.
+8244	Globularia nudicaulis L.
+8248	Globularia repens Lam.
+8250	Globularia vulgaris L.
+8256	Ribes alpinum L.
+8258	Ribes nigrum L.
+8259	Ribes petraeum Wulfen in Jacq.
+8260	Ribes rubrum L.
+8262	Ribes sanguineum Pursh
+8263	Ribes uva-crispa L.
+8276	Myriophyllum spicatum L.
+8277	Myriophyllum verticillatum L.
+8281	Aesculus hippocastanum L.
+8283	Hippuris vulgaris L.
+8285	Deutzia scabra Thunb.
+8289	Philadelphus coronarius L.
+8292	Phacelia tanacetifolia Bentham
+8302	Hypericum androsaemum L.
+8306	Hypericum calycinum L.
+8310	Hypericum coris L.
+8312	Hypericum desetangsii Lamotte
+8319	Hypericum hircinum L.
+8323	Hypericum hirsutum L.
+8324	Hypericum humifusum L.
+8327	Hypericum hyssopifolium Chaix
+8335	Hypericum montanum L.
+8336	Hypericum mutilum L.
+8337	Hypericum nummularium L.
+8342	Hypericum perforatum L. subsp. veronense (Schrank) Cesati
+8345	Hypericum pulchrum L.
+8351	Hypericum richeri Vill.
+8359	Hypericum tomentosum L.
+8366	Herniaria alpina Chaix
+8374	Herniaria glabra L.
+8377	Herniaria hirsuta L.
+8379	Herniaria incana Lam.
+8398	Illecebrum verticillatum L.
+8403	Paronychia argentea Lam.
+8410	Paronychia kapela (Hacq.) Kerner
+8413	Paronychia kapela (Hacq.) Kerner subsp. serpyllifolia (Chaix) Graebner
+8415	Paronychia polygonifolia (Vill.) DC.
+8417	Scleranthus annuus L.
+8427	Scleranthus perennis L. subsp. perennis
+8429	Scleranthus polycarpos L.
+8436	Juglans regia L.
+8438	Pterocarya fraxinifolia Spach
+8444	Acinos arvensis (Lam.) Dandy
+8445	Acinos arvensis (Lam.) Dandy subsp. arvensis
+8449	Ajuga chamaepitys (L.) Schreber
+8450	Ajuga genevensis L.
+8457	Ajuga pyramidalis L.
+8461	Ballota frutescens (L.) J. Woods
+8465	Ballota nigra L. subsp. meridionalis (BÚguinot) BÚguinot [1909]
+8480	Calamintha ascendens Jordan
+8484	Calamintha grandiflora (L.) Moench
+8485	Calamintha menthifolia Host
+8487	Calamintha nepeta (L.) Savi
+8503	Dracocephalum austriacum L.
+8504	Dracocephalum ruyschiana L.
+8518	Galeopsis ladanum L.
+8519	Galeopsis ladanum L. subsp. angustifolia (Hoffm.) Celak.
+8541	Glechoma hirsuta Waldst. & Kit.
+8543	Horminum pyrenaicum L.
+8547	Hyssopus officinalis L.
+8549	Hyssopus officinalis L. subsp. canescens (DC.) Nyman
+8556	Lamium amplexicaule L.
+8563	Lamium galeobdolon (L.) L. subsp. montanum (Pers.) Hayek
+8570	Lamium garganicum L. subsp. longiflorum (Ten.) KerguÚlen
+8573	Lamium hybridum Vill.
+8579	Lavandula angustifolia Miller subsp. angustifolia
+8583	Lavandula latifolia Medik.
+8602	Marrubium peregrinum L.
+8603	Marrubium vulgare L.
+8610	Melissa officinalis L. subsp. officinalis
+8611	Melittis melissophyllum L.
+8631	Mentha requienii Bentham
+8633	Mentha spicata L.
+8640	Mentha suaveolens Ehrh. subsp. suaveolens
+8674	Micromeria marginata (Sm.) Chater
+8678	Nepeta cataria L.
+8685	Nepeta nepetella L.
+8686	Nepeta nuda L.
+8688	Ocimum basilicum L.
+8691	Origanum majorana L.
+8699	Phlomis herba-venti L.
+8700	Phlomis lychnitis L.
+8709	Prunella hyssopifolia L.
+8710	Prunella laciniata (L.) L.
+8716	Rosmarinus officinalis L.
+8717	Salvia aethiopis L.
+8722	Salvia glutinosa L.
+8736	Salvia officinalis L.
+8745	Salvia sclarea L.
+8747	Salvia sylvestris L.
+8748	Salvia tomentosa Miller
+8750	Salvia verbenaca L.
+8769	Satureja hortensis L.
+8773	Satureja montana L.
+8779	Scutellaria alpina L.
+8780	Scutellaria altissima L.
+8784	Scutellaria hastifolia L.
+8785	Scutellaria minor Hudson
+8797	Sideritis hirsuta L.
+8813	Sideritis romana L.
+8815	Sideritis scordioides L.
+8817	Stachys alopecuros (L.) Bentham
+8819	Stachys alopecuros (L.) Bentham subsp. godronii (Rouy) Merxm.
+8821	Stachys alpina L.
+8822	Stachys annua (L.) L.
+8824	Stachys arvensis (L.) L.
+8826	Stachys byzantina C. Koch
+8830	Stachys cretica L. subsp. salviifolia (Ten.) Rech. fil.
+8832	Stachys germanica L.
+8835	Stachys heraclea All.
+8846	Stachys officinalis (L.) TrÚvisan
+8848	Stachys pradica (Zanted.) Greuter & Pignatti
+8850	Stachys recta L. subsp. labiosa (Bertol.) Briq.
+8853	Stachys sylvatica L.
+8856	Teucrium aureum Schreber
+8859	Teucrium botrys L.
+8867	Teucrium chamaedrys L. subsp. germanicum (F. Hermann) Rech. fil.
+8875	Teucrium flavum L. subsp. flavum
+8880	Teucrium lucidum L.
+8891	Teucrium polium L. subsp. polium
+8898	Teucrium pyrenaicum L.
+8901	Teucrium scordium L.
+8908	Thymus alpestris Tausch ex A. Kerner
+8920	Thymus embergeri Roussine
+8932	Thymus longicaulis C. Presl
+8935	Thymus nervosus Willk.
+8937	Thymus oenipontanus H. Braun
+8943	Thymus praecox Opiz
+8945	Thymus praecox Opiz subsp. britannicus (Ronniger) Holub
+8953	Thymus pulegioides L. subsp. pannonicus (All.) KerguÚlen
+8976	Thymus vulgaris L.
+8983	Laurus nobilis L.
+8987	Pinguicula arvetii Genty
+8989	Pinguicula grandiflora Lam.
+8991	Pinguicula grandiflora Lam. subsp. grandiflora
+8992	Pinguicula grandiflora Lam. subsp. rosea (Mutel) Casper
+8994	Pinguicula leptoceras Reichenb.
+8998	Pinguicula longifolia Ramond ex DC. subsp. reichenbachiana (Schindler) Casper
+9004	Pinguicula vulgaris L.
+9008	Utricularia australis R. Br.
+9012	Utricularia minor L.
+9021	Linum alpinum Jacq.
+9031	Linum austriacum L.
+9033	Linum austriacum L. subsp. collinum (Boiss.) Nyman
+9037	Linum bienne Miller
+9041	Linum campanulatum L.
+9053	Linum maritimum L.
+9056	Linum narbonense L.
+9057	Linum nodiflorum L.
+9062	Linum strictum L.
+9068	Linum suffruticosum L. subsp. appressum (A. Caballero) Rivas Martínez
+9072	Linum trigynum L.
+9074	Linum viscosum L.
+9075	Radiola linoides Roth
+9077	Ammannia coccinea Rottb.
+9084	Lythrum hyssopifolia L.
+9088	Lythrum portula (L.) D.A. Webb
+9092	Lythrum thymifolium L.
+9093	Lythrum tribracteatum Salzm. ex Sprengel
+9105	Punica granatum L.
+9107	Liriodendron tulipifera L.
+9111	Abutilon theophrasti Medik.
+9114	Alcea rosea L.
+9115	Althaea cannabina L.
+9117	Althaea hirsuta L.
+9120	Althaea officinalis L.
+9123	Anoda cristata (L.) Schlecht.
+9129	Hibiscus syriacus L.
+9130	Hibiscus trionum L.
+9135	Lavatera maritima Gouan
+9140	Lavatera thuringiaca L.
+9141	Lavatera trimestris L.
+9160	Malva nicaeensis All.
+9161	Malva parviflora L.
+9166	Malva sylvestris L.
+9170	Malva verticillata L.
+9174	Sida spinosa L.
+9183	Menyanthes trifoliata L.
+9184	Nymphoides peltata (S.G. Gmelin) O. Kuntze
+9187	Acacia dealbata Willd.
+9199	Albizia julibrissin Durazzini
+9215	Mollugo verticillata L.
+9218	Broussonetia papyrifera (L.) Vent.
+9219	Ficus carica L.
+9223	Morus alba L.
+9224	Morus nigra L.
+9238	Myrtus communis L.
+9246	Mirabilis jalapa L.
+9249	Nuphar lutea (L.) Sm.
+9252	Nymphaea alba L.
+9258	Circaea alpina L.
+9265	Epilobium alpestre (Jacq.) Krocker
+9269	Epilobium alsinifolium Vill.
+9270	Epilobium anagallidifolium Lam.
+9272	Epilobium ciliatum Rafin.
+9273	Epilobium collinum C.C. Gmelin
+9275	Epilobium dodonaei Vill. subsp. dodonaei
+9276	Epilobium dodonaei Vill. subsp. fleischeri (Hochst.) Schinz & Thell.
+9277	Epilobium duriaei Gay ex Godron
+9282	Epilobium lanceolatum Sebastiani & Mauri
+9288	Epilobium nutans F.W. Schmidt
+9289	Epilobium obscurum Schreber
+9292	Epilobium roseum Schreber
+9299	Epilobium tetragonum L. subsp. lamyi (F.W. Schultz) Nyman
+9305	Fuchsia magellanica Lam.
+9316	Ludwigia grandiflora (Michaux) Greuter & Burdet
+9317	Ludwigia palustris (L.) Elliott
+9321	Oenothera angustissima Gates
+9323	Oenothera biennis L.
+9328	Oenothera canovirens Steele
+9333	Oenothera glazioviana M. Micheli in C.E.P. Mart.
+9338	Oenothera issleri Renner ex Rostanski
+9347	Oenothera oakesiana (A. Gray) B. Wats. & Coult. in A.
+9350	Oenothera pycnocarpa Atkinson & Bartlett
+9352	Oenothera rosea L'HÚrit. ex Aiton
+9361	Oenothera suaveolens Pers.
+9362	Oenothera subterminalis Gates
+9364	Oenothera villosa Thunb. [1792]
+9366	Fraxinus angustifolia Vahl
+9380	Jasminum fruticans L.
+9382	Jasminum nudiflorum Lindley
+9384	Jasminum officinale L.
+9385	Ligustrum lucidum Aiton fil.
+9386	Ligustrum ovalifolium Hassk.
+9388	Olea europaea L.
+9394	Phillyrea angustifolia L.
+9397	Phillyrea latifolia L.
+9400	Syringa vulgaris L.
+9402	Oxalis acetosella L.
+9412	Oxalis debilis H.B.K.
+9415	Oxalis dillenii Jacq.
+9421	Oxalis latifolia Kunth
+9438	Paeonia mascula (L.) Miller
+9443	Paeonia officinalis L.
+9445	Paeonia officinalis L. subsp. huthii Soldano [1993]
+9447	Paeonia officinalis L. subsp. officinalis
+9455	Ceratocapnos claviculata (L.) LidÚn
+9458	Chelidonium majus L.
+9463	Corydalis cava (L.) Schweigg. & Koerte
+9467	Corydalis intermedia (L.) MÚrat
+9471	Corydalis solida (L.) Clairv.
+9472	Eschscholzia californica Cham.
+9473	Fumaria agraria Lag.
+9476	Fumaria barnolae Sennen & Pau
+9486	Fumaria capreolata L.
+9504	Fumaria officinalis L.
+9507	Fumaria parviflora Lam.
+9516	Fumaria schleicheri Soyer-Willemet
+9520	Fumaria vaillantii Loisel.
+9524	Glaucium flavum Crantz
+9534	Meconopsis cambrica (L.) Vig.
+9543	Papaver argemone L.
+9545	Papaver aurantiacum Loisel. [1809]
+9549	Papaver croceum Ledeb.
+9550	Papaver dubium L.
+9555	Papaver hybridum L.
+9571	Papaver rhoeas L.
+9575	Papaver somniferum L.
+9585	Pseudofumaria alba (Miller) LidÚn
+9586	Pseudofumaria lutea (L.) Borckh.
+9601	Phytolacca americana L.
+9605	Pittosporum tobira (Thunb.) Aiton fil.
+9609	Littorella uniflora (L.) Ascherson
+9612	Plantago alpina L.
+9613	Plantago altissima L.
+9615	Plantago argentea Chaix
+9618	Plantago atrata Hoppe subsp. atrata
+9619	Plantago atrata Hoppe subsp. fuscescens (Jordan) Pilger
+9621	Plantago bellardii All.
+9627	Plantago coronopus L. subsp. coronopus
+9638	Plantago holosteum Scop.
+9650	Plantago lagopus L.
+9664	Plantago major L. subsp. intermedia (Gilib.) Lange
+9668	Plantago maritima L. subsp. serpentina (All.) Arcangeli
+9685	Plantago sempervirens Crantz
+9702	Platanus hispanica Miller ex Muenchh.
+9713	Armeria alpina Willd.
+9714	Armeria arenaria (Pers.) Schultes
+9764	Ceratostigma plumbaginoides Bunge
+9854	Plumbago europaea L.
+9945	Collomia grandiflora Douglas ex Lindley
+9946	Polemonium caeruleum L.
+9948	Polygala alpestris Reichenb.
+9949	Polygala alpina (DC.) Steudel
+9958	Polygala calcarea F.W. Schultz
+9962	Polygala chamaebuxus L.
+9969	Polygala exilis DC.
+9971	Polygala monspeliaca L.
+10008	Fagopyrum esculentum Moench [1796]
+10009	Fagopyrum tataricum (L.) Gaertner
+10012	Fallopia baldschuanica (Regel) Holub
+10013	Fallopia convolvulus (L.) 'A. L÷ve
+10016	Fallopia dumetorum (L.) Holub
+10019	Oxyria digyna (L.) Hill
+10036	Polygonum alpinum All.
+10037	Polygonum amphibium L.
+10045	Polygonum aviculare L. subsp. depressum (Meisn.) Arcangeli
+10047	Polygonum aviculare L. subsp. rurivagum (Jordan ex Boreau) Berher
+10052	Polygonum bellardii All.
+10053	Polygonum bistorta L.
+10068	Polygonum hydropiper L.
+10070	Polygonum lapathifolium L.
+10075	Polygonum lapathifolium L. subsp. pallidum (With.) Fries
+10079	Polygonum minus Hudson
+10080	Polygonum mite Schrank
+10083	Polygonum orientale L.
+10090	Polygonum persicaria L.
+10091	Polygonum polystachyum Meisner in Wall.
+10106	Polygonum viviparum L.
+10107	Reynoutria japonica Houtt.
+10109	Reynoutria sachalinensis (Friedrich Schmidt Petrop.) N
+10110	Reynoutria x-bohemica Chrtek & Chrtkova
+10130	Rumex arifolius All.
+10133	Rumex bucephalophorus
+10145	Rumex conglomeratus Murray
+10154	Rumex cristatus DC.
+10159	Rumex hydrolapathum Hudson
+10160	Rumex intermedius DC.
+10164	Rumex longifolius DC.
+10165	Rumex maritimus L.
+10166	Rumex nebroides Campd.
+10175	Rumex palustris Sm.
+10179	Rumex patientia L.
+10182	Rumex pseudalpinus H÷fft
+10183	Rumex pulcher L.
+10185	Rumex pulcher L. subsp. pulcher
+10191	Rumex sanguineus L.
+10192	Rumex scutatus L.
+10197	Rumex thyrsiflorus Fingerh.
+10206	Claytonia perfoliata Donn ex Willd.
+10208	Montia fontana L.
+10224	Portulaca grandiflora Hooker
+10225	Portulaca oleracea L.
+10237	Anagallis arvensis L.
+10247	Anagallis foemina Miller
+10249	Anagallis minima (L.) E.H.L. Krause
+10252	Anagallis tenella (L.) L.
+10254	Androsace adfinis Biroli
+10255	Androsace adfinis Biroli subsp. adfinis
+10256	Androsace adfinis Biroli subsp. brigantiaca (Jordan & Fourr.) Kress
+10257	Androsace adfinis Biroli subsp. puberula (Jordan & Fourr.) Kress
+10258	Androsace alpina (L.) Lam.
+10269	Androsace chaixii Gren. & Godron
+10270	Androsace chamaejasme Wulfen
+10276	Androsace elongata L. subsp. breistrofferi (Charpin & Greuter) Molero &
+10279	Androsace halleri L.
+10280	Androsace helvetica (L.) All.
+10283	Androsace lactea L.
+10287	Androsace obtusifolia All.
+10289	Androsace pubescens DC.
+10293	Androsace septentrionalis L.
+10295	Androsace vandellii (Turra) Chiov.
+10296	Androsace villosa L.
+10297	Androsace vitaliana (L.) Lapeyr.
+10302	Asterolinon linum-stellatum (L.) Duby
+10305	Coris monspeliensis L.
+10306	Cortusa matthiolii L.
+10310	Cyclamen hederifolium Aiton
+10312	Cyclamen purpurascens Miller
+10320	Hottonia palustris L.
+10323	Lysimachia nemorum L.
+10325	Lysimachia punctata L.
+10332	Primula allionii Loisel.
+10333	Primula auricula L.
+10335	Primula auricula L. subsp. balbisii (Lehm.) Nyman
+10340	Primula elatior (L.) Hill subsp. elatior
+10341	Primula elatior (L.) Hill subsp. intricata (Gren. & Godron) Widmer
+10347	Primula halleri J.F. Gmelin
+10348	Primula hirsuta All.
+10350	Primula integrifolia L.
+10355	Primula marginata Curtis
+10364	Primula veris L. subsp. columnae (Ten.) Maire & Petitmengin
+10377	Primula vulgaris Hudson subsp. vulgaris
+10378	Samolus valerandi L.
+10379	Soldanella alpina L.
+10382	Soldanella villosa Darracq
+10383	Trientalis europaea L.
+10388	Aconitum anthora L.
+10395	Aconitum lycoctonum L.
+10396	Aconitum lycoctonum L. subsp. neapolitanum (Ten.) Nyman
+10398	Aconitum lycoctonum L. subsp. vulparia (Reichenb. ex Sprengel) Nyman
+10401	Aconitum napellus L.
+10407	Aconitum napellus L. subsp. vulgare Rouy & Fouc.
+10418	Aconitum variegatum L.
+10419	Aconitum variegatum L. subsp. paniculatum (Arcangeli) Greuter & Burdet
+10422	Aconitum variegatum L. subsp. valesiacum (Gáyer) Greuter & Burdet
+10428	Actaea spicata L.
+10429	Adonis aestivalis L.
+10432	Adonis annua L.
+10439	Adonis flammea Jacq.
+10442	Adonis pyrenaica DC.
+10444	Adonis vernalis L.
+10451	Anemone baldensis L.
+10452	Anemone coronaria L.
+10455	Anemone hortensis L.
+10460	Anemone nemorosa L.
+10473	Anemone trifolia L.
+10475	Anemone trifolia L. subsp. trifolia
+10477	Aquilegia alpina L.
+10478	Aquilegia atrata Koch
+10481	Aquilegia bertolonii Schott
+10491	Aquilegia vulgaris L.
+10497	Callianthemum coriandrifolium Reichenb.
+10502	Caltha palustris L.
+10506	Ceratocephalus falcatus (L.) Pers. subsp. falcatus
+10507	Clematis alpina (L.) Miller
+10509	Clematis flammula L.
+10511	Clematis recta L.
+10512	Clematis vitalba L.
+10513	Clematis viticella L.
+10514	Consolida ajacis (L.) Schur
+10516	Consolida hispanica (Costa) Greuter & Burdet
+10519	Consolida pubescens (DC.) Soó
+10522	Consolida regalis S.F. Gray subsp. regalis
+10525	Delphinium dubium (Rouy & Fouc.) Pawl.
+10529	Delphinium elatum L. subsp. helveticum Pawl.
+10550	Eranthis hyemalis (L.) Salisb.
+10559	Helleborus foetidus L.
+10568	Helleborus viridis L.
+10572	Hepatica nobilis Schreber
+10582	Nigella damascena L.
+10590	Pulsatilla alpina (L.) Delarbre
+10594	Pulsatilla alpina (L.) Delarbre subsp. apiifolia (Scop.) Nyman
+10601	Pulsatilla halleri (All.) Willd. subsp. halleri
+10602	Pulsatilla montana (Hoppe) Reichenb.
+10606	Pulsatilla rubra Delarbre
+10623	Ranunculus acris L. subsp. acris
+10624	Ranunculus acris L. subsp. friesianus (Jordan) Syme
+10626	Ranunculus aduncus Gren.
+10629	Ranunculus alpestris L.
+10637	Ranunculus arvensis L.
+10653	Ranunculus carinthiacus Hoppe in Sturm
+10655	Ranunculus cassubicifolius Walo Koch
+10672	Ranunculus ficaria L.
+10680	Ranunculus flammula L.
+10682	Ranunculus fluitans Lam.
+10687	Ranunculus garganicus Ten.
+10691	Ranunculus glacialis L.
+10693	Ranunculus gramineus L.
+10699	Ranunculus kuepferi Greuter & Burdet
+10702	Ranunculus lanuginosus L.
+10705	Ranunculus lingua L.
+10712	Ranunculus monspeliacus L.
+10715	Ranunculus montanus Willd.
+10717	Ranunculus muricatus L.
+10727	Ranunculus ophioglossifolius Vill.
+10729	Ranunculus paludosus Poiret
+10730	Ranunculus parnassifolius L.
+10734	Ranunculus parviflorus L.
+10739	Ranunculus peltatus Schrank subsp. peltatus
+10750	Ranunculus platanifolius L.
+10752	Ranunculus polyanthemophyllus Walo Koch & H. Hess
+10765	Ranunculus reptans L.
+10774	Ranunculus sardous Crantz
+10780	Ranunculus sartorianus Boiss. & Heldr.
+10782	Ranunculus sceleratus L. subsp. sceleratus
+10784	Ranunculus serpens Schrank
+10790	Ranunculus thora L.
+10791	Ranunculus trichophyllus Chaix
+10792	Ranunculus trichophyllus Chaix subsp. eradicatus (Laest.) C. Cook
+10799	Ranunculus tuberosus Lapeyr.
+10800	Ranunculus velutinus Ten.
+10802	Thalictrella thalictroides (L.) E. Nardi
+10803	Thalictrum alpinum L.
+10813	Thalictrum flavum L.
+10818	Thalictrum foetidum L.
+10826	Thalictrum minus L.
+10829	Thalictrum minus L. subsp. majus (Crantz) Hooker fil.
+10832	Thalictrum minus L. subsp. saxatile Cesati
+10838	Thalictrum simplex L.
+10840	Thalictrum simplex L. subsp. bauhinii (Crantz) Tutin
+10843	Thalictrum simplex L. subsp. simplex
+10845	Trollius europaeus L.
+10865	Reseda lutea L.
+10866	Reseda luteola L.
+10867	Reseda phyteuma L.
+10891	Paliurus spina-christi Miller
+10892	Rhamnus alaternus L.
+10895	Rhamnus alpina L.
+10905	Rhamnus pumila Turra
+10908	Rhamnus saxatilis Jacq. subsp. saxatilis
+10915	Agrimonia procera Wallr.
+10917	Alchemilla acutiloba Opiz
+10918	Alchemilla aggregata Buser gr. versipila
+10926	Alchemilla amphibola Buser gr. subsericea
+10927	Alchemilla amphisericea Buser in Doerfler
+10928	Alchemilla argentidens Buser in Doerfler
+10935	Alchemilla buseri Maillefer gr. plicatula
+10940	Alchemilla colorata Buser
+10941	Alchemilla compta Buser
+10946	Alchemilla coruscans Buser gr. plicatula
+10948	Alchemilla decumbens Buser
+10949	Alchemilla demissa Buser
+10960	Alchemilla flavovirens Buser gr. pallens
+10961	Alchemilla flexicaulis Buser
+10962	Alchemilla florulenta Buser gr. plicatula
+10963	Alchemilla frigens Buser ex Jaquet gr. longana
+10970	Alchemilla glomerulans Buser
+10974	Alchemilla heteropoda Buser
+10983	Alchemilla inconcinna Buser
+10986	Alchemilla jugensis (Buser) Maillefer gr. grossidens
+10988	Alchemilla leptoclada Buser gr. conjuncta
+10999	Alchemilla multidens Buser gr. flavicoma
+11004	Alchemilla pentaphyllea L.
+11005	Alchemilla petraea Buser ex Maillefer gr. plicatula
+11010	Alchemilla racemulosa Buser gr. connivens
+11011	Alchemilla reniformis Buser
+11013	Alchemilla saxatilis Buser
+11014	Alchemilla schmidelyana Buser
+11019	Alchemilla splendens Christ ex Favrat
+11020	Alchemilla straminea Buser
+11023	Alchemilla subsericea Reuter
+11024	Alchemilla tenuis Buser
+11025	Alchemilla transiens (Buser) Buser
+11027	Alchemilla undulata Buser
+11029	Alchemilla vetteri Buser
+11037	Amelanchier lamarckii F.G. Schroeder
+11038	Amelanchier ovalis Medik.
+11039	Amelanchier ovalis Medik. subsp. embergeri Favarger & Stearn
+11046	Aphanes arvensis L.
+11048	Aphanes inexspectata Lippert
+11050	Aphanes minutiflora (Aznavour) Holub
+11057	Aruncus dioicus (Walter) Fernald
+11068	Chaenomeles japonica (Thunb.) Spach
+11073	Cotoneaster delphinensis Chatenier
+11074	Cotoneaster horizontalis Decne
+11077	Cotoneaster jurana Gandoger
+11081	Cotoneaster simonsii Baker
+11086	Cotoneaster x-intermedius (Lecoq & Lamotte) Coste
+11087	Crataegus azarolus L.
+11096	Crataegus laevigata (Poiret) DC.
+11133	Cydonia oblonga Miller
+11135	Dryas octopetala L.
+11136	Duchesnea indica (Andrews) Focke
+11137	Eriobotrya japonica (Thunb.) Lindley
+11149	Fragaria moschata Weston
+11151	Fragaria vesca L.
+11156	Geum aleppicum Jacq.
+11158	Geum heterocarpum Boiss.
+11160	Geum montanum L.
+11162	Geum reptans L.
+11164	Geum sylvaticum Pourret
+11166	Geum urbanum L.
+11167	Kerria japonica (L.) DC.
+11174	Malus domestica Borckh.
+11176	Malus sylvestris Miller
+11183	Mespilus germanica L.
+11187	Physocarpus opulifolius (L.) Maxim.
+11193	Potentilla alba L.
+11196	Potentilla anglica Laicharding
+11203	Potentilla australis Krasan
+11204	Potentilla brauneana Hoppe in Sturm
+11209	Potentilla caulescens L. subsp. petiolulata (Gaudin) Nyman
+11214	Potentilla cinerea Chaix ex Vill.
+11230	Potentilla frigida Vill.
+11232	Potentilla fruticosa L.
+11233	Potentilla grandiflora L.
+11238	Potentilla hirta L.
+11249	Potentilla micrantha Ramond ex DC.
+11253	Potentilla multifida L.
+11254	Potentilla neglecta Baumg.
+11256	Potentilla neumanniana Reichenb.
+11257	Potentilla nitida L.
+11261	Potentilla norvegica L.
+11273	Potentilla prostrata Rottb. subsp. floccosa Sojßk
+11274	Potentilla pusilla Host
+11276	Potentilla recta L.
+11278	Potentilla rupestris L.
+11282	Potentilla saxifraga Ardoino ex De Not.
+11285	Potentilla sterilis (L.) Garcke
+11288	Potentilla supina L.
+11290	Potentilla thuringiaca Bernh. ex Link
+11294	Potentilla valderia L.
+11312	Prunus armeniaca L.
+11313	Prunus avium L.
+11315	Prunus brigantina Vill.
+11316	Prunus cerasifera Ehrh.
+11320	Prunus cerasus L.
+11325	Prunus domestica L.
+11330	Prunus domestica L. subsp. insititia (L.) Bonnier & Layens
+11332	Prunus dulcis (Miller) D.A. Webb
+11334	Prunus laurocerasus L.
+11336	Prunus mahaleb L.
+11340	Prunus padus L.
+11341	Prunus padus L. subsp. borealis Cajander
+11342	Prunus padus L. subsp. padus
+11343	Prunus persica (L.) Batsch
+11353	Prunus serotina Ehrh.
+11360	Pyracantha coccinea M.J. Roemer
+11364	Pyrus communis L.
+11376	Pyrus salviifolia DC.
+11379	Rosa abietina Gren. ex Christ
+11380	Rosa agrestis Savi
+11385	Rosa arvensis Hudson
+11386	Rosa caesia Sm.
+11398	Rosa corymbifera Borckh.
+11402	Rosa elliptica Tausch
+11403	Rosa foetida J. Herrmann
+11404	Rosa gallica L.
+11405	Rosa glauca Pourret
+11415	Rosa micrantha Sm.
+11417	Rosa montana Chaix
+11419	Rosa multiflora Thunb.
+11421	Rosa obtusifolia Desv.
+11422	Rosa pendulina L.
+11423	Rosa pimpinellifolia L.
+11425	Rosa pouzinii Tratt.
+11429	Rosa rubiginosa L.
+11431	Rosa rugosa Thunb.
+11433	Rosa sempervirens L.
+11435	Rosa serafinii Viv.
+11437	Rosa sicula Tratt.
+11440	Rosa stylosa Desv.
+11441	Rosa subcanina (Christ) Dalla Torre & Sarnth.
+11442	Rosa subcollina (Christ) Dalla Torre & Sarnth.
+11443	Rosa tomentosa Sm.
+11445	Rosa villosa L.
+11448	Rosa virginiana J. Herrmann
+11453	Rosa x-dumalis Bechst.
+11461	Rubus adscitus Genev.
+11464	Rubus albiflorus Boulay & Lucand ex Coste gr. R. rh
+11481	Rubus bertramii G. Braun gr. R. fruticosus
+11483	Rubus bifrons Vest ex Tratt.
+11488	Rubus bregutiensis A. Kerner ex Focke gr. R. menkei
+11506	Rubus condensatus P.J. Mueller gr. R. gremlii
+11507	Rubus conspicuus P.J. Mueller gr. R. vestitus
+11521	Rubus divaricatus P.J. Mueller
+11537	Rubus flaccidus Genev. gr. R. macrophyllus
+11538	Rubus flexuosus P.J. M³ller & LefÞvre gr. R. folios
+11539	Rubus foliosus Weihe & Nees
+11552	Rubus grabowskii G³nther, Schummel, Wimm. & Grab.
+11553	Rubus gracilis J. & C. Presl [1822]
+11557	Rubus gremlii Focke
+11558	Rubus guentheri Weihe & Nees in Bluff & Fingerh. gr
+11573	Rubus idaeus L.
+11587	Rubus laciniatus (Weston) Willd.
+11604	Rubus macrophyllus Weihe & Nees
+11610	Rubus mercieri Genev. gr. R. gremlii
+11638	Rubus pedemontanus Pinkwart in Baenitz
+11640	Rubus phyllostachys P.J. Mueller gr. R. candicans
+11647	Rubus praecox Bertol.
+11660	Rubus rudis Weihe & Nees
+11662	Rubus salisburgensis Focke gr. R. gremlii
+11664	Rubus saxatilis L.
+11686	Rubus sulcatus Vest ex Tratt.
+11688	Rubus tereticaulis P.J. Mueller gr. R. scaber
+11689	Rubus thelybatos Focke gr. R. melanoxylon
+11700	Rubus ulmifolius Schott
+11704	Rubus vestitus Weihe & Nees
+11721	Sibbaldia procumbens L.
+11724	Sorbaria sorbifolia (L.) A. Braun
+11726	Sorbus aria (L.) Crantz
+11732	Sorbus chamaemespilus (L.) Crantz
+11734	Sorbus domestica L.
+11735	Sorbus latifolia (Lam.) Pers.
+11739	Sorbus torminalis (L.) Crantz
+11742	Spiraea alba Duroi
+11745	Spiraea chamaedryfolia L.
+11746	Spiraea douglasii Hooker
+11751	Spiraea japonica L. fil.
+11753	Spiraea salicifolia L.
+11760	Asperula aristata L. fil.
+11763	Asperula aristata L. fil. subsp. longiflora (Waldst. & Kit.) Hayek
+11764	Asperula aristata L. fil. subsp. oreophila (Briq.) Hayek
+11767	Asperula arvensis L.
+11778	Asperula hexaphylla All.
+11786	Asperula rupicola Jordan
+11787	Asperula taurina L.
+11788	Asperula tinctoria L.
+11789	Crucianella angustifolia L.
+11790	Crucianella latifolia L.
+11792	Cruciata glabra (L.) Ehrend.
+11794	Cruciata pedemontana (Bellardi) Ehrend.
+11801	Galium anisophyllon Vill.
+11807	Galium aristatum L.
+11814	Galium baldense Sprengel
+11820	Galium cinereum All.
+11828	Galium corrudifolium Vill.
+11833	Galium divaricatum Pourret ex Lam.
+11852	Galium laevigatum L.
+11853	Galium lucidum All.
+11856	Galium megalospermum All.
+11868	Galium mollugo L. subsp. mollugo
+11871	Galium murale (L.) All.
+11873	Galium obliquum Vill.
+11874	Galium odoratum (L.) Scop.
+11877	Galium palustre L. subsp. debile (Desv.) Berher
+11878	Galium palustre L. subsp. elongatum (C. Presl) Lange
+11881	Galium parisiense L.
+11888	Galium pseudohelveticum Ehrend.
+11897	Galium pusillum L.
+11902	Galium rotundifolium L.
+11906	Galium rubioides L.
+11909	Galium saxatile L.
+11916	Galium sylvaticum L.
+11926	Galium tendae Reichenb. fil.
+11929	Galium timeroyi Jordan
+11931	Galium tricornutum Dandy
+11932	Galium trifidum L.
+11938	Galium verrucosum Hudson
+11941	Galium verticillatum Danth. in Lam.
+11953	Rubia peregrina L.
+11959	Rubia tinctorum L.
+11960	Sherardia arvensis L.
+11967	Valantia hispida L.
+11968	Valantia muralis L.
+11975	Dictamnus albus L.
+11979	Ruta angustifolia Pers.
+11983	Ruta chalepensis L.
+11987	Ruta graveolens L.
+11991	Ruta montana (L.) L.
+11993	Populus alba L.
+11996	Populus canescens (Aiton) Sm.
+11998	Populus deltoides Marshall
+12002	Populus nigra L.
+12007	Populus nigra L. subsp. nigra var. italica Duroi
+12010	Populus tremula L.
+12016	Salix alba L.
+12017	Salix alba L. subsp. alba
+12019	Salix alba L. subsp. vitellina (L.) Sch³bl. & Martens
+12024	Salix apennina A. Skvortsov
+12025	Salix appendiculata Vill.
+12031	Salix babylonica L.
+12037	Salix breviserrata B. Flod.
+12038	Salix caesia Vill.
+12040	Salix caprea L.
+12047	Salix daphnoides Vill.
+12049	Salix elaeagnos Scop. subsp. angustifolia (Cariot) Rech. fil.
+12051	Salix foetida Schleicher ex DC.
+12052	Salix fragilis L.
+12055	Salix glaucosericea B. Flod.
+12057	Salix hastata L.
+12059	Salix helvetica Vill.
+12060	Salix herbacea L.
+12062	Salix laggeri Wimmer
+12068	Salix myrsinifolia Salisb.
+12075	Salix pentandra L.
+12078	Salix purpurea L.
+12086	Salix reticulata L.
+12087	Salix retusa L.
+12090	Salix serpyllifolia Scop. 4
+12091	Salix triandra L. emend. Ser.
+12095	Salix viminalis L.
+12103	Thesium alpinum L.
+12107	Thesium bavarum Schrank
+12109	Thesium divaricatum Jan ex Mert. & Koch
+12110	Thesium humifusum DC.
+12122	Sarracenia purpurea L.
+12124	Bergenia crassifolia (L.) Fritsch
+12125	Chrysosplenium alternifolium L.
+12126	Chrysosplenium oppositifolium L.
+12130	Saxifraga aizoides L.
+12133	Saxifraga androsacea L.
+12134	Saxifraga aquatica Lapeyr.
+12137	Saxifraga aspera L.
+12144	Saxifraga bryoides L.
+12146	Saxifraga burseriana L.
+12147	Saxifraga caesia L.
+12148	Saxifraga callosa Sm.
+12156	Saxifraga cochlearis Reichenb.
+12157	Saxifraga continentalis (Engler & Irmscher) D.A. Webb
+12161	Saxifraga cotyledon L.
+12164	Saxifraga cuneifolia L.
+12165	Saxifraga cuneifolia L. subsp. cuneifolia
+12166	Saxifraga cuneifolia L. subsp. robusta D.A. Webb
+12173	Saxifraga delphinensis Ravaud
+12175	Saxifraga diapensioides Bellardi
+12178	Saxifraga exarata Vill.
+12180	Saxifraga exarata Vill. subsp. exarata
+12183	Saxifraga exarata Vill. subsp. moschata (Wulfen) Cavillier in Burnat
+12186	Saxifraga florulenta Moretti
+12201	Saxifraga hieraciifolia Waldst. & Kit.
+12203	Saxifraga hirsuta L.
+12228	Saxifraga muscoides All.
+12236	Saxifraga oppositifolia L.
+12241	Saxifraga paniculata Miller
+12243	Saxifraga pedemontana All.
+12245	Saxifraga pedemontana All. subsp. pedemontana
+12256	Saxifraga retusa Gouan
+12257	Saxifraga retusa Gouan subsp. augustana (Vaccari) P. Fourn.
+12258	Saxifraga retusa Gouan subsp. retusa
+12264	Saxifraga rotundifolia L.
+12267	Saxifraga sedoides L.
+12268	Saxifraga seguieri Sprengel
+12278	Saxifraga stolonifera Meerb.
+12280	Saxifraga tridactylites L.
+12282	Saxifraga umbrosa L.
+12283	Saxifraga valdensis DC.
+12298	Anarrhinum bellidifolium (L.) Willd.
+12316	Antirrhinum latifolium Miller
+12322	Antirrhinum majus L. subsp. majus
+12344	Asarina procumbens Miller
+12348	Bartsia trixago L.
+12354	Chaenorrhinum minus (L.) Lange
+12358	Chaenorrhinum origanifolium (L.) Kosteletzky
+12362	Chaenorrhinum rubrifolium (DC.) Fourr.
+12369	Cymbalaria muralis G. Gaertner, B. Meyer & Scherb
+12371	Digitalis grandiflora Miller
+12374	Digitalis lutea L. subsp. lutea
+12376	Digitalis purpurea L.
+12379	Erinus alpinus L.
+12382	Euphrasia alpina Lam.
+12391	Euphrasia hirtella Jordan ex Reuter
+12402	Euphrasia nemorosa (Pers.) Wallr.
+12410	Euphrasia officinalis L.
+12413	Euphrasia officinalis L. subsp. monticola Silverside
+12415	Euphrasia officinalis L. subsp. pratensis Sch³bler & Martens
+12419	Euphrasia pectinata Ten.
+12420	Euphrasia picta Wimmer
+12421	Euphrasia portae Freyn
+12425	Euphrasia salisburgensis Funck
+12427	Euphrasia stricta D. Wolff ex J.F. Lehm.
+12435	Gratiola officinalis L.
+12442	Kickxia elatine (L.) Dumort.
+12447	Kickxia spuria (L.) Dumort.
+12450	Lathraea clandestina L.
+12452	Lathraea squamaria L.
+12453	Limosella aquatica L.
+12460	Linaria alpina (L.) Miller subsp. alpina
+12461	Linaria alpina (L.) Miller var. petraea (Jordan) ...
+12462	Linaria angustissima (Loisel.) Borbás
+12464	Linaria arvensis (L.) Desf.
+12467	Linaria chalepensis (L.) Miller
+12477	Linaria genistifolia (L.) Miller
+12487	Linaria pelliceriana (L.) Miller
+12492	Linaria repens (L.) Miller
+12498	Linaria simplex (Willd.) DC.
+12503	Linaria supina (L.) Chaz.
+12516	Lindernia dubia (L.) Pennell
+12520	Melampyrum arvense L.
+12536	Melampyrum sylvaticum L.
+12540	Melampyrum vaudense (Ronniger) Soó
+12543	Mimulus guttatus DC.
+12545	Mimulus moschatus Douglas ex Lindley
+12547	Misopates orontium (L.) Rafin.
+12557	Odontites lanceolatus (Gaudin) Reichenb. subsp. lanceolatus
+12570	Odontites vernus (Bellardi) Dumort.
+12571	Odontites vernus (Bellardi) Dumort. subsp. serotinus (Dumort.) Corb.
+12572	Odontites vernus (Bellardi) Dumort. subsp. vernus
+12574	Orobanche alba Willd.
+12575	Orobanche alsatica Kirschleger
+12576	Orobanche amethystea Thuill.
+12582	Orobanche artemisiae-campestris Vaucher ex Gaudin
+12583	Orobanche bartlingii Griseb.
+12594	Orobanche elatior Sutton
+12597	Orobanche flava F.W. Schultz
+12600	Orobanche gracilis Sm.
+12602	Orobanche hederae Duby
+12603	Orobanche laevis L.
+12604	Orobanche laserpitii-sileris Reuter ex Jordan
+12613	Orobanche minor Sm. in Sowerby
+12623	Orobanche ozanonis F.W. Schultz ex G. Beck
+12630	Orobanche ramosa L.
+12631	Orobanche ramosa L. subsp. mutelii (F.W. Schultz) Coutinho
+12635	Orobanche rapum-genistae Thuill.
+12640	Orobanche reticulata Wallr.
+12644	Orobanche rubens Wallr.
+12652	Orobanche variegata Wallr.
+12654	Parentucellia latifolia (L.) Caruel
+12655	Parentucellia viscosa (L.) Caruel
+12657	Paulownia tomentosa (Thunb.) Steudel
+12659	Pedicularis ascendens Schleicher ex Gaudin
+12662	Pedicularis cenisia Gaudin
+12663	Pedicularis comosa L. subsp. comosa
+12667	Pedicularis foliosa L.
+12668	Pedicularis gyroflexa Vill. in Chaix
+12670	Pedicularis kerneri Dalla Torre
+12672	Pedicularis oederi Vahl
+12675	Pedicularis recutita L.
+12678	Pedicularis rosea Wulfen subsp. allionii (Reichenb. fil.) Arcangeli [1882]
+12682	Pedicularis rostratospicata Crantz subsp. helvetica (Steininger) O. Schwarz
+12684	Pedicularis sylvatica L.
+12685	Pedicularis tuberosa L.
+12686	Pedicularis verticillata L.
+12696	Rhinanthus alectorolophus (Scop.) Pollich
+12705	Rhinanthus angustifolius C.C. Gmelin
+12713	Rhinanthus burnatii (Chab.) Soó
+12719	Rhinanthus glacialis Personnat
+12734	Rhinanthus minor L.
+12740	Rhinanthus ovifugus Chab.
+12742	Rhinanthus pseudoantiquus H. Kunz
+12753	Scrophularia auriculata L.
+12755	Scrophularia canina L.
+12757	Scrophularia canina L. subsp. canina
+12760	Scrophularia canina L. subsp. juratensis (Schleich. ex Wydl.) Bonnier & L
+12766	Scrophularia lucida L.
+12770	Scrophularia nodosa L.
+12772	Scrophularia peregrina L.
+12776	Scrophularia scopolii Hoppe
+12782	Scrophularia umbrosa Dumort.
+12784	Scrophularia vernalis L.
+12788	Verbascum blattaria L.
+12791	Verbascum boerhavii L.
+12792	Verbascum chaixii Vill.
+12798	Verbascum densiflorum Bertol.
+12803	Verbascum nigrum L.
+12805	Verbascum phlomoides L.
+12809	Verbascum pulverulentum Vill.
+12812	Verbascum sinuatum L.
+12816	Verbascum thapsus L. subsp. montanum (Schrader) Bonnier & Layens
+12818	Verbascum virgatum Stokes
+12821	Veronica agrestis L.
+12825	Veronica allionii Vill.
+12826	Veronica alpina L.
+12827	Veronica anagallis-aquatica L. anagallis
+12832	Veronica aphylla L.
+12834	Veronica austriaca L.
+12838	Veronica austriaca L. subsp. teucrium (L.) D.A. Webb
+12846	Veronica cymbalaria Bodard
+12849	Veronica dillenii Crantz
+12852	Veronica fruticans Jacq.
+12853	Veronica fruticulosa L.
+12856	Veronica hederifolia L.
+12857	Veronica hederifolia L. subsp. hederifolia
+12860	Veronica hederifolia L. subsp. triloba (Opiz) Celak.
+12868	Veronica montana L.
+12874	Veronica peregrina L.
+12875	Veronica persica Poiret
+12876	Veronica polita Fries
+12878	Veronica praecox All.
+12880	Veronica prostrata L. subsp. prostrata
+12881	Veronica prostrata L. subsp. scheereri J.P. Brandt
+12889	Veronica serpyllifolia L. subsp. humifusa (Dickson) Syme
+12891	Veronica serpyllifolia L. subsp. serpyllifolia
+12892	Veronica spicata L.
+12900	Veronica triphyllos L.
+12901	Veronica urticifolia Jacq.
+12902	Veronica verna L.
+12907	Ailanthus altissima (Miller) Swingle
+12911	Atropa belladonna L.
+12913	Capsicum annuum L.
+12919	Datura stramonium L.
+12922	Hyoscyamus albus L.
+12923	Hyoscyamus niger L.
+12925	Lycium barbarum L.
+12926	Lycium chinense Miller
+12928	Lycium europaeum L.
+12932	Lycopersicon esculentum Miller, nom. cons.
+12936	Nicotiana rustica L.
+12937	Nicotiana tabacum L.
+12942	Physalis alkekengi L.
+12945	Salpichroa origanifolia (Lam.) Baillon
+12947	Solanum americanum Miller
+12951	Solanum chenopodioides Lam.
+12953	Solanum dulcamara L.
+12963	Solanum melongena L.
+12965	Solanum nigrum L.
+12975	Solanum physalifolium Rusby var. nitidibaccatum (Bitter) Edmonds
+12978	Solanum rostratum Dunal
+12985	Solanum tuberosum L.
+12986	Solanum villosum Miller
+12987	Solanum villosum Miller subsp. miniatum (Willd.) Edmonds
+12992	Staphylea pinnata L.
+13003	Myricaria germanica (L.) Desv.
+13018	Camellia japonica L.
+13027	Daphne alpina L.
+13029	Daphne cneorum L
+13036	Daphne laureola L.
+13043	Daphne striata Tratt.
+13060	Thymelaea dioica (Gouan) All.
+13064	Thymelaea passerina (L.) Cosson & Germ.
+13066	Thymelaea sanamunda All.
+13077	Tilia cordata Miller
+13081	Tilia platyphyllos Scop.
+13086	Tilia tomentosa Moench
+13092	Trapa natans L.
+13094	Tropaeolum majus L.
+13096	Celtis australis L.
+13101	Ulmus laevis Pallas
+13102	Ulmus minor Miller
+13112	Parietaria judaica L.
+13114	Parietaria officinalis L.
+13117	Soleirolia soleirolii (Req.) Dandy
+13122	Urtica dioica L. subsp. galeopsifolia (Opiz) Chrtek
+13126	Urtica pilulifera L.
+13129	Centranthus angustifolius (Miller) DC.
+13131	Centranthus calcitrapa (L.) Dufresne
+13132	Centranthus lecoqii Jordan
+13134	Centranthus ruber (L.) DC.
+13144	Valeriana celtica L.
+13153	Valeriana montana L.
+13163	Valeriana officinalis L. subsp. repens (Host) O. Bolos & Vigo
+13164	Valeriana officinalis L. subsp. sambucifolia (Mikan fil.) Celak.
+13165	Valeriana officinalis L. subsp. tenuifolia (Vahl) Sch³bl. & Martens
+13168	Valeriana pratensis Dierbach [1825]
+13171	Valeriana pyrenaica L.
+13173	Valeriana rotundifolia Vill.
+13176	Valeriana saliunca All.
+13179	Valeriana tripteris L.
+13181	Valeriana tuberosa L.
+13182	Valeriana versifolia Br³gger
+13186	Valerianella coronata (L.) DC.
+13189	Valerianella dentata (L.) Pollich
+13190	Valerianella discoidea (L.) Loisel.
+13191	Valerianella echinata (L.) DC.
+13192	Valerianella eriocarpa Desv.
+13195	Valerianella locusta (L.) Laterrade
+13215	Verbena bonariensis L.
+13218	Verbena officinalis L.
+13225	Viola alba Besser
+13237	Viola argenteria Moraldo & Forneris
+13241	Viola biflora L.
+13243	Viola calcarata L.
+13249	Viola canina L.
+13258	Viola canina L. subsp. ruppii (All.) Sch³bl. & Martens
+13262	Viola cenisia L.
+13266	Viola collina Besser
+13281	Viola jordanii Hanry
+13283	Viola kitaibeliana Schultes
+13287	Viola lutea Hudson
+13291	Viola mirabilis L.
+13297	Viola nummulariifolia Vill.
+13298	Viola odorata L.
+13309	Viola persicifolia Schreber
+13310	Viola pinnata L.
+13313	Viola pyrenaica Ramond ex DC.
+13314	Viola reichenbachiana Jordan ex Boreau
+13315	Viola riviniana Reichenb.
+13333	Viola suavis M. Bieb.
+13335	Viola thomasiana Song. & Perr.
+13348	Viola valderia All.
+13353	Arceuthobium oxycedri (DC.) M. Bieb.
+13354	Viscum album L.
+13355	Viscum album L. subsp. album
+13356	Viscum album L. subsp. austriacum (Wiesb.) Vollmann
+13363	Parthenocissus inserta (A. Kerner) Fritsch
+13366	Parthenocissus tricuspidata (Siebold & Zucc.) Planchon
+13372	Vitis labrusca L.
+13377	Vitis vinifera L.
+13378	Vitis vinifera L. subsp. sylvestris (C.C. Gmelin) Beger in Hegi
+13383	Tribulus terrestris L.
+13443	Acorus calamus L.
+13445	Agave americana L.
+13448	Yucca filamentosa L.
+13453	Alisma gramineum Lej.
+13455	Alisma lanceolatum With.
+13458	Alisma plantago-aquatica L., 1753
+13466	Caldesia parnassifolia (L.) Parl.
+13467	Damasonium alisma Miller
+13472	Luronium natans (L.) Rafin.
+13475	Sagittaria latifolia Willd.
+13477	Sagittaria sagittifolia L.
+13480	Allium acutiflorum Loisel.
+13481	Allium ampeloprasum L.
+13484	Allium angulosum L.
+13489	Allium carinatum L.
+13490	Allium carinatum L. sensu 2 subsp. pulchellum Bonnier & Layens
+13491	Allium cepa L.
+13499	Allium fistulosum L.
+13507	Allium lineare L.
+13508	Allium lusitanicum Lam.
+13513	Allium moschatum L.
+13515	Allium narcissiflorum Vill.
+13516	Allium neapolitanum Cyr.
+13519	Allium oleraceum L.
+13532	Allium polyanthum Schultes & Schultes fil.
+13533	Allium porrum L.
+13535	Allium roseum L.
+13542	Allium sativum L.
+13545	Allium scaberrimum Serres
+13546	Allium schoenoprasum L.
+13548	Allium scorodoprasum L. subsp. rotundum (L.) Stearn
+13549	Allium scorodoprasum L. subsp. scorodoprasum
+13557	Allium trifoliatum Cyr.
+13561	Allium victorialis L.
+13562	Allium vineale L.
+13587	Leucojum aestivum L.
+13590	Leucojum fabrei QuÚzel & B. Girerd
+13593	Leucojum nicaeense Ardoino
+13597	Narcissus assoanus Dufour in Schultes & Schultes fil.
+13611	Narcissus jonquilla L.
+13627	Narcissus minor L.
+13634	Narcissus poeticus L.
+13652	Narcissus tazetta L.
+13675	Sternbergia lutea (L.) Ker-Gawler ex Sprengel
+13677	Anthericum liliago L.
+13681	Anthericum ramosum L.
+13685	Aphyllanthes monspeliensis L.
+13694	Arum italicum Miller
+13697	Arum maculatum L.
+13702	Calla palustris L.
+13704	Dracunculus vulgaris Schott
+13719	Trachycarpus fortunei (Hooker) H. A. Wendl.
+13723	Asparagus acutifolius L.
+13729	Asparagus officinalis L. subsp. officinalis
+13734	Asparagus tenuifolius Lam.
+13744	Asphodelus macrocarpus Parl. var.arrondeaui (Lloyd) DiazLifanfe º ValdÞs
+13763	Paradisea liliastrum (L.) Bertol.
+13772	Butomus umbellatus L.
+13776	Bulbocodium vernum L.
+13777	Colchicum alpinum DC.
+13783	Colchicum autumnale L.
+13799	Commelina communis L.
+13801	Tradescantia virginiana L.
+13804	Convallaria majalis L.
+13809	Maianthemum bifolium (L.) F.W. Schmidt
+13811	Polygonatum multiflorum (L.) All.
+13812	Polygonatum odoratum (Miller) Druce
+13814	Polygonatum verticillatum (L.) All.
+13816	Streptopus amplexifolius (L.) DC.
+13829	Bolboschoenus maritimus (L.) Palla
+13839	Carex alba Scop.
+13843	Carex appropinquata Schumacher
+13849	Carex atrata L.
+13850	Carex atrata L. subsp. aterrima (Hoppe) Celak.
+13851	Carex atrata L. subsp. atrata
+13853	Carex atrofusca Schkuhr
+13857	Carex bicolor All.
+13859	Carex bohemica Schreber
+13860	Carex brachystachys Schrank
+13865	Carex brunnescens (Pers.) Poiret
+13871	Carex capillaris L.
+13881	Carex cuprina (Sandor ex Heuffel) Nendtwich ex A. K
+13884	Carex curta Good
+13887	Carex curvula All.
+13888	Carex curvula All. subsp. curvula
+13889	Carex curvula All. subsp. rosae Gilomen
+13895	Carex depauperata Curtis ex With.
+13900	Carex digitata L.
+13910	Carex divisa Hudson subsp. divisa
+13913	Carex divulsa Stokes subsp. divulsa
+13919	Carex elongata L.
+13920	Carex ericetorum Pollich
+13924	Carex ferruginea Scop.
+13931	Carex fimbriata Schkuhr
+13932	Carex firma Host
+13934	Carex flacca Schreber subsp. claviformis (Hoppe) Schinz & Thell. [1909]
+13935	Carex flacca Schreber subsp. erythrostachys (Hoppe) Holub
+13945	Carex foetida All.
+13946	Carex frigida All.
+13960	Carex halleriana Asso
+13965	Carex heleonastes L. fil.
+13969	Carex hispida Willd.
+13982	Carex lachenalii Schkuhr
+13990	Carex limosa L.
+13998	Carex magellanica Lam. subsp. irrigua (Wahlenb.) Hiitonen
+14006	Carex microglochin Wahlenb.
+14011	Carex mucronata All.
+14031	Carex norvegica Retz.
+14039	Carex ornithopoda Willd.
+14043	Carex ornithopoda Willd. subsp. ornithopodioides (Hausm.) Nyman
+14051	Carex pairae F.W. Schultz
+14060	Carex parviflora Host
+14061	Carex pauciflora Lighft.
+14062	Carex pendula Hudson
+14063	Carex pilosa Scop.
+14074	Carex pseudocyperus L.
+14091	Carex rupestris All.
+14098	Carex sempervirens Vill. subsp. sempervirens
+14106	Carex spicata Hudson
+14114	Carex sylvatica Hudson
+14115	Carex tenax Reuter, non Dewey (s.r.)
+14123	Carex umbrosa Host subsp. umbrosa
+14125	Carex vaginata Tausch
+14127	Carex viridula Michaux
+14128	Carex viridula Michaux subsp. brachyrrhyncha (Celak.) B. Schmid
+14131	Carex viridula Michaux subsp. oedocarpa (Anderss.) B. Schmid
+14140	Carex vulpinoidea Michaux
+14144	Cladium mariscus (L.) Pohl
+14150	Cyperus difformis L.
+14152	Cyperus eragrostis Lam.
+14153	Cyperus esculentus L.
+14156	Cyperus fuscus L.
+14158	Cyperus glomeratus L.
+14165	Cyperus longus L. subsp. longus
+14179	Eleocharis acicularis (L.) Roemer & Schultes
+14186	Eleocharis ovata (Roth) Roemer & Schultes
+14203	Eriophorum gracile Koch ex Roth
+14205	Eriophorum polystachion L. [1753]
+14209	Eriophorum scheuchzeri Hoppe
+14217	Isolepis cernua (Vahl) Roemer & Schultes
+14220	Isolepis setacea (L.) R. Br.
+14228	Kobresia myosuroides (Vill.) Fiori
+14230	Kobresia simpliciuscula (Wahlenb.) Mackenzie
+14232	Pycreus flavescens (L.) Reichenb.
+14237	Schoenoplectus lacustris (L.) Palla
+14239	Schoenoplectus mucronatus (L.) Palla
+14241	Schoenoplectus supinus (L.) Palla
+14242	Schoenoplectus tabernaemontani (C.C. Gmelin) Palla
+14243	Schoenoplectus triqueter (L.) Palla
+14251	Scirpoides holoschoenus (L.) Soják subsp. australis (Murray) Soják
+14252	Scirpoides holoschoenus (L.) Soják subsp. holoschoenus
+14259	Scirpus atrovirens Willd.
+14314	Trichophorum alpinum (L.) Pers.
+14317	Trichophorum cespitosum (L.) Hartman subsp. germanicum (Palla) Hegi
+14319	Trichophorum pumilum (Vahl) Schinz & Thell.
+14325	Tamus communis L.
+14329	Hemerocallis fulva (L.) L.
+14335	Bellevalia romana (L.) Reichenb.
+14340	Dipcadi serotinum (L.) Medik.
+14349	Hyacinthoides hispanica (Miller) Rothm.
+14350	Hyacinthoides italica (L.) Rothm.
+14351	Hyacinthoides non-scripta (L.) Chouard ex Rothm.
+14360	Hyacinthus orientalis L.
+14371	Muscari comosum (L.) Miller
+14375	Muscari neglectum Guss. ex Ten.
+14378	Ornithogalum angustifolium Boreau
+14390	Ornithogalum narbonense L.
+14391	Ornithogalum nutans L.
+14395	Ornithogalum pyrenaicum L.
+14404	Scilla autumnalis L.
+14406	Scilla bifolia L.
+14411	Scilla hyacinthoides L.
+14420	Scilla siberica Haw. in Andrews
+14433	Elodea callitrichoides (L.C.M. Richard) Caspary
+14434	Elodea canadensis Michaux
+14437	Elodea nuttalii (Planchon) St. John
+14438	Hydrocharis morsus-ranae L.
+14439	Lagarosiphon major (Ridley) Moss
+14443	Najas gracillima (A. Braun ex Engelm.) Magnus
+14447	Najas marina L.
+14452	Najas minor All.
+14454	Stratiotes aloides L.
+14455	Vallisneria spiralis L.
+14464	Crocus ligusticus M.G. Mariotti
+14472	Crocus vernus (L.) Hill subsp. albiflorus (Kit.) Cesati
+14474	Crocus versicolor Ker-Gawler
+14485	Gladiolus imbricatus L.
+14486	Gladiolus italicus Miller
+14487	Gladiolus palustris Gaudin
+14492	Hermodactylus tuberosus (L.) Miller
+14499	Iris foetidissima L.
+14500	Iris germanica L.
+14504	Iris graminea L.
+14507	Iris lutescens Lam.
+14512	Iris perrieri Simonnet ex P. Fourn.
+14515	Iris sibirica L.
+14532	Romulea bulbocodium (L.) Sebastiani & Mauri
+14575	Juncus arcticus Willd.
+14591	Juncus bulbosus L.
+14596	Juncus capitatus Weigel
+14617	Juncus jacquinii L.
+14635	Juncus pygmaeus L.C.M. Richard
+14640	Juncus sphaerocarpus Nees
+14643	Juncus striatus Schousboe ex E.H.F. Meyer
+14653	Juncus tenageia Ehrh in L. fil.
+14660	Juncus trifidus L.
+14661	Juncus trifidus L. subsp. hostii Nyman
+14664	Juncus triglumis L.
+14667	Luzula alpina Hoppe in Sturm
+14668	Luzula alpinopilosa (Chaix) Breistr.
+14676	Luzula desvauxii Kunth
+14678	Luzula forsteri (Sm.) DC.
+14681	Luzula glabrata (Hoppe) Desv.
+14687	Luzula lutea (All.) DC.
+14690	Luzula luzulina (Vill.) Dalla Torre & Sarnth.
+14691	Luzula luzuloides (Lam.) Dandy & Wilmott
+14703	Luzula nivea (L.) DC.
+14706	Luzula nutans (Vill.) Duval-Jouve
+14711	Luzula pilosa (L.) Willd.
+14713	Luzula sieberi Tausch
+14715	Luzula spicata (L.) DC.
+14721	Luzula sudetica (Willd.) DC. in Lam. & DC. [1815]
+14734	Triglochin palustre L.
+14736	Lemna aequinoctialis Welw.
+14738	Lemna gibba L.
+14739	Lemna minor L.
+14741	Lemna minuta H.B.K.
+14744	Lemna trisulca L.
+14745	Lemna turionifera Landolt
+14747	Spirodela polyrhiza (L.) Schleiden
+14748	Wolffia arrhiza (L.) Horkel ex Wimmer
+14751	Erythronium dens-canis L.
+14754	Fritillaria involucrata All.
+14762	Fritillaria orientalis Adams
+14769	Gagea bohemica (Zauschner) Schultes & Schultes fil. subsp. gallica (Rouy) I.B.K. Richardson
+14782	Gagea fragifera (Vill.) E. Bayer & G. López
+14785	Gagea lutea (L.) Ker-Gawler
+14787	Gagea minima (L.) Ker-Gawler
+14789	Gagea pratensis (Pers.) Dumort.
+14797	Gagea villosa (M. Bieb.) Sweet
+14801	Lilium bulbiferum L. var. croceum (Chaix) Pers.
+14802	Lilium candidum L.
+14805	Lilium martagon L.
+14806	Lilium pomponium L.
+14810	Lloydia serotina (L.) Reichenb.
+14822	Tulipa australis Link
+14830	Tulipa gesneriana L.
+14842	Tulipa raddii Reboul
+14844	Tulipa sylvestris L.
+14860	Veratrum lobelianum Bernh. in Schrader
+14863	Aceras anthropophorum (L.) Aiton fil.
+14868	Cephalanthera damasonium (Miller) Druce
+14871	Cephalanthera longifolia (L.) Fritsch
+14873	Cephalanthera rubra (L.) L.C.M. Richard
+14875	Chamorchis alpina (L.) L.C.M. Richard
+14878	Corallorrhiza corallorhiza (L.) Karsten
+14882	Dactylorhiza angustata (Arvet-Touvet) Tyteca & Gathoye
+14885	Dactylorhiza cruenta (O.F. M³ller) Soó
+14891	Dactylorhiza alpestris (Pugsl.) Averyanov
+14906	Dactylorhiza latifolia (L.) Soó
+14915	Dactylorhiza majalis (Reichenb.) P.F. Hunt & Summerhay
+14920	Dactylorhiza ochroleuca (W³stn. ex Boll.) Holub
+14931	Dactylorhiza sudetica (Reichenb. fil.) Averyanov
+14935	Epipactis atrorubens (Hoffm.) Besser
+14937	Epipactis distans Arvet-Touvet
+14945	Epipactis leptochila (Godfery) Godfery
+14947	Epipactis microphylla (Ehrh.) Swartz
+14948	Epipactis muelleri Godfery
+14953	Epipactis placentina L. Bongiorni & P. Gr³nanger [1993
+14954	Epipactis purpurata Sm.
+14955	Epipactis rhodanensis A. GÚvaudan & K. Robatsch [1994]
+14957	Epipactis tremolsii Pau
+14960	Epipogium aphyllum Swartz
+14963	Goodyera repens (L.) R. Br.
+14977	Limodorum abortivum (L.) Swartz
+14981	Listera cordata (L.) R. Br.
+14988	Neotinea maculata (Desf.) Stearn
+15027	Ophrys aurelia Delforge & Devillers-Terschuren
+15039	Ophrys drumana Delforge
+15043	Ophrys fuciflora (F.W. Schmidt) Moench
+15045	Ophrys fuciflora (F.W. Schmidt) Moench subsp. fuciflora
+15048	Ophrys fusca Link
+15063	Ophrys lutea Cav.
+15078	Ophrys provincialis (Baumann & K³nkele) H. Paulus
+15096	Ophrys splendida G÷lz & Reinhard
+15173	Orchis pallens L.
+15184	Orchis provincialis Balbis ex DC.
+15195	Orchis simia Lam.
+15214	Pseudorchis albida (L.) 'A. & D. L÷ve
+15228	Serapias lingua L.
+15239	Serapias vomeracea (Burm.) Briq.
+15246	Traunsteinera globosa (L.) Reichenb.
+15250	Achnatherum calamagrostis (L.) P. Beauv.
+15252	Aegilops cylindrica Host
+15258	Aegilops neglecta Req. ex Bertol.
+15259	Aegilops ovata L.
+15263	Aegilops triuncialis L.
+15264	Aegilops ventricosa Tausch
+15275	Agropyron cristatum (L.) Gaertn. subsp. pectinatum (M. Bieb.) Tzvelev
+15299	Agrostis agrostiflora (G. Beck) Rauschert
+15307	Agrostis alpina Scop.
+15312	Agrostis canina L.
+15316	Agrostis capillaris L.
+15318	Agrostis capillaris L. subsp. castellana (Boiss. & Reuter) O.Bol?s & al.
+15332	Agrostis gigantea Roth
+15356	Agrostis schleicheri Jordan & Verlot
+15394	Aira caryophyllea L.
+15396	Aira caryophyllea L. subsp. caryophyllea
+15398	Aira caryophyllea L. subsp. multiculmis (Dumort.) Bonnier & Layens
+15402	Aira cupaniana Guss.
+15406	Aira elegantissima Schur
+15415	Aira praecox L.
+15425	Alopecurus aequalis Sobol.
+15427	Alopecurus alpinus Vill.
+15429	Alopecurus bulbosus Gouan
+15436	Alopecurus myosuroides Hudson.
+15438	Alopecurus rendlei Eig
+15450	Andropogon distachyos L.
+15463	Anthoxanthum aristatum Boiss.
+15466	Anthoxanthum odoratum L. subsp. nipponicum (Honda) Tzvelev
+15477	Apera interrupta (L.) P. Beauv.
+15478	Apera spica-venti (L.) P. Beauv.
+15481	Arrhenatherum elatius (L.) P. Beauv. ex J. & C. Presl subsp. bulbosum (Willd.) Sch³bler & Martens
+15492	Arundo donax L.
+15509	Avena barbata Link
+15523	Avena fatua L.
+15560	Avena sativa L.
+15582	Avenula bromoides (Gouan) H. Scholz
+15600	Avenula pubescens (Hudson) Dumort.
+15607	Avenula versicolor (Vill.) Laínz subsp. praetutiana (Parl. ex Arcangeli) Holub
+15608	Avenula versicolor (Vill.) Laínz subsp. versicolor
+15611	Bellardiochloa variegata (Lam.) KerguÚlen
+15613	Bothriochloa ischaemum (L.) Keng
+15616	Brachypodium distachyon (L.) P. Beauv.
+15617	Brachypodium phoenicoides (L.) Roemer & Schultes
+15618	Brachypodium pinnatum (L.) P. Beauv.
+15623	Brachypodium retusum (Pers.) P. Beauv.
+15624	Brachypodium rupestre (Host) Roemer & Schultes
+15629	Briza maxima L.
+15633	Briza minor L.
+15639	Bromus arvensis L.
+15643	Bromus benekenii (Lange) Trimen
+15645	Bromus carinatus Hooker & Arnott
+15647	Bromus catharticus Vahl
+15648	Bromus commutatus Schrader
+15649	Bromus diandrus Roth
+15650	Bromus diandrus Roth subsp. diandrus
+15651	Bromus diandrus Roth subsp. maximus (Desf.) Soó
+15656	Bromus erectus Hudson subsp. longiflorus (Willd.) Arcangeli
+15664	Bromus hordeaceus L. subsp. divaricatus (Bonnier & Layens) KerguÚlen
+15667	Bromus hordeaceus L. subsp. lepidus (Holmberg) Pedersen
+15670	Bromus hordeaceus L. subsp. thominei (Hard.) Br.-Bl.
+15677	Bromus japonicus Thunb. subsp. japonicus
+15678	Bromus lanceolatus Roth
+15683	Bromus madritensis L.
+15705	Bromus rubens L.
+15709	Bromus secalinus L.
+15712	Bromus squarrosus L.
+15713	Bromus sterilis L.
+15714	Bromus tectorum L.
+15723	Calamagrostis arundinacea (L.) Roth
+15724	Calamagrostis canescens (Weber) Roth
+15735	Calamagrostis pseudophragmites (Haller fil.) Koeler
+15746	Calamagrostis varia (Schrader) Host subsp. varia
+15748	Calamagrostis villosa (Chaix) J.F. Gmelin
+15750	Catabrosa aquatica (L.) P. Beauv.
+15753	Catapodium rigidum (L.) C.E. Hubbard
+15781	Corynephorus divaricatus (Pourret) Breistr.
+15789	Cynodon dactylon (L.) Pers.
+15797	Cynosurus echinatus L.
+15815	Dactylis glomerata L. subsp. glomerata
+15817	Dactylis glomerata L. subsp. hispanica (Roth) Nyman
+15832	Danthonia decumbens (L.) DC.
+15837	Dasypyrum villosum (L.) P. Candargy
+15841	Deschampsia cespitosa (L.) P. Beauv. subsp. convoluta (Rouy) P. Fourn.
+15858	Deschampsia media (Gouan) Roemer & Schultes
+15873	Digitaria ischaemum (Schreber) Muhlenb.
+15876	Digitaria sanguinalis (L.) Scop.
+15881	Echinaria capitata (L.) Desf.
+15882	Echinochloa colona (L.) Link
+15883	Echinochloa crus-galli (L.) P. Beauv.
+15889	Echinochloa esculenta (A. Braun) Scholz
+15892	Echinochloa muricata (P. Beauv.) Fernald subsp. microstachya (Wiegand) Jauzein
+15901	Eleusine indica (L.) Gaertner
+15903	Eleusine indica (L.) Gaertner subsp. indica
+15934	Elytrigia intermedia (Host) Nevski
+15948	Eragrostis barrelieri Daveau
+15950	Eragrostis curvula (Schrader) Nees
+15953	Eragrostis frankii C.A. Meyer ex Steudel
+15958	Eragrostis mexicana (Hornem.) Link subsp. virescens (C. Presl) Koch & Sánchez Vega
+15963	Eragrostis pectinacea (Michaux) Nees
+15965	Eragrostis pilosa (L.)P. Beauv. subsp. abyssinica (Jacq.) Ascherson & Graebner
+15966	Eragrostis pilosa (L.)P. Beauv. subsp. damiensiana (Bonnet) Thell.
+15977	Festuca acuminata Gaudin
+15978	Festuca airoides Lam.
+15980	Festuca alpina Suter
+15985	Festuca altissima All.
+16000	Festuca arvernensis Auquier,KerguÚlen & Markgr.-Dann subsp. costei (St.-Yves) Auquier & KerguÚlen
+16007	Festuca breistrofferi Chas, KerguÚlen & Plonka
+16010	Festuca burgundiana Auquier & KerguÚlen
+16019	Festuca cinerea Vill.
+16020	Festuca circummediterranea Patzke
+16031	Festuca dimorpha Guss.
+16060	Festuca filiformis Pourret
+16070	Festuca gigantea (L.) Vill.
+16077	Festuca halleri All.
+16078	Festuca halleri All. subsp. halleri
+16087	Festuca heterophylla Lam.
+16098	Festuca intercedens (Hackel) L³di ex Becherer
+16101	Festuca laevigata Gaudin
+16102	Festuca laevigata Gaudin subsp. crassifolia (Gaudin) KerguÚlen & Plonka
+16116	Festuca longifolia Thuill. subsp. pseudocostei Auquier & KerguÚlen
+16120	Festuca marginata (Hackel) K. Richter subsp. marginata
+16141	Festuca occitanica (Litard.) Auquier & KerguÚlen
+16187	Festuca pallens Host
+16193	Festuca paniculata (L.) Schinz & Thell. subsp. paniculata
+16202	Festuca pratensis Hudson subsp. apennina (De Not.) Hegi
+16208	Festuca pulchella Schrader
+16209	Festuca pulchella Schrader subsp. jurana (Gren.) Markgr.-Dann.
+16216	Festuca quadriflora Honckeny
+16218	Festuca rivularis Boiss.
+16224	Festuca rubra L. subsp. fallax (Thuill.) Nyman
+16249	Festuca rupicaprina (Hackel) K. Richter
+16264	Festuca stenantha (Hackel) K. Richter
+16265	Festuca stricta Host
+16266	Festuca stricta Host subsp. sulcata (Hackel) Patzke
+16273	Festuca trichophylla (Gaudin) K. Richter
+16276	Festuca uechtritziana Wiesb.
+16277	Festuca valesiaca Gaudin
+16289	Festuca violacea Gaudin
+16295	Festuca yvesii Sennen & Pau
+16303	Gaudinia fragilis (L.) P. Beauv.
+16327	Glyceria notata Chevall.
+16334	Glyceria striata (Lam.) A.S. Hitchc.
+16341	Hainardia cylindrica (Willd.) W. Greuter
+16351	Helictotrichon parlatorei (Woods) Pilger
+16358	Helictotrichon sedenense (DC.) Holub subsp. sedenense
+16359	Helictotrichon sempervirens (Vill.) Pilger
+16360	Helictotrichon setaceum (Vill.) Henrard
+16372	Hordelymus europaeus (L.) C.O. Harz
+16378	Hordeum distichon L.
+16385	Hordeum jubatum L.
+16398	Hordeum murinum L. subsp. leporinum (Link) Arcangeli
+16399	Hordeum murinum L. subsp. murinum
+16404	Hordeum vulgare L.
+16407	Hyparrhenia hirta (L.) Stapf
+16420	Koeleria cenisia Reuter ex Reverchon
+16427	Koeleria glauca (Schrader) DC.
+16439	Koeleria vallesiana (Honckeny) Gaudin
+16447	Lagurus ovatus L.
+16449	Leersia oryzoides (L.) Swartz
+16469	Lolium rigidum Gaudin
+16484	Melica amethystina Pourret
+16489	Melica ciliata L. subsp. magnolii (Godron & Grenier) K. Richter
+16495	Melica minuta L.
+16496	Melica nutans L.
+16503	Melica transsilvanica Schur
+16504	Melica uniflora Retz.
+16505	Mibora minima (L.) Desv.
+16507	Micropyrum tenellum (L.) Link
+16509	Milium effusum L.
+16512	Milium vernale M. Bieb.
+16522	Molinia caerulea (L.) Moench
+16524	Molinia caerulea (L.) Moench subsp. arundinacea (Schrank) K. Richter
+16544	Oplismenus undulatifolius (Ard.) Roemer & Schultes
+16546	Oreochloa disticha (Wulfen) Link
+16553	Oreochloa seslerioides (All.) K. Richter
+16554	Oryza sativa L.
+16564	Panicum capillare L.
+16572	Panicum dichotomiflorum Michaux
+16586	Panicum miliaceum L.
+16601	Panicum schinzii Hackel in Schinz [1888]
+16613	Paspalum dilatatum Poir.
+16614	Paspalum distichum L.
+16621	Pennisetum villosum R. Br. ex Fresen.
+16629	Phalaris canariensis L.
+16642	Phleum alpinum L.
+16643	Phleum alpinum L. subsp. alpinum
+16645	Phleum alpinum L. subsp. rhaeticum Humphries
+16648	Phleum arenarium L.
+16656	Phleum hirsutum Honckeny
+16660	Phleum paniculatum Hudson
+16669	Phleum pratense L. subsp. pratense
+16670	Phleum pratense L. subsp. serotinum (Jordan) Berher
+16688	Piptatherum coerulescens (Desf.) P. Beauv.
+16689	Piptatherum miliaceum (L.) Cosson
+16693	Piptatherum paradoxum (L.) P. Beauv.
+16694	Piptatherum virescens (Trin.) Boiss.
+16709	Poa badensis Haenke ex Willd.
+16712	Poa badensis Haenke ex Willd. subsp. xerophila (Br.-Bl.) KerguÚlen
+16716	Poa bulbosa L.
+16723	Poa cenisia All.
+16740	Poa flaccidula Boiss. & Reuter
+16747	Poa hybrida Gaudin
+16748	Poa infirma H.B.K.
+16750	Poa laxa Haenke
+16756	Poa minor Gaudin
+16765	Poa perconcinna Edmonston
+16782	Poa supina Schrader
+16788	Poa trivialis L. subsp. sylvicola (Guss.) H. Lindb. fil.
+16806	Pseudosasa japonica (Siebold & Zuccarini ex Steudel) M
+16811	Puccinellia distans (L.) Parl.
+16815	Puccinellia fasciculata (Torrey) E.P. Bicknell
+16828	Roegneria canina (L.) Nevski
+16831	Rostraria cristata (L.) Tzvelev
+16846	Sclerochloa dura (L.) P. Beauv.
+16853	Secale cereale L.
+16858	Sesleria argentea (Savi) Savi
+16860	Sesleria caerulea (L.) Ard., non sensu 4
+16868	Sesleria ovata (Hoppe) Kerner
+16870	Setaria adhaerens (Forsskål) Chiov.
+16876	Setaria faberi F. Hermann
+16881	Setaria italica (L.) P. Beauv.
+16884	Setaria parviflora (Poiret) KerguÚlen
+16885	Setaria pumila (Poiret) Roemer & Schultes
+16887	Setaria verticillata (L.) P. Beauv.
+16889	Setaria verticillata (L.) P. Beauv. var. ambigua (Guss.) Parl.
+16893	Setaria viridis (L.) P. Beauv. subsp. pycnocoma (Steudel) Tzvelev
+16894	Setaria viridis (L.) P. Beauv. subsp. viridis
+16896	Sorghum bicolor (L.) Moench
+16897	Sorghum halepense (L.) Pers.
+16916	Sporobolus indicus (L.) R. Br.
+16917	Sporobolus neglectus Nash
+16926	Stipa bromoides (L.) D÷rfler
+16931	Stipa eriocaulis Borbás
+16932	Stipa eriocaulis Borbás subsp. eriocaulis
+16933	Stipa eriocaulis Borbás subsp. lutetiana H. Scholz
+16942	Stipa offneri Breistr.
+16945	Stipa pennata L.
+16959	Tragus racemosus (L.) All.
+16968	Trisetum distichophyllum (Vill.) P. Beauv. ex Roemer &
+16977	Trisetum flavescens (L.) P. Beauv. subsp. purpurascens (DC.) Arcangeli
+16986	Trisetum spicatum (L.) K. Richter subsp. ovatipaniculatum HultÚn ex Jonsell
+16991	Triticum aestivum L.
+16995	Triticum durum Desf.
+17021	Ventenata dubia (Leers) Cosson & Durieu
+17024	Vulpia bromoides (L.) S.F. Gray
+17026	Vulpia ciliata Dumort.
+17034	Vulpia ligustica (All.) Link
+17038	Vulpia muralis (Kunth) Nees
+17039	Vulpia myuros (L.) C.C. Gmelin
+17048	Vulpia unilateralis (L.) Stace
+17062	Zea mays L.
+17064	Heteranthera limosa (Swartz) Willd.
+17065	Heteranthera reniformis Ruiz & Pavon
+17066	Pontederia cordata L.
+17074	Groenlandia densa (L.) Fourr.
+17076	Potamogeton alpinus Balbis
+17077	Potamogeton berchtoldii Fieber
+17079	Potamogeton coloratus Hornem.
+17081	Potamogeton crispus L.
+17084	Potamogeton filiformis Pers.
+17085	Potamogeton friesii Rupr.
+17086	Potamogeton gramineus L.
+17092	Potamogeton lucens L.
+17097	Potamogeton natans L.
+17099	Potamogeton nodosus Poiret
+17101	Potamogeton obtusifolius Mert. & Koch
+17103	Potamogeton pectinatus L.
+17104	Potamogeton perfoliatus L.
+17109	Potamogeton pusillus L.
+17118	Potamogeton trichoides Cham. & Schlecht.
+17132	Ruscus aculeatus L.
+17134	Ruscus hypophyllum L.
+17139	Smilax aspera L.
+17144	Sparganium angustifolium Michaux
+17146	Sparganium emersum Rehmann
+17147	Sparganium erectum L.
+17148	Sparganium erectum L. subsp. erectum
+17150	Sparganium erectum L. subsp. neglectum (Beeby) K. Richter
+17151	Sparganium minimum Wallr.
+17158	Paris quadrifolia L.
+17161	Typha angustifolia L.
+17165	Typha domingensis (Pers.) Steudel
+17167	Typha latifolia L.
+17168	Typha laxmannii Lepechin
+17175	Typha shuttleworthii Koch & Sonder
+17188	Zannichellia palustris L.
+17190	Zannichellia palustris L. subsp. pedicellata (Wahlenb. & RosÚn) Arcangeli
+17195	Zannichellia peltata Bertol.
+17285	Chamaecyparis lawsoniana (A. Murray) Parl.
+17296	Cupressus sempervirens L.
+17297	Juniperus communis L.
+17309	Juniperus oxycedrus L. subsp. oxycedrus
+17311	Juniperus phoenicea L. subsp. phoenicea
+17313	Juniperus sabina L.
+17314	Juniperus sibirica Loddiges in Burgsd.
+17315	Juniperus thurifera L.
+17319	Platycladus orientalis (L.) Franco
+17322	Thuja occidentalis L.
+17324	Thuja plicata D. Don ex Lamb.
+17338	Ephedra negrii J. Nouviant in KerguÚlen [1993]
+17343	Abies alba Miller
+17353	Cedrus atlantica (Endl.) CarriÞre
+17356	Larix decidua Miller
+17363	Picea abies (L.) Karsten
+17370	Pinus cembra L.
+17372	Pinus halepensis Miller
+17384	Pinus mugo Turra
+17387	Pinus nigra Arnold subsp. nigra
+17389	Pinus pinaster Aiton
+17395	Pinus strobus L.
+17396	Pinus sylvestris L.
+17400	Pinus uncinata Ramond ex DC. [1805], et non Miller
+17404	Pseudotsuga menziesii (Mirbel) Franco
+17408	Taxus baccata L.
+17445	Adiantum capillus-veneris L.
+17447	Anogramma leptophylla (L.) Link
+17464	Cryptogramma crispa (L.) R. Br. ex Hooker
+17468	Notholaena marantae (L.) Desv.
+17478	Asplenium adiantum-nigrum L.
+17487	Asplenium ceterach L.
+17489	Asplenium fissum Kit. ex Willd.
+17490	Asplenium fontanum (L.) Bernh.
+17492	Asplenium foreziense Le Grand.
+17496	Asplenium jahandiezii (Litard.) Rouy.
+17501	Asplenium lepidum C. Presl subsp. lepidum
+17507	Asplenium onopteris L.
+17508	Asplenium petrarchae (GuÚrin) DC.
+17509	Asplenium ramosum L. [1753]
+17510	Asplenium ruta-muraria L.
+17511	Asplenium ruta-muraria L. subsp. dolomiticum Lovis & Reichst.
+17512	Asplenium ruta-muraria L. subsp. ruta-muraria
+17515	Asplenium seelosii Leybold
+17521	Asplenium trichomanes L.
+17523	Asplenium trichomanes L. subsp. inexpectans Lovis
+17524	Asplenium trichomanes L. subsp. pachyrachis (Christ) Lovis & Reichst.
+17525	Asplenium trichomanes L. subsp. quadrivalens D.E. Meyer
+17526	Asplenium trichomanes L. subsp. trichomanes
+17544	Azolla filiculoides Lam.
+17545	Azolla mexicana C. Presl
+17548	Blechnum spicant (L.) Roth
+17552	Pteridium aquilinum (L.) Kuhn
+17567	Cyrtomium fortunei J. Sm.
+17573	Dryopteris affinis (Lowe) Fraser-Jenkins subsp. borreri (Newman) Fraser-Jenkins
+17575	Dryopteris affinis (Lowe) Fraser-Jenkins subsp. cambrensis Fraser-Jenkins
+17584	Dryopteris carthusiana (Vill.) H.P. Fuchs
+17586	Dryopteris cristata (L.) A. Gray
+17587	Dryopteris dilatata (Hoffm.) A. Gray
+17588	Dryopteris expansa (C. Presl) Fraser-Jenkins & Jermy
+17589	Dryopteris filix-mas (L.) Schott
+17594	Dryopteris oreades Fomin
+17595	Dryopteris pallida (Bory) Maire & Petitmengin
+17598	Dryopteris remota (D÷ll) Druce
+17601	Dryopteris submontana (Fraser-Jenkins & Jermy) Fraser-
+17604	Dryopteris tyrrhena Fraser-Jenkins & Reichst.
+17605	Dryopteris villarii (Bellardi) Schinz & Thell.
+17626	Polystichum aculeatum (L.) Roth
+17629	Polystichum braunii (Spenner) FÚe
+17635	Polystichum lonchitis (L.) Roth
+17637	Polystichum setiferum (Forsskål) Woynar
+17643	Equisetum fluviatile L.
+17645	Equisetum hyemale L.
+17650	Equisetum palustre L.
+17652	Equisetum ramosissimum Desf.
+17654	Equisetum sylvaticum L.
+17664	Trichomanes speciosum Willd.
+17689	Diphasiastrum alpinum (L.) Holub
+17707	Lycopodium clavatum L.
+17717	Marsilea quadrifolia L.
+17720	Pilularia globulifera L.
+17725	Botrychium lunaria (L.) Swartz
+17728	Botrychium matricariifolium (A. Braun ex D÷ll) Koch
+17730	Botrychium multifidum (S.G. Gmelin) Rupr.
+17732	Botrychium simplex E. Hitchc.
+17744	Osmunda regalis L.
+17747	Polypodium cambricum L.
+17749	Polypodium interjectum Shivas
+17750	Polypodium vulgare L.
+17756	Pteris cretica L.
+17758	Pteris vittata L.
+17761	Salvinia natans (L.) All.
+17766	Selaginella denticulata (L.) Link
+17767	Selaginella helvetica (L.) Spring
+17769	Selaginella selaginoides (L.) C.F. Martius
+17777	Oreopteris limbosperma (All.) Holub
+17789	Thelypteris palustris Schott
+17797	Athyrium distentifolium Tausch ex Opiz
+17798	Athyrium filix-femina (L.) Roth
+17802	Cystopteris alpina (Lam.) Desv.
+17806	Cystopteris fragilis (L.) Bernh.
+17813	Cystopteris montana (Lam.) Desv.
+17821	Gymnocarpium dryopteris (L.) Newman
+17822	Gymnocarpium robertianum (Hoffm.) Newman
+17823	Matteuccia struthiopteris (L.) Todaro
+17838	Woodsia alpina (Bolton) S.F. Gray
+17841	Woodsia glabella Richardson subsp. pulchella (Bertol.) 'A. & D. L÷ve
+17844	Woodsia ilvensis (L.) R. Br.
+40004	Cotoneaster raboutensis Flink, Fryer, Garraud, et All.
+40005	Epipactis provincialis Aubenas et Robatsch
+40010	Dryopteris affinis (Lowe) Fraser-Jenkins subsp.pseudodijuncta (Fras.-Jenk.) Fras.-Jenk.
+40014	Iberis nana All.
+40022	Veronica beccabunga x anagalis aquatica
+40023	Viscum album L. subsp. abietis (Wiesb.) Abromeit
+40041	Allium oporinanthum Brullo Pavone  & Salmeri
+40066	Galium triflorum Michaux
+40109	Arum cylindraceum Gasparr.
+40128	Saxifraga fragosoi Sennen
+40137	Genista cinerea x scorpius
+40144	Achillea collina Reichb.
+40145	Achillea roseo-alba Ehrend.
+40151	Macrosyringion glutinosum (M.Bieb.) Rothm.
+40153	Cervaria rivini Gaetner
+40154	Holandrea carvifolia (Villars) Reduron, Charpin & Pime.
+40157	Oreoselinum nigrum Delabre
+40158	Pteroselinum austriacum (Jacq.) Reichb.
+40163	Coristospermum ferulaceum (All.) Reduron, Charpin & Pim.
+40164	Epikeros pyreanaicus (L.) Raf.
+40166	Mutellina purpurea (Poiret) Reduron,Charpin & Pim.
+40169	Pachypleurum mutellinoides (Crantz) Holub
+40173	Anacamptis pyramidalis (L.) L.C.M. Richard subsp. tanayensis (Chenevard) Quentin
+40175	Alchemilla multidens Buser =10999
+40179	Libanotis pyrenaica Reduron
+40181	Cytisus lotoides Pourr.
+40183	Allium colpoleri Pineo
+40187	Vaccinium uliginosum L. subsp. uliginosum
+40205	Dianthus scaber Chaix
+40217	Asphodelus macrocarpus Parl.
+40220	Euphorbia esula L. subsp.saratoi Adoino
+40221	Rosa trachyphylla Rau
+40223	Juncus alpinoarticulatus Chaix subsp. fuscoaster Schreber
+40226	Minuartia hybrida (Vill.) Schischkin subsp. laxa (Jord.) Jauzein
+40227	Minuartia hybrida (Vill.) Schischkin subsp. viscosa (Schreber) Jauzein
+40231	Allium flexum Waldst. et Kit.
+40233	Allium longispathum RedoutÚ
+40237	Galium aparine L. subsp. aparine
+40239	Melampyrum nemorosum L.
+40241	Sporobolus vaginiflorus (Torr.) Wood
+40242	Ophrys virescens Philippe, 1859
+40243	Sanguisorba verrucosa Ehrenb.
+40260	Carex glacialis Mackensie
+40263	Physalis peruviana
+40264	Pyrus spinosa Forssk.
+40272	Festuca melanopsis Foggi, Gr. Rossi & M.A. Signorini
+40273	Viola laricicola Marcussen
+40279	Triticum turgidum
+40280	Cotoneaster salicifolius Franchet
+40285	Pinguicula hirtiflora Ten.
+40287	Aquilegia vulgaris x alpina ?
+40292	Campanula portenschlagiana Schulthes
+40307	Centaurea scabiosa L. subsp. grinensis (Reut.) Nyman
+40318	Lindernia palustris
+40329	Phlox paniculata L.
+40330	Centaurea triumfetti All. subsp. axillaris (Willd.) A.& D. L÷ve
+40344	Silene petrarchae Ferrarini & Cecchi
+40353	Anacamptis laxiflora (Lam.) R.M.Bateman, Pridgeon & Cha.
+40354	Neotinea tridentata (Scop.) R.M.Bateman, Pridgeon & M.
+40358	Himantoglossum robertianum (Loisel.) P. Delforge
+40359	Anacamptis coriphora (L.) R.M.Bat, Pridg. & M.W.Cha subsp.fragrans (Pollini) R.M.Bat, Pridg. & M.W.Cha
+40367	Primula cottia Widmer
+40369	Juncus monanthos Schrank
+40407	Orobanche grenieri F.W. Schultz
+40409	Euphrasia christii Favrat
+40412	Xanthoselinum alsaticum (L.) Schur subsp. alsaticum
+40427	Alchemilla petiolulans Buser
+40428	Ambrosia psilostachya DC.
+40429	Carlina hispanica Lam. subsp hispanica
+40430	Chenopodium album subsp. opulifolium Batt.
+40431	Mutellina adonidifolia (J. Gay) Guterm.
+40432	Cleistogenes serotina (L.) Keng
+40433	Anacamptis coriophora (L.) Bateman, Pridgeon & Chase subsp. coriophora
+40434	Avenula pratensis (L.) Dumort. subsp. pratensis
+40435	Asphodelus albus subsp. delphinensis (Gren. & Godr.) Z.Diaz & ValdÚ
+40436	Torilis nodosa (L.) Gaertn. subsp. nodosa
+40437	Sideritis hyssopifolia L. subsp. hyssopifolia
+40441	Galanthus nivalis L., 1753
+40442	Euphrasia minima Jacq. ex DC., 1805
+40443	Euphorbia exigua L. subsp. exigua
+40445	Dactylorhiza fuchsii (Druce) So¾, 1962
+40446	Colchicum longifolium Castagne, 1845
+40449	Seseli longifolium L. subsp. longifolium
+40458	Sedum sarmentosum Bunge, 1835
+40463	Cynoglottis barrelieri (All.) Vural & Kit Tan, 1983
+40466	Ormenis nobilis (L.) Coss. & Germ., 1845
+40469	Ophrys massiliensis Viglione & VÚla, 1999
+40480	Eleocharis mamillata subsp. austriaca (Hayek) Strandh., 1965
+40486	Gymnadenia nigra subsp. corneliana (Beauverd) J.M.Tison, 2010
+40487	Gymnadenia nigra subsp. rhellicani (Teppner & E.Klein) J.M.Tison, 2
+40488	Gymnadenia nigra subsp. austriaca (Teppner & E.Klein) Teppner & E.K
+40489	Gymnadenia nigra subsp. cenisia G.Foelsche, W.Foelsche, M.Gerbaud &
+40492	Alkanna matthioli Tausch, 1824
+40495	Acanthus mollis L., 1753
+40496	Acer campestre L., 1753
+40497	Acer negundo L., 1753
+40498	Aconitum burnatii Gßyer, 1909
+40499	Allium flavum L., 1753
+40500	Allium sphaerocephalon L., 1753
+40501	Allium ursinum L., 1753
+40502	Alyssum cuneifolium Ten., 1815
+40503	Androsace maxima L., 1753
+40504	Anemone ranunculoides L., 1753
+40505	Arabis serpillifolia Vill., 1779
+40506	Aristolochia pallida Willd., 1805
+40507	Artemisia chamaemelifolia Vill., 1779
+40508	Asperula purpurea (L.) Ehrend., 1973
+40509	Astragalus depressus L., 1756
+40510	Baldellia ranunculoides (L.) Parl. subsp. ranunculoides
+40511	Bupleurum tenuissimum L., 1753
+40512	Campanula thyrsoides L., 1753
+40513	Cardamine impatiens L., 1753
+40515	Carex liparocarpos Gaudin, 1804
+40516	Crepis pygmaea L., 1753
+40518	Delphinium fissum Waldst. & Kit., 1802
+40519	Dianthus armeria L., 1753
+40521	Dianthus subacaulis Vill., 1789
+40522	Doronicum clusii (All.) Tausch, 1828
+40524	Festuca scabriculmis (Hack.) K.Richt., 1890
+40525	Fraxinus ornus L., 1753
+40526	Glaucium corniculatum (L.) Rudolph, 1781
+40528	Helleborus niger L., 1753
+40530	Huperzia selago (L.) Bernh. ex Schrank & Mart., 1829
+40531	Iberis aurosica Chaix, 1785
+40532	Iberis ciliata All., 1789
+40533	Iberis sempervirens L., 1753
+40535	Juncus fontanesii J.Gay, 1827
+40536	Katapsuxis silaifolia (Jacq.) Raf., 1840
+40537	Leonurus cardiaca L., 1753
+40538	Lepidium villarsii Godr., 1847
+40539	Lomelosia graminifolia (L.) Greuter & Burdet, 1985
+40540	Lycopodium annotinum L., 1753
+40542	Melica ciliata L. subsp. ciliata
+40543	Matthiola fruticulosa (Loefl. ex L.) Maire, 1932
+40544	Murbeckiella pinnatifida (Lam.) Rothm., 1939
+40545	Nigella arvensis L., 1753
+40546	Noccaea praecox (Wulfen) F.K.Mey., 1973
+40547	Nonea erecta Bernh., 1800
+40548	Odontites viscosus (L.) Clairv., 1811
+40549	Orchis spitzelii Saut. ex W.D.J.Koch, 1838
+40550	Parietaria lusitanica L., 1753
+40554	Phyteuma globulariifolium Sternb. & Hoppe subsp. globularii
+40555	Plantago scabra Moench, 1794
+40557	Potentilla nivalis Lapeyr., 1782
+40558	Primula pedemontana E.Thomas ex Gaudin, 1828
+40559	Ranunculus seguieri Vill., 1779
+40561	Salvia verticillata L., 1753
+40562	Saxifraga adscendens L., 1753
+40565	Viola rupestris F.W.Schmidt, 1791
+40567	Sedum atratum L., 1763
+40568	Senecio doria L., 1759
+40569	Thalictrum aquilegiifolium L., 1753
+40570	Tofieldia pusilla (Michx.) Pers., 1805
+40571	Tozzia alpina L., 1753
+40581	Asplenium scolopendrium L., 1753
+40582	Asplenium septentrionale (L.) Hoffm., 1795
+40583	Blackstonia acuminata (W.D.J.Koch & Ziz) Domin, 1933
+40585	Carex buxbaumii Wahlenb., 1803
+40586	Carex maritima Gunnerus, 1772
+40587	Circaea lutetiana L., 1753
+40588	Corrigiola littoralis L., 1753
+40589	Euphorbia spinosa L., 1753
+40593	Pedicularis palustris L., 1753
+40594	Roemeria hybrida (L.) DC., 1821
+40595	Sideritis montana L., 1753
+40596	Silene conica L., 1753
+40597	Telephium imperati L., 1753
+40599	Veronica scutellata L., 1753
+40601	Galeopsis ladanum subsp. villosa (Huds.) Celak., 1871
+40605	Saxifraga biflora All., 1773
+40607	Alchemilla alpina groupe
+40611	Cotoneaster horizontalis groupe
+40615	Luzula multiflora groupe
+40616	Luzula sylvatica groupe
+40619	Ranunculus fluitans groupe
+40620	Ranunculus montanus groupe
+40622	Reynoutria japonica groupe
+40628	Tulipa gesneriana groupe
+40630	Valeriana officinalis groupe
+40639	Centaurea paniculata groupe
+40640	Anthyllis vulneraria L.  subsp guyotii (Chodat) Grenon
+40645	Cornus sericea L., 1771
+40654	Cardamine amara L. subsp. amara
+40658	Alchemilla glacialis Buser
+40664	Arenaria serpyllifolia subsp. marschlinsii (W.D.J.Koch) Nyman, 1878
+40669	Biscutella lima Rchb., 1832
+14185	Eleocharis multicaulis (Sm.) Desv.
+14518	Iris spuria L. subsp. maritima P. Fourn.
+14625	Juncus maritimus Lam.
+17031	Vulpia fasciculata (Forsskål) Fritsch
+11804	Galium aparine L. subsp. spurium (L.) Hartm. [1846]
+13858	Carex binervis Sm.
+14003	Carex melanostachya M. Bieb. ex Willd.
+15830	Danthonia alpina Vest
+16302	Gastridium ventricosum (Gouan) Schinz & Thell.
+16313	Glyceria declinata BrÚb.
+16796	Polypogon monspeliensis (L.) Desf.
+16800	Polypogon viridis (Gouan) Breistr.
+17350	Abies nordmanniana (Steven) Spach
+1836	Helianthus x-laetiflorus Pers.
+6093	Crassula tillaea Lester-Garland
+7346	Medicago x-varia T. Martyn
+7933	Quercus x-calvescens Vuk.
+9261	Circaea x-intermedia Ehrh.
+375	Ferula communis L.
+640	Seseli peucedanoides (M. Bieb.) Kos.-Pol.
+667	Thapsia villosa L.
+767	Vincetoxicum nigrum (L.) Moench
+1023	Asteriscus spinosus (L.) Schultz Bip.
+1213	Centaurea alpina L.
+1228	Centaurea balbisiana Soldano subsp. jordaniana (Gren. & Godron) KerguÚlen
+1599	Crepis bursifolia L.
+1871	Hieracium andryaloides Vill.
+1905	Hieracium beyeri Zahn
+1942	Hieracium chaixianum Arvet-Touvet & Gautier
+2014	Hieracium falcatum Arvet-Touvet gr.
+2053	Hieracium halleri Vill. gr. alpinum
+2075	Hieracium juranum Fries gr.
+2078	Hieracium kochianum Jordan
+2089	Hieracium ramosissimum Schleicher ex Hegetschw. gr.
+2169	Hieracium oxyodon Fries gr.
+2179	Hieracium pedemontanum Burnat & Gremli
+2185	Hieracium pellitum Fries gr.
+2230	Hieracium pseudocerinthe (Gaudin) Koch
+2264	Hieracium rupestre All. gr.
+2297	Hieracium stelligerum FroÙl. gr.
+2335	Hieracium urticaceum Arvet-Touvet & Ravaud gr.
+2348	Hieracium viscosum Arvet-Touvet gr.
+2372	Hieracium hybridum Chaix ex Vill.
+2374	Hieracium laggeri (Schultz Bip. ex Reichenb. fil.) F
+2417	Inula bifrons (L.) L.
+2581	Leucanthemum pallens (Gay ex Perreymond) DC.
+2582	Leucanthemum pallens (Gay ex Perreymond) DC. subsp. leucolepis (Briq. & Cavill.) Favarger
+2583	Leucanthemum pallens (Gay ex Perreymond) DC. subsp. pallens
+2605	Leuzea conifera (L.) DC.
+2693	Petasites pyrenaicus (L.) G. López
+2889	Senecio lividus L.
+2989	Sonchus maritimus L.
+3035	Taraxacum apenninum sauf T. apenninum (Ten.) Ten.
+3080	Taraxacum fulvum Raunk. gr.
+3103	Taraxacum litardierei van Soest T. gr. pacheri
+3251	Tyrimnus leucographus (L.) Cass.
+3368	Anchusa ovata Lehm.
+3417	Cynoglossum pustulatum Boiss.
+3423	Echium asperrimum Lam.
+3565	Neatostema apulum (L.) I.M. Johnston
+3569	Nonea pallens Petrovic
+3580	Onosma arenaria Waldst. & Kit. subsp. pyramidata Br.-Bl.
+3592	Onosma pseudoarenaria Schur subsp. delphinensis (Br.-Bl.) P. Fourn.
+3612	Pulmonaria longifolia (Bast.) Boreau
+4154	Hormathophylla macrocarpa (DC.) K³pfer
+4441	Sisymbrium austriacum Jacq. subsp. chrysanthum (Jordan) Rouy & Fouc.
+4966	Bufonia paniculata F. Dubois ex Delarbre
+5193	Loeflingia hispanica L. subsp. hispanica
+5412	Silene inaperta L.
+5469	Silene portensis L. subsp. portensis
+5781	Salsola kali L. subsp. tragus (L.) Nyman
+5824	Cistus laurifolius L.
+5856	Fumana laevipes (L.) Spach
+6122	Sedum caespitosum (Cav.) DC.
+6620	Euphorbia serrata L.
+6829	Coronilla minima L. subsp. lotoides (Koch) Nyman
+6848	Cytisophyllum sessilifolium (L.) O.F. Láng
+6876	Cytisus oromediterraneus Rivas-Martínez, Díaz, Fernán
+6900	Dorycnium herbaceum Vill. subsp. gracile (Jordan) Nyman
+7008	Hedysarum boveanum Bunge ex Basiner subsp. europaeum Guittonneau & KerguÚlen
+7032	Hippocrepis ciliata Willd.
+7263	Medicago littoralis Rohde ex Loisel.
+7372	Onobrychis caput-galli (L.) Lam.
+7404	Ononis cristata Miller
+7407	Ononis fruticosa L.
+7447	Ornithopus compressus L.
+7543	Scorpiurus muricatus subsp. subvillosus (L.) Thell.
+7594	Trifolium bocconi Savi
+7603	Trifolium cherleri L.
+7642	Trifolium lappaceum L.
+7714	Trifolium scabrum L. subsp. lucanicum (Guss.) Arcangeli [1882]
+7736	Trifolium suffocatum L.
+7789	Vicia benghalensis L.
+7944	Blackstonia imperfoliata (L. fil.) Samp.
+8365	Chaetonychia cymosa (L.) Sweet
+8373	Herniaria cinerea DC.
+8811	Sideritis provincialis Jordan & Fourr., in Sched.
+9002	Pinguicula reuteri Genty
+9045	Linum corymbulosum Reichenb.
+9403	Oxalis articulata Savigny
+10177	Rumex papillaris Boiss. & Reut.
+10186	Rumex pulcher L. subsp. woodsii (De Not.) Arcangeli
+10353	Primula latifolia Lapeyr. subsp. latifolia
+10583	Nigella gallica Jordan
+11223	Potentilla delphinensis Gren. & Godron
+11864	Galium mollugo L. subsp. erectum Syme
+11910	Galium saxosum (Chaix) Breistr.
+12015	Salix acuminata Miller
+12102	Osyris alba L.
+12274	Saxifraga stellaris L. subsp. robusta (Engler) Gremli
+13009	Tamarix gallica L.
+13200	Valerianella microcarpa Loisel.
+13608	Narcissus dubius Gouan
+13861	Carex brevicollis DC.
+13903	Carex distachya Desf.
+13959	Carex grioletii Roemer
+14236	Schoenoplectus carinatus (Sm.) Palla
+14238	Schoenoplectus litoralis (Schrader) Palla
+14569	Juncus alpinoarticulatus Chaix subsp.alpinoarticulatus
+14709	Luzula pedemontana Boiss. & Reuter
+14766	Fritillaria tubiformis Gren. & Godron subsp. moggridgei (Baker) Rix
+14767	Fritillaria tubiformis Gren. & Godron subsp. tubiformis
+14770	Gagea bohemica (Zauschner) Schultes & Schultes fil. subsp. bohemica
+14820	Tulipa agenensis DC.
+14887	Dactylorhiza occitanica Geniez, Melki, Pain, & Soca
+15689	Bromus pannonicus Kumm. & Sendtn.
+15800	Cynosurus effusus Link
+15929	Elytrigia campestris (Godron & Gren.) KerguÚlen
+15994	Festuca arundinacea Schreber subsp. fenas (Lag.) Arcangeli
+16062	Festuca flavescens Bellardi
+16115	Festuca longifolia Thuill. subsp. longifolia
+16808	Psilurus incurvus (Gouan) Schinz & Thell.
+17036	Vulpia membranacea (L.) Dumort.
+17337	Ephedra nebrodensis Guss. [1845]
+17386	Pinus nigra Arnold subsp. laricio Maire
+17804	Cystopteris diaphana (Bory) Blasdell
+17805	Cystopteris dickieana R. Sim
+20000	Cotoneaster atlanticus Klotz
+20001	Epipactis fibri Scappaticci & Robatsch
+40108	Visnaga daucoides Gaertner
+40116	Galium aparine L. subsp. tenerum (Schleich.) Coutinho
+40129	Danae racemosa Moench.
+40159	Thysselinum palustre (L.) Hoffm.
+40177	Festuca balmensis R. Portal & L. Garraud
+40178	Hieracium piloselloides Vill. subsp. praealtum (Vill.) Zahn
+40185	Primula x variabilis Goupil
+40206	Minuartia glomerata (M. bieb.) Degen subsp. burnatii (Rouy & Foucaud) Favarger & Conti
+40240	Hieracium liottardii Vill.
+40314	Potentilla pedata Koch
+40493	Bothriochloa barbinodis (Lag.) Herter, 1940
+40541	Mantisalca salmantica (L.) Briq. & Cavill., 1930
+40591	Limodorum trabutianum Batt., 1886
+40653	Alchemilla glaucescens groupe
+241	Bupleurum gerardii All.
+263	Bupleurum subovatum Link ex Sprengel
+304	Cicuta virosa L.
+454	Laserpitium prutenicum L. subsp. dufourianum (Rouy & Cam.) Br.-Bl.
+491	Oenanthe crocata L.
+493	Oenanthe fluviatilis (Bab.) Coleman
+532	Peucedanum gallicum Latourr.
+534	Peucedanum officinale L.
+629	Seseli hippomarathrum Jacq.
+662	Smyrnium olusatrum L.
+682	Torilis arvensis (Hudson) Link subsp. neglecta Thell.
+937	Artemisia campestris L. subsp. maritima (DC.) Arcangeli
+940	Artemisia capillaris Thunb.
+1000	Aster linosyris (L.) Bernh. subsp. armoricanus (Rouy) KerguÚlen
+1030	Balsamita major Desf.
+1099	Calycocorsus stipitatus (Jacq.) Rauschert
+1103	Carduus acanthoides L.
+1158	Carduus nutans L. subsp. leiophyllus (Petrovic) Stoj. & Stef.
+1206	Carthamus tinctorius L.
+1252	Centaurea decipiens Thuill.
+1285	Centaurea maculosa Lam.
+1300	Centaurea nemoralis Jordan
+1304	Centaurea nigra L. subsp. carpetana (Boiss. & Reuter) Nyman
+1309	Centaurea nigrescens Willd.
+1378	Centaurea transalpina Schleicher ex DC.
+1408	Chondrilla chondrilloides (Ard.) Karsten
+1495	Cirsium canum (L.) All.
+1590	Crepis alpestris (Jacq.) Tausch
+1838	Helichrysum arenarium (L.) Moench
+1843	Helichrysum italicum (Roth) G. Don fil.
+1928	Hieracium caespitosum Dumort.
+2398	Hyoseris radiata L.
+2521	Leontodon incanus (L.) Schrank
+2609	Ligularia sibirica (L.) Cass.
+2792	Scorzonera aristata Ramond ex DC.
+2811	Scorzonera purpurea L.
+2885	Senecio leucanthemifolius Poiret subsp. vernalis (Waldst. & Kit.) Alexander
+2915	Senecio sarracenicus L.
+2982	Sonchus arvensis L. subsp. uliginosus (M. Bieb.) Nyman
+3190	Tephroseris longifolia (Jacq.) Griseb. & Schenk
+3234	Tragopogon pratensis L. subsp. minor (Miller) Wahlenb.
+3279	Xeranthemum annuum L.
+3339	Betula nana L.
+3410	Cynoglossum germanicum Jacq. subsp. pellucidum (Lapeyr.) Sutory
+3616	Pulmonaria mollis Wulgen ex Hornem.
+3813	Biscutella laevigata L. subsp. varia (Dumort.) Rouy & Fouc.
+3841	Brassica juncea (L.) Czernova
+3870	Brassica rapa L. emend. Metzger
+3906	Camelina alyssum (Miller) Thell.
+3911	Camelina rumelica Velen.
+3940	Cardamine parviflora L.
+3945	Cardamine pratensis L. subsp. dentata (Schultes) Celak.
+3947	Cardamine pratensis L. subsp. matthioli (Moretti) Nyman
+3993	Cochlearia officinalis L.
+3997	Cochlearia pyrenaica DC.
+4120	Erysimum odoratum Ehrh.
+4126	Erysimum repandum L.
+4172	Hymenolobus procumbens (L.) Torrey & A. Gray subsp. pauciflorus (Koch) Schinz & Thell.
+4267	Lepidium perfoliatum L.
+4297	Matthiola incana (L.) R. Br.
+4326	Nasturtium microphyllum (Boenn.) Reichenb.
+4371	Raphanus raphanistrum L. subsp. landra (Moretti ex DC.) Bonnier & Layens
+4402	Rorippa stylosa (Pers.) Mansf. & Rothm.
+4491	Subularia aquatica L.
+4631	Campanula baumgartenii J. Becker
+4635	Campanula cervicaria L.
+4677	Campanula patula L. subsp. costae (Willk.) Nyman
+4716	Jasione laevis Lam.
+4721	Jasione montana L. subsp. mediterranea (Rouy) Gamisans
+4800	Wahlenbergia hederacea (L.) Reichenb.
+5003	Cerastium dubium (Bast.) GuÚpin
+5264	Minuartia setacea (Thuill.) Hayek
+5265	Minuartia stricta (Swartz) Hiern
+5334	Sagina nodosa (L.) Fenzl
+5391	Silene conoidea L.
+5398	Silene dichotoma Ehrh.
+5431	Silene linicola C.C. Gmelin
+5452	Silene nutans L. subsp. insubrica (Gaudin) Soldano
+5502	Silene viridiflora L.
+5524	Spergula morisonii Boreau
+5547	Spergularia marina (L.) Besser [1822], et non (L.) Gri
+5740	Polycnemum arvense L.
+6031	Cuscuta epilinum Weihe
+6176	Sedum telephium L. subsp. fabaria (Kirschleger) Syme in Sowerby [1861
+6223	Bryonia alba L.
+6292	Knautia godetii Reuter
+6352	Scabiosa mollissima Viv.
+6376	Succisella inflexa (Kluk) G. Beck
+6406	Elatine triandra Schkuhr
+6429	Chimaphila umbellata (L.) W. Barton
+6511	Euphorbia angulata Jacq.
+6538	Euphorbia epithymoides L.
+6550	Euphorbia flavicoma DC. 2, 3, 4, 5 subsp. costeana (Rouy) P. Fourn.
+6659	Adenocarpus complicatus (L.) Gay
+6818	Cicer arietinum L.
+6862	Cytisus decumbens (Durande) Spach
+6941	Genista cinerea (Vill.) DC. subsp. cinerea
+6968	Genista pilosa L. subsp. jordanii (Rouy & Fouc.) Br.-Bl.
+7003	Glycyrrhiza glabra L.
+7099	Lathyrus ochrus (L.) DC.
+7133	Lens culinaris Medik.
+7194	Lupinus albus L.
+7195	Lupinus angustifolius L.
+7199	Lupinus angustifolius L. subsp. reticulatus (Desv.) Arcangeli
+7205	Lupinus luteus L.
+7207	Lupinus perennis L.
+7749	Trigonella caerulea (L.) Ser.
+7755	Trigonella foenum-graecum L.
+7774	Ulex minor Roth
+7793	Vicia cassubica L.
+7810	Vicia faba L.
+7841	Vicia orobus DC.
+7992	Cicendia filiformis (L.) Delarbre
+8012	Exaculum pusillum (Lam.) Caruel
+8096	Gentianella amarella (L.) B÷rner
+8098	Gentianella campestris (L.) B÷rner subsp. baltica (Murb.) Pritchard
+8152	Erodium moschatum (L.) L'HÚrit.
+8168	Geranium bohemicum L.
+8176	Geranium divaricatum Ehrh.
+8271	Myriophyllum alterniflorum DC.
+8313	Hypericum elodes L.
+8432	Scleranthus verticillatus Tausch
+8511	Galeopsis bifida Boenn.
+8527	Galeopsis reuteri Reichenb. fil.
+8529	Galeopsis speciosa Miller
+8594	Leonurus marrubiastrum L.
+8597	Lycopus exaltatus L. fil.
+9009	Utricularia bremii Heer ex K÷lliker
+9010	Utricularia intermedia Hayne
+9015	Utricularia ochroleuca R. Hartman
+9016	Utricularia vulgaris L.
+9049	Linum hirsutum L.
+9051	Linum leonii F.W. Schultz
+9073	Linum usitatissimum L.
+9080	Lythrum borysthenicum (Schrank) Litv.
+9094	Lythrum virgatum L.
+9251	Nuphar pumila (Timm) DC.
+9254	Nymphaea candida C. Presl
+9349	Oenothera parviflora L.
+9470	Corydalis pumila (Host) Reichenb.
+9490	Fumaria densiflora DC.
+9506	Fumaria officinalis L. subsp. wirtgenii (Koch) Arcangeli
+9542	Papaver apulum Ten.
+9719	Armeria arenaria (Pers.) Schultes subsp. praecox (Jordan) KerguÚlen
+9725	Armeria elongata (Hoffm.) Koch
+9730	Armeria halleri Wallr.
+9749	Armeria muelleri Huet
+10071	Polygonum lapathifolium L. subsp. brittingeri (Opiz) Jav.
+10126	Rumex aquaticus L.
+10230	Portulaca oleracea L. subsp. oleracea var. sativa (Haw.) DC.
+10327	Lysimachia thyrsiflora L.
+10431	Adonis aestivalis L. subsp. squarrosa (Steven) Nyman
+10435	Adonis annua L. subsp. cupaniana (Guss.) Steinberg
+10472	Anemone sylvestris L.
+10603	Pulsatilla pratensis (L.) Miller
+10633	Ranunculus aquatilis L.
+10640	Ranunculus baudotii Godron
+10660	Ranunculus circinatus Sibth.
+10695	Ranunculus hederaceus L.
+10723	Ranunculus nodiflorus L.
+10741	Ranunculus penicillatus (Dumort.) Bab.
+10751	Ranunculus polyanthemoides Boreau
+10753	Ranunculus polyanthemos L.
+10770	Ranunculus rionii Lagger
+10778	Ranunculus sardous Crantz subsp. xatardii (Lapeyr.) Rouy & Fouc.
+10951	Alchemilla exigua Buser ex Paulin
+11006	Alchemilla plicata Buser
+11022	Alchemilla subcrenata Buser
+11111	Crataegus rhipidophylla Gandoger [1872]
+11114	Crataegus rhipidophylla Gandoger [1872] var. lindmanii (Hrabetová Uhrová) K.I. Christensen
+11217	Potentilla collina Wibel
+11373	Pyrus nivalis Jacq.
+11411	Rosa majalis J. Herrmann
+11416	Rosa mollis Sm.
+11436	Rosa sherardii Davies
+11622	Rubus nessensis W. Hall
+11945	Galium verum L. subsp. wirtgenii (F.W. Schultz) Celak. [1870]
+12027	Salix arenaria L.
+12034	Salix bicolor Willd.
+12089	Salix rosmarinifolia L.
+12115	Thesium kyrnosum Hendrych
+12145	Saxifraga bulbifera L.
+12202	Saxifraga hirculus L.
+12260	Saxifraga rosacea Moench
+12263	Saxifraga rosacea Moench subsp. sternbergii (Willd.) KerguÚlen & Lambinon
+12396	Euphrasia micrantha Reichenb.
+12401	Euphrasia nana (Rouy) D. Prain [1913]
+12546	Misopates calycinum Rothm.
+12592	Orobanche crenata Forsskål
+12607	Orobanche lucorum A. Br.
+12624	Orobanche picridis F.W. Schultz
+12636	Orobanche rapum-genistae Thuill. subsp. benthamii (Timb.-Lagr.) P. Fourn.
+12646	Orobanche salviae Koch
+12743	Rhinanthus pumilus (Sterneck) Soldano
+12744	Rhinanthus songeonii Chab.
+12783	Scrophularia umbrosa Dumort. subsp. neesii (Wirtgen) E. Mayer
+12820	Veronica acinifolia L.
+12830	Veronica anagalloides Guss.
+12844	Veronica catenata Pennell
+12871	Veronica opaca Fries
+13232	Viola ambigua Waldst. & Kit.
+13259	Viola canina L. subsp. schultzii (Billot) Rouy & Foucaud
+13267	Viola cornuta L.
+13290	Viola lutea Hudson subsp. sudetica (Willd.) Nyman
+13495	Allium ericetorum Thore
+13517	Allium nigrum L.
+13554	Allium suaveolens Jacq.
+13637	Narcissus poeticus L. subsp. radiiflorus (Salisb.) Baker
+13874	Carex cespitosa L.
+13876	Carex chordorrhiza L. fil.
+13907	Carex divisa Hudson
+13947	Carex fritschii Waisb.
+13948	Carex fuliginosa Schkuhr
+13964	Carex hartmanii Cajander
+14000	Carex mairei Cosson & Germ.
+14004	Carex michelii Host
+14071	Carex praecox Schreber subsp. intermedia (Celak.) Schultze-Motel
+14078	Carex punctata Gaudin
+14086	Carex repens Bellardi
+14133	Carex viridula Michaux subsp. viridula var. pulchella (L÷nnr.) B. Schmid
+14166	Cyperus michelianus (L.) Link
+14172	Cyperus rotundus L.
+14181	Eleocharis atropurpurea (Retz.) C. Presl
+14195	Eleogiton fluitans (L.) Link
+14211	Fimbristylis annua (All.) Roemer & Schultes
+14212	Fimbristylis bisumbellata (Forsskål) Bubani
+14224	Juncellus serotinus (Rottb.) C.B. Clarke
+14240	Schoenoplectus pungens (Vahl) Palla
+14298	Scirpus radicans Schkuhr
+14397	Ornithogalum sphaerocarpum A. Kerner
+14449	Najas marina L. subsp. intermedia (Wolfgang ex Gorski) Casper
+14470	Crocus sativus L.
+14484	Gladiolus illyricus Koch
+14490	Gladiolus x-dubius Guss.
+14495	Iris aphylla L.
+14511	Iris pallida Lam.
+14557	Sisyrinchium montanum E.L. Greene
+14573	Juncus ambiguus Guss.
+14574	Juncus anceps Laharpe
+14626	Juncus minutulus (Albert & Jahandiez) D. Prain
+14698	Luzula multiflora (Ehrh.) Lej. subsp. congesta (Thuill.) Arcangeli
+14824	Tulipa aximensis Jordan gr. gesneriana
+14827	Tulipa clusiana DC.
+14828	Tulipa didieri Jordan gr. gesneriana
+14833	Tulipa marjolletii Perr. & Song. gr. gesneriana
+14834	Tulipa mauriana Jordan & Fourr. gr. gesneriana
+14835	Tulipa montisandrei Prudhomme [1994]
+14838	Tulipa planifolia Jordan gr. gesneriana
+14839	Tulipa platystigma Jordan gr. gesneriana
+14970	Hammarbya paludosa (L.) O. Kuntze
+15020	Ophrys arachnitiformis Gren. & Philippe
+15056	Ophrys incubacea Bianca ex Tod.
+15080	Ophrys saratoi Camus
+15081	Ophrys scolopax Cav.
+15098	Ophrys tetraloniae Teschner [1987]
+15137	Orchis lactea Poiret
+15161	Orchis mascula (L.) L. subsp. olbiensis (Reuter ex Grenier) Ascherson & G
+15176	Orchis papilionacea L.
+15185	Orchis provincialis Balbis ex DC. subsp. pauciflora (Ten.) Arcangeli
+15222	Serapias cordigera L.
+15381	Agrostis vinealis Schreber
+15545	Avena nuda L.
+15571	Avena sterilis L.
+15574	Avena sterilis L. subsp. ludoviciana (Durieu) Nyman
+15576	Avena strigosa Schreber
+15661	Bromus grossus Desf. ex DC.
+15740	Calamagrostis stricta (Timm) Koeler
+15768	Chrysopogon gryllus (L.) Trin.
+15772	Coleanthus subtilis (Tratt.) Seidl.
+15784	Crypsis alopecuroides (Piller & Mitterp.) Schrader
+15818	Dactylis glomerata L. subsp. lobata (Drejer) Lindb. fil.
+15843	Deschampsia cespitosa (L.) P. Beauv. subsp. littoralis (Gaudin) Gremli
+15987	Festuca amethystina L.
+16044	Festuca duvalii (St.-Yves) Stohr
+16086	Festuca heteropachys (St.-Yves) Patzke ex Auquier
+16111	Festuca lemanii Bast.
+16267	Festuca stricta Host subsp. trachyphylla (Hackel) Patzke
+16363	Heteropogon contortus (L.) P. Beauv. ex Roemer & Schul
+16468	Lolium remotum Schrank
+16476	Lolium temulentum L.
+16516	Miscanthus sinensis Anderss.
+16929	Stipa epilosa Martinovsky
+16947	Stipa pennata L. subsp. grafiana (Steven) K. Richter
+16950	Stipa pennata L. subsp. pennata
+16980	Trisetum loeflingianum (L.) C. Presl
+17003	Triticum monococcum L.
+17011	Triticum spelta L.
+17075	Potamogeton acutifolius Link
+17080	Potamogeton compressus L.
+17107	Potamogeton polygonifolius Pourret
+17108	Potamogeton praelongus Wulfen
+17334	Ephedra helvetica C.A. Meyer sensu 2
+17448	Cheilanthes acrostica (Balbis) Todaro
+17483	Asplenium adulterinum Milde
+17488	Asplenium cuneifolium Viv.
+17504	Asplenium obovatum Viv.
+17505	Asplenium obovatum Viv. subsp. lanceolatum (Bubani) P. da Silva
+17674	IsoÙtes echinospora Durieu
+17678	IsoÙtes lacustris L.
+17690	Diphasiastrum complanatum (L.) Holub
+17693	Diphasiastrum tristachyum (Pursh) Holub
+17695	Diphasiastrum zeilleri (Rouy) Holub
+17724	Botrychium lanceolatum (S.G. Gmelin) Angstr÷m
+40070	Helleborus bocconei Ten.
+40140	Aristolochia lutea Gaudin
+40155	Holandrea schottii (Besser ex DC.) Reduron, Charp.& Pi.
+40162	Coristospermum cuneifolium (Guss.) Bertol.
+40186	Koeleria eriostachya Panc.
+40202	Gagea reverchonii Degen
+40230	Linum perenne auct. plur.
+40254	Pimpinella nigra Miller
+40255	Thalictrum lucidum L.
+40258	Serapias neglecta De Not.
+40259	Stipa tirsa Steven
+40296	Ophrys passionis Sennen
+40316	Dactylorhiza lapponica (Laestad ex. Reich. fil) Soo
+40348	Euphrasia cisalpina Pusley
+40365	Gagea lacaitae Terracc.
+40426	Juniperus communis subsp intermedia Schur (K. Richt)
+40475	Hieracium saussureoides (Arv.-Touv.) St.-Lag., 1877
+40481	Eleocharis mamillata subsp. mamillata
+40563	Scabiosa ochroleuca L., 1753
+40609	Carex flava groupe
+40610	Centaurea jacea groupe
+40612	Dactylorhiza maculata groupe
+40613	Dactylorhiza majalis groupe
+40614	Festuca ovina groupe
+40617	Melampyrum nemorosum groupe
+40629	Utricularia vulgaris groupe
+40631	Neslia paniculata groupe
+40632	Koeleria macrantha groupe
+40633	Utricularia stygia G.Thor, 1988
+40673	Bupleurum affine Sadler, 1825
+161	Angelica sylvestris L.
+190	Astrantia major L.
+429	Heracleum sphondylium L. subsp. sphondylium
+684	Torilis arvensis (Hudson) Link subsp. purpurea (Ten.) Hayek var. heterophylla (Guss.) Jury
+1697	Erigeron acer L. subsp. angulosus (Gaudin) Vacc.
+2194	Hieracium picroides Vill. gr.
+3325	Betula alba L.
+4948	Arenaria serpyllifolia L.
+5498	Silene vallesia L.
+6821	Colutea arborescens L. subsp. arborescens
+6822	Colutea arborescens L. subsp. gallica Browicz
+7683	Trifolium pratense L. subsp. pratense
+8210	Geranium robertianum L. subsp. robertianum
+10298	Androsace vitaliana (L.) Lapeyr. subsp. cinerea (S³nd.) Kress in Hegi
+10352	Primula latifolia Lapeyr.
+10593	Pulsatilla alpina (L.) Delarbre subsp. alpina
+10595	Pulsatilla alpina (L.) Delarbre subsp. austriaca Aichele & Schwegler
+11021	Alchemilla strigulosa Buser
+11879	Galium palustre L. subsp. palustre
+11944	Galium verum L. subsp. verum
+12184	Saxifraga exarata Vill. subsp. pseudoexarata (Br.-Bl.) Webb
+13161	Valeriana officinalis L. subsp. officinalis
+13912	Carex divulsa Stokes
+14111	Carex strigosa Hudson
+16486	Melica ciliata L.
+16525	Molinia caerulea (L.) Moench subsp. caerulea
+40027	Poa nemoralis L. var. glaucantha Gaudin
+40142	Brassica montana Pourret
+1708	Erigeron annuus (L.) Pers. subsp. septentrionalis (Fernald & Wieg.) Wagenitz
+2097	Hieracium lanceolatum Vill. gr. prenanthoides
+2173	Hieracium pallidum Biv.
+3087	Taraxacum gymnanthum DC. gr. bithynicum
+5627	Atriplex halimus L.
+5951	Helianthemum pilosum (L.) Pers. [1806]
+5995	Convolvulus althaeoides L.
+6279	Knautia arvernensis (Briq.) Szabó
+7721	Trifolium squamosum L.
+7850	Vicia pubescens (DC.) Link
+7929	Quercus suber L.
+8957	Thymus rigidulus KerguÚlen
+10674	Ranunculus ficaria L. subsp. bulbilifer Lambinon
+11449	Rosa vosagiaca Desportes
+12012	Populus x-canadensis Moench
+13062	Thymelaea hirsuta (L.) Endl.
+15416	Aira provincialis Jordan
+16073	Festuca glauca Vill.
+17390	Pinus pinea L.
+40029	Abies pinsapo Boiss.
+40228	Rosa x chavinii Rapin
+40234	Corynephorus divaricatus (Pourret) Breistr. subsp. articulatus (Desf.) Lainz
+12099	Salix x-rubens Schrank
+13090	Tilia x-vulgaris Hayne
+40012	Equisetum x moorei Newm.
+16114	Festuca longifolia Thuill.
+5092	Dianthus carthusianorum L. subsp. carthusianorum
+6894	Cytisus triflorus Lam.
+7797	Vicia cracca L. subsp. cracca
+9654	Plantago lagopus L. var. lagopus
+9717	Armeria arenaria (Pers.) Schultes subsp. bupleuroides (Godron & Gren.) Greuter & Bur
+12514	Linaria vulgaris Miller subsp. vulgaris
+14069	Carex praecox Schreber
+5826	Cistus laurifolius L. subsp. laurifolius
+10732	Ranunculus parnassifolius L. subsp. heterocarpus K³pfer
+11175	Malus pumila Miller
+14699	Luzula multiflora (Ehrh.) Lej. subsp. multiflora
+16471	Lolium rigidum Gaudin subsp. rigidum
+40769	"Symphyotrichum x salignum (Willd.) G.L.Nesom, 1995
+"
+40836	Allium coloratum Spreng., 1825
+40838	Ceratophyllum submersum L., 1763
+40847	Carduus personata (L.) Jacq., 1776
+40848	Ceratocephalus falcatus (L.) Pers., 1805
+40849	Eritrichium nanum (L.) Schrad. ex Gaudin, 1828
+40850	Euphorbia segetalis L. subsp. segetalis
+40851	Pulsatilla halleri (All.) Willd., 1809
+40852	Primula latifolia subsp. graveolens (Hegetschw.) Rouy
+40903	Scorzonera hispanica subsp. asphodeloides (Wallr.) Arcang., 1882
+40904	Santolina decumbens Mill., 1768
+40908	Phelipanche arenaria (Borkh.) Pomel, 1874
+40911	Phelipanche ramosa groupe
+40912	Antennaria carpatica subsp. helvetica (Chrtek & Pouzar) Chrtek & Pouzar
+41010	Cotoneaster juranus groupe
+41022	Pinus mugo subsp. uncinata (Ramond ex DC.) Domin, 1936
+41023	Silene nocturna L. subsp. nocturna
+41148	Hieracium huteri Hausm., 1857
+41158	Pilosella aurantiaca (L.) F.W.Schultz & Sch.Bip., 1862
+41163	Pilosella corymbuloides (Arv.-Touv.) S.Bräut. & Greuter
+41165	Pilosella cymosa subsp. sabina (Sebast. & Mauri) H.P.Fuchs, 1980
+41169	Pilosella glacialis (Reyn. ex Lachen.) F.W.Schultz & Sch.Bip., 1862
+41174	Pilosella lactucella subsp. lactucella 
+41178	Pilosella officinarum F.W.Schultz & Sch.Bip., 1862
+41180	Pilosella peleteriana subsp. peleteriana 
+41181	Pilosella piloselloides (Vill.) Soják, 1971
+41184	Pilosella piloselloides subsp. praealta (Gochnat) S.Bräut. & Greuter, 2007
+125333	Symphyotrichum squamatum (Spreng.) G.L.Nesom, 1995
+4141	Hesperis laciniata All. subsp. spectabilis (Jordan) Rouy & Fouc.
+5115	Dianthus furcatus Balbis subsp. furcatus
+6436	Erica carnea L., nom. cons. subsp. occidentalis (Bentham) Laínz
+9065	Linum strictum L. subsp. strictum
+40795	Orchis anthropophora (L.) All., 1785
+41329	Ophrys exaltata Ten., 1819
+40621	Ranunculus tuberosus groupe
+40623	Rubus fruticosus groupe
+40626	Taraxacum officinale groupe
+41296	Euphrasia officinalis  subsp. rostkoviana (Hayne) F.Town
+323	Daucus carota L. subsp. carota
+790	Achillea millefolium L. subsp. millefolium
+7627	Trifolium incarnatum L. subsp. incarnatum
+9665	Plantago major L. subsp. major
+9667	Plantago maritima L. subsp. maritima
+15317	Agrostis capillaris L. subsp. capillaris
+15467	Anthoxanthum odoratum L. subsp. odoratum
+16158	Festuca ovina L. subsp. duriuscula auct.
+16238	Festuca rubra L. subsp. rubra
+16789	Poa trivialis L. subsp. trivialis
+9058	Linum ockendonii Greuter & Burdet
+40275	Cotoneaster franchetii David
