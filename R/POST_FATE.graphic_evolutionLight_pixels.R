@@ -20,10 +20,13 @@
 ##' @param opt.abund_fixedScale default \code{TRUE}. If \code{FALSE}, the
 ##' ordinate scale will be adapted for each stratum for the graphical
 ##' representation of the evolution of light resources through time
-##' @param opt.no_CPU default 1 (\emph{optional}). The number of resources that 
-##' can be used to parallelize the \code{unzip/zip} of raster files
 ##' @param opt.cells_ID default NULL (\emph{optional}). The cells ID of the 
 ##' studied area for which light resources will be extracted.
+##' @param opt.no_CPU default 1 (\emph{optional}). The number of resources that 
+##' can be used to parallelize the \code{unzip/zip} of raster files
+##' @param opt.doPlot default TRUE (\emph{optional}). If TRUE, plot(s) will be
+##' processed, otherwise only the calculation and reorganization of outputs
+##' will occur, be saved and returned.
 ##' 
 ##' 
 ##' @details 
@@ -104,8 +107,9 @@ POST_FATE.graphic_evolutionLight_pixels = function(
   , file.simulParam = NULL
   , no.years = 10
   , opt.abund_fixedScale = TRUE
-  , opt.no_CPU = 1
   , opt.cells_ID = NULL
+  , opt.no_CPU = 1
+  , opt.doPlot = TRUE
 ){
   
   .testParam_existFolder(name.simulation, "PARAM_SIMUL/")
@@ -129,7 +133,7 @@ POST_FATE.graphic_evolutionLight_pixels = function(
   }
   #################################################################################################
   
-  for (abs.simulParam in abs.simulParams)
+  res = foreach (abs.simulParam = abs.simulParams) %do%
   {
     
     cat("\n ############## GRAPHIC POST FATE ############## \n")
@@ -143,7 +147,7 @@ POST_FATE.graphic_evolutionLight_pixels = function(
     
     dir.output.light = paste0(name.simulation, "/RESULTS/", basename(dir.save), "/LIGHT/")
     .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/LIGHT/"))
-
+    
     ## Get raster mask -------------------------------------------------------------
     .getGraphics_mask(abs.simulParam = abs.simulParam)
     
@@ -186,10 +190,10 @@ POST_FATE.graphic_evolutionLight_pixels = function(
       stop(paste0("Missing data!\n The folder ", dir.output.light, " does not contain adequate files",
                   " (number of strata null or no strata files found)"))
     }
-
+    
     cat("\n Number of strata : ", no_strata)
     cat("\n")
-
+    
     ## UNZIP the raster saved ------------------------------------------------------
     .unzip_ALL(folder_name = dir.output.light, nb_cores = opt.no_CPU)
     
@@ -210,10 +214,10 @@ POST_FATE.graphic_evolutionLight_pixels = function(
                          "_STRATA_",
                          1:no_strata,
                          ".tif")
-
+      
       st = paste0("STRATUM_", c(1:no_strata))[which(file.exists(file_name))]
       file_name = file_name[which(file.exists(file_name))]
-
+      
       if (length(file_name) > 0)
       {
         ras = stack(file_name) * ras.mask
@@ -228,38 +232,36 @@ POST_FATE.graphic_evolutionLight_pixels = function(
       }
     }
     cat("\n")
-
+    
     
     ## produce the plot ------------------------------------------------------------
-    vec_col = c('#a6cee3', '#1f78b4', '#b2df8a', '#33a02c'
-                , '#fb9a99', '#e31a1c', '#fdbf6f', '#ff7f00'
-                , '#cab2d6', '#6a3d9a', '#ffff99', '#b15928')
-    fun_col = colorRampPalette(vec_col)
-    
-    ## Evolution of abundance
-    pp = ggplot(distriAbund, aes_string(x = "YEAR", y = "Abund", color = "STRATUM")) +
-      scale_color_manual("", values = fun_col(no_strata)) +
-      geom_line() + ## lwd = 0.8 ?
-      facet_grid("TYPE ~ ID", scales = ifelse(opt.abund_fixedScale, "fixed", "free_y")) +
-      labs(x = "", y = "", title = paste0("GRAPH B : evolution of light resources"),
-           subtitle = paste0("For each stratum, the line represents the evolution through time of its light resources\n",
-                             "for 5 randomly selected pixels within the studied area.\n")) +
+    if (opt.doPlot)
+    {
+      cat("\n PRODUCING PLOT...")
+      vec_col = c('#a6cee3', '#1f78b4', '#b2df8a', '#33a02c'
+                  , '#fb9a99', '#e31a1c', '#fdbf6f', '#ff7f00'
+                  , '#cab2d6', '#6a3d9a', '#ffff99', '#b15928')
+      fun_col = colorRampPalette(vec_col)
+      
+      ## Evolution of abundance
+      pp = ggplot(distriAbund, aes_string(x = "YEAR", y = "Abund", color = "STRATUM")) +
+        scale_color_manual("", values = fun_col(no_strata)) +
+        geom_line() + ## lwd = 0.8 ?
+        facet_grid("TYPE ~ ID", scales = ifelse(opt.abund_fixedScale, "fixed", "free_y")) +
+        labs(x = "", y = "", title = paste0("GRAPH B : evolution of light resources"),
+             subtitle = paste0("For each stratum, the line represents the evolution through time of its light resources\n",
+                               "for 5 randomly selected pixels within the studied area.\n")) +
+        .getGraphics_theme()
       # xlim(0, 400) + ??
-      theme_fivethirtyeight() +
-      theme(panel.background = element_rect(fill = "transparent", colour = NA)
-            , plot.background = element_rect(fill = "transparent", colour = NA)
-            , legend.background = element_rect(fill = "transparent", colour = NA)
-            , legend.box.background = element_rect(fill = "transparent", colour = NA)
-            , legend.key = element_rect(fill = "transparent", colour = NA))
-    
-    ggsave(filename = paste0(name.simulation
-                             , "/RESULTS/POST_FATE_GRAPHIC_A_evolution_light_pixels_"
-                             , ifelse(length(IDS) <= 5, paste0(IDS, collapse = "_"), length(IDS))
-                             , "_"
-                             , basename(dir.save)
-                             , ".pdf")
-           , plot = pp, width = 10, height = 8)
-    
+      
+      ggsave(filename = paste0(name.simulation
+                               , "/RESULTS/POST_FATE_GRAPHIC_A_evolution_light_pixels_"
+                               , ifelse(length(IDS) <= 5, paste0(IDS, collapse = "_"), length(IDS))
+                               , "_"
+                               , basename(dir.save)
+                               , ".pdf")
+             , plot = pp, width = 10, height = 8)
+    } ## END opt.doPlot
     
     ## ZIP the raster saved ------------------------------------------------------
     .zip(folder_name = dir.output.light, nb_cores= opt.no_CPU)
@@ -283,5 +285,10 @@ POST_FATE.graphic_evolutionLight_pixels = function(
                    , basename(dir.save)
                    , ".csv \n"
                    , "has been successfully created !\n"))
-  }
+    
+    return(list(tab = distriAbund, plot = pp))
+  } ## END loop on abs.simulParams
+  names(res) = abs.simulParams
+  
+  return(res)
 }

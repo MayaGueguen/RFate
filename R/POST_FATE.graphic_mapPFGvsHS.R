@@ -18,10 +18,10 @@
 ##' of the \code{FATE-HD} simulation
 ##' @param year an \code{integer} corresponding to the simulation year(s) that 
 ##' will be used to extract PFG binary maps
-##' @param opt.no_CPU default 1 (\emph{optional}). The number of resources that 
-##' can be used to parallelize the \code{unzip/zip} of raster files
 ##' @param opt.strata default ALL (\emph{optional}). The stratum number from 
 ##' which to extract PFG binary maps
+##' @param opt.no_CPU default 1 (\emph{optional}). The number of resources that 
+##' can be used to parallelize the \code{unzip/zip} of raster files
 ##' 
 ##' 
 ##' @details 
@@ -240,14 +240,9 @@ POST_FATE.graphic_mapPFGvsHS = function(
                                          , "1 if the PFG abundance represents more than 5 % "
                                          , "of the pixel abundance, 0 otherwise.\n"
                                          , "If the PFG is present in one stratum, then it is considered present within the pixel.\n")) +
-                theme_fivethirtyeight() +
+                .getGraphics_theme() +
                 theme(axis.text = element_blank()
-                      , legend.key.width = unit(3, "lines")
-                      , panel.background = element_rect(fill = "transparent", colour = NA)
-                      , plot.background = element_rect(fill = "transparent", colour = NA)
-                      , legend.background = element_rect(fill = "transparent", colour = NA)
-                      , legend.box.background = element_rect(fill = "transparent", colour = NA)
-                      , legend.key = element_rect(fill = "transparent", colour = NA))
+                      , legend.key.width = unit(3, "lines"))
               plot(pp)
             }
           }

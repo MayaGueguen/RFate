@@ -20,13 +20,16 @@
 ##' @param strata_min an \code{integer} corresponding to the lowest stratum from
 ##' which PFG abundances are summed up to the highest stratum
 ##' @param mat.PFG.succ a \code{data.frame} with 2 columns : PFG, soil_contrib
-##' @param opt.no_CPU default 1 (\emph{optional}). The number of resources that 
-##' can be used to parallelize the \code{unzip/zip} of raster files
 ##' @param opt.mat.soil.obs default NULL (\emph{optional}). A \code{data.frame}
 ##' with 3 columns : X, Y, obs
 ##' @param opt.ras.soil.obs default NULL (\emph{optional}). A \code{string} that
 ##' corresponds to the file name of a raster containing observed values for 
 ##' community weighted mean of soil
+##' @param opt.no_CPU default 1 (\emph{optional}). The number of resources that 
+##' can be used to parallelize the \code{unzip/zip} of raster files
+##' @param opt.doPlot default TRUE (\emph{optional}). If TRUE, plot(s) will be
+##' processed, otherwise only the calculation and reorganization of outputs
+##' will occur, be saved and returned.
 ##' 
 ##' 
 ##' @details 
@@ -107,9 +110,10 @@ POST_FATE.graphic_mapPFGsoil = function(
   , year
   , strata_min = 1
   , mat.PFG.succ
-  , opt.no_CPU = 1
   , opt.mat.soil.obs = NULL
   , opt.ras.soil.obs = NULL
+  , opt.no_CPU = 1
+  , opt.doPlot = TRUE
 ){
   
   .testParam_existFolder(name.simulation, "PARAM_SIMUL/")
@@ -217,7 +221,7 @@ POST_FATE.graphic_mapPFGsoil = function(
   
   #################################################################################################
   
-  for (abs.simulParam in abs.simulParams)
+  res = foreach (abs.simulParam = abs.simulParams) %do%
   {
     
     cat("\n ############## GRAPHIC POST FATE ############## \n")
@@ -287,12 +291,11 @@ POST_FATE.graphic_mapPFGsoil = function(
     
     
     ## get the data inside the rasters ---------------------------------------------
-    pdf(file = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_E_map_PFGsoil_", basename(dir.save), ".pdf")
-        , width = 10, height = 10)
-    cat("\n GETTING SOIL for year")
-    for (y in years)
+    cat("\n GETTING SOIL for")
+    plot_list = foreach (y = years) %do%
     {
-      cat(" ", y)
+      cat("\n > year", y)
+      
       cat("\n PFG ")
       ras_TOT.list = foreach (pfg = PFG) %do%
       {
@@ -337,7 +340,8 @@ POST_FATE.graphic_mapPFGsoil = function(
           
           return(ras_TOT)
         }
-      }
+      } ## END ras_TOT.list
+      
       names(ras_TOT.list) = PFG
       ras_TOT.list = ras_TOT.list[!sapply(ras_TOT.list, is.null)]
       ras_TOT.list = stack(ras_TOT.list)
@@ -378,32 +382,6 @@ POST_FATE.graphic_mapPFGsoil = function(
                      , " > ", output.name, " \n"
                      , "has been successfully created !\n"))
       
-      ## produce the plot ------------------------------------------------------------
-      ## Map of soil CWM
-      pp = ggplot(ras.pts, aes_string(x = "X", y = "Y", fill = "SOIL")) +
-        scale_fill_gradientn("Soil (Landolt)"
-                             , colors = (brewer.pal(9, "Oranges"))) +
-                             # , breaks = seq(1, 5, 0.2)
-                             # , labels = seq(1, 5, 0.2)) +
-        coord_equal() +
-        geom_raster() +
-        labs(x = "", y = "", title = paste0("GRAPH E : map of soil CWM - Simulation year : ", y),
-             subtitle = paste0("For each pixel, PFG abundances from strata "
-                               , strata_min, " to ", no_strata, " are summed,\n"
-                               , "then transformed into relative values by dividing by the maximum abundance obtained.\n"
-                               , "Community Weighted Mean is then calculated with observed values of soil\n"
-                               , "(Landolt - Flora Indicativa) for each PFG.")) +
-        theme_fivethirtyeight() +
-        theme(axis.text = element_blank()
-              , legend.key.width = unit(2, "lines")
-              , panel.background = element_rect(fill = "transparent", colour = NA)
-              , plot.background = element_rect(fill = "transparent", colour = NA)
-              , legend.background = element_rect(fill = "transparent", colour = NA)
-              , legend.box.background = element_rect(fill = "transparent", colour = NA)
-              , legend.key = element_rect(fill = "transparent", colour = NA))
-      plot(pp)
-      
-      
       ## Observed cover maps ------------------------------------------------------------
       if (!is.null(opt.mat.soil.obs))
       {
@@ -422,8 +400,8 @@ POST_FATE.graphic_mapPFGsoil = function(
         opt.mat.soil.sim$ID = cellFromXY(ras.mask, opt.mat.soil.sim[, c("X", "Y")])
         
         mat.soil = merge(opt.mat.soil.obs[, c("ID", "obs")]
-                          , opt.mat.soil.sim[, c("ID", "sim")]
-                          , by = "ID")
+                         , opt.mat.soil.sim[, c("ID", "sim")]
+                         , by = "ID")
         mat.soil = na.exclude(mat.soil)
         
         ## calculate evaluation statistics ---------------------------------------------
@@ -478,22 +456,60 @@ POST_FATE.graphic_mapPFGsoil = function(
         #                            , "0 indicates an indiscriminate model and +1 a perfect model.\n"
         #                            , "AUC corresponds to the area under the ROC curve (Receiver Operating Characteristic).\n\n"
         #                            , "Statistics are calculated for different thresholds for converting coverage to binary values (x-axis).\n")) +
-        #   theme_fivethirtyeight() +
-        #   theme(legend.key.width = unit(2, "lines")
-        #         , panel.background = element_rect(fill = "transparent", colour = NA)
-        #         , plot.background = element_rect(fill = "transparent", colour = NA)
-        #         , legend.background = element_rect(fill = "transparent", colour = NA)
-        #         , legend.box.background = element_rect(fill = "transparent", colour = NA)
-        #         , legend.key = element_rect(fill = "transparent", colour = NA))
+        # .getGraphics_theme() +
+        #   theme(axis.text = element_blank()
+        #         , legend.key.width = unit(2, "lines"))
         # plot(pp)
       }
+      
+      ## produce the plot ------------------------------------------------------------
+      if (opt.doPlot)
+      {
+        cat("\n PRODUCING PLOT...")
+        
+        ## Map of soil CWM
+        pp = ggplot(ras.pts, aes_string(x = "X", y = "Y", fill = "SOIL")) +
+          scale_fill_gradientn("Soil (Landolt)"
+                               , colors = (brewer.pal(9, "Oranges"))) +
+          # , breaks = seq(1, 5, 0.2)
+          # , labels = seq(1, 5, 0.2)) +
+          coord_equal() +
+          geom_raster() +
+          labs(x = "", y = "", title = paste0("GRAPH E : map of soil CWM - Simulation year : ", y),
+               subtitle = paste0("For each pixel, PFG abundances from strata "
+                                 , strata_min, " to ", no_strata, " are summed,\n"
+                                 , "then transformed into relative values by dividing by the maximum abundance obtained.\n"
+                                 , "Community Weighted Mean is then calculated with observed values of soil\n"
+                                 , "(Landolt - Flora Indicativa) for each PFG.")) +
+          .getGraphics_theme() +
+          theme(axis.text = element_blank()
+                , legend.key.width = unit(2, "lines"))
+        
+      } ## END opt.doPlot
+      
+      return(list(raster = ras_soil, plot = pp))
+    } ## END loop on years
+    names(plot_list) = years
+    
+    ## SAVE plots into file ------------------------------------------------------
+    if (opt.doPlot && length(plot_list) > 0)
+    {
+      pdf(file = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_E_map_PFGsoil_", basename(dir.save), ".pdf")
+          , width = 12, height = 10)
+      for (y in years)
+      {
+        plot(plot_list[[as.character(y)]][[2]])
+      }
+      dev.off()
     }
-  } ## end loop on years
-  cat("\n")
-  dev.off()
+    
+    ## ZIP the raster saved ------------------------------------------------------
+    .zip(folder_name = dir.output.perPFG.perStrata, nb_cores = opt.no_CPU)
+    
+    return(plot_list)
+  } ## END loop on abs.simulParams
+  names(res) = abs.simulParams
   
-  ## ZIP the raster saved ------------------------------------------------------
-  .zip(folder_name = dir.output.perPFG.perStrata, nb_cores = opt.no_CPU)
-  
+  return(res)
 }
 

@@ -7,7 +7,7 @@ through time for 5 (or more) pixels of a \code{FATE-HD} simulation}
 \usage{
 POST_FATE.graphic_evolutionAbund_pixels(name.simulation,
   file.simulParam = NULL, no.years = 10, opt.abund_fixedScale = TRUE,
-  opt.no_CPU = 1, opt.cells_ID = NULL)
+  opt.cells_ID = NULL, opt.no_CPU = 1, opt.doPlot = TRUE)
 }
 \arguments{
 \item{name.simulation}{a \code{string} that corresponds to the main directory
@@ -24,11 +24,15 @@ years that will be used to extract PFG abundance maps}
 scale will be adapted for each PFG for the graphical representation of the 
 evolution of abundances through time}
 
+\item{opt.cells_ID}{default NULL (\emph{optional}). The cells ID of the 
+studied area for which PFG abundances will be extracted.}
+
 \item{opt.no_CPU}{default 1 (\emph{optional}). The number of resources that 
 can be used to parallelize the \code{unzip/zip} of raster files}
 
-\item{opt.cells_ID}{default NULL (\emph{optional}). The cells ID of the 
-studied area for which PFG abundances will be extracted.}
+\item{opt.doPlot}{default TRUE (\emph{optional}). If TRUE, plot(s) will be
+processed, otherwise only the calculation and reorganization of outputs
+will occur, be saved and returned.}
 }
 \value{
 One \code{POST_FATE_[...].pdf} file is created : 

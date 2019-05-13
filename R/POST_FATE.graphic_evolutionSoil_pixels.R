@@ -17,10 +17,13 @@
 ##' of the \code{FATE-HD} simulation
 ##' @param no.years an \code{integer} corresponding to the number of simulation
 ##' years that will be used to extract PFG abundance maps
-##' @param opt.no_CPU default 1 (\emph{optional}). The number of resources that 
-##' can be used to parallelize the \code{unzip/zip} of raster files
 ##' @param opt.cells_ID default NULL (\emph{optional}). The cells ID of the 
 ##' studied area for which soil resources will be extracted.
+##' @param opt.no_CPU default 1 (\emph{optional}). The number of resources that 
+##' can be used to parallelize the \code{unzip/zip} of raster files
+##' @param opt.doPlot default TRUE (\emph{optional}). If TRUE, plot(s) will be
+##' processed, otherwise only the calculation and reorganization of outputs
+##' will occur, be saved and returned.
 ##' 
 ##' 
 ##' @details 
@@ -94,8 +97,9 @@ POST_FATE.graphic_evolutionSoil_pixels = function(
   name.simulation
   , file.simulParam = NULL
   , no.years = 10
-  , opt.no_CPU = 1
   , opt.cells_ID = NULL
+  , opt.no_CPU = 1
+  , opt.doPlot = TRUE
 ){
   
   .testParam_existFolder(name.simulation, "PARAM_SIMUL/")
@@ -119,21 +123,21 @@ POST_FATE.graphic_evolutionSoil_pixels = function(
   }
   #################################################################################################
   
-  for (abs.simulParam in abs.simulParams)
+  res = foreach (abs.simulParam = abs.simulParams) %do%
   {
     
     cat("\n ############## GRAPHIC POST FATE ############## \n")
     cat("\n Simulation name : ", name.simulation)
     cat("\n Simulation file : ", abs.simulParam)
     cat("\n")
-
+    
     ## Get results directories -----------------------------------------------------
     .getGraphics_results(name.simulation  = name.simulation
                          , abs.simulParam = abs.simulParam)
     
     dir.output.soil = paste0(name.simulation, "/RESULTS/", basename(dir.save), "/SOIL/")
     .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/SOIL/"))
-
+    
     ## Get raster mask -------------------------------------------------------------
     .getGraphics_mask(abs.simulParam = abs.simulParam)
     
@@ -172,7 +176,7 @@ POST_FATE.graphic_evolutionSoil_pixels = function(
     years = sort(unique(as.numeric(years)))
     years = years[round(seq(1, length(years), length.out = min(no.years, length(years))))]
     no_years = length(years)
-
+    
     ## UNZIP the raster saved ------------------------------------------------------
     .unzip_ALL(folder_name = dir.output.soil, nb_cores = opt.no_CPU)
     
@@ -191,9 +195,9 @@ POST_FATE.graphic_evolutionSoil_pixels = function(
                          "Soil_Resources_YEAR_",
                          y,
                          ".tif")
-
+      
       file_name = file_name[which(file.exists(file_name))]
-
+      
       if (length(file_name) > 0)
       {
         ras = raster(file_name) * ras.mask
@@ -216,48 +220,46 @@ POST_FATE.graphic_evolutionSoil_pixels = function(
       distriSoil = na.exclude(distriSoil)
       addAbund = TRUE
     }
-
+    
     
     ## produce the plot ------------------------------------------------------------
-    vec_col = c('#a6cee3', '#1f78b4', '#b2df8a', '#33a02c'
-                , '#fb9a99', '#e31a1c', '#fdbf6f', '#ff7f00'
-                , '#cab2d6', '#6a3d9a', '#ffff99', '#b15928')
-    fun_col = colorRampPalette(vec_col)
-    
-    ## Evolution of abundance
-    pp = ggplot(distriSoil, aes_string(x = "YEAR", y = "SOIL"))
-    
-    if (addAbund)
+    if (opt.doPlot)
     {
+      cat("\n PRODUCING PLOT...")
+      vec_col = c('#a6cee3', '#1f78b4', '#b2df8a', '#33a02c'
+                  , '#fb9a99', '#e31a1c', '#fdbf6f', '#ff7f00'
+                  , '#cab2d6', '#6a3d9a', '#ffff99', '#b15928')
+      fun_col = colorRampPalette(vec_col)
+      
+      ## Evolution of abundance
+      pp = ggplot(distriSoil, aes_string(x = "YEAR", y = "SOIL"))
+      
+      if (addAbund)
+      {
+        pp = pp +
+          geom_line(aes_string(y = "Abund", color = "PFG"), lwd = 0.4) +
+          scale_color_manual("", values = fun_col(length(unique(distriSoil$PFG)))) +
+          facet_grid("TYPE ~ ID", scales = "fixed")
+      } else
+      {
+        pp = pp +
+          facet_grid(" ~ ID", scales = "fixed")
+      }
       pp = pp +
-        geom_line(aes_string(y = "Abund", color = "PFG"), lwd = 0.4) +
-        scale_color_manual("", values = fun_col(length(unique(distriSoil$PFG)))) +
-        facet_grid("TYPE ~ ID", scales = "fixed")
-    } else
-    {
-      pp = pp +
-        facet_grid(" ~ ID", scales = "fixed")
-    }
-    pp = pp +
-      geom_line(lwd = 0.8) +
-      labs(x = "", y = "", title = paste0("GRAPH B : evolution of soil resources"),
-           subtitle = paste0("The line represents the evolution through time of the soil resources\n",
-                             "for 5 randomly selected pixels within the studied area.\n")) +
-      theme_fivethirtyeight() +
-      theme(panel.background = element_rect(fill = "transparent", colour = NA)
-            , plot.background = element_rect(fill = "transparent", colour = NA)
-            , legend.background = element_rect(fill = "transparent", colour = NA)
-            , legend.box.background = element_rect(fill = "transparent", colour = NA)
-            , legend.key = element_rect(fill = "transparent", colour = NA))
-    
-    ggsave(filename = paste0(name.simulation
-                             , "/RESULTS/POST_FATE_GRAPHIC_A_evolution_soil_pixels_"
-                             , ifelse(length(IDS) <= 5, paste0(IDS, collapse = "_"), length(IDS))
-                             , "_"
-                             , basename(dir.save)
-                             , ".pdf")
-           , plot = pp, width = 10, height = 8)
-    
+        geom_line(lwd = 0.8) +
+        labs(x = "", y = "", title = paste0("GRAPH B : evolution of soil resources"),
+             subtitle = paste0("The line represents the evolution through time of the soil resources\n",
+                               "for 5 randomly selected pixels within the studied area.\n")) +
+        .getGraphics_theme()
+      
+      ggsave(filename = paste0(name.simulation
+                               , "/RESULTS/POST_FATE_GRAPHIC_A_evolution_soil_pixels_"
+                               , ifelse(length(IDS) <= 5, paste0(IDS, collapse = "_"), length(IDS))
+                               , "_"
+                               , basename(dir.save)
+                               , ".pdf")
+             , plot = pp, width = 10, height = 8)
+    } ## END opt.doPlot
     
     ## ZIP the raster saved ------------------------------------------------------
     .zip(folder_name = dir.output.soil, nb_cores= opt.no_CPU)
@@ -281,5 +283,10 @@ POST_FATE.graphic_evolutionSoil_pixels = function(
                    , basename(dir.save)
                    , ".csv \n"
                    , "has been successfully created !\n"))
-  }
+    
+    return(list(tab = distriSoil, plot = pp))
+  } ## END loop on abs.simulParams
+  names(res) = abs.simulParams
+  
+  return(res)
 }

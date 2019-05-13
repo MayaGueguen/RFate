@@ -8,7 +8,7 @@ to asses the quality of the model
 \usage{
 POST_FATE.graphic_validationStatistics(name.simulation,
   file.simulParam = NULL, year, mat.PFG.obs, opt.ras_habitat = NULL,
-  opt.no_CPU = 1)
+  opt.no_CPU = 1, opt.doPlot = TRUE)
 }
 \arguments{
 \item{name.simulation}{a \code{string} that corresponds to the main directory
@@ -29,6 +29,10 @@ within each pixel, corresponding to a specific habitat}
 
 \item{opt.no_CPU}{default 1 (\emph{optional}). The number of resources that 
 can be used to parallelize the \code{unzip/zip} of raster files}
+
+\item{opt.doPlot}{default TRUE (\emph{optional}). If TRUE, plot(s) will be
+processed, otherwise only the calculation and reorganization of outputs
+will occur, be saved and returned.}
 }
 \value{
 A \code{data.frame} with the following columns :

@@ -26,7 +26,9 @@
 ##' within each pixel, corresponding to a specific habitat
 ##' @param opt.no_CPU default 1 (\emph{optional}). The number of resources that 
 ##' can be used to parallelize the \code{unzip/zip} of raster files
-##' 
+##' @param opt.doPlot default TRUE (\emph{optional}). If TRUE, plot(s) will be
+##' processed, otherwise only the calculation and reorganization of outputs
+##' will occur, be saved and returned.
 ##' 
 ##' @details 
 ##' 
@@ -116,6 +118,7 @@ POST_FATE.graphic_evolutionCoverage = function(
   , opt.abund_fixedScale = TRUE
   , opt.ras_habitat = NULL
   , opt.no_CPU = 1
+  , opt.doPlot = TRUE
 ){
   
   .testParam_existFolder(name.simulation, "PARAM_SIMUL/")
@@ -148,7 +151,7 @@ POST_FATE.graphic_evolutionCoverage = function(
   
   #################################################################################################
   
-  for (abs.simulParam in abs.simulParams)
+  res = foreach (abs.simulParam = abs.simulParams) %do%
   {
     
     cat("\n ############## GRAPHIC POST FATE ############## \n")
@@ -231,7 +234,7 @@ POST_FATE.graphic_evolutionCoverage = function(
       }
       gp = PFG[which(file.exists(file_name))]
       file_name = file_name[which(file.exists(file_name))]
-
+      
       if (length(file_name) > 0)
       {
         ras = stack(file_name) * ras.mask
@@ -265,7 +268,7 @@ POST_FATE.graphic_evolutionCoverage = function(
           }
         }
       }
-    } ## end loop on years
+    } ## END loop on years
     cat("\n")
     
     distri.melt = melt(distri)
@@ -274,44 +277,36 @@ POST_FATE.graphic_evolutionCoverage = function(
     colnames(distriAbund.melt) = c("YEAR", "PFG", "HAB", "Abund")
     
     ## produce the plot ------------------------------------------------------------
-    
-    col_vec = c('#6da34d', '#297373', '#58a4b0', '#5c4742', '#3f334d')
-    col_fun = colorRampPalette(col_vec)
-    
-    ## Evolution of space occupation
-    pp1 = ggplot(distri.melt, aes_string(x = "YEAR", y = "Abund * 100", color = "factor(HAB)")) +
-      geom_line(lwd = 1) +
-      facet_wrap("~ PFG") +
-      scale_color_manual("Habitat", values = col_fun(no_hab)) +
-      labs(x = "", y = "", title = paste0("GRAPH A : evolution of species' space occupation"),
-           subtitle = paste0("For each PFG, the line represents the evolution through time of its space occupancy,\n",
-                             "meaning the percentage of pixels in which the abundance of the species is greater than 0.\n")) +
-      theme_fivethirtyeight() +
-      theme(panel.background = element_rect(fill = "transparent", colour = NA)
-            , plot.background = element_rect(fill = "transparent", colour = NA)
-            , legend.background = element_rect(fill = "transparent", colour = NA)
-            , legend.box.background = element_rect(fill = "transparent", colour = NA)
-            , legend.key = element_rect(fill = "transparent", colour = NA))
-    ggsave(filename = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_A_evolution_spaceOccupancy_", basename(dir.save), ".pdf")
-           , plot = pp1, width = 10, height = 8)
-    
-    ## Evolution of abundance
-    pp2 = ggplot(distriAbund.melt, aes_string(x = "YEAR", y = "Abund", color = "HAB")) +
-      geom_line(lwd = 1) +
-      facet_wrap("~ PFG", scales = ifelse(opt.abund_fixedScale, "fixed", "free_y")) +
-      scale_color_manual("Habitat", values = col_fun(no_hab)) +
-      labs(x = "", y = "", title = paste0("GRAPH A : evolution of species' abundance"),
-           subtitle = paste0("For each PFG, the line represents the evolution through time of its abundance\n",
-                             "over the whole studied area, meaning the sum of its abundances in every pixel.\n")) +
-      theme_fivethirtyeight() +
-      theme(panel.background = element_rect(fill = "transparent", colour = NA)
-            , plot.background = element_rect(fill = "transparent", colour = NA)
-            , legend.background = element_rect(fill = "transparent", colour = NA)
-            , legend.box.background = element_rect(fill = "transparent", colour = NA)
-            , legend.key = element_rect(fill = "transparent", colour = NA))
-    ggsave(filename = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_A_evolution_abundance_", basename(dir.save), ".pdf")
-           , plot = pp2, width = 10, height = 8)
-    
+    if (opt.doPlot)
+    {
+      cat("\n PRODUCING PLOT(S)...")
+      col_vec = c('#6da34d', '#297373', '#58a4b0', '#5c4742', '#3f334d')
+      col_fun = colorRampPalette(col_vec)
+      
+      ## Evolution of space occupation
+      pp1 = ggplot(distri.melt, aes_string(x = "YEAR", y = "Abund * 100", color = "factor(HAB)")) +
+        geom_line(lwd = 1) +
+        facet_wrap("~ PFG") +
+        scale_color_manual("Habitat", values = col_fun(no_hab)) +
+        labs(x = "", y = "", title = paste0("GRAPH A : evolution of species' space occupation"),
+             subtitle = paste0("For each PFG, the line represents the evolution through time of its space occupancy,\n",
+                               "meaning the percentage of pixels in which the abundance of the species is greater than 0.\n")) +
+        .getGraphics_theme()
+      ggsave(filename = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_A_evolution_spaceOccupancy_", basename(dir.save), ".pdf")
+             , plot = pp1, width = 10, height = 8)
+      
+      ## Evolution of abundance
+      pp2 = ggplot(distriAbund.melt, aes_string(x = "YEAR", y = "Abund", color = "HAB")) +
+        geom_line(lwd = 1) +
+        facet_wrap("~ PFG", scales = ifelse(opt.abund_fixedScale, "fixed", "free_y")) +
+        scale_color_manual("Habitat", values = col_fun(no_hab)) +
+        labs(x = "", y = "", title = paste0("GRAPH A : evolution of species' abundance"),
+             subtitle = paste0("For each PFG, the line represents the evolution through time of its abundance\n",
+                               "over the whole studied area, meaning the sum of its abundances in every pixel.\n")) +
+        .getGraphics_theme()
+      ggsave(filename = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_A_evolution_abundance_", basename(dir.save), ".pdf")
+             , plot = pp2, width = 10, height = 8)
+    } ## END opt.doPlot
     
     ## ZIP the raster saved ------------------------------------------------------
     .zip(folder_name = dir.output.perPFG.allStrata, nb_cores= opt.no_CPU)
@@ -342,6 +337,13 @@ POST_FATE.graphic_evolutionCoverage = function(
                    , ".csv \n"
                    , "have been successfully created !\n"))
     
-  }
+    return(list(tab.spaceOccupancy = distri.melt
+                , tab.abundance = distriAbund.melt
+                , graph.spaceOccupancy = pp1
+                , graph.abundance = pp2))
+  } ## END loop on abs.simulParams
+  names(res) = abs.simulParams
+  
+  return(res)
 }
 

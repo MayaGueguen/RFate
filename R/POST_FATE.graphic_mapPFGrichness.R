@@ -18,6 +18,9 @@
 ##' will be used to extract PFG binary maps
 ##' @param opt.no_CPU default 1 (\emph{optional}). The number of resources that 
 ##' can be used to parallelize the \code{unzip/zip} of raster files
+##' @param opt.doPlot default TRUE (\emph{optional}). If TRUE, plot(s) will be
+##' processed, otherwise only the calculation and reorganization of outputs
+##' will occur, be saved and returned.
 ##' 
 ##' 
 ##' @details 
@@ -89,6 +92,7 @@ POST_FATE.graphic_mapPFGrichness = function(
   , file.simulParam = NULL
   , year
   , opt.no_CPU = 1
+  , opt.doPlot = TRUE
 ){
   
   .testParam_existFolder(name.simulation, "PARAM_SIMUL/")
@@ -116,7 +120,7 @@ POST_FATE.graphic_mapPFGrichness = function(
   }
   #################################################################################################
   
-  for (abs.simulParam in abs.simulParams)
+  res = foreach (abs.simulParam = abs.simulParams) %do%
   {
     
     cat("\n ############## GRAPHIC POST FATE ############## \n")
@@ -135,7 +139,7 @@ POST_FATE.graphic_mapPFGrichness = function(
     
     ## Get raster mask -------------------------------------------------------------
     .getGraphics_mask(abs.simulParam = abs.simulParam)
-
+    
     ## Get list of arrays and extract years of simulation --------------------------
     years = sort(unique(as.numeric(year)))
     no_years = length(years)
@@ -148,13 +152,10 @@ POST_FATE.graphic_mapPFGrichness = function(
     
     
     ## get the data inside the rasters ---------------------------------------------
-    pdf(file = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_B_map_PFGrichness_", basename(dir.save), ".pdf")
-        , width = 10, height = 10)
-    
-    cat("\n GETTING RICHNESS for year")
-    for (y in years)
+    cat("\n GETTING RICHNESS for")
+    plot_list = foreach (y = years) %do%
     {
-      cat(" ", y)
+      cat("\n > year", y)
       
       file_name = paste0(dir.output.perPFG.allStrata.BIN
                          , "Binary_YEAR_"
@@ -162,7 +163,7 @@ POST_FATE.graphic_mapPFGrichness = function(
                          , "_"
                          , PFG
                          , "_STRATA_all.tif")
-        
+      
       gp = PFG[which(file.exists(file_name))]
       file_name = file_name[which(file.exists(file_name))]
       
@@ -190,36 +191,52 @@ POST_FATE.graphic_mapPFGrichness = function(
                        , "has been successfully created !\n"))
         
         ## produce the plot ------------------------------------------------------------
-        ## Map of PFG richness
-        pp = ggplot(ras.pts, aes_string(x = "X", y = "Y", fill = "NB")) +
-          scale_fill_gradientn("Number of PFG"
-                               , colors = viridis_pal()(max(ras.pts$NB))
-                               , breaks = seq(1, max(ras.pts$NB), 2)) +
-          coord_equal() +
-          geom_raster() +
-          labs(x = "", y = ""
-               , title = paste0("GRAPH D : map of PFG richness - Simulation year : ", y)
-               , subtitle = paste0("For each pixel and stratum, first relative abundances are calculated, "
-                                   , "then transformed into binary values :\n"
-                                   , "1 if the PFG abundance represents more than 5 % "
-                                   , "of the pixel abundance, 0 otherwise.\n"
-                                   , "If the PFG is present in one stratum, then it is considered present within the pixel.\n"
-                                   , "Finally, simulated PFG occurrences are summed.\n")) +
-          theme_fivethirtyeight() +
-          theme(axis.text = element_blank()
-                , legend.key.width = unit(2, "lines")
-                , panel.background = element_rect(fill = "transparent", colour = NA)
-                , plot.background = element_rect(fill = "transparent", colour = NA)
-                , legend.background = element_rect(fill = "transparent", colour = NA)
-                , legend.box.background = element_rect(fill = "transparent", colour = NA)
-                , legend.key = element_rect(fill = "transparent", colour = NA))
-        plot(pp)
+        if (opt.doPlot)
+        {
+          cat("\n PRODUCING PLOT...")
+          
+          ## Map of PFG richness
+          pp = ggplot(ras.pts, aes_string(x = "X", y = "Y", fill = "NB")) +
+            scale_fill_gradientn("Number of PFG"
+                                 , colors = viridis_pal()(max(ras.pts$NB))
+                                 , breaks = seq(1, max(ras.pts$NB), 2)) +
+            coord_equal() +
+            geom_raster() +
+            labs(x = "", y = ""
+                 , title = paste0("GRAPH D : map of PFG richness - Simulation year : ", y)
+                 , subtitle = paste0("For each pixel and stratum, first relative abundances are calculated, "
+                                     , "then transformed into binary values :\n"
+                                     , "1 if the PFG abundance represents more than 5 % "
+                                     , "of the pixel abundance, 0 otherwise.\n"
+                                     , "If the PFG is present in one stratum, then it is considered present within the pixel.\n"
+                                     , "Finally, simulated PFG occurrences are summed.\n")) +
+            .getGraphics_theme() +
+            theme(axis.text = element_blank()
+                  , legend.key.width = unit(2, "lines"))
+          
+        } ## END opt.doPlot
+        
+        return(list(raster = ras_TOT, plot = pp))
       }
     } ## end loop on years
+    names(plot_list) = years
     
-    cat("\n")
-    dev.off()
+    ## SAVE plots into file ------------------------------------------------------
+    if (opt.doPlot && length(plot_list) > 0)
+    {
+      pdf(file = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_B_map_PFGrichness_", basename(dir.save), ".pdf")
+          , width = 12, height = 10)
+      for (y in years)
+      {
+        plot(plot_list[[as.character(y)]][[2]])
+      }
+      dev.off()
+    }
     
-  }
+    return(plot_list)
+  } ## END loop on abs.simulParams
+  names(res) = abs.simulParams
+  
+  return(res)
 }
 

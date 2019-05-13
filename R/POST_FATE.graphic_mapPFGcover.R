@@ -18,13 +18,16 @@
 ##' will be used to extract PFG abundance and binary maps
 ##' @param strata_min an \code{integer} corresponding to the lowest stratum from
 ##' which PFG abundances are summed up to the highest stratum
-##' @param opt.no_CPU default 1 (\emph{optional}). The number of resources that 
-##' can be used to parallelize the \code{unzip/zip} of raster files
 ##' @param opt.mat.cover.obs default NULL (\emph{optional}). A \code{data.frame}
 ##' with 3 columns : X, Y, obs
 ##' @param opt.ras.cover.obs default NULL (\emph{optional}). A \code{string} that
 ##' corresponds to the file name of a raster containing observed values for 
 ##' vegetation cover
+##' @param opt.no_CPU default 1 (\emph{optional}). The number of resources that 
+##' can be used to parallelize the \code{unzip/zip} of raster files
+##' @param opt.doPlot default TRUE (\emph{optional}). If TRUE, plot(s) will be
+##' processed, otherwise only the calculation and reorganization of outputs
+##' will occur, be saved and returned.
 ##' 
 ##' 
 ##' @details 
@@ -101,9 +104,10 @@ POST_FATE.graphic_mapPFGcover = function(
   , file.simulParam = NULL
   , year
   , strata_min
-  , opt.no_CPU = 1
   , opt.mat.cover.obs = NULL
   , opt.ras.cover.obs = NULL
+  , opt.no_CPU = 1
+  , opt.doPlot = TRUE
 ){
   
   .testParam_existFolder(name.simulation, "PARAM_SIMUL/")
@@ -180,7 +184,7 @@ POST_FATE.graphic_mapPFGcover = function(
   
   #################################################################################################
   
-  for (abs.simulParam in abs.simulParams)
+  res = foreach (abs.simulParam = abs.simulParams) %do%
   {
     
     cat("\n ############## GRAPHIC POST FATE ############## \n")
@@ -250,12 +254,11 @@ POST_FATE.graphic_mapPFGcover = function(
     
     
     ## get the data inside the rasters ---------------------------------------------
-    pdf(file = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_B_map_PFGcover_", basename(dir.save), ".pdf")
-        , width = 10, height = 10)
-    cat("\n GETTING COVER for year")
-    for (y in years)
+    cat("\n GETTING COVER for")
+    mat.valid_list = list()
+    plot_list = foreach (y = years) %do%
     {
-      cat(" ", y)
+      cat("\n > year", y)
       
       cat("\n PFG ")
       ras_TOT.list = foreach (pfg = PFG) %do%
@@ -308,7 +311,8 @@ POST_FATE.graphic_mapPFGcover = function(
           
           return(ras_TOT)
         }
-      }
+      } ## END ras_TOT.list
+      
       if (length(ras_TOT.list) > 0)
       {
         names(ras_TOT.list) = PFG
@@ -338,29 +342,7 @@ POST_FATE.graphic_mapPFGcover = function(
                        , " > ", output.name, " \n"
                        , "has been successfully created !\n"))
         
-        ## produce the plot ------------------------------------------------------------
-        ## Map of PFG cover
-        pp = ggplot(ras.pts, aes_string(x = "X", y = "Y", fill = "COVER")) +
-          scale_fill_gradientn("Abundance (%)"
-                               , colors = brewer.pal(9, "Greens")
-                               , limits = c(0, 1)
-                               , breaks = seq(0, 1, 0.2)
-                               , labels = seq(0, 100, 20)) +
-          coord_equal() +
-          geom_raster() +
-          labs(x = "", y = "", title = paste0("GRAPH E : map of PFG cover - Simulation year : ", y),
-               subtitle = paste0("For each pixel, PFG abundances from strata ",
-                                 strata_min, " to ", no_strata, " are summed,\n",
-                                 "then transformed into relative values by dividing by the maximum abundance obtained.\n")) +
-          theme_fivethirtyeight() +
-          theme(axis.text = element_blank()
-                , legend.key.width = unit(2, "lines")
-                , panel.background = element_rect(fill = "transparent", colour = NA)
-                , plot.background = element_rect(fill = "transparent", colour = NA)
-                , legend.background = element_rect(fill = "transparent", colour = NA)
-                , legend.box.background = element_rect(fill = "transparent", colour = NA)
-                , legend.key = element_rect(fill = "transparent", colour = NA))
-        plot(pp)
+        mat.valid_list[[as.character(y)]][["raster"]] = ras_REL
         
         
         ## Observed cover maps ------------------------------------------------------------
@@ -401,6 +383,8 @@ POST_FATE.graphic_mapPFGcover = function(
           EVAL.cover = foreach(xx = seq(0, 1, 0.1), .combine = "rbind") %do% { getEval(xx, mat = mat.cover) }
           EVAL.cover.melt = melt(EVAL.cover, id.vars = "thresh")
           
+          mat.valid_list[[as.character(y)]][["ccr"]] = EVAL.cover
+          
           write.csv(EVAL.cover
                     , file = paste0(name.simulation
                                     , "/RESULTS/POST_FATE_PFGcover_YEAR_"
@@ -415,8 +399,31 @@ POST_FATE.graphic_mapPFGcover = function(
                          , "_VALIDATION_STATISTICS"
                          , basename(dir.save)
                          , ".csv has been successfully created !\n"))
+        }
+        
+        ## produce the plot ------------------------------------------------------------
+        if (opt.doPlot)
+        {
+          cat("\n PRODUCING PLOT(S)...")
           
-          ## produce the plot ------------------------------------------------------------
+          ## Map of PFG cover
+          pp1 = ggplot(ras.pts, aes_string(x = "X", y = "Y", fill = "COVER")) +
+            scale_fill_gradientn("Abundance (%)"
+                                 , colors = brewer.pal(9, "Greens")
+                                 , limits = c(0, 1)
+                                 , breaks = seq(0, 1, 0.2)
+                                 , labels = seq(0, 100, 20)) +
+            coord_equal() +
+            geom_raster() +
+            labs(x = "", y = "", title = paste0("GRAPH E : map of PFG cover - Simulation year : ", y),
+                 subtitle = paste0("For each pixel, PFG abundances from strata ",
+                                   strata_min, " to ", no_strata, " are summed,\n",
+                                   "then transformed into relative values by dividing by the maximum abundance obtained.\n")) +
+            .getGraphics_theme() +
+            theme(axis.text = element_blank()
+                  , legend.key.width = unit(2, "lines"))
+          
+          ## Correct classification rate
           tab = EVAL.cover.melt[which(EVAL.cover.melt$variable %in% c("AUC", "TSS", "CCR")), ]
           tab.max.auc = EVAL.cover.melt[which(EVAL.cover.melt$variable == "AUC"), ]
           tab.max.auc = tab.max.auc[which.max(tab.max.auc$value), ]
@@ -425,7 +432,7 @@ POST_FATE.graphic_mapPFGcover = function(
           tab.max.ccr = EVAL.cover.melt[which(EVAL.cover.melt$variable == "CCR"), ]
           tab.max.ccr = tab.max.ccr[which.max(tab.max.ccr$value), ]
           
-          pp = ggplot(tab, aes(x = thresh, y = value)) +
+          pp2 = ggplot(tab, aes(x = thresh, y = value)) +
             geom_vline(data = tab.max.auc, aes(xintercept = thresh)
                        , color = "brown", lwd = 5, alpha = 0.5) +
             geom_vline(data = tab.max.tss, aes(xintercept = thresh)
@@ -441,22 +448,33 @@ POST_FATE.graphic_mapPFGcover = function(
                                      , "0 indicates an indiscriminate model and +1 a perfect model.\n"
                                      , "AUC corresponds to the area under the ROC curve (Receiver Operating Characteristic).\n\n"
                                      , "Statistics are calculated for different thresholds for converting coverage to binary values (x-axis).\n")) +
-            theme_fivethirtyeight() +
-            theme(legend.key.width = unit(2, "lines")
-                  , panel.background = element_rect(fill = "transparent", colour = NA)
-                  , plot.background = element_rect(fill = "transparent", colour = NA)
-                  , legend.background = element_rect(fill = "transparent", colour = NA)
-                  , legend.box.background = element_rect(fill = "transparent", colour = NA)
-                  , legend.key = element_rect(fill = "transparent", colour = NA))
-          plot(pp)
-        }
+            .getGraphics_theme()
+          
+          return(list(plot.cover = pp1, plot.ccr = pp2))
+        } ## END opt.doPlot
       }
-    } ## end loop on years
-    cat("\n")
-    dev.off()
+    } ## END loop on years
+    names(plot_list) = years
+    
+    ## SAVE plots into file ------------------------------------------------------
+    if (opt.doPlot && length(plot_list) > 0)
+    {
+      pdf(file = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_B_map_PFGcover_", basename(dir.save), ".pdf")
+          , width = 12, height = 10)
+      for (y in years)
+      {
+        plot(plot_list[[as.character(y)]][[1]])
+        plot(plot_list[[as.character(y)]][[2]])
+      }
+      dev.off()
+    }
     
     ## ZIP the raster saved ------------------------------------------------------
     .zip(folder_name = dir.output.perPFG.perStrata, nb_cores = opt.no_CPU)
     
-  }
+    return(list(tab = mat.valid_list, plot = plot_list))
+  } ## END loop on abs.simulParams
+  names(res) = abs.simulParams
+  
+  return(res)
 }
