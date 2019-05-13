@@ -457,7 +457,7 @@ POST_FATE.graphic_mapPFGcover = function(
     names(plot_list) = years
     
     ## SAVE plots into file ------------------------------------------------------
-    if (opt.doPlot && length(plot_list) > 0)
+    if (opt.doPlot && !is.null(plot_list[[1]]))
     {
       pdf(file = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_B_map_PFGcover_", basename(dir.save), ".pdf")
           , width = 12, height = 10)

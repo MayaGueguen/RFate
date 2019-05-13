@@ -6,8 +6,8 @@
  \cr for one (or several) specific year of a \code{FATE-HD} simulation}
 \usage{
 POST_FATE.graphic_mapPFGsoil(name.simulation, file.simulParam = NULL,
-  year, strata_min = 1, mat.PFG.succ, opt.no_CPU = 1,
-  opt.mat.soil.obs = NULL, opt.ras.soil.obs = NULL)
+  year, strata_min = 1, mat.PFG.succ, opt.mat.soil.obs = NULL,
+  opt.ras.soil.obs = NULL, opt.no_CPU = 1, opt.doPlot = TRUE)
 }
 \arguments{
 \item{name.simulation}{a \code{string} that corresponds to the main directory
@@ -25,15 +25,19 @@ which PFG abundances are summed up to the highest stratum}
 
 \item{mat.PFG.succ}{a \code{data.frame} with 2 columns : PFG, soil_contrib}
 
-\item{opt.no_CPU}{default 1 (\emph{optional}). The number of resources that 
-can be used to parallelize the \code{unzip/zip} of raster files}
-
 \item{opt.mat.soil.obs}{default NULL (\emph{optional}). A \code{data.frame}
 with 3 columns : X, Y, obs}
 
 \item{opt.ras.soil.obs}{default NULL (\emph{optional}). A \code{string} that
 corresponds to the file name of a raster containing observed values for 
 community weighted mean of soil}
+
+\item{opt.no_CPU}{default 1 (\emph{optional}). The number of resources that 
+can be used to parallelize the \code{unzip/zip} of raster files}
+
+\item{opt.doPlot}{default TRUE (\emph{optional}). If TRUE, plot(s) will be
+processed, otherwise only the calculation and reorganization of outputs
+will occur, be saved and returned.}
 }
 \value{
 One \code{POST_FATE_[...].pdf} file is created : 

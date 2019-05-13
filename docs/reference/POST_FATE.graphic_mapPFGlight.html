@@ -161,8 +161,8 @@ simulation year.</p>
     </div>
 
     <pre class="usage"><span class='fu'>POST_FATE.graphic_mapPFGlight</span>(<span class='no'>name.simulation</span>, <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>year</span>, <span class='kw'>strata_min</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>mat.PFG.succ</span>, <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>opt.mat.light.obs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>opt.ras.light.obs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='no'>year</span>, <span class='kw'>strata_min</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>mat.PFG.succ</span>, <span class='kw'>opt.mat.light.obs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>opt.ras.light.obs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>opt.doPlot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -193,11 +193,6 @@ which PFG abundances are summed up to the highest stratum</p></td>
       <td><p>a <code>data.frame</code> with 2 columns : PFG, light</p></td>
     </tr>
     <tr>
-      <th>opt.no_CPU</th>
-      <td><p>default 1 (<em>optional</em>). The number of resources that 
-can be used to parallelize the <code>unzip/zip</code> of raster files</p></td>
-    </tr>
-    <tr>
       <th>opt.mat.light.obs</th>
       <td><p>default NULL (<em>optional</em>). A <code>data.frame</code>
 with 3 columns : X, Y, obs</p></td>
@@ -207,6 +202,17 @@ with 3 columns : X, Y, obs</p></td>
       <td><p>default NULL (<em>optional</em>). A <code>string</code> that
 corresponds to the file name of a raster containing observed values for 
 community weighted mean of light</p></td>
+    </tr>
+    <tr>
+      <th>opt.no_CPU</th>
+      <td><p>default 1 (<em>optional</em>). The number of resources that 
+can be used to parallelize the <code>unzip/zip</code> of raster files</p></td>
+    </tr>
+    <tr>
+      <th>opt.doPlot</th>
+      <td><p>default TRUE (<em>optional</em>). If TRUE, plot(s) will be
+processed, otherwise only the calculation and reorganization of outputs
+will occur, be saved and returned.</p></td>
     </tr>
     </table>
     

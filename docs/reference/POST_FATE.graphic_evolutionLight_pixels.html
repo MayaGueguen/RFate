@@ -162,7 +162,7 @@ resources for 5 (or more) randomly selected cells of the studied area.</p>
 
     <pre class="usage"><span class='fu'>POST_FATE.graphic_evolutionLight_pixels</span>(<span class='no'>name.simulation</span>,
   <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>no.years</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>opt.abund_fixedScale</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>opt.cells_ID</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>opt.cells_ID</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>opt.doPlot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -190,14 +190,20 @@ ordinate scale will be adapted for each stratum for the graphical
 representation of the evolution of light resources through time</p></td>
     </tr>
     <tr>
+      <th>opt.cells_ID</th>
+      <td><p>default NULL (<em>optional</em>). The cells ID of the 
+studied area for which light resources will be extracted.</p></td>
+    </tr>
+    <tr>
       <th>opt.no_CPU</th>
       <td><p>default 1 (<em>optional</em>). The number of resources that 
 can be used to parallelize the <code>unzip/zip</code> of raster files</p></td>
     </tr>
     <tr>
-      <th>opt.cells_ID</th>
-      <td><p>default NULL (<em>optional</em>). The cells ID of the 
-studied area for which light resources will be extracted.</p></td>
+      <th>opt.doPlot</th>
+      <td><p>default TRUE (<em>optional</em>). If TRUE, plot(s) will be
+processed, otherwise only the calculation and reorganization of outputs
+will occur, be saved and returned.</p></td>
     </tr>
     </table>
     
