@@ -118,6 +118,7 @@ factory <- function(fun) {
              list(res = res, warn = warn, err = err)
            })
     , type = "message")
+  mess = paste0(mess, collapse = "\n")
   return(list(res = res$res
               , mess = mess[which(nchar(mess) > 0)]
               , warn = res$warn
@@ -127,7 +128,6 @@ factory <- function(fun) {
 print_messages = function(fun, cut_pattern = "STUPID")
 {
   out_fun = factory(fun)
-  print(out_fun)
   if (length(out_fun$err) > 0)
   {
     sapply(out_fun$err, function(xx) shinyalert(type = "error", text = xx))
