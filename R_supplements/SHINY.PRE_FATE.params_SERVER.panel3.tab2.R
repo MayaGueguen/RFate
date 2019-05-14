@@ -32,7 +32,7 @@ observeEvent(input$show.through_time, {
 ####################################################################
 
 observeEvent(input$create.evolutionCoverage, {
-  
+    
   withBusyIndicatorServer("create.evolutionCoverage", {
     path.init = getwd()
     setwd(get_path.folder())
@@ -50,7 +50,7 @@ observeEvent(input$create.evolutionCoverage, {
     output$plot.evolutionCoverage1 = renderPlot({
       plot(get_res[[1]]$graph.spaceOccupancy)
     })
-    
+
     output$plot.evolutionCoverage2 = renderPlot({
       plot(get_res[[1]]$graph.abundance)
     })
@@ -58,6 +58,7 @@ observeEvent(input$create.evolutionCoverage, {
     setwd(path.init)
   })
 })
+
 
 ####################################################################
 

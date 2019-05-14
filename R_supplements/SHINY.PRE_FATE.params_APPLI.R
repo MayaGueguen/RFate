@@ -10,6 +10,8 @@ library(shinyjs)
 library(shinycssloaders)
 library(shinyWidgets)
 library(shinyhelper)
+# library(shinymaterial)
+library(shinybusy)
 library(markdown)
 library(RFate)
 library(data.table)
@@ -45,6 +47,25 @@ ui <- fluidPage(
   useShinyjs(),
   introjsUI(),
   
+#   tags$script("
+#               $(document).on('shiny:busy', function() {
+#   var inputs = document.getElementsByTagName('button');
+#   console.log(inputs);
+# for (var i = 0; i < inputs.length; i++) {
+# inputs[i].disabled = true;
+# }
+# });
+# 
+# $(document).on('shiny:idle', function() {
+#   var inputs = document.getElementsByTagName('button');
+#   console.log(inputs);
+# for (var i = 0; i < inputs.length; i++) {
+# inputs[i].disabled = false;
+# }
+# });
+#               "),
+  
+  # tags$link(rel="stylesheet", type="text/css", href="app.css"),
   tags$body(
     tags$style(HTML("
                     @import url('https://fonts.googleapis.com/css?family=Londrina+Solid:200,300|Medula+One|Slabo+27px|Francois+One');
@@ -55,8 +76,8 @@ ui <- fluidPage(
                     line-height: 1.1;
                     background-color: #3a7da8;
                     padding: 20px;
-                    margin-top: 20px;
-                    margin-bottom: 20px;
+                    margin-top: 0px;
+                    margin-bottom: 0px;
                     border-radius: 0px;
                     color: #FFFFFF;
                     }
@@ -118,7 +139,24 @@ ui <- fluidPage(
                     "))
     ),
   
-  headerPanel("FATE", windowTitle = "FATE"),
+  fluidRow(
+    style = HTML(paste0("background-color: #3a7da8; margin-top: 20px; margin-bottom: 20px;")),
+    column(10,
+           headerPanel("FATE", windowTitle = "FATE")
+    )
+    , column(2,
+             conditionalPanel(condition="$('html').hasClass('shiny-busy')",
+                              tags$img(src = 
+                                         #"http://www.grobelny.pl/kola.gif"
+                                         #"https://i.pinimg.com/originals/18/42/81/184281f0fe87517a950beb8112c308dd.gif"
+                                         #"https://cdn-images-1.medium.com/max/2400/1*F_5AEXIfr1AXuShXhYT4zg.gif"
+                                         #"http://thinkfuture.com/wp-content/uploads/2013/10/loading_spinner.gif"
+                                         #"https://cdn.dribbble.com/users/1169971/screenshots/3553587/graphloader.gif"
+                                         "https://loading.io/spinners/equalizer/lg.equalizer-bars-loader.gif"
+                                       , height = "80px")
+             )
+    )
+  ),
   
   # Sidebar layout with a input and output definitions
   mainPanel(
@@ -144,6 +182,34 @@ server <- function(input, output, session) {
   session$onSessionEnded(stopApp)
   
   observe_helpers(withMathJax = TRUE)
+  
+  # Function to toggle input elements. 
+  # input_list: List of inputs, reactiveValuesToList(input)
+  # enable_inputs: Enable or disable inputs?
+  # Only buttons: Toggle all inputs, or only buttons?
+  # toggle_inputs = function(input_list
+  #                          , enable_inputs = TRUE
+  #                          , only_buttons = FALSE)
+  # {
+  #   # Subset if only_buttons is TRUE.
+  #   if(only_buttons)
+  #   {
+  #     buttons = which(sapply(input_list, function(x) {any(grepl('Button', attr(x,"class")))}))
+  #     input_list = input_list[buttons]
+  #   }
+  #   
+  #   # Toggle elements
+  #   for(x in names(input_list))
+  #   {
+  #     if(enable_inputs)
+  #     {
+  #       shinyjs::enable(x)
+  #     } else
+  #     {
+  #       shinyjs::disable(x)
+  #     }
+  #   }
+  # }
   
  
   ####################################################################
