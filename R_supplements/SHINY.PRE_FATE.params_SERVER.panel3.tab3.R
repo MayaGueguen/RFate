@@ -61,12 +61,10 @@ observeEvent(input$create.relativeAbund, {
   setwd(get_path.folder())
   
   get_res = print_messages(as.expression(
-    POST_FATE.relativeAbund_presenceAbsence(name.simulation = get_name.simul()
-                                            , file.simulParam = input$graph.simulParam
-                                            , year = as.numeric(input$graph.year)
-                                            , strata_min = as.numeric(input$graph.strata_min)
-                                            , rel.abund.threshold = input$graph.rel_abund_thresh
-                                            , opt.no_CPU = input$graph.opt.no_CPU
+    POST_FATE.relativeAbund(name.simulation = get_name.simul()
+                            , file.simulParam = input$graph.simulParam
+                            , year = as.numeric(input$graph.year)
+                            , opt.no_CPU = input$graph.opt.no_CPU
     )
   ))
   
@@ -135,106 +133,15 @@ observeEvent(input$create.validationStat, {
     POST_FATE.graphic_validationStatistics(name.simulation = get_name.simul()
                                            , file.simulParam = input$graph.simulParam
                                            , year = as.numeric(input$graph.year)
-                                           , mat.PFG.obs = input$graph.mat.PFG.obs
+                                           , mat.PFG.obs = fread(input$graph.mat.PFG.obs$datapath)
                                            , opt.no_CPU = input$graph.opt.no_CPU
     )
   ))
   
-  if(get_res)
-  {
-    mat.valid = fread(get_last.createdFiles2(pattern_head = "POST_FATE_prediction_VALIDATION_STATISTICS_"
-                                               , pattern_tail = ".csv$"))
-
-    mat.valid = melt(mat.valid, id.vars = c("PFG", "AUC.sd", "sensitivity.sd", "specificity.sd"))
-    mat.valid$variable = factor(mat.valid$variable, c("sensitivity", "TSS", "specificity", "AUC"))
-    
-    mat.valid$AUC.sd[which(mat.valid$variable != "AUC")] = NA
-    mat.valid$sensitivity.sd[which(mat.valid$variable != "sensitivity")] = NA
-    mat.valid$specificity.sd[which(mat.valid$variable != "specificity")] = NA
-    
-    mat.valid_list[[y]] = mat.valid
-    
-    mat.valid$hline = 0.5
-    mat.valid$hline[which(mat.valid$variable == "AUC")] = 0.8
-    mat.valid$hline[which(mat.valid$variable == "TSS")] = 0.4
-    
-    output$plot.validationStat = renderPlot({
-
-      ## produce the plot ------------------------------------------------------------
-      ## 1. get the legend
-      pp = ggplot(mat.valid, aes_string(x = "PFG", y = "value", fill = "value")) +
-        scale_fill_gradientn(""
-                             , colors = brewer.pal(9, "RdYlGn")
-                             , breaks = seq(0, 1, 0.2)
-                             , limits = c(0, 1)) +
-        geom_bar(stat = "identity") +
-        ylim(0, 1) +
-        theme_fivethirtyeight() +
-        theme(legend.key.width = unit(2, "lines")
-              , panel.background = element_rect(fill = "transparent", colour = NA)
-              , plot.background = element_rect(fill = "transparent", colour = NA)
-              , legend.background = element_rect(fill = "transparent", colour = NA)
-              , legend.box.background = element_rect(fill = "transparent", colour = NA)
-              , legend.key = element_rect(fill = "transparent", colour = NA))
-      pp_leg = get_legend(pp)
-      
-      ## 2. get one plot for the title and for each statistic
-      pp_list = foreach(vari = c("all", "sensitivity", "specificity", "TSS", "AUC")) %do%
-      {
-        if (vari == "all"){
-          pp = ggplot(mat.valid, aes_string(x = "PFG", y = "value", fill = "value")) +
-            labs(x = "", y = "", title = paste0("GRAPH F : validation statistics - Simulation year : ", y),
-                 subtitle = paste0("Sensitivity (or specificity) measures the proportion of actual positives (or negatives) that are correctly identified as such.\n"
-                                   , "True skill statistic (TSS) values of -1 indicate predictive abilities of not better than a random model,\n"
-                                   , "0 indicates an indiscriminate model and +1 a perfect model.\n"
-                                   , "AUC corresponds to the area under the ROC curve (Receiver Operating Characteristic).\n")) +
-            theme_fivethirtyeight() +
-            theme(panel.background = element_rect(fill = "transparent", colour = NA)
-                  , panel.grid = element_blank()
-                  , axis.text = element_blank()
-                  , plot.background = element_rect(fill = "transparent", colour = NA)
-                  , legend.background = element_rect(fill = "transparent", colour = NA)
-                  , legend.box.background = element_rect(fill = "transparent", colour = NA)
-                  , legend.key = element_rect(fill = "transparent", colour = NA))
-        } else {
-          if (vari == "sensitivity") subti = "Sensitivity - True positive rate"
-          if (vari == "specificity") subti = "Specificity - True negative rate"
-          if (vari == "TSS") subti = "True Skill Statistic (TSS)"
-          if (vari == "AUC") subti = "Area Under Curve (AUC)"
-          pp = ggplot(mat.valid[which(mat.valid$variable == vari), ]
-                      , aes_string(x = "PFG", y = "value", fill = "value")) +
-            scale_fill_gradientn(guide = F
-                                 , colors = brewer.pal(9, "RdYlGn")
-                                 , breaks = seq(0, 1, 0.2)
-                                 , limits = c(0, 1)) +
-            scale_y_continuous(breaks = seq(0, 1, 0.2), limits = c(0, 1.08)) +
-            geom_bar(stat = "identity") +
-            geom_hline(aes_string(yintercept = "hline"), lty = 2, color = "grey30") +
-            geom_errorbar(aes(ymin = value - sensitivity.sd, ymax = value + sensitivity.sd), color = "grey30") +
-            geom_errorbar(aes(ymin = value - specificity.sd, ymax = value + specificity.sd), color = "grey30") +
-            geom_errorbar(aes(ymin = value - AUC.sd, ymax = value + AUC.sd), color = "grey30") +
-            annotate(geom = "text", x = no_PFG / 2, y = 1.05, label = subti, size = 4) +
-            theme_fivethirtyeight() +
-            theme(panel.background = element_rect(fill = "transparent", colour = NA)
-                  , plot.background = element_rect(fill = "transparent", colour = NA)
-                  , legend.background = element_rect(fill = "transparent", colour = NA)
-                  , legend.box.background = element_rect(fill = "transparent", colour = NA)
-                  , legend.key = element_rect(fill = "transparent", colour = NA)
-                  , axis.text.x = element_text(angle = 90))
-          
-          pp = ggMarginal(pp, type = "boxplot", margins = "y", size = 7)
-        }
-        
-        return(pp)
-      }
-      
-      ## 3. gather everything
-      pp_list[[6]] = pp_leg
-      grid.arrange(grobs = pp_list
-                   , layout_matrix = matrix(c(1,1,2,3,2,3,4,5,4,5,6,6), ncol = 2, byrow = TRUE)
-                   , newpage = ifelse(y == years[1], FALSE, TRUE))
-    })
-  }
+  output$plot.validationStat = renderPlot({
+    plot(get_res[[1]]$plot[[1]][['ALL']])
+  })
+  
   setwd(path.init)
 })
 
@@ -253,44 +160,10 @@ observeEvent(input$create.PFGrichness, {
     )
   ))
   
-  if(get_res)
-  {
-    ras_TOT = raster(get_last.createdFiles2(pattern_path = paste0(basename(get_dir.save()), "/")
-                                            , pattern_head = "PFGrichness_YEAR_"
-                                            , pattern_tail = ".tif$"))
-    
-    ras.pts = as.data.frame(rasterToPoints(ras_TOT))
-    colnames(ras.pts) = c("X", "Y", "NB")
-    
-    output$plot.PFGrichness = renderPlot({
-      
-      ## Map of PFG richness
-      pp = ggplot(ras.pts, aes_string(x = "X", y = "Y", fill = "NB")) +
-        scale_fill_gradientn("Number of PFG"
-                             , colors = viridis_pal()(max(ras.pts$NB))
-                             , breaks = seq(1, max(ras.pts$NB), 2)) +
-        coord_equal() +
-        geom_raster() +
-        labs(x = "", y = ""
-             , title = paste0("GRAPH D : map of PFG richness - Simulation year : ", as.numeric(input$graph.year))
-             , subtitle = paste0("For each pixel and stratum, first relative abundances are calculated, "
-                                 , "then transformed into binary values :\n"
-                                 , "1 if the PFG abundance represents more than 5 % "
-                                 , "of the pixel abundance, 0 otherwise.\n"
-                                 , "If the PFG is present in one stratum, then it is considered present within the pixel.\n"
-                                 , "Finally, simulated PFG occurrences are summed.\n")) +
-        theme_fivethirtyeight() +
-        theme(axis.text = element_blank()
-              , legend.key.width = unit(2, "lines")
-              , panel.background = element_rect(fill = "transparent", colour = NA)
-              , plot.background = element_rect(fill = "transparent", colour = NA)
-              , legend.background = element_rect(fill = "transparent", colour = NA)
-              , legend.box.background = element_rect(fill = "transparent", colour = NA)
-              , legend.key = element_rect(fill = "transparent", colour = NA))
+  output$plot.PFGrichness = renderPlot({
+    plot(get_res[[1]][[1]])
+  })
 
-      print(pp)
-    })
-  }
   setwd(path.init)
 })
 
@@ -312,46 +185,9 @@ observeEvent(input$create.PFGcover, {
     )
   ))
   
-  if(get_res)
-  {
-    ras_REL = raster(get_last.createdFiles2(pattern_path = paste0(basename(get_dir.save()), "/")
-                                            , pattern_head = "PFGcover_YEAR_"
-                                            , pattern_tail = ".tif$"))
-    
-    ras.pts = as.data.frame(rasterToPoints(ras_REL))
-    colnames(ras.pts) = c("X", "Y", "COVER")
-    
-    strata.available = list.files(paste0(get_dir.save(), "/ABUND_perPFG_perStrata"))
-    strata.available = sapply(sub(".*_STRATA_", "", strata.available)
-                              , function(x) strsplit(as.character(x), "[.]")[[1]][1])
-    strata.available = sort(unique(as.numeric(strata.available)))
-    
-    output$plot.PFGcover = renderPlot({
-
-      ## Map of PFG cover
-      pp = ggplot(ras.pts, aes_string(x = "X", y = "Y", fill = "COVER")) +
-        scale_fill_gradientn("Abundance (%)"
-                             , colors = brewer.pal(9, "Greens")
-                             , limits = c(0, 1)
-                             , breaks = seq(0, 1, 0.2)
-                             , labels = seq(0, 100, 20)) +
-        coord_equal() +
-        geom_raster() +
-        labs(x = "", y = "", title = paste0("GRAPH E : map of PFG cover - Simulation year : ", as.numeric(input$graph.year)),
-             subtitle = paste0("For each pixel, PFG abundances from strata ",
-                               as.numeric(input$opt.strata_min), " to ", max(strata.available), " are summed,\n",
-                               "then transformed into relative values by dividing by the maximum abundance obtained.\n")) +
-        theme_fivethirtyeight() +
-        theme(axis.text = element_blank()
-              , legend.key.width = unit(2, "lines")
-              , panel.background = element_rect(fill = "transparent", colour = NA)
-              , plot.background = element_rect(fill = "transparent", colour = NA)
-              , legend.background = element_rect(fill = "transparent", colour = NA)
-              , legend.box.background = element_rect(fill = "transparent", colour = NA)
-              , legend.key = element_rect(fill = "transparent", colour = NA))
-
-      print(pp)
-    })
-  }
+  output$plot.PFGcover = renderPlot({
+    plot(get_res[[1]]$plot[[1]])
+  })
+  
   setwd(path.init)
 })

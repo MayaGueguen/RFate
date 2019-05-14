@@ -26,24 +26,13 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
            )
            , column(3
                     , br()
-                    , numericInput(inputId = "graph.rel_abund_thresh"
-                                   , label = param.style("opt.rel_abund_thresh")
-                                   , value = 0.05
-                                   , min = 0
-                                   , max = 1
-                                   , width = "100%")
-           )
-           , column(3
-                    , br()
                     , numericInput(inputId = "graph.opt.no_CPU"
                                    , label = param.style("opt.no_CPU")
                                    , value = 1
                                    , min = 1
                                    , width = "100%")
            )
-         )
-         , fluidRow(
-           column(3
+           , column(3
                   , br()
                   , shinyjs::disabled(
                     actionButton(inputId = "create.relativeAbund"
@@ -58,18 +47,6 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
                     )
                   )
            )
-           # , column(9
-           #          , wellPanel(
-           #            style = HTML(paste0("background-color: ", help.color, ";")),
-           #            helpText(HTML("
-           #                          <p><a href='https://mayagueguen.github.io/RFate/reference/POST_FATE.relativeAbund_presenceAbsence.html' target='_blank'>
-           #                          See more details on <span style='font-family:Monospace;'>RFate</span> package website.</a></p>
-           #                          <table style='width:100%;'>
-           #                          
-           #                          </table>
-           #                          "
-           #            ))) ## END wellPanel
-           #            )
          )
          , fluidRow(
            column(6
