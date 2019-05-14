@@ -47,26 +47,30 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
                   , br()
                   , shinyjs::disabled(
                     actionButton(inputId = "create.relativeAbund"
-                                 , label = "Run relative & binary abund"
+                                 , label = "Run relative abund"
                                  , icon = icon("play")
                                  , width = "100%"
                                  , style = HTML(button.style)
+                    ) %>% helper(type = "inline"
+                                 , title = "Create maps of relative abundance"
+                                 , size = "l"
+                                 , content = help.HTML("docs/reference/POST_FATE.relativeAbund.html")
                     )
                   )
            )
-           , column(9
-                    , wellPanel(
-                      style = HTML(paste0("background-color: ", help.color, ";")),
-                      helpText(HTML("
-                                    <p><a href='https://mayagueguen.github.io/RFate/reference/POST_FATE.relativeAbund_presenceAbsence.html' target='_blank'>
-                                    See more details on <span style='font-family:Monospace;'>RFate</span> package website.</a></p>
-                                    <table style='width:100%;'>
-                                    
-                                    </table>
-                                    "
-                      ))) ## END wellPanel
-                      )
-                      )
+           # , column(9
+           #          , wellPanel(
+           #            style = HTML(paste0("background-color: ", help.color, ";")),
+           #            helpText(HTML("
+           #                          <p><a href='https://mayagueguen.github.io/RFate/reference/POST_FATE.relativeAbund_presenceAbsence.html' target='_blank'>
+           #                          See more details on <span style='font-family:Monospace;'>RFate</span> package website.</a></p>
+           #                          <table style='width:100%;'>
+           #                          
+           #                          </table>
+           #                          "
+           #            ))) ## END wellPanel
+           #            )
+         )
          , fluidRow(
            column(6
                   , br()
@@ -134,7 +138,12 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
                                                 , icon = icon("play")
                                                 , width = "100%"
                                                 , style = HTML(button.style)
-                                 ))
+                                 ) %>% helper(type = "inline"
+                                              , title = "Plot maps of 0/1 predicted by FATE vs Habitat suitability"
+                                              , size = "l"
+                                              , content = help.HTML("docs/reference/POST_FATE.graphic_mapPFGvsHS.html")
+                                 )
+                        )
                       ))
                     , shinyjs::hidden(
                       fluidRow(
@@ -148,7 +157,12 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
                                                 , icon = icon("play")
                                                 , width = "100%"
                                                 , style = HTML(button.style)
-                                 ))
+                                 ) %>% helper(type = "inline"
+                                              , title = "Plot validation statistics and transform maps of abundances into 0/1"
+                                              , size = "l"
+                                              , content = help.HTML("docs/reference/POST_FATE.graphic_validationStatistics.html")
+                                 )
+                        )
                       ))
                     , shinyjs::hidden(
                       fluidRow(
@@ -162,7 +176,12 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
                                                 , icon = icon("play")
                                                 , width = "100%"
                                                 , style = HTML(button.style)
-                                 ))
+                                 ) %>% helper(type = "inline"
+                                              , title = "Plot map of PFG richness"
+                                              , size = "l"
+                                              , content = help.HTML("docs/reference/POST_FATE.graphic_mapPFGrichness.html")
+                                 )
+                        )
                       ))
                     , shinyjs::hidden(
                       fluidRow(
@@ -176,7 +195,12 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
                                                 , icon = icon("play")
                                                 , width = "100%"
                                                 , style = HTML(button.style)
-                                 ))
+                                 ) %>% helper(type = "inline"
+                                              , title = "Plot map of PFG cover"
+                                              , size = "l"
+                                              , content = help.HTML("docs/reference/POST_FATE.graphic_mapPFGcover.html")
+                                 )
+                        )
                       ))
                     , shinyjs::hidden(
                       fluidRow(
@@ -190,7 +214,12 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
                                                 , icon = icon("play")
                                                 , width = "100%"
                                                 , style = HTML(button.style)
-                                 ))
+                                 ) %>% helper(type = "inline"
+                                              , title = "Plot map of PFG light"
+                                              , size = "l"
+                                              , content = help.HTML("docs/reference/POST_FATE.graphic_mapPFGlight.html")
+                                 )
+                        )
                       ))
                     , shinyjs::hidden(
                       fluidRow(
@@ -204,8 +233,13 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
                                                 , icon = icon("play")
                                                 , width = "100%"
                                                 , style = HTML(button.style)
-                                 ))
+                                 ) %>% helper(type = "inline"
+                                              , title = "Plot map of PFG soil"
+                                              , size = "l"
+                                              , content = help.HTML("docs/reference/POST_FATE.graphic_mapPFGsoil.html")
+                                 )
+                        )
                       ))
            )
          )
-                      ) ## END tabPanel (Global parameters)
+) ## END tabPanel (Global parameters)

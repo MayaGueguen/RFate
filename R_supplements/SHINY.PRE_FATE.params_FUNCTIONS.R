@@ -95,61 +95,60 @@ help.HTML = function(html.file, target.anchor = 'class="hasAnchor"', target.clas
 
 ###################################################################################################################################
 
-get_messages = function(out_info)
-{
-  ind_empty = which(nchar(out_info) == 0)
-  ind_Warning = grep("^Warning", out_info)
-  ind_Warning_mess = vector()
-  for(ind in ind_Warning){
-    if (length(ind_empty) > 0)
-    {
-      i = ind + 1
-      next_empty = FALSE
-      while(!next_empty)
-      {
-        if (i %in% ind_empty){
-          next_empty = TRUE
-        } else {
-          i = i + 1
-        }
-      }
-    } else
-    {
-      i = length(out_info) + 1
-    }
-    ind_Warning_mess = c(ind_Warning_mess, (ind+1):(i-1))
-  }
-  ind_mess = 1:length(out_info)
-  ind_mess = ind_mess[-c(ind_empty, ind_Warning, ind_Warning_mess)]
-  return(list(warning = out_info[ind_Warning_mess]
-              , message = out_info[ind_mess]))
+factory <- function(fun) {
+  # function(...) {
+  mess = capture.output(
+    assign("res"
+           , {
+             warn <- err <- NULL
+             res <- withCallingHandlers(
+               tryCatch(
+                 # fun(...),
+                 fun
+                 , error = function(e) {
+                   err <<- conditionMessage(e)
+                   NULL
+                 }
+               )
+               , warning = function(w) {
+                 warn <<- append(warn, conditionMessage(w))
+                 invokeRestart("muffleWarning")
+               }
+             )
+             list(res = res, warn = warn, err = err)
+           })
+    , type = "message")
+  return(list(res = res$res
+              , mess = mess[which(nchar(mess) > 0)]
+              , warn = res$warn
+              , err = res$err))
 }
-
-###################################################################################################################################
 
 print_messages = function(fun, cut_pattern = "STUPID")
 {
-  out_fun = tryCatch(
-    capture.output(type = "message", expr = { fun })
-    , error = function(e) { e })
-  if (inherits(out_fun, "simpleError"))
+  out_fun = factory(fun)
+  print(out_fun)
+  if (length(out_fun$err) > 0)
   {
-    shinyalert(type = "error", text = out_fun$message)
+    sapply(out_fun$err, function(xx) shinyalert(type = "error", text = xx))
     return(0)
   } else
   {
-    out_info = get_messages(out_fun)
-    if (length(out_info$warning) > 0)
+    if (length(out_fun$warn) > 0)
     {
-      showNotification(out_info$warning, type = "warning")
+      sapply(out_fun$warn, function(xx) showNotification(xx, type = "warning"))
     }
-    if (length(out_info$message) > 0)
+    if (length(out_fun$mess) > 0)
     {
-      shinyalert(type = "success", text = sub(cut_pattern, paste0(cut_pattern, " "), out_info$message))
+      sapply(out_fun$mess, function(xx) shinyalert(type = "success"
+                                                   , text = sub(cut_pattern
+                                                                , paste0(cut_pattern, " ")
+                                                                , xx)))
     }
-    return(1)
+    return(out_fun$res)
   }
 }
+
 
 ###################################################################################################################################
 
