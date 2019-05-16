@@ -356,11 +356,16 @@ POST_FATE.graphic_validationStatistics = function(
                 }
                 tmp = tmp[, -which(colnames(tmp) %in% c("Row.names", "HAB")), drop = FALSE]
                 
-                if (nrow(tmp) > 0 && length(which(tmp$obs == 0)) > 0 && length(which(tmp$obs == 1)) > 0)
+                if (nrow(tmp) > 0 &&
+                    length(which(tmp$obs == 0)) > 0 &&
+                    length(which(tmp$obs == 1)) > 0)
                 {
                   # auc = unname(somers2(x = mat[, "fg"], y = mat[, "obs"])["C"])
-                  cutoff = .getCutoff(Obs = tmp[, "obs"], Fit = tmp[, "fg"])
-                  if (!(is.na(cutoff[1])))
+                  if (habi == "ALL")
+                  {
+                    cutoff <<- .getCutoff(Obs = tmp[, "obs"], Fit = tmp[, "fg"])
+                  }
+                  if (exists("cutoff") && !(is.na(cutoff[1])))
                   {
                     mat.bin = tmp
                     mat.bin$fg = ifelse(mat.bin$fg >= cutoff$Cut, 1, 0)

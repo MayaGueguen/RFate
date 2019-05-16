@@ -6,7 +6,7 @@
   tt = c(100)
   
   Quant = quantile(Fit)
-  if (sum(Quant) > 0)
+  if (sum(Quant) > 0 && sum(Quant) < 5)
   {
     i = Quant[2]
     a = 2
