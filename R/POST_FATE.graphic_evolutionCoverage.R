@@ -309,7 +309,7 @@ POST_FATE.graphic_evolutionCoverage = function(
     } ## END opt.doPlot
     
     ## ZIP the raster saved ------------------------------------------------------
-    .zip(folder_name = dir.output.perPFG.allStrata, nb_cores= opt.no_CPU)
+    .zip_ALL(folder_name = dir.output.perPFG.allStrata, nb_cores= opt.no_CPU)
     
     write.csv(distri.melt
               , file = paste0(name.simulation

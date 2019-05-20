@@ -206,7 +206,9 @@ POST_FATE.relativeAbund = function(
     } ## end loop on years
     
     ## ZIP the raster saved ------------------------------------------------------
-    .zip(folder_name = dir.output.perPFG.allStrata, nb_cores = opt.no_CPU)
+    .zip(folder_name = dir.output.perPFG.allStrata
+         , list_files = raster.perPFG.allStrata
+         , nb_cores = opt.no_CPU)
     
   }
 }

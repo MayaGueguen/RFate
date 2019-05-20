@@ -258,7 +258,7 @@ POST_FATE.graphic_evolutionAbund_pixels = function(
     } ## END opt.doPlot
     
     ## ZIP the raster saved ------------------------------------------------------
-    .zip(folder_name = dir.output.perPFG.allStrata, nb_cores= opt.no_CPU)
+    .zip_ALL(folder_name = dir.output.perPFG.allStrata, nb_cores= opt.no_CPU)
     
     write.csv(distriAbund
               , file = paste0(name.simulation

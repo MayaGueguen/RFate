@@ -470,7 +470,9 @@ POST_FATE.graphic_mapPFGcover = function(
     }
     
     ## ZIP the raster saved ------------------------------------------------------
-    .zip(folder_name = dir.output.perPFG.perStrata, nb_cores = opt.no_CPU)
+    .zip(folder_name = dir.output.perPFG.perStrata
+         , list_files = raster.perPFG.perStrata
+         , nb_cores = opt.no_CPU)
     
     return(list(tab = mat.valid_list, plot = plot_list))
   } ## END loop on abs.simulParams
