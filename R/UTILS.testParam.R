@@ -1,9 +1,51 @@
 
+globalVariables(
+  c(
+    "AUC.sd",
+    "PFG",
+    "SCENARIO.DIST",
+    "SCENARIO.HS",
+    "SCENARIO.MASK",
+    "abs.simulParam",
+    "cutoff",
+    "di.mod",
+    "dir.output.perPFG.allStrata",
+    "dir.output.perPFG.allStrata.BIN",
+    "dir.output.perPFG.allStrata.REL",
+    "dir.output.perPFG.perStrata",
+    "dir.output.perPFG.perStrata.BIN",
+    "dir.save",
+    "file.mask",
+    "files.PFG.DISP",
+    "files.PFG.DIST",
+    "files.PFG.LIGHT",
+    "files.PFG.SOIL",
+    "files.PFG.SUCC",
+    "i",
+    "ind_1_mask",
+    "no_1_mask",
+    "no_PFG",
+    "pfg",
+    "ras.mask",
+    "sensitivity.sd",
+    "specificity.sd",
+    "st",
+    "tab",
+    "thresh",
+    "tr",
+    "value",
+    "vari",
+    "xx",
+    "xy.1",
+    "y"
+  )
+)
+
+#################################################################################################
 .testParam_notDef = function(param)
 {
   if (missing(param) ||
       (length(param) == 1 && is.na(param)) ||
-      # sum(is.na(param)) > 0 ||
       is.null(param) ||
       length(param) == 0)
   {
