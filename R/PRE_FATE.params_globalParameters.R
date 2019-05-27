@@ -418,31 +418,31 @@ PRE_FATE.params_globalParameters = function(
                    , " ==> Automatically set to 1"))
   }
   if (.testParam_notNum(required.no_PFG) ||
-      required.no_PFG <= 0 ){
+      sum(required.no_PFG <= 0) > 0 ){
     .stopMessage_beInteger("required.no_PFG")
   }
   if (.testParam_notNum(required.no_STRATA) ||
-      required.no_STRATA <= 0 ){
+      sum(required.no_STRATA <= 0) > 0 ){
     .stopMessage_beInteger("required.no_STRATA")
   }
   if (.testParam_notNum(required.simul_duration) ||
-      required.simul_duration <= 0 ) {
+      sum(required.simul_duration <= 0) > 0 ){
     .stopMessage_beInteger("required.simul_duration")
   }
   if (.testParam_notNum(required.seeding_duration) ||
-      required.seeding_duration <= 0 ){
+      sum(required.seeding_duration <= 0) > 0 ){
     .stopMessage_beInteger("required.seeding_duration")
   }
   if (.testParam_notNum(required.seeding_timestep) ||
-      required.seeding_timestep <= 0 ){
+      sum(required.seeding_timestep <= 0) > 0 ){
     .stopMessage_beInteger("required.seeding_timestep")
   }
   if (.testParam_notNum(required.seeding_input) ||
-      required.seeding_input <= 0 ){
+      sum(required.seeding_input <= 0) > 0 ){
     .stopMessage_beInteger("required.seeding_input")
   }
   if (.testParam_notNum(required.max_by_cohort) ||
-      required.max_by_cohort <= 0 )
+      sum(required.max_by_cohort <= 0) > 0 )
   {
     .stopMessage_beInteger("required.max_by_cohort")
   } else if (round(required.max_by_cohort) != required.max_by_cohort)
@@ -450,7 +450,7 @@ PRE_FATE.params_globalParameters = function(
     warning("`required.max_by_cohort` is a double. It will be converted (rounded) to an integer")
   }
   if (.testParam_notNum(required.max_abund_low) ||
-      required.max_abund_low <= 0 )
+      sum(required.max_abund_low <= 0) > 0 )
   {
     .stopMessage_beInteger("required.max_abund_low")
   } else if (round(required.max_abund_low) != required.max_abund_low)
@@ -458,7 +458,7 @@ PRE_FATE.params_globalParameters = function(
     warning("`required.max_abund_low` is a double. It will be converted (rounded) to an integer")
   }
   if (.testParam_notNum(required.max_abund_medium) ||
-      required.max_abund_medium <= 0 )
+      sum(required.max_abund_medium <= 0) > 0 )
   {
     .stopMessage_beInteger("required.max_abund_medium")
   } else if (round(required.max_abund_medium) != required.max_abund_medium)
@@ -466,7 +466,7 @@ PRE_FATE.params_globalParameters = function(
     warning("`required.max_abund_medium` is a double. It will be converted (rounded) to an integer")
   }
   if (.testParam_notNum(required.max_abund_high) ||
-      required.max_abund_high <= 0 )
+      sum(required.max_abund_high <= 0) > 0 )
   {
     .stopMessage_beInteger("required.max_abund_high")
   } else if (round(required.max_abund_high) != required.max_abund_high)
@@ -502,7 +502,7 @@ PRE_FATE.params_globalParameters = function(
   if (doHabSuitability)
   {
     if (.testParam_notNum(HABSUIT.ref_option) ||
-        !(HABSUIT.ref_option %in% c(1,2))){
+        sum(!(HABSUIT.ref_option %in% c(1,2))) > 0){
       .stopMessage_content("HABSUIT.ref_option", c("1 (random)", "2 (distribution per PFG)"))
     }
   }

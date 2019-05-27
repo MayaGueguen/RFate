@@ -12,3 +12,4 @@
 ^R_supplements$
 ^data_supplements$
 ^_FUNC_createRpackage_RFate\.R$
+^pkgdown$
