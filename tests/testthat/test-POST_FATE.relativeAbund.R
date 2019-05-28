@@ -1,4 +1,6 @@
 library(RFate)
+library(raster)
+library(rgdal)
 context("POST_FATE.relativeAbund() function")
 
 
@@ -263,7 +265,7 @@ test_that("POST_FATE.relativeAbund gives error with wrong data : rasters", {
               , col.names = FALSE, row.names = FALSE, quote = FALSE)
   write.table(FATE_Bauges$param.global, file = "FATE_Bauges/DATA/Global_parameters_FUTUR_LIGHT.txt"
               , col.names = FALSE, row.names = FALSE, quote = FALSE)
-  require(raster)
+  
   writeRaster(FATE_Bauges$mask, filename = "FATE_Bauges/DATA/MASK/maskDemo.tif")
   dir.save = FATE_Bauges$param.simul$V1[grep("SAVE_DIR", FATE_Bauges$param.simul$V1) + 1]
   system(paste0("mkdir ", dir.save))
