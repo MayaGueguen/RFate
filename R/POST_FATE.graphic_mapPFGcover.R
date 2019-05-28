@@ -202,7 +202,8 @@ POST_FATE.graphic_mapPFGcover = function(
                      , abs.simulParam = abs.simulParam)
     
     ## Get raster mask -------------------------------------------------------------
-    .getGraphics_mask(abs.simulParam = abs.simulParam)
+    .getGraphics_mask(name.simulation  = name.simulation
+                      , abs.simulParam = abs.simulParam)
     
     ## Get list of arrays and extract years of simulation --------------------------
     years = sort(unique(as.numeric(year)))

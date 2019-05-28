@@ -90,7 +90,7 @@ POST_FATE.relativeAbund = function(
   .testParam_existFolder(name.simulation, "PARAM_SIMUL/")
   .testParam_existFolder(name.simulation, "RESULTS/")
   .testParam_existFolder(name.simulation, "DATA/")
-  name.simulation = sub("/", "", name.simulation)
+  name.simulation = sub("/$", "", name.simulation)
   
   if (.testParam_notDef(file.simulParam) || nchar(file.simulParam) == 0)
   {
@@ -131,7 +131,8 @@ POST_FATE.relativeAbund = function(
                      , abs.simulParam = abs.simulParam)
     
     ## Get raster mask -------------------------------------------------------------
-    .getGraphics_mask(abs.simulParam = abs.simulParam)
+    .getGraphics_mask(name.simulation  = name.simulation
+                      , abs.simulParam = abs.simulParam)
     
     
     ## Get list of arrays and extract years of simulation --------------------------

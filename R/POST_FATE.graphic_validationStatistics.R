@@ -233,7 +233,8 @@ POST_FATE.graphic_validationStatistics = function(
                      , abs.simulParam = abs.simulParam)
     
     ## Get raster mask -------------------------------------------------------------
-    .getGraphics_mask(abs.simulParam = abs.simulParam)
+    .getGraphics_mask(name.simulation  = name.simulation
+                      , abs.simulParam = abs.simulParam)
     
     ## Get PFG observations --------------------------------------------------------
     mat.PFG.obs = mat.PFG.obs[which(mat.PFG.obs$PFG %in% PFG), ]

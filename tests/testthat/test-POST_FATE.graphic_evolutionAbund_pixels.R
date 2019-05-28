@@ -63,7 +63,7 @@ test_that("POST_FATE.graphic_evolutionAbund_pixels gives error with wrong data :
 
 
 ## INPUTS
-test_that("POST_FATE.graphic_validationStatistics gives error with wrong data : files", {
+test_that("POST_FATE.graphic_evolutionAbund_pixels gives error with wrong data : files", {
   expect_error(POST_FATE.graphic_evolutionAbund_pixels(name.simulation = "FATE_simulation"
                                                           , file.simulParam = "ParamSimul.txt")
                , "Wrong type of data!\n `flag` (--END_OF_FILE--) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"

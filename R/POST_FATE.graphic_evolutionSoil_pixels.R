@@ -139,7 +139,8 @@ POST_FATE.graphic_evolutionSoil_pixels = function(
     .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/SOIL/"))
     
     ## Get raster mask -------------------------------------------------------------
-    .getGraphics_mask(abs.simulParam = abs.simulParam)
+    .getGraphics_mask(name.simulation  = name.simulation
+                      , abs.simulParam = abs.simulParam)
     
     ## Get concerned cells id ------------------------------------------------------
     IDS = sample(ind_1_mask, 5)

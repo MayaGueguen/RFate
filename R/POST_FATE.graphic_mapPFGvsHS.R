@@ -158,7 +158,8 @@ POST_FATE.graphic_mapPFGvsHS = function(
                      , abs.simulParam = abs.simulParam)
     
     ## Get raster mask -------------------------------------------------------------
-    .getGraphics_mask(abs.simulParam = abs.simulParam)
+    .getGraphics_mask(name.simulation  = name.simulation
+                      , abs.simulParam = abs.simulParam)
     
     ## Get raster HS ---------------------------------------------------------------
     file.hs = .getParam(params.lines = abs.simulParam

@@ -150,7 +150,8 @@ POST_FATE.graphic_evolutionAbund_pixels = function(
                      , abs.simulParam = abs.simulParam)
     
     ## Get raster mask -------------------------------------------------------------
-    .getGraphics_mask(abs.simulParam = abs.simulParam)
+    .getGraphics_mask(name.simulation  = name.simulation
+                      , abs.simulParam = abs.simulParam)
     
     ## Get concerned cells id ------------------------------------------------------
     IDS = sample(ind_1_mask, 5)

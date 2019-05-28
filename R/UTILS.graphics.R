@@ -44,7 +44,8 @@
                                , flag = "GLOBAL_PARAMS"
                                , flag.split = "^--.*--$"
                                , is.num = FALSE)
-  no_PFG <<- .getParam(params.lines = file.globalParam
+  no_PFG <<- .getParam(params.lines = paste0(sub(basename(name.simulation), "", name.simulation)
+                                             , file.globalParam)
                      , flag = "NB_FG"
                      , flag.split = " "
                      , is.num = TRUE)
@@ -68,16 +69,18 @@
 }
 
 #################################################################################################
-.getGraphics_mask = function(abs.simulParam)
+.getGraphics_mask = function(name.simulation, abs.simulParam)
 {
   ## Get raster mask -------------------------------------------------------------
   file.mask <<- .getParam(params.lines = abs.simulParam
                         , flag = "MASK"
                         , flag.split = "^--.*--$"
                         , is.num = FALSE)
-  .testParam_existFile(file.mask)
+  .testParam_existFile(paste0(sub(basename(name.simulation), "", name.simulation)
+                              , file.mask))
   
-  ras.mask <<- raster(file.mask)
+  ras.mask <<- raster(paste0(sub(basename(name.simulation), "", name.simulation)
+                             , file.mask))
   ras.mask[which(ras.mask[] == 0)] <<- NA
   ind_1_mask <<- which(ras.mask[] == 1)
   no_1_mask <<- length(ind_1_mask)

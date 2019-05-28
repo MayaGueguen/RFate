@@ -207,7 +207,7 @@ PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
                                 , name.mask = "mask.tif")
 
 for (pfg in 1:6){
-  file.create(paste0("FATE_simulation/DATA/PFGS/ENVSUIT/mask_PFG", pfg, ".tif"))
+  file.create(paste0("FATE_simulation/DATA/PFGS/HABSUIT/mask_PFG", pfg, ".tif"))
 }
 PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
                                 , name.mask = "mask.tif")

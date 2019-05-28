@@ -169,7 +169,8 @@ POST_FATE.graphic_evolutionCoverage = function(
                      , abs.simulParam = abs.simulParam)
     
     ## Get raster mask -------------------------------------------------------------
-    .getGraphics_mask(abs.simulParam = abs.simulParam)
+    .getGraphics_mask(name.simulation  = name.simulation
+                      , abs.simulParam = abs.simulParam)
     
     ## Get habitat information -----------------------------------------------------
     no_hab = 1
