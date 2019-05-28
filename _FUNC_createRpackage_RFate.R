@@ -20,10 +20,13 @@ package_version = "0.0.7.9000"
 
 #####################################################################
 
-load("RFate/data/MontBlanc.rda")
-
 setwd("RFate/")
-usethis::use_data(MontBlanc, overwrite = TRUE)
+
+# load("data/MontBlanc.rda")
+# usethis::use_data(MontBlanc, overwrite = TRUE)
+
+load("data_supplements/FATE_Bauges")
+usethis::use_data(FATE_Bauges, overwrite = TRUE)
 
 usethis::use_testthat()
 usethis::use_test(name ="PRE_functions")

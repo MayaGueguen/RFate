@@ -17,3 +17,22 @@
 ##' 
 ## END OF HEADER ###############################################################
 "MontBlanc"
+
+### HEADER #####################################################################
+##' @title Bauges simulation folder
+##' 
+##' @name FATE_Bauges
+##'
+##' @author Maya Guéguen
+##' 
+##' @description Bauges simulation folder
+##' 
+##' @format A \code{list} object with 2 elements :
+##' 
+##' \itemize{
+##'   \item 
+##'   \item 
+##' }
+##' 
+## END OF HEADER ###############################################################
+"FATE_Bauges"
