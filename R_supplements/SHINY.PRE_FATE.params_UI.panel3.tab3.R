@@ -32,8 +32,12 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
                                    , min = 1
                                    , width = "100%")
            )
-           , column(3
-                  , br()
+         )
+         , fluidRow(
+           column(3, br()),
+           column(3, br()),
+           column(3, br()),
+           column(3
                   , shinyjs::disabled(
                     actionButton(inputId = "create.relativeAbund"
                                  , label = "Run relative abund"
@@ -51,40 +55,26 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
          , fluidRow(
            column(5
                   , br()
+                  , br()
                   , uiOutput(outputId = "UI.graph.mat.PFG.obs")
            )
            , column(1
                     , br()
+                    , br()
                     , actionButton(inputId = "graph.mat.PFG.obs.delete"
-                                 , label = ""
-                                 , icon = icon("broom")
-                                 , width = "100%"
-                                 , style = HTML(button.style)
+                                   , label = ""
+                                   , icon = icon("broom")
+                                   , width = "100%"
+                                   , style = HTML(button.style)
                     )
            )
-           # , column(4
-           #          , br()
-           #          , fileInput(inputId = "graph.mat.PFG.succ"
-           #                      , label = NULL
-           #                      , buttonLabel = param.style("mat.PFG.succ")
-           #                      , multiple = FALSE
-           #                      , width = "100%")
-           # )
            , column(5
                     , br()
+                    , br()
                     , uiOutput(outputId = "UI.graph.opt.cover.obs")
-                    # , fileInput(inputId = "graph.opt.light.obs"
-                    #             , label = NULL
-                    #             , buttonLabel = param.style("opt.light.obs")
-                    #             , multiple = FALSE
-                    #             , width = "100%")
-                    # , fileInput(inputId = "graph.opt.soil.obs"
-                    #             , label = NULL
-                    #             , buttonLabel = param.style("opt.soil.obs")
-                    #             , multiple = FALSE
-                    #             , width = "100%")
            )
            , column(1
+                    , br()
                     , br()
                     , actionButton(inputId = "graph.opt.cover.obs.delete"
                                    , label = ""
@@ -116,117 +106,170 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
                     , shinyjs::hidden(
                       fluidRow(
                         id = "panel.PFGvsHS"
-                        , column(8
-                                 , plotlyOutput(outputId = "plot.PFGvsHS", width = "100%", height = "600px")
-                        )
-                        , column(4
-                                 , actionButton(inputId = "create.PFGvsHS"
-                                                , label = "Run plot"
-                                                , icon = icon("play")
-                                                , width = "100%"
-                                                , style = HTML(button.style)
-                                 ) %>% helper(type = "inline"
-                                              , title = "Plot maps of 0/1 predicted by FATE vs Habitat suitability"
-                                              , size = "l"
-                                              , content = help.HTML("docs/reference/POST_FATE.graphic_mapPFGvsHS.html")
+                        , column(12
+                                 , fluidRow(
+                                   column(8, br())
+                                   , column(4
+                                            , actionButton(inputId = "create.PFGvsHS"
+                                                           , label = "Run plot"
+                                                           , icon = icon("play")
+                                                           , width = "100%"
+                                                           , style = HTML(button.style)
+                                            ) %>% helper(type = "inline"
+                                                         , title = "Plot maps of 0/1 predicted by FATE vs Habitat suitability"
+                                                         , size = "l"
+                                                         , content = help.HTML("docs/reference/POST_FATE.graphic_mapPFGvsHS.html")
+                                            )
+                                   )
+                                 )
+                                 , fluidRow(
+                                   column(12
+                                          , plotlyOutput(outputId = "plot.PFGvsHS", width = "100%", height = "600px")
+                                   )
                                  )
                         )
-                      ))
+                      )
+                    )
                     , shinyjs::hidden(
                       fluidRow(
                         id = "panel.validationStat"
-                        , column(8
-                                 , plotOutput(outputId = "plot.validationStat", width = "100%", height = "600px")
-                        )
-                        , column(4
-                                 , actionButton(inputId = "create.validationStat"
-                                                , label = "Run plot"
-                                                , icon = icon("play")
-                                                , width = "100%"
-                                                , style = HTML(button.style)
-                                 ) %>% helper(type = "inline"
-                                              , title = "Plot validation statistics and transform maps of abundances into 0/1"
-                                              , size = "l"
-                                              , content = help.HTML("docs/reference/POST_FATE.graphic_validationStatistics.html")
+                        , column(12
+                                 , fluidRow(
+                                   column(8, br())
+                                   , column(4
+                                            , actionButton(inputId = "create.validationStat"
+                                                           , label = "Run plot"
+                                                           , icon = icon("play")
+                                                           , width = "100%"
+                                                           , style = HTML(button.style)
+                                            ) %>% helper(type = "inline"
+                                                         , title = "Plot validation statistics and transform maps of abundances into 0/1"
+                                                         , size = "l"
+                                                         , content = help.HTML("docs/reference/POST_FATE.graphic_validationStatistics.html")
+                                            )
+                                   )
+                                 )
+                                 , fluidRow(
+                                   column(12
+                                          , br()
+                                          , plotOutput(outputId = "plot.validationStat", width = "100%", height = "600px")
+                                   )
                                  )
                         )
-                      ))
+                      )
+                    )
                     , shinyjs::hidden(
                       fluidRow(
                         id = "panel.PFGrichness"
-                        , column(8
-                                 , plotlyOutput(outputId = "plot.PFGrichness", width = "100%", height = "600px")
-                        )
-                        , column(4
-                                 , actionButton(inputId = "create.PFGrichness"
-                                                , label = "Run plot"
-                                                , icon = icon("play")
-                                                , width = "100%"
-                                                , style = HTML(button.style)
-                                 ) %>% helper(type = "inline"
-                                              , title = "Plot map of PFG richness"
-                                              , size = "l"
-                                              , content = help.HTML("docs/reference/POST_FATE.graphic_mapPFGrichness.html")
+                        , column(12
+                                 , fluidRow(
+                                   column(8, br())
+                                   , column(4
+                                            , actionButton(inputId = "create.PFGrichness"
+                                                           , label = "Run plot"
+                                                           , icon = icon("play")
+                                                           , width = "100%"
+                                                           , style = HTML(button.style)
+                                            ) %>% helper(type = "inline"
+                                                         , title = "Plot map of PFG richness"
+                                                         , size = "l"
+                                                         , content = help.HTML("docs/reference/POST_FATE.graphic_mapPFGrichness.html")
+                                            )
+                                   )
+                                 )
+                                 , fluidRow(
+                                   column(12
+                                          , br()
+                                          , plotlyOutput(outputId = "plot.PFGrichness", width = "100%", height = "600px")
+                                   )
                                  )
                         )
-                      ))
+                      )
+                    )
                     , shinyjs::hidden(
                       fluidRow(
                         id = "panel.PFGcover"
-                        , column(8
-                                 , plotlyOutput(outputId = "plot.PFGcover", width = "100%", height = "600px")
-                        )
-                        , column(4
-                                 , actionButton(inputId = "create.PFGcover"
-                                                , label = "Run plot"
-                                                , icon = icon("play")
-                                                , width = "100%"
-                                                , style = HTML(button.style)
-                                 ) %>% helper(type = "inline"
-                                              , title = "Plot map of PFG cover"
-                                              , size = "l"
-                                              , content = help.HTML("docs/reference/POST_FATE.graphic_mapPFGcover.html")
+                        , column(12
+                                 , fluidRow(
+                                   column(8, br())
+                                   , column(4
+                                            , actionButton(inputId = "create.PFGcover"
+                                                           , label = "Run plot"
+                                                           , icon = icon("play")
+                                                           , width = "100%"
+                                                           , style = HTML(button.style)
+                                            ) %>% helper(type = "inline"
+                                                         , title = "Plot map of PFG cover"
+                                                         , size = "l"
+                                                         , content = help.HTML("docs/reference/POST_FATE.graphic_mapPFGcover.html")
+                                            )
+                                   )
+                                 )
+                                 , fluidRow(
+                                   column(12
+                                          , br()
+                                          , plotlyOutput(outputId = "plot.PFGcover", width = "100%", height = "600px")
+                                   )
                                  )
                         )
-                      ))
+                      )
+                    )
                     , shinyjs::hidden(
                       fluidRow(
                         id = "panel.PFGlight"
-                        , column(8
-                                 , plotlyOutput(outputId = "plot.PFGlight", width = "100%", height = "600px")
-                        )
-                        , column(4
-                                 , actionButton(inputId = "create.PFGlight"
-                                                , label = "Run plot"
-                                                , icon = icon("play")
-                                                , width = "100%"
-                                                , style = HTML(button.style)
-                                 ) %>% helper(type = "inline"
-                                              , title = "Plot map of PFG light"
-                                              , size = "l"
-                                              , content = help.HTML("docs/reference/POST_FATE.graphic_mapPFGlight.html")
+                        , column(12
+                                 , fluidRow(
+                                   column(8, br())
+                                   , column(4
+                                            , actionButton(inputId = "create.PFGlight"
+                                                           , label = "Run plot"
+                                                           , icon = icon("play")
+                                                           , width = "100%"
+                                                           , style = HTML(button.style)
+                                            ) %>% helper(type = "inline"
+                                                         , title = "Plot map of PFG light"
+                                                         , size = "l"
+                                                         , content = help.HTML("docs/reference/POST_FATE.graphic_mapPFGlight.html")
+                                            )
+                                   )
+                                 )
+                                 , fluidRow(
+                                   column(12
+                                          , br()
+                                          , plotlyOutput(outputId = "plot.PFGlight", width = "100%", height = "600px")
+                                   )
                                  )
                         )
-                      ))
+                      )
+                    )
                     , shinyjs::hidden(
                       fluidRow(
                         id = "panel.PFGsoil"
-                        , column(8
-                                 , plotlyOutput(outputId = "plot.PFGsoil", width = "100%", height = "600px")
-                        )
-                        , column(4
-                                 , actionButton(inputId = "create.PFGsoil"
-                                                , label = "Run plot"
-                                                , icon = icon("play")
-                                                , width = "100%"
-                                                , style = HTML(button.style)
-                                 ) %>% helper(type = "inline"
-                                              , title = "Plot map of PFG soil"
-                                              , size = "l"
-                                              , content = help.HTML("docs/reference/POST_FATE.graphic_mapPFGsoil.html")
+                        , column(12
+                                 , fluidRow(
+                                   column(8, br())
+                                   , column(4
+                                            , actionButton(inputId = "create.PFGsoil"
+                                                           , label = "Run plot"
+                                                           , icon = icon("play")
+                                                           , width = "100%"
+                                                           , style = HTML(button.style)
+                                            ) %>% helper(type = "inline"
+                                                         , title = "Plot map of PFG soil"
+                                                         , size = "l"
+                                                         , content = help.HTML("docs/reference/POST_FATE.graphic_mapPFGsoil.html")
+                                            )
+                                   )
+                                 )
+                                 , fluidRow(
+                                   column(12
+                                          , br()
+                                          , plotlyOutput(outputId = "plot.PFGsoil", width = "100%", height = "600px")
+                                   )
                                  )
                         )
-                      ))
+                      )
+                    )
            )
          )
 ) ## END tabPanel (Global parameters)

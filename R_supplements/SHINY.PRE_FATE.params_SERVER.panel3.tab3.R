@@ -123,14 +123,18 @@ observeEvent(input$create.PFGvsHS, {
   get_res = print_messages(as.expression(
     POST_FATE.graphic_mapPFGvsHS(name.simulation = get_name.simul()
                                  , file.simulParam = get_param.simul()
-                                 , year = input$graph.year
-                                 , opt.strata = input$opt.strata_min
+                                 , year = as.numeric(input$graph.year)
+                                 , opt.strata = as.numeric(input$graph.strata_min)
                                  , opt.no_CPU = input$graph.opt.no_CPU
     )
   ))
   
-  if(get_res)
-  {
+  output$plot.PFGvsHS = renderPlot({
+    plot(get_res[[1]]$plot[[1]][[1]])
+  })
+  
+  # if(get_res)
+  # {
     # col_vec = c('#6da34d', '#297373', '#58a4b0', '#5c4742', '#3f334d')
     # col_fun = colorRampPalette(col_vec)
     # 
@@ -159,7 +163,7 @@ observeEvent(input$create.PFGvsHS, {
     #   
     #   print(pp1)
     # })
-  }
+  # }
   setwd(path.init)
 })
 
@@ -170,12 +174,28 @@ observeEvent(input$create.validationStat, {
   path.init = getwd()
   setwd(get_path.folder())
   
+  if (is.data.frame(input$graph.mat.PFG.obs))
+  {
+    graph.mat.PFG.obs = fread(input$graph.mat.PFG.obs$datapath)
+  } else
+  {
+    graph.mat.PFG.obs = ""
+  }
+  if (is.data.frame(input$graph.opt.cover.obs))
+  {
+    graph.opt.cover.obs = input$graph.mat.PFG.obs$datapath
+  } else
+  {
+    graph.opt.cover.obs = ""
+  }
+  
+
   get_res = print_messages(as.expression(
     POST_FATE.graphic_validationStatistics(name.simulation = get_name.simul()
                                            , file.simulParam = get_param.simul()
                                            , year = as.numeric(input$graph.year)
-                                           , mat.PFG.obs = fread(input$graph.mat.PFG.obs$datapath)
-                                           , opt.ras_habitat = input$graph.opt.cover.obs$datapath
+                                           , mat.PFG.obs = graph.mat.PFG.obs
+                                           , opt.ras_habitat = graph.opt.cover.obs
                                            , opt.no_CPU = input$graph.opt.no_CPU
     )
   ))
