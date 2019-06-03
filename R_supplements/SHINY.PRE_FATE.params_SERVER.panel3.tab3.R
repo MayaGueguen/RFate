@@ -53,6 +53,47 @@ observeEvent(input$show.specific_year, {
   }
 })
 
+
+####################################################################
+
+output$UI.graph.mat.PFG.obs = renderUI({
+  fileInput(inputId = "graph.mat.PFG.obs"
+            , label = NULL
+            , buttonLabel = param.style("mat.PFG.obs")
+            , multiple = FALSE
+            , width = "100%")
+})
+
+observeEvent(input$graph.mat.PFG.obs.delete, {
+  output$UI.graph.mat.PFG.obs = renderUI({
+    fileInput(inputId = "graph.mat.PFG.obs"
+              , label = NULL
+              , buttonLabel = param.style("mat.PFG.obs")
+              , multiple = FALSE
+              , width = "100%")
+  })
+})
+
+####################################################################
+
+output$UI.graph.opt.cover.obs = renderUI({
+  fileInput(inputId = "graph.opt.cover.obs"
+              , label = NULL
+              , buttonLabel = param.style("opt.cover.obs")
+              , multiple = FALSE
+              , width = "100%")
+})
+
+observeEvent(input$graph.opt.cover.obs.delete, {
+  output$UI.graph.opt.cover.obs = renderUI({
+    fileInput(inputId = "graph.opt.cover.obs"
+              , label = NULL
+              , buttonLabel = param.style("opt.cover.obs")
+              , multiple = FALSE
+              , width = "100%")
+  })
+})
+  
 ####################################################################
 
 observeEvent(input$create.relativeAbund, {
@@ -99,7 +140,7 @@ observeEvent(input$create.PFGvsHS, {
     # distriAbund.melt = fread(get_last.createdFiles2(pattern_head = "POST_FATE_evolution_abundance_"
     #                                                 , pattern_tail = ".csv$"))
     # 
-    # output$plot.evolutionCoverage1 = renderPlot({
+    # output$plot.evolutionCoverage1 = renderPlotly({
     #   
     #   ## Evolution of space occupation
     #   pp1 = ggplot(distri.melt, aes_string(x = "YEAR", y = "Abund * 100", color = "factor(HAB)")) +
@@ -134,6 +175,7 @@ observeEvent(input$create.validationStat, {
                                            , file.simulParam = input$graph.simulParam
                                            , year = as.numeric(input$graph.year)
                                            , mat.PFG.obs = fread(input$graph.mat.PFG.obs$datapath)
+                                           , opt.ras_habitat = input$graph.opt.cover.obs$datapath
                                            , opt.no_CPU = input$graph.opt.no_CPU
     )
   ))
@@ -160,8 +202,8 @@ observeEvent(input$create.PFGrichness, {
     )
   ))
   
-  output$plot.PFGrichness = renderPlot({
-    plot(get_res[[1]][[1]])
+  output$plot.PFGrichness = renderPlotly({
+    plot(get_res[[1]][[1]][[2]])
   })
 
   setwd(path.init)
@@ -185,7 +227,7 @@ observeEvent(input$create.PFGcover, {
     )
   ))
   
-  output$plot.PFGcover = renderPlot({
+  output$plot.PFGcover = renderPlotly({
     plot(get_res[[1]]$plot[[1]])
   })
   

@@ -51,8 +51,8 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Through time</span>")
              fluidRow(
                id = "panel.evolutionCoverage"
                , column(8
-                        , plotOutput(outputId = "plot.evolutionCoverage1", width = "100%", height = "600px")
-                        , plotOutput(outputId = "plot.evolutionCoverage2", width = "100%", height = "600px")
+                        , plotlyOutput(outputId = "plot.evolutionCoverage1", width = "100%", height = "600px")
+                        , plotlyOutput(outputId = "plot.evolutionCoverage2", width = "100%", height = "600px")
                )
                , column(4
                         , withBusyIndicatorUI(
@@ -73,7 +73,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Through time</span>")
              fluidRow(
                id = "panel.evolutionAbund"
                , column(8
-                        , plotOutput(outputId = "plot.evolutionAbund", width = "100%", height = "600px")
+                        , plotlyOutput(outputId = "plot.evolutionAbund", width = "100%", height = "600px")
                )
                , column(4
                         , actionButton(inputId = "create.evolutionAbund"
@@ -92,7 +92,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Through time</span>")
              fluidRow(
                id = "panel.evolutionLight"
                , column(8
-                        , plotOutput(outputId = "plot.evolutionLight", width = "100%", height = "600px")
+                        , plotlyOutput(outputId = "plot.evolutionLight", width = "100%", height = "600px")
                )
                , column(4
                         , actionButton(inputId = "create.evolutionLight"
@@ -112,7 +112,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Through time</span>")
              fluidRow(
                id = "panel.evolutionSoil"
                , column(8
-                        , plotOutput(outputId = "plot.evolutionSoil", width = "100%", height = "600px")
+                        , plotlyOutput(outputId = "plot.evolutionSoil", width = "100%", height = "600px")
                )
                , column(4
                         , actionButton(inputId = "create.evolutionSoil"

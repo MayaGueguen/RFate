@@ -49,13 +49,18 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
            )
          )
          , fluidRow(
-           column(6
+           column(5
                   , br()
-                  , fileInput(inputId = "graph.mat.PFG.obs"
-                              , label = NULL
-                              , buttonLabel = param.style("mat.PFG.obs")
-                              , multiple = FALSE
-                              , width = "100%")
+                  , uiOutput(outputId = "UI.graph.mat.PFG.obs")
+           )
+           , column(1
+                    , br()
+                    , actionButton(inputId = "graph.mat.PFG.obs.delete"
+                                 , label = ""
+                                 , icon = icon("broom")
+                                 , width = "100%"
+                                 , style = HTML(button.style)
+                    )
            )
            # , column(4
            #          , br()
@@ -65,13 +70,9 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
            #                      , multiple = FALSE
            #                      , width = "100%")
            # )
-           , column(6
+           , column(5
                     , br()
-                    , fileInput(inputId = "graph.opt.cover.obs"
-                                , label = NULL
-                                , buttonLabel = param.style("opt.cover.obs")
-                                , multiple = FALSE
-                                , width = "100%")
+                    , uiOutput(outputId = "UI.graph.opt.cover.obs")
                     # , fileInput(inputId = "graph.opt.light.obs"
                     #             , label = NULL
                     #             , buttonLabel = param.style("opt.light.obs")
@@ -82,6 +83,15 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
                     #             , buttonLabel = param.style("opt.soil.obs")
                     #             , multiple = FALSE
                     #             , width = "100%")
+           )
+           , column(1
+                    , br()
+                    , actionButton(inputId = "graph.opt.cover.obs.delete"
+                                   , label = ""
+                                   , icon = icon("broom")
+                                   , width = "100%"
+                                   , style = HTML(button.style)
+                    )
            )
          )
          , fluidRow(
@@ -107,7 +117,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
                       fluidRow(
                         id = "panel.PFGvsHS"
                         , column(8
-                                 , plotOutput(outputId = "plot.PFGvsHS", width = "100%", height = "600px")
+                                 , plotlyOutput(outputId = "plot.PFGvsHS", width = "100%", height = "600px")
                         )
                         , column(4
                                  , actionButton(inputId = "create.PFGvsHS"
@@ -145,7 +155,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
                       fluidRow(
                         id = "panel.PFGrichness"
                         , column(8
-                                 , plotOutput(outputId = "plot.PFGrichness", width = "100%", height = "600px")
+                                 , plotlyOutput(outputId = "plot.PFGrichness", width = "100%", height = "600px")
                         )
                         , column(4
                                  , actionButton(inputId = "create.PFGrichness"
@@ -164,7 +174,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
                       fluidRow(
                         id = "panel.PFGcover"
                         , column(8
-                                 , plotOutput(outputId = "plot.PFGcover", width = "100%", height = "600px")
+                                 , plotlyOutput(outputId = "plot.PFGcover", width = "100%", height = "600px")
                         )
                         , column(4
                                  , actionButton(inputId = "create.PFGcover"
@@ -183,7 +193,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
                       fluidRow(
                         id = "panel.PFGlight"
                         , column(8
-                                 , plotOutput(outputId = "plot.PFGlight", width = "100%", height = "600px")
+                                 , plotlyOutput(outputId = "plot.PFGlight", width = "100%", height = "600px")
                         )
                         , column(4
                                  , actionButton(inputId = "create.PFGlight"
@@ -202,7 +212,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
                       fluidRow(
                         id = "panel.PFGsoil"
                         , column(8
-                                 , plotOutput(outputId = "plot.PFGsoil", width = "100%", height = "600px")
+                                 , plotlyOutput(outputId = "plot.PFGsoil", width = "100%", height = "600px")
                         )
                         , column(4
                                  , actionButton(inputId = "create.PFGsoil"

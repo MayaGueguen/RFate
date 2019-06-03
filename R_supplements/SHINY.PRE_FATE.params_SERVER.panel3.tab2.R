@@ -47,11 +47,11 @@ observeEvent(input$create.evolutionCoverage, {
       )
     ))
     
-    output$plot.evolutionCoverage1 = renderPlot({
+    output$plot.evolutionCoverage1 = renderPlotly({
       plot(get_res[[1]]$graph.spaceOccupancy)
     })
 
-    output$plot.evolutionCoverage2 = renderPlot({
+    output$plot.evolutionCoverage2 = renderPlotly({
       plot(get_res[[1]]$graph.abundance)
     })
     
@@ -77,7 +77,7 @@ observeEvent(input$create.evolutionAbund, {
     )
   ))
   
-  output$plot.evolutionAbund = renderPlot({
+  output$plot.evolutionAbund = renderPlotly({
     plot(get_res[[1]]$plot)
   })
   
@@ -101,7 +101,7 @@ observeEvent(input$create.evolutionLight, {
     )
   ))
   
-  output$plot.evolutionLight = renderPlot({
+  output$plot.evolutionLight = renderPlotly({
     plot(get_res[[1]]$plot)
   })
   
@@ -124,7 +124,7 @@ observeEvent(input$create.evolutionSoil, {
     )
   ))
   
-  output$plot.evolutionSoil = renderPlot({
+  output$plot.evolutionSoil = renderPlotly({
     plot(get_res[[1]]$plot)
   })
   

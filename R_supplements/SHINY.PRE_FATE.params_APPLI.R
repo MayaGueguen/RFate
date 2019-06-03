@@ -5,6 +5,7 @@ rm(list = ls())
 library(shiny)
 library(shinyFiles)
 library(shinyalert)
+# devtools::install_github('wleepang/shiny-directory-input')
 library(shinyDirectoryInput)
 library(shinyjs)
 library(shinycssloaders)
@@ -24,6 +25,7 @@ library(viridis)
 library(RColorBrewer)
 library(rintrojs)
 library(dplyr)
+library(plotly)
 
 ###################################################################################################################################
 
