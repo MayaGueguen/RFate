@@ -254,53 +254,53 @@ test_that("POST_FATE.relativeAbund gives error with wrong data : rasters", {
   #              , "Missing data!\n The names of PFG extracted from files within FATE_simulation/DATA/PFGS/SUCC/"
   #              , fixed = TRUE)
   
-  if (dir.exists("FATE_simulation")) system("rm -r FATE_simulation/")
-  system("mkdir FATE_Bauges/")
-  system("mkdir FATE_Bauges/PARAM_SIMUL/")
-  system("mkdir FATE_Bauges/RESULTS/")
-  system("mkdir FATE_Bauges/DATA/")
-  system("mkdir FATE_Bauges/DATA/MASK/")
-  data("FATE_Bauges")
-  write.table(FATE_Bauges$param.simul, file = "FATE_Bauges/PARAM_SIMUL/paramSimul_Graz1_CA_rcp26_LIGHT.txt"
-              , col.names = FALSE, row.names = FALSE, quote = FALSE)
-  write.table(FATE_Bauges$param.global, file = "FATE_Bauges/DATA/Global_parameters_FUTUR_LIGHT.txt"
-              , col.names = FALSE, row.names = FALSE, quote = FALSE)
-  
-  writeRaster(FATE_Bauges$mask, filename = "FATE_Bauges/DATA/MASK/maskDemo.tif")
-  dir.save = FATE_Bauges$param.simul$V1[grep("SAVE_DIR", FATE_Bauges$param.simul$V1) + 1]
-  system(paste0("mkdir ", dir.save))
-  system(paste0("mkdir ", dir.save, "ABUND_perPFG_allStrata/"))
-  system(paste0("mkdir ", dir.save, "ABUND_perPFG_perStrata/"))
-  writeRaster(FATE_Bauges$ABUND_perPFG_allStrata$Abund_YEAR_20
-              , filename = paste0(dir.save
-                                  , "ABUND_perPFG_allStrata/"
-                                  , names(FATE_Bauges$ABUND_perPFG_allStrata$Abund_YEAR_20))
-              , bylayer = TRUE)
-  
-  expect_error(POST_FATE.relativeAbund(name.simulation = "FATE_Bauges"
-                                       , file.simulParam = "paramSimul_Graz1_CA_rcp26_LIGHT.txt"
-                                       , year = 10)
-               , "Missing data!\n The folder FATE_Bauges/RESULTS/Graz1_CA_rcp26_LIGHT/ABUND_perPFG_allStrata/ does not contain adequate files"
-               , fixed = TRUE)
-  
-  # expect_error(POST_FATE.relativeAbund(name.simulation = "RFate/data_supplements/FATE_Bauges_oldPFG_newParam/"
-  #                                      , file.simulParam = "RFate/data_supplements/FATE_Bauges_oldPFG_newParam/PARAM_SIMUL/paramSimul_Graz1_CA_rcp26_LIGHT.txt"
+  # if (dir.exists("FATE_simulation")) system("rm -r FATE_simulation/")
+  # system("mkdir FATE_Bauges/")
+  # system("mkdir FATE_Bauges/PARAM_SIMUL/")
+  # system("mkdir FATE_Bauges/RESULTS/")
+  # system("mkdir FATE_Bauges/DATA/")
+  # system("mkdir FATE_Bauges/DATA/MASK/")
+  # data("FATE_Bauges")
+  # write.table(FATE_Bauges$param.simul, file = "FATE_Bauges/PARAM_SIMUL/paramSimul_Graz1_CA_rcp26_LIGHT.txt"
+  #             , col.names = FALSE, row.names = FALSE, quote = FALSE)
+  # write.table(FATE_Bauges$param.global, file = "FATE_Bauges/DATA/Global_parameters_FUTUR_LIGHT.txt"
+  #             , col.names = FALSE, row.names = FALSE, quote = FALSE)
+  # 
+  # writeRaster(FATE_Bauges$mask, filename = "FATE_Bauges/DATA/MASK/maskDemo.tif")
+  # dir.save = FATE_Bauges$param.simul$V1[grep("SAVE_DIR", FATE_Bauges$param.simul$V1) + 1]
+  # system(paste0("mkdir ", dir.save))
+  # system(paste0("mkdir ", dir.save, "ABUND_perPFG_allStrata/"))
+  # system(paste0("mkdir ", dir.save, "ABUND_perPFG_perStrata/"))
+  # writeRaster(FATE_Bauges$ABUND_perPFG_allStrata$Abund_YEAR_20
+  #             , filename = paste0(dir.save
+  #                                 , "ABUND_perPFG_allStrata/"
+  #                                 , names(FATE_Bauges$ABUND_perPFG_allStrata$Abund_YEAR_20))
+  #             , bylayer = TRUE)
+  # 
+  # expect_error(POST_FATE.relativeAbund(name.simulation = "FATE_Bauges"
+  #                                      , file.simulParam = "paramSimul_Graz1_CA_rcp26_LIGHT.txt"
   #                                      , year = 10)
-  #              , "Missing data!\n The folder RFate/data_supplements/FATE_Bauges_oldPFG_newParam/RESULTS/Graz1_CA_rcp26_LIGHT/ABUND_perPFG_allStrata/ does not contain adequate files"
+  #              , "Missing data!\n The folder FATE_Bauges/RESULTS/Graz1_CA_rcp26_LIGHT/ABUND_perPFG_allStrata/ does not contain adequate files"
   #              , fixed = TRUE)
-  # expect_error(POST_FATE.relativeAbund(name.simulation = "data_supplements/FATE_Bauges_oldPFG_newParam/"
-  #                                      , file.simulParam = "data_supplements/FATE_Bauges_oldPFG_newParam/PARAM_SIMUL/paramSimul_Graz1_CA_rcp26_LIGHT.txt"
-  #                                      , year = 10)
-  #              , "Missing data!\n The names of PFG extracted from files within FATE_simulation/DATA/PFGS/SUCC/"
-  #              , fixed = TRUE)
+  # 
+  # # expect_error(POST_FATE.relativeAbund(name.simulation = "RFate/data_supplements/FATE_Bauges_oldPFG_newParam/"
+  # #                                      , file.simulParam = "RFate/data_supplements/FATE_Bauges_oldPFG_newParam/PARAM_SIMUL/paramSimul_Graz1_CA_rcp26_LIGHT.txt"
+  # #                                      , year = 10)
+  # #              , "Missing data!\n The folder RFate/data_supplements/FATE_Bauges_oldPFG_newParam/RESULTS/Graz1_CA_rcp26_LIGHT/ABUND_perPFG_allStrata/ does not contain adequate files"
+  # #              , fixed = TRUE)
+  # # expect_error(POST_FATE.relativeAbund(name.simulation = "data_supplements/FATE_Bauges_oldPFG_newParam/"
+  # #                                      , file.simulParam = "data_supplements/FATE_Bauges_oldPFG_newParam/PARAM_SIMUL/paramSimul_Graz1_CA_rcp26_LIGHT.txt"
+  # #                                      , year = 10)
+  # #              , "Missing data!\n The names of PFG extracted from files within FATE_simulation/DATA/PFGS/SUCC/"
+  # #              , fixed = TRUE)
 })
 
 ## OUTPUTS
 test_that("POST_FATE.relativeAbund gives error with wrong data : outputs", {
-  expect_output_file(POST_FATE.relativeAbund(name.simulation = "FATE_Bauges"
-                                             , file.simulParam = "paramSimul_Graz1_CA_rcp26_LIGHT.txt"
-                                             , year = 20)
-                     , "FATE_Bauges/RESULTS/Graz1_CA_rcp26_LIGHT/ABUND_REL_perPFG_allStrata/Abund_relative_YEAR_20_C1_STRATA_all.txt"
-                     , fixed = TRUE)
+  # expect_output_file(POST_FATE.relativeAbund(name.simulation = "FATE_Bauges"
+  #                                            , file.simulParam = "paramSimul_Graz1_CA_rcp26_LIGHT.txt"
+  #                                            , year = 20)
+  #                    , "FATE_Bauges/RESULTS/Graz1_CA_rcp26_LIGHT/ABUND_REL_perPFG_allStrata/Abund_relative_YEAR_20_C1_STRATA_all.txt"
+  #                    , fixed = TRUE)
 })
 

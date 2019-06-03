@@ -12,13 +12,13 @@ addons:
       - libgdal1-dev
       - libproj-dev
       - libgeos-dev
-      - r-cran-ncdf4
-      - libv8-3.14-dev
-      - libprotobuf-dev
-      - protobuf-compiler
-      - libudunits2-dev
-      - libnetcdf-dev
-      - libjq-dev
+#      - r-cran-ncdf4
+#      - libv8-3.14-dev
+#      - libprotobuf-dev
+#      - protobuf-compiler
+#      - libudunits2-dev
+#      - libnetcdf-dev
+#      - libjq-dev
       
 matrix:
   include:
