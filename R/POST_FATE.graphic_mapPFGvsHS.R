@@ -130,7 +130,7 @@ POST_FATE.graphic_mapPFGvsHS = function(
   }
   #################################################################################################
   
-  for (abs.simulParam in abs.simulParams)
+  res = foreach (abs.simulParam = abs.simulParams) %do%
   {
     
     cat("\n ############## GRAPHIC POST FATE ############## \n")
@@ -180,10 +180,10 @@ POST_FATE.graphic_mapPFGvsHS = function(
     
     
     ## get the data inside the rasters ---------------------------------------------
-    cat("\n GETTING PFG and SDM maps for year")
-    for (y in years)
+    cat("\n GETTING PFG and SDM maps for")
+    plot_list = foreach (y = years) %do%
     {
-      cat(" ", y)
+      cat("\n > year", y)
       
       ## SDM maps ------------------------------------------------------------------
       ras.hs = stack(file.hs) * ras.mask
@@ -212,12 +212,10 @@ POST_FATE.graphic_mapPFGvsHS = function(
         
         
         ## produce the plot ----------------------------------------------------------
-        pdf(file = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_C_map_PFGvsHS_", basename(dir.save), ".pdf")
-            , width = 10, height = 10)
-        cat(" PFG :")
-        for (pfg in PFG)
+        cat("\n PRODUCING PLOT(S)...")
+        plot_list.PFG = foreach(pfg = PFG) %do%
         {
-          cat(" ", pfg)
+          cat("\n > Preparing for PFG ", pfg)
           
           if (pfg %in% colnames(ras.hs.pts))
           {
@@ -244,16 +242,36 @@ POST_FATE.graphic_mapPFGvsHS = function(
                 .getGraphics_theme() +
                 theme(axis.text = element_blank()
                       , legend.key.width = unit(3, "lines"))
-              plot(pp)
+              return(pp)
             }
           }
-        } ## end loop on PFG
+        } ## END loop on PFG
+        names(plot_list.PFG) = PFG
+        return(plot_list.PFG)
       }
-      cat("\n")
-      dev.off()
       
-    } ## end loop on years
+    } ## END loop on years
+    names(plot_list) = years
     
-  }
+    ## SAVE plots into file ------------------------------------------------------
+    if (!is.null(plot_list[[1]]))
+    {
+      pdf(file = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_C_map_PFGvsHS_", basename(dir.save), ".pdf")
+          , width = 10, height = 10)
+      for (y in years)
+      {
+        for (pfg in PFG)
+        {
+          plot(plot_list[[as.character(y)]][[pfg]])
+        }
+      }
+      dev.off()
+    }
+    
+    return(plot_list)
+  } ## END loop on abs.simulParams
+  names(res) = abs.simulParams
+  
+  return(res)
 }
 
