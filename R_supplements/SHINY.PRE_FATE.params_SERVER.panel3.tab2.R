@@ -39,7 +39,7 @@ observeEvent(input$create.evolutionCoverage, {
     
     get_res = print_messages(as.expression(
       POST_FATE.graphic_evolutionCoverage(name.simulation = get_name.simul()
-                                          , file.simulParam = input$graph.simulParam
+                                          , file.simulParam = get_param.simul()
                                           , no.years = input$graph.no.years
                                           , opt.abund_fixedScale = input$graph.opt.fixedScale
                                           , opt.ras_habitat = input$graph.opt.ras_habitat
@@ -69,7 +69,7 @@ observeEvent(input$create.evolutionAbund, {
   
   get_res = print_messages(as.expression(
     POST_FATE.graphic_evolutionAbund_pixels(name.simulation = get_name.simul()
-                                            , file.simulParam = input$graph.simulParam
+                                            , file.simulParam = get_param.simul()
                                             , no.years = input$graph.no.years
                                             , opt.abund_fixedScale = input$graph.opt.fixedScale
                                             , opt.cells_ID = NULL
@@ -93,7 +93,7 @@ observeEvent(input$create.evolutionLight, {
   
   get_res = print_messages(as.expression(
     POST_FATE.graphic_evolutionLight_pixels(name.simulation = get_name.simul()
-                                            , file.simulParam = input$graph.simulParam
+                                            , file.simulParam = get_param.simul()
                                             , no.years = input$graph.no.years
                                             , opt.abund_fixedScale = input$graph.opt.fixedScale
                                             , opt.cells_ID = NULL
@@ -117,7 +117,7 @@ observeEvent(input$create.evolutionSoil, {
   
   get_res = print_messages(as.expression(
     POST_FATE.graphic_evolutionSoil_pixels(name.simulation = get_name.simul()
-                                           , file.simulParam = input$graph.simulParam
+                                           , file.simulParam = get_param.simul()
                                            , no.years = input$graph.no.years
                                            , opt.cells_ID = NULL
                                            , opt.no_CPU = input$graph.opt.no_CPU

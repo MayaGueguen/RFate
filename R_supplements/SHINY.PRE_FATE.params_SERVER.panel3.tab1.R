@@ -21,7 +21,6 @@ update_graph.files = function()
     ind.toSuppr = c(ind.toSuppr, get_browser.cover())
     ind.toSuppr = c(ind.toSuppr, get_browser.light())
     ind.toSuppr = c(ind.toSuppr, get_browser.soil())
-    cat("IND TO SUPPR : ", ind.toSuppr, "\n")
     if (length(ind.toSuppr) > 0)
     {
       names.files = names.files[-ind.toSuppr]

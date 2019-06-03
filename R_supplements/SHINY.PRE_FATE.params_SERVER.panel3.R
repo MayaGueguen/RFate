@@ -33,6 +33,10 @@ get_path.folder = eventReactive(input$folder.simul, {
   return(dirname(get_path.simul()))
 })
 
+get_param.simul = eventReactive(input$graph.simulParam, {
+  return(paste0(get_path.simul(), "/PARAM_SIMUL/", input$graph.simulParam))
+})
+
 ####################################################################
 
 observeEvent(input$folder.simul, {
@@ -42,6 +46,7 @@ observeEvent(input$folder.simul, {
                                   , pattern = ".txt$"
                                   , all.files = FALSE
                                   , full.names = TRUE)
+    names.simulParam = basename(names.simulParam)
     if (length(names.simulParam) > 0)
     {
       updateSelectInput(session
@@ -128,7 +133,7 @@ get_globalParam = eventReactive(input$graph.simulParam, {
     shinyjs::enable("create.PFGrichness")
     shinyjs::enable("create.PFGcover")
     
-    file.globalParam = .getParam(params.lines = input$graph.simulParam
+    file.globalParam = .getParam(params.lines = get_param.simul()
                                  , flag = "GLOBAL_PARAMS"
                                  , flag.split = "^--.*--$"
                                  , is.num = FALSE)
@@ -180,7 +185,7 @@ get_doSoil = eventReactive(input$graph.simulParam, {
 get_dir.save = eventReactive(input$graph.simulParam, {
   if (nchar(input$graph.simulParam) > 0)
   {
-    dir.save = .getParam(params.lines = input$graph.simulParam
+    dir.save = .getParam(params.lines = get_param.simul()
                          , flag = "SAVE_DIR"
                          , flag.split = "^--.*--$"
                          , is.num = FALSE)
@@ -192,7 +197,7 @@ get_dir.save = eventReactive(input$graph.simulParam, {
 get_lightFiles = eventReactive(input$graph.simulParam, {
   if (nchar(input$graph.simulParam) > 0 && get_doLight())
   {
-    lightFiles = .getParam(params.lines = input$graph.simulParam
+    lightFiles = .getParam(params.lines = get_param.simul()
                            , flag = "PFG_LIGHT_PARAMS"
                            , flag.split = "^--.*--$"
                            , is.num = FALSE)
@@ -207,7 +212,7 @@ get_lightFiles = eventReactive(input$graph.simulParam, {
 get_soilFiles = eventReactive(input$graph.simulParam, {
   if (nchar(input$graph.simulParam) > 0 && get_doSoil())
   {
-    soilFiles = .getParam(params.lines = input$graph.simulParam
+    soilFiles = .getParam(params.lines = get_param.simul()
                           , flag = "PFG_SOIL_PARAMS"
                           , flag.split = "^--.*--$"
                           , is.num = FALSE)

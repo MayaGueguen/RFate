@@ -103,7 +103,7 @@ observeEvent(input$create.relativeAbund, {
   
   get_res = print_messages(as.expression(
     POST_FATE.relativeAbund(name.simulation = get_name.simul()
-                            , file.simulParam = input$graph.simulParam
+                            , file.simulParam = get_param.simul()
                             , year = as.numeric(input$graph.year)
                             , opt.no_CPU = input$graph.opt.no_CPU
     )
@@ -122,7 +122,7 @@ observeEvent(input$create.PFGvsHS, {
   
   get_res = print_messages(as.expression(
     POST_FATE.graphic_mapPFGvsHS(name.simulation = get_name.simul()
-                                 , file.simulParam = input$graph.simulParam
+                                 , file.simulParam = get_param.simul()
                                  , year = input$graph.year
                                  , opt.strata = input$opt.strata_min
                                  , opt.no_CPU = input$graph.opt.no_CPU
@@ -172,7 +172,7 @@ observeEvent(input$create.validationStat, {
   
   get_res = print_messages(as.expression(
     POST_FATE.graphic_validationStatistics(name.simulation = get_name.simul()
-                                           , file.simulParam = input$graph.simulParam
+                                           , file.simulParam = get_param.simul()
                                            , year = as.numeric(input$graph.year)
                                            , mat.PFG.obs = fread(input$graph.mat.PFG.obs$datapath)
                                            , opt.ras_habitat = input$graph.opt.cover.obs$datapath
@@ -196,7 +196,7 @@ observeEvent(input$create.PFGrichness, {
   
   get_res = print_messages(as.expression(
     POST_FATE.graphic_mapPFGrichness(name.simulation = get_name.simul()
-                                     , file.simulParam = input$graph.simulParam
+                                     , file.simulParam = get_param.simul()
                                      , year = as.numeric(input$graph.year)
                                      , opt.no_CPU = input$graph.opt.no_CPU
     )
@@ -218,7 +218,7 @@ observeEvent(input$create.PFGcover, {
   
   get_res = print_messages(as.expression(
     POST_FATE.graphic_mapPFGcover(name.simulation = get_name.simul()
-                                 , file.simulParam = input$graph.simulParam
+                                 , file.simulParam = get_param.simul()
                                  , year = as.numeric(input$graph.year)
                                  , strata_min = as.numeric(input$graph.strata_min)
                                  , opt.no_CPU = input$graph.opt.no_CPU
