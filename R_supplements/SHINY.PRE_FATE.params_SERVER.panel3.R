@@ -16,12 +16,29 @@ observeEvent(input$HELP.panel3, {
 
 ####################################################################
 
-observeEvent(input$folder.simul, {
-  if (input$folder.simul > 0) {
+get_path.simul = eventReactive(input$folder.simul, {
+  if (input$folder.simul > 0)
+  {
     path = choose.dir(default = readDirectoryInput(session, 'folder.simul'))
     updateDirectoryInput(session, 'folder.simul', value = path)
-    
-    names.simulParam = list.files(path = paste0(path, "/PARAM_SIMUL")
+    return(path)
+  }
+})
+
+get_name.simul = eventReactive(input$folder.simul, {
+  return(basename(get_path.simul()))
+})
+
+get_path.folder = eventReactive(input$folder.simul, {
+  return(dirname(get_path.simul()))
+})
+
+####################################################################
+
+observeEvent(input$folder.simul, {
+  if (input$folder.simul > 0)
+  {
+    names.simulParam = list.files(path = paste0(get_path.simul(), "/PARAM_SIMUL")
                                   , pattern = ".txt$"
                                   , all.files = FALSE
                                   , full.names = TRUE)
@@ -55,7 +72,8 @@ observeEvent(input$folder.simul, {
       shinyjs::disable("create.PFGlight")
       shinyjs::disable("create.PFGsoil")
     }
-    return(path)
+    
+    update_graph.files()
   } else
   {
     shinyjs::reset("graph.simulParam")
@@ -75,18 +93,6 @@ observeEvent(input$folder.simul, {
 })
 
 ####################################################################
-
-get_path.simul = eventReactive(input$graph.simulParam, {
-  return(sub("PARAM_SIMUL", "", dirname(input$graph.simulParam)))
-})
-
-get_name.simul = eventReactive(input$graph.simulParam, {
-  return(basename(get_path.simul()))
-})
-
-get_path.folder = eventReactive(input$graph.simulParam, {
-  return(dirname(get_path.simul()))
-})
 
 get_last.createdFiles1 = function(pattern_path)
 {
@@ -187,9 +193,9 @@ get_lightFiles = eventReactive(input$graph.simulParam, {
   if (nchar(input$graph.simulParam) > 0 && get_doLight())
   {
     lightFiles = .getParam(params.lines = input$graph.simulParam
-                         , flag = "PFG_LIGHT_PARAMS"
-                         , flag.split = "^--.*--$"
-                         , is.num = FALSE)
+                           , flag = "PFG_LIGHT_PARAMS"
+                           , flag.split = "^--.*--$"
+                           , is.num = FALSE)
     lightFiles = paste0(get_path.folder(), "/", lightFiles)
     lightFiles
   } else
@@ -202,9 +208,9 @@ get_soilFiles = eventReactive(input$graph.simulParam, {
   if (nchar(input$graph.simulParam) > 0 && get_doSoil())
   {
     soilFiles = .getParam(params.lines = input$graph.simulParam
-                           , flag = "PFG_SOIL_PARAMS"
-                           , flag.split = "^--.*--$"
-                           , is.num = FALSE)
+                          , flag = "PFG_SOIL_PARAMS"
+                          , flag.split = "^--.*--$"
+                          , is.num = FALSE)
     soilFiles = paste0(get_path.folder(), "/", soilFiles)
     soilFiles
   } else
@@ -251,13 +257,13 @@ mat.PFG.succ = reactive({
     tabLight = foreach(i = 1:no_PFG, .combine = "rbind") %do%
     {
       pfg = .getParam(params.lines = lightFiles[i]
-                         , flag = "NAME"
-                         , flag.split = " "
-                         , is.num = FALSE)
-      light = .getParam(params.lines = lightFiles[i]
                       , flag = "NAME"
                       , flag.split = " "
                       , is.num = FALSE)
+      light = .getParam(params.lines = lightFiles[i]
+                        , flag = "NAME"
+                        , flag.split = " "
+                        , is.num = FALSE)
       return(data.frame(PFG = pfg, light = light))
     }
   }
@@ -272,9 +278,9 @@ mat.PFG.succ = reactive({
                       , flag.split = " "
                       , is.num = FALSE)
       soil = .getParam(params.lines = soilFiles[i]
-                        , flag = "SOIL_CONTRIB"
-                        , flag.split = " "
-                        , is.num = TRUE)
+                       , flag = "SOIL_CONTRIB"
+                       , flag.split = " "
+                       , is.num = TRUE)
       return(data.frame(PFG = pfg, soil_contrib = soil))
     }
   }
@@ -287,7 +293,7 @@ mat.PFG.succ = reactive({
 observeEvent(input$graph.simulParam, {
   
   get_enableLightSoil()
-    
+  
   ## -------------------------------------------------------------    
   years.available = list.files(paste0(get_dir.save(), "/ABUND_perPFG_allStrata"))
   years.available = sapply(sub("Abund_YEAR_", "", years.available)
