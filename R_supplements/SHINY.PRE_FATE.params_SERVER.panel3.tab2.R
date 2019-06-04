@@ -32,31 +32,29 @@ observeEvent(input$show.through_time, {
 ####################################################################
 
 observeEvent(input$create.evolutionCoverage, {
-    
-  withBusyIndicatorServer("create.evolutionCoverage", {
-    path.init = getwd()
-    setwd(get_path.folder())
-    
-    get_res = print_messages(as.expression(
-      POST_FATE.graphic_evolutionCoverage(name.simulation = get_name.simul()
-                                          , file.simulParam = get_param.simul()
-                                          , no.years = input$graph.no.years
-                                          , opt.abund_fixedScale = input$graph.opt.fixedScale
-                                          , opt.ras_habitat = input$graph.opt.ras_habitat
-                                          , opt.no_CPU = input$graph.opt.no_CPU
-      )
-    ))
-    
-    output$plot.evolutionCoverage1 = renderPlotly({
-      plot(get_res[[1]]$graph.spaceOccupancy)
-    })
-
-    output$plot.evolutionCoverage2 = renderPlotly({
-      plot(get_res[[1]]$graph.abundance)
-    })
-    
-    setwd(path.init)
+  
+  path.init = getwd()
+  setwd(get_path.folder())
+  
+  get_res = print_messages(as.expression(
+    POST_FATE.graphic_evolutionCoverage(name.simulation = get_name.simul()
+                                        , file.simulParam = get_param.simul()
+                                        , no.years = input$graph.no.years
+                                        , opt.abund_fixedScale = input$graph.opt.fixedScale
+                                        , opt.ras_habitat = input$graph.opt.ras_habitat
+                                        , opt.no_CPU = input$graph.opt.no_CPU
+    )
+  ))
+  
+  output$plot.evolutionCoverage1 = renderPlotly({
+    plot(get_res[[1]]$graph.spaceOccupancy)
   })
+  
+  output$plot.evolutionCoverage2 = renderPlotly({
+    plot(get_res[[1]]$graph.abundance)
+  })
+  
+  setwd(path.init)
 })
 
 

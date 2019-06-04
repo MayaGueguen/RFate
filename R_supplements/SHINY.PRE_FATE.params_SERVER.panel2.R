@@ -46,8 +46,12 @@ observeEvent(input$run.copy, {
   {
     if(!is.null(input$run.executable))
     {
+      showModal(modalDialog(HTML(paste0("Copying <em>", basename(get_path.run()), "</em> folder..."))
+                            , title = HTML("Run <code>FATE-HD</code> simulation")
+                            , footer = NULL))
       system(paste0("scp -r ", get_path.run(), " ./"))
       system(paste0("scp ", input$run.executable$datapath, " FATE_executable.exe"))
+      removeModal()
     }
   }
 })
@@ -60,7 +64,16 @@ observeEvent(input$run, {
     if (file.exists("FATE_executable.exe") &&
         dir.exists(basename(get_path.run())))
     {
+      showModal(modalDialog(HTML(paste0("Running simulation with :
+                                        <ul>
+                                        <li><strong>folder :</strong> ", basename(get_path.run()),"</li>
+                                        <li><strong>simulation parameter file :</strong> ", input$run.simulParam, "</li>
+                                        </ul>"))
+                            , title = HTML("Run <code>FATE-HD</code> simulation")
+                            , footer = NULL))
       print("youhouuu")
+      Sys.sleep(30)
+      removeModal()
     }
   }
 })

@@ -55,8 +55,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Through time</span>")
                         , plotlyOutput(outputId = "plot.evolutionCoverage2", width = "100%", height = "600px")
                )
                , column(4
-                        , withBusyIndicatorUI(
-                          actionButton(inputId = "create.evolutionCoverage"
+                        , actionButton(inputId = "create.evolutionCoverage"
                                        , label = "Run plot"
                                        , icon = icon("play")
                                        , width = "100%"
@@ -66,7 +65,6 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Through time</span>")
                                        , size = "l"
                                        , content = help.HTML("docs/reference/POST_FATE.graphic_evolutionCoverage.html")
                           )
-                        )
                )
              ))
            , shinyjs::hidden(
