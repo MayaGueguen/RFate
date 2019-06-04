@@ -162,8 +162,8 @@ ________________________________________________________________________________
 <br/>
 
 *0. Transformation of outputs*
-- **Create binary maps** : transform abundance values into presence / absence
-with the function [POST_FATE.relativeAbund_presenceAbsence](https://mayagueguen.github.io/RFate/reference/POST_FATE.relativeAbund_presenceAbsence.html)
+- **Create relative abundance maps** : transform absolute abundance values into relative
+with the function [POST_FATE.relativeAbund](https://mayagueguen.github.io/RFate/reference/POST_FATE.relativeAbund.html)
 
 *A. Evolution of simulation through time*
 - **Abundance over all studied area** : with the function [POST_FATE.graphic_evolutionCoverage](https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_evolutionCoverage.html)
@@ -182,7 +182,8 @@ with the function [POST_FATE.graphic_mapPFGlight](https://mayagueguen.github.io/
 with the function [POST_FATE.graphic_mapPFGsoil](https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFGsoil.html)
 
 *C. Evaluation of outputs*
+- **Validation statistics** : calculate evaluation metrics (TSS, AUC) for each PFG, and transform relative abundance maps into presence / absence  
+with the function [POST_FATE.graphic_validationStatistics](https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_validationStatistics.html)
 - **PFG outputs vs Habitat suitability** : compare binary maps (outputs) with habitat suitability maps (inputs)  
 with the function [POST_FATE.graphic_mapPFGvsHS](https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFGvsHS.html)
-- **Validation statistics** : calculate evaluation metrics (TSS, AUC) for each PFG  
-with the function [POST_FATE.graphic_validationStatistics](https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_validationStatistics.html)
+
