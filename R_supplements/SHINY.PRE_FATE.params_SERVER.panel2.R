@@ -24,8 +24,6 @@ observeEvent(input$run.folder.simul, {
       shinyjs::reset("run.simulParam")
       shinyjs::disable("run.simulParam")
     }
-    
-    update_browser.files()
   } else
   {
     shinyjs::reset("run.simulParam")
