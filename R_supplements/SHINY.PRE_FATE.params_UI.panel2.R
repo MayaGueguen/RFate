@@ -32,6 +32,22 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-cogs'></i> Run
                )
                , column(2
                         , br()
+                        , actionButton(inputId = "run.copy"
+                                       , label = "Copy files"
+                                       , icon = icon("copy", class = "icon-help")
+                                       , width = "100%"
+                                       , style = HTML(button.style.help)))
+             ) ## END fluidRow
+             , fluidRow(
+               column(5
+                        , fileInput(inputId = "run.executable"
+                                    , label = param.style("Select the FATE executable file :")
+                                    , multiple = F
+                                    , width = "100%")
+               )
+               , column(5, br())
+               , column(2
+                        , br()
                         , actionButton(inputId = "run"
                                        , label = "Run"
                                        , icon = icon("play-circle", class = "icon-help")
