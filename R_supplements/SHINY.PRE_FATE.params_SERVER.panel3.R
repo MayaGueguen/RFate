@@ -6,9 +6,20 @@ observeEvent(input$HELP.panel3, {
           , options = list("nextLabel" = "Next"
                            , "prevLabel" = "Prev"
                            , "skipLabel" = "Close"
-                           , steps = data.frame(element = paste0("#help3_", 1)
-                                                , intro = c("COUCOU")
-                           )
+                           , steps = data.frame(element = c(paste0("#help3_", 1:2),"#main.panel")
+                                                , intro = c("<p>A folder name with a typical <code>FATE-HD</code> organization, that can be created with the function 
+                                                              <a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.skeletonDirectory.html'>PRE_FATE.skeletonDirectory</a>.</p>
+                                                              <p><strong>RESULTS</strong> folder should contain <code>FATE-HD</code> output maps.</p>"
+                                                            , "<p><strong>ParamSimulation file</strong> : containing all links to the files created with the previous functions.<br>
+                                                              It can be created with the function <a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_simulParameters.html'>PRE_FATE.params_simulParameters</a>.</p>
+                                                              <p>Parameters will be extracted and used to produce output graphics.</p>"
+                                                            , "<p><em>1. BROWSER</em></p>
+                                                            <ul><li>Explore <strong>pre-existing graphics</strong> into the selected simulation folder</li></ul>
+                                                            <p><em>2. Evolution of simulation through time</em></p>
+                                                            <ul><li>Create graphics with abundances of PFG <strong>over several years</strong></li></ul>
+                                                            <p><em>3. Specific year</em></p>
+                                                            <ul><li>Create graphics with abundances of PFG <strong>for a specific year</strong> of simulation</li></ul>
+                                                            "))
           )
   )
 })

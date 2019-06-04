@@ -12,27 +12,22 @@ tabPanel(title = HTML("<span class='panel_title'><i class='fa fa-chart-bar'></i>
              br(),
              fluidRow(
                column(5
-                      , id = "help3_1"
-                      # , introBox(
-                        , div(id = "help3_1"
-                              , directoryInput(inputId = "folder.simul"
-                                       , label = param.style("Select the simulation folder :")
-                                       , value = '~')
-                        )
-                      #   , data.step = 6
-                      #   , data.position = "bottom"
-                      #   , data.intro = "
-                      #       Coucou!"
-                      # )
+                      , div(id = "help3_1"
+                            , directoryInput(inputId = "folder.simul"
+                                             , label = param.style("Select the simulation folder :")
+                                             , value = '~')
+                      )
                )
                , column(5
-                        , shinyjs::disabled(
-                          selectInput(inputId = "graph.simulParam"
-                                      , label = param.style("Select the simulation parameters file :")
-                                      , choices = NULL
-                                      , selected = NULL
-                                      , multiple = F
-                                      , width = "100%")
+                        , div(id = "help3_2"
+                              , shinyjs::disabled(
+                                selectInput(inputId = "graph.simulParam"
+                                            , label = param.style("Select the simulation parameters file :")
+                                            , choices = NULL
+                                            , selected = NULL
+                                            , multiple = F
+                                            , width = "100%")
+                              )
                         )
                )
                , column(2
