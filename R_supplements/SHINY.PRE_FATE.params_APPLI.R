@@ -168,7 +168,7 @@ ui <- fluidPage(
                , navbarMenu(title = HTML("<span class='panel_title'><i class='fa fa-copy'></i> Simulation parameter files</span>")
                             , source("R_supplements/SHINY.PRE_FATE.params_UI.panel1.R", local = TRUE)$value
                             , tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-folder-open'></i> Open</span>")))
-               , tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-cogs'></i> Run simulation</span>"))
+               , source("R_supplements/SHINY.PRE_FATE.params_UI.panel2.R", local = TRUE)$value
                , source("R_supplements/SHINY.PRE_FATE.params_UI.panel3.R", local = TRUE)$value
     )
   )
