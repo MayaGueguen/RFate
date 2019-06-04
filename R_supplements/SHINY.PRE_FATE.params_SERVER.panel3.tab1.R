@@ -1,7 +1,7 @@
 
 ####################################################################
 
-get_names.files = eventReactive(input$folder.simul, {
+get_names.files = eventReactive(input$graph.folder.simul, {
   names.files = list.files(path = paste0(get_path.simul(), "/RESULTS")
                            , pattern = ".pdf$"
                            , all.files = FALSE
@@ -10,7 +10,7 @@ get_names.files = eventReactive(input$folder.simul, {
   return(names.files)
 })
 
-update_graph.files = function()
+update_browser.files = function()
 {
   names.files = get_names.files()
   if (length(names.files) > 0)
@@ -27,13 +27,13 @@ update_graph.files = function()
     }
     
     updateSelectInput(session
-                      , inputId = "graph.files"
+                      , inputId = "browser.files"
                       , choices = names.files
                       , selected = names.files[1])
-    shinyjs::enable("graph.files")
+    shinyjs::enable("browser.files")
   } else
   {
-    shinyjs::disable("graph.files")
+    shinyjs::disable("browser.files")
   }
 }
 
@@ -84,11 +84,11 @@ get_browser.soil = eventReactive(input$browser.soil, {
 
 ####################################################################
 
-observeEvent(input$browser.abundance, { update_graph.files() })
-observeEvent(input$browser.validation, { update_graph.files() })
-observeEvent(input$browser.richness, { update_graph.files() })
-observeEvent(input$browser.cover, { update_graph.files() })
-observeEvent(input$browser.light, { update_graph.files() })
-observeEvent(input$browser.soil, { update_graph.files() })
+observeEvent(input$browser.abundance, { update_browser.files() })
+observeEvent(input$browser.validation, { update_browser.files() })
+observeEvent(input$browser.richness, { update_browser.files() })
+observeEvent(input$browser.cover, { update_browser.files() })
+observeEvent(input$browser.light, { update_browser.files() })
+observeEvent(input$browser.soil, { update_browser.files() })
 
 

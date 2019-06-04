@@ -13,7 +13,7 @@ tabPanel(title = HTML("<span class='panel_title'><i class='fa fa-chart-bar'></i>
              fluidRow(
                column(5
                       , div(id = "help3_1"
-                            , directoryInput(inputId = "folder.simul"
+                            , directoryInput(inputId = "graph.folder.simul"
                                              , label = param.style("Select the simulation folder :")
                                              , value = '~')
                       )

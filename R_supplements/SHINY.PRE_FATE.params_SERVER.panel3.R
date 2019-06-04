@@ -27,20 +27,20 @@ observeEvent(input$HELP.panel3, {
 
 ####################################################################
 
-get_path.simul = eventReactive(input$folder.simul, {
-  if (input$folder.simul > 0)
+get_path.simul = eventReactive(input$graph.folder.simul, {
+  if (input$graph.folder.simul > 0)
   {
-    path = choose.dir(default = readDirectoryInput(session, 'folder.simul'))
-    updateDirectoryInput(session, 'folder.simul', value = path)
+    path = choose.dir(default = readDirectoryInput(session, 'graph.folder.simul'))
+    updateDirectoryInput(session, 'graph.folder.simul', value = path)
     return(path)
   }
 })
 
-get_name.simul = eventReactive(input$folder.simul, {
+get_name.simul = eventReactive(input$graph.folder.simul, {
   return(basename(get_path.simul()))
 })
 
-get_path.folder = eventReactive(input$folder.simul, {
+get_path.folder = eventReactive(input$graph.folder.simul, {
   return(dirname(get_path.simul()))
 })
 
@@ -50,8 +50,8 @@ get_param.simul = eventReactive(input$graph.simulParam, {
 
 ####################################################################
 
-observeEvent(input$folder.simul, {
-  if (input$folder.simul > 0)
+observeEvent(input$graph.folder.simul, {
+  if (input$graph.folder.simul > 0)
   {
     names.simulParam = list.files(path = paste0(get_path.simul(), "/PARAM_SIMUL")
                                   , pattern = ".txt$"
@@ -89,7 +89,7 @@ observeEvent(input$folder.simul, {
       shinyjs::disable("create.PFGsoil")
     }
     
-    update_graph.files()
+    update_browser.files()
   } else
   {
     shinyjs::reset("graph.simulParam")

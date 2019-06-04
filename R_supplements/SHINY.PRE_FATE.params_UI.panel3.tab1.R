@@ -50,7 +50,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>BROWSER</span>")
            column(12
                   , br()
                   , shinyjs::disabled(
-                    selectInput(inputId = "graph.files"
+                    selectInput(inputId = "browser.files"
                                 , label = param.style("Select the graphic to display :")
                                 , choices = NULL
                                 , selected = NULL
