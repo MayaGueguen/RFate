@@ -68,14 +68,17 @@ observeEvent(input$HELP.panel1, {
 ####################################################################
 
 observeEvent(input$create.skeleton, {
-  print_messages(as.expression(
+  get_res = print_messages(as.expression(
     PRE_FATE.skeletonDirectory(name.simulation = input$name.simul)
   ))
   
-  shinyjs::show("main.panel")
-  shinyjs::enable("create.simul")
-  shinyjs::enable("FATE_simulation.zip")
-  shinyjs::enable("refresh")
+  if (as.character(get_res) != "0")
+  {
+    shinyjs::show("main.panel")
+    shinyjs::enable("create.simul")
+    shinyjs::enable("FATE_simulation.zip")
+    shinyjs::enable("refresh")
+  }
 })
 
 ####################################################################
@@ -118,10 +121,21 @@ output$FATE_simulation.zip = downloadHandler(
 ####################################################################
 
 observeEvent(input$refresh, {
-  system(command = paste0("rm -r ", input$name.simul))
-  shinyjs::hide("main.panel")
-  shinyjs::disable("create.simul")
-  shinyjs::disable("FATE_simulation.zip")
-  shinyjs::disable("refresh")
+  shinyalert(type = "warning"
+             , text = paste0("The current simulation folder will be removed !\n"
+                             , "Make sure you saved your previous work.")
+             , showCancelButton = TRUE
+             , showConfirmButton = TRUE
+             , callbackR = function(x)
+             {
+               if (x)
+               {
+                 system(command = paste0("rm -r ", input$name.simul))
+                 shinyjs::hide("main.panel")
+                 shinyjs::disable("create.simul")
+                 shinyjs::disable("FATE_simulation.zip")
+                 shinyjs::disable("refresh")
+               }
+             })
 })
 
