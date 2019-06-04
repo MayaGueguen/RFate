@@ -98,7 +98,7 @@ observeEvent(input$create.global, {
       )
     ), cut_pattern = paste0(input$name.simul, "/DATA/GLOBAL_PARAMETERS/"))
     
-    if(get_res)
+    if (as.character(get_res) != "0")
     {
       output$created_table.global = renderDataTable({
         path_folder = paste0(input$name.simul, "/DATA/GLOBAL_PARAMETERS/")
