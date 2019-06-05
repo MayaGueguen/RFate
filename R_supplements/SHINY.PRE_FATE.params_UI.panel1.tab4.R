@@ -71,7 +71,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Raster files</span>")
                                                                                          , "habsuit.mask")
                                                                       , param.desc.vec = c("<hr/>"
                                                                                            , "<em>(optional) a string that corresponds to the name of the folder
-                                                                                           that will be created into the <span style='font-family:Monospace;'>name.simulation/DATA/SAVE/</span> directory to store the habitat suitability maps"
+                                                                                           that will be created into the <span style='font-family:Monospace;'>name.simulation/DATA/PFGS/HABSUIT/</span> directory to store the habitat suitability maps"
                                                                                            , "one or several <span style='font-family:Monospace;'>string</span> corresponding to
                                                                                            the file name(s) of a raster mask, with values from 0 to 1 within each pixel, corresponding to the probability to find a specific PFG within this pixel")
                                                                       ))
@@ -113,11 +113,13 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Raster files</span>")
                           , fluidRow(
                             column(6
                                    , br()
-                                   , actionButton(inputId = "add.changing"
+                                   , shinyjs::disabled(
+                                     actionButton(inputId = "add.changing"
                                                   , label = "Add changing year"
                                                   , icon = icon("plus")
                                                   , width = "100%"
                                                   , style = HTML(button.style)
+                                   )
                                    )
                             )
                             , column(6
@@ -137,14 +139,14 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Raster files</span>")
                             )
                           )
                           , fluidRow(
-                            column(2
+                            column(4
                                    , br()
                                    , br()
                                    , HTML("<em>opt.folder.name</em>")
                                    , textInput(inputId = "changing.folder"
                                                , label = NULL
                                                , width = "100%"))
-                            , column(2
+                            , column(4
                                      , br()
                                      , br()
                                      , HTML("<strong>Type</strong>")
@@ -154,17 +156,27 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Raster files</span>")
                                                    , selected = "MASK"
                                                    , multiple = FALSE
                                                    , width = "100%"))
+                            , column(4
+                                     , br()
+                                     , br()
+                                     , br()
+                                     , actionButton(inputId = "refresh.changing"
+                                                    , label = "Get available files"
+                                                    , icon = icon("refresh")
+                                                    , width = "100%"
+                                                    , style = HTML(button.style)
+                                     ))
+                          )
+                          , fluidRow(
+                            column(2
+                                   , br()
+                                   , HTML("<strong>Year</strong>")
+                                   , numericInput(inputId = "changing.year"
+                                                  , label = NULL
+                                                  , value = 1
+                                                  , min = 1
+                                                  , width = "100%"))
                             , column(2
-                                     , br()
-                                     , br()
-                                     , HTML("<strong>Year</strong>")
-                                     , numericInput(inputId = "changing.year"
-                                                    , label = NULL
-                                                    , value = 1
-                                                    , min = 1
-                                                    , width = "100%"))
-                            , column(2
-                                     , br()
                                      , br()
                                      , HTML("<strong>Order</strong>")
                                      , numericInput(inputId = "changing.order"
@@ -172,20 +184,20 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Raster files</span>")
                                                     , value = 1
                                                     , min = 1
                                                     , width = "100%"))
-                            , column(4
-                                     , br()
+                            , column(8
                                      , br()
                                      , HTML("<strong>File</strong>")
-                                     , textInput(inputId = "changing.file"
-                                                 , label = NULL
-                                                 , width = "100%"))
-                            # , fileInput(inputId = "changing.file"
-                            #             , label = NULL
-                            #             , multiple = FALSE
-                            #             , width = "100%"))
+                                     , selectInput(inputId = "changing.file"
+                                                   , label = NULL
+                                                   , choices = NULL
+                                                   , selected = NULL
+                                                   , multiple = TRUE
+                                                   , width = "100%")
+                            )
                           )
                           , fluidRow(
                             column(10
+                                   , br()
                                    , br()
                                    , tableOutput(outputId = "mat.changing"))
                             , column(2
@@ -200,7 +212,8 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Raster files</span>")
                           , fluidRow(
                             br(),
                             column(12,
-                                   wellPanel(dataTableOutput(outputId = "created_table.changing"))
+                                   wellPanel(style = "overflow-x:scroll;"
+                                             , dataTableOutput(outputId = "created_table.changing"))
                             )
                           )
                ) ## END tabPanel (Changing)

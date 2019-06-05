@@ -7,16 +7,23 @@ observeEvent(input$upload.mask, {
     if(!is.null(input$simul.mask))
     {
       file1 = input$simul.mask$datapath
-      file2 = input$simul.mask$name
+      file2 = gsub(" ", "_", input$simul.mask$name)
       file2 = paste0("MASK_", file2)
       file2 = paste0(input$name.simul, "/DATA/MASK/", file2)
       get_res = file.copy(from = file1, to = file2)
-      
-      if(get_res)
+
+      if(sum(get_res) == length(get_res))
       {
+        if (length(grep(" ", input$simul.mask$name)) > 0)
+        {
+          showNotification("Spaces within name.mask have been replaced by `_` !", type = "warning")
+        }
         shinyalert(type = "success", text = paste0("The file ", input$simul.mask$name
                                                    , " has been correctly uploaded and renamed as "
-                                                   , file2, " !"))
+                                                   , sub(paste0(input$name.simul, "/DATA/MASK/")
+                                                         , paste0(input$name.simul, "/DATA/MASK/ ")
+                                                         , file2)
+                                                   , " !"))
       } else
       {
         shinyalert(type = "error", text = "Oops. Something went wrong !")
@@ -45,16 +52,23 @@ observeEvent(input$upload.habsuit.mask, {
       }
       
       file1 = input$habsuit.mask$datapath
-      file2 = input$habsuit.mask$name
+      file2 = gsub(" ", "_", input$habsuit.mask$name)
       file2 = paste0("HABSUIT_", file2)
       file2 = paste0(input$name.simul, "/DATA/PFGS/HABSUIT/", opt.folder.name, file2)
       get_res = file.copy(from = file1, to = file2)
       
-      if(get_res)
+      if(sum(get_res) == length(get_res))
       {
+        if (length(grep(" ", input$habsuit.mask$name)) > 0)
+        {
+          showNotification("Spaces within habsuit.mask have been replaced by `_` !", type = "warning")
+        }
         shinyalert(type = "success", text = paste0("The file ", input$habsuit.mask$name
                                                    , " has been correctly uploaded and renamed as "
-                                                   , file2, " !"))
+                                                   , sub(paste0(input$name.simul, "/DATA/PFGS/HABSUIT/", opt.folder.name)
+                                                         , paste0(input$name.simul, "/DATA/PFGS/HABSUIT/", opt.folder.name, " ")
+                                                         , file2)
+                                                   , " !"))
       } else
       {
         shinyalert(type = "error", text = "Oops. Something went wrong !")
@@ -73,16 +87,23 @@ observeEvent(input$upload.dist.mask, {
     if(!is.null(input$dist.mask))
     {
       file1 = input$dist.mask$datapath
-      file2 = input$dist.mask$name
+      file2 = gsub(" ", "_", input$dist.mask$name)
       file2 = paste0("DIST_", file2)
       file2 = paste0(input$name.simul, "/DATA/MASK/", file2)
       get_res = file.copy(from = file1, to = file2)
-      
-      if(get_res)
+
+      if(sum(get_res) == length(get_res))
       {
+        if (length(grep(" ", input$dist.mask$name)) > 0)
+        {
+          showNotification("Spaces within dist.mask have been replaced by `_` !", type = "warning")
+        }
         shinyalert(type = "success", text = paste0("The file ", input$dist.mask$name
                                                    , " has been correctly uploaded and renamed as "
-                                                   , file2, " !"))
+                                                   , sub(paste0(input$name.simul, "/DATA/MASK/")
+                                                         , paste0(input$name.simul, "/DATA/MASK/ ")
+                                                         , file2)
+                                                   , " !"))
       } else
       {
         shinyalert(type = "error", text = "Oops. Something went wrong !")
@@ -96,18 +117,45 @@ observeEvent(input$upload.dist.mask, {
 
 ####################################################################
 
+observeEvent(input$refresh.changing, {
+  names.raster1 = list.files(path = paste0(input$name.simul, "/DATA/MASK")
+                             , pattern = ".tif$|.img$"
+                             , all.files = FALSE
+                             , full.names = TRUE)
+  names.raster2 = list.files(path = paste0(input$name.simul, "/DATA/PFGS/HABSUIT")
+                             , pattern = ".tif$|.img$"
+                             , all.files = FALSE
+                             , full.names = TRUE
+                             , recursive = TRUE)
+  names.raster = c(names.raster1, names.raster2)
+  names.raster = sub(paste0(".*", input$name.simul), input$name.simul, names.raster)
+  if (length(names.raster) > 0)
+  {
+    updateSelectInput(session = session
+                      , inputId = "changing.file"
+                      , label = NULL
+                      , choices = names.raster
+                      , selected = names.raster[1])
+    
+    shinyjs::enable("add.changing")
+  } else
+  {
+    shinyjs::reset("changing.file")
+    shinyjs::disable("add.changing")
+  }
+})
+
+
+####################################################################
+
 observeEvent(input$add.changing, {
-  # if(!is.null(input$changing.file))
-  # {
   mat.changing <<- rbind(mat.changing
                          , data.frame(opt.folder.name = input$changing.folder
                                       , type.changing = input$type.changing
                                       , year = input$changing.year
                                       , order = input$changing.order
                                       , file.name = input$changing.file))
-  # , file.name = input$changing.file$name))
   output$mat.changing = renderTable({ mat.changing })
-  # }
   
   shinyjs::enable("create.changing")
 })
@@ -121,45 +169,43 @@ observeEvent(input$delete.changing, {
 
 ####################################################################
 
+output$created_table.changing = renderDataTable({
+  path_folder = paste0(input$name.simul, "/DATA/SCENARIO/")
+  return(get_files(path_folder, skip.no = 0, opt.sub_folder = TRUE))
+})
+
 observeEvent(input$create.changing, {
   if (input$create.skeleton > 0)
   {
-    if (nrow(mat.changing) > 0)
+    mat.changing.split = split(mat.changing, list(mat.changing$type.changing, mat.changing$opt.folder.name))
+    for(i in 1:length(mat.changing.split))
     {
-      mat.changing.split = split(mat.changing, list(mat.changing$type.changing, mat.changing$opt.folder.name))
-      print(length(mat.changing.split))
-      for(i in 1:length(mat.changing.split))
+      tab = mat.changing.split[[i]]
+      tab$opt.folder.name = as.character(tab$opt.folder.name)
+      tab$file.name = as.character(tab$file.name)
+      if (nrow(tab) > 0 && sum(nchar(tab$file.name) == 0) == 0)
       {
-        print(i)
-        tab = mat.changing.split[[i]]
-        tab$opt.folder.name = as.character(tab$opt.folder.name)
-        tab$file.name = as.character(tab$file.name)
-        print(nrow(tab))
-        print(tab)
-        print(tab$opt.folder.name)
-        if (nrow(tab) > 0 && sum(nchar(tab$file.name) == 0) == 0)
+        if (nchar(unique(tab$opt.folder.name)) > 0)
         {
-          if (nchar(tab$opt.folder.name) > 0)
-          {
-            dir.create(paste0(input$name.simul, "/DATA/scenario/", tab$opt.folder.name))
-          }
-          get_res = print_messages(as.expression(
-            PRE_FATE.params_changingYears(name.simulation = input$name.simul
-                                          , type.changing = tab$type.changing
-                                          , mat.changing = data.frame(year = tab$year
-                                                                      , order = tab$year
-                                                                      , file.name = tab$file.name)
-                                          , opt.folder.name = tab$opt.folder.name
-            )
-          ))
-          
-          if(get_res)
-          {
-            output$created_table.changing = renderDataTable({
-              path_folder = paste0(input$name.simul, "/DATA/SCENARIO/")
-              return(get_files(path_folder, skip.no = 0))
-            })
-          }
+          dir.create(paste0(input$name.simul, "/DATA/SCENARIO/", unique(tab$opt.folder.name)))
+        }
+        
+        get_res = print_messages(as.expression(
+          PRE_FATE.params_changingYears(name.simulation = input$name.simul
+                                        , type.changing = unique(tab$type.changing)
+                                        , mat.changing = data.frame(year = tab$year
+                                                                    , order = tab$order
+                                                                    , file.name = tab$file.name)
+                                        , opt.folder.name = unique(tab$opt.folder.name)
+          )
+        ), cut_pattern = paste0(input$name.simul, "/DATA/SCENARIO/"))
+        
+        if (as.character(get_res) != "0")
+        {
+          output$created_table.changing = renderDataTable({
+            path_folder = paste0(input$name.simul, "/DATA/SCENARIO/")
+            return(get_files(path_folder, skip.no = 0, opt.sub_folder = TRUE))
+          })
         }
       }
     }
