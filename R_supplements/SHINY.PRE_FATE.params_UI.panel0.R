@@ -68,14 +68,16 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-home'></i></sp
                                              , label = "Go to FATE website"
                                              , icon = icon("arrow-circle-right", class = "icon-help")
                                              , width = "100%"
-                                             , style = HTML(button.style.help))
+                                             , style = HTML(button.style.help)
+                                             , onclick ="window.open('https://mayagueguen.github.io/FATE-WEBSITE/', '_blank')")
                               , br()
                               , br()
                               , actionButton(inputId = "web.RFate"
                                              , label = "Go to RFate website"
                                              , icon = icon("arrow-circle-right", class = "icon-help")
                                              , width = "100%"
-                                             , style = HTML(button.style.help))
+                                             , style = HTML(button.style.help)
+                                             , onclick ="window.open('https://mayagueguen.github.io/RFate/', '_blank')")
                         )
                )
                       )
