@@ -1,6 +1,19 @@
 
 ####################################################################
 
+get_opt.folder.name = eventReactive(input$PFG.folder, {
+  opt.folder.name = ifelse(nchar(input$PFG.folder) > 0
+                           , gsub(" ", "_", input$PFG.folder)
+                           , "")
+  if (length(grep(" ", input$PFG.folder)) > 0)
+  {
+    showNotification("Spaces within opt.folder.name have been replaced by `_` !", type = "warning")
+  }
+  return(opt.folder.name)
+})
+
+####################################################################
+
 observeEvent(input$name.PFG, {
   if (nchar(input$name.PFG) > 0)
   {
@@ -54,6 +67,9 @@ observeEvent(input$delete.names.PFG, {
   output$names.PFG = renderText({ "PFG list : " })
   
   shinyjs::reset("name.PFG")
+  shinyjs::reset("succ.PFG")
+  shinyjs::reset("disp.PFG")
+  shinyjs::reset("soil.PFG")
   shinyjs::disable("succ.PFG")
   shinyjs::disable("add.PFG.succ")
   shinyjs::disable("disp.PFG")
@@ -91,7 +107,7 @@ observeEvent(input$delete.PFG.ALL, {
 
 output$created_table.succ = renderDataTable({
   path_folder = paste0(input$name.simul, "/DATA/PFGS/SUCC/")
-  return(get_files(path_folder))
+  return(get_files(path_folder, skip.no = 0, opt.sub_folder = TRUE))
 })
 
 observeEvent(input$create.succ, {
@@ -100,14 +116,15 @@ observeEvent(input$create.succ, {
     get_res = print_messages(as.expression(
       PRE_FATE.params_PFGsuccession(name.simulation = input$name.simul
                                     , mat.PFG.succ = mat.PFG.ALL[, c("PFG", "type", "height", "maturity", "longevity")]
+                                    , opt.folder.name = get_opt.folder.name()
       )
-    ))
+    ), cut_pattern = paste0(input$name.simul, "/DATA/PFGS/SUCC/"))
     
-    if(get_res)
+    if (as.character(get_res) != "0")
     {
       output$created_table.succ = renderDataTable({
         path_folder = paste0(input$name.simul, "/DATA/PFGS/SUCC/")
-        return(get_files(path_folder))
+        return(get_files(path_folder, skip.no = 0, opt.sub_folder = TRUE))
       })
     }
   } else
@@ -120,7 +137,7 @@ observeEvent(input$create.succ, {
 
 output$created_table.light = renderDataTable({
   path_folder = paste0(input$name.simul, "/DATA/PFGS/LIGHT/")
-  return(get_files(path_folder))
+  return(get_files(path_folder, skip.no = 0, opt.sub_folder = TRUE))
 })
 
 observeEvent(input$create.light, {
@@ -129,14 +146,15 @@ observeEvent(input$create.light, {
     get_res = print_messages(as.expression(
       PRE_FATE.params_PFGlight(name.simulation = input$name.simul
                                , mat.PFG.succ = mat.PFG.ALL[, c("PFG", "type", "height", "maturity", "longevity", "light")]
+                               , opt.folder.name = get_opt.folder.name()
       )
-    ))
+    ), cut_pattern = paste0(input$name.simul, "/DATA/PFGS/LIGHT/"))
     
-    if(get_res)
+    if (as.character(get_res) != "0")
     {
       output$created_table.light = renderDataTable({
         path_folder = paste0(input$name.simul, "/DATA/PFGS/LIGHT/")
-        return(get_files(path_folder))
+        return(get_files(path_folder, skip.no = 0, opt.sub_folder = TRUE))
       })
     }
   } else
@@ -170,7 +188,7 @@ observeEvent(input$delete.PFG.disp, {
 
 output$created_table.disp = renderDataTable({
   path_folder = paste0(input$name.simul, "/DATA/PFGS/DISP/")
-  return(get_files(path_folder))
+  return(get_files(path_folder, skip.no = 0, opt.sub_folder = TRUE))
 })
 
 observeEvent(input$create.disp, {
@@ -179,14 +197,15 @@ observeEvent(input$create.disp, {
     get_res = print_messages(as.expression(
       PRE_FATE.params_PFGdispersal(name.simulation = input$name.simul
                                    , mat.PFG.disp = mat.PFG.disp
+                                   , opt.folder.name = get_opt.folder.name()
       )
-    ))
+    ), cut_pattern = paste0(input$name.simul, "/DATA/PFGS/DISP/"))
     
-    if(get_res)
+    if (as.character(get_res) != "0")
     {
       output$created_table.disp = renderDataTable({
         path_folder = paste0(input$name.simul, "/DATA/PFGS/DISP/")
-        return(get_files(path_folder))
+        return(get_files(path_folder, skip.no = 0, opt.sub_folder = TRUE))
       })
     }
   } else
@@ -388,6 +407,16 @@ output$UI.dist.grouping = renderUI({
 
 ####################################################################
 
+observeEvent(input$dist.name, {
+  if (nchar(input$dist.name) > 0)
+  {
+    shinyjs::enable("add.PFG.dist")
+  } else
+  {
+    shinyjs::disable("add.PFG.dist")
+  }
+})
+
 observeEvent(input$add.PFG.dist, {
   if (input$dist.grouping == "by type")
   {
@@ -439,7 +468,7 @@ observeEvent(input$delete.PFG.dist, {
 
 output$created_table.dist = renderDataTable({
   path_folder = paste0(input$name.simul, "/DATA/PFGS/DIST/")
-  return(get_files(path_folder))
+  return(get_files(path_folder, skip.no = 0, opt.sub_folder = TRUE))
 })
 
 observeEvent(input$create.dist, {
@@ -448,14 +477,15 @@ observeEvent(input$create.dist, {
     get_res = print_messages(as.expression(
       PRE_FATE.params_PFGdisturbance(name.simulation = input$name.simul
                                      , mat.PFG.dist = mat.PFG.dist
+                                     , opt.folder.name = get_opt.folder.name()
       )
-    ))
+    ), cut_pattern = paste0(input$name.simul, "/DATA/PFGS/DIST/"))
     
-    if(get_res)
+    if (as.character(get_res) != "0")
     {
       output$created_table.dist = renderDataTable({
         path_folder = paste0(input$name.simul, "/DATA/PFGS/DIST/")
-        return(get_files(path_folder))
+        return(get_files(path_folder, skip.no = 0, opt.sub_folder = TRUE))
       })
     }
   } else
@@ -501,7 +531,7 @@ observeEvent(input$delete.PFG.soil, {
 
 output$created_table.soil = renderDataTable({
   path_folder = paste0(input$name.simul, "/DATA/PFGS/SOIL/")
-  return(get_files(path_folder))
+  return(get_files(path_folder, skip.no = 0, opt.sub_folder = TRUE))
 })
 
 observeEvent(input$create.soil, {
@@ -511,14 +541,15 @@ observeEvent(input$create.soil, {
       PRE_FATE.params_PFGsoil(name.simulation = input$name.simul
                               , mat.PFG.soil = unique(mat.PFG.soil[, c("PFG", "type", "soil_contrib", "soil_tol_min", "soil_tol_max")])
                               , mat.PFG.tol = mat.PFG.soil[, c("PFG", "lifeStage", "soilResources", "soil_tol")]
+                              , opt.folder.name = get_opt.folder.name()
       )
     ), cut_pattern = paste0(input$name.simul, "/DATA/PFGS/SOIL/"))
     
-    if(get_res)
+    if (as.character(get_res) != "0")
     {
       output$created_table.soil = renderDataTable({
         path_folder = paste0(input$name.simul, "/DATA/PFGS/SOIL/")
-        return(get_files(path_folder))
+        return(get_files(path_folder, skip.no = 0, opt.sub_folder = TRUE))
       })
     }
   } else

@@ -29,12 +29,11 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                             )
                           )
                  )
-                 , column(5
-                          , br()
+                 , column(6
                           , wellPanel(style = "overflow-x:scroll;"
                                       , textOutput(outputId = "names.PFG"))
                  )
-                 , column(2
+                 , column(1
                           , br()
                           , actionButton(inputId = "delete.names.PFG"
                                          , label = NULL
@@ -42,6 +41,15 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                          , style = HTML(button.style)
                           )
                  )
+               )
+               , fluidRow(
+                 column(5, br())
+                 , column(6
+                        , br()
+                        , textInput(inputId = "PFG.folder"
+                                    , label = param.style("opt.folder.name")
+                                    , value = NULL
+                                    , width = "100%"))
                )
              ) ## END wellPanel
              , tabsetPanel(
