@@ -244,19 +244,27 @@ PRE_FATE.params_PFGlight = function(
   strata.limits = c(0, 20, 50, 150, 400, 1000, 2000, 5000, 10000)
   categories = cut(mat.PFG.succ$height, breaks = strata.limits)
   categories.table = table(categories)
-  STRATA_LIMITS = 0
-  tmp = categories.table[1]
-  for (categ in 2:length(strata.limits))
+  if (no.PFG == 1)
   {
-    if (tmp >= max(c(2, (no.PFG.perStrata - 2))))
+    categ = which(categories.table == 1)
+    STRATA_LIMITS = c(0, strata.limits[categ], strata.limits[categ + 1])    
+  } else
+  {
+    STRATA_LIMITS = 0
+    tmp = categories.table[1]
+    for (categ in 2:length(strata.limits))
     {
-      STRATA_LIMITS = c(STRATA_LIMITS, strata.limits[categ])
-      tmp = categories.table[categ]
-    } else 
-    {
-      tmp = tmp + categories.table[categ]
+      if (tmp >= max(c(1, (no.PFG.perStrata - 2))))
+      {
+        STRATA_LIMITS = c(STRATA_LIMITS, strata.limits[categ])
+        tmp = categories.table[categ]
+      } else 
+      {
+        tmp = tmp + categories.table[categ]
+      }
     }
   }
+  STRATA_LIMITS = sort(unique(STRATA_LIMITS))
   # barplot(table(cut(mat.PFG.succ$height, breaks = STRATA_LIMITS)))
   
   ## GET STRATA attribution
@@ -303,28 +311,31 @@ PRE_FATE.params_PFGlight = function(
   ## at age = maturity/2, height = IMM_SIZE * height	
   ## at age = longevity, height = height
   CHANG_STR_AGES = matrix(0, nrow = no.strata, ncol = no.PFG)
-  CHANG_STR_AGES[2:no.strata, ] = 10000
-  for (i in 1:no.PFG)
+  if (no.strata > 1)
   {
-    ## If not in first stratum / herbaceous (or potentially chamaephytes) :
-    if (!(IMM_SIZE[i] == 10))
+    CHANG_STR_AGES[2:no.strata, ] = 10000
+    for (i in 1:no.PFG)
     {
-      k = -log(1 - IMM_SIZE[i] / 10) / (MATURITY[i] / 2)
-      A = 1:LONGEVITY[i]
-      
-      ## negative binomiale curve
-      H = mat.PFG.succ$height[i] * (1 - exp(-k * A))
-      
-      # calculation of transition ages depending on strata heights
-      for (str in 2:no.strata) {
-        age.brk = A[which(H >= STRATA_LIMITS[str])][1]
-        CHANG_STR_AGES[str, i] = ifelse(is.na(age.brk), CHANG_STR_AGES[str, i], age.brk)
+      ## If not in first stratum / herbaceous (or potentially chamaephytes) :
+      if (!(IMM_SIZE[i] == 10))
+      {
+        k = -log(1 - IMM_SIZE[i] / 10) / (MATURITY[i] / 2)
+        A = 1:LONGEVITY[i]
+        
+        ## negative binomiale curve
+        H = mat.PFG.succ$height[i] * (1 - exp(-k * A))
+        
+        # calculation of transition ages depending on strata heights
+        for (str in 2:no.strata) {
+          age.brk = A[which(H >= STRATA_LIMITS[str])][1]
+          CHANG_STR_AGES[str, i] = ifelse(is.na(age.brk), CHANG_STR_AGES[str, i], age.brk)
+        }
       }
+      # else if (mat.PFG.succ$height[i] > STRATA_LIMITS[2])
+      # {
+      #   CHANG_STR_AGES[2, i] = 0 ## direct into strata max
+      # }
     }
-    # else if (mat.PFG.succ$height[i] > STRATA_LIMITS[2])
-    # {
-    #   CHANG_STR_AGES[2, i] = 0 ## direct into strata max
-    # }
   }
   
   #################################################################################################
