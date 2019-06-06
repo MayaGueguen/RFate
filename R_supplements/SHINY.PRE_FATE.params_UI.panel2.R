@@ -1,87 +1,126 @@
 
-tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-cogs'></i> Run simulation</span>")
-         , value = "panel2"
+tabPanel(title = HTML("<p class='panel_title'><i class='fa fa-folder-plus'></i> New</p>")
+         , value = "panel1"
          , sidebarLayout(
            
            # Inputs
            sidebarPanel(
-             width = 12,
+             width = 3,
              style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px;")),
              withMathJax(),
              
-             br(),
-             fluidRow(
-               column(5
-                      , div(id = "help2_1"
-                            , directoryInput(inputId = "run.folder.simul"
-                                             , label = param.style("Select the simulation folder :")
-                                             , value = '~')
-                      )
-               )
-               , column(5
-                        , div(id = "help2_2"
-                              , shinyjs::disabled(
-                                selectInput(inputId = "run.simulParam"
-                                            , label = param.style("Select the simulation parameters file :")
-                                            , choices = NULL
-                                            , selected = NULL
-                                            , multiple = F
+             div(id = "help1_1"
+                 , fluidRow(
+                   column(12
+                          , actionButton(inputId = "HELP.panel1"
+                                         , label = "Need some help"
+                                         , icon = icon("question-circle", class = "icon-help")
+                                         , width = "100%"
+                                         , style = HTML(button.style.help))
+                          , br()
+                          , br()
+                          , br()
+                          , br()
+                          , div(id = "help1_2"
+                                , textInput(inputId = "name.simul"
+                                            , label = param.style("Enter the simulation name :")
+                                            , value = "FATE_simulation"
                                             , width = "100%")
-                              )
-                        )
-               )
-               , column(2
-                        , br()
-                        , actionButton(inputId = "run.copy"
-                                       , label = "Copy files"
-                                       , icon = icon("copy", class = "icon-help")
-                                       , width = "100%"
-                                       , style = HTML(button.style.help)))
-             ) ## END fluidRow
-             , fluidRow(
-               column(5
-                        , fileInput(inputId = "run.executable"
-                                    , label = param.style("Select the FATE executable file :")
-                                    , multiple = F
-                                    , width = "100%")
-               )
-               , column(5, br())
-               , column(2
-                        , br()
-                        , actionButton(inputId = "run"
-                                       , label = "Run"
-                                       , icon = icon("play-circle", class = "icon-help")
-                                       , width = "100%"
-                                       , style = HTML(button.style.help)))
-             ) ## END fluidRow
-           ) ## END sidebarPanel
+                                , actionButton(inputId = "create.skeleton"
+                                               , label = "Create folder"
+                                               , icon = icon("folder")
+                                               , width = "100%"
+                                               , style = HTML(button.style))
+                          )
+                   )
+                 ),
+                 br(),
+                 helpText(HTML("
+                               <ul style='font-size:75%;padding-left:20px;'>
+                               <li>DATA
+                               <ul>
+                               <li>GLOBAL PARAMETERS</li>
+                               <li>MASK</li>
+                               <li>SCENARIO</li>
+                               <li>SAVE</li>
+                               <li>PFGS :
+                               <ul>
+                               <li>SUCC</li>
+                               <li>DISP</li>
+                               <li>HABSUIT</li>
+                               <li>LIGHT</li>
+                               <li>SOIL</li>
+                               <li>DIST</li>
+                               </ul>
+                               </li>
+                               </ul>
+                               </li>
+                               <li>PARAM SIMUL</li>
+                               <li>RESULTS</li>
+                               </ul>
+                               "
+                 )),
+                 br(),
+                 br(),
+                 fluidRow(
+                   column(12
+                          , div(id = "help1_4"
+                                , shinyjs::disabled(
+                                  actionButton(inputId = "create.simul"
+                                               , label = HTML("Create Simulation <br/>parameters file")
+                                               , icon = icon("file")
+                                               , width = "100%"
+                                               , style = HTML(button.style)
+                                  )
+                                )
+                          )
+                          , br()
+                          , br()
+                          , div(id = "help1_5"
+                                , shinyjs::disabled(
+                                  downloadButton(outputId = "FATE_simulation.zip"
+                                                 , label = "Download folder"
+                                                 , icon = icon("download")
+                                                 , width = "100%"
+                                                 , style = HTML(button.style)
+                                  )
+                                )
+                          )
+                          , br()
+                          , br()
+                          , shinyjs::disabled(
+                            actionButton(inputId = "refresh"
+                                         , label = "Start new folder"
+                                         , icon = icon("refresh")
+                                         , width = "100%"
+                                         , style = HTML(button.style)
+                            )
+                          )
+                   )
+                 )
+                 ) ## END wellPanel
+                 ) ## END sidebarPanel
            
            # Output
            , mainPanel(
-             width = 12,
-             wellPanel(id = "main.panel",
-                       style = "border-solid:solid; border-width:0px;",
-                       fluidRow(
-                         column(6
-                                , wellPanel(id = "main.panel1",
-                                            br(),
-                                            HTML("<strong>ERRORS</strong>")
-                                )
-                         )
-                         , column(6
-                                  , wellPanel(id = "main.panel2",
-                                              br(),
-                                              HTML("<strong>OUTPUTS</strong>")
-                                  )
-                         )
-                       )
-             ) ## END wellPanel
+             width = 9,
+             shinyjs::hidden(
+               wellPanel(id = "main.panel",
+                         style = "border-solid:solid; border-width:0px; border-color:#068f96;",
+                         tabsetPanel(
+                           source("R_supplements/SHINY.PRE_FATE.params_UI.panel1.tab1.R", local = TRUE)$value
+                           , source("R_supplements/SHINY.PRE_FATE.params_UI.panel1.tab2.R", local = TRUE)$value
+                           , source("R_supplements/SHINY.PRE_FATE.params_UI.panel1.tab3.R", local = TRUE)$value
+                           , source("R_supplements/SHINY.PRE_FATE.params_UI.panel1.tab4.R", local = TRUE)$value
+                         ) ## END tabsetPanel
+               ) ## END wellPanel
+             ) ## END hidden
            ) ## END mainPanel
-         # ) %>% helper(type = "inline"
-         #              , title = "Evaluate FATE-HD simulation outputs"
-         #              , size = "l"
-         #              , content = help.HTML(html.file = "docs/index.html"
-         #                                    , target.anchor = '<div '
-         #                                    , target.class = "post_fate---evaluation-of-simulation")
-         ) ## END sidebarLayout
-) ## tabPanel
+             ) %>% helper(type = "inline"
+                          , title = "Create FATE-HD parameter files"
+                          , size = "l"
+                          , content = help.HTML(html.file = "docs/index.html"
+                                                , target.anchor = 'class="section level2"'
+                                                , target.class = "pre_fate---build-parameter-files")
+             ) ## END sidebarLayout
+         ) ## END tabPanel

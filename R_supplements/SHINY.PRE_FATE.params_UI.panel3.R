@@ -1,6 +1,6 @@
 
-tabPanel(title = HTML("<span class='panel_title'><i class='fa fa-chart-bar'></i> Simulation outputs & graphics</span>")
-         , value = "panel3"
+tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-cogs'></i> Run simulation</span>")
+         , value = "panel2"
          , sidebarLayout(
            
            # Inputs
@@ -12,16 +12,16 @@ tabPanel(title = HTML("<span class='panel_title'><i class='fa fa-chart-bar'></i>
              br(),
              fluidRow(
                column(5
-                      , div(id = "help3_1"
-                            , directoryInput(inputId = "graph.folder.simul"
+                      , div(id = "help2_1"
+                            , directoryInput(inputId = "run.folder.simul"
                                              , label = param.style("Select the simulation folder :")
                                              , value = '~')
                       )
                )
                , column(5
-                        , div(id = "help3_2"
+                        , div(id = "help2_2"
                               , shinyjs::disabled(
-                                selectInput(inputId = "graph.simulParam"
+                                selectInput(inputId = "run.simulParam"
                                             , label = param.style("Select the simulation parameters file :")
                                             , choices = NULL
                                             , selected = NULL
@@ -32,9 +32,25 @@ tabPanel(title = HTML("<span class='panel_title'><i class='fa fa-chart-bar'></i>
                )
                , column(2
                         , br()
-                        , actionButton(inputId = "HELP.panel3"
-                                       , label = "Need some help"
-                                       , icon = icon("question-circle", class = "icon-help")
+                        , actionButton(inputId = "run.copy"
+                                       , label = "Copy files"
+                                       , icon = icon("copy", class = "icon-help")
+                                       , width = "100%"
+                                       , style = HTML(button.style.help)))
+             ) ## END fluidRow
+             , fluidRow(
+               column(5
+                        , fileInput(inputId = "run.executable"
+                                    , label = param.style("Select the FATE executable file :")
+                                    , multiple = F
+                                    , width = "100%")
+               )
+               , column(5, br())
+               , column(2
+                        , br()
+                        , actionButton(inputId = "run"
+                                       , label = "Run"
+                                       , icon = icon("play-circle", class = "icon-help")
                                        , width = "100%"
                                        , style = HTML(button.style.help)))
              ) ## END fluidRow
@@ -45,18 +61,27 @@ tabPanel(title = HTML("<span class='panel_title'><i class='fa fa-chart-bar'></i>
              width = 12,
              wellPanel(id = "main.panel",
                        style = "border-solid:solid; border-width:0px;",
-                       tabsetPanel(
-                         source("R_supplements/SHINY.PRE_FATE.params_UI.panel3.tab1.R", local = TRUE)$value
-                         , source("R_supplements/SHINY.PRE_FATE.params_UI.panel3.tab2.R", local = TRUE)$value
-                         , source("R_supplements/SHINY.PRE_FATE.params_UI.panel3.tab3.R", local = TRUE)$value
-                       ) ## END tabsetPanel
+                       fluidRow(
+                         column(6
+                                , wellPanel(id = "main.panel1",
+                                            br(),
+                                            HTML("<strong>ERRORS</strong>")
+                                )
+                         )
+                         , column(6
+                                  , wellPanel(id = "main.panel2",
+                                              br(),
+                                              HTML("<strong>OUTPUTS</strong>")
+                                  )
+                         )
+                       )
              ) ## END wellPanel
            ) ## END mainPanel
-         ) %>% helper(type = "inline"
-                      , title = "Evaluate FATE-HD simulation outputs"
-                      , size = "l"
-                      , content = help.HTML(html.file = "docs/index.html"
-                                            , target.anchor = '<div '
-                                            , target.class = "post_fate---evaluation-of-simulation")
+         # ) %>% helper(type = "inline"
+         #              , title = "Evaluate FATE-HD simulation outputs"
+         #              , size = "l"
+         #              , content = help.HTML(html.file = "docs/index.html"
+         #                                    , target.anchor = '<div '
+         #                                    , target.class = "post_fate---evaluation-of-simulation")
          ) ## END sidebarLayout
 ) ## tabPanel

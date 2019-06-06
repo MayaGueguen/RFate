@@ -129,7 +129,9 @@ observeEvent(input$create.PFGvsHS, {
     )
   ))
   
-  output$plot.PFGvsHS = renderPlot({
+  # plot(get_res[[1]]$plot[[1]][[1]])
+  
+  output$plot.PFGvsHS = renderPlotly({
     plot(get_res[[1]]$plot[[1]][[1]])
   })
   
