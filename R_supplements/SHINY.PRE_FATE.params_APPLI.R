@@ -163,7 +163,7 @@ ui <- fluidPage(
     navbarPage(""
                , id = "navbar"
                , source("R_supplements/SHINY.PRE_FATE.params_UI.panel0.R", local = TRUE)$value
-               , tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-object-group'></i> Plant Functional Groups</span>"))
+               , source("R_supplements/SHINY.PRE_FATE.params_UI.panel1.R", local = TRUE)$value
                , navbarMenu(title = HTML("<span class='panel_title'><i class='fa fa-copy'></i> Simulation parameter files</span>")
                             , source("R_supplements/SHINY.PRE_FATE.params_UI.panel2.R", local = TRUE)$value
                             , tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-folder-open'></i> Open</span>")))
