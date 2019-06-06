@@ -1,12 +1,12 @@
 
 ####################################################################
 
-observeEvent(input$HELP.panel3, {
+observeEvent(input$HELP.panel4, {
   introjs(session = session
           , options = list("nextLabel" = "Next"
                            , "prevLabel" = "Prev"
                            , "skipLabel" = "Close"
-                           , steps = data.frame(element = c(paste0("#help3_", 1:2),"#main.panel")
+                           , steps = data.frame(element = c(paste0("#help4_", 1:2),"#main.panel")
                                                 , intro = c("<p>A folder name with a typical <code>FATE-HD</code> organization, that can be created with the function 
                                                               <a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.skeletonDirectory.html'>PRE_FATE.skeletonDirectory</a>.</p>
                                                               <p><strong>RESULTS</strong> folder should contain <code>FATE-HD</code> output maps.</p>"

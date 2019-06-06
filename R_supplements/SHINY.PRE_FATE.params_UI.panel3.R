@@ -1,6 +1,6 @@
 
 tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-cogs'></i> Run simulation</span>")
-         , value = "panel2"
+         , value = "panel3"
          , sidebarLayout(
            
            # Inputs
@@ -12,14 +12,14 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-cogs'></i> Run
              br(),
              fluidRow(
                column(5
-                      , div(id = "help2_1"
+                      , div(id = "help3_1"
                             , directoryInput(inputId = "run.folder.simul"
                                              , label = param.style("Select the simulation folder :")
                                              , value = '~')
                       )
                )
                , column(5
-                        , div(id = "help2_2"
+                        , div(id = "help3_2"
                               , shinyjs::disabled(
                                 selectInput(inputId = "run.simulParam"
                                             , label = param.style("Select the simulation parameters file :")

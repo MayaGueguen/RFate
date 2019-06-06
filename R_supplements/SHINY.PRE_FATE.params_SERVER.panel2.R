@@ -1,12 +1,12 @@
 
 ####################################################################
 
-observeEvent(input$HELP.panel1, {
+observeEvent(input$HELP.panel2, {
   introjs(session = session
           , options = list("nextLabel" = "Next"
                            , "prevLabel" = "Prev"
                            , "skipLabel" = "Close"
-                           , steps = data.frame(element = c(paste0("#help1_", 1:2),"#main.panel",paste0("#help1_", 4:5))#paste0("#help1_", 1:5)
+                           , steps = data.frame(element = c(paste0("#help2_", 1:2),"#main.panel",paste0("#help2_", 4:5))
                                                 # , position = c("auto", "auto", "bottom-middle-aligned", "auto", "auto")
                                                 , intro = c("<p><code>FATE-HD</code> requires only one input parameter, which is a file containing
                                                             the names of parameter files, which may themselves contain parameters or other

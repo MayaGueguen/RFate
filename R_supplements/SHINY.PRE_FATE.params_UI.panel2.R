@@ -1,6 +1,6 @@
 
 tabPanel(title = HTML("<p class='panel_title'><i class='fa fa-folder-plus'></i> New</p>")
-         , value = "panel1"
+         , value = "panel2"
          , sidebarLayout(
            
            # Inputs
@@ -9,10 +9,10 @@ tabPanel(title = HTML("<p class='panel_title'><i class='fa fa-folder-plus'></i> 
              style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px;")),
              withMathJax(),
              
-             div(id = "help1_1"
+             div(id = "help2_1"
                  , fluidRow(
                    column(12
-                          , actionButton(inputId = "HELP.panel1"
+                          , actionButton(inputId = "HELP.panel2"
                                          , label = "Need some help"
                                          , icon = icon("question-circle", class = "icon-help")
                                          , width = "100%"
@@ -21,7 +21,7 @@ tabPanel(title = HTML("<p class='panel_title'><i class='fa fa-folder-plus'></i> 
                           , br()
                           , br()
                           , br()
-                          , div(id = "help1_2"
+                          , div(id = "help2_2"
                                 , textInput(inputId = "name.simul"
                                             , label = param.style("Enter the simulation name :")
                                             , value = "FATE_simulation"
@@ -64,7 +64,7 @@ tabPanel(title = HTML("<p class='panel_title'><i class='fa fa-folder-plus'></i> 
                  br(),
                  fluidRow(
                    column(12
-                          , div(id = "help1_4"
+                          , div(id = "help2_4"
                                 , shinyjs::disabled(
                                   actionButton(inputId = "create.simul"
                                                , label = HTML("Create Simulation <br/>parameters file")
@@ -76,7 +76,7 @@ tabPanel(title = HTML("<p class='panel_title'><i class='fa fa-folder-plus'></i> 
                           )
                           , br()
                           , br()
-                          , div(id = "help1_5"
+                          , div(id = "help2_5"
                                 , shinyjs::disabled(
                                   downloadButton(outputId = "FATE_simulation.zip"
                                                  , label = "Download folder"
@@ -108,10 +108,10 @@ tabPanel(title = HTML("<p class='panel_title'><i class='fa fa-folder-plus'></i> 
                wellPanel(id = "main.panel",
                          style = "border-solid:solid; border-width:0px; border-color:#068f96;",
                          tabsetPanel(
-                           source("R_supplements/SHINY.PRE_FATE.params_UI.panel1.tab1.R", local = TRUE)$value
-                           , source("R_supplements/SHINY.PRE_FATE.params_UI.panel1.tab2.R", local = TRUE)$value
-                           , source("R_supplements/SHINY.PRE_FATE.params_UI.panel1.tab3.R", local = TRUE)$value
-                           , source("R_supplements/SHINY.PRE_FATE.params_UI.panel1.tab4.R", local = TRUE)$value
+                           source("R_supplements/SHINY.PRE_FATE.params_UI.panel2.tab1.R", local = TRUE)$value
+                           , source("R_supplements/SHINY.PRE_FATE.params_UI.panel2.tab2.R", local = TRUE)$value
+                           , source("R_supplements/SHINY.PRE_FATE.params_UI.panel2.tab3.R", local = TRUE)$value
+                           , source("R_supplements/SHINY.PRE_FATE.params_UI.panel2.tab4.R", local = TRUE)$value
                          ) ## END tabsetPanel
                ) ## END wellPanel
              ) ## END hidden

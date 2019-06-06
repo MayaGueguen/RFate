@@ -71,7 +71,6 @@ observeEvent(input$run, {
                                         </ul>"))
                             , title = HTML("Run <code>FATE-HD</code> simulation")
                             , footer = NULL))
-      print("youhouuu")
       Sys.sleep(30)
       removeModal()
     }

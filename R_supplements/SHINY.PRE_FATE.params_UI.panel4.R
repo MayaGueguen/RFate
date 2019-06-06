@@ -1,6 +1,6 @@
 
 tabPanel(title = HTML("<span class='panel_title'><i class='fa fa-chart-bar'></i> Simulation outputs & graphics</span>")
-         , value = "panel3"
+         , value = "panel4"
          , sidebarLayout(
            
            # Inputs
@@ -12,14 +12,14 @@ tabPanel(title = HTML("<span class='panel_title'><i class='fa fa-chart-bar'></i>
              br(),
              fluidRow(
                column(5
-                      , div(id = "help3_1"
+                      , div(id = "help4_1"
                             , directoryInput(inputId = "graph.folder.simul"
                                              , label = param.style("Select the simulation folder :")
                                              , value = '~')
                       )
                )
                , column(5
-                        , div(id = "help3_2"
+                        , div(id = "help4_2"
                               , shinyjs::disabled(
                                 selectInput(inputId = "graph.simulParam"
                                             , label = param.style("Select the simulation parameters file :")
@@ -32,7 +32,7 @@ tabPanel(title = HTML("<span class='panel_title'><i class='fa fa-chart-bar'></i>
                )
                , column(2
                         , br()
-                        , actionButton(inputId = "HELP.panel3"
+                        , actionButton(inputId = "HELP.panel4"
                                        , label = "Need some help"
                                        , icon = icon("question-circle", class = "icon-help")
                                        , width = "100%"
@@ -46,9 +46,9 @@ tabPanel(title = HTML("<span class='panel_title'><i class='fa fa-chart-bar'></i>
              wellPanel(id = "main.panel",
                        style = "border-solid:solid; border-width:0px;",
                        tabsetPanel(
-                         source("R_supplements/SHINY.PRE_FATE.params_UI.panel3.tab1.R", local = TRUE)$value
-                         , source("R_supplements/SHINY.PRE_FATE.params_UI.panel3.tab2.R", local = TRUE)$value
-                         , source("R_supplements/SHINY.PRE_FATE.params_UI.panel3.tab3.R", local = TRUE)$value
+                         source("R_supplements/SHINY.PRE_FATE.params_UI.panel4.tab1.R", local = TRUE)$value
+                         , source("R_supplements/SHINY.PRE_FATE.params_UI.panel4.tab2.R", local = TRUE)$value
+                         , source("R_supplements/SHINY.PRE_FATE.params_UI.panel4.tab3.R", local = TRUE)$value
                        ) ## END tabsetPanel
              ) ## END wellPanel
            ) ## END mainPanel
