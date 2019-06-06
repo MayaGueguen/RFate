@@ -26,6 +26,9 @@ library(RColorBrewer)
 library(rintrojs)
 library(dplyr)
 library(plotly)
+library(cowplot)
+library(ggExtra)
+library(gridExtra)
 
 ###################################################################################################################################
 

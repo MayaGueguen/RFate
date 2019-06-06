@@ -162,13 +162,10 @@ observeEvent(input$browser.files, {
       if (graph.type %in% c("richness", "cover"))
       {
         ras = raster(paste0(get_path.simul(), "/RESULTS/", input$browser.files, ".tif"))
-        print(ras)
       } else
       {
         tab = fread(paste0(get_path.simul(), "/RESULTS/", input$browser.files, ".csv"))
-        print(head(tab))
       }
-      print(graph.type)
       
       opt.abund_fixedScale = FALSE
       
@@ -267,72 +264,73 @@ observeEvent(input$browser.files, {
                     hab_names = sort(unique(tab$HAB))
                     
                     ## produce the plot ------------------------------------------------------------
-                    # plot_list.hab = foreach(habi = hab_names) %do%
-                    # {
-                    #   cat("\n > Preparing for habitat ", habi)
-                    #   mat.plot = tab[which(tab$HAB == habi), ]
-                    #   
-                    #   ## 1. get the legend
-                    #   pp = ggplot(mat.plot, aes_string(x = "PFG", y = "value", fill = "value")) +
-                    #     scale_fill_gradientn(""
-                    #                          , colors = brewer.pal(9, "RdYlGn")
-                    #                          , breaks = seq(0, 1, 0.2)
-                    #                          , limits = c(0, 1)) +
-                    #     geom_bar(stat = "identity", na.rm = TRUE) +
-                    #     ylim(0, 1) +
-                    #     .getGraphics_theme() +
-                    #     theme(legend.key.width = unit(2, "lines"))
-                    #   
-                    #   pp_leg = suppressWarnings(get_legend(pp))
-                    #   
-                    #   ## 2. get one plot for the title and for each statistic
-                    #   pp_list = foreach(vari = c("all", "sensitivity", "specificity", "TSS", "AUC")) %do%
-                    #   {
-                    #     if (vari == "all"){
-                    #       pp = ggplot(mat.plot, aes_string(x = "PFG", y = "value", fill = "value")) +
-                    #         labs(x = "", y = "", title = paste0("GRAPH F : validation statistics - Simulation year : ", y, " - Habitat ", habi),
-                    #              subtitle = paste0("Sensitivity (or specificity) measures the proportion of actual positives (or negatives) that are correctly identified as such.\n"
-                    #                                , "True skill statistic (TSS) values of -1 indicate predictive abilities of not better than a random model,\n"
-                    #                                , "0 indicates an indiscriminate model and +1 a perfect model.\n"
-                    #                                , "AUC corresponds to the area under the ROC curve (Receiver Operating Characteristic).\n")) +
-                    #         .getGraphics_theme() +
-                    #         theme(panel.grid = element_blank()
-                    #               , axis.text = element_blank())
-                    #     } else
-                    #     {
-                    #       if (vari == "sensitivity") subti = "Sensitivity - True positive rate"
-                    #       if (vari == "specificity") subti = "Specificity - True negative rate"
-                    #       if (vari == "TSS") subti = "True Skill Statistic (TSS)"
-                    #       if (vari == "AUC") subti = "Area Under Curve (AUC)"
-                    #       pp = ggplot(mat.plot[which(mat.plot$variable == vari), ]
-                    #                   , aes_string(x = "PFG", y = "value", fill = "value")) +
-                    #         scale_fill_gradientn(guide = F
-                    #                              , colors = brewer.pal(9, "RdYlGn")
-                    #                              , breaks = seq(0, 1, 0.2)
-                    #                              , limits = c(0, 1)) +
-                    #         scale_y_continuous(breaks = seq(0, 1, 0.2), limits = c(0, 1.08)) +
-                    #         geom_bar(stat = "identity", na.rm = TRUE) +
-                    #         geom_hline(aes_string(yintercept = "hline"), lty = 2, color = "grey30") +
-                    #         geom_errorbar(aes(ymin = value - sensitivity.sd, ymax = value + sensitivity.sd), color = "grey30", na.rm = TRUE) +
-                    #         geom_errorbar(aes(ymin = value - specificity.sd, ymax = value + specificity.sd), color = "grey30", na.rm = TRUE) +
-                    #         geom_errorbar(aes(ymin = value - AUC.sd, ymax = value + AUC.sd), color = "grey30", na.rm = TRUE) +
-                    #         annotate(geom = "text", x = no_PFG / 2, y = 1.05, label = subti, size = 4) +
-                    #         .getGraphics_theme() +
-                    #         theme(axis.text.x = element_text(angle = 90))
-                    #       
-                    #       pp = suppressWarnings(ggMarginal(pp, type = "boxplot", margins = "y", size = 7))
-                    #     }
-                    #     
-                    #     return(pp)
-                    #   }
-                    #   
-                    #   ## 3. gather everything
-                    #   pp_list[[6]] = pp_leg
-                    #   return(grid.arrange(grobs = pp_list
-                    #                       , layout_matrix = matrix(c(1,1,2,3,2,3,4,5,4,5,6,6), ncol = 2, byrow = TRUE)
-                    #                       , newpage = ifelse(y == years[1], FALSE, TRUE)))
-                    # } ## END loop on hab_names
-                    # names(plot_list.hab) = hab_names
+                    pp = foreach(habi = hab_names) %do%
+                    {
+                      cat("\n > Preparing for habitat ", habi)
+                      mat.plot = tab[which(tab$HAB == habi), ]
+
+                      ## 1. get the legend
+                      pp = ggplot(mat.plot, aes_string(x = "PFG", y = "value", fill = "value")) +
+                        scale_fill_gradientn(""
+                                             , colors = brewer.pal(9, "RdYlGn")
+                                             , breaks = seq(0, 1, 0.2)
+                                             , limits = c(0, 1)) +
+                        geom_bar(stat = "identity", na.rm = TRUE) +
+                        ylim(0, 1) +
+                        .getGraphics_theme() +
+                        theme(legend.key.width = unit(2, "lines"))
+
+                      pp_leg = suppressWarnings(get_legend(pp))
+
+                      ## 2. get one plot for the title and for each statistic
+                      pp_list = foreach(vari = c("all", "sensitivity", "specificity", "TSS", "AUC")) %do%
+                      {
+                        if (vari == "all"){
+                          pp = ggplot(mat.plot, aes_string(x = "PFG", y = "value", fill = "value")) +
+                            labs(x = "", y = "", title = paste0("GRAPH F : validation statistics - Simulation year : "
+                                                                , strsplit(sub(".*YEAR_", "", input$browser.files), "_")[[1]][1]
+                                                                , " - Habitat ", habi),
+                                 subtitle = paste0("Sensitivity (or specificity) measures the proportion of actual positives (or negatives) that are correctly identified as such.\n"
+                                                   , "True skill statistic (TSS) values of -1 indicate predictive abilities of not better than a random model,\n"
+                                                   , "0 indicates an indiscriminate model and +1 a perfect model.\n"
+                                                   , "AUC corresponds to the area under the ROC curve (Receiver Operating Characteristic).\n")) +
+                            .getGraphics_theme() +
+                            theme(panel.grid = element_blank()
+                                  , axis.text = element_blank())
+                        } else
+                        {
+                          if (vari == "sensitivity") subti = "Sensitivity - True positive rate"
+                          if (vari == "specificity") subti = "Specificity - True negative rate"
+                          if (vari == "TSS") subti = "True Skill Statistic (TSS)"
+                          if (vari == "AUC") subti = "Area Under Curve (AUC)"
+                          pp = ggplot(mat.plot[which(mat.plot$variable == vari), ]
+                                      , aes_string(x = "PFG", y = "value", fill = "value")) +
+                            scale_fill_gradientn(guide = F
+                                                 , colors = brewer.pal(9, "RdYlGn")
+                                                 , breaks = seq(0, 1, 0.2)
+                                                 , limits = c(0, 1)) +
+                            scale_y_continuous(breaks = seq(0, 1, 0.2), limits = c(0, 1.08)) +
+                            geom_bar(stat = "identity", na.rm = TRUE) +
+                            geom_hline(aes_string(yintercept = "hline"), lty = 2, color = "grey30") +
+                            geom_errorbar(aes(ymin = value - sensitivity.sd, ymax = value + sensitivity.sd), color = "grey30", na.rm = TRUE) +
+                            geom_errorbar(aes(ymin = value - specificity.sd, ymax = value + specificity.sd), color = "grey30", na.rm = TRUE) +
+                            geom_errorbar(aes(ymin = value - AUC.sd, ymax = value + AUC.sd), color = "grey30", na.rm = TRUE) +
+                            annotate(geom = "text", x = length(unique(tab$PFG)) / 2, y = 1.05, label = subti, size = 4) +
+                            .getGraphics_theme() +
+                            theme(axis.text.x = element_text(angle = 90))
+
+                          pp = suppressWarnings(ggMarginal(pp, type = "boxplot", margins = "y", size = 7))
+                        }
+
+                        return(pp)
+                      }
+
+                      ## 3. gather everything
+                      pp_list[[6]] = pp_leg
+                      return(grid.arrange(grobs = pp_list
+                                          , layout_matrix = matrix(c(1,1,2,3,2,3,4,5,4,5,6,6), ncol = 2, byrow = TRUE)
+                      ))
+                    } ## END loop on hab_names
                   }
                   ## ---------------------------------------------------------------------------------------------------------- ##
                   ## ---------------------------------------------------------------------------------------------------------- ##
@@ -438,7 +436,93 @@ observeEvent(input$browser.files, {
                   }
       )
       
-      output$plot.browser = renderPlotly({ ggplotly(pp) })
+      if (is.ggplot(pp))
+      {
+        RV$compt = 1
+        RV$comptMax = 1
+        
+        shinyjs::hide("go.left")
+        shinyjs::hide("go.right")
+        
+        output$UI.plot.browser = renderUI({
+          plotlyOutput(outputId = "plot.browser", width = "100%", height = "600px")
+        })
+        
+        output$plot.browser = renderPlotly({ ggplotly(pp) })
+      } else
+      {
+        shinyjs::show("go.left")
+        shinyjs::show("go.right")
+        shinyjs::disable("go.left")
+        shinyjs::disable("go.right")
+        if (length(pp) > 1)
+        {
+          shinyjs::enable("go.right")
+        }
+        
+        output$UI.plot.browser = renderUI({
+          lapply(1:length(pp), function(i) {
+            plotOutput(outputId = paste0("plot.browser_", i), width = "100%", height = "600px")
+          })
+        })
+        
+        lapply(1:length(pp), function(i) {
+          output[[paste0("plot.browser_", i)]] = renderPlot({ plot(pp[[i]]) })
+        })
+        
+        RV$comptMax = length(pp)
+        RV$compt = 1
+        
+        all.plot = 1:RV$comptMax
+        shinyjs::show(paste0("plot.browser_", RV$compt))
+        if (RV$comptMax > 1)
+        {
+          for (i in all.plot[-RV$compt])
+          {
+            shinyjs::hide(paste0("plot.browser_", i))
+          }
+        }
+      }
+    }
+  }
+})
+
+####################################################################
+
+RV = reactiveValues(compt = 1, comptMax = 1)
+
+observeEvent(RV$compt, {
+  all.plot = 1:RV$comptMax
+  shinyjs::show(paste0("plot.browser_", RV$compt))
+  if (RV$comptMax > 1)
+  {
+    for (i in all.plot[-RV$compt])
+    {
+      shinyjs::hide(paste0("plot.browser_", i))
+    }
+  }
+})
+
+observeEvent(input$go.left, {
+  if (input$go.left > 0)
+  {
+    shinyjs::enable("go.right")
+    RV$compt = RV$compt - 1
+    if (RV$compt == 1)
+    {
+      shinyjs::disable("go.left")
+    }
+  }
+})
+
+observeEvent(input$go.right, {
+  if (input$go.right > 0)
+  {
+    shinyjs::enable("go.left")
+    RV$compt = RV$compt + 1
+    if (RV$compt == RV$comptMax)
+    {
+      shinyjs::disable("go.right")
     }
   }
 })

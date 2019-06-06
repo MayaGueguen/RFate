@@ -44,7 +44,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>BROWSER</span>")
                                     , value = TRUE
                                     , width = "100%")
            )
-
+           
          )
          , fluidRow(
            column(12
@@ -60,9 +60,42 @@ tabPanel(title = HTML("<span class='tabPanel_title'>BROWSER</span>")
            )
          )
          , fluidRow(
-           column(12
-                  , br()
-                  , plotlyOutput(outputId = "plot.browser", width = "100%", height = "600px")
+           # column(1
+           #        , br()
+           #        , br()
+           #        , br()
+           #        , shinyjs::hidden(
+           #          actionButton(inputId = "go.left"
+           #                       , label = ""
+           #                       , icon = icon("arrow-circle-left", class = "icon-help")
+           #                       , width = "100%"
+           #                       , style = HTML(button.style.help))
+           #        )
+           # )
+           column(11
+                    , br()
+                    , uiOutput(outputId = "UI.plot.browser")
+           )
+           , column(1
+                    , br()
+                    , br()
+                    , br()
+                    , shinyjs::hidden(
+                      actionButton(inputId = "go.left"
+                                   , label = ""
+                                   , icon = icon("arrow-circle-left", class = "icon-help")
+                                   , width = "100%"
+                                   , style = HTML(button.style.help))
+                    )
+                    , br()
+                    , br()
+                    , shinyjs::hidden(
+                      actionButton(inputId = "go.right"
+                                   , label = ""
+                                   , icon = icon("arrow-circle-right", class = "icon-help")
+                                   , width = "100%"
+                                   , style = HTML(button.style.help))
+                    )
            )
          )
 ) ## END tabPanel (Global parameters)
