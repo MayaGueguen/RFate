@@ -228,4 +228,15 @@ get_files = function(path_folder, skip.no = 2, opt.sub_folder = FALSE)
   return(value.line)
 }
 
+###################################################################################################################################
+
+.getGraphics_theme = function()
+{
+  return(theme_fivethirtyeight() +
+           theme(panel.background = element_rect(fill = "transparent", colour = NA)
+                 , plot.background = element_rect(fill = "transparent", colour = NA)
+                 , legend.background = element_rect(fill = "transparent", colour = NA)
+                 , legend.box.background = element_rect(fill = "transparent", colour = NA)
+                 , legend.key = element_rect(fill = "transparent", colour = NA)))
+}
 

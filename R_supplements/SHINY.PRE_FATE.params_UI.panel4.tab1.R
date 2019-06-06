@@ -59,5 +59,10 @@ tabPanel(title = HTML("<span class='tabPanel_title'>BROWSER</span>")
                   )
            )
          )
-        
+         , fluidRow(
+           column(12
+                  , br()
+                  , plotlyOutput(outputId = "plot.browser", width = "100%", height = "600px")
+           )
+         )
 ) ## END tabPanel (Global parameters)
