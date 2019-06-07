@@ -152,12 +152,24 @@ print_messages = function(fun, cut_pattern = "STUPID")
 
 ###################################################################################################################################
 
-get_files = function(path_folder, skip.no = 2, opt.sub_folder = FALSE)
+get_files.names = function(path_folder, skip.no = 2, opt.sub_folder = FALSE)
 {
   tab_names = list.files(path = path_folder
                          , include.dirs = FALSE
                          , full.names = TRUE
                          , recursive = opt.sub_folder)
+  return(tab_names)
+}
+
+get_files = function(path_folder, skip.no = 2, opt.sub_folder = FALSE)
+{
+  # tab_names = list.files(path = path_folder
+  #                        , include.dirs = FALSE
+  #                        , full.names = TRUE
+  #                        , recursive = opt.sub_folder)
+  tab_names = get_files.names(path_folder = path_folder
+                              , skip.no = skip.no
+                              , opt.sub_folder = opt.sub_folder)
   if (length(tab_names) > 0)
   {
     tab = foreach(tab_name = tab_names) %do%
@@ -240,3 +252,50 @@ get_files = function(path_folder, skip.no = 2, opt.sub_folder = FALSE)
                  , legend.key = element_rect(fill = "transparent", colour = NA)))
 }
 
+###################################################################################################################################
+
+# Create a function that wraps a Shiny input function in code that adds information about the tag type
+updateableInput <- function(inputType) {
+  function(...) {
+    shinyFuncName <- as.character(as.list(match.call()[1]))
+    shinyFunc <- get(shinyFuncName, envir = as.environment("package:shiny"))
+    shiny::tagAppendAttributes(shinyFunc(...), `data-input-type` = inputType)
+  }
+}
+
+# define what Shiny inputs you want to support
+# (the following three common input types are tested; the code here probably will
+# not work as-is for ALL inputs but you should be able to modify it slightly for other inputs)
+textInput <- updateableInput("Text")
+numericInput <- updateableInput("Numeric")
+selectInput <- updateableInput("Select")
+checkboxInput  <- updateableInput("Checkbox")
+
+# Update a single Shiny input without specifying its type
+updateShinyInput <- function(session, id, value) {
+  shinyUpdateInputId <- paste0("shiny-update-input-", id)
+  print(shinyUpdateInputId)
+  js$getInputType(id, shinyUpdateInputId)
+  print("yo")
+  shiny::observeEvent(session$input[[shinyUpdateInputId]], {
+    inputType <- session$input[[shinyUpdateInputId]]
+    print(inputType)
+    updateFunc <- sprintf("update%sInput", inputType)
+    funcParams <- list(session = session, inputId = id)    
+    if (inputType == "Select") {
+      funcParams[['selected']] <- value
+    } else {
+      funcParams[['value']] <- value
+    }    
+    do.call(updateFunc, funcParams)
+  })
+}
+
+# Update multiple Shiny inputs simultaneously
+updateShinyInputs <- function(session, updates) {
+  lapply(names(updates), function(id) {
+    print(id)
+    print(updates[[id]])
+    updateShinyInput(session, id, updates[[id]])
+  })
+}

@@ -1,5 +1,6 @@
 
-tabPanel(title = HTML("<p class='panel_title'><i class='fa fa-folder-plus'></i> New</p>")
+# tabPanel(title = HTML("<p class='panel_title'><i class='fa fa-folder-plus'></i> New</p>")
+tabPanel(title = HTML("<span class='panel_title'><i class='fa fa-copy'></i> Simulation parameter files</span>")
          , value = "panel2"
          , sidebarLayout(
            
@@ -64,6 +65,27 @@ tabPanel(title = HTML("<p class='panel_title'><i class='fa fa-folder-plus'></i> 
                  br(),
                  fluidRow(
                    column(12
+                          , br()
+                          , div(id = "help2_4"
+                                , shinyjs::disabled(
+                                  selectInput(inputId = "load.file"
+                                              , label = NULL
+                                              , choices = NULL
+                                              , selected = NULL
+                                              , multiple = F
+                                              , width = "100%"
+                                  )
+                                  , actionButton(inputId = "load.param"
+                                                 , label = HTML("Load parameters")
+                                                 , icon = icon("upload")
+                                                 , width = "100%"
+                                                 , style = HTML(button.style)
+                                  )
+                                )
+                          )
+                          , br()
+                          , br()
+                          , br()
                           , div(id = "help2_4"
                                 , shinyjs::disabled(
                                   actionButton(inputId = "create.simul"
@@ -74,7 +96,6 @@ tabPanel(title = HTML("<p class='panel_title'><i class='fa fa-folder-plus'></i> 
                                   )
                                 )
                           )
-                          , br()
                           , br()
                           , div(id = "help2_5"
                                 , shinyjs::disabled(
@@ -88,6 +109,7 @@ tabPanel(title = HTML("<p class='panel_title'><i class='fa fa-folder-plus'></i> 
                           )
                           , br()
                           , br()
+                          , br()
                           , shinyjs::disabled(
                             actionButton(inputId = "refresh"
                                          , label = "Start new folder"
@@ -98,7 +120,7 @@ tabPanel(title = HTML("<p class='panel_title'><i class='fa fa-folder-plus'></i> 
                           )
                    )
                  )
-                 ) ## END wellPanel
+                 ) ## END div
                  ) ## END sidebarPanel
            
            # Output

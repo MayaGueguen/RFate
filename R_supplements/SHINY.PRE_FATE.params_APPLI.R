@@ -49,6 +49,7 @@ mat.changing = data.frame()
 ui <- fluidPage(
   useShinyalert(),
   useShinyjs(),
+  extendShinyjs("R_supplements/www/js/app-shinyjs.js", functions = c("getInputType")),
   introjsUI(),
   
   # tags$link(rel="stylesheet", type="text/css", href="app.css"),
@@ -167,9 +168,7 @@ ui <- fluidPage(
                , id = "navbar"
                , source("R_supplements/SHINY.PRE_FATE.params_UI.panel0.R", local = TRUE)$value
                , source("R_supplements/SHINY.PRE_FATE.params_UI.panel1.R", local = TRUE)$value
-               , navbarMenu(title = HTML("<span class='panel_title'><i class='fa fa-copy'></i> Simulation parameter files</span>")
-                            , source("R_supplements/SHINY.PRE_FATE.params_UI.panel2.R", local = TRUE)$value
-                            , tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-folder-open'></i> Open</span>")))
+               , source("R_supplements/SHINY.PRE_FATE.params_UI.panel2.R", local = TRUE)$value
                , source("R_supplements/SHINY.PRE_FATE.params_UI.panel3.R", local = TRUE)$value
                , source("R_supplements/SHINY.PRE_FATE.params_UI.panel4.R", local = TRUE)$value
     )

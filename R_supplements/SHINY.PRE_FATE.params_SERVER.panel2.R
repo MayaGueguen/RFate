@@ -75,9 +75,145 @@ observeEvent(input$create.skeleton, {
   if (as.character(get_res) != "0")
   {
     shinyjs::show("main.panel")
+    shinyjs::enable("load.file")
+    shinyjs::enable("load.param")
     shinyjs::enable("create.simul")
     shinyjs::enable("FATE_simulation.zip")
     shinyjs::enable("refresh")
+  }
+})
+
+####################################################################
+
+observeEvent(input$name.simul, {
+  file.simulParam = get_files.names(path_folder = paste0(input$name.simul, "/PARAM_SIMUL/"))
+  if (length(file.simulParam) > 0)
+  {
+    newFiles = basename(file.simulParam)
+    newFiles = sub("paramSimul_", "", newFiles)
+    newFiles = sub(".txt", "", newFiles)
+    updateSelectInput(session = session
+                      , inputId = "load.file"
+                      , choices = newFiles
+                      , selected = newFiles[1]
+    )
+  }
+})
+
+####################################################################
+
+observeEvent(input$load.param, {
+  if (nchar(input$load.file) > 0)
+  {
+    file.simulParam = paste0(input$name.simul, "/PARAM_SIMUL/paramSimul_", input$load.file, ".txt")
+    file.globalParam = .getParam(params.lines = file.simulParam
+                                 , flag = "GLOBAL_PARAMS"
+                                 , flag.split = "^--.*--$"
+                                 , is.num = FALSE)
+  } else
+  {
+    file.globalParam = get_files.names(path_folder = paste0(input$name.simul, "/DATA/GLOBAL_PARAMETERS/"))
+  }
+  # print(file.globalParam)
+  
+  if (length(file.globalParam) > 0)
+  {
+    file.globalParam = file.globalParam[1]
+    # print(file.globalParam)
+    
+    update.param = list(
+      "required.no_PFG" = .getParam(params.lines = file.globalParam
+                                    , flag = "NB_FG"
+                                    , flag.split = " "
+                                    , is.num = TRUE)
+      , "required.no_STRATA" = .getParam(params.lines = file.globalParam
+                                         , flag = "NB_STRATUM"
+                                         , flag.split = " "
+                                         , is.num = TRUE)
+      , "required.simul_duration" = .getParam(params.lines = file.globalParam
+                                              , flag = "SIMULATION_DURATION"
+                                              , flag.split = " "
+                                              , is.num = TRUE)
+      , "opt.no_CPU" = .getParam(params.lines = file.globalParam
+                                 , flag = "NB_CPUS"
+                                 , flag.split = " "
+                                 , is.num = TRUE)
+      , "required.seeding_duration" = .getParam(params.lines = file.globalParam
+                                                , flag = "SEEDING_DURATION"
+                                                , flag.split = " "
+                                                , is.num = TRUE)
+      , "required.seeding_timestep" = .getParam(params.lines = file.globalParam
+                                                , flag = "SEEDING_TIMESTEP"
+                                                , flag.split = " "
+                                                , is.num = TRUE)
+      , "required.seeding_input" = .getParam(params.lines = file.globalParam
+                                             , flag = "SEEDING_INPUT"
+                                             , flag.split = " "
+                                             , is.num = TRUE)
+      , "required.max_by_cohort" = .getParam(params.lines = file.globalParam
+                                             , flag = "MAX_BY_COHORT"
+                                             , flag.split = " "
+                                             , is.num = TRUE)
+      , "required.max_abund_low" = .getParam(params.lines = file.globalParam
+                                             , flag = "MAX_ABUND_LOW"
+                                             , flag.split = " "
+                                             , is.num = TRUE)
+      , "required.max_abund_medium" = .getParam(params.lines = file.globalParam
+                                                , flag = "MAX_ABUND_MEDIUM"
+                                                , flag.split = " "
+                                                , is.num = TRUE)
+      , "required.max_abund_high" = .getParam(params.lines = file.globalParam
+                                              , flag = "MAX_ABUND_HIGH"
+                                              , flag.split = " "
+                                              , is.num = TRUE)
+      , "doDispersal" = .getParam(params.lines = file.globalParam
+                                  , flag = "DO_DISPERSAL"
+                                  , flag.split = " "
+                                  , is.num = TRUE)
+      , "doHabSuitability" = .getParam(params.lines = file.globalParam
+                                       , flag = "DO_HAB_SUITABILITY"
+                                       , flag.split = " "
+                                       , is.num = TRUE)
+      , "HABSUIT.ref_option" = .getParam(params.lines = file.globalParam
+                                         , flag = "HABSUIT_OPTION"
+                                         , flag.split = " "
+                                         , is.num = TRUE)
+      , "doDisturbances" = .getParam(params.lines = file.globalParam
+                                     , flag = "DO_DISTURBANCES"
+                                     , flag.split = " "
+                                     , is.num = TRUE)
+      , "DIST.no" = .getParam(params.lines = file.globalParam
+                              , flag = "NB_DISTURBANCES"
+                              , flag.split = " "
+                              , is.num = TRUE)
+      , "DIST.no_sub" = .getParam(params.lines = file.globalParam
+                                  , flag = "NB_SUBDISTURBANCES"
+                                  , flag.split = " "
+                                  , is.num = TRUE)
+      , "DIST.freq" = .getParam(params.lines = file.globalParam
+                                , flag = "FREQ_DISTURBANCES"
+                                , flag.split = " "
+                                , is.num = TRUE)
+      , "doLight" = .getParam(params.lines = file.globalParam
+                              , flag = "DO_LIGHT_COMPETITION"
+                              , flag.split = " "
+                              , is.num = TRUE)
+      , "LIGHT.thresh_medium" = .getParam(params.lines = file.globalParam
+                                          , flag = "LIGHT_THRESH_MEDIUM"
+                                          , flag.split = " "
+                                          , is.num = TRUE)
+      , "LIGHT.thresh_low" = .getParam(params.lines = file.globalParam
+                                       , flag = "LIGHT_THRESH_LOW"
+                                       , flag.split = " "
+                                       , is.num = TRUE)
+      , "doSoil" = .getParam(params.lines = file.globalParam
+                             , flag = "DO_SOIL_COMPETITION"
+                             , flag.split = " "
+                             , is.num = TRUE)
+    )
+    print(update.param)
+    updateShinyInputs(session = session
+                      , updates = update.param)
   }
 })
 
@@ -132,6 +268,8 @@ observeEvent(input$refresh, {
                {
                  system(command = paste0("rm -r ", input$name.simul))
                  shinyjs::hide("main.panel")
+                 shinyjs::disable("load.file")
+                 shinyjs::disable("load.param")
                  shinyjs::disable("create.simul")
                  shinyjs::disable("FATE_simulation.zip")
                  shinyjs::disable("refresh")
