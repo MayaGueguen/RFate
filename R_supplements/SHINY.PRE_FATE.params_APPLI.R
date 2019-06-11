@@ -34,7 +34,6 @@ library(gridExtra)
 
 source("R_supplements/SHINY.PRE_FATE.params_FUNCTIONS.R", local = TRUE)
 
-names.PFG = c()
 mat.PFG.ALL = data.frame()
 mat.PFG.disp = data.frame()
 mat.PFG.dist = data.frame()
@@ -185,6 +184,10 @@ server <- function(input, output, session) {
   session$onSessionEnded(stopApp)
   
   observe_helpers(withMathJax = TRUE)
+  
+  RV = reactiveValues(names.PFG = c()
+                      # , compt = 1, comptMax = 1
+  )
   
   ####################################################################
 

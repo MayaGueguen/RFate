@@ -31,7 +31,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                  )
                  , column(6
                           , wellPanel(style = "overflow-x:scroll;"
-                                      , textOutput(outputId = "names.PFG"))
+                                      , htmlOutput(outputId = "names.PFG"))
                  )
                  , column(1
                           , br()
@@ -45,11 +45,11 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                , fluidRow(
                  column(5, br())
                  , column(6
-                        , br()
-                        , textInput(inputId = "PFG.folder"
-                                    , label = param.style("opt.folder.name")
-                                    , value = NULL
-                                    , width = "100%"))
+                          , br()
+                          , textInput(inputId = "PFG.folder"
+                                      , label = param.style("opt.folder.name")
+                                      , value = NULL
+                                      , width = "100%"))
                )
              ) ## END wellPanel
              , tabsetPanel(
@@ -102,14 +102,8 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                  , br()
                                  , br()
                                  , HTML("<strong>PFG</strong>")
-                                 , shinyjs::disabled(
-                                   selectInput(inputId = "succ.PFG"
-                                               , label = NULL
-                                               , choices = NULL
-                                               , selected = NULL
-                                               , multiple = F
-                                               , width = "100%")
-                                 ))
+                                 , uiOutput(outputId = "UI.succ.PFG")
+                          )
                           , column(2
                                    , br()
                                    , br()
@@ -217,14 +211,8 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                    , br()
                                    , br()
                                    , HTML("<strong>PFG</strong>")
-                                   , shinyjs::disabled(
-                                     selectInput(inputId = "disp.PFG"
-                                                 , label = NULL
-                                                 , choices = NULL
-                                                 , selected = NULL
-                                                 , multiple = F
-                                                 , width = "100%")
-                                   ))
+                                   , uiOutput(outputId = "UI.disp.PFG")
+                            )
                             , column(2
                                      , br()
                                      , br()
@@ -390,14 +378,8 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                    , br()
                                    , br()
                                    , HTML("<strong>PFG</strong>")
-                                   , shinyjs::disabled(
-                                     selectInput(inputId = "soil.PFG"
-                                                 , label = NULL
-                                                 , choices = NULL
-                                                 , selected = NULL
-                                                 , multiple = F
-                                                 , width = "100%")
-                                   ))
+                                   , uiOutput(outputId = "UI.soil.PFG")
+                            )
                             , column(2
                                      , br()
                                      , br()

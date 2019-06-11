@@ -14,6 +14,79 @@ get_opt.folder.name = eventReactive(input$PFG.folder, {
 
 ####################################################################
 
+output$names.PFG = renderText({
+  HTML(paste0("<strong>PFG list :</strong> ", paste0(RV$names.PFG, collapse = " ; ")))
+})
+
+output$UI.succ.PFG = renderUI({
+  if (length(RV$names.PFG) == 0)
+  {
+    shinyjs::disabled(
+      selectInput(inputId = "succ.PFG"
+                  , label = NULL
+                  , choices = RV$names.PFG
+                  , selected = RV$names.PFG[1]
+                  , multiple = F
+                  , width = "100%")
+    )
+  } else
+  {
+    selectInput(inputId = "succ.PFG"
+                , label = NULL
+                , choices = RV$names.PFG
+                , selected = RV$names.PFG[1]
+                , multiple = F
+                , width = "100%")
+  }
+})
+
+output$UI.disp.PFG = renderUI({
+  if (length(RV$names.PFG) == 0)
+  {
+    shinyjs::disabled(
+      selectInput(inputId = "disp.PFG"
+                  , label = NULL
+                  , choices = RV$names.PFG
+                  , selected = RV$names.PFG[1]
+                  , multiple = F
+                  , width = "100%")
+    )
+  } else
+  {
+    selectInput(inputId = "disp.PFG"
+                , label = NULL
+                , choices = RV$names.PFG
+                , selected = RV$names.PFG[1]
+                , multiple = F
+                , width = "100%")
+  }
+})
+
+output$UI.soil.PFG = renderUI({
+  if (length(RV$names.PFG) == 0)
+  {
+    shinyjs::disabled(
+      selectInput(inputId = "soil.PFG"
+                  , label = NULL
+                  , choices = RV$names.PFG
+                  , selected = RV$names.PFG[1]
+                  , multiple = F
+                  , width = "100%")
+    )
+  } else
+  {
+    selectInput(inputId = "soil.PFG"
+                , label = NULL
+                , choices = RV$names.PFG
+                , selected = RV$names.PFG[1]
+                , multiple = F
+                , width = "100%")
+  }
+})
+
+
+####################################################################
+
 observeEvent(input$name.PFG, {
   if (nchar(input$name.PFG) > 0)
   {
@@ -22,35 +95,16 @@ observeEvent(input$name.PFG, {
   {
     shinyjs::disable("add.PFG.name")
   }
-  if (length(names.PFG) == 0)
-  {
-    output$names.PFG = renderText({ "PFG list : " })
-  }
 })
 
 observeEvent(input$add.PFG.name, {
-  if (input$name.PFG %in% names.PFG)
+  if (input$name.PFG %in% RV$names.PFG)
   {
     shinyalert(type = "warning", text = "You must give different PFG names !")
     shinyjs::reset("name.PFG")
   } else
   {
-    names.PFG <<- c(names.PFG, input$name.PFG)
-    output$names.PFG = renderText({
-      paste0("PFG list : ", paste0(names.PFG, collapse = " "))
-    })
-    updateSelectInput(session
-                      , inputId = "succ.PFG"
-                      , choices = names.PFG
-                      , selected = names.PFG[1])
-    updateSelectInput(session
-                      , inputId = "disp.PFG"
-                      , choices = names.PFG
-                      , selected = names.PFG[1])
-    updateSelectInput(session
-                      , inputId = "soil.PFG"
-                      , choices = names.PFG
-                      , selected = names.PFG[1])
+    RV$names.PFG = c(RV$names.PFG, input$name.PFG)
     
     shinyjs::reset("name.PFG")
     shinyjs::enable("succ.PFG")
@@ -63,8 +117,7 @@ observeEvent(input$add.PFG.name, {
 })
 
 observeEvent(input$delete.names.PFG, {
-  names.PFG <<- c()
-  output$names.PFG = renderText({ "PFG list : " })
+  RV$names.PFG = c()
   
   shinyjs::reset("name.PFG")
   shinyjs::reset("succ.PFG")
