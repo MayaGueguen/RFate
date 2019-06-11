@@ -274,12 +274,12 @@ checkboxInput  <- updateableInput("Checkbox")
 # Update a single Shiny input without specifying its type
 updateShinyInput <- function(session, id, value) {
   shinyUpdateInputId <- paste0("shiny-update-input-", id)
-  print(shinyUpdateInputId)
+  # print(shinyUpdateInputId)
   js$getInputType(id, shinyUpdateInputId)
-  print("yo")
+  # print("yo")
   shiny::observeEvent(session$input[[shinyUpdateInputId]], {
     inputType <- session$input[[shinyUpdateInputId]]
-    print(inputType)
+    # print(inputType)
     updateFunc <- sprintf("update%sInput", inputType)
     funcParams <- list(session = session, inputId = id)    
     if (inputType == "Select") {
@@ -294,8 +294,8 @@ updateShinyInput <- function(session, id, value) {
 # Update multiple Shiny inputs simultaneously
 updateShinyInputs <- function(session, updates) {
   lapply(names(updates), function(id) {
-    print(id)
-    print(updates[[id]])
+    # print(id)
+    # print(updates[[id]])
     updateShinyInput(session, id, updates[[id]])
   })
 }

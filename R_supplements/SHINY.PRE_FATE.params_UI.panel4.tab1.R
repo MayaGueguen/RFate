@@ -60,18 +60,6 @@ tabPanel(title = HTML("<span class='tabPanel_title'>BROWSER</span>")
            )
          )
          , fluidRow(
-           # column(1
-           #        , br()
-           #        , br()
-           #        , br()
-           #        , shinyjs::hidden(
-           #          actionButton(inputId = "go.left"
-           #                       , label = ""
-           #                       , icon = icon("arrow-circle-left", class = "icon-help")
-           #                       , width = "100%"
-           #                       , style = HTML(button.style.help))
-           #        )
-           # )
            column(11
                     , br()
                     , uiOutput(outputId = "UI.plot.browser")

@@ -240,8 +240,6 @@ observeEvent(input$add.PFG.disp, {
                                       , d50 = as.numeric(input$disp.d50)
                                       , d99 = as.numeric(input$disp.d99)
                                       , ldd = as.numeric(input$disp.ldd)))
-  
-  shinyjs::enable("create.disp")
 })
 
 observeEvent(input$delete.PFG.disp, {
@@ -291,7 +289,16 @@ observeEvent(input$create.disp, {
 ####################################################################
 
 output$UI.dist.grouping = renderUI({
+  name.1st_col = ""
   if (input$dist.grouping == "by type")
+  {
+    name.1st_col = "H"
+  } else if (length(RV$names.PFG) > 0)
+  {
+    name.1st_col = RV$names.PFG[1]
+  }
+  
+  if (nchar(name.1st_col) > 0)
   {
     fluidRow(
       column(6
@@ -299,13 +306,13 @@ output$UI.dist.grouping = renderUI({
              , fluidRow(
                column(4, HTML(""))
                , column(4, HTML(""))
-               , column(4, HTML("<strong>H</strong>"))
+               , column(4, HTML(paste0("<strong>", name.1st_col, "</strong>")))
              )
              , fluidRow(
                column(4, HTML("<strong> Stage 1</strong>"))
                , column(4, HTML("<strong>Killed</strong>"))
                , column(4
-                        , selectInput(inputId = "dist.1.kill.H"
+                        , selectInput(inputId = paste0("dist.1.kill.", name.1st_col)
                                       , label = NULL
                                       , choices = seq(0,100,10)
                                       , multiple = FALSE
@@ -315,7 +322,7 @@ output$UI.dist.grouping = renderUI({
                column(4, HTML(""))
                , column(4, HTML("<strong>Resprout</strong>"))
                , column(4
-                        , selectInput(inputId = "dist.1.resprout.H"
+                        , selectInput(inputId = paste0("dist.1.resprout.", name.1st_col)
                                       , label = NULL
                                       , choices = seq(0,100,10)
                                       , multiple = FALSE
@@ -325,7 +332,7 @@ output$UI.dist.grouping = renderUI({
                column(4, HTML("<strong> Stage 2</strong>"))
                , column(4, HTML("<strong>Killed</strong>"))
                , column(4
-                        , selectInput(inputId = "dist.2.kill.H"
+                        , selectInput(inputId = paste0("dist.2.kill.", name.1st_col)
                                       , label = NULL
                                       , choices = seq(0,100,10)
                                       , multiple = FALSE
@@ -335,7 +342,7 @@ output$UI.dist.grouping = renderUI({
                column(4, HTML(""))
                , column(4, HTML("<strong>Resprout</strong>"))
                , column(4
-                        , selectInput(inputId = "dist.2.resprout.H"
+                        , selectInput(inputId = paste0("dist.2.resprout.", name.1st_col)
                                       , label = NULL
                                       , choices = seq(0,100,10)
                                       , multiple = FALSE
@@ -345,7 +352,7 @@ output$UI.dist.grouping = renderUI({
                column(4, HTML("<strong> Stage 3</strong>"))
                , column(4, HTML("<strong>Killed</strong>"))
                , column(4
-                        , selectInput(inputId = "dist.3.kill.H"
+                        , selectInput(inputId = paste0("dist.3.kill.", name.1st_col)
                                       , label = NULL
                                       , choices = seq(0,100,10)
                                       , multiple = FALSE
@@ -355,7 +362,7 @@ output$UI.dist.grouping = renderUI({
                column(4, HTML(""))
                , column(4, HTML("<strong>Resprout</strong>"))
                , column(4
-                        , selectInput(inputId = "dist.3.resprout.H"
+                        , selectInput(inputId = paste0("dist.3.resprout.", name.1st_col)
                                       , label = NULL
                                       , choices = seq(0,100,10)
                                       , multiple = FALSE
@@ -365,7 +372,7 @@ output$UI.dist.grouping = renderUI({
                column(4, HTML("<strong> Stage 4</strong>"))
                , column(4, HTML("<strong>Killed</strong>"))
                , column(4
-                        , selectInput(inputId = "dist.4.kill.H"
+                        , selectInput(inputId = paste0("dist.4.kill.", name.1st_col)
                                       , label = NULL
                                       , choices = seq(0,100,10)
                                       , multiple = FALSE
@@ -375,109 +382,46 @@ output$UI.dist.grouping = renderUI({
                column(4, HTML(""))
                , column(4, HTML("<strong>Resprout</strong>"))
                , column(4
-                        , selectInput(inputId = "dist.4.resprout.H"
+                        , selectInput(inputId = paste0("dist.4.resprout.", name.1st_col)
                                       , label = NULL
                                       , choices = seq(0,100,10)
                                       , multiple = FALSE
                                       , width = "100%"))
              ))
-      , column(2
-               , br()
-               , HTML("<strong>C</strong>")
-               , selectInput(inputId = "dist.1.kill.C"
-                             , label = NULL
-                             , choices = seq(0,100,10)
-                             , multiple = FALSE
-                             , width = "100%")
-               , selectInput(inputId = "dist.1.resprout.C"
-                             , label = NULL
-                             , choices = seq(0,100,10)
-                             , multiple = FALSE
-                             , width = "100%")
-               , selectInput(inputId = "dist.2.kill.C"
-                             , label = NULL
-                             , choices = seq(0,100,10)
-                             , multiple = FALSE
-                             , width = "100%")
-               , selectInput(inputId = "dist.2.resprout.C"
-                             , label = NULL
-                             , choices = seq(0,100,10)
-                             , multiple = FALSE
-                             , width = "100%")
-               , selectInput(inputId = "dist.3.kill.C"
-                             , label = NULL
-                             , choices = seq(0,100,10)
-                             , multiple = FALSE
-                             , width = "100%")
-               , selectInput(inputId = "dist.3.resprout.C"
-                             , label = NULL
-                             , choices = seq(0,100,10)
-                             , multiple = FALSE
-                             , width = "100%")
-               , selectInput(inputId = "dist.4.kill.C"
-                             , label = NULL
-                             , choices = seq(0,100,10)
-                             , multiple = FALSE
-                             , width = "100%")
-               , selectInput(inputId = "dist.4.resprout.C"
-                             , label = NULL
-                             , choices = seq(0,100,10)
-                             , multiple = FALSE
-                             , width = "100%")
-      )
-      , column(2
-               , br()
-               , HTML("<strong>P</strong>")
-               , selectInput(inputId = "dist.1.kill.P"
-                             , label = NULL
-                             , choices = seq(0,100,10)
-                             , multiple = FALSE
-                             , width = "100%")
-               , selectInput(inputId = "dist.1.resprout.P"
-                             , label = NULL
-                             , choices = seq(0,100,10)
-                             , multiple = FALSE
-                             , width = "100%")
-               , selectInput(inputId = "dist.2.kill.P"
-                             , label = NULL
-                             , choices = seq(0,100,10)
-                             , multiple = FALSE
-                             , width = "100%")
-               , selectInput(inputId = "dist.2.resprout.P"
-                             , label = NULL
-                             , choices = seq(0,100,10)
-                             , multiple = FALSE
-                             , width = "100%")
-               , selectInput(inputId = "dist.3.kill.P"
-                             , label = NULL
-                             , choices = seq(0,100,10)
-                             , multiple = FALSE
-                             , width = "100%")
-               , selectInput(inputId = "dist.3.resprout.P"
-                             , label = NULL
-                             , choices = seq(0,100,10)
-                             , multiple = FALSE
-                             , width = "100%")
-               , selectInput(inputId = "dist.4.kill.P"
-                             , label = NULL
-                             , choices = seq(0,100,10)
-                             , multiple = FALSE
-                             , width = "100%")
-               , selectInput(inputId = "dist.4.resprout.P"
-                             , label = NULL
-                             , choices = seq(0,100,10)
-                             , multiple = FALSE
-                             , width = "100%")
-      )
+      , uiOutput(outputId = "UI.dist.grouping.BIS")
     )
-  } else
-  {
-    # names.PFG = list.files(path = paste0(input$name.simul, "/DATA/PFGS/SUCC/")
-    #                        , pattern = "^SUCC_")
-    # names.PFG = sub("^SUCC_", "", names.PFG)
-    # names.PFG = sub(".txt$", "", names.PFG)
   }
 })
+  
+output$UI.dist.grouping.BIS = renderUI({
+  name.2nd_col = vector()
+  if (input$dist.grouping == "by type")
+  {
+    name.2nd_col = c("C", "P")
+  } else if (length(RV$names.PFG) > 1)
+  {
+    name.2nd_col = RV$names.PFG[2:length(RV$names.PFG)]
+  }
+  
+  if (length(name.2nd_col) > 0)
+  {
+    lapply(name.2nd_col, function(j) {
+      column(2
+             , br()
+             , HTML(paste0("<strong>", j, "</strong>"))
+             , lapply(as.vector(sapply(1:4, function(x) paste0("dist.", x, ".", c("kill", "resprout"), ".", j)))
+                      , function(i) {
+                        selectInput(inputId = i
+                                    , label = NULL
+                                    , choices = seq(0,100,10)
+                                    , multiple = FALSE
+                                    , width = "100%")
+                      })
+      )
+    })
+  }
+})
+
 
 ####################################################################
 
@@ -528,13 +472,20 @@ observeEvent(input$add.PFG.dist, {
   {
     
   }
-  
-  shinyjs::enable("create.dist")
 })
 
 observeEvent(input$delete.PFG.dist, {
   RV$mat.PFG.dist <- data.frame()
-  shinyjs::disable("create.dist")
+})
+
+observeEvent(RV$mat.PFG.dist, {
+  if (nrow(RV$mat.PFG.dist) > 0)
+  {
+    shinyjs::enable("create.dist")
+  } else
+  {
+    shinyjs::disable("create.dist")
+  }
 })
 
 ####################################################################

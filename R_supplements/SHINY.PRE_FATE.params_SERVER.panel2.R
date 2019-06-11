@@ -346,7 +346,6 @@ observeEvent(input$load.param, {
     }
     RV$mat.PFG.disp = foreach(fi = file.PFGdisp, .combine = 'rbind') %do%
     {
-      print(fi)
       PFG = .getParam(params.lines = fi
                       , flag = "NAME"
                       , flag.split = " "
@@ -360,7 +359,6 @@ observeEvent(input$load.param, {
                          , flag.split = " "
                          , is.num = TRUE)
       
-      print(PFG)
       return(data.frame(PFG = ifelse(is.null(PFG), "", PFG)
                         , MODE = ifelse(is.null(MODE), "", MODE)
                         , d50 = ifelse(is.null(dd), "", dd[1])
