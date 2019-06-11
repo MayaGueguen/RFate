@@ -133,8 +133,10 @@ observeEvent(input$delete.names.PFG, {
 
 ####################################################################
 
+output$mat.PFG.ALL = renderTable({ RV$mat.PFG.ALL })
+
 observeEvent(input$add.PFG.succ, {
-  mat.PFG.ALL <<- rbind(mat.PFG.ALL
+  RV$mat.PFG.ALL <- rbind(RV$mat.PFG.ALL
                         , data.frame(PFG = input$succ.PFG
                                      , type = input$succ.type
                                      , height = as.numeric(input$succ.height)
@@ -142,16 +144,13 @@ observeEvent(input$add.PFG.succ, {
                                      , longevity = as.numeric(input$succ.longevity)
                                      , light = as.numeric(input$succ.light)
                         ))
-  output$mat.PFG.ALL = renderTable({ mat.PFG.ALL })
   
   shinyjs::enable("create.succ")
   shinyjs::enable("create.light")
 })
 
 observeEvent(input$delete.PFG.ALL, {
-  mat.PFG.ALL <<- data.frame()
-  output$mat.PFG.ALL = renderTable({ mat.PFG.ALL })
-  
+  RV$mat.PFG.ALL <- data.frame()
   shinyjs::disable("create.succ")
   shinyjs::disable("create.light")
 })
@@ -168,7 +167,7 @@ observeEvent(input$create.succ, {
   {
     get_res = print_messages(as.expression(
       PRE_FATE.params_PFGsuccession(name.simulation = input$name.simul
-                                    , mat.PFG.succ = mat.PFG.ALL[, c("PFG", "type", "height", "maturity", "longevity")]
+                                    , mat.PFG.succ = RV$mat.PFG.ALL[, c("PFG", "type", "height", "maturity", "longevity")]
                                     , opt.folder.name = get_opt.folder.name()
       )
     ), cut_pattern = paste0(input$name.simul, "/DATA/PFGS/SUCC/"))
@@ -198,7 +197,7 @@ observeEvent(input$create.light, {
   {
     get_res = print_messages(as.expression(
       PRE_FATE.params_PFGlight(name.simulation = input$name.simul
-                               , mat.PFG.succ = mat.PFG.ALL[, c("PFG", "type", "height", "maturity", "longevity", "light")]
+                               , mat.PFG.succ = RV$mat.PFG.ALL[, c("PFG", "type", "height", "maturity", "longevity", "light")]
                                , opt.folder.name = get_opt.folder.name()
       )
     ), cut_pattern = paste0(input$name.simul, "/DATA/PFGS/LIGHT/"))
@@ -218,22 +217,21 @@ observeEvent(input$create.light, {
 
 ####################################################################
 
+output$mat.PFG.disp = renderTable({ RV$mat.PFG.disp })
+
 observeEvent(input$add.PFG.disp, {
-  mat.PFG.disp <<- rbind(mat.PFG.disp
+  RV$mat.PFG.disp <- rbind(RV$mat.PFG.disp
                          , data.frame(PFG = input$disp.PFG
                                       , MODE = as.numeric(input$disp.mode)
                                       , d50 = as.numeric(input$disp.d50)
                                       , d99 = as.numeric(input$disp.d99)
                                       , ldd = as.numeric(input$disp.ldd)))
-  output$mat.PFG.disp = renderTable({ mat.PFG.disp })
   
   shinyjs::enable("create.disp")
 })
 
 observeEvent(input$delete.PFG.disp, {
-  mat.PFG.disp <<- data.frame()
-  output$mat.PFG.disp = renderTable({ mat.PFG.disp })
-  
+  RV$mat.PFG.disp <- data.frame()
   shinyjs::disable("create.disp")
 })
 
@@ -249,7 +247,7 @@ observeEvent(input$create.disp, {
   {
     get_res = print_messages(as.expression(
       PRE_FATE.params_PFGdispersal(name.simulation = input$name.simul
-                                   , mat.PFG.disp = mat.PFG.disp
+                                   , mat.PFG.disp = RV$mat.PFG.disp
                                    , opt.folder.name = get_opt.folder.name()
       )
     ), cut_pattern = paste0(input$name.simul, "/DATA/PFGS/DISP/"))
@@ -460,6 +458,8 @@ output$UI.dist.grouping = renderUI({
 
 ####################################################################
 
+output$mat.PFG.dist = renderTable({ RV$mat.PFG.dist })
+
 observeEvent(input$dist.name, {
   if (nchar(input$dist.name) > 0)
   {
@@ -473,7 +473,7 @@ observeEvent(input$dist.name, {
 observeEvent(input$add.PFG.dist, {
   if (input$dist.grouping == "by type")
   {
-    mat.PFG.dist <<- rbind(mat.PFG.dist
+    RV$mat.PFG.dist <- rbind(RV$mat.PFG.dist
                            , data.frame(name = input$dist.name
                                         , responseStage = 1:4
                                         , KilledIndiv_H = as.numeric(c(input$dist.1.kill.H
@@ -505,15 +505,12 @@ observeEvent(input$add.PFG.dist, {
   {
     
   }
-  output$mat.PFG.dist = renderTable({ mat.PFG.dist })
   
   shinyjs::enable("create.dist")
 })
 
 observeEvent(input$delete.PFG.dist, {
-  mat.PFG.dist <<- data.frame()
-  output$mat.PFG.dist = renderTable({ mat.PFG.dist })
-  
+  RV$mat.PFG.dist <- data.frame()
   shinyjs::disable("create.dist")
 })
 
@@ -529,7 +526,7 @@ observeEvent(input$create.dist, {
   {
     get_res = print_messages(as.expression(
       PRE_FATE.params_PFGdisturbance(name.simulation = input$name.simul
-                                     , mat.PFG.dist = mat.PFG.dist
+                                     , mat.PFG.dist = RV$mat.PFG.dist
                                      , opt.folder.name = get_opt.folder.name()
       )
     ), cut_pattern = paste0(input$name.simul, "/DATA/PFGS/DIST/"))
@@ -549,8 +546,10 @@ observeEvent(input$create.dist, {
 
 ####################################################################
 
+output$mat.PFG.soil = renderTable({ RV$mat.PFG.soil })
+
 observeEvent(input$add.PFG.soil, {
-  mat.PFG.soil <<- rbind(mat.PFG.soil
+  RV$mat.PFG.soil <- rbind(RV$mat.PFG.soil
                         , data.frame(PFG = input$soil.PFG
                                      , type = input$soil.type
                                      , soil_contrib = as.numeric(input$soil.contrib)
@@ -568,15 +567,12 @@ observeEvent(input$add.PFG.soil, {
                                                     , as.numeric(input$soil.Ma.M)
                                                     , as.numeric(input$soil.Ma.H))
                         ))
-  output$mat.PFG.soil = renderTable({ mat.PFG.soil })
   
   shinyjs::enable("create.soil")
 })
 
 observeEvent(input$delete.PFG.soil, {
-  mat.PFG.soil <<- data.frame()
-  output$mat.PFG.soil = renderTable({ mat.PFG.soil })
-  
+  RV$mat.PFG.soil <- data.frame()
   shinyjs::disable("create.soil")
 })
 
@@ -592,8 +588,8 @@ observeEvent(input$create.soil, {
   {
     get_res = print_messages(as.expression(
       PRE_FATE.params_PFGsoil(name.simulation = input$name.simul
-                              , mat.PFG.soil = unique(mat.PFG.soil[, c("PFG", "type", "soil_contrib", "soil_tol_min", "soil_tol_max")])
-                              , mat.PFG.tol = mat.PFG.soil[, c("PFG", "lifeStage", "soilResources", "soil_tol")]
+                              , mat.PFG.soil = unique(RV$mat.PFG.soil[, c("PFG", "type", "soil_contrib", "soil_tol_min", "soil_tol_max")])
+                              , mat.PFG.tol = RV$mat.PFG.soil[, c("PFG", "lifeStage", "soilResources", "soil_tol")]
                               , opt.folder.name = get_opt.folder.name()
       )
     ), cut_pattern = paste0(input$name.simul, "/DATA/PFGS/SOIL/"))

@@ -34,13 +34,6 @@ library(gridExtra)
 
 source("R_supplements/SHINY.PRE_FATE.params_FUNCTIONS.R", local = TRUE)
 
-mat.PFG.ALL = data.frame()
-mat.PFG.disp = data.frame()
-mat.PFG.dist = data.frame()
-mat.PFG.soil = data.frame()
-mat.changing = data.frame()
-
-
 ###################################################################################################################################
 ###################################################################################################################################
 
@@ -186,6 +179,11 @@ server <- function(input, output, session) {
   observe_helpers(withMathJax = TRUE)
   
   RV = reactiveValues(names.PFG = c()
+                      , mat.PFG.ALL = data.frame()
+                      , mat.PFG.disp = data.frame()
+                      , mat.PFG.dist = data.frame()
+                      , mat.PFG.soil = data.frame()
+                      , mat.changing = data.frame()
                       # , compt = 1, comptMax = 1
   )
   

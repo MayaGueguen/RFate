@@ -148,22 +148,21 @@ observeEvent(input$refresh.changing, {
 
 ####################################################################
 
+output$mat.changing = renderTable({ RV$mat.changing })
+
 observeEvent(input$add.changing, {
-  mat.changing <<- rbind(mat.changing
+  RV$mat.changing <- rbind(RV$mat.changing
                          , data.frame(opt.folder.name = input$changing.folder
                                       , type.changing = input$type.changing
                                       , year = input$changing.year
                                       , order = input$changing.order
                                       , file.name = input$changing.file))
-  output$mat.changing = renderTable({ mat.changing })
   
   shinyjs::enable("create.changing")
 })
 
 observeEvent(input$delete.changing, {
-  mat.changing <<- data.frame()
-  output$mat.changing = renderTable({ mat.changing })
-  
+  RV$mat.changing <- data.frame()
   shinyjs::disable("create.changing")
 })
 
@@ -177,7 +176,7 @@ output$created_table.changing = renderDataTable({
 observeEvent(input$create.changing, {
   if (input$create.skeleton > 0)
   {
-    mat.changing.split = split(mat.changing, list(mat.changing$type.changing, mat.changing$opt.folder.name))
+    mat.changing.split = split(RV$mat.changing, list(RV$mat.changing$type.changing, RV$mat.changing$opt.folder.name))
     for(i in 1:length(mat.changing.split))
     {
       tab = mat.changing.split[[i]]
