@@ -87,6 +87,26 @@ output$UI.soil.PFG = renderUI({
 
 ####################################################################
 
+observeEvent(RV$names.PFG, {
+  if (length(RV$names.PFG) > 0)
+  {
+    shinyjs::enable("succ.PFG")
+    shinyjs::enable("add.PFG.succ")
+    shinyjs::enable("disp.PFG")
+    shinyjs::enable("add.PFG.disp")
+    shinyjs::enable("soil.PFG")
+    shinyjs::enable("add.PFG.soil")
+  } else
+  {
+    shinyjs::disable("succ.PFG")
+    shinyjs::disable("add.PFG.succ")
+    shinyjs::disable("disp.PFG")
+    shinyjs::disable("add.PFG.disp")
+    shinyjs::disable("soil.PFG")
+    shinyjs::disable("add.PFG.soil")
+  }
+})
+
 observeEvent(input$name.PFG, {
   if (nchar(input$name.PFG) > 0)
   {
@@ -105,30 +125,17 @@ observeEvent(input$add.PFG.name, {
   } else
   {
     RV$names.PFG = c(RV$names.PFG, input$name.PFG)
-    
     shinyjs::reset("name.PFG")
-    shinyjs::enable("succ.PFG")
-    shinyjs::enable("add.PFG.succ")
-    shinyjs::enable("disp.PFG")
-    shinyjs::enable("add.PFG.disp")
-    shinyjs::enable("soil.PFG")
-    shinyjs::enable("add.PFG.soil")
   }
 })
 
 observeEvent(input$delete.names.PFG, {
-  RV$names.PFG = c()
+  RV$names.PFG = vector()
   
   shinyjs::reset("name.PFG")
   shinyjs::reset("succ.PFG")
   shinyjs::reset("disp.PFG")
   shinyjs::reset("soil.PFG")
-  shinyjs::disable("succ.PFG")
-  shinyjs::disable("add.PFG.succ")
-  shinyjs::disable("disp.PFG")
-  shinyjs::disable("add.PFG.disp")
-  shinyjs::disable("soil.PFG")
-  shinyjs::disable("add.PFG.soil")
 })
 
 ####################################################################
@@ -144,15 +151,22 @@ observeEvent(input$add.PFG.succ, {
                                      , longevity = as.numeric(input$succ.longevity)
                                      , light = as.numeric(input$succ.light)
                         ))
-  
-  shinyjs::enable("create.succ")
-  shinyjs::enable("create.light")
 })
 
 observeEvent(input$delete.PFG.ALL, {
   RV$mat.PFG.ALL <- data.frame()
-  shinyjs::disable("create.succ")
-  shinyjs::disable("create.light")
+})
+
+observeEvent(RV$mat.PFG.ALL, {
+  if (nrow(RV$mat.PFG.ALL) > 0)
+  {
+    shinyjs::enable("create.succ")
+    shinyjs::enable("create.light")
+  } else
+  {
+    shinyjs::disable("create.succ")
+    shinyjs::disable("create.light")
+  }
 })
 
 ####################################################################
@@ -232,7 +246,16 @@ observeEvent(input$add.PFG.disp, {
 
 observeEvent(input$delete.PFG.disp, {
   RV$mat.PFG.disp <- data.frame()
-  shinyjs::disable("create.disp")
+})
+
+observeEvent(RV$mat.PFG.disp, {
+  if (nrow(RV$mat.PFG.disp) > 0)
+  {
+    shinyjs::enable("create.disp")
+  } else
+  {
+    shinyjs::disable("create.disp")
+  }
 })
 
 ####################################################################

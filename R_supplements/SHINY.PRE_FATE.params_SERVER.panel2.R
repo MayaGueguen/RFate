@@ -102,24 +102,90 @@ observeEvent(input$name.simul, {
 
 ####################################################################
 
+get_files_simulParam = function(simulParam.fi, simulParam.val, flag, flag.split = "^--.*--$", is.num = FALSE)
+{
+  res = ifelse(length(grep(flag, simulParam.val)) > 0
+               , list(.getParam(params.lines = simulParam.fi
+                                , flag = flag
+                                , flag.split = flag.split
+                                , is.num = is.num))
+               , "")
+  return(unlist(res))
+}
+
+get_val_param = function(filename)
+{
+  if (file.exists(filename))
+  {
+    val.file = readLines(filename)
+    ind.comment = grep("^#", val.file)
+    if (length(ind.comment) > 0)
+    {
+      val.file = val.file[-ind.comment]
+    }
+  } else
+  {
+    val.file = ""
+  }
+  return(val.file)
+}
+
+####################################################################
+
 observeEvent(input$load.param, {
   if (nchar(input$load.file) > 0)
   {
     file.simulParam = paste0(input$name.simul, "/PARAM_SIMUL/paramSimul_", input$load.file, ".txt")
-    file.globalParam = .getParam(params.lines = file.simulParam
-                                 , flag = "GLOBAL_PARAMS"
-                                 , flag.split = "^--.*--$"
-                                 , is.num = FALSE)
+    val.simulParam = readLines(file.simulParam)
+    # val.simulParam = get_val_param(file.simulParam)
+    
+    file.globalParam = get_files_simulParam(file.simulParam, val.simulParam, flag = "GLOBAL_PARAMS")
+    file.saveArrays = get_files_simulParam(file.simulParam, val.simulParam, flag = "ARRAYS_SAVING_YEARS")
+    file.saveObjects = get_files_simulParam(file.simulParam, val.simulParam, flag = "OBJECTS_SAVING_YEARS")
+    file.PFGsucc = get_files_simulParam(file.simulParam, val.simulParam, flag = "PFG_LIFE_HISTORY_PARAMS")
+    file.PFGlight = get_files_simulParam(file.simulParam, val.simulParam, flag = "PFG_LIGHT_PARAMS")
+    file.PFGdisp = get_files_simulParam(file.simulParam, val.simulParam, flag = "PFG_DISPERSAL_PARAMS")
+    file.PFGdist = get_files_simulParam(file.simulParam, val.simulParam, flag = "PFG_DISTURBANCES_PARAMS")
+    file.PFGsoil = get_files_simulParam(file.simulParam, val.simulParam, flag = "PFG_SOIL_PARAMS")
   } else
   {
     file.globalParam = get_files.names(path_folder = paste0(input$name.simul, "/DATA/GLOBAL_PARAMETERS/"))
+    file.globalParam = file.globalParam[1]
+    file.saveArrays = get_files.names(path_folder = paste0(input$name.simul, "/DATA/SAVE/"))
+    file.saveArrays = file.saveArrays[1]
+    file.saveObjects = get_files.names(path_folder = paste0(input$name.simul, "/DATA/SAVE/"))
+    file.saveObjects = file.saveObjects[1]
   }
-  # print(file.globalParam)
   
   if (length(file.globalParam) > 0)
   {
-    file.globalParam = file.globalParam[1]
-    # print(file.globalParam)
+    # if (file.exists(file.saveArrays))
+    # {
+    #   val.saveArrays = readLines(file.saveArrays)
+    #   ind.comment = grep("^#", val.saveArrays)
+    #   if (length(ind.comment) > 0)
+    #   {
+    #     val.saveArrays = val.saveArrays[-ind.comment]
+    #   }
+    # } else
+    # {
+    #   val.saveArrays = ""
+    # }
+    val.saveArrays = get_val_param(file.saveArrays)
+    val.saveObjects = get_val_param(file.saveObjects)
+    
+    # if (file.exists(file.saveObjects))
+    # {
+    #   val.saveObjects = readLines(file.saveObjects)
+    #   ind.comment = grep("^#", val.saveObjects)
+    #   if (length(ind.comment) > 0)
+    #   {
+    #     val.saveObjects = val.saveObjects[-ind.comment]
+    #   }
+    # } else
+    # {
+    #   val.saveObjects = ""
+    # }
     
     update.param = list(
       "required.no_PFG" = .getParam(params.lines = file.globalParam
@@ -210,10 +276,99 @@ observeEvent(input$load.param, {
                              , flag = "DO_SOIL_COMPETITION"
                              , flag.split = " "
                              , is.num = TRUE)
+      , "save.maps.folder" = sub(paste0(input$name.simul, "/DATA/SAVE"), "", dirname(file.saveArrays))
+      , "save.maps.year1" = val.saveArrays[1]
+      , "save.maps.year2" = val.saveArrays[length(val.saveArrays)]
+      , "save.maps.no" = length(val.saveArrays)
+      , "save.objects.folder" = sub(paste0(input$name.simul, "/DATA/SAVE"), "", dirname(file.saveObjects))
+      , "save.objects.year1" = val.saveObjects[1]
+      , "save.objects.year2" = ifelse(length(val.saveObjects) > 1, val.saveObjects[2], "")
+      , "save.objects.year3" = ifelse(length(val.saveObjects) > 2, val.saveObjects[3], "")
+      , "PFG.folder" = sub(paste0(input$name.simul, "/DATA/PFGS/SUCC"), "", unique(dirname(file.PFGsucc)))
     )
-    print(update.param)
+    
+    ## update shiny input parameters
     updateShinyInputs(session = session
                       , updates = update.param)
+    
+    ## update shiny reactiveValues
+    RV$names.PFG = sub(".txt", "", sub("SUCC_", "", basename(file.PFGsucc)))
+    RV$mat.PFG.ALL = foreach(fi = file.PFGsucc, .combine = 'rbind') %do%
+    {
+      PFG = .getParam(params.lines = fi
+                      , flag = "NAME"
+                      , flag.split = " "
+                      , is.num = FALSE)
+      type = .getParam(params.lines = fi
+                       , flag = "TYPE"
+                       , flag.split = " "
+                       , is.num = FALSE)
+      height = .getParam(params.lines = fi
+                         , flag = "HEIGHT"
+                         , flag.split = " "
+                         , is.num = TRUE)
+      maturity = .getParam(params.lines = fi
+                           , flag = "MATURITY"
+                           , flag.split = " "
+                           , is.num = TRUE)
+      longevity = .getParam(params.lines = fi
+                            , flag = "LONGEVITY"
+                            , flag.split = " "
+                            , is.num = TRUE)
+      light = 0
+      
+      return(data.frame(PFG = ifelse(is.null(PFG), "", PFG)
+                        , type = ifelse(is.null(type), "", type)
+                        , height = ifelse(is.null(height), "", height)
+                        , maturity = ifelse(is.null(maturity), "", maturity)
+                        , longevity = ifelse(is.null(longevity), "", longevity)
+                        , light = 0
+      ))
+    }
+    if (length(file.PFGlight) > 0)
+    {
+      for(fi in file.PFGlight)
+      {
+        PFG = .getParam(params.lines = fi
+                        , flag = "NAME"
+                        , flag.split = " "
+                        , is.num = FALSE)
+        light = .getParam(params.lines = fi
+                              , flag = "LIGHT"
+                              , flag.split = " "
+                              , is.num = TRUE)
+        light = ifelse(is.null(light), NULL, light)
+        if (PFG %in% RV$mat.PFG.ALL$PFG && !is.null(light))
+        {
+          RV$mat.PFG.ALL$light[which(RV$mat.PFG.ALL$PFG == PFG)] = light
+        }
+      }
+    }
+    RV$mat.PFG.disp = foreach(fi = file.PFGdisp, .combine = 'rbind') %do%
+    {
+      print(fi)
+      PFG = .getParam(params.lines = fi
+                      , flag = "NAME"
+                      , flag.split = " "
+                      , is.num = FALSE)
+      MODE = .getParam(params.lines = fi
+                       , flag = "MODE_DISPERS"
+                       , flag.split = " "
+                       , is.num = TRUE)
+      dd = .getParam(params.lines = fi
+                         , flag = "DISPERS_DIST"
+                         , flag.split = " "
+                         , is.num = TRUE)
+      
+      print(PFG)
+      return(data.frame(PFG = ifelse(is.null(PFG), "", PFG)
+                        , MODE = ifelse(is.null(MODE), "", MODE)
+                        , d50 = ifelse(is.null(dd), "", dd[1])
+                        , d99 = ifelse(is.null(dd), "", dd[2])
+                        , ldd = ifelse(is.null(dd), "", dd[3])
+      ))
+    }
+    
   }
 })
 
