@@ -110,7 +110,15 @@ get_files_simulParam = function(simulParam.fi, simulParam.val, flag, flag.split 
                                 , flag.split = flag.split
                                 , is.num = is.num))
                , "")
-  return(unlist(res))
+  res = unlist(res)
+  if (sum(file.exists(res)) > 0)
+  {
+    res = res[file.exists(res)]
+  } else
+  {
+    res = ""
+  }
+  return(res)
 }
 
 get_val_param = function(filename)
@@ -137,7 +145,6 @@ observeEvent(input$load.param, {
   {
     file.simulParam = paste0(input$name.simul, "/PARAM_SIMUL/paramSimul_", input$load.file, ".txt")
     val.simulParam = readLines(file.simulParam)
-    # val.simulParam = get_val_param(file.simulParam)
     
     file.globalParam = get_files_simulParam(file.simulParam, val.simulParam, flag = "GLOBAL_PARAMS")
     file.saveArrays = get_files_simulParam(file.simulParam, val.simulParam, flag = "ARRAYS_SAVING_YEARS")
@@ -147,6 +154,12 @@ observeEvent(input$load.param, {
     file.PFGdisp = get_files_simulParam(file.simulParam, val.simulParam, flag = "PFG_DISPERSAL_PARAMS")
     file.PFGdist = get_files_simulParam(file.simulParam, val.simulParam, flag = "PFG_DISTURBANCES_PARAMS")
     file.PFGsoil = get_files_simulParam(file.simulParam, val.simulParam, flag = "PFG_SOIL_PARAMS")
+    file.changeMask_t = get_files_simulParam(file.simulParam, val.simulParam, flag = "MASK_CHANGE_TIME")
+    file.changeMask_m = get_files_simulParam(file.simulParam, val.simulParam, flag = "MASK_CHANGE_MASK")
+    file.changeHS_t = get_files_simulParam(file.simulParam, val.simulParam, flag = "HAB_CHANGE_TIME")
+    file.changeHS_m = get_files_simulParam(file.simulParam, val.simulParam, flag = "HAB_CHANGE_MASK")
+    file.changeDist_t = get_files_simulParam(file.simulParam, val.simulParam, flag = "DIST_CHANGE_TIME")
+    file.changeDist_m = get_files_simulParam(file.simulParam, val.simulParam, flag = "DIST_CHANGE_MASK")
   } else
   {
     file.globalParam = get_files.names(path_folder = paste0(input$name.simul, "/DATA/GLOBAL_PARAMETERS/"))
@@ -157,7 +170,7 @@ observeEvent(input$load.param, {
     file.saveObjects = file.saveObjects[1]
   }
   
-  if (length(file.globalParam) > 0)
+  if (length(file.globalParam) > 0 && nchar(file.globalParam) > 0)
   {
     val.saveArrays = get_val_param(file.saveArrays)
     val.saveObjects = get_val_param(file.saveObjects)
@@ -267,60 +280,63 @@ observeEvent(input$load.param, {
                       , updates = update.param)
     
     ## update shiny reactiveValues
-    RV$names.PFG = sub(".txt", "", sub("SUCC_", "", basename(file.PFGsucc)))
-    RV$mat.PFG.ALL = foreach(fi = file.PFGsucc, .combine = 'rbind') %do%
+    if (length(file.PFGsucc) > 0 && nchar(file.PFGsucc) > 0)
     {
-      PFG = .getParam(params.lines = fi
-                      , flag = "NAME"
-                      , flag.split = " "
-                      , is.num = FALSE)
-      type = .getParam(params.lines = fi
-                       , flag = "TYPE"
-                       , flag.split = " "
-                       , is.num = FALSE)
-      height = .getParam(params.lines = fi
-                         , flag = "HEIGHT"
-                         , flag.split = " "
-                         , is.num = TRUE)
-      maturity = .getParam(params.lines = fi
-                           , flag = "MATURITY"
-                           , flag.split = " "
-                           , is.num = TRUE)
-      longevity = .getParam(params.lines = fi
-                            , flag = "LONGEVITY"
-                            , flag.split = " "
-                            , is.num = TRUE)
-      light = 0
-      
-      return(data.frame(PFG = ifelse(is.null(PFG), "", PFG)
-                        , type = ifelse(is.null(type), "", type)
-                        , height = ifelse(is.null(height), "", height)
-                        , maturity = ifelse(is.null(maturity), "", maturity)
-                        , longevity = ifelse(is.null(longevity), "", longevity)
-                        , light = 0
-      ))
-    }
-    if (length(file.PFGlight) > 0)
-    {
-      for(fi in file.PFGlight)
+      RV$names.PFG = sub(".txt", "", sub("SUCC_", "", basename(file.PFGsucc)))
+      RV$mat.PFG.ALL = foreach(fi = file.PFGsucc, .combine = 'rbind') %do%
       {
         PFG = .getParam(params.lines = fi
                         , flag = "NAME"
                         , flag.split = " "
                         , is.num = FALSE)
-        light = .getParam(params.lines = fi
-                          , flag = "LIGHT"
-                          , flag.split = " "
-                          , is.num = TRUE)
-        light = ifelse(is.null(light), NULL, light)
-        if (PFG %in% RV$mat.PFG.ALL$PFG && !is.null(light))
+        type = .getParam(params.lines = fi
+                         , flag = "TYPE"
+                         , flag.split = " "
+                         , is.num = FALSE)
+        height = .getParam(params.lines = fi
+                           , flag = "HEIGHT"
+                           , flag.split = " "
+                           , is.num = TRUE)
+        maturity = .getParam(params.lines = fi
+                             , flag = "MATURITY"
+                             , flag.split = " "
+                             , is.num = TRUE)
+        longevity = .getParam(params.lines = fi
+                              , flag = "LONGEVITY"
+                              , flag.split = " "
+                              , is.num = TRUE)
+        light = 0
+        
+        return(data.frame(PFG = ifelse(is.null(PFG), "", PFG)
+                          , type = ifelse(is.null(type), "", type)
+                          , height = ifelse(is.null(height), "", height)
+                          , maturity = ifelse(is.null(maturity), "", maturity)
+                          , longevity = ifelse(is.null(longevity), "", longevity)
+                          , light = 0
+        ))
+      }
+      if (length(file.PFGlight) > 0)
+      {
+        for(fi in file.PFGlight)
         {
-          RV$mat.PFG.ALL$light[which(RV$mat.PFG.ALL$PFG == PFG)] = light
+          PFG = .getParam(params.lines = fi
+                          , flag = "NAME"
+                          , flag.split = " "
+                          , is.num = FALSE)
+          light = .getParam(params.lines = fi
+                            , flag = "LIGHT"
+                            , flag.split = " "
+                            , is.num = TRUE)
+          light = ifelse(is.null(light), NULL, light)
+          if (PFG %in% RV$mat.PFG.ALL$PFG && !is.null(light))
+          {
+            RV$mat.PFG.ALL$light[which(RV$mat.PFG.ALL$PFG == PFG)] = light
+          }
         }
       }
     }
     ## Dispersal
-    if (length(file.PFGdisp) > 0)
+    if (length(file.PFGdisp) > 0 && nchar(file.PFGdisp) > 0)
     {
       RV$mat.PFG.disp = foreach(fi = file.PFGdisp, .combine = 'rbind') %do%
       {
@@ -346,7 +362,7 @@ observeEvent(input$load.param, {
       }
     }
     ## Disturbances
-    if (length(file.PFGdist) > 0)
+    if (length(file.PFGdist) > 0 && nchar(file.PFGdist) > 0)
     {
       res = foreach(fi = file.PFGdist) %do%
       {
@@ -371,6 +387,68 @@ observeEvent(input$load.param, {
         return(res)
       }
       RV$mat.PFG.dist = Reduce(f = function(x, y) merge(x, y, by = c("name", "responseStage")), x = res)
+    }
+    ## Soil
+    if (length(file.PFGsoil) > 0 && nchar(file.PFGsoil) > 0)
+    {
+      RV$mat.PFG.soil = foreach(fi = file.PFGsoil, .combine = 'rbind') %do%
+      {
+        PFG = .getParam(params.lines = fi
+                        , flag = "NAME"
+                        , flag.split = " "
+                        , is.num = FALSE)
+        soil_contrib = .getParam(params.lines = fi
+                                 , flag = "SOIL_CONTRIB"
+                                 , flag.split = " "
+                                 , is.num = TRUE)
+        soil_tol_min = .getParam(params.lines = fi
+                                 , flag = "SOIL_LOW"
+                                 , flag.split = " "
+                                 , is.num = TRUE)
+        soil_tol_max = .getParam(params.lines = fi
+                                 , flag = "SOIL_HIGH"
+                                 , flag.split = " "
+                                 , is.num = TRUE)
+        soil_tol = .getParam(params.lines = fi
+                             , flag = "SOIL_TOL"
+                             , flag.split = " "
+                             , is.num = TRUE)
+        
+        return(data.frame(PFG = ifelse(is.null(PFG), "", PFG)
+                          , type = 0
+                          , soil_contrib = ifelse(is.null(soil_contrib), "", soil_contrib)
+                          , soil_tol_min = ifelse(is.null(soil_tol_min), "", soil_tol_min)
+                          , soil_tol_max = ifelse(is.null(soil_tol_max), "", soil_tol_max)
+                          , lifeStage = rep(c("Germinant", "Immature", "Mature"), each = 3)
+                          , soilResources = rep(c("Low", "Medium", "High"), 3)
+                          , soil_tol = ifelse(is.null(soil_tol), "", soil_tol)
+        ))
+      }
+    }
+    ## Changing
+    if ((length(file.changeMask_t) > 0 && nchar(file.changeMask_t) > 0) ||
+        (length(file.changeHS_t) > 0 && nchar(file.changeHS_t) > 0) ||
+        (length(file.changeDist_t) > 0 && nchar(file.changeDist_t) > 0))
+    {
+      RV$mat.changing = foreach(ty = c("MASK", "HS", "DIST"), .combine = 'rbind') %do%
+      {
+        if (ty == "MASK") file.change_m = file.changeMask_m
+        if (ty == "HS") file.change_m = file.changeHS_m
+        if (ty == "DIST") file.change_m = file.changeDist_m
+        if (length(file.change_m) > 0 && nchar(file.change_m) > 0)
+        {
+          res = foreach(fi = file.change_m, .combine = "rbind") %do%
+          {
+            li = readLines(fi)
+            return(data.frame(opt.folder.name = sub(paste0(input$name.simul, "/DATA/SCENARIO"), "", dirname(fi))
+                              , type.changing = ty
+                              , year = gsub("t|.txt", "", tail(strsplit(basename(fi), "_")[[1]], 1))
+                              , order = 1:length(li)
+                              , file.name = li))
+          }
+          return(res)
+        }
+      }
     }
   }
 })

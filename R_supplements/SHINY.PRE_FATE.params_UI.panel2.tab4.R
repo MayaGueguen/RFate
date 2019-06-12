@@ -199,7 +199,8 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Raster files</span>")
                             column(10
                                    , br()
                                    , br()
-                                   , tableOutput(outputId = "mat.changing"))
+                                   , wellPanel(style = "overflow-x:scroll;"
+                                               , tableOutput(outputId = "mat.changing")))
                             , column(2
                                      , br()
                                      , actionButton(inputId = "delete.changing"

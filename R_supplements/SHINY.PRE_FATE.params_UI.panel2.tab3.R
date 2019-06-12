@@ -155,7 +155,8 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                         , fluidRow(
                           column(11
                                  , br()
-                                 , tableOutput(outputId = "mat.PFG.ALL"))
+                                 , wellPanel(style = "overflow-x:scroll;"
+                                             , tableOutput(outputId = "mat.PFG.ALL")))
                           , column(1
                                    , br()
                                    , actionButton(inputId = "delete.PFG.ALL"
@@ -254,7 +255,8 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                           , fluidRow(
                             column(10
                                    , br()
-                                   , tableOutput(outputId = "mat.PFG.disp"))
+                                   , wellPanel(style = "overflow-x:scroll;"
+                                               , tableOutput(outputId = "mat.PFG.disp")))
                             , column(2
                                      , br()
                                      , actionButton(inputId = "delete.PFG.disp"
