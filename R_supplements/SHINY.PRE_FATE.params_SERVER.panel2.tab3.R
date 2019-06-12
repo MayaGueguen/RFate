@@ -144,13 +144,13 @@ output$mat.PFG.ALL = renderTable({ RV$mat.PFG.ALL })
 
 observeEvent(input$add.PFG.succ, {
   RV$mat.PFG.ALL <- rbind(RV$mat.PFG.ALL
-                        , data.frame(PFG = input$succ.PFG
-                                     , type = input$succ.type
-                                     , height = as.numeric(input$succ.height)
-                                     , maturity = as.numeric(input$succ.maturity)
-                                     , longevity = as.numeric(input$succ.longevity)
-                                     , light = as.numeric(input$succ.light)
-                        ))
+                          , data.frame(PFG = input$succ.PFG
+                                       , type = input$succ.type
+                                       , height = as.numeric(input$succ.height)
+                                       , maturity = as.numeric(input$succ.maturity)
+                                       , longevity = as.numeric(input$succ.longevity)
+                                       , light = as.numeric(input$succ.light)
+                          ))
 })
 
 observeEvent(input$delete.PFG.ALL, {
@@ -235,11 +235,11 @@ output$mat.PFG.disp = renderTable({ RV$mat.PFG.disp })
 
 observeEvent(input$add.PFG.disp, {
   RV$mat.PFG.disp <- rbind(RV$mat.PFG.disp
-                         , data.frame(PFG = input$disp.PFG
-                                      , MODE = as.numeric(input$disp.mode)
-                                      , d50 = as.numeric(input$disp.d50)
-                                      , d99 = as.numeric(input$disp.d99)
-                                      , ldd = as.numeric(input$disp.ldd)))
+                           , data.frame(PFG = input$disp.PFG
+                                        , MODE = as.numeric(input$disp.mode)
+                                        , d50 = as.numeric(input$disp.d50)
+                                        , d99 = as.numeric(input$disp.d99)
+                                        , ldd = as.numeric(input$disp.ldd)))
 })
 
 observeEvent(input$delete.PFG.disp, {
@@ -392,7 +392,7 @@ output$UI.dist.grouping = renderUI({
     )
   }
 })
-  
+
 output$UI.dist.grouping.BIS = renderUI({
   name.2nd_col = vector()
   if (input$dist.grouping == "by type")
@@ -438,44 +438,44 @@ observeEvent(input$dist.name, {
 })
 
 observeEvent(input$add.PFG.dist, {
-  if (input$dist.grouping == "by type")
+  if ((input$dist.grouping == "by type" && RV$compt.dist.by_pfg) ||
+      (input$dist.grouping == "by PFG" && RV$compt.dist.by_type))
   {
-    RV$mat.PFG.dist <- rbind(RV$mat.PFG.dist
-                           , data.frame(name = input$dist.name
-                                        , responseStage = 1:4
-                                        , KilledIndiv_H = as.numeric(c(input$dist.1.kill.H
-                                                                       , input$dist.2.kill.H
-                                                                       , input$dist.3.kill.H
-                                                                       , input$dist.4.kill.H)) / 10
-                                        , KilledIndiv_C = as.numeric(c(input$dist.1.kill.C
-                                                                       , input$dist.2.kill.C
-                                                                       , input$dist.3.kill.C
-                                                                       , input$dist.4.kill.C)) / 10
-                                        , KilledIndiv_P = as.numeric(c(input$dist.1.kill.P
-                                                                       , input$dist.2.kill.P
-                                                                       , input$dist.3.kill.P
-                                                                       , input$dist.4.kill.P)) / 10
-                                        , ResproutIndiv_H = as.numeric(c(input$dist.1.resprout.H
-                                                                         , input$dist.2.resprout.H
-                                                                         , input$dist.3.resprout.H
-                                                                         , input$dist.4.resprout.H)) / 10
-                                        , ResproutIndiv_C = as.numeric(c(input$dist.1.resprout.C
-                                                                         , input$dist.2.resprout.C
-                                                                         , input$dist.3.resprout.C
-                                                                         , input$dist.4.resprout.C)) / 10
-                                        , ResproutIndiv_P = as.numeric(c(input$dist.1.resprout.P
-                                                                         , input$dist.2.resprout.P
-                                                                         , input$dist.3.resprout.P
-                                                                         , input$dist.4.resprout.P)) / 10
-                           ))
+    shinyalert(type = "warning", text = "You can not mix 'by type' and 'by PFG' !")
   } else
   {
-    
+    name.cols = ifelse(input$dist.grouping == "by type", list(c("H", "C", "P")), list(RV$names.PFG))
+    if (length(name.cols) > 0)
+    {
+      res = data.frame(name = input$dist.name, responseStage = 1:4)
+      for (group in name.cols)
+      {
+        eval(parse(text = paste0("res$KilledIndiv_", group, " = as.numeric(c("
+                                 , paste0("input$dist.", 1:4, ".kill.", group, collapse = " , ")
+                                 , ")) / 10"
+        )))
+        eval(parse(text = paste0("res$ResproutIndiv_", group, " = as.numeric(c("
+                                 , paste0("input$dist.", 1:4, ".resprout.", group, collapse = " , ")
+                                 , ")) / 10"
+        )))
+      }
+      RV$mat.PFG.dist <- rbind(RV$mat.PFG.dist, res)
+      
+      if (input$dist.grouping == "by type")
+      {
+        RV$compt.dist.by_type <- TRUE
+      } else
+      {
+        RV$compt.dist.by_pfg <- TRUE
+      }
+    }
   }
 })
 
 observeEvent(input$delete.PFG.dist, {
   RV$mat.PFG.dist <- data.frame()
+  RV$compt.dist.by_type <- FALSE
+  RV$compt.dist.by_pfg <- FALSE
 })
 
 observeEvent(RV$mat.PFG.dist, {
@@ -524,23 +524,23 @@ output$mat.PFG.soil = renderTable({ RV$mat.PFG.soil })
 
 observeEvent(input$add.PFG.soil, {
   RV$mat.PFG.soil <- rbind(RV$mat.PFG.soil
-                        , data.frame(PFG = input$soil.PFG
-                                     , type = input$soil.type
-                                     , soil_contrib = as.numeric(input$soil.contrib)
-                                     , soil_tol_min = as.numeric(input$soil.tol_min)
-                                     , soil_tol_max = as.numeric(input$soil.tol_max)
-                                     , lifeStage = rep(c("Germinant", "Immature", "Mature"), each = 3)
-                                     , soilResources = rep(c("Low", "Medium", "High"), 3)
-                                     , soil_tol = c(as.numeric(input$soil.Ge.L)
-                                                    , as.numeric(input$soil.Ge.M)
-                                                    , as.numeric(input$soil.Ge.H)
-                                                    , as.numeric(input$soil.Im.L)
-                                                    , as.numeric(input$soil.Im.M)
-                                                    , as.numeric(input$soil.Im.H)
-                                                    , as.numeric(input$soil.Ma.L)
-                                                    , as.numeric(input$soil.Ma.M)
-                                                    , as.numeric(input$soil.Ma.H))
-                        ))
+                           , data.frame(PFG = input$soil.PFG
+                                        , type = input$soil.type
+                                        , soil_contrib = as.numeric(input$soil.contrib)
+                                        , soil_tol_min = as.numeric(input$soil.tol_min)
+                                        , soil_tol_max = as.numeric(input$soil.tol_max)
+                                        , lifeStage = rep(c("Germinant", "Immature", "Mature"), each = 3)
+                                        , soilResources = rep(c("Low", "Medium", "High"), 3)
+                                        , soil_tol = c(as.numeric(input$soil.Ge.L)
+                                                       , as.numeric(input$soil.Ge.M)
+                                                       , as.numeric(input$soil.Ge.H)
+                                                       , as.numeric(input$soil.Im.L)
+                                                       , as.numeric(input$soil.Im.M)
+                                                       , as.numeric(input$soil.Im.H)
+                                                       , as.numeric(input$soil.Ma.L)
+                                                       , as.numeric(input$soil.Ma.M)
+                                                       , as.numeric(input$soil.Ma.H))
+                           ))
   
   shinyjs::enable("create.soil")
 })

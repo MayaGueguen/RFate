@@ -438,8 +438,8 @@ observeEvent(input$browser.files, {
       
       if (is.ggplot(pp))
       {
-        RV$compt = 1
-        RV$comptMax = 1
+        RV$compt.browser <- 1
+        RV$compt.browser.max <- 1
         
         shinyjs::hide("go.left")
         shinyjs::hide("go.right")
@@ -470,14 +470,14 @@ observeEvent(input$browser.files, {
           output[[paste0("plot.browser_", i)]] = renderPlot({ plot(pp[[i]]) })
         })
         
-        RV$comptMax = length(pp)
-        RV$compt = 1
+        RV$compt.browser.max <- length(pp)
+        RV$compt.browser <- 1
         
-        all.plot = 1:RV$comptMax
-        shinyjs::show(paste0("plot.browser_", RV$compt))
-        if (RV$comptMax > 1)
+        all.plot = 1:RV$compt.browser.max
+        shinyjs::show(paste0("plot.browser_", RV$compt.browser))
+        if (RV$compt.browser.max > 1)
         {
-          for (i in all.plot[-RV$compt])
+          for (i in all.plot[-RV$compt.browser])
           {
             shinyjs::hide(paste0("plot.browser_", i))
           }
@@ -489,14 +489,14 @@ observeEvent(input$browser.files, {
 
 ####################################################################
 
-RV = reactiveValues(compt = 1, comptMax = 1)
+# RV = reactiveValues(compt = 1, comptMax = 1)
 
-observeEvent(RV$compt, {
-  all.plot = 1:RV$comptMax
-  shinyjs::show(paste0("plot.browser_", RV$compt))
-  if (RV$comptMax > 1)
+observeEvent(RV$compt.browser, {
+  all.plot = 1:RV$compt.browser.max
+  shinyjs::show(paste0("plot.browser_", RV$compt.browser))
+  if (RV$compt.browser.max > 1)
   {
-    for (i in all.plot[-RV$compt])
+    for (i in all.plot[-RV$compt.browser])
     {
       shinyjs::hide(paste0("plot.browser_", i))
     }
@@ -507,8 +507,8 @@ observeEvent(input$go.left, {
   if (input$go.left > 0)
   {
     shinyjs::enable("go.right")
-    RV$compt = RV$compt - 1
-    if (RV$compt == 1)
+    RV$compt.browser <- RV$compt.browser - 1
+    if (RV$compt.browser == 1)
     {
       shinyjs::disable("go.left")
     }
@@ -519,8 +519,8 @@ observeEvent(input$go.right, {
   if (input$go.right > 0)
   {
     shinyjs::enable("go.left")
-    RV$compt = RV$compt + 1
-    if (RV$compt == RV$comptMax)
+    RV$compt.browser <- RV$compt.browser + 1
+    if (RV$compt.browser == RV$compt.browser.max)
     {
       shinyjs::disable("go.right")
     }

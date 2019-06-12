@@ -159,33 +159,8 @@ observeEvent(input$load.param, {
   
   if (length(file.globalParam) > 0)
   {
-    # if (file.exists(file.saveArrays))
-    # {
-    #   val.saveArrays = readLines(file.saveArrays)
-    #   ind.comment = grep("^#", val.saveArrays)
-    #   if (length(ind.comment) > 0)
-    #   {
-    #     val.saveArrays = val.saveArrays[-ind.comment]
-    #   }
-    # } else
-    # {
-    #   val.saveArrays = ""
-    # }
     val.saveArrays = get_val_param(file.saveArrays)
     val.saveObjects = get_val_param(file.saveObjects)
-    
-    # if (file.exists(file.saveObjects))
-    # {
-    #   val.saveObjects = readLines(file.saveObjects)
-    #   ind.comment = grep("^#", val.saveObjects)
-    #   if (length(ind.comment) > 0)
-    #   {
-    #     val.saveObjects = val.saveObjects[-ind.comment]
-    #   }
-    # } else
-    # {
-    #   val.saveObjects = ""
-    # }
     
     update.param = list(
       "required.no_PFG" = .getParam(params.lines = file.globalParam
@@ -334,9 +309,9 @@ observeEvent(input$load.param, {
                         , flag.split = " "
                         , is.num = FALSE)
         light = .getParam(params.lines = fi
-                              , flag = "LIGHT"
-                              , flag.split = " "
-                              , is.num = TRUE)
+                          , flag = "LIGHT"
+                          , flag.split = " "
+                          , is.num = TRUE)
         light = ifelse(is.null(light), NULL, light)
         if (PFG %in% RV$mat.PFG.ALL$PFG && !is.null(light))
         {
@@ -344,29 +319,59 @@ observeEvent(input$load.param, {
         }
       }
     }
-    RV$mat.PFG.disp = foreach(fi = file.PFGdisp, .combine = 'rbind') %do%
+    ## Dispersal
+    if (length(file.PFGdisp) > 0)
     {
-      PFG = .getParam(params.lines = fi
-                      , flag = "NAME"
-                      , flag.split = " "
-                      , is.num = FALSE)
-      MODE = .getParam(params.lines = fi
-                       , flag = "MODE_DISPERS"
-                       , flag.split = " "
-                       , is.num = TRUE)
-      dd = .getParam(params.lines = fi
-                         , flag = "DISPERS_DIST"
+      RV$mat.PFG.disp = foreach(fi = file.PFGdisp, .combine = 'rbind') %do%
+      {
+        PFG = .getParam(params.lines = fi
+                        , flag = "NAME"
+                        , flag.split = " "
+                        , is.num = FALSE)
+        MODE = .getParam(params.lines = fi
+                         , flag = "MODE_DISPERS"
                          , flag.split = " "
                          , is.num = TRUE)
-      
-      return(data.frame(PFG = ifelse(is.null(PFG), "", PFG)
-                        , MODE = ifelse(is.null(MODE), "", MODE)
-                        , d50 = ifelse(is.null(dd), "", dd[1])
-                        , d99 = ifelse(is.null(dd), "", dd[2])
-                        , ldd = ifelse(is.null(dd), "", dd[3])
-      ))
+        dd = .getParam(params.lines = fi
+                       , flag = "DISPERS_DIST"
+                       , flag.split = " "
+                       , is.num = TRUE)
+        
+        return(data.frame(PFG = ifelse(is.null(PFG), "", PFG)
+                          , MODE = ifelse(is.null(MODE), "", MODE)
+                          , d50 = ifelse(is.null(dd), "", dd[1])
+                          , d99 = ifelse(is.null(dd), "", dd[2])
+                          , ldd = ifelse(is.null(dd), "", dd[3])
+        ))
+      }
     }
-    
+    ## Disturbances
+    if (length(file.PFGdist) > 0)
+    {
+      res = foreach(fi = file.PFGdist) %do%
+      {
+        PFG = .getParam(params.lines = fi
+                        , flag = "NAME"
+                        , flag.split = " "
+                        , is.num = FALSE)
+        FATES = .getParam(params.lines = fi
+                          , flag = "FATES"
+                          , flag.split = " "
+                          , is.num = TRUE)
+        
+        no.dist = length(FATES) / (4 * 2)
+        ind_Kill = seq(1, 4 * 2, 2)
+        res = foreach(di = 1:no.dist, .combine = "rbind") %do%
+        {
+          res = data.frame(name = paste0("DIST_", di), responseStage = 1:4)
+          eval(parse(text = paste0("res$KilledIndiv_", PFG, " = FATES[ind_Kill + (di -1) * 8]")))
+          eval(parse(text = paste0("res$ResproutIndiv_", PFG, " = FATES[ind_Kill + 1 + (di -1) * 8]")))
+          return(res)
+        }
+        return(res)
+      }
+      RV$mat.PFG.dist = Reduce(f = function(x, y) merge(x, y, by = c("name", "responseStage")), x = res)
+    }
   }
 })
 

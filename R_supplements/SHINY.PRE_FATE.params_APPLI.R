@@ -184,7 +184,10 @@ server <- function(input, output, session) {
                       , mat.PFG.dist = data.frame()
                       , mat.PFG.soil = data.frame()
                       , mat.changing = data.frame()
-                      # , compt = 1, comptMax = 1
+                      , compt.dist.by_type = FALSE
+                      , compt.dist.by_pfg = FALSE
+                      , compt.browser = 1
+                      , compt.browser.max = 1
   )
   
   ####################################################################
