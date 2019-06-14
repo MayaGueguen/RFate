@@ -45,6 +45,8 @@ One \code{POST_FATE_[...].pdf} file is created :
   \item{\file{GRAPHIC_B \cr PFGlight}}{to visualize the light CWM
   within the studied area}
 }
+
+A raster file is created into simulation results folder.
 }
 \description{
 This script is designed to produce a raster map of community
