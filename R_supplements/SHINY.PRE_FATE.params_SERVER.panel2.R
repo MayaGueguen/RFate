@@ -415,7 +415,6 @@ observeEvent(input$load.param, {
                              , is.num = TRUE)
         
         return(data.frame(PFG = ifelse(is.null(PFG), "", PFG)
-                          , type = 0
                           , soil_contrib = ifelse(is.null(soil_contrib), "", soil_contrib)
                           , soil_tol_min = ifelse(is.null(soil_tol_min), "", soil_tol_min)
                           , soil_tol_max = ifelse(is.null(soil_tol_max), "", soil_tol_max)
@@ -423,6 +422,10 @@ observeEvent(input$load.param, {
                           , soilResources = rep(c("Low", "Medium", "High"), 3)
                           , soil_tol = ifelse(is.null(soil_tol), "", soil_tol)
         ))
+      }
+      if (length(file.PFGsucc) > 0 && nchar(file.PFGsucc) > 0)
+      {
+        RV$mat.PFG.soil = merge(RV$mat.PFG.soil, RV$mat.PFG.ALL[, c("PFG", "type")], by = "PFG", all.x = TRUE)
       }
     }
     ## Changing

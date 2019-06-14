@@ -59,6 +59,8 @@
 ##'   within the studied area}
 ##' }
 ##' 
+##' A raster file is created into simulation results folder.
+##' 
 ##' 
 ##' @keywords FATE, outputs, relative abundance, soil, community weighted mean,
 ##' 

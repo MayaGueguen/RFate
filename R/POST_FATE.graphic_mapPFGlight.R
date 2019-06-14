@@ -59,6 +59,7 @@
 ##'   within the studied area}
 ##' }
 ##' 
+##' A raster file is created into simulation results folder.
 ##' 
 ##' @keywords FATE, outputs, relative abundance, light, community weighted mean,
 ##' 

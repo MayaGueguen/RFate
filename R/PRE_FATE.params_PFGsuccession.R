@@ -243,6 +243,9 @@ PRE_FATE.params_PFGsuccession = function(
   ## GET PFG TYPE
   TYPE = as.character(mat.PFG.succ$type)
 
+  ## GET PFG HEIGHT
+  HEIGHT = mat.PFG.succ$height
+  
   ## GET MATURITY AGE values
   MATURITY = mat.PFG.succ$maturity
   
@@ -395,6 +398,7 @@ PRE_FATE.params_PFGsuccession = function(
   names.params.list = get("NAME")
   names.params.list.sub = c("NAME"
                             , "TYPE"
+                            , "HEIGHT"
                             , "LONGEVITY"
                             , "MATURITY"
                             , "STRATA"
@@ -410,6 +414,7 @@ PRE_FATE.params_PFGsuccession = function(
   params.csv = t(do.call(rbind, params.list))
   colnames(params.csv) = c("NAME"
                            , "TYPE"
+                           , "HEIGHT"
                            , "LONGEVITY"
                            , "MATURITY"
                            , "STRATA"
