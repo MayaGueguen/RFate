@@ -398,7 +398,7 @@ test_that("POST_FATE.graphic_mapPFGlight gives error with wrong data : files", {
                , fixed = TRUE)
   
   
-  if (file.exists("FATE_simulation/PARAM_SIMUL/ParamSimul.txt")) system("rm FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
+  if (file.exists("FATE_simulation/PARAM_SIMUL/ParamSimul.txt")) file.remove("FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   file.create("FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   cat("GLOBAL_PARAMS\n--SAVE_DIR--\nHello\n--END_OF_FILE--\n", file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   expect_error(POST_FATE.graphic_mapPFGlight(name.simulation = "FATE_simulation"

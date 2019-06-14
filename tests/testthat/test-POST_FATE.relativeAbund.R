@@ -152,7 +152,7 @@ test_that("POST_FATE.relativeAbund gives error with wrong data : files", {
                , fixed = TRUE)
   
   
-  if (file.exists("FATE_simulation/PARAM_SIMUL/ParamSimul.txt")) system("rm FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
+  if (file.exists("FATE_simulation/PARAM_SIMUL/ParamSimul.txt")) file.remove("FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   file.create("FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   cat("GLOBAL_PARAMS\n--SAVE_DIR--\nHello\n--END_OF_FILE--\n", file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   expect_error(POST_FATE.relativeAbund(name.simulation = "FATE_simulation"
@@ -268,9 +268,9 @@ test_that("POST_FATE.relativeAbund gives error with wrong data : rasters", {
   # 
   # writeRaster(FATE_Bauges$mask, filename = "FATE_Bauges/DATA/MASK/maskDemo.tif")
   # dir.save = FATE_Bauges$param.simul$V1[grep("SAVE_DIR", FATE_Bauges$param.simul$V1) + 1]
-  # system(paste0("mkdir ", dir.save))
-  # system(paste0("mkdir ", dir.save, "ABUND_perPFG_allStrata/"))
-  # system(paste0("mkdir ", dir.save, "ABUND_perPFG_perStrata/"))
+  # dir.create(dir.save)
+  # dir.create("ABUND_perPFG_allStrata/")
+  # dir.create("ABUND_perPFG_perStrata/")
   # writeRaster(FATE_Bauges$ABUND_perPFG_allStrata$Abund_YEAR_20
   #             , filename = paste0(dir.save
   #                                 , "ABUND_perPFG_allStrata/"
