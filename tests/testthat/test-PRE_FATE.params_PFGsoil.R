@@ -27,7 +27,7 @@ test_that("PRE_FATE.params_PFGsoil gives error with wrong data : name.simulation
 
 ## INPUTS
 test_that("PRE_FATE.params_PFGsoil gives error with wrong data : mat.PFG.soil", {
-  if (dir.exists("FATE_simulation")) system("rm -r FATE_simulation/")
+  if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
   PRE_FATE.skeletonDirectory()
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation")
                , "`mat.PFG.soil` must be a data.frame")
@@ -117,7 +117,7 @@ test_that("PRE_FATE.params_PFGsoil gives error with wrong data : mat.PFG.soil", 
 
 ## INPUTS
 test_that("PRE_FATE.params_PFGsoil gives error with wrong data : mat.PFG.tol", {
-  # if (dir.exists("FATE_simulation")) system("rm -r FATE_simulation/")
+  # if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
   # PRE_FATE.skeletonDirectory()
   # expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
   #                                      , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 2, soil_tol_min = 1, soil_tol_max = 3))
@@ -230,7 +230,7 @@ test_that("PRE_FATE.params_PFGsoil gives error with wrong data : mat.PFG.tol", {
 
 ## OUTPUTS
 test_that("PRE_FATE.params_PFGsoil gives correct output", {
-  if (dir.exists("FATE_simulation")) system("rm -r FATE_simulation/")
+  if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
   PRE_FATE.skeletonDirectory()
   expect_message(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
                                          , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 2, soil_tol_min = 2, soil_tol_max = 3))

@@ -27,7 +27,7 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : name.si
 
 ## INPUTS
 test_that("PRE_FATE.params_simulParameters gives error with wrong data : name.mask", {
-  if (dir.exists("FATE_simulation")) system("rm -r FATE_simulation/")
+  if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
   PRE_FATE.skeletonDirectory()
   expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation")
                , "`name.mask` must contain a character value of length > 0")
@@ -43,43 +43,43 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : name.ma
 
 ## INPUTS
 test_that("PRE_FATE.params_simulParameters gives error with wrong data : name.simulation", {
-  if (dir.exists("FATE_simulation")) system("rm -r FATE_simulation/")
-  system("mkdir FATE_simulation")
+  if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
+  dir.create("FATE_simulation")
   expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation")
                , "`name.simulation` does not exist or does not contain a PARAM_SIMUL/ folder")
-  system("mkdir FATE_simulation/PARAM_SIMUL")
+  dir.create("FATE_simulation/PARAM_SIMUL")
   expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation")
                , "`name.simulation` does not exist or does not contain a DATA/GLOBAL_PARAMETERS/ folder")
-  system("mkdir FATE_simulation/DATA")
-  system("mkdir FATE_simulation/DATA/GLOBAL_PARAMETERS")
+  dir.create("FATE_simulation/DATA")
+  dir.create("FATE_simulation/DATA/GLOBAL_PARAMETERS")
   expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation")
                , "`name.simulation` does not exist or does not contain a DATA/SAVE/ folder")
-  system("mkdir FATE_simulation/DATA/SAVE")
+  dir.create("FATE_simulation/DATA/SAVE")
   expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation")
                , "`name.simulation` does not exist or does not contain a DATA/SCENARIO/ folder")
-  system("mkdir FATE_simulation/DATA/SCENARIO")
+  dir.create("FATE_simulation/DATA/SCENARIO")
   expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation")
                , "`name.simulation` does not exist or does not contain a DATA/MASK/ folder")
-  system("mkdir FATE_simulation/DATA/MASK")
+  dir.create("FATE_simulation/DATA/MASK")
   expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation")
                , "`name.simulation` does not exist or does not contain a DATA/PFGS/SUCC/ folder")
-  system("mkdir FATE_simulation/DATA/PFGS")
-  system("mkdir FATE_simulation/DATA/PFGS/SUCC")
+  dir.create("FATE_simulation/DATA/PFGS")
+  dir.create("FATE_simulation/DATA/PFGS/SUCC")
   expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation")
                , "`name.simulation` does not exist or does not contain a DATA/PFGS/DISP/ folder")
-  system("mkdir FATE_simulation/DATA/PFGS/DISP")
+  dir.create("FATE_simulation/DATA/PFGS/DISP")
   expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation")
                , "`name.simulation` does not exist or does not contain a DATA/PFGS/HABSUIT/ folder")
-  system("mkdir FATE_simulation/DATA/PFGS/HABSUIT")
+  dir.create("FATE_simulation/DATA/PFGS/HABSUIT")
   expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation")
                , "`name.simulation` does not exist or does not contain a DATA/PFGS/LIGHT/ folder")
-  system("mkdir FATE_simulation/DATA/PFGS/LIGHT")
+  dir.create("FATE_simulation/DATA/PFGS/LIGHT")
   expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation")
                , "`name.simulation` does not exist or does not contain a DATA/PFGS/SOIL/ folder")
-  system("mkdir FATE_simulation/DATA/PFGS/SOIL")
+  dir.create("FATE_simulation/DATA/PFGS/SOIL")
   expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation")
                , "`name.simulation` does not exist or does not contain a RESULTS/ folder")
-  system("mkdir FATE_simulation/RESULTS")
+  dir.create("FATE_simulation/RESULTS")
   expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation")
                , "`name.mask` must contain a character value of length > 0")
   
@@ -161,7 +161,7 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : name.si
   expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif")
                  , "`name.simulation` does not exist or does not contain a DATA/PFGS/DIST/ folder"
                  , fixed = T)
-  system("mkdir FATE_simulation/DATA/PFGS/DIST")
+  dir.create("FATE_simulation/DATA/PFGS/DIST")
   
   expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif")
                , "There is not the same number of files (`.txt` file starting with `DIST`) into the DATA/PFGS/DIST/ folder as the number of PFG indicated into the file"
@@ -277,7 +277,7 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : name.si
   file.remove("FATE_simulation/DATA/SCENARIO/DIST_changing_times_BIS.txt")
   
   file.remove(list.files("FATE_simulation/DATA/SCENARIO/"))
-  system("mkdir FATE_simulation/DATA/SCENARIO/Scen1")
+  dir.create("FATE_simulation/DATA/SCENARIO/Scen1")
   expect_warning(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif", name.dist = "dist.tif")
                , "There is no adequate file (`.txt` file starting with `MASK_changing_times`) into the folder FATE_simulation/DATA/SCENARIO/Scen1"
                , fixed = T)
@@ -339,7 +339,7 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : name.si
                  , "The parameter file FATE_simulation/PARAM_SIMUL/Simul_parameters_V1.1.txt has been successfully created !")
   
   
-  system("mkdir FATE_simulation/DATA/PFGS/HABSUIT/Scen1")
+  dir.create("FATE_simulation/DATA/PFGS/HABSUIT/Scen1")
   file.create("FATE_simulation/DATA/PFGS/HABSUIT/Scen1/Mask_PFG1.tif")
   expect_warning(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif", name.dist = "dist.tif")
                  , "There is not the same number of files into the DATA/PFGS/HABSUIT/ folder as the number of PFG indicated into the file")

@@ -27,7 +27,7 @@ test_that("PRE_FATE.params_PFGdispersal gives error with wrong data : name.simul
 
 ## INPUTS
 test_that("PRE_FATE.params_PFGdispersal gives error with wrong data : mat.PFG.disp", {
-  if (dir.exists("FATE_simulation")) system("rm -r FATE_simulation/")
+  if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
   PRE_FATE.skeletonDirectory()
   expect_error(PRE_FATE.params_PFGdispersal(name.simulation = "FATE_simulation")
                , "`mat.PFG.disp` must be a data.frame")
@@ -120,7 +120,7 @@ test_that("PRE_FATE.params_PFGdispersal gives error with wrong data : mat.PFG.di
 
 ## OUTPUTS
 test_that("PRE_FATE.params_PFGdispersal gives correct output", {
-  if (dir.exists("FATE_simulation")) system("rm -r FATE_simulation/")
+  if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
   PRE_FATE.skeletonDirectory()
   expect_message(PRE_FATE.params_PFGdispersal(name.simulation = "FATE_simulation"
                                             , mat.PFG.disp = data.frame(PFG = 1, MODE = 1, d50 = 2, d99 = 3, ldd = 4))

@@ -444,8 +444,6 @@ POST_FATE.graphics = function(
       res.evolutionAbund = POST_FATE.graphic_evolutionAbund_pixels(name.simulation = name.simulation
                                                                    , file.simulParam = abs.simulParam
                                                                    , no.years = no.years
-                                                                   , opt.abund_fixedScale = opt.abund_fixedScale
-                                                                   , opt.ras_habitat = opt.ras_habitat
                                                                    , opt.no_CPU = opt.no_CPU
                                                                    , opt.doPlot = opt.doPlot)
     }
@@ -456,8 +454,6 @@ POST_FATE.graphics = function(
       res.evolutionLight = POST_FATE.graphic_evolutionLight_pixels(name.simulation = name.simulation
                                                                    , file.simulParam = abs.simulParam
                                                                    , no.years = no.years
-                                                                   , opt.abund_fixedScale = opt.abund_fixedScale
-                                                                   , opt.ras_habitat = opt.ras_habitat
                                                                    , opt.no_CPU = opt.no_CPU
                                                                    , opt.doPlot = opt.doPlot)
     }
@@ -468,8 +464,6 @@ POST_FATE.graphics = function(
       res.evolutionSoil = POST_FATE.graphic_evolutionSoil_pixels(name.simulation = name.simulation
                                                                  , file.simulParam = abs.simulParam
                                                                  , no.years = no.years
-                                                                 , opt.abund_fixedScale = opt.abund_fixedScale
-                                                                 , opt.ras_habitat = opt.ras_habitat
                                                                  , opt.no_CPU = opt.no_CPU
                                                                  , opt.doPlot = opt.doPlot)
     }

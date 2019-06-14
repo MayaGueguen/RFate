@@ -27,7 +27,7 @@ test_that("PRE_FATE.params_changingYears gives error with wrong data : name.simu
 
 ## INPUTS
 test_that("PRE_FATE.params_changingYears gives error with wrong data : type.changing and mat.changing", {
-  if (dir.exists("FATE_simulation")) system("rm -r FATE_simulation/")
+  if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
   PRE_FATE.skeletonDirectory()
   expect_error(PRE_FATE.params_changingYears(name.simulation = "FATE_simulation")
                , "`type.changing` must be either `MASK`, `HS` or `DIST`", fixed = T)
@@ -114,7 +114,7 @@ test_that("PRE_FATE.params_changingYears gives error with wrong data : type.chan
 
 ## OUTPUTS
 test_that("PRE_FATE.params_changingYears gives correct output", {
-  if (dir.exists("FATE_simulation")) system("rm -r FATE_simulation/")
+  if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
   PRE_FATE.skeletonDirectory()
   expect_message(PRE_FATE.params_changingYears(name.simulation = "FATE_simulation", type.changing = "DIST"
                                                , mat.changing = data.frame(year = c(10,10), order = c(1,2), file.name = c("A","B")))

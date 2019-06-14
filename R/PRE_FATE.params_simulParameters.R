@@ -150,7 +150,7 @@
 ##' @examples
 ##' 
 ##' ## Create a skeleton folder with the default name ('FATE_simulation')
-##' if (dir.exists("FATE_simulation")) system("rm -r FATE_simulation/")
+##' if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
 ##' PRE_FATE.skeletonDirectory()
 ##' 
 ##' ## Create a Global_parameters file

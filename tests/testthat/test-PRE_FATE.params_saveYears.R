@@ -72,7 +72,7 @@ test_that("PRE_FATE.params_saveYears gives error with wrong data : years.maps an
 
 ## OUTPUTS
 test_that("PRE_FATE.params_saveYears gives correct output", {
-  if (dir.exists("FATE_simulation")) system("rm -r FATE_simulation/")
+  if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
   PRE_FATE.skeletonDirectory()
   expect_message(PRE_FATE.params_saveYears(name.simulation = "FATE_simulation", years.maps = 1)
                , "The parameter file FATE_simulation/DATA/SAVE/SAVE_YEARS_maps.txt has been successfully created !")

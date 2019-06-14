@@ -28,7 +28,7 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : name.s
 
 ## INPUTS
 test_that("PRE_FATE.params_globalParameters gives error with wrong data : required.no_PFG", {
-  if (dir.exists("FATE_simulation")) system("rm -r FATE_simulation/")
+  if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
   PRE_FATE.skeletonDirectory()
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation")
                , "`required.no_PFG` must be an integer > 0")
@@ -740,7 +740,7 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : DIST.f
 
 ## OUTPUTS
 test_that("PRE_FATE.params_globalParameters gives correct output", {
-  if (dir.exists("FATE_simulation")) system("rm -r FATE_simulation/")
+  if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
   PRE_FATE.skeletonDirectory()
   expect_warning(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                   , opt.no_CPU = "a"

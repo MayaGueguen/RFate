@@ -25,17 +25,17 @@ test_that("POST_FATE.graphic_evolutionCoverage gives error with wrong data : nam
   expect_error(POST_FATE.graphic_evolutionCoverage(data.frame(1))
                , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a PARAM_SIMUL/ folder")
   
-  if (dir.exists("FATE_simulation")) system("rm -r FATE_simulation/")
-  system("mkdir FATE_simulation/")
+  if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
+  dir.create("FATE_simulation/")
   expect_error(POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation")
                , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a PARAM_SIMUL/ folder")
-  system("mkdir FATE_simulation/PARAM_SIMUL/")
+  dir.create("FATE_simulation/PARAM_SIMUL/")
   expect_error(POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation")
                , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/ folder")
-  system("mkdir FATE_simulation/RESULTS/")
+  dir.create("FATE_simulation/RESULTS/")
   expect_error(POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation")
                , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a DATA/ folder")
-  system("mkdir FATE_simulation/DATA/")
+  dir.create("FATE_simulation/DATA/")
   expect_error(POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation")
                , "Missing data!\n The folder FATE_simulation/PARAM_SIMUL/ does not contain adequate files")
 })
@@ -94,17 +94,17 @@ test_that("POST_FATE.graphic_evolutionCoverage gives error with wrong data : fil
                                                    , file.simulParam = "ParamSimul.txt")
                , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/ folder"
                , fixed = TRUE)
-  system("mkdir FATE_simulation/RESULTS/Hello/")
+  dir.create("FATE_simulation/RESULTS/Hello/")
   expect_error(POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation"
                                                    , file.simulParam = "ParamSimul.txt")
                , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/ABUND_perPFG_allStrata/ folder"
                , fixed = TRUE)
-  system("mkdir FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/")
+  dir.create("FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/")
   expect_error(POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation"
                                                    , file.simulParam = "ParamSimul.txt")
                , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/ABUND_perPFG_perStrata/ folder"
                , fixed = TRUE)
-  system("mkdir FATE_simulation/RESULTS/Hello/ABUND_perPFG_perStrata/")
+  dir.create("FATE_simulation/RESULTS/Hello/ABUND_perPFG_perStrata/")
 
   expect_error(POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation"
                                                    , file.simulParam = "ParamSimul.txt")

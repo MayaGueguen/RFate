@@ -27,7 +27,7 @@ test_that("PRE_FATE.params_PFGsuccession gives error with wrong data : name.simu
 
 ## INPUTS
 test_that("PRE_FATE.params_PFGsuccession gives error with wrong data : mat.PFG.succ", {
-  if (dir.exists("FATE_simulation")) system("rm -r FATE_simulation/")
+  if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
   PRE_FATE.skeletonDirectory()
   expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation")
                , "`mat.PFG.succ` must be a data.frame")
@@ -141,7 +141,7 @@ test_that("PRE_FATE.params_PFGsuccession gives error with wrong data : mat.PFG.s
 
 ## OUTPUTS
 test_that("PRE_FATE.params_PFGsuccession gives correct output", {
-  if (dir.exists("FATE_simulation")) system("rm -r FATE_simulation/")
+  if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
   PRE_FATE.skeletonDirectory()
   expect_message(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
                                                , mat.PFG.succ = data.frame(PFG = paste0("PFG",1:6)

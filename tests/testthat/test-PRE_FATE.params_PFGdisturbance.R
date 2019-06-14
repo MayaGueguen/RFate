@@ -27,7 +27,7 @@ test_that("PRE_FATE.params_PFGdisturbance gives error with wrong data : name.sim
 
 ## INPUTS
 test_that("PRE_FATE.params_PFGdisturbance gives error with wrong data : mat.PFG.succ", {
-  if (dir.exists("FATE_simulation")) system("rm -r FATE_simulation/")
+  if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
   PRE_FATE.skeletonDirectory()
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation")
                , "`mat.PFG.succ` must be an existing `.csv` or `.txt` filename with a header and space separator")
@@ -232,7 +232,7 @@ test_that("PRE_FATE.params_PFGdisturbance gives error with wrong data : mat.PFG.
 
 ## OUTPUTS
 test_that("PRE_FATE.params_PFGdisturbance gives correct output", {
-  if (dir.exists("FATE_simulation")) system("rm -r FATE_simulation/")
+  if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
   PRE_FATE.skeletonDirectory()
   PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
                                 , mat.PFG.succ = data.frame(PFG = paste0("PFG",1:6)
