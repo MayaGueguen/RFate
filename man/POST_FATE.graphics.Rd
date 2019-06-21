@@ -8,15 +8,18 @@ simulation}
 POST_FATE.graphics(name.simulation, file.simulParam, year, no.years,
   opt.strata_min = 1, opt.strata = "ALL", opt.mat.PFG.succ = NULL,
   opt.mat.PFG.obs = NULL, opt.mat.CWM.obs = NULL,
-  opt.ras.cover.obs = NULL, opt.ras.light.obs = NULL,
-  opt.ras.soil.obs = NULL, opt.ras_habitat = NULL,
-  opt.cells_ID = NULL, opt.abund_fixedScale = TRUE, opt.no_CPU = 1,
-  opt.doPlot = TRUE, opt.doFunc.validation = TRUE,
-  opt.doFunc.mapPFGvsHS = TRUE, opt.doFunc.mapPFGcover = TRUE,
-  opt.doFunc.mapPFGrichness = TRUE, opt.doFunc.mapPFGlight = TRUE,
-  opt.doFunc.mapPFGsoil = TRUE, opt.doFunc.evolutionCoverage = TRUE,
-  opt.doFunc.evolutionAbund = TRUE, opt.doFunc.evolutionLight = TRUE,
-  opt.doFunc.evolutionSoil = TRUE)
+  opt.mat.cover.obs = NULL, opt.mat.light.obs = NULL,
+  opt.mat.soil.obs = NULL, opt.ras.cover.obs = NULL,
+  opt.ras.light.obs = NULL, opt.ras.soil.obs = NULL,
+  opt.ras_habitat = NULL, opt.cells_ID = NULL,
+  opt.abund_fixedScale = TRUE, opt.no_CPU = 1, opt.doPlot = TRUE,
+  opt.doFunc.validation = TRUE, opt.doFunc.mapPFGvsHS = TRUE,
+  opt.doFunc.mapPFGcover = TRUE, opt.doFunc.mapPFGrichness = TRUE,
+  opt.doFunc.mapPFGlight = TRUE, opt.doFunc.mapPFGsoil = TRUE,
+  opt.doFunc.evolutionCoverage = TRUE,
+  opt.doFunc.evolutionAbund_pixels = TRUE,
+  opt.doFunc.evolutionLight_pixels = TRUE,
+  opt.doFunc.evolutionSoil_pixels = TRUE)
 }
 \arguments{
 \item{name.simulation}{a \code{string} that corresponds to the main 
@@ -47,6 +50,15 @@ with 4 columns : PFG, X, Y, obs (0/1)}
 
 \item{opt.mat.CWM.obs}{default NULL (\emph{optional}). A \code{data.frame} 
 with 3 or 4 columns : X, Y, light (CWM), soil (CWM)}
+
+\item{opt.mat.cover.obs}{default NULL (\emph{optional}). A \code{data.frame}
+with 3 columns : X, Y, obs (0/1)}
+
+\item{opt.mat.light.obs}{default NULL (\emph{optional}). A \code{data.frame}
+with 3 columns : X, Y, obs (0/1)}
+
+\item{opt.mat.soil.obs}{default NULL (\emph{optional}). A \code{data.frame}
+with 3 columns : X, Y, obs (0/1)}
 
 \item{opt.ras.cover.obs}{default NULL (\emph{optional}). A \code{string} 
 that corresponds to the file name of a raster containing observed values for 
@@ -99,13 +111,13 @@ corresponding \code{POST_FATE.graphic_...} function will be run.}
 \item{opt.doFunc.evolutionCoverage}{default TRUE (\emph{optional}). If TRUE, 
 corresponding \code{POST_FATE.graphic_...} function will be run.}
 
-\item{opt.doFunc.evolutionAbund}{default TRUE (\emph{optional}).If TRUE, 
+\item{opt.doFunc.evolutionAbund_pixels}{default TRUE (\emph{optional}).If TRUE, 
 corresponding \code{POST_FATE.graphic_...} function will be run.}
 
-\item{opt.doFunc.evolutionLight}{default TRUE (\emph{optional}). If TRUE, 
+\item{opt.doFunc.evolutionLight_pixels}{default TRUE (\emph{optional}). If TRUE, 
 corresponding \code{POST_FATE.graphic_...} function will be run.}
 
-\item{opt.doFunc.evolutionSoil}{default TRUE (\emph{optional}). If TRUE, 
+\item{opt.doFunc.evolutionSoil_pixels}{default TRUE (\emph{optional}). If TRUE, 
 corresponding \code{POST_FATE.graphic_...} function will be run.}
 }
 \value{

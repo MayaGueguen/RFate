@@ -33,6 +33,12 @@
 ##' with 4 columns : PFG, X, Y, obs (0/1)
 ##' @param opt.mat.CWM.obs default NULL (\emph{optional}). A \code{data.frame} 
 ##' with 3 or 4 columns : X, Y, light (CWM), soil (CWM)
+##' @param opt.mat.cover.obs default NULL (\emph{optional}). A \code{data.frame}
+##' with 3 columns : X, Y, obs (0/1)
+##' @param opt.mat.light.obs default NULL (\emph{optional}). A \code{data.frame}
+##' with 3 columns : X, Y, obs (0/1)
+##' @param opt.mat.soil.obs default NULL (\emph{optional}). A \code{data.frame}
+##' with 3 columns : X, Y, obs (0/1)
 ##' @param opt.ras.cover.obs default NULL (\emph{optional}). A \code{string} 
 ##' that corresponds to the file name of a raster containing observed values for 
 ##' vegetation cover
@@ -69,11 +75,11 @@
 ##' corresponding \code{POST_FATE.graphic_...} function will be run.
 ##' @param opt.doFunc.evolutionCoverage default TRUE (\emph{optional}). If TRUE, 
 ##' corresponding \code{POST_FATE.graphic_...} function will be run.
-##' @param opt.doFunc.evolutionAbund default TRUE (\emph{optional}).If TRUE, 
+##' @param opt.doFunc.evolutionAbund_pixels default TRUE (\emph{optional}).If TRUE, 
 ##' corresponding \code{POST_FATE.graphic_...} function will be run.
-##' @param opt.doFunc.evolutionLight default TRUE (\emph{optional}). If TRUE, 
+##' @param opt.doFunc.evolutionLight_pixels default TRUE (\emph{optional}). If TRUE, 
 ##' corresponding \code{POST_FATE.graphic_...} function will be run.
-##' @param opt.doFunc.evolutionSoil default TRUE (\emph{optional}). If TRUE, 
+##' @param opt.doFunc.evolutionSoil_pixels default TRUE (\emph{optional}). If TRUE, 
 ##' corresponding \code{POST_FATE.graphic_...} function will be run.
 ##' 
 ##' @details 
@@ -248,6 +254,9 @@ POST_FATE.graphics = function(
   , opt.mat.PFG.succ = NULL
   , opt.mat.PFG.obs = NULL
   , opt.mat.CWM.obs = NULL
+  , opt.mat.cover.obs = NULL
+  , opt.mat.light.obs = NULL
+  , opt.mat.soil.obs = NULL
   , opt.ras.cover.obs = NULL
   , opt.ras.light.obs = NULL
   , opt.ras.soil.obs = NULL
@@ -263,9 +272,9 @@ POST_FATE.graphics = function(
   , opt.doFunc.mapPFGlight = TRUE
   , opt.doFunc.mapPFGsoil = TRUE
   , opt.doFunc.evolutionCoverage = TRUE
-  , opt.doFunc.evolutionAbund = TRUE
-  , opt.doFunc.evolutionLight = TRUE
-  , opt.doFunc.evolutionSoil = TRUE
+  , opt.doFunc.evolutionAbund_pixels = TRUE
+  , opt.doFunc.evolutionLight_pixels = TRUE
+  , opt.doFunc.evolutionSoil_pixels = TRUE
 ){
   
   .testParam_existFolder(name.simulation, "PARAM_SIMUL/")
@@ -287,23 +296,7 @@ POST_FATE.graphics = function(
     abs.simulParams = paste0(name.simulation, "/PARAM_SIMUL/", file.simulParam)
     .testParam_existFile(abs.simulParams)
   }
-  # if (.testParam_notNum(year))
-  # {
-  #   .stopMessage_beInteger("year")
-  # }
-  # if (.testParam_notNum(no.years))
-  # {
-  #   .stopMessage_beInteger("no.years")
-  # }
-  # if (!.testParam_notDef(opt.ras_habitat))
-  # {
-  #   if (nchar(opt.ras_habitat) > 0)
-  #   {
-  #     .testParam_existFile(opt.ras_habitat)
-  #     ras.habitat = raster(opt.ras_habitat)
-  #   }
-  # }
-  
+
   #################################################################################################
   
   res = foreach (abs.simulParam = abs.simulParams) %do%

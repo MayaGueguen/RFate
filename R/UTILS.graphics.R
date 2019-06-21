@@ -60,7 +60,7 @@
                   , flag.split = "^--.*--$"
                   , is.num = FALSE)
   pattern = ".*SUCC_"
-  PFG <<- sub(".txt", "", sub(pattern, "", PFG))
+  PFG <<- sub(".txt", "", sub(pattern, "", basename(PFG)))
   if (length(PFG) != no_PFG)
   {
     stop(paste0("Missing data!\n The number of PFG (NB_FG) within ", file.globalParam

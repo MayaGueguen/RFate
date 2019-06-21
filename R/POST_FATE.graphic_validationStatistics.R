@@ -185,6 +185,7 @@ POST_FATE.graphic_validationStatistics = function(
         .stopMessage_columnNames("mat.PFG.obs", c("PFG", "X", "Y", "obs"))
       }
     }
+    mat.PFG.obs$PFG = as.character(mat.PFG.obs$PFG)
     if (.testParam_notChar(mat.PFG.obs$PFG))
     {
       .stopMessage_beChar("mat.PFG.obs$PFG")

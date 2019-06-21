@@ -73,37 +73,7 @@ test_that("POST_FATE.graphics gives error with wrong data : files", {
                , "Wrong type of data!\n `flag.split` (^--.*--$) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"
                , fixed = TRUE)  
   cat("--T--\n--END_OF_FILE--\n", file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
-  # expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
-  #                                                  , file.simulParam = "ParamSimul.txt")
-  #              , "Wrong type of data!\n `flag` (SAVE_DIR) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"
-  #              , fixed = TRUE)
-  # cat("SAVE_DIR\n--END_OF_FILE--\n", file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
-  # expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
-  #                                                  , file.simulParam = "ParamSimul.txt")
-  #              , "Wrong type of data!\n `flag.split` (^--.*--$) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"
-  #              , fixed = TRUE)
-  # cat("--SAVE_DIR--\n--END_OF_FILE--\n", file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
-  # expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
-  #                                                  , file.simulParam = "ParamSimul.txt")
-  #              , "Wrong type of data!\n `flag` (SAVE_DIR) does not contain any value"
-  #              , fixed = TRUE)
-  # cat("--SAVE_DIR--\nHello\n--END_OF_FILE--\n", file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
-  # expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
-  #                                                  , file.simulParam = "ParamSimul.txt")
-  #              , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/ folder"
-  #              , fixed = TRUE)
-  # dir.create("FATE_simulation/RESULTS/Hello/")
-  # expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
-  #                                                  , file.simulParam = "ParamSimul.txt")
-  #              , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/ABUND_perPFG_allStrata/ folder"
-  #              , fixed = TRUE)
-  # dir.create("FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/")
-  # expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
-  #                                                  , file.simulParam = "ParamSimul.txt")
-  #              , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/ABUND_perPFG_perStrata/ folder"
-  #              , fixed = TRUE)
-  # dir.create("FATE_simulation/RESULTS/Hello/ABUND_perPFG_perStrata/")
-  
+
   expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
                                   , file.simulParam = "ParamSimul.txt")
                , "Wrong type of data!\n `flag` (GLOBAL_PARAMS) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"
@@ -117,11 +87,7 @@ test_that("POST_FATE.graphics gives error with wrong data : files", {
                                                    , file.simulParam = "ParamSimul.txt")
                , "Wrong type of data!\n `flag.split` (^--.*--$) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"
                , fixed = TRUE)
-  # expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
-  #                                 , file.simulParam = "ParamSimul.txt")
-  #              , "Wrong type of data!\n `flag` (GLOBAL_PARAMS) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"
-  #              , fixed = TRUE)
-  
+
   cat("--GLOBAL_PARAMS--\n--END_OF_FILE--\n"
       , file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
@@ -151,10 +117,6 @@ test_that("POST_FATE.graphics gives error with wrong data : files", {
                , "Wrong type of data!\n `flag` (DO_SOIL_COMPETITION) is not found within `params.lines` (FATE_simulation/GlobalParam.txt)"
                , fixed = TRUE)
   cat("DO_SOIL_COMPETITION \n", file = "FATE_simulation/GlobalParam.txt")
-  # expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
-  #                                                  , file.simulParam = "ParamSimul.txt")
-  #              , "Missing data!\n The number of PFG (NB_FG) within FATE_simulation/GlobalParam.txt does not contain any value"
-  #              , fixed = TRUE)
   expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
                                   , file.simulParam = "ParamSimul.txt")
                , "Wrong type of data!\n `flag` (DO_LIGHT_COMPETITION) is not found within `params.lines` (FATE_simulation/GlobalParam.txt)"
@@ -165,48 +127,6 @@ test_that("POST_FATE.graphics gives error with wrong data : files", {
                , "Wrong type of data!\n `flag` (DO_SOIL_COMPETITION) is not found within `params.lines` (FATE_simulation/GlobalParam.txt)"
                , fixed = TRUE)
   cat("DO_LIGHT_COMPETITION 1\nDO_SOIL_COMPETITION 1\n", file = "FATE_simulation/GlobalParam.txt")
-  # expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
-  #                                 , file.simulParam = "ParamSimul.txt")
-  #              , "Wrong type of data!\n `flag` (DO_SOIL_COMPETITION) is not found within `params.lines` (FATE_simulation/GlobalParam.txt)"
-  #              , fixed = TRUE)
-  # cat("NB_FG 3\n", file = "FATE_simulation/GlobalParam.txt")
-  # expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
-  #                                                  , file.simulParam = "ParamSimul.txt")
-  #              , "Wrong type of data!\n `flag` (PFG_LIFE_HISTORY_PARAMS) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"
-  #              , fixed = TRUE)
-  # cat("--PFG_LIFE_HISTORY_PARAMS--\n--GLOBAL_PARAMS--\nFATE_simulation/GlobalParam.txt\n--SAVE_DIR--\nHello\n--END_OF_FILE--\n"
-  #     , file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
-  # expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
-  #                                                  , file.simulParam = "ParamSimul.txt")
-  #              , "Wrong type of data!\n `flag` (PFG_LIFE_HISTORY_PARAMS) does not contain any value"
-  #              , fixed = TRUE)
-  # cat("--PFG_LIFE_HISTORY_PARAMS--\nHop\n--GLOBAL_PARAMS--\nFATE_simulation/GlobalParam.txt\n--SAVE_DIR--\nHello\n--END_OF_FILE--\n"
-  #     , file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
-  # expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
-  #                                                  , file.simulParam = "ParamSimul.txt")
-  #              , "Missing data!\n The number of PFG (NB_FG) within FATE_simulation/GlobalParam.txt is different from the number of PFG files contained in FATE_simulation/DATA/PFGS/SUCC/"
-  #              , fixed = TRUE)
-  # cat("NB_FG 1\n", file = "FATE_simulation/GlobalParam.txt")
-  # expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
-  #                                                  , file.simulParam = "ParamSimul.txt")
-  #              , "Wrong type of data!\n `flag` (MASK) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"
-  #              , fixed = TRUE)
-  # 
-  # cat("--MASK--\nFATE_simulation/Mask.asc\n--PFG_LIFE_HISTORY_PARAMS--\nHop\n--GLOBAL_PARAMS--\nFATE_simulation/GlobalParam.txt\n--SAVE_DIR--\nHello\n--END_OF_FILE--\n"
-  #     , file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
-  # expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
-  #                                                  , file.simulParam = "ParamSimul.txt")
-  #              , "Wrong name file given!\n `FATE_simulation/Mask.asc` does not exist"
-  #              , fixed = TRUE)
-  # 
-  # cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
-  #     , file = "FATE_simulation/Mask.asc")
-  # # ras = raster(matrix(c(0, 0, 1, 0, 1, 1, 1, 1, 1), byrow = T, ncol = 3))
-  # # writeRaster(ras, filename = "FATE_simulation/Mask.tif", overwrite = TRUE)
-  # expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
-  #                                                  , file.simulParam = "ParamSimul.txt")
-  #              , "Missing data!\n The folder FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/ does not contain adequate files")
-  # file.create("FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_1_PFG1_STRATA_all.tif")
 })
 
 ## INPUTS
@@ -251,22 +171,10 @@ test_that("POST_FATE.graphics gives error with wrong data : year", {
 
 
 ## INPUTS
-test_that("POST_FATE.graphics gives error with wrong data : param file", {
+test_that("POST_FATE.graphics gives error with wrong data : folders / files : POST_FATE.relativeAbund", {
 
   cat("--GLOBAL_PARAMS--\nFATE_simulation/GlobalParam.txt\n--SAVE_DIR--\nHello\n--END_OF_FILE--\n"
       , file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
-      # expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
-                                  # , file.simulParam = "ParamSimul.txt"
-                                  # , year = 10)
-               # , "Wrong type of data!\n `flag.split` (^--.*--$) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"
-               # , fixed = TRUE)
-  # cat("--SAVE_DIR--\n--END_OF_FILE--\n", file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
-  # expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
-  #                                 , file.simulParam = "ParamSimul.txt"
-  #                                 , year = 10)
-  #              , "Wrong type of data!\n `flag` (SAVE_DIR) does not contain any value"
-  #              , fixed = TRUE)
-  # cat("--SAVE_DIR--\nHello\n--END_OF_FILE--\n", file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
                                   , file.simulParam = "ParamSimul.txt"
                                   , year = 10)
@@ -285,6 +193,263 @@ test_that("POST_FATE.graphics gives error with wrong data : param file", {
                , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/ABUND_perPFG_perStrata/ folder"
                , fixed = TRUE)
   dir.create("FATE_simulation/RESULTS/Hello/ABUND_perPFG_perStrata/")
-  
-  ## FLAG NB_PFG not found...
+
+  expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
+                                  , file.simulParam = "ParamSimul.txt"
+                                  , year = 10)
+               , "Wrong type of data!\n `flag` (NB_FG) is not found within `params.lines` (FATE_simulation/GlobalParam.txt)"
+               , fixed = TRUE)
+  cat("DO_LIGHT_COMPETITION 1\nDO_SOIL_COMPETITION 1\nNB_FG \n", file = "FATE_simulation/GlobalParam.txt")
+  expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
+                                  , file.simulParam = "ParamSimul.txt"
+                                  , year = 10)
+               , "Missing data!\n The number of PFG (NB_FG) within FATE_simulation/GlobalParam.txt does not contain any value"
+               , fixed = TRUE)
+  cat("DO_LIGHT_COMPETITION 1\nDO_SOIL_COMPETITION 1\nNB_FG 1\n", file = "FATE_simulation/GlobalParam.txt")
+  expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
+                                  , file.simulParam = "ParamSimul.txt"
+                                  , year = 10)
+               , "Wrong type of data!\n `flag` (PFG_LIFE_HISTORY_PARAMS) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"
+               , fixed = TRUE)
+  cat("--GLOBAL_PARAMS--\nFATE_simulation/GlobalParam.txt\n--SAVE_DIR--\nHello\n--PFG_LIFE_HISTORY_PARAMS--\n--END_OF_FILE--\n"
+      , file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
+  expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
+                                  , file.simulParam = "ParamSimul.txt"
+                                  , year = 10)
+               , "Missing data!\n The number of PFG (NB_FG) within FATE_simulation/GlobalParam.txt is different from the number of PFG files contained in FATE_simulation/DATA/PFGS/SUCC/"
+               , fixed = TRUE)
+  cat("--GLOBAL_PARAMS--\nFATE_simulation/GlobalParam.txt\n--SAVE_DIR--\nHello\n--PFG_LIFE_HISTORY_PARAMS--\nFATE_simulation/PFG1.txt\n--END_OF_FILE--\n"
+      , file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
+  expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
+                                  , file.simulParam = "ParamSimul.txt"
+                                  , year = 10)
+               , "Wrong type of data!\n `flag` (MASK) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"
+               , fixed = TRUE)
+  cat("--GLOBAL_PARAMS--\nFATE_simulation/GlobalParam.txt\n--SAVE_DIR--\nHello\n--PFG_LIFE_HISTORY_PARAMS--\nFATE_simulation/PFG1.txt\n--MASK--\n--END_OF_FILE--\n"
+      , file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
+  expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
+                                  , file.simulParam = "ParamSimul.txt"
+                                  , year = 10)
+               , "Wrong name file given!\n `--END_OF_FILE--` does not exist"
+               , fixed = TRUE)
+  cat("--GLOBAL_PARAMS--\nFATE_simulation/GlobalParam.txt\n--SAVE_DIR--\nHello\n--PFG_LIFE_HISTORY_PARAMS--\nFATE_simulation/PFG1.txt\n--MASK--\nFATE_simulation/Mask.asc\n--END_OF_FILE--\n"
+      , file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
+  cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
+      , file = "FATE_simulation/Mask.asc")
+  expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
+                                  , file.simulParam = "ParamSimul.txt"
+                                  , year = 10)
+               , "Missing data!\n The folder FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/ does not contain adequate files"
+               , fixed = TRUE)
+  cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
+      , file = "FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_10_Hop_STRATA_all.tif")
+  expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
+                                  , file.simulParam = "ParamSimul.txt"
+                                  , year = 10)
+               , "Missing data!\n The names of PFG extracted from files within FATE_simulation/DATA/PFGS/SUCC/"
+               , fixed = TRUE)
+  cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
+      , file = "FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_10_PFG1_STRATA_all.tif")
+
 })
+
+## INPUTS
+test_that("POST_FATE.graphics gives error with wrong data : folders / files : POST_FATE.graphic_validationStatistics", {
+  expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
+                                  , file.simulParam = "ParamSimul.txt"
+                                  , year = 10)
+               , "Wrong type of data!\n `mat.PFG.obs` must be a data.frame"
+               , fixed = TRUE)
+  expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
+                                  , file.simulParam = "ParamSimul.txt"
+                                  , year = 10
+                                  , opt.mat.PFG.obs = data.frame(PFG = "A", X = 1, Y = 2, obs = 1))
+               , "Missing data!\n The names of PFG within `mat.PFG.obs` is different from the names of PFG contained from FATE_simulation/DATA/PFGS/SUCC/"
+               , fixed = TRUE)
+  expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
+                                  , file.simulParam = "ParamSimul.txt"
+                                  , year = 10
+                                  , opt.mat.PFG.obs = data.frame(PFG = "PFG1", X = 1, Y = 2, obs = 1))
+               , "Missing data!\n The folder FATE_simulation/RESULTS/Hello/ABUND_perPFG_perStrata/ does not contain adequate files"
+               , fixed = TRUE)
+  cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
+      , file = "FATE_simulation/RESULTS/Hello/ABUND_perPFG_perStrata/Abund_YEAR_10_PFG1_STRATA_1.tif")
+})
+
+
+## INPUTS
+test_that("POST_FATE.graphics gives error with wrong data : folders / files : POST_FATE.graphic_mapPFGvsHS", {
+  expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
+                                  , file.simulParam = "ParamSimul.txt"
+                                  , year = 10
+                                  , opt.doFunc.validation = FALSE)
+               , "Wrong type of data!\n `flag` (PFG_HAB_MASK) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"
+               , fixed = TRUE)
+  cat("--GLOBAL_PARAMS--\nFATE_simulation/GlobalParam.txt\n--SAVE_DIR--\nHello\n--PFG_LIFE_HISTORY_PARAMS--\nFATE_simulation/PFG1.txt\n--MASK--\nFATE_simulation/Mask.asc\n--PFG_HAB_MASK--\nFATE_simulation/Habsuit.asc\n--END_OF_FILE--\n"
+      , file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
+  cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
+      , file = "FATE_simulation/Habsuit.asc")
+  expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
+                                  , file.simulParam = "ParamSimul.txt"
+                                  , year = 10
+                                  , opt.doFunc.validation = FALSE)
+               , "Missing data!\n The folder FATE_simulation/RESULTS/Hello/BIN_perPFG_allStrata/ does not contain adequate files"
+               , fixed = TRUE)
+  cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
+      , file = "FATE_simulation/RESULTS/Hello/BIN_perPFG_allStrata/Binary_YEAR_10_PFG1_STRATA_all.tif")
+})
+
+
+## INPUTS
+test_that("POST_FATE.graphics gives error with wrong data : folders / files : POST_FATE.graphic_mapPFGcover", {
+  # expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
+  #                                 , file.simulParam = "ParamSimul.txt"
+  #                                 , year = 10
+  #                                 , opt.doFunc.validation = FALSE)
+  #              , "objet 'opt.mat.cover.obs' introuvable"
+  #              , fixed = TRUE)
+})
+
+## INPUTS
+test_that("POST_FATE.graphics gives error with wrong data : folders / files : POST_FATE.graphic_mapPFGrichness", {
+  expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
+                                  , file.simulParam = "ParamSimul.txt"
+                                  , year = 10
+                                  , opt.doFunc.validation = FALSE
+                                  , opt.doFunc.mapPFGvsHS = FALSE
+                                  , opt.doFunc.mapPFGcover = FALSE)
+               , "Wrong type of data!\n `mat.PFG.succ` must be a data.frame"
+               , fixed = TRUE)
+})
+
+## INPUTS
+test_that("POST_FATE.graphics gives error with wrong data : folders / files : POST_FATE.graphic_mapPFGlight", {
+  expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
+                                  , file.simulParam = "ParamSimul.txt"
+                                  , year = 10
+                                  , opt.doFunc.validation = FALSE
+                                  , opt.doFunc.mapPFGvsHS = FALSE
+                                  , opt.doFunc.mapPFGcover = FALSE
+                                  , opt.doFunc.mapPFGrichness = FALSE)
+               , "Wrong type of data!\n `mat.PFG.succ` must be a data.frame"
+               , fixed = TRUE)
+  # expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
+  #                                 , file.simulParam = "ParamSimul.txt"
+  #                                 , year = 10
+  #                                 , opt.doFunc.validation = FALSE
+  #                                 , opt.doFunc.mapPFGvsHS = FALSE
+  #                                 , opt.doFunc.mapPFGcover = FALSE
+  #                                 , opt.doFunc.mapPFGrichness = FALSE
+  #                                 , opt.mat.PFG.succ = data.frame(PFG = "PFG1", light = 1))
+  #              , "objet 'opt.mat.light.obs' introuvable"
+  #              , fixed = TRUE)
+})
+
+
+## INPUTS
+test_that("POST_FATE.graphics gives error with wrong data : folders / files : POST_FATE.graphic_mapPFGsoil", {
+  expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
+                                  , file.simulParam = "ParamSimul.txt"
+                                  , year = 10
+                                  , opt.doFunc.validation = FALSE
+                                  , opt.doFunc.mapPFGvsHS = FALSE
+                                  , opt.doFunc.mapPFGcover = FALSE
+                                  , opt.doFunc.mapPFGrichness = FALSE
+                                  , opt.doFunc.mapPFGlight = FALSE)
+               , "Wrong type of data!\n `mat.PFG.succ` must be a data.frame"
+               , fixed = TRUE)
+  # expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
+  #                                 , file.simulParam = "ParamSimul.txt"
+  #                                 , year = 10
+  #                                 , opt.doFunc.validation = FALSE
+  #                                 , opt.doFunc.mapPFGvsHS = FALSE
+  #                                 , opt.doFunc.mapPFGcover = FALSE
+  #                                 , opt.doFunc.mapPFGrichness = FALSE
+  #                                 , opt.doFunc.mapPFGlight = FALSE
+  #                                 , opt.mat.PFG.succ = data.frame(PFG = "PFG1", soil_contrib = 1))
+  #              , "objet 'opt.mat.soil.obs' introuvable"
+  #              , fixed = TRUE)
+})
+
+
+## INPUTS
+test_that("POST_FATE.graphics gives error with wrong data : folders / files : POST_FATE.graphic_evolutionCoverage", {
+  # expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
+  #                                 , file.simulParam = "ParamSimul.txt"
+  #                                 , year = 10
+  #                                 , opt.doFunc.validation = FALSE
+  #                                 , opt.doFunc.mapPFGvsHS = FALSE
+  #                                 , opt.doFunc.mapPFGcover = FALSE
+  #                                 , opt.doFunc.mapPFGrichness = FALSE
+  #                                 , opt.doFunc.mapPFGlight = FALSE
+  #                                 , opt.doFunc.mapPFGsoil = FALSE
+  #                                 , no.years = 1)
+  #              , "toutou"
+  #              , fixed = TRUE)
+})
+
+
+## INPUTS
+test_that("POST_FATE.graphics gives error with wrong data : folders / files : POST_FATE.graphic_evolutionLight_pixels", {
+  expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
+                                  , file.simulParam = "ParamSimul.txt"
+                                  , year = 10
+                                  , opt.doFunc.validation = FALSE
+                                  , opt.doFunc.mapPFGvsHS = FALSE
+                                  , opt.doFunc.mapPFGcover = FALSE
+                                  , opt.doFunc.mapPFGrichness = FALSE
+                                  , opt.doFunc.mapPFGlight = FALSE
+                                  , opt.doFunc.mapPFGsoil = FALSE
+                                  , no.years = 1)
+               , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/LIGHT/ folder"
+               , fixed = TRUE)
+  dir.create("FATE_simulation/RESULTS/Hello/LIGHT/")
+  expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
+                                  , file.simulParam = "ParamSimul.txt"
+                                  , year = 10
+                                  , opt.doFunc.validation = FALSE
+                                  , opt.doFunc.mapPFGvsHS = FALSE
+                                  , opt.doFunc.mapPFGcover = FALSE
+                                  , opt.doFunc.mapPFGrichness = FALSE
+                                  , opt.doFunc.mapPFGlight = FALSE
+                                  , opt.doFunc.mapPFGsoil = FALSE
+                                  , no.years = 1)
+               , "Missing data!\n The folder FATE_simulation/RESULTS/Hello/LIGHT/ does not contain adequate files"
+               , fixed = TRUE)
+  cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
+      , file = "FATE_simulation/RESULTS/Hello/LIGHT/Light_Resources_YEAR_10_STRATA_1.tif")
+})
+
+
+## INPUTS
+test_that("POST_FATE.graphics gives error with wrong data : folders / files : POST_FATE.graphic_evolutionSoil_pixels", {
+  expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
+                                  , file.simulParam = "ParamSimul.txt"
+                                  , year = 10
+                                  , opt.doFunc.validation = FALSE
+                                  , opt.doFunc.mapPFGvsHS = FALSE
+                                  , opt.doFunc.mapPFGcover = FALSE
+                                  , opt.doFunc.mapPFGrichness = FALSE
+                                  , opt.doFunc.mapPFGlight = FALSE
+                                  , opt.doFunc.mapPFGsoil = FALSE
+                                  , no.years = 1)
+               , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/SOIL/ folder"
+               , fixed = TRUE)
+  dir.create("FATE_simulation/RESULTS/Hello/SOIL/")
+  expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
+                                  , file.simulParam = "ParamSimul.txt"
+                                  , year = 10
+                                  , opt.doFunc.validation = FALSE
+                                  , opt.doFunc.mapPFGvsHS = FALSE
+                                  , opt.doFunc.mapPFGcover = FALSE
+                                  , opt.doFunc.mapPFGrichness = FALSE
+                                  , opt.doFunc.mapPFGlight = FALSE
+                                  , opt.doFunc.mapPFGsoil = FALSE
+                                  , no.years = 1)
+               , "Missing data!\n The folder FATE_simulation/RESULTS/Hello/SOIL/ does not contain adequate files"
+               , fixed = TRUE)
+  cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
+      , file = "FATE_simulation/RESULTS/Hello/SOIL/Soil_Resources_YEAR_10.tif")
+})
+
+

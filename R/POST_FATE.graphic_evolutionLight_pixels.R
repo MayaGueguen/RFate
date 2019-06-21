@@ -246,6 +246,7 @@ POST_FATE.graphic_evolutionLight_pixels = function(
       
       ## Evolution of abundance
       pp = ggplot(distriAbund, aes_string(x = "YEAR", y = "Abund", color = "STRATUM")) +
+        # scale_y_manual() +
         scale_color_manual("", values = fun_col(no_strata)) +
         geom_line() + ## lwd = 0.8 ?
         facet_grid("TYPE ~ ID", scales = ifelse(opt.abund_fixedScale, "fixed", "free_y")) +
