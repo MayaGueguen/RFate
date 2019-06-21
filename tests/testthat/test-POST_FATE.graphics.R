@@ -302,12 +302,12 @@ test_that("POST_FATE.graphics gives error with wrong data : folders / files : PO
 
 ## INPUTS
 test_that("POST_FATE.graphics gives error with wrong data : folders / files : POST_FATE.graphic_mapPFGcover", {
-  # expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
-  #                                 , file.simulParam = "ParamSimul.txt"
-  #                                 , year = 10
-  #                                 , opt.doFunc.validation = FALSE)
-  #              , "objet 'opt.mat.cover.obs' introuvable"
-  #              , fixed = TRUE)
+  expect_error(POST_FATE.graphics(name.simulation = "FATE_simulation"
+                                  , file.simulParam = "ParamSimul.txt"
+                                  , year = 10
+                                  , opt.doFunc.validation = FALSE)
+               , "task 1 failed"
+               , fixed = TRUE)
 })
 
 ## INPUTS
@@ -452,4 +452,34 @@ test_that("POST_FATE.graphics gives error with wrong data : folders / files : PO
       , file = "FATE_simulation/RESULTS/Hello/SOIL/Soil_Resources_YEAR_10.tif")
 })
 
+
+## OUTPUTS
+test_that("POST_FATE.graphics gives right output", {
+  expect_output(str(POST_FATE.graphics(name.simulation = "FATE_simulation"
+                                       , file.simulParam = "ParamSimul.txt"
+                                       , year = 10
+                                       , opt.doFunc.validation = FALSE
+                                       , opt.doFunc.mapPFGvsHS = FALSE
+                                       , opt.doFunc.mapPFGcover = FALSE
+                                       , opt.doFunc.mapPFGrichness = FALSE
+                                       , opt.doFunc.mapPFGlight = FALSE
+                                       , opt.doFunc.mapPFGsoil = FALSE
+                                       , opt.doFunc.evolutionCoverage = FALSE
+                                       , opt.doFunc.evolutionAbund_pixels = FALSE
+                                       , opt.doFunc.evolutionLight_pixels = FALSE
+                                       , opt.doFunc.evolutionSoil_pixels = FALSE)), "List")
+  expect_equal(length(POST_FATE.graphics(name.simulation = "FATE_simulation"
+                                         , file.simulParam = "ParamSimul.txt"
+                                         , year = 10
+                                         , opt.doFunc.validation = FALSE
+                                         , opt.doFunc.mapPFGvsHS = FALSE
+                                         , opt.doFunc.mapPFGcover = FALSE
+                                         , opt.doFunc.mapPFGrichness = FALSE
+                                         , opt.doFunc.mapPFGlight = FALSE
+                                         , opt.doFunc.mapPFGsoil = FALSE
+                                         , opt.doFunc.evolutionCoverage = FALSE
+                                         , opt.doFunc.evolutionAbund_pixels = FALSE
+                                         , opt.doFunc.evolutionLight_pixels = FALSE
+                                         , opt.doFunc.evolutionSoil_pixels = FALSE)), 1)
+})
 

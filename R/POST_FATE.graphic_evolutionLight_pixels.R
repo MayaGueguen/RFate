@@ -94,7 +94,8 @@
 ##' @importFrom ggplot2 ggplot aes aes_string ggsave
 ##' geom_line geom_point geom_hline geom_vline geom_label geom_errorbar geom_path
 ##' element_text element_blank element_rect
-##' scale_color_discrete scale_color_manual scale_shape_manual facet_grid labs theme
+##' scale_y_continuous scale_color_discrete scale_color_manual scale_shape_manual
+##' facet_grid labs theme
 ##' @importFrom ggthemes theme_fivethirtyeight
 ##' @importFrom ggrepel geom_label_repel
 ##'
@@ -246,7 +247,7 @@ POST_FATE.graphic_evolutionLight_pixels = function(
       
       ## Evolution of abundance
       pp = ggplot(distriAbund, aes_string(x = "YEAR", y = "Abund", color = "STRATUM")) +
-        # scale_y_manual() +
+        scale_y_continuous(breaks = c(1,2,3), labels = c("Low", "Medium", "High")) +
         scale_color_manual("", values = fun_col(no_strata)) +
         geom_line() + ## lwd = 0.8 ?
         facet_grid("TYPE ~ ID", scales = ifelse(opt.abund_fixedScale, "fixed", "free_y")) +
