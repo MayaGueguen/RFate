@@ -497,8 +497,8 @@ test_that("POST_FATE.graphics gives right output", {
                                          , file.simulParam = "ParamSimul.txt"
                                          , year = 10
                                          , opt.doFunc.validation = FALSE
-                                         , opt.doFunc.mapPFGvsHS = FALSE
-                                         , opt.doFunc.mapPFGcover = TRUE
+                                         , opt.doFunc.mapPFGvsHS = TRUE
+                                         , opt.doFunc.mapPFGcover = FALSE
                                          , opt.doFunc.mapPFGrichness = FALSE
                                          , opt.doFunc.mapPFGlight = FALSE
                                          , opt.doFunc.mapPFGsoil = FALSE
