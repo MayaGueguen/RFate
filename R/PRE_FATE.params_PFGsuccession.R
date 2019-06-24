@@ -16,6 +16,9 @@
 ##' maturity, longevity
 ##' @param strata.limits a \code{vector} of \code{integer} containing values 
 ##' among which height strata limits will be chosen
+##' @param strata.limits_reduce default \code{TRUE}. If \code{TRUE}, stratum 
+##' height limits are checked to try and bring several PFGs together in a same
+##' stratum
 ##' @param opt.folder.name (\emph{optional}) \cr a \code{string} that
 ##' corresponds to the name of the folder that will be created into the 
 ##' \code{name.simulation/DATA/PFGS/SUCC/} directory to store the results
@@ -175,6 +178,7 @@ PRE_FATE.params_PFGsuccession = function(
   name.simulation
   , mat.PFG.succ
   , strata.limits = c(0, 20, 50, 150, 400, 1000, 2000, 5000, 10000)
+  , strata.limits_reduce = TRUE
   , opt.folder.name = NULL
 ){
   
@@ -184,17 +188,22 @@ PRE_FATE.params_PFGsuccession = function(
   {
     .stopMessage_beDataframe("mat.PFG.succ")
   }
-  if (nrow(mat.PFG.succ) == 0 || ncol(mat.PFG.succ) != 5)
+  if (nrow(mat.PFG.succ) == 0 || ncol(mat.PFG.succ) < 5)
   {
     .stopMessage_numRowCol("mat.PFG.succ", c("PFG", "type","height", "maturity", "longevity"))
-  }
-  if (ncol(mat.PFG.succ) == 5)
+  } else if (ncol(mat.PFG.succ) == 5)
   {
-    if (sum(colnames(mat.PFG.succ) == c("PFG", "type","height", "maturity", "longevity")) == 5)
+    if (sum(colnames(mat.PFG.succ) %in% c("PFG", "type","height", "maturity", "longevity")) < 5)
     {
-      mat.PFG.succ = mat.PFG.succ[ , c("PFG", "type","height", "maturity", "longevity")]
-    } else {
       .stopMessage_columnNames("mat.PFG.succ", c("PFG", "type","height", "maturity", "longevity"))
+    }
+  } else if (ncol(mat.PFG.succ) > 5)
+  {
+    if (!((sum(colnames(mat.PFG.succ) %in% c("PFG", "type","height", "maturity", "longevity")) == 5) &&
+          (sum(colnames(mat.PFG.succ) %in% c("max_abundance", "potential_fecundity", "immature_size", "active_germ")) == (ncol(mat.PFG.succ) - 5))))
+    {
+      .stopMessage_columnNames("mat.PFG.succ", c("PFG", "type","height", "maturity", "longevity"
+                                                 , "(max_abundance)", "(potential_fecundity)", "(immature_size)"))
     }
   }
   mat.PFG.succ$PFG = as.character(mat.PFG.succ$PFG)
@@ -222,6 +231,47 @@ PRE_FATE.params_PFGsuccession = function(
       length(which(is.na(mat.PFG.succ$longevity))) > 0)
   {
     .stopMessage_columnNoNA("mat.PFG.succ", c("height", "maturity", "longevity"))
+  }
+  if (sum(colnames(mat.PFG.succ) == "max_abundance") == 1)
+  {
+    if (!is.numeric(mat.PFG.succ$max_abundance))
+    {
+      .stopMessage_columnNumeric("mat.PFG.succ", "max_abundance")
+    }
+    if (length(which(is.na(mat.PFG.succ$max_abundance))) > 0)
+    {
+      .stopMessage_columnNoNA("mat.PFG.succ", "max_abundance")
+    }
+    if (sum(mat.PFG.succ$max_abundance %in% c(1,2,3)) < nrow(mat.PFG.succ))
+    {
+      stop("Wrong type of data!\n Column `max_abundance` of `mat.PFG.succ` must contain values between 1 and 3")
+    }
+  }
+  if (sum(colnames(mat.PFG.succ) == "potential_fecundity") == 1)
+  {
+    if (!is.numeric(mat.PFG.succ$potential_fecundity))
+    {
+      .stopMessage_columnNumeric("mat.PFG.succ", "potential_fecundity")
+    }
+    if (length(which(is.na(mat.PFG.succ$potential_fecundity))) > 0)
+    {
+      .stopMessage_columnNoNA("mat.PFG.succ", "potential_fecundity")
+    }
+  }
+  if (sum(colnames(mat.PFG.succ) == "immature_size") == 1)
+  {
+    if (!is.numeric(mat.PFG.succ$immature_size))
+    {
+      .stopMessage_columnNumeric("mat.PFG.succ", "immature_size")
+    }
+    if (length(which(is.na(mat.PFG.succ$immature_size))) > 0)
+    {
+      .stopMessage_columnNoNA("mat.PFG.succ", "immature_size")
+    }
+    if (sum(mat.PFG.succ$immature_size %in% seq(0,10)) < nrow(mat.PFG.succ))
+    {
+      stop("Wrong type of data!\n Column `immature_size` of `mat.PFG.succ` must contain values between 0 and 10")
+    }
   }
   strata.limits = sort(unique(na.exclude(strata.limits)))
   if (.testParam_notNum(strata.limits) ||
@@ -274,30 +324,36 @@ PRE_FATE.params_PFGsuccession = function(
   
   ## GET height strata limits (for light competition and PFG growth)
   ## n strata (+ germinants = 0)
-  no.PFG.perStrata = round(sqrt(no.PFG))
-  categories = cut(mat.PFG.succ$height, breaks = strata.limits)
-  categories.table = table(categories)
-  if (no.PFG == 1)
+  if (strata.limits_reduce)
   {
-    categ = which(categories.table == 1)
-    STRATA_LIMITS = c(0, strata.limits[categ], strata.limits[categ + 1])    
-  } else
-  {
-    STRATA_LIMITS = 0
-    tmp = categories.table[1]
-    for (categ in 2:length(strata.limits))
+    no.PFG.perStrata = round(sqrt(no.PFG))
+    categories = cut(mat.PFG.succ$height, breaks = strata.limits)
+    categories.table = table(categories)
+    if (no.PFG == 1)
     {
-      if (tmp >= max(c(1, (no.PFG.perStrata - 2))))
+      categ = which(categories.table == 1)
+      STRATA_LIMITS = c(0, strata.limits[categ], strata.limits[categ + 1])    
+    } else
+    {
+      STRATA_LIMITS = 0
+      tmp = categories.table[1]
+      for (categ in 2:length(strata.limits))
       {
-        STRATA_LIMITS = c(STRATA_LIMITS, strata.limits[categ])
-        tmp = categories.table[categ]
-      } else 
-      {
-        tmp = tmp + categories.table[categ]
+        if (tmp >= max(c(1, (no.PFG.perStrata - 2))))
+        {
+          STRATA_LIMITS = c(STRATA_LIMITS, strata.limits[categ])
+          tmp = categories.table[categ]
+        } else 
+        {
+          tmp = tmp + categories.table[categ]
+        }
       }
     }
+    STRATA_LIMITS = sort(unique(STRATA_LIMITS))
+  } else
+  {
+    STRATA_LIMITS = strata.limits
   }
-  STRATA_LIMITS = sort(unique(STRATA_LIMITS))
   # barplot(table(cut(mat.PFG.succ$height, breaks = STRATA_LIMITS)))
   
   ## GET STRATA attribution
@@ -320,14 +376,20 @@ PRE_FATE.params_PFGsuccession = function(
   ##  = maximum shade a PFG can make in a pixel corresponding to a number of individuals
   ## Defined according to the number of strata potentially occupied by a PFG
   ## 3 levels : 1 = Low, 2 = Medium or 3 = High
-  MAX_ABUNDANCE = rep(NA, no.PFG)
-  MAX_ABUNDANCE[which(mat.PFG.succ$type == "H")] = 1 ## herbaceous make little shade 
-  MAX_ABUNDANCE[which(mat.PFG.succ$type == "C")] = 2 ## chamaephytes make medium shade 
-  MAX_ABUNDANCE[which(mat.PFG.succ$type == "P")] = 3 ## phanerophytes make lot of shade 
-  MAX_ABUNDANCE[which(STRATA == 1)] = 1 ## all plants in first stratum make little shade
-  MAX_ABUNDANCE[which(STRATA == 2 & mat.PFG.succ$type != "H")] = 2 ## plants other than herbaceous in stratum 2 make medium shade
-  MAX_ABUNDANCE[which(STRATA > 2 & mat.PFG.succ$type == "H")] = 2 ## herbaceous in stratum > 2 make medium shade
-  MAX_ABUNDANCE[which(STRATA > 3 & mat.PFG.succ$type == "C")] = 3 ## chamaephytes in stratum > 3 make lot of shade
+  if (sum(colnames(mat.PFG.succ) == "max_abundance") == 1)
+  {
+    MAX_ABUNDANCE = mat.PFG.succ$max_abundance
+  } else
+  {
+    MAX_ABUNDANCE = rep(NA, no.PFG)
+    MAX_ABUNDANCE[which(mat.PFG.succ$type == "H")] = 1 ## herbaceous make little shade 
+    MAX_ABUNDANCE[which(mat.PFG.succ$type == "C")] = 2 ## chamaephytes make medium shade 
+    MAX_ABUNDANCE[which(mat.PFG.succ$type == "P")] = 3 ## phanerophytes make lot of shade 
+    MAX_ABUNDANCE[which(STRATA == 1)] = 1 ## all plants in first stratum make little shade
+    MAX_ABUNDANCE[which(STRATA == 2 & mat.PFG.succ$type != "H")] = 2 ## plants other than herbaceous in stratum 2 make medium shade
+    MAX_ABUNDANCE[which(STRATA > 2 & mat.PFG.succ$type == "H")] = 2 ## herbaceous in stratum > 2 make medium shade
+    MAX_ABUNDANCE[which(STRATA > 3 & mat.PFG.succ$type == "C")] = 3 ## chamaephytes in stratum > 3 make lot of shade
+  }
   
   #################################################################################################
   
@@ -344,14 +406,20 @@ PRE_FATE.params_PFGsuccession = function(
   ##             8 = 80 %
   ##             9 = 90 %
   ##             10 = 100 %
-  IMM_SIZE = rep(10, no.PFG)
-  IMM_SIZE[which(mat.PFG.succ$type == "H")] = 10 ## immature herbaceous contribute to shade in the same way than mature herbaceous
-  IMM_SIZE[which(mat.PFG.succ$type == "C")] = 5 ## immature chamaephytes contribute to shade half less than mature herbaceous
-  IMM_SIZE[which(mat.PFG.succ$type == "P")] = 1 ## immature phanerophytes contribute to shade only by 10 % of their full capacity
-  IMM_SIZE[which(mat.PFG.succ$type == "H" & STRATA == 2)] = 8 ## intermediate percentage for herbaceous in stratum 2
-  IMM_SIZE[which(mat.PFG.succ$type == "H" & STRATA > 2)] = 5 ## intermediate percentage for herbaceous in stratum > 2
-  IMM_SIZE[which(mat.PFG.succ$type == "C" & STRATA == 1)] = 10 ## immature chamaephytes in 1st stratum contribute to shade in the same way than mature chamaephytes
-  IMM_SIZE[which(mat.PFG.succ$type == "P" & mat.PFG.succ$height < 1000)] = 5 ## immature phanerophytes with height < 10m contribute to shade half less than mature phanerophytes
+  if (sum(colnames(mat.PFG.succ) == "immature_size") == 1)
+  {
+    IMM_SIZE = mat.PFG.succ$immature_size
+  } else
+  {
+    IMM_SIZE = rep(10, no.PFG)
+    IMM_SIZE[which(mat.PFG.succ$type == "H")] = 10 ## immature herbaceous contribute to shade in the same way than mature herbaceous
+    IMM_SIZE[which(mat.PFG.succ$type == "C")] = 5 ## immature chamaephytes contribute to shade half less than mature herbaceous
+    IMM_SIZE[which(mat.PFG.succ$type == "P")] = 1 ## immature phanerophytes contribute to shade only by 10 % of their full capacity
+    IMM_SIZE[which(mat.PFG.succ$type == "H" & STRATA == 2)] = 8 ## intermediate percentage for herbaceous in stratum 2
+    IMM_SIZE[which(mat.PFG.succ$type == "H" & STRATA > 2)] = 5 ## intermediate percentage for herbaceous in stratum > 2
+    IMM_SIZE[which(mat.PFG.succ$type == "C" & STRATA == 1)] = 10 ## immature chamaephytes in 1st stratum contribute to shade in the same way than mature chamaephytes
+    IMM_SIZE[which(mat.PFG.succ$type == "P" & mat.PFG.succ$height < 1000)] = 5 ## immature phanerophytes with height < 10m contribute to shade half less than mature phanerophytes
+  }
   
   #################################################################################################
   
@@ -399,7 +467,13 @@ PRE_FATE.params_PFGsuccession = function(
   SEED_DORMANCY = rep(0, no.PFG)
   
   ## GET POTENTIAL FECUNDITY
-  POTENTIAL_FECUNDITY = rep(100, no.PFG)
+  if (sum(colnames(mat.PFG.succ) == "potential_fecundity") == 1)
+  {
+    POTENTIAL_FECUNDITY = mat.PFG.succ$potential_fecundity
+  } else
+  {
+    POTENTIAL_FECUNDITY = rep(100, no.PFG)
+  }
   
   #################################################################################################
 

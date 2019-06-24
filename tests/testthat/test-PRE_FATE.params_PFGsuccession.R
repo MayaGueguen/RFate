@@ -136,6 +136,81 @@ test_that("PRE_FATE.params_PFGsuccession gives error with wrong data : mat.PFG.s
                                              , mat.PFG.succ = data.frame(PFG = c(1,2), type = "H", height = 3, maturity = 4
                                                                          , longevity = c(10,NA)))
                , "Columns `height`, `maturity` and `longevity` of `mat.PFG.succ` must not contain NA values")
+  
+  expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
+                                             , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
+                                                                         , longevity = 10, hop = 1))
+               , "Column names of `mat.PFG.succ` must be `PFG`, `type`, `height`, `maturity`, `longevity`, `(max_abundance)`, `(potential_fecundity)` and `(immature_size)`"
+               , fixed = TRUE)
+  
+  expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
+                                             , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
+                                                                         , longevity = 10, max_abundance = NA))
+               , "Columns `max_abundance` of `mat.PFG.succ` must contain numeric values")
+  expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
+                                             , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
+                                                                         , longevity = 10, max_abundance = "a"))
+               , "Columns `max_abundance` of `mat.PFG.succ` must contain numeric values")
+  expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
+                                             , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
+                                                                         , longevity = 10, max_abundance = factor(1)))
+               , "Columns `max_abundance` of `mat.PFG.succ` must contain numeric values")
+  expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
+                                             , mat.PFG.succ = data.frame(PFG = c(1,2), type = "H", height = 3, maturity = 4
+                                                                         , longevity = 10, max_abundance = c(10,NA)))
+               , "Columns `max_abundance` of `mat.PFG.succ` must not contain NA values")
+  expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
+                                             , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
+                                                                         , longevity = 10, max_abundance = 1.5))
+               , "Column `max_abundance` of `mat.PFG.succ` must contain values between 1 and 3")
+  expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
+                                             , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
+                                                                         , longevity = 10, max_abundance = 10))
+               , "Column `max_abundance` of `mat.PFG.succ` must contain values between 1 and 3")
+  
+  
+  expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
+                                             , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
+                                                                         , longevity = 10, potential_fecundity = NA))
+               , "Columns `potential_fecundity` of `mat.PFG.succ` must contain numeric values")
+  expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
+                                             , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
+                                                                         , longevity = 10, potential_fecundity = "a"))
+               , "Columns `potential_fecundity` of `mat.PFG.succ` must contain numeric values")
+  expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
+                                             , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
+                                                                         , longevity = 10, potential_fecundity = factor(1)))
+               , "Columns `potential_fecundity` of `mat.PFG.succ` must contain numeric values")
+  expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
+                                             , mat.PFG.succ = data.frame(PFG = c(1,2), type = "H", height = 3, maturity = 4
+                                                                         , longevity = 10, potential_fecundity = c(10,NA)))
+               , "Columns `potential_fecundity` of `mat.PFG.succ` must not contain NA values")
+
+  
+  expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
+                                             , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
+                                                                         , longevity = 10, immature_size = NA))
+               , "Columns `immature_size` of `mat.PFG.succ` must contain numeric values")
+  expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
+                                             , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
+                                                                         , longevity = 10, immature_size = "a"))
+               , "Columns `immature_size` of `mat.PFG.succ` must contain numeric values")
+  expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
+                                             , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
+                                                                         , longevity = 10, immature_size = factor(1)))
+               , "Columns `immature_size` of `mat.PFG.succ` must contain numeric values")
+  expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
+                                             , mat.PFG.succ = data.frame(PFG = c(1,2), type = "H", height = 3, maturity = 4
+                                                                         , longevity = 10, immature_size = c(10,NA)))
+               , "Columns `immature_size` of `mat.PFG.succ` must not contain NA values")
+  expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
+                                             , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
+                                                                         , longevity = 10, immature_size = 1.5))
+               , "Column `immature_size` of `mat.PFG.succ` must contain values between 0 and 10")
+  expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
+                                             , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
+                                                                         , longevity = 10, immature_size = 11))
+               , "Column `immature_size` of `mat.PFG.succ` must contain values between 0 and 10")
 })
 
 
@@ -221,4 +296,40 @@ test_that("PRE_FATE.params_PFGsuccession gives correct output", {
                                                                            , longevity = c(12, 200, 25, 4, 110, 70))
                                                , opt.folder.name = "scen1")
                  , "The parameter file FATE_simulation/DATA/PFGS/SUCC/scen1/SUCC_PFG1.txt has been successfully created !")
+  
+  
+  expect_message(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
+                                               , mat.PFG.succ = data.frame(PFG = paste0("PFG",1)
+                                                                           , type = c("C")
+                                                                           , height = c(10)
+                                                                           , maturity = c(5)
+                                                                           , longevity = c(12)))
+                 , "The parameter file FATE_simulation/DATA/PFGS/SUCC/SUCC_PFG1.txt has been successfully created !")
+  expect_message(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
+                                               , mat.PFG.succ = data.frame(PFG = paste0("PFG",1:6)
+                                                                           , type = c("C", "C", "H", "H", "P", "P")
+                                                                           , height = c(10, 250, 36, 68, 1250, 550)
+                                                                           , maturity = c(5, 5, 3, 3, 8, 9)
+                                                                           , longevity = c(12, 200, 25, 4, 110, 70)
+                                                                           , max_abundance = c(2, 2, 1, 1, 2, 3))
+                                               , opt.folder.name = "max_abund")
+                 , "The parameter file FATE_simulation/DATA/PFGS/SUCC/max_abund/SUCC_PFG1.txt has been successfully created !")
+  expect_message(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
+                                               , mat.PFG.succ = data.frame(PFG = paste0("PFG",1:6)
+                                                                           , type = c("C", "C", "H", "H", "P", "P")
+                                                                           , height = c(10, 250, 36, 68, 1250, 550)
+                                                                           , maturity = c(5, 5, 3, 3, 8, 9)
+                                                                           , longevity = c(12, 200, 25, 4, 110, 70)
+                                                                           , potential_fecundity = rep(150,6))
+                                               , opt.folder.name = "pot_fecund")
+                 , "The parameter file FATE_simulation/DATA/PFGS/SUCC/pot_fecund/SUCC_PFG1.txt has been successfully created !")
+  expect_message(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
+                                               , mat.PFG.succ = data.frame(PFG = paste0("PFG",1:6)
+                                                                           , type = c("C", "C", "H", "H", "P", "P")
+                                                                           , height = c(10, 250, 36, 68, 1250, 550)
+                                                                           , maturity = c(5, 5, 3, 3, 8, 9)
+                                                                           , longevity = c(12, 200, 25, 4, 110, 70)
+                                                                           , potential_fecundity = c(8, 8, 10, 10, 5, 6))
+                                               , opt.folder.name = "imm_size")
+                 , "The parameter file FATE_simulation/DATA/PFGS/SUCC/imm_size/SUCC_PFG1.txt has been successfully created !")
 })
