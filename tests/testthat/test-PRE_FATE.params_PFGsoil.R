@@ -69,6 +69,9 @@ test_that("PRE_FATE.params_PFGsoil gives error with wrong data : mat.PFG.soil", 
                , "`mat.PFG.soil$type` must be either `H`, `C` or `P`", fixed = T)
   
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                       , mat.PFG.soil = data.frame(PFG = c(1,2), type = "H", soil_contrib = c(NA, 1), soil_tol_min = 2, soil_tol_max = 3))
+               , "Wrong type of data!\n Columns `soil_contrib`, `soil_tol_min` and `soil_tol_max` of `mat.PFG.soil` must not contain NA values")
+  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
                                        , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = NA, soil_tol_min = 2, soil_tol_max = 3))
                , "Wrong type of data!\n Columns `soil_contrib`, `soil_tol_min` and `soil_tol_max` of `mat.PFG.soil` must contain numeric values")
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
@@ -82,6 +85,9 @@ test_that("PRE_FATE.params_PFGsoil gives error with wrong data : mat.PFG.soil", 
                , "Wrong type of data!\n Columns `soil_contrib`, `soil_tol_min` and `soil_tol_max` of `mat.PFG.soil` must contain numeric values")
   
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                       , mat.PFG.soil = data.frame(PFG = c(1,2), type = "H", soil_contrib = 1, soil_tol_min = c(NA, 1), soil_tol_max = 3))
+               , "Wrong type of data!\n Columns `soil_contrib`, `soil_tol_min` and `soil_tol_max` of `mat.PFG.soil` must not contain NA values")
+  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
                                        , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 1, soil_tol_min = NA, soil_tol_max = 3))
                , "Wrong type of data!\n Columns `soil_contrib`, `soil_tol_min` and `soil_tol_max` of `mat.PFG.soil` must contain numeric values")
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
@@ -94,6 +100,9 @@ test_that("PRE_FATE.params_PFGsoil gives error with wrong data : mat.PFG.soil", 
                                        , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 1, soil_tol_min = factor("a"), soil_tol_max = 3))
                , "Wrong type of data!\n Columns `soil_contrib`, `soil_tol_min` and `soil_tol_max` of `mat.PFG.soil` must contain numeric values")
   
+  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                       , mat.PFG.soil = data.frame(PFG = c(1,2), type = "H", soil_contrib = 1, soil_tol_min = 2, soil_tol_max = c(NA, 1)))
+               , "Wrong type of data!\n Columns `soil_contrib`, `soil_tol_min` and `soil_tol_max` of `mat.PFG.soil` must not contain NA values")
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
                                        , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 1, soil_tol_min = 2, soil_tol_max = NA))
                , "Wrong type of data!\n Columns `soil_contrib`, `soil_tol_min` and `soil_tol_max` of `mat.PFG.soil` must contain numeric values")

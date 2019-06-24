@@ -256,8 +256,23 @@ test_that("POST_FATE.graphic_mapPFGvsHS gives error with wrong data : rasters", 
                                             , year = 10)
                , "Missing data!\n The folder FATE_simulation/RESULTS/Hello/BIN_perPFG_allStrata/ does not contain adequate files"
                , fixed = TRUE)
+  expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
+                                            , year = 10)
+               , "Missing data!\n The folder FATE_simulation/RESULTS/Hello/BIN_perPFG_allStrata/ does not contain adequate files"
+               , fixed = TRUE)
   
   file.create("FATE_simulation/RESULTS/Hello/BIN_perPFG_allStrata/Binary_YEAR_10_PFG1_STRATA_all.txt")
+  
+  
+  expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
+                                            , file.simulParam = "ParamSimul.txt"
+                                            , year = 10
+                                            , opt.strata = 1)
+               , "Missing data!\n The folder FATE_simulation/RESULTS/Hello/BIN_perPFG_perStrata/ does not contain adequate files"
+               , fixed = TRUE)
+  
+  file.create("FATE_simulation/RESULTS/Hello/BIN_perPFG_perStrata/Binary_YEAR_10_PFG1_STRATA_1.txt")
+  
 })
 
 

@@ -53,6 +53,9 @@ test_that("PRE_FATE.speciesClustering_step2 gives error with wrong data : no.clu
                                                 , no.clusters = "a")
                , "missing `no.clusters` information")
   expect_error(PRE_FATE.speciesClustering_step2(clust.dendograms = hclust(as.dist(matrix(seq(4), ncol = 2)))
+                                                , no.clusters = c(1,2))
+               , "Wrong type of data!\n `no.clusters` must have the same length than `clust.dendograms`")
+  expect_error(PRE_FATE.speciesClustering_step2(clust.dendograms = hclust(as.dist(matrix(seq(4), ncol = 2)))
                                                 , no.clusters = 1)
                , "missing `mat.species.DIST` information which must be a dist object, or a list of dist objects")
 })
@@ -84,6 +87,11 @@ test_that("PRE_FATE.speciesClustering_step2 gives error with wrong data : mat.sp
                                                 , no.clusters = 1
                                                 , mat.species.DIST = matrix(seq(4), ncol = 2))
                , "missing `mat.species.DIST` information which must be a dist object, or a list of dist objects")
+  
+  expect_error(PRE_FATE.speciesClustering_step2(clust.dendograms = hclust(as.dist(matrix(seq(4), ncol = 2)))
+                                                , no.clusters = 1
+                                                , mat.species.DIST = list(matrix(seq(4), ncol = 2), 1))
+               , "Wrong type of data!\n `mat.species.DIST` must have the same length than `clust.dendograms`")
   
   expect_error(PRE_FATE.speciesClustering_step2(clust.dendograms = hclust(as.dist(matrix(seq(4), ncol = 2)))
                                                 , no.clusters = 1

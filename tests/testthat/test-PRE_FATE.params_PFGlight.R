@@ -167,6 +167,11 @@ test_that("PRE_FATE.params_PFGlight gives error with wrong data : mat.PFG.succ",
                                                                     , longevity = 10, light = c(2,NA)))
                , "Columns `height`, `maturity`, `longevity` and `light` of `mat.PFG.succ` must not contain NA values")
   
+  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
+                                        , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
+                                                                    , longevity = 10, light = 1, hop = 1))
+               , "Column names of `mat.PFG.succ` must be `PFG`, `type`, `height`, `maturity`, `longevity`, `light`, `(immature_size)`, `(active_germ_low)`, `(active_germ_medium)` and `(active_germ_high)`"
+               , fixed = TRUE)
   
   expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
                                         , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
@@ -396,4 +401,18 @@ test_that("PRE_FATE.params_PFGlight gives correct output", {
                                                                       , active_germ_high = c(8, 8, 10, 10, 5, 6))
                                           , opt.folder.name = "act_germ")
                  , "The parameter file FATE_simulation/DATA/PFGS/LIGHT/act_germ/LIGHT_PFG1.txt has been successfully created !")
+  
+  expect_message(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
+                                          , mat.PFG.succ = data.frame(PFG = paste0("PFG",1:6)
+                                                                      , type = c("C", "C", "H", "H", "P", "P")
+                                                                      , height = c(10, 250, 36, 68, 1250, 550)
+                                                                      , maturity = c(5, 5, 3, 3, 8, 9)
+                                                                      , longevity = c(12, 200, 25, 4, 110, 70)
+                                                                      , light = c(4, 6, 3, 6, 5, 5)
+                                                                      , active_germ_low = c(8, 8, 10, 10, 5, 6)
+                                                                      , active_germ_medium = c(8, 8, 10, 10, 5, 6)
+                                                                      , active_germ_high = c(8, 8, 10, 10, 5, 6))
+                                          , strata.limits_reduce = FALSE
+                                          , opt.folder.name = "strat")
+                 , "The parameter file FATE_simulation/DATA/PFGS/LIGHT/strat/LIGHT_PFG1.txt has been successfully created !")
 })

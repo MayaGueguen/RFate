@@ -59,6 +59,9 @@ test_that("PRE_FATE.params_PFGdispersal gives error with wrong data : mat.PFG.di
                , "`mat.PFG.disp$PFG` must contain a character value of length > 0", fixed = T)
   
   expect_error(PRE_FATE.params_PFGdispersal(name.simulation = "FATE_simulation"
+                                            , mat.PFG.disp = data.frame(PFG = c(1,2), MODE = c(1,NA), d50 = 2, d99 = 3, ldd = 4))
+               , "Wrong type of data!\n Columns `MODE`, `d50`, `d99` and `ldd` of `mat.PFG.disp` must not contain NA values")
+  expect_error(PRE_FATE.params_PFGdispersal(name.simulation = "FATE_simulation"
                                             , mat.PFG.disp = data.frame(PFG = 1, MODE = NA, d50 = 2, d99 = 3, ldd = 4))
                , "Wrong type of data!\n Columns `MODE`, `d50`, `d99` and `ldd` of `mat.PFG.disp` must contain numeric values")
   expect_error(PRE_FATE.params_PFGdispersal(name.simulation = "FATE_simulation"
@@ -78,6 +81,9 @@ test_that("PRE_FATE.params_PFGdispersal gives error with wrong data : mat.PFG.di
                , "Wrong type of data!\n Column `MODE` of `mat.PFG.disp` must contain values between 1 and 3")
   
   expect_error(PRE_FATE.params_PFGdispersal(name.simulation = "FATE_simulation"
+                                            , mat.PFG.disp = data.frame(PFG = c(1,2), MODE = 1, d50 = c(2,NA), d99 = 3, ldd = 4))
+               , "Wrong type of data!\n Columns `MODE`, `d50`, `d99` and `ldd` of `mat.PFG.disp` must not contain NA values")
+  expect_error(PRE_FATE.params_PFGdispersal(name.simulation = "FATE_simulation"
                                             , mat.PFG.disp = data.frame(PFG = 1, MODE = 1, d50 = NA, d99 = 3, ldd = 4))
                , "Wrong type of data!\n Columns `MODE`, `d50`, `d99` and `ldd` of `mat.PFG.disp` must contain numeric values")
   expect_error(PRE_FATE.params_PFGdispersal(name.simulation = "FATE_simulation"
@@ -91,6 +97,9 @@ test_that("PRE_FATE.params_PFGdispersal gives error with wrong data : mat.PFG.di
                , "Wrong type of data!\n Columns `MODE`, `d50`, `d99` and `ldd` of `mat.PFG.disp` must contain numeric values")
   
   expect_error(PRE_FATE.params_PFGdispersal(name.simulation = "FATE_simulation"
+                                            , mat.PFG.disp = data.frame(PFG = c(1,2), MODE = 1, d50 = 2, d99 = c(3,NA), ldd = 4))
+               , "Wrong type of data!\n Columns `MODE`, `d50`, `d99` and `ldd` of `mat.PFG.disp` must not contain NA values")
+  expect_error(PRE_FATE.params_PFGdispersal(name.simulation = "FATE_simulation"
                                             , mat.PFG.disp = data.frame(PFG = 1, MODE = 1, d50 = 2, d99 = NA, ldd = 4))
                , "Wrong type of data!\n Columns `MODE`, `d50`, `d99` and `ldd` of `mat.PFG.disp` must contain numeric values")
   expect_error(PRE_FATE.params_PFGdispersal(name.simulation = "FATE_simulation"
@@ -103,6 +112,9 @@ test_that("PRE_FATE.params_PFGdispersal gives error with wrong data : mat.PFG.di
                                             , mat.PFG.disp = data.frame(PFG = 1, MODE = 1, d50 = 2, d99 = factor("a"), ldd = 4))
                , "Wrong type of data!\n Columns `MODE`, `d50`, `d99` and `ldd` of `mat.PFG.disp` must contain numeric values")
   
+  expect_error(PRE_FATE.params_PFGdispersal(name.simulation = "FATE_simulation"
+                                            , mat.PFG.disp = data.frame(PFG = c(1,2), MODE = 1, d50 = 2, d99 = 3, ldd = c(4,NA)))
+               , "Wrong type of data!\n Columns `MODE`, `d50`, `d99` and `ldd` of `mat.PFG.disp` must not contain NA values")
   expect_error(PRE_FATE.params_PFGdispersal(name.simulation = "FATE_simulation"
                                             , mat.PFG.disp = data.frame(PFG = 1, MODE = 1, d50 = 2, d99 = 3, ldd = NA))
                , "Wrong type of data!\n Columns `MODE`, `d50`, `d99` and `ldd` of `mat.PFG.disp` must contain numeric values")
