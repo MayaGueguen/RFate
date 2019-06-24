@@ -200,7 +200,7 @@ PRE_FATE.params_PFGsuccession = function(
   } else if (ncol(mat.PFG.succ) > 5)
   {
     if (!((sum(colnames(mat.PFG.succ) %in% c("PFG", "type","height", "maturity", "longevity")) == 5) &&
-          (sum(colnames(mat.PFG.succ) %in% c("max_abundance", "potential_fecundity", "immature_size", "active_germ")) == (ncol(mat.PFG.succ) - 5))))
+          (sum(colnames(mat.PFG.succ) %in% c("max_abundance", "potential_fecundity", "immature_size")) == (ncol(mat.PFG.succ) - 5))))
     {
       .stopMessage_columnNames("mat.PFG.succ", c("PFG", "type","height", "maturity", "longevity"
                                                  , "(max_abundance)", "(potential_fecundity)", "(immature_size)"))

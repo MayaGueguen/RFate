@@ -166,6 +166,110 @@ test_that("PRE_FATE.params_PFGlight gives error with wrong data : mat.PFG.succ",
                                         , mat.PFG.succ = data.frame(PFG = c(1,2), type = "H", height = 3, maturity = 4
                                                                     , longevity = 10, light = c(2,NA)))
                , "Columns `height`, `maturity`, `longevity` and `light` of `mat.PFG.succ` must not contain NA values")
+  
+  
+  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
+                                        , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
+                                                                    , longevity = 10, light = 1, immature_size = NA))
+               , "Columns `immature_size` of `mat.PFG.succ` must contain numeric values")
+  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
+                                        , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
+                                                                    , longevity = 10, light = 1, immature_size = "a"))
+               , "Columns `immature_size` of `mat.PFG.succ` must contain numeric values")
+  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
+                                        , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
+                                                                    , longevity = 10, light = 1, immature_size = factor(1)))
+               , "Columns `immature_size` of `mat.PFG.succ` must contain numeric values")
+  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
+                                        , mat.PFG.succ = data.frame(PFG = c(1,2), type = "H", height = 3, maturity = 4
+                                                                    , longevity = 10, light = 1, immature_size = c(10,NA)))
+               , "Columns `immature_size` of `mat.PFG.succ` must not contain NA values")
+  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
+                                        , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
+                                                                    , longevity = 10, light = 1, immature_size = 1.5))
+               , "Column `immature_size` of `mat.PFG.succ` must contain values between 0 and 10")
+  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
+                                        , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
+                                                                    , longevity = 10, light = 1, immature_size = 11))
+               , "Column `immature_size` of `mat.PFG.succ` must contain values between 0 and 10")
+  
+  
+  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
+                                        , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
+                                                                    , longevity = 10, light = 1, active_germ_low = NA))
+               , "Columns `active_germ_low` of `mat.PFG.succ` must contain numeric values")
+  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
+                                        , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
+                                                                    , longevity = 10, light = 1, active_germ_low = "a"))
+               , "Columns `active_germ_low` of `mat.PFG.succ` must contain numeric values")
+  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
+                                        , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
+                                                                    , longevity = 10, light = 1, active_germ_low = factor(1)))
+               , "Columns `active_germ_low` of `mat.PFG.succ` must contain numeric values")
+  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
+                                        , mat.PFG.succ = data.frame(PFG = c(1,2), type = "H", height = 3, maturity = 4
+                                                                    , longevity = 10, light = 1, active_germ_low = c(10,NA)))
+               , "Columns `active_germ_low` of `mat.PFG.succ` must not contain NA values")
+  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
+                                        , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
+                                                                    , longevity = 10, light = 1, active_germ_low = 1.5))
+               , "Column `active_germ_low` of `mat.PFG.succ` must contain values between 0 and 10")
+  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
+                                        , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
+                                                                    , longevity = 10, light = 1, active_germ_low = 11))
+               , "Column `active_germ_low` of `mat.PFG.succ` must contain values between 0 and 10")
+  
+  
+  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
+                                        , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
+                                                                    , longevity = 10, light = 1, active_germ_medium = NA))
+               , "Columns `active_germ_medium` of `mat.PFG.succ` must contain numeric values")
+  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
+                                        , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
+                                                                    , longevity = 10, light = 1, active_germ_medium = "a"))
+               , "Columns `active_germ_medium` of `mat.PFG.succ` must contain numeric values")
+  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
+                                        , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
+                                                                    , longevity = 10, light = 1, active_germ_medium = factor(1)))
+               , "Columns `active_germ_medium` of `mat.PFG.succ` must contain numeric values")
+  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
+                                        , mat.PFG.succ = data.frame(PFG = c(1,2), type = "H", height = 3, maturity = 4
+                                                                    , longevity = 10, light = 1, active_germ_medium = c(10,NA)))
+               , "Columns `active_germ_medium` of `mat.PFG.succ` must not contain NA values")
+  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
+                                        , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
+                                                                    , longevity = 10, light = 1, active_germ_medium = 1.5))
+               , "Column `active_germ_medium` of `mat.PFG.succ` must contain values between 0 and 10")
+  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
+                                        , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
+                                                                    , longevity = 10, light = 1, active_germ_medium = 11))
+               , "Column `active_germ_medium` of `mat.PFG.succ` must contain values between 0 and 10")
+  
+  
+  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
+                                        , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
+                                                                    , longevity = 10, light = 1, active_germ_high = NA))
+               , "Columns `active_germ_high` of `mat.PFG.succ` must contain numeric values")
+  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
+                                        , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
+                                                                    , longevity = 10, light = 1, active_germ_high = "a"))
+               , "Columns `active_germ_high` of `mat.PFG.succ` must contain numeric values")
+  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
+                                        , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
+                                                                    , longevity = 10, light = 1, active_germ_high = factor(1)))
+               , "Columns `active_germ_high` of `mat.PFG.succ` must contain numeric values")
+  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
+                                        , mat.PFG.succ = data.frame(PFG = c(1,2), type = "H", height = 3, maturity = 4
+                                                                    , longevity = 10, light = 1, active_germ_high = c(10,NA)))
+               , "Columns `active_germ_high` of `mat.PFG.succ` must not contain NA values")
+  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
+                                        , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
+                                                                    , longevity = 10, light = 1, active_germ_high = 1.5))
+               , "Column `active_germ_high` of `mat.PFG.succ` must contain values between 0 and 10")
+  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
+                                        , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4
+                                                                    , longevity = 10, light = 1, active_germ_high = 11))
+               , "Column `active_germ_high` of `mat.PFG.succ` must contain values between 0 and 10")
 })
 
 
@@ -261,4 +365,35 @@ test_that("PRE_FATE.params_PFGlight gives correct output", {
                                                                       , light = c(4, 6, 3, 6, 5, 5))
                                           , opt.folder.name = "scen1")
                  , "The parameter file FATE_simulation/DATA/PFGS/LIGHT/scen1/LIGHT_PFG1.txt has been successfully created !")
+  
+  expect_message(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
+                                          , mat.PFG.succ = data.frame(PFG = paste0("PFG",1)
+                                                                      , type = c("C")
+                                                                      , height = c(10)
+                                                                      , maturity = c(5)
+                                                                      , longevity = c(12)
+                                                                      , light = c(4)))
+                 , "The parameter file FATE_simulation/DATA/PFGS/LIGHT/LIGHT_PFG1.txt has been successfully created !")
+  expect_message(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
+                                          , mat.PFG.succ = data.frame(PFG = paste0("PFG",1:6)
+                                                                      , type = c("C", "C", "H", "H", "P", "P")
+                                                                      , height = c(10, 250, 36, 68, 1250, 550)
+                                                                      , maturity = c(5, 5, 3, 3, 8, 9)
+                                                                      , longevity = c(12, 200, 25, 4, 110, 70)
+                                                                      , light = c(4, 6, 3, 6, 5, 5)
+                                                                      , immature_size = c(8, 8, 10, 10, 5, 6))
+                                          , opt.folder.name = "imm_size")
+                 , "The parameter file FATE_simulation/DATA/PFGS/LIGHT/imm_size/LIGHT_PFG1.txt has been successfully created !")
+  expect_message(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
+                                          , mat.PFG.succ = data.frame(PFG = paste0("PFG",1:6)
+                                                                      , type = c("C", "C", "H", "H", "P", "P")
+                                                                      , height = c(10, 250, 36, 68, 1250, 550)
+                                                                      , maturity = c(5, 5, 3, 3, 8, 9)
+                                                                      , longevity = c(12, 200, 25, 4, 110, 70)
+                                                                      , light = c(4, 6, 3, 6, 5, 5)
+                                                                      , active_germ_low = c(8, 8, 10, 10, 5, 6)
+                                                                      , active_germ_medium = c(8, 8, 10, 10, 5, 6)
+                                                                      , active_germ_high = c(8, 8, 10, 10, 5, 6))
+                                          , opt.folder.name = "act_germ")
+                 , "The parameter file FATE_simulation/DATA/PFGS/LIGHT/act_germ/LIGHT_PFG1.txt has been successfully created !")
 })

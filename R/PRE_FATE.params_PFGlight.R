@@ -16,6 +16,9 @@
 ##' maturity, longevity, light
 ##' @param strata.limits a \code{vector} of \code{integer} containing values 
 ##' among which height strata limits will be chosen
+##' @param strata.limits_reduce default \code{TRUE}. If \code{TRUE}, stratum 
+##' height limits are checked to try and bring several PFGs together in a same
+##' stratum
 ##' @param opt.folder.name (\emph{optional}) \cr a \code{string} that
 ##' corresponds to the name of the folder that will be created into the 
 ##' \code{name.simulation/DATA/PFGS/LIGHT/} directory to store the results
@@ -145,6 +148,7 @@ PRE_FATE.params_PFGlight = function(
   name.simulation
   , mat.PFG.succ
   , strata.limits = c(0, 20, 50, 150, 400, 1000, 2000, 5000, 10000)
+  , strata.limits_reduce = TRUE
   , opt.folder.name = NULL
 ){
   
@@ -154,17 +158,22 @@ PRE_FATE.params_PFGlight = function(
   {
     .stopMessage_beDataframe("mat.PFG.succ")
   }
-  if (nrow(mat.PFG.succ) == 0 || ncol(mat.PFG.succ) != 6)
+  if (nrow(mat.PFG.succ) == 0 || ncol(mat.PFG.succ) < 6)
   {
     .stopMessage_numRowCol("mat.PFG.succ", c("PFG", "type","height", "maturity", "longevity", "light"))
-  }
-  if (ncol(mat.PFG.succ) == 6)
+  } else if (ncol(mat.PFG.succ) == 6)
   {
-    if (sum(colnames(mat.PFG.succ) == c("PFG", "type","height", "maturity", "longevity", "light")) == 6)
+    if (sum(colnames(mat.PFG.succ) == c("PFG", "type","height", "maturity", "longevity", "light")) < 6)
     {
-      mat.PFG.succ = mat.PFG.succ[ , c("PFG", "type","height", "maturity", "longevity", "light")]
-    } else {
       .stopMessage_columnNames("mat.PFG.succ", c("PFG", "type","height", "maturity", "longevity", "light"))
+    }
+  } else if (ncol(mat.PFG.succ) > 6)
+  {
+    if (!((sum(colnames(mat.PFG.succ) %in% c("PFG", "type","height", "maturity", "longevity", "light")) == 6) &&
+          (sum(colnames(mat.PFG.succ) %in% c("immature_size", "active_germ_low", "active_germ_medium", "active_germ_high")) == (ncol(mat.PFG.succ) - 6))))
+    {
+      .stopMessage_columnNames("mat.PFG.succ", c("PFG", "type","height", "maturity", "longevity", "light"
+                                                 , "(immature_size)", "(active_germ_low)", "(active_germ_medium)", "(active_germ_high)"))
     }
   }
   mat.PFG.succ$PFG = as.character(mat.PFG.succ$PFG)
@@ -197,6 +206,66 @@ PRE_FATE.params_PFGlight = function(
   }
   if (sum(mat.PFG.succ$light %in% seq(0,10)) < nrow(mat.PFG.succ)){
     stop("Wrong type of data!\n Column `light` of `mat.PFG.succ` must contain values between 0 and 10")
+  }
+  if (sum(colnames(mat.PFG.succ) == "immature_size") == 1)
+  {
+    if (!is.numeric(mat.PFG.succ$immature_size))
+    {
+      .stopMessage_columnNumeric("mat.PFG.succ", "immature_size")
+    }
+    if (length(which(is.na(mat.PFG.succ$immature_size))) > 0)
+    {
+      .stopMessage_columnNoNA("mat.PFG.succ", "immature_size")
+    }
+    if (sum(mat.PFG.succ$immature_size %in% seq(0,10)) < nrow(mat.PFG.succ))
+    {
+      stop("Wrong type of data!\n Column `immature_size` of `mat.PFG.succ` must contain values between 0 and 10")
+    }
+  }
+  if (sum(colnames(mat.PFG.succ) == "active_germ_low") == 1)
+  {
+    if (!is.numeric(mat.PFG.succ$active_germ_low))
+    {
+      .stopMessage_columnNumeric("mat.PFG.succ", "active_germ_low")
+    }
+    if (length(which(is.na(mat.PFG.succ$active_germ_low))) > 0)
+    {
+      .stopMessage_columnNoNA("mat.PFG.succ", "active_germ_low")
+    }
+    if (sum(mat.PFG.succ$active_germ_low %in% seq(0,10)) < nrow(mat.PFG.succ))
+    {
+      stop("Wrong type of data!\n Column `active_germ_low` of `mat.PFG.succ` must contain values between 0 and 10")
+    }
+  }
+  if (sum(colnames(mat.PFG.succ) == "active_germ_medium") == 1)
+  {
+    if (!is.numeric(mat.PFG.succ$active_germ_medium))
+    {
+      .stopMessage_columnNumeric("mat.PFG.succ", "active_germ_medium")
+    }
+    if (length(which(is.na(mat.PFG.succ$active_germ_medium))) > 0)
+    {
+      .stopMessage_columnNoNA("mat.PFG.succ", "active_germ_medium")
+    }
+    if (sum(mat.PFG.succ$active_germ_medium %in% seq(0,10)) < nrow(mat.PFG.succ))
+    {
+      stop("Wrong type of data!\n Column `active_germ_medium` of `mat.PFG.succ` must contain values between 0 and 10")
+    }
+  }
+  if (sum(colnames(mat.PFG.succ) == "active_germ_high") == 1)
+  {
+    if (!is.numeric(mat.PFG.succ$active_germ_high))
+    {
+      .stopMessage_columnNumeric("mat.PFG.succ", "active_germ_high")
+    }
+    if (length(which(is.na(mat.PFG.succ$active_germ_high))) > 0)
+    {
+      .stopMessage_columnNoNA("mat.PFG.succ", "active_germ_high")
+    }
+    if (sum(mat.PFG.succ$active_germ_high %in% seq(0,10)) < nrow(mat.PFG.succ))
+    {
+      stop("Wrong type of data!\n Column `active_germ_high` of `mat.PFG.succ` must contain values between 0 and 10")
+    }
   }
   strata.limits = sort(unique(na.exclude(strata.limits)))
   if (.testParam_notNum(strata.limits) ||
@@ -249,30 +318,36 @@ PRE_FATE.params_PFGlight = function(
   
   ## GET height strata limits (for light competition and PFG growth)
   ## n strata (+ germinants = 0)
-  no.PFG.perStrata = round(sqrt(no.PFG))
-  categories = cut(mat.PFG.succ$height, breaks = strata.limits)
-  categories.table = table(categories)
-  if (no.PFG == 1)
+  if (strata.limits_reduce)
   {
-    categ = which(categories.table == 1)
-    STRATA_LIMITS = c(0, strata.limits[categ], strata.limits[categ + 1])    
-  } else
-  {
-    STRATA_LIMITS = 0
-    tmp = categories.table[1]
-    for (categ in 2:length(strata.limits))
+    no.PFG.perStrata = round(sqrt(no.PFG))
+    categories = cut(mat.PFG.succ$height, breaks = strata.limits)
+    categories.table = table(categories)
+    if (no.PFG == 1)
     {
-      if (tmp >= max(c(1, (no.PFG.perStrata - 2))))
+      categ = which(categories.table == 1)
+      STRATA_LIMITS = c(0, strata.limits[categ], strata.limits[categ + 1])    
+    } else
+    {
+      STRATA_LIMITS = 0
+      tmp = categories.table[1]
+      for (categ in 2:length(strata.limits))
       {
-        STRATA_LIMITS = c(STRATA_LIMITS, strata.limits[categ])
-        tmp = categories.table[categ]
-      } else 
-      {
-        tmp = tmp + categories.table[categ]
+        if (tmp >= max(c(1, (no.PFG.perStrata - 2))))
+        {
+          STRATA_LIMITS = c(STRATA_LIMITS, strata.limits[categ])
+          tmp = categories.table[categ]
+        } else 
+        {
+          tmp = tmp + categories.table[categ]
+        }
       }
     }
+    STRATA_LIMITS = sort(unique(STRATA_LIMITS))
+  } else
+  {
+    STRATA_LIMITS = strata.limits
   }
-  STRATA_LIMITS = sort(unique(STRATA_LIMITS))
   # barplot(table(cut(mat.PFG.succ$height, breaks = STRATA_LIMITS)))
   
   ## GET STRATA attribution
@@ -303,14 +378,20 @@ PRE_FATE.params_PFGlight = function(
   ##             8 = 80 %
   ##             9 = 90 %
   ##             10 = 100 %
-  IMM_SIZE = rep(10, no.PFG)
-  IMM_SIZE[which(mat.PFG.succ$type == "H")] = 10 ## immature herbaceous contribute to shade in the same way than mature herbaceous
-  IMM_SIZE[which(mat.PFG.succ$type == "C")] = 5 ## immature chamaephytes contribute to shade half less than mature herbaceous
-  IMM_SIZE[which(mat.PFG.succ$type == "P")] = 1 ## immature phanerophytes contribute to shade only by 10 % of their full capacity
-  IMM_SIZE[which(mat.PFG.succ$type == "H" & STRATA == 2)] = 8 ## intermediate percentage for herbaceous in stratum 2
-  IMM_SIZE[which(mat.PFG.succ$type == "H" & STRATA > 2)] = 5 ## intermediate percentage for herbaceous in stratum > 2
-  IMM_SIZE[which(mat.PFG.succ$type == "C" & STRATA == 1)] = 10 ## immature chamaephytes in 1st stratum contribute to shade in the same way than mature chamaephytes
-  IMM_SIZE[which(mat.PFG.succ$type == "P" & mat.PFG.succ$height < 1000)] = 5 ## immature phanerophytes with height < 10m contribute to shade half less than mature phanerophytes
+  if (sum(colnames(mat.PFG.succ) == "immature_size") == 1)
+  {
+    IMM_SIZE = mat.PFG.succ$immature_size
+  } else
+  {
+    IMM_SIZE = rep(10, no.PFG)
+    IMM_SIZE[which(mat.PFG.succ$type == "H")] = 10 ## immature herbaceous contribute to shade in the same way than mature herbaceous
+    IMM_SIZE[which(mat.PFG.succ$type == "C")] = 5 ## immature chamaephytes contribute to shade half less than mature herbaceous
+    IMM_SIZE[which(mat.PFG.succ$type == "P")] = 1 ## immature phanerophytes contribute to shade only by 10 % of their full capacity
+    IMM_SIZE[which(mat.PFG.succ$type == "H" & STRATA == 2)] = 8 ## intermediate percentage for herbaceous in stratum 2
+    IMM_SIZE[which(mat.PFG.succ$type == "H" & STRATA > 2)] = 5 ## intermediate percentage for herbaceous in stratum > 2
+    IMM_SIZE[which(mat.PFG.succ$type == "C" & STRATA == 1)] = 10 ## immature chamaephytes in 1st stratum contribute to shade in the same way than mature chamaephytes
+    IMM_SIZE[which(mat.PFG.succ$type == "P" & mat.PFG.succ$height < 1000)] = 5 ## immature phanerophytes with height < 10m contribute to shade half less than mature phanerophytes
+  }
   
   #################################################################################################
   
@@ -363,13 +444,32 @@ PRE_FATE.params_PFGlight = function(
   ##             8 = 80 %
   ##             9 = 90 %
   ##             10 = 100 %
-  ACTIVE_GERM = matrix(0, nrow = 3, ncol = no.PFG)
-  ## woody species have little variation in germination rate depending on light conditions
-  ACTIVE_GERM[, which(mat.PFG.succ$type %in% c("C", "P"))] = 9
-  ## herbaceous germinate less in the shadow
-  ACTIVE_GERM[1, which(mat.PFG.succ$type == "H")] = 5 ## low light conditions
-  ACTIVE_GERM[2, which(mat.PFG.succ$type == "H")] = 8 ## medium light conditions
-  ACTIVE_GERM[3, which(mat.PFG.succ$type == "H")] = 9 ## high light conditions
+  ACTIVE_GERM = matrix(10, nrow = 3, ncol = no.PFG)
+  if (sum(colnames(mat.PFG.succ) == "active_germ_low") == 1 ||
+      sum(colnames(mat.PFG.succ) == "active_germ_medium") == 1 ||
+      sum(colnames(mat.PFG.succ) == "active_germ_high") == 1)
+  {
+    if (sum(colnames(mat.PFG.succ) == "active_germ_low") == 1)
+    {
+      ACTIVE_GERM[1, ] = mat.PFG.succ$active_germ_low ## low light conditions
+    }
+    if (sum(colnames(mat.PFG.succ) == "active_germ_medium") == 1)
+    {
+      ACTIVE_GERM[2, ] = mat.PFG.succ$active_germ_medium ## low light conditions
+    }
+    if (sum(colnames(mat.PFG.succ) == "active_germ_high") == 1)
+    {
+      ACTIVE_GERM[3, ] = mat.PFG.succ$active_germ_high ## low light conditions
+    }
+  } else
+  {
+    ## woody species have little variation in germination rate depending on light conditions
+    ACTIVE_GERM[, which(mat.PFG.succ$type %in% c("C", "P"))] = 9
+    ## herbaceous germinate less in the shadow
+    ACTIVE_GERM[1, which(mat.PFG.succ$type == "H")] = 5 ## low light conditions
+    ACTIVE_GERM[2, which(mat.PFG.succ$type == "H")] = 8 ## medium light conditions
+    ACTIVE_GERM[3, which(mat.PFG.succ$type == "H")] = 9 ## high light conditions
+  }
   
   #################################################################################################
   

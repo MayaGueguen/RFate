@@ -56,6 +56,7 @@ test_that("PRE_FATE.speciesClustering_step1 gives right output", {
   expect_equal(length(PRE_FATE.speciesClustering_step1(list(matrix(seq(9), ncol=3)
                                                             , matrix(seq(9), ncol=3)))$clust.dendograms), 2)
   
+  expect_output(str(PRE_FATE.speciesClustering_step1(as.dist(matrix(seq(9), ncol=3)))$clust.evaluation), "data.frame")
   expect_output(str(PRE_FATE.speciesClustering_step1(matrix(seq(9), ncol=3))$clust.evaluation), "data.frame")
   expect_output(str(PRE_FATE.speciesClustering_step1(matrix(seq(9), ncol=3))$clust.evaluation), "4 variables")
   

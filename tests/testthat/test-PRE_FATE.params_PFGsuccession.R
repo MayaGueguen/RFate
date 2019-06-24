@@ -329,7 +329,16 @@ test_that("PRE_FATE.params_PFGsuccession gives correct output", {
                                                                            , height = c(10, 250, 36, 68, 1250, 550)
                                                                            , maturity = c(5, 5, 3, 3, 8, 9)
                                                                            , longevity = c(12, 200, 25, 4, 110, 70)
-                                                                           , potential_fecundity = c(8, 8, 10, 10, 5, 6))
+                                                                           , immature_size = c(8, 8, 10, 10, 5, 6))
                                                , opt.folder.name = "imm_size")
                  , "The parameter file FATE_simulation/DATA/PFGS/SUCC/imm_size/SUCC_PFG1.txt has been successfully created !")
+  expect_message(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
+                                               , mat.PFG.succ = data.frame(PFG = paste0("PFG",1:6)
+                                                                           , type = c("C", "C", "H", "H", "P", "P")
+                                                                           , height = c(10, 250, 36, 68, 1250, 550)
+                                                                           , maturity = c(5, 5, 3, 3, 8, 9)
+                                                                           , longevity = c(12, 200, 25, 4, 110, 70))
+                                               , strata.limits_reduce = FALSE
+                                               , opt.folder.name = "strat")
+                 , "The parameter file FATE_simulation/DATA/PFGS/SUCC/strat/SUCC_PFG1.txt has been successfully created !")
 })
