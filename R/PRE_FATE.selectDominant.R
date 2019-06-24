@@ -295,7 +295,7 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
                    , unique(mat.site.species.abund$habitat)
                    , "). `doHabitatSelection` set to FALSE"))
   }
-
+  
   
   #################################################################################################
   ### PREPARATION OF DATA
@@ -354,7 +354,7 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
   cat("\n  This is done over all sites, and for each habitat")
   cat("\n")
   
-  categories = unique(mat.site.species.abund$habitat)
+  categories = as.character(unique(mat.site.species.abund$habitat))
   if (length(categories) == 1 && is.na(categories[1])) {
     categories = "all"
   } else {
@@ -374,34 +374,41 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
       {
         mat.site.species_habitat = mat.site.species.abund[which(mat.site.species.abund$habitat == habitat_i),]
       }
-      ## Split abundance data by species
-      list.dat = split(mat.site.species_habitat$abund, mat.site.species_habitat$species)
-      list.number = sapply(list.dat,length)
-      mat.species.stat = as.data.frame(t(sapply(list.dat, function(dat)
+      
+      if (nrow(mat.site.species_habitat) > 0)
       {
-        dat = na.omit(dat)
-        col.names = c("stat.abund_max"
-                      , "stat.no_sites_abund_max"
-                      , "stat.no_sites_abund"
-                      , "stat.no_sites_abund_over25"
-                      , "stat.abund_median"
-                      , "stat.abund_mean")
-        ## For each species :
-        if (length(dat) > 0)
+        ## Split abundance data by species
+        list.dat = split(mat.site.species_habitat$abund, mat.site.species_habitat$species)
+        list.number = sapply(list.dat,length)
+        mat.species.stat = as.data.frame(t(sapply(list.dat, function(dat)
         {
-          res = c(max(dat)
-                  , length(which(dat == max(dat)))
-                  , length(dat)
-                  , length(dat[which(dat >= 25)])
-                  , median(dat)
-                  , mean(dat))
-        } else
-        {
-          res = rep(NA, 6)
-        }
-        names(res) = col.names
-        return(res)
-      })))
+          dat = na.omit(dat)
+          col.names = c("stat.abund_max"
+                        , "stat.no_sites_abund_max"
+                        , "stat.no_sites_abund"
+                        , "stat.no_sites_abund_over25"
+                        , "stat.abund_median"
+                        , "stat.abund_mean")
+          ## For each species :
+          if (length(dat) > 0)
+          {
+            res = c(max(dat)
+                    , length(which(dat == max(dat)))
+                    , length(dat)
+                    , length(dat[which(dat >= 25)])
+                    , median(dat)
+                    , mean(dat))
+          } else
+          {
+            res = rep(NA, 6)
+          }
+          names(res) = col.names
+          return(res)
+        })))
+      } else
+      {
+        res = rep(NA, 6)
+      }
       mat.species.stat = data.frame(species = names(list.dat)
                                     , mat.species.stat
                                     , stat.no_sites_recorded = list.number)
@@ -410,7 +417,7 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
   }
   cat("\n")
   
-
+  
   #################################################################################################
   ### SELECTION OF DOMINANT SPECIES
   #################################################################################################
@@ -458,8 +465,8 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
       if (length(select_12) > 0)
       {
         mat.select.species.habitat = rbind(mat.select.species.habitat,
-                                             data.frame(species = mat.land$species[select_12],
-                                                        habitat = names(mat.species.stat.habitat)[i]))
+                                           data.frame(species = mat.land$species[select_12],
+                                                      habitat = names(mat.species.stat.habitat)[i]))
       }
     }
   }
@@ -533,7 +540,7 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
   #################################################################################################
   ## GRAPHICS TO HELP ADJUST PARAMETERS TO SELECT DOMINANT SPECIES
   #################################################################################################
-
+  
   colRamp = colorRampPalette(c('#8e0152','#c51b7d','#de77ae','#7fbc41','#4d9221','#276419'))
   
   variables.labeller = c("stat.no_sites_recorded" = "stat.no_sites_recorded"
@@ -594,7 +601,7 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
          , plot = pp1, width = 10, height = 8)
   
   ## STEP 2 : Selected -----------------------------------------------------------
-
+  
   mat.plot = melt(mat.species.dominant, id.vars = c("species","SELECTION"))
   mat.plot = rbind(mat.plot, data.frame(species = "SP.ghost", SELECTION = NA, 
                                         variable = c("Fake1","Fake2"), value = NA))
@@ -638,7 +645,7 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
   
   ggsave(filename = paste0("PRE_FATE_DOMINANT_STEP_2_selectedSpecies_", end_filename, ".pdf")
          , plot = pp2, width = 10, height = 8)
-
+  
   #################################################################################################
   
   cat("\n> Done!\n")
@@ -651,5 +658,5 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
   
   return(mat.species.dominant)
   
-}
+  }
 

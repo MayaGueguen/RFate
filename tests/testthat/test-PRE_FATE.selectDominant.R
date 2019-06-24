@@ -118,4 +118,11 @@ test_that("PRE_FATE.selectDominant right results", {
                                                                                 , habitat = c("Landes", "Grassland"))))
                 , "data.frame")
   
+  expect_output(str(PRE_FATE.selectDominant(mat.site.species.abund = data.frame(sites = c(rep("A", 50), rep("B", 50))
+                                                                                , species = sample(1:5, 100, replace = T)
+                                                                                , abund = sample(c(rep(1, 20), seq(30, 50)), 100, replace = T)
+                                                                                , habitat = c("Landes", "Grassland"))
+                                            , doHabitatSelection = TRUE))
+                , "data.frame")
+  
 })
