@@ -1,6 +1,15 @@
 
 .getCutoff <- function(Obs, Fit)
 {
+  if (.testParam_notNum(Obs))
+  {
+    .stopMessage_content("Obs", c("0", "1"))
+  }
+  if (.testParam_notNum(Fit))
+  {
+    .stopMessage_content("Fit", c("0", "1"))
+  }
+  
   SumObs = sum(Obs)
   LengObs = length(Obs)
   tt = c(100)
