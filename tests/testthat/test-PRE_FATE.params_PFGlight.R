@@ -169,6 +169,49 @@ test_that("PRE_FATE.params_PFGlight gives error with wrong data : mat.PFG.succ",
 })
 
 
+## INPUTS
+test_that("PRE_FATE.params_PFGlight gives error with wrong data : strata.limits", {
+  if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
+  PRE_FATE.skeletonDirectory()
+  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
+                                        , mat.PFG.succ = data.frame(PFG = paste0("PFG",1:6)
+                                                                    , type = c("C", "C", "H", "H", "P", "P")
+                                                                    , height = c(10, 250, 36, 68, 1250, 550)
+                                                                    , maturity = c(5, 5, 3, 3, 8, 9)
+                                                                    , longevity = c(12, 200, 25, 4, 110, 70)
+                                                                    , light = c(4, 6, 3, 6, 5, 5))
+                                        , strata.limits = NA)
+               , "Wrong type of data!\n `strata.limits` must be an integer > 0")
+  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
+                                        , mat.PFG.succ = data.frame(PFG = paste0("PFG",1:6)
+                                                                    , type = c("C", "C", "H", "H", "P", "P")
+                                                                    , height = c(10, 250, 36, 68, 1250, 550)
+                                                                    , maturity = c(5, 5, 3, 3, 8, 9)
+                                                                    , longevity = c(12, 200, 25, 4, 110, 70)
+                                                                    , light = c(4, 6, 3, 6, 5, 5))
+                                        , strata.limits = "a")
+               , "Wrong type of data!\n `strata.limits` must be an integer > 0")
+  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
+                                        , mat.PFG.succ = data.frame(PFG = paste0("PFG",1:6)
+                                                                    , type = c("C", "C", "H", "H", "P", "P")
+                                                                    , height = c(10, 250, 36, 68, 1250, 550)
+                                                                    , maturity = c(5, 5, 3, 3, 8, 9)
+                                                                    , longevity = c(12, 200, 25, 4, 110, 70)
+                                                                    , light = c(4, 6, 3, 6, 5, 5))
+                                        , strata.limits = factor(1))
+               , "Wrong type of data!\n `strata.limits` must be an integer > 0")
+  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
+                                        , mat.PFG.succ = data.frame(PFG = paste0("PFG",1:6)
+                                                                    , type = c("C", "C", "H", "H", "P", "P")
+                                                                    , height = c(10, 250, 36, 68, 1250, 550)
+                                                                    , maturity = c(5, 5, 3, 3, 8, 9)
+                                                                    , longevity = c(12, 200, 25, 4, 110, 70)
+                                                                    , light = c(4, 6, 3, 6, 5, 5))
+                                        , strata.limits = -1)
+               , "Wrong type of data!\n `strata.limits` must be an integer > 0")
+})
+
+
 ## OUTPUTS
 test_that("PRE_FATE.params_PFGlight gives correct output", {
   if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)

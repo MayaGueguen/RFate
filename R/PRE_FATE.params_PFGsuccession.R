@@ -14,6 +14,8 @@
 ##' directory or simulation name of the \code{FATE-HD} simulation
 ##' @param mat.PFG.succ a \code{data.frame} with 5 columns : PFG, type, height,
 ##' maturity, longevity
+##' @param strata.limits a \code{vector} of \code{integer} containing values 
+##' among which height strata limits will be chosen
 ##' @param opt.folder.name (\emph{optional}) \cr a \code{string} that
 ##' corresponds to the name of the folder that will be created into the 
 ##' \code{name.simulation/DATA/PFGS/SUCC/} directory to store the results
@@ -172,6 +174,7 @@
 PRE_FATE.params_PFGsuccession = function(
   name.simulation
   , mat.PFG.succ
+  , strata.limits = c(0, 20, 50, 150, 400, 1000, 2000, 5000, 10000)
   , opt.folder.name = NULL
 ){
   
@@ -220,6 +223,12 @@ PRE_FATE.params_PFGsuccession = function(
   {
     .stopMessage_columnNoNA("mat.PFG.succ", c("height", "maturity", "longevity"))
   }
+  strata.limits = sort(unique(na.exclude(strata.limits)))
+  if (.testParam_notNum(strata.limits) ||
+      length(which(strata.limits < 0)) > 0)
+  {
+    .stopMessage_beInteger("strata.limits")
+  }
   ## CHECKS for parameter opt.folder.name
   if (is.null(opt.folder.name)){
     opt.folder.name = ""
@@ -266,7 +275,6 @@ PRE_FATE.params_PFGsuccession = function(
   ## GET height strata limits (for light competition and PFG growth)
   ## n strata (+ germinants = 0)
   no.PFG.perStrata = round(sqrt(no.PFG))
-  strata.limits = c(0, 20, 50, 150, 400, 1000, 2000, 5000, 10000)
   categories = cut(mat.PFG.succ$height, breaks = strata.limits)
   categories.table = table(categories)
   if (no.PFG == 1)

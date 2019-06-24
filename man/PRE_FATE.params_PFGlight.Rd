@@ -6,6 +6,7 @@
 simulation}
 \usage{
 PRE_FATE.params_PFGlight(name.simulation, mat.PFG.succ,
+  strata.limits = c(0, 20, 50, 150, 400, 1000, 2000, 5000, 10000),
   opt.folder.name = NULL)
 }
 \arguments{
@@ -14,6 +15,9 @@ directory or simulation name of the \code{FATE-HD} simulation}
 
 \item{mat.PFG.succ}{a \code{data.frame} with 6 columns : PFG, type, height,
 maturity, longevity, light}
+
+\item{strata.limits}{a \code{vector} of \code{integer} containing values 
+among which height strata limits will be chosen}
 
 \item{opt.folder.name}{(\emph{optional}) \cr a \code{string} that
 corresponds to the name of the folder that will be created into the 

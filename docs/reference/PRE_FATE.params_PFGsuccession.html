@@ -163,6 +163,7 @@ core module of <code>FATE-HD</code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>PRE_FATE.params_PFGsuccession</span>(<span class='no'>name.simulation</span>, <span class='no'>mat.PFG.succ</span>,
+  <span class='kw'>strata.limits</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>20</span>, <span class='fl'>50</span>, <span class='fl'>150</span>, <span class='fl'>400</span>, <span class='fl'>1000</span>, <span class='fl'>2000</span>, <span class='fl'>5000</span>, <span class='fl'>10000</span>),
   <span class='kw'>opt.folder.name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -177,6 +178,11 @@ directory or simulation name of the <code>FATE-HD</code> simulation</p></td>
       <th>mat.PFG.succ</th>
       <td><p>a <code>data.frame</code> with 5 columns : PFG, type, height,
 maturity, longevity</p></td>
+    </tr>
+    <tr>
+      <th>strata.limits</th>
+      <td><p>a <code>vector</code> of <code>integer</code> containing values 
+among which height strata limits will be chosen</p></td>
     </tr>
     <tr>
       <th>opt.folder.name</th>
