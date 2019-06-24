@@ -265,7 +265,7 @@ PRE_FATE.speciesClustering_step3 = function(
       mat.species.traits$maturity[ind.pfg.maturity] = mat.species.traits$longevity[ind.pfg.maturity] / 2
     }
     ## Set new values for both
-    if (length(tab.longevity.pfg) > 0 && length(tab.maturity.pfg) &&
+    if (length(tab.longevity.pfg) > 0 && length(tab.maturity.pfg) > 0 &&
         length(intersect(ind.pfg.longevity, ind.pfg.maturity)) > 0)
     {
       ind.pfg.longevity.maturity = intersect(ind.pfg.longevity, ind.pfg.maturity)

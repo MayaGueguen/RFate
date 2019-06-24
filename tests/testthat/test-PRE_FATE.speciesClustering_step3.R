@@ -118,6 +118,15 @@ test_that("PRE_FATE.speciesClustering_step3 gives correct output", {
                                                                                      , height = 10
                                                                                      , light = 8))), "data.frame")
   
+  
+  expect_output(str(PRE_FATE.speciesClustering_step3(mat.species.traits = data.frame(species = 1
+                                                                                     , PFG = c("A", "A", "B", "C")
+                                                                                     , type = "H"
+                                                                                     , height = 10
+                                                                                     , maturity = c(NA, NA, 10, NA)
+                                                                                     , longevity = c(10, 14, NA, NA)
+                                                                                     , soil_contrib = 0.5, soil_tolerance = 1))), "data.frame")
+  
 })
 
   

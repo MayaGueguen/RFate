@@ -261,7 +261,8 @@ PRE_FATE.params_PFGdisturbance = function(
       length(unique(mat.PFG.succ$NAME)) < nrow(mat.PFG.succ)){
     stop("Wrong type of data!\n Column `NAME` of `mat.PFG.succ` must contain different values")
   }
-  if (.testParam_notChar(mat.PFG.succ$NAME))
+  if (.testParam_notChar(mat.PFG.succ$NAME) ||
+      length(which(nchar(mat.PFG.succ$NAME) == 0)) > 0)
   {
     .stopMessage_beChar("mat.PFG.succ$NAME")
   }

@@ -798,4 +798,95 @@ test_that("PRE_FATE.params_globalParameters gives correct output", {
                                                   , DIST.no_sub = 2
                                                   , DIST.freq = c(2,2))
                  , "The parameter file FATE_simulation/DATA/GLOBAL_PARAMETERS/Global_parameters_V3.txt has been successfully created !")
+  
+  expect_warning(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                  , opt.replacePrevious = TRUE
+                                                  , required.no_PFG = 5
+                                                  , required.no_STRATA = 2
+                                                  , required.simul_duration = 100
+                                                  , required.seeding_duration = 100
+                                                  , required.seeding_timestep = 100
+                                                  , required.seeding_input = 100
+                                                  , required.max_by_cohort = 5000000.5
+                                                  , required.max_abund_low = 3000000
+                                                  , required.max_abund_medium = 5000000
+                                                  , required.max_abund_high = 9000000)
+                 , "`required.max_by_cohort` is a double. It will be converted (rounded) to an integer"
+                 , fixed = TRUE)
+  expect_warning(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                  , opt.replacePrevious = TRUE
+                                                  , required.no_PFG = 5
+                                                  , required.no_STRATA = 2
+                                                  , required.simul_duration = 100
+                                                  , required.seeding_duration = 100
+                                                  , required.seeding_timestep = 100
+                                                  , required.seeding_input = 100
+                                                  , required.max_by_cohort = 5000000
+                                                  , required.max_abund_low = 3000000.5
+                                                  , required.max_abund_medium = 5000000
+                                                  , required.max_abund_high = 9000000)
+                 , "`required.max_abund_low` is a double. It will be converted (rounded) to an integer"
+                 , fixed = TRUE)
+  expect_warning(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                  , opt.replacePrevious = TRUE
+                                                  , required.no_PFG = 5
+                                                  , required.no_STRATA = 2
+                                                  , required.simul_duration = 100
+                                                  , required.seeding_duration = 100
+                                                  , required.seeding_timestep = 100
+                                                  , required.seeding_input = 100
+                                                  , required.max_by_cohort = 5000000
+                                                  , required.max_abund_low = 3000000
+                                                  , required.max_abund_medium = 5000000.5
+                                                  , required.max_abund_high = 9000000)
+                 , "`required.max_abund_medium` is a double. It will be converted (rounded) to an integer"
+                 , fixed = TRUE)
+  expect_warning(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                  , opt.replacePrevious = TRUE
+                                                  , required.no_PFG = 5
+                                                  , required.no_STRATA = 2
+                                                  , required.simul_duration = 100
+                                                  , required.seeding_duration = 100
+                                                  , required.seeding_timestep = 100
+                                                  , required.seeding_input = 100
+                                                  , required.max_by_cohort = 5000000
+                                                  , required.max_abund_low = 3000000
+                                                  , required.max_abund_medium = 5000000
+                                                  , required.max_abund_high = 9000000.5)
+                 , "`required.max_abund_high` is a double. It will be converted (rounded) to an integer"
+                 , fixed = TRUE)
+  expect_warning(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                  , opt.replacePrevious = TRUE
+                                                  , required.no_PFG = 5
+                                                  , required.no_STRATA = 2
+                                                  , required.simul_duration = 100
+                                                  , required.seeding_duration = 100
+                                                  , required.seeding_timestep = 100
+                                                  , required.seeding_input = 100
+                                                  , required.max_by_cohort = 5000000
+                                                  , required.max_abund_low = 3000000
+                                                  , required.max_abund_medium = 5000000
+                                                  , required.max_abund_high = 9000000
+                                                  , doLight = TRUE
+                                                  , LIGHT.thresh_medium = 100.5
+                                                  , LIGHT.thresh_low = 50)
+                 , "`LIGHT.thresh_medium` is a double. It will be converted (rounded) to an integer"
+                 , fixed = TRUE)
+  expect_warning(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                  , opt.replacePrevious = TRUE
+                                                  , required.no_PFG = 5
+                                                  , required.no_STRATA = 2
+                                                  , required.simul_duration = 100
+                                                  , required.seeding_duration = 100
+                                                  , required.seeding_timestep = 100
+                                                  , required.seeding_input = 100
+                                                  , required.max_by_cohort = 5000000
+                                                  , required.max_abund_low = 3000000
+                                                  , required.max_abund_medium = 5000000
+                                                  , required.max_abund_high = 9000000
+                                                  , doLight = TRUE
+                                                  , LIGHT.thresh_medium = 100
+                                                  , LIGHT.thresh_low = 50.5)
+                 , "`LIGHT.thresh_low` is a double. It will be converted (rounded) to an integer"
+                 , fixed = TRUE)
 })

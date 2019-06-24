@@ -245,6 +245,10 @@ test_that("POST_FATE.relativeAbund gives error with wrong data : rasters", {
                                        , year = 10)
                , "Missing data!\n The folder FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/ does not contain adequate files"
                , fixed = TRUE)
+  expect_error(POST_FATE.relativeAbund(name.simulation = "FATE_simulation"
+                                       , year = 10)
+               , "Missing data!\n The folder FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/ does not contain adequate files"
+               , fixed = TRUE)
   
   # cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
   #     , file = "FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_10_HOP_STRATA_all.tif")
