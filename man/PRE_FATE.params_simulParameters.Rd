@@ -6,7 +6,7 @@
 simulation}
 \usage{
 PRE_FATE.params_simulParameters(name.simulation, name.mask,
-  name.dist = NULL)
+  name.dist = NULL, opt.global.name = NULL, opt.folder.name = NULL)
 }
 \arguments{
 \item{name.simulation}{a \code{string} that corresponds to the main 
@@ -21,6 +21,16 @@ cells of the studied area in which the succession module of the
 to the file name of a raster mask, with either 0 or 1 within each pixel, 
 1 corresponding to the cells of the studied area in which the succession 
 module of the \code{FATE-HD} simulation will take place}
+
+\item{opt.global.name}{(\emph{optional}) \cr a \code{string} that
+corresponds to the name of the global parameter file in the folder
+\code{name.simulation/DATA/GLOBAL_PARAMETERS/} that will be used to build 
+the simulation parameter file}
+
+\item{opt.folder.name}{(\emph{optional}) \cr a \code{string} that
+corresponds to the name of the folder in each 
+\code{name.simulation/DATA/PFGS/module/} from which PFG file names will be
+extracted to build the simulation parameter file}
 }
 \value{
 A \code{.txt} file into the \code{name.simulation/PARAM_SIMUL/}

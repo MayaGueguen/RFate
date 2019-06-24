@@ -19,6 +19,14 @@
 ##' to the file name of a raster mask, with either 0 or 1 within each pixel, 
 ##' 1 corresponding to the cells of the studied area in which the succession 
 ##' module of the \code{FATE-HD} simulation will take place
+##' @param opt.global.name (\emph{optional}) \cr a \code{string} that
+##' corresponds to the name of the global parameter file in the folder
+##' \code{name.simulation/DATA/GLOBAL_PARAMETERS/} that will be used to build 
+##' the simulation parameter file
+##' @param opt.folder.name (\emph{optional}) \cr a \code{string} that
+##' corresponds to the name of the folder in each 
+##' \code{name.simulation/DATA/PFGS/module/} from which PFG file names will be
+##' extracted to build the simulation parameter file
 ##' 
 ##' 
 ##' 
@@ -246,6 +254,8 @@ PRE_FATE.params_simulParameters = function(
   name.simulation
   , name.mask
   , name.dist = NULL
+  , opt.global.name = NULL
+  , opt.folder.name = NULL
 ){
   
   .testParam_existFolder(name.simulation, "PARAM_SIMUL/")
@@ -266,13 +276,40 @@ PRE_FATE.params_simulParameters = function(
   {
     .testParam_existFile(paste0(name.simulation, "/DATA/MASK/", name.mask))
   }
-  
+  ## CHECKS for parameter opt.global.name
+  if (is.null(opt.global.name)){
+    opt.global.name = ""
+  } else if (!is.null(opt.global.name) && !is.character(opt.global.name)){
+    warning("As `opt.global.name` does not contain character value, it will be ignored")
+    opt.global.name = ""
+  } else if (nchar(opt.global.name) > 0){
+    opt.global.name = basename(opt.global.name)
+  } else {
+    opt.global.name = ""
+  }
+  ## CHECKS for parameter opt.folder.name
+  if (is.null(opt.folder.name)){
+    opt.folder.name = ""
+  } else if (!is.null(opt.folder.name) && !is.character(opt.folder.name)){
+    warning("As `opt.folder.name` does not contain character value, it will be ignored")
+    opt.folder.name = ""
+  } else if (nchar(opt.folder.name) > 0){
+    opt.folder.name = paste0(opt.folder.name, "/")
+  } else {
+    opt.folder.name = ""
+  }
   
   #################################################################################################
   
-  files.GLOBAL = list.files(path = paste0(name.simulation, "/DATA/GLOBAL_PARAMETERS")
-                            , pattern = "^Global_parameters.*.txt"
-                            , full.names = TRUE)
+  if (opt.global.name == "")
+  {
+    files.GLOBAL = list.files(path = paste0(name.simulation, "/DATA/GLOBAL_PARAMETERS")
+                              , pattern = "^Global_parameters.*.txt"
+                              , full.names = TRUE)
+  } else
+  {
+    files.GLOBAL = paste0(name.simulation, "/DATA/GLOBAL_PARAMETERS/", opt.global.name)
+  }
   if (length(files.GLOBAL) == 0)
   {
     stop(paste0("Wrong number of files!\n There is no adequate file "
@@ -505,15 +542,21 @@ PRE_FATE.params_simulParameters = function(
         .testParam_existFolder(name.simulation, paste0("DATA/PFGS/", mod, "/"))
         
         ## Get folders
-        dirs.mod = list.dirs(path = paste0(name.simulation, "/DATA/PFGS/", mod)
-                             , full.names = FALSE
-                             , recursive = FALSE)
-        if (length(dirs.mod) > 0)
+        if (opt.folder.name == "")
         {
-          dirs.mod = paste0(name.simulation, "/DATA/PFGS/", mod, "/", dirs.mod)
+          dirs.mod = list.dirs(path = paste0(name.simulation, "/DATA/PFGS/", mod)
+                               , full.names = FALSE
+                               , recursive = FALSE)
+          if (length(dirs.mod) > 0)
+          {
+            dirs.mod = paste0(name.simulation, "/DATA/PFGS/", mod, "/", dirs.mod)
+          } else
+          {
+            dirs.mod = paste0(name.simulation, "/DATA/PFGS/", mod)
+          }
         } else
         {
-          dirs.mod = paste0(name.simulation, "/DATA/PFGS/", mod)
+          dirs.mod = paste0(name.simulation, "/DATA/PFGS/", mod, "/", opt.folder.name)
         }
         
         ## Get files
