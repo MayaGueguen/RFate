@@ -161,7 +161,7 @@ file containing <code>PARAMETER FILENAMES</code> used in <code>FATE-HD</code> mo
     </div>
 
     <pre class="usage"><span class='fu'>PRE_FATE.params_simulParameters</span>(<span class='no'>name.simulation</span>, <span class='no'>name.mask</span>,
-  <span class='kw'>name.dist</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>name.dist</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>opt.global.name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>opt.folder.name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -184,6 +184,20 @@ cells of the studied area in which the succession module of the
 to the file name of a raster mask, with either 0 or 1 within each pixel, 
 1 corresponding to the cells of the studied area in which the succession 
 module of the <code>FATE-HD</code> simulation will take place</p></td>
+    </tr>
+    <tr>
+      <th>opt.global.name</th>
+      <td><p>(<em>optional</em>) <br /> a <code>string</code> that
+corresponds to the name of the global parameter file in the folder
+<code>name.simulation/DATA/GLOBAL_PARAMETERS/</code> that will be used to build 
+the simulation parameter file</p></td>
+    </tr>
+    <tr>
+      <th>opt.folder.name</th>
+      <td><p>(<em>optional</em>) <br /> a <code>string</code> that
+corresponds to the name of the folder in each 
+<code>name.simulation/DATA/PFGS/module/</code> from which PFG file names will be
+extracted to build the simulation parameter file</p></td>
     </tr>
     </table>
     

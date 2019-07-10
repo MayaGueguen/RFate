@@ -160,38 +160,65 @@ POST_FATE.graphic_mapPFGrichness = function(
     {
       cat("\n > year", y)
       
-      file_name = paste0(dir.output.perPFG.allStrata.BIN
+      file_name.bin = paste0(dir.output.perPFG.allStrata.BIN
                          , "Binary_YEAR_"
                          , y
                          , "_"
                          , PFG
                          , "_STRATA_all.tif")
+      file_name.rel = paste0(dir.output.perPFG.allStrata.REL
+                         , "Abund_relative_YEAR_"
+                         , y
+                         , "_"
+                         , PFG
+                         , "_STRATA_all.tif")
       
-      gp = PFG[which(file.exists(file_name))]
-      file_name = file_name[which(file.exists(file_name))]
+      gp.bin = PFG[which(file.exists(file_name.bin))]
+      file_name.bin = file_name.bin[which(file.exists(file_name.bin))]
       
-      if (length(file_name) > 0)
+      gp.rel = PFG[which(file.exists(file_name.rel))]
+      file_name.rel = file_name.rel[which(file.exists(file_name.rel))]
+      
+      if (length(file_name.bin) > 0)
       {
-        ras = stack(file_name) * ras.mask
-        names(ras) = gp
+        ras.bin = stack(file_name.bin) * ras.mask
+        names(ras.bin) = gp.bin
         
-        ras_TOT = sum(ras)
-        ras.pts = as.data.frame(rasterToPoints(ras_TOT))
+        ras.rel = stack(file_name.rel) * ras.mask
+        names(ras.rel) = gp.rel
+        
+        ras = ras.rel * ras.bin
+        
+        ras.pts = as.data.frame(ras)
+        ras.pts = as.matrix(ras.pts)
+        DIV = foreach(qq = 0:2) %do%
+        {
+          div_q = divLeinster(spxp = ras.pts, q = qq)
+          ras.div = ras.mask
+          ras.div[] = div_q
+          ras.div[which(ras.mask[] == 0)] = NA
+          
+          output.name = paste0(name.simulation
+                               , "/RESULTS/"
+                               , basename(dir.save)
+                               , "/PFGrichness_YEAR_"
+                               , y
+                               , "_STRATA_all_q"
+                               , qq
+                               , ".tif")
+          writeRaster(ras.div
+                      , filename = output.name
+                      , overwrite = TRUE)
+          
+          message(paste0("\n The output file \n"
+                         , " > ", output.name, " \n"
+                         , "has been successfully created !\n"))
+          
+          return(ras.div)
+        }
+        
+        ras.pts = as.data.frame(rasterToPoints(DIV[[1]]))
         colnames(ras.pts) = c("X", "Y", "NB")
-        
-        output.name = paste0(name.simulation
-                             , "/RESULTS/"
-                             , basename(dir.save)
-                             , "/PFGrichness_YEAR_"
-                             , y
-                             , "_STRATA_all.tif")
-        writeRaster(ras_TOT
-                    , filename = output.name
-                    , overwrite = TRUE)
-        
-        message(paste0("\n The output file \n"
-                       , " > ", output.name, " \n"
-                       , "has been successfully created !\n"))
         
         ## produce the plot ------------------------------------------------------------
         if (opt.doPlot)
@@ -219,7 +246,7 @@ POST_FATE.graphic_mapPFGrichness = function(
           
         } ## END opt.doPlot
         
-        return(list(raster = ras_TOT, plot = pp))
+        return(list(raster = DIV[[1]], plot = pp))
       }
     } ## end loop on years
     names(plot_list) = years
