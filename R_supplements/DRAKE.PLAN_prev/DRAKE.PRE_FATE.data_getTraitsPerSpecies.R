@@ -1,8 +1,4 @@
 
-################################################################################################################
-### 1. MERGE REDUNDANT INFORMATION (similar species and traits)
-################################################################################################################
-
 getTraits_1_merge.species = function(traits)
 {
   ## Merge together similar species
@@ -46,10 +42,6 @@ getTraits_1_merge.traits = function(traits)
   return(traits)
 }
 
-################################################################################################################
-###
-################################################################################################################
-
 traits_genre = function(traits)
 {
   traits.genre = unique(traits[, c("code_cbna", "libelle", "genre")])
@@ -57,10 +49,6 @@ traits_genre = function(traits)
   # length(sort(unique(traits.genre$genre)))
   return(traits.genre)
 }
-
-################################################################################################################
-### 2.a REMOVE UNINFORMATIVE VALUES
-################################################################################################################
 
 getTraits_1_removeUninformative = function(traits)
 {
@@ -118,10 +106,6 @@ getTraits_1_removeUninformative = function(traits)
   return(traits)
 }
 
-################################################################################################################
-### 2.b REMOVE SIMILAR TRAITS
-################################################################################################################
-
 trait_remove = function(traits, trait.code)
 {
   cat("\n ==> REMOVE trait ", trait.code, "\n")
@@ -170,10 +154,6 @@ getTraits_1_remove = function(traits)
   
   return(traits)
 }
-
-################################################################################################################
-### 2.c CORRECT / SIMPLIFY SOME VALUES
-################################################################################################################
 
 getTraits_1_change = function(traits)
 {
@@ -255,9 +235,6 @@ getTraits_1_change = function(traits)
 }
 
 
-################################################################################################################
-### 3. SEPARATE QUALI AND QUANTI TRAITS and treat separately
-################################################################################################################
 
 getTraits_2_split = function(traits)
 {
@@ -270,7 +247,7 @@ getTraits_2_split = function(traits)
   code.quali = sort(unique(traits_quali$CODE_simplified))
   intersect(code.quant, code.quali)
   
-  return(list(QUANT = traits_quant, QUALI = traits_quali))
+  return(list(traits_quant, traits_quali))
 }
 
 getTraits_3_quantMedian = function(traits_quant)
@@ -348,10 +325,6 @@ getTraits_3_qualiMerged = function(traits_quali)
   return(traits_quali.mean)
 }
 
-################################################################################################################
-###
-################################################################################################################
-
 getTraits_3_thresholdGenus = function(traits, traits.genre)
 {
   tmp = table(traits$CODE, traits$genus)
@@ -364,11 +337,6 @@ getTraits_3_thresholdGenus = function(traits, traits.genre)
   
   return( traits)
 }
-
-
-################################################################################################################
-### 4. SAVE TRAITS
-################################################################################################################
 
 getTraits_4_save = function(traits, namefile)
 {

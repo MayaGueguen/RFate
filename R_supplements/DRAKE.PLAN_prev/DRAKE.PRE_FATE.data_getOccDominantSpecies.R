@@ -4,7 +4,7 @@
 ### 1. GET OCCURRENCES
 ################################################################################################################
 
-getOcc_1_XY = function(stations)
+getOcc_1_XY = function(stations, zone.name)
 {
   stations.XY = stations[, c("numchrono", "longitudel93_rel", "latitudel93_rel")]
   stations.XY = unique(stations.XY)
@@ -12,23 +12,26 @@ getOcc_1_XY = function(stations)
                   , row.names = paste0("NUMCHRONO-", stations.XY$numchrono))
   colnames(XY) = c("X_L93", "Y_L93")
   
+  save(XY, file = paste0(zone.name, "/DB.XY.RData"))
+  
   return(XY)
 }
 
-getOcc_1_obs = function(observations, stations, maskSimul, maskDem)
+getOcc_1_obs = function(observations, stations, maskSimul, maskDem, zone.name)
 {
   observations$codecover = PRE_FATE.abundBraunBlanquet(observations$codecover)
   observations.xy = merge(observations, stations, by = "numchrono")
   head(observations.xy)
   
+  min.dem = maskSimul * maskDem
+  min.dem[which(maskSimul[] == 0)] = NA
+  min.dem = min(min.dem[], na.rm = TRUE)
+  
   observations.xy$dem = extract(maskDem, observations.xy[, c("longitudel93_rel", "latitudel93_rel")])
-  
-  # min.dem = maskSimul * maskDem
-  # min.dem[which(maskSimul[] == 0)] = NA
-  # min.dem = min(min.dem[], na.rm = TRUE)
   # observations.xy = observations.xy[which(observations.xy$dem >= min.dem), ]
-  
   head(observations.xy)
+  
+  save(observations.xy, file = paste0(zone.name, "/DB.observations.xy.RData"))
   
   return(observations.xy)
 }
@@ -112,7 +115,7 @@ getOcc_3_matDom = function(sp.SELECT, observations.xy, stations.COMMUNITY, zone.
     mat.sites.species.abund[i, ] = ifelse(is.na(mat.sites.species.abund[i, ]), 0, mat.sites.species.abund[i, ])
   }
   
-  save(mat.sites.species.abund, file = file_out(paste0(zone.name, "/FULL.mat.sites.species.abund.RData")))
+  save(mat.sites.species.abund, file = paste0(zone.name, "/FULL.mat.sites.species.abund.RData"))
   
   ## Keep only dominant species
   dim(mat.sites.species.abund)
@@ -121,7 +124,7 @@ getOcc_3_matDom = function(sp.SELECT, observations.xy, stations.COMMUNITY, zone.
   mat.sites.species.abund = mat.sites.species.abund[, ind_dom]
   dim(mat.sites.species.abund)
   
-  save(mat.sites.species.abund, file = file_out(paste0(zone.name, "/DOM.mat.sites.species.abund.RData")))
+  save(mat.sites.species.abund, file = paste0(zone.name, "/DOM.mat.sites.species.abund.RData"))
   
   ## For presence / absence ------------------------------------------------------
 
@@ -139,7 +142,7 @@ getOcc_3_matDom = function(sp.SELECT, observations.xy, stations.COMMUNITY, zone.
   dim(mat.sites.species.PA)
   mat.sites.species.PA[1:10, 1:10]
   
-  save(mat.sites.species.PA, file = file_out(paste0(zone.name, "/DOM.mat.sites.species.PA.RData")))
+  save(mat.sites.species.PA, file = paste0(zone.name, "/DOM.mat.sites.species.PA.RData"))
   
   return(mat.sites.species.PA)
 }
@@ -162,9 +165,9 @@ getOcc_3_occDom = function(mat.sites.species, species, zone.name, sp.type)
     } else
     {
       if (sp.type == "SP"){
-        save(sp.occ, file = file_out(paste0(zone.name, "/", sp.type, "_OCC/OCC_X", sp)))
+        save(sp.occ, file = paste0(zone.name, "/", sp.type, "_OCC/OCC_X", sp))
       } else {
-        save(sp.occ, file = file_out(paste0(zone.name, "/", sp.type, "_OCC/OCC_", sp)))
+        save(sp.occ, file = paste0(zone.name, "/", sp.type, "_OCC/OCC_", sp))
       }
     }
   }
@@ -172,9 +175,7 @@ getOcc_3_occDom = function(mat.sites.species, species, zone.name, sp.type)
   dom_missing = species[which(species$numtaxon %in% sp.suppr), , drop = FALSE]
   if (nrow(dom_missing) > 0)
   {
-    write.csv(dom_missing
-              , file = file_out(paste0(zone.name, "/MISSING_", sp.type, "_observations.csv"))
-              , row.names = F)
+    write.csv(dom_missing, file = paste0(zone.name, "/MISSING_", sp.type, "_observations.csv"), row.names = F)
   }
   
   list_sp = list.files(path = paste0(zone.name, "/", sp.type, "_OCC/"))
@@ -259,8 +260,7 @@ WRAPPER <- function(sp.name, zone.name, XY, zone.env.stk.CALIB, zone.env.stk.PRO
                                      , prob.mean = FALSE
                                      , prob.mean.weight = TRUE
                                      , prob.mean.weight.decay = 'proportional'
-                                     , committee.averaging = FALSE
-                                     , VarImport = 5)
+                                     , committee.averaging = FALSE)
   }
   
   ## project ensemble models -----------------------------------------------------
@@ -272,7 +272,7 @@ WRAPPER <- function(sp.name, zone.name, XY, zone.env.stk.CALIB, zone.env.stk.PRO
   {
     bm.ef <- BIOMOD_EnsembleForecasting(EM.output = bm.em
                                         , new.env = zone.env.stk.PROJ
-                                        , output.format = ".tif" #".img"
+                                        , output.format = ".img"
                                         , proj.name = "current"
                                         , selected.models = "all"
                                         , binary.meth = c('TSS'))
@@ -295,6 +295,9 @@ getSDM_env = function(zone.name, zone.env.folder, zone.env.variables, maskSimul)
   origin(maskSimul) = origin(zone.env.stk.CALIB)
   zone.env.stk.PROJ = stack(zone.env.stk.CALIB * maskSimul)
   names(zone.env.stk.PROJ) = names(zone.env.stk.CALIB)
+  
+  save(zone.env.stk.CALIB, file = paste0(zone.name, "/", zone.name, ".zone.env.stk.CALIB.RData"))
+  save(zone.env.stk.PROJ, file = paste0(zone.name, "/", zone.name, ".zone.env.stk.PROJ.RData"))
   
   return(list(env.CALIB = zone.env.stk.CALIB
               , env.PROJ = zone.env.stk.PROJ))
