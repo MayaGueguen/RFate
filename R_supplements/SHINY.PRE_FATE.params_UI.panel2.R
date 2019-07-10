@@ -69,7 +69,7 @@ tabPanel(title = HTML("<span class='panel_title'><i class='fa fa-copy'></i> Simu
                           , div(id = "help2_4"
                                 , shinyjs::disabled(
                                   selectInput(inputId = "load.file"
-                                              , label = NULL
+                                              , label = param.style("Simulation parameters file :")
                                               , choices = NULL
                                               , selected = NULL
                                               , multiple = F

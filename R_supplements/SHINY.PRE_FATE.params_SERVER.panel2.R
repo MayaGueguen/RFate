@@ -141,33 +141,43 @@ get_val_param = function(filename)
 ####################################################################
 
 observeEvent(input$load.param, {
+  
+  file.globalParam = ""
+  file.saveArrays = file.saveObjects = ""
+  file.PFGsucc = file.PFGlight = file.PFGdisp = file.PFGdist = file.PFGsoil = ""
+  file.changeMask_t = file.changeMask_m = ""
+  file.changeHS_t = file.changeHS_m = ""
+  file.changeDist_t = file.changeDist_m = ""
+  
   if (nchar(input$load.file) > 0)
   {
     file.simulParam = paste0(input$name.simul, "/PARAM_SIMUL/paramSimul_", input$load.file, ".txt")
-    val.simulParam = readLines(file.simulParam)
-    
-    file.globalParam = get_files_simulParam(file.simulParam, val.simulParam, flag = "GLOBAL_PARAMS")
-    file.saveArrays = get_files_simulParam(file.simulParam, val.simulParam, flag = "ARRAYS_SAVING_YEARS")
-    file.saveObjects = get_files_simulParam(file.simulParam, val.simulParam, flag = "OBJECTS_SAVING_YEARS")
-    file.PFGsucc = get_files_simulParam(file.simulParam, val.simulParam, flag = "PFG_LIFE_HISTORY_PARAMS")
-    file.PFGlight = get_files_simulParam(file.simulParam, val.simulParam, flag = "PFG_LIGHT_PARAMS")
-    file.PFGdisp = get_files_simulParam(file.simulParam, val.simulParam, flag = "PFG_DISPERSAL_PARAMS")
-    file.PFGdist = get_files_simulParam(file.simulParam, val.simulParam, flag = "PFG_DISTURBANCES_PARAMS")
-    file.PFGsoil = get_files_simulParam(file.simulParam, val.simulParam, flag = "PFG_SOIL_PARAMS")
-    file.changeMask_t = get_files_simulParam(file.simulParam, val.simulParam, flag = "MASK_CHANGE_TIME")
-    file.changeMask_m = get_files_simulParam(file.simulParam, val.simulParam, flag = "MASK_CHANGE_MASK")
-    file.changeHS_t = get_files_simulParam(file.simulParam, val.simulParam, flag = "HAB_CHANGE_TIME")
-    file.changeHS_m = get_files_simulParam(file.simulParam, val.simulParam, flag = "HAB_CHANGE_MASK")
-    file.changeDist_t = get_files_simulParam(file.simulParam, val.simulParam, flag = "DIST_CHANGE_TIME")
-    file.changeDist_m = get_files_simulParam(file.simulParam, val.simulParam, flag = "DIST_CHANGE_MASK")
+    print(file.simulParam)
+    if (file.exists(file.simulParam))
+    {
+      val.simulParam = readLines(file.simulParam)
+      
+      file.globalParam = get_files_simulParam(file.simulParam, val.simulParam, flag = "GLOBAL_PARAMS")
+      file.saveArrays = get_files_simulParam(file.simulParam, val.simulParam, flag = "ARRAYS_SAVING_YEARS")
+      file.saveObjects = get_files_simulParam(file.simulParam, val.simulParam, flag = "OBJECTS_SAVING_YEARS")
+      file.PFGsucc = get_files_simulParam(file.simulParam, val.simulParam, flag = "PFG_LIFE_HISTORY_PARAMS")
+      file.PFGlight = get_files_simulParam(file.simulParam, val.simulParam, flag = "PFG_LIGHT_PARAMS")
+      file.PFGdisp = get_files_simulParam(file.simulParam, val.simulParam, flag = "PFG_DISPERSAL_PARAMS")
+      file.PFGdist = get_files_simulParam(file.simulParam, val.simulParam, flag = "PFG_DISTURBANCES_PARAMS")
+      file.PFGsoil = get_files_simulParam(file.simulParam, val.simulParam, flag = "PFG_SOIL_PARAMS")
+      file.changeMask_t = get_files_simulParam(file.simulParam, val.simulParam, flag = "MASK_CHANGE_TIME")
+      file.changeMask_m = get_files_simulParam(file.simulParam, val.simulParam, flag = "MASK_CHANGE_MASK")
+      file.changeHS_t = get_files_simulParam(file.simulParam, val.simulParam, flag = "HAB_CHANGE_TIME")
+      file.changeHS_m = get_files_simulParam(file.simulParam, val.simulParam, flag = "HAB_CHANGE_MASK")
+      file.changeDist_t = get_files_simulParam(file.simulParam, val.simulParam, flag = "DIST_CHANGE_TIME")
+      file.changeDist_m = get_files_simulParam(file.simulParam, val.simulParam, flag = "DIST_CHANGE_MASK")
+    } else
+    {
+      shinyalert(type = "warning", text = paste0("The file '", file.simulParam, "'does not exist !"))
+    }
   } else
   {
-    file.globalParam = get_files.names(path_folder = paste0(input$name.simul, "/DATA/GLOBAL_PARAMETERS/"))
-    file.globalParam = file.globalParam[1]
-    file.saveArrays = get_files.names(path_folder = paste0(input$name.simul, "/DATA/SAVE/"))
-    file.saveArrays = file.saveArrays[1]
-    file.saveObjects = get_files.names(path_folder = paste0(input$name.simul, "/DATA/SAVE/"))
-    file.saveObjects = file.saveObjects[1]
+    shinyalert(type = "warning", text = "You must give the name of an existing simulation parameters file !")
   }
   
   if (length(file.globalParam) > 0 && nchar(file.globalParam) > 0)
