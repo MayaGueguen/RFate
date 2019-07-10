@@ -140,6 +140,126 @@ get_val_param = function(filename)
 
 ####################################################################
 
+get_update.global = function(file.globalParam)
+{
+  update.param = list(
+    "required.no_PFG" = .getParam(params.lines = file.globalParam
+                                  , flag = "NB_FG"
+                                  , flag.split = " "
+                                  , is.num = TRUE)
+    , "required.no_STRATA" = .getParam(params.lines = file.globalParam
+                                       , flag = "NB_STRATUM"
+                                       , flag.split = " "
+                                       , is.num = TRUE)
+    , "required.simul_duration" = .getParam(params.lines = file.globalParam
+                                            , flag = "SIMULATION_DURATION"
+                                            , flag.split = " "
+                                            , is.num = TRUE)
+    , "opt.no_CPU" = .getParam(params.lines = file.globalParam
+                               , flag = "NB_CPUS"
+                               , flag.split = " "
+                               , is.num = TRUE)
+    , "required.seeding_duration" = .getParam(params.lines = file.globalParam
+                                              , flag = "SEEDING_DURATION"
+                                              , flag.split = " "
+                                              , is.num = TRUE)
+    , "required.seeding_timestep" = .getParam(params.lines = file.globalParam
+                                              , flag = "SEEDING_TIMESTEP"
+                                              , flag.split = " "
+                                              , is.num = TRUE)
+    , "required.seeding_input" = .getParam(params.lines = file.globalParam
+                                           , flag = "SEEDING_INPUT"
+                                           , flag.split = " "
+                                           , is.num = TRUE)
+    , "required.max_by_cohort" = .getParam(params.lines = file.globalParam
+                                           , flag = "MAX_BY_COHORT"
+                                           , flag.split = " "
+                                           , is.num = TRUE)
+    , "required.max_abund_low" = .getParam(params.lines = file.globalParam
+                                           , flag = "MAX_ABUND_LOW"
+                                           , flag.split = " "
+                                           , is.num = TRUE)
+    , "required.max_abund_medium" = .getParam(params.lines = file.globalParam
+                                              , flag = "MAX_ABUND_MEDIUM"
+                                              , flag.split = " "
+                                              , is.num = TRUE)
+    , "required.max_abund_high" = .getParam(params.lines = file.globalParam
+                                            , flag = "MAX_ABUND_HIGH"
+                                            , flag.split = " "
+                                            , is.num = TRUE)
+    , "doDispersal" = .getParam(params.lines = file.globalParam
+                                , flag = "DO_DISPERSAL"
+                                , flag.split = " "
+                                , is.num = TRUE)
+    , "doHabSuitability" = .getParam(params.lines = file.globalParam
+                                     , flag = "DO_HAB_SUITABILITY"
+                                     , flag.split = " "
+                                     , is.num = TRUE)
+    , "HABSUIT.ref_option" = .getParam(params.lines = file.globalParam
+                                       , flag = "HABSUIT_OPTION"
+                                       , flag.split = " "
+                                       , is.num = TRUE)
+    , "doDisturbances" = .getParam(params.lines = file.globalParam
+                                   , flag = "DO_DISTURBANCES"
+                                   , flag.split = " "
+                                   , is.num = TRUE)
+    , "DIST.no" = .getParam(params.lines = file.globalParam
+                            , flag = "NB_DISTURBANCES"
+                            , flag.split = " "
+                            , is.num = TRUE)
+    , "DIST.no_sub" = .getParam(params.lines = file.globalParam
+                                , flag = "NB_SUBDISTURBANCES"
+                                , flag.split = " "
+                                , is.num = TRUE)
+    , "DIST.freq" = .getParam(params.lines = file.globalParam
+                              , flag = "FREQ_DISTURBANCES"
+                              , flag.split = " "
+                              , is.num = TRUE)
+    , "doLight" = .getParam(params.lines = file.globalParam
+                            , flag = "DO_LIGHT_COMPETITION"
+                            , flag.split = " "
+                            , is.num = TRUE)
+    , "LIGHT.thresh_medium" = .getParam(params.lines = file.globalParam
+                                        , flag = "LIGHT_THRESH_MEDIUM"
+                                        , flag.split = " "
+                                        , is.num = TRUE)
+    , "LIGHT.thresh_low" = .getParam(params.lines = file.globalParam
+                                     , flag = "LIGHT_THRESH_LOW"
+                                     , flag.split = " "
+                                     , is.num = TRUE)
+    , "doSoil" = .getParam(params.lines = file.globalParam
+                           , flag = "DO_SOIL_COMPETITION"
+                           , flag.split = " "
+                           , is.num = TRUE)
+  )
+  
+  ## update shiny input parameters
+  updateShinyInputs(session = session
+                    , updates = update.param)
+}
+
+get_update.save = function(file.saveArrays, file.saveObjects, file.PFGsucc)
+{
+  val.saveArrays = get_val_param(file.saveArrays)
+  val.saveObjects = get_val_param(file.saveObjects)
+  
+  update.param = list(
+    "save.maps.folder" = sub(paste0(input$name.simul, "/DATA/SAVE"), "", dirname(file.saveArrays))
+    , "save.maps.year1" = val.saveArrays[1]
+    , "save.maps.year2" = val.saveArrays[length(val.saveArrays)]
+    , "save.maps.no" = length(val.saveArrays)
+    , "save.objects.folder" = sub(paste0(input$name.simul, "/DATA/SAVE"), "", dirname(file.saveObjects))
+    , "save.objects.year1" = val.saveObjects[1]
+    , "save.objects.year2" = ifelse(length(val.saveObjects) > 1, val.saveObjects[2], "")
+    , "save.objects.year3" = ifelse(length(val.saveObjects) > 2, val.saveObjects[3], "")
+    , "PFG.folder" = sub(paste0(input$name.simul, "/DATA/PFGS/SUCC"), "", unique(dirname(file.PFGsucc)))
+  )
+  
+  ## update shiny input parameters
+  updateShinyInputs(session = session
+                    , updates = update.param)
+}
+
 observeEvent(input$load.param, {
   
   file.globalParam = ""
@@ -182,112 +302,11 @@ observeEvent(input$load.param, {
   
   if (length(file.globalParam) > 0 && nchar(file.globalParam) > 0)
   {
-    val.saveArrays = get_val_param(file.saveArrays)
-    val.saveObjects = get_val_param(file.saveObjects)
-    
-    update.param = list(
-      "required.no_PFG" = .getParam(params.lines = file.globalParam
-                                    , flag = "NB_FG"
-                                    , flag.split = " "
-                                    , is.num = TRUE)
-      , "required.no_STRATA" = .getParam(params.lines = file.globalParam
-                                         , flag = "NB_STRATUM"
-                                         , flag.split = " "
-                                         , is.num = TRUE)
-      , "required.simul_duration" = .getParam(params.lines = file.globalParam
-                                              , flag = "SIMULATION_DURATION"
-                                              , flag.split = " "
-                                              , is.num = TRUE)
-      , "opt.no_CPU" = .getParam(params.lines = file.globalParam
-                                 , flag = "NB_CPUS"
-                                 , flag.split = " "
-                                 , is.num = TRUE)
-      , "required.seeding_duration" = .getParam(params.lines = file.globalParam
-                                                , flag = "SEEDING_DURATION"
-                                                , flag.split = " "
-                                                , is.num = TRUE)
-      , "required.seeding_timestep" = .getParam(params.lines = file.globalParam
-                                                , flag = "SEEDING_TIMESTEP"
-                                                , flag.split = " "
-                                                , is.num = TRUE)
-      , "required.seeding_input" = .getParam(params.lines = file.globalParam
-                                             , flag = "SEEDING_INPUT"
-                                             , flag.split = " "
-                                             , is.num = TRUE)
-      , "required.max_by_cohort" = .getParam(params.lines = file.globalParam
-                                             , flag = "MAX_BY_COHORT"
-                                             , flag.split = " "
-                                             , is.num = TRUE)
-      , "required.max_abund_low" = .getParam(params.lines = file.globalParam
-                                             , flag = "MAX_ABUND_LOW"
-                                             , flag.split = " "
-                                             , is.num = TRUE)
-      , "required.max_abund_medium" = .getParam(params.lines = file.globalParam
-                                                , flag = "MAX_ABUND_MEDIUM"
-                                                , flag.split = " "
-                                                , is.num = TRUE)
-      , "required.max_abund_high" = .getParam(params.lines = file.globalParam
-                                              , flag = "MAX_ABUND_HIGH"
-                                              , flag.split = " "
-                                              , is.num = TRUE)
-      , "doDispersal" = .getParam(params.lines = file.globalParam
-                                  , flag = "DO_DISPERSAL"
-                                  , flag.split = " "
-                                  , is.num = TRUE)
-      , "doHabSuitability" = .getParam(params.lines = file.globalParam
-                                       , flag = "DO_HAB_SUITABILITY"
-                                       , flag.split = " "
-                                       , is.num = TRUE)
-      , "HABSUIT.ref_option" = .getParam(params.lines = file.globalParam
-                                         , flag = "HABSUIT_OPTION"
-                                         , flag.split = " "
-                                         , is.num = TRUE)
-      , "doDisturbances" = .getParam(params.lines = file.globalParam
-                                     , flag = "DO_DISTURBANCES"
-                                     , flag.split = " "
-                                     , is.num = TRUE)
-      , "DIST.no" = .getParam(params.lines = file.globalParam
-                              , flag = "NB_DISTURBANCES"
-                              , flag.split = " "
-                              , is.num = TRUE)
-      , "DIST.no_sub" = .getParam(params.lines = file.globalParam
-                                  , flag = "NB_SUBDISTURBANCES"
-                                  , flag.split = " "
-                                  , is.num = TRUE)
-      , "DIST.freq" = .getParam(params.lines = file.globalParam
-                                , flag = "FREQ_DISTURBANCES"
-                                , flag.split = " "
-                                , is.num = TRUE)
-      , "doLight" = .getParam(params.lines = file.globalParam
-                              , flag = "DO_LIGHT_COMPETITION"
-                              , flag.split = " "
-                              , is.num = TRUE)
-      , "LIGHT.thresh_medium" = .getParam(params.lines = file.globalParam
-                                          , flag = "LIGHT_THRESH_MEDIUM"
-                                          , flag.split = " "
-                                          , is.num = TRUE)
-      , "LIGHT.thresh_low" = .getParam(params.lines = file.globalParam
-                                       , flag = "LIGHT_THRESH_LOW"
-                                       , flag.split = " "
-                                       , is.num = TRUE)
-      , "doSoil" = .getParam(params.lines = file.globalParam
-                             , flag = "DO_SOIL_COMPETITION"
-                             , flag.split = " "
-                             , is.num = TRUE)
-      , "save.maps.folder" = sub(paste0(input$name.simul, "/DATA/SAVE"), "", dirname(file.saveArrays))
-      , "save.maps.year1" = val.saveArrays[1]
-      , "save.maps.year2" = val.saveArrays[length(val.saveArrays)]
-      , "save.maps.no" = length(val.saveArrays)
-      , "save.objects.folder" = sub(paste0(input$name.simul, "/DATA/SAVE"), "", dirname(file.saveObjects))
-      , "save.objects.year1" = val.saveObjects[1]
-      , "save.objects.year2" = ifelse(length(val.saveObjects) > 1, val.saveObjects[2], "")
-      , "save.objects.year3" = ifelse(length(val.saveObjects) > 2, val.saveObjects[3], "")
-      , "PFG.folder" = sub(paste0(input$name.simul, "/DATA/PFGS/SUCC"), "", unique(dirname(file.PFGsucc)))
-    )
-    
-    ## update shiny input parameters
-    updateShinyInputs(session = session
-                      , updates = update.param)
+    ## update global /save values
+    get_update.global(file.globalParam = file.globalParam)
+    get_update.save(file.saveArrays = file.saveArrays
+                    , file.saveObjects = file.saveObjects
+                    , file.PFGsucc = file.PFGsucc)
     
     ## update shiny reactiveValues
     if (length(file.PFGsucc) > 0 && nchar(file.PFGsucc) > 0)

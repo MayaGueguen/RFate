@@ -63,10 +63,77 @@ output$UI.doLight = renderUI({
 
 ####################################################################
 
-output$created_table.global = renderDataTable({
+get_tab.global = eventReactive(input$name.simul, {
   path_folder = paste0(input$name.simul, "/DATA/GLOBAL_PARAMETERS/")
-  return(get_files(path_folder))
+  tab = get_files(path_folder)
+  
+  lapply(1:ncol(tab)
+         , function(i)
+         {
+           observeEvent(input[[paste0("upload.global.", i)]], {
+             # tab = get_tab.global()
+             
+             get_update.global(file.globalParam = paste0(input$name.simul
+                                                         , "/DATA/GLOBAL_PARAMETERS/"
+                                                         , colnames(tab)[i]))
+           })
+         })
+  
+  return(tab)
 })
+
+
+output$UI.files.global = renderUI({
+  tab = get_tab.global()
+  
+  fluidRow(
+    column(8
+           , lapply(1:ncol(tab)
+                    , function(i) {
+                      checkboxInput(inputId = paste0("check.global.", i)
+                                    , label = colnames(tab)[i]
+                                    , value = TRUE
+                                    , width = "100%")
+                    })
+    )
+    , column(2
+             , lapply(1:ncol(tab)
+                      , function(i) {
+                        actionButton(inputId = paste0("upload.global.", i)
+                                     , label = NULL
+                                     , icon = icon("upload")
+                                     , width = "100%"
+                                     , style = HTML(paste(button.style, "margin-bottom: 3px;")))
+                      })
+    )
+    , column(2
+             , lapply(1:ncol(tab)
+                      , function(i) {
+                        actionButton(inputId = paste0("delete.global.", i)
+                                     , label = NULL
+                                     , icon = icon("trash-alt")
+                                     , width = "100%"
+                                     , style = HTML(paste(button.style, "margin-bottom: 3px;")))
+                      })
+    )
+  )
+})
+
+output$created_table.global = renderDataTable({
+  tab = get_tab.global()
+  tab = as.data.frame(tab)
+  
+  col_toKeep = foreach(i = 1:ncol(tab), .combine = "c") %do%
+  {
+    eval(parse(text = paste0("res = input$check.global.", i)))
+    return(res)
+  }
+
+  return(tab[, which(col_toKeep == TRUE), drop = FALSE])
+})
+
+
+####################################################################
 
 observeEvent(input$create.global, {
   if (input$create.skeleton > 0)
