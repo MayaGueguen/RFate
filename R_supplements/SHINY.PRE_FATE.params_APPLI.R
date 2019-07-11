@@ -184,11 +184,15 @@ server <- function(input, output, session) {
                       , mat.PFG.dist = data.frame()
                       , mat.PFG.soil = data.frame()
                       , mat.changing = data.frame()
+                      , compt.global.nb = 0
+                      , compt.global.files = c() ## tosuppr ?
+                      , compt.global.tab = data.frame()
                       , compt.dist.by_type = FALSE
                       , compt.dist.by_pfg = FALSE
                       , compt.browser = 1
                       , compt.browser.max = 1
   )
+  # RV$compt.global.nb <- 0
   
   ####################################################################
 

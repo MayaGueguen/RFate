@@ -6,7 +6,7 @@ observeEvent(input$HELP.panel2, {
           , options = list("nextLabel" = "Next"
                            , "prevLabel" = "Prev"
                            , "skipLabel" = "Close"
-                           , steps = data.frame(element = c(paste0("#help2_", 1:2),"#main.panel",paste0("#help2_", 4:5))
+                           , steps = data.frame(element = c(paste0("#help2_", 1:2),"#main.panel",paste0("#help2_", 4:6))
                                                 # , position = c("auto", "auto", "bottom-middle-aligned", "auto", "auto")
                                                 , intro = c("<p><code>FATE-HD</code> requires only one input parameter, which is a file containing
                                                             the names of parameter files, which may themselves contain parameters or other
@@ -59,6 +59,7 @@ observeEvent(input$HELP.panel2, {
                                                             It can be created with the function <a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_simulParameters.html'>PRE_FATE.params_simulParameters</a>
                                                             </li>
                                                             </ul>"
+                                                            , "<p>A pre-existing ParamSimulation file can be given to load previous parameters and help create new parameter files from basis.</p>"
                                                             , "<p>Download the complete simulation folder as an archive file (<code>FATE_simulation.zip</code>).</p>"))
           )
                            )

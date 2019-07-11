@@ -5,20 +5,55 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-object-group'>
            
            # Inputs
            sidebarPanel(
-             width = 12,
+             width = 4,
              style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px;")),
              withMathJax(),
              
              br(),
              fluidRow(
-               column(5, br())
-               , column(2
-                        , br()
-                        , actionButton(inputId = "HELP.panel1"
-                                       , label = "Need some help"
-                                       , icon = icon("question-circle", class = "icon-help")
-                                       , width = "100%"
-                                       , style = HTML(button.style.help)))
+               column(12
+                      , actionButton(inputId = "HELP.panel1"
+                                     , label = "Need some help"
+                                     , icon = icon("question-circle", class = "icon-help")
+                                     , width = "100%"
+                                     , style = HTML(button.style.help))
+                      , br()
+                      , br()
+                      , br()
+                      , br()
+                      , textInput(inputId = "PFG.zone_name"
+                                  , label = param.style("Studied area")
+                                  , value = "AREA_1"
+                                  , width = "100%")
+                      , br()
+                      , fileInput(inputId = "PFG.mask"
+                                  , label = param.style("Simulation mask")
+                                  , multiple = FALSE
+                                  , width = "100%")
+                      , br()
+                      , fluidRow(
+                        column(6
+                               , textInput(inputId = "PFG.extent_xmin"
+                                           , label = param.style("xmin")
+                                           , value = NULL
+                                           , width = "100%")
+                               , textInput(inputId = "PFG.extent_xmax"
+                                           , label = param.style("xmax")
+                                           , value = NULL
+                                           , width = "100%")
+                        )
+                        , column(6
+                                 , textInput(inputId = "PFG.extent_ymin"
+                                             , label = param.style("ymin")
+                                             , value = NULL
+                                             , width = "100%")
+                                 , textInput(inputId = "PFG.extent_ymax"
+                                             , label = param.style("ymax")
+                                             , value = NULL
+                                             , width = "100%")
+                        )
+                      )
+                      )
              ) ## END fluidRow
            ) ## END sidebarPanel
            

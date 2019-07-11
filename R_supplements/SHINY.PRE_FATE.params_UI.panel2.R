@@ -66,7 +66,7 @@ tabPanel(title = HTML("<span class='panel_title'><i class='fa fa-copy'></i> Simu
                  fluidRow(
                    column(12
                           , br()
-                          , div(id = "help2_4"
+                          , div(id = "help2_5"
                                 , shinyjs::disabled(
                                   selectInput(inputId = "load.file"
                                               , label = param.style("Simulation parameters file :")
@@ -97,7 +97,7 @@ tabPanel(title = HTML("<span class='panel_title'><i class='fa fa-copy'></i> Simu
                                 )
                           )
                           , br()
-                          , div(id = "help2_5"
+                          , div(id = "help2_6"
                                 , shinyjs::disabled(
                                   downloadButton(outputId = "FATE_simulation.zip"
                                                  , label = "Download folder"
