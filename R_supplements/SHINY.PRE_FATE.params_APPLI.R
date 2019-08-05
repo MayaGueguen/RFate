@@ -188,6 +188,18 @@ server <- function(input, output, session) {
                       , compt.global.files = c()
                       , compt.save.nb = 0
                       , compt.save.files = c()
+                      , compt.succ.nb = 0
+                      , compt.succ.files = c()
+                      , compt.light.nb = 0
+                      , compt.light.files = c()
+                      , compt.disp.nb = 0
+                      , compt.disp.files = c()
+                      , compt.dist.nb = 0
+                      , compt.dist.files = c()
+                      , compt.soil.nb = 0
+                      , compt.soil.files = c()
+                      , compt.change.nb = 0
+                      , compt.change.files = c()
                       , compt.dist.by_type = FALSE
                       , compt.dist.by_pfg = FALSE
                       , compt.browser = 1
@@ -203,7 +215,11 @@ server <- function(input, output, session) {
   source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel2.R", local = TRUE)$value
   source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel2.tab1.R", local = TRUE)$value
   source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel2.tab2.R", local = TRUE)$value
-  source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel2.tab3.R", local = TRUE)$value
+  source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel2.tab3.tab0.R", local = TRUE)$value
+  source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel2.tab3.tab1.R", local = TRUE)$value
+  source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel2.tab3.tab2.R", local = TRUE)$value
+  source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel2.tab3.tab3.R", local = TRUE)$value
+  source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel2.tab3.tab4.R", local = TRUE)$value
   source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel2.tab4.R", local = TRUE)$value
   
   ####################################################################
