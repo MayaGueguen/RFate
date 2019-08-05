@@ -53,11 +53,6 @@ observeEvent(RV$mat.PFG.disp, {
 
 ####################################################################
 
-output$created_table.disp = renderDataTable({
-  path_folder = paste0(input$name.simul, "/DATA/PFGS/DISP/")
-  return(get_files(path_folder, skip.no = 0, opt.sub_folder = TRUE))
-})
-
 observeEvent(input$create.disp, {
   if (input$create.skeleton > 0)
   {
@@ -68,16 +63,178 @@ observeEvent(input$create.disp, {
       )
     ), cut_pattern = paste0(input$name.simul, "/DATA/PFGS/DISP/"))
     
-    if (as.character(get_res) != "0")
-    {
-      output$created_table.disp = renderDataTable({
-        path_folder = paste0(input$name.simul, "/DATA/PFGS/DISP/")
-        return(get_files(path_folder, skip.no = 0, opt.sub_folder = TRUE))
-      })
-    }
   } else
   {
     shinyalert(type = "warning", text = "You must create a simulation folder first !")
+  }
+})
+
+####################################################################
+
+get_tab.disp = eventReactive(paste(input$name.simul
+                                     , input$create.disp
+                                     , RV$compt.disp.nb), {
+                                       if (!is.null(input$name.simul) && nchar(input$name.simul) > 0)
+                                       {
+                                         path_folder = paste0(input$name.simul, "/DATA/PFGS/DISP/")
+                                         tab = get_files(path_folder, skip.no = 0, opt.sub_folder = TRUE)
+                                         
+                                         if (!is.null(tab) && ncol(tab) > 0)
+                                         {
+                                           RV$compt.disp.nb = ncol(tab)
+                                           RV$compt.disp.files = colnames(tab)
+                                           return(tab)
+                                         }
+                                       }
+                                     })
+
+output$UI.files.disp = renderUI({
+  tab = get_tab.disp()
+  tab = as.data.frame(tab)
+  
+  if (!is.null(tab) && ncol(tab) > 0)
+  {
+    tagList(
+      fluidRow(
+        column(4
+               , checkboxInput(inputId = "check.disp.all"
+                               , label = HTML("<em>Select all</em>")
+                               , value = TRUE
+                               , width = "100%"))
+        , column(3
+                 , actionButton(inputId = "view.disp.select"
+                                , label = "View selected"
+                                , icon = icon("eye")
+                                , width = "100%"
+                                , style = HTML(paste(button.style, "margin-bottom: 3px;"))))
+        , column(3
+                 , actionButton(inputId = "delete.disp.select"
+                                , label = "Delete selected"
+                                , icon = icon("trash-alt")
+                                , width = "100%"
+                                , style = HTML(paste(button.style, "margin-bottom: 3px;"))))
+      ),
+      hr(),
+      fluidRow(
+        column(10
+               , lapply(1:ncol(tab)
+                        , function(i) {
+                          checkboxInput(inputId = paste0("check.disp.", colnames(tab)[i])
+                                        , label = gsub("__", "/", colnames(tab)[i])
+                                        , value = TRUE
+                                        , width = "100%")
+                        })
+        )
+        # , column(2
+        #          , lapply(1:ncol(tab)
+        #                   , function(i) {
+        #                     actionButton(inputId = paste0("upload.disp.", colnames(tab)[i])
+        #                                  , label = NULL
+        #                                  , icon = icon("upload")
+        #                                  , width = "100%"
+        #                                  , style = HTML(paste(button.style, "margin-bottom: 3px;")))
+        #                   })
+        # )
+      )
+    )
+  }
+})
+
+# observeEvent(RV$compt.disp.nb, {
+#   for (i in 1:RV$compt.disp.nb)
+#   {
+#     observeEvent(input[[paste0("upload.disp.", RV$compt.disp.files[i])]], {
+#       get_update.disp(file.dispParam = paste0(input$name.simul
+#                                                   , "/DATA/PFGS/DISP/"
+#                                                   , RV$compt.disp.files[i]))
+#     })
+#   }
+# })
+
+
+observeEvent(input$check.disp.all, {
+  for (col_tab in RV$compt.disp.files)
+  {
+    updateCheckboxInput(session
+                        , inputId = paste0("check.disp.", col_tab)
+                        , value = input$check.disp.all)
+  }
+})
+
+observeEvent(input$view.disp.select, {
+  output$created_table.disp = renderDataTable({
+    req(grep(pattern = "check.disp.", x = names(input), value = TRUE))
+    
+    tab = get_tab.disp()
+    tab = as.data.frame(tab)
+    
+    if (!is.null(tab) && ncol(tab) > 0)
+    {
+      if (input$check.disp.all)
+      {
+        col_toKeep = rep(TRUE, ncol(tab))
+      } else
+      {
+        col_toKeep = foreach(i = 1:ncol(tab), .combine = "c") %do%
+        {
+          eval(parse(text = paste0("res = input$check.disp.", colnames(tab)[i])))
+          return(res)
+        }
+      }
+      return(tab[, which(col_toKeep == TRUE), drop = FALSE])
+    }
+  })
+})
+
+observeEvent(input$delete.disp.select, {
+  if (input$check.disp.all)
+  {
+    col_toKeep = rep(TRUE,RV$compt.disp.nb)
+  } else
+  {
+    col_toKeep = foreach(i = 1:RV$compt.disp.nb, .combine = "c") %do%
+    {
+      eval(parse(text = paste0("res = input$check.disp.", RV$compt.disp.files[i])))
+      return(res)
+    }
+  }
+  
+  if (sum(col_toKeep) > 0)
+  {
+    file.dispParam = RV$compt.disp.files[col_toKeep]
+    shinyalert(type = "warning"
+               , text = paste0("The simulation parameter file(s) "
+                               , paste0(input$name.simul, "/DATA/PFGS/DISP/ \n")
+                               , paste0(gsub("__", "/", file.dispParam), collapse = " , ")
+                               , "\n will be removed !\n"
+                               , "Make sure this is what you want.")
+               , showCancelButton = TRUE
+               , showConfirmButton = TRUE
+               , callbackR = function(x)
+               {
+                 if (x)
+                 {
+                   for (fi in file.dispParam) 
+                   {
+                     file.remove(paste0(input$name.simul, "/DATA/PFGS/DISP/", gsub("__", "/", fi)))
+                     if (nchar(dirname(gsub("__", "/", fi))) > 0)
+                     {
+                       sub_dir = paste0(input$name.simul, "/DATA/PFGS/DISP/", dirname(gsub("__", "/", fi)))
+                       if (dir.exists(sub_dir) && length(list.files(path = sub_dir)) == 0)
+                       {
+                         unlink(sub_dir, recursive = TRUE)
+                       }
+                     }
+                     removeUI(selector = paste0("check.disp.", fi)
+                              , multiple = FALSE
+                              , immediate = TRUE)
+                     removeUI(selector = paste0("upload.disp.", fi)
+                              , multiple = FALSE
+                              , immediate = TRUE)
+                   }
+                   RV$compt.disp.nb = min(0, RV$compt.disp.nb - sum(col_toKeep))
+                 }
+               })
   }
 })
 

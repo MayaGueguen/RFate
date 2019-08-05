@@ -99,7 +99,7 @@ get_tab.succ = eventReactive(paste(input$name.simul
                                        if (!is.null(input$name.simul) && nchar(input$name.simul) > 0)
                                        {
                                          path_folder = paste0(input$name.simul, "/DATA/PFGS/SUCC/")
-                                         tab = get_files(path_folder, skip.no = 2, opt.sub_folder = TRUE)
+                                         tab = get_files(path_folder, skip.no = 0, opt.sub_folder = TRUE)
                                          
                                          if (!is.null(tab) && ncol(tab) > 0)
                                          {
