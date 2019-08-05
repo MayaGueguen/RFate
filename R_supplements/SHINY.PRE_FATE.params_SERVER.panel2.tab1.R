@@ -61,29 +61,67 @@ output$UI.doLight = renderUI({
   }
 })
 
+
+####################################################################
+
+observeEvent(input$create.global, {
+  if (input$create.skeleton > 0)
+  {
+    get_res = print_messages(as.expression(
+      PRE_FATE.params_globalParameters(name.simulation = input$name.simul
+                                       , opt.no_CPU = input$opt.no_CPU
+                                       , required.no_PFG = input$required.no_PFG
+                                       , required.no_STRATA = input$required.no_STRATA
+                                       , required.simul_duration = input$required.simul_duration
+                                       , required.seeding_duration = input$required.seeding_duration
+                                       , required.seeding_timestep = input$required.seeding_timestep
+                                       , required.seeding_input = input$required.seeding_input
+                                       , required.max_by_cohort = input$required.max_by_cohort
+                                       , required.max_abund_low = input$required.max_abund_low
+                                       , required.max_abund_medium = input$required.max_abund_medium
+                                       , required.max_abund_high = input$required.max_abund_high
+                                       , doDispersal = input$doDispersal
+                                       , doHabSuitability = input$doHabSuitability
+                                       , HABSUIT.ref_option = ifelse(input$HABSUIT.ref_option == "(1) random", 1, 2)
+                                       , doLight = input$doLight
+                                       , LIGHT.thresh_medium = input$LIGHT.thresh_medium
+                                       , LIGHT.thresh_low = input$LIGHT.thresh_low
+                                       , doSoil = input$doSoil
+                                       , doDisturbances = input$doDisturbances
+                                       , DIST.no = input$DIST.no
+                                       , DIST.no_sub = input$DIST.no_sub
+                                       , DIST.freq = rep(input$DIST.freq, input$DIST.no)
+      )
+    ), cut_pattern = paste0(input$name.simul, "/DATA/GLOBAL_PARAMETERS/"))
+  } else
+  {
+    shinyalert(type = "warning", text = "You must create a simulation folder first !")
+  }
+})
+
 ####################################################################
 
 get_tab.global = eventReactive(paste(input$name.simul
                                      , input$create.global
                                      , RV$compt.global.nb), {
-  if (!is.null(input$name.simul) && nchar(input$name.simul) > 0)
-  {
-    path_folder = paste0(input$name.simul, "/DATA/GLOBAL_PARAMETERS/")
-    tab = get_files(path_folder)
-    
-    if (!is.null(tab) && ncol(tab) > 0)
-    {
-      RV$compt.global.nb = ncol(tab)
-      RV$compt.global.files = colnames(tab)
-      return(tab)
-    }
-  }
-})
+                                       if (!is.null(input$name.simul) && nchar(input$name.simul) > 0)
+                                       {
+                                         path_folder = paste0(input$name.simul, "/DATA/GLOBAL_PARAMETERS/")
+                                         tab = get_files(path_folder)
+                                         
+                                         if (!is.null(tab) && ncol(tab) > 0)
+                                         {
+                                           RV$compt.global.nb = ncol(tab)
+                                           RV$compt.global.files = colnames(tab)
+                                           return(tab)
+                                         }
+                                       }
+                                     })
 
 output$UI.files.global = renderUI({
   tab = get_tab.global()
   tab = as.data.frame(tab)
-
+  
   if (!is.null(tab) && ncol(tab) > 0)
   {
     tagList(
@@ -94,11 +132,11 @@ output$UI.files.global = renderUI({
                                , value = TRUE
                                , width = "100%"))
         , column(3
-               , actionButton(inputId = "view.global.select"
-                              , label = "View selected"
-                              , icon = icon("eye")
-                              , width = "100%"
-                              , style = HTML(paste(button.style, "margin-bottom: 3px;"))))
+                 , actionButton(inputId = "view.global.select"
+                                , label = "View selected"
+                                , icon = icon("eye")
+                                , width = "100%"
+                                , style = HTML(paste(button.style, "margin-bottom: 3px;"))))
         , column(3
                  , actionButton(inputId = "delete.global.select"
                                 , label = "Delete selected"
@@ -227,44 +265,6 @@ observeEvent(input$delete.global.select, {
                    RV$compt.global.nb = min(0, RV$compt.global.nb - sum(col_toKeep))
                  }
                })
-  }
-})
-
-
-####################################################################
-
-observeEvent(input$create.global, {
-  if (input$create.skeleton > 0)
-  {
-    get_res = print_messages(as.expression(
-      PRE_FATE.params_globalParameters(name.simulation = input$name.simul
-                                       , opt.no_CPU = input$opt.no_CPU
-                                       , required.no_PFG = input$required.no_PFG
-                                       , required.no_STRATA = input$required.no_STRATA
-                                       , required.simul_duration = input$required.simul_duration
-                                       , required.seeding_duration = input$required.seeding_duration
-                                       , required.seeding_timestep = input$required.seeding_timestep
-                                       , required.seeding_input = input$required.seeding_input
-                                       , required.max_by_cohort = input$required.max_by_cohort
-                                       , required.max_abund_low = input$required.max_abund_low
-                                       , required.max_abund_medium = input$required.max_abund_medium
-                                       , required.max_abund_high = input$required.max_abund_high
-                                       , doDispersal = input$doDispersal
-                                       , doHabSuitability = input$doHabSuitability
-                                       , HABSUIT.ref_option = ifelse(input$HABSUIT.ref_option == "(1) random", 1, 2)
-                                       , doLight = input$doLight
-                                       , LIGHT.thresh_medium = input$LIGHT.thresh_medium
-                                       , LIGHT.thresh_low = input$LIGHT.thresh_low
-                                       , doSoil = input$doSoil
-                                       , doDisturbances = input$doDisturbances
-                                       , DIST.no = input$DIST.no
-                                       , DIST.no_sub = input$DIST.no_sub
-                                       , DIST.freq = rep(input$DIST.freq, input$DIST.no)
-      )
-    ), cut_pattern = paste0(input$name.simul, "/DATA/GLOBAL_PARAMETERS/"))
-  } else
-  {
-    shinyalert(type = "warning", text = "You must create a simulation folder first !")
   }
 })
 
