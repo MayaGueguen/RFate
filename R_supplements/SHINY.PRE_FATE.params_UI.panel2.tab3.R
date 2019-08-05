@@ -167,13 +167,25 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                           )
                         )
                         , fluidRow(
-                          br(),
-                          column(12
-                                 , wellPanel(style = "overflow-x:scroll;"
-                                             , dataTableOutput(outputId = "created_table.succ"))
-                                 , br()
-                                 , wellPanel(style = "overflow-x:scroll;"
-                                             , dataTableOutput(outputId = "created_table.light"))
+                          br()
+                          , br()
+                          , br()
+                          , br()
+                          , column(12
+                                   , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px; overflow-y:scroll; max-height:250px;"))
+                                               , uiOutput(outputId = "UI.files.succ")))
+                          , column(12
+                                   , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px; overflow-x:scroll;"))
+                                               , dataTableOutput(outputId = "created_table.succ"))
+                          )
+                          , br()
+                          , br()
+                          , column(12
+                                   , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px; overflow-y:scroll; max-height:250px;"))
+                                               , uiOutput(outputId = "UI.files.light")))
+                          , column(12
+                                   , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px; overflow-x:scroll;"))
+                                               , dataTableOutput(outputId = "created_table.light"))
                           )
                         )
                ) ## END tabPanel (succ)
@@ -267,10 +279,16 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                             )
                           )
                           , fluidRow(
-                            br(),
-                            column(12,
-                                   wellPanel(style = "overflow-x:scroll;"
-                                             , dataTableOutput(outputId = "created_table.disp"))
+                            br()
+                            , br()
+                            , br()
+                            , br()
+                            , column(12
+                                     , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px; overflow-y:scroll; max-height:250px;"))
+                                                 , uiOutput(outputId = "UI.files.disp")))
+                            , column(12
+                                     , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px; overflow-x:scroll;"))
+                                                 , dataTableOutput(outputId = "created_table.disp"))
                             )
                           )
                ) ## END tabPanel (dispersal)
@@ -338,10 +356,16 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                             )
                           )
                           , fluidRow(
-                            br(),
-                            column(12,
-                                   wellPanel(style = "overflow-x:scroll;"
-                                             , dataTableOutput(outputId = "created_table.dist"))
+                            br()
+                            , br()
+                            , br()
+                            , br()
+                            , column(12
+                                     , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px; overflow-y:scroll; max-height:250px;"))
+                                                 , uiOutput(outputId = "UI.files.dist")))
+                            , column(12
+                                     , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px; overflow-x:scroll;"))
+                                                 , dataTableOutput(outputId = "created_table.dist"))
                             )
                           )
                ) ## END tabPanel (disturbances)
@@ -511,10 +535,16 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                             )
                           )
                           , fluidRow(
-                            br(),
-                            column(12,
-                                   wellPanel(style = "overflow-x:scroll;"
-                                             , dataTableOutput(outputId = "created_table.soil"))
+                            br()
+                            , br()
+                            , br()
+                            , br()
+                            , column(12
+                                     , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px; overflow-y:scroll; max-height:250px;"))
+                                                 , uiOutput(outputId = "UI.files.soil")))
+                            , column(12
+                                     , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px; overflow-x:scroll;"))
+                                                 , dataTableOutput(outputId = "created_table.soil"))
                             )
                           )
                ) ## END tabPanel (soil)

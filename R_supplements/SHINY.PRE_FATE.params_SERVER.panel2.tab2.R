@@ -250,10 +250,10 @@ observeEvent(input$delete.save.select, {
                          unlink(sub_dir, recursive = TRUE)
                        }
                      }
-                     removeUI(selector = paste0("check.save.", file.saveParam)
+                     removeUI(selector = paste0("check.save.", fi)
                               , multiple = FALSE
                               , immediate = TRUE)
-                     removeUI(selector = paste0("upload.save.", file.saveParam)
+                     removeUI(selector = paste0("upload.save.", fi)
                               , multiple = FALSE
                               , immediate = TRUE)
                    }

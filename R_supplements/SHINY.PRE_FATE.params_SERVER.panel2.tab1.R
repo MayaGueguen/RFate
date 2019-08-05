@@ -235,7 +235,7 @@ observeEvent(input$delete.global.select, {
     shinyalert(type = "warning"
                , text = paste0("The simulation parameter file(s) "
                                , paste0(input$name.simul, "/DATA/GLOBAL_PARAMETERS/ \n")
-                               , paste0(gsub("__", "/", file.saveParam), collapse = " , ")
+                               , paste0(gsub("__", "/", file.globalParam), collapse = " , ")
                                , "\n will be removed !\n"
                                , "Make sure this is what you want.")
                , showCancelButton = TRUE
@@ -255,10 +255,10 @@ observeEvent(input$delete.global.select, {
                          unlink(sub_dir, recursive = TRUE)
                        }
                      }
-                     removeUI(selector = paste0("check.global.", file.globalParam)
+                     removeUI(selector = paste0("check.global.", fi)
                               , multiple = FALSE
                               , immediate = TRUE)
-                     removeUI(selector = paste0("upload.global.", file.globalParam)
+                     removeUI(selector = paste0("upload.global.", fi)
                               , multiple = FALSE
                               , immediate = TRUE)
                    }
