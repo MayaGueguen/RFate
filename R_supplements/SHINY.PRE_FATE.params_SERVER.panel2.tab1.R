@@ -63,141 +63,268 @@ output$UI.doLight = renderUI({
 
 ####################################################################
 
-# get_tab.global = eventReactive(paste(input$name.simul, input$create.global), { ## update
-# get_tab.global = eventReactive(input$name.simul, { ## init
-# get_tab.global = eventReactive(lapply(grep(pattern = "name.simul|create.global|^delete.global.",
-#                                            x = names(input),
-#                                            value = TRUE), function(x) input[[x]]), {
 get_tab.global = eventReactive(paste(input$name.simul, RV$compt.global.nb), { ## init
   cat("\n CREATE TAB \n")
   
-  path_folder = paste0(input$name.simul, "/DATA/GLOBAL_PARAMETERS/")
-  tab = get_files(path_folder)
-  
-  RV$compt.global.nb = ncol(tab)
-  return(tab)
+  if (!is.null(input$name.simul) && nchar(input$name.simul) > 0)
+  {
+    path_folder = paste0(input$name.simul, "/DATA/GLOBAL_PARAMETERS/")
+    tab = get_files(path_folder)
+    
+    if (!is.null(tab) && ncol(tab) > 0)
+    {
+      RV$compt.global.nb = ncol(tab)
+      RV$compt.global.files = colnames(tab)
+      return(tab)
+    }
+  }
 })
 
 output$UI.files.global = renderUI({
   cat("\n CREATE GLOBAL BUTTONS \n")
-  
+
   tab = get_tab.global()
   tab = as.data.frame(tab)
-  
+
   if (!is.null(tab) && ncol(tab) > 0)
   {
-    fluidRow(
-      column(8
-             , lapply(1:ncol(tab)
-                      , function(i) {
-                        checkboxInput(inputId = paste0("check.global.", colnames(tab)[i])
-                                      , label = colnames(tab)[i]
-                                      , value = TRUE
-                                      , width = "100%")
-                      })
-      )
-      , column(2
+    tagList(
+      fluidRow(
+        column(4
+               , checkboxInput(inputId = "check.global.all"
+                               , label = "Select all"
+                               , value = TRUE
+                               , width = "100%"))
+        , column(3
+               , actionButton(inputId = "view.global.select"
+                              , label = "View selected"
+                              , icon = icon("eye")
+                              , width = "100%"
+                              , style = HTML(paste(button.style, "margin-bottom: 3px;"))))
+        , column(3
+                 , actionButton(inputId = "delete.global.select"
+                                , label = "Delete selected"
+                                , icon = icon("trash-alt")
+                                , width = "100%"
+                                , style = HTML(paste(button.style, "margin-bottom: 3px;"))))
+      ),
+      fluidRow(
+        column(10
                , lapply(1:ncol(tab)
                         , function(i) {
-                          actionButton(inputId = paste0("upload.global.", colnames(tab)[i])
-                                       , label = NULL
-                                       , icon = icon("upload")
-                                       , width = "100%"
-                                       , style = HTML(paste(button.style, "margin-bottom: 3px;")))
+                          checkboxInput(inputId = paste0("check.global.", colnames(tab)[i])
+                                        , label = colnames(tab)[i]
+                                        , value = TRUE
+                                        , width = "100%")
                         })
-      )
-      , column(2
-               , lapply(1:ncol(tab)
-                        , function(i) {
-                          actionButton(inputId = paste0("delete.global.", colnames(tab)[i])
-                                       , label = NULL
-                                       , icon = icon("trash-alt")
-                                       , width = "100%"
-                                       , style = HTML(paste(button.style, "margin-bottom: 3px;")))
-                        })
+        )
+        , column(2
+                 , lapply(1:ncol(tab)
+                          , function(i) {
+                            actionButton(inputId = paste0("upload.global.", colnames(tab)[i])
+                                         , label = NULL
+                                         , icon = icon("upload")
+                                         , width = "100%"
+                                         , style = HTML(paste(button.style, "margin-bottom: 3px;")))
+                          })
+        )
       )
     )
   }
 })
 
-output$created_table.global = renderDataTable({
-  req(grep(pattern = "check.global.", x = names(input), value = TRUE))
-  
-  print("GETRENDER")
-  cat("\n")
-  
-  tab = get_tab.global()
-  tab = as.data.frame(tab)
-  
-  
-  col_toKeep = foreach(i = 1:ncol(tab), .combine = "c") %do%
+observeEvent(input$check.global.all, {
+  for (col_tab in RV$compt.global.files)
   {
-    eval(parse(text = paste0("res = input$check.global.", colnames(tab)[i])))
-    return(res)
+    updateCheckboxInput(session
+                        , inputId = paste0("check.global.", col_tab)
+                        , value = input$check.global.all)
   }
-  print(dim(tab))
-  print(col_toKeep)
-  
-  return(tab[, which(col_toKeep == TRUE), drop = FALSE])
 })
+
+observeEvent(input$view.global.select, {
+  output$created_table.global = renderDataTable({
+    req(grep(pattern = "check.global.", x = names(input), value = TRUE))
+    
+    print("GETRENDER")
+    cat("\n")
+    
+    tab = get_tab.global()
+    tab = as.data.frame(tab)
+    
+    if (!is.null(tab) && ncol(tab) > 0)
+    {
+      if (input$check.global.all)
+      {
+        col_toKeep = rep(TRUE, ncol(tab))
+      } else
+      {
+        col_toKeep = foreach(i = 1:ncol(tab), .combine = "c") %do%
+        {
+          eval(parse(text = paste0("res = input$check.global.", colnames(tab)[i])))
+          return(res)
+        }
+      }
+      return(tab[, which(col_toKeep == TRUE), drop = FALSE])
+    }
+  })
+})
+
+observeEvent(input$delete.global.select, {
+  print("OBSERVE CHECK")
+  
+  if (input$check.global.all)
+  {
+    col_toKeep = rep(TRUE,RV$compt.global.nb)
+  } else
+  {
+    col_toKeep = foreach(i = 1:RV$compt.global.nb, .combine = "c") %do%
+    {
+      eval(parse(text = paste0("res = input$check.global.", RV$compt.global.files[i])))
+      return(res)
+    }
+  }
+  
+  if (sum(col_toKeep) > 0)
+  {
+    file.globalParam = paste0(input$name.simul
+                              , "/DATA/GLOBAL_PARAMETERS/"
+                              , RV$compt.global.files[col_toKeep])
+    print(file.globalParam)
+    shinyalert(type = "warning"
+               , text = paste0("The simulation parameter file(s) "
+                               , paste0(sub("GLOBAL_PARAMETERS/", "GLOBAL_PARAMETERS/\n", file.globalParam)
+                                        , collapse = " , ")
+                               , " will be removed !\n"
+                               , "Make sure this is what you want.")
+               , showCancelButton = TRUE
+               , showConfirmButton = TRUE
+               , callbackR = function(x)
+               {
+                 if (x)
+                 {
+                   removeUI(selector = paste0("check.global.", RV$compt.global.files[col_toKeep])
+                            , multiple = FALSE
+                            , immediate = TRUE)
+                   removeUI(selector = paste0("upload.global.", RV$compt.global.files[col_toKeep])
+                            , multiple = FALSE
+                            , immediate = TRUE)
+                   # removeUI(selector = paste0("delete.global.", RV$compt.global.files[i])
+                   #          , multiple = FALSE
+                   #          , immediate = TRUE)
+                   print("notremoved")
+                   sapply(file.globalParam, file.remove)
+                   print("removed!")
+                   RV$compt.global.nb = min(0, RV$compt.global.nb - sum(col_toKeep))
+                 }
+               })
+  }
+})
+  
+  # for (i in 1:RV$compt.global.nb)
+  #        {
+           # req(grep(pattern = "delete.global.", x = names(input), value = TRUE))
+           # # print("bb")
+           # observeEvent(input[[paste0("delete.global.", RV$compt.global.files[i])]], {
+           #   print(i)
+             # file.globalParam = paste0(input$name.simul
+             #                           , "/DATA/GLOBAL_PARAMETERS/"
+             #                           , RV$compt.global.files[i])
+             # print(file.globalParam)
+             # shinyalert(type = "warning"
+             #            , text = paste0("The simulation parameter file "
+             #                            , sub("GLOBAL_PARAMETERS/", "GLOBAL_PARAMETERS/\n", file.globalParam)
+             #                            , " will be removed !\n"
+             #                            , "Make sure this is what you want.")
+             #            , showCancelButton = TRUE
+             #            , showConfirmButton = TRUE
+             #            , callbackR = function(x)
+             #            {
+             #              if (x)
+             #              {
+             #                removeUI(selector = paste0("check.global.", RV$compt.global.files[i])
+             #                         , multiple = FALSE
+             #                         , immediate = TRUE)
+             #                removeUI(selector = paste0("upload.global.", RV$compt.global.files[i])
+             #                         , multiple = FALSE
+             #                         , immediate = TRUE)
+             #                removeUI(selector = paste0("delete.global.", RV$compt.global.files[i])
+             #                         , multiple = FALSE
+             #                         , immediate = TRUE)
+             #                print("notremoved")
+             #                file.remove(file.globalParam)
+             #                print("removed!")
+             #                RV$compt.global.nb = min(0, RV$compt.global.nb - 1)
+             #              }
+             #            })
+           # })
+         # })
+  # }))
 # })
+
 
 # observeEvent(get_tab.global(), {
 # observeEvent(paste(get_tab.global(), RV$compt.global.nb), {
-observeEvent(lapply(grep(pattern = "^check.global.",
-            x = names(input),
-            value = TRUE), function(x) input[[x]]), {
-  tab = get_tab.global()
-
-  lapply(1:ncol(tab)
-         , function(i)
-         {
-           print("AA")
-           req(grep(pattern = "upload.global.", x = names(input), value = TRUE))
-           print("aa")
-           observeEvent(input[[paste0("upload.global.", colnames(tab)[i])]], {
-             get_update.global(file.globalParam = paste0(input$name.simul
-                                                         , "/DATA/GLOBAL_PARAMETERS/"
-                                                         , colnames(tab)[i]))
-           })
-           print("BB")
-           req(grep(pattern = "delete.global.", x = names(input), value = TRUE))
-           print("bb")
-           observeEvent(input[[paste0("delete.global.", colnames(tab)[i])]], {
-             print(i)
-             file.globalParam = paste0(input$name.simul
-                                       , "/DATA/GLOBAL_PARAMETERS/"
-                                       , colnames(tab)[i])
-             print(file.globalParam)
-             shinyalert(type = "warning"
-                        , text = paste0("The simulation parameter file "
-                                        , sub("GLOBAL_PARAMETERS/", "GLOBAL_PARAMETERS/\n", file.globalParam)
-                                        , " will be removed !\n"
-                                        , "Make sure this is what you want.")
-                        , showCancelButton = TRUE
-                        , showConfirmButton = TRUE
-                        , callbackR = function(x)
-                        {
-                          if (x)
-                          {
-                            removeUI(selector = paste0("check.global.", colnames(tab)[i])
-                                     , multiple = FALSE
-                                     , immediate = TRUE)
-                            removeUI(selector = paste0("upload.global.", colnames(tab)[i])
-                                     , multiple = FALSE
-                                     , immediate = TRUE)
-                            removeUI(selector = paste0("delete.global.", colnames(tab)[i])
-                                     , multiple = FALSE
-                                     , immediate = TRUE)
-                            print("notremoved")
-                            file.remove(file.globalParam)
-                            print("removed!")
-                            RV$compt.global.nb = min(0, RV$compt.global.nb - 1)
-                          }
-                        })
-           })
-         })
-})
+# observeEvent(lapply(grep(pattern = "^check.global.",
+#                          x = names(input),
+#                          value = TRUE), function(x) input[[x]]), {
+#                            print("OBSERVE CHECK")
+#                            # tab = get_tab.global()
+#                            
+#                            # if (!is.null(tab) && ncol(tab) > 0)
+#                            TEST  = isolate(local(
+#                            {
+#                              lapply(1:RV$compt.global.nb #ncol(tab)
+#                                     , function(i)
+#                                     {
+#                                       print(c("AA", i))
+#                                       req(grep(pattern = "upload.global.", x = names(input), value = TRUE))
+#                                       # print("aa")
+#                                       # observeEvent(input[[paste0("upload.global.", colnames(tab)[i])]], {
+#                                       observeEvent(input[[paste0("upload.global.", RV$compt.global.files[i])]], {
+#                                         get_update.global(file.globalParam = paste0(input$name.simul
+#                                                                                     , "/DATA/GLOBAL_PARAMETERS/"
+#                                                                                     , RV$compt.global.files[i]))
+#                                       })
+#                                       print(c("BB", i))
+#                                       req(grep(pattern = "delete.global.", x = names(input), value = TRUE))
+#                                       # print("bb")
+#                                       observeEvent(input[[paste0("delete.global.", RV$compt.global.files[i])]], {
+#                                         print(i)
+#                                         file.globalParam = paste0(input$name.simul
+#                                                                   , "/DATA/GLOBAL_PARAMETERS/"
+#                                                                   , RV$compt.global.files[i])
+#                                         print(file.globalParam)
+#                                         shinyalert(type = "warning"
+#                                                    , text = paste0("The simulation parameter file "
+#                                                                    , sub("GLOBAL_PARAMETERS/", "GLOBAL_PARAMETERS/\n", file.globalParam)
+#                                                                    , " will be removed !\n"
+#                                                                    , "Make sure this is what you want.")
+#                                                    , showCancelButton = TRUE
+#                                                    , showConfirmButton = TRUE
+#                                                    , callbackR = function(x)
+#                                                    {
+#                                                      if (x)
+#                                                      {
+#                                                        removeUI(selector = paste0("check.global.", RV$compt.global.files[i])
+#                                                                 , multiple = FALSE
+#                                                                 , immediate = TRUE)
+#                                                        removeUI(selector = paste0("upload.global.", RV$compt.global.files[i])
+#                                                                 , multiple = FALSE
+#                                                                 , immediate = TRUE)
+#                                                        removeUI(selector = paste0("delete.global.", RV$compt.global.files[i])
+#                                                                 , multiple = FALSE
+#                                                                 , immediate = TRUE)
+#                                                        print("notremoved")
+#                                                        file.remove(file.globalParam)
+#                                                        print("removed!")
+#                                                        RV$compt.global.nb = min(0, RV$compt.global.nb - 1)
+#                                                      }
+#                                                    })
+#                                       })
+#                                     })
+#                            }))
+#                          })
 
 # observeEvent(RV$compt.global.nb, {
 #   # tab = get_tab.global()
@@ -473,13 +600,13 @@ observeEvent(input$create.global, {
       )
     ), cut_pattern = paste0(input$name.simul, "/DATA/GLOBAL_PARAMETERS/"))
     
-    # if (as.character(get_res) != "0")
-    # {
-    #   # print("youhouu")
-    #   # print(RV$compt.global.nb)
-    #   RV$compt.global.nb <- RV$compt.global.nb + 1
-    #   # print(RV$compt.global.nb)
-    # }
+    if (as.character(get_res) != "0")
+    {
+      # print("youhouu")
+      # print(RV$compt.global.nb)
+      RV$compt.global.nb <- RV$compt.global.nb + 1
+      # print(RV$compt.global.nb)
+    }
   } else
   {
     shinyalert(type = "warning", text = "You must create a simulation folder first !")
