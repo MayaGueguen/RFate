@@ -166,10 +166,6 @@ get_files.names = function(path_folder, skip.no = 2, opt.sub_folder = FALSE)
 
 get_files = function(path_folder, skip.no = 2, opt.sub_folder = FALSE)
 {
-  # tab_names = list.files(path = path_folder
-  #                        , include.dirs = FALSE
-  #                        , full.names = TRUE
-  #                        , recursive = opt.sub_folder)
   tab_names = get_files.names(path_folder = path_folder
                               , skip.no = skip.no
                               , opt.sub_folder = opt.sub_folder)
