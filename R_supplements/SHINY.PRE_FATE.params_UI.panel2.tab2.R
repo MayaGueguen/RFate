@@ -92,10 +92,16 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Scenario files</span>")
                )
                )
              , fluidRow(
-               br(),
-               column(12,
-                      wellPanel(style = "overflow-x:scroll;"
-                                , dataTableOutput(outputId = "created_table.save"))
+               br()
+               , br()
+               , br()
+               , br()
+               , column(12
+                        , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px; overflow-y:scroll; max-height:250px;"))
+                                    , uiOutput(outputId = "UI.files.save")))
+               , column(12
+                        , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px; overflow-x:scroll;"))
+                                    , dataTableOutput(outputId = "created_table.save"))
                )
              )
          ) ## END mainPanel

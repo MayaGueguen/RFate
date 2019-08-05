@@ -1,11 +1,6 @@
 
 ####################################################################
 
-output$created_table.save = renderDataTable({
-  path_folder = paste0(input$name.simul, "/DATA/SAVE/")
-  return(get_files(path_folder, skip.no = 0, opt.sub_folder = TRUE))
-})
-
 observeEvent(input$create.save.maps, {
   if (input$create.skeleton > 0)
   {
@@ -38,13 +33,6 @@ observeEvent(input$create.save.maps, {
             )
           ), cut_pattern = paste0(input$name.simul, "/DATA/SAVE/"))
           
-          if (as.character(get_res) != "0")
-          {
-            output$created_table.save = renderDataTable({
-              path_folder = paste0(input$name.simul, "/DATA/SAVE/")
-              return(get_files(path_folder, skip.no = 0, opt.sub_folder = TRUE))
-            })
-          }
         } else
         {
           shinyalert(type = "warning", text = "No years have been selected !")
@@ -95,13 +83,6 @@ observeEvent(input$create.save.objects, {
         )
       ), cut_pattern = paste0(input$name.simul, "/DATA/SAVE/"))
       
-      if (as.character(get_res) != "0")
-      {
-        output$created_table.save = renderDataTable({
-          path_folder = paste0(input$name.simul, "/DATA/SAVE/")
-          return(get_files(path_folder, skip.no = 0, opt.sub_folder = TRUE))
-        })
-      }
     } else
     {
       shinyalert(type = "warning", text = "No years have been selected !")
@@ -109,5 +90,175 @@ observeEvent(input$create.save.objects, {
   } else
   {
     shinyalert(type = "warning", text = "You must create a simulation folder first !")
+  }
+})
+
+####################################################################
+
+get_tab.save = eventReactive(paste(input$name.simul
+                                     , input$create.save.maps
+                                     , input$create.save.objects
+                                     , RV$compt.save.nb), {
+                                       if (!is.null(input$name.simul) && nchar(input$name.simul) > 0)
+                                       {
+                                         path_folder = paste0(input$name.simul, "/DATA/SAVE/")
+                                         tab = get_files(path_folder, skip.no = 0, opt.sub_folder = TRUE)
+                                         
+                                         if (!is.null(tab) && ncol(tab) > 0)
+                                         {
+                                           RV$compt.save.nb = ncol(tab)
+                                           RV$compt.save.files = colnames(tab)
+                                           return(tab)
+                                         }
+                                       }
+                                     })
+
+output$UI.files.save = renderUI({
+  tab = get_tab.save()
+  tab = as.data.frame(tab)
+  
+  if (!is.null(tab) && ncol(tab) > 0)
+  {
+    tagList(
+      fluidRow(
+        column(4
+               , checkboxInput(inputId = "check.save.all"
+                               , label = HTML("<em>Select all</em>")
+                               , value = TRUE
+                               , width = "100%"))
+        , column(3
+                 , actionButton(inputId = "view.save.select"
+                                , label = "View selected"
+                                , icon = icon("eye")
+                                , width = "100%"
+                                , style = HTML(paste(button.style, "margin-bottom: 3px;"))))
+        , column(3
+                 , actionButton(inputId = "delete.save.select"
+                                , label = "Delete selected"
+                                , icon = icon("trash-alt")
+                                , width = "100%"
+                                , style = HTML(paste(button.style, "margin-bottom: 3px;"))))
+      ),
+      hr(),
+      fluidRow(
+        column(10
+               , lapply(1:ncol(tab)
+                        , function(i) {
+                          checkboxInput(inputId = paste0("check.save.", colnames(tab)[i])
+                                        , label = gsub("__", "/", colnames(tab)[i])
+                                        , value = TRUE
+                                        , width = "100%")
+                        })
+        )
+        , column(2
+                 , lapply(1:ncol(tab)
+                          , function(i) {
+                            actionButton(inputId = paste0("upload.save.", colnames(tab)[i])
+                                         , label = NULL
+                                         , icon = icon("upload")
+                                         , width = "100%"
+                                         , style = HTML(paste(button.style, "margin-bottom: 3px;")))
+                          })
+        )
+      )
+    )
+  }
+})
+
+observeEvent(RV$compt.save.nb, {
+  for (i in 1:RV$compt.save.nb)
+  {
+    observeEvent(input[[paste0("upload.save.", RV$compt.save.files[i])]], {
+      get_update.save(file.saveParam = paste0(input$name.simul
+                                                  , "/DATA/SAVE/"
+                                                  , RV$compt.save.files[i]))
+    })
+  }
+})
+
+
+observeEvent(input$check.save.all, {
+  for (col_tab in RV$compt.save.files)
+  {
+    updateCheckboxInput(session
+                        , inputId = paste0("check.save.", col_tab)
+                        , value = input$check.save.all)
+  }
+})
+
+observeEvent(input$view.save.select, {
+  output$created_table.save = renderDataTable({
+    req(grep(pattern = "check.save.", x = names(input), value = TRUE))
+    
+    tab = get_tab.save()
+    tab = as.data.frame(tab)
+    
+    if (!is.null(tab) && ncol(tab) > 0)
+    {
+      if (input$check.save.all)
+      {
+        col_toKeep = rep(TRUE, ncol(tab))
+      } else
+      {
+        col_toKeep = foreach(i = 1:ncol(tab), .combine = "c") %do%
+        {
+          eval(parse(text = paste0("res = input$check.save.", colnames(tab)[i])))
+          return(res)
+        }
+      }
+      return(tab[, which(col_toKeep == TRUE), drop = FALSE])
+    }
+  })
+})
+
+observeEvent(input$delete.save.select, {
+  if (input$check.save.all)
+  {
+    col_toKeep = rep(TRUE,RV$compt.save.nb)
+  } else
+  {
+    col_toKeep = foreach(i = 1:RV$compt.save.nb, .combine = "c") %do%
+    {
+      eval(parse(text = paste0("res = input$check.save.", RV$compt.save.files[i])))
+      return(res)
+    }
+  }
+  
+  if (sum(col_toKeep) > 0)
+  {
+    file.saveParam = RV$compt.save.files[col_toKeep]
+    shinyalert(type = "warning"
+               , text = paste0("The simulation parameter file(s) "
+                               , paste0(input$name.simul, "/DATA/SAVE/ \n")
+                               , paste0(gsub("__", "/", file.saveParam), collapse = " , ")
+                               , "\n will be removed !\n"
+                               , "Make sure this is what you want.")
+               , showCancelButton = TRUE
+               , showConfirmButton = TRUE
+               , callbackR = function(x)
+               {
+                 if (x)
+                 {
+                   for (fi in file.saveParam) 
+                   {
+                     file.remove(paste0(input$name.simul, "/DATA/SAVE/", gsub("__", "/", fi)))
+                     if (nchar(dirname(gsub("__", "/", fi))) > 0)
+                     {
+                       sub_dir = paste0(input$name.simul, "/DATA/SAVE/", dirname(gsub("__", "/", fi)))
+                       if (dir.exists(sub_dir) && length(list.files(path = sub_dir)) == 0)
+                       {
+                         unlink(sub_dir, recursive = TRUE)
+                       }
+                     }
+                     removeUI(selector = paste0("check.save.", file.saveParam)
+                              , multiple = FALSE
+                              , immediate = TRUE)
+                     removeUI(selector = paste0("upload.save.", file.saveParam)
+                              , multiple = FALSE
+                              , immediate = TRUE)
+                   }
+                   RV$compt.save.nb = min(0, RV$compt.save.nb - sum(col_toKeep))
+                 }
+               })
   }
 })

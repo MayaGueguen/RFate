@@ -112,7 +112,7 @@ output$UI.files.global = renderUI({
                , lapply(1:ncol(tab)
                         , function(i) {
                           checkboxInput(inputId = paste0("check.global.", colnames(tab)[i])
-                                        , label = colnames(tab)[i]
+                                        , label = gsub("__", "/", colnames(tab)[i])
                                         , value = TRUE
                                         , width = "100%")
                         })
@@ -194,11 +194,10 @@ observeEvent(input$delete.global.select, {
   if (sum(col_toKeep) > 0)
   {
     file.globalParam = RV$compt.global.files[col_toKeep]
-    print(file.globalParam)
     shinyalert(type = "warning"
                , text = paste0("The simulation parameter file(s) "
                                , paste0(input$name.simul, "/DATA/GLOBAL_PARAMETERS/ \n")
-                               , paste0(file.globalParam, collapse = " , ")
+                               , paste0(gsub("__", "/", file.saveParam), collapse = " , ")
                                , "\n will be removed !\n"
                                , "Make sure this is what you want.")
                , showCancelButton = TRUE
@@ -209,7 +208,15 @@ observeEvent(input$delete.global.select, {
                  {
                    for (fi in file.globalParam) 
                    {
-                     file.remove(paste0(input$name.simul, "/DATA/GLOBAL_PARAMETERS/", fi))
+                     file.remove(paste0(input$name.simul, "/DATA/GLOBAL_PARAMETERS/", gsub("__", "/", fi)))
+                     if (nchar(dirname(gsub("__", "/", fi))) > 0)
+                     {
+                       sub_dir = paste0(input$name.simul, "/DATA/GLOBAL_PARAMETERS/", dirname(gsub("__", "/", fi)))
+                       if (dir.exists(sub_dir) && length(list.files(path = sub_dir)) == 0)
+                       {
+                         unlink(sub_dir, recursive = TRUE)
+                       }
+                     }
                      removeUI(selector = paste0("check.global.", file.globalParam)
                               , multiple = FALSE
                               , immediate = TRUE)

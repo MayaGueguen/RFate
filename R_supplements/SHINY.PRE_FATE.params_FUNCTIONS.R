@@ -152,7 +152,7 @@ print_messages = function(fun, cut_pattern = "STUPID")
 
 ###################################################################################################################################
 
-get_files.names = function(path_folder, skip.no = 2, opt.sub_folder = FALSE)
+get_files.names = function(path_folder, opt.sub_folder = FALSE)
 {
   if (dir.exists(path_folder))
   {
@@ -167,7 +167,6 @@ get_files.names = function(path_folder, skip.no = 2, opt.sub_folder = FALSE)
 get_files = function(path_folder, skip.no = 2, opt.sub_folder = FALSE)
 {
   tab_names = get_files.names(path_folder = path_folder
-                              , skip.no = skip.no
                               , opt.sub_folder = opt.sub_folder)
   if (!is.null(tab_names) && length(tab_names) > 0)
   {
@@ -193,6 +192,7 @@ get_files = function(path_folder, skip.no = 2, opt.sub_folder = FALSE)
     }
     tab_names = sub("//", "/", tab_names)
     tab_names = sub(path_folder, "", tab_names)
+    tab_names = gsub("/", "__", tab_names)
     colnames(tab) = tab_names
     return(tab)
   }
