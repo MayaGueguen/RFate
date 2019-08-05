@@ -119,7 +119,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Raster files</span>")
                                                   , icon = icon("plus")
                                                   , width = "100%"
                                                   , style = HTML(button.style)
-                                   )
+                                     )
                                    )
                             )
                             , column(6
@@ -211,10 +211,16 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Raster files</span>")
                             )
                           )
                           , fluidRow(
-                            br(),
-                            column(12,
-                                   wellPanel(style = "overflow-x:scroll;"
-                                             , dataTableOutput(outputId = "created_table.changing"))
+                            br()
+                            , br()
+                            , br()
+                            , br()
+                            , column(12
+                                     , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px; overflow-y:scroll; max-height:250px;"))
+                                                 , uiOutput(outputId = "UI.files.changing")))
+                            , column(12
+                                     , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px; overflow-x:scroll;"))
+                                                 , dataTableOutput(outputId = "created_table.changing"))
                             )
                           )
                ) ## END tabPanel (Changing)

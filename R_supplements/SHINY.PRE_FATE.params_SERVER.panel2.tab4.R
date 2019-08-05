@@ -168,11 +168,6 @@ observeEvent(input$delete.changing, {
 
 ####################################################################
 
-output$created_table.changing = renderDataTable({
-  path_folder = paste0(input$name.simul, "/DATA/SCENARIO/")
-  return(get_files(path_folder, skip.no = 0, opt.sub_folder = TRUE))
-})
-
 observeEvent(input$create.changing, {
   if (input$create.skeleton > 0)
   {
@@ -198,14 +193,7 @@ observeEvent(input$create.changing, {
                                         , opt.folder.name = unique(tab$opt.folder.name)
           )
         ), cut_pattern = paste0(input$name.simul, "/DATA/SCENARIO/"))
-        
-        if (as.character(get_res) != "0")
-        {
-          output$created_table.changing = renderDataTable({
-            path_folder = paste0(input$name.simul, "/DATA/SCENARIO/")
-            return(get_files(path_folder, skip.no = 0, opt.sub_folder = TRUE))
-          })
-        }
+
       }
     }
   } else
@@ -213,3 +201,174 @@ observeEvent(input$create.changing, {
     shinyalert(type = "warning", text = "You must create a simulation folder first !")
   }
 })
+
+####################################################################
+
+get_tab.changing = eventReactive(paste(input$name.simul
+                                     , input$create.changing
+                                     , RV$compt.changing.nb), {
+                                       if (!is.null(input$name.simul) && nchar(input$name.simul) > 0)
+                                       {
+                                         path_folder = paste0(input$name.simul, "/DATA/SCENARIO/")
+                                         tab = get_files(path_folder, skip.no = 0, opt.sub_folder = TRUE)
+                                         
+                                         if (!is.null(tab) && ncol(tab) > 0)
+                                         {
+                                           RV$compt.changing.nb = ncol(tab)
+                                           RV$compt.changing.files = colnames(tab)
+                                           return(tab)
+                                         }
+                                       }
+                                     })
+
+output$UI.files.changing = renderUI({
+  tab = get_tab.changing()
+  tab = as.data.frame(tab)
+  
+  if (!is.null(tab) && ncol(tab) > 0)
+  {
+    tagList(
+      fluidRow(
+        column(4
+               , checkboxInput(inputId = "check.changing.all"
+                               , label = HTML("<em>Select all</em>")
+                               , value = TRUE
+                               , width = "100%"))
+        , column(3
+                 , actionButton(inputId = "view.changing.select"
+                                , label = "View selected"
+                                , icon = icon("eye")
+                                , width = "100%"
+                                , style = HTML(paste(button.style, "margin-bottom: 3px;"))))
+        , column(3
+                 , actionButton(inputId = "delete.changing.select"
+                                , label = "Delete selected"
+                                , icon = icon("trash-alt")
+                                , width = "100%"
+                                , style = HTML(paste(button.style, "margin-bottom: 3px;"))))
+      ),
+      hr(),
+      fluidRow(
+        column(10
+               , lapply(1:ncol(tab)
+                        , function(i) {
+                          checkboxInput(inputId = paste0("check.changing.", colnames(tab)[i])
+                                        , label = gsub("__", "/", colnames(tab)[i])
+                                        , value = TRUE
+                                        , width = "100%")
+                        })
+        )
+        # , column(2
+        #          , lapply(1:ncol(tab)
+        #                   , function(i) {
+        #                     actionButton(inputId = paste0("upload.changing.", colnames(tab)[i])
+        #                                  , label = NULL
+        #                                  , icon = icon("upload")
+        #                                  , width = "100%"
+        #                                  , style = HTML(paste(button.style, "margin-bottom: 3px;")))
+        #                   })
+        # )
+      )
+    )
+  }
+})
+
+# observeEvent(RV$compt.changing.nb, {
+#   for (i in 1:RV$compt.changing.nb)
+#   {
+#     observeEvent(input[[paste0("upload.changing.", RV$compt.changing.files[i])]], {
+#       get_update.changing(file.changingParam = paste0(input$name.simul
+#                                                   , "/DATA/SCENARIO/"
+#                                                   , RV$compt.changing.files[i]))
+#     })
+#   }
+# })
+
+
+observeEvent(input$check.changing.all, {
+  for (col_tab in RV$compt.changing.files)
+  {
+    updateCheckboxInput(session
+                        , inputId = paste0("check.changing.", col_tab)
+                        , value = input$check.changing.all)
+  }
+})
+
+observeEvent(input$view.changing.select, {
+  output$created_table.changing = renderDataTable({
+    req(grep(pattern = "check.changing.", x = names(input), value = TRUE))
+    
+    tab = get_tab.changing()
+    tab = as.data.frame(tab)
+    
+    if (!is.null(tab) && ncol(tab) > 0)
+    {
+      if (input$check.changing.all)
+      {
+        col_toKeep = rep(TRUE, ncol(tab))
+      } else
+      {
+        col_toKeep = foreach(i = 1:ncol(tab), .combine = "c") %do%
+        {
+          eval(parse(text = paste0("res = input$check.changing.", colnames(tab)[i])))
+          return(res)
+        }
+      }
+      return(tab[, which(col_toKeep == TRUE), drop = FALSE])
+    }
+  })
+})
+
+observeEvent(input$delete.changing.select, {
+  if (input$check.changing.all)
+  {
+    col_toKeep = rep(TRUE,RV$compt.changing.nb)
+  } else
+  {
+    col_toKeep = foreach(i = 1:RV$compt.changing.nb, .combine = "c") %do%
+    {
+      eval(parse(text = paste0("res = input$check.changing.", RV$compt.changing.files[i])))
+      return(res)
+    }
+  }
+  
+  if (sum(col_toKeep) > 0)
+  {
+    file.changingParam = RV$compt.changing.files[col_toKeep]
+    shinyalert(type = "warning"
+               , text = paste0("The simulation parameter file(s) "
+                               , paste0(input$name.simul, "/DATA/SCENARIO/ \n")
+                               , paste0(gsub("__", "/", file.changingParam), collapse = " , ")
+                               , "\n will be removed !\n"
+                               , "Make sure this is what you want.")
+               , showCancelButton = TRUE
+               , showConfirmButton = TRUE
+               , callbackR = function(x)
+               {
+                 if (x)
+                 {
+                   for (fi in file.changingParam) 
+                   {
+                     file.remove(paste0(input$name.simul, "/DATA/SCENARIO/", gsub("__", "/", fi)))
+                     if (nchar(dirname(gsub("__", "/", fi))) > 0)
+                     {
+                       sub_dir = paste0(input$name.simul, "/DATA/SCENARIO/", dirname(gsub("__", "/", fi)))
+                       if (dir.exists(sub_dir) && length(list.files(path = sub_dir)) == 0)
+                       {
+                         unlink(sub_dir, recursive = TRUE)
+                       }
+                     }
+                     removeUI(selector = paste0("check.changing.", fi)
+                              , multiple = FALSE
+                              , immediate = TRUE)
+                     removeUI(selector = paste0("upload.changing.", fi)
+                              , multiple = FALSE
+                              , immediate = TRUE)
+                   }
+                   RV$compt.changing.nb = min(0, RV$compt.changing.nb - sum(col_toKeep))
+                 }
+               })
+  }
+})
+
+

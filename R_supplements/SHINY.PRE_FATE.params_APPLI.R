@@ -198,8 +198,8 @@ server <- function(input, output, session) {
                       , compt.dist.files = c()
                       , compt.soil.nb = 0
                       , compt.soil.files = c()
-                      , compt.change.nb = 0
-                      , compt.change.files = c()
+                      , compt.changing.nb = 0
+                      , compt.changing.files = c()
                       , compt.dist.by_type = FALSE
                       , compt.dist.by_pfg = FALSE
                       , compt.browser = 1
