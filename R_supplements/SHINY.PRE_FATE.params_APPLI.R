@@ -225,6 +225,7 @@ server <- function(input, output, session) {
   source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel2.menu1.tab3.tab3.R", local = TRUE)$value
   source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel2.menu1.tab3.tab4.R", local = TRUE)$value
   source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel2.menu1.tab4.R", local = TRUE)$value
+  source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel2.menu2.R", local = TRUE)$value
   
   ####################################################################
   

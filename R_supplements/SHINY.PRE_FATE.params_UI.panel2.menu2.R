@@ -66,7 +66,7 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
                                               br(),
                                               fluidRow(
                                                 column(4
-                                                       , checkboxGroupInput(inputId = "sel.choices.1"
+                                                       , checkboxGroupInput(inputId = "set.choices.1"
                                                                             , label = HTML("<i class='fa fa-heart'></i> global parameters")
                                                                             , choices = c("max_by_cohort"
                                                                                           , "max_abund_low"
@@ -84,7 +84,7 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
                                                        )
                                                 )
                                                 , column(3
-                                                         , sliderInput(inputId = "sel.slider.1"
+                                                         , sliderInput(inputId = "set.slider.1"
                                                                        , label = HTML("% of variation<br/><br/>")
                                                                        , min = 0
                                                                        , max = 100
@@ -96,7 +96,7 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
                                                 )
                                                 , column(1, br())
                                                 , column(4
-                                                         , checkboxGroupInput(inputId = "sel.choices.3"
+                                                         , checkboxGroupInput(inputId = "set.choices.2"
                                                                               , label = HTML("<i class='fa fa-globe'></i> habitat suitability")
                                                                               , choices = c("ref_option")
                                                                               , selected = NULL
@@ -114,7 +114,7 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
                                               , fluidRow(
                                                 br()
                                                 , column(4
-                                                         , checkboxGroupInput(inputId = "sel.choices.2"
+                                                         , checkboxGroupInput(inputId = "set.choices.3"
                                                                               , label = HTML("<i class='fa fa-heart'></i> seeding")
                                                                               , choices = c("seeding_duration"
                                                                                             , "seeding_step"
@@ -124,7 +124,7 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
                                                          )
                                                 )
                                                 , column(3
-                                                         , sliderInput(inputId = "sel.slider.2"
+                                                         , sliderInput(inputId = "set.slider.3"
                                                                        , label = HTML("<br/>")
                                                                        , min = 0
                                                                        , max = 100
@@ -136,7 +136,7 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
                                                 )
                                                 , column(1, br())
                                                 , column(4
-                                                         , checkboxGroupInput(inputId = "sel.choices.3"
+                                                         , checkboxGroupInput(inputId = "set.choices.4"
                                                                               , label = HTML("<i class='fa fa-seedling'></i> dispersal")
                                                                               , choices = c("mode_dispers")
                                                                               , selected = NULL
@@ -154,7 +154,7 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
                                               , fluidRow(
                                                 br()
                                                 , column(4
-                                                         , checkboxGroupInput(inputId = "sel.choices.4"
+                                                         , checkboxGroupInput(inputId = "set.choices.5"
                                                                               , label = HTML("<i class='fa fa-sun'></i> global parameters")
                                                                               , choices = c("light_thresh_medium"
                                                                                             , "light_thresh_low")
@@ -163,7 +163,7 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
                                                          )
                                                 )
                                                 , column(3
-                                                         , sliderInput(inputId = "sel.slider.4"
+                                                         , sliderInput(inputId = "set.slider.5"
                                                                        , label = HTML("<br/>")
                                                                        , min = 0
                                                                        , max = 100
@@ -175,7 +175,7 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
                                                 )
                                                 , column(1, br())
                                                 , column(4
-                                                         , checkboxGroupInput(inputId = "sel.choices.3"
+                                                         , checkboxGroupInput(inputId = "set.choices.6"
                                                                               , label = HTML("<i class='fa fa-sun'></i> height strata")
                                                                               , choices = c("strata_limits")
                                                                               , selected = NULL
@@ -195,7 +195,7 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
                            , column(2
                                     , wellPanel(id = "main.panel2",
                                                 br(),
-                                                numericInput(inputId = "sel.num_simul"
+                                                numericInput(inputId = "set.num_simul"
                                                              , label = "Maximum number of simulation files"
                                                              , value = 3000
                                                              , min = 1000
