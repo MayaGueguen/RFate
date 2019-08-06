@@ -1,109 +1,49 @@
 
 ####################################################################
 
-output$UI.set.folders = renderUI({
+output$UI.set.folders.strat2 = renderUI({
   if (!is.null(input$set.strategy))
   {
     shinyjs::show("main.panel")
     
-    if (input$set.strategy == "From 1 folder, 1 simulation file")
+    if (input$set.strategy == "From 1 folder, 2 simulation files")
     {
-      fluidRow(
-        column(5
-               , directoryInput(inputId = "set.folder1"
-                                , label = param.style("Select the simulation folder :")
-                                , value = '~')
-               , shinyjs::disabled(
-                 selectInput(inputId = "set.folder1.simulParam1"
-                             , label = param.style("Select the simulation parameters file(s) :")
-                             , choices = NULL
-                             , selected = NULL
-                             , multiple = F
-                             , width = "100%")
-               )
-        )
-        , column(5, br())
-        , column(2
-                 , br()
-                 , actionButton(inputId = "HELP.panel2.menu2"
-                                , label = "Need some help"
-                                , icon = icon("question-circle", class = "icon-help")
-                                , width = "100%"
-                                , style = HTML(button.style.help)))
-      ) ## END fluidRow
-    } else if (input$set.strategy == "From 1 folder, 2 simulation files")
-    {
-      fluidRow(
-        column(5
-               , directoryInput(inputId = "set.folder1"
-                                , label = param.style("Select the simulation folder :")
-                                , value = '~')
-               , shinyjs::disabled(
-                 selectInput(inputId = "set.folder1.simulParam1"
-                             , label = param.style("Select the simulation parameters file(s) :")
-                             , choices = NULL
-                             , selected = NULL
-                             , multiple = F
-                             , width = "100%")
-               )
-               , shinyjs::disabled(
-                 selectInput(inputId = "set.folder1.simulParam2"
-                             , label = NULL
-                             , choices = NULL
-                             , selected = NULL
-                             , multiple = F
-                             , width = "100%")
-               )
-        )
-        , column(5, br())
-        , column(2
-                 , br()
-                 , actionButton(inputId = "HELP.panel2.menu2"
-                                , label = "Need some help"
-                                , icon = icon("question-circle", class = "icon-help")
-                                , width = "100%"
-                                , style = HTML(button.style.help)))
-      ) ## END fluidRow
-    } else if (input$set.strategy == "From 2 folders, 2 simulation files")
-    {
-      fluidRow(
-        column(5
-               , directoryInput(inputId = "set.folder1"
-                                , label = param.style("Select the simulation folder :")
-                                , value = '~')
-               , shinyjs::disabled(
-                 selectInput(inputId = "set.folder1.simulParam1"
-                             , label = param.style("Select the simulation parameters file(s) :")
-                             , choices = NULL
-                             , selected = NULL
-                             , multiple = F
-                             , width = "100%")
-               )
-        )
-        , column(5
-                 , directoryInput(inputId = "set.folder2"
-                                  , label = param.style("Select the simulation folder :")
-                                  , value = '~')
-                 , shinyjs::disabled(
-                   selectInput(inputId = "set.folder2.simulParam2"
-                               , label = param.style("Select the simulation parameters file :")
-                               , choices = NULL
-                               , selected = NULL
-                               , multiple = F
-                               , width = "100%")
-                 )
-        )
-        , column(2
-                 , br()
-                 , actionButton(inputId = "HELP.panel2.menu2"
-                                , label = "Need some help"
-                                , icon = icon("question-circle", class = "icon-help")
-                                , width = "100%"
-                                , style = HTML(button.style.help)))
-      ) ## END fluidRow
+      shinyjs::disabled(
+        selectInput(inputId = "set.folder1.simulParam2"
+                    , label = NULL
+                    , choices = NULL
+                    , selected = NULL
+                    , multiple = F
+                    , width = "100%")
+      )
     }
   }
 })
+
+output$UI.set.folders.strat3 = renderUI({
+  if (!is.null(input$set.strategy))
+  {
+    shinyjs::show("main.panel")
+    
+    if (input$set.strategy == "From 2 folders, 2 simulation files")
+    {
+      tagList(
+        directoryInput(inputId = "set.folder2"
+                       , label = param.style("Select the simulation folder :")
+                       , value = '~')
+        , shinyjs::disabled(
+          selectInput(inputId = "set.folder2.simulParam2"
+                      , label = param.style("Select the simulation parameters file :")
+                      , choices = NULL
+                      , selected = NULL
+                      , multiple = F
+                      , width = "100%")
+        )
+      )
+    }
+  }
+})
+
 
 ####################################################################
 
@@ -131,13 +71,13 @@ output$UI.set.slider.3 = renderUI({
     if (input$set.strategy == "From 1 folder, 1 simulation file")
     {
       sliderInput(inputId = "set.slider.3"
-                    , label = HTML("<br/>")
-                    , min = 0
-                    , max = 100
-                    , value = 50
-                    , step = 5
-                    , round = TRUE
-                    , width = "100%"
+                  , label = HTML("<br/>")
+                  , min = 0
+                  , max = 100
+                  , value = 50
+                  , step = 5
+                  , round = TRUE
+                  , width = "100%"
       )
     }
   }

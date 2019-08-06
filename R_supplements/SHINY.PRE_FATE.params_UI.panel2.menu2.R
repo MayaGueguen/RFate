@@ -1,7 +1,7 @@
 
 tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Create multiple set</span>")
          , value = "panel3"
-
+         
          , fluidRow(
            radioGroupButtons(inputId = "set.strategy"
                              , label = NULL
@@ -25,7 +25,30 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
              withMathJax(),
              
              br(),
-             uiOutput(outputId = "UI.set.folders")
+             fluidRow(
+               column(5
+                      , directoryInput(inputId = "set.folder1"
+                                       , label = param.style("Select the simulation folder :")
+                                       , value = '~')
+                      , shinyjs::disabled(
+                        selectInput(inputId = "set.folder1.simulParam1"
+                                    , label = param.style("Select the simulation parameters file(s) :")
+                                    , choices = NULL
+                                    , selected = NULL
+                                    , multiple = F
+                                    , width = "100%")
+                      )
+                      , uiOutput(outputId = "UI.set.folders.strat2")
+               )
+               , column(5, uiOutput(outputId = "UI.set.folders.strat3"))
+               , column(2
+                        , br()
+                        , actionButton(inputId = "HELP.panel2.menu2"
+                                       , label = "Need some help"
+                                       , icon = icon("question-circle", class = "icon-help")
+                                       , width = "100%"
+                                       , style = HTML(button.style.help)))
+             ) ## END fluidRow
            ) ## END sidebarPanel
            
            # Output
@@ -33,7 +56,7 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
              width = 12
              , shinyjs::hidden(
                
-             wellPanel(id = "main.panel",
+               wellPanel(id = "main.panel",
                          style = "border-solid:solid; border-width:0px;",
                          fluidRow(
                            column(10
@@ -161,7 +184,7 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
                                     ) ## END main.panel2
                            )
                          )
-             ) ## END main.panel
+               ) ## END main.panel
              )
            ) ## END mainPanel
          ) ## END sidebarLayout
