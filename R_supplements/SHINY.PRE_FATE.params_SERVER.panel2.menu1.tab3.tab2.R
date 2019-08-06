@@ -16,8 +16,8 @@ output$UI.disp.PFG = renderUI({
   {
     selectInput(inputId = "disp.PFG"
                 , label = NULL
-                , choices = RV$names.PFG
-                , selected = RV$names.PFG[1]
+                , choices = RV$names.PFG[which(!(RV$names.PFG %in% RV$mat.PFG.disp$PFG))]
+                , selected = RV$names.PFG[which(!(RV$names.PFG %in% RV$mat.PFG.disp$PFG))][1]
                 , multiple = F
                 , width = "100%")
   }
