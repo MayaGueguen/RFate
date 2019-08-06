@@ -64,10 +64,14 @@ help.full = function(param.web = NULL, param.name.vec, param.desc.vec)
 
 ###################################################################################################################################
 
-help.HTML = function(html.file, target.anchor = 'class="hasAnchor"', target.class = '#arguments')
+help.HTML = function(html.file, target.anchor = 'class="hasAnchor"', target.class = '#arguments', web.address = NULL)
 {
   TEXT = readLines(html.file)
   TEXT.keep = help.web(web.address = paste0("https://mayagueguen.github.io/RFate/reference/", basename(html.file)))
+  if (!is.null(web.address))
+  {
+    TEXT.keep = help.web(web.address = web.address)
+  }
 
   ind.anchor = grep(target.anchor, TEXT)
   # ind.anchor = c(ind.anchor, length(TEXT))

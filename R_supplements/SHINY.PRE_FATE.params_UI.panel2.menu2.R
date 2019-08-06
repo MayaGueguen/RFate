@@ -74,6 +74,13 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
                                                                                           , "max_abund_high")
                                                                             , selected = NULL
                                                                             , width = "100%"
+                                                       ) %>% helper(type = "inline"
+                                                                    , title = "FATE-HD modules : CORE - Required and impacted parameters"
+                                                                    , size = "l"
+                                                                    , content = help.HTML(html.file = "https://mayagueguen.github.io/FATE-WEBSITE/1c_fate-hd_tutorial_MODULES.html"
+                                                                                          , target.anchor = '<h1'
+                                                                                          , target.class = "CORE"
+                                                                                          , web.address = "https://mayagueguen.github.io/FATE-WEBSITE/1c_fate-hd_tutorial_MODULES.html#_core_module_(succession)")
                                                        )
                                                 )
                                                 , column(3
@@ -96,6 +103,13 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
                                                                               , width = "100%"
                                                          )
                                                 )
+                                              ) %>% helper(type = "inline"
+                                                           , title = "FATE-HD modules : HABITAT SUITABILITY - Required and impacted parameters"
+                                                           , size = "l"
+                                                           , content = help.HTML(html.file = "https://mayagueguen.github.io/FATE-WEBSITE/1c_fate-hd_tutorial_MODULES.html"
+                                                                                 , target.anchor = '<h1'
+                                                                                 , target.class = "HABITAT SUITABILITY"
+                                                                                 , web.address = "https://mayagueguen.github.io/FATE-WEBSITE/1c_fate-hd_tutorial_MODULES.html#_habitat_suitability_module_")
                                               )
                                               , fluidRow(
                                                 br()
@@ -129,6 +143,13 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
                                                                               , width = "100%"
                                                          )
                                                 )
+                                              ) %>% helper(type = "inline"
+                                                           , title = "FATE-HD modules : DISPERSAL - Required and impacted parameters"
+                                                           , size = "l"
+                                                           , content = help.HTML(html.file = "https://mayagueguen.github.io/FATE-WEBSITE/1c_fate-hd_tutorial_MODULES.html"
+                                                                                 , target.anchor = '<h1'
+                                                                                 , target.class = "DISPERSAL"
+                                                                                 , web.address = "https://mayagueguen.github.io/FATE-WEBSITE/1c_fate-hd_tutorial_MODULES.html#_dispersal_module_")
                                               )
                                               , fluidRow(
                                                 br()
@@ -161,16 +182,42 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
                                                                               , width = "100%"
                                                          )
                                                 )
-                                              )
-                                  )## END main.panel1
+                                              ) %>% helper(type = "inline"
+                                                           , title = "FATE-HD modules : LIGHT - Required and impacted parameters"
+                                                           , size = "l"
+                                                           , content = help.HTML(html.file = "https://mayagueguen.github.io/FATE-WEBSITE/1c_fate-hd_tutorial_MODULES.html"
+                                                                                 , target.anchor = '<h1'
+                                                                                 , target.class = "LIGHT"
+                                                                                 , web.address = "https://mayagueguen.github.io/FATE-WEBSITE/1c_fate-hd_tutorial_MODULES.html#_light_module_")
+                                              ) ## END fluidRow
+                                  ) ## END main.panel1
+                           )
+                           , column(2
+                                    , wellPanel(id = "main.panel2",
+                                                br(),
+                                                numericInput(inputId = "sel.num_simul"
+                                                             , label = "Maximum number of simulation files"
+                                                             , value = 3000
+                                                             , min = 1000
+                                                             , max = 10000
+                                                             , step = 500
+                                                             , width = "100%"
+                                                )
+                                                , br()
+                                                , br()
+                                                , shinyjs::disabled(
+                                                  actionButton(inputId = "create.multiple_set"
+                                                               , label = HTML("Create <br/>multiple set")
+                                                               , icon = icon("play")
+                                                               , width = "100%"
+                                                               , style = HTML(button.style)
+                                                  )
+                                                )
+                                                # fluidRow(
+                                                # )
+                                    ) ## END main.panel2
                            )
                          )
-                         # ) %>% helper(type = "inline"
-                         #              , title = "FATE-HD modules"
-                         #              , size = "l"
-                         #              , content = help.HTML(html.file = "https://mayagueguen.github.io/FATE-WEBSITE/1c_fate-hd_tutorial_MODULES.html"
-                         #                                    , target.anchor = '<div '
-                         #                                    , target.class = "#arguments")
              ) ## END main.panel
            ) ## END mainPanel
          ) ## END sidebarLayout
