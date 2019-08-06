@@ -38,9 +38,17 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
                                     , multiple = F
                                     , width = "100%")
                       )
-                      , uiOutput(outputId = "UI.set.folders.strat2")
+                      , shinyjs::hidden(
+                        selectInput(inputId = "set.folder1.simulParam2"
+                                    , label = NULL
+                                    , choices = NULL
+                                    , selected = NULL
+                                    , multiple = F
+                                    , width = "100%")
+                      )
                )
-               , column(5, uiOutput(outputId = "UI.set.folders.strat3"))
+               , column(5, uiOutput(outputId = "UI.set.folders.strat3")
+               )
                , column(2
                         , br()
                         , actionButton(inputId = "HELP.panel2.menu2"
@@ -81,7 +89,19 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
                                                                                           , web.address = "https://mayagueguen.github.io/FATE-WEBSITE/1c_fate-hd_tutorial_MODULES.html#_core_module_(succession)")
                                                        )
                                                 )
-                                                , column(3, uiOutput(outputId = "UI.set.slider.1"))
+                                                , column(3
+                                                         , shinyjs::hidden(
+                                                           sliderInput(inputId = "set.slider.1"
+                                                                       , label = HTML("% of variation<br/><br/>")
+                                                                       , min = 0
+                                                                       , max = 100
+                                                                       , value = 50
+                                                                       , step = 5
+                                                                       , round = TRUE
+                                                                       , width = "100%"
+                                                           )
+                                                         )
+                                                )
                                                 , column(1, br())
                                                 , column(4
                                                          , checkboxGroupInput(inputId = "set.choices.2"
@@ -111,7 +131,19 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
                                                                               , width = "100%"
                                                          )
                                                 )
-                                                , column(3, uiOutput(outputId = "UI.set.slider.3"))
+                                                , column(3
+                                                         , shinyjs::hidden(
+                                                           sliderInput(inputId = "set.slider.3"
+                                                                       , label = HTML("<br/>")
+                                                                       , min = 0
+                                                                       , max = 100
+                                                                       , value = 50
+                                                                       , step = 5
+                                                                       , round = TRUE
+                                                                       , width = "100%"
+                                                           )
+                                                         )
+                                                )
                                                 , column(1, br())
                                                 , column(4
                                                          , checkboxGroupInput(inputId = "set.choices.4"
@@ -140,7 +172,19 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
                                                                               , width = "100%"
                                                          )
                                                 )
-                                                , column(3, uiOutput(outputId = "UI.set.slider.5"))
+                                                , column(3
+                                                         , shinyjs::hidden(
+                                                           sliderInput(inputId = "set.slider.5"
+                                                                       , label = HTML("<br/>")
+                                                                       , min = 0
+                                                                       , max = 100
+                                                                       , value = 50
+                                                                       , step = 5
+                                                                       , round = TRUE
+                                                                       , width = "100%"
+                                                           )
+                                                         )
+                                                )
                                                 , column(1, br())
                                                 , column(4
                                                          , checkboxGroupInput(inputId = "set.choices.6"

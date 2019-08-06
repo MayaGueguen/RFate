@@ -1,102 +1,46 @@
 
 ####################################################################
 
-output$UI.set.folders.strat2 = renderUI({
+observeEvent(input$set.strategy, {
   if (!is.null(input$set.strategy))
   {
     shinyjs::show("main.panel")
     
-    if (input$set.strategy == "From 1 folder, 2 simulation files")
+    if (input$set.strategy == "From 1 folder, 1 simulation file")
     {
-      shinyjs::disabled(
-        selectInput(inputId = "set.folder1.simulParam2"
-                    , label = NULL
-                    , choices = NULL
-                    , selected = NULL
-                    , multiple = F
-                    , width = "100%")
-      )
-    }
-  }
-})
-
-output$UI.set.folders.strat3 = renderUI({
-  if (!is.null(input$set.strategy))
-  {
-    shinyjs::show("main.panel")
-    
-    if (input$set.strategy == "From 2 folders, 2 simulation files")
+      shinyjs::hide("set.folder1.simulParam2")
+      output$UI.set.folders.strat3 = renderUI({ br() })
+      shinyjs::show("set.slider.1")
+      shinyjs::show("set.slider.3")
+      shinyjs::show("set.slider.5")
+    } else if (input$set.strategy == "From 1 folder, 2 simulation files")
     {
-      tagList(
-        directoryInput(inputId = "set.folder2"
-                       , label = param.style("Select the simulation folder :")
-                       , value = '~')
-        , shinyjs::disabled(
-          selectInput(inputId = "set.folder2.simulParam2"
-                      , label = param.style("Select the simulation parameters file :")
-                      , choices = NULL
-                      , selected = NULL
-                      , multiple = F
-                      , width = "100%")
+      shinyjs::show("set.folder1.simulParam2")
+      output$UI.set.folders.strat3 = renderUI({ br() })
+      shinyjs::hide("set.slider.1")
+      shinyjs::hide("set.slider.3")
+      shinyjs::hide("set.slider.5")
+    } else if (input$set.strategy == "From 2 folders, 2 simulation files")
+    {
+      shinyjs::hide("set.folder1.simulParam2")
+      output$UI.set.folders.strat3 = renderUI({
+        tagList(
+          directoryInput(inputId = "set.folder2"
+                         , label = param.style("Select the simulation folder :")
+                         , value = '~')
+          , shinyjs::disabled(
+            selectInput(inputId = "set.folder2.simulParam2"
+                          , label = param.style("Select the simulation parameters file :")
+                          , choices = NULL
+                          , selected = NULL
+                          , multiple = F
+                          , width = "100%")
+          )
         )
-      )
-    }
-  }
-})
-
-
-####################################################################
-
-output$UI.set.slider.1 = renderUI({
-  if (!is.null(input$set.strategy))
-  {
-    if (input$set.strategy == "From 1 folder, 1 simulation file")
-    {
-      sliderInput(inputId = "set.slider.1"
-                  , label = HTML("% of variation<br/><br/>")
-                  , min = 0
-                  , max = 100
-                  , value = 50
-                  , step = 5
-                  , round = TRUE
-                  , width = "100%"
-      )
-    }
-  }
-})
-
-output$UI.set.slider.3 = renderUI({
-  if (!is.null(input$set.strategy))
-  {
-    if (input$set.strategy == "From 1 folder, 1 simulation file")
-    {
-      sliderInput(inputId = "set.slider.3"
-                  , label = HTML("<br/>")
-                  , min = 0
-                  , max = 100
-                  , value = 50
-                  , step = 5
-                  , round = TRUE
-                  , width = "100%"
-      )
-    }
-  }
-})
-
-output$UI.set.slider.5 = renderUI({
-  if (!is.null(input$set.strategy))
-  {
-    if (input$set.strategy == "From 1 folder, 1 simulation file")
-    {
-      sliderInput(inputId = "set.slider.5"
-                  , label = HTML("<br/>")
-                  , min = 0
-                  , max = 100
-                  , value = 50
-                  , step = 5
-                  , round = TRUE
-                  , width = "100%"
-      )
+      })
+      shinyjs::hide("set.slider.1")
+      shinyjs::hide("set.slider.3")
+      shinyjs::hide("set.slider.5")
     }
   }
 })
@@ -124,7 +68,7 @@ get_path.folder2 = eventReactive(input$set.folder2, {
 
 ####################################################################
 
-observeEvent(input$set.folder1, {
+observeEvent(paste(input$set.folder1, input$set.strategy), {
   if (input$set.folder1 > 0)
   {
     names.simulParam = list.files(path = paste0(get_path.folder1(), "/PARAM_SIMUL")
@@ -193,39 +137,112 @@ observeEvent(input$set.folder2, {
 
 ####################################################################
 
-# observeEvent(input$run.copy, {
-#   if (input$run.folder.simul > 0 && nchar(input$run.simulParam) > 0)
-#   {
-#     if(!is.null(input$run.executable))
-#     {
-#       showModal(modalDialog(HTML(paste0("Copying <em>", basename(get_path.run()), "</em> folder..."))
-#                             , title = HTML("Run <code>FATE-HD</code> simulation")
-#                             , footer = NULL))
-#       system(paste0("scp -r ", get_path.run(), " ./"))
-#       system(paste0("scp ", input$run.executable$datapath, " FATE_executable.exe"))
-#       removeModal()
-#     }
-#   }
-# })
-# 
-# ####################################################################
-# 
-# observeEvent(input$run, {
-#   if (input$run.folder.simul > 0 && nchar(input$run.simulParam) > 0)
-#   {
-#     if (file.exists("FATE_executable.exe") &&
-#         dir.exists(basename(get_path.run())))
-#     {
-#       showModal(modalDialog(HTML(paste0("Running simulation with :
-#                                         <ul>
-#                                         <li><strong>folder :</strong> ", basename(get_path.run()),"</li>
-#                                         <li><strong>simulation parameter file :</strong> ", input$run.simulParam, "</li>
-#                                         </ul>"))
-#                             , title = HTML("Run <code>FATE-HD</code> simulation")
-#                             , footer = NULL))
-#       Sys.sleep(30)
-#       removeModal()
-#     }
-#   }
-# })
-# 
+get_checked = eventReactive(lapply(grep(pattern = "^set.choices.",
+                                        x = names(input),
+                                        value = TRUE), function(x) input[[x]]),
+                            {
+                              return(list(input$set.choices.1
+                                          , input$set.choices.2
+                                          , input$set.choices.3
+                                          , input$set.choices.4
+                                          , input$set.choices.5
+                                          , input$set.choices.6))
+                            })
+
+get_sliders = eventReactive(lapply(grep(pattern = "^set.slider.",
+                                        x = names(input),
+                                        value = TRUE), function(x) input[[x]]),
+                            {
+                              if (!is.null(input$set.strategy))
+                              {
+                                if (input$set.strategy == "From 1 folder, 1 simulation file")
+                                {
+                                  return(c(input$set.slider.1
+                                           , 0
+                                           , input$set.slider.3
+                                           , 0
+                                           , input$set.slider.5
+                                           , 0))
+                                }
+                              }
+                            })
+
+# get_ranges = eventReactive(paste(get_checked(), get_sliders()), {
+observeEvent(paste(get_checked(), get_sliders()), {
+  if (!is.null(input$set.strategy))
+  {
+    print("uuuuuuuuuuuuu")
+    print(input$set.folder1)
+    print(nchar(input$set.folder1))
+    print(get_path.folder1())
+    if (!is.null(get_path.folder1()) &&
+        # !is.na(get_path.folder1()) &&
+        nchar(get_path.folder1()) > 0 &&
+        dir.exists(get_path.folder1()))
+    {
+      if (!is.null(input$set.folder1.simulParam1) &&
+          nchar(input$set.folder1.simulParam1) > 0 &&
+          file.exists(paste0(get_path.folder1(), "/PARAM_SIMUL/", input$set.folder1.simulParam1)))
+      {
+        if (input$set.strategy == "From 1 folder, 1 simulation file")
+        {
+          print("SCENARIO 1")
+        } else if (input$set.strategy == "From 1 folder, 2 simulation files")
+        {
+          if (!is.null(input$set.folder1.simulParam2) &&
+              nchar(input$set.folder1.simulParam2) > 0 &&
+              file.exists(paste0(get_path.folder1(), "/PARAM_SIMUL/", input$set.folder1.simulParam2)))
+          { 
+            print("SCENARIO 2")
+          } else
+          {
+            shinyalert(type = "warning", text = paste0("The file '"
+                                                       , paste0(get_path.folder1()
+                                                                , "/PARAM_SIMUL/\n"
+                                                                , input$set.folder1.simulParam2)
+                                                       , "'does not exist !"))
+            ## MESSAGE d'ERREUR folder1 simulParam2
+          }
+        } else if (input$set.strategy == "From 2 folders, 2 simulation files")
+        {
+          if (!is.null(get_path.folder2()) &&
+              nchar(get_path.folder2()) > 0 &&
+              dir.exists(get_path.folder2()))
+          {
+            if (!is.null(input$set.folder2.simulParam2) &&
+                nchar(input$set.folder2.simulParam2) > 0 &&
+                file.exists(paste0(get_path.folder2(), "/PARAM_SIMUL/", input$set.folder2.simulParam2)))
+            { 
+              print("SCENARIO 3")
+            } else
+            {
+              shinyalert(type = "warning", text = paste0("The file '"
+                                                         , paste0(get_path.folder2()
+                                                                  , "/PARAM_SIMUL/\n"
+                                                                  , input$set.folder2.simulParam2)
+                                                         , "'does not exist !"))
+              ## MESSAGE d'ERREUR folder2 simulParam2
+            }
+          } else
+          {
+            shinyalert(type = "warning", text = paste0("The folder '", get_path.folder2(), "'does not exist !"))
+            ## MESSAGE d'ERREUR folder2
+          }
+        }
+      } else
+      {
+        shinyalert(type = "warning", text = paste0("The file '"
+                                                   , paste0(get_path.folder1()
+                                                            , "/PARAM_SIMUL/\n"
+                                                            , input$set.folder1.simulParam1)
+                                                   , "'does not exist !"))
+        ## MESSAGE d'ERREUR folder1 simulParam1
+      }
+    } else
+    {
+      shinyalert(type = "warning", text = paste0("The folder '", get_path.folder1(), "'does not exist !"))
+      ## MESSAGE d'ERREUR folder1
+    }
+  }
+})
+
