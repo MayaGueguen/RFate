@@ -17,7 +17,7 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
                                        , value = '~')
                       , shinyjs::disabled(
                         selectInput(inputId = "set.folder1.simulParam1"
-                                    , label = param.style("Select the simulation parameters file :")
+                                    , label = param.style("Select the simulation parameters file(s) :")
                                     , choices = NULL
                                     , selected = NULL
                                     , multiple = F
@@ -25,7 +25,7 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
                       )
                       , shinyjs::disabled(
                         selectInput(inputId = "set.folder1.simulParam2"
-                                    , label = param.style("Select the simulation parameters file :")
+                                    , label = NULL
                                     , choices = NULL
                                     , selected = NULL
                                     , multiple = F

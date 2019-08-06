@@ -35,18 +35,58 @@ observeEvent(input$set.folder1, {
                         , inputId = "set.folder1.simulParam1"
                         , choices = names.simulParam
                         , selected = names.simulParam[1])
+
+      updateSelectInput(session
+                        , inputId = "set.folder1.simulParam2"
+                        , choices = names.simulParam
+                        , selected = names.simulParam[1])
+      
       shinyjs::enable("set.folder1.simulParam1")
+      shinyjs::enable("set.folder1.simulParam2")
     } else
     {
       shinyjs::reset("set.folder1.simulParam1")
+      shinyjs::reset("set.folder1.simulParam2")
       shinyjs::disable("set.folder1.simulParam1")
+      shinyjs::disable("set.folder1.simulParam2")
     }
   } else
   {
     shinyjs::reset("set.folder1.simulParam1")
+    shinyjs::reset("set.folder1.simulParam2")
     shinyjs::disable("set.folder1.simulParam1")
+    shinyjs::disable("set.folder1.simulParam2")
   }
 })
+
+observeEvent(input$set.folder2, {
+  if (input$set.folder2 > 0)
+  {
+    names.simulParam = list.files(path = paste0(get_path.folder2(), "/PARAM_SIMUL")
+                                  , pattern = ".txt$"
+                                  , all.files = FALSE
+                                  , full.names = TRUE)
+    names.simulParam = basename(names.simulParam)
+    if (length(names.simulParam) > 0)
+    {
+      updateSelectInput(session
+                        , inputId = "set.folder2.simulParam2"
+                        , choices = names.simulParam
+                        , selected = names.simulParam[1])
+      
+      shinyjs::enable("set.folder2.simulParam2")
+    } else
+    {
+      shinyjs::reset("set.folder2.simulParam2")
+      shinyjs::disable("set.folder2.simulParam2")
+    }
+  } else
+  {
+    shinyjs::reset("set.folder2.simulParam2")
+    shinyjs::disable("set.folder2.simulParam2")
+  }
+})
+
 
 ####################################################################
 
