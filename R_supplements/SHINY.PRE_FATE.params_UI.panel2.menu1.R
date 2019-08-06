@@ -1,6 +1,6 @@
 
-# tabPanel(title = HTML("<p class='panel_title'><i class='fa fa-folder-plus'></i> New</p>")
-tabPanel(title = HTML("<span class='panel_title'><i class='fa fa-copy'></i> Simulation parameter files</span>")
+tabPanel(title = HTML("<p class='panel_title'><i class='fa fa-folder-plus'></i> New / <i class='fa fa-folder-open'></i> Modify</p>")
+# tabPanel(title = HTML("<span class='panel_title'><i class='fa fa-copy'></i> Simulation parameter files</span>")
          , value = "panel2"
          , sidebarLayout(
            
@@ -130,10 +130,10 @@ tabPanel(title = HTML("<span class='panel_title'><i class='fa fa-copy'></i> Simu
                wellPanel(id = "main.panel",
                          style = "border-solid:solid; border-width:0px; border-color:#068f96;",
                          tabsetPanel(
-                           source("R_supplements/SHINY.PRE_FATE.params_UI.panel2.tab1.R", local = TRUE)$value
-                           , source("R_supplements/SHINY.PRE_FATE.params_UI.panel2.tab2.R", local = TRUE)$value
-                           , source("R_supplements/SHINY.PRE_FATE.params_UI.panel2.tab3.R", local = TRUE)$value
-                           , source("R_supplements/SHINY.PRE_FATE.params_UI.panel2.tab4.R", local = TRUE)$value
+                           source("R_supplements/SHINY.PRE_FATE.params_UI.panel2.menu1.tab1.R", local = TRUE)$value
+                           , source("R_supplements/SHINY.PRE_FATE.params_UI.panel2.menu1.tab2.R", local = TRUE)$value
+                           , source("R_supplements/SHINY.PRE_FATE.params_UI.panel2.menu1.tab3.R", local = TRUE)$value
+                           , source("R_supplements/SHINY.PRE_FATE.params_UI.panel2.menu1.tab4.R", local = TRUE)$value
                          ) ## END tabsetPanel
                ) ## END wellPanel
              ) ## END hidden

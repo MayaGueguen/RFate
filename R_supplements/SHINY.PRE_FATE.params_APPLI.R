@@ -160,7 +160,11 @@ ui <- fluidPage(
                , id = "navbar"
                , source("R_supplements/SHINY.PRE_FATE.params_UI.panel0.R", local = TRUE)$value
                , source("R_supplements/SHINY.PRE_FATE.params_UI.panel1.R", local = TRUE)$value
-               , source("R_supplements/SHINY.PRE_FATE.params_UI.panel2.R", local = TRUE)$value
+               # , source("R_supplements/SHINY.PRE_FATE.params_UI.panel2.R", local = TRUE)$value
+               , navbarMenu(title = HTML("<span class='panel_title'><i class='fa fa-copy'></i> Simulation parameter files</span>")
+                            , source("R_supplements/SHINY.PRE_FATE.params_UI.panel2.menu1.R", local = TRUE)$value
+                            , source("R_supplements/SHINY.PRE_FATE.params_UI.panel2.menu2.R", local = TRUE)$value)
+                            # , tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Create multiple set</span>")))
                , source("R_supplements/SHINY.PRE_FATE.params_UI.panel3.R", local = TRUE)$value
                , source("R_supplements/SHINY.PRE_FATE.params_UI.panel4.R", local = TRUE)$value
     )
@@ -212,15 +216,15 @@ server <- function(input, output, session) {
   
   ####################################################################
   
-  source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel2.R", local = TRUE)$value
-  source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel2.tab1.R", local = TRUE)$value
-  source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel2.tab2.R", local = TRUE)$value
-  source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel2.tab3.tab0.R", local = TRUE)$value
-  source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel2.tab3.tab1.R", local = TRUE)$value
-  source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel2.tab3.tab2.R", local = TRUE)$value
-  source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel2.tab3.tab3.R", local = TRUE)$value
-  source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel2.tab3.tab4.R", local = TRUE)$value
-  source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel2.tab4.R", local = TRUE)$value
+  source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel2.menu1.R", local = TRUE)$value
+  source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel2.menu1.tab1.R", local = TRUE)$value
+  source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel2.menu1.tab2.R", local = TRUE)$value
+  source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel2.menu1.tab3.tab0.R", local = TRUE)$value
+  source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel2.menu1.tab3.tab1.R", local = TRUE)$value
+  source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel2.menu1.tab3.tab2.R", local = TRUE)$value
+  source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel2.menu1.tab3.tab3.R", local = TRUE)$value
+  source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel2.menu1.tab3.tab4.R", local = TRUE)$value
+  source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel2.menu1.tab4.R", local = TRUE)$value
   
   ####################################################################
   
