@@ -194,9 +194,9 @@ get_toSuppr = eventReactive(get_checked(), {
   return(toSuppr)
 })
 
-# get_ranges = eventReactive(paste(get_checked(), get_sliders()), {
-observeEvent(paste(get_checked(), get_sliders()), {
-  
+
+get_PARAMS = function(path_folder, file_simul, params)
+{
   GLOBAL.names.params = c("max_by_cohort" = "MAX_BY_COHORT"
                           , "max_abund_low" = "MAX_ABUND_LOW"
                           , "max_abund_medium" = "MAX_ABUND_MEDIUM"
@@ -210,13 +210,77 @@ observeEvent(paste(get_checked(), get_sliders()), {
                           , "light_thresh_low" = "LIGHT_THRESH_LOW"
                           , "strata_limits" = "NB_STRATUM")
   
-  params.checked = get_checked()
-  params.sliders = get_sliders()
+  ## GET FILE informations
   
+  ## Simulation parameter file
+  abs.simulParam = paste0(path_folder, "/PARAM_SIMUL/", file_simul)
+  lines.simulParam = readLines(abs.simulParam)
+  params.simulParam = grep("^--.*--$", lines.simulParam, value = TRUE)
+  params.simulParam = gsub("--", "", params.simulParam)
+  # params.simulParam.TOKEEP = params.simulParam[which(!(params.simulParam %in% toSuppr))]
+  
+  ## Global parameter file
+  file.globalParam = .getParam(params.lines = abs.simulParam
+                               , flag = "GLOBAL_PARAMS"
+                               , flag.split = "^--.*--$"
+                               , is.num = FALSE)
+  file.globalParam = paste0(dirname(path_folder), "/", file.globalParam)
+  
+  lines.globalParam = readLines(file.globalParam)
+  params.globalParam = as.vector(sapply(lines.globalParam, function(x) strsplit(as.character(x), " ")[[1]][1]))
+  params.globalParam = params.globalParam[which(params.globalParam != "##")]
+  # params.globalParam.TOKEEP = params.globalParam[which(!(params.globalParam %in% toSuppr))]
+  
+  for (i in unlist(params))
+  {
+    if (length(grep(GLOBAL.names.params[i], params.globalParam)) == 0)
+    {
+      for (y in 1:length(params))
+      {
+        if (length(params[[y]]) > 0)
+        {
+          toSuppr = c()
+          for (x in 1:length(params[[y]]))
+          {
+            if (!is.null(params[[y]][x]) && params[[y]][x] == i)
+            {
+              toSuppr = c(toSuppr, x)
+              shinyalert(type = "warning", text = paste0("The parameter '", i, "' is not defined in the global file :\n"
+                                                         , basename(file.globalParam)
+                                                         , "\n from the simulation file :\n"
+                                                         , basename(abs.simulParam)
+                                                         , "\n\nIt will not be considered."))
+            }
+          }
+          if (length(toSuppr) > 0)
+          {
+            params[[y]] = params[[y]][-toSuppr]
+          }
+        }
+      }
+    }
+  }
+  
+  ## Get parameters value
+  PARAMS = lapply(params[1:3], function(y) {
+    sapply(y, function(x) {
+      if (!is.null(x))
+      {
+        return(.getParam(params.lines = file.globalParam
+                         , flag = as.vector(GLOBAL.names.params[x])
+                         , flag.split = " "
+                         , is.num = TRUE))
+      }
+    })
+  })
+  
+  return(PARAMS)
+}
+
+
+get_ranges = eventReactive(paste(get_checked(), get_sliders()), {
   if (!is.null(input$set.strategy))
   {
-    print("uuuuuuuuuuuuu")
-    
     if (!is.null(get_path.folder1()) &&
         nchar(get_path.folder1()) > 0 &&
         dir.exists(get_path.folder1()))
@@ -225,96 +289,45 @@ observeEvent(paste(get_checked(), get_sliders()), {
           nchar(input$set.folder1.simulParam1) > 0 &&
           file.exists(paste0(get_path.folder1(), "/PARAM_SIMUL/", input$set.folder1.simulParam1)))
       {
+        params.checked = get_checked()
+        
         ## GET FILE 1 informations
-        
-        ## Simulation parameter file
-        abs.simulParam = paste0(get_path.folder1(), "/PARAM_SIMUL/", input$set.folder1.simulParam1)
-        lines.simulParam = readLines(abs.simulParam)
-        params.simulParam = grep("^--.*--$", lines.simulParam, value = TRUE)
-        params.simulParam = gsub("--", "", params.simulParam)
-        # params.simulParam.TOKEEP = params.simulParam[which(!(params.simulParam %in% toSuppr))]
-        
-        ## Global parameter file
-        file.globalParam = .getParam(params.lines = abs.simulParam
-                                     , flag = "GLOBAL_PARAMS"
-                                     , flag.split = "^--.*--$"
-                                     , is.num = FALSE)
-        file.globalParam = paste0(dirname(get_path.folder1()), "/", file.globalParam)
-        
-        lines.globalParam = readLines(file.globalParam)
-        params.globalParam = as.vector(sapply(lines.globalParam, function(x) strsplit(as.character(x), " ")[[1]][1]))
-        params.globalParam = params.globalParam[which(params.globalParam != "##")]
-        # params.globalParam.TOKEEP = params.globalParam[which(!(params.globalParam %in% toSuppr))]
-        
-        for (i in unlist(params.checked))
-        {
-          if (length(grep(GLOBAL.names.params[i], params.globalParam)) == 0)
-          {
-            for (y in 1:length(params.checked))
-            {
-              if (length(params.checked[[y]]) > 0)
-              {
-                toSuppr = c()
-                for (x in 1:length(params.checked[[y]]))
-                {
-                  if (!is.null(params.checked[[y]][x]) && params.checked[[y]][x] == i)
-                  {
-                    toSuppr = c(toSuppr, x)
-                    #   ## WARNING, le paramètre demandé à varier n'est pas défini
-                  }
-                }
-                if (length(toSuppr) > 0)
-                {
-                  params.checked[[y]] = params.checked[[y]][-toSuppr]
-                }
-              }
-            }
-          }
-        }
-
-        ## Get parameters value
-        PARAMS = lapply(params.checked[1:3], function(y) {
-          sapply(y, function(x) {
-            if (!is.null(x))
-            {
-              return(.getParam(params.lines = file.globalParam
-                               , flag = as.vector(GLOBAL.names.params[x])
-                               , flag.split = " "
-                               , is.num = TRUE))
-            }
-          })
-        })
+        PARAMS1 = get_PARAMS(path_folder = get_path.folder1()
+                            , file_simul = input$set.folder1.simulParam1
+                            , params = params.checked)
         
         if (input$set.strategy == "From 1 folder, 1 simulation file")
         {
           ## ------------------------------------------------------------------------------------------ 
           ff = function()
           {
-            lapply(1:length(PARAMS), function(y) {
-              if (length(PARAMS[[y]]) > 0)
+            lapply(1:length(PARAMS1), function(y) {
+              if (length(PARAMS1[[y]]) > 0)
               {
-                sapply(1:length(PARAMS[[y]]), function(x) {
-                  if (!is.null(PARAMS[[y]][x]))
+                sapply(1:length(PARAMS1[[y]]), function(x) {
+                  if (!is.null(PARAMS1[[y]][x]))
                   {
                     res = todo(x, y)
-                    names(res) = names(PARAMS[[y]][x])
+                    names(res) = names(PARAMS1[[y]][x])
                     return(res)
                   }
                 })
               }
             })
           }
-          todo = function(x, y) { return(as.vector(PARAMS[[y]][x]) * params.sliders[y] / 100) }
+          
+          params.sliders = get_sliders()
+          todo = function(x, y) { return(as.vector(PARAMS1[[y]][x]) * params.sliders[y] / 100) }
           PARAMS.ecart = ff()
-          todo = function(x, y) { return(as.vector(PARAMS[[y]][x]) - PARAMS.ecart[[y]][x]) }
+          todo = function(x, y) { return(as.vector(PARAMS1[[y]][x]) - PARAMS.ecart[[y]][x]) }
           PARAMS.min = ff()
-          todo = function(x, y) { return(as.vector(PARAMS[[y]][x]) + PARAMS.ecart[[y]][x]) }
+          todo = function(x, y) { return(as.vector(PARAMS1[[y]][x]) + PARAMS.ecart[[y]][x]) }
           PARAMS.max = ff()
 
           PARAMS.range = rbind(unlist(PARAMS.min)
                                , unlist(PARAMS.max))
           rownames(PARAMS.range) = c("min", "max")
-          print(PARAMS.range)
+          return(PARAMS.range)
           
         } else if (input$set.strategy == "From 1 folder, 2 simulation files")
         {
@@ -322,14 +335,38 @@ observeEvent(paste(get_checked(), get_sliders()), {
           if (!is.null(input$set.folder1.simulParam2) &&
               nchar(input$set.folder1.simulParam2) > 0 &&
               file.exists(paste0(get_path.folder1(), "/PARAM_SIMUL/", input$set.folder1.simulParam2)))
-          { 
+          {
             if (input$set.folder1.simulParam1 == input$set.folder1.simulParam2)
             {
               shinyalert(type = "warning", text = paste0("You must select different simulation parameter files !"))
-              ## MESSAGE ERREUR
             } else
             {
-              print("SCENARIO 2")
+              ## GET FILE 2 informations
+              PARAMS2 = get_PARAMS(path_folder = get_path.folder1()
+                                   , file_simul = input$set.folder1.simulParam2
+                                   , params = params.checked)
+              
+              if (length(unlist(PARAMS1)) != length(unlist(PARAMS2)) ||
+                  sum(names(unlist(PARAMS1)) == names(unlist(PARAMS2))) != length(unlist(PARAMS1)))
+              {
+                shinyalert(type = "warning", text = paste0("The files do not contain the same parameters to be evaluated.\n"
+                                                           , "\n File 1 : '"
+                                                           , paste0(names(unlist(PARAMS1)), collapse = "', '")
+                                                           , "'\n File 2 : '"
+                                                           , paste0(names(unlist(PARAMS2)), collapse = "', '")
+                                                           , "'\n\nPlease check."))
+              } else
+              {
+                
+                PARAMS.min = sapply(1:length(unlist(PARAMS1)), function(x) { min(c(unlist(PARAMS1)[x], unlist(PARAMS2)[x])) })
+                PARAMS.max = sapply(1:length(unlist(PARAMS1)), function(x) { max(c(unlist(PARAMS1)[x], unlist(PARAMS2)[x])) })
+                names(PARAMS.min) = names(PARAMS.max) = names(unlist(PARAMS1))
+                
+                PARAMS.range = rbind(unlist(PARAMS.min)
+                                     , unlist(PARAMS.max))
+                rownames(PARAMS.range) = c("min", "max")
+                return(PARAMS.range)
+              }
             }
           } else
           {
@@ -338,7 +375,6 @@ observeEvent(paste(get_checked(), get_sliders()), {
                                                                 , "/PARAM_SIMUL/\n"
                                                                 , input$set.folder1.simulParam2)
                                                        , "' does not exist !"))
-            ## MESSAGE d'ERREUR folder1 simulParam2
           }
         } else if (input$set.strategy == "From 2 folders, 2 simulation files")
         {
@@ -355,10 +391,34 @@ observeEvent(paste(get_checked(), get_sliders()), {
                   input$set.folder1.simulParam1 == input$set.folder2.simulParam2)
               {
                 shinyalert(type = "warning", text = paste0("You must select different simulation parameter files !"))
-                ## MESSAGE ERREUR
               } else
               {
-                print("SCENARIO 3")
+                ## GET FILE 2 informations
+                PARAMS2 = get_PARAMS(path_folder = get_path.folder2()
+                                     , file_simul = input$set.folder2.simulParam2
+                                     , params = params.checked)
+                
+                if (length(unlist(PARAMS1)) != length(unlist(PARAMS2)) ||
+                    sum(names(unlist(PARAMS1)) == names(unlist(PARAMS2))) != length(unlist(PARAMS1)))
+                {
+                  shinyalert(type = "warning", text = paste0("The files do not contain the same parameters to be evaluated.\n"
+                                                             , "\n File 1 : '"
+                                                             , paste0(names(unlist(PARAMS1)), collapse = "', '")
+                                                             , "'\n File 2 : '"
+                                                             , paste0(names(unlist(PARAMS2)), collapse = "', '")
+                                                             , "'\n\nPlease check."))
+                } else
+                {
+                  
+                  PARAMS.min = sapply(1:length(unlist(PARAMS1)), function(x) { min(c(unlist(PARAMS1)[x], unlist(PARAMS2)[x])) })
+                  PARAMS.max = sapply(1:length(unlist(PARAMS1)), function(x) { max(c(unlist(PARAMS1)[x], unlist(PARAMS2)[x])) })
+                  names(PARAMS.min) = names(PARAMS.max) = names(unlist(PARAMS1))
+                  
+                  PARAMS.range = rbind(unlist(PARAMS.min)
+                                       , unlist(PARAMS.max))
+                  rownames(PARAMS.range) = c("min", "max")
+                  return(PARAMS.range)
+                }
               }
             } else
             {
@@ -367,12 +427,10 @@ observeEvent(paste(get_checked(), get_sliders()), {
                                                                   , "/PARAM_SIMUL/\n"
                                                                   , input$set.folder2.simulParam2)
                                                          , "' does not exist !"))
-              ## MESSAGE d'ERREUR folder2 simulParam2
             }
           } else
           {
             shinyalert(type = "warning", text = paste0("The folder '", get_path.folder2(), "' does not exist !"))
-            ## MESSAGE d'ERREUR folder2
           }
         }
       } else
@@ -382,12 +440,10 @@ observeEvent(paste(get_checked(), get_sliders()), {
                                                             , "/PARAM_SIMUL/\n"
                                                             , input$set.folder1.simulParam1)
                                                    , "' does not exist !"))
-        ## MESSAGE d'ERREUR folder1 simulParam1
       }
     } else
     {
       shinyalert(type = "warning", text = paste0("The folder '", get_path.folder1(), "' does not exist !"))
-      ## MESSAGE d'ERREUR folder1
     }
   }
 })
