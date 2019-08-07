@@ -104,7 +104,7 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
                                                 )
                                                 , column(1, br())
                                                 , column(4
-                                                         , checkboxGroupInput(inputId = "set.choices.2"
+                                                         , checkboxGroupInput(inputId = "set.choices.4"
                                                                               , label = HTML("<i class='fa fa-globe'></i> habitat suitability")
                                                                               , choices = c("ref_option")
                                                                               , selected = NULL
@@ -122,7 +122,7 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
                                               , fluidRow(
                                                 br()
                                                 , column(4
-                                                         , checkboxGroupInput(inputId = "set.choices.3"
+                                                         , checkboxGroupInput(inputId = "set.choices.2"
                                                                               , label = HTML("<i class='fa fa-heart'></i> seeding")
                                                                               , choices = c("seeding_duration"
                                                                                             , "seeding_step"
@@ -133,7 +133,7 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
                                                 )
                                                 , column(3
                                                          , shinyjs::hidden(
-                                                           sliderInput(inputId = "set.slider.3"
+                                                           sliderInput(inputId = "set.slider.2"
                                                                        , label = HTML("<br/>")
                                                                        , min = 0
                                                                        , max = 100
@@ -146,7 +146,7 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
                                                 )
                                                 , column(1, br())
                                                 , column(4
-                                                         , checkboxGroupInput(inputId = "set.choices.4"
+                                                         , checkboxGroupInput(inputId = "set.choices.5"
                                                                               , label = HTML("<i class='fa fa-seedling'></i> dispersal")
                                                                               , choices = c("mode_dispers")
                                                                               , selected = NULL
@@ -164,7 +164,7 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
                                               , fluidRow(
                                                 br()
                                                 , column(4
-                                                         , checkboxGroupInput(inputId = "set.choices.5"
+                                                         , checkboxGroupInput(inputId = "set.choices.3"
                                                                               , label = HTML("<i class='fa fa-sun'></i> global parameters")
                                                                               , choices = c("light_thresh_medium"
                                                                                             , "light_thresh_low")
@@ -174,7 +174,7 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
                                                 )
                                                 , column(3
                                                          , shinyjs::hidden(
-                                                           sliderInput(inputId = "set.slider.5"
+                                                           sliderInput(inputId = "set.slider.3"
                                                                        , label = HTML("<br/>")
                                                                        , min = 0
                                                                        , max = 100
