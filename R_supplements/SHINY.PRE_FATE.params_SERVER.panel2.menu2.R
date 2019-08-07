@@ -5,6 +5,7 @@ observeEvent(input$set.strategy, {
   if (!is.null(input$set.strategy))
   {
     shinyjs::show("main.panel")
+    shinyjs::enable("create.multiple_set")
     
     if (input$set.strategy == "From 1 folder, 1 simulation file")
     {
@@ -20,6 +21,7 @@ observeEvent(input$set.strategy, {
       shinyjs::hide("set.slider.1")
       shinyjs::hide("set.slider.2")
       shinyjs::hide("set.slider.3")
+      
     } else if (input$set.strategy == "From 2 folders, 2 simulation files")
     {
       shinyjs::hide("set.folder1.simulParam2")
@@ -194,6 +196,7 @@ get_toSuppr = eventReactive(get_checked(), {
   return(toSuppr)
 })
 
+####################################################################
 
 get_PARAMS = function(path_folder, file_simul, params)
 {
@@ -215,9 +218,20 @@ get_PARAMS = function(path_folder, file_simul, params)
   ## Simulation parameter file
   abs.simulParam = paste0(path_folder, "/PARAM_SIMUL/", file_simul)
   lines.simulParam = readLines(abs.simulParam)
-  params.simulParam = grep("^--.*--$", lines.simulParam, value = TRUE)
+  # params.simulParam = grep("^--.*--$", lines.simulParam, value = TRUE)
+  # params.simulParam = gsub("--", "", params.simulParam)
+  # params.simulParam.TOKEEP = params.simulParam[which(!(params.simulParam %in% get_toSuppr()))]
+  ind = grep("^--.*--$", lines.simulParam)
+  params.simulParam = lines.simulParam[ind]
   params.simulParam = gsub("--", "", params.simulParam)
-  # params.simulParam.TOKEEP = params.simulParam[which(!(params.simulParam %in% toSuppr))]
+  params.simulParam.TOKEEP = params.simulParam[which(!(params.simulParam %in% get_toSuppr()))]
+  params.simulParam.TOKEEP = paste0("--", params.simulParam.TOKEEP, "--")
+  toKeep = c()
+  for (i in sapply(params.simulParam.TOKEEP, function(x) grep(x, lines.simulParam)))
+  {
+    toKeep = c(toKeep, lines.simulParam[i:(ind[which(ind == i) + 1] - 1)])
+  }
+  params.simulParam.TOKEEP = toKeep
   
   ## Global parameter file
   file.globalParam = .getParam(params.lines = abs.simulParam
@@ -228,8 +242,13 @@ get_PARAMS = function(path_folder, file_simul, params)
   
   lines.globalParam = readLines(file.globalParam)
   params.globalParam = as.vector(sapply(lines.globalParam, function(x) strsplit(as.character(x), " ")[[1]][1]))
-  params.globalParam = params.globalParam[which(params.globalParam != "##")]
-  # params.globalParam.TOKEEP = params.globalParam[which(!(params.globalParam %in% toSuppr))]
+  # params.globalParam = params.globalParam[which(params.globalParam != "##")]
+  # params.globalParam.TOKEEP = params.globalParam[which(!(params.globalParam %in% get_toSuppr()))]
+  params.globalParam.TOKEEP = lines.globalParam[which(!(params.globalParam %in% get_toSuppr()))]
+  if (length(grep("##", params.globalParam.TOKEEP)) > 0)
+  {
+    params.globalParam.TOKEEP = params.globalParam.TOKEEP[-grep("##", params.globalParam.TOKEEP)]
+  }
   
   for (i in unlist(params))
   {
@@ -274,11 +293,21 @@ get_PARAMS = function(path_folder, file_simul, params)
     })
   })
   
-  return(PARAMS)
+  return(list(PARAMS = PARAMS
+              , TOKEEP.simul = params.simulParam.TOKEEP
+              , TOKEEP.global = params.globalParam.TOKEEP))
 }
 
+####################################################################
 
-get_ranges = eventReactive(paste(get_checked(), get_sliders()), {
+get_ranges = eventReactive(paste(input$set.strategy
+                                 , input$set.folder1
+                                 , input$set.folder1.simulParam1
+                                 , input$set.folder1.simulParam2
+                                 , input$set.folder2
+                                 , input$set.folder2.simulParam2
+                                 , get_checked()
+                                 , get_sliders()), {
   if (!is.null(input$set.strategy))
   {
     if (!is.null(get_path.folder1()) &&
@@ -295,6 +324,9 @@ get_ranges = eventReactive(paste(get_checked(), get_sliders()), {
         PARAMS1 = get_PARAMS(path_folder = get_path.folder1()
                             , file_simul = input$set.folder1.simulParam1
                             , params = params.checked)
+        TOKEEP1.simul = PARAMS1$TOKEEP.simul
+        TOKEEP1.global = PARAMS1$TOKEEP.global
+        PARAMS1 = PARAMS1$PARAMS
         
         if (input$set.strategy == "From 1 folder, 1 simulation file")
         {
@@ -327,7 +359,9 @@ get_ranges = eventReactive(paste(get_checked(), get_sliders()), {
           PARAMS.range = rbind(unlist(PARAMS.min)
                                , unlist(PARAMS.max))
           rownames(PARAMS.range) = c("min", "max")
-          return(PARAMS.range)
+          return(list(PARAMS.range = PARAMS.range
+                      , TOKEEP.global = TOKEEP1.global
+                      , TOKEEP.simul = TOKEEP1.simul))
           
         } else if (input$set.strategy == "From 1 folder, 2 simulation files")
         {
@@ -345,6 +379,9 @@ get_ranges = eventReactive(paste(get_checked(), get_sliders()), {
               PARAMS2 = get_PARAMS(path_folder = get_path.folder1()
                                    , file_simul = input$set.folder1.simulParam2
                                    , params = params.checked)
+              TOKEEP2.simul = PARAMS2$TOKEEP.simul
+              TOKEEP2.global = PARAMS2$TOKEEP.global
+              PARAMS2 = PARAMS2$PARAMS
               
               if (length(unlist(PARAMS1)) != length(unlist(PARAMS2)) ||
                   sum(names(unlist(PARAMS1)) == names(unlist(PARAMS2))) != length(unlist(PARAMS1)))
@@ -355,6 +392,16 @@ get_ranges = eventReactive(paste(get_checked(), get_sliders()), {
                                                            , "'\n File 2 : '"
                                                            , paste0(names(unlist(PARAMS2)), collapse = "', '")
                                                            , "'\n\nPlease check."))
+              } else if (length(TOKEEP1.global) != length(TOKEEP2.global) ||
+                         sum(TOKEEP1.global == TOKEEP2.global) != length(TOKEEP1.global))
+              {
+                shinyalert(type = "warning", text = paste0("The global files have different fixed parameter values."
+                                                           , "\nPlease check."))
+              } else if (length(TOKEEP1.simul) != length(TOKEEP2.simul) ||
+                         sum(TOKEEP1.simul == TOKEEP2.simul) != length(TOKEEP1.simul))
+              {
+                shinyalert(type = "warning", text = paste0("The simulation files have different fixed parameter values."
+                                                           , "\nPlease check."))
               } else
               {
                 
@@ -365,7 +412,9 @@ get_ranges = eventReactive(paste(get_checked(), get_sliders()), {
                 PARAMS.range = rbind(unlist(PARAMS.min)
                                      , unlist(PARAMS.max))
                 rownames(PARAMS.range) = c("min", "max")
-                return(PARAMS.range)
+                return(list(PARAMS.range = PARAMS.range
+                            , TOKEEP.global = TOKEEP1.global
+                            , TOKEEP.simul = TOKEEP1.simul))
               }
             }
           } else
@@ -397,6 +446,9 @@ get_ranges = eventReactive(paste(get_checked(), get_sliders()), {
                 PARAMS2 = get_PARAMS(path_folder = get_path.folder2()
                                      , file_simul = input$set.folder2.simulParam2
                                      , params = params.checked)
+                TOKEEP2.simul = PARAMS2$TOKEEP.simul
+                TOKEEP2.global = PARAMS2$TOKEEP.global
+                PARAMS2 = PARAMS2$PARAMS
                 
                 if (length(unlist(PARAMS1)) != length(unlist(PARAMS2)) ||
                     sum(names(unlist(PARAMS1)) == names(unlist(PARAMS2))) != length(unlist(PARAMS1)))
@@ -407,6 +459,16 @@ get_ranges = eventReactive(paste(get_checked(), get_sliders()), {
                                                              , "'\n File 2 : '"
                                                              , paste0(names(unlist(PARAMS2)), collapse = "', '")
                                                              , "'\n\nPlease check."))
+                } else if (length(TOKEEP1.global) != length(TOKEEP2.global) ||
+                           sum(TOKEEP1.global == TOKEEP2.global) != length(TOKEEP1.global))
+                {
+                  shinyalert(type = "warning", text = paste0("The global files have different fixed parameter values."
+                                                             , "\nPlease check."))
+                } else if (length(TOKEEP1.simul) != length(TOKEEP2.simul) ||
+                           sum(TOKEEP1.simul == TOKEEP2.simul) != length(TOKEEP1.simul))
+                {
+                  shinyalert(type = "warning", text = paste0("The simulation files have different fixed parameter values."
+                                                             , "\nPlease check."))
                 } else
                 {
                   
@@ -417,7 +479,9 @@ get_ranges = eventReactive(paste(get_checked(), get_sliders()), {
                   PARAMS.range = rbind(unlist(PARAMS.min)
                                        , unlist(PARAMS.max))
                   rownames(PARAMS.range) = c("min", "max")
-                  return(PARAMS.range)
+                  return(list(PARAMS.range = PARAMS.range
+                              , TOKEEP.global = TOKEEP1.global
+                              , TOKEEP.simul = TOKEEP1.simul))
                 }
               }
             } else
@@ -445,6 +509,27 @@ get_ranges = eventReactive(paste(get_checked(), get_sliders()), {
     {
       shinyalert(type = "warning", text = paste0("The folder '", get_path.folder1(), "' does not exist !"))
     }
+  }
+})
+
+####################################################################
+
+observeEvent(input$create.multiple_set, {
+  params.checked = get_checked()
+  
+  if (length(unlist(params.checked)) == 0)
+  {
+    shinyalert(type = "warning", text = "You must select some parameters to vary !")
+  } else
+  {
+    params.ranges = get_ranges()
+    
+    print(params.checked)
+    print(params.ranges)
+    
+    ## CREATE NEW FOLDER
+    # PRE_FATE.skeletonDirectory(name.simulation = "FATE_simulation_MULTIPLE_SET")
+    
   }
 })
 
