@@ -200,7 +200,6 @@
 ##' ## Create PFG dispersal parameter files
 ##' PRE_FATE.params_PFGdispersal(name.simulation = "FATE_simulation"
 ##'                             , mat.PFG.disp = data.frame(PFG = paste0("PFG", 1:6)
-##'                                                         , MODE = 1
 ##'                                                         , d50 = rep(c(50, 50, 10),2)
 ##'                                                         , d99 = rep(c(1000, 1500, 2000),2)
 ##'                                                         , ldd = rep(c(10000, 5000, 10000), 2)))
