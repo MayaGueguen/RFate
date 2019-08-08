@@ -12,8 +12,7 @@ PRE_FATE.params_PFGdispersal(name.simulation, mat.PFG.disp,
 \item{name.simulation}{a \code{string} that corresponds to the main directory
 or simulation name of the \code{FATE-HD} simulation}
 
-\item{mat.PFG.disp}{a \code{data.frame} with 5 columns : PFG, MODE, d50, d99,
-ldd}
+\item{mat.PFG.disp}{a \code{data.frame} with 4 columns : PFG, d50, d99, ldd}
 
 \item{opt.folder.name}{(\emph{optional}) \cr a \code{string} that
 corresponds to the name of the folder that will be created into the 
@@ -24,7 +23,6 @@ A \code{.txt} file per PFG into the \code{name.simulation/DATA/PFGS/DISP/}
 directory with the following parameters :
 
 \itemize{
-  \item MODE_DISPERS 
   \item DISPERS_DIST
 }
 
@@ -47,18 +45,6 @@ seeds dispersed into 3 different concentric circles :
   \item{d99}{the distance at which 49\% of seeds are dispersed}
   \item{ldd}{the long dispersal distance at which 1\% of seeds are dispersed}
 }
-
-Three modes of dispersal are available :
-
-\describe{
-  \item{uniform kernel [1]}{homogeneous dispersal within the d50, d99 and ldd circles}
-  \item{exponential kernel [2]}{seeds are dispersed within each concentric circle
-  according to a decreasing exponential density law (lambda = 1)}
-  \item{exponential kernel \cr with probability [3]}{seeds are dispersed within each 
-  concentric circle according to a decreasing exponential density law 
-  (lambda = 1) and a continuous decreasing probability with distance}
-  \item{homogeneous dispersal \cr EVERYWHERE}{\emph{(!not available YET!)}}
-}
 }
 \examples{
 
@@ -68,7 +54,6 @@ PRE_FATE.skeletonDirectory()
 ## Create PFG dispersal parameter files
 PRE_FATE.params_PFGdispersal(name.simulation = "FATE_simulation"
                             , mat.PFG.disp = data.frame(PFG = c("PFG1", "PFG2", "PFG3")
-                                                        , MODE = 1
                                                         , d50 = c(50, 50, 10)
                                                         , d99 = c(1000, 1500, 2000)
                                                         , ldd = c(10000, 5000, 10000)))

@@ -482,6 +482,55 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : LIGHT.
 })
 
 ## INPUTS
+test_that("PRE_FATE.params_globalParameters gives error with wrong data : DISPERSAL.mode", {
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.simul_duration = 100
+                                                , required.seeding_duration = 100
+                                                , required.seeding_timestep = 100
+                                                , required.seeding_input = 100
+                                                , required.max_by_cohort = 5000000
+                                                , required.max_abund_low = 3000000
+                                                , required.max_abund_medium = 5000000
+                                                , required.max_abund_high = 9000000
+                                                , doDispersal = T
+                                                , DISPERSAL.mode = NA)
+               , "`DISPERSAL.mode` must be either `1 (uniform kernel)`, `2 (exponential kernel)` or `3 (exponential kernel with probability)`"
+               , fixed = T)
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.simul_duration = 100
+                                                , required.seeding_duration = 100
+                                                , required.seeding_timestep = 100
+                                                , required.seeding_input = 100
+                                                , required.max_by_cohort = 5000000
+                                                , required.max_abund_low = 3000000
+                                                , required.max_abund_medium = 5000000
+                                                , required.max_abund_high = 9000000
+                                                , doDispersal = T
+                                                , DISPERSAL.mode = NULL)
+               , "`DISPERSAL.mode` must be either `1 (uniform kernel)`, `2 (exponential kernel)` or `3 (exponential kernel with probability)`"
+               , fixed = T)
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.simul_duration = 100
+                                                , required.seeding_duration = 100
+                                                , required.seeding_timestep = 100
+                                                , required.seeding_input = 100
+                                                , required.max_by_cohort = 5000000
+                                                , required.max_abund_low = 3000000
+                                                , required.max_abund_medium = 5000000
+                                                , required.max_abund_high = 9000000
+                                                , doDispersal = T
+                                                , DISPERSAL.mode = "")
+               , "`DISPERSAL.mode` must be either `1 (uniform kernel)`, `2 (exponential kernel)` or `3 (exponential kernel with probability)`"
+               , fixed = T)
+})
+
+## INPUTS
 test_that("PRE_FATE.params_globalParameters gives error with wrong data : HABSUIT.ref_option", {
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.no_PFG = 5

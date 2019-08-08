@@ -167,9 +167,10 @@ containing <code>GLOBAL PARAMETERS</code> used in <code>FATE-HD</code> model.</p
   <span class='no'>required.max_by_cohort</span>, <span class='no'>required.max_abund_low</span>,
   <span class='no'>required.max_abund_medium</span>, <span class='no'>required.max_abund_high</span>, <span class='kw'>doLight</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='no'>LIGHT.thresh_medium</span>, <span class='no'>LIGHT.thresh_low</span>, <span class='kw'>doDispersal</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>doHabSuitability</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>HABSUIT.ref_option</span>, <span class='kw'>doDisturbances</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>DIST.no</span>, <span class='no'>DIST.no_sub</span>, <span class='no'>DIST.freq</span>, <span class='kw'>doSoil</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>doFire</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>doDrought</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>doHabStability</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>doAliens</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='no'>DISPERSAL.mode</span>, <span class='kw'>doHabSuitability</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>HABSUIT.ref_option</span>,
+  <span class='kw'>doDisturbances</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>DIST.no</span>, <span class='no'>DIST.no_sub</span>, <span class='no'>DIST.freq</span>,
+  <span class='kw'>doSoil</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>doFire</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>doDrought</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>doHabStability</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>doAliens</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -271,6 +272,12 @@ activated in the <code>FATE-HD</code> simulation, and associated parameters are
 required</p></td>
     </tr>
     <tr>
+      <th>DISPERSAL.mode</th>
+      <td><p>an <code>integer</code> corresponding to the way of 
+simulating the seed dispersal for each PFG, either uniform kernel (1), 
+exponential kernel (2) or exponential kernel with probability (3)</p></td>
+    </tr>
+    <tr>
       <th>doHabSuitability</th>
       <td><p>default <code>FALSE</code>. If <code>TRUE</code>, habitat
 suitability is activated in the <code>FATE-HD</code> simulation, and associated 
@@ -352,6 +359,7 @@ directory with the following parameters :</p>
 <p>If the simulation includes <em>dispersal</em> :</p>
 <ul>
 <li><p>DO_DISPERSAL</p></li>
+<li><p>DISPERSAL_MODE</p></li>
 </ul>
 
 <p>If the simulation includes <em>habitat suitability</em> :</p>
@@ -443,18 +451,30 @@ if so, some additional parameters will be required :</p>
 </ul>
   <br /> <br /></p></dd>
   <dt>DISPERSAL</dt><dd><p>= to allow plants to disperse seeds according
-  to 3 user-defined distances <br />
-  <br /> <br /></p></dd>
+  to 3 user-defined distances
+  <ul>
+<li><p><em>DISPERSAL.mode</em> : three modes of dispersal are available :</p><ol>
+<li><p><em>uniform kernel [1]</em> : homogeneous dispersal within the 
+      d50, d99 and ldd circles</p></li>
+<li><p><em>exponential kernel [2]</em> : seeds are dispersed within 
+      each concentric circle (d50, d99 and ldd) according to a decreasing 
+      exponential density law (lambda = 1)</p></li>
+<li><p><em>exponential kernel with probability [3]</em> : seeds are 
+      dispersed within each concentric circle (d50, d99 and ldd) according 
+      to a decreasing exponential density law (lambda = 1) and a continuous 
+      decreasing probability with distance</p></li>
+<li><p><em>homogeneous dispersal <br /> EVERYWHERE</em> : 
+      <em>(!not available YET!)</em> <br /> <br /></p></li>
+</ol></li>
+</ul></p></dd>
   <dt>HABITAT SUITABILITY</dt><dd><p>= to influence plants fecundity and seed 
   recruitment according to PFG preferences for habitat conditions <br />
-  = filter based 
-  on maps given for each PFG within the <em>Simul_parameters</em> file 
-  with the <code>PFG_HAB_MASK</code> flag. <br /> <br />
-  These maps must contain values 
-  between 0 and 1 corresponding to the probability of presence of the 
-  group in each pixel. Each year (timestep), this value will be compared 
-  to a reference value, and if superior, the PFG will be able to grow and 
-  survive.
+  = filter based on maps given for each PFG within the 
+  <em>Simul_parameters</em> file with the <code>PFG_HAB_MASK</code> flag. <br /> <br />
+  These maps must contain values between 0 and 1 corresponding to the 
+  probability of presence of the group in each pixel. Each year (timestep), 
+  this value will be compared to a reference value, and if superior, the 
+  PFG will be able to grow and survive.
   <ul>
 <li><p><em>HABSUIT.ref_option</em> : the habitat suitability reference
     value can be set in two possible ways :</p><ol>
@@ -550,6 +570,7 @@ if so, some additional parameters will be required :</p>
                                  , <span class='kw'>LIGHT.thresh_medium</span> <span class='kw'>=</span> <span class='fl'>13000000</span>
                                  , <span class='kw'>LIGHT.thresh_low</span> <span class='kw'>=</span> <span class='fl'>19000000</span>
                                  , <span class='kw'>doDispersal</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+                                 , <span class='kw'>DISPERSAL.mode</span> <span class='kw'>=</span> <span class='fl'>1</span>
                                  , <span class='kw'>doHabSuitability</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
                                  , <span class='kw'>HABSUIT.ref_option</span> <span class='kw'>=</span> <span class='fl'>1</span>
                                  )
@@ -570,6 +591,7 @@ if so, some additional parameters will be required :</p>
                                  , <span class='kw'>LIGHT.thresh_medium</span> <span class='kw'>=</span> <span class='fl'>13000000</span>
                                  , <span class='kw'>LIGHT.thresh_low</span> <span class='kw'>=</span> <span class='fl'>19000000</span>
                                  , <span class='kw'>doDispersal</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+                                 , <span class='kw'>DISPERSAL.mode</span> <span class='kw'>=</span> <span class='fl'>1</span>
                                  , <span class='kw'>doHabSuitability</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
                                  , <span class='kw'>HABSUIT.ref_option</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>2</span>)
                                  )

@@ -12,9 +12,10 @@ PRE_FATE.params_globalParameters(name.simulation, opt.no_CPU = 1,
   required.max_by_cohort, required.max_abund_low,
   required.max_abund_medium, required.max_abund_high, doLight = FALSE,
   LIGHT.thresh_medium, LIGHT.thresh_low, doDispersal = FALSE,
-  doHabSuitability = FALSE, HABSUIT.ref_option, doDisturbances = FALSE,
-  DIST.no, DIST.no_sub, DIST.freq, doSoil = FALSE, doFire = FALSE,
-  doDrought = FALSE, doHabStability = FALSE, doAliens = FALSE)
+  DISPERSAL.mode, doHabSuitability = FALSE, HABSUIT.ref_option,
+  doDisturbances = FALSE, DIST.no, DIST.no_sub, DIST.freq,
+  doSoil = FALSE, doFire = FALSE, doDrought = FALSE,
+  doHabStability = FALSE, doAliens = FALSE)
 }
 \arguments{
 \item{name.simulation}{a \code{string} that corresponds to the main
@@ -79,6 +80,10 @@ than this threshold imply \strong{medium amount of light}.}
 activated in the \code{FATE-HD} simulation, and associated parameters are 
 required}
 
+\item{DISPERSAL.mode}{an \code{integer} corresponding to the way of 
+simulating the seed dispersal for each PFG, either uniform kernel (1), 
+exponential kernel (2) or exponential kernel with probability (3)}
+
 \item{doHabSuitability}{default \code{FALSE}. If \code{TRUE}, habitat
 suitability is activated in the \code{FATE-HD} simulation, and associated 
 parameters are required}
@@ -139,6 +144,7 @@ If the simulation includes \emph{dispersal} :
 
 \itemize{
   \item DO_DISPERSAL
+  \item DISPERSAL_MODE
 }
 
 If the simulation includes \emph{habitat suitability} :
@@ -250,19 +256,32 @@ if so, some additional parameters will be required :
   \cr \cr
   }
   \item{DISPERSAL}{= to allow plants to disperse seeds according
-  to 3 user-defined distances \cr
-  \cr \cr
+  to 3 user-defined distances
+  \itemize{
+    \item \emph{DISPERSAL.mode} : three modes of dispersal are available :
+    \enumerate{
+      \item \emph{uniform kernel [1]} : homogeneous dispersal within the 
+      d50, d99 and ldd circles
+      \item \emph{exponential kernel [2]} : seeds are dispersed within 
+      each concentric circle (d50, d99 and ldd) according to a decreasing 
+      exponential density law (lambda = 1)
+      \item \emph{exponential kernel with probability [3]} : seeds are 
+      dispersed within each concentric circle (d50, d99 and ldd) according 
+      to a decreasing exponential density law (lambda = 1) and a continuous 
+      decreasing probability with distance
+      \item \emph{homogeneous dispersal \cr EVERYWHERE} : 
+      \emph{(!not available YET!)} \cr \cr
+    }
+  }
   }
   \item{HABITAT SUITABILITY}{= to influence plants fecundity and seed 
   recruitment according to PFG preferences for habitat conditions \cr
-  = filter based 
-  on maps given for each PFG within the \emph{Simul_parameters} file 
-  with the \code{PFG_HAB_MASK} flag. \cr \cr
-  These maps must contain values 
-  between 0 and 1 corresponding to the probability of presence of the 
-  group in each pixel. Each year (timestep), this value will be compared 
-  to a reference value, and if superior, the PFG will be able to grow and 
-  survive.
+  = filter based on maps given for each PFG within the 
+  \emph{Simul_parameters} file with the \code{PFG_HAB_MASK} flag. \cr \cr
+  These maps must contain values between 0 and 1 corresponding to the 
+  probability of presence of the group in each pixel. Each year (timestep), 
+  this value will be compared to a reference value, and if superior, the 
+  PFG will be able to grow and survive.
   \itemize{
     \item \emph{HABSUIT.ref_option} : the habitat suitability reference
     value can be set in two possible ways :
@@ -355,6 +374,7 @@ PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                  , LIGHT.thresh_medium = 13000000
                                  , LIGHT.thresh_low = 19000000
                                  , doDispersal = TRUE
+                                 , DISPERSAL.mode = 1
                                  , doHabSuitability = TRUE
                                  , HABSUIT.ref_option = 1
                                  )
@@ -375,6 +395,7 @@ PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                  , LIGHT.thresh_medium = 13000000
                                  , LIGHT.thresh_low = 19000000
                                  , doDispersal = TRUE
+                                 , DISPERSAL.mode = 1
                                  , doHabSuitability = TRUE
                                  , HABSUIT.ref_option = c(1,2)
                                  )

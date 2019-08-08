@@ -175,8 +175,7 @@ or simulation name of the <code>FATE-HD</code> simulation</p></td>
     </tr>
     <tr>
       <th>mat.PFG.disp</th>
-      <td><p>a <code>data.frame</code> with 5 columns : PFG, MODE, d50, d99,
-ldd</p></td>
+      <td><p>a <code>data.frame</code> with 4 columns : PFG, d50, d99, ldd</p></td>
     </tr>
     <tr>
       <th>opt.folder.name</th>
@@ -191,7 +190,6 @@ corresponds to the name of the folder that will be created into the
     <p>A <code>.txt</code> file per PFG into the <code>name.simulation/DATA/PFGS/DISP/</code>
 directory with the following parameters :</p>
 <ul>
-<li><p>MODE_DISPERS</p></li>
 <li><p>DISPERS_DIST</p></li>
 </ul>
 
@@ -209,16 +207,6 @@ seeds dispersed into 3 different concentric circles :</p>
   <dt>d99</dt><dd><p>the distance at which 49% of seeds are dispersed</p></dd>
   <dt>ldd</dt><dd><p>the long dispersal distance at which 1% of seeds are dispersed</p></dd>
 </dl>
-    <p>Three modes of dispersal are available :</p>
-<dl class='dl-horizontal'>
-  <dt>uniform kernel [1]</dt><dd><p>homogeneous dispersal within the d50, d99 and ldd circles</p></dd>
-  <dt>exponential kernel [2]</dt><dd><p>seeds are dispersed within each concentric circle
-  according to a decreasing exponential density law (lambda = 1)</p></dd>
-  <dt>exponential kernel <br /> with probability [3]</dt><dd><p>seeds are dispersed within each 
-  concentric circle according to a decreasing exponential density law 
-  (lambda = 1) and a continuous decreasing probability with distance</p></dd>
-  <dt>homogeneous dispersal <br /> EVERYWHERE</dt><dd><p><em>(!not available YET!)</em></p></dd>
-</dl>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -233,7 +221,6 @@ seeds dispersed into 3 different concentric circles :</p>
 <span class='co'>## Create PFG dispersal parameter files</span>
 <span class='fu'>PRE_FATE.params_PFGdispersal</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
                             , <span class='kw'>mat.PFG.disp</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>PFG</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"PFG1"</span>, <span class='st'>"PFG2"</span>, <span class='st'>"PFG3"</span>)
-                                                        , <span class='kw'>MODE</span> <span class='kw'>=</span> <span class='fl'>1</span>
                                                         , <span class='kw'>d50</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>50</span>, <span class='fl'>50</span>, <span class='fl'>10</span>)
                                                         , <span class='kw'>d99</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1000</span>, <span class='fl'>1500</span>, <span class='fl'>2000</span>)
                                                         , <span class='kw'>ldd</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>10000</span>, <span class='fl'>5000</span>, <span class='fl'>10000</span>)))
