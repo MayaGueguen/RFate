@@ -316,226 +316,193 @@ get_ranges = eventReactive(paste(input$set.strategy
                                  , input$set.folder2
                                  , input$set.folder2.simulParam2
                                  , get_checked()
-                                 , get_sliders()), {
-                                   if (!is.null(input$set.strategy))
+                                 , get_sliders()),
+                           {
+                             if (!is.null(input$set.strategy))
+                             {
+                               if (!is.null(get_path.folder1()) &&
+                                   nchar(get_path.folder1()) > 0 &&
+                                   dir.exists(get_path.folder1()))
+                               {
+                                 if (!is.null(input$set.folder1.simulParam1) &&
+                                     nchar(input$set.folder1.simulParam1) > 0 &&
+                                     file.exists(paste0(get_path.folder1(), "/PARAM_SIMUL/", input$set.folder1.simulParam1)))
+                                 {
+                                   params.checked = get_checked()
+                                   
+                                   ## GET FILE 1 informations
+                                   PARAMS1 = get_PARAMS(path_folder = get_path.folder1()
+                                                        , file_simul = input$set.folder1.simulParam1
+                                                        , params = params.checked)
+                                   TOKEEP1.simul = PARAMS1$TOKEEP.simul
+                                   TOKEEP1.global = PARAMS1$TOKEEP.global
+                                   SUCC_LIGHT1.simul = PARAMS1$SUCC_LIGHT.simul
+                                   PARAMS1 = PARAMS1$PARAMS
+                                   
+                                   if (input$set.strategy == "From 1 folder, 1 simulation file")
                                    {
-                                     if (!is.null(get_path.folder1()) &&
-                                         nchar(get_path.folder1()) > 0 &&
-                                         dir.exists(get_path.folder1()))
+                                     ## ------------------------------------------------------------------------------------------ 
+                                     ff = function()
                                      {
-                                       if (!is.null(input$set.folder1.simulParam1) &&
-                                           nchar(input$set.folder1.simulParam1) > 0 &&
-                                           file.exists(paste0(get_path.folder1(), "/PARAM_SIMUL/", input$set.folder1.simulParam1)))
-                                       {
-                                         params.checked = get_checked()
-                                         
-                                         ## GET FILE 1 informations
-                                         PARAMS1 = get_PARAMS(path_folder = get_path.folder1()
-                                                              , file_simul = input$set.folder1.simulParam1
-                                                              , params = params.checked)
-                                         TOKEEP1.simul = PARAMS1$TOKEEP.simul
-                                         TOKEEP1.global = PARAMS1$TOKEEP.global
-                                         SUCC_LIGHT1.simul = PARAMS1$SUCC_LIGHT.simul
-                                         PARAMS1 = PARAMS1$PARAMS
-                                         
-                                         if (input$set.strategy == "From 1 folder, 1 simulation file")
+                                       lapply(1:length(PARAMS1), function(y) {
+                                         if (length(PARAMS1[[y]]) > 0)
                                          {
-                                           ## ------------------------------------------------------------------------------------------ 
-                                           ff = function()
-                                           {
-                                             lapply(1:length(PARAMS1), function(y) {
-                                               if (length(PARAMS1[[y]]) > 0)
-                                               {
-                                                 sapply(1:length(PARAMS1[[y]]), function(x) {
-                                                   if (!is.null(PARAMS1[[y]][x]))
-                                                   {
-                                                     res = todo(x, y)
-                                                     names(res) = names(PARAMS1[[y]][x])
-                                                     return(res)
-                                                   }
-                                                 })
-                                               }
-                                             })
-                                           }
-                                           
-                                           params.sliders = get_sliders()
-                                           todo = function(x, y) { return(as.vector(PARAMS1[[y]][x]) * params.sliders[y] / 100) }
-                                           PARAMS.ecart = ff()
-                                           todo = function(x, y) { return(as.vector(PARAMS1[[y]][x]) - PARAMS.ecart[[y]][x]) }
-                                           PARAMS.min = ff()
-                                           todo = function(x, y) { return(as.vector(PARAMS1[[y]][x]) + PARAMS.ecart[[y]][x]) }
-                                           PARAMS.max = ff()
-                                           
-                                           PARAMS.range = rbind(unlist(PARAMS.min)
-                                                                , unlist(PARAMS.max))
-                                           rownames(PARAMS.range) = c("min", "max")
-                                           if ("strata_limits" %in% unlist(params.checked))
-                                           {
-                                             PARAMS.range[, "strata_limits"] = c(1, PARAMS1[[4]][1])
-                                           }
-                                           return(list(PARAMS.range = PARAMS.range
-                                                       , TOKEEP.global = TOKEEP1.global
-                                                       , TOKEEP.simul = TOKEEP1.simul
-                                                       , SUCC_LIGHT.simul = SUCC_LIGHT1.simul))
-                                           
-                                         } else if (input$set.strategy == "From 1 folder, 2 simulation files")
-                                         {
-                                           ## ------------------------------------------------------------------------------------------
-                                           if (!is.null(input$set.folder1.simulParam2) &&
-                                               nchar(input$set.folder1.simulParam2) > 0 &&
-                                               file.exists(paste0(get_path.folder1(), "/PARAM_SIMUL/", input$set.folder1.simulParam2)))
-                                           {
-                                             if (input$set.folder1.simulParam1 == input$set.folder1.simulParam2)
+                                           sapply(1:length(PARAMS1[[y]]), function(x) {
+                                             if (!is.null(PARAMS1[[y]][x]))
                                              {
-                                               shinyalert(type = "warning", text = paste0("You must select different simulation parameter files !"))
-                                             } else
-                                             {
-                                               ## GET FILE 2 informations
-                                               PARAMS2 = get_PARAMS(path_folder = get_path.folder1()
-                                                                    , file_simul = input$set.folder1.simulParam2
-                                                                    , params = params.checked)
-                                               TOKEEP2.simul = PARAMS2$TOKEEP.simul
-                                               TOKEEP2.global = PARAMS2$TOKEEP.global
-                                               PARAMS2 = PARAMS2$PARAMS
-                                               
-                                               if (length(unlist(PARAMS1)) != length(unlist(PARAMS2)) ||
-                                                   sum(names(unlist(PARAMS1)) == names(unlist(PARAMS2))) != length(unlist(PARAMS1)))
-                                               {
-                                                 shinyalert(type = "warning", text = paste0("The files do not contain the same parameters to be evaluated.\n"
-                                                                                            , "\n File 1 : '"
-                                                                                            , paste0(names(unlist(PARAMS1)), collapse = "', '")
-                                                                                            , "'\n File 2 : '"
-                                                                                            , paste0(names(unlist(PARAMS2)), collapse = "', '")
-                                                                                            , "'\n\nPlease check."))
-                                               } else if (length(TOKEEP1.global) != length(TOKEEP2.global) ||
-                                                          sum(TOKEEP1.global == TOKEEP2.global) != length(TOKEEP1.global))
-                                               {
-                                                 shinyalert(type = "warning", text = paste0("The global files have different fixed parameter values."
-                                                                                            , "\nPlease check."))
-                                               } else if (length(TOKEEP1.simul) != length(TOKEEP2.simul) ||
-                                                          sum(TOKEEP1.simul == TOKEEP2.simul) != length(TOKEEP1.simul))
-                                               {
-                                                 shinyalert(type = "warning", text = paste0("The simulation files have different fixed parameter values."
-                                                                                            , "\nPlease check."))
-                                               } else
-                                               {
-                                                 
-                                                 PARAMS.min = sapply(1:length(unlist(PARAMS1)), function(x) { min(c(unlist(PARAMS1)[x], unlist(PARAMS2)[x])) })
-                                                 PARAMS.max = sapply(1:length(unlist(PARAMS1)), function(x) { max(c(unlist(PARAMS1)[x], unlist(PARAMS2)[x])) })
-                                                 names(PARAMS.min) = names(PARAMS.max) = names(unlist(PARAMS1))
-                                                 
-                                                 PARAMS.range = rbind(unlist(PARAMS.min)
-                                                                      , unlist(PARAMS.max))
-                                                 rownames(PARAMS.range) = c("min", "max")
-                                                 if ("strata_limits" %in% unlist(params.checked))
-                                                 {
-                                                   PARAMS.range[, "strata_limits"] = c(1, max(c(PARAMS1[[4]][1], PARAMS2[[4]][1])))
-                                                 }
-                                                 return(list(PARAMS.range = PARAMS.range
-                                                             , TOKEEP.global = TOKEEP1.global
-                                                             , TOKEEP.simul = TOKEEP1.simul
-                                                             , SUCC_LIGHT.simul = SUCC_LIGHT1.simul))
-                                               }
+                                               res = todo(x, y)
+                                               names(res) = names(PARAMS1[[y]][x])
+                                               return(res)
                                              }
-                                           } else
-                                           {
-                                             shinyalert(type = "warning", text = paste0("The file '"
-                                                                                        , paste0(get_path.folder1()
-                                                                                                 , "/PARAM_SIMUL/\n"
-                                                                                                 , input$set.folder1.simulParam2)
-                                                                                        , "' does not exist !"))
-                                           }
-                                         } else if (input$set.strategy == "From 2 folders, 2 simulation files")
-                                         {
-                                           ## ------------------------------------------------------------------------------------------
-                                           if (!is.null(get_path.folder2()) &&
-                                               nchar(get_path.folder2()) > 0 &&
-                                               dir.exists(get_path.folder2()))
-                                           {
-                                             if (!is.null(input$set.folder2.simulParam2) &&
-                                                 nchar(input$set.folder2.simulParam2) > 0 &&
-                                                 file.exists(paste0(get_path.folder2(), "/PARAM_SIMUL/", input$set.folder2.simulParam2)))
-                                             {
-                                               if (get_path.folder1() == get_path.folder2() &&
-                                                   input$set.folder1.simulParam1 == input$set.folder2.simulParam2)
-                                               {
-                                                 shinyalert(type = "warning", text = paste0("You must select different simulation parameter files !"))
-                                               } else
-                                               {
-                                                 ## GET FILE 2 informations
-                                                 PARAMS2 = get_PARAMS(path_folder = get_path.folder2()
-                                                                      , file_simul = input$set.folder2.simulParam2
-                                                                      , params = params.checked)
-                                                 TOKEEP2.simul = PARAMS2$TOKEEP.simul
-                                                 TOKEEP2.global = PARAMS2$TOKEEP.global
-                                                 PARAMS2 = PARAMS2$PARAMS
-                                                 
-                                                 if (length(unlist(PARAMS1)) != length(unlist(PARAMS2)) ||
-                                                     sum(names(unlist(PARAMS1)) == names(unlist(PARAMS2))) != length(unlist(PARAMS1)))
-                                                 {
-                                                   shinyalert(type = "warning", text = paste0("The files do not contain the same parameters to be evaluated.\n"
-                                                                                              , "\n File 1 : '"
-                                                                                              , paste0(names(unlist(PARAMS1)), collapse = "', '")
-                                                                                              , "'\n File 2 : '"
-                                                                                              , paste0(names(unlist(PARAMS2)), collapse = "', '")
-                                                                                              , "'\n\nPlease check."))
-                                                 } else if (length(TOKEEP1.global) != length(TOKEEP2.global) ||
-                                                            sum(TOKEEP1.global == TOKEEP2.global) != length(TOKEEP1.global))
-                                                 {
-                                                   shinyalert(type = "warning", text = paste0("The global files have different fixed parameter values."
-                                                                                              , "\nPlease check."))
-                                                 } else if (length(TOKEEP1.simul) != length(TOKEEP2.simul) ||
-                                                            sum(TOKEEP1.simul == TOKEEP2.simul) != length(TOKEEP1.simul))
-                                                 {
-                                                   shinyalert(type = "warning", text = paste0("The simulation files have different fixed parameter values."
-                                                                                              , "\nPlease check."))
-                                                 } else
-                                                 {
-                                                   
-                                                   PARAMS.min = sapply(1:length(unlist(PARAMS1)), function(x) { min(c(unlist(PARAMS1)[x], unlist(PARAMS2)[x])) })
-                                                   PARAMS.max = sapply(1:length(unlist(PARAMS1)), function(x) { max(c(unlist(PARAMS1)[x], unlist(PARAMS2)[x])) })
-                                                   names(PARAMS.min) = names(PARAMS.max) = names(unlist(PARAMS1))
-                                                   
-                                                   PARAMS.range = rbind(unlist(PARAMS.min)
-                                                                        , unlist(PARAMS.max))
-                                                   rownames(PARAMS.range) = c("min", "max")
-                                                   if ("strata_limits" %in% unlist(params.checked))
-                                                   {
-                                                     PARAMS.range[, "strata_limits"] = c(1, max(c(PARAMS1[[4]][1], PARAMS2[[4]][1])))
-                                                   }
-                                                   return(list(PARAMS.range = PARAMS.range
-                                                               , TOKEEP.global = TOKEEP1.global
-                                                               , TOKEEP.simul = TOKEEP1.simul
-                                                               , SUCC_LIGHT.simul = SUCC_LIGHT1.simul))
-                                                 }
-                                               }
-                                             } else
-                                             {
-                                               shinyalert(type = "warning", text = paste0("The file '"
-                                                                                          , paste0(get_path.folder2()
-                                                                                                   , "/PARAM_SIMUL/\n"
-                                                                                                   , input$set.folder2.simulParam2)
-                                                                                          , "' does not exist !"))
-                                             }
-                                           } else
-                                           {
-                                             shinyalert(type = "warning", text = paste0("The folder '", get_path.folder2(), "' does not exist !"))
-                                           }
+                                           })
                                          }
-                                       } else
+                                       })
+                                     }
+                                     
+                                     params.sliders = get_sliders()
+                                     todo = function(x, y) { return(as.vector(PARAMS1[[y]][x]) * params.sliders[y] / 100) }
+                                     PARAMS.ecart = ff()
+                                     todo = function(x, y) { return(as.vector(PARAMS1[[y]][x]) - PARAMS.ecart[[y]][x]) }
+                                     PARAMS.min = ff()
+                                     todo = function(x, y) { return(as.vector(PARAMS1[[y]][x]) + PARAMS.ecart[[y]][x]) }
+                                     PARAMS.max = ff()
+                                     
+                                     PARAMS.range = rbind(unlist(PARAMS.min)
+                                                          , unlist(PARAMS.max))
+                                     rownames(PARAMS.range) = c("min", "max")
+                                     if ("strata_limits" %in% unlist(params.checked))
+                                     {
+                                       PARAMS.range[, "strata_limits"] = c(1, PARAMS1[[4]][1])
+                                     }
+                                     return(list(PARAMS.range = PARAMS.range
+                                                 , TOKEEP.global = TOKEEP1.global
+                                                 , TOKEEP.simul = TOKEEP1.simul
+                                                 , SUCC_LIGHT.simul = SUCC_LIGHT1.simul))
+                                     
+                                     ## END STRATEGY 1
+                                   } else
+                                   {
+                                     if (input$set.strategy == "From 1 folder, 2 simulation files")
+                                     {
+                                       ## ------------------------------------------------------------------------------------------
+                                       if (!is.null(input$set.folder1.simulParam2) &&
+                                           nchar(input$set.folder1.simulParam2) > 0 &&
+                                           file.exists(paste0(get_path.folder1(), "/PARAM_SIMUL/", input$set.folder1.simulParam2)))
                                        {
-                                         shinyalert(type = "warning", text = paste0("The file '"
-                                                                                    , paste0(get_path.folder1()
-                                                                                             , "/PARAM_SIMUL/\n"
-                                                                                             , input$set.folder1.simulParam1)
-                                                                                    , "' does not exist !"))
+                                         if (input$set.folder1.simulParam1 == input$set.folder1.simulParam2)
+                                         {
+                                           shinyalert(type = "warning", text = paste0("You must select different simulation parameter files !"))
+                                         } else
+                                         {
+                                           ## GET FILE 2 informations
+                                           PARAMS2 = get_PARAMS(path_folder = get_path.folder1()
+                                                                , file_simul = input$set.folder1.simulParam2
+                                                                , params = params.checked)
+                                         }
                                        }
                                      } else
                                      {
-                                       shinyalert(type = "warning", text = paste0("The folder '", get_path.folder1(), "' does not exist !"))
+                                       shinyalert(type = "warning", text = paste0("The file '"
+                                                                                  , paste0(get_path.folder1()
+                                                                                           , "/PARAM_SIMUL/\n"
+                                                                                           , input$set.folder1.simulParam2)
+                                                                                  , "' does not exist !"))
+                                     } ## END STRATEGY 2
+                                     if (input$set.strategy == "From 2 folders, 2 simulation files")
+                                     {
+                                       ## ------------------------------------------------------------------------------------------
+                                       if (!is.null(get_path.folder2()) &&
+                                           nchar(get_path.folder2()) > 0 &&
+                                           dir.exists(get_path.folder2()))
+                                       {
+                                         if (!is.null(input$set.folder2.simulParam2) &&
+                                             nchar(input$set.folder2.simulParam2) > 0 &&
+                                             file.exists(paste0(get_path.folder2(), "/PARAM_SIMUL/", input$set.folder2.simulParam2)))
+                                         {
+                                           if (get_path.folder1() == get_path.folder2() &&
+                                               input$set.folder1.simulParam1 == input$set.folder2.simulParam2)
+                                           {
+                                             shinyalert(type = "warning", text = paste0("You must select different simulation parameter files !"))
+                                           } else
+                                           {
+                                             ## GET FILE 2 informations
+                                             PARAMS2 = get_PARAMS(path_folder = get_path.folder2()
+                                                                  , file_simul = input$set.folder2.simulParam2
+                                                                  , params = params.checked)
+                                           }
+                                         } else
+                                         {
+                                           shinyalert(type = "warning", text = paste0("The file '"
+                                                                                      , paste0(get_path.folder2()
+                                                                                               , "/PARAM_SIMUL/\n"
+                                                                                               , input$set.folder2.simulParam2)
+                                                                                      , "' does not exist !"))
+                                         }
+                                       } else
+                                       {
+                                         shinyalert(type = "warning", text = paste0("The folder '", get_path.folder2(), "' does not exist !"))
+                                       }
+                                     } ## END STRATEGY 3
+                                     
+                                     ## ------------------------------------------------------------------------------------------   
+                                     TOKEEP2.simul = PARAMS2$TOKEEP.simul
+                                     TOKEEP2.global = PARAMS2$TOKEEP.global
+                                     PARAMS2 = PARAMS2$PARAMS
+                                     
+                                     if (length(unlist(PARAMS1)) != length(unlist(PARAMS2)) ||
+                                         sum(names(unlist(PARAMS1)) == names(unlist(PARAMS2))) != length(unlist(PARAMS1)))
+                                     {
+                                       shinyalert(type = "warning", text = paste0("The files do not contain the same parameters to be evaluated.\n"
+                                                                                  , "\n File 1 : '"
+                                                                                  , paste0(names(unlist(PARAMS1)), collapse = "', '")
+                                                                                  , "'\n File 2 : '"
+                                                                                  , paste0(names(unlist(PARAMS2)), collapse = "', '")
+                                                                                  , "'\n\nPlease check."))
+                                     } else if (length(TOKEEP1.global) != length(TOKEEP2.global) ||
+                                                sum(TOKEEP1.global == TOKEEP2.global) != length(TOKEEP1.global))
+                                     {
+                                       shinyalert(type = "warning", text = paste0("The global files have different fixed parameter values."
+                                                                                  , "\nPlease check."))
+                                     } else if (length(TOKEEP1.simul) != length(TOKEEP2.simul) ||
+                                                sum(TOKEEP1.simul == TOKEEP2.simul) != length(TOKEEP1.simul))
+                                     {
+                                       shinyalert(type = "warning", text = paste0("The simulation files have different fixed parameter values."
+                                                                                  , "\nPlease check."))
+                                     } else
+                                     {
+                                       
+                                       PARAMS.min = sapply(1:length(unlist(PARAMS1)), function(x) { min(c(unlist(PARAMS1)[x], unlist(PARAMS2)[x])) })
+                                       PARAMS.max = sapply(1:length(unlist(PARAMS1)), function(x) { max(c(unlist(PARAMS1)[x], unlist(PARAMS2)[x])) })
+                                       names(PARAMS.min) = names(PARAMS.max) = names(unlist(PARAMS1))
+                                       
+                                       PARAMS.range = rbind(unlist(PARAMS.min)
+                                                            , unlist(PARAMS.max))
+                                       rownames(PARAMS.range) = c("min", "max")
+                                       if ("strata_limits" %in% unlist(params.checked))
+                                       {
+                                         PARAMS.range[, "strata_limits"] = c(1, max(c(PARAMS1[[4]][1], PARAMS2[[4]][1])))
+                                       }
+                                       return(list(PARAMS.range = PARAMS.range
+                                                   , TOKEEP.global = TOKEEP1.global
+                                                   , TOKEEP.simul = TOKEEP1.simul
+                                                   , SUCC_LIGHT.simul = SUCC_LIGHT1.simul))
+                                       
                                      }
-                                   }
-                                 })
+                                   } ## END STRATEGY 2 & 3
+                                 } else
+                                 {
+                                   shinyalert(type = "warning", text = paste0("The file '"
+                                                                              , paste0(get_path.folder1()
+                                                                                       , "/PARAM_SIMUL/\n"
+                                                                                       , input$set.folder1.simulParam1)
+                                                                              , "' does not exist !"))
+                                 }
+                               } else
+                               {
+                                 shinyalert(type = "warning", text = paste0("The folder '", get_path.folder1(), "' does not exist !"))
+                               }
+                             }
+                           })
 
 ####################################################################
 
@@ -553,22 +520,8 @@ observeEvent(input$create.multiple_set, {
     SUCC_LIGHT.simul = params.ranges$SUCC_LIGHT.simul
     params.ranges = params.ranges$PARAMS.range
     
-    
     # print("Params ranges : ")
     # print(params.ranges)
-    # GLOBAL.names.params = c("max_by_cohort" = "MAX_BY_COHORT"
-    #                         , "max_abund_low" = "MAX_ABUND_LOW"
-    #                         , "max_abund_medium" = "MAX_ABUND_MEDIUM"
-    #                         , "max_abund_high" = "MAX_ABUND_HIGH"
-    #                         , "ref_option" = "HABSUIT_OPTION"
-    #                         , "seeding_duration" = "SEEDING_DURATION"
-    #                         , "seeding_step" = "SEEDING_TIMESTEP"
-    #                         , "seeding_input" = "SEEDING_INPUT"
-    #                         , "mode_dispers" = "DISPERSAL_MODE"
-    #                         , "light_thresh_medium" = "LIGHT_THRESH_MEDIUM"
-    #                         , "light_thresh_low" = "LIGHT_THRESH_LOW"
-    #                         , "strata_limits" = "NB_STRATUM")
-    
     
     if (sum(c("max_by_cohort"
               , "max_abund_low"
@@ -583,8 +536,8 @@ observeEvent(input$create.multiple_set, {
       NB_SIMUL_LHS = input$set.num_simul
       if ("ref_option" %in% unlist(params.checked)) { NB_SIMUL_LHS = trunc(NB_SIMUL_LHS / 2) }
       if ("mode_dispers" %in% unlist(params.checked)) { NB_SIMUL_LHS = trunc(NB_SIMUL_LHS / 3) }
-      print("NB_SIMUL_LHS : ")
-      print(NB_SIMUL_LHS)
+      # print("NB_SIMUL_LHS : ")
+      # print(NB_SIMUL_LHS)
       
       ## Create LHS constraint
       lhs_constraint = function(xx)
@@ -621,18 +574,27 @@ observeEvent(input$create.multiple_set, {
         )
       )
       colnames(params.space) = colnames(params.ranges)
-      rownames(params.space) = paste0("REP-", 1:nrow(params.space))
+      # rownames(params.space) = paste0("REP-", 1:nrow(params.space))
       params.space = as.data.frame(params.space)
       
-      print(head(params.space))
-      print(dim(params.space))
+      # print(head(params.space))
+      # print(dim(params.space))
       # print(table(params.space[, "strata_limits"]))
     }
-    
-    
-    
-    
-    
+    if ("ref_option" %in% unlist(params.checked))
+    {
+      params.space.BIS = data.frame(ref_option = c(1, 2))
+      params.space = merge(params.space, params.space.BIS)
+    }
+    if ("mode_dispers" %in% unlist(params.checked))
+    {
+      params.space.BIS = data.frame(mode_dispers = c(1, 2, 3))
+      params.space = merge(params.space, params.space.BIS)
+    }
+    rownames(params.space) = paste0("REP-", 1:nrow(params.space))
+    print(head(params.space))
+    print(tail(params.space))
+    print(dim(params.space))
     
     ## CREATE NEW FOLDER
     PRE_FATE.skeletonDirectory(name.simulation = "FATE_simulation_MULTIPLE_SET")
@@ -648,37 +610,29 @@ observeEvent(input$create.multiple_set, {
     ## SUCC - LIGHT FILES
     if ("strata_limits" %in% unlist(params.checked))
     {
-      print(SUCC_LIGHT.simul)
+      # print(SUCC_LIGHT.simul)
       SUCC_table = foreach(fi = SUCC_LIGHT.simul$SUCC, .combine = "rbind") %do%
       {
-        print(fi)
-        PFG = .getParam(params.lines = paste0(dirname(get_path.folder1()), "/", fi)
-                        , flag = "NAME"
-                        , flag.split = " "
-                        , is.num = FALSE)
-        type = .getParam(params.lines = paste0(dirname(get_path.folder1()), "/", fi)
-                         , flag = "TYPE"
-                         , flag.split = " "
-                         , is.num = FALSE)
-        height = .getParam(params.lines = paste0(dirname(get_path.folder1()), "/", fi)
-                           , flag = "HEIGHT"
+        # print(fi)
+        # combi = data.frame(param = c("NAME", "TYPE", "HEIGHT", "MATURITY", "LONGEVITY")
+        #                    , is.num = c(FALSE, FALSE, TRUE, TRUE, TRUE))
+        combi = data.frame(param = c("NAME", "TYPE", "MATURITY", "LONGEVITY")
+                           , is.num = c(FALSE, FALSE, TRUE, TRUE))
+        res = foreach(i = 1:nrow(combi)) %do%
+        {
+          return(.getParam(params.lines = paste0(dirname(get_path.folder1()), "/", fi)
+                           , flag = combi$param[i]
                            , flag.split = " "
-                           , is.num = TRUE)
-        maturity = .getParam(params.lines = paste0(dirname(get_path.folder1()), "/", fi)
-                             , flag = "MATURITY"
-                             , flag.split = " "
-                             , is.num = TRUE)
-        longevity = .getParam(params.lines = paste0(dirname(get_path.folder1()), "/", fi)
-                              , flag = "LONGEVITY"
-                              , flag.split = " "
-                              , is.num = TRUE)
-        return(data.frame(PFG, type, height, maturity, longevity))
+                           , is.num = combi$is.num[i]))
+        }
+        # return(data.frame(PFG = res[[1]], type = res[[2]], height = res[[3]], maturity = res[[4]], longevity = res[[5]]))
+        return(data.frame(PFG = res[[1]], type = res[[2]], maturity = res[[3]], longevity = res[[4]]))
       }
       if ("DO_LIGHT_COMPETITION 1" %in% TOKEEP.global)
       {
         LIGHT_table = foreach(fi = SUCC_LIGHT.simul$LIGHT, .combine = "rbind") %do%
         {
-          print(fi)
+          # print(fi)
           PFG = .getParam(params.lines = paste0(dirname(get_path.folder1()), "/", fi)
                           , flag = "NAME"
                           , flag.split = " "
@@ -691,37 +645,175 @@ observeEvent(input$create.multiple_set, {
         }
         SUCC_table = merge(SUCC_table, LIGHT_table, by = "PFG")
       }
-      print(SUCC_table)
+      # print(SUCC_table)
       
       for (i in 1:nrow(params.space))
       {
-        print(i)
-        # print(params.space[i, ])
         strata.limits = sort(sample(c(0, 20, 50, 150, 400, 1000, 2000, 5000, 10000)
                                     , params.space$strata_limits[i]))
-        # print(strata.limits)
         
-        PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation_MULTIPLE_SET"
-                                      , mat.PFG.succ = SUCC_table
-                                      , strata.limits = strata.limits
-                                      , strata.limits_reduce = FALSE
-                                      , opt.folder.name = paste0(rownames(params.space)[i])
-        )
+        get_res = print_messages(as.expression(
+          PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation_MULTIPLE_SET"
+                                        , mat.PFG.succ = SUCC_table
+                                        , strata.limits = strata.limits
+                                        , strata.limits_reduce = FALSE
+                                        , opt.folder.name = paste0(rownames(params.space)[i])
+          )
+        ), cut_pattern = paste0(input$name.simul, "/DATA/PFGS/SUCC/"))
         
         if ("DO_LIGHT_COMPETITION 1" %in% TOKEEP.global)
         {
-          PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation_MULTIPLE_SET"
-                                   , mat.PFG.succ = SUCC_table
-                                   , strata.limits = strata.limits
-                                   , strata.limits_reduce = FALSE
-                                   , opt.folder.name = paste0(rownames(params.space)[i])
-          )
+          get_res = print_messages(as.expression(
+            PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation_MULTIPLE_SET"
+                                     , mat.PFG.succ = SUCC_table
+                                     , strata.limits = strata.limits
+                                     , strata.limits_reduce = FALSE
+                                     , opt.folder.name = paste0(rownames(params.space)[i])
+            )
+          ), cut_pattern = paste0(input$name.simul, "/DATA/PFGS/LIGHT/"))
         }
       }
     }
     
     ## Get fixed global parameters
-    writeLines(text = TOKEEP.global, con = "FATE_simulation_MULTIPLE_SET/tmp_global_param.txt")
+    tmp_global_param = "FATE_simulation_MULTIPLE_SET/tmp_global_param.txt"
+    writeLines(text = TOKEEP.global, con = tmp_global_param)
+    
+    for (i in 1:nrow(params.space))
+    {
+      doDispersal = .getParam(params.lines = tmp_global_param
+                                , flag = "DO_DISPERSAL"
+                                , flag.split = " "
+                                , is.num = TRUE)
+      doHabSuitability = .getParam(params.lines = tmp_global_param
+                              , flag = "DO_HAB_SUITABILITY"
+                              , flag.split = " "
+                              , is.num = TRUE)
+      doLight = .getParam(params.lines = tmp_global_param
+                              , flag = "DO_LIGHT_COMPETITION"
+                              , flag.split = " "
+                              , is.num = TRUE)
+      doSoil = .getParam(params.lines = tmp_global_param
+                              , flag = "DO_SOIL_COMPETITION"
+                              , flag.split = " "
+                              , is.num = TRUE)
+      doDisturbances = .getParam(params.lines = tmp_global_param
+                         , flag = "DO_DISTURBANCES"
+                         , flag.split = " "
+                         , is.num = TRUE)
+
+      get_res = print_messages(as.expression(
+        PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation_MULTIPLE_SET"
+                                         , opt.no_CPU = .getParam(params.lines = tmp_global_param
+                                                                  , flag = "NB_CPUS"
+                                                                  , flag.split = " "
+                                                                  , is.num = TRUE)
+                                         , required.no_PFG = .getParam(params.lines = tmp_global_param
+                                                                       , flag = "NB_FG"
+                                                                       , flag.split = " "
+                                                                       , is.num = TRUE)
+                                         , required.no_STRATA = ifelse("strata_limits" %in% unlist(params.checked)
+                                                                       , params.space$strata_limits[i]
+                                                                       , .getParam(params.lines = tmp_global_param
+                                                                                   , flag = "NB_STRATUM"
+                                                                                   , flag.split = " "
+                                                                                   , is.num = TRUE))
+                                         , required.simul_duration = .getParam(params.lines = tmp_global_param
+                                                                               , flag = "SIMULATION_DURATION"
+                                                                               , flag.split = " "
+                                                                               , is.num = TRUE)
+                                         , required.seeding_duration = ifelse("seeding_duration" %in% unlist(params.checked)
+                                                                              , params.space$seeding_duration[i]
+                                                                              , .getParam(params.lines = tmp_global_param
+                                                                                          , flag = "SEEDING_DURATION"
+                                                                                          , flag.split = " "
+                                                                                          , is.num = TRUE))
+                                         , required.seeding_timestep = ifelse("seeding_step" %in% unlist(params.checked)
+                                                                              , params.space$seeding_step[i]
+                                                                              , .getParam(params.lines = tmp_global_param
+                                                                                          , flag = "SEEDING_TIMESTEP"
+                                                                                          , flag.split = " "
+                                                                                          , is.num = TRUE))
+                                         , required.seeding_input = ifelse("seeding_input" %in% unlist(params.checked)
+                                                                           , params.space$seeding_input[i]
+                                                                           , .getParam(params.lines = tmp_global_param
+                                                                                       , flag = "SEEDING_INPUT"
+                                                                                       , flag.split = " "
+                                                                                       , is.num = TRUE))
+                                         , required.max_by_cohort = ifelse("max_by_cohort" %in% unlist(params.checked)
+                                                                           , params.space$max_by_cohort[i]
+                                                                           , .getParam(params.lines = tmp_global_param
+                                                                                       , flag = "MAX_BY_COHORT"
+                                                                                       , flag.split = " "
+                                                                                       , is.num = TRUE))
+                                         , required.max_abund_low = ifelse("max_abund_low" %in% unlist(params.checked)
+                                                                           , params.space$max_abund_low[i]
+                                                                           , .getParam(params.lines = tmp_global_param
+                                                                                       , flag = "MAX_ABUND_LOW"
+                                                                                       , flag.split = " "
+                                                                                       , is.num = TRUE))
+                                         , required.max_abund_medium = ifelse("max_abund_medium" %in% unlist(params.checked)
+                                                                              , params.space$max_abund_medium[i]
+                                                                              , .getParam(params.lines = tmp_global_param
+                                                                                          , flag = "MAX_ABUND_MEDIUM"
+                                                                                          , flag.split = " "
+                                                                                          , is.num = TRUE))
+                                         , required.max_abund_high = ifelse("max_abund_high" %in% unlist(params.checked)
+                                                                            , params.space$max_abund_high[i]
+                                                                            , .getParam(params.lines = tmp_global_param
+                                                                                        , flag = "MAX_ABUND_HIGH"
+                                                                                        , flag.split = " "
+                                                                                        , is.num = TRUE))
+                                         , doDispersal = doDispersal
+                                         , DISPERSAL.mode = ifelse(doDispersal && "mode_dispers" %in% unlist(params.checked)
+                                                                   , params.space$mode_dispers[i]
+                                                                   , .getParam(params.lines = tmp_global_param
+                                                                               , flag = "DISPERSAL_MODE"
+                                                                               , flag.split = " "
+                                                                               , is.num = TRUE))
+                                         , doHabSuitability = doHabSuitability
+                                         , HABSUIT.ref_option = ifelse(doHabSuitability && "ref_option" %in% unlist(params.checked)
+                                                                       , params.space$ref_option[i]
+                                                                       , .getParam(params.lines = tmp_global_param
+                                                                                   , flag = "HABSUIT_OPTION"
+                                                                                   , flag.split = " "
+                                                                                   , is.num = TRUE))
+                                         , doLight = doLight
+                                         , LIGHT.thresh_medium = ifelse(doLight && "light_thresh_medium" %in% unlist(params.checked)
+                                                                        , params.space$light_thresh_medium[i]
+                                                                        , .getParam(params.lines = tmp_global_param
+                                                                                    , flag = "LIGHT_THRESH_MEDIUM"
+                                                                                    , flag.split = " "
+                                                                                    , is.num = TRUE))
+                                         , LIGHT.thresh_low = ifelse(doLight && "light_thresh_low" %in% unlist(params.checked)
+                                                                     , params.space$light_thresh_low[i]
+                                                                     , .getParam(params.lines = tmp_global_param
+                                                                                 , flag = "LIGHT_THRESH_LOW"
+                                                                                 , flag.split = " "
+                                                                                 , is.num = TRUE))
+                                         , doSoil = doSoil
+                                         , doDisturbances = doDisturbances
+                                         , DIST.no = ifelse(doDisturbances
+                                                            , .getParam(params.lines = tmp_global_param
+                                                                        , flag = "NB_DISTURBANCES"
+                                                                        , flag.split = " "
+                                                                        , is.num = TRUE)
+                                                            , NULL)
+                                         , DIST.no_sub = ifelse(doDisturbances
+                                                                , .getParam(params.lines = tmp_global_param
+                                                                            , flag = "NB_SUBDISTURBANCES"
+                                                                            , flag.split = " "
+                                                                            , is.num = TRUE)
+                                                                , NULL)
+                                         , DIST.freq = unlist(ifelse(doDisturbances
+                                                              , list(.getParam(params.lines = tmp_global_param
+                                                                          , flag = "FREQ_DISTURBANCES"
+                                                                          , flag.split = " "
+                                                                          , is.num = TRUE))
+                                                              , NULL))
+        )
+      ), cut_pattern = paste0(input$name.simul, "/DATA/GLOBAL_PARAMETERS/"))
+    }
   }
 })
 
