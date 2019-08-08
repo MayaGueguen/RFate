@@ -107,6 +107,7 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : name.si
                                    , DIST.no_sub = 4
                                    , DIST.freq = 1
                                    , doDispersal = TRUE
+                                   , DISPERSAL.mode = 1
                                    , doLight = TRUE
                                    , LIGHT.thresh_medium = 13000000
                                    , LIGHT.thresh_low = 19000000
