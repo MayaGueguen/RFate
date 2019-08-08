@@ -523,12 +523,72 @@ observeEvent(input$create.multiple_set, {
   } else
   {
     params.ranges = get_ranges()
-    
-    print(params.checked)
-    print(params.ranges)
+    TOKEEP.simul = params.ranges$TOKEEP.simul
+    TOKEEP.global = params.ranges$TOKEEP.global
+    params.ranges = params.ranges$PARAMS.range
     
     ## CREATE NEW FOLDER
-    # PRE_FATE.skeletonDirectory(name.simulation = "FATE_simulation_MULTIPLE_SET")
+    PRE_FATE.skeletonDirectory(name.simulation = "FATE_simulation_MULTIPLE_SET")
+    
+    ## Copy simulation files
+    ind = grep("^--.*--$", TOKEEP.simul)
+    for (fi in TOKEEP.simul[-ind])
+    {
+      file.copy(from = paste0(dirname(get_path.folder1()), "/", fi)
+                , to = paste0("FATE_simulation_MULTIPLE_SET/", paste0(strsplit(fi, "/")[[1]][-1], collapse = "/")))
+    }
+    
+    ## Get fixed global parameters
+    writeLines(text = TOKEEP.global, con = "FATE_simulation_MULTIPLE_SET/tmp_global_param.txt")
+
+    if (sum(c("max_by_cohort"
+              , "max_abund_low"
+              , "max_abund_medium"
+              , "max_abund_high"
+              , "seeding_duration"
+              , "seeding_step"
+              , "seeding_input"
+              , "light_thresh_medium"
+              , "light_thresh_low") %in% unlist(params.checked)) > 0)
+    {
+      
+      ## Create LHS constraint
+      lhs_constraint = function(xx)
+      {
+        ff = function(param1, param2)
+        {
+          if (sum(c(param1, param2) %in% names(xx)) == 2)
+          {
+            return(xx[param1] <= xx[param2])
+          } else { return(TRUE) }
+        }
+        return(ifelse(ff("max_abund_low", "max_abund_medium") &&
+                        ff("max_abund_medium", "max_abund_high") &&
+                        ff("seeding_timestep", "seeding_duration") &&
+                        ff("light_thresh_medium", "light_thresh_low"), 0, 1))
+      }
+      
+      ## Run Latin Hypercube Sampling
+      set.seed(22121994) ## needed everytime as lhs is also a random value generator.
+      params.space = designLHD(
+        , lower = params.ranges[1, ]
+        , upper = params.ranges[2, ]
+        , control = list(size = input$set.num_simul
+                         , types = c("max_by_cohort" = "integer"
+                                     , "max_abund_low" = "integer"
+                                     , "max_abund_medium" = "integer"
+                                     , "max_abund_high" = "integer"
+                                     , "seeding_duration" = "integer"
+                                     , "seeding_step" = "integer"
+                                     , "seeding_input" = "integer"
+                                     , "light_thresh_medium" = "integer"
+                                     , "light_thresh_low" = "integer")
+                         , inequalityConstraint = lhs_constraint
+        )
+      )
+      colnames(params.space) = colnames(params.ranges)
+      rownames(params.space) = paste0("REP-", 1:nrow(params.space))
+    }
     
   }
 })

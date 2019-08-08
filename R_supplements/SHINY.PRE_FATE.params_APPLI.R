@@ -29,6 +29,7 @@ library(plotly)
 library(cowplot)
 library(ggExtra)
 library(gridExtra)
+library(SPOT) ## designLHD
 
 ###################################################################################################################################
 
