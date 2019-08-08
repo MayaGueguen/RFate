@@ -130,7 +130,6 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : name.si
   ## Create PFG dispersal parameter files
   PRE_FATE.params_PFGdispersal(name.simulation = "FATE_simulation"
                                , mat.PFG.disp = data.frame(PFG = paste0("PFG", 1:6)
-                                                           , MODE = 1
                                                            , d50 = rep(c(500, 500, 100),2)
                                                            , d99 = rep(c(10000, 15000, 20000),2)
                                                            , ldd = rep(c(100000, 50000, 100000),2)))
