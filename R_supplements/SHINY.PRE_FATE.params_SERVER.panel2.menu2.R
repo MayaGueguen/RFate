@@ -160,7 +160,7 @@ get_sliders = eventReactive(lapply(grep(pattern = "^set.slider.",
                                 if (input$set.strategy == "From 1 folder, 1 simulation file")
                                 {
                                   return(c(input$set.slider.1
-                                           , input$set.slider.1
+                                           , input$set.slider.2
                                            , input$set.slider.3))
                                 }
                               }
@@ -360,8 +360,12 @@ get_ranges = eventReactive(paste(input$set.strategy
                                      }
                                      
                                      params.sliders = get_sliders()
+                                     print("Params sliders :")
+                                     print(params.sliders)
                                      todo = function(x, y) { return(as.vector(PARAMS1[[y]][x]) * params.sliders[y] / 100) }
                                      PARAMS.ecart = ff()
+                                     print("Params ecart :")
+                                     print(PARAMS.ecart)
                                      todo = function(x, y) { return(as.vector(PARAMS1[[y]][x]) - PARAMS.ecart[[y]][x]) }
                                      PARAMS.min = ff()
                                      todo = function(x, y) { return(as.vector(PARAMS1[[y]][x]) + PARAMS.ecart[[y]][x]) }
@@ -520,8 +524,8 @@ observeEvent(input$create.multiple_set, {
     SUCC_LIGHT.simul = params.ranges$SUCC_LIGHT.simul
     params.ranges = params.ranges$PARAMS.range
     
-    # print("Params ranges : ")
-    # print(params.ranges)
+    print("Params ranges : ")
+    print(params.ranges)
     
     if (sum(c("max_by_cohort"
               , "max_abund_low"
@@ -555,6 +559,16 @@ observeEvent(input$create.multiple_set, {
                         ff("light_thresh_medium", "light_thresh_low"), 0, 1))
       }
       
+      ind = which(colnames(params.ranges) %in% c("max_by_cohort"
+                                                 , "max_abund_low"
+                                                 , "max_abund_medium"
+                                                 , "max_abund_high"
+                                                 , "light_thresh_medium"
+                                                 , "light_thresh_low"))
+      params.ranges[, ind] = params.ranges[, ind] / 10000
+      ind = which(colnames(params.ranges) %in% c("seeding_duration", "seeding_input"))
+      params.ranges[, ind] = params.ranges[, ind] / 10
+      
       ## Run Latin Hypercube Sampling
       set.seed(22121994) ## needed everytime as lhs is also a random value generator.
       params.space = designLHD(
@@ -576,6 +590,16 @@ observeEvent(input$create.multiple_set, {
       colnames(params.space) = colnames(params.ranges)
       # rownames(params.space) = paste0("REP-", 1:nrow(params.space))
       params.space = as.data.frame(params.space)
+      
+      ind = which(colnames(params.space) %in% c("max_by_cohort"
+                                                 , "max_abund_low"
+                                                 , "max_abund_medium"
+                                                 , "max_abund_high"
+                                                 , "light_thresh_medium"
+                                                 , "light_thresh_low"))
+      params.space[, ind] = params.space[, ind] * 10000
+      ind = which(colnames(params.space) %in% c("seeding_duration", "seeding_input"))
+      params.space[, ind] = params.space[, ind] * 10
       
       # print(head(params.space))
       # print(dim(params.space))
