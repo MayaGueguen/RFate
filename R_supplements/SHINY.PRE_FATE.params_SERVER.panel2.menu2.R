@@ -360,12 +360,8 @@ get_ranges = eventReactive(paste(input$set.strategy
                                      }
                                      
                                      params.sliders = get_sliders()
-                                     print("Params sliders :")
-                                     print(params.sliders)
                                      todo = function(x, y) { return(as.vector(PARAMS1[[y]][x]) * params.sliders[y] / 100) }
                                      PARAMS.ecart = ff()
-                                     print("Params ecart :")
-                                     print(PARAMS.ecart)
                                      todo = function(x, y) { return(as.vector(PARAMS1[[y]][x]) - PARAMS.ecart[[y]][x]) }
                                      PARAMS.min = ff()
                                      todo = function(x, y) { return(as.vector(PARAMS1[[y]][x]) + PARAMS.ecart[[y]][x]) }
@@ -374,6 +370,13 @@ get_ranges = eventReactive(paste(input$set.strategy
                                      PARAMS.range = rbind(unlist(PARAMS.min)
                                                           , unlist(PARAMS.max))
                                      rownames(PARAMS.range) = c("min", "max")
+                                     if ("seeding_step" %in% unlist(params.checked))
+                                     {
+                                       if (PARAMS.range[1, "seeding_step"] < 1)
+                                       {
+                                         PARAMS.range[, "seeding_step"] = PARAMS.range[, "seeding_step"] + 1
+                                       }
+                                     }
                                      if ("strata_limits" %in% unlist(params.checked))
                                      {
                                        PARAMS.range[, "strata_limits"] = c(1, PARAMS1[[4]][1])
@@ -482,6 +485,13 @@ get_ranges = eventReactive(paste(input$set.strategy
                                        PARAMS.range = rbind(unlist(PARAMS.min)
                                                             , unlist(PARAMS.max))
                                        rownames(PARAMS.range) = c("min", "max")
+                                       if ("seeding_step" %in% unlist(params.checked))
+                                       {
+                                         if (PARAMS.range[1, "seeding_step"] < 1)
+                                         {
+                                           PARAMS.range[, "seeding_step"] = PARAMS.range[, "seeding_step"] + 1
+                                         }
+                                       }
                                        if ("strata_limits" %in% unlist(params.checked))
                                        {
                                          PARAMS.range[, "strata_limits"] = c(1, max(c(PARAMS1[[4]][1], PARAMS2[[4]][1])))
@@ -518,14 +528,17 @@ observeEvent(input$create.multiple_set, {
     shinyalert(type = "warning", text = "You must select some parameters to vary !")
   } else
   {
+    cat("\n>> CREATION of multiple set of parameters <<\n")
+    cat("\n 1. Get the range of parameters to be varied...\n")
     params.ranges = get_ranges()
     TOKEEP.simul = params.ranges$TOKEEP.simul
     TOKEEP.global = params.ranges$TOKEEP.global
     SUCC_LIGHT.simul = params.ranges$SUCC_LIGHT.simul
     params.ranges = params.ranges$PARAMS.range
     
-    print("Params ranges : ")
     print(params.ranges)
+    
+    cat("\n 2. Apply Latin Hypercube Sampling...\n")
     
     if (sum(c("max_by_cohort"
               , "max_abund_low"
@@ -540,8 +553,6 @@ observeEvent(input$create.multiple_set, {
       NB_SIMUL_LHS = input$set.num_simul
       if ("ref_option" %in% unlist(params.checked)) { NB_SIMUL_LHS = trunc(NB_SIMUL_LHS / 2) }
       if ("mode_dispers" %in% unlist(params.checked)) { NB_SIMUL_LHS = trunc(NB_SIMUL_LHS / 3) }
-      # print("NB_SIMUL_LHS : ")
-      # print(NB_SIMUL_LHS)
       
       ## Create LHS constraint
       lhs_constraint = function(xx)
@@ -559,6 +570,7 @@ observeEvent(input$create.multiple_set, {
                         ff("light_thresh_medium", "light_thresh_low"), 0, 1))
       }
       
+      ## Round some parameters to avoid too much precision
       ind = which(colnames(params.ranges) %in% c("max_by_cohort"
                                                  , "max_abund_low"
                                                  , "max_abund_medium"
@@ -570,7 +582,7 @@ observeEvent(input$create.multiple_set, {
       params.ranges[, ind] = params.ranges[, ind] / 10
       
       ## Run Latin Hypercube Sampling
-      set.seed(22121994) ## needed everytime as lhs is also a random value generator.
+      set.seed(sample(1:1000000, 1)) ## needed everytime as lhs is also a random value generator.
       params.space = designLHD(
         , lower = params.ranges[1, ]
         , upper = params.ranges[2, ]
@@ -588,9 +600,9 @@ observeEvent(input$create.multiple_set, {
         )
       )
       colnames(params.space) = colnames(params.ranges)
-      # rownames(params.space) = paste0("REP-", 1:nrow(params.space))
       params.space = as.data.frame(params.space)
       
+      ## Upscale rounded parameters to have correct ranges
       ind = which(colnames(params.space) %in% c("max_by_cohort"
                                                  , "max_abund_low"
                                                  , "max_abund_medium"
@@ -600,30 +612,41 @@ observeEvent(input$create.multiple_set, {
       params.space[, ind] = params.space[, ind] * 10000
       ind = which(colnames(params.space) %in% c("seeding_duration", "seeding_input"))
       params.space[, ind] = params.space[, ind] * 10
-      
-      # print(head(params.space))
-      # print(dim(params.space))
-      # print(table(params.space[, "strata_limits"]))
     }
     if ("ref_option" %in% unlist(params.checked))
     {
       params.space.BIS = data.frame(ref_option = c(1, 2))
-      params.space = merge(params.space, params.space.BIS)
+      if (exists("params.spaces"))
+      {
+        params.space = merge(params.space, params.space.BIS)
+      } else
+      {
+        params.space = params.space.BIS
+      }
     }
     if ("mode_dispers" %in% unlist(params.checked))
     {
       params.space.BIS = data.frame(mode_dispers = c(1, 2, 3))
-      params.space = merge(params.space, params.space.BIS)
+      if (exists("params.spaces"))
+      {
+        params.space = merge(params.space, params.space.BIS)
+      } else
+      {
+        params.space = params.space.BIS
+      }
     }
     rownames(params.space) = paste0("REP-", 1:nrow(params.space))
     print(head(params.space))
-    print(tail(params.space))
-    print(dim(params.space))
+    
+    
+    ## ------------------------------------------------------------------------------------------ 
+    cat("\n 3. Create new simulation folder...")
     
     ## CREATE NEW FOLDER
     PRE_FATE.skeletonDirectory(name.simulation = "FATE_simulation_MULTIPLE_SET")
     
     ## Copy simulation files
+    cat("\n>> Copy files that do not change...")
     ind = grep("^--.*--$", TOKEEP.simul)
     for (fi in TOKEEP.simul[-ind])
     {
@@ -634,14 +657,13 @@ observeEvent(input$create.multiple_set, {
     ## SUCC - LIGHT FILES
     if ("strata_limits" %in% unlist(params.checked))
     {
-      # print(SUCC_LIGHT.simul)
+      cat("\n>> Get PFG attribute values...")
       SUCC_table = foreach(fi = SUCC_LIGHT.simul$SUCC, .combine = "rbind") %do%
       {
-        # print(fi)
-        # combi = data.frame(param = c("NAME", "TYPE", "HEIGHT", "MATURITY", "LONGEVITY")
-        #                    , is.num = c(FALSE, FALSE, TRUE, TRUE, TRUE))
-        combi = data.frame(param = c("NAME", "TYPE", "MATURITY", "LONGEVITY")
-                           , is.num = c(FALSE, FALSE, TRUE, TRUE))
+        combi = data.frame(param = c("NAME", "TYPE", "HEIGHT", "MATURITY", "LONGEVITY")
+                           , is.num = c(FALSE, FALSE, TRUE, TRUE, TRUE))
+        # combi = data.frame(param = c("NAME", "TYPE", "MATURITY", "LONGEVITY")
+                           # , is.num = c(FALSE, FALSE, TRUE, TRUE))
         res = foreach(i = 1:nrow(combi)) %do%
         {
           return(.getParam(params.lines = paste0(dirname(get_path.folder1()), "/", fi)
@@ -649,14 +671,13 @@ observeEvent(input$create.multiple_set, {
                            , flag.split = " "
                            , is.num = combi$is.num[i]))
         }
-        # return(data.frame(PFG = res[[1]], type = res[[2]], height = res[[3]], maturity = res[[4]], longevity = res[[5]]))
-        return(data.frame(PFG = res[[1]], type = res[[2]], maturity = res[[3]], longevity = res[[4]]))
+        return(data.frame(PFG = res[[1]], type = res[[2]], height = res[[3]], maturity = res[[4]], longevity = res[[5]]))
+        # return(data.frame(PFG = res[[1]], type = res[[2]], maturity = res[[3]], longevity = res[[4]]))
       }
       if ("DO_LIGHT_COMPETITION 1" %in% TOKEEP.global)
       {
         LIGHT_table = foreach(fi = SUCC_LIGHT.simul$LIGHT, .combine = "rbind") %do%
         {
-          # print(fi)
           PFG = .getParam(params.lines = paste0(dirname(get_path.folder1()), "/", fi)
                           , flag = "NAME"
                           , flag.split = " "
@@ -669,8 +690,9 @@ observeEvent(input$create.multiple_set, {
         }
         SUCC_table = merge(SUCC_table, LIGHT_table, by = "PFG")
       }
-      # print(SUCC_table)
+      print(SUCC_table)
       
+      cat("\n>> Create multiple PFG succession / light files...")
       for (i in 1:nrow(params.space))
       {
         strata.limits = sort(sample(c(0, 20, 50, 150, 400, 1000, 2000, 5000, 10000)
@@ -703,6 +725,7 @@ observeEvent(input$create.multiple_set, {
     tmp_global_param = "FATE_simulation_MULTIPLE_SET/tmp_global_param.txt"
     writeLines(text = TOKEEP.global, con = tmp_global_param)
     
+    cat("\n>> Create multiple global parameter files...")
     for (i in 1:nrow(params.space))
     {
       doDispersal = .getParam(params.lines = tmp_global_param
@@ -838,6 +861,25 @@ observeEvent(input$create.multiple_set, {
         )
       ), cut_pattern = paste0(input$name.simul, "/DATA/GLOBAL_PARAMETERS/"))
     }
+    
+    cat("\n>> Create multiple simulation parameter files...")
+    for (i in 1:nrow(params.space))
+    {
+      get_res = print_messages(as.expression(
+        PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation_MULTIPLE_SET"
+                                        , name.mask = basename(TOKEEP.simul[which(TOKEEP.simul == "--MASK--") + 1])
+                                        , name.dist = ifelse(length(grep("DIST_MASK", TOKEEP.simul)) > 0
+                                                             , basename(TOKEEP.simul[which(TOKEEP.simul == "--DIST_MASK--") + 1])
+                                                             , "")
+                                        , opt.global.name = paste0("Global_parameters_V", i, ".txt")
+                                        , opt.folder.name = ifelse("strata_limits" %in% unlist(params.checked)
+                                                                   , paste0(rownames(params.space)[i])
+                                                                   , "")
+        )
+      ), cut_pattern = paste0(input$name.simul, "/PARAM_SIMUL/"))
+    }
+    
+    cat("\n\n Done !\n")
   }
 })
 

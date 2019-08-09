@@ -229,16 +229,6 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                             , column(2
                                      , br()
                                      , br()
-                                     , HTML("<strong>MODE</strong>")
-                                     , selectInput(inputId = "disp.mode"
-                                                   , label = NULL
-                                                   , choices = 1:3
-                                                   , selected = NULL
-                                                   , multiple = F
-                                                   , width = "100%"))
-                            , column(2
-                                     , br()
-                                     , br()
                                      , HTML("<strong>d50</strong>")
                                      , numericInput(inputId = "disp.d50"
                                                     , label = NULL

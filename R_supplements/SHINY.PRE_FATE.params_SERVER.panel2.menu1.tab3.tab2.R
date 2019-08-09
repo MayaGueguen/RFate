@@ -31,7 +31,6 @@ output$mat.PFG.disp = renderTable({ RV$mat.PFG.disp })
 observeEvent(input$add.PFG.disp, {
   RV$mat.PFG.disp <- rbind(RV$mat.PFG.disp
                            , data.frame(PFG = input$disp.PFG
-                                        , MODE = as.numeric(input$disp.mode)
                                         , d50 = as.numeric(input$disp.d50)
                                         , d99 = as.numeric(input$disp.d99)
                                         , ldd = as.numeric(input$disp.ldd)))

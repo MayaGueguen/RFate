@@ -1,4 +1,19 @@
 
+####################################################################
+
+output$UI.doDispersal = renderUI({
+  if (input$doDispersal)
+  {
+    selectInput(inputId = "DISPERSAL.mode"
+                , label = ""
+                , choices = c("(1) uniform kernel"
+                              , "(2) exponential kernel"
+                              , "(3) exponential kernel with probability")
+                , selected = "(1) uniform kernel"
+                , multiple = FALSE
+                , width = "100%")
+  } 
+})
 
 ####################################################################
 
@@ -81,6 +96,9 @@ observeEvent(input$create.global, {
                                        , required.max_abund_medium = input$required.max_abund_medium
                                        , required.max_abund_high = input$required.max_abund_high
                                        , doDispersal = input$doDispersal
+                                       , DISPERSAL.mode = as.vector(c("(1) uniform kernel" = 1
+                                                                      , "(2) exponential kernel" = 2
+                                                                      , "(3) exponential kernel with probability" = 3)[input$DISPERSAL.mode])
                                        , doHabSuitability = input$doHabSuitability
                                        , HABSUIT.ref_option = ifelse(input$HABSUIT.ref_option == "(1) random", 1, 2)
                                        , doLight = input$doLight

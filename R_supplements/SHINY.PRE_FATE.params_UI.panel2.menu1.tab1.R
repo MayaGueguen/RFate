@@ -78,6 +78,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Global parameters</span>")
                                       , label = param.style("doDispersal")
                                       , value = TRUE
                                       , width = "100%")
+                      , uiOutput(outputId = "UI.doDispersal")
                )
                , column(4
                         , br()
