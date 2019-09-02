@@ -112,8 +112,24 @@
 ##'     \item parameter files are created for these new parameter values
 ##'   }
 ##'   }
-##'   \item{1 folder - 2 simulation files}{}
-##'   \item{2 folders - 2 simulation files}{}
+##'   \item{1 folder - 2 simulation files}{
+##'   \itemize{
+##'     \item requested parameter values are extracted from the two given 
+##'     simulation files
+##'     \item ranges assigned to each parameter correspond to the extracted 
+##'     values (e.g. : if do.seeding_duration is asked, values will be generated 
+##'     for this parameter between : 
+##'     \code{SEEDING_DURATION (file_simulation.1)} and \code{SEEDING_DURATION 
+##'     (file_simulation.2)}
+##'     \item same as 1st scenario
+##'   }
+##'   }
+##'   \item{2 folders - 2 simulation files}{
+##'   \itemize{
+##'     \item same as 2nd scenario, except that the two given simulation files 
+##'     come from two different simulation folders
+##'   }
+##'   }
 ##' }
 ##' 
 ##' \describe{
