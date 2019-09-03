@@ -6,7 +6,7 @@
 simulation}
 \usage{
 PRE_FATE.params_multipleSet(name.simulation.1, name.simulation.2 = NULL,
-  file.simulation.1, file.simulation.2 = NULL, no_simulations,
+  file.simulParam.1, file.simulParam.2 = NULL, no_simulations,
   opt.percent_max = 0.5, opt.percent_seeding = 0.5,
   opt.percent_light = 0.5, do.max_by_cohort = TRUE,
   do.max_abund_low = TRUE, do.max_abund_medium = TRUE,
@@ -14,29 +14,29 @@ PRE_FATE.params_multipleSet(name.simulation.1, name.simulation.2 = NULL,
   do.seeding_timestep = TRUE, do.seeding_input = TRUE,
   do.no_STRATA = TRUE, do.LIGHT.thresh_medium = TRUE,
   do.LIGHT.thresh_low = TRUE, do.DISPERSAL.mode = TRUE,
-  do.HABSUIT.ref_option = TRUE)
+  do.HABSUIT.habsuit_ref_option = TRUE)
 }
 \arguments{
 \item{name.simulation.1}{a \code{string} that corresponds to the main
 directory or simulation name of the \code{FATE-HD} simulation from which to
-retrieve the first parameter simulation file (\code{file.simulation.1}), 
-and the second if given (\code{file.simulation.2}) and no other directory 
+retrieve the first parameter simulation file (\code{file.simulParam.1}), 
+and the second if given (\code{file.simulParam.2}) and no other directory 
 provided (\code{name.simulation.2 = NULL})}
 
 \item{name.simulation.2}{default \code{NULL} (\emph{optional}). \cr 
 A \code{string} that corresponds to the main directory or simulation name 
 of the \code{FATE-HD} simulation from which to retrieve the second 
-parameter simulation file (\code{file.simulation.2})}
+parameter simulation file (\code{file.simulParam.2})}
 
-\item{file.simulation.1}{a \code{string} that corresponds to the name of 
+\item{file.simulParam.1}{a \code{string} that corresponds to the name of 
 the simulation parameter file from which to retrieve parameter values that
 will be used to build the multiple set of new parameters}
 
-\item{file.simulation.2}{default \code{NULL} (\emph{optional}). \cr 
+\item{file.simulParam.2}{default \code{NULL} (\emph{optional}). \cr 
 A \code{string} that corresponds to the name of the second simulation 
 parameter file from which to retrieve parameter values that will be used to 
 build parameter ranges in comparison with values from 
-\code{file.simulation.1}}
+\code{file.simulParam.1}}
 
 \item{no_simulations}{an \code{integer} corresponding to the number of set 
 of parameters that will be produced according to Latin Hypercube Sampling 
@@ -100,7 +100,7 @@ be declined into a range of values}
 be declined into its 3 possible values (either uniform kernel (1), 
 exponential kernel (2) or exponential kernel with probability (3))}
 
-\item{do.HABSUIT.ref_option}{default \code{TRUE}. If \code{TRUE}, 
+\item{do.HABSUIT.habsuit_ref_option}{default \code{TRUE}. If \code{TRUE}, 
 \code{HABSUIT_OPTION} parameter within \code{Global_parameters} file will 
 be declined into its 2 possible values (either random (1) or PFG specific 
 (2))}

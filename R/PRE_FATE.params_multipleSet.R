@@ -12,21 +12,21 @@
 ##'              
 ##' @param name.simulation.1 a \code{string} that corresponds to the main
 ##' directory or simulation name of the \code{FATE-HD} simulation from which to
-##' retrieve the first parameter simulation file (\code{file.simulation.1}), 
-##' and the second if given (\code{file.simulation.2}) and no other directory 
+##' retrieve the first parameter simulation file (\code{file.simulParam.1}), 
+##' and the second if given (\code{file.simulParam.2}) and no other directory 
 ##' provided (\code{name.simulation.2 = NULL})
 ##' @param name.simulation.2 default \code{NULL} (\emph{optional}). \cr 
 ##' A \code{string} that corresponds to the main directory or simulation name 
 ##' of the \code{FATE-HD} simulation from which to retrieve the second 
-##' parameter simulation file (\code{file.simulation.2})
-##' @param file.simulation.1 a \code{string} that corresponds to the name of 
+##' parameter simulation file (\code{file.simulParam.2})
+##' @param file.simulParam.1 a \code{string} that corresponds to the name of 
 ##' the simulation parameter file from which to retrieve parameter values that
 ##' will be used to build the multiple set of new parameters
-##' @param file.simulation.2 default \code{NULL} (\emph{optional}). \cr 
+##' @param file.simulParam.2 default \code{NULL} (\emph{optional}). \cr 
 ##' A \code{string} that corresponds to the name of the second simulation 
 ##' parameter file from which to retrieve parameter values that will be used to 
 ##' build parameter ranges in comparison with values from 
-##' \code{file.simulation.1}
+##' \code{file.simulParam.1}
 ##' @param no_simulations an \code{integer} corresponding to the number of set 
 ##' of parameters that will be produced according to Latin Hypercube Sampling 
 ##' (LHS)
@@ -74,7 +74,7 @@
 ##' \code{DISPERSAL_MODE} parameter within \code{Global_parameters} file will 
 ##' be declined into its 3 possible values (either uniform kernel (1), 
 ##' exponential kernel (2) or exponential kernel with probability (3))
-##' @param do.HABSUIT.ref_option default \code{TRUE}. If \code{TRUE}, 
+##' @param do.HABSUIT.habsuit_ref_option default \code{TRUE}. If \code{TRUE}, 
 ##' \code{HABSUIT_OPTION} parameter within \code{Global_parameters} file will 
 ##' be declined into its 2 possible values (either random (1) or PFG specific 
 ##' (2))
@@ -217,8 +217,8 @@
 PRE_FATE.params_multipleSet = function(
   name.simulation.1
   , name.simulation.2 = NULL
-  , file.simulation.1
-  , file.simulation.2 = NULL
+  , file.simulParam.1
+  , file.simulParam.2 = NULL
   , no_simulations
   , opt.percent_max = 0.5
   , opt.percent_seeding = 0.5
@@ -234,299 +234,730 @@ PRE_FATE.params_multipleSet = function(
   , do.LIGHT.thresh_medium = TRUE
   , do.LIGHT.thresh_low = TRUE
   , do.DISPERSAL.mode = TRUE
-  , do.HABSUIT.ref_option = TRUE
+  , do.HABSUIT.habsuit_ref_option = TRUE
 ){
   
-  .testParam_existFolder(name.simulation, "DATA/GLOBAL_PARAMETERS/")
+  scenario1 = scenario2 = scenario3 = FALSE
   
-  if (is.na(opt.no_CPU) ||
-      is.null(opt.no_CPU) ||
-      !is.numeric(opt.no_CPU) ||
-      opt.no_CPU <= 0){
-    warning(paste0("Wrong type of data!\n `opt.no_CPU` must be an integer > 0\n"
-                   , " ==> Automatically set to 1"))
-  }
-  if (.testParam_notNum(required.no_PFG) ||
-      sum(required.no_PFG <= 0) > 0 ){
-    .stopMessage_beInteger("required.no_PFG")
-  }
-  if (.testParam_notNum(required.no_STRATA) ||
-      sum(required.no_STRATA <= 0) > 0 ){
-    .stopMessage_beInteger("required.no_STRATA")
-  }
-  if (.testParam_notNum(required.simul_duration) ||
-      sum(required.simul_duration <= 0) > 0 ){
-    .stopMessage_beInteger("required.simul_duration")
-  }
-  if (.testParam_notNum(required.seeding_duration) ||
-      sum(required.seeding_duration <= 0) > 0 ){
-    .stopMessage_beInteger("required.seeding_duration")
-  }
-  if (.testParam_notNum(required.seeding_timestep) ||
-      sum(required.seeding_timestep <= 0) > 0 ){
-    .stopMessage_beInteger("required.seeding_timestep")
-  }
-  if (.testParam_notNum(required.seeding_input) ||
-      sum(required.seeding_input <= 0) > 0 ){
-    .stopMessage_beInteger("required.seeding_input")
-  }
-  if (.testParam_notNum(required.max_by_cohort) ||
-      sum(required.max_by_cohort <= 0) > 0 )
-  {
-    .stopMessage_beInteger("required.max_by_cohort")
-  } else if (round(required.max_by_cohort) != required.max_by_cohort)
-  {
-    warning("`required.max_by_cohort` is a double. It will be converted (rounded) to an integer")
-  }
-  if (.testParam_notNum(required.max_abund_low) ||
-      sum(required.max_abund_low <= 0) > 0 )
-  {
-    .stopMessage_beInteger("required.max_abund_low")
-  } else if (round(required.max_abund_low) != required.max_abund_low)
-  {
-    warning("`required.max_abund_low` is a double. It will be converted (rounded) to an integer")
-  }
-  if (.testParam_notNum(required.max_abund_medium) ||
-      sum(required.max_abund_medium <= 0) > 0 )
-  {
-    .stopMessage_beInteger("required.max_abund_medium")
-  } else if (round(required.max_abund_medium) != required.max_abund_medium)
-  {
-    warning("`required.max_abund_medium` is a double. It will be converted (rounded) to an integer")
-  }
-  if (.testParam_notNum(required.max_abund_high) ||
-      sum(required.max_abund_high <= 0) > 0 )
-  {
-    .stopMessage_beInteger("required.max_abund_high")
-  } else if (round(required.max_abund_high) != required.max_abund_high)
-  {
-    warning("`required.max_abund_high` is a double. It will be converted (rounded) to an integer")
-  }
+  .testParam_existFolder(name.simulation.1, "PARAM_SIMUL/")
+  .testParam_existFolder(name.simulation.1, "DATA/GLOBAL_PARAMETERS/")
+  name.simulation.1 = sub("/", "", name.simulation.1)
   
-  if (doLight)
+  ## Simulation parameter file 1
+  if (.testParam_notDef(file.simulParam.1) || nchar(file.simulParam.1) == 0)
   {
-    if (.testParam_notNum(LIGHT.thresh_medium) ||
-        LIGHT.thresh_medium <= 0 )
+    abs.simulParams = list.files(paste0(name.simulation.1, "/PARAM_SIMUL/"))
+    if (length(abs.simulParams) == 0)
     {
-      .stopMessage_beInteger("LIGHT.thresh_medium")
-    } else if (round(LIGHT.thresh_medium) != LIGHT.thresh_medium)
+      stop(paste0("Missing data!\n The folder ", name.simulation.1, "/PARAM_SIMUL/ does not contain adequate files"))
+    } else
     {
-      warning("`LIGHT.thresh_medium` is a double. It will be converted (rounded) to an integer")
+      stop(paste0("Missing data!\n The folder "
+                  , name.simulation.1
+                  , "/PARAM_SIMUL/ contain several adequate files.\n"
+                  , "You must select one with the `file.simulParam.1` parameter "))
     }
-    if (.testParam_notNum(LIGHT.thresh_low) ||
-        LIGHT.thresh_low <= 0 )
+  } else
+  {
+    file.simulParam.1 = basename(file.simulParam.1)
+    file.simulParam.1 = paste0(name.simulation.1, "/PARAM_SIMUL/", file.simulParam.1)
+    .testParam_existFile(file.simulParam.1)
+    scenario1 = TRUE
+  }
+  ## Simulation parameter file 2
+  if (!(.testParam_notDef(file.simulParam.2) || nchar(file.simulParam.2) == 0))
+  {
+    if (!(.testParam_notDef(name.simulation.2) || nchar(name.simulation.2) == 0))
     {
-      .stopMessage_beInteger("LIGHT.thresh_low")
-    } else if (round(LIGHT.thresh_low) != LIGHT.thresh_low)
+      .testParam_existFolder(name.simulation.2, "PARAM_SIMUL/")
+      .testParam_existFolder(name.simulation.2, "DATA/GLOBAL_PARAMETERS/")
+      name.simulation.2 = sub("/", "", name.simulation.2)
+      
+      file.simulParam.2 = basename(file.simulParam.2)
+      file.simulParam.2 = paste0(name.simulation.2, "/PARAM_SIMUL/", file.simulParam.2)
+      .testParam_existFile(file.simulParam.2)
+      
+      if (name.simulation.1 == name.simulation.2 &&
+          file.simulParam.1 == file.simulParam.2)
+      {
+        stop(paste0("You must select different simulation parameter files !"))
+      }
+      scenario1 = FALSE
+      scenario3 = TRUE
+    } else
     {
-      warning("`LIGHT.thresh_low` is a double. It will be converted (rounded) to an integer")
+      file.simulParam.2 = basename(file.simulParam.2)
+      file.simulParam.2 = paste0(name.simulation.1, "/PARAM_SIMUL/", file.simulParam.2)
+      .testParam_existFile(file.simulParam.2)
+      if (file.simulParam.1 == file.simulParam.2)
+      {
+        stop(paste0("You must select different simulation parameter files !"))
+      }
+      scenario1 = FALSE
+      scenario2 = TRUE
     }
   }
   
-  if (doDispersal)
+  if (.testParam_notNum(no_simulations) || no_simulations <= 0)
   {
-    if (.testParam_notNum(DISPERSAL.mode) ||
-        sum(!(DISPERSAL.mode %in% c(1,2,3))) > 0){
-      .stopMessage_content("DISPERSAL.mode", c("1 (uniform kernel)"
-                                               , "2 (exponential kernel)"
-                                               , "3 (exponential kernel with probability)"))
-    }
-  }
-  
-  if (doHabSuitability)
+    .stopMessage_beInteger("no_simulations")
+  } else if (round(no_simulations) != no_simulations)
   {
-    if (.testParam_notNum(HABSUIT.ref_option) ||
-        sum(!(HABSUIT.ref_option %in% c(1,2))) > 0){
-      .stopMessage_content("HABSUIT.ref_option", c("1 (random)", "2 (distribution per PFG)"))
-    }
-  }
-  
-  if (doDisturbances)
-  {
-    if (.testParam_notNum(DIST.no) ||
-        DIST.no <= 0 ){
-      .stopMessage_beInteger("DIST.no")
-    }
-    if (.testParam_notNum(DIST.no_sub) ||
-        DIST.no_sub <= 0 ){
-      .stopMessage_beInteger("DIST.no_sub")
-    }
-    if (.testParam_notNum(DIST.freq) ||
-        sum(DIST.freq <= 0) > 0){
-      stop("Wrong type of data!\n `DIST.freq` must be a vector of integer > 0")
-    } else if (length(DIST.freq) != DIST.no){
-      stop("Wrong type of data!\n `DIST.freq` must contain as many values as the number of disturbances (`DIST.no`)")
-    }
+    warning("`no_simulations` is a double. It will be converted (rounded) to an integer")
   }
   
   #################################################################################################
   
-  if (doLight)
+  if (sum(c(do.max_by_cohort
+            , do.max_abund_low
+            , do.max_abund_medium
+            , do.max_abund_high
+            , do.seeding_duration
+            , do.seeding_timestep
+            , do.seeding_input
+            , do.LIGHT.thresh_medium
+            , do.LIGHT.thresh_low
+            , do.HABSUIT.ref_option
+            , do.DISPERSAL.mode
+            , do.no_STRATA)) == 0)
   {
-    params.LIGHT = list(as.numeric(doLight)
-                        , as.integer(LIGHT.thresh_medium)
-                        , as.integer(LIGHT.thresh_low))
-    names.params.list.LIGHT = c("DO_LIGHT_COMPETITION"
-                                , "LIGHT_THRESH_MEDIUM"
-                                , "LIGHT_THRESH_LOW")
-  } else
-  {
-    params.LIGHT = list(as.numeric(doLight))
-    names.params.list.LIGHT = "DO_LIGHT_COMPETITION"
+    stop("You must select some parameters to vary !")
   }
-  if (doDispersal)
-  {
-    params.DISP = list(as.numeric(doDispersal)
-                          , DISPERSAL.mode)
-    names.params.list.DISP = c("DO_DISPERSAL"
-                                  , "DISPERSAL_MODE")
-  } else
-  {
-    params.DISP = list(as.numeric(doDispersal))
-    names.params.list.DISP = "DO_DISPERSAL"
+  
+  get_checked = list(6)
+  if (do.max_by_cohort){
+    get_checked[[1]] = c(get_checked[[1]], "max_by_cohort")
   }
-  if (doHabSuitability)
-  {
-    params.HABSUIT = list(as.numeric(doHabSuitability)
-                          , HABSUIT.ref_option)
-    names.params.list.HABSUIT = c("DO_HAB_SUITABILITY"
-                                  , "HABSUIT_OPTION")
-  } else
-  {
-    params.HABSUIT = list(as.numeric(doHabSuitability))
-    names.params.list.HABSUIT = "DO_HAB_SUITABILITY"
+  if (do.max_abund_low){
+    get_checked[[1]] = c(get_checked[[1]], "max_abund_low")
   }
-  if (doDisturbances)
-  {
-    params.DIST = list(as.numeric(doDisturbances)
-                       , DIST.no
-                       , DIST.no_sub
-                       , DIST.freq)
-    names.params.list.DIST = c("DO_DISTURBANCES"
-                               , "NB_DISTURBANCES"
-                               , "NB_SUBDISTURBANCES"
-                               , "FREQ_DISTURBANCES")
-  } else
-  {
-    params.DIST = list(as.numeric(doDisturbances))
-    names.params.list.DIST = "DO_DISTURBANCES"
+  if (do.max_abund_medium){
+    get_checked[[1]] = c(get_checked[[1]], "max_abund_medium")
   }
-  if (doSoil)
-  {
-    params.SOIL = list(as.numeric(doSoil))
-    names.params.list.SOIL = c("DO_SOIL_COMPETITION")
-  } else
-  {
-    params.SOIL = list(as.numeric(doSoil))
-    names.params.list.SOIL = "DO_SOIL_COMPETITION"
+  if (do.max_abund_high){
+    get_checked[[1]] = c(get_checked[[1]], "max_abund_high")
   }
-  if (doDrought)
-  {
-    # params.DROUGHT = list(as.numeric(doDrought)
-    #                       , DROUGHT.no_sub
-    #                       , DROUGHT.chrono_post
-    #                       , DROUGHT.chrono_curr)
-    # names.params.list.DROUGHT = c("DO_DROUGHT_DISTURBANCES"
-    #                               , "NB_SUBDROUGHT"
-    #                               , "CHRONO_POST_DROUGHT"
-    #                               , "CHRONO_CURR_DROUGHT")
-  } else
-  {
-    params.DROUGHT = list(as.numeric(doDrought))
-    names.params.list.DROUGHT = "DO_DROUGHT_DISTURBANCES"
+  if (do.seeding_duration){
+    get_checked[[2]] = c(get_checked[[2]], "seeding_duration")
   }
-  if (doHabStability)
-  {
-    # params.HABSTAB = list(as.numeric(doHabStability)
-    #                       , HABSTAB.no_hab)
-    # names.params.list.HABSTAB = c("DO_HAB_STABILITY"
-    #                               , "NB_HABITATS")
-  } else
-  {
-    params.HABSTAB = list(as.numeric(doHabStability))
-    names.params.list.HABSTAB = "DO_HAB_STABILITY"
+  if (do.seeding_timestep){
+    get_checked[[2]] = c(get_checked[[2]], "seeding_timestep")
   }
-  if (doAliens)
+  if (do.seeding_input){
+    get_checked[[2]] = c(get_checked[[2]], "seeding_input")
+  }
+  if (do.LIGHT.thresh_medium){
+    get_checked[[3]] = c(get_checked[[3]], "light_thresh_medium")
+  }
+  if (do.LIGHT.thresh_low){
+    get_checked[[3]] = c(get_checked[[3]], "light_thresh_low")
+  }
+  if (do.HABSUIT.ref_option){
+    get_checked[[4]] = c(get_checked[[4]], "habsuit_ref_option")
+  }
+  if (do.DISPERSAL.mode){
+    get_checked[[5]] = c(get_checked[[5]], "dispersal_mode")
+  }
+  if (do.no_STRATA){
+    get_checked[[6]] = c(get_checked[[6]], "no_strata")
+  }
+  
+  get_sliders = c(opt.percent_max, opt.percent_seeding, opt.percent_light)
+  
+  GLOBAL.names.params = c("max_by_cohort" = "MAX_BY_COHORT"
+                          , "max_abund_low" = "MAX_ABUND_LOW"
+                          , "max_abund_medium" = "MAX_ABUND_MEDIUM"
+                          , "max_abund_high" = "MAX_ABUND_HIGH"
+                          , "habsuit_habsuit_ref_option" = "HABSUIT_OPTION"
+                          , "seeding_duration" = "SEEDING_DURATION"
+                          , "seeding_timestep" = "SEEDING_TIMESTEP"
+                          , "seeding_input" = "SEEDING_INPUT"
+                          , "dispersal_mode" = "DISPERSAL_MODE"
+                          , "light_thresh_medium" = "LIGHT_THRESH_MEDIUM"
+                          , "light_thresh_low" = "LIGHT_THRESH_LOW"
+                          , "no_strata" = "NB_STRATUM")
+  
+  
+  get_toSuppr = c("GLOBAL_PARAMS", "SAVE_DIR", "END_OF_FILE")
+  if ("no_strata" %in% get_checked)
   {
-    # params.ALIEN = list(as.numeric(doAliens)
-    #                     , ALIEN.freq)
-    # names.params.list.ALIEN = c("DO_ALIENS_DISTURBANCE"
-    #                             , "FREQ_ALIENS")
-  } else
+    get_toSuppr = c(get_toSuppr, "PFG_LIFE_HISTORY_PARAMS", "PFG_LIGHT_PARAMS")
+  }
+  for (i in get_toSuppr)
   {
-    params.ALIEN = list(as.numeric(doAliens))
-    names.params.list.ALIEN = "DO_ALIENS_DISTURBANCE"
-  } 
+    get_toSuppr = c(get_toSuppr, as.vector(GLOBAL.names.params[i]))
+  }
   
   #################################################################################################
   
-  params.combi = expand.grid(opt.no_CPU
-                             , required.no_PFG
-                             , required.no_STRATA
-                             , required.simul_duration
-                             , required.seeding_duration
-                             , required.seeding_timestep
-                             , required.seeding_input
-                             , as.integer(required.max_by_cohort)
-                             , as.integer(required.max_abund_low)
-                             , as.integer(required.max_abund_medium)
-                             , as.integer(required.max_abund_high)
-  )
-  
-  params.list = lapply(1:nrow(params.combi), function(x) {
-    res = lapply(1:ncol(params.combi), function(y) { params.combi[x, y] })
-    res = c(res, params.LIGHT)
-    res = c(res, params.DISP)
-    res = c(res, params.HABSUIT)
-    res = c(res, params.DIST)
-    res = c(res, params.SOIL)
-    res = c(res, params.DROUGHT)
-    res = c(res, params.HABSTAB)
-    res = c(res, params.ALIEN)
-  })
-  
-  no.start = 1
-  if (!opt.replacePrevious)
+  get_PARAMS = function(path_folder, file_simul, params)
   {
-    previous.files = list.files(path = paste0(name.simulation, "/DATA/GLOBAL_PARAMETERS/")
-                                , pattern = "^Global_parameters_")
-    if (length(previous.files) > 0) {
-      no.start = length(previous.files) + 1
-    }
-  }
-
-  names.params.list = paste0("V", no.start:length(params.list))
-  names.params.list.sub = c("NB_CPUS"
-                            , "NB_FG"
-                            , "NB_STRATUM"
-                            , "SIMULATION_DURATION"
-                            , "SEEDING_DURATION"
-                            , "SEEDING_TIMESTEP"
-                            , "SEEDING_INPUT"
-                            , "MAX_BY_COHORT"
-                            , "MAX_ABUND_LOW"
-                            , "MAX_ABUND_MEDIUM"
-                            , "MAX_ABUND_HIGH"
-  )
-  names.params.list.sub = c(names.params.list.sub, names.params.list.LIGHT)
-  names.params.list.sub = c(names.params.list.sub, names.params.list.DISP)
-  names.params.list.sub = c(names.params.list.sub, names.params.list.HABSUIT)
-  names.params.list.sub = c(names.params.list.sub, names.params.list.DIST)
-  names.params.list.sub = c(names.params.list.sub, names.params.list.SOIL)
-  names.params.list.sub = c(names.params.list.sub, names.params.list.DROUGHT)
-  names.params.list.sub = c(names.params.list.sub, names.params.list.HABSTAB)
-  names.params.list.sub = c(names.params.list.sub, names.params.list.ALIEN)
-  
-  
-  for (i in 1:length(params.list)){
-    params = params.list[[i]]
-    names(params) = names.params.list.sub
+    ## GET FILE informations
     
-    .createParams(params.file = paste0(name.simulation,
-                                       "/DATA/GLOBAL_PARAMETERS/Global_parameters_",
-                                       names.params.list[i],
-                                       ".txt")
-                  , params.list = params)
+    ## Simulation parameter file
+    abs.simulParam = paste0(path_folder, "/PARAM_SIMUL/", file_simul)
+    lines.simulParam = readLines(abs.simulParam)
+    ind = grep("^--.*--$", lines.simulParam)
+    params.simulParam = lines.simulParam[ind]
+    params.simulParam = gsub("--", "", params.simulParam)
+    params.simulParam.TOKEEP = params.simulParam[which(!(params.simulParam %in% get_toSuppr))]
+    params.simulParam.TOKEEP = paste0("--", params.simulParam.TOKEEP, "--")
+    toKeep = c()
+    for (i in sapply(params.simulParam.TOKEEP, function(x) grep(x, lines.simulParam)))
+    {
+      toKeep = c(toKeep, lines.simulParam[i:(ind[which(ind == i) + 1] - 1)])
+    }
+    params.simulParam.TOKEEP = toKeep
+    
+    ## Get succession and light PFG files
+    ind1 = ifelse(length(grep("PFG_LIFE_HISTORY_PARAMS", lines.simulParam)) > 0
+                  , grep("PFG_LIFE_HISTORY_PARAMS", lines.simulParam) + 1
+                  , 0) 
+    ind2 = ifelse(ind1 > 0, ind[which(ind == (ind1 - 1)) + 1] - 1, 0)
+    ind3 = ifelse(length(grep("PFG_LIGHT_PARAMS", lines.simulParam)) > 0
+                  , grep("PFG_LIGHT_PARAMS", lines.simulParam) + 1
+                  , 0) 
+    ind4 = ifelse(ind3 > 0, ind[which(ind == (ind3 - 1)) + 1] - 1, 0)
+    params.simulParam.SUCC_LIGHT = list(SUCC = lines.simulParam[ind1:ind2]
+                                        , LIGHT = lines.simulParam[ind3:ind4])
+    
+    ## Global parameter file
+    file.globalParam = .getParam(params.lines = abs.simulParam
+                                 , flag = "GLOBAL_PARAMS"
+                                 , flag.split = "^--.*--$"
+                                 , is.num = FALSE)
+    file.globalParam = paste0(dirname(path_folder), "/", file.globalParam)
+    
+    lines.globalParam = readLines(file.globalParam)
+    params.globalParam = as.vector(sapply(lines.globalParam, function(x) strsplit(as.character(x), " ")[[1]][1]))
+    params.globalParam.TOKEEP = lines.globalParam[which(!(params.globalParam %in% get_toSuppr))]
+    if (length(grep("##", params.globalParam.TOKEEP)) > 0)
+    {
+      params.globalParam.TOKEEP = params.globalParam.TOKEEP[-grep("##", params.globalParam.TOKEEP)]
+    }
+    
+    ## Remove parameters not present in global file
+    for (i in unlist(params))
+    {
+      if (length(grep(GLOBAL.names.params[i], params.globalParam)) == 0)
+      {
+        for (y in 1:length(params))
+        {
+          if (length(params[[y]]) > 0)
+          {
+            toSuppr = c()
+            for (x in 1:length(params[[y]]))
+            {
+              if (!is.null(params[[y]][x]) && params[[y]][x] == i)
+              {
+                toSuppr = c(toSuppr, x)
+                shinyalert(type = "warning", text = paste0("The parameter '", i, "' is not defined in the global file :\n"
+                                                           , basename(file.globalParam)
+                                                           , "\n from the simulation file :\n"
+                                                           , basename(abs.simulParam)
+                                                           , "\n\nIt will not be considered."))
+              }
+            }
+            if (length(toSuppr) > 0)
+            {
+              params[[y]] = params[[y]][-toSuppr]
+            }
+          }
+        }
+      }
+    }
+    
+    ## Get parameters value
+    PARAMS = lapply(params[c(1:3, 6)], function(y) {
+      sapply(y, function(x) {
+        if (!is.null(x))
+        {
+          return(.getParam(params.lines = file.globalParam
+                           , flag = as.vector(GLOBAL.names.params[x])
+                           , flag.split = " "
+                           , is.num = TRUE))
+        }
+      })
+    })
+    
+    return(list(PARAMS = PARAMS
+                , TOKEEP.simul = params.simulParam.TOKEEP
+                , TOKEEP.global = params.globalParam.TOKEEP
+                , SUCC_LIGHT.simul = params.simulParam.SUCC_LIGHT))
   }
   
+  #################################################################################################
+  
+  get_ranges = function()
+  {
+    ## GET FILE 1 informations
+    PARAMS1 = get_PARAMS(path_folder = name.simulation.1
+                         , file_simul = file.simulParam.1
+                         , params = get_checked)
+    TOKEEP1.simul = PARAMS1$TOKEEP.simul
+    TOKEEP1.global = PARAMS1$TOKEEP.global
+    SUCC_LIGHT1.simul = PARAMS1$SUCC_LIGHT.simul
+    PARAMS1 = PARAMS1$PARAMS
+    
+    if (scenario1)
+    {
+      ## ------------------------------------------------------------------------------------------ 
+      ff = function()
+      {
+        lapply(1:length(PARAMS1), function(y) {
+          if (length(PARAMS1[[y]]) > 0)
+          {
+            sapply(1:length(PARAMS1[[y]]), function(x) {
+              if (!is.null(PARAMS1[[y]][x]))
+              {
+                res = todo(x, y)
+                names(res) = names(PARAMS1[[y]][x])
+                return(res)
+              }
+            })
+          }
+        })
+      }
+      
+      todo = function(x, y) { return(as.vector(PARAMS1[[y]][x]) * get_sliders[y] / 100) }
+      PARAMS.ecart = ff()
+      todo = function(x, y) { return(as.vector(PARAMS1[[y]][x]) - PARAMS.ecart[[y]][x]) }
+      PARAMS.min = ff()
+      todo = function(x, y) { return(as.vector(PARAMS1[[y]][x]) + PARAMS.ecart[[y]][x]) }
+      PARAMS.max = ff()
+      
+      PARAMS.range = rbind(unlist(PARAMS.min), unlist(PARAMS.max))
+      rownames(PARAMS.range) = c("min", "max")
+      if ("seeding_timestep" %in% unlist(get_checked))
+      {
+        if (PARAMS.range[1, "seeding_timestep"] < 1)
+        {
+          PARAMS.range[, "seeding_timestep"] = PARAMS.range[, "seeding_timestep"] + 1
+        }
+      }
+      if ("no_strata" %in% unlist(get_checked))
+      {
+        PARAMS.range[, "no_strata"] = c(1, PARAMS1[[4]][1])
+      }
+      return(list(PARAMS.range = PARAMS.range
+                  , TOKEEP.global = TOKEEP1.global
+                  , TOKEEP.simul = TOKEEP1.simul
+                  , SUCC_LIGHT.simul = SUCC_LIGHT1.simul))
+      
+      ## END STRATEGY 1
+    } else
+    {
+      ## GET FILE 2 informations
+      PARAMS2 = get_PARAMS(path_folder = ifelse(scenario2, name.simulation.1, name.simulation.2)
+                           , file_simul = file.simulParam.2
+                           , params = get_checked)
+      
+      ## ------------------------------------------------------------------------------------------   
+      TOKEEP2.simul = PARAMS2$TOKEEP.simul
+      TOKEEP2.global = PARAMS2$TOKEEP.global
+      PARAMS2 = PARAMS2$PARAMS
+      
+      if (length(unlist(PARAMS1)) != length(unlist(PARAMS2)) ||
+          sum(names(unlist(PARAMS1)) == names(unlist(PARAMS2))) != length(unlist(PARAMS1)))
+      {
+        stop(paste0("The files do not contain the same parameters to be evaluated.\n"
+                    , "\n File 1 : '"
+                    , paste0(names(unlist(PARAMS1)), collapse = "', '")
+                    , "'\n File 2 : '"
+                    , paste0(names(unlist(PARAMS2)), collapse = "', '")
+                    , "'\n\nPlease check."))
+      } else if (length(TOKEEP1.global) != length(TOKEEP2.global) ||
+                 sum(TOKEEP1.global == TOKEEP2.global) != length(TOKEEP1.global))
+      {
+        stop(paste0("The global files have different fixed parameter values.\nPlease check."))
+      } else if (length(TOKEEP1.simul) != length(TOKEEP2.simul) ||
+                 sum(TOKEEP1.simul == TOKEEP2.simul) != length(TOKEEP1.simul))
+      {
+        stop(paste0("The simulation files have different fixed parameter values.\nPlease check."))
+      } else
+      {
+        PARAMS.min = sapply(1:length(unlist(PARAMS1)), function(x) { min(c(unlist(PARAMS1)[x], unlist(PARAMS2)[x])) })
+        PARAMS.max = sapply(1:length(unlist(PARAMS1)), function(x) { max(c(unlist(PARAMS1)[x], unlist(PARAMS2)[x])) })
+        names(PARAMS.min) = names(PARAMS.max) = names(unlist(PARAMS1))
+        
+        PARAMS.range = rbind(unlist(PARAMS.min), unlist(PARAMS.max))
+        rownames(PARAMS.range) = c("min", "max")
+        if ("seeding_timestep" %in% unlist(get_checked))
+        {
+          if (PARAMS.range[1, "seeding_timestep"] < 1)
+          {
+            PARAMS.range[, "seeding_timestep"] = PARAMS.range[, "seeding_timestep"] + 1
+          }
+        }
+        if ("no_strata" %in% unlist(get_checked))
+        {
+          PARAMS.range[, "no_strata"] = c(1, max(c(PARAMS1[[4]][1], PARAMS2[[4]][1])))
+        }
+        return(list(PARAMS.range = PARAMS.range
+                    , TOKEEP.global = TOKEEP1.global
+                    , TOKEEP.simul = TOKEEP1.simul
+                    , SUCC_LIGHT.simul = SUCC_LIGHT1.simul))
+        
+      }
+    } ## END STRATEGY 2 & 3
+  }
+  
+  #################################################################################################
+  
+  cat("\n>> CREATION of multiple set of parameters <<\n")
+  cat("\n 1. Get the range of parameters to be varied...\n")
+  params.ranges = get_ranges()
+  TOKEEP.simul = params.ranges$TOKEEP.simul
+  TOKEEP.global = params.ranges$TOKEEP.global
+  SUCC_LIGHT.simul = params.ranges$SUCC_LIGHT.simul
+  params.ranges = params.ranges$PARAMS.range
+  
+  print(params.ranges)
+  
+  cat("\n 2. Apply Latin Hypercube Sampling...\n")
+  
+  if (sum(c("max_by_cohort"
+            , "max_abund_low"
+            , "max_abund_medium"
+            , "max_abund_high"
+            , "seeding_duration"
+            , "seeding_timestep"
+            , "seeding_input"
+            , "light_thresh_medium"
+            , "light_thresh_low") %in% unlist(get_checked)) > 0)
+  {
+    NB_SIMUL_LHS = no_simulations
+    if ("habsuit_ref_option" %in% unlist(get_checked)) { NB_SIMUL_LHS = trunc(NB_SIMUL_LHS / 2) }
+    if ("dispersal_mode" %in% unlist(get_checked)) { NB_SIMUL_LHS = trunc(NB_SIMUL_LHS / 3) }
+    
+    ## Create LHS constraint
+    lhs_constraint = function(xx)
+    {
+      ff = function(param1, param2)
+      {
+        if (sum(c(param1, param2) %in% names(xx)) == 2)
+        {
+          return(xx[param1] <= xx[param2])
+        } else { return(TRUE) }
+      }
+      return(ifelse(ff("max_abund_low", "max_abund_medium") &&
+                      ff("max_abund_medium", "max_abund_high") &&
+                      ff("seeding_timestep", "seeding_duration") &&
+                      ff("light_thresh_medium", "light_thresh_low"), 0, 1))
+    }
+    
+    ## Round some parameters to avoid too much precision
+    ind = which(colnames(params.ranges) %in% c("max_by_cohort"
+                                               , "max_abund_low"
+                                               , "max_abund_medium"
+                                               , "max_abund_high"
+                                               , "light_thresh_medium"
+                                               , "light_thresh_low"))
+    params.ranges[, ind] = params.ranges[, ind] / 10000
+    ind = which(colnames(params.ranges) %in% c("seeding_duration", "seeding_input"))
+    params.ranges[, ind] = params.ranges[, ind] / 10
+    
+    ## Run Latin Hypercube Sampling
+    set.seed(sample(1:1000000, 1)) ## needed everytime as lhs is also a random value generator.
+    params.space = designLHD(
+      , lower = params.ranges[1, ]
+      , upper = params.ranges[2, ]
+      , control = list(size = NB_SIMUL_LHS
+                       , types = c("max_by_cohort" = "integer"
+                                   , "max_abund_low" = "integer"
+                                   , "max_abund_medium" = "integer"
+                                   , "max_abund_high" = "integer"
+                                   , "seeding_duration" = "integer"
+                                   , "seeding_timestep" = "integer"
+                                   , "seeding_input" = "integer"
+                                   , "light_thresh_medium" = "integer"
+                                   , "light_thresh_low" = "integer")
+                       , inequalityConstraint = lhs_constraint
+      )
+    )
+    colnames(params.space) = colnames(params.ranges)
+    params.space = as.data.frame(params.space)
+    
+    ## Upscale rounded parameters to have correct ranges
+    ind = which(colnames(params.space) %in% c("max_by_cohort"
+                                              , "max_abund_low"
+                                              , "max_abund_medium"
+                                              , "max_abund_high"
+                                              , "light_thresh_medium"
+                                              , "light_thresh_low"))
+    params.space[, ind] = params.space[, ind] * 10000
+    ind = which(colnames(params.space) %in% c("seeding_duration", "seeding_input"))
+    params.space[, ind] = params.space[, ind] * 10
+  }
+  if ("habsuit_ref_option" %in% unlist(get_checked))
+  {
+    params.space.BIS = data.frame(habsuit_ref_option = c(1, 2))
+    if (exists("params.spaces"))
+    {
+      params.space = merge(params.space, params.space.BIS)
+    } else
+    {
+      params.space = params.space.BIS
+    }
+  }
+  if ("dispersal_mode" %in% unlist(get_checked))
+  {
+    params.space.BIS = data.frame(dispersal_mode = c(1, 2, 3))
+    if (exists("params.spaces"))
+    {
+      params.space = merge(params.space, params.space.BIS)
+    } else
+    {
+      params.space = params.space.BIS
+    }
+  }
+  rownames(params.space) = paste0("REP-", 1:nrow(params.space))
+  print(head(params.space))
+  
+  
+  ## ------------------------------------------------------------------------------------------ 
+  cat("\n 3. Create new simulation folder...")
+  
+  ## CREATE NEW FOLDER
+  PRE_FATE.skeletonDirectory(name.simulation = "FATE_simulation_MULTIPLE_SET")
+  
+  ## Copy simulation files
+  cat("\n>> Copy files that do not change...")
+  ind = grep("^--.*--$", TOKEEP.simul)
+  for (fi in TOKEEP.simul[-ind])
+  {
+    file.copy(from = paste0(dirname(name.simulation.1), "/", fi)
+              , to = paste0("FATE_simulation_MULTIPLE_SET/"
+                            , paste0(strsplit(fi, "/")[[1]][-1]
+                                     , collapse = "/")))
+  }
+  
+  ## SUCC - LIGHT FILES
+  if ("no_strata" %in% unlist(get_checked))
+  {
+    cat("\n>> Get PFG attribute values...")
+    SUCC_table = foreach(fi = SUCC_LIGHT.simul$SUCC, .combine = "rbind") %do%
+    {
+      combi = data.frame(param = c("NAME", "TYPE", "HEIGHT", "MATURITY", "LONGEVITY")
+                         , is.num = c(FALSE, FALSE, TRUE, TRUE, TRUE))
+      # combi = data.frame(param = c("NAME", "TYPE", "MATURITY", "LONGEVITY")
+      # , is.num = c(FALSE, FALSE, TRUE, TRUE))
+      res = foreach(i = 1:nrow(combi)) %do%
+      {
+        return(.getParam(params.lines = paste0(dirname(name.simulation.1), "/", fi)
+                         , flag = combi$param[i]
+                         , flag.split = " "
+                         , is.num = combi$is.num[i]))
+      }
+      return(data.frame(PFG = res[[1]], type = res[[2]], height = res[[3]], maturity = res[[4]], longevity = res[[5]]))
+      # return(data.frame(PFG = res[[1]], type = res[[2]], maturity = res[[3]], longevity = res[[4]]))
+    }
+    if ("DO_LIGHT_COMPETITION 1" %in% TOKEEP.global)
+    {
+      LIGHT_table = foreach(fi = SUCC_LIGHT.simul$LIGHT, .combine = "rbind") %do%
+      {
+        PFG = .getParam(params.lines = paste0(dirname(name.simulation.1), "/", fi)
+                        , flag = "NAME"
+                        , flag.split = " "
+                        , is.num = FALSE)
+        light = .getParam(params.lines = paste0(dirname(name.simulation.1), "/", fi)
+                          , flag = "LIGHT"
+                          , flag.split = " "
+                          , is.num = TRUE)
+        return(data.frame(PFG, light))
+      }
+      SUCC_table = merge(SUCC_table, LIGHT_table, by = "PFG")
+    }
+    print(SUCC_table)
+    
+    cat("\n>> Create multiple PFG succession / light files...")
+    for (i in 1:nrow(params.space))
+    {
+      strata.limits = sort(sample(c(0, 20, 50, 150, 400, 1000, 2000, 5000, 10000)
+                                  , params.space$no_strata[i]))
+      
+      get_res = print_messages(as.expression(
+        PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation_MULTIPLE_SET"
+                                      , mat.PFG.succ = SUCC_table
+                                      , strata.limits = strata.limits
+                                      , strata.limits_reduce = FALSE
+                                      , opt.folder.name = paste0(rownames(params.space)[i])
+        )
+      ), cut_pattern = paste0(input$name.simul, "/DATA/PFGS/SUCC/"))
+      
+      if ("DO_LIGHT_COMPETITION 1" %in% TOKEEP.global)
+      {
+        get_res = print_messages(as.expression(
+          PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation_MULTIPLE_SET"
+                                   , mat.PFG.succ = SUCC_table
+                                   , strata.limits = strata.limits
+                                   , strata.limits_reduce = FALSE
+                                   , opt.folder.name = paste0(rownames(params.space)[i])
+          )
+        ), cut_pattern = paste0(input$name.simul, "/DATA/PFGS/LIGHT/"))
+      }
+    }
+  }
+  
+  ## Get fixed global parameters
+  tmp_global_param = "FATE_simulation_MULTIPLE_SET/tmp_global_param.txt"
+  writeLines(text = TOKEEP.global, con = tmp_global_param)
+  
+  cat("\n>> Create multiple global parameter files...")
+  for (i in 1:nrow(params.space))
+  {
+    doDispersal = .getParam(params.lines = tmp_global_param
+                            , flag = "DO_DISPERSAL"
+                            , flag.split = " "
+                            , is.num = TRUE)
+    doHabSuitability = .getParam(params.lines = tmp_global_param
+                                 , flag = "DO_HAB_SUITABILITY"
+                                 , flag.split = " "
+                                 , is.num = TRUE)
+    doLight = .getParam(params.lines = tmp_global_param
+                        , flag = "DO_LIGHT_COMPETITION"
+                        , flag.split = " "
+                        , is.num = TRUE)
+    doSoil = .getParam(params.lines = tmp_global_param
+                       , flag = "DO_SOIL_COMPETITION"
+                       , flag.split = " "
+                       , is.num = TRUE)
+    doDisturbances = .getParam(params.lines = tmp_global_param
+                               , flag = "DO_DISTURBANCES"
+                               , flag.split = " "
+                               , is.num = TRUE)
+    
+    get_res = print_messages(as.expression(
+      PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation_MULTIPLE_SET"
+                                       , opt.no_CPU = .getParam(params.lines = tmp_global_param
+                                                                , flag = "NB_CPUS"
+                                                                , flag.split = " "
+                                                                , is.num = TRUE)
+                                       , required.no_PFG = .getParam(params.lines = tmp_global_param
+                                                                     , flag = "NB_FG"
+                                                                     , flag.split = " "
+                                                                     , is.num = TRUE)
+                                       , required.no_STRATA = ifelse("no_strata" %in% unlist(get_checked)
+                                                                     , params.space$no_strata[i]
+                                                                     , .getParam(params.lines = tmp_global_param
+                                                                                 , flag = "NB_STRATUM"
+                                                                                 , flag.split = " "
+                                                                                 , is.num = TRUE))
+                                       , required.simul_duration = .getParam(params.lines = tmp_global_param
+                                                                             , flag = "SIMULATION_DURATION"
+                                                                             , flag.split = " "
+                                                                             , is.num = TRUE)
+                                       , required.seeding_duration = ifelse("seeding_duration" %in% unlist(get_checked)
+                                                                            , params.space$seeding_duration[i]
+                                                                            , .getParam(params.lines = tmp_global_param
+                                                                                        , flag = "SEEDING_DURATION"
+                                                                                        , flag.split = " "
+                                                                                        , is.num = TRUE))
+                                       , required.seeding_timestep = ifelse("seeding_timestep" %in% unlist(get_checked)
+                                                                            , params.space$seeding_timestep[i]
+                                                                            , .getParam(params.lines = tmp_global_param
+                                                                                        , flag = "SEEDING_TIMESTEP"
+                                                                                        , flag.split = " "
+                                                                                        , is.num = TRUE))
+                                       , required.seeding_input = ifelse("seeding_input" %in% unlist(get_checked)
+                                                                         , params.space$seeding_input[i]
+                                                                         , .getParam(params.lines = tmp_global_param
+                                                                                     , flag = "SEEDING_INPUT"
+                                                                                     , flag.split = " "
+                                                                                     , is.num = TRUE))
+                                       , required.max_by_cohort = ifelse("max_by_cohort" %in% unlist(get_checked)
+                                                                         , params.space$max_by_cohort[i]
+                                                                         , .getParam(params.lines = tmp_global_param
+                                                                                     , flag = "MAX_BY_COHORT"
+                                                                                     , flag.split = " "
+                                                                                     , is.num = TRUE))
+                                       , required.max_abund_low = ifelse("max_abund_low" %in% unlist(get_checked)
+                                                                         , params.space$max_abund_low[i]
+                                                                         , .getParam(params.lines = tmp_global_param
+                                                                                     , flag = "MAX_ABUND_LOW"
+                                                                                     , flag.split = " "
+                                                                                     , is.num = TRUE))
+                                       , required.max_abund_medium = ifelse("max_abund_medium" %in% unlist(get_checked)
+                                                                            , params.space$max_abund_medium[i]
+                                                                            , .getParam(params.lines = tmp_global_param
+                                                                                        , flag = "MAX_ABUND_MEDIUM"
+                                                                                        , flag.split = " "
+                                                                                        , is.num = TRUE))
+                                       , required.max_abund_high = ifelse("max_abund_high" %in% unlist(get_checked)
+                                                                          , params.space$max_abund_high[i]
+                                                                          , .getParam(params.lines = tmp_global_param
+                                                                                      , flag = "MAX_ABUND_HIGH"
+                                                                                      , flag.split = " "
+                                                                                      , is.num = TRUE))
+                                       , doDispersal = doDispersal
+                                       , DISPERSAL.mode = ifelse(doDispersal && "dispersal_mode" %in% unlist(get_checked)
+                                                                 , params.space$dispersal_mode[i]
+                                                                 , .getParam(params.lines = tmp_global_param
+                                                                             , flag = "DISPERSAL_MODE"
+                                                                             , flag.split = " "
+                                                                             , is.num = TRUE))
+                                       , doHabSuitability = doHabSuitability
+                                       , HABSUIT.ref_option = ifelse(doHabSuitability && "habsuit_ref_option" %in% unlist(get_checked)
+                                                                             , params.space$habsuit_ref_option[i]
+                                                                             , .getParam(params.lines = tmp_global_param
+                                                                                         , flag = "HABSUIT_OPTION"
+                                                                                         , flag.split = " "
+                                                                                         , is.num = TRUE))
+                                       , doLight = doLight
+                                       , LIGHT.thresh_medium = ifelse(doLight && "light_thresh_medium" %in% unlist(get_checked)
+                                                                      , params.space$light_thresh_medium[i]
+                                                                      , .getParam(params.lines = tmp_global_param
+                                                                                  , flag = "LIGHT_THRESH_MEDIUM"
+                                                                                  , flag.split = " "
+                                                                                  , is.num = TRUE))
+                                       , LIGHT.thresh_low = ifelse(doLight && "light_thresh_low" %in% unlist(get_checked)
+                                                                   , params.space$light_thresh_low[i]
+                                                                   , .getParam(params.lines = tmp_global_param
+                                                                               , flag = "LIGHT_THRESH_LOW"
+                                                                               , flag.split = " "
+                                                                               , is.num = TRUE))
+                                       , doSoil = doSoil
+                                       , doDisturbances = doDisturbances
+                                       , DIST.no = ifelse(doDisturbances
+                                                          , .getParam(params.lines = tmp_global_param
+                                                                      , flag = "NB_DISTURBANCES"
+                                                                      , flag.split = " "
+                                                                      , is.num = TRUE)
+                                                          , NULL)
+                                       , DIST.no_sub = ifelse(doDisturbances
+                                                              , .getParam(params.lines = tmp_global_param
+                                                                          , flag = "NB_SUBDISTURBANCES"
+                                                                          , flag.split = " "
+                                                                          , is.num = TRUE)
+                                                              , NULL)
+                                       , DIST.freq = unlist(ifelse(doDisturbances
+                                                                   , list(.getParam(params.lines = tmp_global_param
+                                                                                    , flag = "FREQ_DISTURBANCES"
+                                                                                    , flag.split = " "
+                                                                                    , is.num = TRUE))
+                                                                   , NULL))
+      )
+    ), cut_pattern = paste0(input$name.simul, "/DATA/GLOBAL_PARAMETERS/"))
+  }
+  
+  cat("\n>> Create multiple simulation parameter files...")
+  for (i in 1:nrow(params.space))
+  {
+    get_res = print_messages(as.expression(
+      PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation_MULTIPLE_SET"
+                                      , name.mask = basename(TOKEEP.simul[which(TOKEEP.simul == "--MASK--") + 1])
+                                      , name.dist = ifelse(length(grep("DIST_MASK", TOKEEP.simul)) > 0
+                                                           , basename(TOKEEP.simul[which(TOKEEP.simul == "--DIST_MASK--") + 1])
+                                                           , "")
+                                      , opt.global.name = paste0("Global_parameters_V", i, ".txt")
+                                      , opt.folder.name = ifelse("no_strata" %in% unlist(get_checked)
+                                                                 , paste0(rownames(params.space)[i])
+                                                                 , "")
+      )
+    ), cut_pattern = paste0(input$name.simul, "/PARAM_SIMUL/"))
+  }
+  
+  cat("\n\n Done !\n")
+
+
 }

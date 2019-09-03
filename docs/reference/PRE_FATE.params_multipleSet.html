@@ -161,7 +161,7 @@ using Latin Hypercube Sampling to help find best combination of parameters
     </div>
 
     <pre class="usage"><span class='fu'>PRE_FATE.params_multipleSet</span>(<span class='no'>name.simulation.1</span>, <span class='kw'>name.simulation.2</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>file.simulation.1</span>, <span class='kw'>file.simulation.2</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>no_simulations</span>,
+  <span class='no'>file.simulParam.1</span>, <span class='kw'>file.simulParam.2</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>no_simulations</span>,
   <span class='kw'>opt.percent_max</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>opt.percent_seeding</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
   <span class='kw'>opt.percent_light</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>do.max_by_cohort</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>do.max_abund_low</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>do.max_abund_medium</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
@@ -169,7 +169,7 @@ using Latin Hypercube Sampling to help find best combination of parameters
   <span class='kw'>do.seeding_timestep</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>do.seeding_input</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>do.no_STRATA</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>do.LIGHT.thresh_medium</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>do.LIGHT.thresh_low</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>do.DISPERSAL.mode</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>do.HABSUIT.ref_option</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>do.HABSUIT.habsuit_ref_option</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -178,8 +178,8 @@ using Latin Hypercube Sampling to help find best combination of parameters
       <th>name.simulation.1</th>
       <td><p>a <code>string</code> that corresponds to the main
 directory or simulation name of the <code>FATE-HD</code> simulation from which to
-retrieve the first parameter simulation file (<code>file.simulation.1</code>), 
-and the second if given (<code>file.simulation.2</code>) and no other directory 
+retrieve the first parameter simulation file (<code>file.simulParam.1</code>), 
+and the second if given (<code>file.simulParam.2</code>) and no other directory 
 provided (<code>name.simulation.2 = NULL</code>)</p></td>
     </tr>
     <tr>
@@ -187,21 +187,21 @@ provided (<code>name.simulation.2 = NULL</code>)</p></td>
       <td><p>default <code>NULL</code> (<em>optional</em>). <br /> 
 A <code>string</code> that corresponds to the main directory or simulation name 
 of the <code>FATE-HD</code> simulation from which to retrieve the second 
-parameter simulation file (<code>file.simulation.2</code>)</p></td>
+parameter simulation file (<code>file.simulParam.2</code>)</p></td>
     </tr>
     <tr>
-      <th>file.simulation.1</th>
+      <th>file.simulParam.1</th>
       <td><p>a <code>string</code> that corresponds to the name of 
 the simulation parameter file from which to retrieve parameter values that
 will be used to build the multiple set of new parameters</p></td>
     </tr>
     <tr>
-      <th>file.simulation.2</th>
+      <th>file.simulParam.2</th>
       <td><p>default <code>NULL</code> (<em>optional</em>). <br /> 
 A <code>string</code> that corresponds to the name of the second simulation 
 parameter file from which to retrieve parameter values that will be used to 
 build parameter ranges in comparison with values from 
-<code>file.simulation.1</code></p></td>
+<code>file.simulParam.1</code></p></td>
     </tr>
     <tr>
       <th>no_simulations</th>
@@ -296,7 +296,7 @@ be declined into its 3 possible values (either uniform kernel (1),
 exponential kernel (2) or exponential kernel with probability (3))</p></td>
     </tr>
     <tr>
-      <th>do.HABSUIT.ref_option</th>
+      <th>do.HABSUIT.habsuit_ref_option</th>
       <td><p>default <code>TRUE</code>. If <code>TRUE</code>, 
 <code>HABSUIT_OPTION</code> parameter within <code>Global_parameters</code> file will 
 be declined into its 2 possible values (either random (1) or PFG specific 
