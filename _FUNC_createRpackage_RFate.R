@@ -1,7 +1,7 @@
 
 rm(list=ls())
-setwd("/home/gueguen/Documents/_TUTOS/3_R/_PACKAGES/")
-# setwd("/Users/gueguen/Documents/PACKAGES/")
+# setwd("/home/gueguen/Documents/_TUTOS/3_R/_PACKAGES/")
+setwd("/Users/gueguen/Documents/PACKAGES/")
 
 library(devtools)
 library(tools)
@@ -16,7 +16,7 @@ library(pkgdown)
 ## INFORMATION / PARAMETERS
 
 package_name = "RFate"
-package_version = "0.0.7.9000"
+package_version = "0.0.8.9000"
 
 #####################################################################
 
