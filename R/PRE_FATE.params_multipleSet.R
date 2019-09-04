@@ -247,7 +247,8 @@ PRE_FATE.params_multipleSet = function(
   name.simulation.1 = sub("/", "", name.simulation.1)
   
   ## Simulation parameter file 1
-  if (.testParam_notDef(file.simulParam.1) || nchar(file.simulParam.1) == 0)
+  # if (.testParam_notDef(file.simulParam.1) || nchar(file.simulParam.1) == 0)
+  if (.testParam_notChar(file.simulParam.1))
   {
     abs.simulParams = list.files(paste0(name.simulation.1, "/PARAM_SIMUL/"))
     if (length(abs.simulParams) == 0)
@@ -257,7 +258,7 @@ PRE_FATE.params_multipleSet = function(
     {
       stop(paste0("Missing data!\n The folder "
                   , name.simulation.1
-                  , "/PARAM_SIMUL/ contain several adequate files.\n"
+                  , "/PARAM_SIMUL/ contain one or more files.\n"
                   , "You must select one with the `file.simulParam.1` parameter "))
     }
   } else
@@ -268,9 +269,11 @@ PRE_FATE.params_multipleSet = function(
     scenario1 = TRUE
   }
   ## Simulation parameter file 2
-  if (!(.testParam_notDef(file.simulParam.2) || nchar(file.simulParam.2) == 0))
+  # if (!(.testParam_notDef(file.simulParam.2) || nchar(file.simulParam.2) == 0))
+  if (!.testParam_notChar(file.simulParam.2))
   {
-    if (!(.testParam_notDef(name.simulation.2) || nchar(name.simulation.2) == 0))
+    # if (!(.testParam_notDef(name.simulation.2) || nchar(name.simulation.2) == 0))
+    if (!.testParam_notChar(name.simulation.2))
     {
       .testParam_existFolder(name.simulation.2, "PARAM_SIMUL/")
       .testParam_existFolder(name.simulation.2, "DATA/GLOBAL_PARAMETERS/")

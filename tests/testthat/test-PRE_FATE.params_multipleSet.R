@@ -4,938 +4,394 @@ context("PRE_FATE.params_multipleSet() function")
 ## INPUTS
 test_that("PRE_FATE.params_multipleSet gives error with missing data", {
   expect_error(PRE_FATE.params_multipleSet()
-               , "`name.simulation` does not exist or does not contain a DATA/GLOBAL_PARAMETERS/ folder")
+               , "`name.simulation.1` does not exist or does not contain a PARAM_SIMUL/ folder")
   expect_error(PRE_FATE.params_multipleSet(NA)
-               , "`name.simulation` does not exist or does not contain a DATA/GLOBAL_PARAMETERS/ folder")
+               , "`name.simulation.1` does not exist or does not contain a PARAM_SIMUL/ folder")
   expect_error(PRE_FATE.params_multipleSet(NULL)
-               , "`name.simulation` does not exist or does not contain a DATA/GLOBAL_PARAMETERS/ folder")
+               , "`name.simulation.1` does not exist or does not contain a PARAM_SIMUL/ folder")
 })
 
 
 ## INPUTS
-test_that("PRE_FATE.params_multipleSet gives error with wrong data : name.simulation", {
+test_that("PRE_FATE.params_multipleSet gives error with wrong data : name.simulation.1", {
   expect_error(PRE_FATE.params_multipleSet(1)
-               , "`name.simulation` does not exist or does not contain a DATA/GLOBAL_PARAMETERS/ folder")
+               , "`name.simulation.1` does not exist or does not contain a PARAM_SIMUL/ folder")
   expect_error(PRE_FATE.params_multipleSet("a")
-               , "`name.simulation` does not exist or does not contain a DATA/GLOBAL_PARAMETERS/ folder")
+               , "`name.simulation.1` does not exist or does not contain a PARAM_SIMUL/ folder")
   expect_error(PRE_FATE.params_multipleSet(factor(1))
-               , "`name.simulation` does not exist or does not contain a DATA/GLOBAL_PARAMETERS/ folder")
+               , "`name.simulation.1` does not exist or does not contain a PARAM_SIMUL/ folder")
   expect_error(PRE_FATE.params_multipleSet(matrix(seq(2), ncol=2))
-               , "`name.simulation` does not exist or does not contain a DATA/GLOBAL_PARAMETERS/ folder")
-})
-
-
-
-## INPUTS
-test_that("PRE_FATE.params_multipleSet gives error with wrong data : required.no_PFG", {
+               , "`name.simulation.1` does not exist or does not contain a PARAM_SIMUL/ folder")
+  
   if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
-  PRE_FATE.skeletonDirectory()
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation")
-               , "`required.no_PFG` must be an integer > 0")
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = NA)
-               , "`required.no_PFG` must be an integer > 0")
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = NULL)
-               , "`required.no_PFG` must be an integer > 0")
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = "")
-               , "`required.no_PFG` must be an integer > 0")
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5)
-               , "`required.no_STRATA` must be an integer > 0")
-})
-
-
-## INPUTS
-test_that("PRE_FATE.params_multipleSet gives error with wrong data : required.no_STRATA", {
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = NA)
-               , "`required.no_STRATA` must be an integer > 0")
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = NULL)
-               , "`required.no_STRATA` must be an integer > 0")
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = "")
-               , "`required.no_STRATA` must be an integer > 0")
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2)
-               , "`required.simul_duration` must be an integer > 0")
+  dir.create("FATE_simulation")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation")
+               , "`name.simulation.1` does not exist or does not contain a PARAM_SIMUL/ folder")
+  dir.create("FATE_simulation/PARAM_SIMUL")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation")
+               , "`name.simulation.1` does not exist or does not contain a DATA/GLOBAL_PARAMETERS/ folder")
+  dir.create("FATE_simulation/DATA")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation")
+               , "`name.simulation.1` does not exist or does not contain a DATA/GLOBAL_PARAMETERS/ folder")
+  dir.create("FATE_simulation/DATA/GLOBAL_PARAMETERS")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation")
+               , "Missing data!\n The folder FATE_simulation/PARAM_SIMUL/ does not contain adequate files")
+  file.create("FATE_simulation/PARAM_SIMUL/toto.txt")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation")
+               , "Missing data!\n The folder FATE_simulation/PARAM_SIMUL/ contain one or more files")
 })
 
 ## INPUTS
-test_that("PRE_FATE.params_multipleSet gives error with wrong data : required.simul_duration", {
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = NA)
-               , "`required.simul_duration` must be an integer > 0")
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = NULL)
-               , "`required.simul_duration` must be an integer > 0")
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = "")
-               , "`required.simul_duration` must be an integer > 0")
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100)
-               , "`required.seeding_duration` must be an integer > 0")
-})
-
-## INPUTS
-test_that("PRE_FATE.params_multipleSet gives error with wrong data : required.seeding_duration", {
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = NA)
-               , "`required.seeding_duration` must be an integer > 0")
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = NULL)
-               , "`required.seeding_duration` must be an integer > 0")
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = "")
-               , "`required.seeding_duration` must be an integer > 0")
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100)
-               , "`required.seeding_timestep` must be an integer > 0")
-})
-
-
-## INPUTS
-test_that("PRE_FATE.params_multipleSet gives error with wrong data : required.seeding_timestep", {
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = NA)
-               , "`required.seeding_timestep` must be an integer > 0")
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = NULL)
-               , "`required.seeding_timestep` must be an integer > 0")
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = "")
-               , "`required.seeding_timestep` must be an integer > 0")
-})
-
-## INPUTS
-test_that("PRE_FATE.params_multipleSet gives error with wrong data : required.seeding_input", {
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = NA)
-               , "`required.seeding_input` must be an integer > 0")
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = NULL)
-               , "`required.seeding_input` must be an integer > 0")
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = "")
-               , "`required.seeding_input` must be an integer > 0")
-})
-
-## INPUTS
-test_that("PRE_FATE.params_multipleSet gives error with wrong data : required.max_by_cohort", {
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = NA)
-               , "`required.max_by_cohort` must be an integer > 0")
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = NULL)
-               , "`required.max_by_cohort` must be an integer > 0")
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = "")
-               , "`required.max_by_cohort` must be an integer > 0")
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = -1)
-               , "`required.max_by_cohort` must be an integer > 0")
-})
-
-## INPUTS
-test_that("PRE_FATE.params_multipleSet gives error with wrong data : required.max_abund_low", {
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
-                                                , required.max_abund_low = NA)
-               , "`required.max_abund_low` must be an integer > 0")
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
-                                                , required.max_abund_low = NULL)
-               , "`required.max_abund_low` must be an integer > 0")
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
-                                                , required.max_abund_low = "")
-               , "`required.max_abund_low` must be an integer > 0")
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
-                                                , required.max_abund_low = -1)
-               , "`required.max_abund_low` must be an integer > 0")
-})
-
-## INPUTS
-test_that("PRE_FATE.params_multipleSet gives error with wrong data : required.max_abund_medium", {
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
-                                                , required.max_abund_low = 3000000
-                                                , required.max_abund_medium = NA)
-               , "`required.max_abund_medium` must be an integer > 0")
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
-                                                , required.max_abund_low = 3000000
-                                                , required.max_abund_medium = NULL)
-               , "`required.max_abund_medium` must be an integer > 0")
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
-                                                , required.max_abund_low = 3000000
-                                                , required.max_abund_medium = "")
-               , "`required.max_abund_medium` must be an integer > 0")
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
-                                                , required.max_abund_low = 3000000
-                                                , required.max_abund_medium = -1)
-               , "`required.max_abund_medium` must be an integer > 0")
-})
-
-## INPUTS
-test_that("PRE_FATE.params_multipleSet gives error with wrong data : required.max_abund_high", {
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
-                                                , required.max_abund_low = 3000000
-                                                , required.max_abund_medium = 5000000
-                                                , required.max_abund_high = NA)
-               , "`required.max_abund_high` must be an integer > 0")
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
-                                                , required.max_abund_low = 3000000
-                                                , required.max_abund_medium = 5000000
-                                                , required.max_abund_high = NULL)
-               , "`required.max_abund_high` must be an integer > 0")
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
-                                                , required.max_abund_low = 3000000
-                                                , required.max_abund_medium = 5000000
-                                                , required.max_abund_high = "")
-               , "`required.max_abund_high` must be an integer > 0")
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
-                                                , required.max_abund_low = 3000000
-                                                , required.max_abund_medium = 5000000
-                                                , required.max_abund_high = -1)
-               , "`required.max_abund_high` must be an integer > 0")
-})
-
-## INPUTS
-test_that("PRE_FATE.params_multipleSet gives error with wrong data : LIGHT.thresh_medium", {
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
-                                                , required.max_abund_low = 3000000
-                                                , required.max_abund_medium = 5000000
-                                                , required.max_abund_high = 9000000
-                                                , doLight = T
-                                                , LIGHT.thresh_medium = NA)
-               , "`LIGHT.thresh_medium` must be an integer > 0")
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
-                                                , required.max_abund_low = 3000000
-                                                , required.max_abund_medium = 5000000
-                                                , required.max_abund_high = 9000000
-                                                , doLight = T
-                                                , LIGHT.thresh_medium = NULL)
-               , "`LIGHT.thresh_medium` must be an integer > 0")
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
-                                                , required.max_abund_low = 3000000
-                                                , required.max_abund_medium = 5000000
-                                                , required.max_abund_high = 9000000
-                                                , doLight = T
-                                                , LIGHT.thresh_medium = "")
-               , "`LIGHT.thresh_medium` must be an integer > 0")
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
-                                                , required.max_abund_low = 3000000
-                                                , required.max_abund_medium = 5000000
-                                                , required.max_abund_high = 9000000
-                                                , doLight = T
-                                                , LIGHT.thresh_medium = -1)
-               , "`LIGHT.thresh_medium` must be an integer > 0")
-})
-
-## INPUTS
-test_that("PRE_FATE.params_multipleSet gives error with wrong data : LIGHT.thresh_low", {
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
-                                                , required.max_abund_low = 3000000
-                                                , required.max_abund_medium = 5000000
-                                                , required.max_abund_high = 9000000
-                                                , doLight = T
-                                                , LIGHT.thresh_medium = 13000000
-                                                , LIGHT.thresh_low = NA)
-               , "`LIGHT.thresh_low` must be an integer > 0")
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
-                                                , required.max_abund_low = 3000000
-                                                , required.max_abund_medium = 5000000
-                                                , required.max_abund_high = 9000000
-                                                , doLight = T
-                                                , LIGHT.thresh_medium = 13000000
-                                                , LIGHT.thresh_low = NULL)
-               , "`LIGHT.thresh_low` must be an integer > 0")
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
-                                                , required.max_abund_low = 3000000
-                                                , required.max_abund_medium = 5000000
-                                                , required.max_abund_high = 9000000
-                                                , doLight = T
-                                                , LIGHT.thresh_medium = 13000000
-                                                , LIGHT.thresh_low = "")
-               , "`LIGHT.thresh_low` must be an integer > 0")
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
-                                                , required.max_abund_low = 3000000
-                                                , required.max_abund_medium = 5000000
-                                                , required.max_abund_high = 9000000
-                                                , doLight = T
-                                                , LIGHT.thresh_medium = 13000000
-                                                , LIGHT.thresh_low = -1)
-               , "`LIGHT.thresh_low` must be an integer > 0")
-})
-
-## INPUTS
-test_that("PRE_FATE.params_multipleSet gives error with wrong data : DISPERSAL.mode", {
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
-                                                , required.max_abund_low = 3000000
-                                                , required.max_abund_medium = 5000000
-                                                , required.max_abund_high = 9000000
-                                                , doDispersal = T
-                                                , DISPERSAL.mode = NA)
-               , "`DISPERSAL.mode` must be either `1 (uniform kernel)`, `2 (exponential kernel)` or `3 (exponential kernel with probability)`"
-               , fixed = T)
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
-                                                , required.max_abund_low = 3000000
-                                                , required.max_abund_medium = 5000000
-                                                , required.max_abund_high = 9000000
-                                                , doDispersal = T
-                                                , DISPERSAL.mode = NULL)
-               , "`DISPERSAL.mode` must be either `1 (uniform kernel)`, `2 (exponential kernel)` or `3 (exponential kernel with probability)`"
-               , fixed = T)
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
-                                                , required.max_abund_low = 3000000
-                                                , required.max_abund_medium = 5000000
-                                                , required.max_abund_high = 9000000
-                                                , doDispersal = T
-                                                , DISPERSAL.mode = "")
-               , "`DISPERSAL.mode` must be either `1 (uniform kernel)`, `2 (exponential kernel)` or `3 (exponential kernel with probability)`"
-               , fixed = T)
-})
-
-## INPUTS
-test_that("PRE_FATE.params_multipleSet gives error with wrong data : HABSUIT.ref_option", {
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
-                                                , required.max_abund_low = 3000000
-                                                , required.max_abund_medium = 5000000
-                                                , required.max_abund_high = 9000000
-                                                , doHabSuitability = T
-                                                , HABSUIT.ref_option = NA)
-               , "`HABSUIT.ref_option` must be either `1 (random)` or `2 (distribution per PFG)`", fixed = T)
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
-                                                , required.max_abund_low = 3000000
-                                                , required.max_abund_medium = 5000000
-                                                , required.max_abund_high = 9000000
-                                                , doHabSuitability = T
-                                                , HABSUIT.ref_option = NULL)
-               , "`HABSUIT.ref_option` must be either `1 (random)` or `2 (distribution per PFG)`", fixed = T)
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
-                                                , required.max_abund_low = 3000000
-                                                , required.max_abund_medium = 5000000
-                                                , required.max_abund_high = 9000000
-                                                , doHabSuitability = T
-                                                , HABSUIT.ref_option = "")
-               , "`HABSUIT.ref_option` must be either `1 (random)` or `2 (distribution per PFG)`", fixed = T)
-})
-
-
-
-## INPUTS
-test_that("PRE_FATE.params_multipleSet gives error with wrong data : DIST.no", {
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
-                                                , required.max_abund_low = 3000000
-                                                , required.max_abund_medium = 5000000
-                                                , required.max_abund_high = 9000000
-                                                , doDisturbances = T
-                                                , DIST.no = NA)
-               , "`DIST.no` must be an integer > 0")
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
-                                                , required.max_abund_low = 3000000
-                                                , required.max_abund_medium = 5000000
-                                                , required.max_abund_high = 9000000
-                                                , doDisturbances = T
-                                                , DIST.no = NULL)
-               , "`DIST.no` must be an integer > 0")
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
-                                                , required.max_abund_low = 3000000
-                                                , required.max_abund_medium = 5000000
-                                                , required.max_abund_high = 9000000
-                                                , doDisturbances = T
-                                                , DIST.no = "")
-               , "`DIST.no` must be an integer > 0")
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
-                                                , required.max_abund_low = 3000000
-                                                , required.max_abund_medium = 5000000
-                                                , required.max_abund_high = 9000000
-                                                , doDisturbances = T
-                                                , DIST.no = 2)
-               , "`DIST.no_sub` must be an integer > 0")
-})
-
-## INPUTS
-test_that("PRE_FATE.params_multipleSet gives error with wrong data : DIST.no_sub", {
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
-                                                , required.max_abund_low = 3000000
-                                                , required.max_abund_medium = 5000000
-                                                , required.max_abund_high = 9000000
-                                                , doDisturbances = T
-                                                , DIST.no = 2
-                                                , DIST.no_sub = NA)
-               , "`DIST.no_sub` must be an integer > 0")
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
-                                                , required.max_abund_low = 3000000
-                                                , required.max_abund_medium = 5000000
-                                                , required.max_abund_high = 9000000
-                                                , doDisturbances = T
-                                                , DIST.no = 2
-                                                , DIST.no_sub = NULL)
-               , "`DIST.no_sub` must be an integer > 0")
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
-                                                , required.max_abund_low = 3000000
-                                                , required.max_abund_medium = 5000000
-                                                , required.max_abund_high = 9000000
-                                                , doDisturbances = T
-                                                , DIST.no = 2
-                                                , DIST.no_sub = "")
-               , "`DIST.no_sub` must be an integer > 0")
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
-                                                , required.max_abund_low = 3000000
-                                                , required.max_abund_medium = 5000000
-                                                , required.max_abund_high = 9000000
-                                                , doDisturbances = T
-                                                , DIST.no = 2
-                                                , DIST.no_sub = 2)
-               , "`DIST.freq` must be a vector of integer > 0")
-})
-
-## INPUTS
-test_that("PRE_FATE.params_multipleSet gives error with wrong data : DIST.freq", {
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
-                                                , required.max_abund_low = 3000000
-                                                , required.max_abund_medium = 5000000
-                                                , required.max_abund_high = 9000000
-                                                , doDisturbances = T
-                                                , DIST.no = 2
-                                                , DIST.no_sub = 2
-                                                , DIST.freq = NA)
-               , "`DIST.freq` must be a vector of integer > 0")
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
-                                                , required.max_abund_low = 3000000
-                                                , required.max_abund_medium = 5000000
-                                                , required.max_abund_high = 9000000
-                                                , doDisturbances = T
-                                                , DIST.no = 2
-                                                , DIST.no_sub = 2
-                                                , DIST.freq = NULL)
-               , "`DIST.freq` must be a vector of integer > 0")
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
-                                                , required.max_abund_low = 3000000
-                                                , required.max_abund_medium = 5000000
-                                                , required.max_abund_high = 9000000
-                                                , doDisturbances = T
-                                                , DIST.no = 2
-                                                , DIST.no_sub = 2
-                                                , DIST.freq = "")
-               , "`DIST.freq` must be a vector of integer > 0")
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
-                                                , required.max_abund_low = 3000000
-                                                , required.max_abund_medium = 5000000
-                                                , required.max_abund_high = 9000000
-                                                , doDisturbances = T
-                                                , DIST.no = 2
-                                                , DIST.no_sub = 2
-                                                , DIST.freq = 2)
-               , "`DIST.freq` must contain as many values as the number of disturbances (`DIST.no`)", fixed = T)
-  expect_error(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
-                                                , required.max_abund_low = 3000000
-                                                , required.max_abund_medium = 5000000
-                                                , required.max_abund_high = 9000000
-                                                , doDisturbances = T
-                                                , DIST.no = 2
-                                                , DIST.no_sub = 2
-                                                , DIST.freq = c(2,0))
-               , "`DIST.freq` must be a vector of integer > 0")
-})
-
-
-## OUTPUTS
-test_that("PRE_FATE.params_multipleSet gives correct output", {
-  if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
-  PRE_FATE.skeletonDirectory()
-  expect_warning(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                  , opt.no_CPU = "a"
-                                                  , required.no_PFG = 5
-                                                  , required.no_STRATA = 2
-                                                  , required.simul_duration = 100
-                                                  , required.seeding_duration = 100
-                                                  , required.seeding_timestep = 100
-                                                  , required.seeding_input = 100
-                                                  , required.max_by_cohort = 5000000
-                                                  , required.max_abund_low = 3000000
-                                                  , required.max_abund_medium = 5000000
-                                                  , required.max_abund_high = 9000000)
-                 , "`opt.no_CPU` must be an integer > 0", fixed = T)
+test_that("PRE_FATE.params_multipleSet gives error with wrong data : file.simulParam.1", {
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = NA)
+               , "Missing data!\n The folder FATE_simulation/PARAM_SIMUL/ contain one or more files")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = 1)
+               , "Missing data!\n The folder FATE_simulation/PARAM_SIMUL/ contain one or more files")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = factor("a"))
+               , "Missing data!\n The folder FATE_simulation/PARAM_SIMUL/ contain one or more files")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "a")
+               , "Wrong name file given!\n `FATE_simulation/PARAM_SIMUL/a` does not exist")
   
-  expect_message(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                  , required.no_PFG = 5
-                                                  , required.no_STRATA = 2
-                                                  , required.simul_duration = 100
-                                                  , required.seeding_duration = 100
-                                                  , required.seeding_timestep = 100
-                                                  , required.seeding_input = 100
-                                                  , required.max_by_cohort = 5000000
-                                                  , required.max_abund_low = 3000000
-                                                  , required.max_abund_medium = 5000000
-                                                  , required.max_abund_high = 9000000)
-                 , "The parameter file FATE_simulation/DATA/GLOBAL_PARAMETERS/Global_parameters_V2.txt has been successfully created !")
-  expect_warning(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                  , opt.replacePrevious = TRUE
-                                                  , required.no_PFG = 5
-                                                  , required.no_STRATA = 2
-                                                  , required.simul_duration = 100
-                                                  , required.seeding_duration = 100
-                                                  , required.seeding_timestep = 100
-                                                  , required.seeding_input = 100
-                                                  , required.max_by_cohort = 5000000
-                                                  , required.max_abund_low = 3000000
-                                                  , required.max_abund_medium = 5000000
-                                                  , required.max_abund_high = 9000000)
-                 , "already exists. It will be replaced.")
-  
-  expect_message(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                  , required.no_PFG = 5
-                                                  , required.no_STRATA = 2
-                                                  , required.simul_duration = 100
-                                                  , required.seeding_duration = 100
-                                                  , required.seeding_timestep = 100
-                                                  , required.seeding_input = 100
-                                                  , required.max_by_cohort = 5000000
-                                                  , required.max_abund_low = 3000000
-                                                  , required.max_abund_medium = 5000000
-                                                  , required.max_abund_high = 9000000
-                                                  , doDisturbances = T
-                                                  , DIST.no = 2
-                                                  , DIST.no_sub = 2
-                                                  , DIST.freq = c(2,2))
-                 , "The parameter file FATE_simulation/DATA/GLOBAL_PARAMETERS/Global_parameters_V3.txt has been successfully created !")
-  
-  expect_warning(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                  , opt.replacePrevious = TRUE
-                                                  , required.no_PFG = 5
-                                                  , required.no_STRATA = 2
-                                                  , required.simul_duration = 100
-                                                  , required.seeding_duration = 100
-                                                  , required.seeding_timestep = 100
-                                                  , required.seeding_input = 100
-                                                  , required.max_by_cohort = 5000000.5
-                                                  , required.max_abund_low = 3000000
-                                                  , required.max_abund_medium = 5000000
-                                                  , required.max_abund_high = 9000000)
-                 , "`required.max_by_cohort` is a double. It will be converted (rounded) to an integer"
-                 , fixed = TRUE)
-  expect_warning(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                  , opt.replacePrevious = TRUE
-                                                  , required.no_PFG = 5
-                                                  , required.no_STRATA = 2
-                                                  , required.simul_duration = 100
-                                                  , required.seeding_duration = 100
-                                                  , required.seeding_timestep = 100
-                                                  , required.seeding_input = 100
-                                                  , required.max_by_cohort = 5000000
-                                                  , required.max_abund_low = 3000000.5
-                                                  , required.max_abund_medium = 5000000
-                                                  , required.max_abund_high = 9000000)
-                 , "`required.max_abund_low` is a double. It will be converted (rounded) to an integer"
-                 , fixed = TRUE)
-  expect_warning(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                  , opt.replacePrevious = TRUE
-                                                  , required.no_PFG = 5
-                                                  , required.no_STRATA = 2
-                                                  , required.simul_duration = 100
-                                                  , required.seeding_duration = 100
-                                                  , required.seeding_timestep = 100
-                                                  , required.seeding_input = 100
-                                                  , required.max_by_cohort = 5000000
-                                                  , required.max_abund_low = 3000000
-                                                  , required.max_abund_medium = 5000000.5
-                                                  , required.max_abund_high = 9000000)
-                 , "`required.max_abund_medium` is a double. It will be converted (rounded) to an integer"
-                 , fixed = TRUE)
-  expect_warning(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                  , opt.replacePrevious = TRUE
-                                                  , required.no_PFG = 5
-                                                  , required.no_STRATA = 2
-                                                  , required.simul_duration = 100
-                                                  , required.seeding_duration = 100
-                                                  , required.seeding_timestep = 100
-                                                  , required.seeding_input = 100
-                                                  , required.max_by_cohort = 5000000
-                                                  , required.max_abund_low = 3000000
-                                                  , required.max_abund_medium = 5000000
-                                                  , required.max_abund_high = 9000000.5)
-                 , "`required.max_abund_high` is a double. It will be converted (rounded) to an integer"
-                 , fixed = TRUE)
-  expect_warning(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                  , opt.replacePrevious = TRUE
-                                                  , required.no_PFG = 5
-                                                  , required.no_STRATA = 2
-                                                  , required.simul_duration = 100
-                                                  , required.seeding_duration = 100
-                                                  , required.seeding_timestep = 100
-                                                  , required.seeding_input = 100
-                                                  , required.max_by_cohort = 5000000
-                                                  , required.max_abund_low = 3000000
-                                                  , required.max_abund_medium = 5000000
-                                                  , required.max_abund_high = 9000000
-                                                  , doLight = TRUE
-                                                  , LIGHT.thresh_medium = 100.5
-                                                  , LIGHT.thresh_low = 50)
-                 , "`LIGHT.thresh_medium` is a double. It will be converted (rounded) to an integer"
-                 , fixed = TRUE)
-  expect_warning(PRE_FATE.params_multipleSet(name.simulation = "FATE_simulation"
-                                                  , opt.replacePrevious = TRUE
-                                                  , required.no_PFG = 5
-                                                  , required.no_STRATA = 2
-                                                  , required.simul_duration = 100
-                                                  , required.seeding_duration = 100
-                                                  , required.seeding_timestep = 100
-                                                  , required.seeding_input = 100
-                                                  , required.max_by_cohort = 5000000
-                                                  , required.max_abund_low = 3000000
-                                                  , required.max_abund_medium = 5000000
-                                                  , required.max_abund_high = 9000000
-                                                  , doLight = TRUE
-                                                  , LIGHT.thresh_medium = 100
-                                                  , LIGHT.thresh_low = 50.5)
-                 , "`LIGHT.thresh_low` is a double. It will be converted (rounded) to an integer"
-                 , fixed = TRUE)
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt")
+               , "Wrong type of data!\n `no_simulations` must be an integer > 0")
 })
+
+
+## INPUTS
+test_that("PRE_FATE.params_multipleSet gives error with wrong data : file.simulParam.2", {
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , file.simulParam.2 = NA)
+               , "Wrong type of data!\n `no_simulations` must be an integer > 0")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , file.simulParam.2 = 1)
+               , "Wrong type of data!\n `no_simulations` must be an integer > 0")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , file.simulParam.2 = factor("a"))
+               , "Wrong type of data!\n `no_simulations` must be an integer > 0")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , file.simulParam.2 = "a")
+               , "Wrong name file given!\n `FATE_simulation/PARAM_SIMUL/a` does not exist")
+  
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , file.simulParam.2 = "toto.txt")
+               , "You must select different simulation parameter files !")
+  file.create("FATE_simulation/PARAM_SIMUL/toto2.txt")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , file.simulParam.2 = "toto2.txt")
+               , "Wrong type of data!\n `no_simulations` must be an integer > 0")
+})
+
+## INPUTS
+test_that("PRE_FATE.params_multipleSet gives error with wrong data : name.simulation.2", {
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , name.simulation.2 = "a")
+               , "Missing data!\n The folder FATE_simulation/PARAM_SIMUL/ contain one or more files.")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , name.simulation.2 = "a")
+               , "Wrong type of data!\n `no_simulations` must be an integer > 0")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , file.simulParam.2 = "toto.txt"
+                                           , name.simulation.2 = "a")
+               , "`name.simulation.2` does not exist or does not contain a PARAM_SIMUL/ folder")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , file.simulParam.2 = "toto.txt"
+                                           , name.simulation.2 = factor(1))
+               , "You must select different simulation parameter files !")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , file.simulParam.2 = "toto.txt"
+                                           , name.simulation.2 = matrix(seq(2), ncol=2))
+               , "You must select different simulation parameter files !")
+  
+  
+  if (dir.exists("FATE_simulation2")) unlink("FATE_simulation2", recursive = TRUE)
+  dir.create("FATE_simulation2")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , file.simulParam.2 = "toto.txt"
+                                           , name.simulation.2 = "FATE_simulation2")
+               , "`name.simulation.2` does not exist or does not contain a PARAM_SIMUL/ folder")
+  dir.create("FATE_simulation2/PARAM_SIMUL")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , file.simulParam.2 = "toto.txt"
+                                           , name.simulation.2 = "FATE_simulation2")
+               , "`name.simulation.2` does not exist or does not contain a DATA/GLOBAL_PARAMETERS/ folder")
+  dir.create("FATE_simulation2/DATA")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , file.simulParam.2 = "toto.txt"
+                                           , name.simulation.2 = "FATE_simulation2")
+               , "`name.simulation.2` does not exist or does not contain a DATA/GLOBAL_PARAMETERS/ folder")
+  dir.create("FATE_simulation2/DATA/GLOBAL_PARAMETERS")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , file.simulParam.2 = "toto.txt"
+                                           , name.simulation.2 = "FATE_simulation2")
+               , "Wrong name file given!\n `FATE_simulation2/PARAM_SIMUL/toto.txt` does not exist")
+  
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , file.simulParam.2 = "toto.txt"
+                                           , name.simulation.2 = "FATE_simulation")
+               , "You must select different simulation parameter files !")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , file.simulParam.2 = "toto2.txt"
+                                           , name.simulation.2 = "FATE_simulation")
+               , "Wrong type of data!\n `no_simulations` must be an integer > 0")
+  file.create("FATE_simulation2/PARAM_SIMUL/toto.txt")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , file.simulParam.2 = "toto.txt"
+                                           , name.simulation.2 = "FATE_simulation2")
+               , "Wrong type of data!\n `no_simulations` must be an integer > 0")
+})
+
+
+## INPUTS
+test_that("PRE_FATE.params_multipleSet gives error with wrong data : no_simulations", {
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , no_simulations = NA)
+               , "Wrong type of data!\n `no_simulations` must be an integer > 0")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , no_simulations = NULL)
+               , "Wrong type of data!\n `no_simulations` must be an integer > 0")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , no_simulations = factor(1))
+               , "Wrong type of data!\n `no_simulations` must be an integer > 0")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , no_simulations = "")
+               , "Wrong type of data!\n `no_simulations` must be an integer > 0")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , no_simulations = factor("a"))
+               , "Wrong type of data!\n `no_simulations` must be an integer > 0")
+  # expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+  #                                          , file.simulParam.1 = "toto.txt"
+  #                                          , no_simulations = 10)
+  #              , "Wrong type of data!\n `no_simulations` must be an integer > 0")
+})
+
+
+
+
+# ## INPUTS
+# test_that("PRE_FATE.params_multipleSet gives error with wrong data : DISPERSAL.mode", {
+#   expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+#                                                 , required.no_PFG = 5
+#                                                 , required.no_STRATA = 2
+#                                                 , required.simul_duration = 100
+#                                                 , required.seeding_duration = 100
+#                                                 , required.seeding_timestep = 100
+#                                                 , required.seeding_input = 100
+#                                                 , required.max_by_cohort = 5000000
+#                                                 , required.max_abund_low = 3000000
+#                                                 , required.max_abund_medium = 5000000
+#                                                 , required.max_abund_high = 9000000
+#                                                 , doDispersal = T
+#                                                 , DISPERSAL.mode = NA)
+#                , "`DISPERSAL.mode` must be either `1 (uniform kernel)`, `2 (exponential kernel)` or `3 (exponential kernel with probability)`"
+#                , fixed = T)
+#   expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+#                                                 , required.no_PFG = 5
+#                                                 , required.no_STRATA = 2
+#                                                 , required.simul_duration = 100
+#                                                 , required.seeding_duration = 100
+#                                                 , required.seeding_timestep = 100
+#                                                 , required.seeding_input = 100
+#                                                 , required.max_by_cohort = 5000000
+#                                                 , required.max_abund_low = 3000000
+#                                                 , required.max_abund_medium = 5000000
+#                                                 , required.max_abund_high = 9000000
+#                                                 , doDispersal = T
+#                                                 , DISPERSAL.mode = NULL)
+#                , "`DISPERSAL.mode` must be either `1 (uniform kernel)`, `2 (exponential kernel)` or `3 (exponential kernel with probability)`"
+#                , fixed = T)
+#   expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+#                                                 , required.no_PFG = 5
+#                                                 , required.no_STRATA = 2
+#                                                 , required.simul_duration = 100
+#                                                 , required.seeding_duration = 100
+#                                                 , required.seeding_timestep = 100
+#                                                 , required.seeding_input = 100
+#                                                 , required.max_by_cohort = 5000000
+#                                                 , required.max_abund_low = 3000000
+#                                                 , required.max_abund_medium = 5000000
+#                                                 , required.max_abund_high = 9000000
+#                                                 , doDispersal = T
+#                                                 , DISPERSAL.mode = "")
+#                , "`DISPERSAL.mode` must be either `1 (uniform kernel)`, `2 (exponential kernel)` or `3 (exponential kernel with probability)`"
+#                , fixed = T)
+# })
+# 
+# ## OUTPUTS
+# test_that("PRE_FATE.params_multipleSet gives correct output", {
+#   if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
+#   PRE_FATE.skeletonDirectory()
+#   expect_warning(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+#                                                   , opt.no_CPU = "a"
+#                                                   , required.no_PFG = 5
+#                                                   , required.no_STRATA = 2
+#                                                   , required.simul_duration = 100
+#                                                   , required.seeding_duration = 100
+#                                                   , required.seeding_timestep = 100
+#                                                   , required.seeding_input = 100
+#                                                   , required.max_by_cohort = 5000000
+#                                                   , required.max_abund_low = 3000000
+#                                                   , required.max_abund_medium = 5000000
+#                                                   , required.max_abund_high = 9000000)
+#                  , "`opt.no_CPU` must be an integer > 0", fixed = T)
+#   
+#   expect_message(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+#                                                   , required.no_PFG = 5
+#                                                   , required.no_STRATA = 2
+#                                                   , required.simul_duration = 100
+#                                                   , required.seeding_duration = 100
+#                                                   , required.seeding_timestep = 100
+#                                                   , required.seeding_input = 100
+#                                                   , required.max_by_cohort = 5000000
+#                                                   , required.max_abund_low = 3000000
+#                                                   , required.max_abund_medium = 5000000
+#                                                   , required.max_abund_high = 9000000)
+#                  , "The parameter file FATE_simulation/DATA/GLOBAL_PARAMETERS/Global_parameters_V2.txt has been successfully created !")
+#   expect_warning(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+#                                                   , opt.replacePrevious = TRUE
+#                                                   , required.no_PFG = 5
+#                                                   , required.no_STRATA = 2
+#                                                   , required.simul_duration = 100
+#                                                   , required.seeding_duration = 100
+#                                                   , required.seeding_timestep = 100
+#                                                   , required.seeding_input = 100
+#                                                   , required.max_by_cohort = 5000000
+#                                                   , required.max_abund_low = 3000000
+#                                                   , required.max_abund_medium = 5000000
+#                                                   , required.max_abund_high = 9000000)
+#                  , "already exists. It will be replaced.")
+#   
+#   expect_message(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+#                                                   , required.no_PFG = 5
+#                                                   , required.no_STRATA = 2
+#                                                   , required.simul_duration = 100
+#                                                   , required.seeding_duration = 100
+#                                                   , required.seeding_timestep = 100
+#                                                   , required.seeding_input = 100
+#                                                   , required.max_by_cohort = 5000000
+#                                                   , required.max_abund_low = 3000000
+#                                                   , required.max_abund_medium = 5000000
+#                                                   , required.max_abund_high = 9000000
+#                                                   , doDisturbances = T
+#                                                   , DIST.no = 2
+#                                                   , DIST.no_sub = 2
+#                                                   , DIST.freq = c(2,2))
+#                  , "The parameter file FATE_simulation/DATA/GLOBAL_PARAMETERS/Global_parameters_V3.txt has been successfully created !")
+#   
+#   expect_warning(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+#                                                   , opt.replacePrevious = TRUE
+#                                                   , required.no_PFG = 5
+#                                                   , required.no_STRATA = 2
+#                                                   , required.simul_duration = 100
+#                                                   , required.seeding_duration = 100
+#                                                   , required.seeding_timestep = 100
+#                                                   , required.seeding_input = 100
+#                                                   , required.max_by_cohort = 5000000.5
+#                                                   , required.max_abund_low = 3000000
+#                                                   , required.max_abund_medium = 5000000
+#                                                   , required.max_abund_high = 9000000)
+#                  , "`required.max_by_cohort` is a double. It will be converted (rounded) to an integer"
+#                  , fixed = TRUE)
+#   expect_warning(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+#                                                   , opt.replacePrevious = TRUE
+#                                                   , required.no_PFG = 5
+#                                                   , required.no_STRATA = 2
+#                                                   , required.simul_duration = 100
+#                                                   , required.seeding_duration = 100
+#                                                   , required.seeding_timestep = 100
+#                                                   , required.seeding_input = 100
+#                                                   , required.max_by_cohort = 5000000
+#                                                   , required.max_abund_low = 3000000.5
+#                                                   , required.max_abund_medium = 5000000
+#                                                   , required.max_abund_high = 9000000)
+#                  , "`required.max_abund_low` is a double. It will be converted (rounded) to an integer"
+#                  , fixed = TRUE)
+#   expect_warning(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+#                                                   , opt.replacePrevious = TRUE
+#                                                   , required.no_PFG = 5
+#                                                   , required.no_STRATA = 2
+#                                                   , required.simul_duration = 100
+#                                                   , required.seeding_duration = 100
+#                                                   , required.seeding_timestep = 100
+#                                                   , required.seeding_input = 100
+#                                                   , required.max_by_cohort = 5000000
+#                                                   , required.max_abund_low = 3000000
+#                                                   , required.max_abund_medium = 5000000.5
+#                                                   , required.max_abund_high = 9000000)
+#                  , "`required.max_abund_medium` is a double. It will be converted (rounded) to an integer"
+#                  , fixed = TRUE)
+#   expect_warning(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+#                                                   , opt.replacePrevious = TRUE
+#                                                   , required.no_PFG = 5
+#                                                   , required.no_STRATA = 2
+#                                                   , required.simul_duration = 100
+#                                                   , required.seeding_duration = 100
+#                                                   , required.seeding_timestep = 100
+#                                                   , required.seeding_input = 100
+#                                                   , required.max_by_cohort = 5000000
+#                                                   , required.max_abund_low = 3000000
+#                                                   , required.max_abund_medium = 5000000
+#                                                   , required.max_abund_high = 9000000.5)
+#                  , "`required.max_abund_high` is a double. It will be converted (rounded) to an integer"
+#                  , fixed = TRUE)
+#   expect_warning(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+#                                                   , opt.replacePrevious = TRUE
+#                                                   , required.no_PFG = 5
+#                                                   , required.no_STRATA = 2
+#                                                   , required.simul_duration = 100
+#                                                   , required.seeding_duration = 100
+#                                                   , required.seeding_timestep = 100
+#                                                   , required.seeding_input = 100
+#                                                   , required.max_by_cohort = 5000000
+#                                                   , required.max_abund_low = 3000000
+#                                                   , required.max_abund_medium = 5000000
+#                                                   , required.max_abund_high = 9000000
+#                                                   , doLight = TRUE
+#                                                   , LIGHT.thresh_medium = 100.5
+#                                                   , LIGHT.thresh_low = 50)
+#                  , "`LIGHT.thresh_medium` is a double. It will be converted (rounded) to an integer"
+#                  , fixed = TRUE)
+#   expect_warning(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+#                                                   , opt.replacePrevious = TRUE
+#                                                   , required.no_PFG = 5
+#                                                   , required.no_STRATA = 2
+#                                                   , required.simul_duration = 100
+#                                                   , required.seeding_duration = 100
+#                                                   , required.seeding_timestep = 100
+#                                                   , required.seeding_input = 100
+#                                                   , required.max_by_cohort = 5000000
+#                                                   , required.max_abund_low = 3000000
+#                                                   , required.max_abund_medium = 5000000
+#                                                   , required.max_abund_high = 9000000
+#                                                   , doLight = TRUE
+#                                                   , LIGHT.thresh_medium = 100
+#                                                   , LIGHT.thresh_low = 50.5)
+#                  , "`LIGHT.thresh_low` is a double. It will be converted (rounded) to an integer"
+#                  , fixed = TRUE)
+# })

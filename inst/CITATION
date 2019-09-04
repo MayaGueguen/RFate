@@ -5,7 +5,7 @@ citEntry(
   title = "RFate package - to be used with FATE-HD",
   author = personList(as.person("Maya Guéguen")),
   year = "2019",
-  version = "0.0.7.9000",
+  version = "0.0.8.9000",
   url = "https://mayagueguen.github.io/RFate/",
   textVersion = paste("Maya Guéguen (2019).",
         "Laboratoire d'Ecologie Alpine (LECA), Grenoble (38), France.",
