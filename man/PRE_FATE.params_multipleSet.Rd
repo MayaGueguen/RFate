@@ -12,9 +12,9 @@ PRE_FATE.params_multipleSet(name.simulation.1, name.simulation.2 = NULL,
   do.max_abund_low = TRUE, do.max_abund_medium = TRUE,
   do.max_abund_high = TRUE, do.seeding_duration = TRUE,
   do.seeding_timestep = TRUE, do.seeding_input = TRUE,
-  do.no_STRATA = TRUE, do.LIGHT.thresh_medium = TRUE,
+  do.nb_stratum = TRUE, do.LIGHT.thresh_medium = TRUE,
   do.LIGHT.thresh_low = TRUE, do.DISPERSAL.mode = TRUE,
-  do.HABSUIT.habsuit_ref_option = TRUE)
+  do.HABSUIT.ref_option = TRUE)
 }
 \arguments{
 \item{name.simulation.1}{a \code{string} that corresponds to the main
@@ -83,9 +83,12 @@ be declined into a range of values}
 \code{SEEDING_INPUT} parameter within \code{Global_parameters} file will 
 be declined into a range of values}
 
-\item{do.no_STRATA}{default \code{TRUE}. If \code{TRUE}, 
+\item{do.nb_stratum}{default \code{TRUE}. If \code{TRUE}, 
 \code{NB_STRATUM} parameter within \code{Global_parameters} file will 
-be declined into a range of values}
+be declined into a range of values, with potential impact on some parameters 
+within PFG succession (and light) files (parameters \code{STRATA}, 
+\code{MAX_ABUNDANCE}, \code{IMM_SIZE}, \code{CHANG_STR_AGES} (and 
+\code{SHADE_TOL}))}
 
 \item{do.LIGHT.thresh_medium}{default \code{TRUE}. If \code{TRUE}, 
 \code{LIGHT_THRESH_MEDIUM} parameter within \code{Global_parameters} file will 
@@ -100,7 +103,7 @@ be declined into a range of values}
 be declined into its 3 possible values (either uniform kernel (1), 
 exponential kernel (2) or exponential kernel with probability (3))}
 
-\item{do.HABSUIT.habsuit_ref_option}{default \code{TRUE}. If \code{TRUE}, 
+\item{do.HABSUIT.ref_option}{default \code{TRUE}. If \code{TRUE}, 
 \code{HABSUIT_OPTION} parameter within \code{Global_parameters} file will 
 be declined into its 2 possible values (either random (1) or PFG specific 
 (2))}
