@@ -216,6 +216,27 @@
 ##'
 ## END OF HEADER ###############################################################
 
+name.simulation.1 = "FATE_simulation"
+name.simulation.2 = NULL
+file.simulParam.1 = "toto.txt"
+file.simulParam.2 = NULL
+no_simulations = 10
+opt.percent_max = 0.5
+opt.percent_seeding = 0.5
+opt.percent_light = 0.5
+do.max_by_cohort = TRUE
+do.max_abund_low = TRUE
+do.max_abund_medium = TRUE
+do.max_abund_high = TRUE
+do.seeding_duration = TRUE
+do.seeding_timestep = TRUE
+do.seeding_input = TRUE
+do.nb_stratum = TRUE
+do.LIGHT.thresh_medium = TRUE
+do.LIGHT.thresh_low = TRUE
+do.DISPERSAL.mode = TRUE
+do.HABSUIT.ref_option = TRUE
+
 
 PRE_FATE.params_multipleSet = function(
   name.simulation.1
@@ -244,10 +265,9 @@ PRE_FATE.params_multipleSet = function(
   
   .testParam_existFolder(name.simulation.1, "PARAM_SIMUL/")
   .testParam_existFolder(name.simulation.1, "DATA/GLOBAL_PARAMETERS/")
-  name.simulation.1 = sub("/", "", name.simulation.1)
+  name.simulation.1 = sub("/$", "", name.simulation.1)
   
   ## Simulation parameter file 1
-  # if (.testParam_notDef(file.simulParam.1) || nchar(file.simulParam.1) == 0)
   if (.testParam_notChar(file.simulParam.1))
   {
     abs.simulParams = list.files(paste0(name.simulation.1, "/PARAM_SIMUL/"))
@@ -269,15 +289,13 @@ PRE_FATE.params_multipleSet = function(
     scenario1 = TRUE
   }
   ## Simulation parameter file 2
-  # if (!(.testParam_notDef(file.simulParam.2) || nchar(file.simulParam.2) == 0))
   if (!.testParam_notChar(file.simulParam.2))
   {
-    # if (!(.testParam_notDef(name.simulation.2) || nchar(name.simulation.2) == 0))
     if (!.testParam_notChar(name.simulation.2))
     {
       .testParam_existFolder(name.simulation.2, "PARAM_SIMUL/")
       .testParam_existFolder(name.simulation.2, "DATA/GLOBAL_PARAMETERS/")
-      name.simulation.2 = sub("/", "", name.simulation.2)
+      name.simulation.2 = sub("/$", "", name.simulation.2)
       
       file.simulParam.2 = basename(file.simulParam.2)
       file.simulParam.2 = paste0(name.simulation.2, "/PARAM_SIMUL/", file.simulParam.2)
@@ -312,6 +330,29 @@ PRE_FATE.params_multipleSet = function(
     warning("`no_simulations` is a double. It will be converted (rounded) to an integer")
   }
   
+  if (scenario1)
+  {
+    if (.testParam_notNum(opt.percent_max) ||
+        .testParam_notNum(opt.percent_seeding) ||
+        .testParam_notNum(opt.percent_light))
+    {
+      stop("Wrong data given!\n `opt.percent_max`, `opt.percent_seeding` and `opt.percent_light` must contain numeric values")
+    }
+    if (opt.percent_max < 0 || opt.percent_max > 1)
+    {
+      stop("Wrong data given!\n `opt.percent_max` must be between 0 and 1")
+    }
+    if (opt.percent_seeding < 0 || opt.percent_seeding > 1)
+    {
+      stop("Wrong data given!\n `opt.percent_seeding` must be between 0 and 1")
+    }
+    if (opt.percent_light < 0 || opt.percent_light > 1)
+    {
+      stop("Wrong data given!\n `opt.percent_light` must be between 0 and 1")
+    }
+  }
+
+    
   #################################################################################################
   
   if (sum(c(do.max_by_cohort
@@ -330,7 +371,7 @@ PRE_FATE.params_multipleSet = function(
     stop("You must select some parameters to vary !")
   }
   
-  get_checked = list(6)
+  get_checked = vector("list", 6)
   if (do.max_by_cohort){
     get_checked[[1]] = c(get_checked[[1]], "max_by_cohort")
   }
@@ -374,7 +415,7 @@ PRE_FATE.params_multipleSet = function(
                           , "max_abund_low" = "MAX_ABUND_LOW"
                           , "max_abund_medium" = "MAX_ABUND_MEDIUM"
                           , "max_abund_high" = "MAX_ABUND_HIGH"
-                          , "habsuit_habsuit_ref_option" = "HABSUIT_OPTION"
+                          , "habsuit_ref_option" = "HABSUIT_OPTION"
                           , "seeding_duration" = "SEEDING_DURATION"
                           , "seeding_timestep" = "SEEDING_TIMESTEP"
                           , "seeding_input" = "SEEDING_INPUT"
@@ -389,7 +430,7 @@ PRE_FATE.params_multipleSet = function(
   {
     get_toSuppr = c(get_toSuppr, "PFG_LIFE_HISTORY_PARAMS", "PFG_LIGHT_PARAMS")
   }
-  for (i in get_toSuppr)
+  for (i in get_checked)
   {
     get_toSuppr = c(get_toSuppr, as.vector(GLOBAL.names.params[i]))
   }
@@ -403,7 +444,18 @@ PRE_FATE.params_multipleSet = function(
     ## Simulation parameter file
     abs.simulParam = paste0(path_folder, "/PARAM_SIMUL/", file_simul)
     lines.simulParam = readLines(abs.simulParam)
+    if (length(lines.simulParam) == 0)
+    {
+      stop(paste0("The file ", abs.simulParam, " is empty. Please check."))
+    }
+    
     ind = grep("^--.*--$", lines.simulParam)
+    if (length(ind) == 0)
+    {
+      stop(paste0("The file ", abs.simulParam
+                  , " does not contain any parameter values with the --PARAM-- flag. Please check."))
+    }
+    
     params.simulParam = lines.simulParam[ind]
     params.simulParam = gsub("--", "", params.simulParam)
     params.simulParam.TOKEEP = params.simulParam[which(!(params.simulParam %in% get_toSuppr))]
@@ -435,6 +487,11 @@ PRE_FATE.params_multipleSet = function(
     file.globalParam = paste0(dirname(path_folder), "/", file.globalParam)
     
     lines.globalParam = readLines(file.globalParam)
+    if (length(lines.globalParam) == 0)
+    {
+      stop(paste0("The file ", file.globalParam, " is empty. Please check."))
+    }
+    
     params.globalParam = as.vector(sapply(lines.globalParam, function(x) strsplit(as.character(x), " ")[[1]][1]))
     params.globalParam.TOKEEP = lines.globalParam[which(!(params.globalParam %in% get_toSuppr))]
     if (length(grep("##", params.globalParam.TOKEEP)) > 0)
@@ -498,7 +555,7 @@ PRE_FATE.params_multipleSet = function(
   {
     ## GET FILE 1 informations
     PARAMS1 = get_PARAMS(path_folder = name.simulation.1
-                         , file_simul = file.simulParam.1
+                         , file_simul = basename(file.simulParam.1)
                          , params = get_checked)
     TOKEEP1.simul = PARAMS1$TOKEEP.simul
     TOKEEP1.global = PARAMS1$TOKEEP.global
@@ -555,7 +612,7 @@ PRE_FATE.params_multipleSet = function(
     {
       ## GET FILE 2 informations
       PARAMS2 = get_PARAMS(path_folder = ifelse(scenario2, name.simulation.1, name.simulation.2)
-                           , file_simul = file.simulParam.2
+                           , file_simul = basename(file.simulParam.2)
                            , params = get_checked)
       
       ## ------------------------------------------------------------------------------------------   

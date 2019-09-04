@@ -185,12 +185,104 @@ test_that("PRE_FATE.params_multipleSet gives error with wrong data : no_simulati
                                            , file.simulParam.1 = "toto.txt"
                                            , no_simulations = factor("a"))
                , "Wrong type of data!\n `no_simulations` must be an integer > 0")
-  # expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
-  #                                          , file.simulParam.1 = "toto.txt"
-  #                                          , no_simulations = 10)
-  #              , "Wrong type of data!\n `no_simulations` must be an integer > 0")
 })
 
+## INPUTS
+test_that("PRE_FATE.params_multipleSet gives error with wrong data : opt.percent_max", {
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , no_simulations = 10
+                                           , opt.percent_max = NA)
+               , "Wrong data given!\n `opt.percent_max`, `opt.percent_seeding` and `opt.percent_light` must contain numeric values")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , no_simulations = 10
+                                           , opt.percent_max = NULL)
+               , "Wrong data given!\n `opt.percent_max`, `opt.percent_seeding` and `opt.percent_light` must contain numeric values")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , no_simulations = 10
+                                           , opt.percent_max = factor(1))
+               , "Wrong data given!\n `opt.percent_max`, `opt.percent_seeding` and `opt.percent_light` must contain numeric values")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , no_simulations = 10
+                                           , opt.percent_max = -2)
+               , "Wrong data given!\n `opt.percent_max` must be between 0 and 1")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , no_simulations = 10
+                                           , opt.percent_max = 1.01)
+               , "Wrong data given!\n `opt.percent_max` must be between 0 and 1")
+})
+
+## INPUTS
+test_that("PRE_FATE.params_multipleSet gives error with wrong data : opt.percent_seeding", {
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , no_simulations = 10
+                                           , opt.percent_seeding = NA)
+               , "Wrong data given!\n `opt.percent_max`, `opt.percent_seeding` and `opt.percent_light` must contain numeric values")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , no_simulations = 10
+                                           , opt.percent_seeding = NULL)
+               , "Wrong data given!\n `opt.percent_max`, `opt.percent_seeding` and `opt.percent_light` must contain numeric values")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , no_simulations = 10
+                                           , opt.percent_seeding = factor(1))
+               , "Wrong data given!\n `opt.percent_max`, `opt.percent_seeding` and `opt.percent_light` must contain numeric values")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , no_simulations = 10
+                                           , opt.percent_seeding = -2)
+               , "Wrong data given!\n `opt.percent_seeding` must be between 0 and 1")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , no_simulations = 10
+                                           , opt.percent_seeding = 1.01)
+               , "Wrong data given!\n `opt.percent_seeding` must be between 0 and 1")
+})
+
+## INPUTS
+test_that("PRE_FATE.params_multipleSet gives error with wrong data : opt.percent_light", {
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , no_simulations = 10
+                                           , opt.percent_light = NA)
+               , "Wrong data given!\n `opt.percent_max`, `opt.percent_seeding` and `opt.percent_light` must contain numeric values")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , no_simulations = 10
+                                           , opt.percent_light = NULL)
+               , "Wrong data given!\n `opt.percent_max`, `opt.percent_seeding` and `opt.percent_light` must contain numeric values")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , no_simulations = 10
+                                           , opt.percent_light = factor(1))
+               , "Wrong data given!\n `opt.percent_max`, `opt.percent_seeding` and `opt.percent_light` must contain numeric values")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , no_simulations = 10
+                                           , opt.percent_light = -2)
+               , "Wrong data given!\n `opt.percent_light` must be between 0 and 1")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , no_simulations = 10
+                                           , opt.percent_light = 1.01)
+               , "Wrong data given!\n `opt.percent_light` must be between 0 and 1")
+})
+
+
+## INPUTS
+test_that("PRE_FATE.params_multipleSet gives error with wrong data : within file.simulParam.1", {
+expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                         , file.simulParam.1 = "toto.txt"
+                                         , no_simulations = 10)
+             , "The file FATE_simulation/PARAM_SIMUL/toto.txt is empty. Please check.")
+  
+})
 
 
 
