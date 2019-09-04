@@ -20,16 +20,14 @@
 ##' based on an estimation of the number of individuals and the covering surface.
 ##' A correspondence has been defined between this index and average recovery values :
 ##' 
-##' 
-##' \tabular{crr}{
-##' \strong{Braun-Blanquet} \tab \strong{Recovery class (\%)} \tab \strong{Average recovery (\%)}\cr
-##' + \tab     <1 \tab  0.5\cr
-##' 1 \tab    1-5 \tab    3\cr
-##' 2 \tab   5-25 \tab   15\cr
-##' 3 \tab  25-50 \tab 37.5\cr
-##' 4 \tab  50-75 \tab 62.5\cr
-##' 5 \tab 75-100 \tab 87.5
-##' }
+##' \code{| Braun-Blanquet | Recovery class (\%) | Average recovery (\%) |} \cr
+##' ________________________________________________________ \cr
+##' \code{| + ............ | ............... <1 | ................ 0.5 |} \cr
+##' \code{| 1 ............ | .............. 1-5 | .................. 3 |} \cr
+##' \code{| 2 ............ | ............. 5-25 | ................. 15 |} \cr
+##' \code{| 3 ............ | ............ 25-50 | ............... 37.5 |} \cr
+##' \code{| 4 ............ | ............ 50-75 | ............... 62.5 |} \cr
+##' \code{| 5 ............ | ........... 75-100 | ............... 87.5 |} \cr
 ##' 
 ##' 
 ##' \emph{\cr \cr

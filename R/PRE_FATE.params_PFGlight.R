@@ -79,14 +79,16 @@
 ##'   \item with \code{g}: Germinant, \code{i}: Immature, \code{m}: Mature \cr \cr
 ##' }
 ##' 
-##' \tab | \code{.} \tab \code{D} \tab \code{C} \tab | \tab \code{.} \tab \code{D} \tab \code{C} \tab | \tab \code{.} \tab \code{D} \tab \code{C} \tab | \tab \code{A}\tab \code{A}\tab \code{A} \tab | \tab \code{A} \tab \code{A} \tab \code{A} \tab | \strong{HIGH} \cr
-##' \tab | \code{.} \tab \code{.} \tab \code{C} \tab | \tab \code{A} \tab \code{A} \tab \code{A} \tab | \tab \code{A} \tab \code{A} \tab \code{A} \tab | \tab \code{A}\tab \code{A}\tab \code{A} \tab | \tab \code{.} \tab \code{.} \tab \code{C} \tab | \strong{MEDIUM} \cr
-##' \tab | \code{A} \tab \code{A} \tab \code{A} \tab | \tab \code{A} \tab \code{A} \tab \code{A} \tab | \tab \code{B} \tab \code{.} \tab \code{.} \tab | \tab \code{B}\tab \code{.}\tab \code{.} \tab | \tab \code{B} \tab \code{.} \tab \code{.} \tab | \strong{LOW} \cr
+##' 
+##' \code{| . D C | . D C | . D C | A A A | A A A |} \strong{HIGH} \cr
+##' \code{| . . C | A A A | A A A | A A A | . . C |} \strong{MEDIUM} \cr
+##' \code{| A A A | A A A | B . . | B . . | B . . |} \strong{LOW} \cr
 ##' __________________________________________________ \cr
-##' \tab | \code{g} \tab \code{i} \tab \code{m} \tab | \tab \code{g} \tab \code{i} \tab \code{m} \tab | \tab \code{g} \tab \code{i} \tab \code{m} \tab | \tab \code{g} \tab \code{i} \tab \code{m} \tab | \tab \code{g} \tab \code{i} \tab \code{m} \tab | \strong{Life stage} \cr
+##' \code{| g i m | g i m | g i m | g i m | g i m |} \strong{Life stage} \cr
 ##' __________________________________________________ \cr
-##' \tab | \code{_} \tab \code{1} \tab \code{_} \tab | \tab \code{_} \tab \code{2} \tab \code{_} \tab | \tab \code{_} \tab \code{3} \tab \code{_} \tab | \tab \code{_}\tab \code{4}\tab \code{_} \tab | \tab \code{_} \tab \code{5} \tab \code{_} \tab | \strong{Light} \cr
+##' \code{| _ 1 _ | _ 2 _ | _ 3 _ | _ 4 _ | _ 5 _ |} \strong{Light} \cr
 ##' \cr
+##' 
 ##' 
 ##' 
 ##' @return A \code{.txt} file per PFG into the 

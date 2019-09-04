@@ -167,9 +167,9 @@ using Latin Hypercube Sampling to help find best combination of parameters
   <span class='kw'>do.max_abund_low</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>do.max_abund_medium</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>do.max_abund_high</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>do.seeding_duration</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>do.seeding_timestep</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>do.seeding_input</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>do.no_STRATA</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>do.LIGHT.thresh_medium</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>do.nb_stratum</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>do.LIGHT.thresh_medium</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>do.LIGHT.thresh_low</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>do.DISPERSAL.mode</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>do.HABSUIT.habsuit_ref_option</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>do.HABSUIT.ref_option</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -271,10 +271,13 @@ be declined into a range of values</p></td>
 be declined into a range of values</p></td>
     </tr>
     <tr>
-      <th>do.no_STRATA</th>
+      <th>do.nb_stratum</th>
       <td><p>default <code>TRUE</code>. If <code>TRUE</code>, 
 <code>NB_STRATUM</code> parameter within <code>Global_parameters</code> file will 
-be declined into a range of values</p></td>
+be declined into a range of values, with potential impact on some parameters 
+within PFG succession (and light) files (parameters <code>STRATA</code>, 
+<code>MAX_ABUNDANCE</code>, <code>IMM_SIZE</code>, <code>CHANG_STR_AGES</code> (and 
+<code>SHADE_TOL</code>))</p></td>
     </tr>
     <tr>
       <th>do.LIGHT.thresh_medium</th>
@@ -296,7 +299,7 @@ be declined into its 3 possible values (either uniform kernel (1),
 exponential kernel (2) or exponential kernel with probability (3))</p></td>
     </tr>
     <tr>
-      <th>do.HABSUIT.habsuit_ref_option</th>
+      <th>do.HABSUIT.ref_option</th>
       <td><p>default <code>TRUE</code>. If <code>TRUE</code>, 
 <code>HABSUIT_OPTION</code> parameter within <code>Global_parameters</code> file will 
 be declined into its 2 possible values (either random (1) or PFG specific 
