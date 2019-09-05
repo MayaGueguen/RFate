@@ -479,7 +479,7 @@ PRE_FATE.params_multipleSet = function(
       for (i in sapply(params.simulParam.TOKEEP, function(x) grep(x, lines.simulParam)))
       {
         print(i)
-        if (ind[which(ind == i)] == ind[which(ind == i) + 1])
+        if (ind[which(ind == i)] == (ind[which(ind == i)] + 1))
         {
           warning(paste0("The flag ", lines.simulParam[i]
                          , " in the file ", abs.simulParam
@@ -526,8 +526,8 @@ PRE_FATE.params_multipleSet = function(
     params.globalParam.TOKEEP = lines.globalParam[which(!(params.globalParam %in% get_toSuppr))]
     if (length(params.globalParam.TOKEEP) == 0)
     {
-      # stop(paste0("The file ", file.globalParam
-                  # , " does not contain any of the required parameter values (NB_FG, SIMULATION_DURATION, ...). Please check."))
+      stop(paste0("The file ", file.globalParam
+                  , " does not contain any of the required parameter values (NB_FG, SIMULATION_DURATION, ...). Please check."))
     } else if (length(grep("##", params.globalParam.TOKEEP)) > 0)
     {
       params.globalParam.TOKEEP = params.globalParam.TOKEEP[-grep("##", params.globalParam.TOKEEP)]
@@ -592,19 +592,29 @@ PRE_FATE.params_multipleSet = function(
                          , file_simul = basename(file.simulParam.1)
                          , params = get_checked)
     print(PARAMS1)
-    if (is.null(unlist(PARAMS1$PARAMS)))
-    {
-      stop(paste0("The global parameter file indicated in ", file.simulParam.1
-                  , " does not contain any of the required parameter values ("
-                  , paste0(as.vector(GLOBAL.names.params[unlist(get_checked)])
-                           , collapse = ", ")
-                  , "). Please check."))
-    }
     
     TOKEEP1.simul = PARAMS1$TOKEEP.simul
     TOKEEP1.global = PARAMS1$TOKEEP.global
     SUCC_LIGHT1.simul = PARAMS1$SUCC_LIGHT.simul
     PARAMS1 = PARAMS1$PARAMS
+    
+    if (is.null(unlist(PARAMS1)))
+    { 
+      if (c("dispersal_mode", "habsuit_ref_option") %in% get_checked)
+      {
+        return(list(PARAMS.range = data.frame()
+                    , TOKEEP.global = TOKEEP1.global
+                    , TOKEEP.simul = TOKEEP1.simul
+                    , SUCC_LIGHT.simul = SUCC_LIGHT1.simul))
+      } else
+      {
+        stop(paste0("The global parameter file indicated in ", file.simulParam.1
+                    , " does not contain any of the required parameter values ("
+                    , paste0(as.vector(GLOBAL.names.params[unlist(get_checked)])
+                             , collapse = ", ")
+                    , "). Please check."))
+      }
+    }
     
     if (scenario1)
     {
