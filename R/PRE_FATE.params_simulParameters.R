@@ -650,6 +650,15 @@ PRE_FATE.params_simulParameters = function(
       }
     }
     
+    FILE_NUMBER = 0
+    if (nrow(PARAMS.combi) == 1 && nrow(PFG.combi) == 1)
+    {
+      FILE_NUMBER = length(list.files(path = paste0(name.simulation
+                                                    , "/PARAM_SIMUL/")
+                                      , pattern = "^Simul_parameters_V"
+                                      , recursive = FALSE
+                                      , include.dirs = FALSE)) + 1
+    }
     
     #################################################################################################
     #################################################################################################    
@@ -659,7 +668,13 @@ PRE_FATE.params_simulParameters = function(
       params.list = lapply(1:ncol(params.combi), function(x) { as.character(params.combi[, x]) })
       names.params.list = names.params.combi
       
-      params.list = c(params.list, list(paste0(name.simulation, "/RESULTS/SIMUL_V", i, ".", ii)))
+      if (FILE_NUMBER == 0)
+      {
+        params.list = c(params.list, list(paste0(name.simulation, "/RESULTS/SIMUL_V", i, ".", ii)))
+      } else
+      {
+        params.list = c(params.list, list(paste0(name.simulation, "/RESULTS/SIMUL_V", FILE_NUMBER)))
+      }
       names.params.list = c(names.params.list, "--SAVE_DIR--")
       
       params.list = c(params.list, list(files.PFG.SUCC[, PFG.combi$SUCC[ii]]))
@@ -712,10 +727,13 @@ PRE_FATE.params_simulParameters = function(
       
       .createParams(params.file = paste0(name.simulation
                                          , "/PARAM_SIMUL/Simul_parameters_V"
-                                         , i, ".", ii
+                                         , ifelse(FILE_NUMBER == 0
+                                                  , paste0(i, ".", ii)
+                                                  , FILE_NUMBER)
                                          , ".txt")
                     , params.list = params
                     , separator = "\n")
+      
     }
   }
 }

@@ -975,6 +975,7 @@ PRE_FATE.params_multipleSet = function(
                                , is.num = TRUE)
     
     PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation_MULTIPLE_SET"
+                                     , opt.replacePrevious = FALSE
                                      , opt.no_CPU = ifelse(length(grep("NB_CPUS", TOKEEP.global)) > 0
                                                            , .getParam(params.lines = tmp_global_param
                                                                        , flag = "NB_CPUS"
@@ -1088,14 +1089,13 @@ PRE_FATE.params_multipleSet = function(
   }
   
   cat("\n>> Create multiple simulation parameter files...")
+  if (length(which(TOKEEP.simul == "--MASK--")) == 0)
+  {
+    stop(paste0("The flag --MASK-- in the file ", file.simulParam.1
+                , " does not contain any value. Please check."))
+  }
   for (i in 1:nrow(params.space))
   {
-    if (length(which(TOKEEP.simul == "--MASK--")) == 0)
-    {
-      stop(paste0("The flag --MASK-- in the file ", file.simulParam.1
-                  , " does not contain any value. Please check."))
-    }
-    
     PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation_MULTIPLE_SET"
                                     , name.mask = basename(TOKEEP.simul[which(TOKEEP.simul == "--MASK--") + 1])
                                     , name.dist = ifelse(length(grep("DIST_MASK", TOKEEP.simul)) > 0
