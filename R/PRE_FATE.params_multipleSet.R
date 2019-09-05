@@ -870,6 +870,7 @@ PRE_FATE.params_multipleSet = function(
   ind = grep("^--.*--$", TOKEEP.simul)
   for (fi in TOKEEP.simul[-ind])
   {
+    cat("\n ", paste0(dirname(name.simulation.1), "/", fi))
     file.copy(from = paste0(dirname(name.simulation.1), "/", fi)
               , to = paste0("FATE_simulation_MULTIPLE_SET/"
                             , paste0(strsplit(fi, "/")[[1]][-1]
@@ -883,11 +884,6 @@ PRE_FATE.params_multipleSet = function(
     {
       stop(paste0("The flag --PFG_LIFE_HISTORY_PARAMS-- in the file ", file.simulParam.1
                      , " does not contain any value. Please check."))
-      # stop(paste0("The PFG succession files indicated in ", file.simulParam.1
-      #             , " do not contain any of the required parameter values ("
-      #             , paste0(as.vector(GLOBAL.names.params[unlist(get_checked)])
-      #                      , collapse = ", ")
-      #             , "). Please check."))
     }
 
     cat("\n>> Get PFG attribute values...")
@@ -989,7 +985,7 @@ PRE_FATE.params_multipleSet = function(
                                                                    , flag = "NB_FG"
                                                                    , flag.split = " "
                                                                    , is.num = TRUE)
-                                     , required.no_STRATA = ifelse("nb_stratum" %in% unlist(get_checked)
+                                     , required.no_STRATA = ifelse("nb_stratum" %in% colnames(params.space)
                                                                    , params.space$nb_stratum[i]
                                                                    , .getParam(params.lines = tmp_global_param
                                                                                , flag = "NB_STRATUM"
@@ -999,70 +995,70 @@ PRE_FATE.params_multipleSet = function(
                                                                            , flag = "SIMULATION_DURATION"
                                                                            , flag.split = " "
                                                                            , is.num = TRUE)
-                                     , required.seeding_duration = ifelse("seeding_duration" %in% unlist(get_checked)
+                                     , required.seeding_duration = ifelse("seeding_duration" %in% colnames(params.space)
                                                                           , params.space$seeding_duration[i]
                                                                           , .getParam(params.lines = tmp_global_param
                                                                                       , flag = "SEEDING_DURATION"
                                                                                       , flag.split = " "
                                                                                       , is.num = TRUE))
-                                     , required.seeding_timestep = ifelse("seeding_timestep" %in% unlist(get_checked)
+                                     , required.seeding_timestep = ifelse("seeding_timestep" %in% colnames(params.space)
                                                                           , params.space$seeding_timestep[i]
                                                                           , .getParam(params.lines = tmp_global_param
                                                                                       , flag = "SEEDING_TIMESTEP"
                                                                                       , flag.split = " "
                                                                                       , is.num = TRUE))
-                                     , required.seeding_input = ifelse("seeding_input" %in% unlist(get_checked)
+                                     , required.seeding_input = ifelse("seeding_input" %in% colnames(params.space)
                                                                        , params.space$seeding_input[i]
                                                                        , .getParam(params.lines = tmp_global_param
                                                                                    , flag = "SEEDING_INPUT"
                                                                                    , flag.split = " "
                                                                                    , is.num = TRUE))
-                                     , required.max_by_cohort = ifelse("max_by_cohort" %in% unlist(get_checked)
+                                     , required.max_by_cohort = ifelse("max_by_cohort" %in% colnames(params.space)
                                                                        , params.space$max_by_cohort[i]
                                                                        , .getParam(params.lines = tmp_global_param
                                                                                    , flag = "MAX_BY_COHORT"
                                                                                    , flag.split = " "
                                                                                    , is.num = TRUE))
-                                     , required.max_abund_low = ifelse("max_abund_low" %in% unlist(get_checked)
+                                     , required.max_abund_low = ifelse("max_abund_low" %in% colnames(params.space)
                                                                        , params.space$max_abund_low[i]
                                                                        , .getParam(params.lines = tmp_global_param
                                                                                    , flag = "MAX_ABUND_LOW"
                                                                                    , flag.split = " "
                                                                                    , is.num = TRUE))
-                                     , required.max_abund_medium = ifelse("max_abund_medium" %in% unlist(get_checked)
+                                     , required.max_abund_medium = ifelse("max_abund_medium" %in% colnames(params.space)
                                                                           , params.space$max_abund_medium[i]
                                                                           , .getParam(params.lines = tmp_global_param
                                                                                       , flag = "MAX_ABUND_MEDIUM"
                                                                                       , flag.split = " "
                                                                                       , is.num = TRUE))
-                                     , required.max_abund_high = ifelse("max_abund_high" %in% unlist(get_checked)
+                                     , required.max_abund_high = ifelse("max_abund_high" %in% colnames(params.space)
                                                                         , params.space$max_abund_high[i]
                                                                         , .getParam(params.lines = tmp_global_param
                                                                                     , flag = "MAX_ABUND_HIGH"
                                                                                     , flag.split = " "
                                                                                     , is.num = TRUE))
                                      , doDispersal = doDispersal
-                                     , DISPERSAL.mode = ifelse(doDispersal && "dispersal_mode" %in% unlist(get_checked)
+                                     , DISPERSAL.mode = ifelse(doDispersal && "dispersal_mode" %in% colnames(params.space)
                                                                , params.space$dispersal_mode[i]
                                                                , .getParam(params.lines = tmp_global_param
                                                                            , flag = "DISPERSAL_MODE"
                                                                            , flag.split = " "
                                                                            , is.num = TRUE))
                                      , doHabSuitability = doHabSuitability
-                                     , HABSUIT.ref_option = ifelse(doHabSuitability && "habsuit_ref_option" %in% unlist(get_checked)
+                                     , HABSUIT.ref_option = ifelse(doHabSuitability && "habsuit_ref_option" %in% colnames(params.space)
                                                                    , params.space$habsuit_ref_option[i]
                                                                    , .getParam(params.lines = tmp_global_param
                                                                                , flag = "HABSUIT_OPTION"
                                                                                , flag.split = " "
                                                                                , is.num = TRUE))
                                      , doLight = doLight
-                                     , LIGHT.thresh_medium = ifelse(doLight && "light_thresh_medium" %in% unlist(get_checked)
+                                     , LIGHT.thresh_medium = ifelse(doLight && "light_thresh_medium" %in% colnames(params.space)
                                                                     , params.space$light_thresh_medium[i]
                                                                     , .getParam(params.lines = tmp_global_param
                                                                                 , flag = "LIGHT_THRESH_MEDIUM"
                                                                                 , flag.split = " "
                                                                                 , is.num = TRUE))
-                                     , LIGHT.thresh_low = ifelse(doLight && "light_thresh_low" %in% unlist(get_checked)
+                                     , LIGHT.thresh_low = ifelse(doLight && "light_thresh_low" %in% colnames(params.space)
                                                                  , params.space$light_thresh_low[i]
                                                                  , .getParam(params.lines = tmp_global_param
                                                                              , flag = "LIGHT_THRESH_LOW"
@@ -1094,13 +1090,19 @@ PRE_FATE.params_multipleSet = function(
   cat("\n>> Create multiple simulation parameter files...")
   for (i in 1:nrow(params.space))
   {
+    if (length(which(TOKEEP.simul == "--MASK--")) == 0)
+    {
+      stop(paste0("The flag --MASK-- in the file ", file.simulParam.1
+                  , " does not contain any value. Please check."))
+    }
+    
     PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation_MULTIPLE_SET"
                                     , name.mask = basename(TOKEEP.simul[which(TOKEEP.simul == "--MASK--") + 1])
                                     , name.dist = ifelse(length(grep("DIST_MASK", TOKEEP.simul)) > 0
                                                          , basename(TOKEEP.simul[which(TOKEEP.simul == "--DIST_MASK--") + 1])
                                                          , "")
                                     , opt.global.name = paste0("Global_parameters_V", i, ".txt")
-                                    , opt.folder.name = ifelse("nb_stratum" %in% unlist(get_checked)
+                                    , opt.folder.name = ifelse("nb_stratum" %in% colnames(params.space)
                                                                , paste0(rownames(params.space)[i])
                                                                , "")
     )
