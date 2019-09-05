@@ -879,6 +879,17 @@ PRE_FATE.params_multipleSet = function(
   ## SUCC - LIGHT FILES
   if ("nb_stratum" %in% unlist(get_checked))
   {
+    if (is.null(SUCC_LIGHT.simul$SUCC) || length(SUCC_LIGHT.simul$SUCC) == 0)
+    {
+      stop(paste0("The flag --PFG_LIFE_HISTORY_PARAMS-- in the file ", file.simulParam.1
+                     , " does not contain any value. Please check."))
+      # stop(paste0("The PFG succession files indicated in ", file.simulParam.1
+      #             , " do not contain any of the required parameter values ("
+      #             , paste0(as.vector(GLOBAL.names.params[unlist(get_checked)])
+      #                      , collapse = ", ")
+      #             , "). Please check."))
+    }
+
     cat("\n>> Get PFG attribute values...")
     SUCC_table = foreach(fi = SUCC_LIGHT.simul$SUCC, .combine = "rbind") %do%
     {
@@ -968,10 +979,12 @@ PRE_FATE.params_multipleSet = function(
                                , is.num = TRUE)
     
     PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation_MULTIPLE_SET"
-                                     , opt.no_CPU = .getParam(params.lines = tmp_global_param
-                                                              , flag = "NB_CPUS"
-                                                              , flag.split = " "
-                                                              , is.num = TRUE)
+                                     , opt.no_CPU = ifelse(length(grep("NB_CPUS", TOKEEP.global)) > 0
+                                                           , .getParam(params.lines = tmp_global_param
+                                                                       , flag = "NB_CPUS"
+                                                                       , flag.split = " "
+                                                                       , is.num = TRUE)
+                                                           , 1)
                                      , required.no_PFG = .getParam(params.lines = tmp_global_param
                                                                    , flag = "NB_FG"
                                                                    , flag.split = " "

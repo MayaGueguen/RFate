@@ -352,11 +352,97 @@ test_that("PRE_FATE.params_multipleSet gives error with wrong data : within file
                , "Wrong type of data!\n `flag.split` ( ) is not found within `params.lines` (./FATE_simulation/glob.txt)"
                , fixed = TRUE)
   cat("MAX_BY_COHORT 10000", file = "FATE_simulation/glob.txt")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , no_simulations = 10
+                                           , do.DISPERSAL.mode = FALSE)
+               , "The flag --PFG_LIFE_HISTORY_PARAMS-- in the file FATE_simulation/PARAM_SIMUL/toto.txt does not contain any value. Please check.")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , no_simulations = 10
+                                           , do.DISPERSAL.mode = FALSE
+                                           , do.nb_stratum = FALSE)
+               , "Wrong type of data!\n `flag.split` ( ) is not found within `params.lines` (FATE_simulation_MULTIPLE_SET/tmp_global_param.txt)"
+               , fixed = TRUE)
+  cat("MAX_BY_COHORT 10000\nTRUC 3", file = "FATE_simulation/glob.txt")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , no_simulations = 10
+                                           , do.DISPERSAL.mode = FALSE
+                                           , do.nb_stratum = FALSE)
+               , "Wrong type of data!\n `flag` (DO_DISPERSAL) is not found within `params.lines` (FATE_simulation_MULTIPLE_SET/tmp_global_param.txt)"
+               , fixed = TRUE)
+  cat("MAX_BY_COHORT 10000\nTRUC 3\nDO_DISPERSAL 0"
+      , file = "FATE_simulation/glob.txt")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , no_simulations = 10
+                                           , do.DISPERSAL.mode = FALSE
+                                           , do.nb_stratum = FALSE)
+               , "Wrong type of data!\n `flag` (DO_HAB_SUITABILITY) is not found within `params.lines` (FATE_simulation_MULTIPLE_SET/tmp_global_param.txt)"
+               , fixed = TRUE)
+  cat("MAX_BY_COHORT 10000\nTRUC 3\nDO_DISPERSAL 0\nDO_HAB_SUITABILITY 0"
+      , file = "FATE_simulation/glob.txt")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , no_simulations = 10
+                                           , do.DISPERSAL.mode = FALSE
+                                           , do.nb_stratum = FALSE)
+               , "Wrong type of data!\n `flag` (DO_LIGHT_COMPETITION) is not found within `params.lines` (FATE_simulation_MULTIPLE_SET/tmp_global_param.txt)"
+               , fixed = TRUE)
+  cat("MAX_BY_COHORT 10000\nTRUC 3\nDO_DISPERSAL 0\nDO_HAB_SUITABILITY 0\nDO_LIGHT_COMPETITION 0"
+      , file = "FATE_simulation/glob.txt")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , no_simulations = 10
+                                           , do.DISPERSAL.mode = FALSE
+                                           , do.nb_stratum = FALSE)
+               , "Wrong type of data!\n `flag` (DO_SOIL_COMPETITION) is not found within `params.lines` (FATE_simulation_MULTIPLE_SET/tmp_global_param.txt)"
+               , fixed = TRUE)
+  cat("MAX_BY_COHORT 10000\nTRUC 3\nDO_DISPERSAL 0\nDO_HAB_SUITABILITY 0\nDO_LIGHT_COMPETITION 0\nDO_SOIL_COMPETITION 0"
+      , file = "FATE_simulation/glob.txt")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , no_simulations = 10
+                                           , do.DISPERSAL.mode = FALSE
+                                           , do.nb_stratum = FALSE)
+               , "Wrong type of data!\n `flag` (DO_DISTURBANCES) is not found within `params.lines` (FATE_simulation_MULTIPLE_SET/tmp_global_param.txt)"
+               , fixed = TRUE)
+  cat("MAX_BY_COHORT 10000\nTRUC 3\nDO_DISPERSAL 0\nDO_HAB_SUITABILITY 0\nDO_LIGHT_COMPETITION 0\nDO_SOIL_COMPETITION 0\nDO_DISTURBANCES 0"
+      , file = "FATE_simulation/glob.txt")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , no_simulations = 10
+                                           , do.DISPERSAL.mode = FALSE
+                                           , do.nb_stratum = FALSE)
+               , "Wrong type of data!\n `flag` (NB_FG) is not found within `params.lines` (FATE_simulation_MULTIPLE_SET/tmp_global_param.txt)"
+               , fixed = TRUE)
+  cat("MAX_BY_COHORT 10000\nNB_FG 3\nDO_DISPERSAL 0\nDO_HAB_SUITABILITY 0\nDO_LIGHT_COMPETITION 0\nDO_SOIL_COMPETITION 0\nDO_DISTURBANCES 0"
+      , file = "FATE_simulation/glob.txt")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , no_simulations = 10
+                                           , do.DISPERSAL.mode = FALSE
+                                           , do.nb_stratum = FALSE)
+               , "Wrong type of data!\n `flag` (NB_STRATUM) is not found within `params.lines` (FATE_simulation_MULTIPLE_SET/tmp_global_param.txt)"
+               , fixed = TRUE)
+  cat("MAX_BY_COHORT 10000\nNB_FG 3\nNB_STRATUM 4\nDO_DISPERSAL 0\nDO_HAB_SUITABILITY 0\nDO_LIGHT_COMPETITION 0\nDO_SOIL_COMPETITION 0\nDO_DISTURBANCES 0"
+      , file = "FATE_simulation/glob.txt")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , no_simulations = 10
+                                           , do.DISPERSAL.mode = FALSE
+                                           , do.nb_stratum = FALSE)
+               , "Wrong type of data!\n `flag` (SIMULATION_DURATION) is not found within `params.lines` (FATE_simulation_MULTIPLE_SET/tmp_global_param.txt)"
+               , fixed = TRUE)
+  cat("MAX_BY_COHORT 10000\nNB_FG 3\nNB_STRATUM 4\nSIMULATION_DURATION 50\nDO_DISPERSAL 0\nDO_HAB_SUITABILITY 0\nDO_LIGHT_COMPETITION 0\nDO_SOIL_COMPETITION 0\nDO_DISTURBANCES 0"
+      , file = "FATE_simulation/glob.txt")
   # expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
   #                                          , file.simulParam.1 = "toto.txt"
   #                                          , no_simulations = 10
-  #                                          , do.DISPERSAL.mode = FALSE)
-  #              , "Wrong type of data!\n `flag.split` ( ) is not found within `params.lines` (./FATE_simulation/glob.txt)"
+  #                                          , do.DISPERSAL.mode = FALSE
+  #                                          , do.nb_stratum = FALSE)
+  #              , "Wrong type of data!\n `flag` (SIMULATION_DURATION) is not found within `params.lines` (FATE_simulation_MULTIPLE_SET/tmp_global_param.txt)"
   #              , fixed = TRUE)
 })
 
