@@ -455,17 +455,42 @@ PRE_FATE.params_multipleSet = function(
       stop(paste0("The file ", abs.simulParam
                   , " does not contain any parameter values with the --PARAM-- flag. Please check."))
     }
+    if (length(grep("--END_OF_FILE--", lines.simulParam)) == 0)
+    {
+      stop(paste0("The file ", abs.simulParam
+                  , " does not contain the --END_OF_FILE-- flag. Please check."))
+    }
     
     params.simulParam = lines.simulParam[ind]
     params.simulParam = gsub("--", "", params.simulParam)
     params.simulParam.TOKEEP = params.simulParam[which(!(params.simulParam %in% get_toSuppr))]
-    params.simulParam.TOKEEP = paste0("--", params.simulParam.TOKEEP, "--")
-    toKeep = c()
-    for (i in sapply(params.simulParam.TOKEEP, function(x) grep(x, lines.simulParam)))
+    if (length(params.simulParam.TOKEEP) == 0)
     {
-      toKeep = c(toKeep, lines.simulParam[i:(ind[which(ind == i) + 1] - 1)])
+      #   stop(paste0("The file ", abs.simulParam
+      #               , " does not contain any of the required parameter values ("
+      #               , paste0()
+      #               , "). Please check."))
+    } else
+    {
+      params.simulParam.TOKEEP = paste0("--", params.simulParam.TOKEEP, "--")
+      print(params.simulParam.TOKEEP)
+      toKeep = c()
+      for (i in sapply(params.simulParam.TOKEEP, function(x) grep(x, lines.simulParam)))
+      {
+        print(i)
+        if (ind[which(ind == i)] == ind[which(ind == i) + 1])
+        {
+          warning(paste0("The flag ", lines.simulParam[i]
+                         , " in the file ", abs.simulParam
+                         , " does not contain any value. Please check."))
+        } else
+        {
+          toKeep = c(toKeep, lines.simulParam[i:(ind[which(ind == i) + 1] - 1)])
+        }
+      }
+      params.simulParam.TOKEEP = toKeep
+      print(params.simulParam.TOKEEP)
     }
-    params.simulParam.TOKEEP = toKeep
     
     ## Get succession and light PFG files
     ind1 = ifelse(length(grep("PFG_LIFE_HISTORY_PARAMS", lines.simulParam)) > 0
@@ -485,6 +510,10 @@ PRE_FATE.params_multipleSet = function(
                                  , flag.split = "^--.*--$"
                                  , is.num = FALSE)
     file.globalParam = paste0(dirname(path_folder), "/", file.globalParam)
+    if (!file.exists(file.globalParam))
+    {
+      .stopMessage_existFile(file.globalParam)
+    }
     
     lines.globalParam = readLines(file.globalParam)
     if (length(lines.globalParam) == 0)
@@ -494,7 +523,11 @@ PRE_FATE.params_multipleSet = function(
     
     params.globalParam = as.vector(sapply(lines.globalParam, function(x) strsplit(as.character(x), " ")[[1]][1]))
     params.globalParam.TOKEEP = lines.globalParam[which(!(params.globalParam %in% get_toSuppr))]
-    if (length(grep("##", params.globalParam.TOKEEP)) > 0)
+    if (length(params.globalParam.TOKEEP) == 0)
+    {
+      # stop(paste0("The file ", file.globalParam
+                  # , " does not contain any of the required parameter values (NB_FG, SIMULATION_DURATION, ...). Please check."))
+    } else if (length(grep("##", params.globalParam.TOKEEP)) > 0)
     {
       params.globalParam.TOKEEP = params.globalParam.TOKEEP[-grep("##", params.globalParam.TOKEEP)]
     }
@@ -590,6 +623,7 @@ PRE_FATE.params_multipleSet = function(
       PARAMS.max = ff()
       
       PARAMS.range = rbind(unlist(PARAMS.min), unlist(PARAMS.max))
+      print(PARAMS.range)
       rownames(PARAMS.range) = c("min", "max")
       if ("seeding_timestep" %in% unlist(get_checked))
       {

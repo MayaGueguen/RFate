@@ -185,6 +185,12 @@ test_that("PRE_FATE.params_multipleSet gives error with wrong data : no_simulati
                                            , file.simulParam.1 = "toto.txt"
                                            , no_simulations = factor("a"))
                , "Wrong type of data!\n `no_simulations` must be an integer > 0")
+  
+  # expect_warning(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+  #                                            , file.simulParam.1 = "toto.txt"
+  #                                            , no_simulations = 3.2
+  #                                            , opt.percent_max = -1)
+  #                , "`no_simulations` is a double. It will be converted (rounded) to an integer")
 })
 
 ## INPUTS
@@ -274,14 +280,70 @@ test_that("PRE_FATE.params_multipleSet gives error with wrong data : opt.percent
                , "Wrong data given!\n `opt.percent_light` must be between 0 and 1")
 })
 
+## INPUTS
+test_that("PRE_FATE.params_multipleSet gives error with wrong data : do...", {
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , no_simulations = 10
+                                           , do.max_by_cohort = FALSE
+                                           , do.max_abund_low = FALSE
+                                           , do.max_abund_medium = FALSE
+                                           , do.max_abund_high = FALSE
+                                           , do.seeding_duration = FALSE
+                                           , do.seeding_timestep = FALSE
+                                           , do.seeding_input = FALSE
+                                           , do.nb_stratum = FALSE
+                                           , do.LIGHT.thresh_medium = FALSE
+                                           , do.LIGHT.thresh_low = FALSE
+                                           , do.DISPERSAL.mode = FALSE
+                                           , do.HABSUIT.ref_option = FALSE)
+               , "You must select some parameters to vary !")
+})
 
 ## INPUTS
 test_that("PRE_FATE.params_multipleSet gives error with wrong data : within file.simulParam.1", {
-expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
-                                         , file.simulParam.1 = "toto.txt"
-                                         , no_simulations = 10)
-             , "The file FATE_simulation/PARAM_SIMUL/toto.txt is empty. Please check.")
-  
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , no_simulations = 10)
+               , "The file FATE_simulation/PARAM_SIMUL/toto.txt is empty. Please check.")
+  cat("Yo\n", file = "FATE_simulation/PARAM_SIMUL/toto.txt")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , no_simulations = 10)
+               , "The file FATE_simulation/PARAM_SIMUL/toto.txt does not contain any parameter values with the --PARAM-- flag. Please check.")
+  cat("--Yo--\n", file = "FATE_simulation/PARAM_SIMUL/toto.txt")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , no_simulations = 10)
+               , "The file FATE_simulation/PARAM_SIMUL/toto.txt does not contain the --END_OF_FILE-- flag. Please check.")
+  cat("--Yo--\n--END_OF_FILE--\n", file = "FATE_simulation/PARAM_SIMUL/toto.txt")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , no_simulations = 10)
+               , "Wrong type of data!\n `flag` (GLOBAL_PARAMS) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/toto.txt)"
+               , fixed = TRUE)
+  cat("--GLOBAL_PARAMS--\n--END_OF_FILE--\n", file = "FATE_simulation/PARAM_SIMUL/toto.txt")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , no_simulations = 10)
+               , "Wrong type of data!\n `flag` (GLOBAL_PARAMS) does not contain any value"
+               , fixed = TRUE)
+  cat("--GLOBAL_PARAMS--\nFATE_simulation/glob.txt\n--END_OF_FILE--\n", file = "FATE_simulation/PARAM_SIMUL/toto.txt")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , no_simulations = 10)
+               , "Wrong name file given!\n `./FATE_simulation/glob.txt` does not exist"
+               , fixed = TRUE)
+  file.create("FATE_simulation/glob.txt")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , no_simulations = 10)
+               , "The file ./FATE_simulation/glob.txt is empty. Please check.")
+  cat("Yo", file = "FATE_simulation/glob.txt")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , no_simulations = 10)
+               , "The file ./FATE_simulation/glob.txt is empty. Please check.")
 })
 
 
