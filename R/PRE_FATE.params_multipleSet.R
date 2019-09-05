@@ -464,13 +464,14 @@ PRE_FATE.params_multipleSet = function(
     params.simulParam = lines.simulParam[ind]
     params.simulParam = gsub("--", "", params.simulParam)
     params.simulParam.TOKEEP = params.simulParam[which(!(params.simulParam %in% get_toSuppr))]
-    if (length(params.simulParam.TOKEEP) == 0)
-    {
-      #   stop(paste0("The file ", abs.simulParam
-      #               , " does not contain any of the required parameter values ("
-      #               , paste0()
-      #               , "). Please check."))
-    } else
+    # if (length(params.simulParam.TOKEEP) == 0)
+    # {
+    #   #   stop(paste0("The file ", abs.simulParam
+    #   #               , " does not contain any of the required parameter values ("
+    #   #               , paste0()
+    #   #               , "). Please check."))
+    # } else
+    if (length(params.simulParam.TOKEEP) > 0)
     {
       params.simulParam.TOKEEP = paste0("--", params.simulParam.TOKEEP, "--")
       print(params.simulParam.TOKEEP)
@@ -590,6 +591,16 @@ PRE_FATE.params_multipleSet = function(
     PARAMS1 = get_PARAMS(path_folder = name.simulation.1
                          , file_simul = basename(file.simulParam.1)
                          , params = get_checked)
+    print(PARAMS1)
+    if (is.null(unlist(PARAMS1$PARAMS)))
+    {
+      stop(paste0("The global parameter file indicated in ", file.simulParam.1
+                  , " does not contain any of the required parameter values ("
+                  , paste0(as.vector(GLOBAL.names.params[unlist(get_checked)])
+                           , collapse = ", ")
+                  , "). Please check."))
+    }
+    
     TOKEEP1.simul = PARAMS1$TOKEEP.simul
     TOKEEP1.global = PARAMS1$TOKEEP.global
     SUCC_LIGHT1.simul = PARAMS1$SUCC_LIGHT.simul
@@ -625,14 +636,15 @@ PRE_FATE.params_multipleSet = function(
       PARAMS.range = rbind(unlist(PARAMS.min), unlist(PARAMS.max))
       print(PARAMS.range)
       rownames(PARAMS.range) = c("min", "max")
-      if ("seeding_timestep" %in% unlist(get_checked))
+      print(PARAMS.range)
+      if ("seeding_timestep" %in% colnames(PARAMS.range)) #unlist(get_checked))
       {
         if (PARAMS.range[1, "seeding_timestep"] < 1)
         {
           PARAMS.range[, "seeding_timestep"] = PARAMS.range[, "seeding_timestep"] + 1
         }
       }
-      if ("nb_stratum" %in% unlist(get_checked))
+      if ("nb_stratum" %in% colnames(PARAMS.range)) #unlist(get_checked))
       {
         PARAMS.range[, "nb_stratum"] = c(1, PARAMS1[[4]][1])
       }
@@ -704,6 +716,7 @@ PRE_FATE.params_multipleSet = function(
   cat("\n>> CREATION of multiple set of parameters <<\n")
   cat("\n 1. Get the range of parameters to be varied...\n")
   params.ranges = get_ranges()
+  print("yooooh")
   TOKEEP.simul = params.ranges$TOKEEP.simul
   TOKEEP.global = params.ranges$TOKEEP.global
   SUCC_LIGHT.simul = params.ranges$SUCC_LIGHT.simul
@@ -721,28 +734,14 @@ PRE_FATE.params_multipleSet = function(
             , "seeding_timestep"
             , "seeding_input"
             , "light_thresh_medium"
-            , "light_thresh_low") %in% unlist(get_checked)) > 0)
+            , "light_thresh_low") %in% colnames(params.ranges)) > 0)
   {
+    print("yaah")
     NB_SIMUL_LHS = no_simulations
     if ("habsuit_ref_option" %in% unlist(get_checked)) { NB_SIMUL_LHS = trunc(NB_SIMUL_LHS / 2) }
     if ("dispersal_mode" %in% unlist(get_checked)) { NB_SIMUL_LHS = trunc(NB_SIMUL_LHS / 3) }
     
-    ## Create LHS constraint
-    lhs_constraint = function(xx)
-    {
-      ff = function(param1, param2)
-      {
-        if (sum(c(param1, param2) %in% names(xx)) == 2)
-        {
-          return(xx[param1] <= xx[param2])
-        } else { return(TRUE) }
-      }
-      return(ifelse(ff("max_abund_low", "max_abund_medium") &&
-                      ff("max_abund_medium", "max_abund_high") &&
-                      ff("seeding_timestep", "seeding_duration") &&
-                      ff("light_thresh_medium", "light_thresh_low"), 0, 1))
-    }
-    
+    print("juuuu")
     ## Round some parameters to avoid too much precision
     ind = which(colnames(params.ranges) %in% c("max_by_cohort"
                                                , "max_abund_low"
@@ -754,27 +753,70 @@ PRE_FATE.params_multipleSet = function(
     ind = which(colnames(params.ranges) %in% c("seeding_duration", "seeding_input"))
     params.ranges[, ind] = params.ranges[, ind] / 10
     
-    ## Run Latin Hypercube Sampling
-    set.seed(sample(1:1000000, 1)) ## needed everytime as lhs is also a random value generator.
-    params.space = designLHD(
-      , lower = params.ranges[1, ]
-      , upper = params.ranges[2, ]
-      , control = list(size = NB_SIMUL_LHS
-                       , types = c("max_by_cohort" = "integer"
-                                   , "max_abund_low" = "integer"
-                                   , "max_abund_medium" = "integer"
-                                   , "max_abund_high" = "integer"
-                                   , "seeding_duration" = "integer"
-                                   , "seeding_timestep" = "integer"
-                                   , "seeding_input" = "integer"
-                                   , "light_thresh_medium" = "integer"
-                                   , "light_thresh_low" = "integer")
-                       , inequalityConstraint = lhs_constraint
+    if (sum(c("max_by_cohort"
+              , "max_abund_low"
+              , "max_abund_medium"
+              , "max_abund_high"
+              , "seeding_duration"
+              , "seeding_timestep"
+              , "seeding_input"
+              , "light_thresh_medium"
+              , "light_thresh_low") %in% colnames(params.ranges)) == 1)
+    {
+      print("1111111")
+      print(NB_SIMUL_LHS)
+      params.space = data.frame(sort(runif(n = NB_SIMUL_LHS
+                                           , min = params.ranges[1, ]
+                                           , max = params.ranges[2, ])))
+      print(params.space)
+      colnames(params.space) = colnames(params.ranges)
+    } else
+    {
+      
+      ## Create LHS constraint
+      lhs_constraint = function(xx)
+      {
+        ff = function(param1, param2)
+        {
+          if (sum(c(param1, param2) %in% names(xx)) == 2)
+          {
+            return(xx[param1] <= xx[param2])
+          } else { return(TRUE) }
+        }
+        return(ifelse(ff("max_abund_low", "max_abund_medium") &&
+                        ff("max_abund_medium", "max_abund_high") &&
+                        ff("seeding_timestep", "seeding_duration") &&
+                        ff("light_thresh_medium", "light_thresh_low"), 0, 1))
+      }
+      
+      ## Run Latin Hypercube Sampling
+      print("diiii")
+      set.seed(sample(1:1000000, 1)) ## needed everytime as lhs is also a random value generator.
+      params.space = designLHD(
+        , lower = params.ranges[1, , drop = FALSE]
+        , upper = params.ranges[2, , drop = FALSE]
+        , control = list(size = NB_SIMUL_LHS
+                         , types = c("max_by_cohort" = "integer"
+                                     , "max_abund_low" = "integer"
+                                     , "max_abund_medium" = "integer"
+                                     , "max_abund_high" = "integer"
+                                     , "seeding_duration" = "integer"
+                                     , "seeding_timestep" = "integer"
+                                     , "seeding_input" = "integer"
+                                     , "light_thresh_medium" = "integer"
+                                     , "light_thresh_low" = "integer")
+                         , inequalityConstraint = lhs_constraint
+        )
       )
-    )
-    colnames(params.space) = colnames(params.ranges)
-    params.space = as.data.frame(params.space)
+      print(params.space)
+      colnames(params.space) = colnames(params.ranges)
+      print(params.space)
+      params.space = as.data.frame(params.space)
+    }
+    print(params.space)
     
+    
+    print("cieuuuux")
     ## Upscale rounded parameters to have correct ranges
     ind = which(colnames(params.space) %in% c("max_by_cohort"
                                               , "max_abund_low"
@@ -782,14 +824,18 @@ PRE_FATE.params_multipleSet = function(
                                               , "max_abund_high"
                                               , "light_thresh_medium"
                                               , "light_thresh_low"))
-    params.space[, ind] = params.space[, ind] * 10000
+    print(ind)
+    print(params.space)
+    if (length(ind) > 0) params.space[, ind] = params.space[, ind] * 10000
+    print(params.space)
     ind = which(colnames(params.space) %in% c("seeding_duration", "seeding_input"))
-    params.space[, ind] = params.space[, ind] * 10
+    if (length(ind) > 0) params.space[, ind] = params.space[, ind] * 10
   }
+  print("plouf")
   if ("habsuit_ref_option" %in% unlist(get_checked))
   {
     params.space.BIS = data.frame(habsuit_ref_option = c(1, 2))
-    if (exists("params.spaces"))
+    if (exists("params.space"))
     {
       params.space = merge(params.space, params.space.BIS)
     } else
@@ -800,7 +846,7 @@ PRE_FATE.params_multipleSet = function(
   if ("dispersal_mode" %in% unlist(get_checked))
   {
     params.space.BIS = data.frame(dispersal_mode = c(1, 2, 3))
-    if (exists("params.spaces"))
+    if (exists("params.space"))
     {
       params.space = merge(params.space, params.space.BIS)
     } else
@@ -809,6 +855,7 @@ PRE_FATE.params_multipleSet = function(
     }
   }
   rownames(params.space) = paste0("REP-", 1:nrow(params.space))
+  print(dim(params.space))
   print(params.space[1:10, ])
   
   

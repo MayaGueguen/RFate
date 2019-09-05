@@ -75,7 +75,7 @@ pkgdown:::build_reference(examples = FALSE)
 
 ## BUILD THE PACKAGE ------------------------------------------------
 
-Rcmd(args = paste0("build ",package_name)) ## or with a shell : R CMD build MyPackage
+Rcmd(args = paste0("build ", package_name)) ## or with a shell : R CMD build MyPackage
 
 ## CHECK THE PACKAGE ------------------------------------------------
 
@@ -86,6 +86,6 @@ devtools::check(pkg = package_name)
 # INSTALL THE PACKAGE ----------------------------------------------
 
 install.packages(pkgs = paste0(package_name, "_", package_version, ".tar.gz"), repos = NULL, type = "source")
-system(paste0("scp ",paste0(package_name, "_", package_version, ".tar.gz"), " ", package_name, "/docs/archive/"))
+system(paste0("scp ", paste0(package_name, "_", package_version, ".tar.gz"), " ", package_name, "/docs/archive/"))
 eval(parse(text = paste0("library(package = ", package_name, ")")))
 
