@@ -351,8 +351,8 @@ PRE_FATE.params_multipleSet = function(
       stop("Wrong data given!\n `opt.percent_light` must be between 0 and 1")
     }
   }
-
-    
+  
+  
   #################################################################################################
   
   if (sum(c(do.max_by_cohort
@@ -478,16 +478,16 @@ PRE_FATE.params_multipleSet = function(
       toKeep = c()
       for (i in sapply(params.simulParam.TOKEEP, function(x) grep(x, lines.simulParam)))
       {
-        print(i)
-        if (ind[which(ind == i)] == (ind[which(ind == i)] + 1))
-        {
-          warning(paste0("The flag ", lines.simulParam[i]
-                         , " in the file ", abs.simulParam
-                         , " does not contain any value. Please check."))
-        } else
-        {
-          toKeep = c(toKeep, lines.simulParam[i:(ind[which(ind == i) + 1] - 1)])
-        }
+        # print(i)
+        # if (ind[which(ind == i)] == (ind[which(ind == i)] + 1))
+        # {
+        #   warning(paste0("The flag ", lines.simulParam[i]
+        #                  , " in the file ", abs.simulParam
+        #                  , " does not contain any value. Please check."))
+        # } else
+        # {
+        toKeep = c(toKeep, lines.simulParam[i:(ind[which(ind == i) + 1] - 1)])
+        # }
       }
       params.simulParam.TOKEEP = toKeep
       print(params.simulParam.TOKEEP)
@@ -647,13 +647,27 @@ PRE_FATE.params_multipleSet = function(
       print(PARAMS.range)
       rownames(PARAMS.range) = c("min", "max")
       print(PARAMS.range)
-      if ("seeding_timestep" %in% colnames(PARAMS.range)) #unlist(get_checked))
+      if (length(which(PARAMS.range[1, ] < 1)) > 0)
       {
-        if (PARAMS.range[1, "seeding_timestep"] < 1)
-        {
-          PARAMS.range[, "seeding_timestep"] = PARAMS.range[, "seeding_timestep"] + 1
-        }
+        PARAMS.range[1, which(PARAMS.range[1, ] < 1)] = 1
       }
+      # for (para in names(GLOBAL.names.params))
+      # {
+      #   if (para %in% colnames(PARAMS.range))
+      #   {
+      #     if (PARAMS.range[1, para] < 1)
+      #     {
+      #       PARAMS.range[, "seeding_timestep"] = PARAMS.range[, "seeding_timestep"] + 1
+      #     }
+      #   }
+      # }
+      # if ("seeding_timestep" %in% colnames(PARAMS.range)) #unlist(get_checked))
+      # {
+      #   if (PARAMS.range[1, "seeding_timestep"] < 1)
+      #   {
+      #     PARAMS.range[, "seeding_timestep"] = PARAMS.range[, "seeding_timestep"] + 1
+      #   }
+      # }
       if ("nb_stratum" %in% colnames(PARAMS.range)) #unlist(get_checked))
       {
         PARAMS.range[, "nb_stratum"] = c(1, PARAMS1[[4]][1])
@@ -701,13 +715,17 @@ PRE_FATE.params_multipleSet = function(
         
         PARAMS.range = rbind(unlist(PARAMS.min), unlist(PARAMS.max))
         rownames(PARAMS.range) = c("min", "max")
-        if ("seeding_timestep" %in% unlist(get_checked))
+        if (length(which(PARAMS.range[1, ] < 1)) > 0)
         {
-          if (PARAMS.range[1, "seeding_timestep"] < 1)
-          {
-            PARAMS.range[, "seeding_timestep"] = PARAMS.range[, "seeding_timestep"] + 1
-          }
+          PARAMS.range[1, which(PARAMS.range[1, ] < 1)] = 1
         }
+        # if ("seeding_timestep" %in% unlist(get_checked))
+        # {
+        #   if (PARAMS.range[1, "seeding_timestep"] < 1)
+        #   {
+        #     PARAMS.range[, "seeding_timestep"] = PARAMS.range[, "seeding_timestep"] + 1
+        #   }
+        # }
         if ("nb_stratum" %in% unlist(get_checked))
         {
           PARAMS.range[, "nb_stratum"] = c(1, max(c(PARAMS1[[4]][1], PARAMS2[[4]][1])))
@@ -744,7 +762,8 @@ PRE_FATE.params_multipleSet = function(
             , "seeding_timestep"
             , "seeding_input"
             , "light_thresh_medium"
-            , "light_thresh_low") %in% colnames(params.ranges)) > 0)
+            , "light_thresh_low"
+            , "nb_stratum") %in% colnames(params.ranges)) > 0)
   {
     print("yaah")
     NB_SIMUL_LHS = no_simulations
@@ -771,13 +790,19 @@ PRE_FATE.params_multipleSet = function(
               , "seeding_timestep"
               , "seeding_input"
               , "light_thresh_medium"
-              , "light_thresh_low") %in% colnames(params.ranges)) == 1)
+              , "light_thresh_low"
+              , "nb_stratum") %in% colnames(params.ranges)) == 1)
     {
       print("1111111")
       print(NB_SIMUL_LHS)
-      params.space = data.frame(sort(runif(n = NB_SIMUL_LHS
-                                           , min = params.ranges[1, ]
-                                           , max = params.ranges[2, ])))
+      params.space = data.frame(sort(sample(x = seq(params.ranges[1, ]
+                                                    , params.ranges[2, ]
+                                                    , 1)
+                                            , size = NB_SIMUL_LHS
+                                            , replace = TRUE)))
+      # params.space = data.frame(sort(runif(n = NB_SIMUL_LHS
+      #                                      , min = params.ranges[1, ]
+      #                                      , max = params.ranges[2, ])))
       print(params.space)
       colnames(params.space) = colnames(params.ranges)
     } else
@@ -893,24 +918,33 @@ PRE_FATE.params_multipleSet = function(
     if (is.null(SUCC_LIGHT.simul$SUCC) || length(SUCC_LIGHT.simul$SUCC) == 0)
     {
       stop(paste0("The flag --PFG_LIFE_HISTORY_PARAMS-- in the file ", file.simulParam.1
-                     , " does not contain any value. Please check."))
+                  , " does not contain any value. Please check."))
     }
-
+    
     cat("\n>> Get PFG attribute values...")
     SUCC_table = foreach(fi = SUCC_LIGHT.simul$SUCC, .combine = "rbind") %do%
     {
+      cat("\n ", fi)
       combi = data.frame(param = c("NAME", "TYPE", "HEIGHT", "MATURITY", "LONGEVITY")
-                         , is.num = c(FALSE, FALSE, TRUE, TRUE, TRUE))
+                         , is.num = c(FALSE, FALSE, TRUE, TRUE, TRUE)
+                         , stringsAsFactors = FALSE)
       # combi = data.frame(param = c("NAME", "TYPE", "MATURITY", "LONGEVITY")
       # , is.num = c(FALSE, FALSE, TRUE, TRUE))
       res = foreach(i = 1:nrow(combi)) %do%
       {
+        print(i)
+        print(combi$param[i])
         return(.getParam(params.lines = paste0(dirname(name.simulation.1), "/", fi)
                          , flag = combi$param[i]
                          , flag.split = " "
                          , is.num = combi$is.num[i]))
       }
-      return(data.frame(PFG = res[[1]], type = res[[2]], height = res[[3]], maturity = res[[4]], longevity = res[[5]]))
+      print(res)
+      return(data.frame(PFG = res[[1]]
+                        , type = res[[2]]
+                        , height = res[[3]]
+                        , maturity = res[[4]]
+                        , longevity = res[[5]]))
       # return(data.frame(PFG = res[[1]], type = res[[2]], maturity = res[[3]], longevity = res[[4]]))
     }
     if ("DO_LIGHT_COMPETITION 1" %in% TOKEEP.global)
@@ -934,8 +968,10 @@ PRE_FATE.params_multipleSet = function(
     cat("\n>> Create multiple PFG succession / light files...")
     for (i in 1:nrow(params.space))
     {
-      strata.limits = sort(sample(c(0, 20, 50, 150, 400, 1000, 2000, 5000, 10000)
-                                  , params.space$nb_stratum[i]))
+      strata.limits = sort(sample(x = c(20, 50, 150, 400, 1000, 2000, 5000, 10000)
+                                  , size = params.space$nb_stratum[i]))
+      strata.limits = c(0, strata.limits)
+      print(strata.limits)
       
       PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation_MULTIPLE_SET"
                                     , mat.PFG.succ = SUCC_table
