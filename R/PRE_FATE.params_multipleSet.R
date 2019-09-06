@@ -216,26 +216,26 @@
 ##'
 ## END OF HEADER ###############################################################
 
-name.simulation.1 = "FATE_simulation"
-name.simulation.2 = NULL
-file.simulParam.1 = "toto.txt"
-file.simulParam.2 = NULL
-no_simulations = 10
-opt.percent_max = 0.5
-opt.percent_seeding = 0.5
-opt.percent_light = 0.5
-do.max_by_cohort = TRUE
-do.max_abund_low = TRUE
-do.max_abund_medium = TRUE
-do.max_abund_high = TRUE
-do.seeding_duration = TRUE
-do.seeding_timestep = TRUE
-do.seeding_input = TRUE
-do.nb_stratum = TRUE
-do.LIGHT.thresh_medium = TRUE
-do.LIGHT.thresh_low = TRUE
-do.DISPERSAL.mode = TRUE
-do.HABSUIT.ref_option = TRUE
+# name.simulation.1 = "FATE_simulation"
+# name.simulation.2 = NULL
+# file.simulParam.1 = "toto.txt"
+# file.simulParam.2 = NULL
+# no_simulations = 10
+# opt.percent_max = 0.5
+# opt.percent_seeding = 0.5
+# opt.percent_light = 0.5
+# do.max_by_cohort = TRUE
+# do.max_abund_low = TRUE
+# do.max_abund_medium = TRUE
+# do.max_abund_high = TRUE
+# do.seeding_duration = TRUE
+# do.seeding_timestep = TRUE
+# do.seeding_input = TRUE
+# do.nb_stratum = TRUE
+# do.LIGHT.thresh_medium = TRUE
+# do.LIGHT.thresh_low = TRUE
+# do.DISPERSAL.mode = TRUE
+# do.HABSUIT.ref_option = TRUE
 
 
 PRE_FATE.params_multipleSet = function(
