@@ -73,22 +73,22 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : requir
                                                 , required.no_PFG = 5
                                                 , required.no_STRATA = 2
                                                 , required.simul_duration = NA)
-               , "`required.simul_duration` must be an integer > 0")
+               , "`required.simul_duration` must be an integer >= 0")
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.no_PFG = 5
                                                 , required.no_STRATA = 2
                                                 , required.simul_duration = NULL)
-               , "`required.simul_duration` must be an integer > 0")
+               , "`required.simul_duration` must be an integer >= 0")
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.no_PFG = 5
                                                 , required.no_STRATA = 2
                                                 , required.simul_duration = "")
-               , "`required.simul_duration` must be an integer > 0")
+               , "`required.simul_duration` must be an integer >= 0")
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.no_PFG = 5
                                                 , required.no_STRATA = 2
                                                 , required.simul_duration = 100)
-               , "`required.seeding_duration` must be an integer > 0")
+               , "`required.seeding_duration` must be an integer >= 0")
 })
 
 ## INPUTS

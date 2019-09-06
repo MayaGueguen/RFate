@@ -450,8 +450,8 @@ PRE_FATE.params_globalParameters = function(
     .stopMessage_beInteger("required.simul_duration")
   }
   if (.testParam_notNum(required.seeding_duration) ||
-      sum(required.seeding_duration <= 0) > 0 ){
-    .stopMessage_beInteger("required.seeding_duration")
+      sum(required.seeding_duration < 0) > 0 ){
+    stop("Wrong type of data!\n `required.seeding_duration` must be an integer >= 0")
   }
   if (.testParam_notNum(required.seeding_timestep) ||
       sum(required.seeding_timestep <= 0) > 0 ){
