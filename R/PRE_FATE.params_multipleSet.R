@@ -464,33 +464,16 @@ PRE_FATE.params_multipleSet = function(
     params.simulParam = lines.simulParam[ind]
     params.simulParam = gsub("--", "", params.simulParam)
     params.simulParam.TOKEEP = params.simulParam[which(!(params.simulParam %in% get_toSuppr))]
-    # if (length(params.simulParam.TOKEEP) == 0)
-    # {
-    #   #   stop(paste0("The file ", abs.simulParam
-    #   #               , " does not contain any of the required parameter values ("
-    #   #               , paste0()
-    #   #               , "). Please check."))
-    # } else
+
     if (length(params.simulParam.TOKEEP) > 0)
     {
       params.simulParam.TOKEEP = paste0("--", params.simulParam.TOKEEP, "--")
-      print(params.simulParam.TOKEEP)
       toKeep = c()
       for (i in sapply(params.simulParam.TOKEEP, function(x) grep(x, lines.simulParam)))
       {
-        # print(i)
-        # if (ind[which(ind == i)] == (ind[which(ind == i)] + 1))
-        # {
-        #   warning(paste0("The flag ", lines.simulParam[i]
-        #                  , " in the file ", abs.simulParam
-        #                  , " does not contain any value. Please check."))
-        # } else
-        # {
         toKeep = c(toKeep, lines.simulParam[i:(ind[which(ind == i) + 1] - 1)])
-        # }
       }
       params.simulParam.TOKEEP = toKeep
-      print(params.simulParam.TOKEEP)
     }
     
     ## Get succession and light PFG files
@@ -591,7 +574,6 @@ PRE_FATE.params_multipleSet = function(
     PARAMS1 = get_PARAMS(path_folder = name.simulation.1
                          , file_simul = basename(file.simulParam.1)
                          , params = get_checked)
-    print(PARAMS1)
     
     TOKEEP1.simul = PARAMS1$TOKEEP.simul
     TOKEEP1.global = PARAMS1$TOKEEP.global
@@ -644,31 +626,12 @@ PRE_FATE.params_multipleSet = function(
       PARAMS.max = ff()
       
       PARAMS.range = rbind(unlist(PARAMS.min), unlist(PARAMS.max))
-      print(PARAMS.range)
       rownames(PARAMS.range) = c("min", "max")
-      print(PARAMS.range)
       if (length(which(PARAMS.range[1, ] < 1)) > 0)
       {
         PARAMS.range[1, which(PARAMS.range[1, ] < 1)] = 1
       }
-      # for (para in names(GLOBAL.names.params))
-      # {
-      #   if (para %in% colnames(PARAMS.range))
-      #   {
-      #     if (PARAMS.range[1, para] < 1)
-      #     {
-      #       PARAMS.range[, "seeding_timestep"] = PARAMS.range[, "seeding_timestep"] + 1
-      #     }
-      #   }
-      # }
-      # if ("seeding_timestep" %in% colnames(PARAMS.range)) #unlist(get_checked))
-      # {
-      #   if (PARAMS.range[1, "seeding_timestep"] < 1)
-      #   {
-      #     PARAMS.range[, "seeding_timestep"] = PARAMS.range[, "seeding_timestep"] + 1
-      #   }
-      # }
-      if ("nb_stratum" %in% colnames(PARAMS.range)) #unlist(get_checked))
+      if ("nb_stratum" %in% colnames(PARAMS.range))
       {
         PARAMS.range[, "nb_stratum"] = c(1, PARAMS1[[4]][1])
       }
@@ -719,13 +682,6 @@ PRE_FATE.params_multipleSet = function(
         {
           PARAMS.range[1, which(PARAMS.range[1, ] < 1)] = 1
         }
-        # if ("seeding_timestep" %in% unlist(get_checked))
-        # {
-        #   if (PARAMS.range[1, "seeding_timestep"] < 1)
-        #   {
-        #     PARAMS.range[, "seeding_timestep"] = PARAMS.range[, "seeding_timestep"] + 1
-        #   }
-        # }
         if ("nb_stratum" %in% unlist(get_checked))
         {
           PARAMS.range[, "nb_stratum"] = c(1, max(c(PARAMS1[[4]][1], PARAMS2[[4]][1])))
@@ -744,7 +700,7 @@ PRE_FATE.params_multipleSet = function(
   cat("\n>> CREATION of multiple set of parameters <<\n")
   cat("\n 1. Get the range of parameters to be varied...\n")
   params.ranges = get_ranges()
-  print("yooooh")
+
   TOKEEP.simul = params.ranges$TOKEEP.simul
   TOKEEP.global = params.ranges$TOKEEP.global
   SUCC_LIGHT.simul = params.ranges$SUCC_LIGHT.simul
@@ -765,12 +721,10 @@ PRE_FATE.params_multipleSet = function(
             , "light_thresh_low"
             , "nb_stratum") %in% colnames(params.ranges)) > 0)
   {
-    print("yaah")
     NB_SIMUL_LHS = no_simulations
     if ("habsuit_ref_option" %in% unlist(get_checked)) { NB_SIMUL_LHS = trunc(NB_SIMUL_LHS / 2) }
     if ("dispersal_mode" %in% unlist(get_checked)) { NB_SIMUL_LHS = trunc(NB_SIMUL_LHS / 3) }
     
-    print("juuuu")
     ## Round some parameters to avoid too much precision
     ind = which(colnames(params.ranges) %in% c("max_by_cohort"
                                                , "max_abund_low"
@@ -793,16 +747,11 @@ PRE_FATE.params_multipleSet = function(
               , "light_thresh_low"
               , "nb_stratum") %in% colnames(params.ranges)) == 1)
     {
-      print("1111111")
-      print(NB_SIMUL_LHS)
       params.space = data.frame(sort(sample(x = seq(params.ranges[1, ]
                                                     , params.ranges[2, ]
                                                     , 1)
                                             , size = NB_SIMUL_LHS
                                             , replace = TRUE)))
-      # params.space = data.frame(sort(runif(n = NB_SIMUL_LHS
-      #                                      , min = params.ranges[1, ]
-      #                                      , max = params.ranges[2, ])))
       print(params.space)
       colnames(params.space) = colnames(params.ranges)
     } else
@@ -825,7 +774,6 @@ PRE_FATE.params_multipleSet = function(
       }
       
       ## Run Latin Hypercube Sampling
-      print("diiii")
       set.seed(sample(1:1000000, 1)) ## needed everytime as lhs is also a random value generator.
       params.space = designLHD(
         , lower = params.ranges[1, , drop = FALSE]
@@ -843,15 +791,10 @@ PRE_FATE.params_multipleSet = function(
                          , inequalityConstraint = lhs_constraint
         )
       )
-      print(params.space)
       colnames(params.space) = colnames(params.ranges)
-      print(params.space)
       params.space = as.data.frame(params.space)
     }
-    print(params.space)
     
-    
-    print("cieuuuux")
     ## Upscale rounded parameters to have correct ranges
     ind = which(colnames(params.space) %in% c("max_by_cohort"
                                               , "max_abund_low"
@@ -859,14 +802,10 @@ PRE_FATE.params_multipleSet = function(
                                               , "max_abund_high"
                                               , "light_thresh_medium"
                                               , "light_thresh_low"))
-    print(ind)
-    print(params.space)
     if (length(ind) > 0) params.space[, ind] = params.space[, ind] * 10000
-    print(params.space)
     ind = which(colnames(params.space) %in% c("seeding_duration", "seeding_input"))
     if (length(ind) > 0) params.space[, ind] = params.space[, ind] * 10
   }
-  print("plouf")
   if ("habsuit_ref_option" %in% unlist(get_checked))
   {
     params.space.BIS = data.frame(habsuit_ref_option = c(1, 2))
@@ -890,8 +829,7 @@ PRE_FATE.params_multipleSet = function(
     }
   }
   rownames(params.space) = paste0("REP-", 1:nrow(params.space))
-  print(dim(params.space))
-  print(params.space[1:10, ])
+  print(params.space[1:min(c(10, nrow(params.space))), ])
   
   
   ## ------------------------------------------------------------------------------------------ 
@@ -932,14 +870,11 @@ PRE_FATE.params_multipleSet = function(
       # , is.num = c(FALSE, FALSE, TRUE, TRUE))
       res = foreach(i = 1:nrow(combi)) %do%
       {
-        print(i)
-        print(combi$param[i])
         return(.getParam(params.lines = paste0(dirname(name.simulation.1), "/", fi)
                          , flag = combi$param[i]
                          , flag.split = " "
                          , is.num = combi$is.num[i]))
       }
-      print(res)
       return(data.frame(PFG = res[[1]]
                         , type = res[[2]]
                         , height = res[[3]]
@@ -971,7 +906,7 @@ PRE_FATE.params_multipleSet = function(
       strata.limits = sort(sample(x = c(20, 50, 150, 400, 1000, 2000, 5000, 10000)
                                   , size = params.space$nb_stratum[i]))
       strata.limits = c(0, strata.limits)
-      print(strata.limits)
+      cat("\n Selected strata.limits :", strata.limits)
       
       PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation_MULTIPLE_SET"
                                     , mat.PFG.succ = SUCC_table

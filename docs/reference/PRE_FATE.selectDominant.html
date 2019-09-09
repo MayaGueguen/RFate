@@ -8,21 +8,25 @@
 
 <title>Selection of dominant species from abundance releves — PRE_FATE.selectDominant • RFate</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -30,11 +34,12 @@
 
 
 
-<meta property="og:title" content="Selection of dominant species from abundance releves — PRE_FATE.selectDominant" />
 
+<meta property="og:title" content="Selection of dominant species from abundance releves — PRE_FATE.selectDominant" />
 <meta property="og:description" content="This script is designed to select dominant species from
              abundance records, and habitat if the information is available." />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -46,6 +51,7 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
 
 
   </head>
@@ -116,7 +122,6 @@
   </a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="../archive/RFate_0.0.7.9000.tar.gz">
@@ -138,6 +143,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -149,10 +155,8 @@
     </div>
 
     <div class="ref-description">
-    
     <p>This script is designed to select dominant species from
              abundance records, and habitat if the information is available.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>PRE_FATE.selectDominant</span>(<span class='kw'>mat.site.species.abund</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sites</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -161,7 +165,7 @@
   <span class='kw'>selectionRule.min_no_abund_over25</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>doHabitatSelection</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>selectionRule.min_percent_habitat</span> <span class='kw'>=</span> <span class='fl'>0.05</span>,
   <span class='kw'>selectionRule.min_no_habitat</span> <span class='kw'>=</span> <span class='fl'>5</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -218,7 +222,7 @@ occupied by the species (between 0 and 1)</p></td>
 occupied by the species</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A <code>data.frame</code> with all the species selected and the values of
@@ -234,6 +238,7 @@ parameters used to make the selection :</p>
   <dt>stat.no_sites <br /> abund_over25</dt><dd><p>number of sites with abundance &gt;= 25</p></dd>
   <dt>SELECTION</dt><dd><p>dataset in which the species has been selected as dominant
   <br /> (global = all data, or habitat, or global + habitat...)</p></dd>
+
 </dl>
 
 
@@ -242,6 +247,7 @@ parameters used to make the selection :</p>
   table of selected species with all the statistics described above</p></dd>
   <dt><code class="file">SPECIES_ONLY</code></dt><dd><p>only the names /
   ID of the species selected</p></dd>
+
 </dl>
 
 <p>Two <code>PRE_FATE_DOMINANT_[...].pdf</code> files are also created :</p><dl class='dl-horizontal'>
@@ -249,9 +255,9 @@ parameters used to make the selection :</p>
   species metrics, and the criteria used to make the selection</p></dd>
   <dt><code class="file">STEP_2 <br /> selectedSpecies</code></dt><dd><p>to visualize the values of
   species metrics, for the selected dominant species</p></dd>
+
 </dl>
 
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This function provides a way to <em>select dominant species based on
@@ -259,7 +265,8 @@ abundance sampling information</em>. <br />
 This information can be given either directly in the form of a <code>data.frame</code>,
 or indirectly with a <code>vector</code> for each required information (sites,
 species, abundance, habitat class - optional).</p>
-    <p>2 rules are applied to make the species selection :</p>
+
+<p>2 rules are applied to make the species selection :</p>
 <dl class='dl-horizontal'>
   <dt><strong>1. Presence releves</strong></dt><dd><p><dl class='dl-horizontal'>
     <dt><strong>on number of sites</strong></dt><dd><p>the species should be found in a certain
@@ -267,8 +274,7 @@ species, abundance, habitat class - optional).</p>
     of all the number of records per species <br /> <em>This should ensure that
     the selected species are covering all the studied area (or at least a
     determining part of it, assuming that the releves are well distributed over
-    all the zone).</em></p></dd>
-  </dl></p></dd>
+    all the zone).</em></p></dd></dl></p></dd>
   <dt><strong>2. Abundance releves : </strong></dt><dd><p>both conditions must be fullfilled
   <dl class='dl-horizontal'>
     <dt><strong>on average abundance</strong></dt><dd><p>the species should have a mean
@@ -278,10 +284,11 @@ species, abundance, habitat class - optional).</p>
     <code>selectionRule.min_no_abund_over25</code> sites</p></dd>
     <dt></dt><dd><p><em>This should ensure that the selected species, besides being
     abundant, are</em> frequently <em>abundant, meaning not ultra specific to a
-    particular area.</em></p></dd>
-  </dl></p></dd>
+    particular area.</em></p></dd></dl></p></dd>
+
 </dl>
-    <p>If habitat information is available (e.g. type of environment : urban,
+
+<p>If habitat information is available (e.g. type of environment : urban,
 desert, grassland... ; type of vegetation : shrubs, forest, alpine grasslands... ;
 etc), 1 rule with 2 conditions can be added to the selection steps,
 <em>in order to keep species that are not dominant at the large scale
@@ -295,20 +302,19 @@ but could be representative of a specific habitat</em> :</p>
     <code>selectionRule.min_no_habitat</code> sites of a landclass</p></dd>
     <dt></dt><dd><p><em>In the same way than for rule 2., this should allow to select
     species that are not globally dominant but that can be representative of a
-    specific habitat, both in terms of abundance and dominancy.</em></p></dd>
-  </dl></p></dd>
+    specific habitat, both in terms of abundance and dominancy.</em></p></dd></dl></p></dd>
+
 </dl>
-    
+
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='PRE_FATE.abundBraunBlanquet.html'>PRE_FATE.abundBraunBlanquet</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
+    <pre class="examples">
 <span class='co'>## Load example data</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>MontBlanc</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/str'>str</a></span>(<span class='no'>MontBlanc</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>MontBlanc</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>MontBlanc</span>)
 
 <span class='co'>## MontBlanc$mat.releves : data.frame</span>
 
@@ -357,21 +363,15 @@ but could be representative of a specific habitat</em> :</p>
 <span class='co'>#########################################################################################</span>
 
 <span class='co'>## 2 .csv and 2 .pdf files have been produced</span>
-<span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/str'>str</a></span>(<span class='no'>sp.DOM</span>)
-
-<span class='co'># }</span></pre>
+<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>sp.DOM</span>)</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -380,19 +380,23 @@ but could be representative of a specific habitat</em> :</p>
   </div>
 </div>
 
+
       <footer>
       <div class="copyright">
   <p>Developed by Maya Guéguen.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

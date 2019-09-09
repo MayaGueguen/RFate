@@ -9,21 +9,25 @@
 <title>Create relative abundance maps for each Plant Functional
 Group <br /> for one (or several) specific year of a <code>FATE-HD</code> simulation — POST_FATE.relativeAbund • RFate</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -31,13 +35,14 @@ Group <br /> for one (or several) specific year of a <code>FATE-HD</code> simula
 
 
 
+
 <meta property="og:title" content="Create relative abundance maps for each Plant Functional
 Group <br /> for one (or several) specific year of a <code>FATE-HD</code> simulation — POST_FATE.relativeAbund" />
-
 <meta property="og:description" content="This script is designed to produce raster maps of PFG simulated
 relative abundances for one (or several) specific FATE-HD 
 simulation year." />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -49,6 +54,7 @@ simulation year." />
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
 
 
   </head>
@@ -119,7 +125,6 @@ simulation year." />
   </a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="../archive/RFate_0.0.7.9000.tar.gz">
@@ -141,6 +146,7 @@ simulation year." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -153,16 +159,14 @@ Group <br /> for one (or several) specific year of a <code>FATE-HD</code> simula
     </div>
 
     <div class="ref-description">
-    
     <p>This script is designed to produce raster maps of PFG simulated
 relative abundances for one (or several) specific <code>FATE-HD</code> 
 simulation year.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>POST_FATE.relativeAbund</span>(<span class='no'>name.simulation</span>, <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>year</span>,
   <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -188,15 +192,15 @@ will be used to extract PFG abundance maps</p></td>
 can be used to parallelize the <code>unzip/zip</code> of raster files</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>One result folder is created :</p><dl class='dl-horizontal'>
   <dt><code class="file">ABUND_REL_perPFG <br />_allStrata</code></dt><dd><p>containing relative abundance 
   raster maps for each PFG across all strata</p></dd>
+
 </dl>
 
-    
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This function allows one to obtain, for a specific <code>FATE-HD</code> simulation
@@ -212,7 +216,7 @@ before the maps are compressed again :</p>
   $$\frac{\text{Abund } PFG_i \text{ } Stratum_j}
   {\Sigma \text{ Abund } PFG_{all} \text{ } Stratum_j}$$</p></li>
 </ol>
-    
+
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='POST_FATE.graphic_evolutionCoverage.html'>POST_FATE.graphic_evolutionCoverage</a></code>,
@@ -220,12 +224,10 @@ before the maps are compressed again :</p>
 <code><a href='POST_FATE.graphic_mapPFGrichness.html'>POST_FATE.graphic_mapPFGrichness</a></code>,
 <code><a href='POST_FATE.graphic_mapPFGcover.html'>POST_FATE.graphic_mapPFGcover</a></code>,
 <code><a href='POST_FATE.graphic_validationStatistics.html'>POST_FATE.graphic_validationStatistics</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"># NOT RUN {
-# }
-<span class='co'># NOT RUN {</span>
+    <pre class="examples">
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'>POST_FATE.relativeAbund</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
                                         , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
                                         , <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>850</span>
@@ -233,26 +235,17 @@ before the maps are compressed again :</p>
 
 <span class='fu'>POST_FATE.relativeAbund</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
                                         , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
-                                        , <span class='kw'>year</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>850</span>, <span class='fl'>950</span>)
+                                        , <span class='kw'>year</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>850</span>, <span class='fl'>950</span>)
                                         , <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>)
-<span class='co'># }</span># NOT RUN {
-                                    
-                                    
-
-# }
-</pre>
+}</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#details">Details</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
@@ -261,19 +254,23 @@ before the maps are compressed again :</p>
   </div>
 </div>
 
+
       <footer>
       <div class="copyright">
   <p>Developed by Maya Guéguen.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

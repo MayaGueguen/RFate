@@ -106,7 +106,7 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
                                                 , column(4
                                                          , checkboxGroupInput(inputId = "set.choices.4"
                                                                               , label = HTML("<i class='fa fa-globe'></i> habitat suitability")
-                                                                              , choices = c("ref_option")
+                                                                              , choices = c("habsuit_ref_option")
                                                                               , selected = NULL
                                                                               , width = "100%"
                                                          )
@@ -125,7 +125,7 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
                                                          , checkboxGroupInput(inputId = "set.choices.2"
                                                                               , label = HTML("<i class='fa fa-heart'></i> seeding")
                                                                               , choices = c("seeding_duration"
-                                                                                            , "seeding_step"
+                                                                                            , "seeding_timestep"
                                                                                             , "seeding_input")
                                                                               , selected = NULL
                                                                               , width = "100%"
@@ -148,7 +148,7 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
                                                 , column(4
                                                          , checkboxGroupInput(inputId = "set.choices.5"
                                                                               , label = HTML("<i class='fa fa-seedling'></i> dispersal")
-                                                                              , choices = c("mode_dispers")
+                                                                              , choices = c("dispersal_mode")
                                                                               , selected = NULL
                                                                               , width = "100%"
                                                          )
