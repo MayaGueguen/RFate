@@ -134,7 +134,9 @@ print_messages = function(fun, cut_pattern = "STUPID")
   out_fun = factory(fun)
   if (length(out_fun$err) > 0)
   {
-    sapply(out_fun$err, function(xx) shinyalert(type = "error", text = xx))
+    sapply(out_fun$err, function(xx) shinyalert(type = "error"
+                                                , closeOnClickOutside = TRUE
+                                                , text = xx))
     return(0)
   } else
   {
@@ -145,6 +147,7 @@ print_messages = function(fun, cut_pattern = "STUPID")
     if (length(out_fun$mess) > 0)
     {
       sapply(out_fun$mess, function(xx) shinyalert(type = "success"
+                                                   , closeOnClickOutside = TRUE
                                                    , text = gsub(cut_pattern
                                                                 , paste0(cut_pattern, " ")
                                                                 , xx)))

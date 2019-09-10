@@ -1,12 +1,12 @@
 
 ####################################################################
 
-observeEvent(input$HELP.panel2, {
+observeEvent(input$HELP.panel2.menu1, {
   introjs(session = session
           , options = list("nextLabel" = "Next"
                            , "prevLabel" = "Prev"
                            , "skipLabel" = "Close"
-                           , steps = data.frame(element = c(paste0("#help2_", 1:2),"#main.panel",paste0("#help2_", 4:6))
+                           , steps = data.frame(element = c(paste0("#help2_1_", 1:2),"#main.panel",paste0("#help2_", 4:6))
                                                 # , position = c("auto", "auto", "bottom-middle-aligned", "auto", "auto")
                                                 , intro = c("<p><code>FATE-HD</code> requires only one input parameter, which is a file containing
                                                             the names of parameter files, which may themselves contain parameters or other
@@ -20,35 +20,35 @@ observeEvent(input$HELP.panel2, {
                                                             , "<p><em>1. Simulation parameterization</em></p>
                                                             <ul>
                                                             <li>
-                                                            <strong>Global parameters</strong> : related to the simulation definition<br>
-                                                            (number of PFG and strata, simulation duration, computer resources, manage abundance values, modules loaded…)<br>
-                                                            with the function <a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a>
+                                                            <strong>Global parameters</strong> (simulation duration, computer resources, manage abundance values, modules loaded...)<br>
+                                                            (<a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a>)
                                                             </li>
                                                             <li>
-                                                            <strong>Years to save abundance rasters and simulation outputs</strong> with the function <a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_saveYears.html'>PRE_FATE.params_saveYears</a>
+                                                            <strong>Years to save abundance rasters and simulation outputs</strong>
+                                                            (<a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_saveYears.html'>PRE_FATE.params_saveYears</a>)
                                                             </li>
                                                             <li>
                                                             <strong>Years and files to change rasters</strong> for the succession, habitat suitability or disturbance modules<br>
-                                                            with the function <a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_changingYears.html'>PRE_FATE.params_changingYears</a>
+                                                            (<a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_changingYears.html'>PRE_FATE.params_changingYears</a>)
                                                             </li>
                                                             </ul>
                                                             <p><em>2. For each PFG : behavior and characteristics</em></p>
                                                             <ul>
                                                             <li>
-                                                            <strong>Succession files</strong> : related to the life history with the function <a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGsuccession.html'>PRE_FATE.params_PFGsuccession</a>
+                                                            <strong>Succession files</strong> (<a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGsuccession.html'>PRE_FATE.params_PFGsuccession</a>)
                                                             </li>
                                                             <li>
-                                                            <strong>Dispersal files</strong> : related to the dispersal ability with the function <a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGdispersal.html'>PRE_FATE.params_PFGdispersal</a>
+                                                            <strong>Dispersal files</strong> (<a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGdispersal.html'>PRE_FATE.params_PFGdispersal</a>)
                                                             </li>
                                                             <li>
-                                                            <strong>Light files</strong> : related to the light competition with the function <a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGlight.html'>PRE_FATE.params_PFGlight</a>
+                                                            <strong>Light files</strong> (<a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGlight.html'>PRE_FATE.params_PFGlight</a>)
                                                             </li>
                                                             <li>
-                                                            <strong>Soil files</strong> : related to the soil competition with the function <a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGsoil.html'>PRE_FATE.params_PFGsoil</a>
+                                                            <strong>Soil files</strong> (<a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGsoil.html'>PRE_FATE.params_PFGsoil</a>)
                                                             </li>
                                                             <li>
-                                                            <strong>Disturbance files</strong> : related to the response to perturbations in terms of resprouting and mortality<br>
-                                                            with the function <a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGdisturbance.html'>PRE_FATE.params_PFGdisturbance</a>
+                                                            <strong>Disturbance files</strong> : response to perturbations in terms of resprouting and mortality<br>
+                                                            (<a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGdisturbance.html'>PRE_FATE.params_PFGdisturbance</a>)
                                                             </li>
                                                             </ul>"
                                                             , "<p><em>3. Parameter management</em></p>
@@ -62,7 +62,7 @@ observeEvent(input$HELP.panel2, {
                                                             , "<p>A pre-existing ParamSimulation file can be given to load previous parameters and help create new parameter files from basis.</p>"
                                                             , "<p>Download the complete simulation folder as an archive file (<code>FATE_simulation.zip</code>).</p>"))
           )
-                           )
+  )
 })
 
 

@@ -101,6 +101,16 @@ observeEvent(input$create.relativeAbund, {
   path.init = getwd()
   setwd(get_path.folder())
   
+  showModal(modalDialog(HTML(paste0("Creating relative PFG abundance maps with :
+                                        <ul>
+                                    <li><strong>folder :</strong> ", basename(get_name.simul()),"</li>
+                                    <li><strong>simulation parameter file :</strong> ", basename(get_param.simul()), "</li>
+                                    <li><strong>year :</strong> ", as.numeric(input$graph.year),"</li>
+                                    <li><strong>opt.no_CPU :</strong> ", input$graph.opt.no_CPU,"</li>
+                                    </ul>"))
+                        , title = HTML("Relative PFG abundance maps (specific year)")
+                        , footer = NULL))
+  Sys.sleep(3)
   get_res = print_messages(as.expression(
     POST_FATE.relativeAbund(name.simulation = get_name.simul()
                             , file.simulParam = get_param.simul()
@@ -108,6 +118,7 @@ observeEvent(input$create.relativeAbund, {
                             , opt.no_CPU = input$graph.opt.no_CPU
     )
   ))
+  removeModal()
   
   setwd(path.init)
 })
@@ -120,6 +131,17 @@ observeEvent(input$create.PFGvsHS, {
   path.init = getwd()
   setwd(get_path.folder())
   
+  showModal(modalDialog(HTML(paste0("Creating maps of PFG habitat suitability vs simulated occurrences with :
+                                        <ul>
+                                    <li><strong>folder :</strong> ", basename(get_name.simul()),"</li>
+                                    <li><strong>simulation parameter file :</strong> ", basename(get_param.simul()), "</li>
+                                    <li><strong>year :</strong> ", as.numeric(input$graph.year),"</li>
+                                    <li><strong>opt.strata :</strong> ", as.numeric(input$graph.strata_min),"</li>
+                                    <li><strong>opt.no_CPU :</strong> ", input$graph.opt.no_CPU,"</li>
+                                    </ul>"))
+                        , title = HTML("Maps of PFG habitat suitability vs simulated occurrences (specific year)")
+                        , footer = NULL))
+  Sys.sleep(3)
   get_res = print_messages(as.expression(
     POST_FATE.graphic_mapPFGvsHS(name.simulation = get_name.simul()
                                  , file.simulParam = get_param.simul()
@@ -128,6 +150,7 @@ observeEvent(input$create.PFGvsHS, {
                                  , opt.no_CPU = input$graph.opt.no_CPU
     )
   ))
+  removeModal()
   
   # plot(get_res[[1]]$plot[[1]][[1]])
   
@@ -191,7 +214,18 @@ observeEvent(input$create.validationStat, {
     graph.opt.cover.obs = ""
   }
   
-
+  showModal(modalDialog(HTML(paste0("Creating statistics for quality assessment (sensitivity, specificity, TSS, AUC) with :
+                                        <ul>
+                                    <li><strong>folder :</strong> ", basename(get_name.simul()),"</li>
+                                    <li><strong>simulation parameter file :</strong> ", basename(get_param.simul()), "</li>
+                                    <li><strong>year :</strong> ", as.numeric(input$graph.year),"</li>
+                                    <li><strong>mat.PFG.obs :</strong> ", is.data.frame(graph.mat.PFG.obs),"</li>
+                                    <li><strong>opt.ras_habitat :</strong> ", graph.opt.cover.obs,"</li>
+                                    <li><strong>opt.no_CPU :</strong> ", input$graph.opt.no_CPU,"</li>
+                                    </ul>"))
+                        , title = HTML("Statistics for quality assessment (specific year)")
+                        , footer = NULL))
+  Sys.sleep(3)
   get_res = print_messages(as.expression(
     POST_FATE.graphic_validationStatistics(name.simulation = get_name.simul()
                                            , file.simulParam = get_param.simul()
@@ -201,6 +235,7 @@ observeEvent(input$create.validationStat, {
                                            , opt.no_CPU = input$graph.opt.no_CPU
     )
   ))
+  removeModal()
   
   output$plot.validationStat = renderPlot({
     plot(get_res[[1]]$plot[[1]][['ALL']])
@@ -216,6 +251,16 @@ observeEvent(input$create.PFGrichness, {
   path.init = getwd()
   setwd(get_path.folder())
   
+  showModal(modalDialog(HTML(paste0("Creating map of PFG richness with :
+                                        <ul>
+                                    <li><strong>folder :</strong> ", basename(get_name.simul()),"</li>
+                                    <li><strong>simulation parameter file :</strong> ", basename(get_param.simul()), "</li>
+                                    <li><strong>year :</strong> ", as.numeric(input$graph.year),"</li>
+                                    <li><strong>opt.no_CPU :</strong> ", input$graph.opt.no_CPU,"</li>
+                                    </ul>"))
+                        , title = HTML("Map of PFG richness (specific year)")
+                        , footer = NULL))
+  Sys.sleep(3)
   get_res = print_messages(as.expression(
     POST_FATE.graphic_mapPFGrichness(name.simulation = get_name.simul()
                                      , file.simulParam = get_param.simul()
@@ -223,6 +268,7 @@ observeEvent(input$create.PFGrichness, {
                                      , opt.no_CPU = input$graph.opt.no_CPU
     )
   ))
+  removeModal()
   
   output$plot.PFGrichness = renderPlotly({
     plot(get_res[[1]][[1]][[2]])
@@ -238,6 +284,17 @@ observeEvent(input$create.PFGcover, {
   path.init = getwd()
   setwd(get_path.folder())
   
+  showModal(modalDialog(HTML(paste0("Creating map of PFG cover with :
+                                        <ul>
+                                    <li><strong>folder :</strong> ", basename(get_name.simul()),"</li>
+                                    <li><strong>simulation parameter file :</strong> ", basename(get_param.simul()), "</li>
+                                    <li><strong>year :</strong> ", as.numeric(input$graph.year),"</li>
+                                    <li><strong>strata_min :</strong> ", as.numeric(input$graph.strata_min),"</li>
+                                    <li><strong>opt.no_CPU :</strong> ", input$graph.opt.no_CPU,"</li>
+                                    </ul>"))
+                        , title = HTML("Map of PFG cover (specific year)")
+                        , footer = NULL))
+  Sys.sleep(3)
   get_res = print_messages(as.expression(
     POST_FATE.graphic_mapPFGcover(name.simulation = get_name.simul()
                                  , file.simulParam = get_param.simul()
@@ -248,6 +305,7 @@ observeEvent(input$create.PFGcover, {
                                  , opt.ras.cover.obs = NULL
     )
   ))
+  removeModal()
   
   output$plot.PFGcover = renderPlotly({
     plot(get_res[[1]]$plot[[1]])

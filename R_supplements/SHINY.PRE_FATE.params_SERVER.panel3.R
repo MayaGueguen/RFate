@@ -49,6 +49,7 @@ observeEvent(input$run.copy, {
       showModal(modalDialog(HTML(paste0("Copying <em>", basename(get_path.run()), "</em> folder..."))
                             , title = HTML("Run <code>FATE-HD</code> simulation")
                             , footer = NULL))
+      Sys.sleep(3)
       system(paste0("scp -r ", get_path.run(), " ./"))
       system(paste0("scp ", input$run.executable$datapath, " FATE_executable.exe"))
       removeModal()
@@ -71,7 +72,7 @@ observeEvent(input$run, {
                                         </ul>"))
                             , title = HTML("Run <code>FATE-HD</code> simulation")
                             , footer = NULL))
-      Sys.sleep(30)
+      Sys.sleep(3)
       removeModal()
     }
   }
