@@ -22,9 +22,9 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-home'></i></sp
                                    (<a href='papers/Boulangeat_2014_GCB.pdf' title='Boulangeat, I., Georges, D., Thuiller, W., FATE-HD: A spatially and temporally explicit 
                                    integrated model for predicting vegetation structure and diversity at regional scale. Global Change Biology, 20, 2368–2378.'>Boulangeat, 2014</a>)</p>
                                    ")
-                                   )
+                      )
                       , HTML("<hr><br/>")
-                            )
+               )
                , column(1, br())
                , column(3
                         , br()
@@ -36,14 +36,24 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-home'></i></sp
                                              , style = HTML(button.style.help))
                         )
                )
-                      )
+             )
              , fluidRow(
                column(8
                       , br()
                       , div(id = "help0_2"
                             , HTML("
+                                   <p><strong>STEP 1 : Creation of Plant Functional Groups</strong><br/><br/></p>
+                                   <div class='row' style='display:flex;'>
+                                   <div class='column' style='flex:5%;'></div>
+                                   <div class='column' style='flex:10%;'>
+                                   <p><i class='fa fa-object-group' style='font-size:30px;'></i></p>
+                                   </div>
+                                   <div class='column' style='flex:85%;'>
                                    <p>“<em>The recurring suggestions are that models should explicitly (i) include spatiotemporal dynamics; (ii) consider multiple species 
                                    in interactions and (iii) account for the processes shaping biodiversity distribution.</em>”</p>
+                                   </div>
+                                   </div>
+                                   <br/>
                                    <p><code>FATE-HD</code> is a “<em>a biodiversity model that meets this challenge at regional scale by combining phenomenological and 
                                    process-based approaches and using well-defined</em> <strong><em>plant</em> <em>functional</em> <em>group</em></strong>”. 
                                    (<a href='http://www.will.chez-alice.fr/pdf/BoulangeatGCB2014.pdf' title='Boulangeat, I., Georges, D., Thuiller, W., FATE-HD: A spatially 
@@ -57,9 +67,9 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-home'></i></sp
                                    Improving plant functional groups for dynamic models of biodiversity: at the crossroad between functional and community ecology. 
                                    Global Change Biology, 18, 3464-3475.'>Boulangeat, 2012</a>). PFGs are based on their distribution, physiological characteristics, competition traits...</p>
                                    ")
-                                   )
+                      )
                       , HTML("<hr><br/>")
-                                   )
+               )
                , column(1, br())
                , column(3
                         , br()
@@ -79,13 +89,26 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-home'></i></sp
                                              , style = HTML(button.style.help)
                                              , onclick ="window.open('https://mayagueguen.github.io/RFate/', '_blank')")
                         )
+                        , br()
+                        , br()
+                        , downloadButton(outputId = "report"
+                                         , label = "Generate report"
+                                         , width = "100%"
+                                         , style = HTML(button.style.help))
                )
-                      )
+             )
              , fluidRow(
                column(8
                       , br()
                       , div(id = "help0_3"
                             , HTML("
+                                   <p><strong>STEP 2 : Creation of simulation folder</strong><br/><br/></p>
+                                   <div class='row' style='display:flex;'>
+                                   <div class='column' style='flex:5%;'></div>
+                                   <div class='column' style='flex:10%;'>
+                                   <p><i class='fa fa-copy' style='font-size:30px;'></i></p>
+                                   </div>
+                                   <div class='column' style='flex:85%;'>
                                    <p><code>FATE-HD</code> requires a quite large number of parameters, which are stored into <code>.txt</code> files, presented to and 
                                    recovered by the software. These <strong>parameters</strong> can be of 3 types :</p>
                                    <ol>
@@ -100,6 +123,8 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-home'></i></sp
                                    </ul>
                                    </li>
                                    </ol>
+                                   </div>
+                                   </div>
                                    ")
                       )
                )
@@ -109,7 +134,7 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-home'></i></sp
                         , HTML("<img src='https://mayagueguen.github.io/pictures/logo-leca.png' width='100%' />")
                )
              ) ## END fluidRow
-                            ) ## END sidebarPanel
+           ) ## END sidebarPanel
            
            # Output
            , mainPanel(
@@ -119,5 +144,5 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-home'></i></sp
                        br()
              ) ## END wellPanel
            ) ## END mainPanel
-               ) ## END sidebarLayout
-                      ) ## tabPanel
+         ) ## END sidebarLayout
+) ## tabPanel

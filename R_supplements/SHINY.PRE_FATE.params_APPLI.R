@@ -33,6 +33,7 @@ library(SPOT) ## designLHD
 
 ###################################################################################################################################
 
+setwd("/home/gueguema/Documents/_TUTOS/3_R/_PACKAGES/RFate/")
 source("R_supplements/SHINY.PRE_FATE.params_FUNCTIONS.R", local = TRUE)
 
 ###################################################################################################################################
@@ -216,6 +217,13 @@ server <- function(input, output, session) {
   source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel0.R", local = TRUE)$value
   
   ####################################################################
+
+  source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel1.R", local = TRUE)$value
+  source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel1.tab1.R", local = TRUE)$value
+  source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel1.tab2.R", local = TRUE)$value
+  source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel1.tab3.R", local = TRUE)$value
+  
+  ####################################################################
   
   source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel2.menu1.R", local = TRUE)$value
   source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel2.menu1.tab1.R", local = TRUE)$value
@@ -238,6 +246,70 @@ server <- function(input, output, session) {
   source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel4.tab1.R", local = TRUE)$value
   source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel4.tab2.R", local = TRUE)$value
   source("R_supplements/SHINY.PRE_FATE.params_SERVER.panel4.tab3.R", local = TRUE)$value
+  
+  output$report <- downloadHandler(
+    # For PDF output, change this to "report.pdf"
+    filename = "report.html",
+    content = function(file) {
+      # Copy the report file to a temporary directory before processing it, in
+      # case we don't have write permissions to the current working dir (which
+      # can happen when deployed).
+      tempReport <- file.path(tempdir(), "report.Rmd")
+      file.copy("R_supplements/report.Rmd", tempReport, overwrite = TRUE)
+
+      # Set up parameters to pass to Rmd document
+      # params <- list(n = input$slider)
+      params.names = c("name.simul"
+                       , "create.skeleton"
+                       , "required.no_PFG"
+                       , "required.no_STRATA"
+                       , "required.simul_duration"
+                       , "opt.no_CPU"
+                       , "required.seeding_duration"
+                       , "required.seeding_timestep"
+                       , "required.seeding_input"
+                       , "required.max_by_cohort"
+                       , "required.max_abund_low"
+                       , "required.max_abund_medium"
+                       , "required.max_abund_high"
+                       , "doDispersal"
+                       , "doHabSuitability"
+                       , "doDisturbances"
+                       , "doLight"
+                       , "doSoil"
+                       , "DISPERSAL.mode"
+                       , "HABSUIT.ref_option"
+                       , "DIST.no"
+                       , "DIST.no_sub"
+                       , "DIST.freq"
+                       , "LIGHT.thresh_medium"
+                       , "LIGHT.thresh_low"
+      )
+      RV.names = c("compt.global.nb"
+                   , "compt.global.files")
+      
+      params = vector("list")
+      for (i in params.names)
+      {
+        eval(parse(text = paste0("params[[i]] = input$", i)))
+      }
+      for (i in RV.names)
+      {
+        eval(parse(text = paste0("params[[i]] = RV$", i)))
+      }
+
+      print(params)
+
+      # Knit the document, passing in the `params` list, and eval it in a
+      # child of the global environment (this isolates the code in the document
+      # from the code in this app).
+      rmarkdown::render(tempReport
+                        , output_file = file
+                        , params = params
+                        , envir = new.env(parent = globalenv())
+      )
+    }
+  )
   
 }
 
