@@ -13,7 +13,7 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-object-group'>
              fluidRow(
                column(5
                       , div(id = "help1_2"
-                            , fileInput(inputId = "sp.occ"
+                            , fileInput(inputId = "species.observations"
                                         , label = NULL
                                         , buttonLabel = param.style("species.observations")
                                         , multiple = FALSE
@@ -25,7 +25,7 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-object-group'>
                )
                , column(5
                         , div(id = "help1_3"
-                              , fileInput(inputId = "sp.traits"
+                              , fileInput(inputId = "species.traits"
                                           , label = NULL
                                           , buttonLabel = param.style("species.traits")
                                           , multiple = FALSE
