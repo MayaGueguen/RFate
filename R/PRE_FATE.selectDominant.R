@@ -223,7 +223,7 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
     {
       .stopMessage_beDataframe("mat.site.species.abund")
     }
-    if (nrow(mat.site.species.abund) == 0 || ncol(mat.site.species.abund) < 3)
+    if (nrow(mat.site.species.abund) == 0 || ncol(mat.site.species.abund) < 3 || ncol(mat.site.species.abund) > 4)
     {
       .stopMessage_numRowCol("mat.site.species.abund", c("sites", "species", "abund", "(habitat)"))
     }
@@ -263,12 +263,16 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
   
   if (!is.numeric(selectionRule.quanti) ||
       !is.numeric(selectionRule.min_mean_abund) ||
-      !is.numeric(selectionRule.min_no_abund_over25) ||
-      !is.numeric(selectionRule.min_no_habitat) ||
-      !is.numeric(selectionRule.min_percent_habitat))
+      !is.numeric(selectionRule.min_no_abund_over25))
   {
-    stop("Wrong data given!\n `selectionRule.quanti`, `selectionRule.min_mean_abund`,
-         `selectionRule.min_no_abund_over25`, `selectionRule.min_no_habitat` and
+    stop("Wrong data given!\n `selectionRule.quanti`, `selectionRule.min_mean_abund` and
+         `selectionRule.min_no_abund_over25` must contain numeric values")
+  }
+  if (doHabitatSelection &&
+      (!is.numeric(selectionRule.min_no_habitat) ||
+      !is.numeric(selectionRule.min_percent_habitat)))
+  {
+    stop("Wrong data given!\n `selectionRule.min_no_habitat` and
          `selectionRule.min_percent_habitat` must contain numeric values")
   }
   if (selectionRule.quanti < 0 || selectionRule.quanti > 1)
@@ -276,13 +280,18 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
     stop("Wrong data given!\n `selectionRule.quanti` must be between 0 and 1")
   }
   if (selectionRule.min_mean_abund < 0 ||
-      selectionRule.min_no_abund_over25 < 0 ||
+      selectionRule.min_no_abund_over25 < 0)
+  {
+    stop("Wrong data given!\n `selectionRule.min_mean_abund` and `selectionRule.min_no_abund_over25` must be >= 0")
+  }
+  if (doHabitatSelection &&
       selectionRule.min_no_habitat < 0)
   {
-    stop("Wrong data given!\n `selectionRule.min_mean_abund`, `selectionRule.min_no_abund_over25` and `selectionRule.min_no_habitat` must be >= 0")
+    stop("Wrong data given!\n `selectionRule.min_no_habitat` must be >= 0")
   }
-  if (selectionRule.min_percent_habitat < 0 ||
-      selectionRule.min_percent_habitat > 1)
+  if (doHabitatSelection &&
+      (selectionRule.min_percent_habitat < 0 ||
+      selectionRule.min_percent_habitat > 1))
   {
     stop("Wrong data given!\n `selectionRule.min_percent_habitat` must be between 0 and 1")
   }

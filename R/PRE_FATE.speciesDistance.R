@@ -6,7 +6,7 @@
 ##'
 ##' @author Maya Guéguen
 ##' 
- # @date 21/03/2018
+# @date 21/03/2018
 ##' 
 ##' @description This script is designed to create a distance matrix between
 ##' species, combining functional distances (based on functional trait values)
@@ -22,8 +22,8 @@
 ##' 
 ##' @param mat.species.overlap Two options :
 ##' \itemize{
-  # \item a \code{data.frame} with a column for each species containing
-  # presence-absence information (0 or 1) or probability values (between 0 and 1)
+# \item a \code{data.frame} with a column for each species containing
+# presence-absence information (0 or 1) or probability values (between 0 and 1)
 ##'   \item a \code{data.frame} with 2 columns :
 ##'   \describe{
 ##'     \item{\code{species}}{the ID of each studied species}
@@ -34,12 +34,13 @@
 ##'   object, or simply a \code{matrix}.
 ##' }
 ##' 
-##' @param min.info.thresh minimum percentage of values for each trait (between
-##' 0 and 1)
-##' @param opt.traits.selection (\emph{optional}) \cr a \code{vector} containing
-##' 2 values to select traits used to form species clusters : the maximum
-##' percentage of null distances between pairs of species (between 0 and 1), and
-##' the standard deviation (between 0 and 1)
+##' @param opt.max.percent.NA default \code{0} (\emph{optional}). Maximum 
+##' percentage of missing values (NA) allowed for each trait (between 0 and 1)
+##' @param opt.max.percent.similarSpecies default \code{0.25} (\emph{optional}). 
+##' Maximum percentage of similar species (same value) allowed for each trait 
+##' (between 0 and 1)
+##' @param opt.min.sd default \code{0.5} (\emph{optional}). Minimum standard 
+##' deviation allowed for each trait (trait unit)
 ##' 
 ##' @details 
 ##' 
@@ -57,9 +58,17 @@
 ##'     \code{as.numeric}, \code{as.factor} and \code{ordered}).
 ##'     \item Functional distance matrix is calculated with Gower dissimilarity,
 ##'     using the \code{gowdis} function from \pkg{FD} package.
-##'     \item This function allows \code{NA} values. In order to let the user
-##'     decide what importance to give to missing values, the \code{min.info.thresh}
-##'     defines which minimum percentage of species should have values for each trait. 
+##'     \item This function allows \code{NA} values. However, too many missing 
+##'     values lead to misleading results. Hence, 3 parameters allow the user 
+##'     to play with the place given to missing values and help the function to 
+##'     select traits that will be used for the distance computation :
+##'     \description{
+##'       \item{opt.max.percent.NA}{traits with too many missing values are 
+##'       removed}
+##'       \item{opt.max.percent.similarSpecies}{traits with too many similar 
+##'       values are removed}
+##'       \item{opt.min.sd}{traits with too little variability are removed}
+##'     }
 ##'   }
 ##'   }
 ##'   \item{\strong{Niche overlap : }}{
@@ -99,11 +108,15 @@
 ##' ## MontBlanc$mat.nicheOverlap : niolap object
 ##' # sp.DIST = PRE_FATE.speciesDistance(mat.species.traits = MontBlanc$mat.traits
 ##' #                                    , mat.species.overlap = MontBlanc$mat.nicheOverlap
-##' #                                    , min.info.thresh = 1)
+##' #                                    , opt.max.percent.NA = 1
+##' #                                    , opt.max.percent.similarSpecies = 0.25
+##' #                                    , opt.min.sd = 0.3)
 ##'                                    
 ##' sp.DIST = PRE_FATE.speciesDistance(mat.species.traits = MontBlanc$mat.traits
 ##'                                    , mat.species.overlap = MontBlanc$mat.nicheOverlap
-##'                                    , min.info.thresh = 0.9)
+##'                                    , opt.max.percent.NA = 0.9
+##'                                    , opt.max.percent.similarSpecies = 0.25
+##'                                    , opt.min.sd = 0.3)
 ##' 
 ##' str(sp.DIST)
 ##' 
@@ -120,8 +133,9 @@
 
 PRE_FATE.speciesDistance = function(mat.species.traits ## data.frame with columns : species, GROUP and one for each trait
                                     , mat.species.overlap ## species x species matrix / or table with raster file names
-                                    , min.info.thresh = 1
-                                    , opt.traits.selection = c(0.25, 0.30)
+                                    , opt.max.percent.NA = 1
+                                    , opt.max.percent.similarSpecies = 0.25
+                                    , opt.min.sd = 0.3
 ){
   
   #################################################################################################
@@ -132,10 +146,18 @@ PRE_FATE.speciesDistance = function(mat.species.traits ## data.frame with column
   {
     stop("No data given!\n (missing `mat.species.traits` or `mat.species.overlap` information)")
   }
-  ## Control form of parameters : min.info.thresh
-  if (!is.numeric(min.info.thresh) || min.info.thresh < 0 || min.info.thresh > 1)
+  ## Control form of parameters : opt
+  if (!is.numeric(opt.max.percent.NA) || opt.max.percent.NA < 0 || opt.max.percent.NA > 1)
   {
-    stop("Wrong type of data!\n `min.info.thresh` must be a number between 0 and 1")
+    stop("Wrong type of data!\n `opt.max.percent.NA` must be a number between 0 and 1")
+  }
+  if (!is.numeric(opt.max.percent.similarSpecies) || opt.max.percent.similarSpecies < 0 || opt.max.percent.similarSpecies > 1)
+  {
+    stop("Wrong type of data!\n `opt.max.percent.similarSpecies` must be a number between 0 and 1")
+  }
+  if (!is.numeric(opt.min.sd) || opt.min.sd < 0 || opt.min.sd > 1)
+  {
+    stop("Wrong type of data!\n `opt.min.sd` must be a number between 0 and 1")
   }
   ## Control form of parameters : mat.species.traits
   if (!is.data.frame(mat.species.traits))
@@ -211,23 +233,18 @@ PRE_FATE.speciesDistance = function(mat.species.traits ## data.frame with column
   traits_names = colnames(mat.species.traits)[which(!(colnames(mat.species.traits) %in% c("species","GROUP")))]
   group_names = sort(unique(as.character(mat.species.traits$GROUP)))
   mat.species.traits$GROUP = factor(mat.species.traits$GROUP, group_names)
-  no_NA_values = apply(as.matrix(mat.species.traits[,traits_names]), 2, function(x) sum(is.na(x)))
-  no_NA_values = no_NA_values / nrow(mat.species.traits)
-  ind_NA_values = which(no_NA_values > (1 - min.info.thresh))
+  
+  ## Remove species with no traits
+  no_NA_values = apply(as.matrix(mat.species.traits[,traits_names]), 1, function(x) sum(is.na(x)))
+  ind_NA_values = which(no_NA_values >= length(traits_names) - 1)
   if (length(ind_NA_values) > 0)
   {
-    stop(paste0("Missing data!\n `mat.species.traits` contain trait with too many missing values : "
-                , paste0(round(no_NA_values[ind_NA_values], 4) * 100, " % for ", traits_names[ind_NA_values]), "\n"))
+    mat.species.traits = mat.species.traits[-ind_NA_values, ]
+    warning(paste0("Missing data!\n `mat.species.traits` contains some species with no trait values : "
+                   , paste0(mat.species.traits$species[ind_NA_values], collapse = ", ")
+                   , "\nThese species will not be taken into account ! \n\n"
+    ))
   }
-  
-  # no_NA_values = apply(as.matrix(mat.species.traits[,traits_names]), 1, function(x) sum(is.na(x)))
-  # ind_NA_values = which(no_NA_values >= length(traits_names) - 1)
-  # if (length(ind_NA_values) > 0)
-  # {
-  #   mat.species.traits = mat.species.traits[-ind_NA_values, ]
-  #   # warning(paste0("Missing data!\n `mat.species.traits` contain trait with too many missing values : "
-  #               # , paste0(round(no_NA_values[ind_NA_values], 4) * 100, " % for ", traits_names[ind_NA_values]), "\n"))
-  # }
   
   ## SPLIT INFORMATION by species type
   species.split = split(as.character(mat.species.traits$species), f = mat.species.traits$GROUP)
@@ -270,35 +287,110 @@ PRE_FATE.speciesDistance = function(mat.species.traits ## data.frame with column
   
   # Keep only species present in both distance matrices (trait & overlap)
   mat.species.traits = mat.species.traits[which(mat.species.traits$species %in% species_names.traits_overlap), ]
-
+  
   
   #################################################################################################
   ### CALCULATE TRAITS DISTANCES
   #################################################################################################
   
-  ## CHOOSE which traits to keep by species type
-  traits_toKeep = foreach(tr = traits_names, .combine = "rbind") %do%
-  {
-    mat.species.traits.split = split(mat.species.traits[, tr, drop = FALSE], f = mat.species.traits$GROUP)
-    mat.species.gower.split = lapply(mat.species.traits.split, FD::gowdis)
-    res = foreach(x = names(mat.species.gower.split), .combine = "rbind") %do%
+  ## Check for percentage of NA ----------------------------------------------------------------- #
+  tab = mat.species.traits[, traits_names, drop = FALSE]
+  tab = split(tab, mat.species.traits$GROUP)
+  tab_eval.1 = sapply(tab, function(x) {
+    apply(x, 2, function(y) sum(is.na(y)))
+  })
+  tab_eval.1 = as.data.frame(tab_eval.1)
+  tab_eval.1$trait = rownames(tab_eval.1)
+  tab_eval.1 = melt(tab_eval.1)
+  colnames(tab_eval.1) = c("TRAIT", "GROUP", "number.NA")
+  tab_eval.1$number.NA = tab_eval.1$number.NA / nrow(mat.species.traits)
+  
+  ## Apply Gower distance for each trait and calculate : ---------------------------------------- #
+  ##  - percentage of 0 (= similar species)
+  ##  - standard deviation (variability of distances)
+  tab_eval.2 = foreach(tr = traits_names, .combine = "rbind") %do%
     {
-      mat = as.matrix(mat.species.gower.split[[x]])
-      mat[upper.tri(mat, diag = TRUE)] = NA
-      mat = as.vector(mat)
-      std.dev = sqrt(var(na.exclude(mat)))
-      percent.0 = length(which(mat == 0)) / length(which(!is.na(mat)))
-      return(data.frame(GROUP = x, TRAIT = tr, std.dev, percent.0))
+      mat.species.traits.split = split(mat.species.traits[, tr, drop = FALSE], f = mat.species.traits$GROUP)
+      mat.species.gower.split = lapply(mat.species.traits.split, FD::gowdis)
+      res = foreach(x = names(mat.species.gower.split), .combine = "rbind") %do%
+        {
+          mat = as.matrix(mat.species.gower.split[[x]])
+          mat[upper.tri(mat, diag = TRUE)] = NA
+          mat = as.vector(mat)
+          std.dev = sqrt(var(na.exclude(mat)))
+          percent.0 = length(which(mat == 0)) / length(which(!is.na(mat)))
+          return(data.frame(GROUP = x, TRAIT = tr, std.dev, percent.0, stringsAsFactors = FALSE))
+        }
+      return(res)
     }
-    return(res)
+  
+  ## CHOOSE which traits to keep by species type ------------------------------------------------ #
+  traits_toKeep = merge(tab_eval.1, tab_eval.2, by = c("GROUP", "TRAIT"))
+  traits_toKeep$toKeep1 = (traits_toKeep$number.NA < opt.max.percent.NA)
+  traits_toKeep$toKeep2 = (traits_toKeep$percent.0 < opt.max.percent.similarSpecies)
+  traits_toKeep$toKeep3 = (traits_toKeep$std.dev > opt.min.sd)
+  traits_toKeep$toKeep = ifelse(traits_toKeep$toKeep1 == FALSE
+                                , FALSE
+                                , ifelse(traits_toKeep$toKeep2 == TRUE
+                                         , TRUE
+                                         , ifelse(traits_toKeep$toKeep3 == TRUE, TRUE, FALSE
+                                         )))
+  
+  if (length(which(traits_toKeep$toKeep == FALSE)) == nrow(traits_toKeep))
+  {
+    eval.message = sapply(unique(traits_toKeep$GROUP), function(gr) {
+      tab = traits_toKeep[which(traits_toKeep$GROUP == gr), ]
+      paste0("In group "
+             , gr
+             , " : \n"
+             , paste0(" >> "
+                      , substr(tab$TRAIT, 1, 10)
+                      , "\t\t\t"
+                      , round(tab$number.NA, 4) * 100
+                      , "\t"
+                      , round(tab$percent.0, 4) * 100
+                      , "\t"
+                      , round(tab$std.de, 4) * 100
+                      , collapse = "\n")
+             , "\n")
+    })
+    eval.message = paste0(eval.message, collapse = "")
+    stop(paste0("Missing data!\n `mat.species.traits` contains traits with too many missing values or not enough variation between species. \n"
+                , "Please check. \n\n"
+                , "Columns below represent for each trait :\n"
+                , " - the percentage of missing values \n"
+                , " - the percentage of similar species \n"
+                , " - the standard deviation of pairwise distances \n\n"
+                , eval.message))
+    
+  } else if (length(which(traits_toKeep$toKeep == FALSE)) > 0)
+  {
+    tab.notKeep = traits_toKeep[which(traits_toKeep$toKeep == FALSE), ]
+    eval.message = sapply(unique(tab.notKeep$GROUP), function(gr) {
+      tab = tab.notKeep[which(tab.notKeep$GROUP == gr), ]
+      paste0("In group "
+             , gr
+             , " : \n"
+             , paste0(" >> "
+                      , substr(tab$TRAIT, 1, 10)
+                      , "\t\t\t"
+                      , round(tab$number.NA, 4) * 100
+                      , "\t"
+                      , round(tab$percent.0, 4) * 100
+                      , "\t"
+                      , round(tab$std.de, 4) * 100
+                      , collapse = "\n")
+             , "\n")
+    })
+    eval.message = paste0(eval.message, collapse = "")
+    warning(paste0("Missing data!\n `mat.species.traits` contains some traits with too many missing values or not enough variation between species. \n"
+                   , "These traits will not be taken into account ! \n\n"
+                   , "Columns below represent for each trait :\n"
+                   , " - the percentage of missing values \n"
+                   , " - the percentage of similar species \n"
+                   , " - the standard deviation of pairwise distances \n\n"
+                   , eval.message))
   }
-  traits_toKeep$toKeep1 = (traits_toKeep$percent.0 < opt.traits.selection[1])
-  traits_toKeep$toKeep2 = (traits_toKeep$std.dev > opt.traits.selection[2])
-  traits_toKeep$toKeep = ifelse(traits_toKeep$toKeep1 == TRUE
-                                , TRUE
-                                , ifelse(traits_toKeep$toKeep2 == TRUE, TRUE, FALSE))
-  # traits_toKeep$toKeep = ifelse((traits_toKeep$toKeep1 + traits_toKeep$toKeep2) > 0, TRUE, FALSE)
-  # traits_toKeep$toKeep = ifelse((traits_toKeep$toKeep1 + traits_toKeep$toKeep2) == 2, TRUE, FALSE)
   
   ## SPLIT INFORMATION by species type
   cat("\n Traits used to calculate functional distances : \n")
@@ -311,7 +403,7 @@ PRE_FATE.speciesDistance = function(mat.species.traits ## data.frame with column
     cat("\n Group ", names(mat.species.traits.split)[gp], ":\n")
     cat("Traits : ", as.character(tmp), "\n")
   }
-
+  
   ## GOWER DISSIMILARITY FOR MIXED VARIABLES
   mat.species.gower.split = lapply(mat.species.traits.split, FD::gowdis)
   

@@ -6,7 +6,8 @@
 based on traits and niche overlap}
 \usage{
 PRE_FATE.speciesDistance(mat.species.traits, mat.species.overlap,
-  min.info.thresh = 1, opt.traits.selection = c(0.25, 0.3))
+  opt.max.percent.NA = 1, opt.max.percent.similarSpecies = 0.25,
+  opt.min.sd = 0.3)
 }
 \arguments{
 \item{mat.species.traits}{A \code{data.frame} with at least 3 columns :
@@ -29,13 +30,15 @@ PRE_FATE.speciesDistance(mat.species.traits, mat.species.overlap,
   object, or simply a \code{matrix}.
 }}
 
-\item{min.info.thresh}{minimum percentage of values for each trait (between
-0 and 1)}
+\item{opt.max.percent.NA}{default \code{0} (\emph{optional}). Maximum 
+percentage of missing values (NA) allowed for each trait (between 0 and 1)}
 
-\item{opt.traits.selection}{(\emph{optional}) \cr a \code{vector} containing
-2 values to select traits used to form species clusters : the maximum
-percentage of null distances between pairs of species (between 0 and 1), and
-the standard deviation (between 0 and 1)}
+\item{opt.max.percent.similarSpecies}{default \code{0.25} (\emph{optional}). 
+Maximum percentage of similar species (same value) allowed for each trait 
+(between 0 and 1)}
+
+\item{opt.min.sd}{default \code{0.5} (\emph{optional}). Minimum standard 
+deviation allowed for each trait (trait unit)}
 }
 \value{
 A \code{dist} object corresponding to the distance between each pair
@@ -62,9 +65,17 @@ on two types of distance information :
     \code{as.numeric}, \code{as.factor} and \code{ordered}).
     \item Functional distance matrix is calculated with Gower dissimilarity,
     using the \code{gowdis} function from \pkg{FD} package.
-    \item This function allows \code{NA} values. In order to let the user
-    decide what importance to give to missing values, the \code{min.info.thresh}
-    defines which minimum percentage of species should have values for each trait. 
+    \item This function allows \code{NA} values. However, too many missing 
+    values lead to misleading results. Hence, 3 parameters allow the user 
+    to play with the place given to missing values and help the function to 
+    select traits that will be used for the distance computation :
+    \description{
+      \item{opt.max.percent.NA}{traits with too many missing values are 
+      removed}
+      \item{opt.max.percent.similarSpecies}{traits with too many similar 
+      values are removed}
+      \item{opt.min.sd}{traits with too little variability are removed}
+    }
   }
   }
   \item{\strong{Niche overlap : }}{
@@ -94,11 +105,15 @@ str(MontBlanc)
 ## MontBlanc$mat.nicheOverlap : niolap object
 # sp.DIST = PRE_FATE.speciesDistance(mat.species.traits = MontBlanc$mat.traits
 #                                    , mat.species.overlap = MontBlanc$mat.nicheOverlap
-#                                    , min.info.thresh = 1)
+#                                    , opt.max.percent.NA = 1
+#                                    , opt.max.percent.similarSpecies = 0.25
+#                                    , opt.min.sd = 0.3)
                                    
 sp.DIST = PRE_FATE.speciesDistance(mat.species.traits = MontBlanc$mat.traits
                                    , mat.species.overlap = MontBlanc$mat.nicheOverlap
-                                   , min.info.thresh = 0.9)
+                                   , opt.max.percent.NA = 0.9
+                                   , opt.max.percent.similarSpecies = 0.25
+                                   , opt.min.sd = 0.3)
 
 str(sp.DIST)
 

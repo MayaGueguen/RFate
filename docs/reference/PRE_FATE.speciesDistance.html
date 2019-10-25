@@ -165,7 +165,8 @@ and niche overlap (based on co-occurrence of species).</p>
     </div>
 
     <pre class="usage"><span class='fu'>PRE_FATE.speciesDistance</span>(<span class='no'>mat.species.traits</span>, <span class='no'>mat.species.overlap</span>,
-  <span class='kw'>min.info.thresh</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>opt.traits.selection</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.25</span>, <span class='fl'>0.3</span>))</pre>
+  <span class='kw'>opt.max.percent.NA</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>opt.max.percent.similarSpecies</span> <span class='kw'>=</span> <span class='fl'>0.25</span>,
+  <span class='kw'>opt.min.sd</span> <span class='kw'>=</span> <span class='fl'>0.3</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -194,16 +195,20 @@ and niche overlap (based on co-occurrence of species).</p>
 </ul></td>
     </tr>
     <tr>
-      <th>min.info.thresh</th>
-      <td><p>minimum percentage of values for each trait (between
-0 and 1)</p></td>
+      <th>opt.max.percent.NA</th>
+      <td><p>default <code>0</code> (<em>optional</em>). Maximum 
+percentage of missing values (NA) allowed for each trait (between 0 and 1)</p></td>
     </tr>
     <tr>
-      <th>opt.traits.selection</th>
-      <td><p>(<em>optional</em>) <br /> a <code>vector</code> containing
-2 values to select traits used to form species clusters : the maximum
-percentage of null distances between pairs of species (between 0 and 1), and
-the standard deviation (between 0 and 1)</p></td>
+      <th>opt.max.percent.similarSpecies</th>
+      <td><p>default <code>0.25</code> (<em>optional</em>). 
+Maximum percentage of similar species (same value) allowed for each trait 
+(between 0 and 1)</p></td>
+    </tr>
+    <tr>
+      <th>opt.min.sd</th>
+      <td><p>default <code>0.5</code> (<em>optional</em>). Minimum standard 
+deviation allowed for each trait (trait unit)</p></td>
     </tr>
     </table>
 
@@ -227,9 +232,14 @@ on two types of distance information :</p>
     <code>as.numeric</code>, <code>as.factor</code> and <code>ordered</code>).</p></li>
 <li><p>Functional distance matrix is calculated with Gower dissimilarity,
     using the <code>gowdis</code> function from <span class="pkg">FD</span> package.</p></li>
-<li><p>This function allows <code>NA</code> values. In order to let the user
-    decide what importance to give to missing values, the <code>min.info.thresh</code>
-    defines which minimum percentage of species should have values for each trait.</p></li>
+<li><p>This function allows <code>NA</code> values. However, too many missing 
+    values lead to misleading results. Hence, 3 parameters allow the user 
+    to play with the place given to missing values and help the function to 
+    select traits that will be used for the distance computation :      opt.max.percent.NAtraits with too many missing values are 
+      removed
+      opt.max.percent.similarSpeciestraits with too many similar 
+      values are removed
+      opt.min.sdtraits with too little variability are removed</p></li>
 </ul></p></li>
 <li><p><strong>Niche overlap : </strong>
   <ul>
@@ -258,11 +268,15 @@ weighted by the number of traits used.</p>
 <span class='co'>## MontBlanc$mat.nicheOverlap : niolap object</span>
 <span class='co'># sp.DIST = PRE_FATE.speciesDistance(mat.species.traits = MontBlanc$mat.traits</span>
 <span class='co'>#                                    , mat.species.overlap = MontBlanc$mat.nicheOverlap</span>
-<span class='co'>#                                    , min.info.thresh = 1)</span>
+<span class='co'>#                                    , opt.max.percent.NA = 1</span>
+<span class='co'>#                                    , opt.max.percent.similarSpecies = 0.25</span>
+<span class='co'>#                                    , opt.min.sd = 0.3)</span>
 
 <span class='no'>sp.DIST</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.speciesDistance</span>(<span class='kw'>mat.species.traits</span> <span class='kw'>=</span> <span class='no'>MontBlanc</span>$<span class='no'>mat.traits</span>
                                    , <span class='kw'>mat.species.overlap</span> <span class='kw'>=</span> <span class='no'>MontBlanc</span>$<span class='no'>mat.nicheOverlap</span>
-                                   , <span class='kw'>min.info.thresh</span> <span class='kw'>=</span> <span class='fl'>0.9</span>)
+                                   , <span class='kw'>opt.max.percent.NA</span> <span class='kw'>=</span> <span class='fl'>0.9</span>
+                                   , <span class='kw'>opt.max.percent.similarSpecies</span> <span class='kw'>=</span> <span class='fl'>0.25</span>
+                                   , <span class='kw'>opt.min.sd</span> <span class='kw'>=</span> <span class='fl'>0.3</span>)
 
 <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>sp.DIST</span>)</pre>
   </div>
@@ -288,7 +302,7 @@ weighted by the number of traits used.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

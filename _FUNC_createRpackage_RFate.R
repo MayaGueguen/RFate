@@ -1,7 +1,7 @@
 
 rm(list=ls())
-# setwd("/home/gueguen/Documents/_TUTOS/3_R/_PACKAGES/")
-setwd("/Users/gueguen/Documents/PACKAGES/")
+setwd("/home/gueguema/Documents/_TUTOS/3_R/_PACKAGES/")
+# setwd("/Users/gueguen/Documents/PACKAGES/")
 
 library(devtools)
 library(tools)
@@ -83,7 +83,7 @@ Rcmd(args = paste0("build ", package_name)) ## or with a shell : R CMD build MyP
 # devtools::check(pkg = package_name, document = FALSE)
 devtools::check(pkg = package_name)
 
-# INSTALL THE PACKAGE ----------------------------------------------
+## INSTALL THE PACKAGE ----------------------------------------------
 
 install.packages(pkgs = paste0(package_name, "_", package_version, ".tar.gz"), repos = NULL, type = "source")
 system(paste0("scp ", paste0(package_name, "_", package_version, ".tar.gz"), " ", package_name, "/docs/archive/"))
