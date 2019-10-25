@@ -5,84 +5,69 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-object-group'>
            
            # Inputs
            sidebarPanel(
-             width = 4,
+             width = 12,
              style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px;")),
              withMathJax(),
              
              br(),
              fluidRow(
-               column(12
-                      , actionButton(inputId = "HELP.panel1"
-                                     , label = "Need some help"
-                                     , icon = icon("question-circle", class = "icon-help")
-                                     , width = "100%"
-                                     , style = HTML(button.style.help))
-                      , br()
-                      , br()
-                      , br()
-                      , br()
-                      , textInput(inputId = "PFG.zone_name"
-                                  , label = param.style("Studied area")
-                                  , value = "AREA_1"
-                                  , width = "100%")
-                      , br()
-                      , fileInput(inputId = "PFG.mask"
-                                  , label = param.style("Simulation mask")
-                                  , multiple = FALSE
-                                  , width = "100%")
-                      , br()
-                      , fluidRow(
-                        column(6
-                               , textInput(inputId = "PFG.extent_xmin"
-                                           , label = param.style("xmin")
-                                           , value = NULL
-                                           , width = "100%")
-                               , textInput(inputId = "PFG.extent_xmax"
-                                           , label = param.style("xmax")
-                                           , value = NULL
-                                           , width = "100%")
-                        )
-                        , column(6
-                                 , textInput(inputId = "PFG.extent_ymin"
-                                             , label = param.style("ymin")
-                                             , value = NULL
-                                             , width = "100%")
-                                 , textInput(inputId = "PFG.extent_ymax"
-                                             , label = param.style("ymax")
-                                             , value = NULL
-                                             , width = "100%")
-                        )
+               column(5
+                      , div(id = "help1_2"
+                            , fileInput(inputId = "sp.occ"
+                                        , label = NULL
+                                        , buttonLabel = param.style("species.observations")
+                                        , multiple = FALSE
+                                        , accept = c("text/csv",
+                                                     "text/comma-separated-values,text/plain",
+                                                     ".csv")
+                                        , width = "100%")
                       )
-                      )
+               )
+               , column(5
+                        , div(id = "help1_3"
+                              , fileInput(inputId = "sp.traits"
+                                          , label = NULL
+                                          , buttonLabel = param.style("species.traits")
+                                          , multiple = FALSE
+                                          , accept = c("text/csv",
+                                                       "text/comma-separated-values,text/plain",
+                                                       ".csv")
+                                          , width = "100%")
+                        )
+               )
+               , column(2
+                        , actionButton(inputId = "HELP.panel1"
+                                       , label = "Need some help"
+                                       , icon = icon("question-circle", class = "icon-help")
+                                       , width = "100%"
+                                       , style = HTML(button.style.help)))
              ) ## END fluidRow
            ) ## END sidebarPanel
            
            # Output
            , mainPanel(
              width = 12,
-             wellPanel(id = "main.panel",
-                       style = "border-solid:solid; border-width:0px;",
-                       fluidRow(
-                         column(6
-                                , wellPanel(id = "main.panel1",
-                                            br(),
-                                            HTML("<strong>ERRORS</strong>")
-                                )
-                         )
-                         , column(6
-                                  , wellPanel(id = "main.panel2",
-                                              br(),
-                                              HTML("<strong>OUTPUTS</strong>")
-                                  )
-                         )
-                       )
-             ) ## END wellPanel
+             fluidRow(
+               column(6,
+                      wellPanel(id = "pfg.panel1",
+                                style = "border-solid:solid; border-width:0px;",
+                                tabsetPanel(
+                                  source("R_supplements/SHINY.PRE_FATE.params_UI.panel1.tab1.R", local = TRUE)$value
+                                  , source("R_supplements/SHINY.PRE_FATE.params_UI.panel1.tab2.R", local = TRUE)$value
+                                  , source("R_supplements/SHINY.PRE_FATE.params_UI.panel1.tab3.R", local = TRUE)$value
+                                ) ## END tabsetPanel
+                      ) ## END wellPanel
+               )
+               , column(6,
+                        wellPanel(id = "pfg.panel2",
+                                  style = "border-solid:solid; border-width:0px;"))
+             ) ## END fluidRow
+           ) %>% helper(type = "inline"
+                        , title = "Create Plant Functional Group (PFG) for a FATE-HD simulation"
+                        , size = "l"
+                        , content = help.HTML(html.file = "docs/index.html"
+                                              , target.anchor = 'class="section level2"'
+                                              , target.class = "pre_fate---build-plant-functional-groups-pfg")
            ) ## END mainPanel
-         # ) %>% helper(type = "inline"
-         #              , title = "Evaluate FATE-HD simulation outputs"
-         #              , size = "l"
-         #              , content = help.HTML(html.file = "docs/index.html"
-         #                                    , target.anchor = '<div '
-         #                                    , target.class = "post_fate---evaluation-of-simulation")
          ) ## END sidebarLayout
 ) ## tabPanel
