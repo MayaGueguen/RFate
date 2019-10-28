@@ -48,7 +48,7 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-object-group'>
            , mainPanel(
              width = 12,
              fluidRow(
-               column(6,
+               column(4,
                       wellPanel(id = "pfg.panel1",
                                 style = "border-solid:solid; border-width:0px;",
                                 tabsetPanel(
@@ -58,7 +58,7 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-object-group'>
                                 ) ## END tabsetPanel
                       ) ## END wellPanel
                )
-               , column(6,
+               , column(8,
                         wellPanel(id = "pfg.panel2",
                                   style = "border-solid:solid; border-width:0px;",
                                   tabsetPanel(
@@ -66,25 +66,53 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-object-group'>
                                              , value = "panel.observations"
                                              , fluidRow(
                                                column(12
-                                                      , br()
-                                                      , dataTableOutput(outputId = "table.observations")
+                                                      , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-top:18px; overflow-y:scroll; max-height:400px;"))
+                                                                  , dataTableOutput(outputId = "table.observations"
+                                                                                    , width = "100%"
+                                                                                    , height = "300px")
+                                                      )
                                                )
                                              ) ## END fluidRow
                                     ) ## END tabPanel
                                     , tabPanel(title = HTML("<span class='tabPanel_title'>Traits</span>")
-                                             , value = "panel.traits"
-                                             , fluidRow(
-                                               column(12
-                                                      , br()
-                                                      , dataTableOutput(outputId = "table.traits")
-                                               )
-                                             ) ## END fluidRow
+                                               , value = "panel.traits"
+                                               , fluidRow(
+                                                 column(12
+                                                        , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-top:18px; overflow-y:scroll; max-height:400px;"))
+                                                                    , dataTableOutput(outputId = "table.traits"
+                                                                                      , width = "100%"
+                                                                                      , height = "300px")
+                                                        )
+                                                 )
+                                               ) ## END fluidRow
                                     ) ## END tabPanel
                                     , tabPanel(title = HTML("<span class='tabPanel_title'>Graphics</span>")
                                                , value = "panel.graphics"
                                                , fluidRow(
-                                                 column(12
+                                                 column(11
                                                         , br()
+                                                        , uiOutput(outputId = "UI.pfg.browser")
+                                                 )
+                                                 , column(1
+                                                          , br()
+                                                          , br()
+                                                          , br()
+                                                          , shinyjs::hidden(
+                                                            actionButton(inputId = "pfg.go.left"
+                                                                         , label = ""
+                                                                         , icon = icon("arrow-circle-left", class = "icon-help")
+                                                                         , width = "100%"
+                                                                         , style = HTML(button.style.help))
+                                                          )
+                                                          , br()
+                                                          , br()
+                                                          , shinyjs::hidden(
+                                                            actionButton(inputId = "pfg.go.right"
+                                                                         , label = ""
+                                                                         , icon = icon("arrow-circle-right", class = "icon-help")
+                                                                         , width = "100%"
+                                                                         , style = HTML(button.style.help))
+                                                          )
                                                  )
                                                ) ## END fluidRow
                                     ) ## END tabPanel

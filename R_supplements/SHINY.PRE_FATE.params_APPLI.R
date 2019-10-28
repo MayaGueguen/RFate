@@ -30,6 +30,7 @@ library(cowplot)
 library(ggExtra)
 library(gridExtra)
 library(SPOT) ## designLHD
+library(DT)
 
 ###################################################################################################################################
 
@@ -210,6 +211,8 @@ server <- function(input, output, session) {
                       , compt.dist.by_pfg = FALSE
                       , compt.browser = 1
                       , compt.browser.max = 1
+                      , compt.browser.pfg = 1
+                      , compt.browser.pfg.max = 1
   )
   
   ####################################################################
