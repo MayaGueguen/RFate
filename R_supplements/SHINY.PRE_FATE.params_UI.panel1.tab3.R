@@ -1,5 +1,5 @@
 
-tabPanel(title = HTML("<span class='tabPanel_title'>Clustering</span>")
+tabPanel(title = HTML("<span class='tabPanel_title'>3. Hierarchical lustering</span>")
          , value = "panel.clustering"
          , fluidRow(
            column(12
@@ -18,41 +18,40 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Clustering</span>")
            )
          ) ## END fluidRow
          , fluidRow(
-           column(6, br())
-           , column(6
-                    , br()
-                    , actionButton(inputId = "clustering.step1"
-                                   , label = "Build dendrograms"
-                                   , icon = icon("bezier-curve")
-                                   , width = "100%"
-                                   , style = HTML(button.style)
-                    ) %>% helper(type = "inline"
-                                 , title = "Clustering : build dendrograms"
-                                 , size = "l"
-                                 , content = help.HTML("docs/reference/PRE_FATE.speciesClustering_step1.html")
-                    )
-                    , br()
-                    , actionButton(inputId = "clustering.step2"
-                                   , label = "Build PFG"
-                                   , icon = icon("object-group")
-                                   , width = "100%"
-                                   , style = HTML(button.style)
-                    ) %>% helper(type = "inline"
-                                 , title = "Clustering : build PFG"
-                                 , size = "l"
-                                 , content = help.HTML("docs/reference/PRE_FATE.speciesClustering_step2.html")
-                    )
-                    , br()
-                    , actionButton(inputId = "clustering.step3"
-                                   , label = "Calculate PFG traits values"
-                                   , icon = icon("clipboard-list")
-                                   , width = "100%"
-                                   , style = HTML(button.style)
-                    ) %>% helper(type = "inline"
-                                 , title = "Clustering : calculate PFG traits values"
-                                 , size = "l"
-                                 , content = help.HTML("docs/reference/PRE_FATE.speciesClustering_step3.html")
-                    )
+           column(12
+                  , br()
+                  , actionButton(inputId = "clustering.step1"
+                                 , label = "Build dendrograms"
+                                 , icon = icon("bezier-curve")
+                                 , width = "100%"
+                                 , style = HTML(button.style)
+                  ) %>% helper(type = "inline"
+                               , title = "Clustering : build dendrograms"
+                               , size = "l"
+                               , content = help.HTML("docs/reference/PRE_FATE.speciesClustering_step1.html")
+                  )
+                  , br()
+                  , actionButton(inputId = "clustering.step2"
+                                 , label = "Build PFG"
+                                 , icon = icon("object-group")
+                                 , width = "100%"
+                                 , style = HTML(button.style)
+                  ) %>% helper(type = "inline"
+                               , title = "Clustering : build PFG"
+                               , size = "l"
+                               , content = help.HTML("docs/reference/PRE_FATE.speciesClustering_step2.html")
+                  )
+                  , br()
+                  , actionButton(inputId = "clustering.step3"
+                                 , label = "Calculate PFG traits values"
+                                 , icon = icon("clipboard-list")
+                                 , width = "100%"
+                                 , style = HTML(button.style)
+                  ) %>% helper(type = "inline"
+                               , title = "Clustering : calculate PFG traits values"
+                               , size = "l"
+                               , content = help.HTML("docs/reference/PRE_FATE.speciesClustering_step3.html")
+                  )
            )
          ) ## END fluidRow
 ) ## END tabPanel (Clustering)
