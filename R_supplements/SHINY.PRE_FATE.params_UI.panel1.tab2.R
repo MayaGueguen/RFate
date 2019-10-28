@@ -11,19 +11,8 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Pairwise distance</span>")
                                  , selected = "from dominant selection"
                                  , inline = TRUE
                                  , width = "100%")
-                  , uiOutput(outputId = "UI.selected.species")
                   , br()
-                  , dataTableOutput(outputId = "species.traits.table")
-                  , br()
-                  , uiOutput(outputId = "UI.selectedTraits")
-                  , uiOutput(outputId = "UI.selectedGroup")
-                  # , selectInput(inputId = "pfg.traits"
-                  #               , label = param.style("Traits to be used")
-                  #               , choices = NULL
-                  #               , selected = NULL
-                  #               , multiple = TRUE
-                  #               , width = "100%")
-                  , br()
+                  , uiOutput(outputId = "UI.species.selected")
                   , fileInput(inputId = "species.niche.distance"
                               , label = NULL
                               , buttonLabel = param.style("species.niche.distance")
@@ -37,7 +26,6 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Pairwise distance</span>")
          ) ## END fluidRow
          , fluidRow(
            column(6
-                  , br()
                   , sliderInput(inputId = "opt.max.percent.NA"
                                 , label = param.style("opt.max.percent.NA")
                                 , min = 0
@@ -47,7 +35,6 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Pairwise distance</span>")
                                 , width = "100%")
            )
            , column(6
-                    , br()
                     , sliderInput(inputId = "opt.max.percent.similarSpecies"
                                   , label = param.style("opt.max.percent.similarSpecies")
                                   , min = 0

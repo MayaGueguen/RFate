@@ -60,7 +60,37 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-object-group'>
                )
                , column(6,
                         wellPanel(id = "pfg.panel2",
-                                  style = "border-solid:solid; border-width:0px;"))
+                                  style = "border-solid:solid; border-width:0px;",
+                                  tabsetPanel(
+                                    tabPanel(title = HTML("<span class='tabPanel_title'>Observations</span>")
+                                             , value = "panel.observations"
+                                             , fluidRow(
+                                               column(12
+                                                      , br()
+                                                      , dataTableOutput(outputId = "table.observations")
+                                               )
+                                             ) ## END fluidRow
+                                    ) ## END tabPanel
+                                    , tabPanel(title = HTML("<span class='tabPanel_title'>Traits</span>")
+                                             , value = "panel.traits"
+                                             , fluidRow(
+                                               column(12
+                                                      , br()
+                                                      , dataTableOutput(outputId = "table.traits")
+                                               )
+                                             ) ## END fluidRow
+                                    ) ## END tabPanel
+                                    , tabPanel(title = HTML("<span class='tabPanel_title'>Graphics</span>")
+                                               , value = "panel.graphics"
+                                               , fluidRow(
+                                                 column(12
+                                                        , br()
+                                                 )
+                                               ) ## END fluidRow
+                                    ) ## END tabPanel
+                                  ) ## END tabsetPanel
+                        ) ## END wellPanel
+               )
              ) ## END fluidRow
            ) %>% helper(type = "inline"
                         , title = "Create Plant Functional Group (PFG) for a FATE-HD simulation"
