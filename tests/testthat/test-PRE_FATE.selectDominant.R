@@ -84,22 +84,30 @@ test_that("PRE_FATE.selectDominant gives error with wrong type of data : selecti
                  , "Only 1 value indicated in `habitat` variable")
   
   expect_error(PRE_FATE.selectDominant(mat.site.species.abund = data.frame(sites = "A", species = "1", abund = 3)
+                                       , doHabitatSelection = TRUE
                                        , selectionRule.min_percent_habitat = "a"), "must contain numeric values")
   expect_error(PRE_FATE.selectDominant(mat.site.species.abund = data.frame(sites = "A", species = "1", abund = 3)
+                                       , doHabitatSelection = TRUE
                                        , selectionRule.min_percent_habitat = factor(1)), "must contain numeric values")
   expect_error(PRE_FATE.selectDominant(mat.site.species.abund = data.frame(sites = "A", species = "1", abund = 3)
+                                       , doHabitatSelection = TRUE
                                        , selectionRule.min_percent_habitat = 1.1), "must be between 0 and 1")
   expect_error(PRE_FATE.selectDominant(mat.site.species.abund = data.frame(sites = "A", species = "1", abund = 3)
+                                       , doHabitatSelection = TRUE
                                        , selectionRule.min_percent_habitat = -119), "must be between 0 and 1")
   
   expect_error(PRE_FATE.selectDominant(mat.site.species.abund = data.frame(sites = "A", species = "1", abund = 3)
+                                       , doHabitatSelection = TRUE
                                        , selectionRule.min_no_habitat = "a"), "must contain numeric values")
   expect_error(PRE_FATE.selectDominant(mat.site.species.abund = data.frame(sites = "A", species = "1", abund = 3)
+                                       , doHabitatSelection = TRUE
                                        , selectionRule.min_no_habitat = factor(1)), "must contain numeric values")
   expect_error(PRE_FATE.selectDominant(mat.site.species.abund = data.frame(sites = "A", species = "1", abund = 3)
+                                       , doHabitatSelection = TRUE
                                        , selectionRule.min_no_habitat = -119), "must be >= 0")
   
   expect_error(PRE_FATE.selectDominant(species = "1", sites = "A", abund = c(3, 10), habitat = "Landes"
+                                       , doHabitatSelection = TRUE
                                        , selectionRule.min_no_habitat = -119), "must be >= 0")
 })
 

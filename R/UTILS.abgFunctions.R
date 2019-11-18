@@ -127,11 +127,10 @@ BetaDisQ <- function(spxp, Z=NULL, q=2, check = TRUE){
 }
 
 #############################################################################################
+##' @importFrom phangorn Ancestors Descendants
 
 chaoObjects <- function(spxp, phy){
-  require(ape)
-  require(phangorn)
-  
+
   if (!inherits(phy, "phylo")){ 
     stop("object \"phy\" is not of class \"phylo\"")}
   if (!inherits(spxp, "matrix")) {

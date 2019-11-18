@@ -108,7 +108,9 @@ test_that("PRE_FATE.speciesClustering_step2 gives right output", {
   data(MontBlanc)
   sp.DIST = PRE_FATE.speciesDistance(mat.species.traits = MontBlanc$mat.traits
                                      , mat.species.overlap = MontBlanc$mat.nicheOverlap
-                                     , min.info.thresh = 0.9)
+                                     , opt.max.percent.NA = 0.9
+                                     , opt.max.percent.similarSpecies = 0.25
+                                     , opt.min.sd = 0.3)
   sp.CLUST = PRE_FATE.speciesClustering_step1(mat.species.DIST = sp.DIST)
 
   expect_output(str(PRE_FATE.speciesClustering_step2(clust.dendograms = sp.CLUST$clust.dendograms[[1]]

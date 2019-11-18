@@ -111,7 +111,9 @@
 ##' ## Calculate distance between species
 ##' sp.DIST = PRE_FATE.speciesDistance(mat.species.traits = MontBlanc$mat.traits
 ##'                                    , mat.species.overlap = MontBlanc$mat.nicheOverlap
-##'                                    , min.info.thresh = 0.9)
+##'                                    , opt.max.percent.NA = 0.9
+##'                                    , opt.max.percent.similarSpecies = 0.25
+##'                                    , opt.min.sd = 0.3)
 ##'                                    
 ##' str(sp.DIST)
 ##'              
