@@ -228,6 +228,7 @@ PRE_FATE.speciesDistance = function(mat.species.traits ## data.frame with column
   #################################################################################################
   
   ## TRAITS ------------------------------------------------------------------------------------- #
+  mat.species.traits = as.data.frame(mat.species.traits)
   rownames(mat.species.traits) = mat.species.traits$species
   species_names.traits = sort(unique(as.character(mat.species.traits$species)))
   traits_names = colnames(mat.species.traits)[which(!(colnames(mat.species.traits) %in% c("species","GROUP")))]
@@ -235,7 +236,7 @@ PRE_FATE.speciesDistance = function(mat.species.traits ## data.frame with column
   mat.species.traits$GROUP = factor(mat.species.traits$GROUP, group_names)
   
   ## Remove species with no traits
-  no_NA_values = apply(as.matrix(mat.species.traits[,traits_names]), 1, function(x) sum(is.na(x)))
+  no_NA_values = apply(as.matrix(mat.species.traits[, traits_names, drop = FALSE]), 1, function(x) sum(is.na(x)))
   ind_NA_values = which(no_NA_values >= length(traits_names) - 1)
   if (length(ind_NA_values) > 0)
   {
@@ -286,7 +287,7 @@ PRE_FATE.speciesDistance = function(mat.species.traits ## data.frame with column
   cat("\n")
   
   # Keep only species present in both distance matrices (trait & overlap)
-  mat.species.traits = mat.species.traits[which(mat.species.traits$species %in% species_names.traits_overlap), ]
+  mat.species.traits = mat.species.traits[which(mat.species.traits$species %in% species_names.traits_overlap), , drop = FALSE]
   
   
   #################################################################################################

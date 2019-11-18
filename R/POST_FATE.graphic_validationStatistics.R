@@ -177,7 +177,7 @@ POST_FATE.graphic_validationStatistics = function(
     }
     if (ncol(mat.PFG.obs) == 4)
     {
-      if (sum(colnames(mat.PFG.obs) == c("PFG", "X", "Y", "obs")) == 4)
+      if (sum(colnames(mat.PFG.obs) %in% c("PFG", "X", "Y", "obs")) == 4)
       {
         mat.PFG.obs = mat.PFG.obs[ , c("PFG", "X", "Y", "obs")]
       } else
