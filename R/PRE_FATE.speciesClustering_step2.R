@@ -248,10 +248,10 @@ PRE_FATE.speciesClustering_step2 = function(clust.dendograms
                         allSp.max = mean(sp.mean.dist) + 1.64 * sd(sp.mean.dist)))
     } else if (length(sp) == 1)
     {
-      return(data.frame(pfg, group, no.cluster, sp, ID = 1, sp.mean.dist = 1,
-                        allSp.mean = 1,
-                        allSp.min = 1,
-                        allSp.max = 1))
+      return(data.frame(pfg, group, no.cluster, sp, ID = 1, sp.mean.dist = NA,
+                        allSp.mean = NA,
+                        allSp.min = NA,
+                        allSp.max = NA))
     }
   }
   determ = do.call(rbind, determ)
@@ -262,6 +262,7 @@ PRE_FATE.speciesClustering_step2 = function(clust.dendograms
   determ$toSuppr = 0
   determ$toSuppr[which(determ$sp.mean.dist > determ$allSp.max)] = 1
   determ$toSuppr[which(determ$sp.mean.dist < determ$allSp.min)] = 1
+  determ$toSuppr = factor(determ$toSuppr, c(0,1))
   
   ## SAVE DETERM
   ## CAT INFO ABOUT HOW MANY SPECIES ARE REMOVED
@@ -273,14 +274,17 @@ PRE_FATE.speciesClustering_step2 = function(clust.dendograms
   
   ## GRAPHICAL REPRESENTATION 1
   colRamp = colorRampPalette(c('#8e0152','#c51b7d','#de77ae','#7fbc41','#4d9221','#276419'))
+  colLev = levels(interaction(determ$toSuppr, determ$group))
   
-  pp3 = ggplot(determ, aes_string(x = "pfg", y = "sp.mean.dist", color = interaction("group", "toSuppr"), shape = factor("toSuppr"))) +
+  pp3 = ggplot(determ, aes_string(x = "pfg", y = "sp.mean.dist"
+                                  , color = interaction(determ$toSuppr, determ$group)
+                                  , shape = ("toSuppr"))) +
+    scale_color_manual(guide = F, values = colRamp(length(colLev))) +
+    scale_shape_manual(guide = F, values = c("0" = 20, "1" = 8)) +
     geom_errorbar(aes_string(ymin = "allSp.min", ymax = "allSp.max"), color = "darkblue") +
     geom_point(position = "jitter") +
     geom_point(aes_string(y = "allSp.mean"), pch = 18, lwd = 5, color = "darkblue") +
     facet_grid("~ group", scales = "free_x") +
-    scale_color_manual(guide = F, values = colRamp(length(levels(interaction(determ$toSuppr, determ$group))))) +
-    scale_shape_manual(guide = F, values = c("0" = 20, "1" = 8)) +
     labs(x = "", y = "Mean distance to other species", title = "STEP C : Removal of distant species",
          subtitle = paste0("Only species whose mean distance to other species is included in the distribution\n",
                            "of all PFG's species mean distances to other species are kept.\n",

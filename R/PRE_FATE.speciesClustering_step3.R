@@ -329,10 +329,15 @@ PRE_FATE.speciesClustering_step3 = function(
   cat("\n Graphical representations...")
   cat("\n")
   
-  mat.species.traits.melt = melt(mat.species.traits, id.vars = c("species", "PFG", "type"))
+  melt.vars = c("PFG")
+  if (isThere.type) {
+    melt.vars = c("PFG", "type")
+  }
+  
+  mat.species.traits.melt = melt(mat.species.traits, id.vars = c("species", melt.vars))
   mat.species.traits.melt$value = as.numeric(as.character(mat.species.traits.melt$value))
   
-  mat.traits.pfg.melt = melt(mat.traits.pfg, id.vars = c("PFG", "type"))
+  mat.traits.pfg.melt = melt(mat.traits.pfg, id.vars = melt.vars)
   mat.traits.pfg.melt$value = as.numeric(as.character(mat.traits.pfg.melt$value))
   
   #################################################################################################
