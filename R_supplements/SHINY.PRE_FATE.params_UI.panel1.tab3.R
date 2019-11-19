@@ -1,5 +1,5 @@
 
-tabPanel(title = HTML("<span class='tabPanel_title'>3. Hierarchical lustering</span>")
+tabPanel(title = HTML("<span class='tabPanel_title'>3. Hierarchical clustering</span>")
          , value = "panel.clustering"
          , fluidRow(
            column(12

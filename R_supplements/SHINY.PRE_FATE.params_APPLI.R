@@ -31,6 +31,7 @@ library(ggExtra)
 library(gridExtra)
 library(SPOT) ## designLHD
 library(DT)
+library(ggdendro)
 
 ###################################################################################################################################
 
@@ -213,6 +214,7 @@ server <- function(input, output, session) {
                       , compt.browser.max = 1
                       , compt.browser.pfg = 1
                       , compt.browser.pfg.max = 1
+                      , pfg.graph = c()
   )
   
   ####################################################################

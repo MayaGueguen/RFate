@@ -15,7 +15,7 @@ output$UI.species.selected = renderUI({
 ####################################################################
 
 get_traits = eventReactive(list(input$species.traits, input$compute.distance), {
-  if (is.data.frame(input$species.traits))
+  if (!is.null(input$species.traits) && is.data.frame(input$species.traits))
   {
     if (extension(input$species.traits$name) %in% c(".txt", ".csv"))
     {
@@ -23,6 +23,7 @@ get_traits = eventReactive(list(input$species.traits, input$compute.distance), {
       
       if (length(which(colnames(sp.traits) == "species")) == 1)
       {
+        shinyjs::show("table.traits")
         return(sp.traits)
       } else
       {
@@ -39,13 +40,32 @@ get_traits = eventReactive(list(input$species.traits, input$compute.distance), {
   }
 })
 
+get_dom_param = eventReactive(list(input$selectionRule.quanti
+                                   , input$selectionRule.min_mean_abund
+                                   , input$selectionRule.min_no_abund_over25
+                                   , input$doHabitatSelection
+                                   , input$selectionRule.min_percent_habitat
+                                   , input$selectionRule.min_no_habitat
+), {
+  end_filename = paste0(c(input$selectionRule.quanti
+                          , input$selectionRule.min_mean_abund
+                          , input$selectionRule.min_no_abund_over25)
+                        , collapse = "_")
+  if(input$doHabitatSelection)
+  {
+    end_filename = paste0(c(end_filename
+                            , input$selectionRule.min_percent_habitat
+                            , input$selectionRule.min_no_habitat)
+                          , collapse = "_")
+  }
+  return(end_filename)
+})
 
 get_dom = eventReactive(list(input$choice.dominant, input$compute.distance), {
   end_filename = ""
   if (input$choice.dominant == "from file")
   {
-    print(input$species.selected)
-    if (is.data.frame(input$species.selected))
+    if (!is.null(input$species.selected) && is.data.frame(input$species.selected))
     {
       if (extension(input$species.selected$name) %in% c(".txt", ".csv"))
       {
@@ -60,19 +80,8 @@ get_dom = eventReactive(list(input$choice.dominant, input$compute.distance), {
     }
   } else
   {
-    end_filename = paste0(c(input$selectionRule.quanti
-                            , input$selectionRule.min_mean_abund
-                            , input$selectionRule.min_no_abund_over25)
-                          , collapse = "_")
-    if(input$doHabitatSelection)
-    {
-      end_filename = paste0(c(end_filename
-                              , input$selectionRule.min_percent_habitat
-                              , input$selectionRule.min_no_habitat)
-                            , collapse = "_")
-    }
     end_filename = paste0("PRE_FATE_DOMINANT_species_selected_SPECIES_ONLY_"
-                          , end_filename
+                          , get_dom_param()
                           , ".csv")
   }
   if (file.exists(end_filename))
@@ -99,14 +108,13 @@ output$table.traits = renderDataTable({
   sp.traits = get_traits()
   if (!is.null(sp.traits))
   {
-    print(head(sp.traits))
     return(sp.traits)
   }
 })
 
 ####################################################################
 
-observeEvent(input$compute.distance, {
+get_DIST = eventReactive(input$compute.distance, {
   
   ## GET species traits
   sp.traits = get_traits()
@@ -121,7 +129,7 @@ observeEvent(input$compute.distance, {
         sp.traits = sp.traits[which(sp.traits$species %in% sp.dom), ]
         
         ## GET species niche distance
-        if (is.data.frame(input$species.niche.distance))
+        if (!is.null(input$species.niche.distance) && is.data.frame(input$species.niche.distance))
         {
           if (extension(input$species.niche.distance$name) %in% c(".txt", ".csv"))
           {
@@ -138,13 +146,15 @@ observeEvent(input$compute.distance, {
           {
             
             get_res = print_messages(as.expression(
-              PRE_FATE.speciesDistance(mat.species.traits = sp.traits
-                                       , mat.species.overlap = sp.niche
-                                       , opt.max.percent.NA = as.numeric(input$opt.max.percent.NA)
-                                       , opt.max.percent.similarSpecies = as.numeric(input$opt.max.percent.similarSpecies)
-                                       , opt.min.sd = as.numeric(input$opt.min.sd)
-              )
-            ))
+                PRE_FATE.speciesDistance(mat.species.traits = sp.traits
+                                         , mat.species.overlap = sp.niche
+                                         , opt.max.percent.NA = as.numeric(input$opt.max.percent.NA)
+                                         , opt.max.percent.similarSpecies = as.numeric(input$opt.max.percent.similarSpecies)
+                                         , opt.min.sd = as.numeric(input$opt.min.sd)
+                )
+              ))
+            
+            return(get_res)
           } else
           {
             shinyalert(type = "warning", text = "Species names between species.niche.distance and dominant species do not match !")
@@ -155,7 +165,6 @@ observeEvent(input$compute.distance, {
         }
       } else
       {
-        print("yuuu")
         shinyalert(type = "warning", text = "Species names between species.traits and dominant species do not match !")
       }
     }

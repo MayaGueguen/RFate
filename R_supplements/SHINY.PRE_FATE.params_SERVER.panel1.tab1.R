@@ -30,6 +30,7 @@ get_obs = eventReactive(list(input$species.observations, input$select.dominant),
     if (extension(input$species.observations$name) %in% c(".txt", ".csv"))
     {
       sp.obs = fread(input$species.observations$datapath)
+      shinyjs::show("table.observations")
       return(sp.obs)
     } else
     {
@@ -49,7 +50,6 @@ output$table.observations = renderDataTable({
   sp.obs = get_obs()
   if (!is.null(sp.obs))
   {
-    print(head(sp.obs))
     return(sp.obs)
   }
 })
@@ -71,7 +71,7 @@ observeEvent(input$select.dominant, {
     }
     
     get_res = print_messages(as.expression(
-      PRE_FATE.selectDominant(mat.site.species.abund = sp.occ
+      PRE_FATE.selectDominant(mat.site.species.abund = sp.obs
                               , selectionRule.quanti = as.numeric(input$selectionRule.quanti)
                               , selectionRule.min_mean_abund = as.numeric(input$selectionRule.min_mean_abund)
                               , selectionRule.min_no_abund_over25 = as.numeric(input$selectionRule.min_no_abund_over25)
