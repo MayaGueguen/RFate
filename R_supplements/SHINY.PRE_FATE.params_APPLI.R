@@ -32,6 +32,8 @@ library(gridExtra)
 library(SPOT) ## designLHD
 library(DT)
 library(ggdendro)
+library(ggrepel)
+library(ade4) ## quasieuclid
 
 ###################################################################################################################################
 

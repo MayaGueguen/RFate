@@ -34,12 +34,12 @@ get_obs = eventReactive(list(input$species.observations, input$select.dominant),
       return(sp.obs)
     } else
     {
-      shinyalert(type = "warning", text = "You must provide a text file for the species.observations !")
+      shinyalert(type = "warning", text = "You must provide a text file (.txt or .csv) for the species.observations !")
       return(NULL)
     }
   } else
   {
-    shinyalert(type = "warning", text = "You must provide a text file for the species.observations !")
+    shinyalert(type = "warning", text = "You must provide a text file for (.txt or .csv) the species.observations !")
     return(NULL)
   }
 })

@@ -72,11 +72,11 @@ get_dom = eventReactive(list(input$choice.dominant, input$compute.distance), {
         end_filename = input$species.selected$datapath
       } else
       {
-        shinyalert(type = "warning", text = "You must provide a text file for the species.selected !")
+        shinyalert(type = "warning", text = "You must provide a text file (.txt or .csv) for the species.selected !")
       }
     } else
     {
-      shinyalert(type = "warning", text = "You must provide a text file for the species.selected !")
+      shinyalert(type = "warning", text = "You must provide a text file (.txt or .csv) for the species.selected !")
     }
   } else
   {
@@ -97,7 +97,7 @@ get_dom = eventReactive(list(input$choice.dominant, input$compute.distance), {
     return(sp.dom)
   } else
   {
-    shinyalert(type = "warning", text = "You must run the selection of dominant species or provide a text file for species.selected !")
+    shinyalert(type = "warning", text = "You must run the selection of dominant species or provide a text file (.txt or .csv) for species.selected !")
     return(NULL)
   }
 })
