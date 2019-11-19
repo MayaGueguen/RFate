@@ -461,6 +461,23 @@ PRE_FATE.speciesDistance = function(mat.species.traits ## data.frame with column
   if(length(mat.species.DIST) == 1)
   {
     mat.species.DIST = mat.species.DIST[[1]]
+    toSave = as.matrix(mat.species.DIST)
+    rownames(toSave) = colnames(toSave)
+    write.csv(toSave
+              , file = paste0("PRE_FATE_DOMINANT_species_distance.csv")
+              , row.names = T)
+  } else
+  {
+    for (i in 1:length(mat.species.DIST))
+    {
+      toSave = as.matrix(mat.species.DIST[[i]])
+      rownames(toSave) = colnames(toSave)
+      write.csv(toSave
+                , file = paste0("PRE_FATE_DOMINANT_species_distance_"
+                                , names(mat.species.DIST)[i]
+                                , ".csv")
+                , row.names = T)
+    }
   }
   
   return(mat.species.DIST)
