@@ -23,7 +23,10 @@ get_traits = eventReactive(list(input$species.traits, input$compute.distance), {
       
       if (length(which(colnames(sp.traits) == "species")) == 1)
       {
-        shinyjs::show("table.traits")
+        shinyjs::show("table.traits.sp")
+        output$table.traits.sp = renderDataTable({
+          sp.traits
+        })
         return(sp.traits)
       } else
       {
@@ -104,13 +107,13 @@ get_dom = eventReactive(list(input$choice.dominant, input$compute.distance), {
 
 ####################################################################
 
-output$table.traits = renderDataTable({
-  sp.traits = get_traits()
-  if (!is.null(sp.traits))
-  {
-    return(sp.traits)
-  }
-})
+# output$table.traits.sp = renderDataTable({
+#   sp.traits = get_traits()
+#   if (!is.null(sp.traits))
+#   {
+#     return(sp.traits)
+#   }
+# })
 
 ####################################################################
 

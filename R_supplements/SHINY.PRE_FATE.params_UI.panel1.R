@@ -62,35 +62,7 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-object-group'>
                         wellPanel(id = "pfg.panel2",
                                   style = "border-solid:solid; border-width:0px;",
                                   tabsetPanel(
-                                    tabPanel(title = HTML("<span class='tabPanel_title'>Observations</span>")
-                                             , value = "panel.observations"
-                                             , fluidRow(
-                                               column(12
-                                                      , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-top:18px; overflow-y:scroll; max-height:400px;"))
-                                                                  , shinyjs::hidden(
-                                                                    dataTableOutput(outputId = "table.observations"
-                                                                                    , width = "100%"
-                                                                                    , height = "300px")
-                                                                  )
-                                                      )
-                                               )
-                                             ) ## END fluidRow
-                                    ) ## END tabPanel
-                                    , tabPanel(title = HTML("<span class='tabPanel_title'>Traits</span>")
-                                               , value = "panel.traits"
-                                               , fluidRow(
-                                                 column(12
-                                                        , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-top:18px; overflow-y:scroll; max-height:400px;"))
-                                                                    , shinyjs::hidden(
-                                                                      dataTableOutput(outputId = "table.traits"
-                                                                                      , width = "100%"
-                                                                                      , height = "300px")
-                                                                    )
-                                                        )
-                                                 )
-                                               ) ## END fluidRow
-                                    ) ## END tabPanel
-                                    , tabPanel(title = HTML("<span class='tabPanel_title'>Graphics</span>")
+                                    tabPanel(title = HTML("<span class='tabPanel_title'>Graphics</span>")
                                                , value = "panel.graphics"
                                                , fluidRow(
                                                  column(11
@@ -117,6 +89,48 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-object-group'>
                                                                          , width = "100%"
                                                                          , style = HTML(button.style.help))
                                                           )
+                                                 )
+                                               ) ## END fluidRow
+                                    ) ## END tabPanel
+                                    , tabPanel(title = HTML("<span class='tabPanel_title'>Observations</span>")
+                                             , value = "panel.observations"
+                                             , fluidRow(
+                                               column(12
+                                                      , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-top:18px; overflow-y:scroll; max-height:400px;"))
+                                                                  , shinyjs::hidden(
+                                                                    dataTableOutput(outputId = "table.observations"
+                                                                                    , width = "100%"
+                                                                                    , height = "300px")
+                                                                  )
+                                                      )
+                                               )
+                                             ) ## END fluidRow
+                                    ) ## END tabPanel
+                                    , tabPanel(title = HTML("<span class='tabPanel_title'>Traits (species)</span>")
+                                               , value = "panel.traits.sp"
+                                               , fluidRow(
+                                                 column(12
+                                                        , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-top:18px; overflow-y:scroll; max-height:400px;"))
+                                                                    , shinyjs::hidden(
+                                                                      dataTableOutput(outputId = "table.traits.sp"
+                                                                                      , width = "100%"
+                                                                                      , height = "600px")
+                                                                    )
+                                                        )
+                                                 )
+                                               ) ## END fluidRow
+                                    ) ## END tabPanel
+                                    , tabPanel(title = HTML("<span class='tabPanel_title'>Traits (PFG)</span>")
+                                               , value = "panel.traits.pfg"
+                                               , fluidRow(
+                                                 column(12
+                                                        , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-top:18px; overflow-y:scroll; max-height:400px;"))
+                                                                    , shinyjs::hidden(
+                                                                      dataTableOutput(outputId = "table.traits.pfg"
+                                                                                      , width = "100%"
+                                                                                      , height = "600px")
+                                                                    )
+                                                        )
                                                  )
                                                ) ## END fluidRow
                                     ) ## END tabPanel

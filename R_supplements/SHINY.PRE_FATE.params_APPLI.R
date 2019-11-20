@@ -34,6 +34,7 @@ library(DT)
 library(ggdendro)
 library(ggrepel)
 library(ade4) ## quasieuclid
+library(reshape2) ## melt
 
 ###################################################################################################################################
 

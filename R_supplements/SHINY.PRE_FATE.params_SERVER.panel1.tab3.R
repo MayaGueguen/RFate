@@ -157,7 +157,7 @@ get_CLUST2 = eventReactive(input$clustering.step2, {
 
 ####################################################################
 
-get_CLUST3 = eventReactive(input$clustering.step3, {
+get_sp.pfg.traits = eventReactive(input$clustering.step3, {
   
   ## GET species traits
   sp.traits = get_traits()
@@ -167,16 +167,47 @@ get_CLUST3 = eventReactive(input$clustering.step3, {
     sp.determ = get_CLUST2()
     if (!is.null(sp.determ))
     {
-      # no.clusters = foreach(i = names(sp.clust$clust.dendograms), .combine = "c") %do%
-      #   {
-      #     input[[paste0("no.clust_", i)]]
-      #   }
-      get_res = print_messages(as.expression(
-        PRE_FATE.speciesClustering_step3(mat.species.traits = sp.pfg.traits)
-      ))
+      sp.traits = as.data.frame(sp.traits)
+      sp.traits$species = as.character(sp.traits$species)
       
-      # shinyjs::enable("clustering.step3")
-      return(get_res)
+      sp.determ = as.data.frame(sp.determ$determ.all)
+      sp.determ$sp = as.character(sp.determ$sp)
+      
+      sp.pfg.traits = merge(sp.traits, sp.determ[, c("sp", "pfg")], by.x = c("species"), by.y = "sp")
+      colnames(sp.pfg.traits)[which(colnames(sp.pfg.traits) %in% c("sp", "species"))] = "species"
+      colnames(sp.pfg.traits)[which(colnames(sp.pfg.traits) %in% c("pfg"))] = "PFG"
+      colnames(sp.pfg.traits)[which(colnames(sp.pfg.traits) %in% c("GROUP", "TYPE"))] = "type"
+      
+      return(sp.pfg.traits)
     }
   }
 })
+
+get_CLUST3 = eventReactive(input$clustering.step3, {
+
+  ## GET species-PFG traits
+  sp.pfg.traits = get_sp.pfg.traits()
+  if (!is.null(sp.pfg.traits))
+  {
+    get_res = print_messages(as.expression(
+      PRE_FATE.speciesClustering_step3(mat.species.traits = sp.pfg.traits)
+    ))
+    
+    shinyjs::show("table.traits.pfg")
+    output$table.traits.pfg = renderDataTable({
+      get_res
+    })
+    
+    return(get_res)
+  }
+})
+
+####################################################################
+
+# output$table.traits.pfg = renderDataTable({
+#   pfg.traits = get_CLUST3()
+#   if (!is.null(pfg.traits))
+#   {
+#     return(pfg.traits)
+#   }
+# })

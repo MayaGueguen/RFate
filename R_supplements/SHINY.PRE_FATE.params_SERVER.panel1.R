@@ -70,9 +70,13 @@ observeEvent(list(input$select.dominant
                    , dist = { get_DIST() }
                    , clust1 = { get_CLUST1() }
                    , clust2 = { get_CLUST2() }
+                   , clust3 = { get_CLUST3() }
       )
       if (graph.type == "clust2"){
         sp.dist = get_dist()
+      }
+      if (graph.type == "clust3"){
+        sp.pfg.traits = get_sp.pfg.traits()
       }
       
       if (!is.null(tab) && length(tab) > 1)
@@ -108,7 +112,6 @@ observeEvent(list(input$select.dominant
                       mat.plot$SELECTION = sub("all_","global + habitat ",mat.plot$SELECTION)
                       mat.plot$SELECTION = sub("all","global",mat.plot$SELECTION)
                       mat.plot$limit = NA
-                      # mat.plot$limit[which(mat.plot$variable == "stat.no_sites_recorded")] = quant
                       mat.plot$limit[which(mat.plot$variable == "stat.abund_mean")] = input$selectionRule.min_mean_abund
                       mat.plot$limit[which(mat.plot$variable == "stat.no_sites_abund_over25")] = input$selectionRule.min_no_abund_over25
                       
@@ -278,26 +281,319 @@ observeEvent(list(input$select.dominant
                       names(pp4_list) = group_names
                       return(c(list(pp3), pp4_list))
                     }
+                    ## ---------------------------------------------------------------------------------------------------------- ##
+                    , clust3 = {
+                      mat.traits.pfg = tab
+                      mat.species.traits = sp.pfg.traits
+                      melt.vars = c("PFG")
+                      if ("type" %in% colnames(tab)) {
+                        melt.vars = c("PFG", "type")
+                      }
+                      
+                      mat.species.traits.melt = melt(mat.species.traits, id.vars = c("species", melt.vars))
+                      mat.species.traits.melt$value = as.numeric(as.character(mat.species.traits.melt$value))
+                      
+                      mat.traits.pfg.melt = melt(mat.traits.pfg, id.vars = melt.vars)
+                      mat.traits.pfg.melt$value = as.numeric(as.character(mat.traits.pfg.melt$value))
+                      
+                      #################################################################################################
+                      ## Longevity - Maturity graph
+                      if ("longevity" %in% colnames(tab) && "maturity" %in% colnames(tab))
+                      {
+                        cat("\n >> Longevity and maturity...")
+                        
+                        ind.keep.sp = which(mat.species.traits.melt$variable %in% c("longevity", "maturity"))
+                        ind.keep.pfg = which(mat.traits.pfg.melt$variable %in% c("longevity", "maturity"))
+                        
+                        pp.1 = ggplot(mat.species.traits.melt[ind.keep.sp,]
+                                      , aes_string(x = "PFG", y = "value", fill = "variable")) +
+                          geom_boxplot(color = "grey60") +
+                          geom_segment(data = mat.traits.pfg
+                                       , aes_string(x = "PFG"
+                                                    , xend = "PFG"
+                                                    , y = "maturity"
+                                                    , yend = "longevity")
+                                       , color = "#525252"
+                                       , lwd = 1
+                                       , inherit.aes = FALSE) +
+                          geom_point(data = mat.traits.pfg.melt[ind.keep.pfg, ]
+                                     , aes_string(x = "PFG"
+                                                  , y = "value"
+                                                  , color = "variable")
+                                     , size = 2
+                                     , inherit.aes = FALSE) +
+                          scale_y_log10() +
+                          scale_fill_manual(guide = FALSE
+                                            , values = c("longevity" = "#ffffff"
+                                                         , "maturity" = "#ffffff")) +
+                          scale_color_manual(""
+                                             , values = c("longevity" = "#377eb8"
+                                                          , "maturity" = "#ff7f00")) +
+                          labs(x = "", y = "", title = "STEP D : Computation of PFG traits values : longevity & maturity"
+                               , subtitle = paste0("PFG traits values are calculated as the average of the PFG determinant species traits values.\n"
+                                                   , "If the trait is factorial or categorical, median value is taken.\n"
+                                                   , "Light-grey boxplot represent determinant species values.\n"
+                                                   , "Colored points represent the PFG calculated values.\n\n"
+                                                   , "If there is no values for longevity within one PFG, and some maturity values are available,\n"
+                                                   , "some values are inferred as maturity * 2.\n"
+                                                   , "If there is no values for maturity within one PFG, and some longevity values are available,\n"
+                                                   , "some values are inferred as longevity / 2.\n")) +
+                          theme_fivethirtyeight() +
+                          theme(panel.background = element_rect(fill = "transparent", colour = NA)
+                                , plot.background = element_rect(fill = "transparent", colour = NA)
+                                , legend.background = element_rect(fill = "transparent", colour = NA)
+                                , legend.box.background = element_rect(fill = "transparent", colour = NA)
+                                , legend.key = element_rect(fill = "transparent", colour = NA))
+                        
+                      } else
+                      {
+                        pp.1 = NULL
+                      }
+                      
+                      #################################################################################################
+                      ## Soil contribution - tolerance
+                      if ("soil" %in% colnames(tab))
+                      {
+                        cat("\n >> Soil contribution and tolerance...")
+                        
+                        ind.keep.sp = which(mat.species.traits.melt$variable %in% c("soil_contrib", "soil_tol_min", "soil_tol_max"))
+                        ind.keep.pfg = which(mat.traits.pfg.melt$variable %in% c("soil_contrib", "soil_tol_min", "soil_tol_max"))
+                        
+                        pp.2 = ggplot(mat.species.traits.melt[ind.keep.sp,]
+                                      , aes_string(x = "PFG"
+                                                   , y = "value"
+                                                   , fill = "factor(variable
+                                               , c('soil_tol_min'
+                                                   , 'soil_contrib'
+                                                   , 'soil_tol_max'))")) +
+                          geom_boxplot(color = "grey60") +
+                          geom_linerange(data = mat.traits.pfg
+                                         , aes_string(x = "as.numeric(PFG) + 0.5"
+                                                      , ymin = "soil_tol_min"
+                                                      , ymax = "soil_tol_max")
+                                         , color = "#525252"
+                                         , lwd = 1
+                                         , inherit.aes = FALSE) +
+                          geom_point(data = mat.traits.pfg.melt[ind.keep.pfg, ]
+                                     , aes_string(x = "as.numeric(PFG) + 0.5"
+                                                  , y = "value"
+                                                  , color = "factor(variable
+                                               , c('soil_tol_min'
+                                                   , 'soil_contrib'
+                                                   , 'soil_tol_max'))")
+                                     , size = 2
+                                     , inherit.aes = FALSE) +
+                          scale_y_continuous(breaks = 1:max(as.numeric(as.character(mat.traits.pfg$soil_tol_max)), na.rm = TRUE)) +
+                          scale_fill_manual(guide = FALSE
+                                            , values = c("soil_tol_min" = "#ffffff"
+                                                         , "soil_contrib" = "#ffffff"
+                                                         , "soil_tol_max" = "#ffffff")) +
+                          scale_color_manual(""
+                                             , values = c("soil_tol_min" = "#ec7014"
+                                                          , "soil_contrib" = "#b15928"
+                                                          , "soil_tol_max" = "#cb181d")) +
+                          labs(x = "", y = "", title = "STEP D : Computation of PFG traits values : soil contribution & tolerance"
+                               , subtitle = paste0("PFG traits values are calculated as the average of the PFG determinant species traits values.\n"
+                                                   , "If the trait is factorial or categorical, median value is taken.\n"
+                                                   , "Light-grey boxplot represent determinant species values.\n"
+                                                   , "Colored points represent the PFG calculated values.\n\n")) +
+                          theme_fivethirtyeight() +
+                          theme(panel.background = element_rect(fill = "transparent", colour = NA)
+                                , plot.background = element_rect(fill = "transparent", colour = NA)
+                                , legend.background = element_rect(fill = "transparent", colour = NA)
+                                , legend.box.background = element_rect(fill = "transparent", colour = NA)
+                                , legend.key = element_rect(fill = "transparent", colour = NA))
+                        
+                      } else
+                      {
+                        pp.2 = NULL
+                      }
+                      
+                      #################################################################################################
+                      ## Height - Light
+                      if ("height" %in% colnames(tab) && "light" %in% colnames(tab))
+                      {
+                        cat("\n >> Height and light...")
+                        
+                        ## Height panel
+                        ind.keep.sp = which(mat.species.traits.melt$variable %in% c("height"))
+                        ind.keep.pfg = which(mat.traits.pfg.melt$variable %in% c("height"))
+                        
+                        pp.3.1 = ggplot(mat.species.traits.melt[ind.keep.sp,]
+                                        , aes_string(x = "PFG", y = "value")) +
+                          geom_boxplot(color = "grey60") +
+                          geom_point(data = mat.traits.pfg.melt[ind.keep.pfg,]
+                                     , aes_string(x = "PFG"
+                                                  , y = "value"
+                                                  , color = "variable")
+                                     , size = 2
+                                     , inherit.aes = FALSE) +
+                          scale_color_manual(guide = F
+                                             , values = c("height" = "#238b45"
+                                                          , "light" = "#1d91c0")) +
+                          scale_y_continuous(breaks = c(1, 10, 100, 1000, 5000)
+                                             , trans = "log") +
+                          labs(x = "", y = "", title = "STEP D : Computation of PFG traits values : height & light"
+                               , subtitle = paste0("PFG traits values are calculated as the average of the PFG determinant species traits values.\n"
+                                                   , "If the trait is factorial or categorical, median value is taken.\n"
+                                                   , "Light-grey boxplot represent determinant species values.\n"
+                                                   , "Colored points represent the PFG calculated values.\n\n")) +
+                          theme_fivethirtyeight() +
+                          theme(axis.text.x = element_blank()
+                                , panel.background = element_rect(fill = "transparent", colour = NA)
+                                , plot.background = element_rect(fill = "transparent", colour = NA)
+                                , legend.background = element_rect(fill = "transparent", colour = NA)
+                                , legend.box.background = element_rect(fill = "transparent", colour = NA)
+                                , legend.key = element_rect(fill = "transparent", colour = NA))
+                        
+                        ## Light panel
+                        ind.keep.sp = which(mat.species.traits.melt$variable %in% c("light"))
+                        ind.keep.pfg = which(mat.traits.pfg.melt$variable %in% c("light"))
+                        
+                        pp.3.2 = ggplot(mat.species.traits.melt[ind.keep.sp,]
+                                        , aes_string(x = "PFG", y = "value")) +
+                          geom_boxplot(color = "grey60") +
+                          geom_point(data = mat.traits.pfg.melt[ind.keep.pfg,]
+                                     , aes_string(x = "PFG"
+                                                  , y = "value"
+                                                  , color = "factor(variable, c('height', 'light'))")
+                                     , size = 2
+                                     , inherit.aes = FALSE) +
+                          scale_color_manual(""
+                                             , values = c("height" = "#238b45"
+                                                          , "light" = "#1d91c0")
+                                             , drop = FALSE) +
+                          scale_y_continuous(breaks = 1:max(as.numeric(as.character(mat.traits.pfg$light)), na.rm = TRUE)) +
+                          labs(x = "", y = "") +
+                          theme_fivethirtyeight() +
+                          theme(axis.text.y = element_text(margin = margin(t = 0
+                                                                           , r = 2
+                                                                           , b = 0
+                                                                           , l = 0
+                                                                           , unit = "lines"))
+                                , panel.background = element_rect(fill = "transparent", colour = NA)
+                                , plot.background = element_rect(fill = "transparent", colour = NA)
+                                , legend.background = element_rect(fill = "transparent", colour = NA)
+                                , legend.box.background = element_rect(fill = "transparent", colour = NA)
+                                , legend.key = element_rect(fill = "transparent", colour = NA))
+                        
+                        pp.3 = list(pp.3.1, pp.3.2)
+                        
+                      } else
+                      {
+                        pp.3 = NULL
+                      }
+                      
+                      #################################################################################################
+                      ## Dispersal graph
+                      if ("dispersal" %in% colnames(tab))
+                      {
+                        cat("\n >> Dispersal...")
+                        
+                        ind.keep.sp = which(mat.species.traits.melt$variable %in% c("dispersal"))
+                        ind.keep.pfg = which(mat.traits.pfg.melt$variable %in% c("dispersal"))
+                        
+                        pp.4 = ggplot(mat.species.traits.melt[ind.keep.sp,]
+                                      , aes_string(x = "PFG", y = "value")) +
+                          geom_boxplot(color = "grey60") +
+                          geom_point(data = mat.traits.pfg.melt[ind.keep.pfg, ]
+                                     , aes_string(x = "PFG"
+                                                  , y = "value"
+                                                  , color = "variable")
+                                     , size = 2
+                                     , inherit.aes = FALSE) +
+                          scale_y_continuous(breaks = 1:max(as.numeric(as.character(mat.traits.pfg$dispersal)), na.rm = TRUE)) +
+                          scale_color_manual("", values = c("dispersal" = "#88419d")) +
+                          labs(x = "", y = "", title = "STEP D : Computation of PFG traits values : dispersal"
+                               , subtitle = paste0("PFG traits values are calculated as the average of the PFG determinant species traits values.\n"
+                                                   , "If the trait is factorial or categorical, median value is taken.\n"
+                                                   , "Light-grey boxplot represent determinant species values.\n"
+                                                   , "Colored points represent the PFG calculated values.\n\n")) +
+                          theme_fivethirtyeight() +
+                          theme(panel.background = element_rect(fill = "transparent", colour = NA)
+                                , plot.background = element_rect(fill = "transparent", colour = NA)
+                                , legend.background = element_rect(fill = "transparent", colour = NA)
+                                , legend.box.background = element_rect(fill = "transparent", colour = NA)
+                                , legend.key = element_rect(fill = "transparent", colour = NA))
+                        
+                      } else
+                      {
+                        pp.4 = NULL
+                      }
+                      
+                      #################################################################################################
+                      ## Palatability graph
+                      if ("palatability" %in% colnames(tab))
+                      {
+                        cat("\n >> Palatability...")
+                        
+                        ind.keep.sp = which(mat.species.traits.melt$variable %in% c("palatability"))
+                        ind.keep.pfg = which(mat.traits.pfg.melt$variable %in% c("palatability"))
+                        
+                        pp.5 = ggplot(mat.species.traits.melt[ind.keep.sp,]
+                                      , aes_string(x = "PFG", y = "value")) +
+                          geom_boxplot(color = "grey60") +
+                          geom_point(data = mat.traits.pfg.melt[ind.keep.pfg, ]
+                                     , aes_string(x = "PFG"
+                                                  , y = "value"
+                                                  , color = "variable")
+                                     , size = 2
+                                     , inherit.aes = FALSE) +
+                          scale_y_continuous(breaks = 1:max(as.numeric(as.character(mat.traits.pfg$palatability)), na.rm = TRUE)) +
+                          scale_color_manual("", values = c("palatability" = "#02818a")) +
+                          labs(x = "", y = "", title = "STEP D : Computation of PFG traits values : palatability"
+                               , subtitle = paste0("PFG traits values are calculated as the average of the PFG determinant species traits values.\n"
+                                                   , "If the trait is factorial or categorical, median value is taken.\n"
+                                                   , "Light-grey boxplot represent determinant species values.\n"
+                                                   , "Colored points represent the PFG calculated values.\n\n")) +
+                          theme_fivethirtyeight() +
+                          theme(panel.background = element_rect(fill = "transparent", colour = NA)
+                                , plot.background = element_rect(fill = "transparent", colour = NA)
+                                , legend.background = element_rect(fill = "transparent", colour = NA)
+                                , legend.box.background = element_rect(fill = "transparent", colour = NA)
+                                , legend.key = element_rect(fill = "transparent", colour = NA))
+                        
+                      } else
+                      {
+                        pp.5 = NULL
+                      }
+                      
+                      #################################################################################################
+                      
+                      pp_list = list()
+                      if (sum(unlist(lapply(list(pp.1, pp.2, pp.3, pp.4, pp.5), is.null))) < 5)
+                      {
+                        if (!is.null(pp.1)) pp_list[[length(pp_list) + 1]] = pp.1
+                        if (!is.null(pp.2)) pp_list[[length(pp_list) + 1]] = pp.2
+                        if (!is.null(pp.3)) pp_list[[length(pp_list) + 1]] = grid.arrange(grobs = pp.3
+                                                                                          , layout_matrix = matrix(c(1, 1, 1, 2, 2)
+                                                                                                                   , ncol = 1
+                                                                                                                   , byrow = TRUE))
+                        if (!is.null(pp.4)) pp_list[[length(pp_list) + 1]] = pp.4
+                        if (!is.null(pp.5)) pp_list[[length(pp_list) + 1]] = pp.5
+                      }
+                      return(pp_list)
+                    }
         )
       }
     }
   
   if (is.ggplot(pp) || (is.list(pp) && length(pp) > 0))
   {
-    if (is.ggplot(pp))
-    {
-      RV$compt.browser.pfg <- 1
-      RV$compt.browser.pfg.max <- 1
-      
-      shinyjs::hide("pfg.go.left")
-      shinyjs::hide("pfg.go.right")
-      
-      output$UI.pfg.browser = renderUI({
-        plotOutput(outputId = "pfg.browser", width = "100%", height = "600px")
-      })
-      
-      output$pfg.browser = renderPlot({ pp })
-    } else
+    # if (is.ggplot(pp))
+    # {
+    #   RV$compt.browser.pfg <- 1
+    #   RV$compt.browser.pfg.max <- 1
+    #   
+    #   shinyjs::hide("pfg.go.left")
+    #   shinyjs::hide("pfg.go.right")
+    #   
+    #   output$UI.pfg.browser = renderUI({
+    #     plotOutput(outputId = "pfg.browser", width = "100%", height = "600px")
+    #   })
+    #   
+    #   output$pfg.browser = renderPlot({ pp })
+    # } else
     {
       shinyjs::show("pfg.go.left")
       shinyjs::show("pfg.go.right")
@@ -313,35 +609,54 @@ observeEvent(list(input$select.dominant
           plotOutput(outputId = paste0("pfg.browser_", i), width = "100%", height = "600px")
         })
       })
-      
       lapply(1:length(pp), function(i) {
         output[[paste0("pfg.browser_", i)]] = renderPlot({ plot(pp[[i]]) })
       })
       
+      # for(i in 1:length(pp)){
+      #   shinyjs::hideElement(paste0("pfg.browser_", i))
+      # }
+      
       RV$compt.browser.pfg.max <- length(pp)
       RV$compt.browser.pfg <- 1
       
-      all.plot = 1:RV$compt.browser.pfg.max
-      shinyjs::show(paste0("pfg.browser_", RV$compt.browser.pfg))
-      if (RV$compt.browser.pfg.max > 1)
-      {
-        for (i in all.plot[-RV$compt.browser.pfg])
-        {
-          shinyjs::hide(paste0("pfg.browser_", i))
-        }
-      }
+      print("HEHOOO")
+
     }
   }
 })
 
 ####################################################################
 
-observeEvent(RV$compt.browser.pfg, {
-  all.plot = 1:RV$compt.browser.pfg.max
-  shinyjs::show(paste0("pfg.browser_", RV$compt.browser.pfg))
-  if (RV$compt.browser.pfg.max > 1)
+# observe({
+#   for (i in 1:RV$compt.browser.pfg.max)
+#   {
+#   shinyjs::toggleState(paste0("pfg.browser_", i), !is.null(input[[paste0("pfg.browser_", i)]]) && i != RV$compt.browser.pfg)
+#   }
+# })
+
+# ttt  =reactive({
+#   lapply(1:RV$compt.browser.pfg.max, function(i) {
+#   input[[paste0("pfg.browser_", i)]]
+#   })
+# })
+
+# update_graphs = eventReactive(list(RV$compt.browser.pfg
+#                                    , RV$compt.browser.pfg.max), {
+  # req(grep(pattern = "pfg.browser_", x = names(input), value = TRUE))
+
+observeEvent(list(RV$compt.browser.pfg, RV$compt.browser.pfg.max), {
+  
+  print("YOUHUUUUUUUUUUUUU")
+  print(RV$compt.browser.pfg)
+  print(RV$compt.browser.pfg.max)
+  
+  for (i in 1:RV$compt.browser.pfg.max)
   {
-    for (i in all.plot[-RV$compt.browser.pfg])
+    if (i == RV$compt.browser.pfg)
+    {
+      shinyjs::show(paste0("pfg.browser_", i))
+    } else
     {
       shinyjs::hide(paste0("pfg.browser_", i))
     }
