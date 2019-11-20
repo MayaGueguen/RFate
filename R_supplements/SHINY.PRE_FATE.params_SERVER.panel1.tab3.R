@@ -20,14 +20,19 @@ output$UI.nb.clusters = renderUI({
   {
     group_names = names(sp.clust$clust.dendograms)
     lapply(group_names, function(i) {
-      sliderInput(inputId = paste0("no.clust_", i)
-                  , label = param.style(paste0("no.clust_", i))
-                  , min = 2
-                  , max = max(sp.clust$clust.evaluation$nb.cluster[which(sp.clust$clust.evaluation$group == i)])
-                  , value = 2
-                  , step = 1
-                  , round = TRUE
-                  , width = "100%"
+      fluidRow(
+        column(3, param.style(paste0("no.clust_", i)))
+        , column(9
+                 , sliderInput(inputId = paste0("no.clust_", i)
+                               , label = NULL
+                               , min = 2
+                               , max = max(sp.clust$clust.evaluation$nb.cluster[which(sp.clust$clust.evaluation$group == i)])
+                               , value = 2
+                               , step = 1
+                               , round = TRUE
+                               , width = "100%"
+                 )
+        )
       )
     })
   }
