@@ -107,16 +107,6 @@ get_dom = eventReactive(list(input$choice.dominant, input$compute.distance), {
 
 ####################################################################
 
-# output$table.traits.sp = renderDataTable({
-#   sp.traits = get_traits()
-#   if (!is.null(sp.traits))
-#   {
-#     return(sp.traits)
-#   }
-# })
-
-####################################################################
-
 get_DIST = eventReactive(input$compute.distance, {
   
   ## GET species traits

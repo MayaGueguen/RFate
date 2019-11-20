@@ -202,12 +202,4 @@ get_CLUST3 = eventReactive(input$clustering.step3, {
   }
 })
 
-####################################################################
 
-# output$table.traits.pfg = renderDataTable({
-#   pfg.traits = get_CLUST3()
-#   if (!is.null(pfg.traits))
-#   {
-#     return(pfg.traits)
-#   }
-# })

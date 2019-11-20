@@ -53,8 +53,7 @@ observeEvent(list(input$select.dominant
                   , input$clustering.step2
                   , input$clustering.step3
 ), {
-  
-  print(RV$pfg.graph)
+
   levels_graph.type = unique(RV$pfg.graph)
   levels_graph.type = factor(levels_graph.type, c("dom", "dist", "clust1", "clust2", "clust3"))
   levels_graph.type = sort(levels_graph.type)
@@ -580,88 +579,34 @@ observeEvent(list(input$select.dominant
   
   if (is.ggplot(pp) || (is.list(pp) && length(pp) > 0))
   {
-    # if (is.ggplot(pp))
-    # {
-    #   RV$compt.browser.pfg <- 1
-    #   RV$compt.browser.pfg.max <- 1
-    #   
-    #   shinyjs::hide("pfg.go.left")
-    #   shinyjs::hide("pfg.go.right")
-    #   
-    #   output$UI.pfg.browser = renderUI({
-    #     plotOutput(outputId = "pfg.browser", width = "100%", height = "600px")
-    #   })
-    #   
-    #   output$pfg.browser = renderPlot({ pp })
-    # } else
+    shinyjs::show("pfg.go.left")
+    shinyjs::show("pfg.go.right")
+    shinyjs::disable("pfg.go.left")
+    shinyjs::disable("pfg.go.right")
+    if (length(pp) > 1)
     {
-      shinyjs::show("pfg.go.left")
-      shinyjs::show("pfg.go.right")
-      shinyjs::disable("pfg.go.left")
-      shinyjs::disable("pfg.go.right")
-      if (length(pp) > 1)
-      {
-        shinyjs::enable("pfg.go.right")
-      }
-      
-      output$UI.pfg.browser = renderUI({
-        lapply(1:length(pp), function(i) {
-          plotOutput(outputId = paste0("pfg.browser_", i), width = "100%", height = "600px")
-        })
-      })
-      lapply(1:length(pp), function(i) {
-        output[[paste0("pfg.browser_", i)]] = renderPlot({ plot(pp[[i]]) })
-      })
-      
-      # for(i in 1:length(pp)){
-      #   shinyjs::hideElement(paste0("pfg.browser_", i))
-      # }
-      
-      RV$compt.browser.pfg.max <- length(pp)
-      RV$compt.browser.pfg <- 1
-      
-      print("HEHOOO")
-
+      shinyjs::enable("pfg.go.left")
     }
+    
+    output$UI.pfg.browser = renderUI({
+      lapply(1:length(pp), function(i) {
+        if (i == length(pp)){
+          plotOutput(outputId = paste0("pfg.browser_", i), width = "100%", height = "600px")
+        } else {
+          shinyjs::hidden(plotOutput(outputId = paste0("pfg.browser_", i), width = "100%", height = "600px"))
+        }
+      })
+    })
+    lapply(1:length(pp), function(i) {
+      output[[paste0("pfg.browser_", i)]] = renderPlot({ plot(pp[[i]]) })
+    })
+
+    RV$compt.browser.pfg.max <- length(pp)
+    RV$compt.browser.pfg <- length(pp)
   }
 })
 
 ####################################################################
-
-# observe({
-#   for (i in 1:RV$compt.browser.pfg.max)
-#   {
-#   shinyjs::toggleState(paste0("pfg.browser_", i), !is.null(input[[paste0("pfg.browser_", i)]]) && i != RV$compt.browser.pfg)
-#   }
-# })
-
-# ttt  =reactive({
-#   lapply(1:RV$compt.browser.pfg.max, function(i) {
-#   input[[paste0("pfg.browser_", i)]]
-#   })
-# })
-
-# update_graphs = eventReactive(list(RV$compt.browser.pfg
-#                                    , RV$compt.browser.pfg.max), {
-  # req(grep(pattern = "pfg.browser_", x = names(input), value = TRUE))
-
-observeEvent(list(RV$compt.browser.pfg, RV$compt.browser.pfg.max), {
-  
-  print("YOUHUUUUUUUUUUUUU")
-  print(RV$compt.browser.pfg)
-  print(RV$compt.browser.pfg.max)
-  
-  for (i in 1:RV$compt.browser.pfg.max)
-  {
-    if (i == RV$compt.browser.pfg)
-    {
-      shinyjs::show(paste0("pfg.browser_", i))
-    } else
-    {
-      shinyjs::hide(paste0("pfg.browser_", i))
-    }
-  }
-})
 
 observeEvent(input$pfg.go.left, {
   if (input$pfg.go.left > 0)
@@ -672,6 +617,8 @@ observeEvent(input$pfg.go.left, {
     {
       shinyjs::disable("pfg.go.left")
     }
+    shinyjs::toggle(paste0("pfg.browser_", RV$compt.browser.pfg + 1))
+    shinyjs::toggle(paste0("pfg.browser_", RV$compt.browser.pfg))
   }
 })
 
@@ -684,6 +631,8 @@ observeEvent(input$pfg.go.right, {
     {
       shinyjs::disable("pfg.go.right")
     }
+    shinyjs::toggle(paste0("pfg.browser_", RV$compt.browser.pfg - 1))
+    shinyjs::toggle(paste0("pfg.browser_", RV$compt.browser.pfg))
   }
 })
 
