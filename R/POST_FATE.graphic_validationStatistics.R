@@ -171,6 +171,7 @@ POST_FATE.graphic_validationStatistics = function(
     .stopMessage_beDataframe("mat.PFG.obs")
   } else
   {
+    mat.PFG.obs = as.data.frame(mat.PFG.obs)
     if (nrow(mat.PFG.obs) == 0 || ncol(mat.PFG.obs) != 4)
     {
       .stopMessage_numRowCol("mat.PFG.obs", c("PFG", "X", "Y", "obs"))
@@ -535,6 +536,7 @@ POST_FATE.graphic_validationStatistics = function(
                                          , breaks = seq(0, 1, 0.2)
                                          , limits = c(0, 1)) +
                     scale_y_continuous(breaks = seq(0, 1, 0.2), limits = c(0, 1.08)) +
+                    geom_point(alpha = 0) +
                     geom_bar(stat = "identity", na.rm = TRUE) +
                     geom_hline(aes_string(yintercept = "hline"), lty = 2, color = "grey30") +
                     geom_errorbar(aes(ymin = value - sensitivity.sd, ymax = value + sensitivity.sd), color = "grey30", na.rm = TRUE) +
@@ -559,6 +561,9 @@ POST_FATE.graphic_validationStatistics = function(
             names(plot_list.hab) = hab_names
             return(plot_list.hab)
           } ## END opt.doPlot
+        } else
+        {
+          warning(paste0("Missing data!\n No validation has been calculated for year ", y, "!"))
         }
       } ## END condition file_name
     } ## END loop on years
