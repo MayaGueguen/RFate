@@ -53,17 +53,24 @@ get_param.simul = eventReactive(input$graph.simulParam, {
 observeEvent(input$graph.folder.simul, {
   if (input$graph.folder.simul > 0)
   {
+    print("yo1")
     names.simulParam = list.files(path = paste0(get_path.simul(), "/PARAM_SIMUL")
                                   , pattern = ".txt$"
                                   , all.files = FALSE
                                   , full.names = TRUE)
     names.simulParam = basename(names.simulParam)
+    print("yo2")
+    
     if (length(names.simulParam) > 0)
     {
+      print("yo3")
+      
       updateSelectInput(session
                         , inputId = "graph.simulParam"
                         , choices = names.simulParam
                         , selected = names.simulParam[1])
+      print("yo4")
+      
       shinyjs::enable("graph.simulParam")
       shinyjs::enable("create.relativeAbund")
       shinyjs::enable("create.evolutionCoverage")
@@ -72,6 +79,8 @@ observeEvent(input$graph.folder.simul, {
       shinyjs::enable("create.validationStat")
       shinyjs::enable("create.PFGrichness")
       shinyjs::enable("create.PFGcover")
+      print("yo5")
+      
     } else
     {
       shinyjs::reset("graph.simulParam")
@@ -88,8 +97,11 @@ observeEvent(input$graph.folder.simul, {
       shinyjs::disable("create.PFGlight")
       shinyjs::disable("create.PFGsoil")
     }
+    print("yo6")
     
     update_browser.files()
+    print("yo7")
+    
   } else
   {
     shinyjs::reset("graph.simulParam")
@@ -134,15 +146,20 @@ get_last.createdFiles2 = function(pattern_path = "", pattern_head, pattern_tail)
 ####################################################################
 
 get_globalParam = eventReactive(input$graph.simulParam, {
+  print("ya1")
+  
   if (nchar(input$graph.simulParam) > 0)
   {
+    print("ya2")
+    
     shinyjs::enable("create.relativeAbund")
+    shinyjs::enable("create.validationStat")
     shinyjs::enable("create.evolutionCoverage")
     shinyjs::enable("create.evolutionAbund")
     shinyjs::enable("create.PFGvsHS")
-    shinyjs::enable("create.validationStat")
     shinyjs::enable("create.PFGrichness")
     shinyjs::enable("create.PFGcover")
+    print("ya3")
     
     file.globalParam = .getParam(params.lines = get_param.simul()
                                  , flag = "GLOBAL_PARAMS"
@@ -150,15 +167,17 @@ get_globalParam = eventReactive(input$graph.simulParam, {
                                  , is.num = FALSE)
     file.globalParam = paste0(get_path.folder(), "/", file.globalParam)
     file.globalParam
+    print("ya4")
+    
   } else
   {
     shinyjs::disable("create.relativeAbund")
+    shinyjs::disable("create.validationStat")
     shinyjs::disable("create.evolutionCoverage")
     shinyjs::disable("create.evolutionAbund")
     shinyjs::disable("create.evolutionLight")
     shinyjs::disable("create.evolutionSoil")
     shinyjs::disable("create.PFGvsHS")
-    shinyjs::disable("create.validationStat")
     shinyjs::disable("create.PFGrichness")
     shinyjs::disable("create.PFGcover")
     shinyjs::disable("create.PFGlight")

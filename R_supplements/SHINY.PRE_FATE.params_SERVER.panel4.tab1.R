@@ -154,17 +154,30 @@ get_graph.type = eventReactive(input$browser.files, {
 })
 
 observeEvent(input$browser.files, {
+  print("ayhdhuhauh")
+  print(input$browser.files)
   if (nchar(input$browser.files) > 0)
   {
     graph.type = get_graph.type()
+    print(graph.type)
     if (!is.na(graph.type))
     {
-      if (graph.type %in% c("richness", "cover"))
+      if (graph.type %in% c("richness", "cover", "light", "soil"))
       {
-        ras = raster(paste0(get_path.simul(), "/RESULTS/", input$browser.files, ".tif"))
+        graph.type.file = paste0(get_path.simul(), "/RESULTS/", input$browser.files, ".tif")
+        if (file.exists(graph.type.file)){
+          ras = raster(graph.type.file)
+        } else {
+          shinyalert(type = "warning", text = paste0("The file selected (", graph.type.file, ") does not exist !"))
+        }
       } else
       {
-        tab = fread(paste0(get_path.simul(), "/RESULTS/", input$browser.files, ".csv"))
+        graph.type.file = paste0(get_path.simul(), "/RESULTS/", input$browser.files, ".csv")
+        if (file.exists(graph.type.file)){
+          tab = fread(graph.type.file)
+        } else {
+          shinyalert(type = "warning", text = paste0("The file selected (", graph.type.file, ") does not exist !"))
+        }
       }
       
       opt.abund_fixedScale = FALSE
@@ -178,166 +191,204 @@ observeEvent(input$browser.files, {
       ## abund
       col_vec = c('#6da34d', '#297373', '#58a4b0', '#5c4742', '#3f334d')
       col_fun = colorRampPalette(col_vec)
+      print(graph.type)
       
       pp = switch(graph.type
                   ## ---------------------------------------------------------------------------------------------------------- ##
                   , abund.pixels = {
-                    pp = ggplot(tab, aes_string(x = "YEAR", y = "Abund", color = "PFG")) +
-                      scale_color_manual("", values = fun_col(length(unique(tab$PFG)))) +
-                      geom_line() +
-                      facet_grid("TYPE ~ ID", scales = ifelse(opt.abund_fixedScale, "fixed", "free_y")) +
-                      labs(x = "", y = "", title = paste0("GRAPH A : evolution of species' abundance"),
-                           subtitle = paste0("For each PFG, the line represents the evolution through time of its abundance\n",
-                                             "for 5 randomly selected pixels within the studied area.\n")) +
-                      .getGraphics_theme()
+                    if (length(which(colnames(tab) %in% c("YEAR", "Abund", "PFG", "TYPE", "ID"))) == 5)
+                    {
+                      list(ggplot(tab, aes_string(x = "YEAR", y = "Abund", color = "PFG")) +
+                             scale_color_manual("", values = fun_col(length(unique(tab$PFG)))) +
+                             geom_line() +
+                             facet_grid("TYPE ~ ID", scales = ifelse(opt.abund_fixedScale, "fixed", "free_y")) +
+                             labs(x = "", y = "", title = paste0("GRAPH A : evolution of species' abundance"),
+                                  subtitle = paste0("For each PFG, the line represents the evolution through time of its abundance\n",
+                                                    "for 5 randomly selected pixels within the studied area.\n")) +
+                             .getGraphics_theme())
+                    } else
+                    {
+                      shinyalert(type = "warning", text = "The file provided does not contain the required columns (YEAR, Abund, PFG, TYPE, ID) !")
+                    }
                   }
                   ## ---------------------------------------------------------------------------------------------------------- ##
                   , light.pixels = {
-                    pp = ggplot(tab, aes_string(x = "YEAR", y = "Abund", color = "STRATUM")) +
-                      scale_color_manual("", values = fun_col(max(sub("STRATUM_", "", tab$STRATUM)))) +
-                      geom_line() +
-                      facet_grid("TYPE ~ ID", scales = ifelse(opt.abund_fixedScale, "fixed", "free_y")) +
-                      labs(x = "", y = "", title = paste0("GRAPH B : evolution of light resources"),
-                           subtitle = paste0("For each stratum, the line represents the evolution through time of its light resources\n",
-                                             "for 5 randomly selected pixels within the studied area.\n")) +
-                      .getGraphics_theme()
+                    if (length(which(colnames(tab) %in% c("YEAR", "Abund", "STRATUM", "TYPE", "ID"))) == 5)
+                    {
+                      list(ggplot(tab, aes_string(x = "YEAR", y = "Abund", color = "STRATUM")) +
+                             scale_color_manual("", values = fun_col(max(sub("STRATUM_", "", tab$STRATUM)))) +
+                             geom_line() +
+                             facet_grid("TYPE ~ ID", scales = ifelse(opt.abund_fixedScale, "fixed", "free_y")) +
+                             labs(x = "", y = "", title = paste0("GRAPH B : evolution of light resources"),
+                                  subtitle = paste0("For each stratum, the line represents the evolution through time of its light resources\n",
+                                                    "for 5 randomly selected pixels within the studied area.\n")) +
+                             .getGraphics_theme())
+                    } else
+                    {
+                      shinyalert(type = "warning", text = "The file provided does not contain the required columns (YEAR, Abund, STRATUM, TYPE, ID) !")
+                    }
                   }
                   ## ---------------------------------------------------------------------------------------------------------- ##
                   , soil.pixels = {
-                    pp = ggplot(tab, aes_string(x = "YEAR", y = "SOIL"))
-                    
-                    if ("Abund" %in% colnames(tab))
+                    if (length(which(colnames(tab) %in% c("YEAR", "SOIL", "ID"))) == 3)
                     {
+                      pp = ggplot(tab, aes_string(x = "YEAR", y = "SOIL"))
+                      
+                      if ("Abund" %in% colnames(tab))
+                      {
+                        pp = pp +
+                          geom_line(aes_string(y = "Abund", color = "PFG"), lwd = 0.4) +
+                          scale_color_manual("", values = fun_col(length(unique(tab$PFG)))) +
+                          facet_grid("TYPE ~ ID", scales = "fixed")
+                      } else
+                      {
+                        pp = pp +
+                          facet_grid(" ~ ID", scales = "fixed")
+                      }
                       pp = pp +
-                        geom_line(aes_string(y = "Abund", color = "PFG"), lwd = 0.4) +
-                        scale_color_manual("", values = fun_col(length(unique(tab$PFG)))) +
-                        facet_grid("TYPE ~ ID", scales = "fixed")
+                        geom_line(lwd = 0.8) +
+                        labs(x = "", y = "", title = paste0("GRAPH B : evolution of soil resources"),
+                             subtitle = paste0("The line represents the evolution through time of the soil resources\n",
+                                               "for 5 randomly selected pixels within the studied area.\n")) +
+                        .getGraphics_theme()
+                      list(pp)
                     } else
                     {
-                      pp = pp +
-                        facet_grid(" ~ ID", scales = "fixed")
+                      shinyalert(type = "warning", text = "The file provided does not contain the required columns (YEAR, SOIL, ID) !")
                     }
-                    pp = pp +
-                      geom_line(lwd = 0.8) +
-                      labs(x = "", y = "", title = paste0("GRAPH B : evolution of soil resources"),
-                           subtitle = paste0("The line represents the evolution through time of the soil resources\n",
-                                             "for 5 randomly selected pixels within the studied area.\n")) +
-                      .getGraphics_theme()
                   }
                   ## ---------------------------------------------------------------------------------------------------------- ##
                   , spaceOccupancy = {
-                    pp = ggplot(tab, aes_string(x = "YEAR", y = "Abund * 100", color = "factor(HAB)")) +
-                      geom_line(lwd = 1) +
-                      facet_wrap("~ PFG") +
-                      scale_color_manual("Habitat", values = col_fun(length(unique(tab$HAB)))) +
-                      labs(x = "", y = "", title = paste0("GRAPH A : evolution of species' space occupation"),
-                           subtitle = paste0("For each PFG, the line represents the evolution through time of its space occupancy,\n",
-                                             "meaning the percentage of pixels in which the abundance of the species is greater than 0.\n")) +
-                      .getGraphics_theme()
+                    if (length(which(colnames(tab) %in% c("YEAR", "Abund", "HAB", "PFG"))) == 4)
+                    {
+                      list(ggplot(tab, aes_string(x = "YEAR", y = "Abund * 100", color = "factor(HAB)")) +
+                             geom_line(lwd = 1) +
+                             facet_wrap("~ PFG") +
+                             scale_color_manual("Habitat", values = col_fun(length(unique(tab$HAB)))) +
+                             labs(x = "", y = "", title = paste0("GRAPH A : evolution of species' space occupation"),
+                                  subtitle = paste0("For each PFG, the line represents the evolution through time of its space occupancy,\n",
+                                                    "meaning the percentage of pixels in which the abundance of the species is greater than 0.\n")) +
+                             .getGraphics_theme())
+                    } else
+                    {
+                      shinyalert(type = "warning", text = "The file provided does not contain the required columns (YEAR, Abund, HAB, PFG) !")
+                    }
                   }
                   ## ---------------------------------------------------------------------------------------------------------- ##
                   , abund = {
-                    pp = ggplot(tab, aes_string(x = "YEAR", y = "Abund", color = "HAB")) +
-                      geom_line(lwd = 1) +
-                      facet_wrap("~ PFG", scales = ifelse(opt.abund_fixedScale, "fixed", "free_y")) +
-                      scale_color_manual("Habitat", values = col_fun(length(unique(tab$HAB)))) +
-                      labs(x = "", y = "", title = paste0("GRAPH A : evolution of species' abundance"),
-                           subtitle = paste0("For each PFG, the line represents the evolution through time of its abundance\n",
-                                             "over the whole studied area, meaning the sum of its abundances in every pixel.\n")) +
-                      .getGraphics_theme()
+                    if (length(which(colnames(tab) %in% c("YEAR", "Abund", "HAB", "PFG"))) == 4)
+                    {
+                      list(ggplot(tab, aes_string(x = "YEAR", y = "Abund", color = "HAB")) +
+                             geom_line(lwd = 1) +
+                             facet_wrap("~ PFG", scales = ifelse(opt.abund_fixedScale, "fixed", "free_y")) +
+                             scale_color_manual("Habitat", values = col_fun(length(unique(tab$HAB)))) +
+                             labs(x = "", y = "", title = paste0("GRAPH A : evolution of species' abundance"),
+                                  subtitle = paste0("For each PFG, the line represents the evolution through time of its abundance\n",
+                                                    "over the whole studied area, meaning the sum of its abundances in every pixel.\n")) +
+                             .getGraphics_theme())
+                    } else
+                    {
+                      shinyalert(type = "warning", text = "The file provided does not contain the required columns (YEAR, Abund, HAB, PFG) !")
+                    }
                   }
                   ## ---------------------------------------------------------------------------------------------------------- ##
                   ## ---------------------------------------------------------------------------------------------------------- ##
                   , validation = {
-                    ## prepare the plot ------------------------------------------------------------
-                    tab = melt(tab, id.vars = c("PFG", "HAB", "AUC.sd", "sensitivity.sd", "specificity.sd"))
-                    tab$variable = factor(tab$variable, c("sensitivity", "TSS", "specificity", "AUC"))
-                    
-                    tab$AUC.sd[which(tab$variable != "AUC")] = NA
-                    tab$sensitivity.sd[which(tab$variable != "sensitivity")] = NA
-                    tab$specificity.sd[which(tab$variable != "specificity")] = NA
-                    
-                    tab$hline = 0.5
-                    tab$hline[which(tab$variable == "AUC")] = 0.8
-                    tab$hline[which(tab$variable == "TSS")] = 0.4
-                    
-                    hab_names = sort(unique(tab$HAB))
-                    
-                    ## produce the plot ------------------------------------------------------------
-                    pp = foreach(habi = hab_names) %do%
+                    if (length(which(colnames(tab) %in% c("PFG", "HAB", "AUC.sd", "sensitivity.sd", "specificity.sd"))) == 5)
                     {
-                      cat("\n > Preparing for habitat ", habi)
-                      mat.plot = tab[which(tab$HAB == habi), ]
-
-                      ## 1. get the legend
-                      pp = ggplot(mat.plot, aes_string(x = "PFG", y = "value", fill = "value")) +
-                        scale_fill_gradientn(""
-                                             , colors = brewer.pal(9, "RdYlGn")
-                                             , breaks = seq(0, 1, 0.2)
-                                             , limits = c(0, 1)) +
-                        geom_bar(stat = "identity", na.rm = TRUE) +
-                        ylim(0, 1) +
-                        .getGraphics_theme() +
-                        theme(legend.key.width = unit(2, "lines"))
-
-                      pp_leg = suppressWarnings(get_legend(pp))
-
-                      ## 2. get one plot for the title and for each statistic
-                      pp_list = foreach(vari = c("all", "sensitivity", "specificity", "TSS", "AUC")) %do%
-                      {
-                        if (vari == "all"){
-                          pp = ggplot(mat.plot, aes_string(x = "PFG", y = "value", fill = "value")) +
-                            labs(x = "", y = "", title = paste0("GRAPH F : validation statistics - Simulation year : "
-                                                                , strsplit(sub(".*YEAR_", "", input$browser.files), "_")[[1]][1]
-                                                                , " - Habitat ", habi),
-                                 subtitle = paste0("Sensitivity (or specificity) measures the proportion of actual positives (or negatives) that are correctly identified as such.\n"
-                                                   , "True skill statistic (TSS) values of -1 indicate predictive abilities of not better than a random model,\n"
-                                                   , "0 indicates an indiscriminate model and +1 a perfect model.\n"
-                                                   , "AUC corresponds to the area under the ROC curve (Receiver Operating Characteristic).\n")) +
-                            .getGraphics_theme() +
-                            theme(panel.grid = element_blank()
-                                  , axis.text = element_blank())
-                        } else
+                      ## prepare the plot ------------------------------------------------------------
+                      tab = melt(tab, id.vars = c("PFG", "HAB", "AUC.sd", "sensitivity.sd", "specificity.sd"))
+                      tab$variable = factor(tab$variable, c("sensitivity", "TSS", "specificity", "AUC"))
+                      
+                      tab$AUC.sd[which(tab$variable != "AUC")] = NA
+                      tab$sensitivity.sd[which(tab$variable != "sensitivity")] = NA
+                      tab$specificity.sd[which(tab$variable != "specificity")] = NA
+                      
+                      tab$hline = 0.5
+                      tab$hline[which(tab$variable == "AUC")] = 0.8
+                      tab$hline[which(tab$variable == "TSS")] = 0.4
+                      
+                      hab_names = sort(unique(tab$HAB))
+                      
+                      ## produce the plot ------------------------------------------------------------
+                      pp = foreach(habi = hab_names) %do%
                         {
-                          if (vari == "sensitivity") subti = "Sensitivity - True positive rate"
-                          if (vari == "specificity") subti = "Specificity - True negative rate"
-                          if (vari == "TSS") subti = "True Skill Statistic (TSS)"
-                          if (vari == "AUC") subti = "Area Under Curve (AUC)"
-                          pp = ggplot(mat.plot[which(mat.plot$variable == vari), ]
-                                      , aes_string(x = "PFG", y = "value", fill = "value")) +
-                            scale_fill_gradientn(guide = F
+                          cat("\n > Preparing for habitat ", habi)
+                          mat.plot = tab[which(tab$HAB == habi), ]
+                          
+                          ## 1. get the legend
+                          pp = ggplot(mat.plot, aes_string(x = "PFG", y = "value", fill = "value")) +
+                            scale_fill_gradientn(""
                                                  , colors = brewer.pal(9, "RdYlGn")
                                                  , breaks = seq(0, 1, 0.2)
                                                  , limits = c(0, 1)) +
-                            scale_y_continuous(breaks = seq(0, 1, 0.2), limits = c(0, 1.08)) +
                             geom_bar(stat = "identity", na.rm = TRUE) +
-                            geom_hline(aes_string(yintercept = "hline"), lty = 2, color = "grey30") +
-                            geom_errorbar(aes(ymin = value - sensitivity.sd, ymax = value + sensitivity.sd), color = "grey30", na.rm = TRUE) +
-                            geom_errorbar(aes(ymin = value - specificity.sd, ymax = value + specificity.sd), color = "grey30", na.rm = TRUE) +
-                            geom_errorbar(aes(ymin = value - AUC.sd, ymax = value + AUC.sd), color = "grey30", na.rm = TRUE) +
-                            annotate(geom = "text", x = length(unique(tab$PFG)) / 2, y = 1.05, label = subti, size = 4) +
+                            ylim(0, 1) +
                             .getGraphics_theme() +
-                            theme(axis.text.x = element_text(angle = 90))
-
-                          pp = suppressWarnings(ggMarginal(pp, type = "boxplot", margins = "y", size = 7))
-                        }
-
-                        return(pp)
-                      }
-
-                      ## 3. gather everything
-                      pp_list[[6]] = pp_leg
-                      return(grid.arrange(grobs = pp_list
-                                          , layout_matrix = matrix(c(1,1,2,3,2,3,4,5,4,5,6,6), ncol = 2, byrow = TRUE)
-                      ))
-                    } ## END loop on hab_names
+                            theme(legend.key.width = unit(2, "lines"))
+                          
+                          pp_leg = suppressWarnings(get_legend(pp))
+                          
+                          ## 2. get one plot for the title and for each statistic
+                          pp_list = foreach(vari = c("all", "sensitivity", "specificity", "TSS", "AUC")) %do%
+                            {
+                              if (vari == "all"){
+                                pp = ggplot(mat.plot, aes_string(x = "PFG", y = "value", fill = "value")) +
+                                  labs(x = "", y = "", title = paste0("GRAPH F : validation statistics - Simulation year : "
+                                                                      , strsplit(sub(".*YEAR_", "", input$browser.files), "_")[[1]][1]
+                                                                      , " - Habitat ", habi),
+                                       subtitle = paste0("Sensitivity (or specificity) measures the proportion of actual positives (or negatives) that are correctly identified as such.\n"
+                                                         , "True skill statistic (TSS) values of -1 indicate predictive abilities of not better than a random model,\n"
+                                                         , "0 indicates an indiscriminate model and +1 a perfect model.\n"
+                                                         , "AUC corresponds to the area under the ROC curve (Receiver Operating Characteristic).\n")) +
+                                  .getGraphics_theme() +
+                                  theme(panel.grid = element_blank()
+                                        , axis.text = element_blank())
+                              } else
+                              {
+                                if (vari == "sensitivity") subti = "Sensitivity - True positive rate"
+                                if (vari == "specificity") subti = "Specificity - True negative rate"
+                                if (vari == "TSS") subti = "True Skill Statistic (TSS)"
+                                if (vari == "AUC") subti = "Area Under Curve (AUC)"
+                                pp = ggplot(mat.plot[which(mat.plot$variable == vari), ]
+                                            , aes_string(x = "PFG", y = "value", fill = "value")) +
+                                  scale_fill_gradientn(guide = F
+                                                       , colors = brewer.pal(9, "RdYlGn")
+                                                       , breaks = seq(0, 1, 0.2)
+                                                       , limits = c(0, 1)) +
+                                  scale_y_continuous(breaks = seq(0, 1, 0.2), limits = c(0, 1.08)) +
+                                  geom_bar(stat = "identity", na.rm = TRUE) +
+                                  geom_hline(aes_string(yintercept = "hline"), lty = 2, color = "grey30") +
+                                  geom_errorbar(aes(ymin = value - sensitivity.sd, ymax = value + sensitivity.sd), color = "grey30", na.rm = TRUE) +
+                                  geom_errorbar(aes(ymin = value - specificity.sd, ymax = value + specificity.sd), color = "grey30", na.rm = TRUE) +
+                                  geom_errorbar(aes(ymin = value - AUC.sd, ymax = value + AUC.sd), color = "grey30", na.rm = TRUE) +
+                                  annotate(geom = "text", x = length(unique(tab$PFG)) / 2, y = 1.05, label = subti, size = 4) +
+                                  .getGraphics_theme() +
+                                  theme(axis.text.x = element_text(angle = 90))
+                                
+                                pp = suppressWarnings(ggMarginal(pp, type = "boxplot", margins = "y", size = 7))
+                              }
+                              
+                              return(pp)
+                            }
+                          
+                          ## 3. gather everything
+                          pp_list[[6]] = pp_leg
+                          list(
+                            grid.arrange(grobs = pp_list
+                                         , layout_matrix = matrix(c(1,1,2,3,2,3,4,5,4,5,6,6), ncol = 2, byrow = TRUE)
+                            ))
+                        } ## END loop on hab_names
+                    } else
+                    {
+                      shinyalert(type = "warning", text = "The file provided does not contain the required columns (PFG, HAB, AUC.sd, sensitivity.sd, specificity.sd) !")
+                    }
                   }
                   ## ---------------------------------------------------------------------------------------------------------- ##
                   ## ---------------------------------------------------------------------------------------------------------- ##
                   , richness = {
                     ras.pts = as.data.frame(rasterToPoints(ras))
                     colnames(ras.pts) = c("X", "Y", "NB")
-                    print(head(ras.pts))
                     
                     pp = ggplot(ras.pts, aes_string(x = "X", y = "Y", fill = "NB")) +
                       scale_fill_gradientn("Number of PFG"
@@ -357,12 +408,12 @@ observeEvent(input$browser.files, {
                       .getGraphics_theme() +
                       theme(axis.text = element_blank()
                             , legend.key.width = unit(2, "lines"))
+                    list(pp)
                   }
                   ## ---------------------------------------------------------------------------------------------------------- ##
                   , cover = {
                     ras.pts = as.data.frame(rasterToPoints(ras))
                     colnames(ras.pts) = c("X", "Y", "COVER")
-                    print(head(ras.pts))
                     
                     pp = ggplot(ras.pts, aes_string(x = "X", y = "Y", fill = "COVER")) +
                       scale_fill_gradientn("Abundance (%)"
@@ -383,12 +434,12 @@ observeEvent(input$browser.files, {
                       .getGraphics_theme() +
                       theme(axis.text = element_blank()
                             , legend.key.width = unit(2, "lines"))
+                    list(pp)
                   }
                   ## ---------------------------------------------------------------------------------------------------------- ##
                   , light = {
                     ras.pts = as.data.frame(rasterToPoints(ras_light))
                     colnames(ras.pts) = c("X", "Y", "LIGHT")
-                    print(head(ras.pts))
                     
                     pp = ggplot(ras.pts, aes_string(x = "X", y = "Y", fill = "LIGHT")) +
                       scale_fill_gradientn("Light (Landolt)"
@@ -408,12 +459,12 @@ observeEvent(input$browser.files, {
                       .getGraphics_theme() +
                       theme(axis.text = element_blank()
                             , legend.key.width = unit(2, "lines"))
+                    list(pp)
                   }
                   ## ---------------------------------------------------------------------------------------------------------- ##
                   , soil = {
                     ras.pts = as.data.frame(rasterToPoints(ras_light))
                     colnames(ras.pts) = c("X", "Y", "SOIL")
-                    print(head(ras.pts))
                     
                     pp = ggplot(ras.pts, aes_string(x = "X", y = "Y", fill = "SOIL")) +
                       scale_fill_gradientn("Soil (Landolt)"
@@ -433,75 +484,50 @@ observeEvent(input$browser.files, {
                       .getGraphics_theme() +
                       theme(axis.text = element_blank()
                             , legend.key.width = unit(2, "lines"))
+                    list(pp)
                   }
       )
       
-      if (is.ggplot(pp))
+      print("poupiouou")
+      print(is.list(pp))
+      print(length(pp))
+      
+      if (is.ggplot(pp) || (is.list(pp) && length(pp) > 0))
       {
-        RV$compt.browser <- 1
-        RV$compt.browser.max <- 1
+        print("CAOUDOUEOUDOUEU")
+        print(is.list(pp))
+        print(length(pp))
         
-        shinyjs::hide("go.left")
-        shinyjs::hide("go.right")
-        
-        output$UI.plot.browser = renderUI({
-          plotlyOutput(outputId = "plot.browser", width = "100%", height = "600px")
-        })
-        
-        output$plot.browser = renderPlotly({ ggplotly(pp) })
-      } else
-      {
         shinyjs::show("go.left")
         shinyjs::show("go.right")
         shinyjs::disable("go.left")
         shinyjs::disable("go.right")
         if (length(pp) > 1)
         {
-          shinyjs::enable("go.right")
+          shinyjs::enable("go.left")
         }
         
         output$UI.plot.browser = renderUI({
           lapply(1:length(pp), function(i) {
-            plotOutput(outputId = paste0("plot.browser_", i), width = "100%", height = "600px")
+            if (i == length(pp)){
+              plotOutput(outputId = paste0("plot.browser_", i), width = "100%", height = "600px")
+            } else {
+              shinyjs::hidden(plotOutput(outputId = paste0("plot.browser_", i), width = "100%", height = "600px"))
+            }
           })
         })
-        
         lapply(1:length(pp), function(i) {
           output[[paste0("plot.browser_", i)]] = renderPlot({ plot(pp[[i]]) })
         })
         
         RV$compt.browser.max <- length(pp)
-        RV$compt.browser <- 1
-        
-        all.plot = 1:RV$compt.browser.max
-        shinyjs::show(paste0("plot.browser_", RV$compt.browser))
-        if (RV$compt.browser.max > 1)
-        {
-          for (i in all.plot[-RV$compt.browser])
-          {
-            shinyjs::hide(paste0("plot.browser_", i))
-          }
-        }
+        RV$compt.browser <- length(pp)
       }
     }
   }
 })
 
 ####################################################################
-
-# RV = reactiveValues(compt = 1, comptMax = 1)
-
-observeEvent(RV$compt.browser, {
-  all.plot = 1:RV$compt.browser.max
-  shinyjs::show(paste0("plot.browser_", RV$compt.browser))
-  if (RV$compt.browser.max > 1)
-  {
-    for (i in all.plot[-RV$compt.browser])
-    {
-      shinyjs::hide(paste0("plot.browser_", i))
-    }
-  }
-})
 
 observeEvent(input$go.left, {
   if (input$go.left > 0)
@@ -512,6 +538,8 @@ observeEvent(input$go.left, {
     {
       shinyjs::disable("go.left")
     }
+    shinyjs::toggle(paste0("plot.browser_", RV$compt.browser + 1))
+    shinyjs::toggle(paste0("plot.browser_", RV$compt.browser))
   }
 })
 
@@ -524,5 +552,8 @@ observeEvent(input$go.right, {
     {
       shinyjs::disable("go.right")
     }
+    shinyjs::toggle(paste0("plot.browser_", RV$compt.browser - 1))
+    shinyjs::toggle(paste0("plot.browser_", RV$compt.browser))
   }
 })
+

@@ -88,8 +88,8 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
            column(3
                   , radioGroupButtons(inputId = "show.specific_year"
                                       , label = ""
-                                      , choices = c("PFG vs Habsuit"
-                                                    , "Validation stat"
+                                      , choices = c("Validation stat"
+                                                    , "PFG vs Habsuit"
                                                     , "PFG richness"
                                                     , "PFG cover"
                                                     , "Light CWM (MAP)"
@@ -103,33 +103,6 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
                   )
            )
            , column(9
-                    , shinyjs::hidden(
-                      fluidRow(
-                        id = "panel.PFGvsHS"
-                        , column(12
-                                 , fluidRow(
-                                   column(8, br())
-                                   , column(4
-                                            , actionButton(inputId = "create.PFGvsHS"
-                                                           , label = "Run plot"
-                                                           , icon = icon("play")
-                                                           , width = "100%"
-                                                           , style = HTML(button.style)
-                                            ) %>% helper(type = "inline"
-                                                         , title = "Plot maps of 0/1 predicted by FATE vs Habitat suitability"
-                                                         , size = "l"
-                                                         , content = help.HTML("docs/reference/POST_FATE.graphic_mapPFGvsHS.html")
-                                            )
-                                   )
-                                 )
-                                 , fluidRow(
-                                   column(12
-                                          , plotlyOutput(outputId = "plot.PFGvsHS", width = "100%", height = "600px")
-                                   )
-                                 )
-                        )
-                      )
-                    )
                     , shinyjs::hidden(
                       fluidRow(
                         id = "panel.validationStat"
@@ -153,6 +126,33 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
                                    column(12
                                           , br()
                                           , plotOutput(outputId = "plot.validationStat", width = "100%", height = "600px")
+                                   )
+                                 )
+                        )
+                      )
+                    )
+                    , shinyjs::hidden(
+                      fluidRow(
+                        id = "panel.PFGvsHS"
+                        , column(12
+                                 , fluidRow(
+                                   column(8, br())
+                                   , column(4
+                                            , actionButton(inputId = "create.PFGvsHS"
+                                                           , label = "Run plot"
+                                                           , icon = icon("play")
+                                                           , width = "100%"
+                                                           , style = HTML(button.style)
+                                            ) %>% helper(type = "inline"
+                                                         , title = "Plot maps of 0/1 predicted by FATE vs Habitat suitability"
+                                                         , size = "l"
+                                                         , content = help.HTML("docs/reference/POST_FATE.graphic_mapPFGvsHS.html")
+                                            )
+                                   )
+                                 )
+                                 , fluidRow(
+                                   column(12
+                                          , plotlyOutput(outputId = "plot.PFGvsHS", width = "100%", height = "600px")
                                    )
                                  )
                         )

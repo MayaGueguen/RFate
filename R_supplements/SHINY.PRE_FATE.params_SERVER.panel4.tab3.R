@@ -123,79 +123,10 @@ observeEvent(input$create.relativeAbund, {
   setwd(path.init)
 })
 
-
-####################################################################
-
-observeEvent(input$create.PFGvsHS, {
-  
-  path.init = getwd()
-  setwd(get_path.folder())
-  
-  showModal(modalDialog(HTML(paste0("Creating maps of PFG habitat suitability vs simulated occurrences with :
-                                        <ul>
-                                    <li><strong>folder :</strong> ", basename(get_name.simul()),"</li>
-                                    <li><strong>simulation parameter file :</strong> ", basename(get_param.simul()), "</li>
-                                    <li><strong>year :</strong> ", as.numeric(input$graph.year),"</li>
-                                    <li><strong>opt.strata :</strong> ", as.numeric(input$graph.strata_min),"</li>
-                                    <li><strong>opt.no_CPU :</strong> ", input$graph.opt.no_CPU,"</li>
-                                    </ul>"))
-                        , title = HTML("Maps of PFG habitat suitability vs simulated occurrences (specific year)")
-                        , footer = NULL))
-  Sys.sleep(3)
-  get_res = print_messages(as.expression(
-    POST_FATE.graphic_mapPFGvsHS(name.simulation = get_name.simul()
-                                 , file.simulParam = get_param.simul()
-                                 , year = as.numeric(input$graph.year)
-                                 , opt.strata = as.numeric(input$graph.strata_min)
-                                 , opt.no_CPU = input$graph.opt.no_CPU
-    )
-  ))
-  removeModal()
-  
-  # plot(get_res[[1]]$plot[[1]][[1]])
-  
-  output$plot.PFGvsHS = renderPlotly({
-    plot(get_res[[1]]$plot[[1]][[1]])
-  })
-  
-  # if(get_res)
-  # {
-    # col_vec = c('#6da34d', '#297373', '#58a4b0', '#5c4742', '#3f334d')
-    # col_fun = colorRampPalette(col_vec)
-    # 
-    # distri.melt = fread(get_last.createdFiles2(pattern_head = "POST_FATE_evolution_spaceOccupancy_"
-    #                                            , pattern_tail = ".csv$"))
-    # 
-    # distriAbund.melt = fread(get_last.createdFiles2(pattern_head = "POST_FATE_evolution_abundance_"
-    #                                                 , pattern_tail = ".csv$"))
-    # 
-    # output$plot.evolutionCoverage1 = renderPlotly({
-    #   
-    #   ## Evolution of space occupation
-    #   pp1 = ggplot(distri.melt, aes_string(x = "YEAR", y = "Abund * 100", color = "factor(HAB)")) +
-    #     geom_line(lwd = 1) +
-    #     facet_wrap("~ PFG") +
-    #     scale_color_manual("Habitat", values = col_fun(length(unique(distri.melt$HAB)))) +
-    #     labs(x = "", y = "", title = paste0("GRAPH A : evolution of species' space occupation"),
-    #          subtitle = paste0("For each PFG, the line represents the evolution through time of its space occupancy,\n",
-    #                            "meaning the percentage of pixels in which the abundance of the species is greater than 0.\n")) +
-    #     theme_fivethirtyeight() +
-    #     theme(panel.background = element_rect(fill = "transparent", colour = NA)
-    #           , plot.background = element_rect(fill = "transparent", colour = NA)
-    #           , legend.background = element_rect(fill = "transparent", colour = NA)
-    #           , legend.box.background = element_rect(fill = "transparent", colour = NA)
-    #           , legend.key = element_rect(fill = "transparent", colour = NA))
-    #   
-    #   print(pp1)
-    # })
-  # }
-  setwd(path.init)
-})
-
 ####################################################################
 
 observeEvent(input$create.validationStat, {
-
+  
   path.init = getwd()
   setwd(get_path.folder())
   
@@ -241,6 +172,41 @@ observeEvent(input$create.validationStat, {
     plot(get_res[[1]]$plot[[1]][['ALL']])
   })
   
+  setwd(path.init)
+})
+
+####################################################################
+
+observeEvent(input$create.PFGvsHS, {
+  
+  path.init = getwd()
+  setwd(get_path.folder())
+  
+  showModal(modalDialog(HTML(paste0("Creating maps of PFG habitat suitability vs simulated occurrences with :
+                                        <ul>
+                                    <li><strong>folder :</strong> ", basename(get_name.simul()),"</li>
+                                    <li><strong>simulation parameter file :</strong> ", basename(get_param.simul()), "</li>
+                                    <li><strong>year :</strong> ", as.numeric(input$graph.year),"</li>
+                                    <li><strong>opt.strata :</strong> ", as.numeric(input$graph.strata_min),"</li>
+                                    <li><strong>opt.no_CPU :</strong> ", input$graph.opt.no_CPU,"</li>
+                                    </ul>"))
+                        , title = HTML("Maps of PFG habitat suitability vs simulated occurrences (specific year)")
+                        , footer = NULL))
+  Sys.sleep(3)
+  get_res = print_messages(as.expression(
+    POST_FATE.graphic_mapPFGvsHS(name.simulation = get_name.simul()
+                                 , file.simulParam = get_param.simul()
+                                 , year = as.numeric(input$graph.year)
+                                 , opt.strata = as.numeric(input$graph.strata_min)
+                                 , opt.no_CPU = input$graph.opt.no_CPU
+    )
+  ))
+  removeModal()
+  
+  output$plot.PFGvsHS = renderPlotly({
+    plot(get_res[[1]]$plot[[1]][[1]])
+  })
+
   setwd(path.init)
 })
 

@@ -68,7 +68,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>BROWSER</span>")
                     , br()
                     , br()
                     , br()
-                    , shinyjs::hidden(
+                    , shinyjs::disabled(
                       actionButton(inputId = "go.left"
                                    , label = ""
                                    , icon = icon("arrow-circle-left", class = "icon-help")
@@ -77,7 +77,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>BROWSER</span>")
                     )
                     , br()
                     , br()
-                    , shinyjs::hidden(
+                    , shinyjs::disabled(
                       actionButton(inputId = "go.right"
                                    , label = ""
                                    , icon = icon("arrow-circle-right", class = "icon-help")
