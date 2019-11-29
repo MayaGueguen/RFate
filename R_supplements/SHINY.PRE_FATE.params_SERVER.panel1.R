@@ -30,29 +30,7 @@ observeEvent(input$HELP.panel1, {
 ####################################################################
 
 
-observeEvent(input$select.dominant, {
-  RV$pfg.graph <- c(RV$pfg.graph, "dom") 
-})
-observeEvent(input$compute.distance, {
-  RV$pfg.graph <- c(RV$pfg.graph, "dist") 
-})
-observeEvent(input$clustering.step1, {
-  RV$pfg.graph <- c(RV$pfg.graph, "clust1")
-})
-observeEvent(input$clustering.step2, {
-  RV$pfg.graph <- c(RV$pfg.graph, "clust2")
-})
-observeEvent(input$clustering.step3, {
-  RV$pfg.graph <- c(RV$pfg.graph, "clust3")
-})
-
-
-observeEvent(list(input$select.dominant
-                  , input$compute.distance
-                  , input$clustering.step1
-                  , input$clustering.step2
-                  , input$clustering.step3
-), {
+observeEvent(RV$pfg.graph, {
 
   levels_graph.type = unique(RV$pfg.graph)
   levels_graph.type = factor(levels_graph.type, c("dom", "dist", "clust1", "clust2", "clust3"))
@@ -71,6 +49,7 @@ observeEvent(list(input$select.dominant
                    , clust2 = { get_CLUST2() }
                    , clust3 = { get_CLUST3() }
       )
+      
       if (graph.type == "clust2"){
         sp.dist = get_dist()
       }
@@ -96,6 +75,7 @@ observeEvent(list(input$select.dominant
         pp = switch(graph.type
                     ## ---------------------------------------------------------------------------------------------------------- ##
                     , dom = {
+                      tab = as.data.frame(tab)
                       mat.plot = melt(tab, id.vars = c("species","SELECTION"))
                       mat.plot = rbind(mat.plot, data.frame(species = "SP.ghost", SELECTION = NA, 
                                                             variable = c("Fake1","Fake2"), value = NA))
@@ -282,8 +262,8 @@ observeEvent(list(input$select.dominant
                     }
                     ## ---------------------------------------------------------------------------------------------------------- ##
                     , clust3 = {
-                      mat.traits.pfg = tab
-                      mat.species.traits = sp.pfg.traits
+                      mat.traits.pfg = as.data.frame(tab)
+                      mat.species.traits = as.data.frame(sp.pfg.traits)
                       melt.vars = c("PFG")
                       if ("type" %in% colnames(tab)) {
                         melt.vars = c("PFG", "type")

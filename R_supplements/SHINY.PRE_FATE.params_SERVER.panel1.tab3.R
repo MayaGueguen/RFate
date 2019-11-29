@@ -123,10 +123,16 @@ get_CLUST1 = eventReactive(input$clustering.step1, {
   sp.dist = get_dist()
   if (!is.null(sp.dist))
   {
+    showModal(modalDialog(HTML(paste0("Create hierarchical clusters (dendograms) from dissimilarity matrix ..."))
+                          , title = HTML("PFG clustering : step 1")
+                          , footer = NULL))
+    Sys.sleep(3)
     get_res = print_messages(as.expression(
       PRE_FATE.speciesClustering_step1(mat.species.DIST = sp.dist)
     ))
+    removeModal()
     
+    RV$pfg.graph <- c(RV$pfg.graph, "clust1")
     shinyjs::enable("clustering.step2")
     return(get_res)
   }
@@ -148,12 +154,22 @@ get_CLUST2 = eventReactive(input$clustering.step2, {
         {
           input[[paste0("no.clust_", i)]]
         }
+      
+      showModal(modalDialog(HTML(paste0("Choose clusters and select determinant species with :
+                                        <ul>
+                                    <li><strong>no.clusters :</strong> ", paste(unlist(no.clusters)),"</li>
+                                    </ul>"))
+                            , title = HTML("PFG clustering : step 2")
+                            , footer = NULL))
+      Sys.sleep(3)
       get_res = print_messages(as.expression(
         PRE_FATE.speciesClustering_step2(clust.dendograms = sp.clust$clust.dendograms
                                          , no.clusters = no.clusters
                                          , mat.species.DIST = sp.dist)
       ))
+      removeModal()
       
+      RV$pfg.graph <- c(RV$pfg.graph, "clust2")
       shinyjs::enable("clustering.step3")
       return(get_res)
     }
@@ -194,10 +210,16 @@ get_CLUST3 = eventReactive(input$clustering.step3, {
   sp.pfg.traits = get_sp.pfg.traits()
   if (!is.null(sp.pfg.traits))
   {
+    showModal(modalDialog(HTML(paste0("Compute PFG traits values based on determinant species..."))
+                          , title = HTML("PFG clustering : step 3")
+                          , footer = NULL))
+    Sys.sleep(3)
     get_res = print_messages(as.expression(
       PRE_FATE.speciesClustering_step3(mat.species.traits = sp.pfg.traits)
     ))
+    removeModal()
     
+    RV$pfg.graph <- c(RV$pfg.graph, "clust3")
     shinyjs::show("table.traits.pfg")
     output$table.traits.pfg = renderDataTable({
       get_res

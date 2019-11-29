@@ -138,6 +138,15 @@ get_DIST = eventReactive(input$compute.distance, {
           if (length(which(colnames(sp.niche) %in% sp.dom)) > 0)
           {
             
+            showModal(modalDialog(HTML(paste0("Compute distances between species based on traits and niche overlap, with parameters :
+                                        <ul>
+                                    <li><strong>opt.max.percent.NA :</strong> ", as.numeric(input$opt.max.percent.NA),"</li>
+                                    <li><strong>opt.max.percent.similarSpecies :</strong> ", as.numeric(input$opt.max.percent.similarSpecies), "</li>
+                                    <li><strong>opt.min.sd :</strong> ", as.numeric(input$opt.min.sd),"</li>
+                                    </ul>"))
+                                  , title = HTML("Distance matrix between selected species")
+                                  , footer = NULL))
+            Sys.sleep(3)
             get_res = print_messages(as.expression(
                 PRE_FATE.speciesDistance(mat.species.traits = sp.traits
                                          , mat.species.overlap = sp.niche
@@ -146,7 +155,9 @@ get_DIST = eventReactive(input$compute.distance, {
                                          , opt.min.sd = as.numeric(input$opt.min.sd)
                 )
               ))
+            removeModal()
             
+            RV$pfg.graph <- c(RV$pfg.graph, "dist") 
             return(get_res)
           } else
           {
