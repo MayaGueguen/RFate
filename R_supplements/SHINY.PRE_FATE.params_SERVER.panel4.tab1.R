@@ -154,12 +154,9 @@ get_graph.type = eventReactive(input$browser.files, {
 })
 
 observeEvent(input$browser.files, {
-  print("ayhdhuhauh")
-  print(input$browser.files)
   if (nchar(input$browser.files) > 0)
   {
     graph.type = get_graph.type()
-    print(graph.type)
     if (!is.na(graph.type))
     {
       if (graph.type %in% c("richness", "cover", "light", "soil"))
@@ -191,7 +188,6 @@ observeEvent(input$browser.files, {
       ## abund
       col_vec = c('#6da34d', '#297373', '#58a4b0', '#5c4742', '#3f334d')
       col_fun = colorRampPalette(col_vec)
-      print(graph.type)
       
       pp = switch(graph.type
                   ## ---------------------------------------------------------------------------------------------------------- ##
@@ -294,8 +290,14 @@ observeEvent(input$browser.files, {
                   ## ---------------------------------------------------------------------------------------------------------- ##
                   ## ---------------------------------------------------------------------------------------------------------- ##
                   , validation = {
-                    if (length(which(colnames(tab) %in% c("PFG", "HAB", "AUC.sd", "sensitivity.sd", "specificity.sd"))) == 5)
+                    if (length(which(colnames(tab) %in% c("PFG", "HAB", "AUC.sd", "sensitivity.sd"
+                                                          , "specificity.sd", "sensitivity", "TSS"
+                                                          , "specificity", "AUC"))) == 9)
                     {
+                      tab = as.data.frame(tab[, c("PFG", "HAB", "AUC.sd", "sensitivity.sd"
+                                                  , "specificity.sd", "sensitivity", "TSS"
+                                                  , "specificity", "AUC")])
+                      
                       ## prepare the plot ------------------------------------------------------------
                       tab = melt(tab, id.vars = c("PFG", "HAB", "AUC.sd", "sensitivity.sd", "specificity.sd"))
                       tab$variable = factor(tab$variable, c("sensitivity", "TSS", "specificity", "AUC"))
@@ -328,14 +330,13 @@ observeEvent(input$browser.files, {
                             theme(legend.key.width = unit(2, "lines"))
                           
                           pp_leg = suppressWarnings(get_legend(pp))
-                          
                           ## 2. get one plot for the title and for each statistic
                           pp_list = foreach(vari = c("all", "sensitivity", "specificity", "TSS", "AUC")) %do%
                             {
                               if (vari == "all"){
                                 pp = ggplot(mat.plot, aes_string(x = "PFG", y = "value", fill = "value")) +
                                   labs(x = "", y = "", title = paste0("GRAPH F : validation statistics - Simulation year : "
-                                                                      , strsplit(sub(".*YEAR_", "", input$browser.files), "_")[[1]][1]
+                                                                      , strsplit(sub(".*YEAR_", "", "POST_FATE_prediction_YEAR_950_VALIDATION_STATISTICS_Graz1_CA_rcp85"), "_")[[1]][1]
                                                                       , " - Habitat ", habi),
                                        subtitle = paste0("Sensitivity (or specificity) measures the proportion of actual positives (or negatives) that are correctly identified as such.\n"
                                                          , "True skill statistic (TSS) values of -1 indicate predictive abilities of not better than a random model,\n"
@@ -357,6 +358,7 @@ observeEvent(input$browser.files, {
                                                        , breaks = seq(0, 1, 0.2)
                                                        , limits = c(0, 1)) +
                                   scale_y_continuous(breaks = seq(0, 1, 0.2), limits = c(0, 1.08)) +
+                                  geom_point(alpha = 0) +
                                   geom_bar(stat = "identity", na.rm = TRUE) +
                                   geom_hline(aes_string(yintercept = "hline"), lty = 2, color = "grey30") +
                                   geom_errorbar(aes(ymin = value - sensitivity.sd, ymax = value + sensitivity.sd), color = "grey30", na.rm = TRUE) +
@@ -368,20 +370,22 @@ observeEvent(input$browser.files, {
                                 
                                 pp = suppressWarnings(ggMarginal(pp, type = "boxplot", margins = "y", size = 7))
                               }
-                              
                               return(pp)
                             }
                           
                           ## 3. gather everything
                           pp_list[[6]] = pp_leg
-                          list(
-                            grid.arrange(grobs = pp_list
-                                         , layout_matrix = matrix(c(1,1,2,3,2,3,4,5,4,5,6,6), ncol = 2, byrow = TRUE)
-                            ))
+                          pp_final = grid.arrange(grobs = pp_list
+                                                  , layout_matrix = matrix(c(1,1,2,3,2,3,4,5,4,5,6,6)
+                                                                           , ncol = 2, byrow = TRUE))
+                          return(pp_final)
                         } ## END loop on hab_names
+                      pp
                     } else
                     {
-                      shinyalert(type = "warning", text = "The file provided does not contain the required columns (PFG, HAB, AUC.sd, sensitivity.sd, specificity.sd) !")
+                      shinyalert(type = "warning", text = paste0("The file provided does not contain the required columns "
+                                                                 , "(PFG, HAB, AUC.sd, sensitivity.sd, specificity.sd, "
+                                                                 , "sensitivity, TSS, specificity, AUC)) !"))
                     }
                   }
                   ## ---------------------------------------------------------------------------------------------------------- ##
@@ -488,16 +492,8 @@ observeEvent(input$browser.files, {
                   }
       )
       
-      print("poupiouou")
-      print(is.list(pp))
-      print(length(pp))
-      
       if (is.ggplot(pp) || (is.list(pp) && length(pp) > 0))
       {
-        print("CAOUDOUEOUDOUEU")
-        print(is.list(pp))
-        print(length(pp))
-        
         shinyjs::show("go.left")
         shinyjs::show("go.right")
         shinyjs::disable("go.left")

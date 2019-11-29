@@ -466,7 +466,7 @@ POST_FATE.graphic_validationStatistics = function(
                                     , "_VALIDATION_STATISTICS_"
                                     , basename(dir.save)
                                     , ".csv")
-                    , row.names = TRUE)
+                    , row.names = FALSE)
           
           message(paste0("\n The output file POST_FATE_prediction_YEAR_"
                          , y

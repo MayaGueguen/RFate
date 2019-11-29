@@ -1,61 +1,6 @@
 
 ####################################################################
 
-observeEvent(input$show.specific_year, {
-  if (input$show.specific_year == "PFG vs Habsuit")
-  {
-    shinyjs::show("panel.PFGvsHS")
-    shinyjs::hide("panel.validationStat")
-    shinyjs::hide("panel.PFGrichness")
-    shinyjs::hide("panel.PFGcover")
-    shinyjs::hide("panel.PFGlight")
-    shinyjs::hide("panel.PFGsoil")
-  } else if (input$show.specific_year == "Validation stat")
-  {
-    shinyjs::hide("panel.PFGvsHS")
-    shinyjs::show("panel.validationStat")
-    shinyjs::hide("panel.PFGrichness")
-    shinyjs::hide("panel.PFGcover")
-    shinyjs::hide("panel.PFGlight")
-    shinyjs::hide("panel.PFGsoil")
-  } else if (input$show.specific_year == "PFG richness")
-  {
-    shinyjs::hide("panel.PFGvsHS")
-    shinyjs::hide("panel.validationStat")
-    shinyjs::show("panel.PFGrichness")
-    shinyjs::hide("panel.PFGcover")
-    shinyjs::hide("panel.PFGlight")
-    shinyjs::hide("panel.PFGsoil")
-  } else if (input$show.specific_year == "PFG cover")
-  {
-    shinyjs::hide("panel.PFGvsHS")
-    shinyjs::hide("panel.validationStat")
-    shinyjs::hide("panel.PFGrichness")
-    shinyjs::show("panel.PFGcover")
-    shinyjs::hide("panel.PFGlight")
-    shinyjs::hide("panel.PFGsoil")
-  } else if (input$show.specific_year == "Light CWM (MAP)")
-  {
-    shinyjs::hide("panel.PFGvsHS")
-    shinyjs::hide("panel.validationStat")
-    shinyjs::hide("panel.PFGrichness")
-    shinyjs::hide("panel.PFGcover")
-    shinyjs::show("panel.PFGlight")
-    shinyjs::hide("panel.PFGsoil")
-  } else if (input$show.specific_year == "Soil CWM (MAP)")
-  {
-    shinyjs::hide("panel.PFGvsHS")
-    shinyjs::hide("panel.validationStat")
-    shinyjs::hide("panel.PFGrichness")
-    shinyjs::hide("panel.PFGcover")
-    shinyjs::hide("panel.PFGlight")
-    shinyjs::show("panel.PFGsoil")
-  }
-})
-
-
-####################################################################
-
 output$UI.graph.mat.PFG.obs = renderUI({
   fileInput(inputId = "graph.mat.PFG.obs"
             , label = NULL
@@ -119,7 +64,7 @@ observeEvent(input$create.relativeAbund, {
     )
   ))
   removeModal()
-  
+
   setwd(path.init)
 })
 
@@ -172,6 +117,13 @@ observeEvent(input$create.validationStat, {
     plot(get_res[[1]]$plot[[1]][['ALL']])
   })
   
+  shinyjs::hide("plot.PFGvsHS")
+  shinyjs::show("plot.validationStat")
+  shinyjs::hide("plot.PFGrichness")
+  shinyjs::hide("plot.PFGcover")
+  shinyjs::hide("plot.PFGlight")
+  shinyjs::hide("plot.PFGsoil")
+  
   setwd(path.init)
 })
 
@@ -206,6 +158,13 @@ observeEvent(input$create.PFGvsHS, {
   output$plot.PFGvsHS = renderPlotly({
     plot(get_res[[1]]$plot[[1]][[1]])
   })
+  
+  shinyjs::show("plot.PFGvsHS")
+  shinyjs::hide("plot.validationStat")
+  shinyjs::hide("plot.PFGrichness")
+  shinyjs::hide("plot.PFGcover")
+  shinyjs::hide("plot.PFGlight")
+  shinyjs::hide("plot.PFGsoil")
 
   setwd(path.init)
 })
@@ -239,6 +198,13 @@ observeEvent(input$create.PFGrichness, {
   output$plot.PFGrichness = renderPlotly({
     plot(get_res[[1]][[1]][[2]])
   })
+  
+  shinyjs::hide("plot.PFGvsHS")
+  shinyjs::hide("plot.validationStat")
+  shinyjs::show("plot.PFGrichness")
+  shinyjs::hide("plot.PFGcover")
+  shinyjs::hide("plot.PFGlight")
+  shinyjs::hide("plot.PFGsoil")
 
   setwd(path.init)
 })
@@ -276,6 +242,13 @@ observeEvent(input$create.PFGcover, {
   output$plot.PFGcover = renderPlotly({
     plot(get_res[[1]]$plot[[1]])
   })
+  
+  shinyjs::hide("plot.PFGvsHS")
+  shinyjs::hide("plot.validationStat")
+  shinyjs::hide("plot.PFGrichness")
+  shinyjs::show("plot.PFGcover")
+  shinyjs::hide("plot.PFGlight")
+  shinyjs::hide("plot.PFGsoil")
   
   setwd(path.init)
 })
