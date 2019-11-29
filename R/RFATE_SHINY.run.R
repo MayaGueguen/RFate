@@ -1,7 +1,7 @@
 ### HEADER #####################################################################
 ##' @title Shiny application to apply \code{RFate} functions
 ##' 
-##' @name SHINY_FATE.run
+##' @name RFATE_SHINY.run
 ##'
 ##' @author Maya Guéguen
 ##' 
@@ -28,7 +28,7 @@
 ## END OF HEADER ###############################################################
 
 
-SHINY_FATE.run = function(){
+RFATE_SHINY.run = function(){
   
   appDir <- system.file("shinyApp", package = "RFate")
   if (appDir == "") {

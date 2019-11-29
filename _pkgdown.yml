@@ -51,7 +51,7 @@ reference:
   - title: Interface
     desc:  Graphical User Interface (shiny application)
     contents:
-      - "SHINY_FATE.run"
+      - "RFATE_SHINY.run"
   - title: Build Plant Functional Groups (PFG)
     desc:  Functions to select dominant species, compute functional distance between species and build clusters. <br/> ..
     contents:
