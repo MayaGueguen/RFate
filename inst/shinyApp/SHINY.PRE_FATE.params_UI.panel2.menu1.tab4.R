@@ -133,7 +133,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Raster files</span>")
                                        ) %>% helper(type = "inline"
                                                     , title = "Create Scenario files"
                                                     , size = "l"
-                                                    , content = help.HTML("docs/reference/PRE_FATE.params_changingYears.html")
+                                                    , content = help.HTML("https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_changingYears.html")
                                        )
                                      )
                             )

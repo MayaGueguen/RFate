@@ -28,7 +28,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>3. Hierarchical clustering</
                   ) %>% helper(type = "inline"
                                , title = "Clustering : build dendrograms"
                                , size = "l"
-                               , content = help.HTML("docs/reference/PRE_FATE.speciesClustering_step1.html")
+                               , content = help.HTML("https://mayagueguen.github.io/RFate/reference/PRE_FATE.speciesClustering_step1.html")
                   )
                   , br()
                   , shinyjs::disabled(
@@ -40,7 +40,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>3. Hierarchical clustering</
                     ) %>% helper(type = "inline"
                                  , title = "Clustering : build PFG"
                                  , size = "l"
-                                 , content = help.HTML("docs/reference/PRE_FATE.speciesClustering_step2.html")
+                                 , content = help.HTML("https://mayagueguen.github.io/RFate/reference/PRE_FATE.speciesClustering_step2.html")
                     )
                   )
                   , br()
@@ -53,7 +53,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>3. Hierarchical clustering</
                     ) %>% helper(type = "inline"
                                  , title = "Clustering : calculate PFG traits values"
                                  , size = "l"
-                                 , content = help.HTML("docs/reference/PRE_FATE.speciesClustering_step3.html")
+                                 , content = help.HTML("https://mayagueguen.github.io/RFate/reference/PRE_FATE.speciesClustering_step3.html")
                     )
                   )
            )

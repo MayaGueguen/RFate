@@ -47,7 +47,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
                     ) %>% helper(type = "inline"
                                  , title = "Create maps of relative abundance"
                                  , size = "l"
-                                 , content = help.HTML("docs/reference/POST_FATE.relativeAbund.html")
+                                 , content = help.HTML("https://mayagueguen.github.io/RFate/reference/POST_FATE.relativeAbund.html")
                     )
                   )
            )
@@ -94,7 +94,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
                   ) %>% helper(type = "inline"
                                , title = "Plot validation statistics and transform maps of abundances into 0/1"
                                , size = "l"
-                               , content = help.HTML("docs/reference/POST_FATE.graphic_validationStatistics.html")
+                               , content = help.HTML("https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_validationStatistics.html")
                   )
                   , br()
                   , actionButton(inputId = "create.PFGvsHS"
@@ -105,7 +105,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
                   ) %>% helper(type = "inline"
                                , title = "Plot maps of 0/1 predicted by FATE vs Habitat suitability"
                                , size = "l"
-                               , content = help.HTML("docs/reference/POST_FATE.graphic_mapPFGvsHS.html")
+                               , content = help.HTML("https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFGvsHS.html")
                   )
                   , br()
                   , actionButton(inputId = "create.PFGrichness"
@@ -116,7 +116,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
                   ) %>% helper(type = "inline"
                                , title = "Plot map of PFG richness"
                                , size = "l"
-                               , content = help.HTML("docs/reference/POST_FATE.graphic_mapPFGrichness.html")
+                               , content = help.HTML("https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFGrichness.html")
                   )
                   , br()
                   , actionButton(inputId = "create.PFGcover"
@@ -127,7 +127,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
                   ) %>% helper(type = "inline"
                                , title = "Plot map of PFG cover"
                                , size = "l"
-                               , content = help.HTML("docs/reference/POST_FATE.graphic_mapPFGcover.html")
+                               , content = help.HTML("https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFGcover.html")
                   )
                   , br()
                   , actionButton(inputId = "create.PFGlight"
@@ -138,7 +138,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
                   ) %>% helper(type = "inline"
                                , title = "Plot map of PFG light"
                                , size = "l"
-                               , content = help.HTML("docs/reference/POST_FATE.graphic_mapPFGlight.html")
+                               , content = help.HTML("https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFGlight.html")
                   )
                   , br()
                   , actionButton(inputId = "create.PFGsoil"
@@ -149,7 +149,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
                   ) %>% helper(type = "inline"
                                , title = "Plot map of PFG soil"
                                , size = "l"
-                               , content = help.HTML("docs/reference/POST_FATE.graphic_mapPFGsoil.html")
+                               , content = help.HTML("https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFGsoil.html")
                   )
            )
            , column(9

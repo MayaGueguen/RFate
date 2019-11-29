@@ -125,7 +125,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Global parameters</span>")
                       ) %>% helper(type = "inline"
                                    , title = "Global parameter file"
                                    , size = "l"
-                                   , content = help.HTML("docs/reference/PRE_FATE.params_globalParameters.html")
+                                   , content = help.HTML("https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_globalParameters.html")
                       )
                )
              )

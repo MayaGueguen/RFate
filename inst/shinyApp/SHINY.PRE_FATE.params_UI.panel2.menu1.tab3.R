@@ -78,7 +78,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                      ) %>% helper(type = "inline"
                                                   , title = "Create PFG succession files"
                                                   , size = "l"
-                                                  , content = help.HTML("docs/reference/PRE_FATE.params_PFGsuccession.html")
+                                                  , content = help.HTML("https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGsuccession.html")
                                      )
                                    )
                                    , br()
@@ -92,7 +92,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                      ) %>% helper(type = "inline"
                                                   , title = "Create PFG light files"
                                                   , size = "l"
-                                                  , content = help.HTML("docs/reference/PRE_FATE.params_PFGlight.html")
+                                                  , content = help.HTML("https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGlight.html")
                                      )
                                    )
                           )
@@ -214,7 +214,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                        ) %>% helper(type = "inline"
                                                     , title = "Create PFG dispersal files"
                                                     , size = "l"
-                                                    , content = help.HTML("docs/reference/PRE_FATE.params_PFGdispersal.html")
+                                                    , content = help.HTML("https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGdispersal.html")
                                        )
                                      )
                             )
@@ -305,7 +305,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                        ) %>% helper(type = "inline"
                                                     , title = "Create PFG disturbance files"
                                                     , size = "l"
-                                                    , content = help.HTML("docs/reference/PRE_FATE.params_PFGdisturbance.html")
+                                                    , content = help.HTML("https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGdisturbance.html")
                                        )
                                      )
                             )
@@ -384,7 +384,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                        ) %>% helper(type = "inline"
                                                     , title = "Create PFG soil files"
                                                     , size = "l"
-                                                    , content = help.HTML("docs/reference/PRE_FATE.params_PFGsoil.html")
+                                                    , content = help.HTML("https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGsoil.html")
                                        )
                                      )
                             )

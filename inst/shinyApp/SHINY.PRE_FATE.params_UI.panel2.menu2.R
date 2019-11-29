@@ -235,7 +235,7 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
                                                   ) %>% helper(type = "inline"
                                                                , title = "Multiple sets of parameters"
                                                                , size = "l"
-                                                               , content = help.HTML("docs/reference/PRE_FATE.params_multipleSet.html")
+                                                               , content = help.HTML("https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_multipleSet.html")
                                                   )
                                                 )
                                     ) ## END main.panel2

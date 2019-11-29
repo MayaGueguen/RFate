@@ -58,7 +58,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>2. Pairwise distance</span>"
                   ) %>% helper(type = "inline"
                                , title = "Computation of species pairwise distance"
                                , size = "l"
-                               , content = help.HTML("docs/reference/PRE_FATE.speciesDistance.html")
+                               , content = help.HTML("https://mayagueguen.github.io/RFate/reference/PRE_FATE.speciesDistance.html")
                   )
            )
          ) ## END fluidRow

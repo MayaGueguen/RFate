@@ -46,7 +46,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Scenario files</span>")
                       ) %>% helper(type = "inline"
                                    , title = "Create SAVE maps files"
                                    , size = "l"
-                                   , content = help.HTML("docs/reference/PRE_FATE.params_saveYears.html")
+                                   , content = help.HTML("https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_saveYears.html")
                       )
                )
                , column(6
@@ -87,7 +87,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Scenario files</span>")
                         ) %>% helper(type = "inline"
                                      , title = "Create SAVE objects files"
                                      , size = "l"
-                                     , content = help.HTML("docs/reference/PRE_FATE.params_saveYears.html")
+                                     , content = help.HTML("https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_saveYears.html")
                         )
                )
                )

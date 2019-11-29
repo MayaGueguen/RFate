@@ -130,10 +130,10 @@ tabPanel(title = HTML("<p class='panel_title'><i class='fa fa-folder-plus'></i> 
                wellPanel(id = "main.panel",
                          style = "border-solid:solid; border-width:0px; border-color:#068f96;",
                          tabsetPanel(
-                           source("R_supplements/SHINY.PRE_FATE.params_UI.panel2.menu1.tab1.R", local = TRUE)$value
-                           , source("R_supplements/SHINY.PRE_FATE.params_UI.panel2.menu1.tab2.R", local = TRUE)$value
-                           , source("R_supplements/SHINY.PRE_FATE.params_UI.panel2.menu1.tab3.R", local = TRUE)$value
-                           , source("R_supplements/SHINY.PRE_FATE.params_UI.panel2.menu1.tab4.R", local = TRUE)$value
+                           source("SHINY.PRE_FATE.params_UI.panel2.menu1.tab1.R", local = TRUE)$value
+                           , source("SHINY.PRE_FATE.params_UI.panel2.menu1.tab2.R", local = TRUE)$value
+                           , source("SHINY.PRE_FATE.params_UI.panel2.menu1.tab3.R", local = TRUE)$value
+                           , source("SHINY.PRE_FATE.params_UI.panel2.menu1.tab4.R", local = TRUE)$value
                          ) ## END tabsetPanel
                ) ## END wellPanel
              ) ## END hidden
@@ -141,7 +141,7 @@ tabPanel(title = HTML("<p class='panel_title'><i class='fa fa-folder-plus'></i> 
              ) %>% helper(type = "inline"
                           , title = "Create FATE-HD parameter files"
                           , size = "l"
-                          , content = help.HTML(html.file = "docs/index.html"
+                          , content = help.HTML(html.file = "https://mayagueguen.github.io/RFate/index.html"
                                                 , target.anchor = 'class="section level2"'
                                                 , target.class = "pre_fate---build-parameter-files")
              ) ## END sidebarLayout
