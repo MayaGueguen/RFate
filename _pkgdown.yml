@@ -36,7 +36,7 @@ navbar:
     download:
       text: 'Download Current Version'
       icon: fa-rocket fa-lg
-      href: archive/RFate_0.0.7.9000.tar.gz
+      href: archive/RFate_0.0.9.9000.tar.gz
     github:
       icon: fa-github fa-lg
       href: https://github.com/MayaGueguen/RFate.git
@@ -48,6 +48,10 @@ reference:
     contents:
       - "MontBlanc"
       - "FATE_Bauges"
+  - title: Interface
+    desc:  Graphical User Interface (shiny application)
+    contents:
+      - "SHINY_FATE.run"
   - title: Build Plant Functional Groups (PFG)
     desc:  Functions to select dominant species, compute functional distance between species and build clusters. <br/> ..
     contents:
@@ -58,7 +62,7 @@ reference:
       - "PRE_FATE.speciesClustering_step2"
       - "PRE_FATE.speciesClustering_step3"
   - title: Create FATE-HD parameter files
-    desc: Create user-friendly directory tree, parameter and simulation files for FATE-HD simulation.  <br/> ..
+    desc:  Create user-friendly directory tree, parameter and simulation files for FATE-HD simulation.  <br/> ..
     contents:
       - "PRE_FATE.skeletonDirectory"
       - "PRE_FATE.params_globalParameters"
@@ -72,7 +76,7 @@ reference:
       - "PRE_FATE.params_simulParameters"
       - "PRE_FATE.params_multipleSet"
   - title: Analyze FATE-HD outputs
-    desc: Evalute predicted maps, produce summary and dynamic graphics.  <br/> ..
+    desc:  Evalute predicted maps, produce summary and dynamic graphics.  <br/> ..
     contents:
       - "POST_FATE.graphics"
       - "POST_FATE.relativeAbund"
