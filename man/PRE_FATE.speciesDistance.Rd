@@ -69,7 +69,7 @@ on two types of distance information :
     values lead to misleading results. Hence, 3 parameters allow the user 
     to play with the place given to missing values and help the function to 
     select traits that will be used for the distance computation :
-    \description{
+    \describe{
       \item{opt.max.percent.NA}{traits with too many missing values are 
       removed}
       \item{opt.max.percent.similarSpecies}{traits with too many similar 
