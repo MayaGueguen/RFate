@@ -1,40 +1,39 @@
 
 rm(list = ls())
 
-## load required libraries
-library(shiny)
-library(shinyFiles)
-library(shinyalert)
-# devtools::install_github('wleepang/shiny-directory-input')
-library(shinyDirectoryInput)
-library(shinyjs)
+## SHINY packages
+list.packages = c("shiny", "shinyFiles", "shinyalert", "shinyDirectoryInput", "shinyjs", "shinyWidgets", "shinyhelper")
+## DATA MANIPULATION packages
+list.packages = c(list.packages
+                  , "data.table", "foreach", "dplyr", "DT", "reshape2")
+## GRAPHICS packages
+list.packages = c(list.packages
+                  , "ggplot2", "ggthemes", "ggdendro", "ggrepel", "ggExtra", "gridExtra"
+                  , "viridis", "RColorBrewer", "plotly", "cowplot")
+## OTHER packages
+list.packages = c(list.packages
+                  , "markdown", "zip", "raster", "rintrojs"
+                  , "SPOT" ## designLHD
+                  , "ade4" ## quasieuclid
+)
+
+load.shinyDirectoryInput = requireNamespace("shinyDirectoryInput")
+load.devtools = requireNamespace("devtools")
+if (!load.shinyDirectoryInput)
+{
+  if (!load.devtools)
+  {
+    install.packages("devtools")
+  }
+  library(devtools)
+  devtools::install_github('wleepang/shiny-directory-input')
+}
+check.packages = sapply(list.packages, .loadPackage)
+load.packages = sapply(list.packages, require, character.only = TRUE)
+
 # library(shinycssloaders)
-library(shinyWidgets)
-library(shinyhelper)
 # library(shinymaterial)
 # library(shinybusy)
-library(markdown)
-library(RFate)
-library(data.table)
-library(foreach)
-library(zip)
-library(ggplot2)
-library(ggthemes)
-library(raster)
-library(viridis)
-library(RColorBrewer)
-library(rintrojs)
-library(dplyr)
-library(plotly)
-library(cowplot)
-library(ggExtra)
-library(gridExtra)
-library(SPOT) ## designLHD
-library(DT)
-library(ggdendro)
-library(ggrepel)
-library(ade4) ## quasieuclid
-library(reshape2) ## melt
 
 ###################################################################################################################################
 

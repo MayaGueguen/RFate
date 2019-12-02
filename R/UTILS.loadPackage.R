@@ -4,6 +4,8 @@
 ##' @param package.name a \code{string} that corresponds to the 
 ##' name of the package that will be load or installed
 ##'
+##' @export
+##'
 ##' @importFrom utils install.packages packageDescription read.delim
 ##'
 ## END OF HEADER ###############################################################
