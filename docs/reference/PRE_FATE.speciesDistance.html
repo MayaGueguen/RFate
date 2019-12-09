@@ -262,19 +262,18 @@ weighted by the number of traits used.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'>## Load example data</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>MontBlanc</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>MontBlanc</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>PNE_PFG</span>)
 
-<span class='co'>## MontBlanc$mat.traits : data.frame</span>
-<span class='co'>## MontBlanc$mat.nicheOverlap : niolap object</span>
-<span class='co'># sp.DIST = PRE_FATE.speciesDistance(mat.species.traits = MontBlanc$mat.traits</span>
-<span class='co'>#                                    , mat.species.overlap = MontBlanc$mat.nicheOverlap</span>
+<span class='co'>## PNE_PFG$dom.traits : data.frame</span>
+<span class='co'>## PNE_PFG$dom.dist_overlap : niolap object</span>
+<span class='co'># sp.DIST = PRE_FATE.speciesDistance(mat.species.traits = PNE_PFG$dom.traits</span>
+<span class='co'>#                                    , mat.species.overlap = PNE_PFG$dom.dist_overlap</span>
 <span class='co'>#                                    , opt.max.percent.NA = 1</span>
 <span class='co'>#                                    , opt.max.percent.similarSpecies = 0.25</span>
 <span class='co'>#                                    , opt.min.sd = 0.3)</span>
 
-<span class='no'>sp.DIST</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.speciesDistance</span>(<span class='kw'>mat.species.traits</span> <span class='kw'>=</span> <span class='no'>MontBlanc</span>$<span class='no'>mat.traits</span>
-                                   , <span class='kw'>mat.species.overlap</span> <span class='kw'>=</span> <span class='no'>MontBlanc</span>$<span class='no'>mat.nicheOverlap</span>
+<span class='no'>sp.DIST</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.speciesDistance</span>(<span class='kw'>mat.species.traits</span> <span class='kw'>=</span> <span class='no'>PNE_PFG</span>$<span class='no'>dom.traits</span>
+                                   , <span class='kw'>mat.species.overlap</span> <span class='kw'>=</span> <span class='no'>PNE_PFG</span>$<span class='no'>dom.dist_overlap</span>
                                    , <span class='kw'>opt.max.percent.NA</span> <span class='kw'>=</span> <span class='fl'>0.9</span>
                                    , <span class='kw'>opt.max.percent.similarSpecies</span> <span class='kw'>=</span> <span class='fl'>0.25</span>
                                    , <span class='kw'>opt.min.sd</span> <span class='kw'>=</span> <span class='fl'>0.3</span>)

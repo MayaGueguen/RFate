@@ -47,16 +47,16 @@
 ##' @examples
 ##' 
 ##' ## Load example data
-##' data(MontBlanc)
-##' str(MontBlanc)
+##' data(PNE_PFG)
 ##'  
-##' ## MontBlanc$mat.releves : data.frame
-##' summary(MontBlanc$mat.releves$abund)
+##' ## PNE_PFG$sp.observations : data.frame
+##' str(PNE_PFG$sp.observations)
+##' summary(PNE_PFG$sp.observations)
 ##' 
 ##' ## Transformation of Braun-Blanquet abundances
-##' MontBlanc$mat.releves$abund = PRE_FATE.abundBraunBlanquet(abund = MontBlanc$mat.releves$abund)
+##' abund = PRE_FATE.abundBraunBlanquet(abund = PNE_PFG$sp.observations$abund_BB)
 ##' 
-##' summary(MontBlanc$mat.releves$abund)
+##' summary(abund)
 ##' 
 ##' @export
 ##'

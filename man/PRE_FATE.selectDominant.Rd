@@ -138,13 +138,10 @@ but could be representative of a specific habitat} :
 \examples{
 
 ## Load example data
-data(MontBlanc)
-str(MontBlanc)
+data(PNE_PFG)
 
-## MontBlanc$mat.releves : data.frame
-
-## Transformation of Braun-Blanquet abundances
-MontBlanc$mat.releves$abund = PRE_FATE.abundBraunBlanquet(abund = MontBlanc$mat.releves$abund)
+## PNE_PFG$sp.observations : data.frame
+tab = PNE_PFG$sp.observations[, c("sites", "species", "abund", "habitat")]
 
 ## Selection of dominant species
 
@@ -152,13 +149,13 @@ MontBlanc$mat.releves$abund = PRE_FATE.abundBraunBlanquet(abund = MontBlanc$mat.
 ## EXAMPLE 1 : With default parametrization
 #########################################################################################
 
-sp.DOM = PRE_FATE.selectDominant(mat.site.species.abund = MontBlanc$mat.releves)
+sp.DOM = PRE_FATE.selectDominant(mat.site.species.abund = tab)
 
 #########################################################################################
 ## EXAMPLE 2 : Redefinition of global selection rules
 #########################################################################################
 
-sp.DOM = PRE_FATE.selectDominant(mat.site.species.abund = MontBlanc$mat.releves
+sp.DOM = PRE_FATE.selectDominant(mat.site.species.abund = tab
                                  , selectionRule.quanti = 0.9
                                  , selectionRule.min_mean_abund = 25
                                  , selectionRule.min_no_abund_over25 = 10)
@@ -167,7 +164,7 @@ sp.DOM = PRE_FATE.selectDominant(mat.site.species.abund = MontBlanc$mat.releves
 ## EXAMPLE 3 : Add habitat selection with default parametrization
 #########################################################################################
 
-sp.DOM = PRE_FATE.selectDominant(mat.site.species.abund = MontBlanc$mat.releves
+sp.DOM = PRE_FATE.selectDominant(mat.site.species.abund = tab
                                  , selectionRule.quanti = 0.9
                                  , selectionRule.min_mean_abund = 25
                                  , selectionRule.min_no_abund_over25 = 10
@@ -177,7 +174,7 @@ sp.DOM = PRE_FATE.selectDominant(mat.site.species.abund = MontBlanc$mat.releves
 ## EXAMPLE 4 : Redefinition of habitat selection rules
 #########################################################################################
 
-sp.DOM = PRE_FATE.selectDominant(mat.site.species.abund = MontBlanc$mat.releves
+sp.DOM = PRE_FATE.selectDominant(mat.site.species.abund = tab
                                  , selectionRule.quanti = 0.9
                                  , selectionRule.min_mean_abund = 25
                                  , selectionRule.min_no_abund_over25 = 10

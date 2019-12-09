@@ -98,19 +98,18 @@ weighted by the number of traits used.
 }
 \examples{
 ## Load example data
-data(MontBlanc)
-str(MontBlanc)
+data(PNE_PFG)
 
-## MontBlanc$mat.traits : data.frame
-## MontBlanc$mat.nicheOverlap : niolap object
-# sp.DIST = PRE_FATE.speciesDistance(mat.species.traits = MontBlanc$mat.traits
-#                                    , mat.species.overlap = MontBlanc$mat.nicheOverlap
+## PNE_PFG$dom.traits : data.frame
+## PNE_PFG$dom.dist_overlap : niolap object
+# sp.DIST = PRE_FATE.speciesDistance(mat.species.traits = PNE_PFG$dom.traits
+#                                    , mat.species.overlap = PNE_PFG$dom.dist_overlap
 #                                    , opt.max.percent.NA = 1
 #                                    , opt.max.percent.similarSpecies = 0.25
 #                                    , opt.min.sd = 0.3)
                                    
-sp.DIST = PRE_FATE.speciesDistance(mat.species.traits = MontBlanc$mat.traits
-                                   , mat.species.overlap = MontBlanc$mat.nicheOverlap
+sp.DIST = PRE_FATE.speciesDistance(mat.species.traits = PNE_PFG$dom.traits
+                                   , mat.species.overlap = PNE_PFG$dom.dist_overlap
                                    , opt.max.percent.NA = 0.9
                                    , opt.max.percent.similarSpecies = 0.25
                                    , opt.min.sd = 0.3)

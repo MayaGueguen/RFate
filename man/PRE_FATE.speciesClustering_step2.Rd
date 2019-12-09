@@ -98,14 +98,14 @@ species based on these PFGs.
 \examples{
 
 ## Load example data
-data(MontBlanc)
+data(PNE_PFG)
 
-## MontBlanc$mat.traits : data.frame
-## MontBlanc$mat.nicheOverlap : niolap object
+## PNE_PFG$dom.traits : data.frame
+## PNE_PFG$dom.dist_overlap : niolap object
 
 ## Calculate distance between species
-sp.DIST = PRE_FATE.speciesDistance(mat.species.traits = MontBlanc$mat.traits
-                                   , mat.species.overlap = MontBlanc$mat.nicheOverlap
+sp.DIST = PRE_FATE.speciesDistance(mat.species.traits = PNE_PFG$dom.traits
+                                   , mat.species.overlap = PNE_PFG$dom.dist_overlap
                                    , opt.max.percent.NA = 0.9
                                    , opt.max.percent.similarSpecies = 0.25
                                    , opt.min.sd = 0.3)
@@ -120,7 +120,7 @@ str(sp.CLUST)
 
 ## Select number of clusters and find determinant species
 sp.DETERM = PRE_FATE.speciesClustering_step2(clust.dendograms = sp.CLUST$clust.dendograms
-                                             , no.clusters = c(11, 7, 8)
+                                             , no.clusters = PNE_PFG$nb.clusters
                                              , mat.species.DIST = sp.DIST)
 
 ## 2 .pdf files have been produced

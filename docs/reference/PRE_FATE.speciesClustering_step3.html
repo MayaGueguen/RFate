@@ -236,8 +236,18 @@ level.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples">
+<span class='co'>## Load example data</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>PNE_PFG</span>)
 
-</pre>
+<span class='co'>## PNE_PFG$dom.traits : data.frame</span>
+<span class='co'>## PNE_PFG$dom.determ : data.frame</span>
+
+<span class='no'>tab1</span> <span class='kw'>=</span> <span class='no'>PNE_PFG</span>$<span class='no'>dom.determ</span>[<span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span>(<span class='no'>PNE_PFG</span>$<span class='no'>dom.determ</span>$<span class='no'>determinant</span> <span class='kw'>==</span> <span class='fl'>TRUE</span>), <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"species"</span>, <span class='st'>"PFG"</span>)]
+<span class='no'>tab2</span> <span class='kw'>=</span> <span class='no'>PNE_PFG</span>$<span class='no'>dom.traits</span>[, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"species"</span>, <span class='st'>"height"</span>, <span class='st'>"dispersal"</span>, <span class='st'>"palatability"</span>, <span class='st'>"light"</span>)]
+<span class='no'>determ.traits</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/merge.html'>merge</a></span>(<span class='no'>tab1</span>, <span class='no'>tab2</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='st'>"species"</span>)
+
+<span class='no'>PFG.traits</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.speciesClustering_step3</span>(<span class='kw'>mat.species.traits</span> <span class='kw'>=</span> <span class='no'>determ.traits</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>PFG.traits</span>)</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

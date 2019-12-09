@@ -153,7 +153,7 @@
 ##' 
 ## END OF HEADER ###############################################################
 
-data("PNE_PFG")
+"PNE_PFG"
 
 ### HEADER #####################################################################
 ##' @title Ecrins National Park (PNE) data : building of parameter files to run 
@@ -226,7 +226,7 @@ data("PNE_PFG")
 ##' 
 ## END OF HEADER ###############################################################
 
-data("PNE_PARAM")
+"PNE_PARAM"
 
 ### HEADER #####################################################################
 ##' @title Ecrins National Park (PNE) data : outputs from \code{FATE-HD} 
@@ -305,4 +305,4 @@ data("PNE_PARAM")
 ##' 
 ## END OF HEADER ###############################################################
 
-data("PNE_RESULTS")
+"PNE_RESULTS"

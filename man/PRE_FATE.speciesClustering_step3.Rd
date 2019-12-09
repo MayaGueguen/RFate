@@ -74,6 +74,18 @@ Those functional traits can be :
 }
 \examples{
 
+## Load example data
+data(PNE_PFG)
+
+## PNE_PFG$dom.traits : data.frame
+## PNE_PFG$dom.determ : data.frame
+
+tab1 = PNE_PFG$dom.determ[which(PNE_PFG$dom.determ$determinant == TRUE), c("species", "PFG")]
+tab2 = PNE_PFG$dom.traits[, c("species", "height", "dispersal", "palatability", "light")]
+determ.traits = merge(tab1, tab2, by = "species")
+
+PFG.traits = PRE_FATE.speciesClustering_step3(mat.species.traits = determ.traits)
+summary(PFG.traits)
 
 }
 \seealso{

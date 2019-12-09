@@ -313,13 +313,10 @@ but could be representative of a specific habitat</em> :</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples">
 <span class='co'>## Load example data</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>MontBlanc</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>MontBlanc</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>PNE_PFG</span>)
 
-<span class='co'>## MontBlanc$mat.releves : data.frame</span>
-
-<span class='co'>## Transformation of Braun-Blanquet abundances</span>
-<span class='no'>MontBlanc</span>$<span class='no'>mat.releves</span>$<span class='no'>abund</span> <span class='kw'>=</span> <span class='fu'><a href='PRE_FATE.abundBraunBlanquet.html'>PRE_FATE.abundBraunBlanquet</a></span>(<span class='kw'>abund</span> <span class='kw'>=</span> <span class='no'>MontBlanc</span>$<span class='no'>mat.releves</span>$<span class='no'>abund</span>)
+<span class='co'>## PNE_PFG$sp.observations : data.frame</span>
+<span class='no'>tab</span> <span class='kw'>=</span> <span class='no'>PNE_PFG</span>$<span class='no'>sp.observations</span>[, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"sites"</span>, <span class='st'>"species"</span>, <span class='st'>"abund"</span>, <span class='st'>"habitat"</span>)]
 
 <span class='co'>## Selection of dominant species</span>
 
@@ -327,13 +324,13 @@ but could be representative of a specific habitat</em> :</p>
 <span class='co'>## EXAMPLE 1 : With default parametrization</span>
 <span class='co'>#########################################################################################</span>
 
-<span class='no'>sp.DOM</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.selectDominant</span>(<span class='kw'>mat.site.species.abund</span> <span class='kw'>=</span> <span class='no'>MontBlanc</span>$<span class='no'>mat.releves</span>)
+<span class='no'>sp.DOM</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.selectDominant</span>(<span class='kw'>mat.site.species.abund</span> <span class='kw'>=</span> <span class='no'>tab</span>)
 
 <span class='co'>#########################################################################################</span>
 <span class='co'>## EXAMPLE 2 : Redefinition of global selection rules</span>
 <span class='co'>#########################################################################################</span>
 
-<span class='no'>sp.DOM</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.selectDominant</span>(<span class='kw'>mat.site.species.abund</span> <span class='kw'>=</span> <span class='no'>MontBlanc</span>$<span class='no'>mat.releves</span>
+<span class='no'>sp.DOM</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.selectDominant</span>(<span class='kw'>mat.site.species.abund</span> <span class='kw'>=</span> <span class='no'>tab</span>
                                  , <span class='kw'>selectionRule.quanti</span> <span class='kw'>=</span> <span class='fl'>0.9</span>
                                  , <span class='kw'>selectionRule.min_mean_abund</span> <span class='kw'>=</span> <span class='fl'>25</span>
                                  , <span class='kw'>selectionRule.min_no_abund_over25</span> <span class='kw'>=</span> <span class='fl'>10</span>)
@@ -342,7 +339,7 @@ but could be representative of a specific habitat</em> :</p>
 <span class='co'>## EXAMPLE 3 : Add habitat selection with default parametrization</span>
 <span class='co'>#########################################################################################</span>
 
-<span class='no'>sp.DOM</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.selectDominant</span>(<span class='kw'>mat.site.species.abund</span> <span class='kw'>=</span> <span class='no'>MontBlanc</span>$<span class='no'>mat.releves</span>
+<span class='no'>sp.DOM</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.selectDominant</span>(<span class='kw'>mat.site.species.abund</span> <span class='kw'>=</span> <span class='no'>tab</span>
                                  , <span class='kw'>selectionRule.quanti</span> <span class='kw'>=</span> <span class='fl'>0.9</span>
                                  , <span class='kw'>selectionRule.min_mean_abund</span> <span class='kw'>=</span> <span class='fl'>25</span>
                                  , <span class='kw'>selectionRule.min_no_abund_over25</span> <span class='kw'>=</span> <span class='fl'>10</span>
@@ -352,7 +349,7 @@ but could be representative of a specific habitat</em> :</p>
 <span class='co'>## EXAMPLE 4 : Redefinition of habitat selection rules</span>
 <span class='co'>#########################################################################################</span>
 
-<span class='no'>sp.DOM</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.selectDominant</span>(<span class='kw'>mat.site.species.abund</span> <span class='kw'>=</span> <span class='no'>MontBlanc</span>$<span class='no'>mat.releves</span>
+<span class='no'>sp.DOM</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.selectDominant</span>(<span class='kw'>mat.site.species.abund</span> <span class='kw'>=</span> <span class='no'>tab</span>
                                  , <span class='kw'>selectionRule.quanti</span> <span class='kw'>=</span> <span class='fl'>0.9</span>
                                  , <span class='kw'>selectionRule.min_mean_abund</span> <span class='kw'>=</span> <span class='fl'>25</span>
                                  , <span class='kw'>selectionRule.min_no_abund_over25</span> <span class='kw'>=</span> <span class='fl'>10</span>
