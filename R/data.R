@@ -102,9 +102,6 @@
 ##'     \item{dom.dist_overlap}{\code{matrix} of dimension \code{358 x 358} \cr
 ##'     containing niche overlap distance for dominant species \cr
 ##'     to be used with the \link{PRE_FATE.speciesDistance} function \cr}
-##'     \item{nb.clusters}{\code{vector} of length \code{3} \cr
-##'     number of groups kept for each life-form class, obtained by cutting the 
-##'     hierarchical tree obtained from species distances}
 ##'     \item{dom.determ}{\code{data.frame} of dimension \code{359 x 5} \cr
 ##'     containing dominant species information relative to PFG \cr
 ##'     obtained from the \link{PRE_FATE.speciesClustering_step2} function \cr
@@ -123,7 +120,10 @@
 ##'       function for details)
 ##'     }
 ##'     }
-##'     \item{PFG.traits}{\code{data.frame} of dimension \code{24 x 14} \cr
+##'     \item{nb.clusters}{\code{vector} of length \code{3} \cr
+##'     number of groups kept for each life-form class, obtained by cutting the 
+##'     hierarchical tree obtained from species distances}
+##'     \item{PFG.traits}{\code{data.frame} of dimension \code{24 x 10} \cr
 ##'     containing traits for plant functional groups \cr
 ##'     obtained from the \link{PRE_FATE.speciesClustering_step3} function \cr
 ##'     \itemize{
@@ -156,30 +156,25 @@
 data("PNE_PFG")
 
 ### HEADER #####################################################################
-##' @title Ecrins National Park (PNE) data : building of Plant Functional Groups
+##' @title Ecrins National Park (PNE) data : building of parameter files to run 
+##' a \code{FATE-HD} simulation
 ##' 
 ##' @name PNE_PARAM
 ##'
 ##' @author Maya Guéguen
 ##' 
-##' @description This dataset contains all data for the Ecrins National Park 
-##' (PNE) area. It contains both the data to create the Plant Functional 
-##' Groups (PFG) over this area 
-##' (\emph{\href{https://mayagueguen.github.io/FATE-WEBSITE/papers/Boulangeat_2012_GCB.pdf}{Boulangeat et al. 2012 GCB}}), 
-##' and the necessary files to build the \code{FATE-HD} simulation folder as well as 
-##' the parameter files 
+##' @description This dataset contains all necessary files to build the 
+##' \code{FATE-HD} simulation folder as well as the parameter files 
 ##' (\emph{\href{https://mayagueguen.github.io/FATE-WEBSITE/papers/Boulangeat_2014_GCB.pdf}{Boulangeat et al. 2014 GCB}}).
 ##' 
-##' @format A \code{list} object with 2 elements :
-##' 
-##' \itemize{
-##'   \item \strong{FATE_PARAM} : a \code{list} object with 7 elements to help 
+##' @format A \code{list} object with 13 elements to help 
 ##'   building the simulation files and folders to run a \code{FATE-HD} 
 ##'   simulation :
+##'   
 ##'   \describe{
 ##'     \item{masks}{a \code{\link[raster]{stack}} object of dimension 
 ##'     \code{782 x 619} with a resolution of \code{100m} and Lambers (lcc) 
-##'     projection, containing 8 mask layers with binary values (0 or 1) to be 
+##'     projection, containing 7 mask layers with binary values (0 or 1) to be 
 ##'     used in a \code{FATE-HD} simulation :
 ##'     \itemize{
 ##'       \item \strong{maskEcrins} : simulation map, where occurs succession
@@ -197,17 +192,18 @@ data("PNE_PFG")
 ##'     \item{HS_0}{a \code{\link[raster]{stack}} object of dimension 
 ##'     \code{782 x 619} with a resolution of \code{100m} and Lambers (lcc) 
 ##'     projection, containing 24 layers with probability values (between 0 and 
-##'     1) representing Habitat Suitability for current time (0) for each PFG 
+##'     1) representing Habitat Suitability for initialization phase and 
+##'     \emph{equilibrium} or \emph{current} time (0) for each PFG 
 ##'     and to be used in a \code{FATE-HD} simulation. \cr
 ##'     These maps are coming from Species Distribution Models and methods to 
 ##'     obtain them are described in Supplementary Materials of 
 ##'     \emph{\href{https://mayagueguen.github.io/FATE-WEBSITE/papers/Boulangeat_2014_GCB.pdf}{Boulangeat et al. 2014 GCB}}.}
-##'     \item{HS_15}{same as HS_0 but 15 years after current time}
-##'     \item{HS_30}{same as HS_0 but 30 years after current time}
-##'     \item{HS_45}{same as HS_0 but 45 years after current time}
-##'     \item{HS_60}{same as HS_0 but 60 years after current time}
-##'     \item{HS_75}{same as HS_0 but 75 years after current time}
-##'     \item{HS_90}{same as HS_0 but 90 years after current time}
+##'     \item{HS_15}{same as HS_0 but 15 years after equilibrium}
+##'     \item{HS_30}{same as HS_0 but 30 years after equilibrium}
+##'     \item{HS_45}{same as HS_0 but 45 years after equilibrium}
+##'     \item{HS_60}{same as HS_0 but 60 years after equilibrium}
+##'     \item{HS_75}{same as HS_0 but 75 years after equilibrium}
+##'     \item{HS_90}{same as HS_0 but 90 years after equilibrium}
 ##'     \item{strata_limits}{a \code{vector} of length \code{5} \cr
 ##'     containing height of stratum limits in centimeters \cr
 ##'     to be used with the \link{PRE_FATE.params_PFGsuccession} and 
@@ -225,7 +221,6 @@ data("PNE_PFG")
 ##'     to be used with the \link{PRE_FATE.params_PFGdisturbance} function \cr}
 ##'     \item{global}{}
 ##'   }
-##' }
 ##' 
 ##' @source 
 ##' 
@@ -234,22 +229,77 @@ data("PNE_PFG")
 data("PNE_PARAM")
 
 ### HEADER #####################################################################
-##' @title Ecrins National Park (PNE) data : building of Plant Functional Groups
+##' @title Ecrins National Park (PNE) data : outputs from \code{FATE-HD} 
+##' simulation
 ##' 
 ##' @name PNE_RESULTS
 ##'
 ##' @author Maya Guéguen
 ##' 
-##' @description This dataset contains all data for the Ecrins National Park 
-##' (PNE) area. It contains both the data to create the Plant Functional 
-##' Groups (PFG) over this area 
-##' (\emph{\href{https://mayagueguen.github.io/FATE-WEBSITE/papers/Boulangeat_2012_GCB.pdf}{Boulangeat et al. 2012 GCB}}), 
-##' and the necessary files to build the \code{FATE-HD} simulation folder as well as 
-##' the parameter files 
-##' (\emph{\href{https://mayagueguen.github.io/FATE-WEBSITE/papers/Boulangeat_2014_GCB.pdf}{Boulangeat et al. 2014 GCB}}).
+##' @description This dataset contains results obtained from outputs of 
+##' \code{FATE-HD} simulation.
 ##' 
-##' @format A \code{list} object with 2 elements :
+##' @format A \code{list} object with 5 elements :
 ##' 
+##' \describe{
+##'   \item{evaluation}{a \code{data.frame} of dimension \code{24 x 11} \cr
+##'     containing statistical metrics to evaluate the predictive quality of 
+##'     both Habitat Suitability models (HS) and \code{FATE-HD} simulation 
+##'     outputs \cr
+##'     \itemize{
+##'       \item \strong{PFG} : name of Plant Functional Group
+##'       \item \strong{nb.obs.absences} : number of observed absences
+##'       \item \strong{nb.obs.presences} : number of observed presences
+##'       \item \strong{specificity.FATE} : proportion of actual negatives that 
+##'       are correctly identified as such by the \code{FATE-HD} model (true 
+##'       negative rate)
+##'       \item \strong{specificity.HS} : proportion of actual negatives that 
+##'       are correctly identified as such by the Habitat Suitability model 
+##'       (true negative rate)
+##'       \item \strong{sensitivity.FATE} : proportion of actual positives that 
+##'       are correctly identified as such by the \code{FATE-HD} model (true 
+##'       positive rate)
+##'       \item \strong{sensitivity.HS} : proportion of actual positives that 
+##'       are correctly identified as such by the Habitat Suitability model 
+##'       (true positive rate)
+##'       \item \strong{TSS.FATE} : True Skill Statistic for \code{FATE-HD} 
+##'       model
+##'       \item \strong{TSS.HS} : True Skill Statistic for Habitat Suitability 
+##'       model
+##'       \item \strong{error.rate.FATE} : percentage of bad predictions for 
+##'       \code{FATE-HD} model
+##'       \item \strong{error.rate.HS} : percentage of bad predictions for 
+##'       Habitat Suitability model
+##'     }
+##'     }
+##'   \item{abund_str.equilibrium}{a \code{\link[raster]{stack}} object of dimension 
+##'     \code{782 x 619} with a resolution of \code{100m} and Lambers (lcc) 
+##'     projection, containing 120 layers representing \code{FATE-HD} 
+##'     \strong{abundances for year 800 of initialization phase} (= 
+##'     \emph{equilibrium} or \emph{current} time). \cr
+##'     Maps are per PFG and per height stratum.}
+##'   \item{forest_cover.init}{a \code{\link[raster]{stack}} object of dimension 
+##'     \code{782 x 619} with a resolution of \code{100m} and Lambers (lcc) 
+##'     projection, containing 16 layers representing \code{FATE-HD} 
+##'     \strong{relative forest cover through initialization phase (from year 50 
+##'     to 800)}. \cr
+##'     Maps are summing all PFGs through all height strata above 1.5 meters. \cr
+##'     }
+##'   \item{forest_cover \cr CC_BAU}{a \code{\link[raster]{stack}} object of dimension 
+##'     \code{782 x 619} with a resolution of \code{100m} and Lambers (lcc) 
+##'     projection, containing 14 layers representing \code{FATE-HD} 
+##'     \strong{relative forest cover through Climate Change (CC) + 
+##'     Business-As-Usual (BAU) scenario (from year 850 to 1500)}. \cr
+##'     Maps are summing all PFGs through all height strata above 1.5 meters. \cr
+##'     }
+##'   \item{forest_cover\cr CC_Abandon}{a \code{\link[raster]{stack}} object of dimension 
+##'     \code{782 x 619} with a resolution of \code{100m} and Lambers (lcc) 
+##'     projection, containing 14 layers representing \code{FATE-HD} 
+##'     \strong{relative forest cover through Climate Change (CC) + Abandonment (BAU) 
+##'     scenario (from year 850 to 1500)}. \cr
+##'     Maps are summing all PFGs through all height strata above 1.5 meters. \cr
+##'     }
+##' }
 ##' 
 ##' @source 
 ##' 

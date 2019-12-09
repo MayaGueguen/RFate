@@ -213,9 +213,6 @@ Groups (PFG) over the Ecrins National Park (PNE)
     <dt>dom.dist_overlap</dt><dd><p><code>matrix</code> of dimension <code>358 x 358</code> <br />
     containing niche overlap distance for dominant species <br />
     to be used with the <a href='PRE_FATE.speciesDistance.html'>PRE_FATE.speciesDistance</a> function <br /></p></dd>
-    <dt>nb.clusters</dt><dd><p><code>vector</code> of length <code>3</code> <br />
-    number of groups kept for each life-form class, obtained by cutting the 
-    hierarchical tree obtained from species distances</p></dd>
     <dt>dom.determ</dt><dd><p><code>data.frame</code> of dimension <code>359 x 5</code> <br />
     containing dominant species information relative to PFG <br />
     obtained from the <a href='PRE_FATE.speciesClustering_step2.html'>PRE_FATE.speciesClustering_step2</a> function <br />
@@ -232,7 +229,10 @@ Groups (PFG) over the Ecrins National Park (PNE)
       species within the PFG ? (see <a href='PRE_FATE.speciesClustering_step2.html'>PRE_FATE.speciesClustering_step2</a> 
       function for details)</p></li>
 </ul></p></dd>
-    <dt>PFG.traits</dt><dd><p><code>data.frame</code> of dimension <code>24 x 14</code> <br />
+    <dt>nb.clusters</dt><dd><p><code>vector</code> of length <code>3</code> <br />
+    number of groups kept for each life-form class, obtained by cutting the 
+    hierarchical tree obtained from species distances</p></dd>
+    <dt>PFG.traits</dt><dd><p><code>data.frame</code> of dimension <code>24 x 10</code> <br />
     containing traits for plant functional groups <br />
     obtained from the <a href='PRE_FATE.speciesClustering_step3.html'>PRE_FATE.speciesClustering_step3</a> function <br />
     <ul>

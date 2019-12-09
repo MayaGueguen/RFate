@@ -6,7 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Ecrins National Park (PNE) data : building of Plant Functional Groups — PNE_PARAM • RFate</title>
+<title>Ecrins National Park (PNE) data : building of parameter files to run 
+a <code>FATE-HD</code> simulation — PNE_PARAM • RFate</title>
 
 
 <!-- jquery -->
@@ -35,13 +36,10 @@
 
 
 
-<meta property="og:title" content="Ecrins National Park (PNE) data : building of Plant Functional Groups — PNE_PARAM" />
-<meta property="og:description" content="This dataset contains all data for the Ecrins National Park 
-(PNE) area. It contains both the data to create the Plant Functional 
-Groups (PFG) over this area 
-(Boulangeat et al. 2012 GCB), 
-and the necessary files to build the FATE-HD simulation folder as well as 
-the parameter files 
+<meta property="og:title" content="Ecrins National Park (PNE) data : building of parameter files to run 
+a <code>FATE-HD</code> simulation — PNE_PARAM" />
+<meta property="og:description" content="This dataset contains all necessary files to build the 
+FATE-HD simulation folder as well as the parameter files 
 (Boulangeat et al. 2014 GCB)." />
 <meta name="twitter:card" content="summary" />
 
@@ -154,18 +152,15 @@ the parameter files
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Ecrins National Park (PNE) data : building of Plant Functional Groups</h1>
+    <h1>Ecrins National Park (PNE) data : building of parameter files to run 
+a <code>FATE-HD</code> simulation</h1>
     <small class="dont-index">Source: <a href='https://github.com/MayaGueguen/RFate.git/blob/master/R/data.R'><code>R/data.R</code></a></small>
     <div class="hidden name"><code>PNE_PARAM.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This dataset contains all data for the Ecrins National Park 
-(PNE) area. It contains both the data to create the Plant Functional 
-Groups (PFG) over this area 
-(<em><a href='https://mayagueguen.github.io/FATE-WEBSITE/papers/Boulangeat_2012_GCB.pdf'>Boulangeat et al. 2012 GCB</a></em>), 
-and the necessary files to build the <code>FATE-HD</code> simulation folder as well as 
-the parameter files 
+    <p>This dataset contains all necessary files to build the 
+<code>FATE-HD</code> simulation folder as well as the parameter files 
 (<em><a href='https://mayagueguen.github.io/FATE-WEBSITE/papers/Boulangeat_2014_GCB.pdf'>Boulangeat et al. 2014 GCB</a></em>).</p>
     </div>
 
@@ -173,14 +168,13 @@ the parameter files
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A <code>list</code> object with 2 elements :</p>
-<ul>
-<li><p><strong>FATE_PARAM</strong> : a <code>list</code> object with 7 elements to help 
+    <p>A <code>list</code> object with 13 elements to help 
   building the simulation files and folders to run a <code>FATE-HD</code> 
-  simulation :</p><dl class='dl-horizontal'>
+  simulation :</p>  
+<p></p><dl class='dl-horizontal'>
     <dt>masks</dt><dd><p>a <code><a href='https://rdrr.io/pkg/raster/man/stack.html'>stack</a></code> object of dimension 
     <code>782 x 619</code> with a resolution of <code>100m</code> and Lambers (lcc) 
-    projection, containing 8 mask layers with binary values (0 or 1) to be 
+    projection, containing 7 mask layers with binary values (0 or 1) to be 
     used in a <code>FATE-HD</code> simulation :
     <ul>
 <li><p><strong>maskEcrins</strong> : simulation map, where occurs succession</p></li>
@@ -197,17 +191,18 @@ the parameter files
     <dt>HS_0</dt><dd><p>a <code><a href='https://rdrr.io/pkg/raster/man/stack.html'>stack</a></code> object of dimension 
     <code>782 x 619</code> with a resolution of <code>100m</code> and Lambers (lcc) 
     projection, containing 24 layers with probability values (between 0 and 
-    1) representing Habitat Suitability for current time (0) for each PFG 
+    1) representing Habitat Suitability for initialization phase and 
+    <em>equilibrium</em> or <em>current</em> time (0) for each PFG 
     and to be used in a <code>FATE-HD</code> simulation. <br />
     These maps are coming from Species Distribution Models and methods to 
     obtain them are described in Supplementary Materials of 
     <em><a href='https://mayagueguen.github.io/FATE-WEBSITE/papers/Boulangeat_2014_GCB.pdf'>Boulangeat et al. 2014 GCB</a></em>.</p></dd>
-    <dt>HS_15</dt><dd><p>same as HS_0 but 15 years after current time</p></dd>
-    <dt>HS_30</dt><dd><p>same as HS_0 but 30 years after current time</p></dd>
-    <dt>HS_45</dt><dd><p>same as HS_0 but 45 years after current time</p></dd>
-    <dt>HS_60</dt><dd><p>same as HS_0 but 60 years after current time</p></dd>
-    <dt>HS_75</dt><dd><p>same as HS_0 but 75 years after current time</p></dd>
-    <dt>HS_90</dt><dd><p>same as HS_0 but 90 years after current time</p></dd>
+    <dt>HS_15</dt><dd><p>same as HS_0 but 15 years after equilibrium</p></dd>
+    <dt>HS_30</dt><dd><p>same as HS_0 but 30 years after equilibrium</p></dd>
+    <dt>HS_45</dt><dd><p>same as HS_0 but 45 years after equilibrium</p></dd>
+    <dt>HS_60</dt><dd><p>same as HS_0 but 60 years after equilibrium</p></dd>
+    <dt>HS_75</dt><dd><p>same as HS_0 but 75 years after equilibrium</p></dd>
+    <dt>HS_90</dt><dd><p>same as HS_0 but 90 years after equilibrium</p></dd>
     <dt>strata_limits</dt><dd><p>a <code>vector</code> of length <code>5</code> <br />
     containing height of stratum limits in centimeters <br />
     to be used with the <a href='PRE_FATE.params_PFGsuccession.html'>PRE_FATE.params_PFGsuccession</a> and 
@@ -225,8 +220,7 @@ the parameter files
     to be used with the <a href='PRE_FATE.params_PFGdisturbance.html'>PRE_FATE.params_PFGdisturbance</a> function <br /></p></dd>
     <dt>global</dt><dd><p></p></dd>
   
-</dl></li>
-</ul>
+</dl>
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
     

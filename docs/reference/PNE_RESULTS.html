@@ -6,7 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Ecrins National Park (PNE) data : building of Plant Functional Groups — PNE_RESULTS • RFate</title>
+<title>Ecrins National Park (PNE) data : outputs from <code>FATE-HD</code> 
+simulation — PNE_RESULTS • RFate</title>
 
 
 <!-- jquery -->
@@ -35,14 +36,10 @@
 
 
 
-<meta property="og:title" content="Ecrins National Park (PNE) data : building of Plant Functional Groups — PNE_RESULTS" />
-<meta property="og:description" content="This dataset contains all data for the Ecrins National Park 
-(PNE) area. It contains both the data to create the Plant Functional 
-Groups (PFG) over this area 
-(Boulangeat et al. 2012 GCB), 
-and the necessary files to build the FATE-HD simulation folder as well as 
-the parameter files 
-(Boulangeat et al. 2014 GCB)." />
+<meta property="og:title" content="Ecrins National Park (PNE) data : outputs from <code>FATE-HD</code> 
+simulation — PNE_RESULTS" />
+<meta property="og:description" content="This dataset contains results obtained from outputs of 
+FATE-HD simulation." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -154,26 +151,78 @@ the parameter files
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Ecrins National Park (PNE) data : building of Plant Functional Groups</h1>
+    <h1>Ecrins National Park (PNE) data : outputs from <code>FATE-HD</code> 
+simulation</h1>
     <small class="dont-index">Source: <a href='https://github.com/MayaGueguen/RFate.git/blob/master/R/data.R'><code>R/data.R</code></a></small>
     <div class="hidden name"><code>PNE_RESULTS.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This dataset contains all data for the Ecrins National Park 
-(PNE) area. It contains both the data to create the Plant Functional 
-Groups (PFG) over this area 
-(<em><a href='https://mayagueguen.github.io/FATE-WEBSITE/papers/Boulangeat_2012_GCB.pdf'>Boulangeat et al. 2012 GCB</a></em>), 
-and the necessary files to build the <code>FATE-HD</code> simulation folder as well as 
-the parameter files 
-(<em><a href='https://mayagueguen.github.io/FATE-WEBSITE/papers/Boulangeat_2014_GCB.pdf'>Boulangeat et al. 2014 GCB</a></em>).</p>
+    <p>This dataset contains results obtained from outputs of 
+<code>FATE-HD</code> simulation.</p>
     </div>
 
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>A <code>list</code> object with 2 elements :</p>
+    <p>A <code>list</code> object with 5 elements :</p>
+<dl class='dl-horizontal'>
+  <dt>evaluation</dt><dd><p>a <code>data.frame</code> of dimension <code>24 x 11</code> <br />
+    containing statistical metrics to evaluate the predictive quality of 
+    both Habitat Suitability models (HS) and <code>FATE-HD</code> simulation 
+    outputs <br />
+    <ul>
+<li><p><strong>PFG</strong> : name of Plant Functional Group</p></li>
+<li><p><strong>nb.obs.absences</strong> : number of observed absences</p></li>
+<li><p><strong>nb.obs.presences</strong> : number of observed presences</p></li>
+<li><p><strong>specificity.FATE</strong> : proportion of actual negatives that 
+      are correctly identified as such by the <code>FATE-HD</code> model (true 
+      negative rate)</p></li>
+<li><p><strong>specificity.HS</strong> : proportion of actual negatives that 
+      are correctly identified as such by the Habitat Suitability model 
+      (true negative rate)</p></li>
+<li><p><strong>sensitivity.FATE</strong> : proportion of actual positives that 
+      are correctly identified as such by the <code>FATE-HD</code> model (true 
+      positive rate)</p></li>
+<li><p><strong>sensitivity.HS</strong> : proportion of actual positives that 
+      are correctly identified as such by the Habitat Suitability model 
+      (true positive rate)</p></li>
+<li><p><strong>TSS.FATE</strong> : True Skill Statistic for <code>FATE-HD</code> 
+      model</p></li>
+<li><p><strong>TSS.HS</strong> : True Skill Statistic for Habitat Suitability 
+      model</p></li>
+<li><p><strong>error.rate.FATE</strong> : percentage of bad predictions for 
+      <code>FATE-HD</code> model</p></li>
+<li><p><strong>error.rate.HS</strong> : percentage of bad predictions for 
+      Habitat Suitability model</p></li>
+</ul></p></dd>
+  <dt>abund_str.equilibrium</dt><dd><p>a <code><a href='https://rdrr.io/pkg/raster/man/stack.html'>stack</a></code> object of dimension 
+    <code>782 x 619</code> with a resolution of <code>100m</code> and Lambers (lcc) 
+    projection, containing 120 layers representing <code>FATE-HD</code> 
+    <strong>abundances for year 800 of initialization phase</strong> (= 
+    <em>equilibrium</em> or <em>current</em> time). <br />
+    Maps are per PFG and per height stratum.</p></dd>
+  <dt>forest_cover.init</dt><dd><p>a <code><a href='https://rdrr.io/pkg/raster/man/stack.html'>stack</a></code> object of dimension 
+    <code>782 x 619</code> with a resolution of <code>100m</code> and Lambers (lcc) 
+    projection, containing 16 layers representing <code>FATE-HD</code> 
+    <strong>relative forest cover through initialization phase (from year 50 
+    to 800)</strong>. <br />
+    Maps are summing all PFGs through all height strata above 1.5 meters. <br /></p></dd>
+  <dt>forest_cover <br /> CC_BAU</dt><dd><p>a <code><a href='https://rdrr.io/pkg/raster/man/stack.html'>stack</a></code> object of dimension 
+    <code>782 x 619</code> with a resolution of <code>100m</code> and Lambers (lcc) 
+    projection, containing 14 layers representing <code>FATE-HD</code> 
+    <strong>relative forest cover through Climate Change (CC) + 
+    Business-As-Usual (BAU) scenario (from year 850 to 1500)</strong>. <br />
+    Maps are summing all PFGs through all height strata above 1.5 meters. <br /></p></dd>
+  <dt>forest_cover<br /> CC_Abandon</dt><dd><p>a <code><a href='https://rdrr.io/pkg/raster/man/stack.html'>stack</a></code> object of dimension 
+    <code>782 x 619</code> with a resolution of <code>100m</code> and Lambers (lcc) 
+    projection, containing 14 layers representing <code>FATE-HD</code> 
+    <strong>relative forest cover through Climate Change (CC) + Abandonment (BAU) 
+    scenario (from year 850 to 1500)</strong>. <br />
+    Maps are summing all PFGs through all height strata above 1.5 meters. <br /></p></dd>
+
+</dl>
     <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
 
     

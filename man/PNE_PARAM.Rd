@@ -2,17 +2,16 @@
 % Please edit documentation in R/data.R
 \name{PNE_PARAM}
 \alias{PNE_PARAM}
-\title{Ecrins National Park (PNE) data : building of Plant Functional Groups}
-\format{A \code{list} object with 2 elements :
-
-\itemize{
-  \item \strong{FATE_PARAM} : a \code{list} object with 7 elements to help 
+\title{Ecrins National Park (PNE) data : building of parameter files to run 
+a \code{FATE-HD} simulation}
+\format{A \code{list} object with 13 elements to help 
   building the simulation files and folders to run a \code{FATE-HD} 
   simulation :
+  
   \describe{
     \item{masks}{a \code{\link[raster]{stack}} object of dimension 
     \code{782 x 619} with a resolution of \code{100m} and Lambers (lcc) 
-    projection, containing 8 mask layers with binary values (0 or 1) to be 
+    projection, containing 7 mask layers with binary values (0 or 1) to be 
     used in a \code{FATE-HD} simulation :
     \itemize{
       \item \strong{maskEcrins} : simulation map, where occurs succession
@@ -30,17 +29,18 @@
     \item{HS_0}{a \code{\link[raster]{stack}} object of dimension 
     \code{782 x 619} with a resolution of \code{100m} and Lambers (lcc) 
     projection, containing 24 layers with probability values (between 0 and 
-    1) representing Habitat Suitability for current time (0) for each PFG 
+    1) representing Habitat Suitability for initialization phase and 
+    \emph{equilibrium} or \emph{current} time (0) for each PFG 
     and to be used in a \code{FATE-HD} simulation. \cr
     These maps are coming from Species Distribution Models and methods to 
     obtain them are described in Supplementary Materials of 
     \emph{\href{https://mayagueguen.github.io/FATE-WEBSITE/papers/Boulangeat_2014_GCB.pdf}{Boulangeat et al. 2014 GCB}}.}
-    \item{HS_15}{same as HS_0 but 15 years after current time}
-    \item{HS_30}{same as HS_0 but 30 years after current time}
-    \item{HS_45}{same as HS_0 but 45 years after current time}
-    \item{HS_60}{same as HS_0 but 60 years after current time}
-    \item{HS_75}{same as HS_0 but 75 years after current time}
-    \item{HS_90}{same as HS_0 but 90 years after current time}
+    \item{HS_15}{same as HS_0 but 15 years after equilibrium}
+    \item{HS_30}{same as HS_0 but 30 years after equilibrium}
+    \item{HS_45}{same as HS_0 but 45 years after equilibrium}
+    \item{HS_60}{same as HS_0 but 60 years after equilibrium}
+    \item{HS_75}{same as HS_0 but 75 years after equilibrium}
+    \item{HS_90}{same as HS_0 but 90 years after equilibrium}
     \item{strata_limits}{a \code{vector} of length \code{5} \cr
     containing height of stratum limits in centimeters \cr
     to be used with the \link{PRE_FATE.params_PFGsuccession} and 
@@ -57,18 +57,13 @@
     containing response of plant functional groups to disturbances \cr
     to be used with the \link{PRE_FATE.params_PFGdisturbance} function \cr}
     \item{global}{}
-  }
-}}
+  }}
 \source{
 
 }
 \description{
-This dataset contains all data for the Ecrins National Park 
-(PNE) area. It contains both the data to create the Plant Functional 
-Groups (PFG) over this area 
-(\emph{\href{https://mayagueguen.github.io/FATE-WEBSITE/papers/Boulangeat_2012_GCB.pdf}{Boulangeat et al. 2012 GCB}}), 
-and the necessary files to build the \code{FATE-HD} simulation folder as well as 
-the parameter files 
+This dataset contains all necessary files to build the 
+\code{FATE-HD} simulation folder as well as the parameter files 
 (\emph{\href{https://mayagueguen.github.io/FATE-WEBSITE/papers/Boulangeat_2014_GCB.pdf}{Boulangeat et al. 2014 GCB}}).
 }
 \author{

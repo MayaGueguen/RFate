@@ -56,9 +56,6 @@
     \item{dom.dist_overlap}{\code{matrix} of dimension \code{358 x 358} \cr
     containing niche overlap distance for dominant species \cr
     to be used with the \link{PRE_FATE.speciesDistance} function \cr}
-    \item{nb.clusters}{\code{vector} of length \code{3} \cr
-    number of groups kept for each life-form class, obtained by cutting the 
-    hierarchical tree obtained from species distances}
     \item{dom.determ}{\code{data.frame} of dimension \code{359 x 5} \cr
     containing dominant species information relative to PFG \cr
     obtained from the \link{PRE_FATE.speciesClustering_step2} function \cr
@@ -77,7 +74,10 @@
       function for details)
     }
     }
-    \item{PFG.traits}{\code{data.frame} of dimension \code{24 x 14} \cr
+    \item{nb.clusters}{\code{vector} of length \code{3} \cr
+    number of groups kept for each life-form class, obtained by cutting the 
+    hierarchical tree obtained from species distances}
+    \item{PFG.traits}{\code{data.frame} of dimension \code{24 x 10} \cr
     containing traits for plant functional groups \cr
     obtained from the \link{PRE_FATE.speciesClustering_step3} function \cr
     \itemize{
