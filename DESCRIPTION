@@ -29,3 +29,4 @@ License:
 URL: https://github.com/MayaGueguen/RFate.git
 RoxygenNote: 6.1.1
 Language: en-US
+LazyData: true

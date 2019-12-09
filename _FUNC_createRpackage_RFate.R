@@ -10,6 +10,7 @@ library(usethis)
 library(spelling)
 # devtools::install_github("hadley/pkgdown")
 library(pkgdown)
+library(raster)
 
 
 #####################################################################
@@ -22,11 +23,17 @@ package_version = "0.0.9.9000"
 
 setwd("RFate/")
 
+tools::checkRdaFiles("data/")
+
 # load("data/MontBlanc.rda")
 # usethis::use_data(MontBlanc, overwrite = TRUE)
+# load("data_supplements/FATE_Bauges")
+# usethis::use_data(FATE_Bauges, overwrite = TRUE)
+# load("data_supplements/PNE.PFG.RData")
 
-load("data_supplements/FATE_Bauges")
-usethis::use_data(FATE_Bauges, overwrite = TRUE)
+source("data-raw/PNE_PFG.R")
+source("data-raw/PNE_PARAM.R")
+source("data-raw/PNE_RESULTS.R")
 
 usethis::use_testthat()
 usethis::use_test(name ="PRE_functions")

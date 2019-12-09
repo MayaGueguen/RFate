@@ -48,6 +48,9 @@ reference:
     contents:
       - "MontBlanc"
       - "FATE_Bauges"
+      - "PNE_PFG"
+      - "PNE_PARAM"
+      - "PNE_RESULTS"
   - title: Interface
     desc:  Graphical User Interface (shiny application)
     contents:
