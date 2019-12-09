@@ -1,0 +1,4 @@
+FATE_PNE_Isa/DATA/MASK/mowing.asc
+FATE_PNE_Isa/DATA/MASK/grazing1.asc
+FATE_PNE_Isa/DATA/MASK/grazing2.asc
+FATE_PNE_Isa/DATA/MASK/grazing3.asc

@@ -1,0 +1,360 @@
+species	name	GROUP	PFG	determinant
+786	Achillea_millefolium	C	C1	TRUE
+6681	Anthyllis_montana	C	C1	TRUE
+11075	Cotoneaster_integerrimus	C	C1	TRUE
+5897	Helianthemum_grandiflorum	C	C1	TRUE
+5924	Helianthemum_nummularium	C	C1	TRUE
+7033	Hippocrepis_comosa	C	C1	TRUE
+4826	Lonicera_caerulea	C	C1	TRUE
+8693	Origanum_vulgare	C	C1	FALSE
+11256	Potentilla_neumanniana	C	C1	TRUE
+11573	Rubus_idaeus	C	C1	TRUE
+11664	Rubus_saxatilis	C	C1	TRUE
+10118	Rumex_acetosella	C	C1	TRUE
+8849	Stachys_recta	C	C1	TRUE
+8863	Teucrium_chamaedrys	C	C1	TRUE
+8943	Thymus_praecox	C	C1	FALSE
+8948	Thymus_pulegioides	C	C1	TRUE
+13153	Valeriana_montana	C	C1	TRUE
+846	Antennaria_dioica	C	C2	TRUE
+975	Artemisia_umbelliformis subsp.eriantha	C	C2	TRUE
+976	Artemisia_umbelliformis subsp.umbelliformis	C	C2	TRUE
+4969	Cerastium_alpinum	C	C2	TRUE
+4999	Cerastium_cerastoides	C	C2	TRUE
+5025	Cerastium_latifolium	C	C2	TRUE
+5029	Cerastium_pedunculatum	C	C2	TRUE
+5059	Cerastium_uniflorum	C	C2	TRUE
+16358	Helictotrichon_sedenense subsp.sedenense	C	C2	TRUE
+2543	Leucanthemopsis_alpina	C	C2	TRUE
+10192	Rumex_scutatus	C	C2	TRUE
+12055	Salix_glaucosericea	C	C2	FALSE
+12057	Salix_hastata	C	C2	TRUE
+12130	Saxifraga_aizoides	C	C2	TRUE
+12236	Saxifraga_oppositifolia	C	C2	TRUE
+6190	Sempervivum_arachnoideum	C	C2	TRUE
+8939	Thymus_polytrichus	C	C2	TRUE
+6493	Vaccinium_uliginosum subsp.microphyllum	C	C2	TRUE
+10289	Androsace_pubescens	C	C3	TRUE
+10297	Androsace_vitaliana	C	C3	TRUE
+11135	Dryas_octopetala	C	C3	TRUE
+6413	Empetrum_nigrum subsp.hermaphroditum	C	C3	TRUE
+3449	Eritrichium_nanum subsp.nanum	C	C3	TRUE
+8239	Globularia_cordifolia	C	C3	TRUE
+5185	Gypsophila_repens	C	C3	TRUE
+17314	Juniperus_sibirica	C	C3	FALSE
+4356	Noccaea_rotundifolia	C	C3	TRUE
+9962	Polygala_chamaebuxus	C	C3	FALSE
+10348	Primula_hirsuta	C	C3	TRUE
+10352	Primula_latifolia	C	C3	TRUE
+10359	Primula_pedemontana subsp.pedemontana	C	C3	FALSE
+4361	Pritzelago_alpina subsp.alpina	C	C3	TRUE
+6483	Rhododendron_ferrugineum	C	C3	TRUE
+5327	Sagina_glabra	C	C3	TRUE
+5343	Sagina_saginoides	C	C3	TRUE
+12060	Salix_herbacea	C	C3	TRUE
+12086	Salix_reticulata	C	C3	TRUE
+12087	Salix_retusa	C	C3	TRUE
+12144	Saxifraga_bryoides	C	C3	TRUE
+12178	Saxifraga_exarata	C	C3	TRUE
+6104	Sedum_album	C	C3	TRUE
+6107	Sedum_alpestre	C	C3	TRUE
+6126	Sedum_dasyphyllum	C	C3	TRUE
+5361	Silene_acaulis	C	C3	TRUE
+5363	Silene_acaulis subsp.bryoides	C	C3	TRUE
+3316	Alnus_alnobetula	C	C4	TRUE
+11038	Amelanchier_ovalis	C	C4	TRUE
+6073	Cornus_sanguinea	C	C4	TRUE
+6077	Corylus_avellana	C	C4	TRUE
+11102	Crataegus_monogyna	C	C4	TRUE
+17297	Juniperus_communis	C	C4	TRUE
+4837	Lonicera_xylosteum	C	C4	TRUE
+8259	Ribes_petraeum	C	C4	TRUE
+11422	Rosa_pendulina	C	C4	TRUE
+12062	Salix_laggeri	C	C4	TRUE
+12078	Salix_purpurea	C	C4	FALSE
+6423	Arctostaphylos_uva-ursi subsp.crassifolius	C	C5	TRUE
+6427	Calluna_vulgaris	C	C5	TRUE
+7035	Hippocrepis_emerus	C	C5	TRUE
+6490	Vaccinium_myrtillus	C	C6	TRUE
+6495	Vaccinium_vitis-idaea subsp.vitis-idaea	C	C6	TRUE
+796	Achillea_nana	H	H1	TRUE
+15307	Agrostis_alpina	H	H1	TRUE
+15351	Agrostis_rupestris	H	H1	TRUE
+11004	Alchemilla_pentaphyllea	H	H1	FALSE
+15427	Alopecurus_alpinus	H	H1	TRUE
+902	Arnica_montana	H	H1	TRUE
+6725	Astragalus_alpinus	H	H1	TRUE
+199	Athamanta_cretensis	H	H1	TRUE
+15608	Avenula_versicolor subsp.versicolor	H	H1	TRUE
+4637	Campanula_cochleariifolia	H	H1	TRUE
+13871	Carex_capillaris	H	H1	TRUE
+13887	Carex_curvula	H	H1	TRUE
+13916	Carex_echinata	H	H1	FALSE
+13945	Carex_foetida	H	H1	TRUE
+13946	Carex_frigida	H	H1	TRUE
+14024	Carex_nigra	H	H1	TRUE
+14054	Carex_panicea	H	H1	TRUE
+14091	Carex_rupestris	H	H1	TRUE
+1680	Doronicum_grandiflorum	H	H1	TRUE
+9270	Epilobium_anagallidifolium	H	H1	TRUE
+14204	Eriophorum_latifolium	H	H1	TRUE
+14205	Eriophorum_polystachion	H	H1	TRUE
+14209	Eriophorum_scheuchzeri	H	H1	TRUE
+16078	Festuca_halleri subsp.halleri	H	H1	TRUE
+16216	Festuca_quadriflora	H	H1	TRUE
+8075	Gentiana_punctata	H	H1	TRUE
+11160	Geum_montanum	H	H1	TRUE
+11162	Geum_reptans	H	H1	TRUE
+2035	Hieracium_glaciale	H	H1	TRUE
+14569	Juncus_alpinoarticulatus subsp.alpinoarticulatus	H	H1	TRUE
+14660	Juncus_trifidus	H	H1	TRUE
+14228	Kobresia_myosuroides	H	H1	TRUE
+2522	Leontodon_montanus	H	H1	TRUE
+2527	Leontodon_pyrenaicus subsp.helveticus	H	H1	TRUE
+12460	Linaria_alpina subsp.alpina	H	H1	TRUE
+7139	Lotus_alpinus	H	H1	TRUE
+14668	Luzula_alpinopilosa	H	H1	TRUE
+10019	Oxyria_digyna	H	H1	TRUE
+16642	Phleum_alpinum	H	H1	TRUE
+9612	Plantago_alpina	H	H1	TRUE
+16696	Poa_alpina	H	H1	TRUE
+16723	Poa_cenisia	H	H1	TRUE
+16750	Poa_laxa	H	H1	TRUE
+10106	Polygonum_viviparum	H	H1	TRUE
+11202	Potentilla_aurea	H	H1	TRUE
+11225	Potentilla_erecta	H	H1	TRUE
+11233	Potentilla_grandiflora	H	H1	TRUE
+10691	Ranunculus_glacialis	H	H1	TRUE
+10699	Ranunculus_kuepferi	H	H1	TRUE
+10715	Ranunculus_montanus	H	H1	TRUE
+12274	Saxifraga_stellaris subsp.robusta	H	H1	TRUE
+40028	Taraxacum_alpinum	H	H1	TRUE
+14315	Trichophorum_cespitosum	H	H1	TRUE
+7580	Trifolium_alpinum	H	H1	TRUE
+7672	Trifolium_pallescens	H	H1	TRUE
+7712	Trifolium_saxatile	H	H1	FALSE
+7739	Trifolium_thalii	H	H1	FALSE
+16968	Trisetum_distichophyllum	H	H1	TRUE
+423	Heracleum_sphondylium subsp.elegans	H	H10	TRUE
+15316	Agrostis_capillaris	H	H2	TRUE
+15363	Agrostis_stolonifera	H	H2	TRUE
+11030	Alchemilla_vulgaris	H	H2	FALSE
+190	Astrantia_major	H	H2	TRUE
+13872	Carex_caryophyllea	H	H2	TRUE
+14094	Carex_sempervirens	H	H2	TRUE
+272	Carum_carvi	H	H2	TRUE
+5687	Chenopodium_bonus-henricus	H	H2	TRUE
+16136	Festuca_nigrescens	H	H2	TRUE
+11151	Fragaria_vesca	H	H2	TRUE
+11803	Galium_aparine	H	H2	TRUE
+11874	Galium_odoratum	H	H2	FALSE
+11942	Galium_verum	H	H2	TRUE
+8218	Geranium_sylvaticum	H	H2	TRUE
+7107	Lathyrus_pratensis	H	H2	TRUE
+2593	Leucanthemum_vulgare	H	H2	TRUE
+7147	Lotus_corniculatus	H	H2	TRUE
+479	Meum_athamanticum	H	H2	TRUE
+7378	Onobrychis_montana	H	H2	TRUE
+9670	Plantago_media	H	H2	TRUE
+10113	Rumex_acetosa	H	H2	TRUE
+10182	Rumex_pseudalpinus	H	H2	TRUE
+16860	Sesleria_caerulea	H	H2	TRUE
+7660	Trifolium_montanum	H	H2	TRUE
+7680	Trifolium_pratense	H	H2	TRUE
+139	Aegopodium_podagraria	H	H3	TRUE
+15465	Anthoxanthum_odoratum	H	H3	TRUE
+15482	Arrhenatherum_elatius subsp.elatius	H	H3	TRUE
+1622	Crepis_pyrenaica	H	H3	TRUE
+15813	Dactylis_glomerata	H	H3	TRUE
+15838	Deschampsia_cespitosa	H	H3	TRUE
+16219	Festuca_rubra	H	H3	TRUE
+419	Heracleum_sphondylium	H	H3	TRUE
+561	Pimpinella_major	H	H3	TRUE
+9655	Plantago_lanceolata	H	H3	TRUE
+16767	Poa_pratensis	H	H3	TRUE
+10622	Ranunculus_acris	H	H3	TRUE
+10130	Rumex_arifolius	H	H3	FALSE
+3116	Taraxacum_officinale	H	H3	TRUE
+7696	Trifolium_repens	H	H3	TRUE
+10845	Trollius_europaeus	H	H3	TRUE
+13120	Urtica_dioica	H	H3	TRUE
+7796	Vicia_cracca	H	H3	TRUE
+10398	Aconitum_lycoctonum subsp.vulparia	H	H4	TRUE
+11057	Aruncus_dioicus	H	H4	TRUE
+17798	Athyrium_filix-femina	H	H4	TRUE
+17587	Dryopteris_dilatata	H	H4	TRUE
+17589	Dryopteris_filix-mas	H	H4	TRUE
+2740	Prenanthes_purpurea	H	H4	TRUE
+15250	Achnatherum_calamagrostis	H	H5	TRUE
+15299	Agrostis_agrostiflora	H	H5	TRUE
+13677	Anthericum_liliago	H	H5	TRUE
+989	Aster_bellidiastrum	H	H5	FALSE
+15630	Briza_media	H	H5	TRUE
+15654	Bromus_erectus	H	H5	TRUE
+15851	Deschampsia_flexuosa	H	H5	TRUE
+9276	Epilobium_dodonaei subsp.fleischeri	H	H5	TRUE
+15977	Festuca_acuminata	H	H5	TRUE
+16062	Festuca_flavescens	H	H5	TRUE
+16101	Festuca_laevigata	H	H5	TRUE
+16119	Festuca_marginata subsp.gallica	H	H5	TRUE
+40272	Festuca_melanopsis	H	H5	TRUE
+16193	Festuca_paniculata subsp.paniculata	H	H5	FALSE
+16351	Helictotrichon_parlatorei	H	H5	FALSE
+4158	Hugueninia_tanacetifolia	H	H5	TRUE
+8330	Hypericum_maculatum	H	H5	TRUE
+16439	Koeleria_vallesiana	H	H5	TRUE
+446	Laserpitium_halleri	H	H5	TRUE
+457	Laserpitium_siler	H	H5	TRUE
+2500	Leontodon_autumnalis	H	H5	TRUE
+2509	Leontodon_hispidus	H	H5	TRUE
+14713	Luzula_sieberi	H	H5	TRUE
+16645	Phleum_alpinum subsp.rhaeticum	H	H5	TRUE
+10590	Pulsatilla_alpina	H	H5	TRUE
+10646	Ranunculus_bulbosus	H	H5	TRUE
+8742	Salvia_pratensis	H	H5	TRUE
+5406	Silene_flos-jovis	H	H5	TRUE
+16932	Stipa_eriocaulis subsp.eriocaulis	H	H5	TRUE
+3209	Tolpis_staticifolia	H	H5	TRUE
+16969	Trisetum_flavescens	H	H5	TRUE
+3709	Arabis_alpina	H	H6	FALSE
+15600	Avenula_pubescens	H	H6	TRUE
+15624	Brachypodium_rupestre	H	H6	TRUE
+1080	Cacalia_alliariae	H	H6	TRUE
+15744	Calamagrostis_varia	H	H6	TRUE
+3941	Cardamine_pentaphyllos	H	H6	TRUE
+13933	Carex_flacca	H	H6	TRUE
+290	Chaerophyllum_aureum	H	H6	TRUE
+302	Chaerophyllum_villarsii	H	H6	TRUE
+1455	Cicerbita_alpina	H	H6	TRUE
+9271	Epilobium_angustifolium	H	H6	TRUE
+15985	Festuca_altissima	H	H6	TRUE
+8059	Gentiana_lutea	H	H6	TRUE
+2144	Hieracium_murorum	H	H6	TRUE
+2225	Hieracium_prenanthoides	H	H6	TRUE
+6285	Knautia_dipsacifolia	H	H6	TRUE
+449	Laserpitium_latifolium	H	H6	TRUE
+14703	Luzula_nivea	H	H6	TRUE
+16496	Melica_nutans	H	H6	TRUE
+6653	Mercurialis_perennis	H	H6	TRUE
+16509	Milium_effusum	H	H6	TRUE
+16524	Molinia_caerulea subsp.arundinacea	H	H6	TRUE
+9402	Oxalis_acetosella	H	H6	FALSE
+16758	Poa_nemoralis	H	H6	TRUE
+10626	Ranunculus_aduncus	H	H6	TRUE
+12264	Saxifraga_rotundifolia	H	H6	TRUE
+2899	Senecio_ovatus subsp.ovatus	H	H6	TRUE
+2942	Serratula_tinctoria	H	H6	FALSE
+13157	Valeriana_officinalis	H	H6	TRUE
+13241	Viola_biflora	H	H6	FALSE
+17509	Asplenium_ramosum	H	H7	TRUE
+17519	Asplenium_septentrionale subsp.septentrionale	H	H7	TRUE
+17525	Asplenium_trichomanes subsp.quadrivalens	H	H7	TRUE
+1085	Cacalia_alpina	H	H7	TRUE
+17464	Cryptogramma_crispa	H	H7	TRUE
+17806	Cystopteris_fragilis	H	H7	TRUE
+17641	Equisetum_arvense	H	H7	TRUE
+17822	Gymnocarpium_robertianum	H	H7	TRUE
+2199	Hieracium_pilosella	H	H7	TRUE
+2393	Homogyne_alpina	H	H7	TRUE
+2685	Petasites_albus	H	H7	TRUE
+3244	Tussilago_farfara	H	H7	TRUE
+17838	Woodsia_alpina	H	H7	TRUE
+1087	Cacalia_leucophylla	H	H8	TRUE
+1544	Cirsium_spinosissimum	H	H8	TRUE
+8017	Gentiana_alpina	H	H8	TRUE
+4312	Murbeckiella_pinnatifida subsp.pinnatifida	H	H8	TRUE
+2648	Omalotheca_supina	H	H8	TRUE
+14860	Veratrum_lobelianum	H	H8	FALSE
+15466	Anthoxanthum_odoratum subsp.nipponicum	H	H9	TRUE
+16538	Nardus_stricta	H	H9	TRUE
+16782	Poa_supina	H	H9	TRUE
+5512	Silene_vulgaris subsp.prostrata	H	H9	TRUE
+40244	Alchemilla_alpigena	H		FALSE
+10944	Alchemilla_coriacea	H		FALSE
+10992	Alchemilla_lucida	H		FALSE
+11035	Alchemilla_xanthochlora	H		FALSE
+10451	Anemone_baldensis	H		FALSE
+4885	Arenaria_biflora	H		FALSE
+913	Artemisia_alba	H		FALSE
+930	Artemisia_campestris	H		FALSE
+948	Artemisia_genipi	C		FALSE
+11760	Asperula_aristata	C		FALSE
+13742	Asphodelus_albus	H		FALSE
+17512	Asplenium_ruta-muraria subsp.ruta-muraria	H		FALSE
+6765	Astragalus_onobrychis	H		FALSE
+6777	Astragalus_sempervirens	C		FALSE
+17797	Athyrium_distentifolium	H		FALSE
+13828	Blysmus_compressus	H		FALSE
+40225	Carduus_medius subsp.carlinifolius	H		FALSE
+14115	Carex_austroalpina	H		FALSE
+13888	Carex_curvula subsp.curvula	H		FALSE
+13889	Carex_curvula subsp.rosae	H		FALSE
+13892	Carex_davalliana	H		FALSE
+14090	Carex_rostrata	H		FALSE
+14129	Carex_viridula subsp.brachyrrhyncha	H		FALSE
+4007	Coincya_richeri	H		FALSE
+13804	Convallaria_majalis	H		FALSE
+10525	Delphinium_dubium	H		FALSE
+14193	Eleocharis_quinqueflora	H		FALSE
+15944	Elytrigia_repens	H		FALSE
+9269	Epilobium_alsinifolium	H		FALSE
+9273	Epilobium_collinum	H		FALSE
+17650	Equisetum_palustre	H		FALSE
+17656	Equisetum_variegatum	H		FALSE
+16087	Festuca_heterophylla	H		FALSE
+16201	Festuca_pratensis subsp.pratensis	H		FALSE
+16291	Festuca_violacea subsp.violacea	H		FALSE
+8509	Galeopsis_angustifolia	H		FALSE
+11856	Galium_megalospermum	H		FALSE
+11888	Galium_pseudohelveticum	H		FALSE
+6979	Genista_sagittalis	C		FALSE
+8193	Geranium_nodosum	H		FALSE
+8207	Geranium_robertianum	H		FALSE
+7006	Hedysarum_boutignyanum	H		FALSE
+5937	Helianthemum_oelandicum	H		FALSE
+16359	Helictotrichon_sempervirens	H		FALSE
+8366	Herniaria_alpina	C		FALSE
+1869	Hieracium_amplexicaule	C		FALSE
+438	Imperatoria_ostruthium	H		FALSE
+14575	Juncus_arcticus	H		FALSE
+14576	Juncus_articulatus	H		FALSE
+14607	Juncus_filiformis	H		FALSE
+14664	Juncus_triglumis	H		FALSE
+12536	Melampyrum_sylvaticum	H		FALSE
+12540	Melampyrum_vaudense	H		FALSE
+16504	Melica_uniflora	H		FALSE
+7489	Oxytropis_helvetica	H		FALSE
+9668	Plantago_maritima subsp.serpentina	C		FALSE
+40027	Poa_nemoralis var. glaucantha	H		FALSE
+10624	Ranunculus_acris subsp.friesianus	H		FALSE
+10905	Rhamnus_pumila	C		FALSE
+12696	Rhinanthus_alectorolophus	H		FALSE
+12734	Rhinanthus_minor	H		FALSE
+12037	Salix_breviserrata	C		FALSE
+12090	Salix_serpyllifolia	C		FALSE
+12166	Saxifraga_cuneifolia subsp.robusta	C		FALSE
+12184	Saxifraga_exarata subsp.pseudoexerata	H		FALSE
+6146	Sedum_anopetalum	C		FALSE
+5582	Stellaria_nemorum subsp.montana	H		FALSE
+17408	Taxus_baccata	H		FALSE
+13304	Viola_palustris	H		FALSE
+17370	Pinus_cembra	P	P1	TRUE
+17396	Pinus_sylvestris	P	P1	TRUE
+11313	Prunus_avium	P	P1	TRUE
+11726	Sorbus_aria	P	P1	TRUE
+11729	Sorbus_aucuparia	P	P1	TRUE
+11736	Sorbus_mougeotii	P	P1	TRUE
+12010	Populus_tremula	P	P2	TRUE
+12047	Salix_daphnoides	P	P2	TRUE
+17343	Abies_alba	P	P3	TRUE
+23	Acer_pseudoplatanus	P	P3	TRUE
+9369	Fraxinus_excelsior	P	P3	TRUE
+13081	Tilia_platyphyllos	P	P3	TRUE
+17356	Larix_decidua	P	P4	TRUE
+7895	Fagus_sylvatica	P	P5	TRUE
+17363	Picea_abies	P	P5	TRUE
+3340	Betula_pendula	P	P6	TRUE
+17400	Pinus_uncinata	P	P6	TRUE
+6	Acer_campestre subsp.campestre	P	P7	TRUE
+19	Acer_opalus	P	P7	TRUE
+3325	Betula_alba	P	P8	TRUE
