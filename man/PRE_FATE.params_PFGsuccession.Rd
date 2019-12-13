@@ -167,6 +167,26 @@ PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
                                                         , height = c(10, 250, 36, 68, 1250, 550)
                                                         , maturity = c(5, 5, 3, 3, 8, 9)
                                                         , longevity = c(12, 200, 25, 4, 110, 70)))
+                                                        
+                                                        
+## Load example data
+data(PNE_PARAM)
+
+## PNE_PARAM$succ_light : data.frame
+## PNE_PARAM$strata_limits : vector
+
+tab = PNE_PARAM$succ_light[, c("PFG", "type", "height", "maturity", "longevity")]
+
+## Create PFG succession parameter files : automatic definition of strata limits
+PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
+                            , mat.PFG.succ = tab)
+                            
+## Create PFG succession parameter files : predefined of strata limits
+PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
+                            , mat.PFG.succ = tab
+                            , strata.limits = PNE_PARAM$strata_limits
+                            , strata.limits_reduce = FALSE)
+                                                        
 
 }
 \seealso{

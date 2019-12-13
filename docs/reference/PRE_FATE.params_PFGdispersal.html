@@ -224,7 +224,17 @@ seeds dispersed into 3 different concentric circles :</p>
                             , <span class='kw'>mat.PFG.disp</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>PFG</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"PFG1"</span>, <span class='st'>"PFG2"</span>, <span class='st'>"PFG3"</span>)
                                                         , <span class='kw'>d50</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>50</span>, <span class='fl'>50</span>, <span class='fl'>10</span>)
                                                         , <span class='kw'>d99</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1000</span>, <span class='fl'>1500</span>, <span class='fl'>2000</span>)
-                                                        , <span class='kw'>ldd</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>10000</span>, <span class='fl'>5000</span>, <span class='fl'>10000</span>)))</pre>
+                                                        , <span class='kw'>ldd</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>10000</span>, <span class='fl'>5000</span>, <span class='fl'>10000</span>)))
+
+
+<span class='co'>## Load example data</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>PNE_PARAM</span>)
+
+<span class='co'>## PNE_PARAM$disp : data.frame</span>
+
+<span class='co'>## Create PFG dispersal parameter files</span>
+<span class='fu'>PRE_FATE.params_PFGdispersal</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
+                            , <span class='kw'>mat.PFG.disp</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>disp</span>)</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
