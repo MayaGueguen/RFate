@@ -206,14 +206,15 @@
 ##' 
 ##' ## Create PFG disturbance parameter files
 ##' PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
-##'                                , mat.PFG.dist = data.frame(name = rep(c("DIST1","DIST2"), each = 4)
-##'                                                            , responseStage = rep(1:4, 2)
-##'                                                            , KilledIndiv_H = c(0,0,0,0,1,1,0,0)
-##'                                                            , KilledIndiv_C = c(0,10,10,10,1,1,0,0)
-##'                                                            , KilledIndiv_P = c(10,10,10,10,10,0,0,0)
-##'                                                            , ResproutIndiv_H = c(0,0,9,10,0,0,5,1)
-##'                                                            , ResproutIndiv_C = c(0,0,0,0,0,0,5,1)
-##'                                                            , ResproutIndiv_P = c(0,0,0,0,0,0,0,0)))
+##'                                , mat.PFG.dist = data.frame(name = rep(c("DIST1","DIST2"), each = 4 * 3)
+##'                                                            , responseStage = rep(1:4, 2 * 3)
+##'                                                            , PFG = rep(c("C", "H", "P"), each = 2 * 4)
+##'                                                            , KilledIndiv = c(c(0,10,10,10,1,1,0,0)
+##'                                                                              , c(0,0,0,0,1,1,0,0)
+##'                                                                              , c(10,10,10,10,10,0,0,0))
+##'                                                            , ResproutIndiv = c(c(0,0,0,0,0,0,5,1)
+##'                                                                                , c(0,0,9,10,0,0,5,1)
+##'                                                                                , c(0,0,0,0,0,0,0,0))))
 ##'                                                            
 ##' ## Create PFG soil parameter files
 ##' PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"

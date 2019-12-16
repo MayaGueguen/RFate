@@ -13,8 +13,8 @@ PRE_FATE.params_PFGdisturbance(name.simulation, mat.PFG.dist,
 \item{name.simulation}{a \code{string} that corresponds to the main
 directory or simulation name of the \code{FATE-HD} simulation}
 
-\item{mat.PFG.dist}{a \code{data.frame} with at least 4 columns : \cr name, 
-responseStage, KilledIndiv_[...], ResproutIndiv_[...] (see \code{Details})}
+\item{mat.PFG.dist}{a \code{data.frame} with 5 columns : \cr name, 
+responseStage, PFG, KilledIndiv, ResproutIndiv (see \code{Details})}
 
 \item{mat.PFG.succ}{a \code{data.frame} with at least 6 columns : \cr
 PFG, type, MATURITY, LONGEVITY, STRATA and CHANG_STR_AGES_to_str_3. \cr
@@ -149,8 +149,10 @@ the response of each PFG to each disturbance :
   same time)}
   \item{responseStage}{the concerned response class \emph{(!currently 4,
   not yet editable!)}}
-  \item{KilledIndiv_[...]}{the proportion of killed individuals}
-  \item{ResproutIndiv_[...]}{the proportion of resprouting individuals}
+  \item{PFG}{the concerned plant functional group \emph{(!should match with 
+  the ones given within \code{mat.PFG.succ}!)}}
+  \item{KilledIndiv}{the proportion of killed individuals}
+  \item{ResproutIndiv}{the proportion of resprouting individuals}
 }
 
 These values will allow to define a third parameter for each PFG :
@@ -165,6 +167,8 @@ These values will allow to define a third parameter for each PFG :
      (chamaephyte) or \code{P} (phanerophyte)
      \item for each PFG
    }
+   Both methods can be combined (but are applied in the order given by the 
+   PFG column).
   }
 }
 
@@ -195,17 +199,35 @@ PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
                                                         
 ## Create PFG disturbance parameter files
 PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
-                               , mat.PFG.dist = data.frame(name = rep(c("DIST1","DIST2"), each = 4)
-                                                           , responseStage = rep(1:4, 2)
-                                                           #, KilledPropagule_H = 0
-                                                           #, KilledPropagule_C = 0
-                                                           #, KilledPropagule_P = 0
-                                                           , KilledIndiv_H = c(0,0,0,0,1,1,0,0)
-                                                           , KilledIndiv_C = c(0,10,10,10,1,1,0,0)
-                                                           , KilledIndiv_P = c(10,10,10,10,10,0,0,0)
-                                                           , ResproutIndiv_H = c(0,0,9,10,0,0,5,1)
-                                                           , ResproutIndiv_C = c(0,0,0,0,0,0,5,1)
-                                                           , ResproutIndiv_P = c(0,0,0,0,0,0,0,0)))
+                               , mat.PFG.dist = data.frame(name = rep(c("DIST1","DIST2"), each = 4 * 3)
+                                                           , responseStage = rep(1:4, 2 * 3)
+                                                           , PFG = rep(c("C", "H", "P"), each = 2 * 4)
+                                                           , KilledIndiv = c(c(0,10,10,10,1,1,0,0)
+                                                                             , c(0,0,0,0,1,1,0,0)
+                                                                             , c(10,10,10,10,10,0,0,0))
+                                                           , ResproutIndiv = c(c(0,0,0,0,0,0,5,1)
+                                                                               , c(0,0,9,10,0,0,5,1)
+                                                                               , c(0,0,0,0,0,0,0,0))))
+                                                           
+                                                           
+## Load example data
+data(PNE_PARAM)
+
+## PNE_PARAM$succ_light : data.frame
+## PNE_PARAM$strata_limits : vector
+## PNE_PARAM$dist : data.frame
+
+tab = PNE_PARAM$succ_light[, c("PFG", "type", "height", "maturity", "longevity")]
+
+## Create PFG succession parameter files : predefined of strata limits
+PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
+                            , mat.PFG.succ = tab
+                            , strata.limits = PNE_PARAM$strata_limits
+                            , strata.limits_reduce = FALSE)
+                            
+## Create PFG disturbance parameter files
+PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
+                               , mat.PFG.dist = PNE_PARAM$dist)
                                                            
 
 }

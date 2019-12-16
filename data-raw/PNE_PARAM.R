@@ -46,9 +46,10 @@ param.2 = foreach(i = list.files(path = "a_DATA/PFGS/DISP"
   {
     ff = readLines(con = i)
     return(data.frame(PFG = gsub("DISP_|.txt", "", basename(i))
-                      , d50 = strsplit(ff, " ")[[1]][2]
-                      , d99 = strsplit(ff, " ")[[1]][3]
-                      , ldd = strsplit(ff, " ")[[1]][4]
+                      , d50 = as.numeric(strsplit(ff, " ")[[1]][2])
+                      , d99 = as.numeric(strsplit(ff, " ")[[1]][3])
+                      , ldd = as.numeric(strsplit(ff, " ")[[1]][4])
+                      , stringsAsFactors = FALSE
     ))
   }
 param.3 = foreach(i = list.files(path = "a_DATA/PFGS/DIST"
@@ -65,6 +66,7 @@ param.3 = foreach(i = list.files(path = "a_DATA/PFGS/DIST"
                      , responseStage = rep(1:4, 4)
                      , KilledIndiv = ff_FATES[seq(1, length(ff_FATES), 2)]
                      , ResproutIndiv = ff_FATES[seq(2, length(ff_FATES), 2)]
+                     , stringsAsFactors = FALSE
     )
   }
 corres_dist = data.frame(old = 0:6, new = c(0, 1, 5, 9, 10, 4, 8))

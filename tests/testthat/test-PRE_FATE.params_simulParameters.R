@@ -171,13 +171,10 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : name.si
   PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                  , mat.PFG.dist = data.frame(name = "graz"
                                                              , responseStage = c(1,2)
-                                                             , KilledIndiv_C = c(1,3)
-                                                             , KilledIndiv_H = c(1,3)
-                                                             , KilledIndiv_P = c(1,3)
-                                                             , ResproutIndiv_C = c(4,9)
-                                                             , ResproutIndiv_H = c(4,9)
-                                                             , ResproutIndiv_P = c(4,9)))
-  
+                                                             , PFG = rep(c("C", "H", "P"), each = 2)
+                                                             , KilledIndiv = rep(c(1, 3), 3)
+                                                             , ResproutIndiv = rep(c(4, 9), 3)))
+
   expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif")
                  , "`name.dist` must contain a character value of length > 0"
                  , fixed = T)

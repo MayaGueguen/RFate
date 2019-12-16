@@ -16,8 +16,8 @@
 ##' PFG, type, MATURITY, LONGEVITY, STRATA and CHANG_STR_AGES_to_str_3. \cr
 ##' Such an object can be obtained with the \code{PRE_FATE.params_PFGsuccession}
 ##' function.
-##' @param mat.PFG.dist a \code{data.frame} with at least 4 columns : \cr name, 
-##' responseStage, KilledIndiv_[...], ResproutIndiv_[...] (see \code{Details})
+##' @param mat.PFG.dist a \code{data.frame} with 5 columns : \cr name, 
+##' responseStage, PFG, KilledIndiv, ResproutIndiv (see \code{Details})
 ##' @param opt.folder.name (\emph{optional}) \cr a \code{string} that
 ##' corresponds to the name of the folder that will be created into the 
 ##' \code{name.simulation/DATA/PFGS/DIST/} directory to store the results
@@ -105,8 +105,10 @@
 ##'   same time)}
 ##'   \item{responseStage}{the concerned response class \emph{(!currently 4,
 ##'   not yet editable!)}}
-##'   \item{KilledIndiv_[...]}{the proportion of killed individuals}
-##'   \item{ResproutIndiv_[...]}{the proportion of resprouting individuals}
+##'   \item{PFG}{the concerned plant functional group \emph{(!should match with 
+##'   the ones given within \code{mat.PFG.succ}!)}}
+##'   \item{KilledIndiv}{the proportion of killed individuals}
+##'   \item{ResproutIndiv}{the proportion of resprouting individuals}
 ##' }
 ##' 
 ##' These values will allow to define a third parameter for each PFG :
@@ -121,6 +123,8 @@
 ##'      (chamaephyte) or \code{P} (phanerophyte)
 ##'      \item for each PFG
 ##'    }
+##'    Both methods can be combined (but are applied in the order given by the 
+##'    PFG column).
 ##'   }
 ##' }
 ##' 
@@ -194,17 +198,35 @@
 ##'                                                         
 ##' ## Create PFG disturbance parameter files
 ##' PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
-##'                                , mat.PFG.dist = data.frame(name = rep(c("DIST1","DIST2"), each = 4)
-##'                                                            , responseStage = rep(1:4, 2)
-##'                                                            #, KilledPropagule_H = 0
-##'                                                            #, KilledPropagule_C = 0
-##'                                                            #, KilledPropagule_P = 0
-##'                                                            , KilledIndiv_H = c(0,0,0,0,1,1,0,0)
-##'                                                            , KilledIndiv_C = c(0,10,10,10,1,1,0,0)
-##'                                                            , KilledIndiv_P = c(10,10,10,10,10,0,0,0)
-##'                                                            , ResproutIndiv_H = c(0,0,9,10,0,0,5,1)
-##'                                                            , ResproutIndiv_C = c(0,0,0,0,0,0,5,1)
-##'                                                            , ResproutIndiv_P = c(0,0,0,0,0,0,0,0)))
+##'                                , mat.PFG.dist = data.frame(name = rep(c("DIST1","DIST2"), each = 4 * 3)
+##'                                                            , responseStage = rep(1:4, 2 * 3)
+##'                                                            , PFG = rep(c("C", "H", "P"), each = 2 * 4)
+##'                                                            , KilledIndiv = c(c(0,10,10,10,1,1,0,0)
+##'                                                                              , c(0,0,0,0,1,1,0,0)
+##'                                                                              , c(10,10,10,10,10,0,0,0))
+##'                                                            , ResproutIndiv = c(c(0,0,0,0,0,0,5,1)
+##'                                                                                , c(0,0,9,10,0,0,5,1)
+##'                                                                                , c(0,0,0,0,0,0,0,0))))
+##'                                                            
+##'                                                            
+##' ## Load example data
+##' data(PNE_PARAM)
+##' 
+##' ## PNE_PARAM$succ_light : data.frame
+##' ## PNE_PARAM$strata_limits : vector
+##' ## PNE_PARAM$dist : data.frame
+##' 
+##' tab = PNE_PARAM$succ_light[, c("PFG", "type", "height", "maturity", "longevity")]
+##' 
+##' ## Create PFG succession parameter files : predefined of strata limits
+##' PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
+##'                             , mat.PFG.succ = tab
+##'                             , strata.limits = PNE_PARAM$strata_limits
+##'                             , strata.limits_reduce = FALSE)
+##'                             
+##' ## Create PFG disturbance parameter files
+##' PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
+##'                                , mat.PFG.dist = PNE_PARAM$dist)
 ##'                                                            
 ##' 
 ##' @export
@@ -288,56 +310,41 @@ PRE_FATE.params_PFGdisturbance = function(
   {
     .stopMessage_beDataframe("mat.PFG.dist")
   }
-  if (nrow(mat.PFG.dist) == 0 || ncol(mat.PFG.dist) < 2)
+  if (nrow(mat.PFG.dist) == 0 || ncol(mat.PFG.dist) != 5)
   {
-    .stopMessage_numRowCol("mat.PFG.dist", c("name", "responseStage"))
+    .stopMessage_numRowCol("mat.PFG.dist", c("name", "responseStage", "PFG", "KilledIndiv", "ResproutIndiv"))
   }
-  if (ncol(mat.PFG.dist) >= 1)
+  if (ncol(mat.PFG.dist) == 5)
   {
-    if (sum(colnames(mat.PFG.dist) %in% c("name", "responseStage")) < 2)
+    if (sum(colnames(mat.PFG.dist) %in% c("name", "responseStage", "PFG", "KilledIndiv", "ResproutIndiv")) < 5)
     {
-      .stopMessage_columnNames("mat.PFG.dist", c("name", "responseStage"))
+      .stopMessage_columnNames("mat.PFG.dist", c("name", "responseStage", "PFG", "KilledIndiv", "ResproutIndiv"))
+    }
+    mat.PFG.dist$name = as.character(mat.PFG.dist$name)
+    if (.testParam_notChar(mat.PFG.dist$name))
+    {
+      .stopMessage_beChar("mat.PFG.dist$name")
     }
     mat.PFG.dist$responseStage = as.numeric(as.character(mat.PFG.dist$responseStage))
-    
-    # if (sum(unique(mat.PFG.dist$name) %in% mat.PFG.succ$NAME) < length(unique(mat.PFG.dist$name)))
-    # {
-    #   warning(paste0("Column `name` of `mat.PFG.dist` contains values not in column `NAME` of `mat.PFG.succ`"))
-    # }
-    # if (sum(unique(mat.PFG.dist$name) %in% mat.PFG.succ$NAME) < nrow(mat.PFG.succ))
-    # {
-    #   warning(paste0("Column `name` of `mat.PFG.dist` does not contain all values in column `NAME` of `mat.PFG.succ`"))
-    # }
     if (sum(mat.PFG.dist$responseStage %in% seq(1,4)) < nrow(mat.PFG.dist)){
       stop("Wrong type of data!\n Column `responseStage` of `mat.PFG.dist` must contain values between 1 and 4")
     }
-    # if (sum(colnames(mat.PFG.dist) %in% paste0("KilledPropagule_", c("H", "C", "P"))) < 3 &&
-    #     sum(colnames(mat.PFG.dist) %in% paste0("KilledPropagule_", mat.PFG.succ$NAME)) < nrow(mat.PFG.succ))
-    # {
-    #   stop(paste0("Wrong type of data!\n Column names of `mat.PFG.dist` must contain either :\n"
-    #               , " ==> `KilledPropagule_H`, `KilledPropagule_C`, `KilledPropagule_P`\n"
-    #               , " ==> ", paste0("`KilledPropagule_", mat.PFG.succ$NAME, collapse = "`, ")))
-    # }
-    # if (sum(colnames(mat.PFG.dist) %in% paste0("ActivatedSeed_", c("H", "C", "P"))) < 3 &&
-    #     sum(colnames(mat.PFG.dist) %in% paste0("ActivatedSeed_", mat.PFG.succ$NAME)) < nrow(mat.PFG.succ))
-    # {
-    #   stop(paste0("Wrong type of data!\n Column names of `mat.PFG.dist` must contain either :\n"
-    #               , " ==> `ActivatedSeed_H`, `ActivatedSeed_C`, `ActivatedSeed_P`\n"
-    #               , " ==> ", paste0("`ActivatedSeed_", mat.PFG.succ$NAME, collapse = "`, ")))
-    # }
-    if (sum(colnames(mat.PFG.dist) %in% paste0("KilledIndiv_", c("H", "C", "P"))) < 3 &&
-        sum(colnames(mat.PFG.dist) %in% paste0("KilledIndiv_", mat.PFG.succ$NAME)) < nrow(mat.PFG.succ))
+    mat.PFG.dist$PFG = as.character(mat.PFG.dist$PFG)
+    if (.testParam_notChar(mat.PFG.dist$PFG))
     {
-      stop(paste0("Wrong type of data!\n Column names of `mat.PFG.dist` must contain either :\n"
-                  , " ==> `KilledIndiv_H`, `KilledIndiv_C`, `KilledIndiv_P`\n"
-                  , " ==> ", paste0("`KilledIndiv_", mat.PFG.succ$NAME, collapse = "`, ")))
+      .stopMessage_beChar("mat.PFG.dist$PFG")
     }
-    if (sum(colnames(mat.PFG.dist) %in% paste0("ResproutIndiv_", c("H", "C", "P"))) < 3 &&
-        sum(colnames(mat.PFG.dist) %in% paste0("ResproutIndiv_", mat.PFG.succ$NAME)) < nrow(mat.PFG.succ))
+    if (.testParam_notInChar(mat.PFG.dist$PFG, inList = c("H", "C", "P", mat.PFG.succ$NAME)))
     {
-      stop(paste0("Wrong type of data!\n Column names of `mat.PFG.dist` must contain either :\n"
-                  , " ==> `ResproutIndiv_H`, `ResproutIndiv_C`, `ResproutIndiv_P`\n"
-                  , " ==> ", paste0("`ResproutIndiv_", mat.PFG.succ$NAME, collapse = "`, ")))
+      .stopMessage_content("mat.PFG.dist$PFG", c("H", "C", "P", mat.PFG.succ$NAME))
+    }
+    mat.PFG.dist$KilledIndiv = as.numeric(as.character(mat.PFG.dist$KilledIndiv))
+    if (sum(mat.PFG.dist$KilledIndiv %in% seq(0, 10)) < nrow(mat.PFG.dist)){
+      stop("Wrong type of data!\n Column `KilledIndiv` of `mat.PFG.dist` must contain values between 0 and 10")
+    }
+    mat.PFG.dist$ResproutIndiv = as.numeric(as.character(mat.PFG.dist$ResproutIndiv))
+    if (sum(mat.PFG.dist$ResproutIndiv %in% seq(0, 10)) < nrow(mat.PFG.dist)){
+      stop("Wrong type of data!\n Column `ResproutIndiv` of `mat.PFG.dist` must contain values between 0 and 10")
     }
   }
   ## CHECKS for parameter opt.folder.name
@@ -367,6 +374,9 @@ PRE_FATE.params_PFGdisturbance = function(
   
   ## GET DIST NAME
   DIST_NAME = unique(as.character(mat.PFG.dist$name))
+  
+  ## GET PFG NAME
+  PFG_NAME = unique(as.character(mat.PFG.dist$PFG))
   
   ## GET STRATUM NUMBER whose height >= 150
   names.strata = colnames(mat.PFG.succ)[grep("^CHANG_STR_AGES_to_str_", colnames(mat.PFG.succ))]
@@ -469,41 +479,40 @@ PRE_FATE.params_PFGdisturbance = function(
   for (no.di in 1:no.DIST)
   {
     di = DIST_NAME[no.di]
-    ind_dist = which(mat.PFG.dist$name == di) 
-    ind_dist = ind_dist[order(mat.PFG.dist$responseStage[ind_dist])]
+    ind_dist = which(mat.PFG.dist$name == di)
     
-    ## KILLED INDIVIDUALS 
-    ind_fates = mat.PFG.dist$responseStage[ind_dist] +
-      (mat.PFG.dist$responseStage[ind_dist] - 1) +
-      (no.di - 1) * 2 * no.STAGES
-    if (sum(colnames(mat.PFG.dist) %in% paste0("KilledIndiv_", c("H", "C", "P"))) == 3)
+    for (pfg in PFG_NAME)
     {
-      FATES[ind_fates, which(mat.PFG.succ$TYPE == "H")] = mat.PFG.dist[ind_dist, "KilledIndiv_H"]
-      FATES[ind_fates, which(mat.PFG.succ$TYPE == "C")] = mat.PFG.dist[ind_dist, "KilledIndiv_C"]
-      FATES[ind_fates, which(mat.PFG.succ$TYPE == "P")] = mat.PFG.dist[ind_dist, "KilledIndiv_P"]
-    } else if (sum(colnames(mat.PFG.dist) %in% paste0("KilledIndiv_", mat.PFG.succ$NAME)) == nrow(mat.PFG.succ))
-    {
-      for (pfg in mat.PFG.succ$NAME)
+      ind_pfg = which(mat.PFG.dist$PFG == pfg)
+      ind_lines = intersect(ind_dist, ind_pfg)
+      ind_lines = ind_lines[order(mat.PFG.dist$responseStage[ind_lines])]
+      
+      ## KILLED INDIVIDUALS 
+      ind_fates = mat.PFG.dist$responseStage[ind_lines] +
+        (mat.PFG.dist$responseStage[ind_lines] - 1) +
+        (no.di - 1) * 2 * no.STAGES
+      
+      if (pfg %in% c("H", "C", "P"))
       {
-        FATES[ind_fates, which(mat.PFG.succ$NAME == pfg)] = mat.PFG.dist[ind_dist, paste0("KilledIndiv_",pfg)]
+        FATES[ind_fates, which(mat.PFG.succ$TYPE == pfg)] = mat.PFG.dist[ind_lines, "KilledIndiv"]
+      } else if (pfg %in% NAME)
+      {
+        FATES[ind_fates, which(mat.PFG.succ$NAME == pfg)] = mat.PFG.dist[ind_lines, "KilledIndiv"]
       }
-    }
-    ## RESPROUTING INDIVIDUALS
-    ind_fates = ind_fates + 1
-    if (sum(colnames(mat.PFG.dist) %in% paste0("ResproutIndiv_", c("H", "C", "P"))) == 3)
-    {
-      FATES[ind_fates, which(mat.PFG.succ$TYPE == "H")] = mat.PFG.dist[ind_dist, "ResproutIndiv_H"]
-      FATES[ind_fates, which(mat.PFG.succ$TYPE == "C")] = mat.PFG.dist[ind_dist, "ResproutIndiv_C"]
-      FATES[ind_fates, which(mat.PFG.succ$TYPE == "P")] = mat.PFG.dist[ind_dist, "ResproutIndiv_P"]
-    } else if (sum(colnames(mat.PFG.dist) %in% paste0("ResproutIndiv_", mat.PFG.succ$NAME)) == nrow(mat.PFG.succ))
-    {
-      for (pfg in mat.PFG.succ$NAME)
+      
+      ## RESPROUTING INDIVIDUALS
+      ind_fates = ind_fates + 1
+      
+      if (pfg %in% c("H", "C", "P"))
       {
-        FATES[ind_fates, which(mat.PFG.succ$NAME == pfg)] = mat.PFG.dist[ind_dist, paste0("ResproutIndiv_",pfg)]
+        FATES[ind_fates, which(mat.PFG.succ$TYPE == pfg)] = mat.PFG.dist[ind_lines, "ResproutIndiv"]
+      } else if (pfg %in% NAME)
+      {
+        FATES[ind_fates, which(mat.PFG.succ$NAME == pfg)] = mat.PFG.dist[ind_lines, "ResproutIndiv"]
       }
     }
   }
-  
+
   #################################################################################################
   
   ## GET PROPORTION OF KILLED PROPAGULES

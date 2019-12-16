@@ -169,64 +169,57 @@ test_that("PRE_FATE.params_PFGdisturbance gives error with wrong data : mat.PFG.
                , "`mat.PFG.dist` must be a data.frame")
   
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation", mat.PFG.dist = data.frame())
-               , "`mat.PFG.dist` does not have the appropriate number of rows (>0) or columns (name, responseStage)", fixed = T)
+               , "`mat.PFG.dist` does not have the appropriate number of rows (>0) or columns (name, responseStage, PFG, KilledIndiv, ResproutIndiv)", fixed = T)
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation", mat.PFG.dist = data.frame(1))
-               , "`mat.PFG.dist` does not have the appropriate number of rows (>0) or columns (name, responseStage)", fixed = T)
-  expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation", mat.PFG.dist = data.frame(1,2,3,4,5,6,7))
-               , "Column names of `mat.PFG.dist` must be `name` and `responseStage`")
+               , "`mat.PFG.dist` does not have the appropriate number of rows (>0) or columns (name, responseStage, PFG, KilledIndiv, ResproutIndiv)", fixed = T)
+  expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation", mat.PFG.dist = data.frame(1, 2, 3, 4, 5))
+               , "Column names of `mat.PFG.dist` must be `name`, `responseStage`, `PFG`, `KilledIndiv` and `ResproutIndiv`")
+  
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
-                                              , mat.PFG.dist = data.frame(name = 1, stage = 1))
-               , "Column names of `mat.PFG.dist` must be `name` and `responseStage`")
+                                              , mat.PFG.dist = data.frame(name = "", responseStage = -1, PFG = "", KilledIndiv = 0, ResproutIndiv = 0))
+               , "Wrong type of data!\n `mat.PFG.dist$name` must contain a character value of length > 0", fixed = T)
+  
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
-                                              , mat.PFG.dist = data.frame(name = 1, responseStage = -1))
+                                              , mat.PFG.dist = data.frame(name = "A", responseStage = -1, PFG = "", KilledIndiv = 0, ResproutIndiv = 0))
                , "Column `responseStage` of `mat.PFG.dist` must contain values between 1 and 4")
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
-                                              , mat.PFG.dist = data.frame(name = 1, responseStage = 1.5))
+                                              , mat.PFG.dist = data.frame(name = 1, responseStage = 1.5, PFG = "", KilledIndiv = 0, ResproutIndiv = 0))
                , "Column `responseStage` of `mat.PFG.dist` must contain values between 1 and 4")
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
-                                              , mat.PFG.dist = data.frame(name = 1, responseStage = "a"))
+                                              , mat.PFG.dist = data.frame(name = 1, responseStage = "a", PFG = "", KilledIndiv = 0, ResproutIndiv = 0))
                , "Column `responseStage` of `mat.PFG.dist` must contain values between 1 and 4")
   
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
-                                              , mat.PFG.dist = data.frame(name = 1, responseStage = 1))
-               , "Column names of `mat.PFG.dist` must contain either :\n ==> `KilledIndiv_H`")
+                                              , mat.PFG.dist = data.frame(name = 1, responseStage = 1, PFG = "", KilledIndiv = 0, ResproutIndiv = 0))
+               , "Wrong type of data!\n `mat.PFG.dist$PFG` must contain a character value of length > 0", fixed = T)
+  
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
-                                              , mat.PFG.dist = data.frame(name = 1, responseStage = 1
-                                                                          , KilledIndiv_H = 0
-                                                                          , KilledIndiv_H = 0
-                                                                          , KilledIndiv_H = 0))
-               , "Column names of `mat.PFG.dist` must contain either :\n ==> `KilledIndiv_H`")
+                                              , mat.PFG.dist = data.frame(name = 1, responseStage = 1, PFG = "a", KilledIndiv = 0, ResproutIndiv = 0))
+               , "Wrong type of data!\n `mat.PFG.dist$PFG` must be either `H`, `C`, `P`, `PFG1`, `PFG2`, `PFG3`, `PFG4`, `PFG5` or `PFG6`", fixed = T)
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
-                                              , mat.PFG.dist = data.frame(name = 1, responseStage = 1
-                                                                          , KilledIndiv_H = 0
-                                                                          , KilledIndiv_C = 0
-                                                                          , KilledIndiv_P = 0))
-               , "Column names of `mat.PFG.dist` must contain either :\n ==> `ResproutIndiv_H`")
+                                              , mat.PFG.dist = data.frame(name = 1, responseStage = 1, PFG = "h", KilledIndiv = 0, ResproutIndiv = 0))
+               , "Wrong type of data!\n `mat.PFG.dist$PFG` must be either `H`, `C`, `P`, `PFG1`, `PFG2`, `PFG3`, `PFG4`, `PFG5` or `PFG6`", fixed = T)
+  
+  
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
-                                              , mat.PFG.dist = data.frame(name = 1, responseStage = 1
-                                                                          , KilledIndiv_H = 0
-                                                                          , KilledIndiv_C = 0
-                                                                          , KilledIndiv_P = 0
-                                                                          , ResproutIndiv_H = 0
-                                                                          , ResproutIndiv_H = 0
-                                                                          , ResproutIndiv_H = 0))
-               , "Column names of `mat.PFG.dist` must contain either :\n ==> `ResproutIndiv_H`")
+                                              , mat.PFG.dist = data.frame(name = 1, responseStage = 1, PFG = "H", KilledIndiv = "", ResproutIndiv = 0))
+               , "Column `KilledIndiv` of `mat.PFG.dist` must contain values between 0 and 10", fixed = T)
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
-                                              , mat.PFG.dist = data.frame(name = 1, responseStage = 1
-                                                                          , KilledIndiv_1 = 0))
-               , "Column names of `mat.PFG.dist` must contain either :\n ==> `KilledIndiv_H`")
+                                              , mat.PFG.dist = data.frame(name = 1, responseStage = 1, PFG = "H", KilledIndiv = -1, ResproutIndiv = 0))
+               , "Column `KilledIndiv` of `mat.PFG.dist` must contain values between 0 and 10", fixed = T)
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
-                                              , mat.PFG.dist = data.frame(name = 1, responseStage = 1
-                                                                          , KilledIndiv_1 = 0
-                                                                          , ResproutIndiv_1 = 0))
-               , "Column names of `mat.PFG.dist` must contain either :\n ==> `KilledIndiv_H`")
+                                              , mat.PFG.dist = data.frame(name = 1, responseStage = 1, PFG = "H", KilledIndiv = 1.5, ResproutIndiv = 0))
+               , "Column `KilledIndiv` of `mat.PFG.dist` must contain values between 0 and 10", fixed = T)
+  
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
-                                              , mat.PFG.dist = data.frame(name = 1, responseStage = 1
-                                                                          , KilledIndiv_H = 0
-                                                                          , KilledIndiv_C = 0
-                                                                          , KilledIndiv_P = 0
-                                                                          , ResproutIndiv_1 = 0))
-               , "Column names of `mat.PFG.dist` must contain either :\n ==> `ResproutIndiv_H`")
+                                              , mat.PFG.dist = data.frame(name = 1, responseStage = 1, PFG = "H", KilledIndiv = 0, ResproutIndiv = ""))
+               , "Column `ResproutIndiv` of `mat.PFG.dist` must contain values between 0 and 10", fixed = T)
+  expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
+                                              , mat.PFG.dist = data.frame(name = 1, responseStage = 1, PFG = "H", KilledIndiv = 0, ResproutIndiv = -1))
+               , "Column `ResproutIndiv` of `mat.PFG.dist` must contain values between 0 and 10", fixed = T)
+  expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
+                                              , mat.PFG.dist = data.frame(name = 1, responseStage = 1, PFG = "H", KilledIndiv = 0, ResproutIndiv = 1.5))
+               , "Column `ResproutIndiv` of `mat.PFG.dist` must contain values between 0 and 10", fixed = T)
 })
 
 
@@ -242,53 +235,43 @@ test_that("PRE_FATE.params_PFGdisturbance gives correct output", {
                                                             , longevity = c(12, 200, 25, 4, 110, 70)))
   
   expect_message(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
-                                                , mat.PFG.dist = data.frame(name = "DIST1", responseStage = 1
-                                                                            , KilledIndiv_H = 0
-                                                                            , KilledIndiv_C = 0
-                                                                            , KilledIndiv_P = 0
-                                                                            , ResproutIndiv_H = 0
-                                                                            , ResproutIndiv_C = 0
-                                                                            , ResproutIndiv_P = 0))
+                                                , mat.PFG.dist = data.frame(name = "DIST1"
+                                                                            , responseStage = 1
+                                                                            , PFG = "C"
+                                                                            , KilledIndiv = 0
+                                                                            , ResproutIndiv = 0))
                  , "The parameter file FATE_simulation/DATA/PFGS/DIST/DIST_PFG1.txt has been successfully created !")
   expect_warning(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
-                                                , mat.PFG.dist = data.frame(name = "DIST1", responseStage = 1
-                                                                            , KilledIndiv_H = 0
-                                                                            , KilledIndiv_C = 0
-                                                                            , KilledIndiv_P = 0
-                                                                            , ResproutIndiv_H = 0
-                                                                            , ResproutIndiv_C = 0
-                                                                            , ResproutIndiv_P = 0))
+                                                , mat.PFG.dist = data.frame(name = "DIST1"
+                                                                            , responseStage = 1
+                                                                            , PFG = "PFG1"
+                                                                            , KilledIndiv = 0
+                                                                            , ResproutIndiv = 0))
                  , "already exists. It will be replaced.")
   
   expect_warning(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
-                                                , mat.PFG.dist = data.frame(name = "DIST1", responseStage = 1
-                                                                            , KilledIndiv_H = 0
-                                                                            , KilledIndiv_C = 0
-                                                                            , KilledIndiv_P = 0
-                                                                            , ResproutIndiv_H = 0
-                                                                            , ResproutIndiv_C = 0
-                                                                            , ResproutIndiv_P = 0)
+                                                , mat.PFG.dist = data.frame(name = "DIST1"
+                                                                            , responseStage = 1
+                                                                            , PFG = "H"
+                                                                            , KilledIndiv = 0
+                                                                            , ResproutIndiv = 0)
                                                 , opt.folder.name = NA)
                  , "As `opt.folder.name` does not contain character value, it will be ignored")
   expect_warning(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
-                                                , mat.PFG.dist = data.frame(name = "DIST1", responseStage = 1
-                                                                            , KilledIndiv_H = 0
-                                                                            , KilledIndiv_C = 0
-                                                                            , KilledIndiv_P = 0
-                                                                            , ResproutIndiv_H = 0
-                                                                            , ResproutIndiv_C = 0
-                                                                            , ResproutIndiv_P = 0)
+                                                , mat.PFG.dist = data.frame(name = "DIST1"
+                                                                            , responseStage = 1
+                                                                            , PFG = "P"
+                                                                            , KilledIndiv = 0
+                                                                            , ResproutIndiv = 0)
                                                 , opt.folder.name = 1)
                  , "As `opt.folder.name` does not contain character value, it will be ignored")
   
   expect_message(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
-                                                , mat.PFG.dist = data.frame(name = "DIST1", responseStage = 1
-                                                                            , KilledIndiv_H = 0
-                                                                            , KilledIndiv_C = 0
-                                                                            , KilledIndiv_P = 0
-                                                                            , ResproutIndiv_H = 0
-                                                                            , ResproutIndiv_C = 0
-                                                                            , ResproutIndiv_P = 0)
+                                                , mat.PFG.dist = data.frame(name = "DIST1"
+                                                                            , responseStage = 1
+                                                                            , PFG = "PFG6"
+                                                                            , KilledIndiv = 0
+                                                                            , ResproutIndiv = 0)
                                                 , opt.folder.name = "scen1")
-                 , "The parameter file FATE_simulation/DATA/PFGS/DIST/scen1/DIST_PFG1.txt has been successfully created !")
+                 , "The parameter file FATE_simulation/DATA/PFGS/DIST/scen1/DIST_PFG6.txt has been successfully created !")
 })
