@@ -565,7 +565,7 @@ test_that("PRE_FATE.params_multipleSet gives error with wrong data : within file
                                            , no_simulations = 10
                                            , do.DISPERSAL.mode = FALSE
                                            , do.nb_stratum = FALSE)
-               , "There is not the same number of files (`.txt` file starting with `SUCC`) into the DATA/PFGS/SUCC/ folder as the number of PFG indicated into the file FATE_simulation_MULTIPLE_SET/DATA/GLOBAL_PARAMETERS/Global_parameters_V1.txt"
+               , "There is not the same number of files (`.txt` file starting with `SUCC`) into the FATE_simulation_MULTIPLE_SET/DATA/PFGS/SUCC/ folder as the number of PFG indicated into the file FATE_simulation_MULTIPLE_SET/DATA/GLOBAL_PARAMETERS/Global_parameters_V1.txt"
                , fixed = TRUE)
   dir.create("FATE_simulation/DATA/PFGS")
   dir.create("FATE_simulation/DATA/PFGS/SUCC")
