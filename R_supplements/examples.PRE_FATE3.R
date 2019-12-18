@@ -6,6 +6,8 @@ data("PNE_PARAM")
 ## PNE_PARAM$disp : data.frame
 ## PNE_PARAM$dist : data.frame
 ## PNE_PARAM$global : vector
+## PNE_PARAM$masks : rasterStack
+
 
 ## Create a skeleton folder
 PRE_FATE.skeletonDirectory(name.simulation = "FATE_PNE")
@@ -62,6 +64,7 @@ PRE_FATE.params_globalParameters(name.simulation = "FATE_PNE"
 writeRaster(PNE_PARAM$masks$maskEcrins, file = "FATE_PNE/DATA/MASK/mask.tif")
 writeRaster(PNE_PARAM$masks$noDisturb, file = "FATE_PNE/DATA/MASK/noDisturb.tif")
 
+## Create simulation parameters file
 PRE_FATE.params_simulParameters(name.simulation = "FATE_PNE"
                                 , name.mask = "mask.tif"
                                 , name.dist = "noDisturb.tif")
