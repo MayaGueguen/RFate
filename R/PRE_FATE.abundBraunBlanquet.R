@@ -47,7 +47,7 @@
 ##' @examples
 ##' 
 ##' ## Load example data
-##' data(PNE_PFG)
+##' data("PNE_PFG")
 ##'  
 ##' ## PNE_PFG$sp.observations : data.frame
 ##' str(PNE_PFG$sp.observations)

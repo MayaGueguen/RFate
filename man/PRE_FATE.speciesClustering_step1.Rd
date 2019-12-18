@@ -114,7 +114,7 @@ the \code{PRE_FATE.speciesClustering_step2} function.
 \examples{
 
 ## Load example data
-data(PNE_PFG)
+data("PNE_PFG")
 
 ## PNE_PFG$dom.traits : data.frame
 ## PNE_PFG$dom.dist_overlap : niolap object

@@ -97,8 +97,9 @@ meaning that distance matrix obtained from functional information is
 weighted by the number of traits used.
 }
 \examples{
+
 ## Load example data
-data(PNE_PFG)
+data("PNE_PFG")
 
 ## PNE_PFG$dom.traits : data.frame
 ## PNE_PFG$dom.dist_overlap : niolap object

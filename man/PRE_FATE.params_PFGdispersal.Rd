@@ -57,10 +57,13 @@ PRE_FATE.params_PFGdispersal(name.simulation = "FATE_simulation"
                                                         , d50 = c(50, 50, 10)
                                                         , d99 = c(1000, 1500, 2000)
                                                         , ldd = c(10000, 5000, 10000)))
-                                                        
-                                                        
+
+
+
+## ----------------------------------------------------------------------------------------- ##
+  
 ## Load example data
-data(PNE_PARAM)
+data("PNE_PARAM")
 
 ## PNE_PARAM$disp : data.frame
 

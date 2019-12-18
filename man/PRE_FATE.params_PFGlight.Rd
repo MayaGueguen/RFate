@@ -124,6 +124,43 @@ __________________________________________________ \cr
 \code{| _ 1 _ | _ 2 _ | _ 3 _ | _ 4 _ | _ 5 _ |} \strong{Light} \cr
 \cr
 }
+\examples{
+
+## Create a skeleton folder with the default name ('FATE_simulation')
+PRE_FATE.skeletonDirectory()
+
+## Create PFG light parameter files
+PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
+                         , mat.PFG.succ = data.frame(PFG = paste0("PFG",1:6)
+                                                     , type = c("C", "C", "H", "H", "P", "P")
+                                                     , height = c(10, 250, 36, 68, 1250, 550)
+                                                     , maturity = c(5, 5, 3, 3, 8, 9)
+                                                     , longevity = c(12, 200, 25, 4, 110, 70)
+                                                     , light = c(4, 6, 3, 6, 5, 5)))
+
+
+
+## ----------------------------------------------------------------------------------------- ##
+
+## Load example data
+data("PNE_PARAM")
+
+## PNE_PARAM$succ_light : data.frame
+## PNE_PARAM$strata_limits : vector
+
+tab = PNE_PARAM$succ_light[, c("PFG", "type", "height", "maturity", "longevity", "light")]
+
+## Create PFG light parameter files : automatic definition of strata limits
+PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
+                         , mat.PFG.succ = tab)
+                            
+## Create PFG light parameter files : predefined of strata limits
+PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
+                         , mat.PFG.succ = tab
+                         , strata.limits = PNE_PARAM$strata_limits
+                         , strata.limits_reduce = FALSE)
+
+}
 \seealso{
 \code{\link{PRE_FATE.skeletonDirectory}}
 }

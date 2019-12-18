@@ -208,10 +208,13 @@ PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                                            , ResproutIndiv = c(c(0,0,0,0,0,0,5,1)
                                                                                , c(0,0,9,10,0,0,5,1)
                                                                                , c(0,0,0,0,0,0,0,0))))
-                                                           
-                                                           
+
+
+
+## ----------------------------------------------------------------------------------------- ##
+                                    
 ## Load example data
-data(PNE_PARAM)
+data("PNE_PARAM")
 
 ## PNE_PARAM$succ_light : data.frame
 ## PNE_PARAM$strata_limits : vector

@@ -68,14 +68,14 @@ reference:
     desc:  Create user-friendly directory tree, parameter and simulation files for FATE-HD simulation.  <br/> ..
     contents:
       - "PRE_FATE.skeletonDirectory"
-      - "PRE_FATE.params_globalParameters"
-      - "PRE_FATE.params_saveYears"
-      - "PRE_FATE.params_changingYears"
       - "PRE_FATE.params_PFGsuccession"
       - "PRE_FATE.params_PFGlight"
+      - "PRE_FATE.params_PFGsoil"
       - "PRE_FATE.params_PFGdispersal"
       - "PRE_FATE.params_PFGdisturbance"
-      - "PRE_FATE.params_PFGsoil"
+      - "PRE_FATE.params_changingYears"
+      - "PRE_FATE.params_saveYears"
+      - "PRE_FATE.params_globalParameters"
       - "PRE_FATE.params_simulParameters"
       - "PRE_FATE.params_multipleSet"
   - title: Analyze FATE-HD outputs

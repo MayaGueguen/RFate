@@ -168,8 +168,11 @@
 ##'                                                         , longevity = c(12, 200, 25, 4, 110, 70)))
 ##'                                                         
 ##'                                                         
+##'                                                         
+##' ## ----------------------------------------------------------------------------------------- ##
+##' 
 ##' ## Load example data
-##' data(PNE_PARAM)
+##' data("PNE_PARAM")
 ##' 
 ##' ## PNE_PARAM$succ_light : data.frame
 ##' ## PNE_PARAM$strata_limits : vector

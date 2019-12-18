@@ -38,6 +38,26 @@ for(i in seq(0,90,15))
 }
 
 param.1 = readLines(con = "a_DATA/Global_parameters.txt")
+param.g = c("NB_CPUS" = as.numeric(param.1[grep("NB_CPUS", param.1) + 1])
+            , "NB_FG" = as.numeric(param.1[grep("NB_FG", param.1) + 1])
+            , "NB_STRATUM" = as.numeric(param.1[grep("NB_STRATUM", param.1) + 1])
+            , "SIMULATION_DURATION" = as.numeric(param.1[grep("SIMULATION_TIME", param.1) + 1])
+            , "SEEDING_DURATION" = as.numeric(param.1[grep("SEEDING_DURATION", param.1) + 1])
+            , "SEEDING_TIMESTEP" = as.numeric(param.1[grep("SEEDING_TIMESTEP", param.1) + 1])
+            , "SEEDING_INPUT" = 100
+            , "MAX_BY_COHORT" = 7000000
+            , "MAX_ABUND_LOW" = 3000000
+            , "MAX_ABUND_MEDIUM" = 7000000
+            , "MAX_ABUND_HIGH" = 10000000
+            , "LIGHT.thresh_medium" = 6000000
+            , "LIGHT.thresh_low" = 9000000
+            , "DISPERSAL.mode" = 1
+            , "HABSUIT.ref_option" = 1
+            , "DIST.no" = as.numeric(param.1[grep("NB_DISTURBANCES", param.1) + 1])
+            , "DIST.no_sub" = as.numeric(param.1[grep("NB_SUBDISTURBANCES", param.1) + 1])
+            , "DIST.freq" = 1
+)
+param.g = sapply(param.g, as.integer)
 
 param.2 = foreach(i = list.files(path = "a_DATA/PFGS/DISP"
                                  , pattern = "^DISP_"
@@ -90,7 +110,7 @@ PNE_PARAM = list(masks = masks
                  , succ_light = param.4
                  , disp = param.2
                  , dist = param.3
-                 , global = param.1
+                 , global = param.g
 )
 save(PNE_PARAM, file = "PNE_PARAM.RData")
 

@@ -46,7 +46,7 @@ essai de reconstitution des séries évolutives herbagères. Doc. Phytosoc., N.S
 \examples{
 
 ## Load example data
-data(PNE_PFG)
+data("PNE_PFG")
  
 ## PNE_PFG$sp.observations : data.frame
 str(PNE_PFG$sp.observations)
