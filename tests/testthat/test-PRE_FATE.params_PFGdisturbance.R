@@ -65,7 +65,7 @@ test_that("PRE_FATE.params_PFGdisturbance gives error with wrong data : mat.PFG.
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                               , mat.PFG.succ = data.frame(NAME = "", TYPE = 2, MATURITY = 4
                                                                           , LONGEVITY = 10, STRATA = 1, CHANG_STR_AGES_to_str_1 = 1))
-               , "`mat.PFG.succ$NAME` must contain a character value of length > 0")
+               , "`mat.PFG.succ$NAME` must contain a character value of length > 0", fixed = T)
   
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                               , mat.PFG.succ = data.frame(NAME = 1, TYPE = c(2,2), MATURITY = 4
