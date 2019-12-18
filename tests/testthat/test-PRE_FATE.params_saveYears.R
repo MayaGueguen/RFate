@@ -78,7 +78,7 @@ test_that("PRE_FATE.params_saveYears gives correct output", {
                , "The parameter file FATE_simulation/DATA/SAVE/SAVE_YEARS_maps.txt has been successfully created !")
   expect_message(PRE_FATE.params_saveYears(name.simulation = "FATE_simulation", years.objects = 1)
                  , "The parameter file FATE_simulation/DATA/SAVE/SAVE_YEARS_objects.txt has been successfully created !")
-  expect_warning(PRE_FATE.params_saveYears(name.simulation = "FATE_simulation", years.maps = 1)
+  expect_warning(PRE_FATE.params_saveYears(name.simulation = "FATE_simulation", years.maps = 1, opt.folder.name = "")
                  , "already exists. It will be replaced.")
   expect_warning(PRE_FATE.params_saveYears(name.simulation = "FATE_simulation", years.objects = 1)
                  , "already exists. It will be replaced.")

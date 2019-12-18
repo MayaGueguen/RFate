@@ -117,7 +117,8 @@ test_that("PRE_FATE.params_PFGdispersal gives correct output", {
                                             , mat.PFG.disp = data.frame(PFG = 1, d50 = 2, d99 = 3, ldd = 4))
                , "The parameter file FATE_simulation/DATA/PFGS/DISP/DISP_1.txt has been successfully created !")
   expect_warning(PRE_FATE.params_PFGdispersal(name.simulation = "FATE_simulation"
-                                              , mat.PFG.disp = data.frame(PFG = 1, d50 = 2, d99 = 3, ldd = 4))
+                                              , mat.PFG.disp = data.frame(PFG = 1, d50 = 2, d99 = 3, ldd = 4)
+                                              , opt.folder.name = "")
                  , "already exists. It will be replaced.")
   
   expect_warning(PRE_FATE.params_PFGdispersal(name.simulation = "FATE_simulation"

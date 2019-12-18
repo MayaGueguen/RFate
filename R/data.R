@@ -219,7 +219,11 @@
 ##'     \item{dist}{a \code{data.frame} of dimension \code{384 x 5} \cr
 ##'     containing response of plant functional groups to disturbances \cr
 ##'     to be used with the \link{PRE_FATE.params_PFGdisturbance} function \cr}
-##'     \item{global}{}
+##'     \item{global}{a \code{vector} of length \code{18} \cr
+##'     containing global parameter values for a \code{FATE-HD} simulation in 
+##'     the PNE \cr
+##'     to be used with the \link{PRE_FATE.params_globalParameters} function \cr
+##'     }
 ##'   }
 ##' 
 ##' @source 

@@ -63,6 +63,11 @@ test_that("PRE_FATE.params_PFGdisturbance gives error with wrong data : mat.PFG.
                , "Column names of `mat.PFG.succ` must be `NAME`, `TYPE`, `MATURITY`, `LONGEVITY`, `STRATA` and `CHANG_STR_AGES_to_str_...`")
   
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
+                                              , mat.PFG.succ = data.frame(NAME = "", TYPE = 2, MATURITY = 4
+                                                                          , LONGEVITY = 10, STRATA = 1, CHANG_STR_AGES_to_str_1 = 1))
+               , "`mat.PFG.succ$NAME` must contain a character value of length > 0")
+  
+  expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                               , mat.PFG.succ = data.frame(NAME = 1, TYPE = c(2,2), MATURITY = 4
                                                                           , LONGEVITY = 10, STRATA = 1, CHANG_STR_AGES_to_str_1 = 1))
                , "Column `NAME` of `mat.PFG.succ` must contain different values")
@@ -246,7 +251,8 @@ test_that("PRE_FATE.params_PFGdisturbance gives correct output", {
                                                                             , responseStage = 1
                                                                             , PFG = "PFG1"
                                                                             , KilledIndiv = 0
-                                                                            , ResproutIndiv = 0))
+                                                                            , ResproutIndiv = 0)
+                                                , opt.folder.name = "")
                  , "already exists. It will be replaced.")
   
   expect_warning(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"

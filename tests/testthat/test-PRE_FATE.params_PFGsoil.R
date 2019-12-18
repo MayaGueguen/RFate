@@ -245,7 +245,8 @@ test_that("PRE_FATE.params_PFGsoil gives correct output", {
                                          , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 2, soil_tol_min = 2, soil_tol_max = 3))
                  , "The parameter file FATE_simulation/DATA/PFGS/SOIL/SOIL_1.txt has been successfully created !")
   expect_warning(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                         , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 2, soil_tol_min = 2, soil_tol_max = 3))
+                                         , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 2, soil_tol_min = 2, soil_tol_max = 3)
+                                         , opt.folder.name = "")
                  , "already exists. It will be replaced.")
   
   expect_message(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"

@@ -339,7 +339,8 @@ test_that("PRE_FATE.params_PFGlight gives correct output", {
                                                                       , height = c(10, 250, 36, 68, 1250, 550)
                                                                       , maturity = c(5, 5, 3, 3, 8, 9)
                                                                       , longevity = c(12, 200, 25, 4, 110, 70)
-                                                                      , light = c(4, 6, 3, 6, 5, 5)))
+                                                                      , light = c(4, 6, 3, 6, 5, 5))
+                                          , opt.folder.name = "")
                  , "already exists. It will be replaced.")
   
   expect_warning(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
