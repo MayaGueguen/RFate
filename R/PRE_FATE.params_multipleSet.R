@@ -210,32 +210,108 @@
 ##' @examples
 ##' 
 ##' 
+##' ## Load example data
+##' data("PNE_PARAM")
+##' 
+##' ## PNE_PARAM$succ_light : data.frame
+##' ## PNE_PARAM$strata_limits : vector
+##' ## PNE_PARAM$disp : data.frame
+##' ## PNE_PARAM$dist : data.frame
+##' ## PNE_PARAM$global : vector
+##' ## PNE_PARAM$masks : rasterStack
+##' 
+##' 
+##' ## Create a skeleton folder
+##' PRE_FATE.skeletonDirectory(name.simulation = "FATE_PNE")
+##' 
+##' ## Create PFG succession parameter files : predefined of strata limits
+##' tab = PNE_PARAM$succ_light[, c("PFG", "type", "height", "maturity", "longevity")]
+##' PRE_FATE.params_PFGsuccession(name.simulation = "FATE_PNE"
+##'                               , mat.PFG.succ = tab
+##'                               , strata.limits = PNE_PARAM$strata_limits
+##'                               , strata.limits_reduce = FALSE)
+##' 
+##' ## Create PFG light parameter files : predefined of strata limits
+##' tab = PNE_PARAM$succ_light[, c("PFG", "type", "height", "maturity", "longevity", "light")]
+##' PRE_FATE.params_PFGlight(name.simulation = "FATE_PNE"
+##'                          , mat.PFG.succ = tab
+##'                          , strata.limits = PNE_PARAM$strata_limits
+##'                          , strata.limits_reduce = FALSE)
+##' 
+##' ## Create PFG dispersal parameter files
+##' PRE_FATE.params_PFGdispersal(name.simulation = "FATE_PNE"
+##'                              , mat.PFG.disp = PNE_PARAM$disp)
+##' 
+##' ## Create PFG disturbance parameter files
+##' PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_PNE"
+##'                                , mat.PFG.dist = PNE_PARAM$dist)
+##' 
+##' ## Create a Global_parameters file
+##' PRE_FATE.params_globalParameters(name.simulation = "FATE_PNE"
+##'                                  , required.no_PFG = PNE_PARAM$global["NB_FG"]
+##'                                  , required.no_STRATA = PNE_PARAM$global["NB_STRATUM"]
+##'                                  , required.simul_duration = PNE_PARAM$global["SIMULATION_DURATION"]
+##'                                  , required.seeding_duration = PNE_PARAM$global["SEEDING_DURATION"]
+##'                                  , required.seeding_timestep = PNE_PARAM$global["SEEDING_TIMESTEP"]
+##'                                  , required.seeding_input = PNE_PARAM$global["SEEDING_INPUT"]
+##'                                  , required.max_by_cohort = PNE_PARAM$global["MAX_BY_COHORT"]
+##'                                  , required.max_abund_low = PNE_PARAM$global["MAX_ABUND_LOW"]
+##'                                  , required.max_abund_medium = PNE_PARAM$global["MAX_ABUND_MEDIUM"]
+##'                                  , required.max_abund_high = PNE_PARAM$global["MAX_ABUND_HIGH"]
+##'                                  , doLight = TRUE
+##'                                  , LIGHT.thresh_medium = PNE_PARAM$global["LIGHT.thresh_medium"]
+##'                                  , LIGHT.thresh_low = PNE_PARAM$global["LIGHT.thresh_low"]
+##'                                  , doDispersal = TRUE
+##'                                  , DISPERSAL.mode = PNE_PARAM$global["DISPERSAL.mode"]
+##'                                  , doHabSuitability = TRUE
+##'                                  , HABSUIT.ref_option = PNE_PARAM$global["HABSUIT.ref_option"]
+##'                                  , doDisturbances = TRUE
+##'                                  , DIST.no = PNE_PARAM$global["DIST.no"]
+##'                                  , DIST.no_sub = PNE_PARAM$global["DIST.no_sub"]
+##'                                  , DIST.freq = rep(PNE_PARAM$global["DIST.freq"]
+##'                                                    , PNE_PARAM$global["DIST.no"])
+##' )
+##' 
+##' ## Create simulation masks
+##' library(raster)
+##' writeRaster(PNE_PARAM$masks$maskEcrins, file = "FATE_PNE/DATA/MASK/mask.tif")
+##' writeRaster(PNE_PARAM$masks$noDisturb, file = "FATE_PNE/DATA/MASK/noDisturb.tif")
+##' 
+##' ## Create simulation parameters file
+##' PRE_FATE.params_simulParameters(name.simulation = "FATE_PNE"
+##'                                 , name.mask = "mask.tif"
+##'                                 , name.dist = "noDisturb.tif")
+##' 
+##' ## Create multiple set of parameters
+##' PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_PNE"
+##'                             , file.simulParam.1 = "Simul_parameters_V1.txt"
+##'                             , no_simulations = 30
+##' )
+##' 
+##' if (dir.exists("FATE_simulation_MULTIPLE_SET")) unlink("FATE_simulation_MULTIPLE_SET", recursive = TRUE)
+##' PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_PNE"
+##'                             , file.simulParam.1 = "Simul_parameters_V1.txt"
+##'                             , no_simulations = 5
+##'                             , do.max_by_cohort = TRUE
+##'                             , do.max_abund_low = FALSE
+##'                             , do.max_abund_medium = FALSE
+##'                             , do.max_abund_high = FALSE
+##'                             , do.seeding_duration = FALSE
+##'                             , do.seeding_timestep = FALSE
+##'                             , do.seeding_input = FALSE
+##'                             , do.nb_stratum = FALSE
+##'                             , do.LIGHT.thresh_medium = FALSE
+##'                             , do.LIGHT.thresh_low = FALSE
+##'                             , do.DISPERSAL.mode = FALSE
+##'                             , do.HABSUIT.ref_option = FALSE
+##' )
+##' 
+##' 
 ##' @export
 ##' 
 ##' @importFrom SPOT designLHD
 ##'
 ## END OF HEADER ###############################################################
-
-# name.simulation.1 = "FATE_simulation"
-# name.simulation.2 = NULL
-# file.simulParam.1 = "toto.txt"
-# file.simulParam.2 = NULL
-# no_simulations = 10
-# opt.percent_max = 0.5
-# opt.percent_seeding = 0.5
-# opt.percent_light = 0.5
-# do.max_by_cohort = TRUE
-# do.max_abund_low = TRUE
-# do.max_abund_medium = TRUE
-# do.max_abund_high = TRUE
-# do.seeding_duration = TRUE
-# do.seeding_timestep = TRUE
-# do.seeding_input = TRUE
-# do.nb_stratum = TRUE
-# do.LIGHT.thresh_medium = TRUE
-# do.LIGHT.thresh_low = TRUE
-# do.DISPERSAL.mode = TRUE
-# do.HABSUIT.ref_option = TRUE
 
 
 PRE_FATE.params_multipleSet = function(
@@ -705,6 +781,8 @@ PRE_FATE.params_multipleSet = function(
   TOKEEP.global = params.ranges$TOKEEP.global
   SUCC_LIGHT.simul = params.ranges$SUCC_LIGHT.simul
   params.ranges = params.ranges$PARAMS.range
+  params.ranges["min", ] = as.integer(params.ranges["min", ])
+  params.ranges["max", ] = as.integer(params.ranges["max", ])
   
   print(params.ranges)
   
@@ -724,6 +802,12 @@ PRE_FATE.params_multipleSet = function(
     NB_SIMUL_LHS = no_simulations
     if ("habsuit_ref_option" %in% unlist(get_checked)) { NB_SIMUL_LHS = trunc(NB_SIMUL_LHS / 2) }
     if ("dispersal_mode" %in% unlist(get_checked)) { NB_SIMUL_LHS = trunc(NB_SIMUL_LHS / 3) }
+    if (NB_SIMUL_LHS <= 1)
+    {
+      stop(paste0("The number of data sets requested (`no_simulations`) is too small "
+                  , "compared to the number of parameters that must vary."
+                  , ".\nPlease check."))
+    }
     
     ## Round some parameters to avoid too much precision
     ind = which(colnames(params.ranges) %in% c("max_by_cohort"
@@ -732,9 +816,9 @@ PRE_FATE.params_multipleSet = function(
                                                , "max_abund_high"
                                                , "light_thresh_medium"
                                                , "light_thresh_low"))
-    params.ranges[, ind] = params.ranges[, ind] / 10000
+    params.ranges[, ind] = round(params.ranges[, ind] / 10000)
     ind = which(colnames(params.ranges) %in% c("seeding_duration", "seeding_input"))
-    params.ranges[, ind] = params.ranges[, ind] / 10
+    params.ranges[, ind] = round(params.ranges[, ind] / 10)
     
     if (sum(c("max_by_cohort"
               , "max_abund_low"
@@ -775,21 +859,22 @@ PRE_FATE.params_multipleSet = function(
       
       ## Run Latin Hypercube Sampling
       set.seed(sample(1:1000000, 1)) ## needed everytime as lhs is also a random value generator.
-      params.space = designLHD(
-        , lower = params.ranges[1, , drop = FALSE]
-        , upper = params.ranges[2, , drop = FALSE]
-        , control = list(size = NB_SIMUL_LHS
-                         , types = c("max_by_cohort" = "integer"
-                                     , "max_abund_low" = "integer"
-                                     , "max_abund_medium" = "integer"
-                                     , "max_abund_high" = "integer"
-                                     , "seeding_duration" = "integer"
-                                     , "seeding_timestep" = "integer"
-                                     , "seeding_input" = "integer"
-                                     , "light_thresh_medium" = "integer"
-                                     , "light_thresh_low" = "integer")
-                         , inequalityConstraint = lhs_constraint
-        )
+      params.space = designLHD(x = NULL
+                               , lower = params.ranges[1, , drop = FALSE]
+                               , upper = params.ranges[2, , drop = FALSE]
+                               , control = list(size = NB_SIMUL_LHS
+                                                , types = c("max_by_cohort" = "integer"
+                                                            , "max_abund_low" = "integer"
+                                                            , "max_abund_medium" = "integer"
+                                                            , "max_abund_high" = "integer"
+                                                            , "seeding_duration" = "integer"
+                                                            , "seeding_timestep" = "integer"
+                                                            , "seeding_input" = "integer"
+                                                            , "light_thresh_medium" = "integer"
+                                                            , "light_thresh_low" = "integer"
+                                                            , "nb_stratum" = "integer")
+                                                , inequalityConstraint = lhs_constraint
+                               )
       )
       colnames(params.space) = colnames(params.ranges)
       params.space = as.data.frame(params.space)
@@ -909,7 +994,7 @@ PRE_FATE.params_multipleSet = function(
       cat("\n Selected strata.limits :", strata.limits)
       
       PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation_MULTIPLE_SET"
-                                    , mat.PFG.succ = SUCC_table
+                                    , mat.PFG.succ = SUCC_table[, c("PFG", "type", "height", "maturity", "longevity")]
                                     , strata.limits = strata.limits
                                     , strata.limits_reduce = FALSE
                                     , opt.folder.name = paste0(rownames(params.space)[i])

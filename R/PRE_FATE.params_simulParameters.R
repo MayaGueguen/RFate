@@ -622,6 +622,19 @@ PRE_FATE.params_simulParameters = function(
         } else
         {
           dirs.mod = paste0(name.simulation, "/DATA/PFGS/", mod, "/", opt.folder.name)
+          if (!dir.exists(dirs.mod))
+          {
+            dirs.mod = list.dirs(path = paste0(name.simulation, "/DATA/PFGS/", mod)
+                                 , full.names = FALSE
+                                 , recursive = FALSE)
+            if (length(dirs.mod) > 0)
+            {
+              dirs.mod = paste0(name.simulation, "/DATA/PFGS/", mod, "/", dirs.mod)
+            } else
+            {
+              dirs.mod = paste0(name.simulation, "/DATA/PFGS/", mod)
+            }
+          }
         }
         
         ## Get files
@@ -634,7 +647,7 @@ PRE_FATE.params_simulParameters = function(
           {
             stop(paste0("There is not the same number of files "
                         , "(`.txt` file starting with `", mod, "`) "
-                        , "into the DATA/PFGS/", mod, "/ folder as the number of PFG "
+                        , "into the ", di.mod, "/ folder as the number of PFG "
                         , "indicated into the file "
                         , globi))
           }
