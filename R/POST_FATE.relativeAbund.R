@@ -138,8 +138,12 @@
 ##' 
 ##' ## Create simulation masks
 ##' library(raster)
-##' writeRaster(PNE_PARAM$masks$maskEcrins, file = "FATE_PNE/DATA/MASK/mask.tif")
-##' writeRaster(PNE_PARAM$masks$noDisturb, file = "FATE_PNE/DATA/MASK/noDisturb.tif")
+##' writeRaster(PNE_PARAM$masks$maskEcrins
+##'             , file = "FATE_PNE/DATA/MASK/mask.tif"
+##'             , overwrite = TRUE)
+##' writeRaster(PNE_PARAM$masks$noDisturb
+##'             , file = "FATE_PNE/DATA/MASK/noDisturb.tif"
+##'             , overwrite = TRUE)
 ##' 
 ##' ## Create simulation parameters file
 ##' PRE_FATE.params_simulParameters(name.simulation = "FATE_PNE"
@@ -162,7 +166,9 @@
 ##'   ind = grep(pfg, names(PNE_RESULTS$abund_str.equilibrium))
 ##'   stk = PNE_RESULTS$abund_str.equilibrium[[ind]] * 1
 ##'   ras = sum(stk)
-##'   writeRaster(ras, filename = paste0(dir1, "/Abund_YEAR_800_", pfg, "_STRATA_all.tif"))
+##'   writeRaster(ras
+##'               , filename = paste0(dir1, "/Abund_YEAR_800_", pfg, "_STRATA_all.tif")
+##'               , overwrite = TRUE)
 ##' }
 ##' 
 ##' ## Create relative abundance maps
