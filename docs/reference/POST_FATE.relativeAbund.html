@@ -307,8 +307,12 @@ before the maps are compressed again :</p>
 
 <span class='co'>## Create simulation masks</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>raster</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/raster/man/writeRaster.html'>writeRaster</a></span>(<span class='no'>PNE_PARAM</span>$<span class='no'>masks</span>$<span class='no'>maskEcrins</span>, <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"FATE_PNE/DATA/MASK/mask.tif"</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/raster/man/writeRaster.html'>writeRaster</a></span>(<span class='no'>PNE_PARAM</span>$<span class='no'>masks</span>$<span class='no'>noDisturb</span>, <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"FATE_PNE/DATA/MASK/noDisturb.tif"</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/raster/man/writeRaster.html'>writeRaster</a></span>(<span class='no'>PNE_PARAM</span>$<span class='no'>masks</span>$<span class='no'>maskEcrins</span>
+            , <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"FATE_PNE/DATA/MASK/mask.tif"</span>
+            , <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/raster/man/writeRaster.html'>writeRaster</a></span>(<span class='no'>PNE_PARAM</span>$<span class='no'>masks</span>$<span class='no'>noDisturb</span>
+            , <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"FATE_PNE/DATA/MASK/noDisturb.tif"</span>
+            , <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'>## Create simulation parameters file</span>
 <span class='fu'><a href='PRE_FATE.params_simulParameters.html'>PRE_FATE.params_simulParameters</a></span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_PNE"</span>
@@ -331,7 +335,9 @@ before the maps are compressed again :</p>
   <span class='no'>ind</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grep</a></span>(<span class='no'>pfg</span>, <span class='fu'><a href='https://rdrr.io/pkg/raster/man/names.html'>names</a></span>(<span class='no'>PNE_RESULTS</span>$<span class='no'>abund_str.equilibrium</span>))
   <span class='no'>stk</span> <span class='kw'>=</span> <span class='no'>PNE_RESULTS</span>$<span class='no'>abund_str.equilibrium</span><span class='kw'>[[</span><span class='no'>ind</span>]] * <span class='fl'>1</span>
   <span class='no'>ras</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>stk</span>)
-  <span class='fu'><a href='https://rdrr.io/pkg/raster/man/writeRaster.html'>writeRaster</a></span>(<span class='no'>ras</span>, <span class='kw'>filename</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='no'>dir1</span>, <span class='st'>"/Abund_YEAR_800_"</span>, <span class='no'>pfg</span>, <span class='st'>"_STRATA_all.tif"</span>))
+  <span class='fu'><a href='https://rdrr.io/pkg/raster/man/writeRaster.html'>writeRaster</a></span>(<span class='no'>ras</span>
+              , <span class='kw'>filename</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='no'>dir1</span>, <span class='st'>"/Abund_YEAR_800_"</span>, <span class='no'>pfg</span>, <span class='st'>"_STRATA_all.tif"</span>)
+              , <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 }
 
 <span class='co'>## Create relative abundance maps</span>

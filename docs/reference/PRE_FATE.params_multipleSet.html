@@ -476,8 +476,12 @@ combinations.</p>
 
 <span class='co'>## Create simulation masks</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>raster</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/raster/man/writeRaster.html'>writeRaster</a></span>(<span class='no'>PNE_PARAM</span>$<span class='no'>masks</span>$<span class='no'>maskEcrins</span>, <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"FATE_PNE/DATA/MASK/mask.tif"</span>)
-<span class='fu'><a href='https://rdrr.io/pkg/raster/man/writeRaster.html'>writeRaster</a></span>(<span class='no'>PNE_PARAM</span>$<span class='no'>masks</span>$<span class='no'>noDisturb</span>, <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"FATE_PNE/DATA/MASK/noDisturb.tif"</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/raster/man/writeRaster.html'>writeRaster</a></span>(<span class='no'>PNE_PARAM</span>$<span class='no'>masks</span>$<span class='no'>maskEcrins</span>
+            , <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"FATE_PNE/DATA/MASK/mask.tif"</span>
+            , <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/raster/man/writeRaster.html'>writeRaster</a></span>(<span class='no'>PNE_PARAM</span>$<span class='no'>masks</span>$<span class='no'>noDisturb</span>
+            , <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"FATE_PNE/DATA/MASK/noDisturb.tif"</span>
+            , <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'>## Create simulation parameters file</span>
 <span class='fu'><a href='PRE_FATE.params_simulParameters.html'>PRE_FATE.params_simulParameters</a></span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_PNE"</span>

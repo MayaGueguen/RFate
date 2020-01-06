@@ -288,8 +288,12 @@ PRE_FATE.params_globalParameters(name.simulation = "FATE_PNE"
 
 ## Create simulation masks
 library(raster)
-writeRaster(PNE_PARAM$masks$maskEcrins, file = "FATE_PNE/DATA/MASK/mask.tif")
-writeRaster(PNE_PARAM$masks$noDisturb, file = "FATE_PNE/DATA/MASK/noDisturb.tif")
+writeRaster(PNE_PARAM$masks$maskEcrins
+            , file = "FATE_PNE/DATA/MASK/mask.tif"
+            , overwrite = TRUE)
+writeRaster(PNE_PARAM$masks$noDisturb
+            , file = "FATE_PNE/DATA/MASK/noDisturb.tif"
+            , overwrite = TRUE)
 
 PRE_FATE.params_simulParameters(name.simulation = "FATE_PNE"
                                 , name.mask = "mask.tif"
