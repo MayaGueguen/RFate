@@ -277,13 +277,150 @@ done per habitat.</p>
 <span class='fu'>POST_FATE.graphic_validationStatistics</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
                                        , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
                                        , <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>850</span>
+                                       , <span class='kw'>mat.PFG.obs</span> <span class='kw'>=</span>
                                        , <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 
 <span class='fu'>POST_FATE.graphic_validationStatistics</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
                                        , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
                                        , <span class='kw'>year</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>850</span>, <span class='fl'>950</span>)
+                                       , <span class='kw'>mat.PFG.obs</span> <span class='kw'>=</span>
                                        , <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>)
-}</pre>
+}
+
+
+
+<span class='co'>## ----------------------------------------------------------------------------------------- ##</span>
+<span class='co'>## Load example data</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"PNE_PFG"</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"PNE_PARAM"</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='st'>"PNE_RESULTS"</span>)
+
+<span class='co'>## PNE_PFG$PFG.observations : data.frame</span>
+<span class='co'>## PNE_PARAM$succ_light : data.frame</span>
+<span class='co'>## PNE_PARAM$strata_limits : vector</span>
+<span class='co'>## PNE_PARAM$disp : data.frame</span>
+<span class='co'>## PNE_PARAM$dist : data.frame</span>
+<span class='co'>## PNE_PARAM$global : vector</span>
+<span class='co'>## PNE_PARAM$masks : rasterStack</span>
+<span class='co'>## PNE_RESULTS$abund_str.equilibrium : rasterStack</span>
+
+<span class='co'>## Create a skeleton folder</span>
+<span class='fu'><a href='PRE_FATE.skeletonDirectory.html'>PRE_FATE.skeletonDirectory</a></span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_PNE"</span>)
+
+<span class='co'>## Create PFG succession parameter files : predefined of strata limits</span>
+<span class='no'>tab</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>succ_light</span>[, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"PFG"</span>, <span class='st'>"type"</span>, <span class='st'>"height"</span>, <span class='st'>"maturity"</span>, <span class='st'>"longevity"</span>)]
+<span class='fu'><a href='PRE_FATE.params_PFGsuccession.html'>PRE_FATE.params_PFGsuccession</a></span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_PNE"</span>
+                              , <span class='kw'>mat.PFG.succ</span> <span class='kw'>=</span> <span class='no'>tab</span>
+                              , <span class='kw'>strata.limits</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>strata_limits</span>
+                              , <span class='kw'>strata.limits_reduce</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='co'>## Create PFG light parameter files : predefined of strata limits</span>
+<span class='no'>tab</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>succ_light</span>[, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"PFG"</span>, <span class='st'>"type"</span>, <span class='st'>"height"</span>, <span class='st'>"maturity"</span>, <span class='st'>"longevity"</span>, <span class='st'>"light"</span>)]
+<span class='fu'><a href='PRE_FATE.params_PFGlight.html'>PRE_FATE.params_PFGlight</a></span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_PNE"</span>
+                         , <span class='kw'>mat.PFG.succ</span> <span class='kw'>=</span> <span class='no'>tab</span>
+                         , <span class='kw'>strata.limits</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>strata_limits</span>
+                         , <span class='kw'>strata.limits_reduce</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='co'>## Create PFG dispersal parameter files</span>
+<span class='fu'><a href='PRE_FATE.params_PFGdispersal.html'>PRE_FATE.params_PFGdispersal</a></span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_PNE"</span>
+                             , <span class='kw'>mat.PFG.disp</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>disp</span>)
+
+<span class='co'>## Create PFG disturbance parameter files</span>
+<span class='fu'><a href='PRE_FATE.params_PFGdisturbance.html'>PRE_FATE.params_PFGdisturbance</a></span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_PNE"</span>
+                               , <span class='kw'>mat.PFG.dist</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>dist</span>)
+
+<span class='co'>## Create a Global_parameters file</span>
+<span class='fu'><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_PNE"</span>
+                                 , <span class='kw'>required.no_PFG</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"NB_FG"</span>]
+                                 , <span class='kw'>required.no_STRATA</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"NB_STRATUM"</span>]
+                                 , <span class='kw'>required.simul_duration</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"SIMULATION_DURATION"</span>]
+                                 , <span class='kw'>required.seeding_duration</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"SEEDING_DURATION"</span>]
+                                 , <span class='kw'>required.seeding_timestep</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"SEEDING_TIMESTEP"</span>]
+                                 , <span class='kw'>required.seeding_input</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"SEEDING_INPUT"</span>]
+                                 , <span class='kw'>required.max_by_cohort</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"MAX_BY_COHORT"</span>]
+                                 , <span class='kw'>required.max_abund_low</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"MAX_ABUND_LOW"</span>]
+                                 , <span class='kw'>required.max_abund_medium</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"MAX_ABUND_MEDIUM"</span>]
+                                 , <span class='kw'>required.max_abund_high</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"MAX_ABUND_HIGH"</span>]
+                                 , <span class='kw'>doLight</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+                                 , <span class='kw'>LIGHT.thresh_medium</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"LIGHT.thresh_medium"</span>]
+                                 , <span class='kw'>LIGHT.thresh_low</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"LIGHT.thresh_low"</span>]
+                                 , <span class='kw'>doDispersal</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+                                 , <span class='kw'>DISPERSAL.mode</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"DISPERSAL.mode"</span>]
+                                 , <span class='kw'>doHabSuitability</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+                                 , <span class='kw'>HABSUIT.ref_option</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"HABSUIT.ref_option"</span>]
+                                 , <span class='kw'>doDisturbances</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+                                 , <span class='kw'>DIST.no</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"DIST.no"</span>]
+                                 , <span class='kw'>DIST.no_sub</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"DIST.no_sub"</span>]
+                                 , <span class='kw'>DIST.freq</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"DIST.freq"</span>]
+                                                   , <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"DIST.no"</span>])
+)
+
+<span class='co'>## Create simulation masks</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>raster</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/raster/man/writeRaster.html'>writeRaster</a></span>(<span class='no'>PNE_PARAM</span>$<span class='no'>masks</span>$<span class='no'>maskEcrins</span>
+            , <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"FATE_PNE/DATA/MASK/mask.tif"</span>
+            , <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/raster/man/writeRaster.html'>writeRaster</a></span>(<span class='no'>PNE_PARAM</span>$<span class='no'>masks</span>$<span class='no'>noDisturb</span>
+            , <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"FATE_PNE/DATA/MASK/noDisturb.tif"</span>
+            , <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+<span class='co'>## Create simulation parameters file</span>
+<span class='fu'><a href='PRE_FATE.params_simulParameters.html'>PRE_FATE.params_simulParameters</a></span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_PNE"</span>
+                                , <span class='kw'>name.mask</span> <span class='kw'>=</span> <span class='st'>"mask.tif"</span>
+                                , <span class='kw'>name.dist</span> <span class='kw'>=</span> <span class='st'>"noDisturb.tif"</span>)
+
+<span class='co'>## Create results folders</span>
+<span class='no'>name.folder</span> <span class='kw'>=</span> <span class='st'>"FATE_PNE"</span>
+<span class='no'>name.simul</span> <span class='kw'>=</span> <span class='st'>"SIMUL_V1"</span>
+<span class='no'>dir1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='no'>name.folder</span>, <span class='st'>"/RESULTS/"</span>, <span class='no'>name.simul</span>, <span class='st'>"/ABUND_perPFG_allStrata"</span>)
+<span class='no'>dir2</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='no'>name.folder</span>, <span class='st'>"/RESULTS/"</span>, <span class='no'>name.simul</span>, <span class='st'>"/ABUND_perPFG_perStrata"</span>)
+
+<span class='fu'><a href='https://rdrr.io/r/base/files2.html'>dir.create</a></span>(<span class='no'>dir1</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/files2.html'>dir.create</a></span>(<span class='no'>dir2</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+<span class='co'>## Create results files</span>
+<span class='no'>PFG.names</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>succ_light</span>$<span class='no'>PFG</span>
+<span class='no'>PFG.short</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span>(<span class='no'>PFG.names</span>, <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'><a href='https://rdrr.io/r/base/strsplit.html'>strsplit</a></span>(<span class='no'>x</span>, <span class='st'>"_"</span>)<span class='kw'>[[</span><span class='fl'>1</span>]][<span class='fl'>1</span>])
+<span class='kw'>for</span> (<span class='no'>pfg</span> <span class='kw'>in</span> <span class='no'>PFG.names</span>)
+{
+  <span class='no'>ind</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>grep</a></span>(<span class='no'>pfg</span>, <span class='fu'><a href='https://rdrr.io/pkg/raster/man/names.html'>names</a></span>(<span class='no'>PNE_RESULTS</span>$<span class='no'>abund_str.equilibrium</span>))
+  <span class='no'>stk</span> <span class='kw'>=</span> <span class='no'>PNE_RESULTS</span>$<span class='no'>abund_str.equilibrium</span><span class='kw'>[[</span><span class='no'>ind</span>]]
+  <span class='fu'><a href='https://rdrr.io/pkg/raster/man/writeRaster.html'>writeRaster</a></span>(<span class='no'>stk</span>
+              , <span class='kw'>filename</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='no'>dir2</span>, <span class='st'>"/Abund_YEAR_800_"</span>, <span class='no'>pfg</span>, <span class='st'>"_STRATA_"</span>
+                                  , <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>sub</a></span>(<span class='st'>".*str"</span>, <span class='st'>""</span>, <span class='fu'><a href='https://rdrr.io/pkg/raster/man/names.html'>names</a></span>(<span class='no'>stk</span>)), <span class='st'>".tif"</span>)
+              , <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+              , <span class='kw'>bylayer</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+  <span class='no'>ras</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span>(<span class='no'>stk</span>)
+  <span class='fu'><a href='https://rdrr.io/pkg/raster/man/writeRaster.html'>writeRaster</a></span>(<span class='no'>ras</span>
+              , <span class='kw'>filename</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='no'>dir1</span>, <span class='st'>"/Abund_YEAR_800_"</span>, <span class='no'>pfg</span>, <span class='st'>"_STRATA_all.tif"</span>)
+              , <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+}
+
+<span class='co'>## Create relative abundance maps</span>
+<span class='fu'><a href='POST_FATE.relativeAbund.html'>POST_FATE.relativeAbund</a></span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_PNE"</span>
+                        , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
+                        , <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>800</span>
+                        , <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+
+<span class='co'>## Create binary maps</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>reshape2</span>)
+<span class='no'>tab</span> <span class='kw'>=</span> <span class='no'>PNE_PFG</span>$<span class='no'>PFG.observations</span>
+<span class='no'>tab</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/reshape2/man/melt.html'>melt</a></span>(<span class='no'>tab</span>, <span class='kw'>id.vars</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"sites"</span>, <span class='st'>"X"</span>, <span class='st'>"Y"</span>))
+<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>tab</span>) <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"sites"</span>, <span class='st'>"X"</span>, <span class='st'>"Y"</span>, <span class='st'>"PFG"</span>, <span class='st'>"obs"</span>)
+<span class='no'>tab</span> <span class='kw'>=</span> <span class='no'>tab</span>[, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"PFG"</span>, <span class='st'>"X"</span>, <span class='st'>"Y"</span>, <span class='st'>"obs"</span>)]
+<span class='no'>tab</span> <span class='kw'>=</span> <span class='no'>tab</span>[<span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span>(<span class='no'>tab</span>$<span class='no'>PFG</span> <span class='kw'>!=</span> <span class='st'>"Others"</span>), ]
+<span class='no'>tab</span>$<span class='no'>PFG</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span>(<span class='no'>tab</span>$<span class='no'>PFG</span>, <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'><a href='https://rdrr.io/pkg/raster/man/names.html'>names</a></span>(<span class='no'>PFG.short</span>)[<span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span>(<span class='no'>PFG.short</span> <span class='kw'>==</span> <span class='no'>x</span>)])
+<span class='no'>tab</span>$<span class='no'>obs</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span>(<span class='no'>tab</span>$<span class='no'>obs</span> <span class='kw'>&gt;</span> <span class='fl'>0</span>, <span class='fl'>1</span>, <span class='fl'>0</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>tab</span>)
+
+<span class='no'>validStats</span> <span class='kw'>=</span> <span class='fu'>POST_FATE.graphic_validationStatistics</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_PNE"</span>
+                                                    , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
+                                                    , <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>800</span>
+                                                    , <span class='kw'>mat.PFG.obs</span> <span class='kw'>=</span> <span class='no'>tab</span>
+                                                    , <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+
+<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>validStats</span>$<span class='no'>`FATE_PNE/PARAM_SIMUL/Simul_parameters_V1.txt`</span>$<span class='no'>tab</span>$<span class='no'>`800`</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/raster/man/plot.html'>plot</a></span>(<span class='no'>validStats</span>$<span class='no'>`FATE_PNE/PARAM_SIMUL/Simul_parameters_V1.txt`</span>$<span class='no'>plot</span>$<span class='no'>`800`</span>$<span class='no'>ALL</span>)</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
