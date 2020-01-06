@@ -11,5 +11,9 @@
 name of the package that will be load or installed}
 }
 \description{
-Load a \code{R} package and install it if necessary
+This function loads a \code{R} package and install it if 
+necessary.
+}
+\author{
+Maya Guéguen
 }

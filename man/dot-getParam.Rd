@@ -2,7 +2,7 @@
 % Please edit documentation in R/UTILS.getParam.R
 \name{.getParam}
 \alias{.getParam}
-\title{Extract a parameter value(s) from a parameter file}
+\title{Extract parameter value(s) from a parameter file}
 \usage{
 .getParam(params.lines, flag, flag.split, is.num = TRUE)
 }
@@ -22,5 +22,9 @@ extracted parameter is considered to be \code{numeric} and
 will be processed as such}
 }
 \description{
-Extract a parameter value(s) from a parameter file
+This function extracts from a text file the value(s) of a 
+given parameter.
+}
+\author{
+Maya Guéguen
 }

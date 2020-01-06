@@ -1,3 +1,16 @@
+### HEADER #####################################################################
+##' @title Find cutoff to transform abundance values into binary values
+##' 
+##' @name .getCutoff
+##'
+##' @description This functions finds the best cutoff to transform abundance 
+##' values into binary values while optimising sensitivity and specificity 
+##' values based on observations
+##' 
+##' @param Obs a \code{vector} containing binary observed values (0/1)
+##' @param Fit a \code{vector} containing abundance values
+##'
+## END OF HEADER ###############################################################
 
 .getCutoff <- function(Obs, Fit)
 {

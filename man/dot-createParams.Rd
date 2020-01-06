@@ -18,5 +18,9 @@ correspond to the parameter names}
 values within the parameter file}
 }
 \description{
-Create a parameters file
+Create a text file containing value(s) for one or several 
+parameters and separated by a same character value.
+}
+\author{
+Maya Guéguen
 }

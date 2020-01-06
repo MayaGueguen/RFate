@@ -1,5 +1,12 @@
 ### HEADER #####################################################################
-##' @title Extract a parameter value(s) from a parameter file
+##' @title Extract parameter value(s) from a parameter file
+##' 
+##' @name .getParam
+##'
+##' @author Maya Guéguen
+##' 
+##' @description This function extracts from a text file the value(s) of a 
+##' given parameter.
 ##' 
 ##' @param params.lines a \code{string} that corresponds to the 
 ##' name of the file from which to extract the parameter value

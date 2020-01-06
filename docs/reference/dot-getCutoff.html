@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Load a <code>R</code> package and install it if necessary — .loadPackage • RFate</title>
+<title>Find cutoff to transform abundance values into binary values — .getCutoff • RFate</title>
 
 
 <!-- jquery -->
@@ -35,9 +35,10 @@
 
 
 
-<meta property="og:title" content="Load a <code>R</code> package and install it if necessary — .loadPackage" />
-<meta property="og:description" content="This function loads a R package and install it if 
-necessary." />
+<meta property="og:title" content="Find cutoff to transform abundance values into binary values — .getCutoff" />
+<meta property="og:description" content="This functions finds the best cutoff to transform abundance 
+values into binary values while optimising sensitivity and specificity 
+values based on observations" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -149,25 +150,29 @@ necessary." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Load a <code>R</code> package and install it if necessary</h1>
-    <small class="dont-index">Source: <a href='https://github.com/MayaGueguen/RFate.git/blob/master/R/UTILS.loadPackage.R'><code>R/UTILS.loadPackage.R</code></a></small>
-    <div class="hidden name"><code>dot-loadPackage.Rd</code></div>
+    <h1>Find cutoff to transform abundance values into binary values</h1>
+    <small class="dont-index">Source: <a href='https://github.com/MayaGueguen/RFate.git/blob/master/R/UTILS.getCutoff.R'><code>R/UTILS.getCutoff.R</code></a></small>
+    <div class="hidden name"><code>dot-getCutoff.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function loads a <code>R</code> package and install it if 
-necessary.</p>
+    <p>This functions finds the best cutoff to transform abundance 
+values into binary values while optimising sensitivity and specificity 
+values based on observations</p>
     </div>
 
-    <pre class="usage"><span class='fu'>.loadPackage</span>(<span class='no'>package.name</span>)</pre>
+    <pre class="usage"><span class='fu'>.getCutoff</span>(<span class='no'>Obs</span>, <span class='no'>Fit</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>package.name</th>
-      <td><p>a <code>string</code> that corresponds to the 
-name of the package that will be load or installed</p></td>
+      <th>Obs</th>
+      <td><p>a <code>vector</code> containing binary observed values (0/1)</p></td>
+    </tr>
+    <tr>
+      <th>Fit</th>
+      <td><p>a <code>vector</code> containing abundance values</p></td>
     </tr>
     </table>
 
@@ -179,8 +184,6 @@ name of the package that will be load or installed</p></td>
       <li><a href="#arguments">Arguments</a></li>
     </ul>
 
-    <h2>Author</h2>
-    <p>Maya Guéguen</p>
   </div>
 </div>
 

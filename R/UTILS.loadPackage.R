@@ -1,6 +1,13 @@
 ### HEADER #####################################################################
 ##' @title Load a \code{R} package and install it if necessary
 ##' 
+##' @name .loadPackage
+##'
+##' @author Maya Guéguen
+##' 
+##' @description This function loads a \code{R} package and install it if 
+##' necessary.
+##' 
 ##' @param package.name a \code{string} that corresponds to the 
 ##' name of the package that will be load or installed
 ##'

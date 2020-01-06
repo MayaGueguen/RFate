@@ -1,6 +1,13 @@
 ### HEADER #####################################################################
 ##' @title Create a parameters file
 ##' 
+##' @name .createParams
+##'
+##' @author Maya Guéguen
+##' 
+##' @description Create a text file containing value(s) for one or several 
+##' parameters and separated by a same character value.
+##' 
 ##' @param params.file a \code{string} that corresponds to the 
 ##' name of the file that will be created
 ##' @param params.list a \code{list} containing all the parameters
