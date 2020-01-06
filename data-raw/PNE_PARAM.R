@@ -21,18 +21,16 @@ library(xlsx)
 projRas = "+proj=lcc +lat_1=45.89891888888889 +lat_2=47.69601444444444 +lat_0=46.8 +lon_0=2.337229166666667 +x_0=600000 +y_0=2200000 +datum=WGS84 +units=m +no_defs +ellps=WGS84 +towgs84=0,0,0"
 
 masks = stack(list.files("a_DATA/MASK/", full.names = TRUE))
-masks = masks * 1
+masks = readAll(masks)
 projection(masks) = projRas
-masks = stack(masks)
 masks = masks[[c("maskEcrins", "noDisturb", "mowing", "grazing1", "grazing2", "grazing3", "grazingAll")]]
 
 for(i in seq(0,90,15))
 {
   cat(" ", i)
   HS = stack(list.files("a_DATA/PFGS/ENVSUIT_A1B/", pattern = paste0("HS_f", i), full.names = TRUE))
-  HS = HS * 1
+  HS = readAll(HS)
   HS = round(HS, 3)
-  HS = stack(HS)
   projection(HS) = projRas
   assign(x = paste0("HS_", i), HS)
 }
