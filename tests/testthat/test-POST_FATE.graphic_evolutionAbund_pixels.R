@@ -221,18 +221,23 @@ test_that("POST_FATE.graphic_evolutionAbund_pixels gives error with wrong data :
   }
   
   expect_error(POST_FATE.graphic_evolutionAbund_pixels(name.simulation = "FATE_simulation"
-                                                       , file.simulParam = "ParamSimul.txt"
-                                                       , opt.cells_ID = c(1, 2))
+                                                       , file.simulParam = "ParamSimul.txt")
                , "Missing data!\n The names of PFG extracted from files within FATE_simulation/DATA/PFGS/SUCC/"
                , fixed = TRUE)
+  
+  file.rename(from = "FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_800_C1_STRATA_all.tif"
+              , to = "FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_1_Hop_STRATA_all.tif")
+  
+  expect_message(POST_FATE.graphic_evolutionAbund_pixels(name.simulation = "FATE_simulation"
+                                                         , file.simulParam = "ParamSimul.txt")
+                 , "has been successfully created !"
+                 , fixed = TRUE)
+  
   expect_warning(POST_FATE.graphic_evolutionAbund_pixels(name.simulation = "FATE_simulation"
                                                          , file.simulParam = "ParamSimul.txt"
                                                          , opt.cells_ID = c(1, 2))
                  , "The values given in `opt.cells_ID` do not match with any cells of the studied area"
                  , fixed = TRUE)
-  
-  file.rename(from = "FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_800_C1_STRATA_all.tif"
-              , to = "FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_1_Hop_STRATA_all.tif")
   
   expect_output(str(POST_FATE.graphic_evolutionAbund_pixels(name.simulation = "FATE_simulation"
                                                             , file.simulParam = "ParamSimul.txt"
