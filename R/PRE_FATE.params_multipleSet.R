@@ -746,8 +746,6 @@ PRE_FATE.params_multipleSet = function(
                  sum(TOKEEP1.global == TOKEEP2.global) != length(TOKEEP1.global))
       {
         stop(paste0("The global files have different fixed parameter values.\nPlease check."))
-      # } else if (length(TOKEEP1.simul) != length(TOKEEP2.simul) ||
-      #            sum(TOKEEP1.simul == TOKEEP2.simul) != length(TOKEEP1.simul))
       } else if (length(TOKEEP1.simul) != length(TOKEEP2.simul) ||
                  sum(sub(name.simulation.1, "", TOKEEP1.simul) == sub(name.simulation.2, "", TOKEEP2.simul)) != length(TOKEEP1.simul))
       {
@@ -919,7 +917,6 @@ PRE_FATE.params_multipleSet = function(
     }
   }
   rownames(params.space) = paste0("REP-", 1:nrow(params.space))
-  print(params.space[1:min(c(10, nrow(params.space))), ])
   
   
   ## ------------------------------------------------------------------------------------------ 
