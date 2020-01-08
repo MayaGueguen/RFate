@@ -746,8 +746,10 @@ PRE_FATE.params_multipleSet = function(
                  sum(TOKEEP1.global == TOKEEP2.global) != length(TOKEEP1.global))
       {
         stop(paste0("The global files have different fixed parameter values.\nPlease check."))
+      # } else if (length(TOKEEP1.simul) != length(TOKEEP2.simul) ||
+      #            sum(TOKEEP1.simul == TOKEEP2.simul) != length(TOKEEP1.simul))
       } else if (length(TOKEEP1.simul) != length(TOKEEP2.simul) ||
-                 sum(TOKEEP1.simul == TOKEEP2.simul) != length(TOKEEP1.simul))
+                 sum(sub(name.simulation.1, "", TOKEEP1.simul) == sub(name.simulation.2, "", TOKEEP2.simul)) != length(TOKEEP1.simul))
       {
         stop(paste0("The simulation files have different fixed parameter values.\nPlease check."))
       } else
@@ -840,7 +842,6 @@ PRE_FATE.params_multipleSet = function(
                                                     , 1)
                                             , size = NB_SIMUL_LHS
                                             , replace = TRUE)))
-      print(params.space)
       colnames(params.space) = colnames(params.ranges)
     } else
     {
@@ -955,8 +956,6 @@ PRE_FATE.params_multipleSet = function(
       combi = data.frame(param = c("NAME", "TYPE", "HEIGHT", "MATURITY", "LONGEVITY")
                          , is.num = c(FALSE, FALSE, TRUE, TRUE, TRUE)
                          , stringsAsFactors = FALSE)
-      # combi = data.frame(param = c("NAME", "TYPE", "MATURITY", "LONGEVITY")
-      # , is.num = c(FALSE, FALSE, TRUE, TRUE))
       res = foreach(i = 1:nrow(combi)) %do%
       {
         return(.getParam(params.lines = paste0(dirname(name.simulation.1), "/", fi)
@@ -969,12 +968,19 @@ PRE_FATE.params_multipleSet = function(
                         , height = res[[3]]
                         , maturity = res[[4]]
                         , longevity = res[[5]]))
-      # return(data.frame(PFG = res[[1]], type = res[[2]], maturity = res[[3]], longevity = res[[4]]))
     }
+    cat("\n")
     if ("DO_LIGHT_COMPETITION 1" %in% TOKEEP.global)
     {
+      if (is.null(SUCC_LIGHT.simul$LIGHT) || length(SUCC_LIGHT.simul$LIGHT) == 0)
+      {
+        stop(paste0("The flag --PFG_LIGHT_PARAMS-- in the file ", file.simulParam.1
+                    , " does not contain any value. Please check."))
+      }
+      
       LIGHT_table = foreach(fi = SUCC_LIGHT.simul$LIGHT, .combine = "rbind") %do%
       {
+        cat("\n ", fi)
         PFG = .getParam(params.lines = paste0(dirname(name.simulation.1), "/", fi)
                         , flag = "NAME"
                         , flag.split = " "
@@ -985,6 +991,7 @@ PRE_FATE.params_multipleSet = function(
                           , is.num = TRUE)
         return(data.frame(PFG, light))
       }
+      cat("\n")
       SUCC_table = merge(SUCC_table, LIGHT_table, by = "PFG")
     }
     print(SUCC_table)

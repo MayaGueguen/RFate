@@ -710,7 +710,6 @@ test_that("PRE_FATE.params_multipleSet gives correct output with other condition
                  , fixed = TRUE)
   
   
-  # dir.create("FATE_simulation2")
   if (dir.exists("FATE_simulation2")) unlink("FATE_simulation2", recursive = TRUE)
   PRE_FATE.skeletonDirectory(name.simulation = "FATE_simulation2")
   file.copy(from = list.files(path = "FATE_simulation"
@@ -721,11 +720,75 @@ test_that("PRE_FATE.params_multipleSet gives correct output with other condition
             , to = sub("FATE_simulation/"
                        , "FATE_simulation2/"
                        , list.files(path = "FATE_simulation"
-                              , all.files = TRUE
-                              , full.names = TRUE
-                              , recursive = TRUE
-                              , include.dirs = FALSE))
+                                    , all.files = TRUE
+                                    , full.names = TRUE
+                                    , recursive = TRUE
+                                    , include.dirs = FALSE))
             , recursive = TRUE)
+  fi = readLines("FATE_simulation2/PARAM_SIMUL/toto.txt")
+  fi = sub("FATE_simulation/", "FATE_simulation2/", fi)
+  cat(fi, file = "FATE_simulation2/PARAM_SIMUL/toto.txt", sep = "\n")
+  
+  cat(paste0("## Test file\n"
+             , "NB_FG 3\nNB_STRATUM 4\nSIMULATION_DURATION 50\n"
+             , "SEEDING_DURATION 10\nSEEDING_TIMESTEP 1\nSEEDING_INPUT 100\n"
+             , "MAX_ABUND_LOW 500000\nMAX_ABUND_MEDIUM 600000\nMAX_ABUND_HIGH 700000\n"
+             , "DO_DISPERSAL 1\nDISPERSAL_MODE 1\n"
+             , "DO_HAB_SUITABILITY 0\nDO_LIGHT_COMPETITION 0\n"
+             , "DO_SOIL_COMPETITION 0\nDO_DISTURBANCES 0\n")
+      , file = "FATE_simulation2/DATA/GLOBAL_PARAMETERS/glob.txt")
+  
+  if (dir.exists("FATE_simulation_MULTIPLE_SET")) unlink("FATE_simulation_MULTIPLE_SET", recursive = TRUE)
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , name.simulation.2 = "FATE_simulation2"
+                                           , file.simulParam.2 = "toto.txt"
+                                           , no_simulations = 10
+                                           , do.max_by_cohort = TRUE
+                                           , do.max_abund_low = FALSE
+                                           , do.max_abund_medium = FALSE
+                                           , do.max_abund_high = FALSE
+                                           , do.seeding_duration = FALSE
+                                           , do.seeding_timestep = FALSE
+                                           , do.seeding_input = FALSE
+                                           , do.nb_stratum = FALSE
+                                           , do.LIGHT.thresh_medium = FALSE
+                                           , do.LIGHT.thresh_low = FALSE
+                                           , do.DISPERSAL.mode = FALSE
+                                           , do.HABSUIT.ref_option = FALSE)
+               , "The files do not contain the same parameters to be evaluated."
+               , fixed = TRUE)
+  
+  cat(paste0("## Test file\n"
+             , "MAX_BY_COHORT 500000\nNB_FG 3\nNB_STRATUM 4\nSIMULATION_DURATION 50\n"
+             , "SEEDING_DURATION 10\nSEEDING_TIMESTEP 1\nSEEDING_INPUT 100\n"
+             , "MAX_ABUND_LOW 0\nMAX_ABUND_MEDIUM 600000\nMAX_ABUND_HIGH 700000\n"
+             , "DO_DISPERSAL 1\nDISPERSAL_MODE 1\n"
+             , "DO_HAB_SUITABILITY 0\nDO_LIGHT_COMPETITION 0\n"
+             , "DO_SOIL_COMPETITION 0\nDO_DISTURBANCES 0\n")
+      , file = "FATE_simulation2/DATA/GLOBAL_PARAMETERS/glob.txt")
+  
+  if (dir.exists("FATE_simulation_MULTIPLE_SET")) unlink("FATE_simulation_MULTIPLE_SET", recursive = TRUE)
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , name.simulation.2 = "FATE_simulation2"
+                                           , file.simulParam.2 = "toto.txt"
+                                           , no_simulations = 10
+                                           , do.max_by_cohort = TRUE
+                                           , do.max_abund_low = FALSE
+                                           , do.max_abund_medium = FALSE
+                                           , do.max_abund_high = FALSE
+                                           , do.seeding_duration = FALSE
+                                           , do.seeding_timestep = FALSE
+                                           , do.seeding_input = FALSE
+                                           , do.nb_stratum = FALSE
+                                           , do.LIGHT.thresh_medium = FALSE
+                                           , do.LIGHT.thresh_low = FALSE
+                                           , do.DISPERSAL.mode = FALSE
+                                           , do.HABSUIT.ref_option = FALSE)
+               , "The global files have different fixed parameter values."
+               , fixed = TRUE)
+  
   cat(paste0("## Test file\n"
              , "MAX_BY_COHORT 500000\nNB_FG 3\nNB_STRATUM 4\nSIMULATION_DURATION 50\n"
              , "SEEDING_DURATION 10\nSEEDING_TIMESTEP 1\nSEEDING_INPUT 100\n"
@@ -734,6 +797,36 @@ test_that("PRE_FATE.params_multipleSet gives correct output with other condition
              , "DO_HAB_SUITABILITY 0\nDO_LIGHT_COMPETITION 0\n"
              , "DO_SOIL_COMPETITION 0\nDO_DISTURBANCES 0\n")
       , file = "FATE_simulation2/DATA/GLOBAL_PARAMETERS/glob.txt")
+  fi = readLines("FATE_simulation2/PARAM_SIMUL/toto.txt")
+  fi = sub("FATE_simulation2/DATA/MASK/mask.txt", "FATE_simulation2/DATA/MASK/maski.txt", fi)
+  cat(fi, file = "FATE_simulation2/PARAM_SIMUL/toto.txt", sep = "\n")
+  file.create("FATE_simulation2/DATA/MASK/maski.txt")
+  
+  
+  if (dir.exists("FATE_simulation_MULTIPLE_SET")) unlink("FATE_simulation_MULTIPLE_SET", recursive = TRUE)
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , name.simulation.2 = "FATE_simulation2"
+                                           , file.simulParam.2 = "toto.txt"
+                                           , no_simulations = 10
+                                           , do.max_by_cohort = TRUE
+                                           , do.max_abund_low = FALSE
+                                           , do.max_abund_medium = FALSE
+                                           , do.max_abund_high = FALSE
+                                           , do.seeding_duration = FALSE
+                                           , do.seeding_timestep = FALSE
+                                           , do.seeding_input = FALSE
+                                           , do.nb_stratum = FALSE
+                                           , do.LIGHT.thresh_medium = FALSE
+                                           , do.LIGHT.thresh_low = FALSE
+                                           , do.DISPERSAL.mode = FALSE
+                                           , do.HABSUIT.ref_option = FALSE)
+               , "The simulation files have different fixed parameter values."
+               , fixed = TRUE)
+  
+  fi = readLines("FATE_simulation2/PARAM_SIMUL/toto.txt")
+  fi = sub("FATE_simulation2/DATA/MASK/maski.txt", "FATE_simulation2/DATA/MASK/mask.txt", fi)
+  cat(fi, file = "FATE_simulation2/PARAM_SIMUL/toto.txt", sep = "\n")
   
   if (dir.exists("FATE_simulation_MULTIPLE_SET")) unlink("FATE_simulation_MULTIPLE_SET", recursive = TRUE)
   expect_message(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
@@ -755,6 +848,27 @@ test_that("PRE_FATE.params_multipleSet gives correct output with other condition
                                              , do.HABSUIT.ref_option = FALSE)
                  , "The parameter file FATE_simulation_MULTIPLE_SET/DATA/GLOBAL_PARAMETERS/Global_parameters_V1.txt has been successfully created !"
                  , fixed = TRUE)
+  
+  if (dir.exists("FATE_simulation_MULTIPLE_SET")) unlink("FATE_simulation_MULTIPLE_SET", recursive = TRUE)
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , name.simulation.2 = "FATE_simulation2"
+                                           , file.simulParam.2 = "toto.txt"
+                                           , no_simulations = 5
+                                           , do.max_by_cohort = TRUE
+                                           , do.max_abund_low = FALSE
+                                           , do.max_abund_medium = FALSE
+                                           , do.max_abund_high = FALSE
+                                           , do.seeding_duration = FALSE
+                                           , do.seeding_timestep = FALSE
+                                           , do.seeding_input = FALSE
+                                           , do.nb_stratum = FALSE
+                                           , do.LIGHT.thresh_medium = FALSE
+                                           , do.LIGHT.thresh_low = FALSE
+                                           , do.DISPERSAL.mode = TRUE
+                                           , do.HABSUIT.ref_option = FALSE)
+               , "The number of data sets requested (`no_simulations`) is too small compared to the number of parameters that must vary.."
+               , fixed = TRUE)
   
 })
 
@@ -932,6 +1046,134 @@ test_that("PRE_FATE.params_multipleSet gives error for scenario nb_stratum", {
                                              , do.HABSUIT.ref_option = FALSE)
                  , "The parameter file FATE_simulation_MULTIPLE_SET/DATA/PFGS/SUCC/REP-1/SUCC_FG1.txt has been successfully created !")
   
+  
+  cat(paste0("## Test file\n"
+             , "MAX_BY_COHORT 10000\nNB_FG 3\nNB_STRATUM 4\nSIMULATION_DURATION 50\n"
+             , "SEEDING_DURATION 10\nSEEDING_TIMESTEP 1\nSEEDING_INPUT 100\n"
+             , "MAX_ABUND_LOW 500000\nMAX_ABUND_MEDIUM 600000\nMAX_ABUND_HIGH 700000\n"
+             , "DO_DISPERSAL 0\n"
+             , "DO_HAB_SUITABILITY 0\nDO_LIGHT_COMPETITION 1\n"
+             , "DO_SOIL_COMPETITION 0\nDO_DISTURBANCES 0\n")
+      , file = "FATE_simulation/DATA/GLOBAL_PARAMETERS/glob.txt")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , no_simulations = 10
+                                           , do.max_by_cohort = FALSE
+                                           , do.max_abund_low = FALSE
+                                           , do.max_abund_medium = FALSE
+                                           , do.max_abund_high = FALSE
+                                           , do.seeding_duration = FALSE
+                                           , do.seeding_timestep = FALSE
+                                           , do.seeding_input = FALSE
+                                           , do.nb_stratum = TRUE
+                                           , do.LIGHT.thresh_medium = FALSE
+                                           , do.LIGHT.thresh_low = FALSE
+                                           , do.DISPERSAL.mode = FALSE
+                                           , do.HABSUIT.ref_option = FALSE)
+               , "The flag --PFG_LIGHT_PARAMS-- in the file FATE_simulation/PARAM_SIMUL/toto.txt does not contain any value. Please check.")
+  
+  cat(paste0("--GLOBAL_PARAMS--\nFATE_simulation/DATA/GLOBAL_PARAMETERS/glob.txt\n"
+             , "--MASK--\nFATE_simulation/DATA/MASK/mask.txt\n"
+             , "--PFG_LIFE_HISTORY_PARAMS--\nFATE_simulation/DATA/PFGS/SUCC/SUCC_1.txt\n"
+             , "FATE_simulation/DATA/PFGS/SUCC/SUCC_2.txt\nFATE_simulation/DATA/PFGS/SUCC/SUCC_3.txt\n"
+             , "--PFG_LIGHT_PARAMS--\nFATE_simulation/DATA/PFGS/SUCC/SUCC_1.txt\n"
+             , "FATE_simulation/DATA/PFGS/SUCC/SUCC_2.txt\nFATE_simulation/DATA/PFGS/SUCC/SUCC_3.txt\n"
+             , "--END_OF_FILE--\n")
+      , file = "FATE_simulation/PARAM_SIMUL/toto.txt")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , no_simulations = 10
+                                           , do.max_by_cohort = FALSE
+                                           , do.max_abund_low = FALSE
+                                           , do.max_abund_medium = FALSE
+                                           , do.max_abund_high = FALSE
+                                           , do.seeding_duration = FALSE
+                                           , do.seeding_timestep = FALSE
+                                           , do.seeding_input = FALSE
+                                           , do.nb_stratum = TRUE
+                                           , do.LIGHT.thresh_medium = FALSE
+                                           , do.LIGHT.thresh_low = FALSE
+                                           , do.DISPERSAL.mode = FALSE
+                                           , do.HABSUIT.ref_option = FALSE)
+               , "`flag` (LIGHT) is not found within `params.lines` (./FATE_simulation/DATA/PFGS/SUCC/SUCC_1.txt)"
+               , fixed = TRUE)
+  
+  cat(paste0("NAME FG1\nTYPE H\nHEIGHT 15\nMATURITY 2\nLONGEVITY 5\nLIGHT 1\n")
+      , file = "FATE_simulation/DATA/PFGS/SUCC/SUCC_1.txt")
+  cat(paste0("NAME FG2\nTYPE C\nHEIGHT 150\nMATURITY 5\nLONGEVITY 10\nLIGHT 3\n")
+      , file = "FATE_simulation/DATA/PFGS/SUCC/SUCC_2.txt")
+  cat(paste0("NAME FG3\nTYPE P\nHEIGHT 1100\nMATURITY 20\nLONGEVITY 80\nLIGHT 6\n")
+      , file = "FATE_simulation/DATA/PFGS/SUCC/SUCC_3.txt")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , no_simulations = 10
+                                           , do.max_by_cohort = FALSE
+                                           , do.max_abund_low = FALSE
+                                           , do.max_abund_medium = FALSE
+                                           , do.max_abund_high = FALSE
+                                           , do.seeding_duration = FALSE
+                                           , do.seeding_timestep = FALSE
+                                           , do.seeding_input = FALSE
+                                           , do.nb_stratum = TRUE
+                                           , do.LIGHT.thresh_medium = FALSE
+                                           , do.LIGHT.thresh_low = FALSE
+                                           , do.DISPERSAL.mode = FALSE
+                                           , do.HABSUIT.ref_option = FALSE)
+               , "`flag` (LIGHT_THRESH_MEDIUM) is not found within `params.lines` (FATE_simulation_MULTIPLE_SET/tmp_global_param.txt)"
+               , fixed = TRUE)
+  
+  cat(paste0("## Test file\n"
+             , "MAX_BY_COHORT 10000\nNB_FG 3\nNB_STRATUM 4\nSIMULATION_DURATION 50\n"
+             , "SEEDING_DURATION 10\nSEEDING_TIMESTEP 1\nSEEDING_INPUT 100\n"
+             , "MAX_ABUND_LOW 500000\nMAX_ABUND_MEDIUM 600000\nMAX_ABUND_HIGH 700000\n"
+             , "DO_DISPERSAL 0\n"
+             , "DO_HAB_SUITABILITY 0\nDO_LIGHT_COMPETITION 1\n"
+             , "LIGHT_THRESH_MEDIUM 10\n"
+             , "DO_SOIL_COMPETITION 0\nDO_DISTURBANCES 0\n")
+      , file = "FATE_simulation/DATA/GLOBAL_PARAMETERS/glob.txt")
+  expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                           , file.simulParam.1 = "toto.txt"
+                                           , no_simulations = 10
+                                           , do.max_by_cohort = FALSE
+                                           , do.max_abund_low = FALSE
+                                           , do.max_abund_medium = FALSE
+                                           , do.max_abund_high = FALSE
+                                           , do.seeding_duration = FALSE
+                                           , do.seeding_timestep = FALSE
+                                           , do.seeding_input = FALSE
+                                           , do.nb_stratum = TRUE
+                                           , do.LIGHT.thresh_medium = FALSE
+                                           , do.LIGHT.thresh_low = FALSE
+                                           , do.DISPERSAL.mode = FALSE
+                                           , do.HABSUIT.ref_option = FALSE)
+               , "`flag` (LIGHT_THRESH_LOW) is not found within `params.lines` (FATE_simulation_MULTIPLE_SET/tmp_global_param.txt)"
+               , fixed = TRUE)
+  
+  cat(paste0("## Test file\n"
+             , "MAX_BY_COHORT 10000\nNB_FG 3\nNB_STRATUM 4\nSIMULATION_DURATION 50\n"
+             , "SEEDING_DURATION 10\nSEEDING_TIMESTEP 1\nSEEDING_INPUT 100\n"
+             , "MAX_ABUND_LOW 500000\nMAX_ABUND_MEDIUM 600000\nMAX_ABUND_HIGH 700000\n"
+             , "DO_DISPERSAL 0\n"
+             , "DO_HAB_SUITABILITY 0\nDO_LIGHT_COMPETITION 1\n"
+             , "LIGHT_THRESH_MEDIUM 10\nLIGHT_THRESH_LOW 5\n"
+             , "DO_SOIL_COMPETITION 0\nDO_DISTURBANCES 0\n")
+      , file = "FATE_simulation/DATA/GLOBAL_PARAMETERS/glob.txt")
+  expect_message(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                             , file.simulParam.1 = "toto.txt"
+                                             , no_simulations = 10
+                                             , do.max_by_cohort = FALSE
+                                             , do.max_abund_low = FALSE
+                                             , do.max_abund_medium = FALSE
+                                             , do.max_abund_high = FALSE
+                                             , do.seeding_duration = FALSE
+                                             , do.seeding_timestep = FALSE
+                                             , do.seeding_input = FALSE
+                                             , do.nb_stratum = TRUE
+                                             , do.LIGHT.thresh_medium = FALSE
+                                             , do.LIGHT.thresh_low = FALSE
+                                             , do.DISPERSAL.mode = FALSE
+                                             , do.HABSUIT.ref_option = FALSE)
+                 , "The parameter file FATE_simulation_MULTIPLE_SET/DATA/PFGS/LIGHT/REP-1/LIGHT_FG1.txt has been successfully created !")
   
 })
 
