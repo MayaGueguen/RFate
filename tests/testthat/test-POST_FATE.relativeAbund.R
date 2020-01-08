@@ -238,8 +238,6 @@ test_that("POST_FATE.relativeAbund gives error with wrong data : files", {
 
 ## INPUTS
 test_that("POST_FATE.relativeAbund gives error with wrong data : rasters", {
-  # cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
-  #     , file = "FATE_simulation/Mask.tif")
   data("PNE_PARAM")
   writeRaster(PNE_PARAM$masks$maskEcrins, filename = "FATE_simulation/Mask.tif", overwrite = TRUE)
   
@@ -296,10 +294,31 @@ test_that("POST_FATE.relativeAbund gives error with wrong data : outputs", {
   file.rename(from = "FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_800_C1_STRATA_all.tif"
               , to = "FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_10_Hop_STRATA_all.tif")
   
-  expect_output_file(POST_FATE.relativeAbund(name.simulation = "FATE_simulation"
-                                       , file.simulParam = "ParamSimul.txt"
-                                       , year = 10)
-               , "FATE_simulation/RESULTS/Hello/ABUND_REL_perPFG_allStrata/Abund_relative_YEAR_10_Hop_STRATA_all.txt"
-               , fixed = TRUE)
+  expect_warning(POST_FATE.relativeAbund(name.simulation = "FATE_simulation"
+                                         , file.simulParam = "ParamSimul.txt"
+                                         , year = 10)
+                 , "Nothing to summarize if you provide a single RasterLayer"
+                 , fixed = TRUE)
+  
+  system("gunzip FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_10_Hop_STRATA_all.tif.gz")
+  ras = raster("FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_10_Hop_STRATA_all.tif") 
+  writeRaster(ras, filename = "FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_10_Hop_STRATA_all.img")
+  file.remove("FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_10_Hop_STRATA_all.tif")
+  expect_warning(POST_FATE.relativeAbund(name.simulation = "FATE_simulation"
+                                         , file.simulParam = "ParamSimul.txt"
+                                         , year = 10)
+                 , "Nothing to summarize if you provide a single RasterLayer"
+                 , fixed = TRUE)
+  
+  system("gunzip FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_10_Hop_STRATA_all.img.gz")
+  ras = raster("FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_10_Hop_STRATA_all.img") 
+  writeRaster(ras, filename = "FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_10_Hop_STRATA_all.asc")
+  file.remove("FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_10_Hop_STRATA_all.img")
+  expect_warning(POST_FATE.relativeAbund(name.simulation = "FATE_simulation"
+                                         , file.simulParam = "ParamSimul.txt"
+                                         , year = 10)
+                 , "Nothing to summarize if you provide a single RasterLayer"
+                 , fixed = TRUE)
+  
 })
 
