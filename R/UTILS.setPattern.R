@@ -44,7 +44,7 @@
   
   for (fi in all.files)
   {
-    params.lines = readLines(fi)
+    params.lines = readLines(con = fi, warn = FALSE)
     if (length(grep(pattern.tofind, params.lines)) > 0){
       params.lines = sub(pattern.tofind, pattern.toreplace, params.lines)
       cat(params.lines, sep = "\n", file = fi, append = FALSE)
