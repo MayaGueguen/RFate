@@ -343,3 +343,33 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : name.si
   
 })
 
+## INPUTS
+test_that("PRE_FATE.params_simulParameters gives error with wrong data : opt.global.name", {
+  expect_warning(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
+                                                 , name.mask = "mask.tif"
+                                                 , name.dist = "dist.tif"
+                                                 , opt.global.name = "")
+                 , "There is not the same number of files into the DATA/PFGS/HABSUIT/ folder as the number of PFG indicated into the file")
+  
+  expect_warning(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
+                                                 , name.mask = "mask.tif"
+                                                 , name.dist = "dist.tif"
+                                                 , opt.global.name = 1)
+                 , "There is not the same number of files into the DATA/PFGS/HABSUIT/ folder as the number of PFG indicated into the file")
+})
+
+## INPUTS
+test_that("PRE_FATE.params_simulParameters gives error with wrong data : opt.folder.name", {
+  expect_warning(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
+                                                 , name.mask = "mask.tif"
+                                                 , name.dist = "dist.tif"
+                                                 , opt.folder.name = "")
+                 , "There is not the same number of files into the DATA/PFGS/HABSUIT/ folder as the number of PFG indicated into the file")
+  
+  expect_warning(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
+                                                 , name.mask = "mask.tif"
+                                                 , name.dist = "dist.tif"
+                                                 , opt.folder.name = 1)
+                 , "There is not the same number of files into the DATA/PFGS/HABSUIT/ folder as the number of PFG indicated into the file")
+})
+
