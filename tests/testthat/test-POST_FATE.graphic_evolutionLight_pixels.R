@@ -1,4 +1,5 @@
 library(RFate)
+library(raster)
 context("POST_FATE.graphic_evolutionLight_pixels() function")
 
 
@@ -116,35 +117,52 @@ test_that("POST_FATE.graphic_evolutionLight_pixels gives error with wrong data :
                , "Wrong type of data!\n `flag` (MASK) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"
                , fixed = TRUE)
   
-  cat("--MASK--\nFATE_simulation/Mask.asc\n--PFG_LIFE_HISTORY_PARAMS--\nHop\n--GLOBAL_PARAMS--\nFATE_simulation/GlobalParam.txt\n--SAVE_DIR--\nHello\n--END_OF_FILE--\n"
+  cat("--MASK--\nFATE_simulation/Mask.tif\n--PFG_LIFE_HISTORY_PARAMS--\nHop\n--GLOBAL_PARAMS--\nFATE_simulation/GlobalParam.txt\n--SAVE_DIR--\nHello\n--END_OF_FILE--\n"
       , file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   expect_error(POST_FATE.graphic_evolutionLight_pixels(name.simulation = "FATE_simulation"
                                                           , file.simulParam = "ParamSimul.txt")
-               , "Wrong name file given!\n `FATE_simulation/Mask.asc` does not exist"
+               , "Wrong name file given!\n `FATE_simulation/Mask.tif` does not exist"
                , fixed = TRUE)
   
-  cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
-      , file = "FATE_simulation/Mask.asc")
+  data("PNE_PARAM")
+  writeRaster(PNE_PARAM$masks$maskEcrins, filename = "FATE_simulation/Mask.tif", overwrite = TRUE)
+  
   expect_error(POST_FATE.graphic_evolutionLight_pixels(name.simulation = "FATE_simulation"
                                                           , file.simulParam = "ParamSimul.txt")
                , "Missing data!\n The folder FATE_simulation/RESULTS/Hello/LIGHT/ does not contain adequate files")
-  file.create("FATE_simulation/RESULTS/Hello/LIGHT/Light_Resources_YEAR_1_STRATA_1.tif")
 })
 
 
 ## INPUTS
 test_that("POST_FATE.graphic_evolutionLight_pixels gives error with wrong data : rasters", {
-  # expect_error(POST_FATE.graphic_evolutionLight_pixels(name.simulation = "FATE_simulation"
-  #                                                         , file.simulParam = "ParamSimul.txt")
-  #              # , "objet 'distri' introuvable"
-  #              # , "Cannot create RasterLayer object from this file"
-  #              , "attempt to set 'colnames' on an object with less than two dimensions"
-  #              , fixed = TRUE)
   
-  # expect_warning(POST_FATE.graphic_evolutionLight_pixels(name.simulation = "FATE_simulation"
-  #                                                           , file.simulParam = "ParamSimul.txt"
-  #                                                           , opt.cells_ID = c(1, 2))
-  #                , "The values given in `opt.cells_ID` do not match with any cells of the studied area"
-  #                , fixed = TRUE)
+  data("PNE_RESULTS")
+  PFG.names = names(PNE_RESULTS$abund_str.equilibrium)
+  PFG.names = sub("PNE_year_800_", "", PFG.names)
+  PFG.names = sapply(PFG.names, function(x) strsplit(x, "_")[[1]][1])
+  for (pfg in PFG.names[1])
+  {
+    ind = grep(pfg, names(PNE_RESULTS$abund_str.equilibrium))
+    stk = PNE_RESULTS$abund_str.equilibrium[[ind]]
+    writeRaster(stk
+                , filename = paste0("FATE_simulation/RESULTS/Hello/LIGHT/Light_Resources_YEAR_1_STRATA_", 1:nlayers(stk), ".tif")
+                , overwrite = TRUE
+                , bylayer = TRUE)
+  }
+  
+  expect_message(POST_FATE.graphic_evolutionLight_pixels(name.simulation = "FATE_simulation"
+                                                         , file.simulParam = "ParamSimul.txt")
+                 , "has been successfully created !"
+                 , fixed = TRUE)
+  
+  expect_warning(POST_FATE.graphic_evolutionLight_pixels(name.simulation = "FATE_simulation"
+                                                         , file.simulParam = "ParamSimul.txt"
+                                                         , opt.cells_ID = c(1, 2))
+                 , "The values given in `opt.cells_ID` do not match with any cells of the studied area"
+                 , fixed = TRUE)
+  
+  expect_output(str(POST_FATE.graphic_evolutionLight_pixels(name.simulation = "FATE_simulation"
+                                                            , file.simulParam = "ParamSimul.txt"
+                                                            , opt.cells_ID = c(254, 262, 871))), "list")
 })
 

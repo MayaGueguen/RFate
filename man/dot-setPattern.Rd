@@ -5,11 +5,16 @@
 \title{Replace a pattern with a new within all parameter files of a 
 \code{FATE-HD} simulation folder}
 \usage{
-.setPattern(name.simulation, pattern.tofind, pattern.toreplace)
+.setPattern(name.simulation, opt.name.file = NULL, pattern.tofind,
+  pattern.toreplace)
 }
 \arguments{
 \item{name.simulation}{a \code{string} that corresponds to the main
 directory or simulation name of the \code{FATE-HD} simulation}
+
+\item{opt.name.file}{(\emph{optional}) \cr a \code{string} that
+corresponds to the name of the file (or part) in which to search and 
+change the pattern}
 
 \item{pattern.tofind}{a \code{string} that corresponds to the pattern to 
 find}

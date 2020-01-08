@@ -687,8 +687,6 @@ PRE_FATE.params_simulParameters = function(
     
     if (do.DIST)
     {
-      # if (!is.null(name.dist))
-      # {
       if (.testParam_notChar(name.dist))
       {
         .stopMessage_beChar("name.dist") 
@@ -696,10 +694,6 @@ PRE_FATE.params_simulParameters = function(
       {
         .testParam_existFile(paste0(name.simulation, "/DATA/MASK/", name.dist))
       }
-      # } else
-      # {
-      # .stopMessage_beChar("name.dist") 
-      # }
       nbDisturbances = .getParam(params.lines = globi
                                  , flag = "NB_DISTURBANCES"
                                  , flag.split = " "

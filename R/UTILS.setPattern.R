@@ -11,6 +11,9 @@
 ##' 
 ##' @param name.simulation a \code{string} that corresponds to the main
 ##' directory or simulation name of the \code{FATE-HD} simulation
+##' @param opt.name.file (\emph{optional}) \cr a \code{string} that
+##' corresponds to the name of the file (or part) in which to search and 
+##' change the pattern
 ##' @param pattern.tofind a \code{string} that corresponds to the pattern to 
 ##' find
 ##' @param pattern.toreplace a \code{string} that corresponds to the pattern to 
@@ -20,6 +23,7 @@
 
 
 .setPattern = function(name.simulation
+                       , opt.name.file = NULL
                        , pattern.tofind
                        , pattern.toreplace
                        
@@ -41,6 +45,20 @@
                          , full.names = TRUE
                          , recursive = TRUE
                          , include.dirs = FALSE)
+  if (length(all.files) == 0){
+    stop(paste0("Missing data!\n The folder ", name.simulation, " does not contain adequate files (.txt)"))
+  }
+  
+  if (is.null(opt.name.file) ||
+      (!is.null(opt.name.file) && !is.character(opt.name.file)) ||
+      (!is.null(opt.name.file) && nchar(opt.name.file) == 0)){
+    warning("As `opt.name.file` does not contain character value, it will be ignored")
+  } else {
+    all.files = all.files[grep(opt.name.file, all.files)]
+    if (length(all.files) == 0){
+      stop(paste0("Missing data!\n The folder ", name.simulation, " does not contain adequate files (", opt.name.file, ")"))
+    }
+  }
   
   for (fi in all.files)
   {
