@@ -230,7 +230,7 @@ POST_FATE.graphic_evolutionCoverage = function(
         stop(paste0("Missing data!\n The names of PFG extracted from files within ", name.simulation, "/DATA/PFGS/SUCC/ : "
                     , paste0("\n", PFG, collapse = "\n")
                     , "\n is different from the files contained in ", dir.output.perPFG.allStrata
-                    , "They should be : "
+                    , "\n They should be : "
                     , paste0("\n", file_name, collapse = "\n")))
       }
       gp = PFG[which(file.exists(file_name))]
@@ -240,10 +240,12 @@ POST_FATE.graphic_evolutionCoverage = function(
       {
         ras = stack(file_name) * ras.mask
         ras = as.data.frame(ras)
+        ras = na.exclude(ras)
+        ras$ROWNAMES = rownames(ras)
         
         if (exists("df.habitat"))
         {
-          ras = merge(ras, df.habitat, by.x = "row.names", by.y = "ID", all.x = TRUE)
+          ras = merge(ras, df.habitat, by.x = "ROWNAMES", by.y = "ID", all.x = TRUE)
         } else
         {
           ras$HAB = "ALL"
@@ -259,7 +261,7 @@ POST_FATE.graphic_evolutionCoverage = function(
           {
             tmp = ras.split[[as.character(habi)]]
           }
-          tmp = tmp[, -which(colnames(tmp) %in% c("Row.names", "HAB")), drop = FALSE]
+          tmp = tmp[, -which(colnames(tmp) %in% c("ROWNAMES", "HAB")), drop = FALSE]
           
           if (nrow(tmp) > 0)
           {

@@ -1,7 +1,6 @@
 library(RFate)
-# library(raster)
+library(raster)
 context("POST_FATE.graphic_evolutionCoverage() function")
-# setwd(tempdir())
 
 
 ## INPUTS
@@ -105,7 +104,7 @@ test_that("POST_FATE.graphic_evolutionCoverage gives error with wrong data : fil
                , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/ABUND_perPFG_perStrata/ folder"
                , fixed = TRUE)
   dir.create("FATE_simulation/RESULTS/Hello/ABUND_perPFG_perStrata/")
-
+  
   expect_error(POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation"
                                                    , file.simulParam = "ParamSimul.txt")
                , "Wrong type of data!\n `flag` (GLOBAL_PARAMS) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"
@@ -176,21 +175,19 @@ test_that("POST_FATE.graphic_evolutionCoverage gives error with wrong data : fil
                , "Wrong type of data!\n `flag` (MASK) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"
                , fixed = TRUE)
   
-  cat("--MASK--\nFATE_simulation/Mask.asc\n--PFG_LIFE_HISTORY_PARAMS--\nHop\n--GLOBAL_PARAMS--\nFATE_simulation/GlobalParam.txt\n--SAVE_DIR--\nHello\n--END_OF_FILE--\n"
+  cat("--MASK--\nFATE_simulation/Mask.tif\n--PFG_LIFE_HISTORY_PARAMS--\nHop\n--GLOBAL_PARAMS--\nFATE_simulation/GlobalParam.txt\n--SAVE_DIR--\nHello\n--END_OF_FILE--\n"
       , file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   expect_error(POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation"
                                                    , file.simulParam = "ParamSimul.txt")
-               , "Wrong name file given!\n `FATE_simulation/Mask.asc` does not exist"
+               , "Wrong name file given!\n `FATE_simulation/Mask.tif` does not exist"
                , fixed = TRUE)
   
-  cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
-      , file = "FATE_simulation/Mask.asc")
-  # ras = raster(matrix(c(0, 0, 1, 0, 1, 1, 1, 1, 1), byrow = T, ncol = 3))
-  # writeRaster(ras, filename = "FATE_simulation/Mask.tif", overwrite = TRUE)
+  data("PNE_PARAM")
+  writeRaster(PNE_PARAM$masks$maskEcrins, filename = "FATE_simulation/Mask.tif", overwrite = TRUE)
+  
   expect_error(POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation"
                                                    , file.simulParam = "ParamSimul.txt")
                , "Missing data!\n The folder FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/ does not contain adequate files")
-  file.create("FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_1_PFG1_STRATA_all.tif")
 })
 
 ## INPUTS
@@ -204,18 +201,77 @@ test_that("POST_FATE.graphic_evolutionCoverage gives error with wrong data : opt
 
 ## INPUTS
 test_that("POST_FATE.graphic_evolutionCoverage gives error with wrong data : rasters", {
+  file.create("FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_1_PFG1_STRATA_all.tif")
+  
   expect_error(POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation"
                                                    , file.simulParam = "ParamSimul.txt")
                , "Missing data!\n The names of PFG extracted from files within FATE_simulation/DATA/PFGS/SUCC/"
                , fixed = TRUE)
-
-  cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
-      , file = "FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_1_Hop_STRATA_all.asc")
+  expect_error(POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation")
+               , "Missing data!\n The names of PFG extracted from files within FATE_simulation/DATA/PFGS/SUCC/"
+               , fixed = TRUE)
   
-  # expect_message(POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation"
-  #                                                    , file.simulParam = "ParamSimul.txt")
-  #                , "have been successfully created !")
-  # expect_message(POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation")
-  #                , "have been successfully created !")
+  file.remove("FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_1_PFG1_STRATA_all.tif")
+  
+  data("PNE_RESULTS")
+  PFG.names = names(PNE_RESULTS$abund_str.equilibrium)
+  PFG.names = sub("PNE_year_800_", "", PFG.names)
+  PFG.names = sapply(PFG.names, function(x) strsplit(x, "_")[[1]][1])
+  for (pfg in PFG.names[1])
+  {
+    ind = grep(pfg, names(PNE_RESULTS$abund_str.equilibrium))
+    stk = PNE_RESULTS$abund_str.equilibrium[[ind]]
+    ras = sum(stk)
+    writeRaster(ras
+                , filename = paste0("FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_800_", pfg, "_STRATA_all.tif")
+                , overwrite = TRUE)
+  }
+  
+  expect_error(POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation"
+                                                   , file.simulParam = "ParamSimul.txt")
+               , "Missing data!\n The names of PFG extracted from files within FATE_simulation/DATA/PFGS/SUCC/"
+               , fixed = TRUE)
+  
+  file.rename(from = "FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_800_C1_STRATA_all.tif"
+              , to = "FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_1_Hop_STRATA_all.tif")
+  
+  expect_message(POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation"
+                                                     , file.simulParam = "ParamSimul.txt")
+                 , "have been successfully created !"
+                 , fixed = TRUE)
+  
+  expect_output(str(POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation"
+                                                        , file.simulParam = "ParamSimul.txt")), "list")
+  
+  system("gunzip FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_1_Hop_STRATA_all.tif.gz")
+  file.copy(from = "FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_1_Hop_STRATA_all.tif"
+            , to = "FATE_simulation/Hab.tif")
+  ras = raster("FATE_simulation/Hab.tif")
+  ras = cut(ras, breaks = seq(100, 4000, length.out = 10))
+  writeRaster(ras, filename = "FATE_simulation/Hab.tif", overwrite = TRUE)
+  
+  expect_output(str(POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation"
+                                                        , file.simulParam = "ParamSimul.txt"
+                                                        , opt.ras_habitat = "FATE_simulation/Hab.tif")), "list")
+  
+  
+  system("gunzip FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_1_Hop_STRATA_all.tif.gz")
+  ras = raster("FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_1_Hop_STRATA_all.tif") 
+  writeRaster(ras, filename = "FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_1_Hop_STRATA_all.img")
+  file.remove("FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_1_Hop_STRATA_all.tif")
+  expect_message(POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation"
+                                                     , file.simulParam = "ParamSimul.txt")
+                 , "have been successfully created !"
+                 , fixed = TRUE)
+  
+  system("gunzip FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_1_Hop_STRATA_all.img.gz")
+  ras = raster("FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_1_Hop_STRATA_all.img") 
+  writeRaster(ras, filename = "FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_1_Hop_STRATA_all.asc")
+  file.remove("FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_1_Hop_STRATA_all.img")
+  expect_message(POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation"
+                                                     , file.simulParam = "ParamSimul.txt")
+                 , "have been successfully created !"
+                 , fixed = TRUE)
+  
 })
 
