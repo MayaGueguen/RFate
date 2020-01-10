@@ -247,7 +247,7 @@ test_that("POST_FATE.graphic_evolutionCoverage gives error with wrong data : ras
   file.copy(from = "FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_1_Hop_STRATA_all.tif"
             , to = "FATE_simulation/Hab.tif")
   ras = raster("FATE_simulation/Hab.tif")
-  ras = cut(ras, breaks = seq(100, 4000, length.out = 10))
+  ras = raster::cut(ras, breaks = seq(100, 4000, length.out = 10))
   writeRaster(ras, filename = "FATE_simulation/Hab.tif", overwrite = TRUE)
   
   expect_output(str(POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation"
