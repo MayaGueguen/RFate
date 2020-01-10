@@ -165,7 +165,7 @@ and niche overlap (based on co-occurrence of species).</p>
     </div>
 
     <pre class="usage"><span class='fu'>PRE_FATE.speciesDistance</span>(<span class='no'>mat.species.traits</span>, <span class='no'>mat.species.overlap</span>,
-  <span class='kw'>opt.max.percent.NA</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>opt.max.percent.similarSpecies</span> <span class='kw'>=</span> <span class='fl'>0.25</span>,
+  <span class='kw'>opt.max.percent.NA</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>opt.max.percent.similarSpecies</span> <span class='kw'>=</span> <span class='fl'>0.25</span>,
   <span class='kw'>opt.min.sd</span> <span class='kw'>=</span> <span class='fl'>0.3</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -269,13 +269,13 @@ weighted by the number of traits used.</p>
 <span class='co'>## PNE_PFG$dom.dist_overlap : niolap object</span>
 <span class='co'># sp.DIST = PRE_FATE.speciesDistance(mat.species.traits = PNE_PFG$dom.traits</span>
 <span class='co'>#                                    , mat.species.overlap = PNE_PFG$dom.dist_overlap</span>
-<span class='co'>#                                    , opt.max.percent.NA = 1</span>
+<span class='co'>#                                    , opt.max.percent.NA = 0</span>
 <span class='co'>#                                    , opt.max.percent.similarSpecies = 0.25</span>
 <span class='co'>#                                    , opt.min.sd = 0.3)</span>
 
 <span class='no'>sp.DIST</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.speciesDistance</span>(<span class='kw'>mat.species.traits</span> <span class='kw'>=</span> <span class='no'>PNE_PFG</span>$<span class='no'>dom.traits</span>
                                    , <span class='kw'>mat.species.overlap</span> <span class='kw'>=</span> <span class='no'>PNE_PFG</span>$<span class='no'>dom.dist_overlap</span>
-                                   , <span class='kw'>opt.max.percent.NA</span> <span class='kw'>=</span> <span class='fl'>0.9</span>
+                                   , <span class='kw'>opt.max.percent.NA</span> <span class='kw'>=</span> <span class='fl'>0.1</span>
                                    , <span class='kw'>opt.max.percent.similarSpecies</span> <span class='kw'>=</span> <span class='fl'>0.25</span>
                                    , <span class='kw'>opt.min.sd</span> <span class='kw'>=</span> <span class='fl'>0.3</span>)
 

@@ -6,7 +6,7 @@
 based on traits and niche overlap}
 \usage{
 PRE_FATE.speciesDistance(mat.species.traits, mat.species.overlap,
-  opt.max.percent.NA = 1, opt.max.percent.similarSpecies = 0.25,
+  opt.max.percent.NA = 0, opt.max.percent.similarSpecies = 0.25,
   opt.min.sd = 0.3)
 }
 \arguments{
@@ -105,13 +105,13 @@ data("PNE_PFG")
 ## PNE_PFG$dom.dist_overlap : niolap object
 # sp.DIST = PRE_FATE.speciesDistance(mat.species.traits = PNE_PFG$dom.traits
 #                                    , mat.species.overlap = PNE_PFG$dom.dist_overlap
-#                                    , opt.max.percent.NA = 1
+#                                    , opt.max.percent.NA = 0
 #                                    , opt.max.percent.similarSpecies = 0.25
 #                                    , opt.min.sd = 0.3)
                                    
 sp.DIST = PRE_FATE.speciesDistance(mat.species.traits = PNE_PFG$dom.traits
                                    , mat.species.overlap = PNE_PFG$dom.dist_overlap
-                                   , opt.max.percent.NA = 0.9
+                                   , opt.max.percent.NA = 0.1
                                    , opt.max.percent.similarSpecies = 0.25
                                    , opt.min.sd = 0.3)
 

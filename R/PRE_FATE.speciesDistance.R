@@ -106,13 +106,13 @@
 ##' ## PNE_PFG$dom.dist_overlap : niolap object
 ##' # sp.DIST = PRE_FATE.speciesDistance(mat.species.traits = PNE_PFG$dom.traits
 ##' #                                    , mat.species.overlap = PNE_PFG$dom.dist_overlap
-##' #                                    , opt.max.percent.NA = 1
+##' #                                    , opt.max.percent.NA = 0
 ##' #                                    , opt.max.percent.similarSpecies = 0.25
 ##' #                                    , opt.min.sd = 0.3)
 ##'                                    
 ##' sp.DIST = PRE_FATE.speciesDistance(mat.species.traits = PNE_PFG$dom.traits
 ##'                                    , mat.species.overlap = PNE_PFG$dom.dist_overlap
-##'                                    , opt.max.percent.NA = 0.9
+##'                                    , opt.max.percent.NA = 0.1
 ##'                                    , opt.max.percent.similarSpecies = 0.25
 ##'                                    , opt.min.sd = 0.3)
 ##' 
@@ -131,7 +131,7 @@
 
 PRE_FATE.speciesDistance = function(mat.species.traits ## data.frame with columns : species, GROUP and one for each trait
                                     , mat.species.overlap ## species x species matrix / or table with raster file names
-                                    , opt.max.percent.NA = 1
+                                    , opt.max.percent.NA = 0
                                     , opt.max.percent.similarSpecies = 0.25
                                     , opt.min.sd = 0.3
 ){
@@ -180,6 +180,11 @@ PRE_FATE.speciesDistance = function(mat.species.traits ## data.frame with column
   {
     stop("Wrong dimension(s) of data!\n `mat.species.traits` does not have the appropriate number of rows (>=2)")
   }
+  mat.species.traits$species = as.character(mat.species.traits$species)
+  if (length(which(is.na(mat.species.traits$species))) > 0 ||
+      length(unique(mat.species.traits$species)) < nrow(mat.species.traits)){
+    stop("Wrong type of data!\n Column `species` of `mat.species.traits` must contain different values")
+  }
   ## Control form of parameters : mat.species.overlap
   if (class(mat.species.overlap) %in% c("dist", "niolap"))
   {
@@ -196,11 +201,6 @@ PRE_FATE.speciesDistance = function(mat.species.traits ## data.frame with column
     }
   } else if (is.data.frame(mat.species.overlap))
   {
-    # if (length(which(mat.species.overlap < 0)) > 0 || length(which(mat.species.overlap > 1)) > 0)
-    # {
-    #   stop("Wrong data given!\n `mat.species.overlap` must contain values between 0 and 1
-    #        (either presence-absence or probability values)")
-    # }
     if (sum(colnames(mat.species.overlap) == "species") != 1)
     {
       stop("Wrong data given!\n `mat.species.overlap` must contain a column whose name is `species`")
@@ -211,11 +211,28 @@ PRE_FATE.speciesDistance = function(mat.species.traits ## data.frame with column
     {
       stop("Wrong data given!\n `mat.species.overlap$raster` must contain file names which exist")
     }
-    mat.species.overlap = mat.species.overlap[which(file.exists(mat.species.overlap$raster)), ]
-    raster.list = lapply(mat.species.overlap$raster, function(x) as(raster(x), "SpatialGridDataFrame"))
-    overlap.mat = as.matrix(niche.overlap(raster.list))
-    rownames(overlap.mat) = colnames(overlap.mat) = mat.species.overlap$species
-    mat.species.overlap = overlap.mat
+    if (nrow(mat.species.overlap) <= 1)
+    {
+      stop("Wrong dimension(s) of data!\n `mat.species.overlap` does not have the appropriate number of rows (>=2)")
+    }
+    mat.species.overlap$species = as.character(mat.species.overlap$species)
+    if (length(which(is.na(mat.species.overlap$species))) > 0 ||
+        length(unique(mat.species.overlap$species)) < nrow(mat.species.overlap)){
+      stop("Wrong type of data!\n Column `species` of `mat.species.overlap` must contain different values")
+    }
+    
+    mat.species.overlap$raster = as.character(mat.species.overlap$raster)
+    mat.species.overlap = mat.species.overlap[which(file.exists(mat.species.overlap$raster)), , drop = FALSE]
+    if (sum(extension(mat.species.overlap$raster) %in% c(".tif", ".img", ".asc")) == nrow(mat.species.overlap))
+    {
+      raster.list = lapply(mat.species.overlap$raster, function(x) as(raster(x), "SpatialGridDataFrame"))
+      overlap.mat = as.matrix(niche.overlap(raster.list))
+      rownames(overlap.mat) = colnames(overlap.mat) = mat.species.overlap$species
+      mat.species.overlap = overlap.mat
+    } else
+    {
+      stop("Wrong data given!\n `mat.species.overlap$raster` must contain file names with appropriate extension (`.tif`, `.img`, `.asc`)")
+    }
   } else {
     stop("Wrong type of data!\n `mat.species.overlap` must be either a data.frame or a dissimilarity object (`dist`, `niolap`, `matrix`)")
   }
@@ -238,11 +255,32 @@ PRE_FATE.speciesDistance = function(mat.species.traits ## data.frame with column
   ind_NA_values = which(no_NA_values >= length(traits_names) - 1)
   if (length(ind_NA_values) > 0)
   {
-    mat.species.traits = mat.species.traits[-ind_NA_values, ]
     warning(paste0("Missing data!\n `mat.species.traits` contains some species with no trait values : "
                    , paste0(mat.species.traits$species[ind_NA_values], collapse = ", ")
                    , "\nThese species will not be taken into account ! \n\n"
     ))
+    mat.species.traits = mat.species.traits[-ind_NA_values, , drop = FALSE]
+    if (nrow(mat.species.traits) <= 1)
+    {
+      stop("Wrong dimension(s) of data!\n `mat.species.traits` does not have the appropriate number of rows (>=2)")
+    }
+  }
+  
+  ## Remove groups with only one species
+  no_sp_group = table(mat.species.traits$GROUP)
+  ind_1_sp = names(no_sp_group)[which(no_sp_group == 1)]
+  ind_1_sp = which(mat.species.traits$GROUP == ind_1_sp)
+  if (length(ind_1_sp) > 0)
+  {
+    warning(paste0("Missing data!\n `mat.species.traits` contains some groups with only one species : "
+                   , paste0(mat.species.traits$GROUP[ind_1_sp], collapse = ", ")
+                   , "\nThese species and groups will not be taken into account ! \n\n"
+    ))
+    mat.species.traits = mat.species.traits[-ind_1_sp, , drop = FALSE]
+    if (nrow(mat.species.traits) <= 1)
+    {
+      stop("Wrong dimension(s) of data!\n `mat.species.traits` does not have the appropriate number of rows (>=2)")
+    }
   }
   
   ## SPLIT INFORMATION by species type
@@ -287,6 +325,22 @@ PRE_FATE.speciesDistance = function(mat.species.traits ## data.frame with column
   # Keep only species present in both distance matrices (trait & overlap)
   mat.species.traits = mat.species.traits[which(mat.species.traits$species %in% species_names.traits_overlap), , drop = FALSE]
   
+  ## Remove groups with only one species
+  no_sp_group = table(mat.species.traits$GROUP)
+  ind_1_sp = names(no_sp_group)[which(no_sp_group == 1)]
+  ind_1_sp = which(mat.species.traits$GROUP == ind_1_sp)
+  if (length(ind_1_sp) > 0)
+  {
+    warning(paste0("Missing data!\n `mat.species.traits` contains some groups with only one species : "
+                   , paste0(mat.species.traits$GROUP[ind_1_sp], collapse = ", ")
+                   , "\nThese species and groups will not be taken into account ! \n\n"
+    ))
+    mat.species.traits = mat.species.traits[-ind_1_sp, , drop = FALSE]
+    if (nrow(mat.species.traits) <= 1)
+    {
+      stop("Wrong dimension(s) of data!\n `mat.species.traits` does not have the appropriate number of rows (>=2)")
+    }
+  }
   
   #################################################################################################
   ### CALCULATE TRAITS DISTANCES
@@ -314,18 +368,26 @@ PRE_FATE.speciesDistance = function(mat.species.traits ## data.frame with column
       res = foreach(x = names(mat.species.gower.split), .combine = "rbind") %do%
         {
           mat = as.matrix(mat.species.gower.split[[x]])
-          mat[upper.tri(mat, diag = TRUE)] = NA
-          mat = as.vector(mat)
-          std.dev = sqrt(var(na.exclude(mat)))
-          percent.0 = length(which(mat == 0)) / length(which(!is.na(mat)))
-          return(data.frame(GROUP = x, TRAIT = tr, std.dev, percent.0, stringsAsFactors = FALSE))
+          if (nrow(mat) > 1)
+          {
+            mat[upper.tri(mat, diag = TRUE)] = NA
+            mat = as.vector(mat)
+            std.dev = sqrt(var(na.exclude(mat)))
+            percent.0 = ifelse(length(which(!is.na(mat))) > 0
+                               , length(which(mat == 0)) / length(which(!is.na(mat)))
+                               , NA)
+            return(data.frame(GROUP = x, TRAIT = tr, std.dev, percent.0, stringsAsFactors = FALSE))
+          } else
+          {
+            return(data.frame(GROUP = x, TRAIT = tr, std.dev = 0, percent.0 = 0, stringsAsFactors = FALSE))
+          }
         }
       return(res)
     }
   
   ## CHOOSE which traits to keep by species type ------------------------------------------------ #
   traits_toKeep = merge(tab_eval.1, tab_eval.2, by = c("GROUP", "TRAIT"))
-  traits_toKeep$toKeep1 = (traits_toKeep$number.NA < opt.max.percent.NA)
+  traits_toKeep$toKeep1 = (traits_toKeep$number.NA <= opt.max.percent.NA)
   traits_toKeep$toKeep2 = (traits_toKeep$percent.0 < opt.max.percent.similarSpecies)
   traits_toKeep$toKeep3 = (traits_toKeep$std.dev > opt.min.sd)
   traits_toKeep$toKeep = ifelse(traits_toKeep$toKeep1 == FALSE
