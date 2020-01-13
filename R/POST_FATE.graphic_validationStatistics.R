@@ -113,9 +113,9 @@
 ##'                                                         
 ##' ## ----------------------------------------------------------------------------------------- ##
 ##' ## Load example data
-##' data("PNE_PFG")
-##' data("PNE_PARAM")
-##' data("PNE_RESULTS")
+##' .loadData("PNE_PFG")
+##' .loadData("PNE_PARAM")
+##' .loadData("PNE_RESULTS")
 ##' 
 ##' ## PNE_PFG$PFG.observations : data.frame
 ##' ## PNE_PARAM$succ_light : data.frame

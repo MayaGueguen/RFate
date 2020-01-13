@@ -80,7 +80,7 @@
 ##' @examples
 ##' 
 ##' ## Load example data
-##' data("PNE_PFG")
+##' .loadData("PNE_PFG")
 ##' 
 ##' ## PNE_PFG$dom.traits : data.frame
 ##' ## PNE_PFG$dom.determ : data.frame

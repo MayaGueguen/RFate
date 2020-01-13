@@ -138,7 +138,7 @@ but could be representative of a specific habitat} :
 \examples{
 
 ## Load example data
-data("PNE_PFG")
+.loadData("PNE_PFG")
 
 ## PNE_PFG$sp.observations : data.frame
 tab = PNE_PFG$sp.observations[, c("sites", "species", "abund", "habitat")]

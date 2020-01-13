@@ -173,7 +173,7 @@ PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
 ## ----------------------------------------------------------------------------------------- ##
 
 ## Load example data
-data("PNE_PARAM")
+.loadData("PNE_PARAM")
 
 ## PNE_PARAM$succ_light : data.frame
 ## PNE_PARAM$strata_limits : vector

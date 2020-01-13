@@ -182,7 +182,7 @@ test_that("POST_FATE.graphic_evolutionCoverage gives error with wrong data : fil
                , "Wrong name file given!\n `FATE_simulation/Mask.tif` does not exist"
                , fixed = TRUE)
   
-  data("PNE_PARAM")
+  .loadData("PNE_PARAM")
   writeRaster(PNE_PARAM$masks$maskEcrins, filename = "FATE_simulation/Mask.tif", overwrite = TRUE)
   
   expect_error(POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation"
@@ -213,7 +213,7 @@ test_that("POST_FATE.graphic_evolutionCoverage gives error with wrong data : ras
   
   file.remove("FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_1_PFG1_STRATA_all.tif")
   
-  data("PNE_RESULTS")
+  .loadData("PNE_RESULTS")
   PFG.names = names(PNE_RESULTS$abund_str.equilibrium)
   PFG.names = sub("PNE_year_800_", "", PFG.names)
   PFG.names = sapply(PFG.names, function(x) strsplit(x, "_")[[1]][1])
