@@ -221,7 +221,7 @@ test_that("PRE_FATE.speciesDistance gives correct output : with mat.species.over
   PFG.names = names(PNE_RESULTS$abund_str.equilibrium)
   PFG.names = sub("PNE_year_800_", "", PFG.names)
   PFG.names = sapply(PFG.names, function(x) strsplit(x, "_")[[1]][1])
-  for (pfg in PFG.names[2])
+  for (pfg in PFG.names[1])
   {
     ind = grep(pfg, names(PNE_RESULTS$abund_str.equilibrium))
     stk = PNE_RESULTS$abund_str.equilibrium[[ind]]
