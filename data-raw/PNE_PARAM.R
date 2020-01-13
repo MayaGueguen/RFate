@@ -112,5 +112,5 @@ PNE_PARAM = list(masks = masks
 )
 save(PNE_PARAM, file = "PNE_PARAM.RData")
 
-setwd("../..")
-usethis::use_data(PNE_PARAM, overwrite = TRUE)
+# setwd("../..")
+# usethis::use_data(PNE_PARAM, overwrite = TRUE)

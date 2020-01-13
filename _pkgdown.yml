@@ -47,8 +47,6 @@ reference:
     desc:  Used in the examples. <br/> ..
     contents:
       - ".loadData"
-      - "MontBlanc"
-      - "FATE_Bauges"
   - title: Interface
     desc:  Graphical User Interface (shiny application)
     contents:

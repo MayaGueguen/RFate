@@ -58,6 +58,6 @@ PNE_RESULTS = list(evaluation = as.data.frame(tab.6)
 )
 save(PNE_RESULTS, file = "PNE_RESULTS.RData")
 
-setwd("../..")
-usethis::use_data(PNE_RESULTS, overwrite = TRUE)
+# setwd("../..")
+# usethis::use_data(PNE_RESULTS, overwrite = TRUE)
 
