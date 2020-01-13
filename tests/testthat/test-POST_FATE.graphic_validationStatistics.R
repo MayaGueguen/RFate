@@ -1,4 +1,5 @@
 library(RFate)
+library(raster)
 context("POST_FATE.graphic_validationStatistics() function")
 
 
@@ -382,34 +383,43 @@ test_that("POST_FATE.graphic_validationStatistics gives error with wrong data : 
                , "Wrong type of data!\n `flag` (MASK) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"
                , fixed = TRUE)
   
-  cat("--MASK--\nFATE_simulation/Mask.asc\n--PFG_LIFE_HISTORY_PARAMS--\nFATE_simulation/DATA/PFGS/SUCC/SUCC_A.txt\n--GLOBAL_PARAMS--\nFATE_simulation/GlobalParam.txt\n--SAVE_DIR--\nHello\n--END_OF_FILE--\n"
+  cat("--MASK--\nFATE_simulation/Mask.tif\n--PFG_LIFE_HISTORY_PARAMS--\nFATE_simulation/DATA/PFGS/SUCC/SUCC_A.txt\n--GLOBAL_PARAMS--\nFATE_simulation/GlobalParam.txt\n--SAVE_DIR--\nHello\n--END_OF_FILE--\n"
       , file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   expect_error(POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
                                                       , file.simulParam = "ParamSimul.txt"
                                                       , year = 10
                                                       , mat.PFG.obs = data.frame(PFG = "A", X = 2, Y = 3, obs = 0, stringsAsFactors = F))
-               , "Wrong name file given!\n `FATE_simulation/Mask.asc` does not exist"
+               , "Wrong name file given!\n `FATE_simulation/Mask.tif` does not exist"
                , fixed = TRUE)
   
-  cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
-      , file = "FATE_simulation/Mask.asc")
+  PNE_PARAM = .loadData("PNE_PARAM")
+  writeRaster(PNE_PARAM$masks$maskEcrins, filename = "FATE_simulation/Mask.tif", overwrite = TRUE)
 
   expect_error(POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
                                                       , file.simulParam = "ParamSimul.txt"
                                                       , year = 10
                                                       , mat.PFG.obs = data.frame(PFG = "A", X = 2, Y = 3, obs = 0, stringsAsFactors = F))
                , "Missing data!\n The folder FATE_simulation/RESULTS/Hello/ABUND_REL_perPFG_allStrata/ does not contain adequate files")
+
+})
+
+## INPUTS
+test_that("POST_FATE.graphic_validationStatistics gives error with wrong data : rasters", {
   file.create("FATE_simulation/RESULTS/Hello/ABUND_REL_perPFG_allStrata/Abund_relative_YEAR_10_PFG1_STRATA_all.tif")
   expect_error(POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
                                                       , file.simulParam = "ParamSimul.txt"
                                                       , year = 10
-                                                      , mat.PFG.obs = data.frame(PFG = "A", X = 2, Y = 3, obs = 0, stringsAsFactors = F))
+                                                      , mat.PFG.obs = data.frame(PFG = "A"
+                                                                                 , X = 2
+                                                                                 , Y = 3
+                                                                                 , obs = 0
+                                                                                 , stringsAsFactors = F))
                , "Missing data!\n The folder FATE_simulation/RESULTS/Hello/ABUND_perPFG_perStrata/ does not contain adequate files")
   file.create("FATE_simulation/RESULTS/Hello/ABUND_perPFG_perStrata/Abund_YEAR_10_PFG1_STRATA_1.tif")
 })
 
 ## OUTPUTS
-test_that("POST_FATE.graphic_validationStatistics gives error with wrong data : outputs", {
+test_that("POST_FATE.graphic_validationStatistics : outputs", {
   expect_output(str(POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
                                                            , file.simulParam = "ParamSimul.txt"
                                                            , year = 10
@@ -417,8 +427,43 @@ test_that("POST_FATE.graphic_validationStatistics gives error with wrong data : 
                 , "List")
   expect_output(str(POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
                                                            , year = 10
-                                                           , mat.PFG.obs = data.frame(PFG = "A", X = 2, Y = 3, obs = 0, stringsAsFactors = F)))
+                                                           , mat.PFG.obs = data.frame(PFG = c("A", "B")
+                                                                                      , X = 2
+                                                                                      , Y = 3
+                                                                                      , obs = c(0, NA)
+                                                                                      , stringsAsFactors = F)))
                 , "List")
+  
+  PNE_RESULTS = .loadData("PNE_RESULTS")
+  PFG.names = names(PNE_RESULTS$abund_str.equilibrium)
+  PFG.names = sub("PNE_year_800_", "", PFG.names)
+  PFG.names = sapply(PFG.names, function(x) strsplit(x, "_")[[1]][1])
+  for (pfg in PFG.names[1])
+  {
+    ind = grep(pfg, names(PNE_RESULTS$abund_str.equilibrium))
+    stk = PNE_RESULTS$abund_str.equilibrium[[ind]]
+    ras = sum(stk)
+    writeRaster(ras
+                , filename = paste0("FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_800_", pfg, "_STRATA_all.tif")
+                , overwrite = TRUE)
+  }
+  
+  file.copy(from = "FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/Abund_YEAR_800_C1_STRATA_all.tif"
+            , to = "FATE_simulation/Hab.tif")
+  ras = raster("FATE_simulation/Hab.tif")
+  ras = raster::cut(ras, breaks = seq(100, 4000, length.out = 10))
+  writeRaster(ras, filename = "FATE_simulation/Hab.tif", overwrite = TRUE)
+  
+  expect_output(str(POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
+                                                           , year = 10
+                                                           , mat.PFG.obs = data.frame(PFG = c("A", "B")
+                                                                                      , X = 2
+                                                                                      , Y = 3
+                                                                                      , obs = c(0, NA)
+                                                                                      , stringsAsFactors = F)
+                                                           , opt.ras_habitat = "FATE_simulation/Hab.tif"))
+                , "List")
+
 })
 
 
