@@ -329,8 +329,18 @@ POST_FATE.graphic_mapPFGsoil = function(
         if (length(file_name) > 0)
         {
           ## Binary map
-          ras.BIN = stack(bin_name) * ras.mask
-          names(ras.BIN) = pfg
+          if (file.exists(bin_name))
+          {
+            ras.BIN = stack(bin_name) * ras.mask
+            names(ras.BIN) = pfg
+          } else
+          {
+            ras.BIN = ras.mask
+            names(ras.BIN) = pfg
+            warning(paste0("Missing data!\n No binary map for PFG ", pfg
+                           , "\n No abundance filtering for this PFG."
+                           , "\n Binary are created with the POST_FATE.graphic_validationStatistics function. Please check!"))
+          }
           
           ## Abundance maps
           ras = stack(file_name) * ras.mask
@@ -360,7 +370,13 @@ POST_FATE.graphic_mapPFGsoil = function(
                       , names(ras_REL.list)[i]
                       , "`. Please check."))
         }
-        ras_REL.list[[i]] = ras_REL.list[[i]] * i_soil
+        if (nlayers(ras_REL.list) == 1)
+        {
+          ras_REL.list = ras_REL.list * i_soil
+        } else
+        {
+          ras_REL.list[[names(ras_REL.list)[i]]] = ras_REL.list[[names(ras_REL.list)[i]]] * i_soil
+        }
       }
       
       ras_soil = sum(ras_REL.list)# / nlayers(ras_REL.list)
