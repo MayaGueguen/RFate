@@ -31,9 +31,9 @@ tools::checkRdaFiles("data/")
 # usethis::use_data(FATE_Bauges, overwrite = TRUE)
 # load("data_supplements/PNE.PFG.RData")
 
-source("data-raw/PNE_PFG.R")
-source("data-raw/PNE_PARAM.R")
-source("data-raw/PNE_RESULTS.R")
+# source("data-raw/PNE_PFG.R")
+# source("data-raw/PNE_PARAM.R")
+# source("data-raw/PNE_RESULTS.R")
 
 usethis::use_testthat()
 usethis::use_test(name ="PRE_functions")

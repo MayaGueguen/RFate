@@ -46,11 +46,9 @@ reference:
   - title: Datasets
     desc:  Used in the examples. <br/> ..
     contents:
+      - ".loadData"
       - "MontBlanc"
       - "FATE_Bauges"
-      - "PNE_PFG"
-      - "PNE_PARAM"
-      - "PNE_RESULTS"
   - title: Interface
     desc:  Graphical User Interface (shiny application)
     contents:

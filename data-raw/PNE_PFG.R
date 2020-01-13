@@ -98,5 +98,5 @@ PNE_PFG = list(sp.observations = as.data.frame(tab.1)
 )
 save(PNE_PFG, file = "PNE_PFG.RData")
 
-setwd("../..")
-usethis::use_data(PNE_PFG, overwrite = TRUE)
+# setwd("../..")
+# usethis::use_data(PNE_PFG, overwrite = TRUE)
