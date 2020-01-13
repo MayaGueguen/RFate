@@ -115,9 +115,9 @@ POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
                                                         
 ## ----------------------------------------------------------------------------------------- ##
 ## Load example data
-.loadData("PNE_PFG")
-.loadData("PNE_PARAM")
-.loadData("PNE_RESULTS")
+PNE_PFG = .loadData("PNE_PFG")
+PNE_PARAM = .loadData("PNE_PARAM")
+PNE_RESULTS = .loadData("PNE_RESULTS")
 
 ## PNE_PFG$PFG.observations : data.frame
 ## PNE_PARAM$succ_light : data.frame

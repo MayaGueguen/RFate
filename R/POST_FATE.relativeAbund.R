@@ -74,8 +74,8 @@
 ##'                                                         
 ##' ## ----------------------------------------------------------------------------------------- ##
 ##' ## Load example data
-##' .loadData("PNE_PARAM")
-##' .loadData("PNE_RESULTS")
+##' PNE_PARAM = .loadData("PNE_PARAM")
+##' PNE_RESULTS = .loadData("PNE_RESULTS")
 ##' 
 ##' ## PNE_PARAM$succ_light : data.frame
 ##' ## PNE_PARAM$strata_limits : vector

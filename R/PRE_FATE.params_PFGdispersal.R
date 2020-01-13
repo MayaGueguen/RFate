@@ -65,7 +65,7 @@
 ##' ## ----------------------------------------------------------------------------------------- ##
 ##'   
 ##' ## Load example data
-##' .loadData("PNE_PARAM")
+##' PNE_PARAM = .loadData("PNE_PARAM")
 ##' 
 ##' ## PNE_PARAM$disp : data.frame
 ##' 

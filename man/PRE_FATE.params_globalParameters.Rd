@@ -405,7 +405,7 @@ PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
 ## ----------------------------------------------------------------------------------------- ##
                  
 ## Load example data
-.loadData("PNE_PARAM")
+PNE_PARAM = .loadData("PNE_PARAM")
 
 ## PNE_PARAM$global : vector
 

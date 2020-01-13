@@ -238,7 +238,7 @@ test_that("POST_FATE.relativeAbund gives error with wrong data : files", {
 
 ## INPUTS
 test_that("POST_FATE.relativeAbund gives error with wrong data : rasters", {
-  .loadData("PNE_PARAM")
+  PNE_PARAM = .loadData("PNE_PARAM")
   writeRaster(PNE_PARAM$masks$maskEcrins, filename = "FATE_simulation/Mask.tif", overwrite = TRUE)
   
   expect_error(POST_FATE.relativeAbund(name.simulation = "FATE_simulation"
@@ -269,7 +269,7 @@ test_that("POST_FATE.relativeAbund gives error with wrong data : rasters", {
                , "Missing data!\n The names of PFG extracted from files within FATE_simulation/DATA/PFGS/SUCC/"
                , fixed = TRUE)
   
-  .loadData("PNE_RESULTS")
+  PNE_RESULTS = .loadData("PNE_RESULTS")
   PFG.names = names(PNE_RESULTS$abund_str.equilibrium)
   PFG.names = sub("PNE_year_800_", "", PFG.names)
   PFG.names = sapply(PFG.names, function(x) strsplit(x, "_")[[1]][1])
