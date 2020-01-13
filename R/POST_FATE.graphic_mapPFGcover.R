@@ -187,298 +187,307 @@ POST_FATE.graphic_mapPFGcover = function(
   #################################################################################################
   
   res = foreach (abs.simulParam = abs.simulParams) %do%
-  {
-    
-    cat("\n ############## GRAPHIC POST FATE ############## \n")
-    cat("\n Simulation name : ", name.simulation)
-    cat("\n Simulation file : ", abs.simulParam)
-    cat("\n")
-    
-    ## Get results directories -----------------------------------------------------
-    .getGraphics_results(name.simulation  = name.simulation
-                         , abs.simulParam = abs.simulParam)
-    
-    ## Get number of PFGs ----------------------------------------------------------
-    ## Get PFG names ---------------------------------------------------------------
-    .getGraphics_PFG(name.simulation  = name.simulation
-                     , abs.simulParam = abs.simulParam)
-    
-    ## Get raster mask -------------------------------------------------------------
-    .getGraphics_mask(name.simulation  = name.simulation
-                      , abs.simulParam = abs.simulParam)
-    
-    ## Get list of arrays and extract years of simulation --------------------------
-    years = sort(unique(as.numeric(year)))
-    no_years = length(years)
-    raster.perPFG.perStrata = grep(paste0("Abund_YEAR_", years, "_", collapse = "|")
-                                   , list.files(dir.output.perPFG.perStrata), value = TRUE)
-    
-    strata = sapply(sub(".*_STRATA_", "", raster.perPFG.perStrata)
-                    , function(x) strsplit(as.character(x), "[.]")[[1]][1])
-    strata = sort(unique(as.numeric(strata)))
-    no_strata = max(strata)
-    if (!(no_strata > 0) || is.infinite(no_strata) | .testParam_notDef(no_strata))
     {
-      stop(paste0("Missing data!\n The folder ", dir.output.perPFG.perStrata, " does not contain adequate files",
-                  " (number of strata null or no strata files found)"))
-    }
-    if (no_strata < strata_min)
-    {
-      stop(paste0("Wrong data given!\n `strata_min` is superior to maximum strata found (", no_strata, ")"))
-    }
-    
-    cat("\n Number of strata : ", no_strata)
-    cat("\n Selected strata : ", strata_min:no_strata)
-    cat("\n")
-    
-    raster.perPFG.perStrata = raster.perPFG.perStrata[grep(paste0("_STRATA_", strata_min:no_strata, collapse = "|")
-                                                           , raster.perPFG.perStrata)]
-    if (length(raster.perPFG.perStrata) == 0)
-    {
-      stop(paste0("Missing data!\n The folder ", dir.output.perPFG.perStrata, " does not contain adequate files"))
-    }
-    
-    ## UNZIP the raster saved ------------------------------------------------------
-    combi = expand.grid(year = years, stratum = strata_min:no_strata)
-    raster.perPFG.perStrata = foreach(y = combi$year, st = combi$stratum, .combine = "c") %do%
-    {
-      paste0(dir.output.perPFG.perStrata,
-             "Abund_YEAR_",
-             y,
-             "_",
-             PFG,
-             "_STRATA_",
-             st,
-             ".tif.gz")
-    }
-    .unzip(folder_name = dir.output.perPFG.perStrata
+      
+      cat("\n ############## GRAPHIC POST FATE ############## \n")
+      cat("\n Simulation name : ", name.simulation)
+      cat("\n Simulation file : ", abs.simulParam)
+      cat("\n")
+      
+      ## Get results directories -----------------------------------------------------
+      .getGraphics_results(name.simulation  = name.simulation
+                           , abs.simulParam = abs.simulParam)
+      
+      ## Get number of PFGs ----------------------------------------------------------
+      ## Get PFG names ---------------------------------------------------------------
+      .getGraphics_PFG(name.simulation  = name.simulation
+                       , abs.simulParam = abs.simulParam)
+      
+      ## Get raster mask -------------------------------------------------------------
+      .getGraphics_mask(name.simulation  = name.simulation
+                        , abs.simulParam = abs.simulParam)
+      
+      ## Get list of arrays and extract years of simulation --------------------------
+      years = sort(unique(as.numeric(year)))
+      no_years = length(years)
+      raster.perPFG.perStrata = grep(paste0("Abund_YEAR_", years, "_", collapse = "|")
+                                     , list.files(dir.output.perPFG.perStrata), value = TRUE)
+      
+      strata = sapply(sub(".*_STRATA_", "", raster.perPFG.perStrata)
+                      , function(x) strsplit(as.character(x), "[.]")[[1]][1])
+      strata = sort(unique(as.numeric(strata)))
+      no_strata = max(strata)
+      if (!(no_strata > 0) || is.infinite(no_strata) | .testParam_notDef(no_strata))
+      {
+        stop(paste0("Missing data!\n The folder ", dir.output.perPFG.perStrata, " does not contain adequate files",
+                    " (number of strata null or no strata files found)"))
+      }
+      if (no_strata < strata_min)
+      {
+        stop(paste0("Wrong data given!\n `strata_min` is superior to maximum strata found (", no_strata, ")"))
+      }
+      
+      cat("\n Number of strata : ", no_strata)
+      cat("\n Selected strata : ", strata_min:no_strata)
+      cat("\n")
+      
+      raster.perPFG.perStrata = raster.perPFG.perStrata[grep(paste0("_STRATA_", strata_min:no_strata, collapse = "|")
+                                                             , raster.perPFG.perStrata)]
+      if (length(raster.perPFG.perStrata) == 0)
+      {
+        stop(paste0("Missing data!\n The folder ", dir.output.perPFG.perStrata, " does not contain adequate files"))
+      }
+      
+      ## UNZIP the raster saved ------------------------------------------------------
+      combi = expand.grid(year = years, stratum = strata_min:no_strata)
+      raster.perPFG.perStrata = foreach(y = combi$year, st = combi$stratum, .combine = "c") %do%
+        {
+          paste0(dir.output.perPFG.perStrata,
+                 "Abund_YEAR_",
+                 y,
+                 "_",
+                 PFG,
+                 "_STRATA_",
+                 st,
+                 ".tif.gz")
+        }
+      .unzip(folder_name = dir.output.perPFG.perStrata
+             , list_files = raster.perPFG.perStrata
+             , nb_cores = opt.no_CPU)
+      
+      
+      ## get the data inside the rasters ---------------------------------------------
+      cat("\n GETTING COVER for")
+      mat.valid_list = list()
+      plot_list = foreach (y = years) %do%
+        {
+          cat("\n > year", y)
+          mat.valid_list[[as.character(y)]] = list()
+          
+          cat("\n PFG ")
+          ras_TOT.list = foreach (pfg = PFG) %do%
+            {
+              cat(" ", pfg)
+              
+              ## Binary map
+              bin_name = paste0(dir.output.perPFG.allStrata.BIN
+                                , "Binary_YEAR_"
+                                , y
+                                , "_"
+                                , pfg
+                                , "_STRATA_all.tif")
+              if (file.exists(bin_name))
+              {
+                ras.BIN = stack(bin_name) * ras.mask
+                names(ras.BIN) = pfg
+              } else
+              {
+                ras.BIN = ras.mask
+                names(ras.BIN) = pfg
+                warning(paste0("Missing data!\n No binary map for PFG ", pfg
+                               , "\n No abundance filtering for this PFG."
+                               , "\n Binary are created with the POST_FATE.graphic_validationStatistics function. Please check!"))
+              }
+              
+              ## Abundance maps
+              file_name = paste0(dir.output.perPFG.perStrata,
+                                 "Abund_YEAR_",
+                                 y,
+                                 "_",
+                                 pfg)
+              file_name = as.vector(sapply(file_name, function(x) paste0(x,
+                                                                         "_STRATA_",
+                                                                         strata_min:no_strata,
+                                                                         ".tif")))
+              gp_st = paste0(pfg, "_STRATA_", strata_min:no_strata)
+              gp_st = gp_st[which(file.exists(file_name))]
+              file_name = file_name[which(file.exists(file_name))]
+              
+              if (length(file_name) > 0)
+              {
+                ras = stack(file_name) * ras.mask
+                ras = ras * ras.BIN
+                ras_TOT = ras
+                if (nlayers(ras) > 1)
+                {
+                  ras_TOT = sum(ras, na.rm = TRUE)
+                }
+                
+                return(ras_TOT)
+              }
+            } ## END ras_TOT.list
+          
+          if (length(ras_TOT.list) > 0)
+          {
+            names(ras_TOT.list) = PFG
+            ras_TOT.list = ras_TOT.list[!sapply(ras_TOT.list, is.null)]
+            ras_TOT.list = stack(ras_TOT.list)
+            
+            ras_TOT = sum(ras_TOT.list)
+            ras_REL = ras_TOT / max(ras_TOT[], na.rm = T)
+            ras.pts = as.data.frame(rasterToPoints(ras_REL))
+            colnames(ras.pts) = c("X", "Y", "COVER")
+            
+            output.name = paste0(name.simulation
+                                 , "/RESULTS/"
+                                 , basename(dir.save)
+                                 , "/PFGcover_YEAR_"
+                                 , y
+                                 , "_STRATA_"
+                                 , strata_min
+                                 , "_"
+                                 , no_strata
+                                 , ".tif")
+            writeRaster(ras_REL
+                        , filename = output.name
+                        , overwrite = TRUE)
+            
+            message(paste0("\n The output file \n"
+                           , " > ", output.name, " \n"
+                           , "has been successfully created !\n"))
+            
+            mat.valid_list[[as.character(y)]][["raster"]] = ras_REL
+            
+            
+            ## Observed cover maps ------------------------------------------------------------
+            if (!is.null(opt.mat.cover.obs))
+            {
+              opt.mat.cover.obs$ID = cellFromXY(ras.mask, opt.mat.cover.obs[, c("X", "Y")])
+            } else if (exists("ras.cover"))
+            {
+              ras.cover = ras.cover * ras.mask
+              opt.mat.cover.obs = data.frame(ID = cellFromXY(ras.cover, xy.1))
+              opt.mat.cover.obs$obs = ras.cover[opt.mat.cover.obs$ID]
+            }
+            
+            if (!is.null(opt.mat.cover.obs))
+            {
+              opt.mat.cover.sim = ras.pts
+              colnames(opt.mat.cover.sim) = c("X", "Y", "sim")
+              opt.mat.cover.sim$ID = cellFromXY(ras.mask, opt.mat.cover.sim[, c("X", "Y")])
+              
+              mat.cover = merge(opt.mat.cover.obs[, c("ID", "obs")]
+                                , opt.mat.cover.sim[, c("ID", "sim")]
+                                , by = "ID")
+              mat.cover = na.exclude(mat.cover)
+              
+              ## calculate evaluation statistics ---------------------------------------------
+              getEval = function(xx, mat)
+              {
+                mat$sim = ifelse(mat$sim < xx, 0, 1)
+                mat.conf = cmx(mat)
+                auc = auc(mat)
+                sens = sensitivity(mat.conf)
+                spec = specificity(mat.conf)
+                TSS = sens$sensitivity + spec$specificity - 1
+                CCR = sum(diag(mat.conf)) / sum(mat.conf) ## Correct Classification Rate
+                return(data.frame(thresh = xx, auc, sens, spec, TSS, CCR))
+              }
+              
+              EVAL.cover = foreach(xx = seq(0, 1, 0.1), .combine = "rbind") %do% { getEval(xx, mat = mat.cover) }
+              EVAL.cover.melt = melt(EVAL.cover, id.vars = "thresh")
+              
+              mat.valid_list[[as.character(y)]][["ccr"]] = EVAL.cover
+              
+              write.csv(EVAL.cover
+                        , file = paste0(name.simulation
+                                        , "/RESULTS/POST_FATE_PFGcover_YEAR_"
+                                        , y
+                                        , "_VALIDATION_STATISTICS"
+                                        , basename(dir.save)
+                                        , ".csv")
+                        , row.names = TRUE)
+              
+              message(paste0("\n The output file POST_FATE_PFGcover_YEAR_"
+                             , y
+                             , "_VALIDATION_STATISTICS"
+                             , basename(dir.save)
+                             , ".csv has been successfully created !\n"))
+            }
+            
+            ## produce the plot ------------------------------------------------------------
+            if (opt.doPlot)
+            {
+              cat("\n PRODUCING PLOT(S)...")
+              
+              ## Map of PFG cover
+              pp1 = ggplot(ras.pts, aes_string(x = "X", y = "Y", fill = "COVER")) +
+                scale_fill_gradientn("Abundance (%)"
+                                     , colors = brewer.pal(9, "Greens")
+                                     , limits = c(0, 1)
+                                     , breaks = seq(0, 1, 0.2)
+                                     , labels = seq(0, 100, 20)) +
+                coord_equal() +
+                geom_raster() +
+                labs(x = "", y = "", title = paste0("GRAPH E : map of PFG cover - Simulation year : ", y),
+                     subtitle = paste0("For each pixel, PFG abundances from strata ",
+                                       strata_min, " to ", no_strata, " are summed,\n",
+                                       "then transformed into relative values by dividing by the maximum abundance obtained.\n")) +
+                .getGraphics_theme() +
+                theme(axis.text = element_blank()
+                      , legend.key.width = unit(2, "lines"))
+              
+              ## Correct classification rate
+              if (exists("EVAL.cover.melt"))
+              {
+                tab = EVAL.cover.melt[which(EVAL.cover.melt$variable %in% c("AUC", "TSS", "CCR")), ]
+                tab.max.auc = EVAL.cover.melt[which(EVAL.cover.melt$variable == "AUC"), ]
+                tab.max.auc = tab.max.auc[which.max(tab.max.auc$value), ]
+                tab.max.tss = EVAL.cover.melt[which(EVAL.cover.melt$variable == "TSS"), ]
+                tab.max.tss = tab.max.tss[which.max(tab.max.tss$value), ]
+                tab.max.ccr = EVAL.cover.melt[which(EVAL.cover.melt$variable == "CCR"), ]
+                tab.max.ccr = tab.max.ccr[which.max(tab.max.ccr$value), ]
+                
+                pp2 = ggplot(tab, aes(x = thresh, y = value)) +
+                  geom_vline(data = tab.max.auc, aes(xintercept = thresh)
+                             , color = "brown", lwd = 5, alpha = 0.5) +
+                  geom_vline(data = tab.max.tss, aes(xintercept = thresh)
+                             , color = "brown", lwd = 5, alpha = 0.5) +
+                  geom_vline(data = tab.max.ccr, aes(xintercept = thresh)
+                             , color = "brown", lwd = 5, alpha = 0.5) +
+                  geom_line(color = "grey60", lwd = 1) +
+                  geom_point() +
+                  facet_wrap(~ variable, scales = "free_y") +
+                  labs(x = "", y = "", title = paste0("GRAPH E : validation statistics of PFG cover - Simulation year : ", y)
+                       , subtitle = paste0("Correct classification rate (CCR) measures the proportion of actual positives (or negatives) that are correctly identified as such.\n"
+                                           , "True skill statistic (TSS) values of -1 indicate predictive abilities of not better than a random model,\n"
+                                           , "0 indicates an indiscriminate model and +1 a perfect model.\n"
+                                           , "AUC corresponds to the area under the ROC curve (Receiver Operating Characteristic).\n\n"
+                                           , "Statistics are calculated for different thresholds for converting coverage to binary values (x-axis).\n")) +
+                  .getGraphics_theme()
+              } else
+              {
+                pp2 = NULL
+              }
+              
+              return(list(plot.cover = pp1, plot.ccr = pp2))
+            } ## END opt.doPlot
+          }
+        } ## END loop on years
+      names(plot_list) = years
+      
+      ## SAVE plots into file ------------------------------------------------------
+      if (opt.doPlot && !is.null(plot_list[[1]]))
+      {
+        pdf(file = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_B_map_PFGcover_", basename(dir.save), ".pdf")
+            , width = 12, height = 10)
+        for (y in years)
+        {
+          pp = plot_list[[as.character(y)]][[1]]
+          if (!is.null(pp)) plot(pp)
+          pp = plot_list[[as.character(y)]][[2]]
+          if (!is.null(pp)) plot(pp)
+        }
+        dev.off()
+      }
+      
+      ## ZIP the raster saved ------------------------------------------------------
+      .zip(folder_name = dir.output.perPFG.perStrata
            , list_files = raster.perPFG.perStrata
            , nb_cores = opt.no_CPU)
-    
-    
-    ## get the data inside the rasters ---------------------------------------------
-    cat("\n GETTING COVER for")
-    mat.valid_list = list()
-    plot_list = foreach (y = years) %do%
-    {
-      cat("\n > year", y)
       
-      cat("\n PFG ")
-      ras_TOT.list = foreach (pfg = PFG) %do%
-      {
-        cat(" ", pfg)
-        
-        ## Binary map
-        bin_name = paste0(dir.output.perPFG.allStrata.BIN
-                          , "Binary_YEAR_"
-                          , y
-                          , "_"
-                          , pfg
-                          , "_STRATA_all.tif")
-        if (file.exists(bin_name))
-        {
-          ras.BIN = stack(bin_name) * ras.mask
-          names(ras.BIN) = pfg
-        } else
-        {
-          ras.BIN = ras.mask
-          names(ras.BIN) = pfg
-          warning(paste0("Missing data!\n No binary map for PFG ", pfg
-                         , "\n No abundance filtering for this PFG."
-                         , "\n Binary are created with the POST_FATE.graphic_validationStatistics function. Please check!"))
-        }
-        
-        ## Abundance maps
-        file_name = paste0(dir.output.perPFG.perStrata,
-                           "Abund_YEAR_",
-                           y,
-                           "_",
-                           pfg)
-        file_name = as.vector(sapply(file_name, function(x) paste0(x,
-                                                                   "_STRATA_",
-                                                                   strata_min:no_strata,
-                                                                   ".tif")))
-        gp_st = paste0(pfg, "_STRATA_", strata_min:no_strata)
-        gp_st = gp_st[which(file.exists(file_name))]
-        file_name = file_name[which(file.exists(file_name))]
-        
-        if (length(file_name) > 0)
-        {
-          ras = stack(file_name) * ras.mask
-          ras = ras * ras.BIN
-          ras_TOT = ras
-          if (nlayers(ras) > 1)
-          {
-            ras_TOT = sum(ras, na.rm = TRUE)
-          }
-          
-          return(ras_TOT)
-        }
-      } ## END ras_TOT.list
-      
-      if (length(ras_TOT.list) > 0)
-      {
-        names(ras_TOT.list) = PFG
-        ras_TOT.list = ras_TOT.list[!sapply(ras_TOT.list, is.null)]
-        ras_TOT.list = stack(ras_TOT.list)
-        
-        ras_TOT = sum(ras_TOT.list)
-        ras_REL = ras_TOT / max(ras_TOT[], na.rm = T)
-        ras.pts = as.data.frame(rasterToPoints(ras_REL))
-        colnames(ras.pts) = c("X", "Y", "COVER")
-        
-        output.name = paste0(name.simulation
-                             , "/RESULTS/"
-                             , basename(dir.save)
-                             , "/PFGcover_YEAR_"
-                             , y
-                             , "_STRATA_"
-                             , strata_min
-                             , "_"
-                             , no_strata
-                             , ".tif")
-        writeRaster(ras_REL
-                    , filename = output.name
-                    , overwrite = TRUE)
-        
-        message(paste0("\n The output file \n"
-                       , " > ", output.name, " \n"
-                       , "has been successfully created !\n"))
-        
-        mat.valid_list[[as.character(y)]][["raster"]] = ras_REL
-        
-        
-        ## Observed cover maps ------------------------------------------------------------
-        if (!is.null(opt.mat.cover.obs))
-        {
-          opt.mat.cover.obs$ID = cellFromXY(ras.mask, opt.mat.cover.obs[, c("X", "Y")])
-        } else if (exists("ras.cover"))
-        {
-          ras.cover = ras.cover * ras.mask
-          opt.mat.cover.obs = data.frame(ID = cellFromXY(ras.cover, xy.1))
-          opt.mat.cover.obs$obs = ras.cover[opt.mat.cover.obs$ID]
-        }
-        
-        if (!is.null(opt.mat.cover.obs))
-        {
-          opt.mat.cover.sim = ras.pts
-          colnames(opt.mat.cover.sim) = c("X", "Y", "sim")
-          opt.mat.cover.sim$ID = cellFromXY(ras.mask, opt.mat.cover.sim[, c("X", "Y")])
-          
-          mat.cover = merge(opt.mat.cover.obs[, c("ID", "obs")]
-                            , opt.mat.cover.sim[, c("ID", "sim")]
-                            , by = "ID")
-          mat.cover = na.exclude(mat.cover)
-          
-          ## calculate evaluation statistics ---------------------------------------------
-          getEval = function(xx, mat)
-          {
-            mat$sim = ifelse(mat$sim < xx, 0, 1)
-            mat.conf = cmx(mat)
-            auc = auc(mat)
-            sens = sensitivity(mat.conf)
-            spec = specificity(mat.conf)
-            TSS = sens$sensitivity + spec$specificity - 1
-            CCR = sum(diag(mat.conf)) / sum(mat.conf) ## Correct Classification Rate
-            return(data.frame(thresh = xx, auc, sens, spec, TSS, CCR))
-          }
-          
-          EVAL.cover = foreach(xx = seq(0, 1, 0.1), .combine = "rbind") %do% { getEval(xx, mat = mat.cover) }
-          EVAL.cover.melt = melt(EVAL.cover, id.vars = "thresh")
-          
-          mat.valid_list[[as.character(y)]][["ccr"]] = EVAL.cover
-          
-          write.csv(EVAL.cover
-                    , file = paste0(name.simulation
-                                    , "/RESULTS/POST_FATE_PFGcover_YEAR_"
-                                    , y
-                                    , "_VALIDATION_STATISTICS"
-                                    , basename(dir.save)
-                                    , ".csv")
-                    , row.names = TRUE)
-          
-          message(paste0("\n The output file POST_FATE_PFGcover_YEAR_"
-                         , y
-                         , "_VALIDATION_STATISTICS"
-                         , basename(dir.save)
-                         , ".csv has been successfully created !\n"))
-        }
-        
-        ## produce the plot ------------------------------------------------------------
-        if (opt.doPlot)
-        {
-          cat("\n PRODUCING PLOT(S)...")
-          
-          ## Map of PFG cover
-          pp1 = ggplot(ras.pts, aes_string(x = "X", y = "Y", fill = "COVER")) +
-            scale_fill_gradientn("Abundance (%)"
-                                 , colors = brewer.pal(9, "Greens")
-                                 , limits = c(0, 1)
-                                 , breaks = seq(0, 1, 0.2)
-                                 , labels = seq(0, 100, 20)) +
-            coord_equal() +
-            geom_raster() +
-            labs(x = "", y = "", title = paste0("GRAPH E : map of PFG cover - Simulation year : ", y),
-                 subtitle = paste0("For each pixel, PFG abundances from strata ",
-                                   strata_min, " to ", no_strata, " are summed,\n",
-                                   "then transformed into relative values by dividing by the maximum abundance obtained.\n")) +
-            .getGraphics_theme() +
-            theme(axis.text = element_blank()
-                  , legend.key.width = unit(2, "lines"))
-          
-          ## Correct classification rate
-          tab = EVAL.cover.melt[which(EVAL.cover.melt$variable %in% c("AUC", "TSS", "CCR")), ]
-          tab.max.auc = EVAL.cover.melt[which(EVAL.cover.melt$variable == "AUC"), ]
-          tab.max.auc = tab.max.auc[which.max(tab.max.auc$value), ]
-          tab.max.tss = EVAL.cover.melt[which(EVAL.cover.melt$variable == "TSS"), ]
-          tab.max.tss = tab.max.tss[which.max(tab.max.tss$value), ]
-          tab.max.ccr = EVAL.cover.melt[which(EVAL.cover.melt$variable == "CCR"), ]
-          tab.max.ccr = tab.max.ccr[which.max(tab.max.ccr$value), ]
-          
-          pp2 = ggplot(tab, aes(x = thresh, y = value)) +
-            geom_vline(data = tab.max.auc, aes(xintercept = thresh)
-                       , color = "brown", lwd = 5, alpha = 0.5) +
-            geom_vline(data = tab.max.tss, aes(xintercept = thresh)
-                       , color = "brown", lwd = 5, alpha = 0.5) +
-            geom_vline(data = tab.max.ccr, aes(xintercept = thresh)
-                       , color = "brown", lwd = 5, alpha = 0.5) +
-            geom_line(color = "grey60", lwd = 1) +
-            geom_point() +
-            facet_wrap(~ variable, scales = "free_y") +
-            labs(x = "", y = "", title = paste0("GRAPH E : validation statistics of PFG cover - Simulation year : ", y)
-                 , subtitle = paste0("Correct classification rate (CCR) measures the proportion of actual positives (or negatives) that are correctly identified as such.\n"
-                                     , "True skill statistic (TSS) values of -1 indicate predictive abilities of not better than a random model,\n"
-                                     , "0 indicates an indiscriminate model and +1 a perfect model.\n"
-                                     , "AUC corresponds to the area under the ROC curve (Receiver Operating Characteristic).\n\n"
-                                     , "Statistics are calculated for different thresholds for converting coverage to binary values (x-axis).\n")) +
-            .getGraphics_theme()
-          
-          return(list(plot.cover = pp1, plot.ccr = pp2))
-        } ## END opt.doPlot
-      }
-    } ## END loop on years
-    names(plot_list) = years
-    
-    ## SAVE plots into file ------------------------------------------------------
-    if (opt.doPlot && !is.null(plot_list[[1]]))
-    {
-      pdf(file = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_B_map_PFGcover_", basename(dir.save), ".pdf")
-          , width = 12, height = 10)
-      for (y in years)
-      {
-        plot(plot_list[[as.character(y)]][[1]])
-        plot(plot_list[[as.character(y)]][[2]])
-      }
-      dev.off()
-    }
-    
-    ## ZIP the raster saved ------------------------------------------------------
-    .zip(folder_name = dir.output.perPFG.perStrata
-         , list_files = raster.perPFG.perStrata
-         , nb_cores = opt.no_CPU)
-    
-    return(list(tab = mat.valid_list, plot = plot_list))
-  } ## END loop on abs.simulParams
+      return(list(tab = mat.valid_list, plot = plot_list))
+    } ## END loop on abs.simulParams
   names(res) = abs.simulParams
   
   return(res)

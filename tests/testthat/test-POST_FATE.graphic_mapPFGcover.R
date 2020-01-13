@@ -1,4 +1,5 @@
 library(RFate)
+library(raster)
 context("POST_FATE.graphic_mapPFGcover() function")
 
 
@@ -141,7 +142,7 @@ test_that("POST_FATE.graphic_mapPFGcover gives error with wrong data : opt.mat.c
                                              , strata_min = 2
                                              , opt.mat.cover.obs = factor(1))
                , "Wrong type of data!\n `opt.mat.cover.obs` must be a data.frame")
-
+  
   expect_error(POST_FATE.graphic_mapPFGcover(name.simulation = "FATE_simulation"
                                              , file.simulParam = "ParamSimul.txt"
                                              , year = 10
@@ -192,7 +193,7 @@ test_that("POST_FATE.graphic_mapPFGcover gives error with wrong data : opt.mat.c
                                              , strata_min = 2
                                              , opt.mat.cover.obs = data.frame(X = 1, Y = 2, obs = factor(1)))
                , "Wrong type of data!\n Columns `X`, `Y` and `obs` of `opt.mat.cover.obs` must contain numeric values")
-
+  
   expect_error(POST_FATE.graphic_mapPFGcover(name.simulation = "FATE_simulation"
                                              , file.simulParam = "ParamSimul.txt"
                                              , year = 10
@@ -226,7 +227,7 @@ test_that("POST_FATE.graphic_mapPFGcover gives error with wrong data : opt.ras.c
   #              , "Cannot create a RasterLayer object from this file."
   #              , fixed = TRUE)
 })
-  
+
 
 ## INPUTS
 test_that("POST_FATE.graphic_mapPFGcover gives error with wrong data : files", {
@@ -286,7 +287,7 @@ test_that("POST_FATE.graphic_mapPFGcover gives error with wrong data : files", {
                , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/ABUND_perPFG_perStrata/ folder"
                , fixed = TRUE)
   dir.create("FATE_simulation/RESULTS/Hello/ABUND_perPFG_perStrata/")
-
+  
   expect_error(POST_FATE.graphic_mapPFGcover(name.simulation = "FATE_simulation"
                                              , file.simulParam = "ParamSimul.txt"
                                              , year = 10
@@ -381,43 +382,82 @@ test_that("POST_FATE.graphic_mapPFGcover gives error with wrong data : files", {
                , "Wrong type of data!\n `flag` (MASK) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"
                , fixed = TRUE)
   
-  cat("--MASK--\nFATE_simulation/Mask.asc\n--PFG_LIFE_HISTORY_PARAMS--\nHop\n--GLOBAL_PARAMS--\nFATE_simulation/GlobalParam.txt\n--SAVE_DIR--\nHello\n--END_OF_FILE--\n"
+  cat("--MASK--\nFATE_simulation/Mask.tif\n--PFG_LIFE_HISTORY_PARAMS--\nHop\n--GLOBAL_PARAMS--\nFATE_simulation/GlobalParam.txt\n--SAVE_DIR--\nHello\n--END_OF_FILE--\n"
       , file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   expect_error(POST_FATE.graphic_mapPFGcover(name.simulation = "FATE_simulation"
                                              , file.simulParam = "ParamSimul.txt"
                                              , year = 10
                                              , strata_min = 2)
-               , "Wrong name file given!\n `FATE_simulation/Mask.asc` does not exist"
+               , "Wrong name file given!\n `FATE_simulation/Mask.tif` does not exist"
                , fixed = TRUE)
+  
+  PNE_PARAM = .loadData("PNE_PARAM")
+  writeRaster(PNE_PARAM$masks$maskEcrins, filename = "FATE_simulation/Mask.tif", overwrite = TRUE)
+  
+  expect_error(POST_FATE.graphic_mapPFGcover(name.simulation = "FATE_simulation"
+                                             , file.simulParam = "ParamSimul.txt"
+                                             , year = 10
+                                             , strata_min = 2)
+               , "Missing data!\n The folder FATE_simulation/RESULTS/Hello/ABUND_perPFG_perStrata/ does not contain adequate files")
+  
 })
 
 
 ## INPUTS
 test_that("POST_FATE.graphic_mapPFGcover gives error with wrong data : rasters", {
-  cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
-      , file = "FATE_simulation/Mask.asc")
-  expect_error(POST_FATE.graphic_mapPFGcover(name.simulation = "FATE_simulation"
-                                             , file.simulParam = "ParamSimul.txt"
-                                             , year = 10
-                                             , strata_min = 2)
-               , "Missing data!\n The folder FATE_simulation/RESULTS/Hello/ABUND_perPFG_perStrata/ does not contain adequate files"
-               , fixed = TRUE)
-  
-  cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
-      , file = "FATE_simulation/RESULTS/Hello/ABUND_perPFG_perStrata/Abund_YEAR_10_Hop_STRATA_1.tif")
+  file.create("FATE_simulation/RESULTS/Hello/ABUND_perPFG_perStrata/Abund_YEAR_10_Hop_STRATA_1.tif")
   expect_error(POST_FATE.graphic_mapPFGcover(name.simulation = "FATE_simulation"
                                              , file.simulParam = "ParamSimul.txt"
                                              , year = 10
                                              , strata_min = 2)
                , "Wrong data given!\n `strata_min` is superior to maximum strata found (1)"
                , fixed = TRUE)
-  cat("ncols 3\nnrows 3\nxllcorner 1\nyllcorner 1\ncellsize 30\nnodata_value -999\n0 0 1\n0 1 1\n1 1 1"
-      , file = "FATE_simulation/RESULTS/Hello/ABUND_perPFG_perStrata/Abund_YEAR_10_Hop_STRATA_2.tif")
-  # expect_message(POST_FATE.graphic_mapPFGcover(name.simulation = "FATE_simulation"
-  #                                            , file.simulParam = "ParamSimul.txt"
-  #                                            , year = 10
-  #                                            , strata_min = 2)
-  #              , "has been successfully created"
-  #              , fixed = TRUE)
+  expect_error(POST_FATE.graphic_mapPFGcover(name.simulation = "FATE_simulation"
+                                             , year = 10
+                                             , strata_min = 2)
+               , "Wrong data given!\n `strata_min` is superior to maximum strata found (1)"
+               , fixed = TRUE)
+
+  
+  PNE_RESULTS = .loadData("PNE_RESULTS")
+  PFG.names = names(PNE_RESULTS$abund_str.equilibrium)
+  PFG.names = sub("PNE_year_800_", "", PFG.names)
+  PFG.names = sapply(PFG.names, function(x) strsplit(x, "_")[[1]][1])
+  for (pfg in PFG.names[1])
+  {
+    ind = grep(pfg, names(PNE_RESULTS$abund_str.equilibrium))
+    stk = PNE_RESULTS$abund_str.equilibrium[[ind]]
+    writeRaster(stk
+                , filename = paste0("FATE_simulation/RESULTS/Hello/ABUND_perPFG_perStrata/Abund_YEAR_10_Hop_STRATA_", 1:nlayers(stk), ".tif")
+                , overwrite = TRUE
+                , bylayer = TRUE)
+  }
+  
+  expect_error(POST_FATE.graphic_mapPFGcover(name.simulation = "FATE_simulation"
+                                             , file.simulParam = "ParamSimul.txt"
+                                             , year = 10
+                                             , strata_min = 2)
+               , "Wrong data given!\n `strata_min` is superior to maximum strata found (1)"
+               , fixed = TRUE)
+  
+  expect_message(POST_FATE.graphic_mapPFGcover(name.simulation = "FATE_simulation"
+                                             , file.simulParam = "ParamSimul.txt"
+                                             , year = 10
+                                             , strata_min = 1)
+                 , "has been successfully created !"
+                 , fixed = TRUE)
+  
+  expect_warning(POST_FATE.graphic_mapPFGcover(name.simulation = "FATE_simulation"
+                                               , file.simulParam = "ParamSimul.txt"
+                                               , year = 10
+                                               , strata_min = 1)
+                 , "No binary map for PFG Hop"
+                 , fixed = TRUE)
+  
+  expect_output(str(POST_FATE.graphic_mapPFGcover(name.simulation = "FATE_simulation"
+                                                  , file.simulParam = "ParamSimul.txt"
+                                                  , year = 10
+                                                  , strata_min = 1)), "list")
+  
 })
 
