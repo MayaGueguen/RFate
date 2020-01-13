@@ -22,7 +22,7 @@
 ##' @param data.name a \code{string} that corresponds to the 
 ##' name of the dataset that will be loaded
 ##' 
-##' @format
+##' @return 
 ##' 
 ##' \strong{\cr PNE_PFG}
 ##' 

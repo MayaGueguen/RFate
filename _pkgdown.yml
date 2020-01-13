@@ -74,6 +74,7 @@ reference:
       - "PRE_FATE.params_globalParameters"
       - "PRE_FATE.params_simulParameters"
       - "PRE_FATE.params_multipleSet"
+      - ".upscaleMaps"
   - title: Analyze FATE-HD outputs
     desc:  Evalute predicted maps, produce summary and dynamic graphics.  <br/> ..
     contents:

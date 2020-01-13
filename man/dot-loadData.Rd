@@ -3,7 +3,15 @@
 \name{.loadData}
 \alias{.loadData}
 \title{Load a dataset}
-\format{\strong{\cr PNE_PFG}
+\usage{
+.loadData(data.name)
+}
+\arguments{
+\item{data.name}{a \code{string} that corresponds to the 
+name of the dataset that will be loaded}
+}
+\value{
+\strong{\cr PNE_PFG}
 
 A \code{list} object with 6 elements to help building the Plant Functional 
 Group :
@@ -229,13 +237,7 @@ A \code{list} object with 5 elements :
     scenario (from year 850 to 1500)}. \cr
     Maps are summing all PFGs through all height strata above 1.5 meters. \cr
     }
-}}
-\usage{
-.loadData(data.name)
 }
-\arguments{
-\item{data.name}{a \code{string} that corresponds to the 
-name of the dataset that will be loaded}
 }
 \description{
 This function loads one of the available data sets, 

@@ -2,9 +2,10 @@
 % Please edit documentation in R/UTILS.upscaleMaps.R
 \name{.upscaleMaps}
 \alias{.upscaleMaps}
-\title{Upscale all raster maps of a \code{FATE-HD} simulation folder}
+\title{Upscale / crop all raster maps of a \code{FATE-HD} simulation folder}
 \usage{
 .upscaleMaps(name.simulation, resolution)
+.cropMaps(name.simulation, extent)
 }
 \arguments{
 \item{name.simulation}{a \code{string} that corresponds to the main
@@ -12,11 +13,14 @@ directory or simulation name of the \code{FATE-HD} simulation}
 
 \item{resolution}{an \code{integer} that corresponds to the new 
 resolution to upscale all the maps}
+
+\item{extent}{a \code{vector} of 4 numeric values that corresponds 
+to the new extent to crop all the maps}
 }
 \description{
-This function scans all the raster files within a 
-\code{FATE-HD} simulation folder and upscale them to the specified 
-resolution
+These functions scan all the raster files within a 
+\code{FATE-HD} simulation folder and upscale / crop them to the specified 
+resolution / extent.
 }
 \author{
 Maya Guéguen

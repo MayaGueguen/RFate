@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Upscale all raster maps of a <code>FATE-HD</code> simulation folder — .upscaleMaps • RFate</title>
+<title>Upscale / crop all raster maps of a <code>FATE-HD</code> simulation folder — .upscaleMaps • RFate</title>
 
 
 <!-- jquery -->
@@ -35,10 +35,10 @@
 
 
 
-<meta property="og:title" content="Upscale all raster maps of a <code>FATE-HD</code> simulation folder — .upscaleMaps" />
-<meta property="og:description" content="This function scans all the raster files within a 
-FATE-HD simulation folder and upscale them to the specified 
-resolution" />
+<meta property="og:title" content="Upscale / crop all raster maps of a <code>FATE-HD</code> simulation folder — .upscaleMaps" />
+<meta property="og:description" content="These functions scan all the raster files within a 
+FATE-HD simulation folder and upscale / crop them to the specified 
+resolution / extent." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -150,18 +150,19 @@ resolution" />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Upscale all raster maps of a <code>FATE-HD</code> simulation folder</h1>
+    <h1>Upscale / crop all raster maps of a <code>FATE-HD</code> simulation folder</h1>
     <small class="dont-index">Source: <a href='https://github.com/MayaGueguen/RFate.git/blob/master/R/UTILS.upscaleMaps.R'><code>R/UTILS.upscaleMaps.R</code></a></small>
     <div class="hidden name"><code>dot-upscaleMaps.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function scans all the raster files within a 
-<code>FATE-HD</code> simulation folder and upscale them to the specified 
-resolution</p>
+    <p>These functions scan all the raster files within a 
+<code>FATE-HD</code> simulation folder and upscale / crop them to the specified 
+resolution / extent.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>.upscaleMaps</span>(<span class='no'>name.simulation</span>, <span class='no'>resolution</span>)</pre>
+    <pre class="usage"><span class='fu'>.upscaleMaps</span>(<span class='no'>name.simulation</span>, <span class='no'>resolution</span>)
+<span class='fu'>.cropMaps</span>(<span class='no'>name.simulation</span>, <span class='no'>extent</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -175,6 +176,11 @@ directory or simulation name of the <code>FATE-HD</code> simulation</p></td>
       <th>resolution</th>
       <td><p>an <code>integer</code> that corresponds to the new 
 resolution to upscale all the maps</p></td>
+    </tr>
+    <tr>
+      <th>extent</th>
+      <td><p>a <code>vector</code> of 4 numeric values that corresponds 
+to the new extent to crop all the maps</p></td>
     </tr>
     </table>
 

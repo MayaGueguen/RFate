@@ -1,27 +1,37 @@
 ### HEADER #####################################################################
-##' @title Upscale all raster maps of a \code{FATE-HD} simulation folder
+##' @title Upscale / crop all raster maps of a \code{FATE-HD} simulation folder
 ##' 
 ##' @name .upscaleMaps
+##' 
+##' @usage
+##' .upscaleMaps(name.simulation, resolution)
+##' .cropMaps(name.simulation, extent)
 ##'
 ##' @author Maya Guéguen
 ##' 
-##' @description This function scans all the raster files within a 
-##' \code{FATE-HD} simulation folder and upscale them to the specified 
-##' resolution
+##' @description These functions scan all the raster files within a 
+##' \code{FATE-HD} simulation folder and upscale / crop them to the specified 
+##' resolution / extent.
 ##' 
 ##' @param name.simulation a \code{string} that corresponds to the main
 ##' directory or simulation name of the \code{FATE-HD} simulation
 ##' @param resolution an \code{integer} that corresponds to the new 
 ##' resolution to upscale all the maps
+##' @param extent a \code{vector} of 4 numeric values that corresponds 
+##' to the new extent to crop all the maps
 ##' 
-##' @importFrom raster raster projectRaster writeRaster
+##' @importFrom raster raster projectRaster writeRaster 
+##' res projection extent crop
 ##'
 ## END OF HEADER ###############################################################
 
+NULL
+
+##' @export
 
 .upscaleMaps = function(name.simulation
-                       , resolution
-                       
+                        , resolution
+                        
 ){
   .testParam_existFolder(name.simulation, "")
   name.simulation = sub("/$", "", name.simulation)
@@ -70,8 +80,9 @@
         ras.new = projectRaster(from = ras
                                 , res = resolution
                                 , crs = old.proj
-                                , method = proj.method)
-        writeRaster(ras.new, filename = fi, overwrite = TRUE)
+                                , method = proj.method
+                                , filename = fi
+                                , overwrite = TRUE)
         message(paste0("\n The raster file ", fi, " has been successfully upscaled !"))
       } else
       {
@@ -81,6 +92,59 @@
     {
       warning(paste0("\n The raster file ", fi, " has a coarser resolution (", old.res
                      , ") than the one resquested (", resolution, "). Please check."))
+    }
+  }
+}
+
+
+##' @export
+
+.cropMaps = function(name.simulation
+                    , extent
+                    
+){
+  .testParam_existFolder(name.simulation, "")
+  name.simulation = sub("/$", "", name.simulation)
+  
+  if (.testParam_notNum(extent) ||
+      length(extent) != 4){
+    stop(paste0("Wrong type of data!\n `extent` must contain 4 numeric values"))
+  }
+  
+  all.files = list.files(path = paste0(name.simulation, "/DATA")
+                         , pattern = ".tif$"
+                         , full.names = TRUE
+                         , recursive = TRUE
+                         , include.dirs = FALSE)
+  if (length(all.files) == 0){
+    all.files = list.files(path = paste0(name.simulation, "/DATA")
+                           , pattern = ".img$"
+                           , full.names = TRUE
+                           , recursive = TRUE
+                           , include.dirs = FALSE)
+    if (length(all.files) == 0){
+      all.files = list.files(path = paste0(name.simulation, "/DATA")
+                             , pattern = ".asc$"
+                             , full.names = TRUE
+                             , recursive = TRUE
+                             , include.dirs = FALSE)
+      if (length(all.files) == 0){
+        stop(paste0("Missing data!\n The folder ", name.simulation, "/DATA does not contain adequate files (.tif, .img or .asc)"))
+      }
+    }
+  }
+  
+  for (fi in all.files)
+  {
+    ras = raster(fi)
+    old.proj = projection(ras)
+    if (!is.na(old.proj))
+    {
+      ras.new = crop(x = ras, y = extent, filename = fi, overwrite = TRUE)
+      message(paste0("\n The raster file ", fi, " has been successfully cropped !"))
+    } else
+    {
+      warning(paste0("\n The raster file ", fi, " does not contain projection information. Please check."))
     }
   }
 }
