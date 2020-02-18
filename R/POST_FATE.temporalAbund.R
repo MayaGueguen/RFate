@@ -248,23 +248,9 @@
 ##' @export
 ##' 
 ##' @importFrom foreach foreach
-##' @importFrom reshape2 melt
+##' @importFrom data.table fwrite
 ##' @importFrom raster raster stack as.data.frame cellFromXY
-##' @importFrom grid unit
-##' @importFrom Hmisc somers2
 ##'
-##' @importFrom ggplot2 ggplot aes aes_string geom_raster geom_bar
-##' geom_hline geom_errorbar scale_fill_gradientn facet_wrap
-##' ylim labs theme annotate element_rect element_blank
-##' scale_y_continuous element_text
-##' @importFrom ggthemes theme_fivethirtyeight
-##' @importFrom ggExtra ggMarginal
-##' @importFrom gridExtra grid.arrange
-##' @importFrom cowplot get_legend
-##' @importFrom RColorBrewer brewer.pal
-##' @importFrom grDevices pdf
-##' 
-##' @importFrom PresenceAbsence sensitivity specificity auc cmx
 ##'
 ## END OF HEADER ###############################################################
 
@@ -329,16 +315,9 @@ POST_FATE.temporalAbund = function(
                         , abs.simulParam = abs.simulParam)
       
       ## Get habitat information -----------------------------------------------------
-      no_hab = 1
-      hab_names = "ALL"
       if (exists("ras.habitat"))
       {
         ras.habitat = ras.habitat * ras.mask
-        df.habitat = data.frame(ID = cellFromXY(ras.habitat, xy.1))
-        df.habitat$HAB = ras.habitat[df.habitat$ID]
-        hab_names = c(hab_names, unique(df.habitat$HAB))
-        hab_names = hab_names[which(!is.na(hab_names))]
-        no_hab = length(hab_names)
       }
       
       ## Get list of arrays and extract years of simulation --------------------------
@@ -355,21 +334,147 @@ POST_FATE.temporalAbund = function(
       
       ## UNZIP the raster saved ------------------------------------------------------
       .unzip_ALL(folder_name = dir.output.perPFG.allStrata, nb_cores = opt.no_CPU)
-    
+      if (doLight) .unzip_ALL(folder_name = dir.output.light, nb_cores = opt.no_CPU)
+      if (doSoil) .unzip_ALL(folder_name = dir.output.soil, nb_cores = opt.no_CPU)
+      
       ## get the data inside the rasters ---------------------------------------------
-      distri = distriAbund = array(0,
-                                   dim = c(no_years, no_PFG, no_hab),
-                                   dimnames = list(years, PFG, hab_names))
-      cat("\n GETTING COVERAGE for year")
-      for (y in years)
+      cat("\n GETTING ABUNDANCE for pfg")
+      tabAbund.list = foreach (pfg = PFG) %do%
+        {
+          cat(" ", pfg)
+          file_name = paste0(dir.output.perPFG.allStrata,
+                             "Abund_YEAR_",
+                             years,
+                             "_",
+                             pfg,
+                             "_STRATA_all")
+          if (length(which(file.exists(paste0(file_name, ".tif")))) > 0)
+          {
+            file_name = paste0(file_name, ".tif")
+          } else if (length(which(file.exists(paste0(file_name, ".img")))) > 0)
+          {
+            file_name = paste0(file_name, ".img")
+          } else if (length(which(file.exists(paste0(file_name, ".asc")))) > 0)
+          {
+            file_name = paste0(file_name, ".asc")
+          }
+          # if (length(which(file.exists(file_name))) == 0)
+          # {
+          #   stop(paste0("Missing data!\n The names of PFG extracted from files within ", name.simulation, "/DATA/PFGS/SUCC/ : "
+          #               , paste0("\n", PFG, collapse = "\n")
+          #               , "\n is different from the files contained in ", dir.output.perPFG.allStrata
+          #               , "\n They should be : "
+          #               , paste0("\n", file_name, collapse = "\n")))
+          # }
+          ye = years[which(file.exists(file_name))]
+          file_name = file_name[which(file.exists(file_name))]
+          
+          if (length(file_name) > 0)
+          {
+            ras = stack(file_name) * ras.mask
+            ras.df = rasterToPoints(ras)
+            ras.df = as.data.frame(ras.df)
+            colnames(ras.df) = c("X", "Y", ye)
+            ID.abund = rowSums(ras.df[, 3:ncol(ras.df)])
+            ras.df = ras.df[which(ID.abund > 0), ]
+            ras.df$ID = cellFromXY(ras.mask, ras.df[, c("X", "Y")])
+            ras.df$PFG = pfg
+            
+            if (exists("ras.habitat"))
+            {
+              ras.df$HAB = cellFromXY(ras.habitat, ras.df[, c("X", "Y")])
+            } else
+            {
+              ras.df$HAB = "ALL"
+            }
+            ras.df = ras.df[, c("PFG", "ID", "X", "Y", "HAB", ye)]
+            
+            return(ras.df)
+          }
+        } ## END loop on PFG
+      cat("\n")
+      
+      tabAbund = rbindlist(tabAbund.list, fill = TRUE)
+      tabAbund = as.data.frame(tabAbund)
+      
+      fwrite(tabAbund
+             , file = paste0(name.simulation
+                             , "/RESULTS/POST_FATE_evolution_abundance_PIXEL_"
+                             , basename(dir.save)
+                             , ".csv")
+             , row.names = FALSE)
+      
+      
+      ## get the data inside the rasters ---------------------------------------------
+      if (doLight)
       {
-        cat(" ", y)
-        file_name = paste0(dir.output.perPFG.allStrata,
-                           "Abund_YEAR_",
-                           y,
-                           "_",
-                           PFG,
-                           "_STRATA_all")
+        cat("\n GETTING LIGHT for stratum")
+        tabLight.list = foreach (str = c(1:no_STRATA)-1) %do%
+          {
+            cat(" ", str)
+            file_name = paste0(dir.output.light,
+                               "Light_Resources_YEAR_",
+                               years,
+                               "_STRATA_",
+                               str)
+            if (length(which(file.exists(paste0(file_name, ".tif")))) > 0)
+            {
+              file_name = paste0(file_name, ".tif")
+            } else if (length(which(file.exists(paste0(file_name, ".img")))) > 0)
+            {
+              file_name = paste0(file_name, ".img")
+            } else if (length(which(file.exists(paste0(file_name, ".asc")))) > 0)
+            {
+              file_name = paste0(file_name, ".asc")
+            }
+            ye = years[which(file.exists(file_name))]
+            file_name = file_name[which(file.exists(file_name))]
+            
+            if (length(file_name) > 0)
+            {
+              ras = stack(file_name) * ras.mask
+              ras.df = rasterToPoints(ras)
+              ras.df = as.data.frame(ras.df)
+              colnames(ras.df) = c("X", "Y", ye)
+              ras.df$ID = cellFromXY(ras.mask, ras.df[, c("X", "Y")])
+              ras.df$STRATUM = str
+              
+              if (exists("ras.habitat"))
+              {
+                ras.df$HAB = cellFromXY(ras.habitat, ras.df[, c("X", "Y")])
+              } else
+              {
+                ras.df$HAB = "ALL"
+              }
+              ras.df = ras.df[, c("STRATUM", "ID", "X", "Y", "HAB", ye)]
+              
+              return(ras.df)
+            }
+          } ## END loop on STRATUM
+        cat("\n")
+        
+        tabLight = rbindlist(tabLight.list, fill = TRUE)
+        tabLight = as.data.frame(tabLight)
+        
+        fwrite(tabLight
+               , file = paste0(name.simulation
+                               , "/RESULTS/POST_FATE_evolution_light_PIXEL_"
+                               , basename(dir.save)
+                               , ".csv")
+               , row.names = FALSE)
+      } else
+      {
+        tabLight = NA
+      } ## END loop for light
+      
+      
+      ## get the data inside the rasters ---------------------------------------------
+      if (doSoil)
+      {
+        cat("\n GETTING SOIL")
+        file_name = paste0(dir.output.soil,
+                           "Soil_Resources_YEAR_",
+                           years)
         if (length(which(file.exists(paste0(file_name, ".tif")))) > 0)
         {
           file_name = paste0(file_name, ".tif")
@@ -380,95 +485,67 @@ POST_FATE.temporalAbund = function(
         {
           file_name = paste0(file_name, ".asc")
         }
-        if (length(which(file.exists(file_name))) == 0)
-        {
-          stop(paste0("Missing data!\n The names of PFG extracted from files within ", name.simulation, "/DATA/PFGS/SUCC/ : "
-                      , paste0("\n", PFG, collapse = "\n")
-                      , "\n is different from the files contained in ", dir.output.perPFG.allStrata
-                      , "\n They should be : "
-                      , paste0("\n", file_name, collapse = "\n")))
-        }
-        gp = PFG[which(file.exists(file_name))]
+        ye = years[which(file.exists(file_name))]
         file_name = file_name[which(file.exists(file_name))]
         
         if (length(file_name) > 0)
         {
           ras = stack(file_name) * ras.mask
-          ras = as.data.frame(ras)
-          ras = na.exclude(ras)
-          ras$ROWNAMES = rownames(ras)
+          ras.df = rasterToPoints(ras)
+          ras.df = as.data.frame(ras.df)
+          colnames(ras.df) = c("X", "Y", ye)
+          ras.df$ID = cellFromXY(ras.mask, ras.df[, c("X", "Y")])
           
-          if (exists("df.habitat"))
+          if (exists("ras.habitat"))
           {
-            ras = merge(ras, df.habitat, by.x = "ROWNAMES", by.y = "ID", all.x = TRUE)
+            ras.df$HAB = cellFromXY(ras.habitat, ras.df[, c("X", "Y")])
           } else
           {
-            ras$HAB = "ALL"
+            ras.df$HAB = "ALL"
           }
-          ras.split = split(ras, ras$HAB)
+          tabSoil = ras.df[, c("ID", "X", "Y", "HAB", ye)]
           
-          for (habi in hab_names)
-          {
-            if (habi == "ALL")
-            {
-              tmp = ras
-            } else
-            {
-              tmp = ras.split[[as.character(habi)]]
-            }
-            tmp = tmp[, -which(colnames(tmp) %in% c("ROWNAMES", "HAB")), drop = FALSE]
-            
-            if (nrow(tmp) > 0)
-            {
-              ## calculate the % of cover of each PPFG
-              distri[as.character(y), gp, as.character(habi)] = apply(tmp, 2, function(x) length(which(x[ind_1_mask] > 0)) / no_1_mask)
-              distriAbund[as.character(y), gp, as.character(habi)] = apply(tmp, 2, function(x) sum(x[ind_1_mask], na.rm = T))
-            }
-          }
+          fwrite(tabSoil
+                 , file = paste0(name.simulation
+                                 , "/RESULTS/POST_FATE_evolution_soil_PIXEL_"
+                                 , basename(dir.save)
+                                 , ".csv")
+                 , row.names = FALSE)
         }
-      } ## END loop on years
+      } else
+      {
+        tabSoil = NA
+      } ## END loop for soil
       cat("\n")
       
-      distri.melt = melt(distri)
-      colnames(distri.melt) = c("YEAR", "PFG", "HAB", "Abund")
-      distriAbund.melt = melt(distriAbund)
-      colnames(distriAbund.melt) = c("YEAR", "PFG", "HAB", "Abund")
-    
-
-    
+      
       ## ZIP the raster saved ------------------------------------------------------
       .zip_ALL(folder_name = dir.output.perPFG.allStrata, nb_cores= opt.no_CPU)
-      
-      write.csv(distri.melt
-                , file = paste0(name.simulation
-                                , "/RESULTS/POST_FATE_evolution_spaceOccupancy_"
-                                , basename(dir.save)
-                                , ".csv")
-                , row.names = TRUE)
-      
-      write.csv(distriAbund.melt
-                , file = paste0(name.simulation
-                                , "/RESULTS/POST_FATE_evolution_abundance_"
-                                , basename(dir.save)
-                                , ".csv")
-                , row.names = TRUE)
+      if (doLight) .zip_ALL(folder_name = dir.output.light, nb_cores = opt.no_CPU)
+      if (doSoil) .zip_ALL(folder_name = dir.output.soil, nb_cores = opt.no_CPU)
       
       cat("\n> Done!\n")
       cat("\n")
       
       message(paste0("\n The output files \n"
-                     , " > POST_FATE_evolution_spaceOccupancy_"
+                     , " > POST_FATE_evolution_abundance_PIXEL_"
                      , basename(dir.save)
                      , ".csv \n"
-                     , " > POST_FATE_evolution_abundance_"
-                     , basename(dir.save)
-                     , ".csv \n"
+                     , ifelse(doLight
+                            , paste0(" > POST_FATE_evolution_light_PIXEL_"
+                                     , basename(dir.save)
+                                     , ".csv \n")
+                            , "")
+                     , ifelse(doSoil
+                            , paste0(" > POST_FATE_evolution_soil_PIXEL_"
+                                     , basename(dir.save)
+                                     , ".csv \n")
+                            , "")
                      , "have been successfully created !\n"))
       
-      return(list(tab.spaceOccupancy = distri.melt
-                  , tab.abundance = distriAbund.melt
-                  , graph.spaceOccupancy = pp1
-                  , graph.abundance = pp2))
+      return(list(tab.abundance = tabAbund
+                  , tab.light = tabLight
+                  , tab.soil = tabSoil))
     } ## END loop on abs.simulParams
   names(res) = abs.simulParams
   

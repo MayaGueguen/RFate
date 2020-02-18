@@ -11,10 +11,17 @@
   
   ## ABUND folders, produced by FATE
   dir.output.perPFG.allStrata <<- paste0(name.simulation, "/RESULTS/", basename(dir.save), "/ABUND_perPFG_allStrata/")
-  .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/ABUND_perPFG_allStrata/"))
+  .testParam_existFolder(name.simulation, paste0("/RESULTS/", basename(dir.save), "/ABUND_perPFG_allStrata/"))
   
   dir.output.perPFG.perStrata <<- paste0(name.simulation, "/RESULTS/", basename(dir.save), "/ABUND_perPFG_perStrata/")
-  .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/ABUND_perPFG_perStrata/"))
+  .testParam_existFolder(name.simulation, paste0("/RESULTS/", basename(dir.save), "/ABUND_perPFG_perStrata/"))
+  
+  ## RESOURCES folders, produced by FATE
+  dir.output.light <<- paste0(name.simulation, "/RESULTS/", basename(dir.save), "/LIGHT/")
+  .testParam_existFolder(name.simulation, paste0("/RESULTS/", basename(dir.save), "/LIGHT/"))
+  
+  dir.output.soil <<- paste0(name.simulation, "/RESULTS/", basename(dir.save), "/SOIL/")
+  .testParam_existFolder(name.simulation, paste0("/RESULTS/", basename(dir.save), "/SOIL/"))
   
   ## ABUND REL folder, produced by POST_FATE.relativeAbund function
   dir.output.perPFG.allStrata.REL <<- paste0(name.simulation, "/RESULTS/", basename(dir.save), "/ABUND_REL_perPFG_allStrata/")
@@ -46,9 +53,9 @@
                                , is.num = FALSE)
   no_PFG <<- .getParam(params.lines = paste0(sub(basename(name.simulation), "", name.simulation)
                                              , file.globalParam)
-                     , flag = "NB_FG"
-                     , flag.split = " "
-                     , is.num = TRUE)
+                       , flag = "NB_FG"
+                       , flag.split = " "
+                       , is.num = TRUE)
   if (length(no_PFG) == 0 || .testParam_notNum(no_PFG))
   {
     stop(paste0("Missing data!\n The number of PFG (NB_FG) within ", file.globalParam, " does not contain any value"))
@@ -56,9 +63,9 @@
   
   ## Get PFG names ---------------------------------------------------------------
   PFG <<- .getParam(params.lines = abs.simulParam
-                  , flag = "PFG_LIFE_HISTORY_PARAMS"
-                  , flag.split = "^--.*--$"
-                  , is.num = FALSE)
+                    , flag = "PFG_LIFE_HISTORY_PARAMS"
+                    , flag.split = "^--.*--$"
+                    , is.num = FALSE)
   pattern = ".*SUCC_"
   PFG <<- sub(".txt", "", sub(pattern, "", basename(PFG)))
   if (length(PFG) != no_PFG)
@@ -66,6 +73,23 @@
     stop(paste0("Missing data!\n The number of PFG (NB_FG) within ", file.globalParam
                 , " is different from the number of PFG files contained in ", name.simulation, "/DATA/PFGS/SUCC/"))
   }
+  
+  ## Get MODULES ---------------------------------------------------------------
+  no_STRATA <<- .getParam(params.lines = paste0(sub(basename(name.simulation), "", name.simulation)
+                                                , file.globalParam)
+                          , flag = "NB_STRATUM"
+                          , flag.split = " "
+                          , is.num = TRUE)
+  doLight <<- .getParam(params.lines = paste0(sub(basename(name.simulation), "", name.simulation)
+                                              , file.globalParam)
+                        , flag = "DO_LIGHT_COMPETITION"
+                        , flag.split = " "
+                        , is.num = TRUE)
+  doSoil <<- .getParam(params.lines = paste0(sub(basename(name.simulation), "", name.simulation)
+                                             , file.globalParam)
+                       , flag = "DO_SOIL_COMPETITION"
+                       , flag.split = " "
+                       , is.num = TRUE)
 }
 
 #################################################################################################
@@ -73,9 +97,9 @@
 {
   ## Get raster mask -------------------------------------------------------------
   file.mask <<- .getParam(params.lines = abs.simulParam
-                        , flag = "MASK"
-                        , flag.split = "^--.*--$"
-                        , is.num = FALSE)
+                          , flag = "MASK"
+                          , flag.split = "^--.*--$"
+                          , is.num = FALSE)
   .testParam_existFile(paste0(sub(basename(name.simulation), "", name.simulation)
                               , file.mask))
   
