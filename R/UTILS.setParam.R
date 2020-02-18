@@ -17,6 +17,8 @@
 ##' type of parameter file
 ##' @param value a \code{string} or a \code{numeric} value (it can also be 
 ##' a \code{vector}) containing the new value of the parameter to be changed
+##' 
+##' @export
 ##'
 ## END OF HEADER ###############################################################
 

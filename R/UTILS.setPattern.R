@@ -18,6 +18,8 @@
 ##' find
 ##' @param pattern.toreplace a \code{string} that corresponds to the pattern to 
 ##' replace
+##' 
+##' @export
 ##'
 ## END OF HEADER ###############################################################
 

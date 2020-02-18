@@ -18,6 +18,8 @@
 ##' @param is.num default \code{TRUE}. If \code{TRUE}, the 
 ##' extracted parameter is considered to be \code{numeric} and 
 ##' will be processed as such
+##' 
+##' @export
 ##'
 ## END OF HEADER ###############################################################
 
