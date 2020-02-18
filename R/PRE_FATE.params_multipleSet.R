@@ -705,7 +705,10 @@ PRE_FATE.params_multipleSet = function(
       todo = function(x, y) { return(as.vector(PARAMS1[[y]][x]) + PARAMS.ecart[[y]][x]) }
       PARAMS.max = ff()
       
-      PARAMS.range = rbind(unlist(PARAMS.min), unlist(PARAMS.max))
+      PARAMS.range = rbind(as.integer(unlist(PARAMS.min))
+                           , as.integer(unlist(PARAMS.max)))
+      PARAMS.range = as.data.frame(PARAMS.range)
+      colnames(PARAMS.range) = names(PARAMS.min)
       rownames(PARAMS.range) = c("min", "max")
       if (length(which(PARAMS.range[1, ] < 1)) > 0)
       {
@@ -747,7 +750,8 @@ PRE_FATE.params_multipleSet = function(
       {
         stop(paste0("The global files have different fixed parameter values.\nPlease check."))
       } else if (length(TOKEEP1.simul) != length(TOKEEP2.simul) ||
-                 sum(sub(name.simulation.1, "", TOKEEP1.simul) == sub(name.simulation.2, "", TOKEEP2.simul)) != length(TOKEEP1.simul))
+                 sum(sub(name.simulation.1, "", TOKEEP1.simul) == sub(ifelse(scenario2, name.simulation.1, name.simulation.2)
+                                                                      , "", TOKEEP2.simul)) != length(TOKEEP1.simul))
       {
         stop(paste0("The simulation files have different fixed parameter values.\nPlease check."))
       } else
@@ -756,7 +760,10 @@ PRE_FATE.params_multipleSet = function(
         PARAMS.max = sapply(1:length(unlist(PARAMS1)), function(x) { max(c(unlist(PARAMS1)[x], unlist(PARAMS2)[x])) })
         names(PARAMS.min) = names(PARAMS.max) = names(unlist(PARAMS1))
         
-        PARAMS.range = rbind(unlist(PARAMS.min), unlist(PARAMS.max))
+        PARAMS.range = rbind(as.integer(unlist(PARAMS.min))
+                             , as.integer(unlist(PARAMS.max)))
+        PARAMS.range = as.data.frame(PARAMS.range)
+        colnames(PARAMS.range) = names(PARAMS.min)
         rownames(PARAMS.range) = c("min", "max")
         if (length(which(PARAMS.range[1, ] < 1)) > 0)
         {
@@ -785,8 +792,6 @@ PRE_FATE.params_multipleSet = function(
   TOKEEP.global = params.ranges$TOKEEP.global
   SUCC_LIGHT.simul = params.ranges$SUCC_LIGHT.simul
   params.ranges = params.ranges$PARAMS.range
-  params.ranges["min", ] = as.integer(params.ranges["min", ])
-  params.ranges["max", ] = as.integer(params.ranges["max", ])
   
   print(params.ranges)
   
@@ -820,7 +825,7 @@ PRE_FATE.params_multipleSet = function(
                                                , "max_abund_high"
                                                , "light_thresh_medium"
                                                , "light_thresh_low"))
-    params.ranges[, ind] = round(params.ranges[, ind] / 10000)
+    params.ranges[, ind] = round(params.ranges[, ind] / 1000)
     ind = which(colnames(params.ranges) %in% c("seeding_duration", "seeding_input"))
     params.ranges[, ind] = round(params.ranges[, ind] / 10)
     
@@ -863,8 +868,8 @@ PRE_FATE.params_multipleSet = function(
       ## Run Latin Hypercube Sampling
       set.seed(sample(1:1000000, 1)) ## needed everytime as lhs is also a random value generator.
       params.space = designLHD(x = NULL
-                               , lower = params.ranges[1, , drop = FALSE]
-                               , upper = params.ranges[2, , drop = FALSE]
+                               , lower = unlist(params.ranges[1, , drop = FALSE])
+                               , upper = unlist(params.ranges[2, , drop = FALSE])
                                , control = list(size = NB_SIMUL_LHS
                                                 , types = c("max_by_cohort" = "integer"
                                                             , "max_abund_low" = "integer"
@@ -890,7 +895,7 @@ PRE_FATE.params_multipleSet = function(
                                               , "max_abund_high"
                                               , "light_thresh_medium"
                                               , "light_thresh_low"))
-    if (length(ind) > 0) params.space[, ind] = params.space[, ind] * 10000
+    if (length(ind) > 0) params.space[, ind] = params.space[, ind] * 1000
     ind = which(colnames(params.space) %in% c("seeding_duration", "seeding_input"))
     if (length(ind) > 0) params.space[, ind] = params.space[, ind] * 10
   }
