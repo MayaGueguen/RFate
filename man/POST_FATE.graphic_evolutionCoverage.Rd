@@ -6,8 +6,8 @@
 and abundance through time for a \code{FATE-HD} simulation}
 \usage{
 POST_FATE.graphic_evolutionCoverage(name.simulation,
-  file.simulParam = NULL, no.years = 10, opt.abund_fixedScale = TRUE,
-  opt.ras_habitat = NULL, opt.no_CPU = 1, opt.doPlot = TRUE)
+  file.simulParam = NULL, opt.abund_fixedScale = TRUE,
+  opt.doPlot = TRUE)
 }
 \arguments{
 \item{name.simulation}{a \code{string} that corresponds to the main directory
@@ -17,19 +17,9 @@ or simulation name of the \code{FATE-HD} simulation}
 parameter file that will be contained into the \code{PARAM_SIMUL} folder
 of the \code{FATE-HD} simulation}
 
-\item{no.years}{an \code{integer} corresponding to the number of simulation
-years that will be used to extract PFG abundance maps}
-
 \item{opt.abund_fixedScale}{default \code{TRUE}. If \code{FALSE}, the
 ordinate scale will be adapted for each PFG for the graphical representation
 of the  evolution of abundances through time}
-
-\item{opt.ras_habitat}{default NULL (\emph{optional}). A \code{string} that
-corresponds to the file name of a raster mask, with an \code{integer} value
-within each pixel, corresponding to a specific habitat}
-
-\item{opt.no_CPU}{default 1 (\emph{optional}). The number of resources that 
-can be used to parallelize the \code{unzip/zip} of raster files}
 
 \item{opt.doPlot}{default TRUE (\emph{optional}). If TRUE, plot(s) will be
 processed, otherwise only the calculation and reorganization of outputs
@@ -54,12 +44,7 @@ of the abundance of each PFG.
 \details{
 This function allows one to obtain, for a specific \code{FATE-HD} simulation
 and a specific parameter file within this simulation, two preanalytical
-graphics. \cr
-
-For each PFG and each selected simulation year, raster maps are retrieved
-from the results folder \code{ABUND_perPFG_allStrata} and unzipped.
-Informations extracted lead to the production of two graphics before the
-maps are compressed again :
+graphics : 
 
 \itemize{
   \item{the evolution of \strong{space occupancy} of each Plant Functional
@@ -74,7 +59,10 @@ maps are compressed again :
   }
 }
 
-If a raster mask for habitat has been provided, the graphics will be also
+It requires that the \code{\link{POST_FATE.temporalEvolution}} has been run 
+and that the \code{POST_FATE.evolution_abundance_PIXEL_[...].csv} exists.
+
+If the information has been provided, the graphics will be also
 done per habitat.
 }
 \examples{
@@ -86,12 +74,10 @@ POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation"
                                     
 POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation"
                                     , file.simulParam = "Simul_parameters_V1.txt"
-                                    , no.years = 50
                                     , opt.no_CPU = 4)
                                     
 POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation"
                                     , file.simulParam = "Simul_parameters_V1.txt"
-                                    , no.years = 50
                                     , opt.abund_fixedScale = FALSE
                                     , opt.no_CPU = 1)
 }
@@ -100,7 +86,7 @@ POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation"
 
 }
 \seealso{
-\code{\link{POST_FATE.relativeAbund}}
+\code{\link{POST_FATE.temporalEvolution}}
 }
 \author{
 Maya Guéguen

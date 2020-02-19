@@ -16,16 +16,9 @@
 ##' @param file.simulParam a \code{string} that corresponds to the name of a
 ##' parameter file that will be contained into the \code{PARAM_SIMUL} folder
 ##' of the \code{FATE-HD} simulation
-##' @param no.years an \code{integer} corresponding to the number of simulation
-##' years that will be used to extract PFG abundance maps
 ##' @param opt.abund_fixedScale default \code{TRUE}. If \code{FALSE}, the
 ##' ordinate scale will be adapted for each PFG for the graphical representation
 ##' of the  evolution of abundances through time
-##' @param opt.ras_habitat default NULL (\emph{optional}). A \code{string} that
-##' corresponds to the file name of a raster mask, with an \code{integer} value
-##' within each pixel, corresponding to a specific habitat
-##' @param opt.no_CPU default 1 (\emph{optional}). The number of resources that 
-##' can be used to parallelize the \code{unzip/zip} of raster files
 ##' @param opt.doPlot default TRUE (\emph{optional}). If TRUE, plot(s) will be
 ##' processed, otherwise only the calculation and reorganization of outputs
 ##' will occur, be saved and returned.
@@ -34,12 +27,7 @@
 ##' 
 ##' This function allows one to obtain, for a specific \code{FATE-HD} simulation
 ##' and a specific parameter file within this simulation, two preanalytical
-##' graphics. \cr
-##' 
-##' For each PFG and each selected simulation year, raster maps are retrieved
-##' from the results folder \code{ABUND_perPFG_allStrata} and unzipped.
-##' Informations extracted lead to the production of two graphics before the
-##' maps are compressed again :
+##' graphics : 
 ##' 
 ##' \itemize{
 ##'   \item{the evolution of \strong{space occupancy} of each Plant Functional
@@ -54,7 +42,10 @@
 ##'   }
 ##' }
 ##' 
-##' If a raster mask for habitat has been provided, the graphics will be also
+##' It requires that the \code{\link{POST_FATE.temporalEvolution}} has been run 
+##' and that the \code{POST_FATE.evolution_abundance_PIXEL_[...].csv} exists.
+##' 
+##' If the information has been provided, the graphics will be also
 ##' done per habitat.
 ##' 
 ##' 
@@ -71,7 +62,7 @@
 ##' 
 ##' @keywords FATE, outputs, abundance through time
 ##' 
-##' @seealso \code{\link{POST_FATE.relativeAbund}}
+##' @seealso \code{\link{POST_FATE.temporalEvolution}}
 ##' 
 ##' @examples
 ##' 
@@ -82,12 +73,10 @@
 ##'                                     
 ##' POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation"
 ##'                                     , file.simulParam = "Simul_parameters_V1.txt"
-##'                                     , no.years = 50
 ##'                                     , opt.no_CPU = 4)
 ##'                                     
 ##' POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation"
 ##'                                     , file.simulParam = "Simul_parameters_V1.txt"
-##'                                     , no.years = 50
 ##'                                     , opt.abund_fixedScale = FALSE
 ##'                                     , opt.no_CPU = 1)
 ##' }
@@ -97,8 +86,7 @@
 ##' @export
 ##' 
 ##' @importFrom utils write.csv
-##' @importFrom raster raster stack as.data.frame
-##' @importFrom reshape2 melt
+##' @importFrom data.table fread
 ##' 
 ##' @importFrom ggplot2 ggplot aes aes_string ggsave
 ##' geom_line geom_point geom_hline geom_vline geom_label geom_errorbar geom_path
@@ -114,10 +102,7 @@
 POST_FATE.graphic_evolutionCoverage = function(
   name.simulation
   , file.simulParam = NULL
-  , no.years = 10
   , opt.abund_fixedScale = TRUE
-  , opt.ras_habitat = NULL
-  , opt.no_CPU = 1
   , opt.doPlot = TRUE
 ){
   
@@ -139,14 +124,6 @@ POST_FATE.graphic_evolutionCoverage = function(
     file.simulParam = basename(file.simulParam)
     abs.simulParams = paste0(name.simulation, "/PARAM_SIMUL/", file.simulParam)
     .testParam_existFile(abs.simulParams)
-  }
-  if (!.testParam_notDef(opt.ras_habitat))
-  {
-    if (nchar(opt.ras_habitat) > 0)
-    {
-      .testParam_existFile(opt.ras_habitat)
-      ras.habitat = raster(opt.ras_habitat)
-    }
   }
   
   #################################################################################################
@@ -172,112 +149,76 @@ POST_FATE.graphic_evolutionCoverage = function(
     .getGraphics_mask(name.simulation  = name.simulation
                       , abs.simulParam = abs.simulParam)
     
-    ## Get habitat information -----------------------------------------------------
-    no_hab = 1
-    hab_names = "ALL"
-    if (exists("ras.habitat"))
-    {
-      ras.habitat = ras.habitat * ras.mask
-      df.habitat = data.frame(ID = cellFromXY(ras.habitat, xy.1))
-      df.habitat$HAB = ras.habitat[df.habitat$ID]
-      hab_names = c(hab_names, unique(df.habitat$HAB))
-      hab_names = hab_names[which(!is.na(hab_names))]
-      no_hab = length(hab_names)
-    }
+    ## Get the abundance table -----------------------------------------------------
+    file.abundance = paste0(name.simulation
+                            , "/RESULTS/POST_FATE_evolution_abundance_PIXEL_"
+                            , basename(dir.save)
+                            , ".csv")
+    .testParam_existFile(file.abundance)
+    tab.abundance = fread(file.abundance)
+    tab.abundance = as.data.frame(tab.abundance)
     
-    ## Get list of arrays and extract years of simulation --------------------------
-    raster.perPFG.allStrata = grep("Abund_", list.files(dir.output.perPFG.allStrata), value = TRUE)
-    if (length(raster.perPFG.allStrata) == 0)
-    {
-      stop(paste0("Missing data!\n The folder ", dir.output.perPFG.allStrata, " does not contain adequate files"))
-    }
-    years = sapply(sub("Abund_YEAR_", "", raster.perPFG.allStrata)
-                   , function(x) strsplit(as.character(x), "_")[[1]][1])
-    years = sort(unique(as.numeric(years)))
-    years = years[round(seq(1, length(years), length.out = min(no.years, length(years))))]
-    no_years = length(years)
+    years = colnames(tab.abundance)
+    years = years[which(!(years %in% c("PFG", "ID", "X", "Y", "HAB")))]
+    years = as.numeric(years)
     
-    ## UNZIP the raster saved ------------------------------------------------------
-    .unzip_ALL(folder_name = dir.output.perPFG.allStrata, nb_cores = opt.no_CPU)
-    
+    hab_names = unique(tab.abundance$HAB)
+    no_hab = length(hab_names)
     
     ## get the data inside the rasters ---------------------------------------------
-    distri = distriAbund = array(0,
-                                 dim = c(no_years, no_PFG, no_hab),
-                                 dimnames = list(years, PFG, hab_names))
-    cat("\n GETTING COVERAGE for year")
-    for (y in years)
-    {
-      cat(" ", y)
-      file_name = paste0(dir.output.perPFG.allStrata,
-                         "Abund_YEAR_",
-                         y,
-                         "_",
-                         PFG,
-                         "_STRATA_all")
-      if (length(which(file.exists(paste0(file_name, ".tif")))) > 0)
+    cat("\n GETTING COVERAGE and ABUNDANCE over the whole area...")
+    
+    tab.abundance.split = split(tab.abundance, list(tab.abundance$PFG, tab.abundance$HAB))
+    distriAbund.melt = foreach(i = 1:length(tab.abundance.split), .combine = "rbind") %do%
       {
-        file_name = paste0(file_name, ".tif")
-      } else if (length(which(file.exists(paste0(file_name, ".img")))) > 0)
-      {
-        file_name = paste0(file_name, ".img")
-      } else if (length(which(file.exists(paste0(file_name, ".asc")))) > 0)
-      {
-        file_name = paste0(file_name, ".asc")
-      }
-      if (length(which(file.exists(file_name))) == 0)
-      {
-        stop(paste0("Missing data!\n The names of PFG extracted from files within ", name.simulation, "/DATA/PFGS/SUCC/ : "
-                    , paste0("\n", PFG, collapse = "\n")
-                    , "\n is different from the files contained in ", dir.output.perPFG.allStrata
-                    , "\n They should be : "
-                    , paste0("\n", file_name, collapse = "\n")))
-      }
-      gp = PFG[which(file.exists(file_name))]
-      file_name = file_name[which(file.exists(file_name))]
-      
-      if (length(file_name) > 0)
-      {
-        ras = stack(file_name) * ras.mask
-        ras = as.data.frame(ras)
-        ras = na.exclude(ras)
-        ras$ROWNAMES = rownames(ras)
+        pfg = strsplit(names(tab.abundance.split)[i], "[.]")[[1]][1]
+        hab = strsplit(names(tab.abundance.split)[i], "[.]")[[1]][2]
+        tab = tab.abundance.split[[i]]
+        tab = tab[, as.character(years)]
         
-        if (exists("df.habitat"))
-        {
-          ras = merge(ras, df.habitat, by.x = "ROWNAMES", by.y = "ID", all.x = TRUE)
-        } else
-        {
-          ras$HAB = "ALL"
-        }
-        ras.split = split(ras, ras$HAB)
-        
-        for (habi in hab_names)
-        {
-          if (habi == "ALL")
-          {
-            tmp = ras
-          } else
-          {
-            tmp = ras.split[[as.character(habi)]]
-          }
-          tmp = tmp[, -which(colnames(tmp) %in% c("ROWNAMES", "HAB")), drop = FALSE]
-          
-          if (nrow(tmp) > 0)
-          {
-            ## calculate the % of cover of each PPFG
-            distri[as.character(y), gp, as.character(habi)] = apply(tmp, 2, function(x) length(which(x[ind_1_mask] > 0)) / no_1_mask)
-            distriAbund[as.character(y), gp, as.character(habi)] = apply(tmp, 2, function(x) sum(x[ind_1_mask], na.rm = T))
-          }
-        }
+        return(data.frame(PFG = pfg, HAB = hab, YEAR = years
+                          , Abund = colSums(tab, na.rm = TRUE)
+                          , stringsAsFactors = FALSE))
       }
-    } ## END loop on years
+    
+    distri.melt = foreach(i = 1:length(tab.abundance.split), .combine = "rbind") %do%
+      {
+        pfg = strsplit(names(tab.abundance.split)[i], "[.]")[[1]][1]
+        hab = strsplit(names(tab.abundance.split)[i], "[.]")[[1]][2]
+        tab = tab.abundance.split[[i]]
+        tab = tab[, as.character(years)]
+        tab = as.matrix(tab)
+        tab = apply(tab, 2, function(x) length(which(x > 0)))
+        
+        return(data.frame(PFG = pfg, HAB = hab, YEAR = years
+                          , Abund = tab / no_1_mask
+                          , stringsAsFactors = FALSE))
+      }
     cat("\n")
     
-    distri.melt = melt(distri)
-    colnames(distri.melt) = c("YEAR", "PFG", "HAB", "Abund")
-    distriAbund.melt = melt(distriAbund)
-    colnames(distriAbund.melt) = c("YEAR", "PFG", "HAB", "Abund")
+    write.csv(distri.melt
+              , file = paste0(name.simulation
+                              , "/RESULTS/POST_FATE_evolution_spaceOccupancy_"
+                              , basename(dir.save)
+                              , ".csv")
+              , row.names = TRUE)
+    
+    write.csv(distriAbund.melt
+              , file = paste0(name.simulation
+                              , "/RESULTS/POST_FATE_evolution_abundance_"
+                              , basename(dir.save)
+                              , ".csv")
+              , row.names = TRUE)
+    
+    message(paste0("\n The output files \n"
+                   , " > POST_FATE_evolution_spaceOccupancy_"
+                   , basename(dir.save)
+                   , ".csv \n"
+                   , " > POST_FATE_evolution_abundance_"
+                   , basename(dir.save)
+                   , ".csv \n"
+                   , "have been successfully created !\n"))
+
     
     ## produce the plot ------------------------------------------------------------
     if (opt.doPlot)
@@ -311,34 +252,9 @@ POST_FATE.graphic_evolutionCoverage = function(
              , plot = pp2, width = 10, height = 8)
     } ## END opt.doPlot
     
-    ## ZIP the raster saved ------------------------------------------------------
-    .zip_ALL(folder_name = dir.output.perPFG.allStrata, nb_cores= opt.no_CPU)
-    
-    write.csv(distri.melt
-              , file = paste0(name.simulation
-                              , "/RESULTS/POST_FATE_evolution_spaceOccupancy_"
-                              , basename(dir.save)
-                              , ".csv")
-              , row.names = TRUE)
-    
-    write.csv(distriAbund.melt
-              , file = paste0(name.simulation
-                              , "/RESULTS/POST_FATE_evolution_abundance_"
-                              , basename(dir.save)
-                              , ".csv")
-              , row.names = TRUE)
     
     cat("\n> Done!\n")
     cat("\n")
-    
-    message(paste0("\n The output files \n"
-                   , " > POST_FATE_evolution_spaceOccupancy_"
-                   , basename(dir.save)
-                   , ".csv \n"
-                   , " > POST_FATE_evolution_abundance_"
-                   , basename(dir.save)
-                   , ".csv \n"
-                   , "have been successfully created !\n"))
     
     return(list(tab.spaceOccupancy = distri.melt
                 , tab.abundance = distriAbund.melt

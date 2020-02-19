@@ -418,16 +418,21 @@ POST_FATE.graphics = function(
     }
     
     cat("\n ############## GET EVOLUTION PLOTS through time ############## \n")
+    cat("\n >> POST_FATE.temporalEvolution...")
+    cat("\n")
+    POST_FATE.temporalEvolution(name.simulation = name.simulation
+                                , file.simulParam = abs.simulParam
+                                , no.years = no.years
+                                , opt.ras_habitat = opt.ras_habitat
+                                , opt.no_CPU = opt.no_CPU)
+    
     if (opt.doFunc.evolutionCoverage)
     {
       cat("\n >> POST_FATE.graphic_evolutionCoverage...")
       cat("\n")
       res.evolutionCoverage = POST_FATE.graphic_evolutionCoverage(name.simulation = name.simulation
                                                                   , file.simulParam = abs.simulParam
-                                                                  , no.years = no.years
                                                                   , opt.abund_fixedScale = opt.abund_fixedScale
-                                                                  , opt.ras_habitat = opt.ras_habitat
-                                                                  , opt.no_CPU = opt.no_CPU
                                                                   , opt.doPlot = opt.doPlot)
     }
     if (opt.doFunc.evolutionAbund_pixels)

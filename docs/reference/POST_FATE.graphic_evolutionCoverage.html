@@ -167,8 +167,8 @@ of the abundance of each PFG.</p>
     </div>
 
     <pre class="usage"><span class='fu'>POST_FATE.graphic_evolutionCoverage</span>(<span class='no'>name.simulation</span>,
-  <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>no.years</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>opt.abund_fixedScale</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>opt.ras_habitat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>opt.doPlot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>opt.abund_fixedScale</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>opt.doPlot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -185,26 +185,10 @@ parameter file that will be contained into the <code>PARAM_SIMUL</code> folder
 of the <code>FATE-HD</code> simulation</p></td>
     </tr>
     <tr>
-      <th>no.years</th>
-      <td><p>an <code>integer</code> corresponding to the number of simulation
-years that will be used to extract PFG abundance maps</p></td>
-    </tr>
-    <tr>
       <th>opt.abund_fixedScale</th>
       <td><p>default <code>TRUE</code>. If <code>FALSE</code>, the
 ordinate scale will be adapted for each PFG for the graphical representation
 of the  evolution of abundances through time</p></td>
-    </tr>
-    <tr>
-      <th>opt.ras_habitat</th>
-      <td><p>default NULL (<em>optional</em>). A <code>string</code> that
-corresponds to the file name of a raster mask, with an <code>integer</code> value
-within each pixel, corresponding to a specific habitat</p></td>
-    </tr>
-    <tr>
-      <th>opt.no_CPU</th>
-      <td><p>default 1 (<em>optional</em>). The number of resources that 
-can be used to parallelize the <code>unzip/zip</code> of raster files</p></td>
     </tr>
     <tr>
       <th>opt.doPlot</th>
@@ -229,11 +213,7 @@ will occur, be saved and returned.</p></td>
 
     <p>This function allows one to obtain, for a specific <code>FATE-HD</code> simulation
 and a specific parameter file within this simulation, two preanalytical
-graphics. <br /></p>
-<p>For each PFG and each selected simulation year, raster maps are retrieved
-from the results folder <code>ABUND_perPFG_allStrata</code> and unzipped.
-Informations extracted lead to the production of two graphics before the
-maps are compressed again :</p>
+graphics :</p>
 <ul>
 <li><p>the evolution of <strong>space occupancy</strong> of each Plant Functional
   Group through simulation time, with <em>space occupancy</em> representing
@@ -245,11 +225,13 @@ maps are compressed again :</p>
   <em>arbitrary unit</em>)</p></li>
 </ul>
 
-<p>If a raster mask for habitat has been provided, the graphics will be also
+<p>It requires that the <code><a href='POST_FATE.temporalEvolution.html'>POST_FATE.temporalEvolution</a></code> has been run 
+and that the <code>POST_FATE.evolution_abundance_PIXEL_[...].csv</code> exists.</p>
+<p>If the information has been provided, the graphics will be also
 done per habitat.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='POST_FATE.relativeAbund.html'>POST_FATE.relativeAbund</a></code></p></div>
+    <div class='dont-index'><p><code><a href='POST_FATE.temporalEvolution.html'>POST_FATE.temporalEvolution</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples">
@@ -260,12 +242,10 @@ done per habitat.</p>
 
 <span class='fu'>POST_FATE.graphic_evolutionCoverage</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
                                     , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
-                                    , <span class='kw'>no.years</span> <span class='kw'>=</span> <span class='fl'>50</span>
                                     , <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>4</span>)
 
 <span class='fu'>POST_FATE.graphic_evolutionCoverage</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
                                     , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
-                                    , <span class='kw'>no.years</span> <span class='kw'>=</span> <span class='fl'>50</span>
                                     , <span class='kw'>opt.abund_fixedScale</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
                                     , <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 }</pre>
