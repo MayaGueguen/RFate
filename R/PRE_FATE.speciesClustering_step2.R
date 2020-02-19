@@ -230,33 +230,36 @@ PRE_FATE.speciesClustering_step2 = function(clust.dendograms
   ## is in the distribution of mean distances of every species to other species
   
   pfg = NULL
-  determ = foreach(pfg = PFG_names) %do% {
-    ## get the SPECIES names
-    sp = names(clust.groups)[which(clust.groups == pfg)]
-    
-    if (length(sp) > 1)
+  determ = foreach(pfg = PFG_names) %do%
     {
-      ## get the GROUP information
-      group = strsplit(pfg, "[.]")[[1]][1]
-      no.cluster = strsplit(pfg, "[.]")[[1]][2]
-      ## get the DISTANCE information
-      mat = as.matrix(mat.species.DIST[[group]])[sp, sp]
+      ## get the SPECIES names
+      sp = names(clust.groups)[which(clust.groups == pfg)]
       
-      ## compute for each species its mean distance to other species
-      sp.mean.dist = apply(mat, 1, mean, na.rm = T)
-      
-      return(data.frame(pfg, group, no.cluster, sp, ID = 1:length(sp), sp.mean.dist,
-                        allSp.mean = mean(sp.mean.dist),
-                        allSp.min = mean(sp.mean.dist) - 1.64 * sd(sp.mean.dist),
-                        allSp.max = mean(sp.mean.dist) + 1.64 * sd(sp.mean.dist)))
-    } else if (length(sp) == 1)
-    {
-      return(data.frame(pfg, group, no.cluster, sp, ID = 1, sp.mean.dist = NA,
-                        allSp.mean = NA,
-                        allSp.min = NA,
-                        allSp.max = NA))
+      if (length(sp) > 1)
+      {
+        ## get the GROUP information
+        group = strsplit(pfg, "[.]")[[1]][1]
+        no.cluster = strsplit(pfg, "[.]")[[1]][2]
+        ## get the DISTANCE information
+        mat = as.matrix(mat.species.DIST[[group]])[sp, sp]
+        
+        ## compute for each species its mean distance to other species
+        sp.mean.dist = apply(mat, 1, mean, na.rm = T)
+        
+        return(data.frame(pfg, group, no.cluster, sp, ID = 1:length(sp), sp.mean.dist
+                          , allSp.mean = mean(sp.mean.dist)
+                          , allSp.min = mean(sp.mean.dist) - 1.64 * sd(sp.mean.dist)
+                          , allSp.max = mean(sp.mean.dist) + 1.64 * sd(sp.mean.dist)
+                          , stringsAsFactors = FALSE))
+      } else if (length(sp) == 1)
+      {
+        return(data.frame(pfg, group, no.cluster, sp, ID = 1, sp.mean.dist = NA
+                          , allSp.mean = NA
+                          , allSp.min = NA
+                          , allSp.max = NA
+                          , stringsAsFactors = FALSE))
+      }
     }
-  }
   determ = do.call(rbind, determ)
   if (length(determ) == 0 || is.null(determ))
   {
