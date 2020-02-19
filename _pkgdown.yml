@@ -36,7 +36,7 @@ navbar:
     download:
       text: 'Download Current Version'
       icon: fa-rocket fa-lg
-      href: archive/RFate_0.0.9.9000.tar.gz
+      href: archive/RFate_0.1.0.9000.tar.gz
     github:
       icon: fa-github fa-lg
       href: https://github.com/MayaGueguen/RFate.git
@@ -82,6 +82,7 @@ reference:
     desc:  Evalute predicted maps, produce summary and dynamic graphics.  <br/> ..
     contents:
       - "POST_FATE.graphics"
+      - "POST_FATE.temporalEvolution"
       - "POST_FATE.relativeAbund"
       - "POST_FATE.graphic_validationStatistics"
       - "POST_FATE.graphic_evolutionCoverage"
