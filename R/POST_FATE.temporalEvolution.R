@@ -3,7 +3,7 @@
 ##' to asses the quality of the model 
 ##'  \cr for one (or several) specific year of a \code{FATE-HD} simulation
 ##' 
-##' @name POST_FATE.temporalAbund
+##' @name POST_FATE.temporalEvolution
 ##'
 ##' @author Maya Guéguen
 ##' 
@@ -88,24 +88,20 @@
 ##' }
 ##' 
 ##' 
-##' @keywords FATE, outputs, binary, area under curve, sensitivity, specificity,
-##' true skill statistic
+##' @keywords FATE, outputs, ...
 ##' 
-##' @seealso \code{\link{POST_FATE.relativeAbund}}
+##' @seealso \code{\link{...}}
 ##' 
 ##' @examples
 ##' 
 ##' \dontrun{                      
-##' POST_FATE.temporalAbund(name.simulation = "FATE_simulation"
+##' POST_FATE.temporalEvolution(name.simulation = "FATE_simulation"
 ##'                                        , file.simulParam = "Simul_parameters_V1.txt"
-##'                                        , year = 850
-##'                                        , mat.PFG.obs = 
 ##'                                        , opt.no_CPU = 1)
 ##'                                     
-##' POST_FATE.temporalAbund(name.simulation = "FATE_simulation"
+##' POST_FATE.temporalEvolution(name.simulation = "FATE_simulation"
 ##'                                        , file.simulParam = "Simul_parameters_V1.txt"
-##'                                        , year = c(850, 950)
-##'                                        , mat.PFG.obs = 
+##'                                        , no.years = 50
 ##'                                        , opt.no_CPU = 1)
 ##' }
 ##'                                                         
@@ -207,55 +203,33 @@
 ##' {
 ##'   ind = grep(pfg, names(PNE_RESULTS$abund_str.equilibrium))
 ##'   stk = PNE_RESULTS$abund_str.equilibrium[[ind]]
-##'   writeRaster(stk
-##'               , filename = paste0(dir2, "/Abund_YEAR_800_", pfg, "_STRATA_"
-##'                                   , sub(".*str", "", names(stk)), ".tif")
-##'               , overwrite = TRUE
-##'               , bylayer = TRUE)
 ##'   ras = sum(stk)
 ##'   writeRaster(ras
 ##'               , filename = paste0(dir1, "/Abund_YEAR_800_", pfg, "_STRATA_all.tif")
 ##'               , overwrite = TRUE)
 ##' }
 ##' 
-##' ## Create relative abundance maps
-##' POST_FATE.relativeAbund(name.simulation = "FATE_PNE"
-##'                         , file.simulParam = "Simul_parameters_V1.txt"
-##'                         , year = 800
-##'                         , opt.no_CPU = 1)
 ##' 
-##' ## Create binary maps
-##' library(reshape2)
-##' tab = PNE_PFG$PFG.observations
-##' tab = melt(tab, id.vars = c("sites", "X", "Y"))
-##' colnames(tab) = c("sites", "X", "Y", "PFG", "obs")
-##' tab = tab[, c("PFG", "X", "Y", "obs")]
-##' tab = tab[which(tab$PFG != "Others"), ]
-##' tab$PFG = sapply(tab$PFG, function(x) names(PFG.short)[which(PFG.short == x)])
-##' tab$obs = ifelse(tab$obs > 0, 1, 0)
-##' str(tab)
+##' ## Create temporal table
 ##' 
-##' validStats = POST_FATE.temporalAbund(name.simulation = "FATE_PNE"
+##' tempEvol = POST_FATE.temporalEvolution(name.simulation = "FATE_PNE"
 ##'                                                     , file.simulParam = "Simul_parameters_V1.txt"
-##'                                                     , year = 800
-##'                                                     , mat.PFG.obs = tab
 ##'                                                     , opt.no_CPU = 1)
 ##' 
-##' str(validStats$`FATE_PNE/PARAM_SIMUL/Simul_parameters_V1.txt`$tab$`800`)
-##' plot(validStats$`FATE_PNE/PARAM_SIMUL/Simul_parameters_V1.txt`$plot$`800`$ALL)
+##' str(tempEvol$`FATE_PNE/PARAM_SIMUL/Simul_parameters_V1.txt`)
 ##'                                                                          
 ##' 
 ##' @export
 ##' 
 ##' @importFrom foreach foreach
-##' @importFrom data.table fwrite
+##' @importFrom data.table rbindlist fwrite
 ##' @importFrom raster raster stack as.data.frame cellFromXY
 ##'
 ##'
 ## END OF HEADER ###############################################################
 
 
-POST_FATE.temporalAbund = function(
+POST_FATE.temporalEvolution = function(
   name.simulation
   , file.simulParam = NULL
   , no.years = 10
