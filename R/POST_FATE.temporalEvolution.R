@@ -1,90 +1,94 @@
 ### HEADER #####################################################################
-##' @title Create a graphical representation of several statistics for each PFG 
-##' to asses the quality of the model 
-##'  \cr for one (or several) specific year of a \code{FATE-HD} simulation
+##' @title Create tables of pixel temporal evolution of PFG abundances, and 
+##' light and soil resources (if activated) for a \code{FATE-HD} simulation
 ##' 
 ##' @name POST_FATE.temporalEvolution
 ##'
 ##' @author Maya Guéguen
 ##' 
-##' @description This script is designed to produce a graphical representation
-##' of several statistics (sensitivity, specificity, TSS, AUC) for quality
-##' assessment for one (or several) specific \code{FATE-HD} simulation year.
+##' @description This script is designed to produce from 1 to 3 tables 
+##' containing pixel temporal evolution of PFG abundances as well as light and 
+##' soil resources if those modules were activated in a \code{FATE-HD} 
+##' simulation.
+##' 
 ##'              
 ##' @param name.simulation a \code{string} that corresponds to the main directory
 ##' or simulation name of the \code{FATE-HD} simulation
 ##' @param file.simulParam a \code{string} that corresponds to the name of a
 ##' parameter file that will be contained into the \code{PARAM_SIMUL} folder
 ##' of the \code{FATE-HD} simulation
-##' @param year an \code{integer} corresponding to the simulation year(s) that 
-##' will be used to extract PFG binary maps
-##' @param mat.PFG.obs a \code{data.frame} with 4 columns : PFG, X, Y, obs
+##' @param no.years an \code{integer} corresponding to the number of simulation
+##' years that will be used to extract PFG abundance / light / soil maps
 ##' @param opt.ras_habitat default NULL (\emph{optional}). A \code{string} that
 ##' corresponds to the file name of a raster mask, with an \code{integer} value
 ##' within each pixel, corresponding to a specific habitat
 ##' @param opt.no_CPU default 1 (\emph{optional}). The number of resources that 
 ##' can be used to parallelize the \code{unzip/zip} of raster files
-##' @param opt.doPlot default TRUE (\emph{optional}). If TRUE, plot(s) will be
-##' processed, otherwise only the calculation and reorganization of outputs
-##' will occur, be saved and returned.
 ##' 
 ##' 
 ##' @details 
 ##' 
 ##' This function allows one to obtain, for a specific \code{FATE-HD} simulation
-##' and a specific parameter file within this simulation, one preanalytical
-##' graphic. \cr
+##' and a specific parameter file within this simulation, one to three 
+##' preanalytical tables that can then be used to create graphics. \cr
 ##' 
 ##' For each PFG and each selected simulation year, raster maps are retrieved
-##' from the results folder \code{ABUND_REL_perPFG_allStrata} and unzipped.
-##' Informations extracted lead to the production of presence/absence maps and 
-##' one graphic before the maps are compressed again :
+##' from the results folder \code{ABUND_perPFG_allStrata} and unzipped.
+##' Informations extracted lead to the production of one table before the maps 
+##' are compressed again :
 ##' 
 ##' \itemize{
-##'   \item{the value of \strong{several statistics for the predictive quality
-##'   of the model for each Plant Functional Group} and for each selected
-##'   simulation year(s)
+##'   \item{the value of \strong{abundance for each Plant Functional Group} for 
+##'   each selected simulation year(s) in every pixel in which the PFG is present 
+##'   for at least one of the selected simulation year(s)
 ##'   }
 ##' }
 ##' 
-##' Observation records (presences and absences) are required for each PFG 
-##' within the \code{mat.PFG.obs} object :
+##' IF the \code{LIGHT} module was activated, for each height stratum and each 
+##' selected simulation year, raster maps are retrieved from the results folder 
+##' \code{LIGHT} and unzipped.
+##' Informations extracted lead to the production of one table before the maps 
+##' are compressed again :
 ##' 
-##' \describe{
-##'   \item{\code{PFG}}{the concerned Plant Functional Group}
-##'   \item{\code{X} and \code{Y}}{the coordinates of each observations,
-##'   matching with the projection of the mask of \code{name.simulation}}
-##'   \item{\code{obs}}{either 0 or 1 to indicate presences or absences}
+##' \itemize{
+##'   \item{the value of \strong{light resources for each height stratum} for 
+##'   each selected simulation year(s) in every pixel
+##'   }
 ##' }
 ##' 
-##' If a raster mask for habitat has been provided, the graphics will be also
-##' done per habitat.
+##' IF the \code{SOIL} module was activated, for each selected simulation year, 
+##' raster maps are retrieved from the results folder \code{SOIL} and unzipped.
+##' Informations extracted lead to the production of one table before the maps 
+##' are compressed again :
 ##' 
-##' 
-##' 
-##' @return A \code{data.frame} with the following columns :
-##' \describe{
-##'   \item{\code{PFG}}{the concerned Plant Functional Group}
-##'   \item{\code{AUC.sd}}{standard deviation of the AUC values}
-##'   \item{\code{sensitivity.sd}}{standard deviation of the sensitivity values}
-##'   \item{\code{specificity.sd}}{standard deviation of the specificity values}
-##'   \item{\code{variable}}{name of the calculated statistic among 'sensitivity',
-##'   'specificity', 'TSS' and 'AUC'}
-##'   \item{\code{value}}{value of the corresponding statistic}
+##' \itemize{
+##'   \item{the value of \strong{soil resources} for each selected simulation 
+##'   year(s) in every pixel
+##'   }
 ##' }
 ##' 
-##' Two folders are created :
+##' If a raster mask for habitat has been provided, the tables will also 
+##' contain information about the pixel habitat.
+##' 
+##' 
+##' 
+##' @return A \code{list} containing three \code{data.frame} object with the 
+##' following columns :
 ##' \describe{
-##'   \item{\file{BIN_perPFG \cr_allStrata}}{containing presence / absence  
-##'   raster maps for each PFG across all strata}
-##'   \item{\file{BIN_perPFG \cr_perStrata}}{containing presence / absence  
-##'   raster maps for each PFG for each stratum}
+##'   \item{\code{PFG}}{the concerned Plant Functional Group (for abundance)}
+##'   \item{\code{STRATUM}}{the concerned height stratum (for LIGHT)}
+##'   \item{\code{ID}}{the concerned pixel}
+##'   \item{\code{X, Y}}{the coordinates of the concerned pixel}
+##'   \item{\code{HAB}}{the habitat of the concerned pixel}
+##'   \item{\emph{years}}{values of the corresponding object for each 
+##'   selected simulation year(s)}
 ##' }
 ##' 
-##' One \code{POST_FATE_[...].pdf} file is created : 
+##' One to three \code{POST_FATE_evolution_[...].csv} files are created : 
 ##' \describe{
-##'   \item{\file{GRAPHIC_C \cr validationStatistics}}{to assess the modeling 
-##'   quality of each PFG based on given observations within the studied area}
+##'   \item{\file{abundance_PIXEL}}{}
+##'   \item{\file{light_PIXEL}}{\emph{if LIGHT module was activated}}
+##'   \item{\file{soil_PIXEL}}{\emph{if SOIL module was activated}}
 ##' }
 ##' 
 ##' 
