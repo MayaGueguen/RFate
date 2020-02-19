@@ -86,6 +86,7 @@ reference:
       - "POST_FATE.graphic_validationStatistics"
       - "POST_FATE.temporalEvolution"
       - "POST_FATE.graphic_evolutionCoverage"
+      - "POST_FATE.graphic_evolutionPixels"
       - "POST_FATE.graphic_evolutionAbund_pixels"
       - "POST_FATE.graphic_evolutionLight_pixels"
       - "POST_FATE.graphic_evolutionSoil_pixels"

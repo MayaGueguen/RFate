@@ -165,7 +165,7 @@ POST_FATE.graphic_evolutionCoverage = function(
     hab_names = unique(tab.abundance$HAB)
     no_hab = length(hab_names)
     
-    ## get the data inside the rasters ---------------------------------------------
+    ## Transform the data inside the table -----------------------------------------
     cat("\n GETTING COVERAGE and ABUNDANCE over the whole area...")
     
     tab.abundance.split = split(tab.abundance, list(tab.abundance$PFG, tab.abundance$HAB))
