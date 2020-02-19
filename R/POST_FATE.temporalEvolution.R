@@ -228,6 +228,7 @@
 ##' @importFrom foreach foreach
 ##' @importFrom data.table rbindlist fwrite
 ##' @importFrom raster raster stack as.data.frame cellFromXY
+##' @importFrom doParallel registerDoParallel
 ##'
 ##'
 ## END OF HEADER ###############################################################
@@ -317,7 +318,11 @@ POST_FATE.temporalEvolution = function(
       
       ## get the data inside the rasters ---------------------------------------------
       cat("\n GETTING ABUNDANCE for pfg")
-      tabAbund.list = foreach (pfg = PFG) %do%
+      if (opt.no_CPU > 1)
+      {
+        registerDoParallel(cores = opt.no_CPU)
+      }
+      tabAbund.list = foreach (pfg = PFG) %dopar%
         {
           cat(" ", pfg)
           file_name = paste0(dir.output.perPFG.allStrata,
@@ -387,7 +392,11 @@ POST_FATE.temporalEvolution = function(
       if (doLight)
       {
         cat("\n GETTING LIGHT for stratum")
-        tabLight.list = foreach (str = c(1:no_STRATA)-1) %do%
+        if (opt.no_CPU > 1)
+        {
+          registerDoParallel(cores = opt.no_CPU)
+        }
+        tabLight.list = foreach (str = c(1:no_STRATA)-1) %dopar%
           {
             cat(" ", str)
             file_name = paste0(dir.output.light,
