@@ -5,37 +5,43 @@
 ##'
 ##' @author Maya Guéguen
 ##' 
-##' @description This script is designed to select dominant species from
-##'              abundance records, and habitat if the information is available.
+##' @description This script is designed to select dominant species from 
+##' abundance records, and habitat if the information is available.
 ##'              
-##' @param mat.site.species.abund a \code{data.frame} with at least 3 columns :
-##' sites ID, species ID, abundance values as frequence values(e.g. Braun Blanquet)
-##' with \code{NA} when no information, habitat ID (optional)
+##' @param mat.site.species.abund a \code{data.frame} with at least 3 columns : 
+##' sites ID, species ID, abundance values as frequence values (e.g. Braun 
+##' Blanquet) with \code{NA} when no information, habitat ID (optional)
 ##' @param sites a \code{vector} with sites ID
 ##' @param species a \code{vector} with species ID
-##' @param abund a \code{vector} with abundance values (e.g. Braun Blanquet) with \code{NA}
-##' when no information
+##' @param abund a \code{vector} with abundance values (e.g. Braun Blanquet) 
+##' with \code{NA} when no information
 ##' @param habitat a \code{vector} with habitat ID
 ##' 
-##' @param selectionRule.quanti minimum quantile of total number of sites that
-##' must occupy the species (between 0 and 1)
-##' @param selectionRule.min_mean_abund minimal average abundance of the species
-##' @param selectionRule.min_no_abund_over25 minimum number of sites where species
-##' is dominant (>= 25 \% of coverage)
-##' @param doHabitatSelection default \code{FALSE}. If \code{TRUE}, selection is also done including
-##' constraints on habitat class
-##' @param selectionRule.min_percent_habitat minimum percentage of habitat class
-##' occupied by the species (between 0 and 1)
-##' @param selectionRule.min_no_habitat minimum number of sites of specific habitat
-##' occupied by the species
+##' @param selectionRule.quanti default \code{0}. Minimum quantile of total 
+##' number of sites that must occupy the species (between 0 and 1)
+##' @param selectionRule.min_mean_abund default \code{0}. Minimal average 
+##' abundance of the species
+##' @param selectionRule.min_no_abund_over25 default \code{0}. Minimum number 
+##' of sites where species is dominant (\code{>= 25 \%} of coverage)
+##' @param doHabitatSelection default \code{FALSE}. If \code{TRUE}, selection 
+##' is also done including constraints on habitat class
+##' @param selectionRule.min_percent_habitat default \code{0.05} 
+##' (\emph{optional}). Minimum percentage of habitat class occupied by the 
+##' species (between 0 and 1)
+##' @param selectionRule.min_no_habitat default \code{5} (\emph{optional}). 
+##' Minimum number of sites of specific habitat occupied by the species
+##' 
+##' @param opt.doPlot default \code{TRUE} (\emph{optional}). If \code{TRUE}, 
+##' plot(s) will be processed, otherwise only the calculation and 
+##' reorganization of outputs will occur, be saved and returned.
 ##' 
 ##' @details 
 ##' 
-##' This function provides a way to \emph{select dominant species based on
+##' This function provides a way to \strong{select dominant species based on 
 ##' abundance sampling information}. \cr
-##' This information can be given either directly in the form of a \code{data.frame},
-##' or indirectly with a \code{vector} for each required information (sites,
-##' species, abundance, habitat class - optional).
+##' This information can be given either directly in the form of a 
+##' \code{data.frame}, or indirectly with a \code{vector} for each required 
+##' information (sites, species, abundance, habitat class - \emph{optional}).
 ##' 
 ##' 
 ##' 2 rules are applied to make the species selection :
@@ -43,49 +49,51 @@
 ##' \describe{
 ##'   \item{\strong{1. Presence releves}}{
 ##'   \describe{
-##'     \item{\strong{on number of sites}}{the species should be found in a certain
-##'     number of sites, which corresponds to the quantile \code{selectionRule.quanti}
-##'     of all the number of records per species \cr \emph{This should ensure that
-##'     the selected species are covering all the studied area (or at least a
-##'     determining part of it, assuming that the releves are well distributed over
-##'     all the zone).}}
+##'     \item{\strong{on number of sites}}{the species should be found in a 
+##'     certain number of sites, which corresponds to the quantile 
+##'     \code{selectionRule.quanti} of all the number of records per species 
+##'     \cr \emph{This should ensure that the selected species are covering all 
+##'     the studied area (or at least a determining part of it, assuming that 
+##'     the releves are well distributed over all the zone).}}
 ##'   }
 ##'   }
 ##'   \item{\strong{2. Abundance releves : }}{both conditions must be fullfilled
 ##'   \describe{
 ##'     \item{\strong{on average abundance}}{the species should have a mean
 ##'     abundance superior or equal to \code{selectionRule.min_mean_abund}}
-##'     \item{\strong{on dominancy}}{the species should be dominant (i.e. represent
-##'     at least 25 \% of the coverage of the site) in at least
-##'     \code{selectionRule.min_no_abund_over25} sites}
-##'     \item{}{\emph{This should ensure that the selected species, besides being
-##'     abundant, are} frequently \emph{abundant, meaning not ultra specific to a
-##'     particular area.}}
+##'     \item{\strong{on dominancy}}{the species should be dominant (i.e. 
+##'     represent at least \code{25 \%} of the coverage of the site) in at 
+##'     least \code{selectionRule.min_no_abund_over25} sites}
+##'     \item{}{\emph{This should ensure that the selected species, besides 
+##'     being abundant, are} frequently \emph{abundant, meaning not ultra 
+##'     specific to a particular area.}}
 ##'   }
 ##'   }
 ##' }
 ##' 
-##' If habitat information is available (e.g. type of environment : urban,
-##' desert, grassland... ; type of vegetation : shrubs, forest, alpine grasslands... ;
-##' etc), 1 rule with 2 conditions can be added to the selection steps,
-##' \emph{in order to keep species that are not dominant at the large scale
-##' but could be representative of a specific habitat} :
+##' If habitat information is available (e.g. type of environment : urban, 
+##' desert, grassland... ; type of vegetation : shrubs, forest, alpine 
+##' grasslands... ; etc), 1 rule with 2 conditions can be added to the 
+##' selection steps, \emph{in order to keep species that are not dominant at 
+##' the large scale but could be representative of a specific habitat} :
 ##' 
 ##' \describe{
-##'   \item{\strong{3. Releves per habitat : }}{both conditions must be fullfilled
+##'   \item{\strong{3. Releves per habitat : }}{both conditions must be 
+##'   fullfilled
 ##'   \describe{
-##'     \item{\strong{on occupancy}}{the species should occupy at least
+##'     \item{\strong{on occupancy}}{the species should occupy at least 
 ##'     \code{selectionRule.min_percent_habitat} \% of a landclass}
-##'     \item{\strong{on representation}}{the species should be found in at least
-##'     \code{selectionRule.min_no_habitat} sites of a landclass}
-##'     \item{}{\emph{In the same way than for rule 2., this should allow to select
-##'     species that are not globally dominant but that can be representative of a
-##'     specific habitat, both in terms of abundance and dominancy.}}
+##'     \item{\strong{on representation}}{the species should be found in at 
+##'     least \code{selectionRule.min_no_habitat} sites of a landclass}
+##'     \item{}{\emph{In the same way than for rule 2., this should allow to 
+##'     select species that are not globally dominant but that can be 
+##'     representative of a specific habitat, both in terms of abundance and 
+##'     dominancy.}}
 ##'   }
 ##'   }
 ##' }
 ##'   
-##' @return A \code{data.frame} with all the species selected and the values of
+##' @return A \code{data.frame} with all the species selected and the values of 
 ##' parameters used to make the selection :
 ##' 
 ##' \describe{
@@ -96,14 +104,16 @@
 ##'   \item{stat.abund_mean}{mean abundance (coverage percentage)}
 ##'   \item{stat.abund_max}{maximal abundance (coverage percentage)}
 ##'   \item{stat.no_sites \cr abund_max}{number of sites with maximal abundance}
-##'   \item{stat.no_sites \cr abund_over25}{number of sites with abundance >= 25}
-##'   \item{SELECTION}{dataset in which the species has been selected as dominant
-##'   \cr (global = all data, or habitat, or global + habitat...)}
+##'   \item{stat.no_sites \cr abund_over25}{number of sites with abundance 
+##'   \code{>= 25}}
+##'   \item{SELECTION}{dataset in which the species has been selected as 
+##'   dominant \cr (global = all data, or habitat, or global + habitat...)}
 ##' }
 ##' 
 ##\cr
 ##' 
-##' The information is written in \code{PRE_FATE_DOMINANT_species_selected_[...].csv} files :
+##' The information is written in 
+##' \code{PRE_FATE_DOMINANT_species_selected_[...].csv} files :
 ##' \describe{
 ##'   \item{\file{COMPLETE_TABLE}}{the complete
 ##'   table of selected species with all the statistics described above}
@@ -113,9 +123,9 @@
 ##' 
 ##' Two \code{PRE_FATE_DOMINANT_[...].pdf} files are also created : 
 ##' \describe{
-##'   \item{\file{STEP_1 \cr selectionCriteria}}{to visualize the values of
+##'   \item{\file{STEP_1 \cr selectionCriteria}}{to visualize the values of 
 ##'   species metrics, and the criteria used to make the selection}
-##'   \item{\file{STEP_2 \cr selectedSpecies}}{to visualize the values of
+##'   \item{\file{STEP_2 \cr selectedSpecies}}{to visualize the values of 
 ##'   species metrics, for the selected dominant species}
 ##' }
 ##' 
@@ -199,12 +209,13 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
                                    , species = NULL ## vector
                                    , abund = NULL ## vector
                                    , habitat = NULL ## vector
-                                   , selectionRule.quanti = 0 ## minimum quantile of total number of sites that must occupy the species
-                                   , selectionRule.min_mean_abund = 0 ## minimum mean abundance of the species
-                                   , selectionRule.min_no_abund_over25 = 0 ## minimum number of sites where species is dominant (>= 25 % of coverage)
-                                   , doHabitatSelection = FALSE ## habitat are given in the data.frame
-                                   , selectionRule.min_percent_habitat = 0.05 ## minimum percentage of the habitat occupied by the species 
-                                   , selectionRule.min_no_habitat = 5 ## minimum number of sites of the habitat occupied by the species
+                                   , selectionRule.quanti = 0 ## numeric
+                                   , selectionRule.min_mean_abund = 0 ## numeric
+                                   , selectionRule.min_no_abund_over25 = 0 ## numeric
+                                   , doHabitatSelection = FALSE ## boolean
+                                   , selectionRule.min_percent_habitat = 0.05 ## numeric
+                                   , selectionRule.min_no_habitat = 5 ## numeric
+                                   , opt.doPlot = TRUE ## boolean
 ){
   
   #################################################################################################
@@ -547,110 +558,117 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
   ## GRAPHICS TO HELP ADJUST PARAMETERS TO SELECT DOMINANT SPECIES
   #################################################################################################
   
-  colRamp = colorRampPalette(c('#8e0152','#c51b7d','#de77ae','#7fbc41','#4d9221','#276419'))
-  
-  variables.labeller = c("stat.no_sites_recorded" = "stat.no_sites_recorded"
-                         , "Fake1" = "", "Fake2" = ""
-                         , "stat.abund_median" = "stat.abund_median"
-                         , "stat.abund_mean" = "stat.abund_mean"
-                         , "stat.abund_max" = "stat.abund_max"
-                         , "stat.no_sites_abund" = "stat.no_sites_abund"
-                         , "stat.no_sites_abund_max" = "stat.no_sites_abund_max"
-                         , "stat.no_sites_abund_over25" = "stat.no_sites_abund_over25"
-  )
-  
-  ## STEP 1 : Selection -----------------------------------------------------------
-  
-  # tmp = mat.species.stat.habitat#[-1]
-  # tmp = lapply(1:length(tmp), function(x) data.frame(tmp[[x]], landclass = names(tmp)[x]))
-  # tmp = do.call(rbind, tmp)
-  
-  tmp = mat.all
-  tmp$habitat = "all"
-  
-  mat.plot = melt(tmp, id.vars = c("species","habitat"))
-  mat.plot = rbind(mat.plot, data.frame(species = "SP.ghost", habitat = NA, variable = c("Fake1","Fake2"), value = NA))
-  mat.plot$variable = factor(mat.plot$variable, c("stat.no_sites_recorded"
-                                                  , "Fake1", "Fake2"
-                                                  , "stat.abund_median"
-                                                  , "stat.abund_mean"
-                                                  , "stat.abund_max"
-                                                  , "stat.no_sites_abund"
-                                                  , "stat.no_sites_abund_max"
-                                                  , "stat.no_sites_abund_over25"
-  ))
-  mat.plot$habitat = as.character(mat.plot$habitat)
-  mat.plot$habitat[which(mat.plot$habitat == "all")] = NA
-  mat.plot$limit = NA
-  mat.plot$limit[which(mat.plot$variable == "stat.no_sites_recorded")] = quant
-  mat.plot$limit[which(mat.plot$variable == "stat.abund_mean")] = selectionRule.min_mean_abund
-  mat.plot$limit[which(mat.plot$variable == "stat.no_sites_abund_over25")] = selectionRule.min_no_abund_over25
-  
-  pp1 = ggplot(mat.plot, aes_string(x = "value")) +
-    geom_histogram(na.rm = T) +
-    # geom_histogram(aes(x = value, fill = habitat)) +
-    # geom_density(aes(x = value, ..count.., group = habitat)) +
-    # scale_color_discrete("Habitat", na.value = NA, breaks = levels(factor(mat.plot$habitat))) +
-    geom_vline(aes_string(xintercept = "limit"), lwd = 1, color = "#fb6a4a", na.rm = TRUE) +
-    facet_wrap("variable", scales="free", labeller = as_labeller(variables.labeller)) +
-    labs(x="", y = "", title = "STEP 1 : Selection of dominant species",
-         subtitle = paste0("Criteria used for each species (highlighted with colored vertical lines) :\n"
-                           , "Total number of presences >= quantile( ", selectionRule.quanti * 100, "% )\n"
-                           , "Mean abundance >= ", selectionRule.min_mean_abund, "\n"
-                           , "Number of releves with (abundance > 25) >= ", selectionRule.min_no_abund_over25
-                           , "\n")) +
-    theme_fivethirtyeight() +
-    theme(legend.position = c(0.7, 0.85),
-          legend.title = element_text(size=10))
-  
-  ggsave(filename = paste0("PRE_FATE_DOMINANT_STEP_1_selectionCriteria_", end_filename, ".pdf")
-         , plot = pp1, width = 10, height = 8)
-  
-  ## STEP 2 : Selected -----------------------------------------------------------
-  
-  mat.plot = melt(mat.species.dominant, id.vars = c("species","SELECTION"))
-  mat.plot = rbind(mat.plot, data.frame(species = "SP.ghost", SELECTION = NA, 
-                                        variable = c("Fake1","Fake2"), value = NA))
-  mat.plot$variable = factor(mat.plot$variable, c("stat.no_sites_recorded"
-                                                  , "Fake1", "Fake2"
-                                                  , "stat.abund_median"
-                                                  , "stat.abund_mean"
-                                                  , "stat.abund_max"
-                                                  , "stat.no_sites_abund"
-                                                  , "stat.no_sites_abund_max"
-                                                  , "stat.no_sites_abund_over25"
-  ))
-  mat.plot$SELECTION = sub("all_","global + habitat ",mat.plot$SELECTION)
-  mat.plot$SELECTION = sub("all","global",mat.plot$SELECTION)
-  mat.plot$limit = NA
-  mat.plot$limit[which(mat.plot$variable == "stat.no_sites_recorded")] = quant
-  mat.plot$limit[which(mat.plot$variable == "stat.abund_mean")] = selectionRule.min_mean_abund
-  mat.plot$limit[which(mat.plot$variable == "stat.no_sites_abund_over25")] = selectionRule.min_no_abund_over25
-  
-  if(length(na.exclude(unique(mat.plot$SELECTION))) == 1) {
-    colos = "grey35"
-  } else {
-    colos = colRamp(length(na.exclude(unique(mat.plot$SELECTION))))
+  if (opt.doPlot)
+  {
+    cat("\n PRODUCING PLOT(S)...")
+    colRamp = colorRampPalette(c('#8e0152','#c51b7d','#de77ae','#7fbc41','#4d9221','#276419'))
+    
+    variables.labeller = c("stat.no_sites_recorded" = "stat.no_sites_recorded"
+                           , "Fake1" = "", "Fake2" = ""
+                           , "stat.abund_median" = "stat.abund_median"
+                           , "stat.abund_mean" = "stat.abund_mean"
+                           , "stat.abund_max" = "stat.abund_max"
+                           , "stat.no_sites_abund" = "stat.no_sites_abund"
+                           , "stat.no_sites_abund_max" = "stat.no_sites_abund_max"
+                           , "stat.no_sites_abund_over25" = "stat.no_sites_abund_over25"
+    )
+    
+    ## STEP 1 : Selection -----------------------------------------------------------
+    
+    # tmp = mat.species.stat.habitat#[-1]
+    # tmp = lapply(1:length(tmp), function(x) data.frame(tmp[[x]], landclass = names(tmp)[x]))
+    # tmp = do.call(rbind, tmp)
+    
+    tmp = mat.all
+    tmp$habitat = "all"
+    
+    mat.plot = melt(tmp, id.vars = c("species","habitat"))
+    mat.plot = rbind(mat.plot, data.frame(species = "SP.ghost", habitat = NA, variable = c("Fake1","Fake2"), value = NA))
+    mat.plot$variable = factor(mat.plot$variable, c("stat.no_sites_recorded"
+                                                    , "Fake1", "Fake2"
+                                                    , "stat.abund_median"
+                                                    , "stat.abund_mean"
+                                                    , "stat.abund_max"
+                                                    , "stat.no_sites_abund"
+                                                    , "stat.no_sites_abund_max"
+                                                    , "stat.no_sites_abund_over25"
+    ))
+    mat.plot$habitat = as.character(mat.plot$habitat)
+    mat.plot$habitat[which(mat.plot$habitat == "all")] = NA
+    mat.plot$limit = NA
+    mat.plot$limit[which(mat.plot$variable == "stat.no_sites_recorded")] = quant
+    mat.plot$limit[which(mat.plot$variable == "stat.abund_mean")] = selectionRule.min_mean_abund
+    mat.plot$limit[which(mat.plot$variable == "stat.no_sites_abund_over25")] = selectionRule.min_no_abund_over25
+    
+    pp1 = ggplot(mat.plot, aes_string(x = "value")) +
+      geom_histogram(na.rm = T) +
+      # geom_histogram(aes(x = value, fill = habitat)) +
+      # geom_density(aes(x = value, ..count.., group = habitat)) +
+      # scale_color_discrete("Habitat", na.value = NA, breaks = levels(factor(mat.plot$habitat))) +
+      geom_vline(aes_string(xintercept = "limit"), lwd = 1, color = "#fb6a4a", na.rm = TRUE) +
+      facet_wrap("variable", scales="free", labeller = as_labeller(variables.labeller)) +
+      labs(x="", y = "", title = "STEP 1 : Selection of dominant species",
+           subtitle = paste0("Criteria used for each species (highlighted with colored vertical lines) :\n"
+                             , "Total number of presences >= quantile( ", selectionRule.quanti * 100, "% )\n"
+                             , "Mean abundance >= ", selectionRule.min_mean_abund, "\n"
+                             , "Number of releves with (abundance > 25) >= ", selectionRule.min_no_abund_over25
+                             , "\n")) +
+      theme_fivethirtyeight() +
+      theme(legend.position = c(0.7, 0.85),
+            legend.title = element_text(size=10))
+    
+    ggsave(filename = paste0("PRE_FATE_DOMINANT_STEP_1_selectionCriteria_", end_filename, ".pdf")
+           , plot = pp1, width = 10, height = 8)
+    
+    ## STEP 2 : Selected -----------------------------------------------------------
+    
+    mat.plot = melt(mat.species.dominant, id.vars = c("species","SELECTION"))
+    mat.plot = rbind(mat.plot, data.frame(species = "SP.ghost", SELECTION = NA, 
+                                          variable = c("Fake1","Fake2"), value = NA))
+    mat.plot$variable = factor(mat.plot$variable, c("stat.no_sites_recorded"
+                                                    , "Fake1", "Fake2"
+                                                    , "stat.abund_median"
+                                                    , "stat.abund_mean"
+                                                    , "stat.abund_max"
+                                                    , "stat.no_sites_abund"
+                                                    , "stat.no_sites_abund_max"
+                                                    , "stat.no_sites_abund_over25"
+    ))
+    mat.plot$SELECTION = sub("all_","global + habitat ",mat.plot$SELECTION)
+    mat.plot$SELECTION = sub("all","global",mat.plot$SELECTION)
+    mat.plot$limit = NA
+    mat.plot$limit[which(mat.plot$variable == "stat.no_sites_recorded")] = quant
+    mat.plot$limit[which(mat.plot$variable == "stat.abund_mean")] = selectionRule.min_mean_abund
+    mat.plot$limit[which(mat.plot$variable == "stat.no_sites_abund_over25")] = selectionRule.min_no_abund_over25
+    
+    if(length(na.exclude(unique(mat.plot$SELECTION))) == 1) {
+      colos = "grey35"
+    } else {
+      colos = colRamp(length(na.exclude(unique(mat.plot$SELECTION))))
+    }
+    
+    pp2 = ggplot(mat.plot, aes_string(x = "value", fill = "SELECTION")) +
+      geom_histogram(position = "dodge", na.rm = TRUE) +
+      geom_vline(aes_string(xintercept = "limit"), lwd = 1, color = "#fb6a4a", na.rm = TRUE) +
+      scale_fill_manual("Species selected in dataset :", values = colos) +
+      facet_wrap("variable", scales="free", labeller = as_labeller(variables.labeller)) +
+      labs(x="", y = "", title = paste0("STEP 2 : selected dominant species (", length(unique(mat.plot$species)) - 1,")"),
+           subtitle = paste0("Criteria used for each species (highlighted with colored vertical lines) :\n"
+                             , "Total number of presences >= quantile( ", selectionRule.quanti * 100, "% )\n"
+                             , "Mean abundance >= ", selectionRule.min_mean_abund, "\n"
+                             , "Number of releves with (abundance > 25) >= ", selectionRule.min_no_abund_over25
+                             , "\n")) +
+      theme_fivethirtyeight() +
+      theme(legend.position = c(0.7, 1),
+            legend.title = element_text(size=10),
+            legend.direction = "vertical")
+    
+    ggsave(filename = paste0("PRE_FATE_DOMINANT_STEP_2_selectedSpecies_", end_filename, ".pdf")
+           , plot = pp2, width = 10, height = 8)
+    
+    suppressMessages(plot(pp1))
+    suppressMessages(plot(pp2))
   }
-  
-  pp2 = ggplot(mat.plot, aes_string(x = "value", fill = "SELECTION")) +
-    geom_histogram(position = "dodge", na.rm = TRUE) +
-    geom_vline(aes_string(xintercept = "limit"), lwd = 1, color = "#fb6a4a", na.rm = TRUE) +
-    scale_fill_manual("Species selected in dataset :", values = colos) +
-    facet_wrap("variable", scales="free", labeller = as_labeller(variables.labeller)) +
-    labs(x="", y = "", title = paste0("STEP 2 : selected dominant species (", length(unique(mat.plot$species)) - 1,")"),
-         subtitle = paste0("Criteria used for each species (highlighted with colored vertical lines) :\n"
-                           , "Total number of presences >= quantile( ", selectionRule.quanti * 100, "% )\n"
-                           , "Mean abundance >= ", selectionRule.min_mean_abund, "\n"
-                           , "Number of releves with (abundance > 25) >= ", selectionRule.min_no_abund_over25
-                           , "\n")) +
-    theme_fivethirtyeight() +
-    theme(legend.position = c(0.7, 1),
-          legend.title = element_text(size=10),
-          legend.direction = "vertical")
-  
-  ggsave(filename = paste0("PRE_FATE_DOMINANT_STEP_2_selectedSpecies_", end_filename, ".pdf")
-         , plot = pp2, width = 10, height = 8)
   
   #################################################################################################
   
@@ -659,10 +677,6 @@ PRE_FATE.selectDominant = function(mat.site.species.abund = NULL ## data.frame
   cat("\n  Complete table of information about selected species can be find in output files.")
   cat("\n")
   
-  suppressMessages(plot(pp1))
-  suppressMessages(plot(pp2))
-  
   return(mat.species.dominant)
-  
 }
 

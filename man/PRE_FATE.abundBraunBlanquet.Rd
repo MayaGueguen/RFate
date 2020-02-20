@@ -8,23 +8,24 @@ PRE_FATE.abundBraunBlanquet(abund)
 }
 \arguments{
 \item{abund}{a \code{vector} with abundance values from Braun-Blanquet
-(+, r, 1, 2, 3, 4, 5), and with \code{NA} when no information}
+(\code{+, r, 1, 2, 3, 4, 5}), and with \code{NA} when no information}
 }
 \value{
 A \code{vector} with numerical values between 0 and 100 corresponding to the median of each recovery class.
 }
 \description{
-This script is designed to transform Braun-Blanquet abundance
+This script is designed to transform Braun-Blanquet abundance 
 information into relative abundances or average recovery values
 (between 0 and 100).
 }
 \details{
-Braun-Blanquet values allow to estimate the abundance-dominance of a species
-based on an estimation of the number of individuals and the covering surface.
-A correspondence has been defined between this index and average recovery values :
+Braun-Blanquet values allow to estimate the abundance-dominance of a 
+species based on an estimation of the number of individuals and the 
+covering surface. A correspondence has been defined between this index and 
+average recovery values :
 
 \code{| Braun-Blanquet | Recovery class (\%) | Average recovery (\%) |} \cr
-________________________________________________________ \cr
+____________________________________________________________ \cr
 \code{| + ............ | ............... <1 | ................ 0.5 |} \cr
 \code{| 1 ............ | .............. 1-5 | .................. 3 |} \cr
 \code{| 2 ............ | ............. 5-25 | ................. 15 |} \cr

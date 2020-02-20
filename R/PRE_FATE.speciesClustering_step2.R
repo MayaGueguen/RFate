@@ -7,14 +7,14 @@
 ##' 
 # @date 21/03/2018
 ##' 
-##' @description This script is designed to obtain functional groups by : 1)
-##' select the number of clusters to be kept from an object obtained with the
-##' \code{\link{PRE_FATE.speciesClustering_step1}} function ; 2) refine these 
-##' groups by identifying determinant species in each of them.
+##' @description This script is designed to obtain functional groups by : 1) 
+##' selecting the number of clusters to be kept from an object obtained with 
+##' the \code{\link{PRE_FATE.speciesClustering_step1}} function ; 2) refining 
+##' these groups by identifying determinant species in each of them.
 ##'              
-##' @param clust.dendograms a dendogram or a \code{list} of dendograms with one
+##' @param clust.dendrograms a dendrogram or a \code{list} of dendrograms with one
 ##' for each \code{GROUP} value, as can be obtained with the 
-##' \code{PRE_FATE.speciesClustering_step1} function.
+##' \code{\link{PRE_FATE.speciesClustering_step1}} function.
 ##' @param no.clusters a \code{vector} with the number of clusters to be kept
 ##' in each subset of data (if the data is split).
 ##' @param mat.species.DIST a \code{dist} object corresponding to the distance
@@ -25,35 +25,36 @@
 ##' 
 ##' @details 
 ##' 
-##' This function allows one to obtain a classification of \emph{dominant}
-##' species into Plant Functional Groups (PFG), and the \emph{determinant}
+##' This function allows one to obtain a classification of \emph{dominant} 
+##' species into Plant Functional Groups (PFG), and the \emph{determinant} 
 ##' species based on these PFGs.
 ##' 
 ##' \strong{What is the difference between \code{dominant} and
 ##' \code{determinant} species ?}
 ##' 
 ##' \itemize{
-##'   \item{\strong{Dominant} species are species representative of an
-##'   environment or a studied area, in terms of number of releves or
-##'   abundance values. They can be found with the \code{PRE_FATE.selectDominant}
-##'   function of this package. These dominant species are used to build PFG
-##'   with the \code{PRE_FATE.speciesClustering_step1} function.
+##'   \item{\strong{Dominant} species are species representative of an 
+##'   environment or a studied area, in terms of number of releves or 
+##'   abundance values. They can be found with the 
+##'   \code{\link{PRE_FATE.selectDominant}} function of this package. 
+##'   These dominant species are used to build PFG with the 
+##'   \code{\link{PRE_FATE.speciesClustering_step1}} function.
 ##'   }
-##'   \item{Once PFG are built, \strong{determinant} species are defined as
-##'   refined subsets of dominant species within each PFG. The process is
+##'   \item{Once PFG are built, \strong{determinant} species are defined as 
+##'   refined subsets of dominant species within each PFG. The process is 
 ##'   detailed below :
 ##'   \itemize{
 ##'     \item each dominant species is assigned to a PFG
 ##'     \item within each PFG :
 ##'     \itemize{
-##'       \item for each species, compute its mean distance to the other
+##'       \item for each species, compute its mean distance to the other 
 ##'       species within the PFG (\code{sp.mean.dist})
 ##'       \item calculate the mean value of all these mean distances
 ##'       (\code{allSp.mean})
 ##'       \item calculate the deviation values around this mean value
 ##'       (\code{allSp.min} and \code{allSp.max})
-##'       \item determinant species are the ones that are included between
-##'       these deviation values
+##'       \item determinant species are the ones that are included between 
+##'       those deviation values
 ##'     }
 ##'   }
 ##'   }
@@ -62,22 +63,23 @@
 ##' @return A \code{list} object with 2 elements :
 ##' 
 ##' \describe{
-##'   \item{determ.sp}{a \code{vector} with the names of all determinant species}
-##'   \item{determ.all}{a \code{data.frame} containing all species (determinant
-##'   and non-determinant) with 10 columns :
+##'   \item{determ.sp}{a \code{vector} with the names of all determinant 
+##'   species}
+##'   \item{determ.all}{a \code{data.frame} containing all species 
+##'   (determinant and non-determinant) with 10 columns :
 ##'   \itemize{
 ##'     \item \code{pfg} : the ID of the PFG (group + no.cluster)
-##'     \item \code{group} : name of sub-dataset
+##'     \item \code{group} : name of data subset
 ##'     \item \code{no.cluster} : cluster number
 ##'     \item \code{sp} : name of species
 ##'     \item \code{ID} : species number in each PFG
-##'     \item \code{sp.mean.dist} : species mean distance to other species of
+##'     \item \code{sp.mean.dist} : species mean distance to other species of 
 ##'     the same PFG
-##'     \item \code{allSp.mean} : mean(sp.mean.dist) within the PFG
-##'     \item \code{allSp.min} : mean(sp.mean.dist) - 1.64 * sd(sp.mean.dist)
-##'     within the PFG
-##'     \item \code{allSp.max} : mean(sp.mean.dist) + 1.64 * sd(sp.mean.dist)
-##'     within the PFG
+##'     \item \code{allSp.mean} : \code{mean(sp.mean.dist)} within the PFG
+##'     \item \code{allSp.min} : \code{mean(sp.mean.dist) - 1.64 * 
+##'     sd(sp.mean.dist)} within the PFG
+##'     \item \code{allSp.max} : \code{mean(sp.mean.dist) + 1.64 * 
+##'     sd(sp.mean.dist)} within the PFG
 ##'     \item \code{toSuppr} : 0 if determinant species, 1 otherwise
 ##'   }
 ##'   }
@@ -85,10 +87,10 @@
 ##' 
 ##' Two \code{PRE_FATE_CLUSTERING_[...].pdf} files are created : 
 ##' \describe{
-##'   \item{\file{STEP_2C \cr distantSpecies}}{to visualize in each PFG the
-##'   distribution of mean distance of each species to other species, and
+##'   \item{\file{STEP_2C \cr distantSpecies}}{to visualize in each PFG the 
+##'   distribution of mean distance of each species to other species, and 
 ##'   non-determinant species which are outside the distribution}
-##'   \item{\file{STEP_2C \cr PCO}}{to visualize in each PFG the distribution
+##'   \item{\file{STEP_2C \cr PCO}}{to visualize in each PFG the distribution 
 ##'   of species, with and without non-determinant species}
 ##' }
 ##' 
@@ -124,7 +126,7 @@
 ##' str(sp.CLUST)
 ##' 
 ##' ## Select number of clusters and find determinant species
-##' sp.DETERM = PRE_FATE.speciesClustering_step2(clust.dendograms = sp.CLUST$clust.dendograms
+##' sp.DETERM = PRE_FATE.speciesClustering_step2(clust.dendrograms = sp.CLUST$clust.dendrograms
 ##'                                              , no.clusters = PNE_PFG$nb.clusters
 ##'                                              , mat.species.DIST = sp.DIST)
 ##' 
@@ -150,29 +152,29 @@
 ## END OF HEADER ###############################################################
 
 
-PRE_FATE.speciesClustering_step2 = function(clust.dendograms
+PRE_FATE.speciesClustering_step2 = function(clust.dendrograms
                                             , no.clusters ## vector
                                             , mat.species.DIST
 ){
   
-  if (.testParam_notInClass(clust.dendograms, inList = c("list","hclust")))
+  if (.testParam_notInClass(clust.dendrograms, inList = c("list","hclust")))
   {
-    stop("No data given!\n (missing `clust.dendograms` information which must be of class `hclust` or a list `hclust` objects)")
+    stop("No data given!\n (missing `clust.dendrograms` information which must be of class `hclust` or a list `hclust` objects)")
   } else
   {
-    if (class(clust.dendograms) == "list" && length(which(sapply(clust.dendograms, class) == "hclust")) < length(clust.dendograms))
+    if (class(clust.dendrograms) == "list" && length(which(sapply(clust.dendrograms, class) == "hclust")) < length(clust.dendrograms))
     {
-      stop("Wrong type of data!\n each element of `clust.dendograms` must be of class `hclust`")
+      stop("Wrong type of data!\n each element of `clust.dendrograms` must be of class `hclust`")
     }
-    if (class(clust.dendograms) == "hclust")
+    if (class(clust.dendrograms) == "hclust")
     {
-      clust.dendograms = list(GROUP1 = clust.dendograms)
+      clust.dendrograms = list(GROUP1 = clust.dendrograms)
     }
-    if(!is.null(names(clust.dendograms)))
+    if(!is.null(names(clust.dendrograms)))
     {
-      group_names = names(clust.dendograms)
+      group_names = names(clust.dendrograms)
     } else {
-      group_names = paste0("GROUP", 1:length(clust.dendograms))
+      group_names = paste0("GROUP", 1:length(clust.dendrograms))
     }
   }
   if (.testParam_notNum(no.clusters))
@@ -180,9 +182,9 @@ PRE_FATE.speciesClustering_step2 = function(clust.dendograms
     stop("No data given!\n (missing `no.clusters` information)")
   } else
   {
-    if (length(no.clusters) != length(clust.dendograms))
+    if (length(no.clusters) != length(clust.dendrograms))
     {
-      stop("Wrong type of data!\n `no.clusters` must have the same length than `clust.dendograms`")
+      stop("Wrong type of data!\n `no.clusters` must have the same length than `clust.dendrograms`")
     }
   }
   if (.testParam_notInClass(mat.species.DIST, inList = c("list", "dist")))
@@ -190,9 +192,9 @@ PRE_FATE.speciesClustering_step2 = function(clust.dendograms
     stop("No data given!\n (missing `mat.species.DIST` information which must be a dist object, or a list of dist objects)")
   } else
   {
-    if (class(mat.species.DIST) == "list" && length(mat.species.DIST) != length(clust.dendograms))
+    if (class(mat.species.DIST) == "list" && length(mat.species.DIST) != length(clust.dendrograms))
     {
-      stop("Wrong type of data!\n `mat.species.DIST` must have the same length than `clust.dendograms`")
+      stop("Wrong type of data!\n `mat.species.DIST` must have the same length than `clust.dendrograms`")
     }
     if (class(mat.species.DIST) == "dist")
     {
@@ -205,9 +207,9 @@ PRE_FATE.speciesClustering_step2 = function(clust.dendograms
   ## DEFINITION OF CLUSTERED GROUPS
   ################################################################################################################################
   
-  ### CUT DENDOGRAMS (or trees) RESULTING FROM hclust INTO SEVERAL GROUPS (nb = k)
+  ### CUT dendrogramS (or trees) RESULTING FROM hclust INTO SEVERAL GROUPS (nb = k)
   ### Number of groups for each group has been chosen according to the previous plot (CLUSTERING_STEP_1B)
-  clust.groups = lapply(1:length(group_names), function(x) cutree(clust.dendograms[[x]], k = no.clusters[x]))
+  clust.groups = lapply(1:length(group_names), function(x) cutree(clust.dendrograms[[x]], k = no.clusters[x]))
   clust.groups = lapply(1:length(group_names), function(x) {
     tmp.names = names(clust.groups[[x]])
     tmp = paste0(group_names[x], ".", clust.groups[[x]])

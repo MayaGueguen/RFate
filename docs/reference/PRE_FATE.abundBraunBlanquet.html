@@ -36,7 +36,7 @@
 
 
 <meta property="og:title" content="Transform Braun-Blanquet values into relative abundances — PRE_FATE.abundBraunBlanquet" />
-<meta property="og:description" content="This script is designed to transform Braun-Blanquet abundance
+<meta property="og:description" content="This script is designed to transform Braun-Blanquet abundance 
 information into relative abundances or average recovery values
 (between 0 and 100)." />
 <meta name="twitter:card" content="summary" />
@@ -156,7 +156,7 @@ information into relative abundances or average recovery values
     </div>
 
     <div class="ref-description">
-    <p>This script is designed to transform Braun-Blanquet abundance
+    <p>This script is designed to transform Braun-Blanquet abundance 
 information into relative abundances or average recovery values
 (between 0 and 100).</p>
     </div>
@@ -169,7 +169,7 @@ information into relative abundances or average recovery values
     <tr>
       <th>abund</th>
       <td><p>a <code>vector</code> with abundance values from Braun-Blanquet
-(+, r, 1, 2, 3, 4, 5), and with <code>NA</code> when no information</p></td>
+(<code>+, r, 1, 2, 3, 4, 5</code>), and with <code>NA</code> when no information</p></td>
     </tr>
     </table>
 
@@ -178,11 +178,12 @@ information into relative abundances or average recovery values
     <p>A <code>vector</code> with numerical values between 0 and 100 corresponding to the median of each recovery class.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Braun-Blanquet values allow to estimate the abundance-dominance of a species
-based on an estimation of the number of individuals and the covering surface.
-A correspondence has been defined between this index and average recovery values :</p>
+    <p>Braun-Blanquet values allow to estimate the abundance-dominance of a 
+species based on an estimation of the number of individuals and the 
+covering surface. A correspondence has been defined between this index and 
+average recovery values :</p>
 <p><code>| Braun-Blanquet | Recovery class (%) | Average recovery (%) |</code> <br />
-________________________________________________________ <br />
+____________________________________________________________ <br />
 <code>| + ............ | ............... &lt;1 | ................ 0.5 |</code> <br />
 <code>| 1 ............ | .............. 1-5 | .................. 3 |</code> <br />
 <code>| 2 ............ | ............. 5-25 | ................. 15 |</code> <br />

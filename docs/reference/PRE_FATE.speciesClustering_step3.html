@@ -38,7 +38,10 @@ values — PRE_FATE.speciesClustering_step3 • RFate</title>
 
 <meta property="og:title" content="Calculate PFG traits values based on determinant species traits 
 values — PRE_FATE.speciesClustering_step3" />
-<meta property="og:description" content="This script is designed to create" />
+<meta property="og:description" content="This script is designed to calculate PFG traits values based 
+on determinant species traits values. Either the mean or the 
+median is used depending on the trait class (i.e. numeric or 
+categorical)." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -157,7 +160,10 @@ values</h1>
     </div>
 
     <div class="ref-description">
-    <p>This script is designed to create</p>
+    <p>This script is designed to calculate PFG traits values based 
+on determinant species traits values. Either the <code>mean</code> or the 
+<code>median</code> is used depending on the trait class (i.e. numeric or 
+categorical).</p>
     </div>
 
     <pre class="usage"><span class='fu'>PRE_FATE.speciesClustering_step3</span>(<span class='no'>mat.species.traits</span>)</pre>
@@ -167,7 +173,7 @@ values</h1>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>mat.species.traits</th>
-      <td><p>A <code>data.frame</code> with at least 3 columns :</p><dl class='dl-horizontal'>
+      <td><p>a <code>data.frame</code> with at least 3 columns :</p><dl class='dl-horizontal'>
   <dt><code>species</code></dt><dd><p>the ID of each determinant species (see 
   <code><a href='PRE_FATE.speciesClustering_step2.html'>PRE_FATE.speciesClustering_step2</a></code>)</p></dd>
   <dt><code>PFG</code></dt><dd><p>a factor variable containing grouping information to
@@ -182,48 +188,47 @@ values</h1>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>.txt</code> file per PFG into the 
-<code>name.simulation/DATA/PFGS/SUCC/</code> directory with the following 
-parameters :</p>
-<ul>
-<li><p>NAME : name of the PFG</p></li>
-<li><p>MATURITY : the maturity age of the PFG <em>(in years)</em></p></li>
-<li><p>LONGEVITY : the PFG life span <em>(in years)</em></p></li>
-<li><p>MAX_ABUNDANCE : the maximal (qualitative) shade that the PFG is able
-  to produce <br /> <em>(1: Low 2: Medium 3: High)</em></p></li>
-<li><p>IMM_SIZE : the relative size of the immature PFG <br />
-  <em>(0: 0% 1: 10% 2: 20% 3: 30% 4: 40% 5: 50% 6: 60% 7: 70% 
-  8: 80% 9: 90% 10: 100%)</em></p></li>
-<li><p>CHANG_STR_AGES : the ages at which the PFG goes in the upper stratum
-  <br /> <em>(in years, put a value higher than the PFG life span if it is 
-  not supposed to rise a stratum)</em></p></li>
-<li><p>SEED_POOL_LIFE : the maximal number of years seeds are able to
-  survive (for active and dormant pool)</p></li>
-<li><p>SEED_DORMANCY : are the seeds dormant or not <em>(0: No 1: Yes)
-  <br /> <br /></em></p></li>
-</ul>
+    <p>A <code>data.frame</code> containing new trait values for each Plant 
+Functional Group (PFG) :</p>
+<dl class='dl-horizontal'>
+  <dt>type</dt><dd><p>either <code>H</code> (herbaceous), <code>C</code> (chamaephyte) or 
+  <code>P</code> (phanerophyte) for now</p></dd>
+  <dt>height</dt><dd><p>mean</p></dd>
+  <dt>maturity</dt><dd><p>mean</p></dd>
+  <dt>longevity</dt><dd><p>mean</p></dd>
+  <dt>dispersal</dt><dd><p>median</p></dd>
+  <dt>light</dt><dd><p>median</p></dd>
+  <dt>soil_contrib</dt><dd><p>mean + round to one digit</p></dd>
+  <dt>soil_tolerance</dt><dd><p>mean + round to one digit</p></dd>
+  <dt>palatability</dt><dd><p>mean + round to one digit
+   <br /> <br /></p></dd>
 
-<p>A <code>SUCC_COMPLETE_TABLE.csv</code> file summarizing information for all groups
-into the <code>name.simulation/DATA/PFGS/</code> directory.  
-This file can be used to parameterize the disturbance files.</p>
+</dl>
+
+<p>The information is written in <code>PRE_FATE_PFG_TRAITS_TABLE.csv</code> file. <br />
+This file can be used to build parameter files to run a <code>FATE-HD</code> 
+simulation.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function allows one to obtain 'average' functional trait values for
-each Plant Functional Group, based on values at the determinant species
+    <p>This function allows one to obtain '<em>average</em>' functional trait values 
+for each Plant Functional Group, based on values at the determinant species
 level.</p>
 <p>Those functional traits can be :</p>
 <dl class='dl-horizontal'>
-  <dt>type</dt><dd><p>or life-form, based on Raunkier. It should be either <code>H</code> 
-  (herbaceous), <code>C</code> (chamaephyte) or <code>P</code> (phanerophyte) for now</p></dd>
+  <dt>PFG</dt><dd><p>name of the PFG</p></dd>
+  <dt>type</dt><dd><p>or life-form, based on Raunkier. <br /> It should be either 
+  <code>H</code> (herbaceous), <code>C</code> (chamaephyte) or <code>P</code> (phanerophyte) 
+  for now</p></dd>
   <dt>height</dt><dd><p>the maximum or average height that reach the species</p></dd>
   <dt>maturity</dt><dd><p>the age from which the species can reproduce</p></dd>
   <dt>longevity</dt><dd><p>the maximum or average lifespan of the species</p></dd>
   <dt>dispersal</dt><dd><p>the age from which the species can reproduce</p></dd>
-  <dt>light</dt><dd><p>a value corresponding to the light preference of the species
-  (from preference for shade to full light)</p></dd>
-  <dt>soil_contrib</dt><dd><p>a value between 0 and 10 corresponding to the 
-  Ellenberg nitrogen value of the PFG</p></dd>
-  <dt>soil_tolerance</dt><dd><p>the range of soil tolerance : small(1) or large(2)</p></dd>
+  <dt>light</dt><dd><p>a value corresponding to the light preference of the species 
+  (from shade-lover to preference for full light)</p></dd>
+  <dt>soil_contrib</dt><dd><p>a value corresponding to the preference of the 
+  species for soil fertility (e.g. Ellenberg, Flora Indicativa)</p></dd>
+  <dt>soil_tolerance</dt><dd><p>the range of soil tolerance : 1 (small) or 2 
+  (large)</p></dd>
   <dt>palatability</dt><dd><p>the appetence of each species from null to high
    <br /> <br /></p></dd>
 

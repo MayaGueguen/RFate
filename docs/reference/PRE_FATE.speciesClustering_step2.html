@@ -36,10 +36,10 @@
 
 
 <meta property="og:title" content="Choose clusters and select determinant species — PRE_FATE.speciesClustering_step2" />
-<meta property="og:description" content="This script is designed to obtain functional groups by : 1)
-select the number of clusters to be kept from an object obtained with the
-PRE_FATE.speciesClustering_step1 function ; 2) refine these 
-groups by identifying determinant species in each of them." />
+<meta property="og:description" content="This script is designed to obtain functional groups by : 1) 
+selecting the number of clusters to be kept from an object obtained with 
+the PRE_FATE.speciesClustering_step1 function ; 2) refining 
+these groups by identifying determinant species in each of them." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -157,23 +157,23 @@ groups by identifying determinant species in each of them." />
     </div>
 
     <div class="ref-description">
-    <p>This script is designed to obtain functional groups by : 1)
-select the number of clusters to be kept from an object obtained with the
-<code><a href='PRE_FATE.speciesClustering_step1.html'>PRE_FATE.speciesClustering_step1</a></code> function ; 2) refine these 
-groups by identifying determinant species in each of them.</p>
+    <p>This script is designed to obtain functional groups by : 1) 
+selecting the number of clusters to be kept from an object obtained with 
+the <code><a href='PRE_FATE.speciesClustering_step1.html'>PRE_FATE.speciesClustering_step1</a></code> function ; 2) refining 
+these groups by identifying determinant species in each of them.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>PRE_FATE.speciesClustering_step2</span>(<span class='no'>clust.dendograms</span>, <span class='no'>no.clusters</span>,
+    <pre class="usage"><span class='fu'>PRE_FATE.speciesClustering_step2</span>(<span class='no'>clust.dendrograms</span>, <span class='no'>no.clusters</span>,
   <span class='no'>mat.species.DIST</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>clust.dendograms</th>
-      <td><p>a dendogram or a <code>list</code> of dendograms with one
+      <th>clust.dendrograms</th>
+      <td><p>a dendrogram or a <code>list</code> of dendrograms with one
 for each <code>GROUP</code> value, as can be obtained with the 
-<code>PRE_FATE.speciesClustering_step1</code> function.</p></td>
+<code><a href='PRE_FATE.speciesClustering_step1.html'>PRE_FATE.speciesClustering_step1</a></code> function.</p></td>
     </tr>
     <tr>
       <th>no.clusters</th>
@@ -193,63 +193,65 @@ one for each <code>GROUP</code> value. Such an object can be obtained with the
 
     <p>A <code>list</code> object with 2 elements :</p>
 <dl class='dl-horizontal'>
-  <dt>determ.sp</dt><dd><p>a <code>vector</code> with the names of all determinant species</p></dd>
-  <dt>determ.all</dt><dd><p>a <code>data.frame</code> containing all species (determinant
-  and non-determinant) with 10 columns :
+  <dt>determ.sp</dt><dd><p>a <code>vector</code> with the names of all determinant 
+  species</p></dd>
+  <dt>determ.all</dt><dd><p>a <code>data.frame</code> containing all species 
+  (determinant and non-determinant) with 10 columns :
   <ul>
 <li><p><code>pfg</code> : the ID of the PFG (group + no.cluster)</p></li>
-<li><p><code>group</code> : name of sub-dataset</p></li>
+<li><p><code>group</code> : name of data subset</p></li>
 <li><p><code>no.cluster</code> : cluster number</p></li>
 <li><p><code>sp</code> : name of species</p></li>
 <li><p><code>ID</code> : species number in each PFG</p></li>
-<li><p><code>sp.mean.dist</code> : species mean distance to other species of
+<li><p><code>sp.mean.dist</code> : species mean distance to other species of 
     the same PFG</p></li>
-<li><p><code>allSp.mean</code> : mean(sp.mean.dist) within the PFG</p></li>
-<li><p><code>allSp.min</code> : mean(sp.mean.dist) - 1.64 * sd(sp.mean.dist)
-    within the PFG</p></li>
-<li><p><code>allSp.max</code> : mean(sp.mean.dist) + 1.64 * sd(sp.mean.dist)
-    within the PFG</p></li>
+<li><p><code>allSp.mean</code> : <code><a href='https://rdrr.io/r/base/mean.html'>mean(sp.mean.dist)</a></code> within the PFG</p></li>
+<li><p><code>allSp.min</code> : <code>mean(sp.mean.dist) - 1.64 * 
+    sd(sp.mean.dist)</code> within the PFG</p></li>
+<li><p><code>allSp.max</code> : <code>mean(sp.mean.dist) + 1.64 * 
+    sd(sp.mean.dist)</code> within the PFG</p></li>
 <li><p><code>toSuppr</code> : 0 if determinant species, 1 otherwise</p></li>
 </ul></p></dd>
 
 </dl>
 
 <p>Two <code>PRE_FATE_CLUSTERING_[...].pdf</code> files are created :</p><dl class='dl-horizontal'>
-  <dt><code class="file">STEP_2C <br /> distantSpecies</code></dt><dd><p>to visualize in each PFG the
-  distribution of mean distance of each species to other species, and
+  <dt><code class="file">STEP_2C <br /> distantSpecies</code></dt><dd><p>to visualize in each PFG the 
+  distribution of mean distance of each species to other species, and 
   non-determinant species which are outside the distribution</p></dd>
-  <dt><code class="file">STEP_2C <br /> PCO</code></dt><dd><p>to visualize in each PFG the distribution
+  <dt><code class="file">STEP_2C <br /> PCO</code></dt><dd><p>to visualize in each PFG the distribution 
   of species, with and without non-determinant species</p></dd>
 
 </dl>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function allows one to obtain a classification of <em>dominant</em>
-species into Plant Functional Groups (PFG), and the <em>determinant</em>
+    <p>This function allows one to obtain a classification of <em>dominant</em> 
+species into Plant Functional Groups (PFG), and the <em>determinant</em> 
 species based on these PFGs.</p>
 <p><strong>What is the difference between <code>dominant</code> and
 <code>determinant</code> species ?</strong></p>
 <ul>
-<li><p><strong>Dominant</strong> species are species representative of an
-  environment or a studied area, in terms of number of releves or
-  abundance values. They can be found with the <code>PRE_FATE.selectDominant</code>
-  function of this package. These dominant species are used to build PFG
-  with the <code>PRE_FATE.speciesClustering_step1</code> function.</p></li>
-<li><p>Once PFG are built, <strong>determinant</strong> species are defined as
-  refined subsets of dominant species within each PFG. The process is
+<li><p><strong>Dominant</strong> species are species representative of an 
+  environment or a studied area, in terms of number of releves or 
+  abundance values. They can be found with the 
+  <code><a href='PRE_FATE.selectDominant.html'>PRE_FATE.selectDominant</a></code> function of this package. 
+  These dominant species are used to build PFG with the 
+  <code><a href='PRE_FATE.speciesClustering_step1.html'>PRE_FATE.speciesClustering_step1</a></code> function.</p></li>
+<li><p>Once PFG are built, <strong>determinant</strong> species are defined as 
+  refined subsets of dominant species within each PFG. The process is 
   detailed below :
   <ul>
 <li><p>each dominant species is assigned to a PFG</p></li>
 <li><p>within each PFG :</p><ul>
-<li><p>for each species, compute its mean distance to the other
+<li><p>for each species, compute its mean distance to the other 
       species within the PFG (<code>sp.mean.dist</code>)</p></li>
 <li><p>calculate the mean value of all these mean distances
       (<code>allSp.mean</code>)</p></li>
 <li><p>calculate the deviation values around this mean value
       (<code>allSp.min</code> and <code>allSp.max</code>)</p></li>
-<li><p>determinant species are the ones that are included between
-      these deviation values</p></li>
+<li><p>determinant species are the ones that are included between 
+      those deviation values</p></li>
 </ul></li>
 </ul></p></li>
 </ul>
@@ -286,7 +288,7 @@ species based on these PFGs.</p>
 <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>sp.CLUST</span>)
 
 <span class='co'>## Select number of clusters and find determinant species</span>
-<span class='no'>sp.DETERM</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.speciesClustering_step2</span>(<span class='kw'>clust.dendograms</span> <span class='kw'>=</span> <span class='no'>sp.CLUST</span>$<span class='no'>clust.dendograms</span>
+<span class='no'>sp.DETERM</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.speciesClustering_step2</span>(<span class='kw'>clust.dendrograms</span> <span class='kw'>=</span> <span class='no'>sp.CLUST</span>$<span class='no'>clust.dendrograms</span>
                                              , <span class='kw'>no.clusters</span> <span class='kw'>=</span> <span class='no'>PNE_PFG</span>$<span class='no'>nb.clusters</span>
                                              , <span class='kw'>mat.species.DIST</span> <span class='kw'>=</span> <span class='no'>sp.DIST</span>)
 

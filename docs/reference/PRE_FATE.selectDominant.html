@@ -36,8 +36,8 @@
 
 
 <meta property="og:title" content="Selection of dominant species from abundance releves — PRE_FATE.selectDominant" />
-<meta property="og:description" content="This script is designed to select dominant species from
-             abundance records, and habitat if the information is available." />
+<meta property="og:description" content="This script is designed to select dominant species from 
+abundance records, and habitat if the information is available." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -155,8 +155,8 @@
     </div>
 
     <div class="ref-description">
-    <p>This script is designed to select dominant species from
-             abundance records, and habitat if the information is available.</p>
+    <p>This script is designed to select dominant species from 
+abundance records, and habitat if the information is available.</p>
     </div>
 
     <pre class="usage"><span class='fu'>PRE_FATE.selectDominant</span>(<span class='kw'>mat.site.species.abund</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sites</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -164,16 +164,16 @@
   <span class='kw'>selectionRule.quanti</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>selectionRule.min_mean_abund</span> <span class='kw'>=</span> <span class='fl'>0</span>,
   <span class='kw'>selectionRule.min_no_abund_over25</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>doHabitatSelection</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>selectionRule.min_percent_habitat</span> <span class='kw'>=</span> <span class='fl'>0.05</span>,
-  <span class='kw'>selectionRule.min_no_habitat</span> <span class='kw'>=</span> <span class='fl'>5</span>)</pre>
+  <span class='kw'>selectionRule.min_no_habitat</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>opt.doPlot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>mat.site.species.abund</th>
-      <td><p>a <code>data.frame</code> with at least 3 columns :
-sites ID, species ID, abundance values as frequence values(e.g. Braun Blanquet)
-with <code>NA</code> when no information, habitat ID (optional)</p></td>
+      <td><p>a <code>data.frame</code> with at least 3 columns : 
+sites ID, species ID, abundance values as frequence values (e.g. Braun 
+Blanquet) with <code>NA</code> when no information, habitat ID (optional)</p></td>
     </tr>
     <tr>
       <th>sites</th>
@@ -185,8 +185,8 @@ with <code>NA</code> when no information, habitat ID (optional)</p></td>
     </tr>
     <tr>
       <th>abund</th>
-      <td><p>a <code>vector</code> with abundance values (e.g. Braun Blanquet) with <code>NA</code>
-when no information</p></td>
+      <td><p>a <code>vector</code> with abundance values (e.g. Braun Blanquet) 
+with <code>NA</code> when no information</p></td>
     </tr>
     <tr>
       <th>habitat</th>
@@ -194,38 +194,46 @@ when no information</p></td>
     </tr>
     <tr>
       <th>selectionRule.quanti</th>
-      <td><p>minimum quantile of total number of sites that
-must occupy the species (between 0 and 1)</p></td>
+      <td><p>default <code>0</code>. Minimum quantile of total 
+number of sites that must occupy the species (between 0 and 1)</p></td>
     </tr>
     <tr>
       <th>selectionRule.min_mean_abund</th>
-      <td><p>minimal average abundance of the species</p></td>
+      <td><p>default <code>0</code>. Minimal average 
+abundance of the species</p></td>
     </tr>
     <tr>
       <th>selectionRule.min_no_abund_over25</th>
-      <td><p>minimum number of sites where species
-is dominant (&gt;= 25 % of coverage)</p></td>
+      <td><p>default <code>0</code>. Minimum number 
+of sites where species is dominant (<code>&gt;= 25 %</code> of coverage)</p></td>
     </tr>
     <tr>
       <th>doHabitatSelection</th>
-      <td><p>default <code>FALSE</code>. If <code>TRUE</code>, selection is also done including
-constraints on habitat class</p></td>
+      <td><p>default <code>FALSE</code>. If <code>TRUE</code>, selection 
+is also done including constraints on habitat class</p></td>
     </tr>
     <tr>
       <th>selectionRule.min_percent_habitat</th>
-      <td><p>minimum percentage of habitat class
-occupied by the species (between 0 and 1)</p></td>
+      <td><p>default <code>0.05</code> 
+(<em>optional</em>). Minimum percentage of habitat class occupied by the 
+species (between 0 and 1)</p></td>
     </tr>
     <tr>
       <th>selectionRule.min_no_habitat</th>
-      <td><p>minimum number of sites of specific habitat
-occupied by the species</p></td>
+      <td><p>default <code>5</code> (<em>optional</em>). 
+Minimum number of sites of specific habitat occupied by the species</p></td>
+    </tr>
+    <tr>
+      <th>opt.doPlot</th>
+      <td><p>default <code>TRUE</code> (<em>optional</em>). If <code>TRUE</code>, 
+plot(s) will be processed, otherwise only the calculation and 
+reorganization of outputs will occur, be saved and returned.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>data.frame</code> with all the species selected and the values of
+    <p>A <code>data.frame</code> with all the species selected and the values of 
 parameters used to make the selection :</p>
 <dl class='dl-horizontal'>
   <dt>stat.no_sites_recorded</dt><dd><p>number of sites with information
@@ -235,14 +243,16 @@ parameters used to make the selection :</p>
   <dt>stat.abund_mean</dt><dd><p>mean abundance (coverage percentage)</p></dd>
   <dt>stat.abund_max</dt><dd><p>maximal abundance (coverage percentage)</p></dd>
   <dt>stat.no_sites <br /> abund_max</dt><dd><p>number of sites with maximal abundance</p></dd>
-  <dt>stat.no_sites <br /> abund_over25</dt><dd><p>number of sites with abundance &gt;= 25</p></dd>
-  <dt>SELECTION</dt><dd><p>dataset in which the species has been selected as dominant
-  <br /> (global = all data, or habitat, or global + habitat...)</p></dd>
+  <dt>stat.no_sites <br /> abund_over25</dt><dd><p>number of sites with abundance 
+  <code>&gt;= 25</code></p></dd>
+  <dt>SELECTION</dt><dd><p>dataset in which the species has been selected as 
+  dominant <br /> (global = all data, or habitat, or global + habitat...)</p></dd>
 
 </dl>
 
 
-<p>The information is written in <code>PRE_FATE_DOMINANT_species_selected_[...].csv</code> files :</p><dl class='dl-horizontal'>
+<p>The information is written in 
+<code>PRE_FATE_DOMINANT_species_selected_[...].csv</code> files :</p><dl class='dl-horizontal'>
   <dt><code class="file">COMPLETE_TABLE</code></dt><dd><p>the complete
   table of selected species with all the statistics described above</p></dd>
   <dt><code class="file">SPECIES_ONLY</code></dt><dd><p>only the names /
@@ -251,58 +261,60 @@ parameters used to make the selection :</p>
 </dl>
 
 <p>Two <code>PRE_FATE_DOMINANT_[...].pdf</code> files are also created :</p><dl class='dl-horizontal'>
-  <dt><code class="file">STEP_1 <br /> selectionCriteria</code></dt><dd><p>to visualize the values of
+  <dt><code class="file">STEP_1 <br /> selectionCriteria</code></dt><dd><p>to visualize the values of 
   species metrics, and the criteria used to make the selection</p></dd>
-  <dt><code class="file">STEP_2 <br /> selectedSpecies</code></dt><dd><p>to visualize the values of
+  <dt><code class="file">STEP_2 <br /> selectedSpecies</code></dt><dd><p>to visualize the values of 
   species metrics, for the selected dominant species</p></dd>
 
 </dl>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function provides a way to <em>select dominant species based on
-abundance sampling information</em>. <br />
-This information can be given either directly in the form of a <code>data.frame</code>,
-or indirectly with a <code>vector</code> for each required information (sites,
-species, abundance, habitat class - optional).</p>
+    <p>This function provides a way to <strong>select dominant species based on 
+abundance sampling information</strong>. <br />
+This information can be given either directly in the form of a 
+<code>data.frame</code>, or indirectly with a <code>vector</code> for each required 
+information (sites, species, abundance, habitat class - <em>optional</em>).</p>
 
 <p>2 rules are applied to make the species selection :</p>
 <dl class='dl-horizontal'>
   <dt><strong>1. Presence releves</strong></dt><dd><p><dl class='dl-horizontal'>
-    <dt><strong>on number of sites</strong></dt><dd><p>the species should be found in a certain
-    number of sites, which corresponds to the quantile <code>selectionRule.quanti</code>
-    of all the number of records per species <br /> <em>This should ensure that
-    the selected species are covering all the studied area (or at least a
-    determining part of it, assuming that the releves are well distributed over
-    all the zone).</em></p></dd></dl></p></dd>
+    <dt><strong>on number of sites</strong></dt><dd><p>the species should be found in a 
+    certain number of sites, which corresponds to the quantile 
+    <code>selectionRule.quanti</code> of all the number of records per species 
+    <br /> <em>This should ensure that the selected species are covering all 
+    the studied area (or at least a determining part of it, assuming that 
+    the releves are well distributed over all the zone).</em></p></dd></dl></p></dd>
   <dt><strong>2. Abundance releves : </strong></dt><dd><p>both conditions must be fullfilled
   <dl class='dl-horizontal'>
     <dt><strong>on average abundance</strong></dt><dd><p>the species should have a mean
     abundance superior or equal to <code>selectionRule.min_mean_abund</code></p></dd>
-    <dt><strong>on dominancy</strong></dt><dd><p>the species should be dominant (i.e. represent
-    at least 25 % of the coverage of the site) in at least
-    <code>selectionRule.min_no_abund_over25</code> sites</p></dd>
-    <dt></dt><dd><p><em>This should ensure that the selected species, besides being
-    abundant, are</em> frequently <em>abundant, meaning not ultra specific to a
-    particular area.</em></p></dd></dl></p></dd>
+    <dt><strong>on dominancy</strong></dt><dd><p>the species should be dominant (i.e. 
+    represent at least <code>25 %</code> of the coverage of the site) in at 
+    least <code>selectionRule.min_no_abund_over25</code> sites</p></dd>
+    <dt></dt><dd><p><em>This should ensure that the selected species, besides 
+    being abundant, are</em> frequently <em>abundant, meaning not ultra 
+    specific to a particular area.</em></p></dd></dl></p></dd>
 
 </dl>
 
-<p>If habitat information is available (e.g. type of environment : urban,
-desert, grassland... ; type of vegetation : shrubs, forest, alpine grasslands... ;
-etc), 1 rule with 2 conditions can be added to the selection steps,
-<em>in order to keep species that are not dominant at the large scale
-but could be representative of a specific habitat</em> :</p>
+<p>If habitat information is available (e.g. type of environment : urban, 
+desert, grassland... ; type of vegetation : shrubs, forest, alpine 
+grasslands... ; etc), 1 rule with 2 conditions can be added to the 
+selection steps, <em>in order to keep species that are not dominant at 
+the large scale but could be representative of a specific habitat</em> :</p>
 <dl class='dl-horizontal'>
-  <dt><strong>3. Releves per habitat : </strong></dt><dd><p>both conditions must be fullfilled
+  <dt><strong>3. Releves per habitat : </strong></dt><dd><p>both conditions must be 
+  fullfilled
   <dl class='dl-horizontal'>
-    <dt><strong>on occupancy</strong></dt><dd><p>the species should occupy at least
+    <dt><strong>on occupancy</strong></dt><dd><p>the species should occupy at least 
     <code>selectionRule.min_percent_habitat</code> % of a landclass</p></dd>
-    <dt><strong>on representation</strong></dt><dd><p>the species should be found in at least
-    <code>selectionRule.min_no_habitat</code> sites of a landclass</p></dd>
-    <dt></dt><dd><p><em>In the same way than for rule 2., this should allow to select
-    species that are not globally dominant but that can be representative of a
-    specific habitat, both in terms of abundance and dominancy.</em></p></dd></dl></p></dd>
+    <dt><strong>on representation</strong></dt><dd><p>the species should be found in at 
+    least <code>selectionRule.min_no_habitat</code> sites of a landclass</p></dd>
+    <dt></dt><dd><p><em>In the same way than for rule 2., this should allow to 
+    select species that are not globally dominant but that can be 
+    representative of a specific habitat, both in terms of abundance and 
+    dominancy.</em></p></dd></dl></p></dd>
 
 </dl>
 

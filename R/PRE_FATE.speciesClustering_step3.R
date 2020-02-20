@@ -6,9 +6,12 @@
 ##'
 ##' @author Maya Guéguen
 ##' 
-##' @description This script is designed to create 
+##' @description This script is designed to calculate PFG traits values based 
+##' on determinant species traits values. Either the \code{mean} or the 
+##' \code{median} is used depending on the trait class (i.e. numeric or 
+##' categorical).
 ##'              
-##' @param mat.species.traits A \code{data.frame} with at least 3 columns :
+##' @param mat.species.traits a \code{data.frame} with at least 3 columns :
 ##' \describe{
 ##'   \item{\code{species}}{the ID of each determinant species (see 
 ##'   \code{\link{PRE_FATE.speciesClustering_step2}})}
@@ -21,56 +24,52 @@
 ##' 
 ##' @details
 ##' 
-##' This function allows one to obtain 'average' functional trait values for
-##' each Plant Functional Group, based on values at the determinant species
+##' This function allows one to obtain '\emph{average}' functional trait values 
+##' for each Plant Functional Group, based on values at the determinant species
 ##' level.
 ##' 
 ##' Those functional traits can be :
 ##' 
 ##' \describe{
-##'   \item{type}{or life-form, based on Raunkier. It should be either \code{H} 
-##'   (herbaceous), \code{C} (chamaephyte) or \code{P} (phanerophyte) for now}
+##'   \item{PFG}{name of the PFG}
+##'   \item{type}{or life-form, based on Raunkier. \cr It should be either 
+##'   \code{H} (herbaceous), \code{C} (chamaephyte) or \code{P} (phanerophyte) 
+##'   for now}
 ##'   \item{height}{the maximum or average height that reach the species}
 ##'   \item{maturity}{the age from which the species can reproduce}
 ##'   \item{longevity}{the maximum or average lifespan of the species}
 ##'   \item{dispersal}{the age from which the species can reproduce}
-##'   \item{light}{a value corresponding to the light preference of the species
-##'   (from preference for shade to full light)}
-##'   \item{soil_contrib}{a value between 0 and 10 corresponding to the 
-##'   Ellenberg nitrogen value of the PFG}
-##'   \item{soil_tolerance}{the range of soil tolerance : small(1) or large(2)}
+##'   \item{light}{a value corresponding to the light preference of the species 
+##'   (from shade-lover to preference for full light)}
+##'   \item{soil_contrib}{a value corresponding to the preference of the 
+##'   species for soil fertility (e.g. Ellenberg, Flora Indicativa)}
+##'   \item{soil_tolerance}{the range of soil tolerance : 1 (small) or 2 
+##'   (large)}
 ##'   \item{palatability}{the appetence of each species from null to high
 ##'    \cr \cr}
 ##' }
 ##' 
 ##' 
+##' @return A \code{data.frame} containing new trait values for each Plant 
+##' Functional Group (PFG) :
 ##' 
-##' 
-##' @return A \code{.txt} file per PFG into the 
-##' \code{name.simulation/DATA/PFGS/SUCC/} directory with the following 
-##' parameters :
-##' 
-##' \itemize{
-##'   \item NAME : name of the PFG
-##'   \item MATURITY : the maturity age of the PFG \emph{(in years)}
-##'   \item LONGEVITY : the PFG life span \emph{(in years)}
-##'   \item MAX_ABUNDANCE : the maximal (qualitative) shade that the PFG is able
-##'   to produce \cr \emph{(1: Low 2: Medium 3: High)}
-##'   \item IMM_SIZE : the relative size of the immature PFG \cr
-##'   \emph{(0: 0\% 1: 10\% 2: 20\% 3: 30\% 4: 40\% 5: 50\% 6: 60\% 7: 70\% 
-##'   8: 80\% 9: 90\% 10: 100\%)}
-##'   \item CHANG_STR_AGES : the ages at which the PFG goes in the upper stratum
-##'   \cr \emph{(in years, put a value higher than the PFG life span if it is 
-##'   not supposed to rise a stratum)}
-##'   \item SEED_POOL_LIFE : the maximal number of years seeds are able to
-##'   survive (for active and dormant pool)
-##'   \item SEED_DORMANCY : are the seeds dormant or not \emph{(0: No 1: Yes)
-##'   \cr \cr}
+##' \describe{
+##'   \item{type}{either \code{H} (herbaceous), \code{C} (chamaephyte) or 
+##'   \code{P} (phanerophyte) for now}
+##'   \item{height}{mean}
+##'   \item{maturity}{mean}
+##'   \item{longevity}{mean}
+##'   \item{dispersal}{median}
+##'   \item{light}{median}
+##'   \item{soil_contrib}{mean + round to one digit}
+##'   \item{soil_tolerance}{mean + round to one digit}
+##'   \item{palatability}{mean + round to one digit
+##'    \cr \cr}
 ##' }
 ##' 
-##' A \code{SUCC_COMPLETE_TABLE.csv} file summarizing information for all groups
-##' into the \code{name.simulation/DATA/PFGS/} directory.  
-##' This file can be used to parameterize the disturbance files.
+##' The information is written in \code{PRE_FATE_PFG_TRAITS_TABLE.csv} file. \cr
+##' This file can be used to build parameter files to run a \code{FATE-HD} 
+##' simulation.
 ##' 
 ##' @keywords functional group, traits
 ##' 
@@ -104,29 +103,6 @@
 ##'
 ## END OF HEADER ###############################################################
 
-# setwd("/home/gueguen/Documents/_TUTOS/3_R/_PACKAGES/RFate/data_supplements/")
-# 
-# mat.traits = fread("TRAITS_FATE_190111.csv")
-# loadd(selected.sp)
-# tab_pfg = selected.sp[, c("CODE_CBNA", "PFG")]
-# mat.traits = merge(tab_pfg, mat.traits, by = "CODE_CBNA", all.x = TRUE)
-# 
-# mat.traits.sp = data.frame(species = paste0("X", mat.traits$CODE_CBNA))
-# mat.traits.sp$PFG = as.character(mat.traits$PFG)
-# mat.traits.sp$type = as.character(mat.traits$LHIST)
-# mat.traits.sp$type[which(mat.traits.sp$type %in% c("Chamaephyte_S"))] = "C"
-# mat.traits.sp$type[which(mat.traits.sp$type %in% c("Chamaephyte_H", "Geophyte_Hemicryptophyte", "Therophyte", "Hydrophyte"))] = "H"
-# mat.traits.sp$type[which(mat.traits.sp$type %in% c("Phanerophyte"))] = "P"
-# mat.traits.sp$height = as.numeric(as.character(mat.traits$HEIGHT))
-# mat.traits.sp$longevity = as.numeric(as.character(mat.traits$LONGEVITY))
-# mat.traits.sp$maturity = as.numeric(as.character(mat.traits$MATURITY))
-# mat.traits.sp$palatability = factor(mat.traits$PALATABILITY, 1:4)
-# mat.traits.sp$dispersal = factor(mat.traits$DISPERSAL, 1:7)
-# mat.traits.sp$light = factor(mat.traits$LIGHT, 1:5)
-# mat.traits.sp$soil_contrib = as.numeric(as.character(mat.traits$NITROGEN))
-# mat.traits.sp$soil_tolerance = as.numeric(as.character(mat.traits$NITROGEN_TOLERANCE))
-# 
-# tmp = PRE_FATE.speciesClustering_step3(mat.species.traits = mat.traits.sp)
 
 PRE_FATE.speciesClustering_step3 = function(
   mat.species.traits

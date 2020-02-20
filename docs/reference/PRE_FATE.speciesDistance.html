@@ -6,8 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Computation of distances between species
-based on traits and niche overlap — PRE_FATE.speciesDistance • RFate</title>
+<title>Computation of distances between species based on traits and niche 
+overlap — PRE_FATE.speciesDistance • RFate</title>
 
 
 <!-- jquery -->
@@ -36,10 +36,10 @@ based on traits and niche overlap — PRE_FATE.speciesDistance • RFate</title>
 
 
 
-<meta property="og:title" content="Computation of distances between species
-based on traits and niche overlap — PRE_FATE.speciesDistance" />
-<meta property="og:description" content="This script is designed to create a distance matrix between
-species, combining functional distances (based on functional trait values)
+<meta property="og:title" content="Computation of distances between species based on traits and niche 
+overlap — PRE_FATE.speciesDistance" />
+<meta property="og:description" content="This script is designed to create a distance matrix between 
+species, combining functional distances (based on functional trait values) 
 and niche overlap (based on co-occurrence of species)." />
 <meta name="twitter:card" content="summary" />
 
@@ -152,15 +152,15 @@ and niche overlap (based on co-occurrence of species)." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Computation of distances between species
-based on traits and niche overlap</h1>
+    <h1>Computation of distances between species based on traits and niche 
+overlap</h1>
     <small class="dont-index">Source: <a href='https://github.com/MayaGueguen/RFate.git/blob/master/R/PRE_FATE.speciesDistance.R'><code>R/PRE_FATE.speciesDistance.R</code></a></small>
     <div class="hidden name"><code>PRE_FATE.speciesDistance.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This script is designed to create a distance matrix between
-species, combining functional distances (based on functional trait values)
+    <p>This script is designed to create a distance matrix between 
+species, combining functional distances (based on functional trait values) 
 and niche overlap (based on co-occurrence of species).</p>
     </div>
 
@@ -173,25 +173,25 @@ and niche overlap (based on co-occurrence of species).</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>mat.species.traits</th>
-      <td><p>A <code>data.frame</code> with at least 3 columns :</p><dl class='dl-horizontal'>
+      <td><p>a <code>data.frame</code> with at least 3 columns :</p><dl class='dl-horizontal'>
 <dt><code>species</code></dt><dd><p>the ID of each studied species</p></dd>
-<dt><code>GROUP</code></dt><dd><p>a factor variable containing grouping information to
-  divide the species into sub data sets (see <code>Details</code>)</p></dd>
+<dt><code>GROUP</code></dt><dd><p>a factor variable containing grouping information to 
+divide the species into data subsets (see <code>Details</code>)</p></dd>
 <dt><code>...</code></dt><dd><p>one column for each functional trait</p></dd>
 
 </dl></td>
     </tr>
     <tr>
       <th>mat.species.overlap</th>
-      <td><p>Two options :</p><ul>
+      <td><p>two options :</p><ul>
 <li><p>a <code>data.frame</code> with 2 columns :</p><dl class='dl-horizontal'>
     <dt><code>species</code></dt><dd><p>the ID of each studied species</p></dd>
     <dt><code>raster</code></dt><dd><p>path to raster file with species distribution</p></dd>
   
 </dl></li>
-<li><p>a dissimilarity structure representing the niche overlap between
-  each pair of species. It can be a <code>dist</code> object, a <code>niolap</code>
-  object, or simply a <code>matrix</code>.</p></li>
+<li><p>a dissimilarity structure representing the niche overlap between 
+  each pair of species. <br /> It can be a <code>dist</code> object, a 
+  <code>niolap</code> object, or simply a <code>matrix</code>.</p></li>
 </ul></td>
     </tr>
     <tr>
@@ -201,9 +201,9 @@ percentage of missing values (NA) allowed for each trait (between 0 and 1)</p></
     </tr>
     <tr>
       <th>opt.max.percent.similarSpecies</th>
-      <td><p>default <code>0.25</code> (<em>optional</em>). 
-Maximum percentage of similar species (same value) allowed for each trait 
-(between 0 and 1)</p></td>
+      <td><p>default <code>0.25</code> 
+(<em>optional</em>). Maximum percentage of similar species (same value) 
+allowed for each trait (between 0 and 1)</p></td>
     </tr>
     <tr>
       <th>opt.min.sd</th>
@@ -219,46 +219,46 @@ of species, or a <code>list</code> of <code>dist</code> objects, one for each
 <code>GROUP</code> value.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function allows one to obtain a distance matrix between species, based
+    <p>This function allows one to obtain a distance matrix between species, based 
 on two types of distance information :</p>
 <ol>
 <li><p><strong>Functional traits : </strong>
   <ul>
-<li><p>The <code>GROUP</code> column is required if species must be separated
-    to have one final distance matrix per <code>GROUP</code> value. If the column
+<li><p>The <code>GROUP</code> column is required if species must be separated 
+    to have one final distance matrix per <code>GROUP</code> value. If the column 
     is missing, all species will be considered as part of a unique dataset.</p></li>
 <li><p>The traits can be qualitative or quantitative, but previously
-    identified as such (i.e. with the use of functions such as
+    identified as such (i.e. with the use of functions such as 
     <code>as.numeric</code>, <code>as.factor</code> and <code>ordered</code>).</p></li>
-<li><p>Functional distance matrix is calculated with Gower dissimilarity,
-    using the <code>gowdis</code> function from <span class="pkg">FD</span> package.</p></li>
+<li><p>Functional distance matrix is calculated with Gower 
+    dissimilarity, using the <code>gowdis</code> function from <span class="pkg">FD</span> package.</p></li>
 <li><p>This function allows <code>NA</code> values. However, too many missing 
     values lead to misleading results. Hence, 3 parameters allow the user 
     to play with the place given to missing values and help the function to 
     select traits that will be used for the distance computation :</p><dl class='dl-horizontal'>
       <dt>opt.max.percent.NA</dt><dd><p>traits with too many missing values are 
       removed</p></dd>
-      <dt>opt.max.percent.similarSpecies</dt><dd><p>traits with too many similar 
-      values are removed</p></dd>
+      <dt>opt.max.percent <br /> .similarSpecies</dt><dd><p>traits with too many 
+      similar values are removed</p></dd>
       <dt>opt.min.sd</dt><dd><p>traits with too little variability are removed</p></dd></dl></li>
 </ul></p></li>
 <li><p><strong>Niche overlap : </strong>
   <ul>
-<li><p>If a <code>data.frame</code> is given, the degree of niche overlap will
-    be computed using the <code>niche.overlap</code> function from <span class="pkg">phyloclim</span>
-    package.</p></li>
+<li><p>If a <code>data.frame</code> is given, the degree of niche overlap will 
+    be computed using the <code>niche.overlap</code> function from 
+    <span class="pkg">phyloclim</span> package. <br /> <br /> <br /></p></li>
 </ul></p></li>
 </ol>
 
-<p>Functional distances and niche overlap informations are then <strong>combined</strong>
-according to the following formula :</p>
-<p>$$\text{mat.DIST}_{sub-group} = [ \text{mat.OVERLAP}_{sub-group} +
-\text{mat.FUNCTIONAL}_{sub-group} * n_{traits} ] / [ n_{traits} + 1 ]$$</p>
-<p>meaning that distance matrix obtained from functional information is
-weighted by the number of traits used.</p>
+<p>Functional distances and niche overlap informations are then 
+<strong>combined</strong> according to the following formula :</p>
+<p>$$\text{mat.DIST}_{sub-group} = \frac{[ \text{mat.OVERLAP}_{sub-group} +
+\text{mat.FUNCTIONAL}_{sub-group} * n_{traits} ]}{[ n_{traits} + 1 ]}$$</p>
+<p>meaning that <strong>distance matrix obtained from functional information 
+is weighted by the number of traits used</strong>.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/FD/man/gowdis.html'>gowdis</a></code></p></div>
+    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/FD/man/gowdis.html'>gowdis</a></code>, <code><a href='https://rdrr.io/pkg/phyloclim/man/niche.overlap.html'>niche.overlap</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples">
@@ -267,6 +267,8 @@ weighted by the number of traits used.</p>
 
 <span class='co'>## PNE_PFG$dom.traits : data.frame</span>
 <span class='co'>## PNE_PFG$dom.dist_overlap : niolap object</span>
+
+<span class='co'>## GIVING ERROR : too many NA</span>
 <span class='co'># sp.DIST = PRE_FATE.speciesDistance(mat.species.traits = PNE_PFG$dom.traits</span>
 <span class='co'>#                                    , mat.species.overlap = PNE_PFG$dom.dist_overlap</span>
 <span class='co'>#                                    , opt.max.percent.NA = 0</span>

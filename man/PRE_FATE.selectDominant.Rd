@@ -9,41 +9,47 @@ PRE_FATE.selectDominant(mat.site.species.abund = NULL, sites = NULL,
   selectionRule.quanti = 0, selectionRule.min_mean_abund = 0,
   selectionRule.min_no_abund_over25 = 0, doHabitatSelection = FALSE,
   selectionRule.min_percent_habitat = 0.05,
-  selectionRule.min_no_habitat = 5)
+  selectionRule.min_no_habitat = 5, opt.doPlot = TRUE)
 }
 \arguments{
-\item{mat.site.species.abund}{a \code{data.frame} with at least 3 columns :
-sites ID, species ID, abundance values as frequence values(e.g. Braun Blanquet)
-with \code{NA} when no information, habitat ID (optional)}
+\item{mat.site.species.abund}{a \code{data.frame} with at least 3 columns : 
+sites ID, species ID, abundance values as frequence values (e.g. Braun 
+Blanquet) with \code{NA} when no information, habitat ID (optional)}
 
 \item{sites}{a \code{vector} with sites ID}
 
 \item{species}{a \code{vector} with species ID}
 
-\item{abund}{a \code{vector} with abundance values (e.g. Braun Blanquet) with \code{NA}
-when no information}
+\item{abund}{a \code{vector} with abundance values (e.g. Braun Blanquet) 
+with \code{NA} when no information}
 
 \item{habitat}{a \code{vector} with habitat ID}
 
-\item{selectionRule.quanti}{minimum quantile of total number of sites that
-must occupy the species (between 0 and 1)}
+\item{selectionRule.quanti}{default \code{0}. Minimum quantile of total 
+number of sites that must occupy the species (between 0 and 1)}
 
-\item{selectionRule.min_mean_abund}{minimal average abundance of the species}
+\item{selectionRule.min_mean_abund}{default \code{0}. Minimal average 
+abundance of the species}
 
-\item{selectionRule.min_no_abund_over25}{minimum number of sites where species
-is dominant (>= 25 \% of coverage)}
+\item{selectionRule.min_no_abund_over25}{default \code{0}. Minimum number 
+of sites where species is dominant (\code{>= 25 \%} of coverage)}
 
-\item{doHabitatSelection}{default \code{FALSE}. If \code{TRUE}, selection is also done including
-constraints on habitat class}
+\item{doHabitatSelection}{default \code{FALSE}. If \code{TRUE}, selection 
+is also done including constraints on habitat class}
 
-\item{selectionRule.min_percent_habitat}{minimum percentage of habitat class
-occupied by the species (between 0 and 1)}
+\item{selectionRule.min_percent_habitat}{default \code{0.05} 
+(\emph{optional}). Minimum percentage of habitat class occupied by the 
+species (between 0 and 1)}
 
-\item{selectionRule.min_no_habitat}{minimum number of sites of specific habitat
-occupied by the species}
+\item{selectionRule.min_no_habitat}{default \code{5} (\emph{optional}). 
+Minimum number of sites of specific habitat occupied by the species}
+
+\item{opt.doPlot}{default \code{TRUE} (\emph{optional}). If \code{TRUE}, 
+plot(s) will be processed, otherwise only the calculation and 
+reorganization of outputs will occur, be saved and returned.}
 }
 \value{
-A \code{data.frame} with all the species selected and the values of
+A \code{data.frame} with all the species selected and the values of 
 parameters used to make the selection :
 
 \describe{
@@ -54,13 +60,15 @@ parameters used to make the selection :
   \item{stat.abund_mean}{mean abundance (coverage percentage)}
   \item{stat.abund_max}{maximal abundance (coverage percentage)}
   \item{stat.no_sites \cr abund_max}{number of sites with maximal abundance}
-  \item{stat.no_sites \cr abund_over25}{number of sites with abundance >= 25}
-  \item{SELECTION}{dataset in which the species has been selected as dominant
-  \cr (global = all data, or habitat, or global + habitat...)}
+  \item{stat.no_sites \cr abund_over25}{number of sites with abundance 
+  \code{>= 25}}
+  \item{SELECTION}{dataset in which the species has been selected as 
+  dominant \cr (global = all data, or habitat, or global + habitat...)}
 }
 
 
-The information is written in \code{PRE_FATE_DOMINANT_species_selected_[...].csv} files :
+The information is written in 
+\code{PRE_FATE_DOMINANT_species_selected_[...].csv} files :
 \describe{
   \item{\file{COMPLETE_TABLE}}{the complete
   table of selected species with all the statistics described above}
@@ -70,22 +78,22 @@ The information is written in \code{PRE_FATE_DOMINANT_species_selected_[...].csv
 
 Two \code{PRE_FATE_DOMINANT_[...].pdf} files are also created : 
 \describe{
-  \item{\file{STEP_1 \cr selectionCriteria}}{to visualize the values of
+  \item{\file{STEP_1 \cr selectionCriteria}}{to visualize the values of 
   species metrics, and the criteria used to make the selection}
-  \item{\file{STEP_2 \cr selectedSpecies}}{to visualize the values of
+  \item{\file{STEP_2 \cr selectedSpecies}}{to visualize the values of 
   species metrics, for the selected dominant species}
 }
 }
 \description{
-This script is designed to select dominant species from
-             abundance records, and habitat if the information is available.
+This script is designed to select dominant species from 
+abundance records, and habitat if the information is available.
 }
 \details{
-This function provides a way to \emph{select dominant species based on
+This function provides a way to \strong{select dominant species based on 
 abundance sampling information}. \cr
-This information can be given either directly in the form of a \code{data.frame},
-or indirectly with a \code{vector} for each required information (sites,
-species, abundance, habitat class - optional).
+This information can be given either directly in the form of a 
+\code{data.frame}, or indirectly with a \code{vector} for each required 
+information (sites, species, abundance, habitat class - \emph{optional}).
 
 
 2 rules are applied to make the species selection :
@@ -93,44 +101,46 @@ species, abundance, habitat class - optional).
 \describe{
   \item{\strong{1. Presence releves}}{
   \describe{
-    \item{\strong{on number of sites}}{the species should be found in a certain
-    number of sites, which corresponds to the quantile \code{selectionRule.quanti}
-    of all the number of records per species \cr \emph{This should ensure that
-    the selected species are covering all the studied area (or at least a
-    determining part of it, assuming that the releves are well distributed over
-    all the zone).}}
+    \item{\strong{on number of sites}}{the species should be found in a 
+    certain number of sites, which corresponds to the quantile 
+    \code{selectionRule.quanti} of all the number of records per species 
+    \cr \emph{This should ensure that the selected species are covering all 
+    the studied area (or at least a determining part of it, assuming that 
+    the releves are well distributed over all the zone).}}
   }
   }
   \item{\strong{2. Abundance releves : }}{both conditions must be fullfilled
   \describe{
     \item{\strong{on average abundance}}{the species should have a mean
     abundance superior or equal to \code{selectionRule.min_mean_abund}}
-    \item{\strong{on dominancy}}{the species should be dominant (i.e. represent
-    at least 25 \% of the coverage of the site) in at least
-    \code{selectionRule.min_no_abund_over25} sites}
-    \item{}{\emph{This should ensure that the selected species, besides being
-    abundant, are} frequently \emph{abundant, meaning not ultra specific to a
-    particular area.}}
+    \item{\strong{on dominancy}}{the species should be dominant (i.e. 
+    represent at least \code{25 \%} of the coverage of the site) in at 
+    least \code{selectionRule.min_no_abund_over25} sites}
+    \item{}{\emph{This should ensure that the selected species, besides 
+    being abundant, are} frequently \emph{abundant, meaning not ultra 
+    specific to a particular area.}}
   }
   }
 }
 
-If habitat information is available (e.g. type of environment : urban,
-desert, grassland... ; type of vegetation : shrubs, forest, alpine grasslands... ;
-etc), 1 rule with 2 conditions can be added to the selection steps,
-\emph{in order to keep species that are not dominant at the large scale
-but could be representative of a specific habitat} :
+If habitat information is available (e.g. type of environment : urban, 
+desert, grassland... ; type of vegetation : shrubs, forest, alpine 
+grasslands... ; etc), 1 rule with 2 conditions can be added to the 
+selection steps, \emph{in order to keep species that are not dominant at 
+the large scale but could be representative of a specific habitat} :
 
 \describe{
-  \item{\strong{3. Releves per habitat : }}{both conditions must be fullfilled
+  \item{\strong{3. Releves per habitat : }}{both conditions must be 
+  fullfilled
   \describe{
-    \item{\strong{on occupancy}}{the species should occupy at least
+    \item{\strong{on occupancy}}{the species should occupy at least 
     \code{selectionRule.min_percent_habitat} \% of a landclass}
-    \item{\strong{on representation}}{the species should be found in at least
-    \code{selectionRule.min_no_habitat} sites of a landclass}
-    \item{}{\emph{In the same way than for rule 2., this should allow to select
-    species that are not globally dominant but that can be representative of a
-    specific habitat, both in terms of abundance and dominancy.}}
+    \item{\strong{on representation}}{the species should be found in at 
+    least \code{selectionRule.min_no_habitat} sites of a landclass}
+    \item{}{\emph{In the same way than for rule 2., this should allow to 
+    select species that are not globally dominant but that can be 
+    representative of a specific habitat, both in terms of abundance and 
+    dominancy.}}
   }
   }
 }

@@ -10,17 +10,17 @@ PRE_FATE.speciesClustering_step1(mat.species.DIST)
 \item{mat.species.DIST}{a \code{dist} object corresponding to the distance
 between each pair of species, or a \code{list} of \code{dist} objects, one
 for each \code{GROUP} value. Such an object can be obtained with the
-\code{PRE_FATE.speciesDistance} function.}
+\code{\link{PRE_FATE.speciesDistance}} function.}
 }
 \value{
 A \code{list} object with 2 elements :
 
 \describe{
-  \item{clust.dendograms}{a \code{list} object with as many objects of class
-  \code{hclust} as subset of data}
+  \item{clust.dendrograms}{a \code{list} object with as many objects of class 
+  \code{hclust} as data subsets}
   \item{clust.evaluation}{a \code{data.frame} with 4 columns :
   \itemize{
-    \item \code{group} : name of sub-dataset
+    \item \code{group} : name of data subset
     \item \code{nb.cluster} : number of clusters used for the clustering
     \item \code{variable} : evaluation metrics' name
     \item \code{value} : value of evaluation metric
@@ -30,86 +30,88 @@ A \code{list} object with 2 elements :
 
 Two \code{PRE_FATE_CLUSTERING_[...].pdf} files are created : 
 \describe{
-  \item{\file{STEP_1A \cr clusteringMethod}}{to account for the chosen
+  \item{\file{STEP_1A \cr clusteringMethod}}{to account for the chosen 
   clustering method}
-  \item{\file{STEP_1B \cr numberOfClusters}}{for decision support, to help
-  the user to choose the adequate number of clusters to be used into
+  \item{\file{STEP_1B \cr numberOfClusters}}{for decision support, to help 
+  the user to choose the adequate number of clusters to be used into 
   the \code{hclust} method}
 }
 }
 \description{
-This script is designed to create clusters of species based on
-a distance matrix between those species. Several metrics are computed to
-evaluate these clusters and a graphic is produced to help the user to choose
-the best number of clusters (by subset of data if distance matrices are
-given for each of them).
+This script is designed to create clusters of species based 
+on a distance matrix between those species. Several metrics are computed 
+to evaluate these clusters and a graphic is produced to help the user to 
+choose the best number of clusters (by subset of data if distance matrices 
+are given for each of them).
 }
 \details{
-This function allows one to obtain dendograms based on a distance matrix
+This function allows one to obtain dendrograms based on a distance matrix 
 between species.
 
-As for the \code{PRE_FATE.speciesDistance} method, clustering can be made
-for sub-datasets, conditioning that \code{mat.species.DIST} parameter is
-given as a \code{list} of \code{dist} object (instead of a \code{dist}
+As for the \code{\link{PRE_FATE.speciesDistance}} method, clustering can be 
+run for data subsets, conditioning that \code{mat.species.DIST} parameter 
+is given as a \code{list} of \code{dist} object (instead of a \code{dist} 
 object alone).
 
 The process is as follows :
 
 \describe{
   \item{\strong{1. Choice of the \cr optimal \cr clustering method}}{
-  hierarchical clustering on the dissimilarity matrix is realized with the
-  \code{hclust} function.
+  hierarchical clustering on the dissimilarity matrix is realized with the 
+  \code{hclust} function from \pkg{stats} package.
   \itemize{
-    \item Several methods are available for the agglomeration : complete,
-    ward.D, ward.D2, single, average (UPGMA), mcquitty (WPGMA), median
+    \item Several methods are available for the agglomeration : complete, 
+    ward.D, ward.D2, single, average (UPGMA), mcquitty (WPGMA), median 
     (WPGMC) and centroid (UPGMC).
-    \item Mouchet et el. (2008) proposed of measure of similarity between
-    the input distance and the one obtained with the clustering which must
+    \item Mouchet et el. (2008) proposed of measure of similarity between 
+    the input distance and the one obtained with the clustering which must 
     be minimized to help finding the best clustering method :
     \deqn{ 1 - cor( input.DIST, clustering.DIST ) ^ 2}
   }
-  \strong{For each agglomeration method, this measure is calculated. The
-  method that minimizes it is kept and used for further analyses. A graphic
+  \strong{For each agglomeration method, this measure is calculated. The 
+  method that minimizes it is kept and used for further analyses. A graphic 
   (\code{STEP_1A}) is made to account for the comparison of these methods.}
   }
   
-  \item{\strong{2. Evaluation of the \cr clustering}}{once the hierarchical
+  \item{\strong{2. Evaluation of the \cr clustering}}{once the hierarchical 
   clustering is done, the number of clusters to keep should be chosen.
   
   To do that, several metrics are computed :
   \itemize{
-    \item{\emph{Dunn index (\code{mdunn}) : }}{ratio of the smallest distance
-    between observations not in the same cluster to the largest intra-cluster
-    distance. Value between zero and infinity, and should be maximized.}
+    \item{\emph{Dunn index (\code{mdunn}) : }}{ratio of the smallest 
+    distance between observations not in the same cluster to the largest 
+    intra-cluster distance. Value between zero and infinity, and should be 
+    maximized.}
     \item{\emph{Meila's Variation of Information index (\code{mVI}) : }}
-    {measures the amount of information lost and gained in changing between
-    2 clusterings. Should be minimized.}
-    \item{\emph{Coefficient of determination (\code{R2}) : }}{value between
-    zero and one. Should be maximized.}
-    \item{\emph{Calinski and Harabasz index (\code{ch}) : }}{the higher
+    {measures the amount of information lost and gained in changing 
+    between 2 clusterings. Should be minimized.}
+    \item{\emph{Coefficient of determination (\code{R2}) : }}{value 
+    between zero and one. Should be maximized.}
+    \item{\emph{Calinski and Harabasz index (\code{ch}) : }}{the higher 
     the value, the "better" is the solution.}
-    \item{\emph{Corrected rand index (\code{Rand}) : }}{measures the
-    similarity between two data clusterings. Value between 0 and 1, with 0
-    indicating that the two data clusters do not agree on any pair of points
-    and 1 indicating that the data clusters are exactly the same.}
+    \item{\emph{Corrected rand index (\code{Rand}) : }}{measures the 
+    similarity between two data clusterings. Value between 0 and 1, with 0 
+    indicating that the two data clusters do not agree on any pair of 
+    points and 1 indicating that the data clusters are exactly the same.}
     \item{\emph{Average silhouette width (\code{av.sil}) : }}{Observations 
-    with a large s(i) (almost 1) are very well clustered, a small s(i)
-    (around 0) means that the observation lies between two clusters, and
-    observations with a negative s(i) are probably placed in the wrong cluster.
-    Should be maximized.}
+    with a large s(i) (almost 1) are very well clustered, a small s(i) 
+    (around 0) means that the observation lies between two clusters, and 
+    observations with a negative s(i) are probably placed in the wrong 
+    cluster. Should be maximized.}
   }
-  \strong{A graphic (\code{STEP_1B}) is produced, giving the values of these
-  metrics in function of the number of clusters used. Number of clusters with
-  evaluation metrics' values among the 3 best are highlighted to help the user
-  to make his/her optimal choice.}
+  \strong{A graphic (\code{STEP_1B}) is produced, giving the values of 
+  these metrics in function of the number of clusters used. Number of clusters 
+  with evaluation metrics' values among the 3 best are highlighted to help the 
+  user to make his/her optimal choice.}
   }
 }
 }
 \note{
-\strong{The function does not return ONE dendogram} (or as many as given
-dissimilarity structures) \strong{but a list with all tested numbers of clusters.}
-One final dendogram can then be obtained using this result as a parameter in
-the \code{PRE_FATE.speciesClustering_step2} function.
+\strong{The function does not return ONE dendrogram} (or as many as 
+given dissimilarity structures) \strong{but a list with all tested numbers 
+of clusters.} One final dendrogram can then be obtained using this result 
+as a parameter in the \code{\link{PRE_FATE.speciesClustering_step2}} 
+function.
 }
 \examples{
 
