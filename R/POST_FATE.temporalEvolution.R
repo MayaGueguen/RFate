@@ -382,7 +382,7 @@ POST_FATE.temporalEvolution = function(
       
       fwrite(tabAbund
              , file = paste0(name.simulation
-                             , "/RESULTS/POST_FATE_evolution_abundance_PIXEL_"
+                             , "/RESULTS/POST_FATE_TABLE_PIXEL_evolution_abundance_"
                              , basename(dir.save)
                              , ".csv")
              , row.names = FALSE)
@@ -445,7 +445,7 @@ POST_FATE.temporalEvolution = function(
         
         fwrite(tabLight
                , file = paste0(name.simulation
-                               , "/RESULTS/POST_FATE_evolution_light_PIXEL_"
+                               , "/RESULTS/POST_FATE_TABLE_PIXEL_evolution_light_"
                                , basename(dir.save)
                                , ".csv")
                , row.names = FALSE)
@@ -494,7 +494,7 @@ POST_FATE.temporalEvolution = function(
           
           fwrite(tabSoil
                  , file = paste0(name.simulation
-                                 , "/RESULTS/POST_FATE_evolution_soil_PIXEL_"
+                                 , "/RESULTS/POST_FATE_TABLE_PIXEL_evolution_soil_"
                                  , basename(dir.save)
                                  , ".csv")
                  , row.names = FALSE)
@@ -515,16 +515,16 @@ POST_FATE.temporalEvolution = function(
       cat("\n")
       
       message(paste0("\n The output files \n"
-                     , " > POST_FATE_evolution_abundance_PIXEL_"
+                     , " > POST_FATE_TABLE_PIXEL_evolution_abundance_"
                      , basename(dir.save)
                      , ".csv \n"
                      , ifelse(doLight
-                            , paste0(" > POST_FATE_evolution_light_PIXEL_"
+                            , paste0(" > POST_FATE_TABLE_PIXEL_evolution_light_"
                                      , basename(dir.save)
                                      , ".csv \n")
                             , "")
                      , ifelse(doSoil
-                            , paste0(" > POST_FATE_evolution_soil_PIXEL_"
+                            , paste0(" > POST_FATE_TABLE_PIXEL_evolution_soil_"
                                      , basename(dir.save)
                                      , ".csv \n")
                             , "")

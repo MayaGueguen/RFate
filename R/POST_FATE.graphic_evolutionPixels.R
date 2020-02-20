@@ -118,6 +118,7 @@ POST_FATE.graphic_evolutionPixels = function(
     abs.simulParams = paste0(name.simulation, "/PARAM_SIMUL/", file.simulParam)
     .testParam_existFile(abs.simulParams)
   }
+  
   #################################################################################################
   
   res = foreach (abs.simulParam = abs.simulParams) %do%
@@ -143,7 +144,7 @@ POST_FATE.graphic_evolutionPixels = function(
 
     ## Get the abundance table -----------------------------------------------------
     file.abundance = paste0(name.simulation
-                            , "/RESULTS/POST_FATE_evolution_abundance_PIXEL_"
+                            , "/RESULTS/POST_FATE_TABLE_PIXEL_evolution_abundance_"
                             , basename(dir.save)
                             , ".csv")
     .testParam_existFile(file.abundance)
@@ -163,7 +164,7 @@ POST_FATE.graphic_evolutionPixels = function(
     if (doLight)
     {
       file.light = paste0(name.simulation
-                              , "/RESULTS/POST_FATE_evolution_light_PIXEL_"
+                              , "/RESULTS/POST_FATE_TABLE_PIXEL_evolution_light_"
                               , basename(dir.save)
                               , ".csv")
       .testParam_existFile(file.light)
@@ -179,7 +180,7 @@ POST_FATE.graphic_evolutionPixels = function(
     if (doSoil)
     {
       file.soil = paste0(name.simulation
-                          , "/RESULTS/POST_FATE_evolution_soil_PIXEL_"
+                          , "/RESULTS/POST_FATE_TABLE_PIXEL_evolution_soil_"
                           , basename(dir.save)
                           , ".csv")
       .testParam_existFile(file.soil)
@@ -225,7 +226,7 @@ POST_FATE.graphic_evolutionPixels = function(
     
     write.csv(distriAbund
               , file = paste0(name.simulation
-                              , "/RESULTS/POST_FATE_evolution_pixels_"
+                              , "/RESULTS/POST_FATE_TABLE_PIXEL_evolution_"
                               , ifelse(length(IDS) <= 5, paste0(IDS, collapse = "_"), length(IDS))
                               , "_"
                               , basename(dir.save)
@@ -233,7 +234,7 @@ POST_FATE.graphic_evolutionPixels = function(
               , row.names = FALSE)
     
     message(paste0("\n The output file \n"
-                   , " > POST_FATE_evolution_pixels_"
+                   , " > POST_FATE_TABLE_PIXEL_evolution_"
                    , ifelse(length(IDS) <= 5, paste0(IDS, collapse = "_"), length(IDS))
                    , "_"
                    , basename(dir.save)
@@ -274,7 +275,7 @@ POST_FATE.graphic_evolutionPixels = function(
         .getGraphics_theme()
       
       ggsave(filename = paste0(name.simulation
-                               , "/RESULTS/POST_FATE_GRAPHIC_evolution_pixels_"
+                               , "/RESULTS/POST_FATE_GRAPHIC_A_evolution_"
                                , ifelse(length(IDS) <= 5, paste0(IDS, collapse = "_"), length(IDS))
                                , "_"
                                , basename(dir.save)

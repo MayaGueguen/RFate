@@ -597,16 +597,16 @@ POST_FATE.graphic_validationStatistics = function(
           ## save table ------------------------------------------------------------------
           write.csv(mat.valid
                     , file = paste0(name.simulation
-                                    , "/RESULTS/POST_FATE_prediction_YEAR_"
+                                    , "/RESULTS/POST_FATE_TABLE_YEAR_"
                                     , y
-                                    , "_VALIDATION_STATISTICS_"
+                                    , "_validationStatistics_"
                                     , basename(dir.save)
                                     , ".csv")
                     , row.names = FALSE)
           
-          message(paste0("\n The output file POST_FATE_prediction_YEAR_"
+          message(paste0("\n The output file POST_FATE_TABLE_YEAR_"
                          , y
-                         , "_VALIDATION_STATISTICS_"
+                         , "_validationStatistics_"
                          , basename(dir.save)
                          , ".csv has been successfully created !\n"))
           
@@ -708,7 +708,7 @@ POST_FATE.graphic_validationStatistics = function(
     ## SAVE plots into file ------------------------------------------------------
     if (opt.doPlot && !is.null(plot_list[[1]]))
     {
-      pdf(file = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_C_validationStatistics_", basename(dir.save), ".pdf")
+      pdf(file = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_B_validationStatistics_", basename(dir.save), ".pdf")
           , width = 12, height = 10)
       for (y in years)
       {

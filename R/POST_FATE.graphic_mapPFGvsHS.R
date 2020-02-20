@@ -256,7 +256,7 @@ POST_FATE.graphic_mapPFGvsHS = function(
     ## SAVE plots into file ------------------------------------------------------
     if (!is.null(plot_list[[1]]))
     {
-      pdf(file = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_C_map_PFGvsHS_", basename(dir.save), ".pdf")
+      pdf(file = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_B_map_PFGvsHS_", basename(dir.save), ".pdf")
           , width = 10, height = 10)
       for (y in years)
       {

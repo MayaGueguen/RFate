@@ -151,7 +151,7 @@ POST_FATE.graphic_evolutionCoverage = function(
     
     ## Get the abundance table -----------------------------------------------------
     file.abundance = paste0(name.simulation
-                            , "/RESULTS/POST_FATE_evolution_abundance_PIXEL_"
+                            , "/RESULTS/POST_FATE_TABLE_PIXEL_evolution_abundance_"
                             , basename(dir.save)
                             , ".csv")
     .testParam_existFile(file.abundance)
@@ -198,23 +198,23 @@ POST_FATE.graphic_evolutionCoverage = function(
     
     write.csv(distri.melt
               , file = paste0(name.simulation
-                              , "/RESULTS/POST_FATE_evolution_spaceOccupancy_"
+                              , "/RESULTS/POST_FATE_TABLE_ZONE_evolution_spaceOccupancy_"
                               , basename(dir.save)
                               , ".csv")
               , row.names = TRUE)
     
     write.csv(distriAbund.melt
               , file = paste0(name.simulation
-                              , "/RESULTS/POST_FATE_evolution_abundance_"
+                              , "/RESULTS/POST_FATE_TABLE_ZONE_evolution_abundance_"
                               , basename(dir.save)
                               , ".csv")
               , row.names = TRUE)
     
     message(paste0("\n The output files \n"
-                   , " > POST_FATE_evolution_spaceOccupancy_"
+                   , " > POST_FATE_TABLE_ZONE_evolution_spaceOccupancy_"
                    , basename(dir.save)
                    , ".csv \n"
-                   , " > POST_FATE_evolution_abundance_"
+                   , " > POST_FATE_TABLE_ZONE_evolution_abundance_"
                    , basename(dir.save)
                    , ".csv \n"
                    , "have been successfully created !\n"))
