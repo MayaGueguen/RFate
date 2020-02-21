@@ -2,50 +2,63 @@
 % Please edit documentation in R/PRE_FATE.params_saveYears.R
 \name{PRE_FATE.params_saveYears}
 \alias{PRE_FATE.params_saveYears}
-\title{Create \emph{SAVE} parameter files for a \code{FATE-HD}
-simulation}
+\title{Create \emph{SAVE} parameter files for a \code{FATE-HD} simulation}
 \usage{
 PRE_FATE.params_saveYears(name.simulation, years.maps = NULL,
   years.objects = NULL, opt.folder.name = NULL)
 }
 \arguments{
-\item{name.simulation}{a \code{string} that corresponds to the main directory
-or simulation name of the \code{FATE-HD} simulation}
+\item{name.simulation}{a \code{string} that corresponds to the main 
+directory or simulation name of the \code{FATE-HD} simulation}
 
-\item{years.maps}{a \code{vector} of simulation years at which PFG abundance
-maps will be saved}
+\item{years.maps}{a \code{vector} of simulation years at which PFG 
+abundance maps (as well as maps of light and soil resources if these 
+modules are activated) will be saved}
 
-\item{years.objects}{a \code{vector} of simulation years at which \code{FATE-HD}
-simulation state will be saved}
+\item{years.objects}{a \code{vector} of simulation years at which 
+\code{FATE-HD} simulation state will be saved}
 
-\item{opt.folder.name}{(\emph{optional}) \cr a \code{string} that corresponds 
-to the name of the folder that will be created into the 
+\item{opt.folder.name}{(\emph{optional}) \cr a \code{string} that 
+corresponds to the name of the folder that will be created into the 
 \code{name.simulation/DATA/SAVE/} directory to store the results}
 }
 \value{
 Two \code{.txt} files into the \code{name.simulation/DATA/SAVE/}
 directory with one line for each simulation year for which the raster maps /
-\code{FATE-HD} object are to be saved. \cr \cr
+\code{FATE-HD} object are to be saved :
+
+ \itemize{
+   \item \code{SAVE_YEARS_maps.txt}
+   \item \code{SAVE_YEARS_objects.txt} \cr \cr
+ }
 
 If the \code{opt.folder.name} has been used, the files will be into the folder
 \code{name.simulation/DATA/SAVE/opt.folder.name/}
 }
 \description{
-This script is designed to create a parameter file containing
-simulation years at which the \code{FATE-HD} software must save rasters of
-PFG abundances or simulation objects.
+This script is designed to create a parameter file containing 
+simulation years at which the \code{FATE-HD} software must save rasters of 
+PFG abundances (as well as light and soil resources if these modules are 
+activated) and/or simulation objects.
 }
 \details{
-\code{FATE-HD} software allows the user to save two different types of outputs :
+\code{FATE-HD} software allows the user to save two different types of 
+outputs :
 
 \describe{
-  \item{Raster maps}{PFG maps can be saved for all specified simulation years.
-  It includes maps per PFG per strata and summary maps per PFG for all height
-  strata combined. \cr Raster format used is depending on input data format. It
-  can be either \code{.img} or \code{.tif}.}
-  \item{Model objects}{using \code{BOOST} library and its serialization functions,
-  \code{FATE-HD} is able to save a simulation at a specific time. This object
-  allows the user to restart a simulation from this precise state.}
+  \item{Raster maps}{PFG abundance maps can be saved for all specified 
+  simulation years. It includes maps per PFG per strata and summary maps 
+  per PFG for all height strata combined. \cr If the light and / or soil 
+  modules are also activated (see 
+  \code{\link{PRE_FATE.params_globalParameters}}), maps for light and / or 
+  soil resources are also saved. \cr Raster format used is depending on 
+  input data format. It can be either \code{.img} or \code{.tif}.}
+  \item{Model objects}{using \code{BOOST} library and its serialization 
+  functions, \code{FATE-HD} is able to save a simulation at a specific 
+  time. This object allows the user to restart a simulation from this 
+  precise state by specifying its name within the \emph{Simul_parameters} 
+  file with the \code{SAVED_STATE} flag (see 
+  \code{\link{PRE_FATE.params_simulParameters}}).}
 }
 }
 \examples{

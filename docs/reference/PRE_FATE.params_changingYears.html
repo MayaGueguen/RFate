@@ -38,9 +38,10 @@ simulation — PRE_FATE.params_changingYears • RFate</title>
 
 <meta property="og:title" content="Create <em>SCENARIO</em> parameter files for a <code>FATE-HD</code>
 simulation — PRE_FATE.params_changingYears" />
-<meta property="og:description" content="This script is designed to create a parameter file containing 
-simulation years at which the FATE-HD software must save rasters of 
-PFG abundances or simulation objects." />
+<meta property="og:description" content="This script is designed to create several parameter files to 
+manage the update of simulation maps : 1) simulation years at which the 
+maps should be changed ; 2) filenames corresponding to the new simulation 
+maps to be used." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -159,9 +160,10 @@ simulation</h1>
     </div>
 
     <div class="ref-description">
-    <p>This script is designed to create a parameter file containing 
-simulation years at which the <code>FATE-HD</code> software must save rasters of 
-PFG abundances or simulation objects.</p>
+    <p>This script is designed to create several parameter files to 
+manage the update of simulation maps : 1) simulation years at which the 
+maps should be changed ; 2) filenames corresponding to the new simulation 
+maps to be used.</p>
     </div>
 
     <pre class="usage"><span class='fu'>PRE_FATE.params_changingYears</span>(<span class='no'>name.simulation</span>, <span class='no'>type.changing</span>, <span class='no'>mat.changing</span>,
@@ -172,34 +174,36 @@ PFG abundances or simulation objects.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>name.simulation</th>
-      <td><p>a <code>string</code> that corresponds to the main directory 
-or simulation name of the <code>FATE-HD</code> simulation</p></td>
+      <td><p>a <code>string</code> that corresponds to the main 
+directory or simulation name of the <code>FATE-HD</code> simulation</p></td>
     </tr>
     <tr>
       <th>type.changing</th>
       <td><p>a <code>string</code> to choose the concerned module : <br />
-succession (<em>MASK</em>), habitat suitability (<em>HS</em>) or disturbances 
-(<em>DIST</em>)</p></td>
+<code>MASK</code> (succession), <code>HS</code> (habitat suitability) or <code>DIST</code> 
+(disturbances)</p></td>
     </tr>
     <tr>
       <th>mat.changing</th>
-      <td><p>a <code>data.frame</code> with 3 columns : year, order, file.name</p></td>
+      <td><p>a <code>data.frame</code> with 3 columns : <code>year</code>, 
+<code>order</code>, <code>file.name</code></p></td>
     </tr>
     <tr>
       <th>opt.folder.name</th>
-      <td><p>(<em>optional</em>) <br /> a <code>string</code> that corresponds 
-to the name of the folder that will be created into the 
+      <td><p>(<em>optional</em>) <br /> a <code>string</code> that 
+corresponds to the name of the folder that will be created into the 
 <code>name.simulation/DATA/SCENARIO/</code> directory to store the results</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Several <code>.txt</code> files into the <code>name.simulation/DATA/SCENARIO/</code> :</p><ul>
-<li><p><code>type.changing_changing_times.txt</code> : one line for each simulation 
-  year</p></li>
-<li><p><code>type.changing_changing_masks_t</code>...<code>.txt</code> : one line for each
-  new raster file <br /> <br /></p></li>
+    <p>Several <code>.txt</code> files into the 
+<code>name.simulation/DATA/SCENARIO/</code> :</p><ul>
+<li><p><code>type.changing_changing_times.txt</code> : one line for each 
+  simulation year</p></li>
+<li><p><code>type.changing_changing_masks_t</code>..<em>year</em>..<code>.txt</code> : 
+  one line for each new raster file <br /> <br /></p></li>
 </ul>
 
 <p>If the <code>opt.folder.name</code> has been used, the files will be into the folder
@@ -209,43 +213,45 @@ to the name of the folder that will be created into the
     <p>Several modules of the <code>FATE-HD</code> software allow the user to simulate 
 changes over time :</p>
 <dl class='dl-horizontal'>
-  <dt>succession</dt><dd><p>the CORE module is based on a raster mask, <strong>with 
-  either 0 or 1</strong> within each pixel, 1 corresponding to the cells in which 
-  the PFG can try to colonize. 
-  The available pixels can change through time, to simulate habitat loss 
-  (e.g. urbanization) or gain (e.g. glacial retreat).</p></dd>
-  <dt>habitat suitability</dt><dd><p><strong>if this MODULE is activated</strong> within the 
-  <em>Global_parameters</em> file, PFG colonization depends on maps given for 
-  each PFG within the <em>Simul_parameters</em> file with the <code>PFG_HAB_MASK</code>
-  flag. <br /> These maps must contain <strong>values between 0 and 1</strong> 
-  corresponding to the probability of presence of the group in each pixel. 
-  These probabilities can change through time, as they often come from 
-  Species Distribution Models (SDM) that can be based for example on climatic
-  variables.</p></dd>
-  <dt>disturbances</dt><dd><p><strong>if this MODULE is activated</strong> within the 
-  <em>Global_parameters</em> file, each disturbance relies on a raster given  
-  within the <em>Simul_parameters</em> file with the <code>DIST_MASK</code>
-  flag. <br />
-  As for succession, this mask is filled <strong>with either 0 or 1</strong> to 
-  define where the perturbation occurs. The impacted pixels can also change 
-  through time (e.g. change in forestry practices, expansion of grazing areas, 
-  etc). <br /> <br /></p></dd>
+  <dt>succession</dt><dd><p>the CORE module is based on a raster mask given within 
+  the <em>Simul_parameters</em> file with the <code>MASK</code> flag (see 
+  <code><a href='PRE_FATE.params_simulParameters.html'>PRE_FATE.params_simulParameters</a></code>), <strong>with either 0 or 
+  1</strong> within each pixel, 1 corresponding to the cells in which the PFG can 
+  try to colonize. The available pixels can change through time, to 
+  simulate habitat loss (e.g. urbanization) or gain (e.g. glacial retreat).</p></dd>
+  <dt>habitat suitability</dt><dd><p><strong>if this MODULE is activated</strong> (see 
+  <code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>), PFG colonization depends 
+  on maps given for each PFG within the <em>Simul_parameters</em> file with 
+  the <code>PFG_HAB_MASK</code> flag (see 
+  <code><a href='PRE_FATE.params_simulParameters.html'>PRE_FATE.params_simulParameters</a></code>). <br /> These maps must 
+  contain <strong>values between 0 and 1</strong> corresponding to the probability 
+  of presence of the group in each pixel. These probabilities can change 
+  through time, as they often come from Species Distribution Models (SDM) 
+  that can be based for example on climatic variables.</p></dd>
+  <dt>disturbances</dt><dd><p><strong>if this MODULE is activated</strong> (see 
+  <code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>), each disturbance relies 
+  on a raster given within the <em>Simul_parameters</em> file with the 
+  <code>DIST_MASK</code> flag (see <code><a href='PRE_FATE.params_simulParameters.html'>PRE_FATE.params_simulParameters</a></code>).
+   <br /> As for succession, this mask is filled <strong>with either 0 or 1</strong> 
+  to define where the perturbation occurs. The impacted pixels can also 
+  change through time (e.g. change in forestry practices, expansion of 
+  grazing areas, etc). <br /> <br /></p></dd>
 
 </dl>
 
 
-<p>These changes require two types of information, that must be presented within
-two different files :</p>
+<p>These changes require two types of information, that must be presented 
+within two different files :</p>
 <dl class='dl-horizontal'>
-  <dt>Years of change <br /> <code>column</code> year</dt><dd><p>all simulation years at which
-   the raster files of a specific module (succession, habitat suitability, 
-   disturbance) will be changed. To each given year must correspond a file 
-   with the names of the new maps.</p></dd>
-  <dt>New maps / mask <br /> <code>column</code> file.name</dt><dd><p>for a specific year of 
-  change, the names of the new raster files, always in the same order. <br /> 
-  It can be either <code>.img</code> or <code>.tif</code>.</p></dd>
-  <dt>Order of the filenames <br /> <code>column</code> order</dt><dd><p><code>integer</code> to be 
-  sure to always give the raster maps in the same order.</p></dd>
+  <dt>Years of change <br /> <code>column</code> year</dt><dd><p>all simulation years at 
+  which the raster files of a specific module (succession, habitat 
+  suitability, disturbance) will be changed. To each given year must 
+  correspond a file with the names of the new maps.</p></dd>
+  <dt>New maps / mask <br /> <code>column</code> file.name</dt><dd><p>for a specific year 
+  of change, the names of the new raster files, always in the same order. 
+  <br /> It can be either <code>.img</code> or <code>.tif</code>.</p></dd>
+  <dt>Order of the filenames <br /> <code>column</code> order</dt><dd><p><code>integer</code> to 
+  be sure to always give the raster maps in the same order.</p></dd>
 
 </dl>
 

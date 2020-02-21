@@ -6,8 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create <em>SAVE</em> parameter files for a <code>FATE-HD</code>
-simulation — PRE_FATE.params_saveYears • RFate</title>
+<title>Create <em>SAVE</em> parameter files for a <code>FATE-HD</code> simulation — PRE_FATE.params_saveYears • RFate</title>
 
 
 <!-- jquery -->
@@ -36,11 +35,11 @@ simulation — PRE_FATE.params_saveYears • RFate</title>
 
 
 
-<meta property="og:title" content="Create <em>SAVE</em> parameter files for a <code>FATE-HD</code>
-simulation — PRE_FATE.params_saveYears" />
-<meta property="og:description" content="This script is designed to create a parameter file containing
-simulation years at which the FATE-HD software must save rasters of
-PFG abundances or simulation objects." />
+<meta property="og:title" content="Create <em>SAVE</em> parameter files for a <code>FATE-HD</code> simulation — PRE_FATE.params_saveYears" />
+<meta property="og:description" content="This script is designed to create a parameter file containing 
+simulation years at which the FATE-HD software must save rasters of 
+PFG abundances (as well as light and soil resources if these modules are 
+activated) and/or simulation objects." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -152,16 +151,16 @@ PFG abundances or simulation objects." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create <em>SAVE</em> parameter files for a <code>FATE-HD</code>
-simulation</h1>
+    <h1>Create <em>SAVE</em> parameter files for a <code>FATE-HD</code> simulation</h1>
     <small class="dont-index">Source: <a href='https://github.com/MayaGueguen/RFate.git/blob/master/R/PRE_FATE.params_saveYears.R'><code>R/PRE_FATE.params_saveYears.R</code></a></small>
     <div class="hidden name"><code>PRE_FATE.params_saveYears.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This script is designed to create a parameter file containing
-simulation years at which the <code>FATE-HD</code> software must save rasters of
-PFG abundances or simulation objects.</p>
+    <p>This script is designed to create a parameter file containing 
+simulation years at which the <code>FATE-HD</code> software must save rasters of 
+PFG abundances (as well as light and soil resources if these modules are 
+activated) and/or simulation objects.</p>
     </div>
 
     <pre class="usage"><span class='fu'>PRE_FATE.params_saveYears</span>(<span class='no'>name.simulation</span>, <span class='kw'>years.maps</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -172,23 +171,24 @@ PFG abundances or simulation objects.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>name.simulation</th>
-      <td><p>a <code>string</code> that corresponds to the main directory
-or simulation name of the <code>FATE-HD</code> simulation</p></td>
+      <td><p>a <code>string</code> that corresponds to the main 
+directory or simulation name of the <code>FATE-HD</code> simulation</p></td>
     </tr>
     <tr>
       <th>years.maps</th>
-      <td><p>a <code>vector</code> of simulation years at which PFG abundance
-maps will be saved</p></td>
+      <td><p>a <code>vector</code> of simulation years at which PFG 
+abundance maps (as well as maps of light and soil resources if these 
+modules are activated) will be saved</p></td>
     </tr>
     <tr>
       <th>years.objects</th>
-      <td><p>a <code>vector</code> of simulation years at which <code>FATE-HD</code>
-simulation state will be saved</p></td>
+      <td><p>a <code>vector</code> of simulation years at which 
+<code>FATE-HD</code> simulation state will be saved</p></td>
     </tr>
     <tr>
       <th>opt.folder.name</th>
-      <td><p>(<em>optional</em>) <br /> a <code>string</code> that corresponds 
-to the name of the folder that will be created into the 
+      <td><p>(<em>optional</em>) <br /> a <code>string</code> that 
+corresponds to the name of the folder that will be created into the 
 <code>name.simulation/DATA/SAVE/</code> directory to store the results</p></td>
     </tr>
     </table>
@@ -197,20 +197,32 @@ to the name of the folder that will be created into the
 
     <p>Two <code>.txt</code> files into the <code>name.simulation/DATA/SAVE/</code>
 directory with one line for each simulation year for which the raster maps /
-<code>FATE-HD</code> object are to be saved. <br /> <br /></p>
+<code>FATE-HD</code> object are to be saved :</p>
+<p></p><ul>
+<li><p><code>SAVE_YEARS_maps.txt</code></p></li>
+<li><p><code>SAVE_YEARS_objects.txt</code> <br /> <br /></p></li>
+</ul>
+
 <p>If the <code>opt.folder.name</code> has been used, the files will be into the folder
 <code>name.simulation/DATA/SAVE/opt.folder.name/</code></p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p><code>FATE-HD</code> software allows the user to save two different types of outputs :</p>
+    <p><code>FATE-HD</code> software allows the user to save two different types of 
+outputs :</p>
 <dl class='dl-horizontal'>
-  <dt>Raster maps</dt><dd><p>PFG maps can be saved for all specified simulation years.
-  It includes maps per PFG per strata and summary maps per PFG for all height
-  strata combined. <br /> Raster format used is depending on input data format. It
-  can be either <code>.img</code> or <code>.tif</code>.</p></dd>
-  <dt>Model objects</dt><dd><p>using <code>BOOST</code> library and its serialization functions,
-  <code>FATE-HD</code> is able to save a simulation at a specific time. This object
-  allows the user to restart a simulation from this precise state.</p></dd>
+  <dt>Raster maps</dt><dd><p>PFG abundance maps can be saved for all specified 
+  simulation years. It includes maps per PFG per strata and summary maps 
+  per PFG for all height strata combined. <br /> If the light and / or soil 
+  modules are also activated (see 
+  <code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>), maps for light and / or 
+  soil resources are also saved. <br /> Raster format used is depending on 
+  input data format. It can be either <code>.img</code> or <code>.tif</code>.</p></dd>
+  <dt>Model objects</dt><dd><p>using <code>BOOST</code> library and its serialization 
+  functions, <code>FATE-HD</code> is able to save a simulation at a specific 
+  time. This object allows the user to restart a simulation from this 
+  precise state by specifying its name within the <em>Simul_parameters</em> 
+  file with the <code>SAVED_STATE</code> flag (see 
+  <code><a href='PRE_FATE.params_simulParameters.html'>PRE_FATE.params_simulParameters</a></code>).</p></dd>
 
 </dl>
 

@@ -9,78 +9,83 @@ PRE_FATE.params_changingYears(name.simulation, type.changing, mat.changing,
   opt.folder.name = NULL)
 }
 \arguments{
-\item{name.simulation}{a \code{string} that corresponds to the main directory 
-or simulation name of the \code{FATE-HD} simulation}
+\item{name.simulation}{a \code{string} that corresponds to the main 
+directory or simulation name of the \code{FATE-HD} simulation}
 
 \item{type.changing}{a \code{string} to choose the concerned module : \cr
-succession (\emph{MASK}), habitat suitability (\emph{HS}) or disturbances 
-(\emph{DIST})}
+\code{MASK} (succession), \code{HS} (habitat suitability) or \code{DIST} 
+(disturbances)}
 
-\item{mat.changing}{a \code{data.frame} with 3 columns : year, order, file.name}
+\item{mat.changing}{a \code{data.frame} with 3 columns : \code{year}, 
+\code{order}, \code{file.name}}
 
-\item{opt.folder.name}{(\emph{optional}) \cr a \code{string} that corresponds 
-to the name of the folder that will be created into the 
+\item{opt.folder.name}{(\emph{optional}) \cr a \code{string} that 
+corresponds to the name of the folder that will be created into the 
 \code{name.simulation/DATA/SCENARIO/} directory to store the results}
 }
 \value{
-Several \code{.txt} files into the \code{name.simulation/DATA/SCENARIO/} :
+Several \code{.txt} files into the 
+\code{name.simulation/DATA/SCENARIO/} :
 \itemize{
-  \item \code{type.changing_changing_times.txt} : one line for each simulation 
-  year 
-  \item \code{type.changing_changing_masks_t}...\code{.txt} : one line for each
-  new raster file \cr \cr
+  \item \code{type.changing_changing_times.txt} : one line for each 
+  simulation year 
+  \item \code{type.changing_changing_masks_t}..\emph{year}..\code{.txt} : 
+  one line for each new raster file \cr \cr
 }
 
 If the \code{opt.folder.name} has been used, the files will be into the folder
 \code{name.simulation/DATA/SCENARIO/opt.folder.name/}
 }
 \description{
-This script is designed to create a parameter file containing 
-simulation years at which the \code{FATE-HD} software must save rasters of 
-PFG abundances or simulation objects.
+This script is designed to create several parameter files to 
+manage the update of simulation maps : 1) simulation years at which the 
+maps should be changed ; 2) filenames corresponding to the new simulation 
+maps to be used.
 }
 \details{
 Several modules of the \code{FATE-HD} software allow the user to simulate 
 changes over time :
 
 \describe{
-  \item{succession}{the CORE module is based on a raster mask, \strong{with 
-  either 0 or 1} within each pixel, 1 corresponding to the cells in which 
-  the PFG can try to colonize. 
-  The available pixels can change through time, to simulate habitat loss 
-  (e.g. urbanization) or gain (e.g. glacial retreat).}
-  \item{habitat suitability}{\strong{if this MODULE is activated} within the 
-  \emph{Global_parameters} file, PFG colonization depends on maps given for 
-  each PFG within the \emph{Simul_parameters} file with the \code{PFG_HAB_MASK}
-  flag. \cr These maps must contain \strong{values between 0 and 1} 
-  corresponding to the probability of presence of the group in each pixel. 
-  These probabilities can change through time, as they often come from 
-  Species Distribution Models (SDM) that can be based for example on climatic
-  variables.}
-  \item{disturbances}{\strong{if this MODULE is activated} within the 
-  \emph{Global_parameters} file, each disturbance relies on a raster given  
-  within the \emph{Simul_parameters} file with the \code{DIST_MASK}
-  flag. \cr
-  As for succession, this mask is filled \strong{with either 0 or 1} to 
-  define where the perturbation occurs. The impacted pixels can also change 
-  through time (e.g. change in forestry practices, expansion of grazing areas, 
-  etc). \cr \cr}
+  \item{succession}{the CORE module is based on a raster mask given within 
+  the \emph{Simul_parameters} file with the \code{MASK} flag (see 
+  \code{\link{PRE_FATE.params_simulParameters}}), \strong{with either 0 or 
+  1} within each pixel, 1 corresponding to the cells in which the PFG can 
+  try to colonize. The available pixels can change through time, to 
+  simulate habitat loss (e.g. urbanization) or gain (e.g. glacial retreat).}
+  \item{habitat suitability}{\strong{if this MODULE is activated} (see 
+  \code{\link{PRE_FATE.params_globalParameters}}), PFG colonization depends 
+  on maps given for each PFG within the \emph{Simul_parameters} file with 
+  the \code{PFG_HAB_MASK} flag (see 
+  \code{\link{PRE_FATE.params_simulParameters}}). \cr These maps must 
+  contain \strong{values between 0 and 1} corresponding to the probability 
+  of presence of the group in each pixel. These probabilities can change 
+  through time, as they often come from Species Distribution Models (SDM) 
+  that can be based for example on climatic variables.}
+  \item{disturbances}{\strong{if this MODULE is activated} (see 
+  \code{\link{PRE_FATE.params_globalParameters}}), each disturbance relies 
+  on a raster given within the \emph{Simul_parameters} file with the 
+  \code{DIST_MASK} flag (see \code{\link{PRE_FATE.params_simulParameters}}).
+   \cr As for succession, this mask is filled \strong{with either 0 or 1} 
+  to define where the perturbation occurs. The impacted pixels can also 
+  change through time (e.g. change in forestry practices, expansion of 
+  grazing areas, etc). \cr \cr}
 }
 
 
-These changes require two types of information, that must be presented within
-two different files :
+These changes require two types of information, that must be presented 
+within two different files :
 
 \describe{
-  \item{Years of change \cr \code{column} year}{all simulation years at which
-   the raster files of a specific module (succession, habitat suitability, 
-   disturbance) will be changed. To each given year must correspond a file 
-   with the names of the new maps.}
-  \item{New maps / mask \cr \code{column} file.name}{for a specific year of 
-  change, the names of the new raster files, always in the same order. \cr 
-  It can be either \code{.img} or \code{.tif}.}
-  \item{Order of the filenames \cr \code{column} order}{\code{integer} to be 
-  sure to always give the raster maps in the same order.}
+  \item{Years of change \cr \code{column} year}{all simulation years at 
+  which the raster files of a specific module (succession, habitat 
+  suitability, disturbance) will be changed. To each given year must 
+  correspond a file with the names of the new maps.}
+  \item{New maps / mask \cr \code{column} file.name}{for a specific year 
+  of change, the names of the new raster files, always in the same order. 
+  \cr It can be either \code{.img} or \code{.tif}.}
+  \item{Order of the filenames \cr \code{column} order}{\code{integer} to 
+  be sure to always give the raster maps in the same order.}
 }
 }
 \examples{
