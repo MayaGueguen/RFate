@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create <em>DISPERSAL</em> parameter files for a <code>FATE-HD</code>
+<title>Create <em>DISPERSAL</em> parameter files for a <code>FATE-HD</code> 
 simulation — PRE_FATE.params_PFGdispersal • RFate</title>
 
 
@@ -36,10 +36,10 @@ simulation — PRE_FATE.params_PFGdispersal • RFate</title>
 
 
 
-<meta property="og:title" content="Create <em>DISPERSAL</em> parameter files for a <code>FATE-HD</code>
+<meta property="og:title" content="Create <em>DISPERSAL</em> parameter files for a <code>FATE-HD</code> 
 simulation — PRE_FATE.params_PFGdispersal" />
 <meta property="og:description" content="This script is designed to create parameter files containing 
-dispersal distances for each PFG (one file for each of them) used in the
+dispersal distances for each PFG (one file for each of them) used in the 
 dispersal module of FATE-HD." />
 <meta name="twitter:card" content="summary" />
 
@@ -152,7 +152,7 @@ dispersal module of FATE-HD." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create <em>DISPERSAL</em> parameter files for a <code>FATE-HD</code>
+    <h1>Create <em>DISPERSAL</em> parameter files for a <code>FATE-HD</code> 
 simulation</h1>
     <small class="dont-index">Source: <a href='https://github.com/MayaGueguen/RFate.git/blob/master/R/PRE_FATE.params_PFGdispersal.R'><code>R/PRE_FATE.params_PFGdispersal.R</code></a></small>
     <div class="hidden name"><code>PRE_FATE.params_PFGdispersal.Rd</code></div>
@@ -160,7 +160,7 @@ simulation</h1>
 
     <div class="ref-description">
     <p>This script is designed to create parameter files containing 
-dispersal distances for each PFG (one file for each of them) used in the
+dispersal distances for each PFG (one file for each of them) used in the 
 dispersal module of <code>FATE-HD</code>.</p>
     </div>
 
@@ -172,16 +172,17 @@ dispersal module of <code>FATE-HD</code>.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>name.simulation</th>
-      <td><p>a <code>string</code> that corresponds to the main directory
-or simulation name of the <code>FATE-HD</code> simulation</p></td>
+      <td><p>a <code>string</code> that corresponds to the main 
+directory or simulation name of the <code>FATE-HD</code> simulation</p></td>
     </tr>
     <tr>
       <th>mat.PFG.disp</th>
-      <td><p>a <code>data.frame</code> with 4 columns : PFG, d50, d99, ldd</p></td>
+      <td><p>a <code>data.frame</code> with 4 columns : <code>PFG</code>, 
+<code>d50</code>, <code>d99</code>, <code>ldd</code></p></td>
     </tr>
     <tr>
       <th>opt.folder.name</th>
-      <td><p>(<em>optional</em>) <br /> a <code>string</code> that
+      <td><p>(<em>optional</em>) <br /> a <code>string</code> that 
 corresponds to the name of the folder that will be created into the 
 <code>name.simulation/DATA/PFGS/DISP/</code> directory to store the results</p></td>
     </tr>
@@ -189,24 +190,26 @@ corresponds to the name of the folder that will be created into the
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>.txt</code> file per PFG into the <code>name.simulation/DATA/PFGS/DISP/</code>
-directory with the following parameters :</p>
-<ul>
-<li><p>DISPERS_DIST</p></li>
-</ul>
+    <p>A <code>.txt</code> file per PFG into the 
+<code>name.simulation/DATA/PFGS/DISP/</code> directory with the following 
+parameters :</p>
+<dl class='dl-horizontal'>
+  <dt>DISPERS_DIST</dt><dd><p>the PFG dispersal distances (3 values) <em>(in meters)</em></p></dd>
 
-<p>If the <code>opt.folder.name</code> has been used, the files will be into the folder
-<code>name.simulation/DATA/PFGS/DISP/opt.folder.name/</code></p>
+</dl>
+
+<p>If the <code>opt.folder.name</code> has been used, the files will be into the 
+folder <code>name.simulation/DATA/PFGS/DISP/opt.folder.name/</code></p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>For each PFG, a dispersal module is available to disperse seeds
-with a kernel. <br />
-Dispersal distances are needed to quantify the amount of
-seeds dispersed into 3 different concentric circles :</p>
+    <p>For each PFG, a dispersal module is available to disperse seeds with a 
+kernel (see <code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>). <br />
+Dispersal distances are needed to quantify the amount of seeds dispersed 
+into 3 different concentric circles :</p>
 <dl class='dl-horizontal'>
-  <dt>d50</dt><dd><p>the distance at which 50% of seeds are dispersed</p></dd>
-  <dt>d99</dt><dd><p>the distance at which 49% of seeds are dispersed</p></dd>
-  <dt>ldd</dt><dd><p>the long dispersal distance at which 1% of seeds are dispersed</p></dd>
+  <dt>d50</dt><dd><p>the distance at which <code>50%</code> of seeds are dispersed</p></dd>
+  <dt>d99</dt><dd><p>the distance at which <code>49%</code> of seeds are dispersed</p></dd>
+  <dt>ldd</dt><dd><p>the long dispersal distance at which <code>1%</code> of seeds are dispersed</p></dd>
 
 </dl>
 

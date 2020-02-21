@@ -12,14 +12,14 @@
 ##'              
 ##' @param name.simulation a \code{string} that corresponds to the main 
 ##' directory or simulation name of the \code{FATE-HD} simulation
-##' @param mat.PFG.succ a \code{data.frame} with 6 columns : PFG, type, height,
-##' maturity, longevity, light
+##' @param mat.PFG.succ a \code{data.frame} with 6 columns : \code{PFG}, 
+##' \code{type}, \code{height}, \code{maturity}, \code{longevity}, \code{light}
 ##' @param strata.limits a \code{vector} of \code{integer} containing values 
 ##' among which height strata limits will be chosen
 ##' @param strata.limits_reduce default \code{TRUE}. If \code{TRUE}, stratum 
-##' height limits are checked to try and bring several PFGs together in a same
+##' height limits are checked to try and bring several PFGs together in a same 
 ##' stratum
-##' @param opt.folder.name (\emph{optional}) \cr a \code{string} that
+##' @param opt.folder.name (\emph{optional}) \cr a \code{string} that 
 ##' corresponds to the name of the folder that will be created into the 
 ##' \code{name.simulation/DATA/PFGS/LIGHT/} directory to store the results
 ##' 
@@ -27,8 +27,8 @@
 ##' 
 ##' @details
 ##' 
-##' The light module allows the user to simulate a primary vegetation succession
-##' based on light competition. \cr
+##' The light module allows the user to simulate a primary vegetation 
+##' succession based on light competition. \cr
 ##' Several parameters are required for each PFG in order to set up this life 
 ##' cycle :
 ##' 
@@ -38,8 +38,8 @@
 ##'   \item{height}{the maximum or average height that reach the PFG}
 ##'   \item{maturity}{the age from which the PFG can reproduce}
 ##'   \item{longevity}{the maximum or average lifespan of the PFG \cr \cr}
-##'   \item{light}{a value between 0 and 5 corresponding to the light value of
-##'   the PFG (e.g. from Flora Indicativa)\cr \cr}
+##'   \item{light}{a value between \code{0} and \code{5} corresponding to the 
+##'   light value of the PFG (e.g. from Flora Indicativa)\cr \cr}
 ##' }
 ##' 
 ##' 
@@ -54,19 +54,21 @@
 ##'   \item{MAX_ABUNDANCE}{(see \code{\link{PRE_FATE.params_PFGsuccession}})}
 ##'   \item{IMM_SIZE}{(see \code{\link{PRE_FATE.params_PFGsuccession}})}
 ##'   \item{CHANG_STR_AGES}{(see \code{\link{PRE_FATE.params_PFGsuccession}})}
-##'   \item{ACTIVE_GERM}{proportion of seeds that will germinate for each light
-##'   condition (Low, Medium, High)}
+##'   \item{ACTIVE_GERM}{proportion of seeds that will germinate for each light 
+##'   condition (\code{Low}, \code{Medium}, \code{High})}
 ##'   \item{SHADE_TOL}{ defined for each life stage (Germinant, Immature, 
-##'   Mature) and each light condition (Low, Medium, High) :
+##'   Mature) and each light condition (\code{Low}, \code{Medium}, 
+##'   \code{High}) :
 ##'   \itemize{
-##'     \item (A) PFG are tolerant to low light if \code{light <= 2}
-##'     \item (A) PFG are tolerant to medium light if \code{2 <= light <= 4}
-##'     \item (A) PFG are tolerant to high light if \code{light >= 3}
-##'     \item (B) all germinants are assumed to be tolerant to Low light
-##'     \item (C) all mature trees or chamaephytes are assumed to be tolerant to
-##'     Medium and High light conditions
+##'     \item (A) PFG are tolerant to \code{Low} light if \code{light <= 2}
+##'     \item (A) PFG are tolerant to \code{Medium} light if 
+##'     \code{2 <= light <= 4}
+##'     \item (A) PFG are tolerant to \code{High} light if \code{light >= 3}
+##'     \item (B) all germinants are assumed to be tolerant to \code{Low} light
+##'     \item (C) all mature trees or chamaephytes are assumed to be tolerant 
+##'     to \code{Medium} and \code{High} light conditions
 ##'     \item (D) all immature trees that grow in the penultimate stratum are 
-##'     assumed to be tolerant to High light
+##'     assumed to be tolerant to \code{High} light
 ##'   }
 ##'   }
 ##' }
@@ -95,13 +97,13 @@
 ##' \code{name.simulation/DATA/PFGS/LIGHT/} directory with the following 
 ##' parameters :
 ##' 
-##' \itemize{
-##'   \item NAME : name of the PFG
-##'   \item ACTIVE_GERM : the germination rates depending on light conditions
+##' \describe{
+##'   \item{NAME}{name of the PFG}
+##'   \item{ACTIVE_GERM}{the germination rates depending on light conditions 
 ##'   \cr \emph{(0: 0\% 1: 10\% 2: 20\% 3: 30\% 4: 40\% 5: 50\% 6: 60\% 7: 70\% 
-##'   8: 80\% 9: 90\% 10: 100\%)}
-##'   \item SHADE_TOL : the PFG shade tolerance table (in a single row). \cr 
-##'   This is a vector of 9 numbers \emph{(0: Die 1: Survive)} corresponding
+##'   8: 80\% 9: 90\% 10: 100\%)}}
+##'   \item{SHADE_TOL}{the PFG shade tolerance table (in a single row). \cr 
+##'   This is a vector of 9 numbers \emph{(0: Die 1: Survive)} corresponding 
 ##'   to the ability of the PFG to survive or not :
 ##'   \itemize{
 ##'     \item at different life stages \emph{(Germinant (Ge), Immature (Im), 
@@ -110,8 +112,27 @@
 ##'     High (H))}.
 ##'   }
 ##'   These parameters should be given in this order : GeL, GeM, GeH, ImL, ImM,
-##'   ImH, MaL, MaM, MaH.
+##'   ImH, MaL, MaM, MaH.}
 ##' }
+
+
+# \itemize{
+#   \item NAME : name of the PFG
+#   \item ACTIVE_GERM : the germination rates depending on light conditions
+#   \cr \emph{(0: 0\% 1: 10\% 2: 20\% 3: 30\% 4: 40\% 5: 50\% 6: 60\% 7: 70\%
+#   8: 80\% 9: 90\% 10: 100\%)}
+#   \item SHADE_TOL : the PFG shade tolerance table (in a single row). \cr
+#   This is a vector of 9 numbers \emph{(0: Die 1: Survive)} corresponding
+#   to the ability of the PFG to survive or not :
+#   \itemize{
+#     \item at different life stages \emph{(Germinant (Ge), Immature (Im),
+#     Mature (Ma))}
+#     \item under different light conditions \emph{(Low (L), Medium (M) or
+#     High (H))}.
+#   }
+#   These parameters should be given in this order : GeL, GeM, GeH, ImL, ImM,
+#   ImH, MaL, MaM, MaH.
+# }
 ##' 
 ##' A \code{LIGHT_COMPLETE_TABLE.csv} file summarizing information for all groups into the
 ##' \code{name.simulation/DATA/PFGS/} directory.  

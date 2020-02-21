@@ -2,21 +2,20 @@
 % Please edit documentation in R/PRE_FATE.params_PFGsoil.R
 \name{PRE_FATE.params_PFGsoil}
 \alias{PRE_FATE.params_PFGsoil}
-\title{Create \emph{SOIL} parameter files for a \code{FATE-HD}
-simulation}
+\title{Create \emph{SOIL} parameter files for a \code{FATE-HD} simulation}
 \usage{
 PRE_FATE.params_PFGsoil(name.simulation, mat.PFG.soil,
   mat.PFG.tol = NULL, opt.folder.name = NULL)
 }
 \arguments{
-\item{name.simulation}{a \code{string} that corresponds to the main
+\item{name.simulation}{a \code{string} that corresponds to the main 
 directory or simulation name of the \code{FATE-HD} simulation}
 
-\item{mat.PFG.soil}{a \code{data.frame} with 5 columns : PFG, type,
-soil_contrib, soil_tol_min, soil_tol_max}
+\item{mat.PFG.soil}{a \code{data.frame} with 5 columns : \code{PFG}, 
+\code{type}, \code{soil_contrib}, \code{soil_tol_min}, \code{soil_tol_max}}
 
-\item{mat.PFG.tol}{a \code{data.frame} with 5 columns : PFG, lifeStage,
-soilResources, soil_tol}
+\item{mat.PFG.tol}{a \code{data.frame} with 4 columns : \code{PFG}, 
+\code{lifeStage}, \code{soilResources}, \code{soil_tol}}
 
 \item{opt.folder.name}{(\emph{optional}) \cr a \code{string} that
 corresponds to the name of the folder that will be created into the 
@@ -27,17 +26,17 @@ A \code{.txt} file per PFG into the
 \code{name.simulation/DATA/PFGS/SOIL/} directory with the following 
 parameters :
 
-\itemize{
-  \item NAME : name of the PFG
-  \item SOIL_CONTRIB : the contribution (influence) of the PFG on the
-  nitrogen soil value of the pixel
-  \item SOIL_LOW : the lower value of nitrogen supported by the PFG
-  \item SOIL_HIGH : the upper value of nitrogen supported by the PFG
-  \item ACTIVE_GERM : the germination rates depending on soil conditions
+\describe{
+  \item{NAME}{name of the PFG}
+  \item{SOIL_CONTRIB}{the contribution (influence) of the PFG on the
+  soil value of the pixel}
+  \item{SOIL_LOW}{the lower value of soil supported by the PFG}
+  \item{SOIL_HIGH}{the upper value of soil supported by the PFG}
+  \item{ACTIVE_GERM}{the germination rates depending on soil conditions
   \cr \emph{(0: 0\% 1: 10\% 2: 20\% 3: 30\% 4: 40\% 5: 50\% 6: 60\% 7: 70\% 
-  8: 80\% 9: 90\% 10: 100\%)}
-  \item SOIL_TOL : the PFG soil tolerance table (in a single row). \cr 
-  This is a vector of 9 numbers corresponding to the ability of the PFG to
+  8: 80\% 9: 90\% 10: 100\%)}}
+  \item{SOIL_TOL}{the PFG soil tolerance table (in a single row). \cr 
+  This is a vector of 9 numbers corresponding to the ability of the PFG to 
   survive or not :
   \itemize{
     \item at different life stages \emph{(Germinant (Ge), Immature (Im), 
@@ -45,10 +44,10 @@ parameters :
     \item under different soil conditions \emph{(Low (L), Medium (M) or 
     High (H))}.
   }
-  These parameters should be given in this order : GeL, GeM, GeH, ImL, ImM,
+  These parameters should be given in this order : GeL, GeM, GeH, ImL, ImM, 
   ImH, MaL, MaM, MaH.
   \cr \emph{(0: 0\% 1: 10\% 2: 20\% 3: 30\% 4: 40\% 5: 50\% 6: 60\% 7: 70\% 
-  8: 80\% 9: 90\% 10: 100\%)}
+  8: 80\% 9: 90\% 10: 100\%)}}
 }
 
 A \code{SOIL_COMPLETE_TABLE.csv} file summarizing information for all groups
@@ -66,16 +65,18 @@ used in the soil module of \code{FATE-HD}.
 The soil module allows the user to simulate a primary vegetation succession 
 based on soil competition. \cr
 
-Several parameters, given within \code{mat.PFG.soil}, are required for each
+Several parameters, given within \code{mat.PFG.soil}, are required for each 
 PFG in order to set up the soil competition :
 
 \describe{
   \item{type}{or life-form, based on Raunkier. It should be either \code{H} 
   (herbaceous), \code{C} (chamaephyte) or \code{P} (phanerophyte) for now}
-  \item{soil_contrib}{a value between 0 and X corresponding to the nitrogen 
-  value of the PFG (e.g. from Ellenberg)}
-  \item{soil_tol_min}{the minimum nitrogen value tolerated by the PFG}
-  \item{soil_tol_max}{the maximum nitrogen value tolerated by the PFG}
+  \item{soil_contrib}{a value corresponding to the PFG preference for soil 
+  fertility \cr (e.g. nitrogen value from Ellenberg or Flora Indicativa)}
+  \item{soil_tol_min}{the minimum soil value tolerated by the PFG (on the 
+  same scale than \emph{soil_contrib})}
+  \item{soil_tol_max}{the maximum soil value tolerated by the PFG (on the 
+  same scale than \emph{soil_contrib})}
 }
 
 
@@ -83,27 +84,30 @@ These values will allow to calculate or define a set of characteristics for
 each PFG :
 
 \describe{
-  \item{SOIL_CONTRIB}{nitrogen contribution to the soil value of the PFG}
-  \item{SOIL_LOW}{minimum nitrogen value tolerated by the PFG}
-  \item{SOIL_HIGH}{maximum nitrogen value tolerated by the PFG}
-  \item{ACTIVE_GERM}{proportion of seeds that will germinate for each soil
-  condition (Low, Medium, High) :
+  \item{SOIL_CONTRIB}{PFG contribution to the soil value}
+  \item{SOIL_LOW}{minimum soil value tolerated by the PFG}
+  \item{SOIL_HIGH}{maximum soil value tolerated by the PFG}
+  \item{ACTIVE_GERM}{proportion of seeds that will germinate for each soil 
+  condition (\code{Low}, \code{Medium}, \code{High}) :
   \itemize{
-    \item woody species have little variation in germination rate : 90\% for
-    Low and High conditions, 100\% for Medium condition
-    \item herbaceous germinate less in richer soil : 80\% for Low, 100\% for
-    Medium and 50\% for High conditions
+    \item woody species have little variation in germination rate : 
+    \code{90\%} for \code{Low} and \code{High} conditions, \code{100\%} for 
+    \code{Medium} condition
+    \item herbaceous germinate less in richer soil : \code{80\%} for 
+    \code{Low}, \code{100\%} for \code{Medium} and \code{50\%} for 
+    \code{High} conditions
   }
   }
 }
 
-A second file, \code{mat.PFG.tol}, can be given to define the importance of
+A second file, \code{mat.PFG.tol}, can be given to define the importance of 
 the response of each PFG to each soil condition :
 
 \describe{
   \item{PFG}{the name of the PFG concerned}
   \item{lifeStage}{the concerned life stage (Germinant, Immature, Mature)}
-  \item{soilResources}{the concerned soil condition (Low, Medium, High)}
+  \item{soilResources}{the concerned soil condition (\code{Low}, 
+  \code{Medium}, \code{High})}
   \item{soil_tol}{the proportion of surviving individuals}
 }
 
@@ -111,22 +115,23 @@ If these values are not given by the user, default rules are defined below :
 
 \describe{
   \item{SOIL_TOL}{ defined for each life stage (Germinant, Immature, 
-  Mature) and each soil condition (Low, Medium, High) :
+  Mature) and each soil condition (\code{Low}, \code{Medium}, \code{High}) :
   \itemize{
     \item (A) germinants are severely impacted by wrong soil conditions :
     \itemize{
-      \item only 10\% of the cohorts survive in Low soil condition
-      \item all cohorts die in High soil condition
+      \item only \code{10\%} of the cohorts survive in \code{Low} soil 
+      condition
+      \item all cohorts die in \code{High} soil condition
     }
     \item (B) immatures are half impacted by wrong soil conditions :
     \itemize{
-      \item 50\% of the cohorts survive in Low soil condition
-      \item 40\% of the cohorts survive in High soil condition
+      \item \code{50\%} of the cohorts survive in \code{Low} soil condition
+      \item \code{40\%} of the cohorts survive in \code{High} soil condition
     }
     \item (C) matures are little affected by wrong soil conditions :
     \itemize{
-      \item 90\% of the cohorts survive in Low soil condition
-      \item 80\% of the cohorts survive in High soil condition
+      \item \code{90\%} of the cohorts survive in \code{Low} soil condition
+      \item \code{80\%} of the cohorts survive in \code{High} soil condition
     }
   }
   }

@@ -5,18 +5,21 @@
 ##'
 ##' @author Maya Guéguen
 ##' 
-##' @description This script is designed to create a user-friendly directory
+##' @description This script is designed to create a user-friendly directory 
 ##' tree to run a \code{FATE-HD} simulation.
 ##'              
-##' @param name.simulation a \code{string} that will be used as the main directory
-##' and simulation name
+##' @param name.simulation a \code{string} that will be used as the main 
+##' directory and simulation name
 ##' 
 ##' @details 
 ##' 
-##' \code{FATE-HD} requires only one input parameter, which is a file containing
-##' the names of parameter files, which may themselves contain parameters or other
-##' file names. The point is : the user could give names of files stored everywhere
-##' on a machine, and does not have to put them all in one same place.
+##' \code{FATE-HD} requires only one input parameter (see 
+##' \code{\link{PRE_FATE.params_simulParameters}}), which is a file containing 
+##' the names of parameter files, which may themselves contain parameters (e.g. 
+##' succession, dispersal files...) or other file names (e.g. disturbance or 
+##' environmental change masks. \cr
+##' The point is : the user could give names of files stored everywhere on a 
+##' machine, and does not have to put them all in one same place.
 ##' 
 ##' But as this is more practical, this function proposes a way to organize all
 ##' those files or parameter files that will or could be used by a \code{FATE-HD}
@@ -70,6 +73,9 @@
 ##' 
 ##' ## Create a skeleton folder with the default name ('FATE_simulation')
 ##' PRE_FATE.skeletonDirectory()
+##' 
+##' ## Create a skeleton folder with a specific name
+##' PRE_FATE.skeletonDirectory(name.simulation = "FATE_AlpineForest")
 ##' 
 ##' @export
 ##'

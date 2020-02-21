@@ -1,5 +1,5 @@
 ### HEADER #####################################################################
-##' @title Create \emph{DISPERSAL} parameter files for a \code{FATE-HD}
+##' @title Create \emph{DISPERSAL} parameter files for a \code{FATE-HD} 
 ##' simulation
 ##' 
 ##' @name PRE_FATE.params_PFGdispersal
@@ -7,41 +7,43 @@
 ##' @author Maya Guéguen
 ##' 
 ##' @description This script is designed to create parameter files containing 
-##' dispersal distances for each PFG (one file for each of them) used in the
+##' dispersal distances for each PFG (one file for each of them) used in the 
 ##' dispersal module of \code{FATE-HD}.
 ##'              
-##' @param name.simulation a \code{string} that corresponds to the main directory
-##' or simulation name of the \code{FATE-HD} simulation
-##' @param mat.PFG.disp a \code{data.frame} with 4 columns : PFG, d50, d99, ldd
-##' @param opt.folder.name (\emph{optional}) \cr a \code{string} that
+##' @param name.simulation a \code{string} that corresponds to the main 
+##' directory or simulation name of the \code{FATE-HD} simulation
+##' @param mat.PFG.disp a \code{data.frame} with 4 columns : \code{PFG}, 
+##' \code{d50}, \code{d99}, \code{ldd}
+##' @param opt.folder.name (\emph{optional}) \cr a \code{string} that 
 ##' corresponds to the name of the folder that will be created into the 
 ##' \code{name.simulation/DATA/PFGS/DISP/} directory to store the results
 ##' 
 ##' 
 ##' @details
 ##' 
-##' For each PFG, a dispersal module is available to disperse seeds
-##' with a kernel. \cr
-##' Dispersal distances are needed to quantify the amount of
-##' seeds dispersed into 3 different concentric circles :
+##' For each PFG, a dispersal module is available to disperse seeds with a 
+##' kernel (see \code{\link{PRE_FATE.params_globalParameters}}). \cr
+##' Dispersal distances are needed to quantify the amount of seeds dispersed 
+##' into 3 different concentric circles :
 ##' 
 ##' \describe{
-##'   \item{d50}{the distance at which 50\% of seeds are dispersed}
-##'   \item{d99}{the distance at which 49\% of seeds are dispersed}
-##'   \item{ldd}{the long dispersal distance at which 1\% of seeds are dispersed}
+##'   \item{d50}{the distance at which \code{50\%} of seeds are dispersed}
+##'   \item{d99}{the distance at which \code{49\%} of seeds are dispersed}
+##'   \item{ldd}{the long dispersal distance at which \code{1\%} of seeds are dispersed}
 ##' }
 ##' 
 ##' 
 ##' 
-##' @return A \code{.txt} file per PFG into the \code{name.simulation/DATA/PFGS/DISP/}
-##' directory with the following parameters :
+##' @return A \code{.txt} file per PFG into the 
+##' \code{name.simulation/DATA/PFGS/DISP/} directory with the following 
+##' parameters :
 ##' 
-##' \itemize{
-##'   \item DISPERS_DIST
+##' \describe{
+##'   \item{DISPERS_DIST}{the PFG dispersal distances (3 values) \emph{(in meters)}}
 ##' }
 ##' 
-##' If the \code{opt.folder.name} has been used, the files will be into the folder
-##' \code{name.simulation/DATA/PFGS/DISP/opt.folder.name/}
+##' If the \code{opt.folder.name} has been used, the files will be into the 
+##' folder \code{name.simulation/DATA/PFGS/DISP/opt.folder.name/}
 ##' 
 ##' 
 ##' @keywords FATE, simulation, dispersal distance
