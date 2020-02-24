@@ -2,53 +2,62 @@
 % Please edit documentation in R/POST_FATE.relativeAbund.R
 \name{POST_FATE.relativeAbund}
 \alias{POST_FATE.relativeAbund}
-\title{Create relative abundance maps for each Plant Functional
-Group \cr for one (or several) specific year of a \code{FATE-HD} simulation}
+\title{Create relative abundance maps for each Plant Functional Group for 
+one (or several) specific year of a \code{FATE-HD} simulation}
 \usage{
 POST_FATE.relativeAbund(name.simulation, file.simulParam = NULL, year,
   opt.no_CPU = 1)
 }
 \arguments{
-\item{name.simulation}{a \code{string} that corresponds to the main
+\item{name.simulation}{a \code{string} that corresponds to the main 
 directory or simulation name of the \code{FATE-HD} simulation}
 
-\item{file.simulParam}{a \code{string} that corresponds to the name of a
-parameter file that will be contained into the \code{PARAM_SIMUL} folder
+\item{file.simulParam}{a \code{string} that corresponds to the name of a 
+parameter file that will be contained into the \code{PARAM_SIMUL} folder 
 of the \code{FATE-HD} simulation}
 
 \item{year}{an \code{integer} corresponding to the simulation year(s) that 
 will be used to extract PFG abundance maps}
 
-\item{opt.no_CPU}{default 1 (\emph{optional}). The number of resources that 
-can be used to parallelize the \code{unzip/zip} of raster files}
+\item{opt.no_CPU}{default \code{1} (\emph{optional}). The number of 
+resources that can be used to parallelize the \code{unzip/zip} of raster 
+files}
 }
 \value{
 One result folder is created :
 \describe{
-  \item{\file{ABUND_REL_perPFG \cr_allStrata}}{containing relative abundance 
-  raster maps for each PFG across all strata}
+  \item{\file{ABUND_REL_perPFG \cr_allStrata}}{containing relative 
+  abundance raster maps for each PFG across all strata}
 }
 }
 \description{
-This script is designed to produce raster maps of PFG simulated
-relative abundances for one (or several) specific \code{FATE-HD} 
+This script is designed to produce raster maps of PFG 
+simulated relative abundances for one (or several) specific \code{FATE-HD} 
 simulation year.
 }
 \details{
-This function allows one to obtain, for a specific \code{FATE-HD} simulation
-and a specific parameter file within this simulation, raster maps of PFG
-relative abundance. \cr
+This function allows one to obtain, for a specific \code{FATE-HD} 
+simulation and a specific parameter file within this simulation, raster 
+maps of PFG relative abundance. \cr
 
-For each PFG and each selected simulation year, raster maps are retrieved
-from the results folder \code{ABUND_perPFG_perStrata} and unzipped.
-Informations extracted lead to the production of the same number of raster
+For each PFG and each selected simulation year, raster maps are retrieved 
+from the results folder \code{ABUND_perPFG_perStrata} and unzipped. 
+Informations extracted lead to the production of the same number of raster 
 before the maps are compressed again :
 
-\enumerate{
+\itemize{
   \item{for each selected simulation year(s), \strong{relative abundances} 
   within each stratum are calculated :
-  \deqn{\frac{\text{Abund } PFG_i \text{ } Stratum_j}
-  {\Sigma \text{ Abund } PFG_{all} \text{ } Stratum_j}}}
+  \deqn{\frac{abund_{\text{PFG}_i, \text{Stratum}_j}}{abund_{allPFG, 
+  allStrata}}} \cr \cr
+  }
+}
+
+\strong{These \code{raster} files can then be used by other functions} :
+
+\itemize{
+  \item to produce presence/absence maps and graphics (see 
+  \code{\link{POST_FATE.graphic_validationStatistics}})
 }
 }
 \examples{
@@ -175,10 +184,6 @@ POST_FATE.relativeAbund(name.simulation = name.folder
 
 }
 \seealso{
-\code{\link{POST_FATE.graphic_evolutionCoverage}},
-\code{\link{POST_FATE.graphic_mapPFGvsHS}},
-\code{\link{POST_FATE.graphic_mapPFGrichness}},
-\code{\link{POST_FATE.graphic_mapPFGcover}},
 \code{\link{POST_FATE.graphic_validationStatistics}}
 }
 \author{

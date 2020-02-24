@@ -1,6 +1,6 @@
 ### HEADER #####################################################################
-##' @title Create tables of pixel temporal evolution of PFG abundances, and 
-##' light and soil resources (if activated) for a \code{FATE-HD} simulation
+##' @title Create tables of pixel temporal evolution of PFG abundances (and 
+##' light and soil resources if activated) for a \code{FATE-HD} simulation
 ##' 
 ##' @name POST_FATE.temporalEvolution
 ##'
@@ -12,67 +12,84 @@
 ##' simulation.
 ##' 
 ##'              
-##' @param name.simulation a \code{string} that corresponds to the main directory
-##' or simulation name of the \code{FATE-HD} simulation
-##' @param file.simulParam a \code{string} that corresponds to the name of a
-##' parameter file that will be contained into the \code{PARAM_SIMUL} folder
+##' @param name.simulation a \code{string} that corresponds to the main 
+##' directory or simulation name of the \code{FATE-HD} simulation
+##' @param file.simulParam a \code{string} that corresponds to the name of a 
+##' parameter file that will be contained into the \code{PARAM_SIMUL} folder 
 ##' of the \code{FATE-HD} simulation
-##' @param no.years an \code{integer} corresponding to the number of simulation
+##' @param no.years an \code{integer} corresponding to the number of simulation 
 ##' years that will be used to extract PFG abundance / light / soil maps
-##' @param opt.ras_habitat default NULL (\emph{optional}). A \code{string} that
-##' corresponds to the file name of a raster mask, with an \code{integer} value
+##' @param opt.ras_habitat default \code{NULL} (\emph{optional}). A \code{string} that 
+##' corresponds to the file name of a raster mask, with an \code{integer} value 
 ##' within each pixel, corresponding to a specific habitat
-##' @param opt.no_CPU default 1 (\emph{optional}). The number of resources that 
-##' can be used to parallelize the \code{unzip/zip} of raster files
+##' @param opt.no_CPU default \code{1} (\emph{optional}). The number of 
+##' resources that can be used to parallelize the \code{unzip/zip} of raster 
+##' files
 ##' 
 ##' 
 ##' @details 
 ##' 
-##' This function allows one to obtain, for a specific \code{FATE-HD} simulation
-##' and a specific parameter file within this simulation, one to three 
-##' preanalytical tables that can then be used to create graphics. \cr
+##' This function allows one to obtain, for a specific \code{FATE-HD} 
+##' simulation and a specific parameter file within this simulation, one to 
+##' three preanalytical tables that can then be used to create graphics.
+##' \cr \cr
 ##' 
-##' For each PFG and each selected simulation year, raster maps are retrieved
+##' For each PFG and each selected simulation year, raster maps are retrieved 
 ##' from the results folder \code{ABUND_perPFG_allStrata} and unzipped.
 ##' Informations extracted lead to the production of one table before the maps 
 ##' are compressed again :
 ##' 
 ##' \itemize{
-##'   \item{the value of \strong{abundance for each Plant Functional Group} for 
-##'   each selected simulation year(s) in every pixel in which the PFG is present 
-##'   for at least one of the selected simulation year(s)
+##'   \item{the value of \strong{abundance for each Plant Functional Group} 
+##'   for each selected simulation year(s) in every pixel in which the PFG is 
+##'   present for at least one of the selected simulation year(s) \cr \cr
 ##'   }
 ##' }
 ##' 
-##' IF the \code{LIGHT} module was activated, for each height stratum and each 
-##' selected simulation year, raster maps are retrieved from the results folder 
-##' \code{LIGHT} and unzipped.
+##' IF the \code{LIGHT} module was activated (see 
+##' \code{\link{PRE_FATE.params_globalParameters}}), for each height stratum 
+##' and each selected simulation year, raster maps are retrieved from the 
+##' results folder \code{LIGHT} and unzipped.
 ##' Informations extracted lead to the production of one table before the maps 
 ##' are compressed again :
 ##' 
 ##' \itemize{
 ##'   \item{the value of \strong{light resources for each height stratum} for 
-##'   each selected simulation year(s) in every pixel
+##'   each selected simulation year(s) in every pixel \cr \cr
 ##'   }
 ##' }
 ##' 
-##' IF the \code{SOIL} module was activated, for each selected simulation year, 
-##' raster maps are retrieved from the results folder \code{SOIL} and unzipped.
+##' IF the \code{SOIL} module was activated (see 
+##' \code{\link{PRE_FATE.params_globalParameters}}), for each selected 
+##' simulation year, raster maps are retrieved from the results folder 
+##' \code{SOIL} and unzipped.
 ##' Informations extracted lead to the production of one table before the maps 
 ##' are compressed again :
 ##' 
 ##' \itemize{
 ##'   \item{the value of \strong{soil resources} for each selected simulation 
-##'   year(s) in every pixel
+##'   year(s) in every pixel \cr \cr
 ##'   }
 ##' }
 ##' 
 ##' If a raster mask for habitat has been provided, the tables will also 
-##' contain information about the pixel habitat.
+##' contain information about the pixel habitat. \cr \cr
+##' 
+##' 
+##' \strong{These \code{.csv} files can then be used by other functions} :
+##' 
+##' \itemize{
+##'   \item to produce graphics of temporal evolution of modelled abundances 
+##'   and space occupancy at the whole area level \cr (see 
+##'   \code{\link{POST_FATE.graphic_evolutionCoverage}})
+##'   \item to produce graphics of temporal evolution of modelled abundances 
+##'   and / or resources at the pixel level \cr (see 
+##'   \code{\link{POST_FATE.graphic_evolutionPixels}})
+##' }
 ##' 
 ##' 
 ##' 
-##' @return A \code{list} containing three \code{data.frame} object with the 
+##' @return A \code{list} containing three \code{data.frame} objects with the 
 ##' following columns :
 ##' \describe{
 ##'   \item{\code{PFG}}{the concerned Plant Functional Group (for abundance)}
@@ -86,15 +103,17 @@
 ##' 
 ##' One to three \code{POST_FATE_evolution_[...].csv} files are created : 
 ##' \describe{
-##'   \item{\file{abundance_PIXEL}}{}
+##'   \item{\file{abundance_PIXEL}}{always}
 ##'   \item{\file{light_PIXEL}}{\emph{if LIGHT module was activated}}
 ##'   \item{\file{soil_PIXEL}}{\emph{if SOIL module was activated}}
 ##' }
 ##' 
 ##' 
-##' @keywords FATE, outputs, ...
+##' @keywords FATE, outputs, temporal evolution
 ##' 
-##' @seealso \code{\link{...}}
+##' @seealso \code{\link{PRE_FATE.params_globalParameters}},
+##' \code{\link{POST_FATE.graphic_evolutionCoverage}},
+##' \code{\link{POST_FATE.graphic_evolutionPixels}}
 ##' 
 ##' @examples
 ##' 

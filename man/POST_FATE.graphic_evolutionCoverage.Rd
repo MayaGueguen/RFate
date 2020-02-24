@@ -10,20 +10,20 @@ POST_FATE.graphic_evolutionCoverage(name.simulation,
   opt.doPlot = TRUE)
 }
 \arguments{
-\item{name.simulation}{a \code{string} that corresponds to the main directory
-or simulation name of the \code{FATE-HD} simulation}
+\item{name.simulation}{a \code{string} that corresponds to the main 
+directory or simulation name of the \code{FATE-HD} simulation}
 
-\item{file.simulParam}{a \code{string} that corresponds to the name of a
-parameter file that will be contained into the \code{PARAM_SIMUL} folder
+\item{file.simulParam}{a \code{string} that corresponds to the name of a 
+parameter file that will be contained into the \code{PARAM_SIMUL} folder 
 of the \code{FATE-HD} simulation}
 
-\item{opt.abund_fixedScale}{default \code{TRUE}. If \code{FALSE}, the
-ordinate scale will be adapted for each PFG for the graphical representation
-of the  evolution of abundances through time}
+\item{opt.abund_fixedScale}{default \code{TRUE}. If \code{FALSE}, the 
+ordinate scale will be adapted for each PFG for the graphical 
+representation of the  evolution of abundances through time}
 
-\item{opt.doPlot}{default TRUE (\emph{optional}). If TRUE, plot(s) will be
-processed, otherwise only the calculation and reorganization of outputs
-will occur, be saved and returned.}
+\item{opt.doPlot}{default \code{TRUE} (\emph{optional}). If TRUE, plot(s) 
+will be processed, otherwise only the calculation and reorganization of 
+outputs will occur, be saved and returned.}
 }
 \value{
 Two \code{POST_FATE_[...].pdf} files are created : 
@@ -39,23 +39,24 @@ Two \code{POST_FATE_[...].pdf} files are created :
 This script is designed to produce two graphical 
 representations for a \code{FATE-HD} simulation : 1) the evolution through
 time of the space occupation of each PFG ; 2) the evolution through time
-of the abundance of each PFG.
+of the abundance of each PFG. These graphics represent both the evolution 
+over the whole area.
 }
 \details{
-This function allows one to obtain, for a specific \code{FATE-HD} simulation
-and a specific parameter file within this simulation, two preanalytical
-graphics : 
+This function allows one to obtain, for a specific \code{FATE-HD} 
+simulation and a specific parameter file within this simulation, two 
+preanalytical graphics : 
 
 \itemize{
-  \item{the evolution of \strong{space occupancy} of each Plant Functional
-  Group through simulation time, with \emph{space occupancy} representing
-  the percentage of pixels within the mask of studied area where the PFG
+  \item{the evolution of \strong{space occupancy} of each Plant Functional 
+  Group through simulation time, with \emph{space occupancy} representing 
+  the percentage of pixels within the mask of studied area where the PFG 
   is present
   }
-  \item{the evolution of \strong{abundance} of each Plant Functional
-  Group through simulation time, with \emph{abundance} being the sum over
-  the whole studied area of the PFG abundances (\code{FATE-HD} 
-  \emph{arbitrary unit})
+  \item{the evolution of \strong{abundance} of each Plant Functional Group 
+  through simulation time, with \emph{abundance} being the sum over the 
+  whole studied area of the PFG abundances (\code{FATE-HD} \emph{arbitrary 
+  unit})
   }
 }
 

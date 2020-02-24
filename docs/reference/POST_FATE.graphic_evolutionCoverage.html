@@ -41,7 +41,8 @@ and abundance through time for a <code>FATE-HD</code> simulation — POST_FATE.g
 <meta property="og:description" content="This script is designed to produce two graphical 
 representations for a FATE-HD simulation : 1) the evolution through
 time of the space occupation of each PFG ; 2) the evolution through time
-of the abundance of each PFG." />
+of the abundance of each PFG. These graphics represent both the evolution 
+over the whole area." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -163,7 +164,8 @@ and abundance through time for a <code>FATE-HD</code> simulation</h1>
     <p>This script is designed to produce two graphical 
 representations for a <code>FATE-HD</code> simulation : 1) the evolution through
 time of the space occupation of each PFG ; 2) the evolution through time
-of the abundance of each PFG.</p>
+of the abundance of each PFG. These graphics represent both the evolution 
+over the whole area.</p>
     </div>
 
     <pre class="usage"><span class='fu'>POST_FATE.graphic_evolutionCoverage</span>(<span class='no'>name.simulation</span>,
@@ -175,26 +177,26 @@ of the abundance of each PFG.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>name.simulation</th>
-      <td><p>a <code>string</code> that corresponds to the main directory
-or simulation name of the <code>FATE-HD</code> simulation</p></td>
+      <td><p>a <code>string</code> that corresponds to the main 
+directory or simulation name of the <code>FATE-HD</code> simulation</p></td>
     </tr>
     <tr>
       <th>file.simulParam</th>
-      <td><p>a <code>string</code> that corresponds to the name of a
-parameter file that will be contained into the <code>PARAM_SIMUL</code> folder
+      <td><p>a <code>string</code> that corresponds to the name of a 
+parameter file that will be contained into the <code>PARAM_SIMUL</code> folder 
 of the <code>FATE-HD</code> simulation</p></td>
     </tr>
     <tr>
       <th>opt.abund_fixedScale</th>
-      <td><p>default <code>TRUE</code>. If <code>FALSE</code>, the
-ordinate scale will be adapted for each PFG for the graphical representation
-of the  evolution of abundances through time</p></td>
+      <td><p>default <code>TRUE</code>. If <code>FALSE</code>, the 
+ordinate scale will be adapted for each PFG for the graphical 
+representation of the  evolution of abundances through time</p></td>
     </tr>
     <tr>
       <th>opt.doPlot</th>
-      <td><p>default TRUE (<em>optional</em>). If TRUE, plot(s) will be
-processed, otherwise only the calculation and reorganization of outputs
-will occur, be saved and returned.</p></td>
+      <td><p>default <code>TRUE</code> (<em>optional</em>). If TRUE, plot(s) 
+will be processed, otherwise only the calculation and reorganization of 
+outputs will occur, be saved and returned.</p></td>
     </tr>
     </table>
 
@@ -211,18 +213,18 @@ will occur, be saved and returned.</p></td>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function allows one to obtain, for a specific <code>FATE-HD</code> simulation
-and a specific parameter file within this simulation, two preanalytical
-graphics :</p>
+    <p>This function allows one to obtain, for a specific <code>FATE-HD</code> 
+simulation and a specific parameter file within this simulation, two 
+preanalytical graphics :</p>
 <ul>
-<li><p>the evolution of <strong>space occupancy</strong> of each Plant Functional
-  Group through simulation time, with <em>space occupancy</em> representing
-  the percentage of pixels within the mask of studied area where the PFG
+<li><p>the evolution of <strong>space occupancy</strong> of each Plant Functional 
+  Group through simulation time, with <em>space occupancy</em> representing 
+  the percentage of pixels within the mask of studied area where the PFG 
   is present</p></li>
-<li><p>the evolution of <strong>abundance</strong> of each Plant Functional
-  Group through simulation time, with <em>abundance</em> being the sum over
-  the whole studied area of the PFG abundances (<code>FATE-HD</code> 
-  <em>arbitrary unit</em>)</p></li>
+<li><p>the evolution of <strong>abundance</strong> of each Plant Functional Group 
+  through simulation time, with <em>abundance</em> being the sum over the 
+  whole studied area of the PFG abundances (<code>FATE-HD</code> <em>arbitrary 
+  unit</em>)</p></li>
 </ul>
 
 <p>It requires that the <code><a href='POST_FATE.temporalEvolution.html'>POST_FATE.temporalEvolution</a></code> has been run 

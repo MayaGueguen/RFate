@@ -1,59 +1,65 @@
 ### HEADER #####################################################################
-##' @title Create relative abundance maps for each Plant Functional
-##' Group \cr for one (or several) specific year of a \code{FATE-HD} simulation
+##' @title Create relative abundance maps for each Plant Functional Group for 
+##' one (or several) specific year of a \code{FATE-HD} simulation
 ##' 
 ##' @name POST_FATE.relativeAbund
 ##'
 ##' @author Maya Guéguen
 ##' 
-##' @description This script is designed to produce raster maps of PFG simulated
-##' relative abundances for one (or several) specific \code{FATE-HD} 
+##' @description This script is designed to produce raster maps of PFG 
+##' simulated relative abundances for one (or several) specific \code{FATE-HD} 
 ##' simulation year.
 ##'              
-##' @param name.simulation a \code{string} that corresponds to the main
+##' @param name.simulation a \code{string} that corresponds to the main 
 ##' directory or simulation name of the \code{FATE-HD} simulation
-##' @param file.simulParam a \code{string} that corresponds to the name of a
-##' parameter file that will be contained into the \code{PARAM_SIMUL} folder
+##' @param file.simulParam a \code{string} that corresponds to the name of a 
+##' parameter file that will be contained into the \code{PARAM_SIMUL} folder 
 ##' of the \code{FATE-HD} simulation
 ##' @param year an \code{integer} corresponding to the simulation year(s) that 
 ##' will be used to extract PFG abundance maps
-##' @param opt.no_CPU default 1 (\emph{optional}). The number of resources that 
-##' can be used to parallelize the \code{unzip/zip} of raster files
+##' @param opt.no_CPU default \code{1} (\emph{optional}). The number of 
+##' resources that can be used to parallelize the \code{unzip/zip} of raster 
+##' files
 ##' 
 ##' 
 ##' @details 
 ##' 
-##' This function allows one to obtain, for a specific \code{FATE-HD} simulation
-##' and a specific parameter file within this simulation, raster maps of PFG
-##' relative abundance. \cr
+##' This function allows one to obtain, for a specific \code{FATE-HD} 
+##' simulation and a specific parameter file within this simulation, raster 
+##' maps of PFG relative abundance. \cr
 ##' 
-##' For each PFG and each selected simulation year, raster maps are retrieved
-##' from the results folder \code{ABUND_perPFG_perStrata} and unzipped.
-##' Informations extracted lead to the production of the same number of raster
+##' For each PFG and each selected simulation year, raster maps are retrieved 
+##' from the results folder \code{ABUND_perPFG_perStrata} and unzipped. 
+##' Informations extracted lead to the production of the same number of raster 
 ##' before the maps are compressed again :
 ##' 
-##' \enumerate{
+##' \itemize{
 ##'   \item{for each selected simulation year(s), \strong{relative abundances} 
 ##'   within each stratum are calculated :
-##'   \deqn{\frac{\text{Abund } PFG_i \text{ } Stratum_j}
-##'   {\Sigma \text{ Abund } PFG_{all} \text{ } Stratum_j}}}
+##'   \deqn{\frac{abund_{\text{PFG}_i, \text{Stratum}_j}}{abund_{allPFG, 
+##'   allStrata}}} \cr \cr
+##'   }
+##' }
+##' 
+##' \strong{These \code{raster} files can then be used by other functions} :
+##' 
+##' \itemize{
+##'   \item to produce presence/absence maps and graphics (see 
+##'   \code{\link{POST_FATE.graphic_validationStatistics}})
 ##' }
 ##' 
 ##' 
 ##' @return One result folder is created :
 ##' \describe{
-##'   \item{\file{ABUND_REL_perPFG \cr_allStrata}}{containing relative abundance 
-##'   raster maps for each PFG across all strata}
+##'   \item{\file{ABUND_REL_perPFG \cr_allStrata}}{containing relative 
+##'   abundance raster maps for each PFG across all strata}
 ##' }
 ##' 
 ##' 
 ##' @keywords FATE, outputs, relative abundance
 ##' 
-##' @seealso \code{\link{POST_FATE.graphic_evolutionCoverage}},
-##' \code{\link{POST_FATE.graphic_mapPFGvsHS}},
-##' \code{\link{POST_FATE.graphic_mapPFGrichness}},
-##' \code{\link{POST_FATE.graphic_mapPFGcover}},
-##' \code{\link{POST_FATE.graphic_validationStatistics}}
+##' @seealso \code{\link{POST_FATE.graphic_validationStatistics}}
+##' 
 ##' 
 ##' 
 ##' @examples

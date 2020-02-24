@@ -1,62 +1,71 @@
 ### HEADER #####################################################################
-##' @title Create a graphical representation of the evolution of PFG abundance
+##' @title Create a graphical representation of the evolution of PFG abundance 
 ##' through time for 5 (or more) pixels of a \code{FATE-HD} simulation
 ##' 
 ##' @name POST_FATE.graphic_evolutionPixels
 ##'
 ##' @author Maya Guéguen
 ##' 
-##' @description This script is designed to produce one graphical representation
-##' for a \code{FATE-HD} simulation : the evolution through time of the 
-##' abundance of each PFG for 5 (or more) randomly selected cells of the
+##' @description This script is designed to produce one graphical 
+##' representation for a \code{FATE-HD} simulation : the evolution through time 
+##' of the abundance of each PFG for 5 (or more) randomly selected cells of the 
 ##' studied area.
 ##'              
-##' @param name.simulation a \code{string} that corresponds to the main directory
-##' or simulation name of the \code{FATE-HD} simulation
-##' @param file.simulParam a \code{string} that corresponds to the name of a
-##' parameter file that will be contained into the \code{PARAM_SIMUL} folder
+##' @param name.simulation a \code{string} that corresponds to the main 
+##' directory or simulation name of the \code{FATE-HD} simulation
+##' @param file.simulParam a \code{string} that corresponds to the name of a 
+##' parameter file that will be contained into the \code{PARAM_SIMUL} folder 
 ##' of the \code{FATE-HD} simulation
-##' @param opt.abund_fixedScale default \code{TRUE}. If \code{FALSE}, the ordinate
-##' scale will be adapted for each PFG for the graphical representation of the 
-##' evolution of abundances through time
-##' @param opt.cells_ID default NULL (\emph{optional}). The cells ID of the 
-##' studied area for which PFG abundances will be extracted.
-##' @param opt.doPlot default TRUE (\emph{optional}). If TRUE, plot(s) will be
-##' processed, otherwise only the calculation and reorganization of outputs
-##' will occur, be saved and returned.
+##' @param opt.abund_fixedScale default \code{TRUE}. If \code{FALSE}, the 
+##' ordinate scale will be adapted for each PFG for the graphical 
+##' representation of the evolution of abundances through time
+##' @param opt.cells_ID default \code{NULL} (\emph{optional}). The cells ID of 
+##' the studied area for which PFG abundances will be extracted.
+##' @param opt.doPlot default \code{TRUE} (\emph{optional}). If \code{TRUE}, 
+##' plot(s) will be processed, otherwise only the calculation and 
+##' reorganization of outputs will occur, be saved and returned.
+##' 
 ##' 
 ##' @details 
 ##' 
-##' This function allows one to obtain, for a specific \code{FATE-HD} simulation
-##' and a specific parameter file within this simulation, one preanalytical
-##' graphics. \cr
-##' 
-##' For each PFG and each selected simulation year, raster maps are retrieved
-##' from the results folder \code{ABUND_perPFG_allStrata} and unzipped.
-##' Informations extracted lead to the production of one graphic before the
-##' maps are compressed again :
+##' This function allows one to obtain, for a specific \code{FATE-HD} 
+##' simulation and a specific parameter file within this simulation, one 
+##' preanalytical graphics :
 ##' 
 ##' \itemize{
-##'   \item{the evolution of \strong{abundance} of each Plant Functional
-##'   Group through simulation time, within 5 (or more) randomly selected pixels
-##'   of the studied area (\code{FATE-HD} \emph{arbitrary unit})
+##'   \item{the evolution of \strong{abundance} of each Plant Functional Group 
+##'   through simulation time, within 5 (or more) randomly selected pixels of 
+##'   the studied area (\code{FATE-HD} \emph{arbitrary unit})
+##'   }
+##'   \item{\strong{if LIGHT is activated} (see 
+##'   \code{\link{PRE_FATE.params_globalParameters}}), evolution of 
+##'   \strong{light resources} within the selected pixels is also represented 
+##'   (\emph{1: Low, 2: Medium, 3: High})
+##'   }
+##'   \item{\strong{if SOIL is activated} (see 
+##'   \code{\link{PRE_FATE.params_globalParameters}}), evolution of 
+##'   \strong{soil resources} within the selected pixels is also represented 
+##'   (user-defined scale)
 ##'   }
 ##' }
+##' 
+##' 
+##' It requires that the \code{\link{POST_FATE.temporalEvolution}} has been run 
+##' and that the \code{POST_FATE.evolution_abundance_PIXEL_[...].csv} exists.
 ##' 
 ##' 
 ##' 
 ##' @return One \code{POST_FATE_[...].pdf} file is created : 
 ##' \describe{
-##'   \item{\file{GRAPHIC_A \cr abundance}}{to visualize for each PFG the
-##'   evolution of its abundance within each selected pixel through
+##'   \item{\file{GRAPHIC_A \cr pixels}}{to visualize for each PFG the 
+##'   evolution of its abundance within each selected pixel through 
 ##'   simulation time}
 ##' }
 ##' 
 ##' 
 ##' @keywords FATE, outputs, abundance through time
 ##' 
-##' @seealso \code{\link{POST_FATE.relativeAbund}}, 
-##' \code{\link{POST_FATE.graphic_validationStatistics}}
+##' @seealso \code{\link{POST_FATE.temporalAbund}}
 ##' 
 ##' @examples
 ##' 
@@ -226,16 +235,20 @@ POST_FATE.graphic_evolutionPixels = function(
     
     write.csv(distriAbund
               , file = paste0(name.simulation
-                              , "/RESULTS/POST_FATE_TABLE_PIXEL_evolution_"
-                              , ifelse(length(IDS) <= 5, paste0(IDS, collapse = "_"), length(IDS))
+                              , "/RESULTS/POST_FATE_TABLE_PIXEL_evolution_pixels_"
+                              , ifelse(length(IDS) <= 5
+                                       , paste0(IDS, collapse = "_")
+                                       , length(IDS))
                               , "_"
                               , basename(dir.save)
                               , ".csv")
               , row.names = FALSE)
     
     message(paste0("\n The output file \n"
-                   , " > POST_FATE_TABLE_PIXEL_evolution_"
-                   , ifelse(length(IDS) <= 5, paste0(IDS, collapse = "_"), length(IDS))
+                   , " > POST_FATE_TABLE_PIXEL_evolution_pixels_"
+                   , ifelse(length(IDS) <= 5
+                            , paste0(IDS, collapse = "_")
+                            , length(IDS))
                    , "_"
                    , basename(dir.save)
                    , ".csv \n"
@@ -275,8 +288,10 @@ POST_FATE.graphic_evolutionPixels = function(
         .getGraphics_theme()
       
       ggsave(filename = paste0(name.simulation
-                               , "/RESULTS/POST_FATE_GRAPHIC_A_evolution_"
-                               , ifelse(length(IDS) <= 5, paste0(IDS, collapse = "_"), length(IDS))
+                               , "/RESULTS/POST_FATE_GRAPHIC_A_evolution_pixels_"
+                               , ifelse(length(IDS) <= 5
+                                        , paste0(IDS, collapse = "_")
+                                        , length(IDS))
                                , "_"
                                , basename(dir.save)
                                , ".pdf")

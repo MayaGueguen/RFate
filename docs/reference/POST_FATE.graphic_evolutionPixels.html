@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create a graphical representation of the evolution of PFG abundance
+<title>Create a graphical representation of the evolution of PFG abundance 
 through time for 5 (or more) pixels of a <code>FATE-HD</code> simulation — POST_FATE.graphic_evolutionPixels • RFate</title>
 
 
@@ -36,11 +36,11 @@ through time for 5 (or more) pixels of a <code>FATE-HD</code> simulation — POS
 
 
 
-<meta property="og:title" content="Create a graphical representation of the evolution of PFG abundance
+<meta property="og:title" content="Create a graphical representation of the evolution of PFG abundance 
 through time for 5 (or more) pixels of a <code>FATE-HD</code> simulation — POST_FATE.graphic_evolutionPixels" />
-<meta property="og:description" content="This script is designed to produce one graphical representation
-for a FATE-HD simulation : the evolution through time of the 
-abundance of each PFG for 5 (or more) randomly selected cells of the
+<meta property="og:description" content="This script is designed to produce one graphical 
+representation for a FATE-HD simulation : the evolution through time 
+of the abundance of each PFG for 5 (or more) randomly selected cells of the 
 studied area." />
 <meta name="twitter:card" content="summary" />
 
@@ -153,16 +153,16 @@ studied area." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create a graphical representation of the evolution of PFG abundance
+    <h1>Create a graphical representation of the evolution of PFG abundance 
 through time for 5 (or more) pixels of a <code>FATE-HD</code> simulation</h1>
     <small class="dont-index">Source: <a href='https://github.com/MayaGueguen/RFate.git/blob/master/R/POST_FATE.graphic_evolutionPixels.R'><code>R/POST_FATE.graphic_evolutionPixels.R</code></a></small>
     <div class="hidden name"><code>POST_FATE.graphic_evolutionPixels.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This script is designed to produce one graphical representation
-for a <code>FATE-HD</code> simulation : the evolution through time of the 
-abundance of each PFG for 5 (or more) randomly selected cells of the
+    <p>This script is designed to produce one graphical 
+representation for a <code>FATE-HD</code> simulation : the evolution through time 
+of the abundance of each PFG for 5 (or more) randomly selected cells of the 
 studied area.</p>
     </div>
 
@@ -175,62 +175,68 @@ studied area.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>name.simulation</th>
-      <td><p>a <code>string</code> that corresponds to the main directory
-or simulation name of the <code>FATE-HD</code> simulation</p></td>
+      <td><p>a <code>string</code> that corresponds to the main 
+directory or simulation name of the <code>FATE-HD</code> simulation</p></td>
     </tr>
     <tr>
       <th>file.simulParam</th>
-      <td><p>a <code>string</code> that corresponds to the name of a
-parameter file that will be contained into the <code>PARAM_SIMUL</code> folder
+      <td><p>a <code>string</code> that corresponds to the name of a 
+parameter file that will be contained into the <code>PARAM_SIMUL</code> folder 
 of the <code>FATE-HD</code> simulation</p></td>
     </tr>
     <tr>
       <th>opt.abund_fixedScale</th>
-      <td><p>default <code>TRUE</code>. If <code>FALSE</code>, the ordinate
-scale will be adapted for each PFG for the graphical representation of the 
-evolution of abundances through time</p></td>
+      <td><p>default <code>TRUE</code>. If <code>FALSE</code>, the 
+ordinate scale will be adapted for each PFG for the graphical 
+representation of the evolution of abundances through time</p></td>
     </tr>
     <tr>
       <th>opt.cells_ID</th>
-      <td><p>default NULL (<em>optional</em>). The cells ID of the 
-studied area for which PFG abundances will be extracted.</p></td>
+      <td><p>default <code>NULL</code> (<em>optional</em>). The cells ID of 
+the studied area for which PFG abundances will be extracted.</p></td>
     </tr>
     <tr>
       <th>opt.doPlot</th>
-      <td><p>default TRUE (<em>optional</em>). If TRUE, plot(s) will be
-processed, otherwise only the calculation and reorganization of outputs
-will occur, be saved and returned.</p></td>
+      <td><p>default <code>TRUE</code> (<em>optional</em>). If <code>TRUE</code>, 
+plot(s) will be processed, otherwise only the calculation and 
+reorganization of outputs will occur, be saved and returned.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>One <code>POST_FATE_[...].pdf</code> file is created :</p><dl class='dl-horizontal'>
-  <dt><code class="file">GRAPHIC_A <br /> abundance</code></dt><dd><p>to visualize for each PFG the
-  evolution of its abundance within each selected pixel through
+  <dt><code class="file">GRAPHIC_A <br /> pixels</code></dt><dd><p>to visualize for each PFG the 
+  evolution of its abundance within each selected pixel through 
   simulation time</p></dd>
 
 </dl>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function allows one to obtain, for a specific <code>FATE-HD</code> simulation
-and a specific parameter file within this simulation, one preanalytical
-graphics. <br /></p>
-<p>For each PFG and each selected simulation year, raster maps are retrieved
-from the results folder <code>ABUND_perPFG_allStrata</code> and unzipped.
-Informations extracted lead to the production of one graphic before the
-maps are compressed again :</p>
+    <p>This function allows one to obtain, for a specific <code>FATE-HD</code> 
+simulation and a specific parameter file within this simulation, one 
+preanalytical graphics :</p>
 <ul>
-<li><p>the evolution of <strong>abundance</strong> of each Plant Functional
-  Group through simulation time, within 5 (or more) randomly selected pixels
-  of the studied area (<code>FATE-HD</code> <em>arbitrary unit</em>)</p></li>
+<li><p>the evolution of <strong>abundance</strong> of each Plant Functional Group 
+  through simulation time, within 5 (or more) randomly selected pixels of 
+  the studied area (<code>FATE-HD</code> <em>arbitrary unit</em>)</p></li>
+<li><p><strong>if LIGHT is activated</strong> (see 
+  <code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>), evolution of 
+  <strong>light resources</strong> within the selected pixels is also represented 
+  (<em>1: Low, 2: Medium, 3: High</em>)</p></li>
+<li><p><strong>if SOIL is activated</strong> (see 
+  <code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>), evolution of 
+  <strong>soil resources</strong> within the selected pixels is also represented 
+  (user-defined scale)</p></li>
 </ul>
 
+
+<p>It requires that the <code><a href='POST_FATE.temporalEvolution.html'>POST_FATE.temporalEvolution</a></code> has been run 
+and that the <code>POST_FATE.evolution_abundance_PIXEL_[...].csv</code> exists.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='POST_FATE.relativeAbund.html'>POST_FATE.relativeAbund</a></code>, 
-<code><a href='POST_FATE.graphic_validationStatistics.html'>POST_FATE.graphic_validationStatistics</a></code></p></div>
+    <div class='dont-index'><p><code>POST_FATE.temporalAbund</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples">

@@ -46,7 +46,8 @@ containing :
   simulation folder as well as the parameter files 
   (Boulangeat et al. 2014 GCB)
   PNE_RESULTSresults obtained from outputs of FATE-HD 
-  simulation
+  simulation 
+  (Boulangeat et al. 2014 GCB)
 
 
 " />
@@ -177,7 +178,8 @@ containing :</p>
   simulation folder as well as the parameter files <br />
   (<em><a href='https://mayagueguen.github.io/FATE-WEBSITE/papers/Boulangeat_2014_GCB.pdf'>Boulangeat et al. 2014 GCB</a></em>)</p></dd>
   <dt>PNE_RESULTS</dt><dd><p>results obtained from outputs of <code>FATE-HD</code> 
-  simulation</p></dd>
+  simulation <br />
+  (<em><a href='https://mayagueguen.github.io/FATE-WEBSITE/papers/Boulangeat_2014_GCB.pdf'>Boulangeat et al. 2014 GCB</a></em>)</p></dd>
 
 </dl>
 
@@ -190,8 +192,8 @@ containing :</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>data.name</th>
-      <td><p>a <code>string</code> that corresponds to the 
-name of the dataset that will be loaded</p></td>
+      <td><p>a <code>string</code> that corresponds to the name of the 
+dataset that will be loaded</p></td>
     </tr>
     </table>
 
@@ -201,9 +203,10 @@ name of the dataset that will be loaded</p></td>
 <p>A <code>list</code> object with 6 elements to help building the Plant Functional 
 Group :</p>  
 <p></p><dl class='dl-horizontal'>
-    <dt>sp.observations</dt><dd><p>a <code>data.frame</code> of dimension <code>168313 x 7</code> <br />
+    <dt>sp.observations</dt><dd><p>a <code>data.frame</code> of dimension 
+    <code>168313 x 7</code> <br />
     containing releves data about plant species in the PNE <br />
-    to be used with the <a href='PRE_FATE.selectDominant.html'>PRE_FATE.selectDominant</a> function <br />
+    to be used with the <code><a href='PRE_FATE.selectDominant.html'>PRE_FATE.selectDominant</a></code> function <br />
     <ul>
 <li><p><strong>sites</strong> : sites ID</p></li>
 <li><p><strong>X</strong> : x-axis coordinates in Lambers (lcc)</p></li>
@@ -228,7 +231,7 @@ Group :</p>
 </ul></p></dd>
     <dt>dom.traits</dt><dd><p><code>data.frame</code> of dimension <code>359 x 6</code> <br />
     containing traits for dominant species <br />
-    to be used with the <a href='PRE_FATE.speciesDistance.html'>PRE_FATE.speciesDistance</a> function <br />
+    to be used with the <code><a href='PRE_FATE.speciesDistance.html'>PRE_FATE.speciesDistance</a></code> function <br />
     <ul>
 <li><p><strong>species</strong> : species ID</p></li>
 <li><p><strong>GROUP</strong> : rough generalization of Raunkier life-forms :</p><ul>
@@ -245,10 +248,11 @@ Group :</p>
 </ul></p></dd>
     <dt>dom.dist_overlap</dt><dd><p><code>matrix</code> of dimension <code>358 x 358</code> <br />
     containing niche overlap distance for dominant species <br />
-    to be used with the <a href='PRE_FATE.speciesDistance.html'>PRE_FATE.speciesDistance</a> function <br /></p></dd>
+    to be used with the <code><a href='PRE_FATE.speciesDistance.html'>PRE_FATE.speciesDistance</a></code> function <br /></p></dd>
     <dt>dom.determ</dt><dd><p><code>data.frame</code> of dimension <code>359 x 5</code> <br />
     containing dominant species information relative to PFG <br />
-    obtained from the <a href='PRE_FATE.speciesClustering_step2.html'>PRE_FATE.speciesClustering_step2</a> function <br />
+    obtained from the <code><a href='PRE_FATE.speciesClustering_step2.html'>PRE_FATE.speciesClustering_step2</a></code> 
+    function <br />
     <ul>
 <li><p><strong>species</strong> : species ID</p></li>
 <li><p><strong>name</strong> : species name (taxonomic)</p></li>
@@ -259,15 +263,16 @@ Group :</p>
 </ul></li>
 <li><p><strong>PFG</strong> : name of assigned Plant Functional Group</p></li>
 <li><p><strong>determinant</strong> : is the species kept as determinant 
-      species within the PFG ? (see <a href='PRE_FATE.speciesClustering_step2.html'>PRE_FATE.speciesClustering_step2</a> 
-      function for details)</p></li>
+      species within the PFG ? (see 
+      <code><a href='PRE_FATE.speciesClustering_step2.html'>PRE_FATE.speciesClustering_step2</a></code> function for details)</p></li>
 </ul></p></dd>
     <dt>nb.clusters</dt><dd><p><code>vector</code> of length <code>3</code> <br />
-    number of groups kept for each life-form class, obtained by cutting the 
-    hierarchical tree obtained from species distances</p></dd>
+    number of groups kept for each life-form class, obtained by cutting 
+    the hierarchical tree obtained from species distances</p></dd>
     <dt>PFG.traits</dt><dd><p><code>data.frame</code> of dimension <code>24 x 10</code> <br />
     containing traits for plant functional groups <br />
-    obtained from the <a href='PRE_FATE.speciesClustering_step3.html'>PRE_FATE.speciesClustering_step3</a> function <br />
+    obtained from the <code><a href='PRE_FATE.speciesClustering_step3.html'>PRE_FATE.speciesClustering_step3</a></code> 
+    function <br />
     <ul>
 <li><p><strong>PFG_name</strong> : full descriptive Plant Functional Group name</p></li>
 <li><p><strong>PFG</strong> : Plant Functional Group short name</p></li>
@@ -328,23 +333,27 @@ files and folders to run a <code>FATE-HD</code> simulation :</p>
     <dt>HS_90</dt><dd><p>same as HS_0 but 90 years after equilibrium</p></dd>
     <dt>strata_limits</dt><dd><p>a <code>vector</code> of length <code>5</code> <br />
     containing height of stratum limits in centimeters <br />
-    to be used with the <a href='PRE_FATE.params_PFGsuccession.html'>PRE_FATE.params_PFGsuccession</a> and 
-    <a href='PRE_FATE.params_PFGlight.html'>PRE_FATE.params_PFGlight</a> functions <br /></p></dd>
+    to be used with the <code><a href='PRE_FATE.params_PFGsuccession.html'>PRE_FATE.params_PFGsuccession</a></code> and 
+    <code><a href='PRE_FATE.params_PFGlight.html'>PRE_FATE.params_PFGlight</a></code> functions <br /></p></dd>
     <dt>succ_light</dt><dd><p>a <code>data.frame</code> of dimension <code>24 x 6</code> <br />
     containing traits for plant functional groups <br />
-    obtained from the <a href='PRE_FATE.speciesClustering_step3.html'>PRE_FATE.speciesClustering_step3</a> function <br />
-    to be used with the <a href='PRE_FATE.params_PFGsuccession.html'>PRE_FATE.params_PFGsuccession</a> and 
-    <a href='PRE_FATE.params_PFGlight.html'>PRE_FATE.params_PFGlight</a> functions <br /></p></dd>
+    obtained from the <code><a href='PRE_FATE.speciesClustering_step3.html'>PRE_FATE.speciesClustering_step3</a></code> 
+    function <br />
+    to be used with the <code><a href='PRE_FATE.params_PFGsuccession.html'>PRE_FATE.params_PFGsuccession</a></code> and 
+    <code><a href='PRE_FATE.params_PFGlight.html'>PRE_FATE.params_PFGlight</a></code> functions <br /></p></dd>
     <dt>disp</dt><dd><p>a <code>data.frame</code> of dimension <code>24 x 4</code> <br />
     containing dispersal values (in meters) for plant functional groups <br />
-    to be used with the <a href='PRE_FATE.params_PFGdispersal.html'>PRE_FATE.params_PFGdispersal</a> function <br /></p></dd>
+    to be used with the <code><a href='PRE_FATE.params_PFGdispersal.html'>PRE_FATE.params_PFGdispersal</a></code> function 
+    <br /></p></dd>
     <dt>dist</dt><dd><p>a <code>data.frame</code> of dimension <code>384 x 5</code> <br />
     containing response of plant functional groups to disturbances <br />
-    to be used with the <a href='PRE_FATE.params_PFGdisturbance.html'>PRE_FATE.params_PFGdisturbance</a> function <br /></p></dd>
+    to be used with the <code><a href='PRE_FATE.params_PFGdisturbance.html'>PRE_FATE.params_PFGdisturbance</a></code> 
+    function <br /></p></dd>
     <dt>global</dt><dd><p>a <code>vector</code> of length <code>18</code> <br />
     containing global parameter values for a <code>FATE-HD</code> simulation in 
     the PNE <br />
-    to be used with the <a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a> function <br /></p></dd>
+    to be used with the <code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code> 
+    function <br /></p></dd>
   
 </dl>
 
@@ -381,30 +390,30 @@ files and folders to run a <code>FATE-HD</code> simulation :</p>
 <li><p><strong>error.rate.HS</strong> : percentage of bad predictions for 
       Habitat Suitability model</p></li>
 </ul></p></dd>
-  <dt>abund_str.equilibrium</dt><dd><p>a <code><a href='https://rdrr.io/pkg/raster/man/stack.html'>stack</a></code> object of dimension 
-    <code>782 x 619</code> with a resolution of <code>100m</code> and Lambers (lcc) 
-    projection, containing 120 layers representing <code>FATE-HD</code> 
-    <strong>abundances for year 800 of initialization phase</strong> (= 
-    <em>equilibrium</em> or <em>current</em> time). <br />
-    Maps are per PFG and per height stratum.</p></dd>
-  <dt>forest_cover.init</dt><dd><p>a <code><a href='https://rdrr.io/pkg/raster/man/stack.html'>stack</a></code> object of dimension 
-    <code>782 x 619</code> with a resolution of <code>100m</code> and Lambers (lcc) 
-    projection, containing 16 layers representing <code>FATE-HD</code> 
-    <strong>relative forest cover through initialization phase (from year 50 
-    to 800)</strong>. <br />
-    Maps are summing all PFGs through all height strata above 1.5 meters. <br /></p></dd>
-  <dt>forest_cover <br /> CC_BAU</dt><dd><p>a <code><a href='https://rdrr.io/pkg/raster/man/stack.html'>stack</a></code> object of dimension 
-    <code>782 x 619</code> with a resolution of <code>100m</code> and Lambers (lcc) 
-    projection, containing 14 layers representing <code>FATE-HD</code> 
-    <strong>relative forest cover through Climate Change (CC) + 
-    Business-As-Usual (BAU) scenario (from year 850 to 1500)</strong>. <br />
-    Maps are summing all PFGs through all height strata above 1.5 meters. <br /></p></dd>
-  <dt>forest_cover<br /> CC_Abandon</dt><dd><p>a <code><a href='https://rdrr.io/pkg/raster/man/stack.html'>stack</a></code> object of dimension 
-    <code>782 x 619</code> with a resolution of <code>100m</code> and Lambers (lcc) 
-    projection, containing 14 layers representing <code>FATE-HD</code> 
-    <strong>relative forest cover through Climate Change (CC) + Abandonment (BAU) 
-    scenario (from year 850 to 1500)</strong>. <br />
-    Maps are summing all PFGs through all height strata above 1.5 meters. <br /></p></dd>
+  <dt>abund_str.equilibrium</dt><dd><p>a <code><a href='https://rdrr.io/pkg/raster/man/stack.html'>stack</a></code> object of 
+  dimension <code>782 x 619</code> with a resolution of <code>100m</code> and Lambers 
+  (lcc) projection, containing 120 layers representing <code>FATE-HD</code> 
+  <strong>abundances for year 800 of initialization phase</strong> (= 
+  <em>equilibrium</em> or <em>current</em> time). <br />
+  Maps are per PFG and per height stratum.</p></dd>
+  <dt>forest_cover.init</dt><dd><p>a <code><a href='https://rdrr.io/pkg/raster/man/stack.html'>stack</a></code> object of 
+  dimension <code>782 x 619</code> with a resolution of <code>100m</code> and Lambers 
+  (lcc) projection, containing 16 layers representing <code>FATE-HD</code> 
+  <strong>relative forest cover through initialization phase (from year 50 
+  to 800)</strong>. <br />
+  Maps are summing all PFGs through all height strata above 1.5 meters. <br /></p></dd>
+  <dt>forest_cover <br /> CC_BAU</dt><dd><p>a <code><a href='https://rdrr.io/pkg/raster/man/stack.html'>stack</a></code> object of 
+  dimension <code>782 x 619</code> with a resolution of <code>100m</code> and Lambers 
+  (lcc) projection, containing 14 layers representing <code>FATE-HD</code> 
+  <strong>relative forest cover through Climate Change (CC) + 
+  Business-As-Usual (BAU) scenario (from year 850 to 1500)</strong>. <br />
+  Maps are summing all PFGs through all height strata above 1.5 meters. <br /></p></dd>
+  <dt>forest_cover<br /> CC_Abandon</dt><dd><p>a <code><a href='https://rdrr.io/pkg/raster/man/stack.html'>stack</a></code> object of 
+  dimension <code>782 x 619</code> with a resolution of <code>100m</code> and Lambers 
+  (lcc) projection, containing 14 layers representing <code>FATE-HD</code> 
+  <strong>relative forest cover through Climate Change (CC) + Abandonment 
+  (BAU) scenario (from year 850 to 1500)</strong>. <br />
+  Maps are summing all PFGs through all height strata above 1.5 meters. <br /></p></dd>
 
 </dl>
 

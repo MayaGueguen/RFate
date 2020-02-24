@@ -16,11 +16,12 @@
 ##'   simulation folder as well as the parameter files \cr
 ##'   (\emph{\href{https://mayagueguen.github.io/FATE-WEBSITE/papers/Boulangeat_2014_GCB.pdf}{Boulangeat et al. 2014 GCB}})}
 ##'   \item{PNE_RESULTS}{results obtained from outputs of \code{FATE-HD} 
-##'   simulation}
+##'   simulation \cr
+##'   (\emph{\href{https://mayagueguen.github.io/FATE-WEBSITE/papers/Boulangeat_2014_GCB.pdf}{Boulangeat et al. 2014 GCB}})}
 ##' }
 ##' 
-##' @param data.name a \code{string} that corresponds to the 
-##' name of the dataset that will be loaded
+##' @param data.name a \code{string} that corresponds to the name of the 
+##' dataset that will be loaded
 ##' 
 ##' @return 
 ##' 
@@ -30,9 +31,10 @@
 ##' Group :
 ##'   
 ##'   \describe{
-##'     \item{sp.observations}{a \code{data.frame} of dimension \code{168313 x 7} \cr
+##'     \item{sp.observations}{a \code{data.frame} of dimension 
+##'     \code{168313 x 7} \cr
 ##'     containing releves data about plant species in the PNE \cr
-##'     to be used with the \link{PRE_FATE.selectDominant} function \cr
+##'     to be used with the \code{\link{PRE_FATE.selectDominant}} function \cr
 ##'     \itemize{
 ##'       \item \strong{sites} : sites ID
 ##'       \item \strong{X} : x-axis coordinates in Lambers (lcc)
@@ -59,7 +61,7 @@
 ##'     }
 ##'     \item{dom.traits}{\code{data.frame} of dimension \code{359 x 6} \cr
 ##'     containing traits for dominant species \cr
-##'     to be used with the \link{PRE_FATE.speciesDistance} function \cr
+##'     to be used with the \code{\link{PRE_FATE.speciesDistance}} function \cr
 ##'     \itemize{
 ##'       \item \strong{species} : species ID
 ##'       \item \strong{GROUP} : rough generalization of Raunkier life-forms :
@@ -78,10 +80,11 @@
 ##'     }
 ##'     \item{dom.dist_overlap}{\code{matrix} of dimension \code{358 x 358} \cr
 ##'     containing niche overlap distance for dominant species \cr
-##'     to be used with the \link{PRE_FATE.speciesDistance} function \cr}
+##'     to be used with the \code{\link{PRE_FATE.speciesDistance}} function \cr}
 ##'     \item{dom.determ}{\code{data.frame} of dimension \code{359 x 5} \cr
 ##'     containing dominant species information relative to PFG \cr
-##'     obtained from the \link{PRE_FATE.speciesClustering_step2} function \cr
+##'     obtained from the \code{\link{PRE_FATE.speciesClustering_step2}} 
+##'     function \cr
 ##'     \itemize{
 ##'       \item \strong{species} : species ID
 ##'       \item \strong{name} : species name (taxonomic)
@@ -93,16 +96,17 @@
 ##'       }
 ##'       \item \strong{PFG} : name of assigned Plant Functional Group
 ##'       \item \strong{determinant} : is the species kept as determinant 
-##'       species within the PFG ? (see \link{PRE_FATE.speciesClustering_step2} 
-##'       function for details)
+##'       species within the PFG ? (see 
+##'       \code{\link{PRE_FATE.speciesClustering_step2}} function for details)
 ##'     }
 ##'     }
 ##'     \item{nb.clusters}{\code{vector} of length \code{3} \cr
-##'     number of groups kept for each life-form class, obtained by cutting the 
-##'     hierarchical tree obtained from species distances}
+##'     number of groups kept for each life-form class, obtained by cutting 
+##'     the hierarchical tree obtained from species distances}
 ##'     \item{PFG.traits}{\code{data.frame} of dimension \code{24 x 10} \cr
 ##'     containing traits for plant functional groups \cr
-##'     obtained from the \link{PRE_FATE.speciesClustering_step3} function \cr
+##'     obtained from the \code{\link{PRE_FATE.speciesClustering_step3}} 
+##'     function \cr
 ##'     \itemize{
 ##'       \item \strong{PFG_name} : full descriptive Plant Functional Group name
 ##'       \item \strong{PFG} : Plant Functional Group short name
@@ -167,23 +171,27 @@
 ##'     \item{HS_90}{same as HS_0 but 90 years after equilibrium}
 ##'     \item{strata_limits}{a \code{vector} of length \code{5} \cr
 ##'     containing height of stratum limits in centimeters \cr
-##'     to be used with the \link{PRE_FATE.params_PFGsuccession} and 
-##'     \link{PRE_FATE.params_PFGlight} functions \cr}
+##'     to be used with the \code{\link{PRE_FATE.params_PFGsuccession}} and 
+##'     \code{\link{PRE_FATE.params_PFGlight}} functions \cr}
 ##'     \item{succ_light}{a \code{data.frame} of dimension \code{24 x 6} \cr
 ##'     containing traits for plant functional groups \cr
-##'     obtained from the \link{PRE_FATE.speciesClustering_step3} function \cr
-##'     to be used with the \link{PRE_FATE.params_PFGsuccession} and 
-##'     \link{PRE_FATE.params_PFGlight} functions \cr}
+##'     obtained from the \code{\link{PRE_FATE.speciesClustering_step3}} 
+##'     function \cr
+##'     to be used with the \code{\link{PRE_FATE.params_PFGsuccession}} and 
+##'     \code{\link{PRE_FATE.params_PFGlight}} functions \cr}
 ##'     \item{disp}{a \code{data.frame} of dimension \code{24 x 4} \cr
 ##'     containing dispersal values (in meters) for plant functional groups \cr
-##'     to be used with the \link{PRE_FATE.params_PFGdispersal} function \cr}
+##'     to be used with the \code{\link{PRE_FATE.params_PFGdispersal}} function 
+##'     \cr}
 ##'     \item{dist}{a \code{data.frame} of dimension \code{384 x 5} \cr
 ##'     containing response of plant functional groups to disturbances \cr
-##'     to be used with the \link{PRE_FATE.params_PFGdisturbance} function \cr}
+##'     to be used with the \code{\link{PRE_FATE.params_PFGdisturbance}} 
+##'     function \cr}
 ##'     \item{global}{a \code{vector} of length \code{18} \cr
 ##'     containing global parameter values for a \code{FATE-HD} simulation in 
 ##'     the PNE \cr
-##'     to be used with the \link{PRE_FATE.params_globalParameters} function \cr
+##'     to be used with the \code{\link{PRE_FATE.params_globalParameters}} 
+##'     function \cr
 ##'     }
 ##'   }
 ##' 
@@ -223,33 +231,33 @@
 ##'       Habitat Suitability model
 ##'     }
 ##'     }
-##'   \item{abund_str.equilibrium}{a \code{\link[raster]{stack}} object of dimension 
-##'     \code{782 x 619} with a resolution of \code{100m} and Lambers (lcc) 
-##'     projection, containing 120 layers representing \code{FATE-HD} 
-##'     \strong{abundances for year 800 of initialization phase} (= 
-##'     \emph{equilibrium} or \emph{current} time). \cr
-##'     Maps are per PFG and per height stratum.}
-##'   \item{forest_cover.init}{a \code{\link[raster]{stack}} object of dimension 
-##'     \code{782 x 619} with a resolution of \code{100m} and Lambers (lcc) 
-##'     projection, containing 16 layers representing \code{FATE-HD} 
-##'     \strong{relative forest cover through initialization phase (from year 50 
-##'     to 800)}. \cr
-##'     Maps are summing all PFGs through all height strata above 1.5 meters. \cr
+##'   \item{abund_str.equilibrium}{a \code{\link[raster]{stack}} object of 
+##'   dimension \code{782 x 619} with a resolution of \code{100m} and Lambers 
+##'   (lcc) projection, containing 120 layers representing \code{FATE-HD} 
+##'   \strong{abundances for year 800 of initialization phase} (= 
+##'   \emph{equilibrium} or \emph{current} time). \cr
+##'   Maps are per PFG and per height stratum.}
+##'   \item{forest_cover.init}{a \code{\link[raster]{stack}} object of 
+##'   dimension \code{782 x 619} with a resolution of \code{100m} and Lambers 
+##'   (lcc) projection, containing 16 layers representing \code{FATE-HD} 
+##'   \strong{relative forest cover through initialization phase (from year 50 
+##'   to 800)}. \cr
+##'   Maps are summing all PFGs through all height strata above 1.5 meters. \cr
+##'   }
+##'   \item{forest_cover \cr CC_BAU}{a \code{\link[raster]{stack}} object of 
+##'   dimension \code{782 x 619} with a resolution of \code{100m} and Lambers 
+##'   (lcc) projection, containing 14 layers representing \code{FATE-HD} 
+##'   \strong{relative forest cover through Climate Change (CC) + 
+##'   Business-As-Usual (BAU) scenario (from year 850 to 1500)}. \cr
+##'   Maps are summing all PFGs through all height strata above 1.5 meters. \cr
 ##'     }
-##'   \item{forest_cover \cr CC_BAU}{a \code{\link[raster]{stack}} object of dimension 
-##'     \code{782 x 619} with a resolution of \code{100m} and Lambers (lcc) 
-##'     projection, containing 14 layers representing \code{FATE-HD} 
-##'     \strong{relative forest cover through Climate Change (CC) + 
-##'     Business-As-Usual (BAU) scenario (from year 850 to 1500)}. \cr
-##'     Maps are summing all PFGs through all height strata above 1.5 meters. \cr
-##'     }
-##'   \item{forest_cover\cr CC_Abandon}{a \code{\link[raster]{stack}} object of dimension 
-##'     \code{782 x 619} with a resolution of \code{100m} and Lambers (lcc) 
-##'     projection, containing 14 layers representing \code{FATE-HD} 
-##'     \strong{relative forest cover through Climate Change (CC) + Abandonment (BAU) 
-##'     scenario (from year 850 to 1500)}. \cr
-##'     Maps are summing all PFGs through all height strata above 1.5 meters. \cr
-##'     }
+##'   \item{forest_cover\cr CC_Abandon}{a \code{\link[raster]{stack}} object of 
+##'   dimension \code{782 x 619} with a resolution of \code{100m} and Lambers 
+##'   (lcc) projection, containing 14 layers representing \code{FATE-HD} 
+##'   \strong{relative forest cover through Climate Change (CC) + Abandonment 
+##'   (BAU) scenario (from year 850 to 1500)}. \cr
+##'   Maps are summing all PFGs through all height strata above 1.5 meters. \cr
+##'   }
 ##' }
 ##'
 ##' @export
