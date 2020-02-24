@@ -170,14 +170,13 @@ simulation folder to find a specific pattern and replace it with a new one</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>name.simulation</th>
-      <td><p>a <code>string</code> that corresponds to the main
+      <td><p>a <code>string</code> that corresponds to the main 
 directory or simulation name of the <code>FATE-HD</code> simulation</p></td>
     </tr>
     <tr>
       <th>opt.name.file</th>
-      <td><p>(<em>optional</em>) <br /> a <code>string</code> that
-corresponds to the name of the file (or part) in which to search and 
-change the pattern</p></td>
+      <td><p>(<em>optional</em>) <br /> a <code>string</code> that corresponds 
+to the name of the file (or part) in which to search and change the pattern</p></td>
     </tr>
     <tr>
       <th>pattern.tofind</th>
@@ -192,11 +191,137 @@ replace</p></td>
     </table>
 
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples">
+<span class='co'>## Create a skeleton folder with the default name ('FATE_simulation')</span>
+<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/files2.html'>dir.exists</a></span>(<span class='st'>"FATE_simulation"</span>)) <span class='fu'><a href='https://rdrr.io/r/base/unlink.html'>unlink</a></span>(<span class='st'>"FATE_simulation"</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'><a href='PRE_FATE.skeletonDirectory.html'>PRE_FATE.skeletonDirectory</a></span>()
+
+<span class='co'>## Create a Global_parameters file</span>
+<span class='fu'><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
+                                 , <span class='kw'>required.no_PFG</span> <span class='kw'>=</span> <span class='fl'>6</span>
+                                 , <span class='kw'>required.no_STRATA</span> <span class='kw'>=</span> <span class='fl'>5</span>
+                                 , <span class='kw'>required.simul_duration</span> <span class='kw'>=</span> <span class='fl'>100</span>
+                                 , <span class='kw'>required.seeding_duration</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>10</span>,<span class='fl'>50</span>)
+                                 , <span class='kw'>required.seeding_timestep</span> <span class='kw'>=</span> <span class='fl'>1</span>
+                                 , <span class='kw'>required.seeding_input</span> <span class='kw'>=</span> <span class='fl'>100</span>
+                                 , <span class='kw'>required.max_abund_low</span> <span class='kw'>=</span> <span class='fl'>30000</span>
+                                 , <span class='kw'>required.max_abund_medium</span> <span class='kw'>=</span> <span class='fl'>50000</span>
+                                 , <span class='kw'>required.max_abund_high</span> <span class='kw'>=</span> <span class='fl'>90000</span>)
+
+
+<span class='co'>## Change number of PFG</span>
+<span class='fu'><a href='https://rdrr.io/r/base/readLines.html'>readLines</a></span>(<span class='st'>"FATE_simulation/DATA/GLOBAL_PARAMETERS/Global_parameters_V1.txt"</span>)
+
+<span class='fu'>.setPattern</span>(<span class='kw'>name.simul</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
+            , <span class='kw'>opt.name.file</span> <span class='kw'>=</span> <span class='st'>"Global_parameters_V1.txt"</span>
+            , <span class='kw'>pattern.tofind</span> <span class='kw'>=</span> <span class='st'>"NB_FG 6"</span>
+            , <span class='kw'>pattern.toreplace</span> <span class='kw'>=</span> <span class='st'>"NB_FG 14"</span>)
+
+<span class='fu'><a href='https://rdrr.io/r/base/readLines.html'>readLines</a></span>(<span class='st'>"FATE_simulation/DATA/GLOBAL_PARAMETERS/Global_parameters_V1.txt"</span>)
+
+
+<span class='co'>## ----------------------------------------------------------------------------------------- ##</span>
+
+<span class='co'>## Load example data</span>
+<span class='no'>PNE_PARAM</span> <span class='kw'>=</span> <span class='fu'><a href='dot-loadData.html'>.loadData</a></span>(<span class='st'>"PNE_PARAM"</span>)
+
+<span class='co'>## PNE_PARAM$succ_light : data.frame</span>
+<span class='co'>## PNE_PARAM$strata_limits : vector</span>
+<span class='co'>## PNE_PARAM$disp : data.frame</span>
+<span class='co'>## PNE_PARAM$dist : data.frame</span>
+<span class='co'>## PNE_PARAM$global : vector</span>
+
+<span class='co'>## Create a skeleton folder</span>
+<span class='fu'><a href='PRE_FATE.skeletonDirectory.html'>PRE_FATE.skeletonDirectory</a></span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_PNE"</span>)
+
+<span class='co'>## Create PFG succession parameter files : predefined of strata limits</span>
+<span class='no'>tab</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>succ_light</span>[, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"PFG"</span>, <span class='st'>"type"</span>, <span class='st'>"height"</span>, <span class='st'>"maturity"</span>, <span class='st'>"longevity"</span>)]
+<span class='fu'><a href='PRE_FATE.params_PFGsuccession.html'>PRE_FATE.params_PFGsuccession</a></span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_PNE"</span>
+                              , <span class='kw'>mat.PFG.succ</span> <span class='kw'>=</span> <span class='no'>tab</span>
+                              , <span class='kw'>strata.limits</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>strata_limits</span>
+                              , <span class='kw'>strata.limits_reduce</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='co'>## Create PFG light parameter files : predefined of strata limits</span>
+<span class='no'>tab</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>succ_light</span>[, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"PFG"</span>, <span class='st'>"type"</span>, <span class='st'>"height"</span>, <span class='st'>"maturity"</span>, <span class='st'>"longevity"</span>, <span class='st'>"light"</span>)]
+<span class='fu'><a href='PRE_FATE.params_PFGlight.html'>PRE_FATE.params_PFGlight</a></span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_PNE"</span>
+                         , <span class='kw'>mat.PFG.succ</span> <span class='kw'>=</span> <span class='no'>tab</span>
+                         , <span class='kw'>strata.limits</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>strata_limits</span>
+                         , <span class='kw'>strata.limits_reduce</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='co'>## Create PFG dispersal parameter files</span>
+<span class='fu'><a href='PRE_FATE.params_PFGdispersal.html'>PRE_FATE.params_PFGdispersal</a></span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_PNE"</span>
+                             , <span class='kw'>mat.PFG.disp</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>disp</span>)
+
+<span class='co'>## Create PFG disturbance parameter files</span>
+<span class='fu'><a href='PRE_FATE.params_PFGdisturbance.html'>PRE_FATE.params_PFGdisturbance</a></span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_PNE"</span>
+                               , <span class='kw'>mat.PFG.dist</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>dist</span>)
+
+<span class='co'>## Create a Global_parameters file</span>
+<span class='fu'><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_PNE"</span>
+                                 , <span class='kw'>required.no_PFG</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"NB_FG"</span>]
+                                 , <span class='kw'>required.no_STRATA</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"NB_STRATUM"</span>]
+                                 , <span class='kw'>required.simul_duration</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"SIMULATION_DURATION"</span>]
+                                 , <span class='kw'>required.seeding_duration</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"SEEDING_DURATION"</span>]
+                                 , <span class='kw'>required.seeding_timestep</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"SEEDING_TIMESTEP"</span>]
+                                 , <span class='kw'>required.seeding_input</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"SEEDING_INPUT"</span>]
+                                 , <span class='kw'>required.max_abund_low</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"MAX_ABUND_LOW"</span>]
+                                 , <span class='kw'>required.max_abund_medium</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"MAX_ABUND_MEDIUM"</span>]
+                                 , <span class='kw'>required.max_abund_high</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"MAX_ABUND_HIGH"</span>]
+                                 , <span class='kw'>doLight</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+                                 , <span class='kw'>LIGHT.thresh_medium</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"LIGHT.thresh_medium"</span>]
+                                 , <span class='kw'>LIGHT.thresh_low</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"LIGHT.thresh_low"</span>]
+                                 , <span class='kw'>doDispersal</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+                                 , <span class='kw'>DISPERSAL.mode</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"DISPERSAL.mode"</span>]
+                                 , <span class='kw'>doHabSuitability</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+                                 , <span class='kw'>HABSUIT.ref_option</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"HABSUIT.ref_option"</span>]
+                                 , <span class='kw'>doDisturbances</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+                                 , <span class='kw'>DIST.no</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"DIST.no"</span>]
+                                 , <span class='kw'>DIST.no_sub</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"DIST.no_sub"</span>]
+                                 , <span class='kw'>DIST.freq</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"DIST.freq"</span>]
+                                                   , <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"DIST.no"</span>])
+)
+
+<span class='co'>## Create simulation masks</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>raster</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/raster/man/writeRaster.html'>writeRaster</a></span>(<span class='no'>PNE_PARAM</span>$<span class='no'>masks</span>$<span class='no'>maskEcrins</span>
+            , <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"FATE_PNE/DATA/MASK/mask.tif"</span>
+            , <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/raster/man/writeRaster.html'>writeRaster</a></span>(<span class='no'>PNE_PARAM</span>$<span class='no'>masks</span>$<span class='no'>noDisturb</span>
+            , <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"FATE_PNE/DATA/MASK/noDisturb.tif"</span>
+            , <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+<span class='fu'><a href='PRE_FATE.params_simulParameters.html'>PRE_FATE.params_simulParameters</a></span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_PNE"</span>
+                                , <span class='kw'>name.mask</span> <span class='kw'>=</span> <span class='st'>"mask.tif"</span>
+                                , <span class='kw'>name.dist</span> <span class='kw'>=</span> <span class='st'>"noDisturb.tif"</span>)
+
+
+<span class='co'>## Change value of POTENTIAL_FECUNDITY in all PFG succession files</span>
+<span class='fu'><a href='https://rdrr.io/r/base/readLines.html'>readLines</a></span>(<span class='st'>"FATE_PNE/DATA/PFGS/SUCC/SUCC_C1_ruderal.txt"</span>)
+
+<span class='fu'>.setPattern</span>(<span class='kw'>name.simul</span> <span class='kw'>=</span> <span class='st'>"FATE_PNE"</span>
+            , <span class='kw'>opt.name.file</span> <span class='kw'>=</span> <span class='st'>"SUCC_"</span>
+            , <span class='kw'>pattern.tofind</span> <span class='kw'>=</span> <span class='st'>"POTENTIAL_FECUNDITY 100"</span>
+            , <span class='kw'>pattern.toreplace</span> <span class='kw'>=</span> <span class='st'>"POTENTIAL_FECUNDITY 500"</span>)
+
+<span class='fu'><a href='https://rdrr.io/r/base/readLines.html'>readLines</a></span>(<span class='st'>"FATE_PNE/DATA/PFGS/SUCC/SUCC_C1_ruderal.txt"</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/readLines.html'>readLines</a></span>(<span class='st'>"FATE_PNE/DATA/PFGS/SUCC/SUCC_P5_alpext.txt"</span>)
+
+
+<span class='co'>## Change name of simulation folder in all files</span>
+<span class='fu'><a href='https://rdrr.io/r/base/readLines.html'>readLines</a></span>(<span class='st'>"FATE_PNE/PARAM_SIMUL/Simul_parameters_V1.txt"</span>)
+
+<span class='fu'>.setPattern</span>(<span class='kw'>name.simul</span> <span class='kw'>=</span> <span class='st'>"FATE_PNE"</span>
+            , <span class='kw'>pattern.tofind</span> <span class='kw'>=</span> <span class='st'>"^FATE_PNE/"</span>
+            , <span class='kw'>pattern.toreplace</span> <span class='kw'>=</span> <span class='st'>"FATE_BIGSIMUL/"</span>)
+
+<span class='fu'><a href='https://rdrr.io/r/base/readLines.html'>readLines</a></span>(<span class='st'>"FATE_PNE/PARAM_SIMUL/Simul_parameters_V1.txt"</span>)</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
     <h2>Author</h2>

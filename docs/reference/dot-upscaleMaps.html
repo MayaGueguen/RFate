@@ -169,27 +169,74 @@ resolution / extent.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>name.simulation</th>
-      <td><p>a <code>string</code> that corresponds to the main
+      <td><p>a <code>string</code> that corresponds to the main 
 directory or simulation name of the <code>FATE-HD</code> simulation</p></td>
     </tr>
     <tr>
       <th>resolution</th>
-      <td><p>an <code>integer</code> that corresponds to the new 
-resolution to upscale all the maps</p></td>
+      <td><p>an <code>integer</code> that corresponds to the new resolution 
+to upscale all the maps</p></td>
     </tr>
     <tr>
       <th>extent</th>
-      <td><p>a <code>vector</code> of 4 numeric values that corresponds 
+      <td><p>a <code>vector</code> of 4 <code>numeric</code> values that corresponds 
 to the new extent to crop all the maps</p></td>
     </tr>
     </table>
 
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples">
+<span class='co'>## Load example data</span>
+<span class='no'>PNE_PARAM</span> <span class='kw'>=</span> <span class='fu'><a href='dot-loadData.html'>.loadData</a></span>(<span class='st'>"PNE_PARAM"</span>)
+
+
+<span class='co'>## Create a skeleton folder</span>
+<span class='fu'><a href='PRE_FATE.skeletonDirectory.html'>PRE_FATE.skeletonDirectory</a></span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_PNE"</span>)
+
+<span class='co'>## Create simulation masks</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>raster</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/raster/man/writeRaster.html'>writeRaster</a></span>(<span class='no'>PNE_PARAM</span>$<span class='no'>masks</span>$<span class='no'>maskEcrins</span>
+            , <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"FATE_PNE/DATA/MASK/mask.tif"</span>
+            , <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/raster/man/writeRaster.html'>writeRaster</a></span>(<span class='no'>PNE_PARAM</span>$<span class='no'>masks</span>$<span class='no'>noDisturb</span>
+            , <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"FATE_PNE/DATA/MASK/noDisturb.tif"</span>
+            , <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'><a href='https://rdrr.io/pkg/raster/man/writeRaster.html'>writeRaster</a></span>(<span class='no'>PNE_PARAM</span>$<span class='no'>HS_0</span>
+            , <span class='kw'>file</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"FATE_PNE/DATA/PFGS/HABSUIT/HS_0_PFG_"</span>
+                            , <span class='fl'>1</span>:<span class='fu'><a href='https://rdrr.io/pkg/raster/man/nlayers.html'>nlayers</a></span>(<span class='no'>PNE_PARAM</span>$<span class='no'>HS_0</span>), <span class='st'>".tif"</span>)
+            , <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+            , <span class='kw'>bylayer</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+
+<span class='co'>## Upscale all simulation maps</span>
+<span class='no'>ras1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster</a></span>(<span class='st'>"FATE_PNE/DATA/MASK/mask.tif"</span>)
+<span class='no'>ras2</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster</a></span>(<span class='st'>"FATE_PNE/DATA/PFGS/HABSUIT/HS_0_PFG_3.tif"</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>ras1</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>ras2</span>)
+
+<span class='fu'>.upscaleMaps</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_PNE"</span>
+             , <span class='kw'>resolution</span> <span class='kw'>=</span> <span class='fl'>250</span>)
+
+<span class='no'>ras1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster</a></span>(<span class='st'>"FATE_PNE/DATA/MASK/mask.tif"</span>)
+<span class='no'>ras2</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster</a></span>(<span class='st'>"FATE_PNE/DATA/PFGS/HABSUIT/HS_0_PFG_3.tif"</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>ras1</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>ras2</span>)
+
+<span class='co'>## Crop all simulation maps</span>
+<span class='fu'>.cropMaps</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_PNE"</span>
+          , <span class='kw'>extent</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>875576</span>, <span class='fl'>930000</span>, <span class='fl'>1946124</span>, <span class='fl'>2000000</span>))
+
+<span class='no'>ras1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster</a></span>(<span class='st'>"FATE_PNE/DATA/MASK/mask.tif"</span>)
+<span class='no'>ras2</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/raster/man/raster.html'>raster</a></span>(<span class='st'>"FATE_PNE/DATA/PFGS/HABSUIT/HS_0_PFG_3.tif"</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>ras1</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>(<span class='no'>ras2</span>)</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
     <h2>Author</h2>

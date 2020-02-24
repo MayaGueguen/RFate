@@ -29,8 +29,8 @@ for(i in seq(0,90,15))
 {
   cat(" ", i)
   HS = stack(list.files("a_DATA/PFGS/ENVSUIT_A1B/", pattern = paste0("HS_f", i), full.names = TRUE))
-  HS = readAll(HS)
   HS = round(HS, 3)
+  HS = readAll(HS)
   projection(HS) = projRas
   assign(x = paste0("HS_", i), HS)
 }

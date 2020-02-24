@@ -7,22 +7,143 @@
 .setParam(params.lines, flag, flag.split, value)
 }
 \arguments{
-\item{params.lines}{a \code{string} that corresponds to the 
-name of the file from which to extract the parameter value}
+\item{params.lines}{a \code{string} that corresponds to the name of the 
+file from which to extract the parameter value}
 
-\item{flag}{a \code{string} that corresponds to the parameter
-name to be extracted and that must be present into the
-\code{param.lines} file}
+\item{flag}{a \code{string} that corresponds to the parameter name to be 
+extracted and that must be present into the \code{param.lines} file}
 
-\item{flag.split}{either " " or "^--.*--$", depending on the
+\item{flag.split}{either "\code{ }" or "\code{^--.*--$}", depending on the 
 type of parameter file}
 
-\item{value}{a \code{string} or a \code{numeric} value (it can also be 
-a \code{vector}) containing the new value of the parameter to be changed}
+\item{value}{a \code{string} or a \code{numeric} value (it can also be a 
+\code{vector}) containing the new value of the parameter to be changed}
 }
 \description{
-This function finds in a text file the value(s) of a 
-given parameter, and replace it with new value(s).
+This function finds in a text file the value(s) of a given 
+parameter, and replace it with new value(s).
+}
+\examples{
+
+## Create a skeleton folder with the default name ('FATE_simulation')
+if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
+PRE_FATE.skeletonDirectory()
+
+## Create a Global_parameters file
+PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                 , required.no_PFG = 6
+                                 , required.no_STRATA = 5
+                                 , required.simul_duration = 100
+                                 , required.seeding_duration = c(10,50)
+                                 , required.seeding_timestep = 1
+                                 , required.seeding_input = 100
+                                 , required.max_abund_low = 30000
+                                 , required.max_abund_medium = 50000
+                                 , required.max_abund_high = 90000)
+                                 
+readLines("FATE_simulation/DATA/GLOBAL_PARAMETERS/Global_parameters_V1.txt")
+                                 
+## Change number of PFG
+.setParam(params.lines = "FATE_simulation/DATA/GLOBAL_PARAMETERS/Global_parameters_V1.txt"
+          , flag = "NB_FG"
+          , flag.split = " "
+          , value = 14)
+          
+readLines("FATE_simulation/DATA/GLOBAL_PARAMETERS/Global_parameters_V1.txt")
+
+
+## ----------------------------------------------------------------------------------------- ##
+                                
+## Load example data
+PNE_PARAM = .loadData("PNE_PARAM")
+
+## PNE_PARAM$succ_light : data.frame
+## PNE_PARAM$strata_limits : vector
+## PNE_PARAM$disp : data.frame
+## PNE_PARAM$dist : data.frame
+## PNE_PARAM$global : vector
+
+## Create a skeleton folder
+PRE_FATE.skeletonDirectory(name.simulation = "FATE_PNE")
+
+## Create PFG succession parameter files : predefined of strata limits
+tab = PNE_PARAM$succ_light[, c("PFG", "type", "height", "maturity", "longevity")]
+PRE_FATE.params_PFGsuccession(name.simulation = "FATE_PNE"
+                              , mat.PFG.succ = tab
+                              , strata.limits = PNE_PARAM$strata_limits
+                              , strata.limits_reduce = FALSE)
+
+## Create PFG light parameter files : predefined of strata limits
+tab = PNE_PARAM$succ_light[, c("PFG", "type", "height", "maturity", "longevity", "light")]
+PRE_FATE.params_PFGlight(name.simulation = "FATE_PNE"
+                         , mat.PFG.succ = tab
+                         , strata.limits = PNE_PARAM$strata_limits
+                         , strata.limits_reduce = FALSE)
+
+## Create PFG dispersal parameter files
+PRE_FATE.params_PFGdispersal(name.simulation = "FATE_PNE"
+                             , mat.PFG.disp = PNE_PARAM$disp)
+
+## Create PFG disturbance parameter files
+PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_PNE"
+                               , mat.PFG.dist = PNE_PARAM$dist)
+
+## Create a Global_parameters file
+PRE_FATE.params_globalParameters(name.simulation = "FATE_PNE"
+                                 , required.no_PFG = PNE_PARAM$global["NB_FG"]
+                                 , required.no_STRATA = PNE_PARAM$global["NB_STRATUM"]
+                                 , required.simul_duration = PNE_PARAM$global["SIMULATION_DURATION"]
+                                 , required.seeding_duration = PNE_PARAM$global["SEEDING_DURATION"]
+                                 , required.seeding_timestep = PNE_PARAM$global["SEEDING_TIMESTEP"]
+                                 , required.seeding_input = PNE_PARAM$global["SEEDING_INPUT"]
+                                 , required.max_abund_low = PNE_PARAM$global["MAX_ABUND_LOW"]
+                                 , required.max_abund_medium = PNE_PARAM$global["MAX_ABUND_MEDIUM"]
+                                 , required.max_abund_high = PNE_PARAM$global["MAX_ABUND_HIGH"]
+                                 , doLight = TRUE
+                                 , LIGHT.thresh_medium = PNE_PARAM$global["LIGHT.thresh_medium"]
+                                 , LIGHT.thresh_low = PNE_PARAM$global["LIGHT.thresh_low"]
+                                 , doDispersal = TRUE
+                                 , DISPERSAL.mode = PNE_PARAM$global["DISPERSAL.mode"]
+                                 , doHabSuitability = TRUE
+                                 , HABSUIT.ref_option = PNE_PARAM$global["HABSUIT.ref_option"]
+                                 , doDisturbances = TRUE
+                                 , DIST.no = PNE_PARAM$global["DIST.no"]
+                                 , DIST.no_sub = PNE_PARAM$global["DIST.no_sub"]
+                                 , DIST.freq = rep(PNE_PARAM$global["DIST.freq"]
+                                                   , PNE_PARAM$global["DIST.no"])
+)
+
+## Create simulation masks
+library(raster)
+writeRaster(PNE_PARAM$masks$maskEcrins
+            , file = "FATE_PNE/DATA/MASK/mask.tif"
+            , overwrite = TRUE)
+writeRaster(PNE_PARAM$masks$noDisturb
+            , file = "FATE_PNE/DATA/MASK/noDisturb.tif"
+            , overwrite = TRUE)
+
+PRE_FATE.params_simulParameters(name.simulation = "FATE_PNE"
+                                , name.mask = "mask.tif"
+                                , name.dist = "noDisturb.tif")
+
+
+## Change names of PFG succession files
+readLines("FATE_PNE/PARAM_SIMUL/Simul_parameters_V1.txt")
+
+## GIVING ERROR : not the same number of elements
+# .setParam(params.lines = "FATE_PNE/PARAM_SIMUL/Simul_parameters_V1.txt"
+#           , flag = "PFG_LIFE_HISTORY_PARAMS"
+#           , flag.split = "^--.*--$"
+#           , value = c("toto", "tata", "titi"))
+
+.setParam(params.lines = "FATE_PNE/PARAM_SIMUL/Simul_parameters_V1.txt"
+          , flag = "PFG_LIFE_HISTORY_PARAMS"
+          , flag.split = "^--.*--$"
+          , value = rep(c("toto", "tata", "titi"), 8))
+          
+readLines("FATE_PNE/PARAM_SIMUL/Simul_parameters_V1.txt")
+
+
 }
 \author{
 Maya Guéguen
