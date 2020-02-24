@@ -2,23 +2,24 @@
 % Please edit documentation in R/PRE_FATE.params_multipleSet.R
 \name{PRE_FATE.params_multipleSet}
 \alias{PRE_FATE.params_multipleSet}
-\title{Create multiple set(s) of parameter files for a \code{FATE-HD}
+\title{Create multiple set(s) of parameter files for a \code{FATE-HD} 
 simulation}
 \usage{
 PRE_FATE.params_multipleSet(name.simulation.1, name.simulation.2 = NULL,
   file.simulParam.1, file.simulParam.2 = NULL, no_simulations,
   opt.percent_max = 0.5, opt.percent_seeding = 0.5,
-  opt.percent_light = 0.5, do.max_by_cohort = TRUE,
+  opt.percent_light = 0.5, opt.percent_soil = 0.5,
   do.max_abund_low = TRUE, do.max_abund_medium = TRUE,
   do.max_abund_high = TRUE, do.seeding_duration = TRUE,
   do.seeding_timestep = TRUE, do.seeding_input = TRUE,
   do.nb_stratum = TRUE, do.LIGHT.thresh_medium = TRUE,
-  do.LIGHT.thresh_low = TRUE, do.DISPERSAL.mode = TRUE,
+  do.LIGHT.thresh_low = TRUE, do.SOIL.init = TRUE,
+  do.SOIL.retention = TRUE, do.DISPERSAL.mode = TRUE,
   do.HABSUIT.ref_option = TRUE)
 }
 \arguments{
-\item{name.simulation.1}{a \code{string} that corresponds to the main
-directory or simulation name of the \code{FATE-HD} simulation from which to
+\item{name.simulation.1}{a \code{string} that corresponds to the main 
+directory or simulation name of the \code{FATE-HD} simulation from which to 
 retrieve the first parameter simulation file (\code{file.simulParam.1}), 
 and the second if given (\code{file.simulParam.2}) and no other directory 
 provided (\code{name.simulation.2 = NULL})}
@@ -29,13 +30,13 @@ of the \code{FATE-HD} simulation from which to retrieve the second
 parameter simulation file (\code{file.simulParam.2})}
 
 \item{file.simulParam.1}{a \code{string} that corresponds to the name of 
-the simulation parameter file from which to retrieve parameter values that
+the simulation parameter file from which to retrieve parameter values that 
 will be used to build the multiple set of new parameters}
 
 \item{file.simulParam.2}{default \code{NULL} (\emph{optional}). \cr 
 A \code{string} that corresponds to the name of the second simulation 
-parameter file from which to retrieve parameter values that will be used to 
-build parameter ranges in comparison with values from 
+parameter file from which to retrieve parameter values that will be used 
+to build parameter ranges in comparison with values from 
 \code{file.simulParam.1}}
 
 \item{no_simulations}{an \code{integer} corresponding to the number of set 
@@ -43,21 +44,20 @@ of parameters that will be produced according to Latin Hypercube Sampling
 (LHS)}
 
 \item{opt.percent_max}{default \code{0.5}. Amount of variation (between 0 
-and 1) around the original value of \code{MAX_BY_COHORT}, 
-\code{MAX_ABUND_LOW}, \code{MAX_ABUND_MEDIUM}, \code{MAX_ABUND_HIGH} if 
-selected}
+and 1) around the original value of \code{MAX_ABUND_LOW}, 
+\code{MAX_ABUND_MEDIUM}, \code{MAX_ABUND_HIGH} if selected}
 
-\item{opt.percent_seeding}{default \code{0.5}. Amount of variation (between 0 
-and 1) around the original value of \code{SEEDING_DURATION}, 
+\item{opt.percent_seeding}{default \code{0.5}. Amount of variation (between 
+0 and 1) around the original value of \code{SEEDING_DURATION}, 
 \code{SEEDING_TIMESTEP}, \code{SEEDING_INPUT} if selected}
 
 \item{opt.percent_light}{default \code{0.5}. Amount of variation (between 0 
 and 1) around the original value of \code{LIGHT_THRESH_MEDIUM}, 
 \code{LIGHT_THRESH_LOW} if selected}
 
-\item{do.max_by_cohort}{default \code{TRUE}. If \code{TRUE}, 
-\code{MAX_BY_COHORT} parameter within \code{Global_parameters} file will be 
-declined into a range of values}
+\item{opt.percent_soil}{default \code{0.5}. Amount of variation (between 0 
+and 1) around the original value of \code{SOIL_INIT}, 
+\code{SOIL_RETENTION} if selected}
 
 \item{do.max_abund_low}{default \code{TRUE}. If \code{TRUE}, 
 \code{MAX_ABUND_LOW} parameter within \code{Global_parameters} file will be 
@@ -85,28 +85,44 @@ be declined into a range of values}
 
 \item{do.nb_stratum}{default \code{TRUE}. If \code{TRUE}, 
 \code{NB_STRATUM} parameter within \code{Global_parameters} file will 
-be declined into a range of values, with potential impact on some parameters 
-within PFG succession (and light) files (parameters \code{STRATA}, 
-\code{MAX_ABUNDANCE}, \code{IMM_SIZE}, \code{CHANG_STR_AGES} (and 
-\code{SHADE_TOL}))}
+be declined into a range of values, with potential impact on some 
+parameters within PFG succession (and light) files (parameters 
+\code{STRATA}, \code{MAX_ABUNDANCE}, \code{IMM_SIZE}, \code{CHANG_STR_AGES} 
+(and \code{SHADE_TOL})) \cr
+(see \code{\link{PRE_FATE.params_PFGsuccession}} 
+(and \code{\link{PRE_FATE.params_PFGlight}}))}
 
 \item{do.LIGHT.thresh_medium}{default \code{TRUE}. If \code{TRUE}, 
-\code{LIGHT_THRESH_MEDIUM} parameter within \code{Global_parameters} file will 
-be declined into a range of values}
+\code{LIGHT_THRESH_MEDIUM} parameter within \code{Global_parameters} file 
+will be declined into a range of values \cr (see 
+\code{\link{PRE_FATE.params_globalParameters}})}
 
 \item{do.LIGHT.thresh_low}{default \code{TRUE}. If \code{TRUE}, 
-\code{LIGHT_THRESH_LOW} parameter within \code{Global_parameters} file will 
-be declined into a range of values}
+\code{LIGHT_THRESH_LOW} parameter within \code{Global_parameters} file 
+will be declined into a range of values \cr (see 
+\code{\link{PRE_FATE.params_globalParameters}})}
+
+\item{do.SOIL.init}{default \code{TRUE}. If \code{TRUE}, 
+\code{SOIL_INIT} parameter within \code{Global_parameters} file 
+will be declined into a range of values \cr (see 
+\code{\link{PRE_FATE.params_globalParameters}})}
+
+\item{do.SOIL.retention}{default \code{TRUE}. If \code{TRUE}, 
+\code{SOIL_RETENTION} parameter within \code{Global_parameters} file 
+will be declined into a range of values \cr (see 
+\code{\link{PRE_FATE.params_globalParameters}})}
 
 \item{do.DISPERSAL.mode}{default \code{TRUE}. If \code{TRUE}, 
 \code{DISPERSAL_MODE} parameter within \code{Global_parameters} file will 
-be declined into its 3 possible values (either uniform kernel (1), 
-exponential kernel (2) or exponential kernel with probability (3))}
+be declined into its 3 possible values (either uniform kernel (\code{1}), 
+exponential kernel (\code{2}) or exponential kernel with probability 
+(\code{3})) \cr (see \code{\link{PRE_FATE.params_globalParameters}})}
 
 \item{do.HABSUIT.ref_option}{default \code{TRUE}. If \code{TRUE}, 
 \code{HABSUIT_OPTION} parameter within \code{Global_parameters} file will 
-be declined into its 2 possible values (either random (1) or PFG specific 
-(2))}
+be declined into its 2 possible values (either random (\code{1}) or PFG 
+specific (\code{2})) \cr (see 
+\code{\link{PRE_FATE.params_globalParameters}})}
 }
 \value{
 A new folder containing the different sets of parameters asked. 
@@ -129,7 +145,6 @@ file :
     \item SEEDING_DURATION
     \item SEEDING_TIMESTEP
     \item SEEDING_INPUT
-    \item MAX_BY_COHORT
     \item MAX_ABUND_LOW
     \item MAX_ABUND_MEDIUM 
     \item MAX_ABUND_HIGH \cr \cr
@@ -139,20 +154,25 @@ file :
     \item LIGHT_THRESH_MEDIUM
     \item LIGHT_THRESH_LOW
   }
+  If the simulation includes \emph{soil competition} :
+  \itemize{
+    \item SOIL_INIT
+    \item SOIL_RETENTION
+  }
   If the simulation includes \emph{dispersal} :
   \itemize{
     \item DISPERSAL_MODE
   }
   If the simulation includes \emph{habitat suitability} :
   \itemize{
-    \item HABSUIT_OPTION
+    \item HABSUIT_OPTION \cr \cr
   }
   \item Into the \code{name.simulation/DATA/PFGS/SUCC} folder :
   \itemize{
     \item STRATA
     \item MAX_ABUNDANCE
     \item IMM_SIZE
-    \item CHANG_STR_AGES
+    \item CHANG_STR_AGES \cr \cr
   }
   \item Into the \code{name.simulation/DATA/PFGS/LIGHT} folder :
   \itemize{
@@ -166,13 +186,14 @@ using Latin Hypercube Sampling to help find best combination of parameters
 (see \code{Details})
 }
 \details{
-A \code{FATE-HD} simulation requires several parameters to define 
-general characteristics of the simulation : they are saved within a
-\code{Global_parameters} file. To fit the model to a particular area 
-and set of Plant Functional Groups (PFG), these are the parameters that 
-should be optimized, since they are not data-dependant, unlike, for example, 
-parameters related to PFG (height, maturity, dispersal distances, soil 
-tolerance, etc).
+A \code{FATE-HD} simulation requires several parameters to define general 
+characteristics of the simulation : they are saved within a 
+\code{Global_parameters} file (see 
+\code{\link{PRE_FATE.params_globalParameters}}). To fit the model to a 
+particular area and set of Plant Functional Groups (PFG), these are the 
+parameters that should be optimized, since they are not data-dependant, 
+unlike, for example, parameters related to PFG (height, maturity, dispersal 
+distances, soil tolerance, etc).
 
 (\emph{Note : this is true, except when varying the number of strata, which 
 will have an impact on some parameters within SUCC and LIGHT PFG parameter 
@@ -189,23 +210,25 @@ Three possible scenarios are available :
     \item requested parameter values are extracted from the given 
     simulation file
     \item ranges are assigned to each parameter according to the specified 
-    value \cr e.g. : if \code{opt.percent_seeding = 0.5}, and do.seeding_duration 
-    is asked, values will be generated for this parameter between : 
-    \deqn{SEEDING\_DURATION \pm SEEDING\_DURATION * \frac{50}{100}}
+    value \cr e.g. : if \code{opt.percent_seeding = 0.5}, and 
+    \code{do.seeding_duration} is asked, values will be generated for this 
+    parameter between : 
+    \deqn{\text{SEEDING_DURATION} \pm \text{SEEDING_DURATION} * 
+    \frac{50}{100}}
     \item according to the required number of parameter sets to be produced 
     (\code{no_simulations}), Latin Hypercube Sampling is applied to select 
     each new parameter values
-    \item parameter files are created for these new parameter values
+    \item parameter files are created for these new parameter values \cr \cr
   }
   }
   \item{1 folder - \cr 2 simulation files}{
   \itemize{
     \item same as 1st scenario
     \item ranges assigned to each parameter correspond to the extracted 
-    values (e.g. : if do.seeding_duration is asked, values will be generated 
-    for this parameter between : 
-    \code{SEEDING_DURATION (file_simulation.1)} and \code{SEEDING_DURATION 
-    (file_simulation.2)}
+    values (e.g. : if do.seeding_duration is asked, values will be 
+    generated for this parameter between : \code{SEEDING_DURATION 
+    (file_simulation.1)} and \code{SEEDING_DURATION (file_simulation.2)} 
+    \cr \cr
   }
   }
   \item{2 folders - \cr 2 simulation files}{
@@ -271,7 +294,6 @@ PRE_FATE.params_globalParameters(name.simulation = "FATE_PNE"
                                  , required.seeding_duration = PNE_PARAM$global["SEEDING_DURATION"]
                                  , required.seeding_timestep = PNE_PARAM$global["SEEDING_TIMESTEP"]
                                  , required.seeding_input = PNE_PARAM$global["SEEDING_INPUT"]
-                                 , required.max_by_cohort = PNE_PARAM$global["MAX_BY_COHORT"]
                                  , required.max_abund_low = PNE_PARAM$global["MAX_ABUND_LOW"]
                                  , required.max_abund_medium = PNE_PARAM$global["MAX_ABUND_MEDIUM"]
                                  , required.max_abund_high = PNE_PARAM$global["MAX_ABUND_HIGH"]
@@ -313,7 +335,6 @@ if (dir.exists("FATE_simulation_MULTIPLE_SET")) unlink("FATE_simulation_MULTIPLE
 PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_PNE"
                             , file.simulParam.1 = "Simul_parameters_V1.txt"
                             , no_simulations = 5
-                            , do.max_by_cohort = TRUE
                             , do.max_abund_low = FALSE
                             , do.max_abund_medium = FALSE
                             , do.max_abund_high = FALSE
@@ -323,6 +344,8 @@ PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_PNE"
                             , do.nb_stratum = FALSE
                             , do.LIGHT.thresh_medium = FALSE
                             , do.LIGHT.thresh_low = FALSE
+                            , do.SOIL.init = FALSE
+                            , do.SOIL.retention = FALSE
                             , do.DISPERSAL.mode = FALSE
                             , do.HABSUIT.ref_option = FALSE
 )

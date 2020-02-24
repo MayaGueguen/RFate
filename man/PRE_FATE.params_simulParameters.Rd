@@ -2,7 +2,7 @@
 % Please edit documentation in R/PRE_FATE.params_simulParameters.R
 \name{PRE_FATE.params_simulParameters}
 \alias{PRE_FATE.params_simulParameters}
-\title{Create \emph{Simul_parameters} parameter file for a \code{FATE-HD}
+\title{Create \emph{Simul_parameters} parameter file for a \code{FATE-HD} 
 simulation}
 \usage{
 PRE_FATE.params_simulParameters(name.simulation, name.mask,
@@ -22,14 +22,14 @@ to the file name of a raster mask, with either 0 or 1 within each pixel,
 1 corresponding to the cells of the studied area in which the disturbance 
 module of the \code{FATE-HD} simulation will take place}
 
-\item{opt.global.name}{(\emph{optional}) \cr a \code{string} that
+\item{opt.global.name}{(\emph{optional}) \cr a \code{string} that 
 corresponds to the name of the global parameter file in the folder
 \code{name.simulation/DATA/GLOBAL_PARAMETERS/} that will be used to build 
 the simulation parameter file}
 
-\item{opt.folder.name}{(\emph{optional}) \cr a \code{string} that
+\item{opt.folder.name}{(\emph{optional}) \cr a \code{string} that 
 corresponds to the name of the folder in each 
-\code{name.simulation/DATA/PFGS/module/} from which PFG file names will be
+\code{name.simulation/DATA/PFGS/module/} from which PFG file names will be 
 extracted to build the simulation parameter file}
 }
 \value{
@@ -45,6 +45,8 @@ directory with the following parameters :
   \item --MASK_CHANGE_TIME-- (\emph{optional})
   \item --MASK_CHANGE_MASK-- (\emph{optional})
   \item \strong{--PFG_LIFE_HISTORY_PARAMS--}
+  \item --PFG_LIGHT_PARAMS-- (\emph{optional})
+  \item --PFG_SOIL_PARAMS-- (\emph{optional})
   \item --PFG_DISPERSAL_PARAMS-- (\emph{optional})
   \item --PFG_HAB_MASK-- (\emph{optional})
   \item --HAB_CHANGE_TIME-- (\emph{optional})
@@ -53,7 +55,6 @@ directory with the following parameters :
   \item --DIST_MASK-- (\emph{optional})
   \item --DIST_CHANGE_TIME-- (\emph{optional})
   \item --DIST_CHANGE_MASK-- (\emph{optional})
-  \item --PFG_SOIL_PARAMS-- (\emph{optional})
   \item --END_OF_FILE--
 }
 }
@@ -62,9 +63,9 @@ This script is designed to create one (or several) parameter
 file containing \code{PARAMETER FILENAMES} used in \code{FATE-HD} model.
 }
 \details{
-The \code{FATE-HD} software takes only one input parameter : a file containing
-links to other files containing all the parameters and data needed by the 
-program to run.
+The \code{FATE-HD} software takes only one input parameter : a file 
+containing links to other files containing all the parameters and data 
+needed by the program to run.
 
 
 \describe{
@@ -83,30 +84,38 @@ program to run.
   (see \code{\link{PRE_FATE.params_saveYears}}) \cr \cr
   }
   \item{MASK}{raster mask that will define the study area}
-  \item{MASK_CHANGE_TIME \cr (\emph{optional})}{file containing the years to 
-  change rasters for the succession module \cr
+  \item{MASK_CHANGE_TIME \cr (\emph{optional})}{file containing the years 
+  to change rasters for the succession module \cr
   (see \code{\link{PRE_FATE.params_changingYears}})
   }
-  \item{MASK_CHANGE_MASK \cr (\emph{optional})}{file containing the files to 
-  change rasters for the succession module \cr
+  \item{MASK_CHANGE_MASK \cr (\emph{optional})}{file containing the files 
+  to change rasters for the succession module \cr
   (see \code{\link{PRE_FATE.params_changingYears}}) \cr \cr
   }
   \item{PFG_LIFE_HISTORY_ \cr PARAMS}{PFG life history related parameters 
   (one by PFG) \cr
   (see \code{\link{PRE_FATE.params_PFGsuccession}}) \cr \cr
   }
-  \item{PFG_DISPERSAL_ \cr PARAMS (\emph{optional})}{PFG dispersal capacity related parameters 
-  (one by PFG) \cr
+  \item{PFG_LIGHT_ \cr PARAMS (\emph{optional})}{PFG light preferences and 
+  tolerance related parameters (one by PFG) \cr
+  (see \code{\link{PRE_FATE.params_PFGlight}}) \cr \cr
+  }
+  \item{PFG_SOIL_ \cr PARAMS (\emph{optional})}{PFG soil contribution and 
+  tolerance related parameters (one by PFG) \cr
+  (see \code{\link{PRE_FATE.params_PFGsoil}}) \cr \cr
+  }
+  \item{PFG_DISPERSAL_ \cr PARAMS (\emph{optional})}{PFG dispersal 
+  capacity related parameters (one by PFG) \cr
   (see \code{\link{PRE_FATE.params_PFGdispersal}}) \cr \cr
   }
-  \item{PFG_HAB_MASK \cr (\emph{optional})}{raster masks (one by PFG) containing 
-  PFG habitat suitability for the study area}
-  \item{HAB_CHANGE_TIME \cr (\emph{optional})}{file containing the years to 
-  change rasters for the habitat suitability module \cr
+  \item{PFG_HAB_MASK \cr (\emph{optional})}{raster masks (one by PFG) 
+  containing PFG habitat suitability for the study area}
+  \item{HAB_CHANGE_TIME \cr (\emph{optional})}{file containing the years 
+  to change rasters for the habitat suitability module \cr
   (see \code{\link{PRE_FATE.params_changingYears}})
   }
-  \item{HAB_CHANGE_MASK \cr (\emph{optional})}{file containing the files to 
-  change rasters for the habitat suitability module \cr
+  \item{HAB_CHANGE_MASK \cr (\emph{optional})}{file containing the files 
+  to change rasters for the habitat suitability module \cr
   (see \code{\link{PRE_FATE.params_changingYears}}) \cr \cr
   }
   \item{PFG_DISTURBANCES_ \cr PARAMS (\emph{optional})}{PFG disturbance 
@@ -115,30 +124,26 @@ program to run.
   }
   \item{DIST_MASK \cr (\emph{optional})}{raster masks that will define the 
   disturbance areas}
-  \item{DIST_CHANGE_TIME \cr (\emph{optional})}{file containing the years to 
-  change rasters for the disturbance module \cr
+  \item{DIST_CHANGE_TIME \cr (\emph{optional})}{file containing the years 
+  to change rasters for the disturbance module \cr
   (see \code{\link{PRE_FATE.params_changingYears}})
   }
-  \item{DIST_CHANGE_MASK \cr (\emph{optional})}{file containing the files to 
-  change rasters for the disturbance module \cr
+  \item{DIST_CHANGE_MASK \cr (\emph{optional})}{file containing the files 
+  to change rasters for the disturbance module \cr
   (see \code{\link{PRE_FATE.params_changingYears}})
-  }
-  \item{PFG_SOIL_ \cr PARAMS (\emph{optional})}{PFG soil contribution and tolerance
-   related parameters (one by PFG) \cr
-  (see \code{\link{PRE_FATE.params_PFGsoil}}) \cr \cr
   }
 }
 }
 \note{
 \itemize{
   \item The links to files are \strong{NOT absolute paths}. \cr
-  \emph{When relative paths are used}, the user should be careful of the
+  \emph{When relative paths are used}, the user should be careful of the 
   folder from which the simulation is launched. \cr
-  \emph{A function allows to transform these relative paths into absolute
-  ones. (!not available yet!)}
+  \emph{A function allows to transform these relative paths into absolute 
+  ones. (see \code{\link{.setPattern}})}
   \item \strong{The order of files matters!} \cr
-  For instance the first link below \code{--PFG_LIFE_HISTORY_PARAMS--} flag 
-  has to match (the same PFG) with the first item below the 
+  For instance the first link below \code{--PFG_LIFE_HISTORY_PARAMS--} 
+  flag has to match (the same PFG) with the first item below the 
   \code{--PFG_DISPERSAL_PARAMS--} flag.
 }
 }
@@ -156,10 +161,9 @@ PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                  , required.seeding_duration = c(10,50)
                                  , required.seeding_timestep = 1
                                  , required.seeding_input = 100
-                                 , required.max_by_cohort = 5000000
-                                 , required.max_abund_low = 3000000
-                                 , required.max_abund_medium = 5000000
-                                 , required.max_abund_high = 9000000)
+                                 , required.max_abund_low = 30000
+                                 , required.max_abund_medium = 50000
+                                 , required.max_abund_high = 90000)
 
 ## Create a SAVE_year_maps or/and SAVE_year_objects parameter file
 PRE_FATE.params_saveYears(name.simulation = "FATE_simulation"
@@ -268,7 +272,6 @@ PRE_FATE.params_globalParameters(name.simulation = "FATE_PNE"
                                  , required.seeding_duration = PNE_PARAM$global["SEEDING_DURATION"]
                                  , required.seeding_timestep = PNE_PARAM$global["SEEDING_TIMESTEP"]
                                  , required.seeding_input = PNE_PARAM$global["SEEDING_INPUT"]
-                                 , required.max_by_cohort = PNE_PARAM$global["MAX_BY_COHORT"]
                                  , required.max_abund_low = PNE_PARAM$global["MAX_ABUND_LOW"]
                                  , required.max_abund_medium = PNE_PARAM$global["MAX_ABUND_MEDIUM"]
                                  , required.max_abund_high = PNE_PARAM$global["MAX_ABUND_HIGH"]
@@ -305,11 +308,12 @@ PRE_FATE.params_simulParameters(name.simulation = "FATE_PNE"
 \code{\link{PRE_FATE.params_globalParameters}},
 \code{\link{PRE_FATE.params_PFGsuccession}},
 \code{\link{PRE_FATE.params_PFGlight}},
+\code{\link{PRE_FATE.params_PFGsoil}},
 \code{\link{PRE_FATE.params_PFGdispersal}},
 \code{\link{PRE_FATE.params_PFGdisturbance}},
-\code{\link{PRE_FATE.params_PFGsoil}},
 \code{\link{PRE_FATE.params_saveYears}},
-\code{\link{PRE_FATE.params_changingYears}}
+\code{\link{PRE_FATE.params_changingYears}},
+\code{\link{.setPattern}}
 }
 \author{
 Maya Guéguen

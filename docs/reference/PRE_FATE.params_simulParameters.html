@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create <em>Simul_parameters</em> parameter file for a <code>FATE-HD</code>
+<title>Create <em>Simul_parameters</em> parameter file for a <code>FATE-HD</code> 
 simulation — PRE_FATE.params_simulParameters • RFate</title>
 
 
@@ -36,7 +36,7 @@ simulation — PRE_FATE.params_simulParameters • RFate</title>
 
 
 
-<meta property="og:title" content="Create <em>Simul_parameters</em> parameter file for a <code>FATE-HD</code>
+<meta property="og:title" content="Create <em>Simul_parameters</em> parameter file for a <code>FATE-HD</code> 
 simulation — PRE_FATE.params_simulParameters" />
 <meta property="og:description" content="This script is designed to create one (or several) parameter 
 file containing PARAMETER FILENAMES used in FATE-HD model." />
@@ -151,7 +151,7 @@ file containing PARAMETER FILENAMES used in FATE-HD model." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create <em>Simul_parameters</em> parameter file for a <code>FATE-HD</code>
+    <h1>Create <em>Simul_parameters</em> parameter file for a <code>FATE-HD</code> 
 simulation</h1>
     <small class="dont-index">Source: <a href='https://github.com/MayaGueguen/RFate.git/blob/master/R/PRE_FATE.params_simulParameters.R'><code>R/PRE_FATE.params_simulParameters.R</code></a></small>
     <div class="hidden name"><code>PRE_FATE.params_simulParameters.Rd</code></div>
@@ -189,16 +189,16 @@ module of the <code>FATE-HD</code> simulation will take place</p></td>
     </tr>
     <tr>
       <th>opt.global.name</th>
-      <td><p>(<em>optional</em>) <br /> a <code>string</code> that
+      <td><p>(<em>optional</em>) <br /> a <code>string</code> that 
 corresponds to the name of the global parameter file in the folder
 <code>name.simulation/DATA/GLOBAL_PARAMETERS/</code> that will be used to build 
 the simulation parameter file</p></td>
     </tr>
     <tr>
       <th>opt.folder.name</th>
-      <td><p>(<em>optional</em>) <br /> a <code>string</code> that
+      <td><p>(<em>optional</em>) <br /> a <code>string</code> that 
 corresponds to the name of the folder in each 
-<code>name.simulation/DATA/PFGS/module/</code> from which PFG file names will be
+<code>name.simulation/DATA/PFGS/module/</code> from which PFG file names will be 
 extracted to build the simulation parameter file</p></td>
     </tr>
     </table>
@@ -216,6 +216,8 @@ directory with the following parameters :</p>
 <li><p>--MASK_CHANGE_TIME-- (<em>optional</em>)</p></li>
 <li><p>--MASK_CHANGE_MASK-- (<em>optional</em>)</p></li>
 <li><p><strong>--PFG_LIFE_HISTORY_PARAMS--</strong></p></li>
+<li><p>--PFG_LIGHT_PARAMS-- (<em>optional</em>)</p></li>
+<li><p>--PFG_SOIL_PARAMS-- (<em>optional</em>)</p></li>
 <li><p>--PFG_DISPERSAL_PARAMS-- (<em>optional</em>)</p></li>
 <li><p>--PFG_HAB_MASK-- (<em>optional</em>)</p></li>
 <li><p>--HAB_CHANGE_TIME-- (<em>optional</em>)</p></li>
@@ -224,15 +226,14 @@ directory with the following parameters :</p>
 <li><p>--DIST_MASK-- (<em>optional</em>)</p></li>
 <li><p>--DIST_CHANGE_TIME-- (<em>optional</em>)</p></li>
 <li><p>--DIST_CHANGE_MASK-- (<em>optional</em>)</p></li>
-<li><p>--PFG_SOIL_PARAMS-- (<em>optional</em>)</p></li>
 <li><p>--END_OF_FILE--</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The <code>FATE-HD</code> software takes only one input parameter : a file containing
-links to other files containing all the parameters and data needed by the 
-program to run.</p>
+    <p>The <code>FATE-HD</code> software takes only one input parameter : a file 
+containing links to other files containing all the parameters and data 
+needed by the program to run.</p>
 
 <dl class='dl-horizontal'>
   <dt>GLOBAL_PARAMS</dt><dd><p>file where parameters related to the simulation 
@@ -247,40 +248,43 @@ program to run.</p>
   years for which simulation outputs will be saved <br />
   (see <code><a href='PRE_FATE.params_saveYears.html'>PRE_FATE.params_saveYears</a></code>) <br /> <br /></p></dd>
   <dt>MASK</dt><dd><p>raster mask that will define the study area</p></dd>
-  <dt>MASK_CHANGE_TIME <br /> (<em>optional</em>)</dt><dd><p>file containing the years to 
-  change rasters for the succession module <br />
+  <dt>MASK_CHANGE_TIME <br /> (<em>optional</em>)</dt><dd><p>file containing the years 
+  to change rasters for the succession module <br />
   (see <code><a href='PRE_FATE.params_changingYears.html'>PRE_FATE.params_changingYears</a></code>)</p></dd>
-  <dt>MASK_CHANGE_MASK <br /> (<em>optional</em>)</dt><dd><p>file containing the files to 
-  change rasters for the succession module <br />
+  <dt>MASK_CHANGE_MASK <br /> (<em>optional</em>)</dt><dd><p>file containing the files 
+  to change rasters for the succession module <br />
   (see <code><a href='PRE_FATE.params_changingYears.html'>PRE_FATE.params_changingYears</a></code>) <br /> <br /></p></dd>
   <dt>PFG_LIFE_HISTORY_ <br /> PARAMS</dt><dd><p>PFG life history related parameters 
   (one by PFG) <br />
   (see <code><a href='PRE_FATE.params_PFGsuccession.html'>PRE_FATE.params_PFGsuccession</a></code>) <br /> <br /></p></dd>
-  <dt>PFG_DISPERSAL_ <br /> PARAMS (<em>optional</em>)</dt><dd><p>PFG dispersal capacity related parameters 
-  (one by PFG) <br />
+  <dt>PFG_LIGHT_ <br /> PARAMS (<em>optional</em>)</dt><dd><p>PFG light preferences and 
+  tolerance related parameters (one by PFG) <br />
+  (see <code><a href='PRE_FATE.params_PFGlight.html'>PRE_FATE.params_PFGlight</a></code>) <br /> <br /></p></dd>
+  <dt>PFG_SOIL_ <br /> PARAMS (<em>optional</em>)</dt><dd><p>PFG soil contribution and 
+  tolerance related parameters (one by PFG) <br />
+  (see <code><a href='PRE_FATE.params_PFGsoil.html'>PRE_FATE.params_PFGsoil</a></code>) <br /> <br /></p></dd>
+  <dt>PFG_DISPERSAL_ <br /> PARAMS (<em>optional</em>)</dt><dd><p>PFG dispersal 
+  capacity related parameters (one by PFG) <br />
   (see <code><a href='PRE_FATE.params_PFGdispersal.html'>PRE_FATE.params_PFGdispersal</a></code>) <br /> <br /></p></dd>
-  <dt>PFG_HAB_MASK <br /> (<em>optional</em>)</dt><dd><p>raster masks (one by PFG) containing 
-  PFG habitat suitability for the study area</p></dd>
-  <dt>HAB_CHANGE_TIME <br /> (<em>optional</em>)</dt><dd><p>file containing the years to 
-  change rasters for the habitat suitability module <br />
+  <dt>PFG_HAB_MASK <br /> (<em>optional</em>)</dt><dd><p>raster masks (one by PFG) 
+  containing PFG habitat suitability for the study area</p></dd>
+  <dt>HAB_CHANGE_TIME <br /> (<em>optional</em>)</dt><dd><p>file containing the years 
+  to change rasters for the habitat suitability module <br />
   (see <code><a href='PRE_FATE.params_changingYears.html'>PRE_FATE.params_changingYears</a></code>)</p></dd>
-  <dt>HAB_CHANGE_MASK <br /> (<em>optional</em>)</dt><dd><p>file containing the files to 
-  change rasters for the habitat suitability module <br />
+  <dt>HAB_CHANGE_MASK <br /> (<em>optional</em>)</dt><dd><p>file containing the files 
+  to change rasters for the habitat suitability module <br />
   (see <code><a href='PRE_FATE.params_changingYears.html'>PRE_FATE.params_changingYears</a></code>) <br /> <br /></p></dd>
   <dt>PFG_DISTURBANCES_ <br /> PARAMS (<em>optional</em>)</dt><dd><p>PFG disturbance 
   related parameters in terms of resprouting and mortality (one by PFG) <br />
   (see <code><a href='PRE_FATE.params_PFGdisturbance.html'>PRE_FATE.params_PFGdisturbance</a></code>)</p></dd>
   <dt>DIST_MASK <br /> (<em>optional</em>)</dt><dd><p>raster masks that will define the 
   disturbance areas</p></dd>
-  <dt>DIST_CHANGE_TIME <br /> (<em>optional</em>)</dt><dd><p>file containing the years to 
-  change rasters for the disturbance module <br />
+  <dt>DIST_CHANGE_TIME <br /> (<em>optional</em>)</dt><dd><p>file containing the years 
+  to change rasters for the disturbance module <br />
   (see <code><a href='PRE_FATE.params_changingYears.html'>PRE_FATE.params_changingYears</a></code>)</p></dd>
-  <dt>DIST_CHANGE_MASK <br /> (<em>optional</em>)</dt><dd><p>file containing the files to 
-  change rasters for the disturbance module <br />
+  <dt>DIST_CHANGE_MASK <br /> (<em>optional</em>)</dt><dd><p>file containing the files 
+  to change rasters for the disturbance module <br />
   (see <code><a href='PRE_FATE.params_changingYears.html'>PRE_FATE.params_changingYears</a></code>)</p></dd>
-  <dt>PFG_SOIL_ <br /> PARAMS (<em>optional</em>)</dt><dd><p>PFG soil contribution and tolerance
-   related parameters (one by PFG) <br />
-  (see <code><a href='PRE_FATE.params_PFGsoil.html'>PRE_FATE.params_PFGsoil</a></code>) <br /> <br /></p></dd>
 
 </dl>
 
@@ -289,13 +293,13 @@ program to run.</p>
     
 <ul>
 <li><p>The links to files are <strong>NOT absolute paths</strong>. <br />
-  <em>When relative paths are used</em>, the user should be careful of the
+  <em>When relative paths are used</em>, the user should be careful of the 
   folder from which the simulation is launched. <br />
-  <em>A function allows to transform these relative paths into absolute
-  ones. (!not available yet!)</em></p></li>
+  <em>A function allows to transform these relative paths into absolute 
+  ones. (see <code><a href='dot-setPattern.html'>.setPattern</a></code>)</em></p></li>
 <li><p><strong>The order of files matters!</strong> <br />
-  For instance the first link below <code>--PFG_LIFE_HISTORY_PARAMS--</code> flag 
-  has to match (the same PFG) with the first item below the 
+  For instance the first link below <code>--PFG_LIFE_HISTORY_PARAMS--</code> 
+  flag has to match (the same PFG) with the first item below the 
   <code>--PFG_DISPERSAL_PARAMS--</code> flag.</p></li>
 </ul>
 
@@ -305,11 +309,12 @@ program to run.</p>
 <code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>,
 <code><a href='PRE_FATE.params_PFGsuccession.html'>PRE_FATE.params_PFGsuccession</a></code>,
 <code><a href='PRE_FATE.params_PFGlight.html'>PRE_FATE.params_PFGlight</a></code>,
+<code><a href='PRE_FATE.params_PFGsoil.html'>PRE_FATE.params_PFGsoil</a></code>,
 <code><a href='PRE_FATE.params_PFGdispersal.html'>PRE_FATE.params_PFGdispersal</a></code>,
 <code><a href='PRE_FATE.params_PFGdisturbance.html'>PRE_FATE.params_PFGdisturbance</a></code>,
-<code><a href='PRE_FATE.params_PFGsoil.html'>PRE_FATE.params_PFGsoil</a></code>,
 <code><a href='PRE_FATE.params_saveYears.html'>PRE_FATE.params_saveYears</a></code>,
-<code><a href='PRE_FATE.params_changingYears.html'>PRE_FATE.params_changingYears</a></code></p></div>
+<code><a href='PRE_FATE.params_changingYears.html'>PRE_FATE.params_changingYears</a></code>,
+<code><a href='dot-setPattern.html'>.setPattern</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples">
@@ -325,10 +330,9 @@ program to run.</p>
                                  , <span class='kw'>required.seeding_duration</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>10</span>,<span class='fl'>50</span>)
                                  , <span class='kw'>required.seeding_timestep</span> <span class='kw'>=</span> <span class='fl'>1</span>
                                  , <span class='kw'>required.seeding_input</span> <span class='kw'>=</span> <span class='fl'>100</span>
-                                 , <span class='kw'>required.max_by_cohort</span> <span class='kw'>=</span> <span class='fl'>5000000</span>
-                                 , <span class='kw'>required.max_abund_low</span> <span class='kw'>=</span> <span class='fl'>3000000</span>
-                                 , <span class='kw'>required.max_abund_medium</span> <span class='kw'>=</span> <span class='fl'>5000000</span>
-                                 , <span class='kw'>required.max_abund_high</span> <span class='kw'>=</span> <span class='fl'>9000000</span>)
+                                 , <span class='kw'>required.max_abund_low</span> <span class='kw'>=</span> <span class='fl'>30000</span>
+                                 , <span class='kw'>required.max_abund_medium</span> <span class='kw'>=</span> <span class='fl'>50000</span>
+                                 , <span class='kw'>required.max_abund_high</span> <span class='kw'>=</span> <span class='fl'>90000</span>)
 
 <span class='co'>## Create a SAVE_year_maps or/and SAVE_year_objects parameter file</span>
 <span class='fu'><a href='PRE_FATE.params_saveYears.html'>PRE_FATE.params_saveYears</a></span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
@@ -437,7 +441,6 @@ program to run.</p>
                                  , <span class='kw'>required.seeding_duration</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"SEEDING_DURATION"</span>]
                                  , <span class='kw'>required.seeding_timestep</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"SEEDING_TIMESTEP"</span>]
                                  , <span class='kw'>required.seeding_input</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"SEEDING_INPUT"</span>]
-                                 , <span class='kw'>required.max_by_cohort</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"MAX_BY_COHORT"</span>]
                                  , <span class='kw'>required.max_abund_low</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"MAX_ABUND_LOW"</span>]
                                  , <span class='kw'>required.max_abund_medium</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"MAX_ABUND_MEDIUM"</span>]
                                  , <span class='kw'>required.max_abund_high</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"MAX_ABUND_HIGH"</span>]

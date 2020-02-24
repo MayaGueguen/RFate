@@ -1,5 +1,5 @@
 ### HEADER #####################################################################
-##' @title Create multiple set(s) of parameter files for a \code{FATE-HD}
+##' @title Create multiple set(s) of parameter files for a \code{FATE-HD} 
 ##' simulation
 ##' 
 ##' @name PRE_FATE.params_multipleSet
@@ -10,8 +10,8 @@
 ##' using Latin Hypercube Sampling to help find best combination of parameters 
 ##' (see \code{Details})
 ##'              
-##' @param name.simulation.1 a \code{string} that corresponds to the main
-##' directory or simulation name of the \code{FATE-HD} simulation from which to
+##' @param name.simulation.1 a \code{string} that corresponds to the main 
+##' directory or simulation name of the \code{FATE-HD} simulation from which to 
 ##' retrieve the first parameter simulation file (\code{file.simulParam.1}), 
 ##' and the second if given (\code{file.simulParam.2}) and no other directory 
 ##' provided (\code{name.simulation.2 = NULL})
@@ -20,29 +20,28 @@
 ##' of the \code{FATE-HD} simulation from which to retrieve the second 
 ##' parameter simulation file (\code{file.simulParam.2})
 ##' @param file.simulParam.1 a \code{string} that corresponds to the name of 
-##' the simulation parameter file from which to retrieve parameter values that
+##' the simulation parameter file from which to retrieve parameter values that 
 ##' will be used to build the multiple set of new parameters
 ##' @param file.simulParam.2 default \code{NULL} (\emph{optional}). \cr 
 ##' A \code{string} that corresponds to the name of the second simulation 
-##' parameter file from which to retrieve parameter values that will be used to 
-##' build parameter ranges in comparison with values from 
+##' parameter file from which to retrieve parameter values that will be used 
+##' to build parameter ranges in comparison with values from 
 ##' \code{file.simulParam.1}
 ##' @param no_simulations an \code{integer} corresponding to the number of set 
 ##' of parameters that will be produced according to Latin Hypercube Sampling 
 ##' (LHS)
 ##' @param opt.percent_max default \code{0.5}. Amount of variation (between 0 
-##' and 1) around the original value of \code{MAX_BY_COHORT}, 
-##' \code{MAX_ABUND_LOW}, \code{MAX_ABUND_MEDIUM}, \code{MAX_ABUND_HIGH} if 
-##' selected
-##' @param opt.percent_seeding default \code{0.5}. Amount of variation (between 0 
-##' and 1) around the original value of \code{SEEDING_DURATION}, 
+##' and 1) around the original value of \code{MAX_ABUND_LOW}, 
+##' \code{MAX_ABUND_MEDIUM}, \code{MAX_ABUND_HIGH} if selected
+##' @param opt.percent_seeding default \code{0.5}. Amount of variation (between 
+##' 0 and 1) around the original value of \code{SEEDING_DURATION}, 
 ##' \code{SEEDING_TIMESTEP}, \code{SEEDING_INPUT} if selected
 ##' @param opt.percent_light default \code{0.5}. Amount of variation (between 0 
 ##' and 1) around the original value of \code{LIGHT_THRESH_MEDIUM}, 
 ##' \code{LIGHT_THRESH_LOW} if selected
-##' @param do.max_by_cohort default \code{TRUE}. If \code{TRUE}, 
-##' \code{MAX_BY_COHORT} parameter within \code{Global_parameters} file will be 
-##' declined into a range of values
+##' @param opt.percent_soil default \code{0.5}. Amount of variation (between 0 
+##' and 1) around the original value of \code{SOIL_INIT}, 
+##' \code{SOIL_RETENTION} if selected
 ##' @param do.max_abund_low default \code{TRUE}. If \code{TRUE}, 
 ##' \code{MAX_ABUND_LOW} parameter within \code{Global_parameters} file will be 
 ##' declined into a range of values
@@ -63,36 +62,51 @@
 ##' be declined into a range of values
 ##' @param do.nb_stratum default \code{TRUE}. If \code{TRUE}, 
 ##' \code{NB_STRATUM} parameter within \code{Global_parameters} file will 
-##' be declined into a range of values, with potential impact on some parameters 
-##' within PFG succession (and light) files (parameters \code{STRATA}, 
-##' \code{MAX_ABUNDANCE}, \code{IMM_SIZE}, \code{CHANG_STR_AGES} (and 
-##' \code{SHADE_TOL}))
+##' be declined into a range of values, with potential impact on some 
+##' parameters within PFG succession (and light) files (parameters 
+##' \code{STRATA}, \code{MAX_ABUNDANCE}, \code{IMM_SIZE}, \code{CHANG_STR_AGES} 
+##' (and \code{SHADE_TOL})) \cr
+##' (see \code{\link{PRE_FATE.params_PFGsuccession}} 
+##' (and \code{\link{PRE_FATE.params_PFGlight}}))
 ##' @param do.LIGHT.thresh_medium default \code{TRUE}. If \code{TRUE}, 
-##' \code{LIGHT_THRESH_MEDIUM} parameter within \code{Global_parameters} file will 
-##' be declined into a range of values
+##' \code{LIGHT_THRESH_MEDIUM} parameter within \code{Global_parameters} file 
+##' will be declined into a range of values \cr (see 
+##' \code{\link{PRE_FATE.params_globalParameters}})
 ##' @param do.LIGHT.thresh_low default \code{TRUE}. If \code{TRUE}, 
-##' \code{LIGHT_THRESH_LOW} parameter within \code{Global_parameters} file will 
-##' be declined into a range of values
+##' \code{LIGHT_THRESH_LOW} parameter within \code{Global_parameters} file 
+##' will be declined into a range of values \cr (see 
+##' \code{\link{PRE_FATE.params_globalParameters}})
+##' @param do.SOIL.init default \code{TRUE}. If \code{TRUE}, 
+##' \code{SOIL_INIT} parameter within \code{Global_parameters} file 
+##' will be declined into a range of values \cr (see 
+##' \code{\link{PRE_FATE.params_globalParameters}})
+##' @param do.SOIL.retention default \code{TRUE}. If \code{TRUE}, 
+##' \code{SOIL_RETENTION} parameter within \code{Global_parameters} file 
+##' will be declined into a range of values \cr (see 
+##' \code{\link{PRE_FATE.params_globalParameters}})
 ##' @param do.DISPERSAL.mode default \code{TRUE}. If \code{TRUE}, 
 ##' \code{DISPERSAL_MODE} parameter within \code{Global_parameters} file will 
-##' be declined into its 3 possible values (either uniform kernel (1), 
-##' exponential kernel (2) or exponential kernel with probability (3))
+##' be declined into its 3 possible values (either uniform kernel (\code{1}), 
+##' exponential kernel (\code{2}) or exponential kernel with probability 
+##' (\code{3})) \cr (see \code{\link{PRE_FATE.params_globalParameters}})
 ##' @param do.HABSUIT.ref_option default \code{TRUE}. If \code{TRUE}, 
 ##' \code{HABSUIT_OPTION} parameter within \code{Global_parameters} file will 
-##' be declined into its 2 possible values (either random (1) or PFG specific 
-##' (2))
+##' be declined into its 2 possible values (either random (\code{1}) or PFG 
+##' specific (\code{2})) \cr (see 
+##' \code{\link{PRE_FATE.params_globalParameters}})
 ##' 
 ##' 
 ##' 
 ##' @details 
 ##' 
-##' A \code{FATE-HD} simulation requires several parameters to define 
-##' general characteristics of the simulation : they are saved within a
-##' \code{Global_parameters} file. To fit the model to a particular area 
-##' and set of Plant Functional Groups (PFG), these are the parameters that 
-##' should be optimized, since they are not data-dependant, unlike, for example, 
-##' parameters related to PFG (height, maturity, dispersal distances, soil 
-##' tolerance, etc).
+##' A \code{FATE-HD} simulation requires several parameters to define general 
+##' characteristics of the simulation : they are saved within a 
+##' \code{Global_parameters} file (see 
+##' \code{\link{PRE_FATE.params_globalParameters}}). To fit the model to a 
+##' particular area and set of Plant Functional Groups (PFG), these are the 
+##' parameters that should be optimized, since they are not data-dependant, 
+##' unlike, for example, parameters related to PFG (height, maturity, dispersal 
+##' distances, soil tolerance, etc).
 ##' 
 ##' (\emph{Note : this is true, except when varying the number of strata, which 
 ##' will have an impact on some parameters within SUCC and LIGHT PFG parameter 
@@ -109,23 +123,25 @@
 ##'     \item requested parameter values are extracted from the given 
 ##'     simulation file
 ##'     \item ranges are assigned to each parameter according to the specified 
-##'     value \cr e.g. : if \code{opt.percent_seeding = 0.5}, and do.seeding_duration 
-##'     is asked, values will be generated for this parameter between : 
-##'     \deqn{SEEDING\_DURATION \pm SEEDING\_DURATION * \frac{50}{100}}
+##'     value \cr e.g. : if \code{opt.percent_seeding = 0.5}, and 
+##'     \code{do.seeding_duration} is asked, values will be generated for this 
+##'     parameter between : 
+##'     \deqn{\text{SEEDING_DURATION} \pm \text{SEEDING_DURATION} * 
+##'     \frac{50}{100}}
 ##'     \item according to the required number of parameter sets to be produced 
 ##'     (\code{no_simulations}), Latin Hypercube Sampling is applied to select 
 ##'     each new parameter values
-##'     \item parameter files are created for these new parameter values
+##'     \item parameter files are created for these new parameter values \cr \cr
 ##'   }
 ##'   }
 ##'   \item{1 folder - \cr 2 simulation files}{
 ##'   \itemize{
 ##'     \item same as 1st scenario
 ##'     \item ranges assigned to each parameter correspond to the extracted 
-##'     values (e.g. : if do.seeding_duration is asked, values will be generated 
-##'     for this parameter between : 
-##'     \code{SEEDING_DURATION (file_simulation.1)} and \code{SEEDING_DURATION 
-##'     (file_simulation.2)}
+##'     values (e.g. : if do.seeding_duration is asked, values will be 
+##'     generated for this parameter between : \code{SEEDING_DURATION 
+##'     (file_simulation.1)} and \code{SEEDING_DURATION (file_simulation.2)} 
+##'     \cr \cr
 ##'   }
 ##'   }
 ##'   \item{2 folders - \cr 2 simulation files}{
@@ -167,7 +183,6 @@
 ##'     \item SEEDING_DURATION
 ##'     \item SEEDING_TIMESTEP
 ##'     \item SEEDING_INPUT
-##'     \item MAX_BY_COHORT
 ##'     \item MAX_ABUND_LOW
 ##'     \item MAX_ABUND_MEDIUM 
 ##'     \item MAX_ABUND_HIGH \cr \cr
@@ -177,20 +192,25 @@
 ##'     \item LIGHT_THRESH_MEDIUM
 ##'     \item LIGHT_THRESH_LOW
 ##'   }
+##'   If the simulation includes \emph{soil competition} :
+##'   \itemize{
+##'     \item SOIL_INIT
+##'     \item SOIL_RETENTION
+##'   }
 ##'   If the simulation includes \emph{dispersal} :
 ##'   \itemize{
 ##'     \item DISPERSAL_MODE
 ##'   }
 ##'   If the simulation includes \emph{habitat suitability} :
 ##'   \itemize{
-##'     \item HABSUIT_OPTION
+##'     \item HABSUIT_OPTION \cr \cr
 ##'   }
 ##'   \item Into the \code{name.simulation/DATA/PFGS/SUCC} folder :
 ##'   \itemize{
 ##'     \item STRATA
 ##'     \item MAX_ABUNDANCE
 ##'     \item IMM_SIZE
-##'     \item CHANG_STR_AGES
+##'     \item CHANG_STR_AGES \cr \cr
 ##'   }
 ##'   \item Into the \code{name.simulation/DATA/PFGS/LIGHT} folder :
 ##'   \itemize{
@@ -254,7 +274,6 @@
 ##'                                  , required.seeding_duration = PNE_PARAM$global["SEEDING_DURATION"]
 ##'                                  , required.seeding_timestep = PNE_PARAM$global["SEEDING_TIMESTEP"]
 ##'                                  , required.seeding_input = PNE_PARAM$global["SEEDING_INPUT"]
-##'                                  , required.max_by_cohort = PNE_PARAM$global["MAX_BY_COHORT"]
 ##'                                  , required.max_abund_low = PNE_PARAM$global["MAX_ABUND_LOW"]
 ##'                                  , required.max_abund_medium = PNE_PARAM$global["MAX_ABUND_MEDIUM"]
 ##'                                  , required.max_abund_high = PNE_PARAM$global["MAX_ABUND_HIGH"]
@@ -296,7 +315,6 @@
 ##' PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_PNE"
 ##'                             , file.simulParam.1 = "Simul_parameters_V1.txt"
 ##'                             , no_simulations = 5
-##'                             , do.max_by_cohort = TRUE
 ##'                             , do.max_abund_low = FALSE
 ##'                             , do.max_abund_medium = FALSE
 ##'                             , do.max_abund_high = FALSE
@@ -306,6 +324,8 @@
 ##'                             , do.nb_stratum = FALSE
 ##'                             , do.LIGHT.thresh_medium = FALSE
 ##'                             , do.LIGHT.thresh_low = FALSE
+##'                             , do.SOIL.init = FALSE
+##'                             , do.SOIL.retention = FALSE
 ##'                             , do.DISPERSAL.mode = FALSE
 ##'                             , do.HABSUIT.ref_option = FALSE
 ##' )
@@ -327,7 +347,7 @@ PRE_FATE.params_multipleSet = function(
   , opt.percent_max = 0.5
   , opt.percent_seeding = 0.5
   , opt.percent_light = 0.5
-  , do.max_by_cohort = TRUE
+  , opt.percent_soil = 0.5
   , do.max_abund_low = TRUE
   , do.max_abund_medium = TRUE
   , do.max_abund_high = TRUE
@@ -337,6 +357,8 @@ PRE_FATE.params_multipleSet = function(
   , do.nb_stratum = TRUE
   , do.LIGHT.thresh_medium = TRUE
   , do.LIGHT.thresh_low = TRUE
+  , do.SOIL.init = TRUE
+  , do.SOIL.retention = TRUE
   , do.DISPERSAL.mode = TRUE
   , do.HABSUIT.ref_option = TRUE
 ){
@@ -414,9 +436,10 @@ PRE_FATE.params_multipleSet = function(
   {
     if (.testParam_notNum(opt.percent_max) ||
         .testParam_notNum(opt.percent_seeding) ||
-        .testParam_notNum(opt.percent_light))
+        .testParam_notNum(opt.percent_light) ||
+        .testParam_notNum(opt.percent_soil))
     {
-      stop("Wrong data given!\n `opt.percent_max`, `opt.percent_seeding` and `opt.percent_light` must contain numeric values")
+      stop("Wrong data given!\n `opt.percent_max`, `opt.percent_seeding`, `opt.percent_light` and `opt.percent_soil` must contain numeric values")
     }
     if (opt.percent_max < 0 || opt.percent_max > 1)
     {
@@ -430,13 +453,16 @@ PRE_FATE.params_multipleSet = function(
     {
       stop("Wrong data given!\n `opt.percent_light` must be between 0 and 1")
     }
+    if (opt.percent_soil < 0 || opt.percent_soil > 1)
+    {
+      stop("Wrong data given!\n `opt.percent_soil` must be between 0 and 1")
+    }
   }
   
   
   #################################################################################################
   
-  if (sum(c(do.max_by_cohort
-            , do.max_abund_low
+  if (sum(c(do.max_abund_low
             , do.max_abund_medium
             , do.max_abund_high
             , do.seeding_duration
@@ -444,6 +470,8 @@ PRE_FATE.params_multipleSet = function(
             , do.seeding_input
             , do.LIGHT.thresh_medium
             , do.LIGHT.thresh_low
+            , do.SOIL.init
+            , do.SOIL.retention
             , do.HABSUIT.ref_option
             , do.DISPERSAL.mode
             , do.nb_stratum)) == 0)
@@ -451,10 +479,7 @@ PRE_FATE.params_multipleSet = function(
     stop("You must select some parameters to vary !")
   }
   
-  get_checked = vector("list", 6)
-  if (do.max_by_cohort){
-    get_checked[[1]] = c(get_checked[[1]], "max_by_cohort")
-  }
+  get_checked = vector("list", 7)
   if (do.max_abund_low){
     get_checked[[1]] = c(get_checked[[1]], "max_abund_low")
   }
@@ -479,20 +504,25 @@ PRE_FATE.params_multipleSet = function(
   if (do.LIGHT.thresh_low){
     get_checked[[3]] = c(get_checked[[3]], "light_thresh_low")
   }
+  if (do.SOIL.init){
+    get_checked[[4]] = c(get_checked[[4]], "soil_init")
+  }
+  if (do.SOIL.retention){
+    get_checked[[4]] = c(get_checked[[4]], "soil_retention")
+  }
   if (do.HABSUIT.ref_option){
-    get_checked[[4]] = c(get_checked[[4]], "habsuit_ref_option")
+    get_checked[[5]] = c(get_checked[[5]], "habsuit_ref_option")
   }
   if (do.DISPERSAL.mode){
-    get_checked[[5]] = c(get_checked[[5]], "dispersal_mode")
+    get_checked[[6]] = c(get_checked[[6]], "dispersal_mode")
   }
   if (do.nb_stratum){
-    get_checked[[6]] = c(get_checked[[6]], "nb_stratum")
+    get_checked[[7]] = c(get_checked[[7]], "nb_stratum")
   }
   
-  get_sliders = c(opt.percent_max, opt.percent_seeding, opt.percent_light)
+  get_sliders = c(opt.percent_max, opt.percent_seeding, opt.percent_light, opt.percent_soil)
   
-  GLOBAL.names.params = c("max_by_cohort" = "MAX_BY_COHORT"
-                          , "max_abund_low" = "MAX_ABUND_LOW"
+  GLOBAL.names.params = c("max_abund_low" = "MAX_ABUND_LOW"
                           , "max_abund_medium" = "MAX_ABUND_MEDIUM"
                           , "max_abund_high" = "MAX_ABUND_HIGH"
                           , "habsuit_ref_option" = "HABSUIT_OPTION"
@@ -500,6 +530,8 @@ PRE_FATE.params_multipleSet = function(
                           , "seeding_timestep" = "SEEDING_TIMESTEP"
                           , "seeding_input" = "SEEDING_INPUT"
                           , "dispersal_mode" = "DISPERSAL_MODE"
+                          , "soil_init" = "SOIL_INIT"
+                          , "soil_retention" = "SOIL_RETENTION"
                           , "light_thresh_medium" = "LIGHT_THRESH_MEDIUM"
                           , "light_thresh_low" = "LIGHT_THRESH_LOW"
                           , "nb_stratum" = "NB_STRATUM")
@@ -544,7 +576,7 @@ PRE_FATE.params_multipleSet = function(
     params.simulParam = lines.simulParam[ind]
     params.simulParam = gsub("--", "", params.simulParam)
     params.simulParam.TOKEEP = params.simulParam[which(!(params.simulParam %in% get_toSuppr))]
-
+    
     if (length(params.simulParam.TOKEEP) > 0)
     {
       params.simulParam.TOKEEP = paste0("--", params.simulParam.TOKEEP, "--")
@@ -710,9 +742,28 @@ PRE_FATE.params_multipleSet = function(
       PARAMS.range = as.data.frame(PARAMS.range)
       colnames(PARAMS.range) = names(PARAMS.min)
       rownames(PARAMS.range) = c("min", "max")
-      if (length(which(PARAMS.range[1, ] < 1)) > 0)
+      if ("soil_init" %in% colnames(PARAMS.range))
       {
-        PARAMS.range[1, which(PARAMS.range[1, ] < 1)] = 1
+        if (PARAMS.range[1, "soil_init"] < 0)
+        {
+          PARAMS.range[1, "soil_init"] = 0
+        }
+      }
+      if ("soil_retention" %in% colnames(PARAMS.range))
+      {
+        if (PARAMS.range[1, "soil_retention"] < 0)
+        {
+          PARAMS.range[1, "soil_retention"] = 0
+        }
+        if (PARAMS.range[1, "soil_retention"] > 1)
+        {
+          PARAMS.range[1, "soil_retention"] = 1
+        }
+      }
+      ind_notSoil = which(!(colnames(PARAMS.range) %in% c("soil_init", "soil_retention")))
+      if (length(which(PARAMS.range[1, ind_notSoil] < 1)) > 0)
+      {
+        PARAMS.range[1, which(PARAMS.range[1, ind_notSoil] < 1)] = 1
       }
       if ("nb_stratum" %in% colnames(PARAMS.range))
       {
@@ -765,9 +816,28 @@ PRE_FATE.params_multipleSet = function(
         PARAMS.range = as.data.frame(PARAMS.range)
         colnames(PARAMS.range) = names(PARAMS.min)
         rownames(PARAMS.range) = c("min", "max")
-        if (length(which(PARAMS.range[1, ] < 1)) > 0)
+        if ("soil_init" %in% colnames(PARAMS.range))
         {
-          PARAMS.range[1, which(PARAMS.range[1, ] < 1)] = 1
+          if (PARAMS.range[1, "soil_init"] < 0)
+          {
+            PARAMS.range[1, "soil_init"] = 0
+          }
+        }
+        if ("soil_retention" %in% colnames(PARAMS.range))
+        {
+          if (PARAMS.range[1, "soil_retention"] < 0)
+          {
+            PARAMS.range[1, "soil_retention"] = 0
+          }
+          if (PARAMS.range[1, "soil_retention"] > 1)
+          {
+            PARAMS.range[1, "soil_retention"] = 1
+          }
+        }
+        ind_notSoil = which(!(colnames(PARAMS.range) %in% c("soil_init", "soil_retention")))
+        if (length(which(PARAMS.range[1, ind_notSoil] < 1)) > 0)
+        {
+          PARAMS.range[1, which(PARAMS.range[1, ind_notSoil] < 1)] = 1
         }
         if ("nb_stratum" %in% unlist(get_checked))
         {
@@ -787,7 +857,7 @@ PRE_FATE.params_multipleSet = function(
   cat("\n>> CREATION of multiple set of parameters <<\n")
   cat("\n 1. Get the range of parameters to be varied...\n")
   params.ranges = get_ranges()
-
+  
   TOKEEP.simul = params.ranges$TOKEEP.simul
   TOKEEP.global = params.ranges$TOKEEP.global
   SUCC_LIGHT.simul = params.ranges$SUCC_LIGHT.simul
@@ -797,8 +867,7 @@ PRE_FATE.params_multipleSet = function(
   
   cat("\n 2. Apply Latin Hypercube Sampling...\n")
   
-  if (sum(c("max_by_cohort"
-            , "max_abund_low"
+  if (sum(c("max_abund_low"
             , "max_abund_medium"
             , "max_abund_high"
             , "seeding_duration"
@@ -806,6 +875,8 @@ PRE_FATE.params_multipleSet = function(
             , "seeding_input"
             , "light_thresh_medium"
             , "light_thresh_low"
+            , "soil_init"
+            , "soil_retention"
             , "nb_stratum") %in% colnames(params.ranges)) > 0)
   {
     NB_SIMUL_LHS = no_simulations
@@ -819,8 +890,7 @@ PRE_FATE.params_multipleSet = function(
     }
     
     ## Round some parameters to avoid too much precision
-    ind = which(colnames(params.ranges) %in% c("max_by_cohort"
-                                               , "max_abund_low"
+    ind = which(colnames(params.ranges) %in% c("max_abund_low"
                                                , "max_abund_medium"
                                                , "max_abund_high"
                                                , "light_thresh_medium"
@@ -829,8 +899,7 @@ PRE_FATE.params_multipleSet = function(
     ind = which(colnames(params.ranges) %in% c("seeding_duration", "seeding_input"))
     params.ranges[, ind] = round(params.ranges[, ind] / 10)
     
-    if (sum(c("max_by_cohort"
-              , "max_abund_low"
+    if (sum(c("max_abund_low"
               , "max_abund_medium"
               , "max_abund_high"
               , "seeding_duration"
@@ -838,6 +907,8 @@ PRE_FATE.params_multipleSet = function(
               , "seeding_input"
               , "light_thresh_medium"
               , "light_thresh_low"
+              , "soil_init"
+              , "soil_retention"
               , "nb_stratum") %in% colnames(params.ranges)) == 1)
     {
       params.space = data.frame(sort(sample(x = seq(params.ranges[1, ]
@@ -871,8 +942,7 @@ PRE_FATE.params_multipleSet = function(
                                , lower = unlist(params.ranges[1, , drop = FALSE])
                                , upper = unlist(params.ranges[2, , drop = FALSE])
                                , control = list(size = NB_SIMUL_LHS
-                                                , types = c("max_by_cohort" = "integer"
-                                                            , "max_abund_low" = "integer"
+                                                , types = c("max_abund_low" = "integer"
                                                             , "max_abund_medium" = "integer"
                                                             , "max_abund_high" = "integer"
                                                             , "seeding_duration" = "integer"
@@ -880,6 +950,8 @@ PRE_FATE.params_multipleSet = function(
                                                             , "seeding_input" = "integer"
                                                             , "light_thresh_medium" = "integer"
                                                             , "light_thresh_low" = "integer"
+                                                            , "soil_init" = "double"
+                                                            , "soil_retention" = "double"
                                                             , "nb_stratum" = "integer")
                                                 , inequalityConstraint = lhs_constraint
                                )
@@ -889,8 +961,7 @@ PRE_FATE.params_multipleSet = function(
     }
     
     ## Upscale rounded parameters to have correct ranges
-    ind = which(colnames(params.space) %in% c("max_by_cohort"
-                                              , "max_abund_low"
+    ind = which(colnames(params.space) %in% c("max_abund_low"
                                               , "max_abund_medium"
                                               , "max_abund_high"
                                               , "light_thresh_medium"
@@ -953,24 +1024,24 @@ PRE_FATE.params_multipleSet = function(
     
     cat("\n>> Get PFG attribute values...")
     SUCC_table = foreach(fi = SUCC_LIGHT.simul$SUCC, .combine = "rbind") %do%
-    {
-      cat("\n ", fi)
-      combi = data.frame(param = c("NAME", "TYPE", "HEIGHT", "MATURITY", "LONGEVITY")
-                         , is.num = c(FALSE, FALSE, TRUE, TRUE, TRUE)
-                         , stringsAsFactors = FALSE)
-      res = foreach(i = 1:nrow(combi)) %do%
       {
-        return(.getParam(params.lines = paste0(dirname(name.simulation.1), "/", fi)
-                         , flag = combi$param[i]
-                         , flag.split = " "
-                         , is.num = combi$is.num[i]))
+        cat("\n ", fi)
+        combi = data.frame(param = c("NAME", "TYPE", "HEIGHT", "MATURITY", "LONGEVITY")
+                           , is.num = c(FALSE, FALSE, TRUE, TRUE, TRUE)
+                           , stringsAsFactors = FALSE)
+        res = foreach(i = 1:nrow(combi)) %do%
+          {
+            return(.getParam(params.lines = paste0(dirname(name.simulation.1), "/", fi)
+                             , flag = combi$param[i]
+                             , flag.split = " "
+                             , is.num = combi$is.num[i]))
+          }
+        return(data.frame(PFG = res[[1]]
+                          , type = res[[2]]
+                          , height = res[[3]]
+                          , maturity = res[[4]]
+                          , longevity = res[[5]]))
       }
-      return(data.frame(PFG = res[[1]]
-                        , type = res[[2]]
-                        , height = res[[3]]
-                        , maturity = res[[4]]
-                        , longevity = res[[5]]))
-    }
     cat("\n")
     if ("DO_LIGHT_COMPETITION 1" %in% TOKEEP.global)
     {
@@ -981,18 +1052,18 @@ PRE_FATE.params_multipleSet = function(
       }
       
       LIGHT_table = foreach(fi = SUCC_LIGHT.simul$LIGHT, .combine = "rbind") %do%
-      {
-        cat("\n ", fi)
-        PFG = .getParam(params.lines = paste0(dirname(name.simulation.1), "/", fi)
-                        , flag = "NAME"
-                        , flag.split = " "
-                        , is.num = FALSE)
-        light = .getParam(params.lines = paste0(dirname(name.simulation.1), "/", fi)
-                          , flag = "LIGHT"
+        {
+          cat("\n ", fi)
+          PFG = .getParam(params.lines = paste0(dirname(name.simulation.1), "/", fi)
+                          , flag = "NAME"
                           , flag.split = " "
-                          , is.num = TRUE)
-        return(data.frame(PFG, light))
-      }
+                          , is.num = FALSE)
+          light = .getParam(params.lines = paste0(dirname(name.simulation.1), "/", fi)
+                            , flag = "LIGHT"
+                            , flag.split = " "
+                            , is.num = TRUE)
+          return(data.frame(PFG, light))
+        }
       cat("\n")
       SUCC_table = merge(SUCC_table, LIGHT_table, by = "PFG")
     }
@@ -1093,12 +1164,6 @@ PRE_FATE.params_multipleSet = function(
                                                                                    , flag = "SEEDING_INPUT"
                                                                                    , flag.split = " "
                                                                                    , is.num = TRUE))
-                                     , required.max_by_cohort = ifelse("max_by_cohort" %in% colnames(params.space)
-                                                                       , params.space$max_by_cohort[i]
-                                                                       , .getParam(params.lines = tmp_global_param
-                                                                                   , flag = "MAX_BY_COHORT"
-                                                                                   , flag.split = " "
-                                                                                   , is.num = TRUE))
                                      , required.max_abund_low = ifelse("max_abund_low" %in% colnames(params.space)
                                                                        , params.space$max_abund_low[i]
                                                                        , .getParam(params.lines = tmp_global_param
@@ -1117,20 +1182,6 @@ PRE_FATE.params_multipleSet = function(
                                                                                     , flag = "MAX_ABUND_HIGH"
                                                                                     , flag.split = " "
                                                                                     , is.num = TRUE))
-                                     , doDispersal = doDispersal
-                                     , DISPERSAL.mode = ifelse(doDispersal && "dispersal_mode" %in% colnames(params.space)
-                                                               , params.space$dispersal_mode[i]
-                                                               , .getParam(params.lines = tmp_global_param
-                                                                           , flag = "DISPERSAL_MODE"
-                                                                           , flag.split = " "
-                                                                           , is.num = TRUE))
-                                     , doHabSuitability = doHabSuitability
-                                     , HABSUIT.ref_option = ifelse(doHabSuitability && "habsuit_ref_option" %in% colnames(params.space)
-                                                                   , params.space$habsuit_ref_option[i]
-                                                                   , .getParam(params.lines = tmp_global_param
-                                                                               , flag = "HABSUIT_OPTION"
-                                                                               , flag.split = " "
-                                                                               , is.num = TRUE))
                                      , doLight = doLight
                                      , LIGHT.thresh_medium = ifelse(doLight && "light_thresh_medium" %in% colnames(params.space)
                                                                     , params.space$light_thresh_medium[i]
@@ -1145,6 +1196,32 @@ PRE_FATE.params_multipleSet = function(
                                                                              , flag.split = " "
                                                                              , is.num = TRUE))
                                      , doSoil = doSoil
+                                     , SOIL.init = ifelse(doSoil && "soil_init" %in% colnames(params.space)
+                                                          , params.space$soil_init[i]
+                                                          , .getParam(params.lines = tmp_global_param
+                                                                      , flag = "SOIL_INIT"
+                                                                      , flag.split = " "
+                                                                      , is.num = TRUE))
+                                     , SOIL.retention = ifelse(doSoil && "soil_retention" %in% colnames(params.space)
+                                                               , params.space$soil_retention[i]
+                                                               , .getParam(params.lines = tmp_global_param
+                                                                           , flag = "SOIL_RETENTION"
+                                                                           , flag.split = " "
+                                                                           , is.num = TRUE))
+                                     , doDispersal = doDispersal
+                                     , DISPERSAL.mode = ifelse(doDispersal && "dispersal_mode" %in% colnames(params.space)
+                                                               , params.space$dispersal_mode[i]
+                                                               , .getParam(params.lines = tmp_global_param
+                                                                           , flag = "DISPERSAL_MODE"
+                                                                           , flag.split = " "
+                                                                           , is.num = TRUE))
+                                     , doHabSuitability = doHabSuitability
+                                     , HABSUIT.ref_option = ifelse(doHabSuitability && "habsuit_ref_option" %in% colnames(params.space)
+                                                                   , params.space$habsuit_ref_option[i]
+                                                                   , .getParam(params.lines = tmp_global_param
+                                                                               , flag = "HABSUIT_OPTION"
+                                                                               , flag.split = " "
+                                                                               , is.num = TRUE))
                                      , doDisturbances = doDisturbances
                                      , DIST.no = ifelse(doDisturbances
                                                         , .getParam(params.lines = tmp_global_param
