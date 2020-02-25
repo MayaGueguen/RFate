@@ -9,6 +9,10 @@
 ##' 
 ##' @param Obs a \code{vector} containing binary observed values (0/1)
 ##' @param Fit a \code{vector} containing abundance values
+##' 
+##' @examples
+##' 
+##' @export
 ##'
 ## END OF HEADER ###############################################################
 

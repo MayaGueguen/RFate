@@ -38,8 +38,8 @@
 
 <meta property="og:title" content="Create a map of the Plant Functional Group richness 
  <br /> for one (or several) specific year of a <code>FATE-HD</code> simulation — POST_FATE.graphic_mapPFGrichness" />
-<meta property="og:description" content="This script is designed to produce a raster map of PFG richness
-for one (or several) specific FATE-HD simulation year." />
+<meta property="og:description" content="This script is designed to produce a raster map of PFG 
+richness for one (or several) specific FATE-HD simulation year." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -158,8 +158,8 @@ for one (or several) specific FATE-HD simulation year." />
     </div>
 
     <div class="ref-description">
-    <p>This script is designed to produce a raster map of PFG richness
-for one (or several) specific <code>FATE-HD</code> simulation year.</p>
+    <p>This script is designed to produce a raster map of PFG 
+richness for one (or several) specific <code>FATE-HD</code> simulation year.</p>
     </div>
 
     <pre class="usage"><span class='fu'>POST_FATE.graphic_mapPFGrichness</span>(<span class='no'>name.simulation</span>, <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
@@ -170,13 +170,13 @@ for one (or several) specific <code>FATE-HD</code> simulation year.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>name.simulation</th>
-      <td><p>a <code>string</code> that corresponds to the main directory
-or simulation name of the <code>FATE-HD</code> simulation</p></td>
+      <td><p>a <code>string</code> that corresponds to the main 
+directory or simulation name of the <code>FATE-HD</code> simulation</p></td>
     </tr>
     <tr>
       <th>file.simulParam</th>
-      <td><p>a <code>string</code> that corresponds to the name of a
-parameter file that will be contained into the <code>PARAM_SIMUL</code> folder
+      <td><p>a <code>string</code> that corresponds to the name of a 
+parameter file that will be contained into the <code>PARAM_SIMUL</code> folder 
 of the <code>FATE-HD</code> simulation</p></td>
     </tr>
     <tr>
@@ -186,40 +186,64 @@ will be used to extract PFG binary maps</p></td>
     </tr>
     <tr>
       <th>opt.no_CPU</th>
-      <td><p>default 1 (<em>optional</em>). The number of resources that 
-can be used to parallelize the <code>unzip/zip</code> of raster files</p></td>
+      <td><p>default <code>1</code> (<em>optional</em>). The number of 
+resources that can be used to parallelize the <code>unzip/zip</code> of raster 
+files</p></td>
     </tr>
     <tr>
       <th>opt.doPlot</th>
-      <td><p>default TRUE (<em>optional</em>). If TRUE, plot(s) will be
-processed, otherwise only the calculation and reorganization of outputs
-will occur, be saved and returned.</p></td>
+      <td><p>default <code>TRUE</code> (<em>optional</em>). If <code>TRUE</code>, 
+plot(s) will be processed, otherwise only the calculation and 
+reorganization of outputs will occur, be saved and returned.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>One <code>POST_FATE_[...].pdf</code> file is created :</p><dl class='dl-horizontal'>
-  <dt><code class="file">GRAPHIC_B <br /> PFGrichness</code></dt><dd><p>to visualize the PFG richness
-  within the studied area</p></dd>
+    <p>A <code>list</code> containing one or several (one for each simulation 
+year) <code>list</code> of <code>ggplot2</code> objects, representing the Plant 
+Functional Group richness for each value of <code>q</code> (0, 1 or 2). <br /> <br /></p>
+<p>Three <code>PFGrichness_YEAR_[...]_STRATA_all_q[...].tif</code> files are 
+created :</p><dl class='dl-horizontal'>
+  <dt><code class="file">q0</code></dt><dd><p>PFG richness</p></dd>
+  <dt><code class="file">q1</code></dt><dd><p>PFG Shannon entropy</p></dd>
+  <dt><code class="file">q2</code></dt><dd><p>PFG Simpson concentration</p></dd>
 
 </dl>
 
-<p>A raster file is created into simulation results folder.</p>
+<p>One <code>POST_FATE_[...].pdf</code> file is created :</p><dl class='dl-horizontal'>
+  <dt><code class="file">GRAPHIC_C <br /> map_PFGrichness</code></dt><dd><p>to visualize the PFG 
+  richness within the studied area</p></dd>
+
+</dl>
+
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function allows one to obtain, for a specific <code>FATE-HD</code> simulation
-and a specific parameter file within this simulation, one preanalytical
-graphic. <br /></p>
-<p>For each PFG and each selected simulation year, raster maps are retrieved
-from the results folder <code>BIN_perPFG_allStrata</code> and unzipped.
-Informations extracted lead to the production of one graphic before the
-maps are compressed again :</p>
+    <p>This function allows one to obtain, for a specific <code>FATE-HD</code> 
+simulation and a specific parameter file within this simulation, three 
+raster maps of PFG richness and one preanalytical graphic. <br /> <br /></p>
+<p>For each PFG and each selected simulation year, raster maps are retrieved 
+from the results folders <code>ABUND_REL_perPFG_allStrata</code> and 
+<code>BIN_perPFG_allStrata</code> and unzipped.
+Informations extracted lead to the production of richness maps and one 
+graphic before the maps are compressed again :</p>
 <ul>
-<li><p>the map of <strong>Plant Functional Group richness</strong> for each selected
-  simulation year(s), representing the number of PFG present in each pixel</p></li>
+<li><p>for each selected simulation year(s), the map of <strong>Plant 
+  Functional Group richness</strong> representing the number of PFG present in 
+  each pixel</p></li>
+<li><p><strong>richness</strong> is calculated with the 
+  <strong><a href='http://www.jstor.org/stable/23143936'>Leinster &amp; Cobbold 
+  2012 Ecology</a> framework</strong> which allows to give more or less importance to 
+  the commun species through the <code>q</code> parameter :
+  <dl class='dl-horizontal'>
+    <dt><code>q = 0</code></dt><dd><p>species richness</p></dd>
+    <dt><code>q = 1</code></dt><dd><p>Shannon entropy</p></dd>
+    <dt><code>q = 2</code></dt><dd><p>Simpson concentration <br /> <br /></p></dd></dl></p></li>
 </ul>
 
+<p>It requires that the <code><a href='POST_FATE.relativeAbund.html'>POST_FATE.relativeAbund</a></code> and 
+<code><a href='POST_FATE.graphic_validationStatistics.html'>POST_FATE.graphic_validationStatistics</a></code> functions have 
+been run and that the folder <code>BIN_perPFG_allStrata</code> exists.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='POST_FATE.relativeAbund.html'>POST_FATE.relativeAbund</a></code>, 

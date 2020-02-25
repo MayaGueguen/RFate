@@ -45,17 +45,50 @@
 ##'   \item{\strong{if SOIL is activated} (see 
 ##'   \code{\link{PRE_FATE.params_globalParameters}}), evolution of 
 ##'   \strong{soil resources} within the selected pixels is also represented 
-##'   (user-defined scale)
+##'   (user-defined scale) \cr \cr
 ##'   }
 ##' }
 ##' 
 ##' 
-##' It requires that the \code{\link{POST_FATE.temporalEvolution}} has been run 
-##' and that the \code{POST_FATE.evolution_abundance_PIXEL_[...].csv} exists.
+##' It requires that the \code{\link{POST_FATE.temporalEvolution}} function has 
+##' been run and that the file 
+##' \code{POST_FATE.evolution_abundance_PIXEL_[...].csv} exists (as well as the 
+##' files \code{POST_FATE.evolution_light_PIXEL_[...].csv} and 
+##' \code{POST_FATE.evolution_soil_PIXEL_[...].csv} if those modules are 
+##' activated).
 ##' 
 ##' 
 ##' 
-##' @return One \code{POST_FATE_[...].pdf} file is created : 
+##' @return A \code{list} containing one \code{data.frame} object with the 
+##' following columns, and one \code{ggplot2} object :
+##' 
+##' \describe{
+##'   \item{tab}{
+##'     \describe{
+##'       \item{\code{TYPE}}{the concerned information (either '\code{light}', 
+##'       '\code{abundance}' or '\code{soil}')}
+##'       \item{\code{GROUP}}{the concerned entity (either 
+##'       '\code{STRATUM_[...]}', PFG name or '\code{soil}')}
+##'       \item{\code{ID}}{the id of the concerned pixel}
+##'       \item{\code{HAB}}{the habitat of the concerned pixel}
+##'       \item{\emph{YEAR}}{the concerned simulation year}
+##'       \item{\code{Occupancy}}{the number of occupied pixels divided by the 
+##'       total number of pixels within the studied area}
+##'     }
+##'   }
+##'   \item{plot}{\code{ggplot2} object, representing the evolution 
+##'   of each PFG abundance, \emph{and light and soil resources if those 
+##'   modules are activated} \cr \cr}
+##' }
+##' 
+##' 
+##' One \code{POST_FATE_TABLE_PIXEL_evolution_pixels_[...].csv} file is created : 
+##' \describe{
+##'   \item{\file{pixels ids}}{always, containing the \code{data.frame} detailed above}
+##' }
+##' 
+##' 
+##' One \code{POST_FATE_[...].pdf} file is created : 
 ##' \describe{
 ##'   \item{\file{GRAPHIC_A \cr pixels}}{to visualize for each PFG the 
 ##'   evolution of its abundance within each selected pixel through 

@@ -205,7 +205,33 @@ reorganization of outputs will occur, be saved and returned.</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>One <code>POST_FATE_[...].pdf</code> file is created :</p><dl class='dl-horizontal'>
+    <p>A <code>list</code> containing one <code>data.frame</code> object with the 
+following columns, and one <code>ggplot2</code> object :</p>
+<dl class='dl-horizontal'>
+  <dt>tab</dt><dd><p><dl class='dl-horizontal'>
+      <dt><code>TYPE</code></dt><dd><p>the concerned information (either '<code>light</code>', 
+      '<code>abundance</code>' or '<code>soil</code>')</p></dd>
+      <dt><code>GROUP</code></dt><dd><p>the concerned entity (either 
+      '<code>STRATUM_[...]</code>', PFG name or '<code>soil</code>')</p></dd>
+      <dt><code>ID</code></dt><dd><p>the id of the concerned pixel</p></dd>
+      <dt><code>HAB</code></dt><dd><p>the habitat of the concerned pixel</p></dd>
+      <dt><em>YEAR</em></dt><dd><p>the concerned simulation year</p></dd>
+      <dt><code>Occupancy</code></dt><dd><p>the number of occupied pixels divided by the 
+      total number of pixels within the studied area</p></dd></dl></p></dd>
+  <dt>plot</dt><dd><p><code>ggplot2</code> object, representing the evolution 
+  of each PFG abundance, <em>and light and soil resources if those 
+  modules are activated</em> <br /> <br /></p></dd>
+
+</dl>
+
+
+<p>One <code>POST_FATE_TABLE_PIXEL_evolution_pixels_[...].csv</code> file is created :</p><dl class='dl-horizontal'>
+  <dt><code class="file">pixels ids</code></dt><dd><p>always, containing the <code>data.frame</code> detailed above</p></dd>
+
+</dl>
+
+
+<p>One <code>POST_FATE_[...].pdf</code> file is created :</p><dl class='dl-horizontal'>
   <dt><code class="file">GRAPHIC_A <br /> pixels</code></dt><dd><p>to visualize for each PFG the 
   evolution of its abundance within each selected pixel through 
   simulation time</p></dd>
@@ -228,12 +254,16 @@ preanalytical graphics :</p>
 <li><p><strong>if SOIL is activated</strong> (see 
   <code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>), evolution of 
   <strong>soil resources</strong> within the selected pixels is also represented 
-  (user-defined scale)</p></li>
+  (user-defined scale) <br /> <br /></p></li>
 </ul>
 
 
-<p>It requires that the <code><a href='POST_FATE.temporalEvolution.html'>POST_FATE.temporalEvolution</a></code> has been run 
-and that the <code>POST_FATE.evolution_abundance_PIXEL_[...].csv</code> exists.</p>
+<p>It requires that the <code><a href='POST_FATE.temporalEvolution.html'>POST_FATE.temporalEvolution</a></code> function has 
+been run and that the file 
+<code>POST_FATE.evolution_abundance_PIXEL_[...].csv</code> exists (as well as the 
+files <code>POST_FATE.evolution_light_PIXEL_[...].csv</code> and 
+<code>POST_FATE.evolution_soil_PIXEL_[...].csv</code> if those modules are 
+activated).</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code>POST_FATE.temporalAbund</code></p></div>

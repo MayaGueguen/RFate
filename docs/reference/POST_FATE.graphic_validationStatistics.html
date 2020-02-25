@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Create a graphical representation of several statistics for each PFG 
-to asses the quality of the model 
- <br /> for one (or several) specific year of a <code>FATE-HD</code> simulation — POST_FATE.graphic_validationStatistics • RFate</title>
+to asses the quality of the model <br /> for one (or several) specific year of 
+a <code>FATE-HD</code> simulation — POST_FATE.graphic_validationStatistics • RFate</title>
 
 
 <!-- jquery -->
@@ -38,10 +38,10 @@ to asses the quality of the model
 
 
 <meta property="og:title" content="Create a graphical representation of several statistics for each PFG 
-to asses the quality of the model 
- <br /> for one (or several) specific year of a <code>FATE-HD</code> simulation — POST_FATE.graphic_validationStatistics" />
-<meta property="og:description" content="This script is designed to produce a graphical representation
-of several statistics (sensitivity, specificity, TSS, AUC) for quality
+to asses the quality of the model <br /> for one (or several) specific year of 
+a <code>FATE-HD</code> simulation — POST_FATE.graphic_validationStatistics" />
+<meta property="og:description" content="This script is designed to produce a graphical representation 
+of several statistics (sensitivity, specificity, TSS, AUC) for quality 
 assessment for one (or several) specific FATE-HD simulation year." />
 <meta name="twitter:card" content="summary" />
 
@@ -155,15 +155,15 @@ assessment for one (or several) specific FATE-HD simulation year." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Create a graphical representation of several statistics for each PFG 
-to asses the quality of the model 
- <br /> for one (or several) specific year of a <code>FATE-HD</code> simulation</h1>
+to asses the quality of the model <br /> for one (or several) specific year of 
+a <code>FATE-HD</code> simulation</h1>
     <small class="dont-index">Source: <a href='https://github.com/MayaGueguen/RFate.git/blob/master/R/POST_FATE.graphic_validationStatistics.R'><code>R/POST_FATE.graphic_validationStatistics.R</code></a></small>
     <div class="hidden name"><code>POST_FATE.graphic_validationStatistics.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This script is designed to produce a graphical representation
-of several statistics (sensitivity, specificity, TSS, AUC) for quality
+    <p>This script is designed to produce a graphical representation 
+of several statistics (sensitivity, specificity, TSS, AUC) for quality 
 assessment for one (or several) specific <code>FATE-HD</code> simulation year.</p>
     </div>
 
@@ -176,13 +176,13 @@ assessment for one (or several) specific <code>FATE-HD</code> simulation year.</
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>name.simulation</th>
-      <td><p>a <code>string</code> that corresponds to the main directory
-or simulation name of the <code>FATE-HD</code> simulation</p></td>
+      <td><p>a <code>string</code> that corresponds to the main 
+directory or simulation name of the <code>FATE-HD</code> simulation</p></td>
     </tr>
     <tr>
       <th>file.simulParam</th>
-      <td><p>a <code>string</code> that corresponds to the name of a
-parameter file that will be contained into the <code>PARAM_SIMUL</code> folder
+      <td><p>a <code>string</code> that corresponds to the name of a 
+parameter file that will be contained into the <code>PARAM_SIMUL</code> folder 
 of the <code>FATE-HD</code> simulation</p></td>
     </tr>
     <tr>
@@ -192,68 +192,75 @@ will be used to extract PFG binary maps</p></td>
     </tr>
     <tr>
       <th>mat.PFG.obs</th>
-      <td><p>a <code>data.frame</code> with 4 columns : PFG, X, Y, obs</p></td>
+      <td><p>a <code>data.frame</code> with 4 columns : <code>PFG</code>, 
+<code>X</code>, <code>Y</code>, <code>obs</code></p></td>
     </tr>
     <tr>
       <th>opt.ras_habitat</th>
-      <td><p>default NULL (<em>optional</em>). A <code>string</code> that
-corresponds to the file name of a raster mask, with an <code>integer</code> value
-within each pixel, corresponding to a specific habitat</p></td>
+      <td><p>default <code>NULL</code> (<em>optional</em>). A 
+<code>string</code> that corresponds to the file name of a raster mask, with an 
+<code>integer</code> value within each pixel, corresponding to a specific habitat</p></td>
     </tr>
     <tr>
       <th>opt.no_CPU</th>
-      <td><p>default 1 (<em>optional</em>). The number of resources that 
-can be used to parallelize the <code>unzip/zip</code> of raster files</p></td>
+      <td><p>default <code>1</code> (<em>optional</em>). The number of 
+resources that can be used to parallelize the <code>unzip/zip</code> of raster 
+files</p></td>
     </tr>
     <tr>
       <th>opt.doPlot</th>
-      <td><p>default TRUE (<em>optional</em>). If TRUE, plot(s) will be
-processed, otherwise only the calculation and reorganization of outputs
-will occur, be saved and returned.</p></td>
+      <td><p>default <code>TRUE</code> (<em>optional</em>). If <code>TRUE</code>, 
+plot(s) will be processed, otherwise only the calculation and 
+reorganization of outputs will occur, be saved and returned.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>data.frame</code> with the following columns :</p><dl class='dl-horizontal'>
-  <dt><code>PFG</code></dt><dd><p>the concerned Plant Functional Group</p></dd>
-  <dt><code>AUC.sd</code></dt><dd><p>standard deviation of the AUC values</p></dd>
-  <dt><code>sensitivity.sd</code></dt><dd><p>standard deviation of the sensitivity values</p></dd>
-  <dt><code>specificity.sd</code></dt><dd><p>standard deviation of the specificity values</p></dd>
-  <dt><code>variable</code></dt><dd><p>name of the calculated statistic among 'sensitivity',
-  'specificity', 'TSS' and 'AUC'</p></dd>
-  <dt><code>value</code></dt><dd><p>value of the corresponding statistic</p></dd>
+    <p>A <code>list</code> containing one <code>data.frame</code> object with the 
+following columns, and one <code>ggplot2</code> object :</p>
+<dl class='dl-horizontal'>
+  <dt>tab</dt><dd><p><dl class='dl-horizontal'>
+      <dt><code>PFG</code></dt><dd><p>the concerned Plant Functional Group</p></dd>
+      <dt><code>AUC.sd</code></dt><dd><p>standard deviation of the AUC values</p></dd>
+      <dt><code>sensitivity.sd</code></dt><dd><p>standard deviation of the sensitivity 
+      values</p></dd>
+      <dt><code>specificity.sd</code></dt><dd><p>standard deviation of the specificity 
+      values</p></dd>
+      <dt><code>variable</code></dt><dd><p>name of the calculated statistic among 
+      '<code>sensitivity</code>', '<code>specificity</code>', '<code>TSS</code>' and 
+      '<code>AUC</code>'</p></dd>
+      <dt><code>value</code></dt><dd><p>value of the corresponding statistic</p></dd></dl></p></dd>
+  <dt>plot</dt><dd><p><code>ggplot2</code> object, representing the values for each PFG 
+  of these four validation statistics (sensitivity, specificity, TSS, AUC) 
+  <br /> <br /></p></dd>
+
+</dl>
+
+<p>One <code>POST_FATE_TABLE_YEAR_[...].csv</code> file is created :</p><dl class='dl-horizontal'>
+  <dt><code class="file">validationStatistics</code></dt><dd><p>containing the <code>data.frame</code> detailed above</p></dd>
 
 </dl>
 
 <p>Two folders are created :</p><dl class='dl-horizontal'>
-  <dt><code class="file">BIN_perPFG <br />_allStrata</code></dt><dd><p>containing presence / absence  
+  <dt><code class="file">BIN_perPFG <br />_allStrata</code></dt><dd><p>containing presence / absence 
   raster maps for each PFG across all strata</p></dd>
-  <dt><code class="file">BIN_perPFG <br />_perStrata</code></dt><dd><p>containing presence / absence  
+  <dt><code class="file">BIN_perPFG <br />_perStrata</code></dt><dd><p>containing presence / absence 
   raster maps for each PFG for each stratum</p></dd>
 
 </dl>
 
 <p>One <code>POST_FATE_[...].pdf</code> file is created :</p><dl class='dl-horizontal'>
-  <dt><code class="file">GRAPHIC_C <br /> validationStatistics</code></dt><dd><p>to assess the modeling 
+  <dt><code class="file">GRAPHIC_B <br /> validationStatistics</code></dt><dd><p>to assess the modeling 
   quality of each PFG based on given observations within the studied area</p></dd>
 
 </dl>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function allows one to obtain, for a specific <code>FATE-HD</code> simulation
-and a specific parameter file within this simulation, one preanalytical
-graphic. <br /></p>
-<p>For each PFG and each selected simulation year, raster maps are retrieved
-from the results folder <code>ABUND_REL_perPFG_allStrata</code> and unzipped.
-Informations extracted lead to the production of presence/absence maps and 
-one graphic before the maps are compressed again :</p>
-<ul>
-<li><p>the value of <strong>several statistics for the predictive quality
-  of the model for each Plant Functional Group</strong> and for each selected
-  simulation year(s)</p></li>
-</ul>
+    <p>This function allows one to obtain, for a specific <code>FATE-HD</code> 
+simulation and a specific parameter file within this simulation, raster 
+maps of PFG presence / absence and one preanalytical graphic. <br /> <br /></p>
 
 <p>Observation records (presences and absences) are required for each PFG 
 within the <code>mat.PFG.obs</code> object :</p>
@@ -265,11 +272,37 @@ within the <code>mat.PFG.obs</code> object :</p>
 
 </dl>
 
-<p>If a raster mask for habitat has been provided, the graphics will be also
-done per habitat.</p>
+
+<p>For each PFG and each selected simulation year, raster maps are retrieved 
+from the results folder <code>ABUND_REL_perPFG_allStrata</code> and unzipped. 
+Informations extracted lead to the production of presence/absence maps and 
+one graphic before the maps are compressed again :</p>
+<ul>
+<li><p>for each selected simulation year(s), the value of <strong>several 
+  statistics to evaluate the predictive quality of the model for each Plant 
+  Functional Group</strong> (sensitivity, specificity, TSS, AUC)</p></li>
+<li><p>for each selected simulation year(s), <strong>presence / absence</strong> 
+  maps of each Plant Functional Group within each stratum are obtained by 
+  finding the best cutoff to transform abundanceq in 0/1 while optimizing 
+  the values of sensitivity and specificity (see <code><a href='dot-getCutoff.html'>.getCutoff</a></code>) 
+  <br /> <br /></p></li>
+</ul>
+
+<p>If a raster mask for habitat has been provided, the graphics will be also 
+done per habitat. <br /> <br /></p>
+<p>It requires that the <code><a href='POST_FATE.relativeAbund.html'>POST_FATE.relativeAbund</a></code> function has 
+been run and that the folder <code>ABUND_REL_perPFG_allStrata</code> exists. <br /></p>
+<p><strong>These binary <code>raster</code> files can then be used by other 
+functions</strong> :</p>
+<ul>
+<li><p>to produce graphics of PFG abundances vs PFG Habitat Suitability 
+  maps (see <code><a href='POST_FATE.graphic_mapPFGvsHS.html'>POST_FATE.graphic_mapPFGvsHS</a></code>)</p></li>
+</ul>
+
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='POST_FATE.relativeAbund.html'>POST_FATE.relativeAbund</a></code></p></div>
+    <div class='dont-index'><p><code><a href='POST_FATE.relativeAbund.html'>POST_FATE.relativeAbund</a></code>, <code><a href='dot-getCutoff.html'>.getCutoff</a></code>,
+<code><a href='POST_FATE.graphic_mapPFGvsHS.html'>POST_FATE.graphic_mapPFGvsHS</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples">
@@ -337,7 +370,6 @@ done per habitat.</p>
                                  , <span class='kw'>required.seeding_duration</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"SEEDING_DURATION"</span>]
                                  , <span class='kw'>required.seeding_timestep</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"SEEDING_TIMESTEP"</span>]
                                  , <span class='kw'>required.seeding_input</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"SEEDING_INPUT"</span>]
-                                 , <span class='kw'>required.max_by_cohort</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"MAX_BY_COHORT"</span>]
                                  , <span class='kw'>required.max_abund_low</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"MAX_ABUND_LOW"</span>]
                                  , <span class='kw'>required.max_abund_medium</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"MAX_ABUND_MEDIUM"</span>]
                                  , <span class='kw'>required.max_abund_high</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"MAX_ABUND_HIGH"</span>]

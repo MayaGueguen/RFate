@@ -26,6 +26,44 @@ will be processed, otherwise only the calculation and reorganization of
 outputs will occur, be saved and returned.}
 }
 \value{
+A \code{list} containing two \code{data.frame} objects with the 
+following columns, and two \code{ggplot2} objects :
+
+\describe{
+  \item{tab.spaceOccupancy}{
+    \describe{
+      \item{\code{PFG}}{the concerned Plant Functional Group (for 
+      abundance)}
+      \item{\code{HAB}}{the concerned habitat}
+      \item{\emph{YEAR}}{the concerned simulation year}
+      \item{\code{Occupancy}}{the number of occupied pixels divided by the 
+      total number of pixels within the studied area}
+    }
+  }
+  \item{tab.abundance}{
+    \describe{
+      \item{\code{PFG}}{the concerned Plant Functional Group (for 
+      abundance)}
+      \item{\code{HAB}}{the concerned habitat}
+      \item{\emph{YEAR}}{the concerned simulation year}
+      \item{\code{Abund}}{the total abundance over all the pixels within 
+      the studied area}
+    }
+  }
+  \item{graph.spaceOccupancy}{\code{ggplot2} object, representing the 
+  evolution of each PFG space occupancy}
+  \item{graph.abundance}{\code{ggplot2} object, representing the evolution 
+  of each PFG total abundance \cr \cr}
+}
+
+
+Two \code{POST_FATE_TABLE_ZONE_evolution_[...].csv} files are created : 
+\describe{
+  \item{\file{spaceOccupancy}}{always, containing \code{tab.spaceOccupancy}}
+  \item{\file{abundance}}{always, containing \code{tab.abundance}}
+}
+
+
 Two \code{POST_FATE_[...].pdf} files are created : 
 \describe{
   \item{\file{GRAPHIC_A \cr spaceOccupancy}}{to visualize for each PFG the
@@ -60,11 +98,12 @@ preanalytical graphics :
   }
 }
 
-It requires that the \code{\link{POST_FATE.temporalEvolution}} has been run 
-and that the \code{POST_FATE.evolution_abundance_PIXEL_[...].csv} exists.
-
 If the information has been provided, the graphics will be also
-done per habitat.
+done per habitat. \cr \cr
+
+It requires that the \code{\link{POST_FATE.temporalEvolution}} function has 
+been run and that the file 
+\code{POST_FATE.evolution_abundance_PIXEL_[...].csv} exists.
 }
 \examples{
 

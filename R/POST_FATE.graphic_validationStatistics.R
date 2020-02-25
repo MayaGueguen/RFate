@@ -1,51 +1,42 @@
 ### HEADER #####################################################################
 ##' @title Create a graphical representation of several statistics for each PFG 
-##' to asses the quality of the model 
-##'  \cr for one (or several) specific year of a \code{FATE-HD} simulation
+##' to asses the quality of the model \cr for one (or several) specific year of 
+##' a \code{FATE-HD} simulation
 ##' 
 ##' @name POST_FATE.graphic_validationStatistics
 ##'
 ##' @author Maya Guéguen
 ##' 
-##' @description This script is designed to produce a graphical representation
-##' of several statistics (sensitivity, specificity, TSS, AUC) for quality
+##' @description This script is designed to produce a graphical representation 
+##' of several statistics (sensitivity, specificity, TSS, AUC) for quality 
 ##' assessment for one (or several) specific \code{FATE-HD} simulation year.
 ##'              
-##' @param name.simulation a \code{string} that corresponds to the main directory
-##' or simulation name of the \code{FATE-HD} simulation
-##' @param file.simulParam a \code{string} that corresponds to the name of a
-##' parameter file that will be contained into the \code{PARAM_SIMUL} folder
+##' @param name.simulation a \code{string} that corresponds to the main 
+##' directory or simulation name of the \code{FATE-HD} simulation
+##' @param file.simulParam a \code{string} that corresponds to the name of a 
+##' parameter file that will be contained into the \code{PARAM_SIMUL} folder 
 ##' of the \code{FATE-HD} simulation
 ##' @param year an \code{integer} corresponding to the simulation year(s) that 
 ##' will be used to extract PFG binary maps
-##' @param mat.PFG.obs a \code{data.frame} with 4 columns : PFG, X, Y, obs
-##' @param opt.ras_habitat default NULL (\emph{optional}). A \code{string} that
-##' corresponds to the file name of a raster mask, with an \code{integer} value
-##' within each pixel, corresponding to a specific habitat
-##' @param opt.no_CPU default 1 (\emph{optional}). The number of resources that 
-##' can be used to parallelize the \code{unzip/zip} of raster files
-##' @param opt.doPlot default TRUE (\emph{optional}). If TRUE, plot(s) will be
-##' processed, otherwise only the calculation and reorganization of outputs
-##' will occur, be saved and returned.
+##' @param mat.PFG.obs a \code{data.frame} with 4 columns : \code{PFG}, 
+##' \code{X}, \code{Y}, \code{obs}
+##' @param opt.ras_habitat default \code{NULL} (\emph{optional}). A 
+##' \code{string} that corresponds to the file name of a raster mask, with an 
+##' \code{integer} value within each pixel, corresponding to a specific habitat
+##' @param opt.no_CPU default \code{1} (\emph{optional}). The number of 
+##' resources that can be used to parallelize the \code{unzip/zip} of raster 
+##' files
+##' @param opt.doPlot default \code{TRUE} (\emph{optional}). If \code{TRUE}, 
+##' plot(s) will be processed, otherwise only the calculation and 
+##' reorganization of outputs will occur, be saved and returned.
 ##' 
 ##' 
 ##' @details 
 ##' 
-##' This function allows one to obtain, for a specific \code{FATE-HD} simulation
-##' and a specific parameter file within this simulation, one preanalytical
-##' graphic. \cr
+##' This function allows one to obtain, for a specific \code{FATE-HD} 
+##' simulation and a specific parameter file within this simulation, raster 
+##' maps of PFG presence / absence and one preanalytical graphic. \cr \cr
 ##' 
-##' For each PFG and each selected simulation year, raster maps are retrieved
-##' from the results folder \code{ABUND_REL_perPFG_allStrata} and unzipped.
-##' Informations extracted lead to the production of presence/absence maps and 
-##' one graphic before the maps are compressed again :
-##' 
-##' \itemize{
-##'   \item{the value of \strong{several statistics for the predictive quality
-##'   of the model for each Plant Functional Group} and for each selected
-##'   simulation year(s)
-##'   }
-##' }
 ##' 
 ##' Observation records (presences and absences) are required for each PFG 
 ##' within the \code{mat.PFG.obs} object :
@@ -57,33 +48,79 @@
 ##'   \item{\code{obs}}{either 0 or 1 to indicate presences or absences}
 ##' }
 ##' 
-##' If a raster mask for habitat has been provided, the graphics will be also
-##' done per habitat.
+##' 
+##' For each PFG and each selected simulation year, raster maps are retrieved 
+##' from the results folder \code{ABUND_REL_perPFG_allStrata} and unzipped. 
+##' Informations extracted lead to the production of presence/absence maps and 
+##' one graphic before the maps are compressed again :
+##' 
+##' \itemize{
+##'   \item{for each selected simulation year(s), the value of \strong{several 
+##'   statistics to evaluate the predictive quality of the model for each Plant 
+##'   Functional Group} (sensitivity, specificity, TSS, AUC)
+##'   }
+##'   \item{for each selected simulation year(s), \strong{presence / absence} 
+##'   maps of each Plant Functional Group within each stratum are obtained by 
+##'   finding the best cutoff to transform abundanceq in 0/1 while optimizing 
+##'   the values of sensitivity and specificity (see \code{\link{.getCutoff}}) 
+##'   \cr \cr
+##'   }
+##' }
+##' 
+##' If a raster mask for habitat has been provided, the graphics will be also 
+##' done per habitat. \cr \cr
+##' 
+##' It requires that the \code{\link{POST_FATE.relativeAbund}} function has 
+##' been run and that the folder \code{ABUND_REL_perPFG_allStrata} exists. \cr
+##' 
+##' \strong{These binary \code{raster} files can then be used by other 
+##' functions} :
+##' 
+##' \itemize{
+##'   \item to produce graphics of PFG abundances vs PFG Habitat Suitability 
+##'   maps (see \code{\link{POST_FATE.graphic_mapPFGvsHS}})
+##' }
 ##' 
 ##' 
+##' @return A \code{list} containing one \code{data.frame} object with the 
+##' following columns, and one \code{ggplot2} object :
 ##' 
-##' @return A \code{data.frame} with the following columns :
 ##' \describe{
-##'   \item{\code{PFG}}{the concerned Plant Functional Group}
-##'   \item{\code{AUC.sd}}{standard deviation of the AUC values}
-##'   \item{\code{sensitivity.sd}}{standard deviation of the sensitivity values}
-##'   \item{\code{specificity.sd}}{standard deviation of the specificity values}
-##'   \item{\code{variable}}{name of the calculated statistic among 'sensitivity',
-##'   'specificity', 'TSS' and 'AUC'}
-##'   \item{\code{value}}{value of the corresponding statistic}
+##'   \item{tab}{ 
+##'     \describe{
+##'       \item{\code{PFG}}{the concerned Plant Functional Group}
+##'       \item{\code{AUC.sd}}{standard deviation of the AUC values}
+##'       \item{\code{sensitivity.sd}}{standard deviation of the sensitivity 
+##'       values}
+##'       \item{\code{specificity.sd}}{standard deviation of the specificity 
+##'       values}
+##'       \item{\code{variable}}{name of the calculated statistic among 
+##'       '\code{sensitivity}', '\code{specificity}', '\code{TSS}' and 
+##'       '\code{AUC}'}
+##'       \item{\code{value}}{value of the corresponding statistic}
+##'     }
+##'   }
+##'   \item{plot}{\code{ggplot2} object, representing the values for each PFG 
+##'   of these four validation statistics (sensitivity, specificity, TSS, AUC) 
+##'   \cr \cr}
+##' }
+##' 
+##' One \code{POST_FATE_TABLE_YEAR_[...].csv} file is created : 
+##' \describe{
+##'   \item{\file{validationStatistics}}{containing the \code{data.frame} detailed above}
 ##' }
 ##' 
 ##' Two folders are created :
 ##' \describe{
-##'   \item{\file{BIN_perPFG \cr_allStrata}}{containing presence / absence  
+##'   \item{\file{BIN_perPFG \cr_allStrata}}{containing presence / absence 
 ##'   raster maps for each PFG across all strata}
-##'   \item{\file{BIN_perPFG \cr_perStrata}}{containing presence / absence  
+##'   \item{\file{BIN_perPFG \cr_perStrata}}{containing presence / absence 
 ##'   raster maps for each PFG for each stratum}
 ##' }
 ##' 
 ##' One \code{POST_FATE_[...].pdf} file is created : 
 ##' \describe{
-##'   \item{\file{GRAPHIC_C \cr validationStatistics}}{to assess the modeling 
+##'   \item{\file{GRAPHIC_B \cr validationStatistics}}{to assess the modeling 
 ##'   quality of each PFG based on given observations within the studied area}
 ##' }
 ##' 
@@ -91,7 +128,8 @@
 ##' @keywords FATE, outputs, binary, area under curve, sensitivity, specificity,
 ##' true skill statistic
 ##' 
-##' @seealso \code{\link{POST_FATE.relativeAbund}}
+##' @seealso \code{\link{POST_FATE.relativeAbund}}, \code{\link{.getCutoff}},
+##' \code{\link{POST_FATE.graphic_mapPFGvsHS}}
 ##' 
 ##' @examples
 ##' 
@@ -159,7 +197,6 @@
 ##'                                  , required.seeding_duration = PNE_PARAM$global["SEEDING_DURATION"]
 ##'                                  , required.seeding_timestep = PNE_PARAM$global["SEEDING_TIMESTEP"]
 ##'                                  , required.seeding_input = PNE_PARAM$global["SEEDING_INPUT"]
-##'                                  , required.max_by_cohort = PNE_PARAM$global["MAX_BY_COHORT"]
 ##'                                  , required.max_abund_low = PNE_PARAM$global["MAX_ABUND_LOW"]
 ##'                                  , required.max_abund_medium = PNE_PARAM$global["MAX_ABUND_MEDIUM"]
 ##'                                  , required.max_abund_high = PNE_PARAM$global["MAX_ABUND_HIGH"]

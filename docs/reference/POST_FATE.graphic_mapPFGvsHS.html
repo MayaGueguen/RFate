@@ -6,8 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create maps of both Habitat suitability and simulated occurrences
-of each Plant Functional Group <br /> for one (or several) specific year of a 
+<title>Create maps of both Habitat suitability and simulated occurrences of 
+each Plant Functional Group <br /> for one (or several) specific year of a 
 <code>FATE-HD</code> simulation — POST_FATE.graphic_mapPFGvsHS • RFate</title>
 
 
@@ -37,10 +37,10 @@ of each Plant Functional Group <br /> for one (or several) specific year of a
 
 
 
-<meta property="og:title" content="Create maps of both Habitat suitability and simulated occurrences
-of each Plant Functional Group <br /> for one (or several) specific year of a 
+<meta property="og:title" content="Create maps of both Habitat suitability and simulated occurrences of 
+each Plant Functional Group <br /> for one (or several) specific year of a 
 <code>FATE-HD</code> simulation — POST_FATE.graphic_mapPFGvsHS" />
-<meta property="og:description" content="This script is designed to produce raster maps of PFG habitat
+<meta property="og:description" content="This script is designed to produce raster maps of PFG habitat 
 suitability and simulated occurrences for one (or several) specific 
 FATE-HD simulation year." />
 <meta name="twitter:card" content="summary" />
@@ -154,15 +154,15 @@ FATE-HD simulation year." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create maps of both Habitat suitability and simulated occurrences
-of each Plant Functional Group <br /> for one (or several) specific year of a 
+    <h1>Create maps of both Habitat suitability and simulated occurrences of 
+each Plant Functional Group <br /> for one (or several) specific year of a 
 <code>FATE-HD</code> simulation</h1>
     <small class="dont-index">Source: <a href='https://github.com/MayaGueguen/RFate.git/blob/master/R/POST_FATE.graphic_mapPFGvsHS.R'><code>R/POST_FATE.graphic_mapPFGvsHS.R</code></a></small>
     <div class="hidden name"><code>POST_FATE.graphic_mapPFGvsHS.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This script is designed to produce raster maps of PFG habitat
+    <p>This script is designed to produce raster maps of PFG habitat 
 suitability and simulated occurrences for one (or several) specific 
 <code>FATE-HD</code> simulation year.</p>
     </div>
@@ -175,13 +175,13 @@ suitability and simulated occurrences for one (or several) specific
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>name.simulation</th>
-      <td><p>a <code>string</code> that corresponds to the main directory
-or simulation name of the <code>FATE-HD</code> simulation</p></td>
+      <td><p>a <code>string</code> that corresponds to the main 
+directory or simulation name of the <code>FATE-HD</code> simulation</p></td>
     </tr>
     <tr>
       <th>file.simulParam</th>
-      <td><p>a <code>string</code> that corresponds to the name of a
-parameter file that will be contained into the <code>PARAM_SIMUL</code> folder
+      <td><p>a <code>string</code> that corresponds to the name of a 
+parameter file that will be contained into the <code>PARAM_SIMUL</code> folder 
 of the <code>FATE-HD</code> simulation</p></td>
     </tr>
     <tr>
@@ -191,42 +191,52 @@ will be used to extract PFG binary maps</p></td>
     </tr>
     <tr>
       <th>opt.no_CPU</th>
-      <td><p>default 1 (<em>optional</em>). The number of resources that 
-can be used to parallelize the <code>unzip/zip</code> of raster files</p></td>
+      <td><p>default <code>1</code> (<em>optional</em>). The number of 
+resources that can be used to parallelize the <code>unzip/zip</code> of raster 
+files</p></td>
     </tr>
     <tr>
       <th>opt.strata</th>
-      <td><p>default ALL (<em>optional</em>). The stratum number from 
-which to extract PFG binary maps</p></td>
+      <td><p>default <code>ALL</code> (<em>optional</em>). The stratum number 
+from which to extract PFG binary maps</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>One <code>POST_FATE_[...].pdf</code> file is created :</p><dl class='dl-horizontal'>
-  <dt><code class="file">GRAPHIC_C <br /> PFGvsHS</code></dt><dd><p>to visualize the PFG presence
+    <p>A <code>list</code> containing one or several (one for each simulation 
+year) <code>list</code> of <code>ggplot2</code> objects, representing for each Plant 
+Functional Group the map of modelled presence / absence vs the Habitat 
+Suitability map. <br /> <br /></p>
+
+<p>One <code>POST_FATE_[...].pdf</code> file is created :</p><dl class='dl-horizontal'>
+  <dt><code class="file">GRAPHIC_B <br /> map_PFGvsHS</code></dt><dd><p>to visualize the PFG presence 
   within the studied area (probability and simulated occurrence)</p></dd>
 
 </dl>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function allows one to obtain, for a specific <code>FATE-HD</code> simulation
-and a specific parameter file within this simulation, one preanalytical
-graphic. <br /></p>
-<p>For each PFG and each selected simulation year, raster maps are retrieved
+    <p>This function allows one to obtain, for a specific <code>FATE-HD</code> 
+simulation and a specific parameter file within this simulation, one 
+preanalytical graphic. <br /> <br /></p>
+<p>For each PFG and each selected simulation year, raster maps are retrieved 
 from the results folder <code>BIN_perPFG_allStrata</code> (unless the 
 <code>opt.strata</code> is used, then it will be from the folder 
-<code>BIN_perPFG_perStrata</code>) and unzipped.
-Informations extracted lead to the production of one graphic before the
+<code>BIN_perPFG_perStrata</code>) and unzipped. 
+Informations extracted lead to the production of one graphic before the 
 maps are compressed again :</p>
 <ul>
-<li><p>the maps of <strong>Plant Functional Group habitat suitability and
+<li><p>the maps of <strong>Plant Functional Group habitat suitability and 
   occurrences</strong> for each selected simulation year(s), representing the 
-  probability of presence of each PFG in each pixel compared to its
-  simulated presence</p></li>
+  probability of presence of each PFG in each pixel compared to its 
+  simulated presence <br /> <br /></p></li>
 </ul>
 
+<p>It requires that the <code><a href='POST_FATE.relativeAbund.html'>POST_FATE.relativeAbund</a></code> and 
+<code><a href='POST_FATE.graphic_validationStatistics.html'>POST_FATE.graphic_validationStatistics</a></code> functions have 
+been run and that the folders <code>BIN_perPFG_allStrata</code> and 
+<code>BIN_perPFG_perStrata</code> exist.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='POST_FATE.relativeAbund.html'>POST_FATE.relativeAbund</a></code>, 

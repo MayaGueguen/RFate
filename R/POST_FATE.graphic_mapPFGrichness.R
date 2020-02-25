@@ -6,49 +6,76 @@
 ##'
 ##' @author Maya Guéguen
 ##' 
-##' @description This script is designed to produce a raster map of PFG richness
-##' for one (or several) specific \code{FATE-HD} simulation year.
+##' @description This script is designed to produce a raster map of PFG 
+##' richness for one (or several) specific \code{FATE-HD} simulation year.
 ##'              
-##' @param name.simulation a \code{string} that corresponds to the main directory
-##' or simulation name of the \code{FATE-HD} simulation
-##' @param file.simulParam a \code{string} that corresponds to the name of a
-##' parameter file that will be contained into the \code{PARAM_SIMUL} folder
+##' @param name.simulation a \code{string} that corresponds to the main 
+##' directory or simulation name of the \code{FATE-HD} simulation
+##' @param file.simulParam a \code{string} that corresponds to the name of a 
+##' parameter file that will be contained into the \code{PARAM_SIMUL} folder 
 ##' of the \code{FATE-HD} simulation
 ##' @param year an \code{integer} corresponding to the simulation year(s) that 
 ##' will be used to extract PFG binary maps
-##' @param opt.no_CPU default 1 (\emph{optional}). The number of resources that 
-##' can be used to parallelize the \code{unzip/zip} of raster files
-##' @param opt.doPlot default TRUE (\emph{optional}). If TRUE, plot(s) will be
-##' processed, otherwise only the calculation and reorganization of outputs
-##' will occur, be saved and returned.
+##' @param opt.no_CPU default \code{1} (\emph{optional}). The number of 
+##' resources that can be used to parallelize the \code{unzip/zip} of raster 
+##' files
+##' @param opt.doPlot default \code{TRUE} (\emph{optional}). If \code{TRUE}, 
+##' plot(s) will be processed, otherwise only the calculation and 
+##' reorganization of outputs will occur, be saved and returned.
 ##' 
 ##' 
 ##' @details 
 ##' 
-##' This function allows one to obtain, for a specific \code{FATE-HD} simulation
-##' and a specific parameter file within this simulation, one preanalytical
-##' graphic. \cr
+##' This function allows one to obtain, for a specific \code{FATE-HD} 
+##' simulation and a specific parameter file within this simulation, three 
+##' raster maps of PFG richness and one preanalytical graphic. \cr \cr
 ##' 
-##' For each PFG and each selected simulation year, raster maps are retrieved
-##' from the results folder \code{BIN_perPFG_allStrata} and unzipped.
-##' Informations extracted lead to the production of one graphic before the
-##' maps are compressed again :
+##' For each PFG and each selected simulation year, raster maps are retrieved 
+##' from the results folders \code{ABUND_REL_perPFG_allStrata} and 
+##' \code{BIN_perPFG_allStrata} and unzipped.
+##' Informations extracted lead to the production of richness maps and one 
+##' graphic before the maps are compressed again :
 ##' 
 ##' \itemize{
-##'   \item{the map of \strong{Plant Functional Group richness} for each selected
-##'   simulation year(s), representing the number of PFG present in each pixel
+##'   \item{for each selected simulation year(s), the map of \strong{Plant 
+##'   Functional Group richness} representing the number of PFG present in 
+##'   each pixel}
+##'   \item{\strong{richness} is calculated with the 
+##'   \strong{\href{http://www.jstor.org/stable/23143936}{Leinster & Cobbold 
+##'   2012 Ecology} framework} which allows to give more or less importance to 
+##'   the commun species through the \code{q} parameter :
+##'   \describe{
+##'     \item{\code{q = 0}}{species richness}
+##'     \item{\code{q = 1}}{Shannon entropy}
+##'     \item{\code{q = 2}}{Simpson concentration \cr \cr}
+##'   }
 ##'   }
 ##' }
 ##' 
+##' It requires that the \code{\link{POST_FATE.relativeAbund}} and 
+##' \code{\link{POST_FATE.graphic_validationStatistics}} functions have 
+##' been run and that the folder \code{BIN_perPFG_allStrata} exists.
 ##' 
 ##' 
-##' @return One \code{POST_FATE_[...].pdf} file is created : 
+##' 
+##' @return A \code{list} containing one or several (one for each simulation 
+##' year) \code{list} of \code{ggplot2} objects, representing the Plant 
+##' Functional Group richness for each value of \code{q} (0, 1 or 2). \cr \cr
+##' 
+##' Three \code{PFGrichness_YEAR_[...]_STRATA_all_q[...].tif} files are 
+##' created : 
 ##' \describe{
-##'   \item{\file{GRAPHIC_B \cr PFGrichness}}{to visualize the PFG richness
-##'   within the studied area}
+##'   \item{\file{q0}}{PFG richness}
+##'   \item{\file{q1}}{PFG Shannon entropy}
+##'   \item{\file{q2}}{PFG Simpson concentration}
 ##' }
 ##' 
-##' A raster file is created into simulation results folder.
+##' One \code{POST_FATE_[...].pdf} file is created : 
+##' \describe{
+##'   \item{\file{GRAPHIC_C \cr map_PFGrichness}}{to visualize the PFG 
+##'   richness within the studied area}
+##' }
+##' 
 ##' 
 ##' 
 ##' @keywords FATE, outputs, PFG richness
@@ -254,7 +281,10 @@ POST_FATE.graphic_mapPFGrichness = function(
     ## SAVE plots into file ------------------------------------------------------
     if (opt.doPlot && !is.null(plot_list[[1]]))
     {
-      pdf(file = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_C_map_PFGrichness_", basename(dir.save), ".pdf")
+      pdf(file = paste0(name.simulation
+                        , "/RESULTS/POST_FATE_GRAPHIC_C_map_PFGrichness_"
+                        , basename(dir.save)
+                        , ".pdf")
           , width = 12, height = 10)
       for (y in years)
       {

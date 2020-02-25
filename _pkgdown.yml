@@ -92,3 +92,4 @@ reference:
       - "POST_FATE.graphic_mapPFGcover"
       - "POST_FATE.graphic_mapPFGlight"
       - "POST_FATE.graphic_mapPFGsoil"
+      - ".getCutoff"

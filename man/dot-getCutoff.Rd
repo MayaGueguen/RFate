@@ -16,3 +16,6 @@ This functions finds the best cutoff to transform abundance
 values into binary values while optimising sensitivity and specificity 
 values based on observations
 }
+\examples{
+
+}

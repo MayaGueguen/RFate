@@ -40,11 +40,11 @@ following columns :
   selected simulation year(s)}
 }
 
-One to three \code{POST_FATE_evolution_[...].csv} files are created : 
+One to three \code{POST_FATE_TABLE_PIXEL_evolution_[...].csv} files are created : 
 \describe{
-  \item{\file{abundance_PIXEL}}{always}
-  \item{\file{light_PIXEL}}{\emph{if LIGHT module was activated}}
-  \item{\file{soil_PIXEL}}{\emph{if SOIL module was activated}}
+  \item{\file{abundance}}{always}
+  \item{\file{light}}{\emph{if LIGHT module was activated}}
+  \item{\file{soil}}{\emph{if SOIL module was activated}}
 }
 }
 \description{

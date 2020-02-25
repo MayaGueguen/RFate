@@ -2,61 +2,73 @@
 % Please edit documentation in R/POST_FATE.graphic_mapPFGvsHS.R
 \name{POST_FATE.graphic_mapPFGvsHS}
 \alias{POST_FATE.graphic_mapPFGvsHS}
-\title{Create maps of both Habitat suitability and simulated occurrences
-of each Plant Functional Group \cr for one (or several) specific year of a 
+\title{Create maps of both Habitat suitability and simulated occurrences of 
+each Plant Functional Group \cr for one (or several) specific year of a 
 \code{FATE-HD} simulation}
 \usage{
 POST_FATE.graphic_mapPFGvsHS(name.simulation, file.simulParam = NULL,
   year, opt.no_CPU = 1, opt.strata = "all")
 }
 \arguments{
-\item{name.simulation}{a \code{string} that corresponds to the main directory
-or simulation name of the \code{FATE-HD} simulation}
+\item{name.simulation}{a \code{string} that corresponds to the main 
+directory or simulation name of the \code{FATE-HD} simulation}
 
-\item{file.simulParam}{a \code{string} that corresponds to the name of a
-parameter file that will be contained into the \code{PARAM_SIMUL} folder
+\item{file.simulParam}{a \code{string} that corresponds to the name of a 
+parameter file that will be contained into the \code{PARAM_SIMUL} folder 
 of the \code{FATE-HD} simulation}
 
 \item{year}{an \code{integer} corresponding to the simulation year(s) that 
 will be used to extract PFG binary maps}
 
-\item{opt.no_CPU}{default 1 (\emph{optional}). The number of resources that 
-can be used to parallelize the \code{unzip/zip} of raster files}
+\item{opt.no_CPU}{default \code{1} (\emph{optional}). The number of 
+resources that can be used to parallelize the \code{unzip/zip} of raster 
+files}
 
-\item{opt.strata}{default ALL (\emph{optional}). The stratum number from 
-which to extract PFG binary maps}
+\item{opt.strata}{default \code{ALL} (\emph{optional}). The stratum number 
+from which to extract PFG binary maps}
 }
 \value{
+A \code{list} containing one or several (one for each simulation 
+year) \code{list} of \code{ggplot2} objects, representing for each Plant 
+Functional Group the map of modelled presence / absence vs the Habitat 
+Suitability map. \cr \cr
+
+
 One \code{POST_FATE_[...].pdf} file is created : 
 \describe{
-  \item{\file{GRAPHIC_C \cr PFGvsHS}}{to visualize the PFG presence
+  \item{\file{GRAPHIC_B \cr map_PFGvsHS}}{to visualize the PFG presence 
   within the studied area (probability and simulated occurrence)}
 }
 }
 \description{
-This script is designed to produce raster maps of PFG habitat
+This script is designed to produce raster maps of PFG habitat 
 suitability and simulated occurrences for one (or several) specific 
 \code{FATE-HD} simulation year.
 }
 \details{
-This function allows one to obtain, for a specific \code{FATE-HD} simulation
-and a specific parameter file within this simulation, one preanalytical
-graphic. \cr
+This function allows one to obtain, for a specific \code{FATE-HD} 
+simulation and a specific parameter file within this simulation, one 
+preanalytical graphic. \cr \cr
 
-For each PFG and each selected simulation year, raster maps are retrieved
+For each PFG and each selected simulation year, raster maps are retrieved 
 from the results folder \code{BIN_perPFG_allStrata} (unless the 
 \code{opt.strata} is used, then it will be from the folder 
-\code{BIN_perPFG_perStrata}) and unzipped.
-Informations extracted lead to the production of one graphic before the
+\code{BIN_perPFG_perStrata}) and unzipped. 
+Informations extracted lead to the production of one graphic before the 
 maps are compressed again :
 
 \itemize{
-  \item{the maps of \strong{Plant Functional Group habitat suitability and
+  \item{the maps of \strong{Plant Functional Group habitat suitability and 
   occurrences} for each selected simulation year(s), representing the 
-  probability of presence of each PFG in each pixel compared to its
-  simulated presence
+  probability of presence of each PFG in each pixel compared to its 
+  simulated presence \cr \cr
   }
 }
+
+It requires that the \code{\link{POST_FATE.relativeAbund}} and 
+\code{\link{POST_FATE.graphic_validationStatistics}} functions have 
+been run and that the folders \code{BIN_perPFG_allStrata} and 
+\code{BIN_perPFG_perStrata} exist.
 }
 \examples{
 
