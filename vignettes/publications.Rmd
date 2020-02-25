@@ -19,6 +19,7 @@
 
 - **Midgley** G. F., Davies I. D., Albert C. H., Altwegg R., Hannah L., Hughes G. O., O'Halloran L. R., Seo C., Thorne J. H. and Thuiller W. (**2010**), *BioMove – an integrated platform simulating the dynamic response of species to environmental change*. Ecography, 33: 612-616. https://doi.org/10.1111/j.1600-0587.2009.06000.x
 
+
 <br/><br/>
 ___________________________________________________________________________________________________
 
@@ -30,10 +31,16 @@ ________________________________________________________________________________
 <br/>
 
 <a href="papers/Boulangeat_2012_GCB.pdf" class="download" title="Download as PDF">
-<img src="pictures/art_2012_Boulangeat_GCB.png" alt="Boulangeat 2012 Global Change Biology" style="width:350px">
+<img src="pictures/art_2012_Boulangeat_GCB_1.png" alt="Boulangeat 2012 Global Change Biology (PAPER)" style="width:350px">
+</a>
+<a href="papers/Boulangeat_2012_Global_Change_Biology_SupMat.pdf" class="download" title="Download as PDF">
+<img src="pictures/art_2012_Boulangeat_GCB_2.png" alt="Boulangeat 2012 Global Change Biology (SupMat)" style="width:350px">
 </a>
 <a href="papers/Boulangeat_2014_GCB.pdf" class="download" title="Download as PDF">
-<img src="pictures/art_2014_Boulangeat_GCB.png" alt="Boulangeat 2014 Global Change Biology" style="width:350px">
+<img src="pictures/art_2014_Boulangeat_GCB_1.png" alt="Boulangeat 2014 Global Change Biology (PAPER)" style="width:350px">
+</a>
+<a href="papers/Boulangeat_2014_Global_Change_Biology_SupMat.pdf" class="download" title="Download as PDF">
+<img src="pictures/art_2014_Boulangeat_GCB_2.png" alt="Boulangeat 2014 Global Change Biology (SupMat)" style="width:350px">
 </a>
 
 <br/>
@@ -55,17 +62,32 @@ ________________________________________________________________________________
 <a href="papers/Boulangeat_2014_Ecography.pdf" class="download" title="Download as PDF">
 <img src="pictures/art_2014_Boulangeat_Ecography.png" alt="Boulangeat 2014 Ecography" style="width:350px">
 </a>
+<a href="" class="download" title="Download as PDF">
+<img src="" alt="" style="width:350px">
+</a>
 <a href="papers/Barros_2016_Ecology_Letters.pdf" class="download" title="Download as PDF">
-<img src="pictures/art_2016_Barros_EL.png" alt="Barros 2016 Ecology Letters" style="width:350px">
+<img src="pictures/art_2016_Barros_EL_1.png" alt="Barros 2016 Ecology Letters (PAPER)" style="width:350px">
+</a>
+<a href="papers/Barros_2016_Ecology_Letters_SupMat1.docx" class="download" title="Download as PDF">
+<img src="pictures/art_2016_Barros_EL_2.png" alt="Barros 2016 Ecology Letters (SupMat)" style="width:350px">
 </a>
 <a href="papers/Barros_2017_Journal_Applied_Ecology.pdf" class="download" title="Download as PDF">
-<img src="pictures/art_2017_Barros_JAE.png" alt="Barros 2017 Journal of Applied Ecology" style="width:350px">
+<img src="pictures/art_2017_Barros_JAE_1.png" alt="Barros 2017 Journal of Applied Ecology (PAPER)" style="width:350px">
+</a>
+<a href="papers/Barros_2017_Journal_Applied_Ecology_SupMat.7z" class="download" title="Download as PDF">
+<img src="pictures/art_2017_Barros_JAE_2.png" alt="Barros 2017 Journal of Applied Ecology (SupMat)" style="width:350px">
 </a>
 <a href="papers/Carboni_2017_Global_Change_Biology.pdf" class="download" title="Download as PDF">
-<img src="pictures/art_2017_Carboni_GCB.png" alt="Carboni 2017 Global Change Biology" style="width:350px">
+<img src="pictures/art_2017_Carboni_GCB_1.png" alt="Carboni 2017 Global Change Biology (PAPER)" style="width:350px">
+</a>
+<a href="papers/Carboni_2017_Global_Change_Biology_SupMat.pdf" class="download" title="Download as PDF">
+<img src="pictures/art_2017_Carboni_GCB_2.png" alt="Carboni 2017 Global Change Biology (SupMat)" style="width:350px">
 </a>
 <a href="papers/Thuiller_2017_Diversity_Distributions.pdf" class="download" title="Download as PDF">
-<img src="pictures/art_2017_Thuiller_DD.png" alt="Thuiller 2017 Diversity Distributions" style="width:350px">
+<img src="pictures/art_2017_Thuiller_DD_1.png" alt="Thuiller 2017 Diversity Distributions (PAPER)" style="width:350px">
+</a>
+<a href="papers/Thuiller_2017_Diversity_Distributions_SupMat.docx" class="download" title="Download as PDF">
+<img src="pictures/art_2017_Thuiller_DD_2.png" alt="Thuiller 2017 Diversity Distributions (SupMat)" style="width:350px">
 </a>
 
 <br/>

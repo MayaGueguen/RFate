@@ -10,54 +10,80 @@ POST_FATE.graphic_mapPFGcover(name.simulation, file.simulParam = NULL,
   opt.no_CPU = 1, opt.doPlot = TRUE)
 }
 \arguments{
-\item{name.simulation}{a \code{string} that corresponds to the main directory
-or simulation name of the \code{FATE-HD} simulation}
+\item{name.simulation}{a \code{string} that corresponds to the main 
+directory or simulation name of the \code{FATE-HD} simulation}
 
-\item{file.simulParam}{a \code{string} that corresponds to the name of a
-parameter file that will be contained into the \code{PARAM_SIMUL} folder
+\item{file.simulParam}{a \code{string} that corresponds to the name of a 
+parameter file that will be contained into the \code{PARAM_SIMUL} folder 
 of the \code{FATE-HD} simulation}
 
 \item{year}{an \code{integer} corresponding to the simulation year(s) that 
 will be used to extract PFG abundance and binary maps}
 
-\item{strata_min}{an \code{integer} corresponding to the lowest stratum from
-which PFG abundances are summed up to the highest stratum}
+\item{strata_min}{an \code{integer} corresponding to the lowest stratum 
+from which PFG abundances are summed up to the highest stratum}
 
-\item{opt.mat.cover.obs}{default NULL (\emph{optional}). A \code{data.frame}
-with 3 columns : X, Y, obs}
+\item{opt.mat.cover.obs}{default \code{NULL} (\emph{optional}). A 
+\code{data.frame} with 3 columns : \code{X}, \code{Y}, \code{obs}}
 
-\item{opt.ras.cover.obs}{default NULL (\emph{optional}). A \code{string} that
-corresponds to the file name of a raster containing observed values for 
-vegetation cover}
+\item{opt.ras.cover.obs}{default \code{NULL} (\emph{optional}). A 
+\code{string} that corresponds to the file name of a raster containing 
+observed values for vegetation cover}
 
-\item{opt.no_CPU}{default 1 (\emph{optional}). The number of resources that 
-can be used to parallelize the \code{unzip/zip} of raster files}
+\item{opt.no_CPU}{default \code{1} (\emph{optional}). The number of 
+resources that can be used to parallelize the \code{unzip/zip} of raster 
+files}
 
-\item{opt.doPlot}{default TRUE (\emph{optional}). If TRUE, plot(s) will be
-processed, otherwise only the calculation and reorganization of outputs
-will occur, be saved and returned.}
+\item{opt.doPlot}{default \code{TRUE} (\emph{optional}). If \code{TRUE}, 
+plot(s) will be processed, otherwise only the calculation and 
+reorganization of outputs will occur, be saved and returned.}
 }
 \value{
+A \code{list} containing one or several (one for each simulation 
+year) \code{list} of \code{raster} and \code{data.frame} with the following 
+columns, and one or two \code{ggplot2} objects :
+
+\describe{
+  \item{tab}{ 
+    \describe{ 
+      \item{raster}{}
+      \item{ccr}{ 
+        \describe{
+          \item{\code{PFG}}{the concerned Plant Functional Group}
+          \item{\code{AUC.sd}}{standard deviation of the AUC values}
+        }
+      }
+    }
+  }
+  \item{plot}{
+    \describe{
+      \item{plot.cover}{\code{ggplot2} object, representing the }
+      \item{plot.ccr}{\code{ggplot2} object, representing the \cr \cr}
+    }
+  }
+}
+
+
 One \code{POST_FATE_[...].pdf} file is created : 
 \describe{
-  \item{\file{GRAPHIC_B \cr PFGcover}}{to visualize the PFG cover
+  \item{\file{GRAPHIC_C \cr map_PFGcover}}{to visualize the PFG cover
   within the studied area}
 }
 
 A raster file is created into simulation results folder.
 }
 \description{
-This script is designed to produce a raster map of PFG cover
+This script is designed to produce a raster map of PFG cover 
 for one (or several) specific \code{FATE-HD} simulation year.
 }
 \details{
 This function allows one to obtain, for a specific \code{FATE-HD} simulation
-and a specific parameter file within this simulation, one preanalytical
-graphic. \cr
+and a specific parameter file within this simulation, one raster 
+maps of PFG relative cover and one preanalytical graphic. \cr \cr
 
-For each PFG and each selected simulation year, raster maps are retrieved
+For each PFG and each selected simulation year, raster maps are retrieved 
 from the results folders \code{ABUND_perPFG_perStrata} and 
-\code{BIN_perPFG_perStrata} and unzipped.
+\code{BIN_perPFG_perStrata} and unzipped. 
 Informations extracted lead to the production of one graphic before the
 maps are compressed again :
 
