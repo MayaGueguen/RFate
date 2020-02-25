@@ -38,7 +38,7 @@
 
 <meta property="og:title" content="Create a map of the Plant Functional Group cover 
  <br /> for one (or several) specific year of a <code>FATE-HD</code> simulation — POST_FATE.graphic_mapPFGcover" />
-<meta property="og:description" content="This script is designed to produce a raster map of PFG cover
+<meta property="og:description" content="This script is designed to produce a raster map of PFG cover 
 for one (or several) specific FATE-HD simulation year." />
 <meta name="twitter:card" content="summary" />
 
@@ -86,7 +86,27 @@ for one (or several) specific FATE-HD simulation year." />
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Tutorials
+    <span class="fab fa fab fa-pagelines"></span>
+     
+    FATE-HD
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li class="divider"></li>
+    <li>
+      <a href="../vignettes/publications.html">Publications</a>
+    </li>
+    <li class="dropdown-header">Modelling framework</li>
+    <li class="dropdown-header">Run a simulation</li>
+    <li class="dropdown-header">Use a module</li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    <span class="fas fa fas fa-toolbox"></span>
+     
+    RFate
      
     <span class="caret"></span>
   </a>
@@ -158,7 +178,7 @@ for one (or several) specific FATE-HD simulation year." />
     </div>
 
     <div class="ref-description">
-    <p>This script is designed to produce a raster map of PFG cover
+    <p>This script is designed to produce a raster map of PFG cover 
 for one (or several) specific <code>FATE-HD</code> simulation year.</p>
     </div>
 
@@ -171,13 +191,13 @@ for one (or several) specific <code>FATE-HD</code> simulation year.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>name.simulation</th>
-      <td><p>a <code>string</code> that corresponds to the main directory
-or simulation name of the <code>FATE-HD</code> simulation</p></td>
+      <td><p>a <code>string</code> that corresponds to the main 
+directory or simulation name of the <code>FATE-HD</code> simulation</p></td>
     </tr>
     <tr>
       <th>file.simulParam</th>
-      <td><p>a <code>string</code> that corresponds to the name of a
-parameter file that will be contained into the <code>PARAM_SIMUL</code> folder
+      <td><p>a <code>string</code> that corresponds to the name of a 
+parameter file that will be contained into the <code>PARAM_SIMUL</code> folder 
 of the <code>FATE-HD</code> simulation</p></td>
     </tr>
     <tr>
@@ -187,37 +207,54 @@ will be used to extract PFG abundance and binary maps</p></td>
     </tr>
     <tr>
       <th>strata_min</th>
-      <td><p>an <code>integer</code> corresponding to the lowest stratum from
-which PFG abundances are summed up to the highest stratum</p></td>
+      <td><p>an <code>integer</code> corresponding to the lowest stratum 
+from which PFG abundances are summed up to the highest stratum</p></td>
     </tr>
     <tr>
       <th>opt.mat.cover.obs</th>
-      <td><p>default NULL (<em>optional</em>). A <code>data.frame</code>
-with 3 columns : X, Y, obs</p></td>
+      <td><p>default <code>NULL</code> (<em>optional</em>). A 
+<code>data.frame</code> with 3 columns : <code>X</code>, <code>Y</code>, <code>obs</code></p></td>
     </tr>
     <tr>
       <th>opt.ras.cover.obs</th>
-      <td><p>default NULL (<em>optional</em>). A <code>string</code> that
-corresponds to the file name of a raster containing observed values for 
-vegetation cover</p></td>
+      <td><p>default <code>NULL</code> (<em>optional</em>). A 
+<code>string</code> that corresponds to the file name of a raster containing 
+observed values for vegetation cover</p></td>
     </tr>
     <tr>
       <th>opt.no_CPU</th>
-      <td><p>default 1 (<em>optional</em>). The number of resources that 
-can be used to parallelize the <code>unzip/zip</code> of raster files</p></td>
+      <td><p>default <code>1</code> (<em>optional</em>). The number of 
+resources that can be used to parallelize the <code>unzip/zip</code> of raster 
+files</p></td>
     </tr>
     <tr>
       <th>opt.doPlot</th>
-      <td><p>default TRUE (<em>optional</em>). If TRUE, plot(s) will be
-processed, otherwise only the calculation and reorganization of outputs
-will occur, be saved and returned.</p></td>
+      <td><p>default <code>TRUE</code> (<em>optional</em>). If <code>TRUE</code>, 
+plot(s) will be processed, otherwise only the calculation and 
+reorganization of outputs will occur, be saved and returned.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>One <code>POST_FATE_[...].pdf</code> file is created :</p><dl class='dl-horizontal'>
-  <dt><code class="file">GRAPHIC_B <br /> PFGcover</code></dt><dd><p>to visualize the PFG cover
+    <p>A <code>list</code> containing one or several (one for each simulation 
+year) <code>list</code> of <code>raster</code> and <code>data.frame</code> with the following 
+columns, and one or two <code>ggplot2</code> objects :</p>
+<dl class='dl-horizontal'>
+  <dt>tab</dt><dd><p><dl class='dl-horizontal'>
+      <dt>raster</dt><dd><p></p></dd>
+      <dt>ccr</dt><dd><p><dl class='dl-horizontal'>
+          <dt><code>PFG</code></dt><dd><p>the concerned Plant Functional Group</p></dd>
+          <dt><code>AUC.sd</code></dt><dd><p>standard deviation of the AUC values</p></dd></dl></p></dd></dl></p></dd>
+  <dt>plot</dt><dd><p><dl class='dl-horizontal'>
+      <dt>plot.cover</dt><dd><p><code>ggplot2</code> object, representing the</p></dd>
+      <dt>plot.ccr</dt><dd><p><code>ggplot2</code> object, representing the <br /> <br /></p></dd></dl></p></dd>
+
+</dl>
+
+
+<p>One <code>POST_FATE_[...].pdf</code> file is created :</p><dl class='dl-horizontal'>
+  <dt><code class="file">GRAPHIC_C <br /> map_PFGcover</code></dt><dd><p>to visualize the PFG cover
   within the studied area</p></dd>
 
 </dl>
@@ -226,11 +263,11 @@ will occur, be saved and returned.</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This function allows one to obtain, for a specific <code>FATE-HD</code> simulation
-and a specific parameter file within this simulation, one preanalytical
-graphic. <br /></p>
-<p>For each PFG and each selected simulation year, raster maps are retrieved
+and a specific parameter file within this simulation, one raster 
+maps of PFG relative cover and one preanalytical graphic. <br /> <br /></p>
+<p>For each PFG and each selected simulation year, raster maps are retrieved 
 from the results folders <code>ABUND_perPFG_perStrata</code> and 
-<code>BIN_perPFG_perStrata</code> and unzipped.
+<code>BIN_perPFG_perStrata</code> and unzipped. 
 Informations extracted lead to the production of one graphic before the
 maps are compressed again :</p>
 <ul>

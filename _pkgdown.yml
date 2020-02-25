@@ -4,7 +4,8 @@ navbar:
     left:
     - home
     - intro
-    - tutorials
+    - FATE-HD
+    - RFate
     - reference
     - articles
     - news
@@ -19,8 +20,19 @@ navbar:
       text: Reference
       icon: fa-book fa-lg
       href: reference/index.html
-    tutorials:
-      text: Tutorials
+    FATE-HD:
+      text: FATE-HD
+      icon: fab fa-pagelines
+      menu:
+        - text: "---------"
+        - text: Publications
+          href: articles/publications.html
+        - text: Modelling framework
+        - text: Run a simulation
+        - text: Use a module
+    RFate:
+      text: RFate
+      icon: fas fa-toolbox
       menu:
         - text: "---------"
         - text: Build PFG
