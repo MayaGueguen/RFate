@@ -1,0 +1,447 @@
+---
+title: "FATE-HD tutorial - Modules"
+# author: "LECA Grenoble"
+# date: "10/05/2016"
+output:
+  html_document:
+    theme: lumen
+    highlight: zenburn
+    number_sections: no
+    toc: yes
+    toc_float:
+      collapsed: false
+      smooth_scroll: false
+---
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
+<br/> <br/>
+
+`FATE-HD` model is built like a [LEGO](https://i.pinimg.com/originals/47/7b/f3/477bf37d4d316285108b62e2e852a014.gif) tool : it has a **core module**, which corresponds to the fundamental succession, and then can be complemented with **other modules**. Some of these modules can be regarded as equally important as the core module (from an ecological likelihood point of view, like light, dispersal, soil, etc), and some others are more specific (drought, aliens, fire, etc).
+
+<br/> <br/>
+
+
+
+# <span style="font-size:35px;"><i class="fa fa-heart"></i> `CORE` module (succession)</span>
+
+<br/>
+
+"*Based on the ‘FATE’ model (Moore & Noble, 1990), it describes the within-pixel succession dynamics in an annual time step. [...] Five processes describe PFG demography (germination, recruitment, growth, survival and fecundity, see Table 1).*" ([Boulangeat, 2014](papers/Boulangeat_2014_GCB.pdf "Boulangeat, I., Georges, D., Thuiller, W., FATE-HD: A spatially and temporally explicit integrated model for predicting vegetation structure and diversity at regional scale. Global Change Biology, 20, 2368–2378."))
+
+
+
+<br/>
+
+#### Required parameters
+
+- In *ParamSimulation* file :
+```R
+--GLOBAL_PARAMS--
+FATE_simulation/DATA/Global_parameters.txt
+--SAVE_DIR--
+FATE_simulation/RESULTS/SIMUL_1/
+--MASK--
+FATE_simulation/DATA/MASK/mask.tif
+--PFG_LIFE_HISTORY_PARAMS--
+FATE_simulation/DATA/PFGS/SUCC/SUCC_PFG1.txt
+FATE_simulation/DATA/PFGS/SUCC/SUCC_PFG2.txt
+--END_OF_FILE--
+```
+The years for which must be saved abundance maps for each PFG can also be indicated,  
+as well as years to save a copy of the simulation object :
+```
+--ARRAYS_SAVING_YEARS--
+FATE_simulation/DATA/SAVE/arraysSavingYears.txt
+--OBJECTS_SAVING_YEARS--
+FATE_simulation/DATA/SAVE/objectsSavingYears.txt
+```
+
+- In *Global Parameters* file :
+```R
+NB_FG 16
+NB_STRATUM 6
+SIMULATION_DURATION 950
+SEEDING_DURATION 300
+SEEDING_TIMESTEP 1
+SEEDING_INPUT
+MAX_BY_COHORT 5000000
+MAX_ABUND_LOW 1000000
+MAX_ABUND_MEDIUM 5000000
+MAX_ABUND_HIGH 8000000
+```
+The number of computer resources can also be given : `NB_CPUS 6`.  
+If so, some parts of the main loop of the code will be parallelized on the amount of indicated resources.
+
+<!-- - In *Namespace constants* file : -->
+<!-- ```R -->
+<!-- GLOBAL_LOW_ABUND 1000000 -->
+<!-- GLOBAL_MEDIUM_ABUND 5000000 -->
+<!-- GLOBAL_HIGH_ABUND 8000000 -->
+<!-- GLOBAL_LOW_RESOURCES_THRESH 19000000 -->
+<!-- GLOBAL_MEDIUM_RESOURCES_THRESH 13000000 -->
+<!-- GLOBAL_MAX_BY_COHORT 5000000 -->
+<!-- ``` -->
+
+- In *SUCCESSION* files :
+```R
+NAME PFG1
+TYPE P
+HEIGHT 1200
+MATURITY 45
+LONGEVITY 451
+STRATA 5
+MAX_ABUNDANCE 3
+IMM_SIZE 1
+CHANG_STR_AGES 0 14 38 110 344
+SEED_POOL_LIFE 0 0
+SEED_DORMANCY 0
+POTENTIAL_FECUNDITY 100
+```
+
+<br/>
+
+# <span style="font-size:35px;"><i class="fa fa-sun"></i> `LIGHT` module </span>
+
+<br/>
+
+"*Vegetation height is represented by a limited number of strata to incorporate the shading process (Fig. 1a). Within a pixel, the light resource for each stratum is calculated from the total abundance of all PFGs across all the upper strata. Within-pixel spatial heterogeneity in light resources is not taken into consideration*" ([Boulangeat, 2014](papers/Boulangeat_2014_GCB.pdf "Boulangeat, I., Georges, D., Thuiller, W., FATE-HD: A spatially and temporally explicit integrated model for predicting vegetation structure and diversity at regional scale. Global Change Biology, 20, 2368–2378."))
+
+
+
+<br/>
+
+#### Required parameters
+
+- In *ParamSimulation* file :
+```R
+--PFG_LIGHT_PARAMS--
+FATE_simulation/DATA/PFGS/SUCC/SUCC_PFG1.txt
+FATE_simulation/DATA/PFGS/SUCC/SUCC_PFG2.txt
+```
+
+- In *Global Parameters* file :
+```R
+DO_LIGHT_COMPETITION 1
+LIGHT_THRESH_LOW 19000000
+LIGHT_THRESH_MEDIUM 13000000
+```
+
+- In *LIGHT* files :
+```R
+NAME PFG1
+LIGHT 4
+ACTIVE_GERM 9 9 9
+SHADE_TOL 1 1 1 1 1 1 1 1 1
+```
+
+<br/>
+
+
+# <span style="font-size:25px;"><i class="fa fa-seedling"></i> `DISPERSAL` module</span>
+
+<br/>
+
+"*The quantity of produced seeds depends on the abundances of mature PFGs and their habitat suitability. A seed dispersal model determines seed inflow in each pixel (Fig. 1c). From the source, three circles of influence are defined using distance parameters. In the first circle, 50% of the seeds are distributed uniformly. In the second circle, 49% of the seeds are distributed with the same concentration as in the first circle but by pairs of pixels, simulating the spatial autocorrelation of dispersed seeds. In the third circle, 1% of the seeds fall into a random pixel. This seed dispersal model behaves similar to a continuous kernel function (see Fig.S1a) but is very effective and requires only a few parameters (Vittoz & Engler, 2007).*" ([Boulangeat, 2014](papers/Boulangeat_2014_GCB.pdf "Boulangeat, I., Georges, D., Thuiller, W., FATE-HD: A spatially and temporally explicit integrated model for predicting vegetation structure and diversity at regional scale. Global Change Biology, 20, 2368–2378."))
+
+<br/>
+
+#### Required parameters
+
+- In *ParamSimulation* file :
+```R
+--PFG_DISPERSAL_PARAMS--
+FATE_simulation/DATA/PFGS/DISP/DISP_PFG1.txt
+FATE_simulation/DATA/PFGS/DISP/DISP_PFG2.txt
+```
+
+- In *Global Parameters* file :
+```R
+DO_DISPERSAL 1
+DISPERSAL_MODE 1
+```
+
+- In *DISPERSAL* files :
+```R
+NAME PFG1
+DISPERS_DIST 100 500 79000
+```
+
+<br/>
+
+# <span style="font-size:25px;"><i class="fa fa-globe"></i> `HABITAT SUITABILITY` module</span>
+
+<br/>
+
+"*Modelling how habitat suitability affects species population dynamics is tricky given the limited knowledge on the type and form of this relationship. Gallien et al. (2010) suggested a parsimonious approach using only presence-absences or a linear link. In FATE-HD, the probability for recruitment and seed production occurring is calculated every year according to the habitat suitability of the PFG in the pixel in question. Over time, the probability of presence is thus linearly related to fecundity and establishment. Accounting for interannual variability allows species coexistence via temporal niches. Mortality does not depend on habitat suitability, as the immediate effects of annual abiotic conditions on plant mortality are not clear in the literature. Habitat suitability for each PFG can be obtained from various sources such as correlative species distribution models (Guisan & Thuiller, 2005) or mechanistic niche models (Chuine & Beaubien, 2001).*" ([Boulangeat, 2014](papers/Boulangeat_2014_GCB.pdf "Boulangeat, I., Georges, D., Thuiller, W., FATE-HD: A spatially and temporally explicit integrated model for predicting vegetation structure and diversity at regional scale. Global Change Biology, 20, 2368–2378."))
+
+<br/>
+
+#### Required parameters
+
+- In *ParamSimulation* file :
+```R
+--PFG_HAB_MASK--
+FATE_simulation/DATA/PFGS/HABSUIT/HS_CA/HS_PFG1_0.tif
+FATE_simulation/DATA/PFGS/HABSUIT/HS_CA/HS_PFG2_0.tif
+```
+Habitat suitability maps can be changed through simulation time.  
+Two supplementary type of files are then needed :
+1. a file with each row indicating each simulation year of change
+2. as many files as the number of years indicated in the previous file,  
+and inside them, as many lines as PFG, with a path for a new habitat suitability for each of them
+```
+--HAB_CHANGE_TIME--
+FATE_simulation/DATA/SCENARIO/HABSUIT/HS_changing_times.txt
+--HAB_CHANGE_MASK--
+FATE_simulation/DATA/SCENARIO/HABSUIT/HS_changing_masks_t20.txt
+FATE_simulation/DATA/SCENARIO/HABSUIT/HS_changing_masks_t30.txt
+FATE_simulation/DATA/SCENARIO/HABSUIT/HS_changing_masks_t50.txt
+FATE_simulation/DATA/SCENARIO/HABSUIT/HS_changing_masks_t100.txt
+```
+
+- In *Global Parameters* file :
+```R
+DO_HAB_SUITABILITY 1
+HABSUIT_OPTION 1
+```
+
+<br/>
+
+# <span style="font-size:25px;"><i class="fa fa-bolt"></i> `DISTURBANCES` module</span>
+
+<br/>
+
+"*Several disturbance models can be parameterized to remove vegetation, affect fecundity, kill seeds or activate dormant seeds according to each PFG’s tolerance or sensitivity to the given disturbance. (Fig. 1d).*" ([Boulangeat, 2014](papers/Boulangeat_2014_GCB.pdf "Boulangeat, I., Georges, D., Thuiller, W., FATE-HD: A spatially and temporally explicit integrated model for predicting vegetation structure and diversity at regional scale. Global Change Biology, 20, 2368–2378."))
+
+<br/>
+
+#### Required parameters
+
+- In *ParamSimulation* file :
+```R
+--PFG_DISTURBANCES_PARAMS--
+FATE_simulation/DATA/PFGS/DIST/DIST_PFG1.txt
+FATE_simulation/DATA/PFGS/DIST/DIST_PFG2.txt
+--DIST_MASK--
+FATE_simulation/DATA/MASK/mask_noPerturb.tif
+FATE_simulation/DATA/MASK/mask_mowing.tif
+FATE_simulation/DATA/MASK/mask_grazing_level1.tif
+FATE_simulation/DATA/MASK/mask_grazing_level2.tif
+```
+Like habitat suitability maps, disturbances maps can be changed through simulation time.  
+Two supplementary type of files are then needed :
+1. a file with each row indicating each simulation year of change
+2. as many files as the number of years indicated in the previous file,  
+and inside them, as many lines as disturbances, with a path for a new mask for each of them
+```
+--DIST_CHANGE_TIME--
+FATE_simulation/DATA/SCENARIO/dist_scenario1/disturbances_changing_times.txt
+--DIST_CHANGE_MASK--
+FATE_simulation/DATA/SCENARIO/dist_scenario1/disturbances_changing_masks_t50.txt
+FATE_simulation/DATA/SCENARIO/dist_scenario1/disturbances_changing_masks_t100.txt
+FATE_simulation/DATA/SCENARIO/dist_scenario1/disturbances_changing_masks_t150.txt
+```
+
+- In *Global Parameters* file :
+```R
+DO_DISTURBANCES 1
+NB_DISTURBANCES 4
+NB_SUBDISTURBANCES 4
+FREQ_DISTURBANCES 1 1 1 1
+```
+
+- In *DISTURBANCE* files :
+```R
+NAME PFG1
+PROP_KILLED 0 0 0 0
+BREAK_AGE 2 4 10 2 4 10 2 4 10 2 4 10
+RESPR_AGE 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+FATES 0 0 0 0 5 2 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 2 0 1
+ACTIVATED_SEED 0 0 0 0
+```
+
+<br/> <br/>
+
+
+# <span style="font-size:20px;"><i class="fa fa-balance-scale"></i> `HABITAT STABILITY` module</span>
+
+<br/>
+
+#### Required parameters
+
+- In *ParamSimulation* file :
+```R
+--HAB_MASK--
+FATE_simulation/DATA/MASK/Habitat_1.tif
+FATE_simulation/DATA/MASK/Habitat_2.tif
+FATE_simulation/DATA/MASK/Habitat_3.tif
+FATE_simulation/DATA/MASK/Habitat_4.tif
+FATE_simulation/DATA/MASK/Habitat_5.tif
+--HAB_BASELINE_STATS--
+FATE_simulation/DATA/MASK/Habitat_BL_1.tif
+FATE_simulation/DATA/MASK/Habitat_BL_2.tif
+FATE_simulation/DATA/MASK/Habitat_BL_3.tif
+FATE_simulation/DATA/MASK/Habitat_BL_4.tif
+FATE_simulation/DATA/MASK/Habitat_BL_5.tif
+```
+
+- In *Global Parameters* file :
+```R
+DO_HAB_STABILITY 1
+NB_HABITATS 5
+```
+
+
+# <span style="font-size:20px;"><i class="fa fa-tint"></i> `DROUGHT` module</span>
+
+<br/>
+
+"*Fig. 1. Drought simulation scheme. For each year i, a PFG’s habitat suitability (HS; step 1) and drought effects (step 2) are evaluated within a pixel j. If HS ij or Din ij are below reference values, PFG fecundity and recruitment are set to 0. Additionally, if Din ij crosses the reference value, one drought year is added to the PFG’s cumulative drought effects counter. Severe drought effects occur if conditions 2.3.1 ii or 2.3.2 are met, consisting in immediate and post-drought effects. Otherwise, only moderate drought effects are caused (2.1 and 2.3.1 i). Drought recovery is simulated by subtracting one or two drought events from the cumulative drought effects counter. [...] See Table S3 in Appendix S2 for full parameter list and refer to main text for further details.*" ([Barros, 2017](papers/Barros_2017_Journal_Applied_Ecology.pdf "Barros, C., Guéguen, M., Douzet, R., Carboni, M., Boulangeat, I., Zimmermann, N.E., Münkemüller, T., Thuiller, W. and Mori, A. (2017), Extreme climate events counteract the effects of climate and land‐use changes in Alpine tree lines. Journal of Applied Ecology, 54: 39-50."))
+
+<br/>
+
+#### Required parameters
+
+- In *ParamSimulation* file :
+```R
+--PFG_DROUGHT_PARAMS--
+FATE_simulation/DATA/PFGS/DIST/DROUGHT_PFG1.txt
+FATE_simulation/DATA/PFGS/DIST/DROUGHT_PFG2.txt
+--MOIST_MASK--
+FATE_simulation/DATA/MASK/moistureIndex_init.tif
+```
+Like habitat suitability or disturbances maps, the moisture index map can be changed through simulation time.  
+Two supplementary type of files are then needed :
+1. a file with each row indicating each simulation year of change
+2. as many files as the number of years indicated in the previous file,  
+and inside them, one line with a path for a new map of moisture index
+```
+--MOIST_CHANGE_TIME--
+FATE_simulation/DATA/SCENARIO/moistureIndex_changing_times.txt
+--MOIST_CHANGE_MASK--
+FATE_simulation/DATA/SCENARIO/moistureIndex_changing_masks_t15.txt
+FATE_simulation/DATA/SCENARIO/moistureIndex_changing_masks_t30.txt
+FATE_simulation/DATA/SCENARIO/moistureIndex_changing_masks_t45.txt
+```
+
+- In *Global Parameters* file :
+```R
+DO_DROUGHT_DISTURBANCES 1
+NB_SUBDROUGHT 4
+CHRONO_POST_DROUGHT 0
+CHRONO_CURR_DROUGHT 1
+```
+
+- In *DROUGHT* files :
+```R
+NAME PFG1
+PROP_KILLED 0 0
+BREAK_AGE 1 5 26 1 5 26
+RESPR_AGE 0 0 3 26 0 0 3 26
+FATES 6 0 2 0 5 0 6 0 2 0 5 0 1 0 2 0
+ACTIVATED_SEED 0 0
+DROUGHT_SD -11.50406848 -12.3335733
+COUNT_MOD_TO_SEV 3
+COUNT_SEV_MORT 3
+DROUGHT_RECOVERY 1
+```
+
+<br/>
+
+# <span style="font-size:20px;"><i class="fab fa-reddit-alien"></i> `ALIENS` module</span>
+
+<br/>
+
+"*We then simulated the introduction of the alien PFGs through annual seeding. The sites of simulated introduction were based on a map of the Human Footprint [...] an index combining information on land-use, population density and transportation network (including mountain footpaths). As such it represents an excellent proxy of potential local propagule pressure for introduced species [...] In the current propagule pressure scenario, introductions were a proportion of a set maximum number of seeds depending on the human footprint value in each pixel (i.e. highest introduction intensity in the most densely populated centres, and lowest introduction intensity along mountain footpaths; see Appendix S2 for maps and for details). In the increased propagule pressure scenario, the maximum introduction level was applied in all areas that had a non-zero human footprint (simulating a maximum exploitation of all areas suitable to humans).*" ([Carboni, 2017](papers/Carboni_2017_Global_Change_Biology.pdf "Carboni M, Guéguen M, Barros C, et al. Simulating plant invasion dynamics in mountain ecosystems under global change scenarios. Glob Change Biol. 2018;24:e289–e302."))
+
+<br/>
+
+#### Required parameters
+
+- In *ParamSimulation* file :
+```R
+--ALIENS_MASK--
+FATE_simulation/DATA/MASK/NoIntroduction.tif
+FATE_simulation/DATA/MASK/Introduction_ALIEN2.tif
+FATE_simulation/DATA/MASK/Introduction_ALIEN3.tif
+```
+Like habitat suitability or disturbances maps, aliens introduction masks can be changed through simulation time.  
+Two supplementary type of files are then needed :
+1. a file with each row indicating each simulation year of change
+2. as many files as the number of years indicated in the previous file,  
+and inside them, as many lines as PFG, with a path for a new mask for each of them
+```
+--ALIENS_CHANGE_TIME--
+FATE_simulation/DATA/SCENARIO/aliens_changing_times.txt
+--ALIENS_CHANGE_MASK--
+FATE_simulation/DATA/SCENARIO/aliens_changing_masks_t20.txt
+FATE_simulation/DATA/SCENARIO/aliens_changing_masks_t25.txt
+```
+Once introduction maps have been set, frequency of introduction can also be changed through simulation time.  
+Two supplementary type of files are then needed :
+1. a file with each row indicating each simulation year of change
+2. as many files as the number of years indicated in the previous file,  
+and inside them, as many lines as PFG, with a number for each of them representing its introduction frequency
+```
+--ALIENS_FREQ_CHANGE_TIME--
+FATE_simulation/DATA/SCENARIO/aliens_freq_changing_times.txt
+--ALIENS_CHANGE_FREQUENCIES--
+FATE_simulation/DATA/SCENARIO/aliens_changing_frequencies_t20.txt
+FATE_simulation/DATA/SCENARIO/aliens_changing_frequencies_t25.txt
+```
+
+- In *Global Parameters* file :
+```R
+DO_ALIENS_DISTURBANCE 1
+FREQ_ALIENS 
+```
+
+- In *SUCCESSION* files :
+```R
+IS_ALIEN 1
+```
+
+<br/>
+
+# <span style="font-size:20px;"><i class="fas fa-recycle"></i> `SOIL` module</span>
+
+
+<br/>
+
+"*To be written*" ()
+
+<br/>
+
+#### Required parameters
+
+- In *ParamSimulation* file :
+```R
+--PFG_SOIL_PARAMS--
+FATE_simulation/DATA/PFGS/SOIL/SOIL_PFG1.txt
+FATE_simulation/DATA/PFGS/SOIL/SOIL_PFG2.txt
+```
+
+- In *Global Parameters* file :
+```R
+DO_SOIL_COMPETITION 1
+```
+
+- In *SOIL* files :
+```R
+NAME PFG1
+SOIL_CONTRIB 2.4
+SOIL_LOW 1
+SOIL_HIGH 4
+ACTIVE_GERM 8 10 5
+SOIL_TOL 1 10 0 5 10 4 9 10 8
+```
+
+
+<br/>
+
+# <span style="font-size:20px;"><i class="fa fa-fire"></i> `FIRE` module</span>
+
+
+<br/>
+

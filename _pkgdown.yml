@@ -28,8 +28,11 @@ navbar:
         - text: Publications
           href: articles/publications.html
         - text: Modelling framework
+          href: articles/fate-hd_tutorial_0_PFG.html
         - text: Run a simulation
+          href: articles/fate-hd_tutorial_1_GETTING_STARTED.html
         - text: Use a module
+          href: articles/fate-hd_tutorial_2_MODULES.html
     RFate:
       text: RFate
       icon: fas fa-toolbox
