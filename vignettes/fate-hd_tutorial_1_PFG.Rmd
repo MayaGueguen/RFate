@@ -1,7 +1,5 @@
 ---
-title: "FATE-HD tutorial - Building PFG"
-# author: "LECA Grenoble"
-# date: "10/05/2016"
+title: "FATE-HD tutorial 1 - Building PFG"
 output:
   html_document:
     theme: lumen

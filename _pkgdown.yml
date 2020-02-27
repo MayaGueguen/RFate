@@ -7,7 +7,6 @@ navbar:
     - FATE-HD
     - RFate
     - reference
-    - articles
     - news
     right:
     - download
@@ -26,13 +25,13 @@ navbar:
       menu:
         - text: "---------"
         - text: Publications
-          href: articles/publications.html
+          href: articles/fate-hd_tutorial_0_publications.html
         - text: Modelling framework
-          href: articles/fate-hd_tutorial_0_PFG.html
+          href: articles/fate-hd_tutorial_1_PFG.html
         - text: Run a simulation
-          href: articles/fate-hd_tutorial_1_GETTING_STARTED.html
+          href: articles/fate-hd_tutorial_2_GETTING_STARTED.html
         - text: Use a module
-          href: articles/fate-hd_tutorial_2_MODULES.html
+          href: articles/fate-hd_tutorial_3_MODULES.html
     RFate:
       text: RFate
       icon: fas fa-toolbox
