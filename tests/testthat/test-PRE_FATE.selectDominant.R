@@ -50,7 +50,7 @@ test_that("PRE_FATE.selectDominant gives error with wrong type of data : selecti
                                        , selectionRule.quanti = 1.1), "must be between 0 and 1")
   expect_error(PRE_FATE.selectDominant(mat.site.species.abund = data.frame(sites = "A", species = "1", abund = 3)
                                        , selectionRule.quanti = -119), "must be between 0 and 1")
-
+  
   expect_error(PRE_FATE.selectDominant(mat.site.species.abund = data.frame(sites = "A", species = "1", abund = 3)
                                        , selectionRule.min_mean_abund = "a"), "must contain numeric values")
   expect_error(PRE_FATE.selectDominant(mat.site.species.abund = data.frame(sites = "A", species = "1", abund = 3)

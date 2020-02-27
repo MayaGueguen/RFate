@@ -41,26 +41,26 @@ test_that("POST_FATE.graphic_mapPFGvsHS gives error with wrong data : name.simul
 ## INPUTS
 test_that("POST_FATE.graphic_mapPFGvsHS gives error with wrong data : file.simulParam", {
   expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
-                                                   , file.simulParam = NULL)
+                                            , file.simulParam = NULL)
                , "Missing data!\n The folder FATE_simulation/PARAM_SIMUL/ does not contain adequate files")
   expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
-                                                   , file.simulParam = NA)
-               , "Missing data!\n The folder FATE_simulation/PARAM_SIMUL/ does not contain adequate files")
-  
-  expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
-                                                   , file.simulParam = "")
-               , "Missing data!\n The folder FATE_simulation/PARAM_SIMUL/ does not contain adequate files")
-  expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
-                                                   , file.simulParam = "")
+                                            , file.simulParam = NA)
                , "Missing data!\n The folder FATE_simulation/PARAM_SIMUL/ does not contain adequate files")
   
+  expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
+                                            , file.simulParam = "")
+               , "Missing data!\n The folder FATE_simulation/PARAM_SIMUL/ does not contain adequate files")
+  expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
+                                            , file.simulParam = "")
+               , "Missing data!\n The folder FATE_simulation/PARAM_SIMUL/ does not contain adequate files")
+  
   
   expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
-                                                   , file.simulParam = "toto")
+                                            , file.simulParam = "toto")
                , "Wrong name file given!\n `FATE_simulation/PARAM_SIMUL/toto` does not exist")
   file.create("FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt")
+                                            , file.simulParam = "ParamSimul.txt")
                , "Wrong type of data!\n `year` must be an integer > 0")
 })
 
@@ -68,68 +68,68 @@ test_that("POST_FATE.graphic_mapPFGvsHS gives error with wrong data : file.simul
 ## INPUTS
 test_that("POST_FATE.graphic_mapPFGvsHS gives error with wrong data : year", {  
   expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = "a")
+                                            , file.simulParam = "ParamSimul.txt"
+                                            , year = "a")
                , "Wrong type of data!\n `year` must be an integer > 0")
   expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = factor("a"))
+                                            , file.simulParam = "ParamSimul.txt"
+                                            , year = factor("a"))
                , "Wrong type of data!\n `year` must be an integer > 0")
   expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = factor(1))
+                                            , file.simulParam = "ParamSimul.txt"
+                                            , year = factor(1))
                , "Wrong type of data!\n `year` must be an integer > 0")
   expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = NULL)
+                                            , file.simulParam = "ParamSimul.txt"
+                                            , year = NULL)
                , "Wrong type of data!\n `year` must be an integer > 0")
   expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = NA)
+                                            , file.simulParam = "ParamSimul.txt"
+                                            , year = NA)
                , "Wrong type of data!\n `year` must be an integer > 0")
 })
-  
+
 ## INPUTS
 test_that("POST_FATE.graphic_mapPFGvsHS gives error with wrong data : files", {
   expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = 10)
+                                            , file.simulParam = "ParamSimul.txt"
+                                            , year = 10)
                , "Wrong type of data!\n `flag` (--END_OF_FILE--) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"
                , fixed = TRUE)
   cat("--END_OF_FILE--\n", file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = 10)
+                                            , file.simulParam = "ParamSimul.txt"
+                                            , year = 10)
                , "Wrong type of data!\n `flag.split` (^--.*--$) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"
                , fixed = TRUE)  
   cat("--T--\n--END_OF_FILE--\n", file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = 10)
+                                            , file.simulParam = "ParamSimul.txt"
+                                            , year = 10)
                , "Wrong type of data!\n `flag` (SAVE_DIR) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"
                , fixed = TRUE)
   cat("SAVE_DIR\n--END_OF_FILE--\n", file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = 10)
+                                            , file.simulParam = "ParamSimul.txt"
+                                            , year = 10)
                , "Wrong type of data!\n `flag.split` (^--.*--$) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"
                , fixed = TRUE)
   cat("--SAVE_DIR--\n--END_OF_FILE--\n", file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = 10)
+                                            , file.simulParam = "ParamSimul.txt"
+                                            , year = 10)
                , "Wrong type of data!\n `flag` (SAVE_DIR) does not contain any value"
                , fixed = TRUE)
   cat("--SAVE_DIR--\nHello\n--END_OF_FILE--\n", file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = 10)
+                                            , file.simulParam = "ParamSimul.txt"
+                                            , year = 10)
                , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/ folder"
                , fixed = TRUE)
   dir.create("FATE_simulation/RESULTS/Hello/")
   expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = 10)
+                                            , file.simulParam = "ParamSimul.txt"
+                                            , year = 10)
                , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/ABUND_perPFG_allStrata/ folder"
                , fixed = TRUE)
   dir.create("FATE_simulation/RESULTS/Hello/ABUND_perPFG_allStrata/")
@@ -139,10 +139,22 @@ test_that("POST_FATE.graphic_mapPFGvsHS gives error with wrong data : files", {
                , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/ABUND_perPFG_perStrata/ folder"
                , fixed = TRUE)
   dir.create("FATE_simulation/RESULTS/Hello/ABUND_perPFG_perStrata/")
-
   expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = 10)
+                                            , file.simulParam = "ParamSimul.txt"
+                                            , year = 10)
+               , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/LIGHT/ folder"
+               , fixed = TRUE)
+  dir.create("FATE_simulation/RESULTS/Hello/LIGHT/")
+  expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
+                                            , file.simulParam = "ParamSimul.txt"
+                                            , year = 10)
+               , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/SOIL/ folder"
+               , fixed = TRUE)
+  dir.create("FATE_simulation/RESULTS/Hello/SOIL/")
+  
+  expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
+                                            , file.simulParam = "ParamSimul.txt"
+                                            , year = 10)
                , "Wrong type of data!\n `flag` (GLOBAL_PARAMS) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"
                , fixed = TRUE)
   
@@ -151,82 +163,101 @@ test_that("POST_FATE.graphic_mapPFGvsHS gives error with wrong data : files", {
   file.create("FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   cat("GLOBAL_PARAMS\n--SAVE_DIR--\nHello\n--END_OF_FILE--\n", file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = 10)
+                                            , file.simulParam = "ParamSimul.txt"
+                                            , year = 10)
                , "Wrong type of data!\n `flag` (GLOBAL_PARAMS) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"
                , fixed = TRUE)
   
   cat("--GLOBAL_PARAMS--\n--SAVE_DIR--\nHello\n--END_OF_FILE--\n"
       , file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = 10)
+                                            , file.simulParam = "ParamSimul.txt"
+                                            , year = 10)
                , "Wrong type of data!\n `flag` (GLOBAL_PARAMS) does not contain any value"
                , fixed = TRUE)
   cat("--GLOBAL_PARAMS--\nFATE_simulation/GlobalParam.txt\n--SAVE_DIR--\nHello\n--END_OF_FILE--\n"
       , file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = 10)
+                                            , file.simulParam = "ParamSimul.txt"
+                                            , year = 10)
                , "Wrong name file given!\n `FATE_simulation/GlobalParam.txt` does not exist"
                , fixed = TRUE)
   
   file.create("FATE_simulation/GlobalParam.txt")
   expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = 10)
+                                            , file.simulParam = "ParamSimul.txt"
+                                            , year = 10)
                , "Wrong type of data!\n `flag.split` ( ) is not found within `params.lines` (FATE_simulation/GlobalParam.txt)"
                , fixed = TRUE)
   cat("HOP \n", file = "FATE_simulation/GlobalParam.txt")
   expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = 10)
+                                            , file.simulParam = "ParamSimul.txt"
+                                            , year = 10)
                , "Wrong type of data!\n `flag` (NB_FG) is not found within `params.lines` (FATE_simulation/GlobalParam.txt)"
                , fixed = TRUE)
   cat("NB_FG \n", file = "FATE_simulation/GlobalParam.txt")
   expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = 10)
+                                            , file.simulParam = "ParamSimul.txt"
+                                            , year = 10)
                , "Missing data!\n The number of PFG (NB_FG) within FATE_simulation/GlobalParam.txt does not contain any value"
                , fixed = TRUE)
   cat("NB_FG a\n", file = "FATE_simulation/GlobalParam.txt")
   expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = 10)
+                                            , file.simulParam = "ParamSimul.txt"
+                                            , year = 10)
                , "Missing data!\n The number of PFG (NB_FG) within FATE_simulation/GlobalParam.txt does not contain any value"
                , fixed = TRUE)
   cat("NB_FG 3\n", file = "FATE_simulation/GlobalParam.txt")
   expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = 10)
+                                            , file.simulParam = "ParamSimul.txt"
+                                            , year = 10)
                , "Wrong type of data!\n `flag` (PFG_LIFE_HISTORY_PARAMS) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"
                , fixed = TRUE)
   cat("--PFG_LIFE_HISTORY_PARAMS--\n--GLOBAL_PARAMS--\nFATE_simulation/GlobalParam.txt\n--SAVE_DIR--\nHello\n--END_OF_FILE--\n"
       , file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = 10)
+                                            , file.simulParam = "ParamSimul.txt"
+                                            , year = 10)
                , "Wrong type of data!\n `flag` (PFG_LIFE_HISTORY_PARAMS) does not contain any value"
                , fixed = TRUE)
   cat("--PFG_LIFE_HISTORY_PARAMS--\nHop\n--GLOBAL_PARAMS--\nFATE_simulation/GlobalParam.txt\n--SAVE_DIR--\nHello\n--END_OF_FILE--\n"
       , file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = 10)
+                                            , file.simulParam = "ParamSimul.txt"
+                                            , year = 10)
                , "Missing data!\n The number of PFG (NB_FG) within FATE_simulation/GlobalParam.txt is different from the number of PFG files contained in FATE_simulation/DATA/PFGS/SUCC/"
                , fixed = TRUE)
   cat("NB_FG 1\n", file = "FATE_simulation/GlobalParam.txt")
   expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = 10)
+                                            , file.simulParam = "ParamSimul.txt"
+                                            , year = 10)
+               , "Wrong type of data!\n `flag` (NB_STRATUM) is not found within `params.lines` (FATE_simulation/GlobalParam.txt)"
+               , fixed = TRUE)
+  cat("NB_FG 1\nNB_STRATUM 3\n", file = "FATE_simulation/GlobalParam.txt")
+  expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
+                                            , file.simulParam = "ParamSimul.txt"
+                                            , year = 10)
+               , "Wrong type of data!\n `flag` (DO_LIGHT_COMPETITION) is not found within `params.lines` (FATE_simulation/GlobalParam.txt)"
+               , fixed = TRUE)
+  cat("NB_FG 1\nNB_STRATUM 3\nDO_LIGHT_COMPETITION 1\n", file = "FATE_simulation/GlobalParam.txt")
+  expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
+                                            , file.simulParam = "ParamSimul.txt"
+                                            , year = 10)
+               , "Wrong type of data!\n `flag` (DO_SOIL_COMPETITION) is not found within `params.lines` (FATE_simulation/GlobalParam.txt)"
+               , fixed = TRUE)
+  cat("NB_FG 1\nNB_STRATUM 3\nDO_LIGHT_COMPETITION 1\nDO_SOIL_COMPETITION 1\n", file = "FATE_simulation/GlobalParam.txt")
+  
+  expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
+                                            , file.simulParam = "ParamSimul.txt"
+                                            , year = 10)
                , "Wrong type of data!\n `flag` (MASK) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"
                , fixed = TRUE)
   
   cat("--MASK--\nFATE_simulation/Mask.asc\n--PFG_LIFE_HISTORY_PARAMS--\nHop\n--GLOBAL_PARAMS--\nFATE_simulation/GlobalParam.txt\n--SAVE_DIR--\nHello\n--END_OF_FILE--\n"
       , file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   expect_error(POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
-                                                , file.simulParam = "ParamSimul.txt"
-                                                , year = 10)
+                                            , file.simulParam = "ParamSimul.txt"
+                                            , year = 10)
                , "Wrong name file given!\n `FATE_simulation/Mask.asc` does not exist"
                , fixed = TRUE)
 })

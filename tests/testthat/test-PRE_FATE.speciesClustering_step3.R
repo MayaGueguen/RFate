@@ -53,7 +53,7 @@ test_that("PRE_FATE.speciesClustering_step3 gives error with wrong data : mat.sp
                , "Wrong type of data!\n Columns `height` of `mat.species.traits` must contain numeric values")
   expect_error(PRE_FATE.speciesClustering_step3(mat.species.traits = data.frame(species = 1, PFG = "A", height = "1"))
                , "Wrong type of data!\n Columns `height` of `mat.species.traits` must contain numeric values")
-
+  
   expect_error(PRE_FATE.speciesClustering_step3(mat.species.traits = data.frame(species = 1, PFG = "A", maturity = NA))
                , "Wrong type of data!\n Columns `maturity` of `mat.species.traits` must contain numeric values")
   expect_error(PRE_FATE.speciesClustering_step3(mat.species.traits = data.frame(species = 1, PFG = "A", maturity = factor(1)))
@@ -87,18 +87,18 @@ test_that("PRE_FATE.speciesClustering_step3 gives error with wrong data : mat.sp
   expect_error(PRE_FATE.speciesClustering_step3(mat.species.traits = data.frame(species = 1, PFG = "A"
                                                                                 , soil_contrib = 1, soil_tolerance = 3))
                , "Wrong type of data!\n Column `soil_tolerance` of `mat.species.traits` must contain values between 1 and 2")
-
+  
 })
 
 ## OUTPUTS
 test_that("PRE_FATE.speciesClustering_step3 gives correct output", {
   expect_output(str(PRE_FATE.speciesClustering_step3(mat.species.traits = data.frame(species = 1
-                                                                                      , PFG = "A"
-                                                                                      , type = "H"
-                                                                                      , height = 10
-                                                                                      , maturity = 5
-                                                                                      , longevity = 2
-                                                                                      , soil_contrib = 0.5, soil_tolerance = 1))), "data.frame")
+                                                                                     , PFG = "A"
+                                                                                     , type = "H"
+                                                                                     , height = 10
+                                                                                     , maturity = 5
+                                                                                     , longevity = 2
+                                                                                     , soil_contrib = 0.5, soil_tolerance = 1))), "data.frame")
   expect_output(str(PRE_FATE.speciesClustering_step3(mat.species.traits = data.frame(species = 1
                                                                                      , PFG = "A"
                                                                                      , type = "H"
@@ -129,5 +129,4 @@ test_that("PRE_FATE.speciesClustering_step3 gives correct output", {
   
 })
 
-  
-  
+

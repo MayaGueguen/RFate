@@ -11,17 +11,17 @@
   
   ## ABUND folders, produced by FATE
   dir.output.perPFG.allStrata <<- paste0(name.simulation, "/RESULTS/", basename(dir.save), "/ABUND_perPFG_allStrata/")
-  .testParam_existFolder(name.simulation, paste0("/RESULTS/", basename(dir.save), "/ABUND_perPFG_allStrata/"))
+  .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/ABUND_perPFG_allStrata/"))
   
   dir.output.perPFG.perStrata <<- paste0(name.simulation, "/RESULTS/", basename(dir.save), "/ABUND_perPFG_perStrata/")
-  .testParam_existFolder(name.simulation, paste0("/RESULTS/", basename(dir.save), "/ABUND_perPFG_perStrata/"))
+  .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/ABUND_perPFG_perStrata/"))
   
   ## RESOURCES folders, produced by FATE
   dir.output.light <<- paste0(name.simulation, "/RESULTS/", basename(dir.save), "/LIGHT/")
-  .testParam_existFolder(name.simulation, paste0("/RESULTS/", basename(dir.save), "/LIGHT/"))
+  .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/LIGHT/"))
   
   dir.output.soil <<- paste0(name.simulation, "/RESULTS/", basename(dir.save), "/SOIL/")
-  .testParam_existFolder(name.simulation, paste0("/RESULTS/", basename(dir.save), "/SOIL/"))
+  .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/SOIL/"))
   
   ## ABUND REL folder, produced by POST_FATE.relativeAbund function
   dir.output.perPFG.allStrata.REL <<- paste0(name.simulation, "/RESULTS/", basename(dir.save), "/ABUND_REL_perPFG_allStrata/")

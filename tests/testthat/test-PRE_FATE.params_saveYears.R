@@ -29,11 +29,11 @@ test_that("PRE_FATE.params_saveYears gives error with wrong data : name.simulati
 test_that("PRE_FATE.params_saveYears gives error with wrong data : years.maps and years.objects", {
   PRE_FATE.skeletonDirectory()
   expect_warning(PRE_FATE.params_saveYears(name.simulation = "FATE_simulation")
-               , "Both `years.maps` and `years.objects` parameters are NULL. No parameter file will be created")
+                 , "Both `years.maps` and `years.objects` parameters are NULL. No parameter file will be created")
   expect_warning(PRE_FATE.params_saveYears(name.simulation = "FATE_simulation", years.maps = NULL)
-               , "Both `years.maps` and `years.objects` parameters are NULL. No parameter file will be created")
+                 , "Both `years.maps` and `years.objects` parameters are NULL. No parameter file will be created")
   expect_warning(PRE_FATE.params_saveYears(name.simulation = "FATE_simulation", years.objects = NULL)
-               , "Both `years.maps` and `years.objects` parameters are NULL. No parameter file will be created")
+                 , "Both `years.maps` and `years.objects` parameters are NULL. No parameter file will be created")
   expect_warning(PRE_FATE.params_saveYears(name.simulation = "FATE_simulation", years.maps = NULL, years.objects = NULL)
                  , "Both `years.maps` and `years.objects` parameters are NULL. No parameter file will be created")
   
@@ -43,7 +43,7 @@ test_that("PRE_FATE.params_saveYears gives error with wrong data : years.maps an
                , "years.maps` and/or `years.objects` must contain numeric values")
   expect_error(PRE_FATE.params_saveYears(name.simulation = "FATE_simulation", years.maps = factor(1))
                , "years.maps` and/or `years.objects` must contain numeric values")
-
+  
   expect_error(PRE_FATE.params_saveYears(name.simulation = "FATE_simulation", years.objects = NA)
                , "years.maps` and/or `years.objects` must contain numeric values")
   expect_error(PRE_FATE.params_saveYears(name.simulation = "FATE_simulation", years.objects = "")
@@ -66,7 +66,7 @@ test_that("PRE_FATE.params_saveYears gives error with wrong data : years.maps an
                , "years.maps` and/or `years.objects` must contain numeric values")
   
   
-
+  
 })
 
 
@@ -75,7 +75,7 @@ test_that("PRE_FATE.params_saveYears gives correct output", {
   if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
   PRE_FATE.skeletonDirectory()
   expect_message(PRE_FATE.params_saveYears(name.simulation = "FATE_simulation", years.maps = 1)
-               , "The parameter file FATE_simulation/DATA/SAVE/SAVE_YEARS_maps.txt has been successfully created !")
+                 , "The parameter file FATE_simulation/DATA/SAVE/SAVE_YEARS_maps.txt has been successfully created !")
   expect_message(PRE_FATE.params_saveYears(name.simulation = "FATE_simulation", years.objects = 1)
                  , "The parameter file FATE_simulation/DATA/SAVE/SAVE_YEARS_objects.txt has been successfully created !")
   expect_warning(PRE_FATE.params_saveYears(name.simulation = "FATE_simulation", years.maps = 1, opt.folder.name = "")

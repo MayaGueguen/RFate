@@ -142,21 +142,12 @@ test_that("POST_FATE.graphic_validationStatistics gives error with wrong data : 
                                                       , mat.PFG.obs = data.frame(1,2,3,4))
                , "Column names of `mat.PFG.obs` must be `PFG`, `X`, `Y` and `obs`")
   
-  # expect_error(POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
-  #                                                     , file.simulParam = "ParamSimul.txt"
-  #                                                     , year = 10
-  #                                                     , mat.PFG.obs = data.frame(PFG = 1, X = 2, Y = 3, obs = 4))
-  #              , "`mat.PFG.obs$PFG` must contain a character value of length > 0", fixed = T)
+  
   expect_error(POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
                                                       , file.simulParam = "ParamSimul.txt"
                                                       , year = 10
                                                       , mat.PFG.obs = data.frame(PFG = NA, X = 2, Y = 3, obs = 4))
                , "`mat.PFG.obs$PFG` must contain a character value of length > 0", fixed = T)
-  # expect_error(POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
-  #                                                     , file.simulParam = "ParamSimul.txt"
-  #                                                     , year = 10
-  #                                                     , mat.PFG.obs = data.frame(PFG = factor("a"), X = 2, Y = 3, obs = 4))
-  #              , "`mat.PFG.obs$PFG` must contain a character value of length > 0", fixed = T)
   expect_error(POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
                                                       , file.simulParam = "ParamSimul.txt"
                                                       , year = 10
@@ -222,10 +213,10 @@ test_that("POST_FATE.graphic_validationStatistics gives error with wrong data : 
 test_that("POST_FATE.graphic_validationStatistics gives error with wrong data : opt.ras_habitat", {
   if (file.exists("aaa")) file.remove("aaa")
   expect_error(POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
-                                                   , file.simulParam = "ParamSimul.txt"
-                                                   , year = 10
-                                                   , mat.PFG.obs = data.frame(PFG = "A", X = 2, Y = 3, obs = 0, stringsAsFactors = F)
-                                                   , opt.ras_habitat = "aaa")
+                                                      , file.simulParam = "ParamSimul.txt"
+                                                      , year = 10
+                                                      , mat.PFG.obs = data.frame(PFG = "A", X = 2, Y = 3, obs = 0, stringsAsFactors = F)
+                                                      , opt.ras_habitat = "aaa")
                , "Wrong name file given!\n `aaa` does not exist")
 })
 
@@ -287,6 +278,20 @@ test_that("POST_FATE.graphic_validationStatistics gives error with wrong data : 
                , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/ABUND_perPFG_perStrata/ folder"
                , fixed = TRUE)
   dir.create("FATE_simulation/RESULTS/Hello/ABUND_perPFG_perStrata/")
+  expect_error(POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
+                                                      , file.simulParam = "ParamSimul.txt"
+                                                      , year = 10
+                                                      , mat.PFG.obs = data.frame(PFG = "A", X = 2, Y = 3, obs = 0, stringsAsFactors = F))
+               , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/LIGHT/ folder"
+               , fixed = TRUE)
+  dir.create("FATE_simulation/RESULTS/Hello/LIGHT/")
+  expect_error(POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
+                                                      , file.simulParam = "ParamSimul.txt"
+                                                      , year = 10
+                                                      , mat.PFG.obs = data.frame(PFG = "A", X = 2, Y = 3, obs = 0, stringsAsFactors = F))
+               , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/SOIL/ folder"
+               , fixed = TRUE)
+  dir.create("FATE_simulation/RESULTS/Hello/SOIL/")
   
   expect_error(POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
                                                       , file.simulParam = "ParamSimul.txt"
@@ -295,7 +300,7 @@ test_that("POST_FATE.graphic_validationStatistics gives error with wrong data : 
                , "Wrong type of data!\n `flag` (GLOBAL_PARAMS) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"
                , fixed = TRUE)
   
-
+  
   if (file.exists("FATE_simulation/PARAM_SIMUL/ParamSimul.txt")) file.remove("FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   file.create("FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
   cat("GLOBAL_PARAMS\n--SAVE_DIR--\nHello\n--END_OF_FILE--\n", file = "FATE_simulation/PARAM_SIMUL/ParamSimul.txt")
@@ -375,7 +380,28 @@ test_that("POST_FATE.graphic_validationStatistics gives error with wrong data : 
                , "Missing data!\n The number of PFG (NB_FG) within FATE_simulation/GlobalParam.txt is different from the number of PFG files contained in FATE_simulation/DATA/PFGS/SUCC/"
                , fixed = TRUE)
   cat("NB_FG 1\n", file = "FATE_simulation/GlobalParam.txt")
-
+  expect_error(POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
+                                                      , file.simulParam = "ParamSimul.txt"
+                                                      , year = 10
+                                                      , mat.PFG.obs = data.frame(PFG = "A", X = 2, Y = 3, obs = 0, stringsAsFactors = F))
+               , "Wrong type of data!\n `flag` (NB_STRATUM) is not found within `params.lines` (FATE_simulation/GlobalParam.txt)"
+               , fixed = TRUE)
+  cat("NB_FG 1\nNB_STRATUM 3\n", file = "FATE_simulation/GlobalParam.txt")
+  expect_error(POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
+                                                      , file.simulParam = "ParamSimul.txt"
+                                                      , year = 10
+                                                      , mat.PFG.obs = data.frame(PFG = "A", X = 2, Y = 3, obs = 0, stringsAsFactors = F))
+               , "Wrong type of data!\n `flag` (DO_LIGHT_COMPETITION) is not found within `params.lines` (FATE_simulation/GlobalParam.txt)"
+               , fixed = TRUE)
+  cat("NB_FG 1\nNB_STRATUM 3\nDO_LIGHT_COMPETITION 1\n", file = "FATE_simulation/GlobalParam.txt")
+  expect_error(POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
+                                                      , file.simulParam = "ParamSimul.txt"
+                                                      , year = 10
+                                                      , mat.PFG.obs = data.frame(PFG = "A", X = 2, Y = 3, obs = 0, stringsAsFactors = F))
+               , "Wrong type of data!\n `flag` (DO_SOIL_COMPETITION) is not found within `params.lines` (FATE_simulation/GlobalParam.txt)"
+               , fixed = TRUE)
+  cat("NB_FG 1\nNB_STRATUM 3\nDO_LIGHT_COMPETITION 1\nDO_SOIL_COMPETITION 1\n", file = "FATE_simulation/GlobalParam.txt")
+  
   expect_error(POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
                                                       , file.simulParam = "ParamSimul.txt"
                                                       , year = 10
@@ -394,13 +420,13 @@ test_that("POST_FATE.graphic_validationStatistics gives error with wrong data : 
   
   PNE_PARAM = .loadData("PNE_PARAM")
   writeRaster(PNE_PARAM$masks$maskEcrins, filename = "FATE_simulation/Mask.tif", overwrite = TRUE)
-
+  
   expect_error(POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
                                                       , file.simulParam = "ParamSimul.txt"
                                                       , year = 10
                                                       , mat.PFG.obs = data.frame(PFG = "A", X = 2, Y = 3, obs = 0, stringsAsFactors = F))
                , "Missing data!\n The folder FATE_simulation/RESULTS/Hello/ABUND_REL_perPFG_allStrata/ does not contain adequate files")
-
+  
 })
 
 ## INPUTS
@@ -463,7 +489,7 @@ test_that("POST_FATE.graphic_validationStatistics : outputs", {
                                                                                       , stringsAsFactors = F)
                                                            , opt.ras_habitat = "FATE_simulation/Hab.tif"))
                 , "List")
-
+  
 })
 
 
