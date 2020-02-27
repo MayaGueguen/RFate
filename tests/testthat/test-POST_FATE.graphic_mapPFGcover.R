@@ -287,6 +287,20 @@ test_that("POST_FATE.graphic_mapPFGcover gives error with wrong data : files", {
                , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/ABUND_perPFG_perStrata/ folder"
                , fixed = TRUE)
   dir.create("FATE_simulation/RESULTS/Hello/ABUND_perPFG_perStrata/")
+  expect_error(POST_FATE.graphic_mapPFGcover(name.simulation = "FATE_simulation"
+                                             , file.simulParam = "ParamSimul.txt"
+                                             , year = 10
+                                             , strata_min = 2)
+               , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/LIGHT/ folder"
+               , fixed = TRUE)
+  dir.create("FATE_simulation/RESULTS/Hello/LIGHT/")
+  expect_error(POST_FATE.graphic_mapPFGcover(name.simulation = "FATE_simulation"
+                                             , file.simulParam = "ParamSimul.txt"
+                                             , year = 10
+                                             , strata_min = 2)
+               , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/SOIL/ folder"
+               , fixed = TRUE)
+  dir.create("FATE_simulation/RESULTS/Hello/SOIL/")
   
   expect_error(POST_FATE.graphic_mapPFGcover(name.simulation = "FATE_simulation"
                                              , file.simulParam = "ParamSimul.txt"
@@ -379,6 +393,28 @@ test_that("POST_FATE.graphic_mapPFGcover gives error with wrong data : files", {
                                              , file.simulParam = "ParamSimul.txt"
                                              , year = 10
                                              , strata_min = 2)
+               , "Wrong type of data!\n `flag` (NB_STRATUM) is not found within `params.lines` (FATE_simulation/GlobalParam.txt)"
+               , fixed = TRUE)
+  cat("NB_FG 1\nNB_STRATUM 3\n", file = "FATE_simulation/GlobalParam.txt")
+  expect_error(POST_FATE.graphic_mapPFGcover(name.simulation = "FATE_simulation"
+                                             , file.simulParam = "ParamSimul.txt"
+                                             , year = 10
+                                             , strata_min = 2)
+               , "Wrong type of data!\n `flag` (DO_LIGHT_COMPETITION) is not found within `params.lines` (FATE_simulation/GlobalParam.txt)"
+               , fixed = TRUE)
+  cat("NB_FG 1\nNB_STRATUM 3\nDO_LIGHT_COMPETITION 1\n", file = "FATE_simulation/GlobalParam.txt")
+  expect_error(POST_FATE.graphic_mapPFGcover(name.simulation = "FATE_simulation"
+                                             , file.simulParam = "ParamSimul.txt"
+                                             , year = 10
+                                             , strata_min = 2)
+               , "Wrong type of data!\n `flag` (DO_SOIL_COMPETITION) is not found within `params.lines` (FATE_simulation/GlobalParam.txt)"
+               , fixed = TRUE)
+  cat("NB_FG 1\nNB_STRATUM 3\nDO_LIGHT_COMPETITION 1\nDO_SOIL_COMPETITION 1\n", file = "FATE_simulation/GlobalParam.txt")
+  
+  expect_error(POST_FATE.graphic_mapPFGcover(name.simulation = "FATE_simulation"
+                                             , file.simulParam = "ParamSimul.txt"
+                                             , year = 10
+                                             , strata_min = 2)
                , "Wrong type of data!\n `flag` (MASK) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"
                , fixed = TRUE)
   
@@ -417,7 +453,7 @@ test_that("POST_FATE.graphic_mapPFGcover gives error with wrong data : rasters",
                                              , strata_min = 2)
                , "Wrong data given!\n `strata_min` is superior to maximum strata found (1)"
                , fixed = TRUE)
-
+  
   
   PNE_RESULTS = .loadData("PNE_RESULTS")
   PFG.names = names(PNE_RESULTS$abund_str.equilibrium)
@@ -441,9 +477,9 @@ test_that("POST_FATE.graphic_mapPFGcover gives error with wrong data : rasters",
                , fixed = TRUE)
   
   expect_message(POST_FATE.graphic_mapPFGcover(name.simulation = "FATE_simulation"
-                                             , file.simulParam = "ParamSimul.txt"
-                                             , year = 10
-                                             , strata_min = 1)
+                                               , file.simulParam = "ParamSimul.txt"
+                                               , year = 10
+                                               , strata_min = 1)
                  , "has been successfully created !"
                  , fixed = TRUE)
   

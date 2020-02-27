@@ -13,13 +13,11 @@ POST_FATE.graphics(name.simulation, file.simulParam, year, no.years,
   opt.ras.light.obs = NULL, opt.ras.soil.obs = NULL,
   opt.ras_habitat = NULL, opt.cells_ID = NULL,
   opt.abund_fixedScale = TRUE, opt.no_CPU = 1, opt.doPlot = TRUE,
-  opt.doFunc.validation = TRUE, opt.doFunc.mapPFGvsHS = TRUE,
-  opt.doFunc.mapPFGcover = TRUE, opt.doFunc.mapPFGrichness = TRUE,
-  opt.doFunc.mapPFGlight = TRUE, opt.doFunc.mapPFGsoil = TRUE,
   opt.doFunc.evolutionCoverage = TRUE,
-  opt.doFunc.evolutionAbund_pixels = TRUE,
-  opt.doFunc.evolutionLight_pixels = TRUE,
-  opt.doFunc.evolutionSoil_pixels = TRUE)
+  opt.doFunc.evolutionPixels = TRUE, opt.doFunc.validation = TRUE,
+  opt.doFunc.mapPFGvsHS = TRUE, opt.doFunc.mapPFGrichness = TRUE,
+  opt.doFunc.mapPFGcover = TRUE, opt.doFunc.mapPFGlight = TRUE,
+  opt.doFunc.mapPFGsoil = TRUE)
 }
 \arguments{
 \item{name.simulation}{a \code{string} that corresponds to the main 
@@ -90,16 +88,21 @@ can be used to parallelize the \code{unzip/zip} of raster files}
 processed, otherwise only the calculation and reorganization of outputs 
 will occur, be saved and returned.}
 
-\item{opt.doFunc.validation}{default TRUE (\emph{optional}). If TRUE, 
+\item{opt.doFunc.evolutionCoverage}{default TRUE (\emph{optional}). If TRUE, 
+corresponding \code{POST_FATE.graphic_...} function will be run.}
+
+\item{opt.doFunc.evolutionPixels}{default TRUE (\emph{optional}).If TRUE, 
+corresponding \code{POST_FATE.graphic_...} function will be run.
+ @param opt.doFunc.validation default TRUE (\emph{optional}). If TRUE, 
 corresponding \code{POST_FATE.graphic_...} function will be run.}
 
 \item{opt.doFunc.mapPFGvsHS}{default TRUE (\emph{optional}). If TRUE, 
 corresponding \code{POST_FATE.graphic_...} function will be run.}
 
-\item{opt.doFunc.mapPFGcover}{default TRUE (\emph{optional}). If TRUE, 
+\item{opt.doFunc.mapPFGrichness}{default TRUE (\emph{optional}).If TRUE, 
 corresponding \code{POST_FATE.graphic_...} function will be run.}
 
-\item{opt.doFunc.mapPFGrichness}{default TRUE (\emph{optional}).If TRUE, 
+\item{opt.doFunc.mapPFGcover}{default TRUE (\emph{optional}). If TRUE, 
 corresponding \code{POST_FATE.graphic_...} function will be run.}
 
 \item{opt.doFunc.mapPFGlight}{default TRUE (\emph{optional}). If TRUE, 
@@ -107,62 +110,6 @@ corresponding \code{POST_FATE.graphic_...} function will be run.}
 
 \item{opt.doFunc.mapPFGsoil}{default TRUE (\emph{optional}). If TRUE, 
 corresponding \code{POST_FATE.graphic_...} function will be run.}
-
-\item{opt.doFunc.evolutionCoverage}{default TRUE (\emph{optional}). If TRUE, 
-corresponding \code{POST_FATE.graphic_...} function will be run.}
-
-\item{opt.doFunc.evolutionAbund_pixels}{default TRUE (\emph{optional}).If TRUE, 
-corresponding \code{POST_FATE.graphic_...} function will be run.}
-
-\item{opt.doFunc.evolutionLight_pixels}{default TRUE (\emph{optional}). If TRUE, 
-corresponding \code{POST_FATE.graphic_...} function will be run.}
-
-\item{opt.doFunc.evolutionSoil_pixels}{default TRUE (\emph{optional}). If TRUE, 
-corresponding \code{POST_FATE.graphic_...} function will be run.}
-}
-\value{
-The following \code{POST_FATE_[...].pdf} files are created : 
-\describe{
-  \item{\file{GRAPHIC_A \cr spaceOccupancy}}{to visualize for each PFG the
-  evolution of its occupation of the studied area through simulation time}
-  \item{\file{GRAPHIC_A \cr abundance}}{to visualize for each PFG the
-  evolution of its abundance within the whole studied area through
-  simulation time}
-  \item{\file{GRAPHIC_A \cr abundance}}{to visualize for each PFG the
-  evolution of its abundance within each selected pixel through
-  simulation time}
-  \item{\file{GRAPHIC_A \cr light resources}}{to visualize for each stratum
-  the evolution of its light resource within each selected pixel through
-  simulation time}
-  \item{\file{GRAPHIC_A \cr soil resources}}{to visualize 
-  the evolution of its soil resource within each selected pixel through
-  simulation time}
-  \item{\file{GRAPHIC_B \cr PFGcover}}{to visualize the PFG cover
-  within the studied area}
-  \item{\file{GRAPHIC_B \cr PFGrichness}}{to visualize the PFG richness
-  within the studied area}
-  \item{\file{GRAPHIC_B \cr PFGlight}}{to visualize the light CWM
-  within the studied area}
-  \item{\file{GRAPHIC_B \cr PFGlsoil}}{to visualize the soil CWM
-  within the studied area}
-  \item{\file{GRAPHIC_C \cr validationStatistics}}{to assess the modeling 
-  quality of each PFG based on given observations within the studied area}
-  \item{\file{GRAPHIC_C \cr PFGvsHS}}{to visualize the PFG presence
-  within the studied area (probability and simulated occurrence)}
-}
-
-Three folders are created :
-\describe{
-  \item{\file{ABUND_REL_perPFG \cr_allStrata}}{containing relative abundance 
-  raster maps for each PFG across all strata (see 
-  \code{\link{POST_FATE.relativeAbund}})}
-  \item{\file{BIN_perPFG \cr_allStrata}}{containing presence / absence  
-  raster maps for each PFG across all strata (see 
-  \code{\link{POST_FATE.graphic_validationStatistics}})}
-  \item{\file{BIN_perPFG \cr_perStrata}}{containing presence / absence  
-  raster maps for each PFG for each stratum (see 
-  \code{\link{POST_FATE.graphic_validationStatistics}})}
-}
 }
 \description{
 This script is designed to produce a set of graphical 
@@ -186,16 +133,6 @@ Informations extracted lead to the production of the following graphics
 before the maps are compressed again :
 
 \itemize{
-  \item{the value of \strong{several statistics for the predictive quality
-  of the model for each Plant Functional Group} and for each selected
-  simulation year(s) (see 
-  \code{\link{POST_FATE.graphic_validationStatistics}})
-  }
-  \item{the maps of \strong{Plant Functional Group habitat suitability and
-  occurrences} for each selected simulation year(s), representing the 
-  probability of presence of each PFG in each pixel compared to its
-  simulated presence (see \code{\link{POST_FATE.graphic_mapPFGvsHS}})
-  }
   \item{the evolution of \strong{space occupancy} of each Plant Functional
   Group through simulation time, with \emph{space occupancy} representing
   the percentage of pixels within the mask of studied area where the PFG
@@ -209,27 +146,29 @@ before the maps are compressed again :
   }
   \item{the evolution of \strong{abundance} of each Plant Functional
   Group through simulation time, within 5 (or more) randomly selected pixels
-  of the studied area (\code{FATE-HD} \emph{arbitrary unit}) (see 
-  \code{\link{POST_FATE.graphic_evolutionAbund_pixels}})
+  of the studied area (\code{FATE-HD} \emph{arbitrary unit}), as well as 
+  \strong{light resources} of each stratum (\emph{1: Low, 2: Medium, 3: High}) 
+  and \strong{soil resources} if these modules are selected 
+  (see \code{\link{POST_FATE.graphic_evolutionPixels}})
   }
-  \item{the evolution of \strong{light resources} of each stratum through
-  simulation time, within 5 (or more) randomly selected pixels
-  of the studied area (\emph{1: Low, 2: Medium, 3: High}) (see 
-  \code{\link{POST_FATE.graphic_evolutionLight_pixels}})
+  \item{the value of \strong{several statistics for the predictive quality
+  of the model for each Plant Functional Group} and for each selected
+  simulation year(s) (see 
+  \code{\link{POST_FATE.graphic_validationStatistics}})
   }
-  \item{the evolution of \strong{soil resources} through
-  simulation time, within 5 (or more) randomly selected pixels
-  of the studied area (see 
-  \code{\link{POST_FATE.graphic_evolutionSoil_pixels}})
+  \item{the maps of \strong{Plant Functional Group habitat suitability and
+  occurrences} for each selected simulation year(s), representing the 
+  probability of presence of each PFG in each pixel compared to its
+  simulated presence (see \code{\link{POST_FATE.graphic_mapPFGvsHS}})
+  }
+  \item{the map of \strong{Plant Functional Group richness} for each selected
+  simulation year(s), representing the number of PFG present in each pixel 
+  (see \code{\link{POST_FATE.graphic_mapPFGrichness}})
   }
   \item{the map of \strong{Plant Functional Group cover} for each selected
   simulation year(s), representing the relative cumulated abundance of PFG 
   present in each pixel above a height threshold (see 
   \code{\link{POST_FATE.graphic_mapPFGcover}})
-  }
-  \item{the map of \strong{Plant Functional Group richness} for each selected
-  simulation year(s), representing the number of PFG present in each pixel 
-  (see \code{\link{POST_FATE.graphic_mapPFGrichness}})
   }
   \item{the map of \strong{light Community Weighted Mean} for each selected
   simulation year(s), representing the simulated value of light (Landolt)

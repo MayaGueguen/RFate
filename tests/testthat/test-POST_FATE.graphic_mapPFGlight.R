@@ -140,7 +140,7 @@ test_that("POST_FATE.graphic_mapPFGlight gives error with wrong data : mat.PFG.s
                                              , file.simulParam = "ParamSimul.txt"
                                              , year = 10
                                              , mat.PFG.succ = data.frame(1,2))
-                            , "Column names of `mat.PFG.succ` must be `PFG` and `light`")
+               , "Column names of `mat.PFG.succ` must be `PFG` and `light`")
   
   expect_error(POST_FATE.graphic_mapPFGlight(name.simulation = "FATE_simulation"
                                              , file.simulParam = "ParamSimul.txt"
@@ -389,6 +389,22 @@ test_that("POST_FATE.graphic_mapPFGlight gives error with wrong data : files", {
                , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/ABUND_perPFG_perStrata/ folder"
                , fixed = TRUE)
   dir.create("FATE_simulation/RESULTS/Hello/ABUND_perPFG_perStrata/")
+  expect_error(POST_FATE.graphic_mapPFGlight(name.simulation = "FATE_simulation"
+                                             , file.simulParam = "ParamSimul.txt"
+                                             , year = 10
+                                             , strata_min = 2
+                                             , mat.PFG.succ = data.frame(PFG = 1, light = 1))
+               , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/LIGHT/ folder"
+               , fixed = TRUE)
+  dir.create("FATE_simulation/RESULTS/Hello/LIGHT/")
+  expect_error(POST_FATE.graphic_mapPFGlight(name.simulation = "FATE_simulation"
+                                             , file.simulParam = "ParamSimul.txt"
+                                             , year = 10
+                                             , strata_min = 2
+                                             , mat.PFG.succ = data.frame(PFG = 1, light = 1))
+               , "Wrong name folder given!\n `name.simulation` does not exist or does not contain a RESULTS/Hello/SOIL/ folder"
+               , fixed = TRUE)
+  dir.create("FATE_simulation/RESULTS/Hello/SOIL/")
   
   expect_error(POST_FATE.graphic_mapPFGlight(name.simulation = "FATE_simulation"
                                              , file.simulParam = "ParamSimul.txt"
@@ -493,6 +509,31 @@ test_that("POST_FATE.graphic_mapPFGlight gives error with wrong data : files", {
                                              , year = 10
                                              , strata_min = 2
                                              , mat.PFG.succ = data.frame(PFG = 1, light = 1))
+               , "Wrong type of data!\n `flag` (NB_STRATUM) is not found within `params.lines` (FATE_simulation/GlobalParam.txt)"
+               , fixed = TRUE)
+  cat("NB_FG 1\nNB_STRATUM 3\n", file = "FATE_simulation/GlobalParam.txt")
+  expect_error(POST_FATE.graphic_mapPFGlight(name.simulation = "FATE_simulation"
+                                             , file.simulParam = "ParamSimul.txt"
+                                             , year = 10
+                                             , strata_min = 2
+                                             , mat.PFG.succ = data.frame(PFG = 1, light = 1))
+               , "Wrong type of data!\n `flag` (DO_LIGHT_COMPETITION) is not found within `params.lines` (FATE_simulation/GlobalParam.txt)"
+               , fixed = TRUE)
+  cat("NB_FG 1\nNB_STRATUM 3\nDO_LIGHT_COMPETITION 1\n", file = "FATE_simulation/GlobalParam.txt")
+  expect_error(POST_FATE.graphic_mapPFGlight(name.simulation = "FATE_simulation"
+                                             , file.simulParam = "ParamSimul.txt"
+                                             , year = 10
+                                             , strata_min = 2
+                                             , mat.PFG.succ = data.frame(PFG = 1, light = 1))
+               , "Wrong type of data!\n `flag` (DO_SOIL_COMPETITION) is not found within `params.lines` (FATE_simulation/GlobalParam.txt)"
+               , fixed = TRUE)
+  cat("NB_FG 1\nNB_STRATUM 3\nDO_LIGHT_COMPETITION 1\nDO_SOIL_COMPETITION 1\n", file = "FATE_simulation/GlobalParam.txt")
+  
+  expect_error(POST_FATE.graphic_mapPFGlight(name.simulation = "FATE_simulation"
+                                             , file.simulParam = "ParamSimul.txt"
+                                             , year = 10
+                                             , strata_min = 2
+                                             , mat.PFG.succ = data.frame(PFG = 1, light = 1))
                , "Wrong type of data!\n `flag` (MASK) is not found within `params.lines` (FATE_simulation/PARAM_SIMUL/ParamSimul.txt)"
                , fixed = TRUE)
   
@@ -508,14 +549,14 @@ test_that("POST_FATE.graphic_mapPFGlight gives error with wrong data : files", {
   
   PNE_PARAM = .loadData("PNE_PARAM")
   writeRaster(PNE_PARAM$masks$maskEcrins, filename = "FATE_simulation/Mask.tif", overwrite = TRUE)
-
+  
   expect_error(POST_FATE.graphic_mapPFGlight(name.simulation = "FATE_simulation"
                                              , file.simulParam = "ParamSimul.txt"
                                              , year = 10
                                              , strata_min = 2
                                              , mat.PFG.succ = data.frame(PFG = 1, light = 1))
                , "Missing data!\n The folder FATE_simulation/RESULTS/Hello/ABUND_perPFG_perStrata/ does not contain adequate files")
-
+  
 })
 
 

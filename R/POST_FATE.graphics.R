@@ -61,25 +61,21 @@
 ##' @param opt.doPlot default TRUE (\emph{optional}). If TRUE, plot(s) will be 
 ##' processed, otherwise only the calculation and reorganization of outputs 
 ##' will occur, be saved and returned.
-##' @param opt.doFunc.validation default TRUE (\emph{optional}). If TRUE, 
+##' @param opt.doFunc.evolutionCoverage default TRUE (\emph{optional}). If TRUE, 
+##' corresponding \code{POST_FATE.graphic_...} function will be run.
+##' @param opt.doFunc.evolutionPixels default TRUE (\emph{optional}).If TRUE, 
+##' corresponding \code{POST_FATE.graphic_...} function will be run.
+##'  @param opt.doFunc.validation default TRUE (\emph{optional}). If TRUE, 
 ##' corresponding \code{POST_FATE.graphic_...} function will be run.
 ##' @param opt.doFunc.mapPFGvsHS default TRUE (\emph{optional}). If TRUE, 
 ##' corresponding \code{POST_FATE.graphic_...} function will be run.
-##' @param opt.doFunc.mapPFGcover default TRUE (\emph{optional}). If TRUE, 
-##' corresponding \code{POST_FATE.graphic_...} function will be run.
 ##' @param opt.doFunc.mapPFGrichness default TRUE (\emph{optional}).If TRUE, 
+##' corresponding \code{POST_FATE.graphic_...} function will be run.
+##' @param opt.doFunc.mapPFGcover default TRUE (\emph{optional}). If TRUE, 
 ##' corresponding \code{POST_FATE.graphic_...} function will be run.
 ##' @param opt.doFunc.mapPFGlight default TRUE (\emph{optional}). If TRUE, 
 ##' corresponding \code{POST_FATE.graphic_...} function will be run.
 ##' @param opt.doFunc.mapPFGsoil default TRUE (\emph{optional}). If TRUE, 
-##' corresponding \code{POST_FATE.graphic_...} function will be run.
-##' @param opt.doFunc.evolutionCoverage default TRUE (\emph{optional}). If TRUE, 
-##' corresponding \code{POST_FATE.graphic_...} function will be run.
-##' @param opt.doFunc.evolutionAbund_pixels default TRUE (\emph{optional}).If TRUE, 
-##' corresponding \code{POST_FATE.graphic_...} function will be run.
-##' @param opt.doFunc.evolutionLight_pixels default TRUE (\emph{optional}). If TRUE, 
-##' corresponding \code{POST_FATE.graphic_...} function will be run.
-##' @param opt.doFunc.evolutionSoil_pixels default TRUE (\emph{optional}). If TRUE, 
 ##' corresponding \code{POST_FATE.graphic_...} function will be run.
 ##' 
 ##' @details 
@@ -97,16 +93,6 @@
 ##' before the maps are compressed again :
 ##' 
 ##' \itemize{
-##'   \item{the value of \strong{several statistics for the predictive quality
-##'   of the model for each Plant Functional Group} and for each selected
-##'   simulation year(s) (see 
-##'   \code{\link{POST_FATE.graphic_validationStatistics}})
-##'   }
-##'   \item{the maps of \strong{Plant Functional Group habitat suitability and
-##'   occurrences} for each selected simulation year(s), representing the 
-##'   probability of presence of each PFG in each pixel compared to its
-##'   simulated presence (see \code{\link{POST_FATE.graphic_mapPFGvsHS}})
-##'   }
 ##'   \item{the evolution of \strong{space occupancy} of each Plant Functional
 ##'   Group through simulation time, with \emph{space occupancy} representing
 ##'   the percentage of pixels within the mask of studied area where the PFG
@@ -120,27 +106,29 @@
 ##'   }
 ##'   \item{the evolution of \strong{abundance} of each Plant Functional
 ##'   Group through simulation time, within 5 (or more) randomly selected pixels
-##'   of the studied area (\code{FATE-HD} \emph{arbitrary unit}) (see 
-##'   \code{\link{POST_FATE.graphic_evolutionAbund_pixels}})
+##'   of the studied area (\code{FATE-HD} \emph{arbitrary unit}), as well as 
+##'   \strong{light resources} of each stratum (\emph{1: Low, 2: Medium, 3: High}) 
+##'   and \strong{soil resources} if these modules are selected 
+##'   (see \code{\link{POST_FATE.graphic_evolutionPixels}})
 ##'   }
-##'   \item{the evolution of \strong{light resources} of each stratum through
-##'   simulation time, within 5 (or more) randomly selected pixels
-##'   of the studied area (\emph{1: Low, 2: Medium, 3: High}) (see 
-##'   \code{\link{POST_FATE.graphic_evolutionLight_pixels}})
+##'   \item{the value of \strong{several statistics for the predictive quality
+##'   of the model for each Plant Functional Group} and for each selected
+##'   simulation year(s) (see 
+##'   \code{\link{POST_FATE.graphic_validationStatistics}})
 ##'   }
-##'   \item{the evolution of \strong{soil resources} through
-##'   simulation time, within 5 (or more) randomly selected pixels
-##'   of the studied area (see 
-##'   \code{\link{POST_FATE.graphic_evolutionSoil_pixels}})
+##'   \item{the maps of \strong{Plant Functional Group habitat suitability and
+##'   occurrences} for each selected simulation year(s), representing the 
+##'   probability of presence of each PFG in each pixel compared to its
+##'   simulated presence (see \code{\link{POST_FATE.graphic_mapPFGvsHS}})
+##'   }
+##'   \item{the map of \strong{Plant Functional Group richness} for each selected
+##'   simulation year(s), representing the number of PFG present in each pixel 
+##'   (see \code{\link{POST_FATE.graphic_mapPFGrichness}})
 ##'   }
 ##'   \item{the map of \strong{Plant Functional Group cover} for each selected
 ##'   simulation year(s), representing the relative cumulated abundance of PFG 
 ##'   present in each pixel above a height threshold (see 
 ##'   \code{\link{POST_FATE.graphic_mapPFGcover}})
-##'   }
-##'   \item{the map of \strong{Plant Functional Group richness} for each selected
-##'   simulation year(s), representing the number of PFG present in each pixel 
-##'   (see \code{\link{POST_FATE.graphic_mapPFGrichness}})
 ##'   }
 ##'   \item{the map of \strong{light Community Weighted Mean} for each selected
 ##'   simulation year(s), representing the simulated value of light (Landolt)
@@ -162,27 +150,21 @@
 ##'   \item{\file{GRAPHIC_A \cr abundance}}{to visualize for each PFG the
 ##'   evolution of its abundance within the whole studied area through
 ##'   simulation time}
-##'   \item{\file{GRAPHIC_A \cr abundance}}{to visualize for each PFG the
+##'   \item{\file{GRAPHIC_A \cr pixels}}{to visualize for each PFG the
 ##'   evolution of its abundance within each selected pixel through
-##'   simulation time}
-##'   \item{\file{GRAPHIC_A \cr light resources}}{to visualize for each stratum
-##'   the evolution of its light resource within each selected pixel through
-##'   simulation time}
-##'   \item{\file{GRAPHIC_A \cr soil resources}}{to visualize 
-##'   the evolution of its soil resource within each selected pixel through
-##'   simulation time}
-##'   \item{\file{GRAPHIC_B \cr PFGcover}}{to visualize the PFG cover
-##'   within the studied area}
-##'   \item{\file{GRAPHIC_B \cr PFGrichness}}{to visualize the PFG richness
-##'   within the studied area}
-##'   \item{\file{GRAPHIC_B \cr PFGlight}}{to visualize the light CWM
-##'   within the studied area}
-##'   \item{\file{GRAPHIC_B \cr PFGlsoil}}{to visualize the soil CWM
-##'   within the studied area}
-##'   \item{\file{GRAPHIC_C \cr validationStatistics}}{to assess the modeling 
+##'   simulation time}, as well as the evolution of light and soil resources}
+##'   \item{\file{GRAPHIC_B \cr validationStatistics}}{to assess the modeling 
 ##'   quality of each PFG based on given observations within the studied area}
-##'   \item{\file{GRAPHIC_C \cr PFGvsHS}}{to visualize the PFG presence
+##'   \item{\file{GRAPHIC_B \cr PFGvsHS}}{to visualize the PFG presence
 ##'   within the studied area (probability and simulated occurrence)}
+##'   \item{\file{GRAPHIC_C \cr PFGrichness}}{to visualize the PFG richness
+##'   within the studied area}
+##'   \item{\file{GRAPHIC_C \cr PFGcover}}{to visualize the PFG cover
+##'   within the studied area}
+##'   \item{\file{GRAPHIC_C \cr PFGlight}}{to visualize the light CWM
+##'   within the studied area}
+##'   \item{\file{GRAPHIC_C \cr PFGlsoil}}{to visualize the soil CWM
+##'   within the studied area}
 ##' }
 ##' 
 ##' Three folders are created :
@@ -236,14 +218,6 @@
 ## END OF HEADER ###############################################################
 
 
-# setwd("~/FATE_Bauges_LIGHT/")
-# library(RFate); library(foreach); library(reshape2)
-# library(data.table); library(ggplot2)
-# POST_FATE.graphics(name.simulation = "FATE_Bauges_oldPFG_newParam/"
-#   , file.simulParam = "FATE_Bauges_oldPFG_newParam/PARAM_SIMUL/paramSimul_Graz1_CA_rcp26_LIGHT.txt"
-#   , year = 800
-#   , no.years = 10)
-
 POST_FATE.graphics = function(
   name.simulation
   , file.simulParam
@@ -265,16 +239,14 @@ POST_FATE.graphics = function(
   , opt.abund_fixedScale = TRUE
   , opt.no_CPU = 1
   , opt.doPlot = TRUE
+  , opt.doFunc.evolutionCoverage = TRUE
+  , opt.doFunc.evolutionPixels = TRUE
   , opt.doFunc.validation = TRUE
   , opt.doFunc.mapPFGvsHS = TRUE
-  , opt.doFunc.mapPFGcover = TRUE
   , opt.doFunc.mapPFGrichness = TRUE
+  , opt.doFunc.mapPFGcover = TRUE
   , opt.doFunc.mapPFGlight = TRUE
   , opt.doFunc.mapPFGsoil = TRUE
-  , opt.doFunc.evolutionCoverage = TRUE
-  , opt.doFunc.evolutionAbund_pixels = TRUE
-  , opt.doFunc.evolutionLight_pixels = TRUE
-  , opt.doFunc.evolutionSoil_pixels = TRUE
 ){
   
   .testParam_existFolder(name.simulation, "PARAM_SIMUL/")
@@ -296,196 +268,189 @@ POST_FATE.graphics = function(
     abs.simulParams = paste0(name.simulation, "/PARAM_SIMUL/", file.simulParam)
     .testParam_existFile(abs.simulParams)
   }
-
+  if (.testParam_notNum(year))
+  {
+    .stopMessage_beInteger("year")
+  }
+  if (.testParam_notNum(no.years))
+  {
+    .stopMessage_beInteger("no.years")
+  }
+  
   #################################################################################################
   
   res = foreach (abs.simulParam = abs.simulParams) %do%
-  {
-    
-    cat("\n ############## GRAPHIC POST FATE ############## \n")
-    cat("\n Simulation name : ", name.simulation)
-    cat("\n Simulation file : ", abs.simulParam)
-    cat("\n")
-    
-    ## Get global param file directories -----------------------------------------------------
-    file.globalParam = .getParam(params.lines = abs.simulParam
-                                 , flag = "GLOBAL_PARAMS"
-                                 , flag.split = "^--.*--$"
-                                 , is.num = FALSE)
-    
-    doLight <- .getParam(params.lines = paste0(sub(basename(name.simulation), "", name.simulation)
-                                               , file.globalParam)
-                         , flag = "DO_LIGHT_COMPETITION"
-                         , flag.split = " "
-                         , is.num = TRUE)
-    doSoil <- .getParam(params.lines = paste0(sub(basename(name.simulation), "", name.simulation)
-                                              , file.globalParam)
-                        , flag = "DO_SOIL_COMPETITION"
-                        , flag.split = " "
-                        , is.num = TRUE)
-    
-    ## Get binary maps -----------------------------------------------------------------------
-    if (opt.doFunc.validation ||
-        opt.doFunc.mapPFGvsHS ||
-        opt.doFunc.mapPFGcover ||
-        opt.doFunc.mapPFGrichness ||
-        opt.doFunc.mapPFGlight ||
-        opt.doFunc.mapPFGsoil)
     {
-      cat("\n ############## GET RELATIVE / BINARY MAPS and VALIDATION PLOTS ############## \n")
-      cat("\n >> POST_FATE.relativeAbund...")
+      
+      cat("\n ############## GRAPHIC POST FATE ############## \n")
+      cat("\n Simulation name : ", name.simulation)
+      cat("\n Simulation file : ", abs.simulParam)
       cat("\n")
-      POST_FATE.relativeAbund(name.simulation = name.simulation
-                              , file.simulParam = abs.simulParam
-                              , year = year
-                              , opt.no_CPU = opt.no_CPU)
       
-      if (opt.doFunc.validation)
+      ## Get global param file directories -----------------------------------------------------
+      file.globalParam = .getParam(params.lines = abs.simulParam
+                                   , flag = "GLOBAL_PARAMS"
+                                   , flag.split = "^--.*--$"
+                                   , is.num = FALSE)
+      
+      doLight <- .getParam(params.lines = paste0(sub(basename(name.simulation), "", name.simulation)
+                                                 , file.globalParam)
+                           , flag = "DO_LIGHT_COMPETITION"
+                           , flag.split = " "
+                           , is.num = TRUE)
+      doSoil <- .getParam(params.lines = paste0(sub(basename(name.simulation), "", name.simulation)
+                                                , file.globalParam)
+                          , flag = "DO_SOIL_COMPETITION"
+                          , flag.split = " "
+                          , is.num = TRUE)
+      
+      ## Get temporal evolution -----------------------------------------------------------------------
+      if (opt.doFunc.evolutionCoverage ||
+          opt.doFunc.evolutionPixels)
       {
-        cat("\n >> POST_FATE.graphic_validationStatistics...")
+        cat("\n ############## GET EVOLUTION PLOTS through time ############## \n")
+        cat("\n >> POST_FATE.temporalEvolution...")
         cat("\n")
-        res.validation = POST_FATE.graphic_validationStatistics(name.simulation = name.simulation
-                                                                , file.simulParam = abs.simulParam
-                                                                , year = year
-                                                                , mat.PFG.obs = opt.mat.PFG.obs
-                                                                , opt.ras_habitat = opt.ras_habitat
-                                                                , opt.no_CPU = opt.no_CPU
-                                                                , opt.doPlot = opt.doPlot)
-      }
-      if (opt.doFunc.mapPFGvsHS)
-      {
-        cat("\n >> POST_FATE.graphic_mapPFGvsHS...")
-        cat("\n")
-        res.mapPFGvsHS = POST_FATE.graphic_mapPFGvsHS(name.simulation = name.simulation
-                                                      , file.simulParam = abs.simulParam
-                                                      , year = year
-                                                      , opt.no_CPU = opt.no_CPU
-                                                      , opt.strata = "all")
+        POST_FATE.temporalEvolution(name.simulation = name.simulation
+                                    , file.simulParam = abs.simulParam
+                                    , no.years = no.years
+                                    , opt.ras_habitat = opt.ras_habitat
+                                    , opt.no_CPU = opt.no_CPU)
+        
+        if (opt.doFunc.evolutionCoverage)
+        {
+          cat("\n >> POST_FATE.graphic_evolutionCoverage...")
+          cat("\n")
+          res.evolutionCoverage = POST_FATE.graphic_evolutionCoverage(name.simulation = name.simulation
+                                                                      , file.simulParam = abs.simulParam
+                                                                      , opt.abund_fixedScale = opt.abund_fixedScale
+                                                                      , opt.doPlot = opt.doPlot)
+        }
+        if (opt.doFunc.evolutionPixels)
+        {
+          cat("\n >> POST_FATE.graphic_evolutionPixels...")
+          cat("\n")
+          res.evolutionPixels = POST_FATE.graphic_evolutionPixels(name.simulation = name.simulation
+                                                                  , file.simulParam = abs.simulParam
+                                                                  , opt.cells_ID = opt.cells_ID
+                                                                  , opt.abund_fixedScale = opt.abund_fixedScale
+                                                                  , opt.doPlot = opt.doPlot)
+        }
       }
       
-      cat("\n ############## GET SPATIAL PLOTS for a specific year ############## \n")
-      if (opt.doFunc.mapPFGcover)
+      ## Get binary maps -----------------------------------------------------------------------
+      if (opt.doFunc.validation ||
+          opt.doFunc.mapPFGvsHS ||
+          opt.doFunc.mapPFGrichness ||
+          opt.doFunc.mapPFGcover ||
+          opt.doFunc.mapPFGlight ||
+          opt.doFunc.mapPFGsoil)
       {
-        cat("\n >> POST_FATE.graphic_mapPFGcover...")
+        cat("\n ############## GET RELATIVE / BINARY MAPS and VALIDATION PLOTS ############## \n")
+        cat("\n >> POST_FATE.relativeAbund...")
         cat("\n")
-        res.mapPFGcover = POST_FATE.graphic_mapPFGcover(name.simulation = name.simulation
+        POST_FATE.relativeAbund(name.simulation = name.simulation
+                                , file.simulParam = abs.simulParam
+                                , year = year
+                                , opt.no_CPU = opt.no_CPU)
+        
+        if (opt.doFunc.validation)
+        {
+          cat("\n >> POST_FATE.graphic_validationStatistics...")
+          cat("\n")
+          res.validation = POST_FATE.graphic_validationStatistics(name.simulation = name.simulation
+                                                                  , file.simulParam = abs.simulParam
+                                                                  , year = year
+                                                                  , mat.PFG.obs = opt.mat.PFG.obs
+                                                                  , opt.ras_habitat = opt.ras_habitat
+                                                                  , opt.no_CPU = opt.no_CPU
+                                                                  , opt.doPlot = opt.doPlot)
+        }
+        if (opt.doFunc.mapPFGvsHS)
+        {
+          cat("\n >> POST_FATE.graphic_mapPFGvsHS...")
+          cat("\n")
+          res.mapPFGvsHS = POST_FATE.graphic_mapPFGvsHS(name.simulation = name.simulation
                                                         , file.simulParam = abs.simulParam
                                                         , year = year
-                                                        , strata_min = opt.strata_min
-                                                        , opt.mat.cover.obs = opt.mat.cover.obs
-                                                        , opt.ras.cover.obs = opt.ras.cover.obs
                                                         , opt.no_CPU = opt.no_CPU
-                                                        , opt.doPlot = opt.doPlot)
-      }
-      if (opt.doFunc.mapPFGrichness)
-      {
-        cat("\n >> POST_FATE.graphic_mapPFGrichness...")
-        cat("\n")
-        res.mapPFGrichness = POST_FATE.graphic_mapPFGrichness(name.simulation = name.simulation
-                                                              , file.simulParam = abs.simulParam
-                                                              , year = year
-                                                              , opt.no_CPU = opt.no_CPU
-                                                              , opt.doPlot = opt.doPlot)
-      }
-      if (opt.doFunc.mapPFGlight && doLight)
-      {
-        cat("\n >> POST_FATE.graphic_mapPFGlight...")
-        cat("\n")
-        res.mapPFGlight = POST_FATE.graphic_mapPFGlight(name.simulation = name.simulation
+                                                        , opt.strata = "all")
+        }
+        
+        cat("\n ############## GET SPATIAL PLOTS for a specific year ############## \n")
+        if (opt.doFunc.mapPFGrichness)
+        {
+          cat("\n >> POST_FATE.graphic_mapPFGrichness...")
+          cat("\n")
+          res.mapPFGrichness = POST_FATE.graphic_mapPFGrichness(name.simulation = name.simulation
+                                                                , file.simulParam = abs.simulParam
+                                                                , year = year
+                                                                , opt.no_CPU = opt.no_CPU
+                                                                , opt.doPlot = opt.doPlot)
+        }
+        if (opt.doFunc.mapPFGcover)
+        {
+          cat("\n >> POST_FATE.graphic_mapPFGcover...")
+          cat("\n")
+          res.mapPFGcover = POST_FATE.graphic_mapPFGcover(name.simulation = name.simulation
+                                                          , file.simulParam = abs.simulParam
+                                                          , year = year
+                                                          , strata_min = opt.strata_min
+                                                          , opt.mat.cover.obs = opt.mat.cover.obs
+                                                          , opt.ras.cover.obs = opt.ras.cover.obs
+                                                          , opt.no_CPU = opt.no_CPU
+                                                          , opt.doPlot = opt.doPlot)
+        }
+        if (opt.doFunc.mapPFGlight && doLight)
+        {
+          cat("\n >> POST_FATE.graphic_mapPFGlight...")
+          cat("\n")
+          res.mapPFGlight = POST_FATE.graphic_mapPFGlight(name.simulation = name.simulation
+                                                          , file.simulParam = abs.simulParam
+                                                          , year = year
+                                                          , strata_min = opt.strata_min
+                                                          , mat.PFG.succ = opt.mat.PFG.succ
+                                                          , opt.mat.light.obs = opt.mat.light.obs
+                                                          , opt.ras.light.obs = opt.ras.light.obs
+                                                          , opt.no_CPU = opt.no_CPU
+                                                          , opt.doPlot = opt.doPlot)
+        }
+        if (opt.doFunc.mapPFGsoil && doSoil)
+        {
+          cat("\n >> POST_FATE.graphic_mapPFGsoil...")
+          cat("\n")
+          res.mapPFGsoil = POST_FATE.graphic_mapPFGsoil(name.simulation = name.simulation
                                                         , file.simulParam = abs.simulParam
                                                         , year = year
                                                         , strata_min = opt.strata_min
                                                         , mat.PFG.succ = opt.mat.PFG.succ
-                                                        , opt.mat.light.obs = opt.mat.light.obs
-                                                        , opt.ras.light.obs = opt.ras.light.obs
+                                                        , opt.mat.soil.obs = opt.mat.soil.obs
+                                                        , opt.ras.soil.obs = opt.ras.soil.obs
                                                         , opt.no_CPU = opt.no_CPU
                                                         , opt.doPlot = opt.doPlot)
+        }
       }
-      if (opt.doFunc.mapPFGsoil && doSoil)
+      
+      ## Get ALL PLOTS -----------------------------------------------------------------------
+      
+      names.res = c("res.validation"
+                    , "res.mapPFGvsHS"
+                    , "res.mapPFGcover"
+                    , "res.mapPFGrichness"
+                    , "res.mapPFGlight"
+                    , "res.mapPFGsoil"
+                    , "res.evolutionCoverage"
+                    , "res.evolutionPixels")
+      res = list()
+      for(i in names.res)
       {
-        cat("\n >> POST_FATE.graphic_mapPFGsoil...")
-        cat("\n")
-        res.mapPFGsoil = POST_FATE.graphic_mapPFGsoil(name.simulation = name.simulation
-                                                      , file.simulParam = abs.simulParam
-                                                      , year = year
-                                                      , strata_min = opt.strata_min
-                                                      , mat.PFG.succ = opt.mat.PFG.succ
-                                                      , opt.mat.soil.obs = opt.mat.soil.obs
-                                                      , opt.ras.soil.obs = opt.ras.soil.obs
-                                                      , opt.no_CPU = opt.no_CPU
-                                                      , opt.doPlot = opt.doPlot)
+        if (exists(i))
+        {
+          res[[i]] = get(i)
+        }
       }
-    }
-    
-    cat("\n ############## GET EVOLUTION PLOTS through time ############## \n")
-    cat("\n >> POST_FATE.temporalEvolution...")
-    cat("\n")
-    POST_FATE.temporalEvolution(name.simulation = name.simulation
-                                , file.simulParam = abs.simulParam
-                                , no.years = no.years
-                                , opt.ras_habitat = opt.ras_habitat
-                                , opt.no_CPU = opt.no_CPU)
-    
-    if (opt.doFunc.evolutionCoverage)
-    {
-      cat("\n >> POST_FATE.graphic_evolutionCoverage...")
-      cat("\n")
-      res.evolutionCoverage = POST_FATE.graphic_evolutionCoverage(name.simulation = name.simulation
-                                                                  , file.simulParam = abs.simulParam
-                                                                  , opt.abund_fixedScale = opt.abund_fixedScale
-                                                                  , opt.doPlot = opt.doPlot)
-    }
-    if (opt.doFunc.evolutionAbund_pixels)
-    {
-      cat("\n >> POST_FATE.graphic_evolutionAbund_pixels...")
-      cat("\n")
-      res.evolutionAbund = POST_FATE.graphic_evolutionAbund_pixels(name.simulation = name.simulation
-                                                                   , file.simulParam = abs.simulParam
-                                                                   , no.years = no.years
-                                                                   , opt.no_CPU = opt.no_CPU
-                                                                   , opt.doPlot = opt.doPlot)
-    }
-    if (opt.doFunc.evolutionLight_pixels && doLight)
-    {
-      cat("\n >> POST_FATE.graphic_evolutionLight_pixels...")
-      cat("\n")
-      res.evolutionLight = POST_FATE.graphic_evolutionLight_pixels(name.simulation = name.simulation
-                                                                   , file.simulParam = abs.simulParam
-                                                                   , no.years = no.years
-                                                                   , opt.no_CPU = opt.no_CPU
-                                                                   , opt.doPlot = opt.doPlot)
-    }
-    if (opt.doFunc.evolutionSoil_pixels && doSoil)
-    {
-      cat("\n >> POST_FATE.graphic_evolutionSoil_pixels...")
-      cat("\n")
-      res.evolutionSoil = POST_FATE.graphic_evolutionSoil_pixels(name.simulation = name.simulation
-                                                                 , file.simulParam = abs.simulParam
-                                                                 , no.years = no.years
-                                                                 , opt.no_CPU = opt.no_CPU
-                                                                 , opt.doPlot = opt.doPlot)
-    }
-    
-    names.res = c("res.validation"
-                  , "res.mapPFGvsHS"
-                  , "res.mapPFGcover"
-                  , "res.mapPFGrichness"
-                  , "res.mapPFGlight"
-                  , "res.mapPFGsoil"
-                  , "res.evolutionCoverage"
-                  , "res.evolutionAbund"
-                  , "res.evolutionLight"
-                  , "res.evolutionSoil")
-    res = list()
-    for(i in names.res)
-    {
-      if (exists(i))
-      {
-        res[[i]] = get(i)
-      }
-    }
-    return(res)
-  } ## END loop on abs.simulParams
+      return(res)
+    } ## END loop on abs.simulParams
   names(res) = abs.simulParams
   
   return(res)

@@ -225,13 +225,11 @@ modelisation (presence/absence, validation statistics).</p>
   <span class='kw'>opt.ras.light.obs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>opt.ras.soil.obs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>opt.ras_habitat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>opt.cells_ID</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>opt.abund_fixedScale</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>opt.doPlot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>opt.doFunc.validation</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>opt.doFunc.mapPFGvsHS</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>opt.doFunc.mapPFGcover</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>opt.doFunc.mapPFGrichness</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>opt.doFunc.mapPFGlight</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>opt.doFunc.mapPFGsoil</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>opt.doFunc.evolutionCoverage</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>opt.doFunc.evolutionAbund_pixels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>opt.doFunc.evolutionLight_pixels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>opt.doFunc.evolutionSoil_pixels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>opt.doFunc.evolutionPixels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>opt.doFunc.validation</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>opt.doFunc.mapPFGvsHS</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>opt.doFunc.mapPFGrichness</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>opt.doFunc.mapPFGcover</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>opt.doFunc.mapPFGlight</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>opt.doFunc.mapPFGsoil</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -345,8 +343,15 @@ processed, otherwise only the calculation and reorganization of outputs
 will occur, be saved and returned.</p></td>
     </tr>
     <tr>
-      <th>opt.doFunc.validation</th>
+      <th>opt.doFunc.evolutionCoverage</th>
       <td><p>default TRUE (<em>optional</em>). If TRUE, 
+corresponding <code>POST_FATE.graphic_...</code> function will be run.</p></td>
+    </tr>
+    <tr>
+      <th>opt.doFunc.evolutionPixels</th>
+      <td><p>default TRUE (<em>optional</em>).If TRUE, 
+corresponding <code>POST_FATE.graphic_...</code> function will be run.
+ @param opt.doFunc.validation default TRUE (<em>optional</em>). If TRUE, 
 corresponding <code>POST_FATE.graphic_...</code> function will be run.</p></td>
     </tr>
     <tr>
@@ -355,13 +360,13 @@ corresponding <code>POST_FATE.graphic_...</code> function will be run.</p></td>
 corresponding <code>POST_FATE.graphic_...</code> function will be run.</p></td>
     </tr>
     <tr>
-      <th>opt.doFunc.mapPFGcover</th>
-      <td><p>default TRUE (<em>optional</em>). If TRUE, 
+      <th>opt.doFunc.mapPFGrichness</th>
+      <td><p>default TRUE (<em>optional</em>).If TRUE, 
 corresponding <code>POST_FATE.graphic_...</code> function will be run.</p></td>
     </tr>
     <tr>
-      <th>opt.doFunc.mapPFGrichness</th>
-      <td><p>default TRUE (<em>optional</em>).If TRUE, 
+      <th>opt.doFunc.mapPFGcover</th>
+      <td><p>default TRUE (<em>optional</em>). If TRUE, 
 corresponding <code>POST_FATE.graphic_...</code> function will be run.</p></td>
     </tr>
     <tr>
@@ -374,72 +379,7 @@ corresponding <code>POST_FATE.graphic_...</code> function will be run.</p></td>
       <td><p>default TRUE (<em>optional</em>). If TRUE, 
 corresponding <code>POST_FATE.graphic_...</code> function will be run.</p></td>
     </tr>
-    <tr>
-      <th>opt.doFunc.evolutionCoverage</th>
-      <td><p>default TRUE (<em>optional</em>). If TRUE, 
-corresponding <code>POST_FATE.graphic_...</code> function will be run.</p></td>
-    </tr>
-    <tr>
-      <th>opt.doFunc.evolutionAbund_pixels</th>
-      <td><p>default TRUE (<em>optional</em>).If TRUE, 
-corresponding <code>POST_FATE.graphic_...</code> function will be run.</p></td>
-    </tr>
-    <tr>
-      <th>opt.doFunc.evolutionLight_pixels</th>
-      <td><p>default TRUE (<em>optional</em>). If TRUE, 
-corresponding <code>POST_FATE.graphic_...</code> function will be run.</p></td>
-    </tr>
-    <tr>
-      <th>opt.doFunc.evolutionSoil_pixels</th>
-      <td><p>default TRUE (<em>optional</em>). If TRUE, 
-corresponding <code>POST_FATE.graphic_...</code> function will be run.</p></td>
-    </tr>
     </table>
-
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>The following <code>POST_FATE_[...].pdf</code> files are created :</p><dl class='dl-horizontal'>
-  <dt><code class="file">GRAPHIC_A <br /> spaceOccupancy</code></dt><dd><p>to visualize for each PFG the
-  evolution of its occupation of the studied area through simulation time</p></dd>
-  <dt><code class="file">GRAPHIC_A <br /> abundance</code></dt><dd><p>to visualize for each PFG the
-  evolution of its abundance within the whole studied area through
-  simulation time</p></dd>
-  <dt><code class="file">GRAPHIC_A <br /> abundance</code></dt><dd><p>to visualize for each PFG the
-  evolution of its abundance within each selected pixel through
-  simulation time</p></dd>
-  <dt><code class="file">GRAPHIC_A <br /> light resources</code></dt><dd><p>to visualize for each stratum
-  the evolution of its light resource within each selected pixel through
-  simulation time</p></dd>
-  <dt><code class="file">GRAPHIC_A <br /> soil resources</code></dt><dd><p>to visualize 
-  the evolution of its soil resource within each selected pixel through
-  simulation time</p></dd>
-  <dt><code class="file">GRAPHIC_B <br /> PFGcover</code></dt><dd><p>to visualize the PFG cover
-  within the studied area</p></dd>
-  <dt><code class="file">GRAPHIC_B <br /> PFGrichness</code></dt><dd><p>to visualize the PFG richness
-  within the studied area</p></dd>
-  <dt><code class="file">GRAPHIC_B <br /> PFGlight</code></dt><dd><p>to visualize the light CWM
-  within the studied area</p></dd>
-  <dt><code class="file">GRAPHIC_B <br /> PFGlsoil</code></dt><dd><p>to visualize the soil CWM
-  within the studied area</p></dd>
-  <dt><code class="file">GRAPHIC_C <br /> validationStatistics</code></dt><dd><p>to assess the modeling 
-  quality of each PFG based on given observations within the studied area</p></dd>
-  <dt><code class="file">GRAPHIC_C <br /> PFGvsHS</code></dt><dd><p>to visualize the PFG presence
-  within the studied area (probability and simulated occurrence)</p></dd>
-
-</dl>
-
-<p>Three folders are created :</p><dl class='dl-horizontal'>
-  <dt><code class="file">ABUND_REL_perPFG <br />_allStrata</code></dt><dd><p>containing relative abundance 
-  raster maps for each PFG across all strata (see 
-  <code><a href='POST_FATE.relativeAbund.html'>POST_FATE.relativeAbund</a></code>)</p></dd>
-  <dt><code class="file">BIN_perPFG <br />_allStrata</code></dt><dd><p>containing presence / absence  
-  raster maps for each PFG across all strata (see 
-  <code><a href='POST_FATE.graphic_validationStatistics.html'>POST_FATE.graphic_validationStatistics</a></code>)</p></dd>
-  <dt><code class="file">BIN_perPFG <br />_perStrata</code></dt><dd><p>containing presence / absence  
-  raster maps for each PFG for each stratum (see 
-  <code><a href='POST_FATE.graphic_validationStatistics.html'>POST_FATE.graphic_validationStatistics</a></code>)</p></dd>
-
-</dl>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -454,14 +394,6 @@ or <code>SOIL</code>) and unzipped.
 Informations extracted lead to the production of the following graphics 
 before the maps are compressed again :</p>
 <ul>
-<li><p>the value of <strong>several statistics for the predictive quality
-  of the model for each Plant Functional Group</strong> and for each selected
-  simulation year(s) (see 
-  <code><a href='POST_FATE.graphic_validationStatistics.html'>POST_FATE.graphic_validationStatistics</a></code>)</p></li>
-<li><p>the maps of <strong>Plant Functional Group habitat suitability and
-  occurrences</strong> for each selected simulation year(s), representing the 
-  probability of presence of each PFG in each pixel compared to its
-  simulated presence (see <code><a href='POST_FATE.graphic_mapPFGvsHS.html'>POST_FATE.graphic_mapPFGvsHS</a></code>)</p></li>
 <li><p>the evolution of <strong>space occupancy</strong> of each Plant Functional
   Group through simulation time, with <em>space occupancy</em> representing
   the percentage of pixels within the mask of studied area where the PFG
@@ -473,23 +405,25 @@ before the maps are compressed again :</p>
   <code><a href='POST_FATE.graphic_evolutionCoverage.html'>POST_FATE.graphic_evolutionCoverage</a></code>)</p></li>
 <li><p>the evolution of <strong>abundance</strong> of each Plant Functional
   Group through simulation time, within 5 (or more) randomly selected pixels
-  of the studied area (<code>FATE-HD</code> <em>arbitrary unit</em>) (see 
-  <code>POST_FATE.graphic_evolutionAbund_pixels</code>)</p></li>
-<li><p>the evolution of <strong>light resources</strong> of each stratum through
-  simulation time, within 5 (or more) randomly selected pixels
-  of the studied area (<em>1: Low, 2: Medium, 3: High</em>) (see 
-  <code>POST_FATE.graphic_evolutionLight_pixels</code>)</p></li>
-<li><p>the evolution of <strong>soil resources</strong> through
-  simulation time, within 5 (or more) randomly selected pixels
-  of the studied area (see 
-  <code>POST_FATE.graphic_evolutionSoil_pixels</code>)</p></li>
+  of the studied area (<code>FATE-HD</code> <em>arbitrary unit</em>), as well as 
+  <strong>light resources</strong> of each stratum (<em>1: Low, 2: Medium, 3: High</em>) 
+  and <strong>soil resources</strong> if these modules are selected 
+  (see <code><a href='POST_FATE.graphic_evolutionPixels.html'>POST_FATE.graphic_evolutionPixels</a></code>)</p></li>
+<li><p>the value of <strong>several statistics for the predictive quality
+  of the model for each Plant Functional Group</strong> and for each selected
+  simulation year(s) (see 
+  <code><a href='POST_FATE.graphic_validationStatistics.html'>POST_FATE.graphic_validationStatistics</a></code>)</p></li>
+<li><p>the maps of <strong>Plant Functional Group habitat suitability and
+  occurrences</strong> for each selected simulation year(s), representing the 
+  probability of presence of each PFG in each pixel compared to its
+  simulated presence (see <code><a href='POST_FATE.graphic_mapPFGvsHS.html'>POST_FATE.graphic_mapPFGvsHS</a></code>)</p></li>
+<li><p>the map of <strong>Plant Functional Group richness</strong> for each selected
+  simulation year(s), representing the number of PFG present in each pixel 
+  (see <code><a href='POST_FATE.graphic_mapPFGrichness.html'>POST_FATE.graphic_mapPFGrichness</a></code>)</p></li>
 <li><p>the map of <strong>Plant Functional Group cover</strong> for each selected
   simulation year(s), representing the relative cumulated abundance of PFG 
   present in each pixel above a height threshold (see 
   <code><a href='POST_FATE.graphic_mapPFGcover.html'>POST_FATE.graphic_mapPFGcover</a></code>)</p></li>
-<li><p>the map of <strong>Plant Functional Group richness</strong> for each selected
-  simulation year(s), representing the number of PFG present in each pixel 
-  (see <code><a href='POST_FATE.graphic_mapPFGrichness.html'>POST_FATE.graphic_mapPFGrichness</a></code>)</p></li>
 <li><p>the map of <strong>light Community Weighted Mean</strong> for each selected
   simulation year(s), representing the simulated value of light (Landolt)
   within each pixel above a height threshold (see 
@@ -520,7 +454,6 @@ before the maps are compressed again :</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
       <li><a href="#details">Details</a></li>
       <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
