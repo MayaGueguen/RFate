@@ -116,7 +116,7 @@ POST_FATE.graphic_evolutionPixels(name.simulation = "FATE_simulation"
 
 }
 \seealso{
-\code{\link{POST_FATE.temporalAbund}}
+\code{\link{POST_FATE.temporalEvolution}}
 }
 \author{
 Maya Guéguen

@@ -350,8 +350,11 @@ corresponding <code>POST_FATE.graphic_...</code> function will be run.</p></td>
     <tr>
       <th>opt.doFunc.evolutionPixels</th>
       <td><p>default TRUE (<em>optional</em>).If TRUE, 
-corresponding <code>POST_FATE.graphic_...</code> function will be run.
- @param opt.doFunc.validation default TRUE (<em>optional</em>). If TRUE, 
+corresponding <code>POST_FATE.graphic_...</code> function will be run.</p></td>
+    </tr>
+    <tr>
+      <th>opt.doFunc.validation</th>
+      <td><p>default TRUE (<em>optional</em>). If TRUE, 
 corresponding <code>POST_FATE.graphic_...</code> function will be run.</p></td>
     </tr>
     <tr>
@@ -380,6 +383,45 @@ corresponding <code>POST_FATE.graphic_...</code> function will be run.</p></td>
 corresponding <code>POST_FATE.graphic_...</code> function will be run.</p></td>
     </tr>
     </table>
+
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>The following <code>POST_FATE_[...].pdf</code> files are created :</p><dl class='dl-horizontal'>
+  <dt><code class="file">GRAPHIC_A <br /> spaceOccupancy</code></dt><dd><p>to visualize for each PFG the
+  evolution of its occupation of the studied area through simulation time</p></dd>
+  <dt><code class="file">GRAPHIC_A <br /> abundance</code></dt><dd><p>to visualize for each PFG the
+  evolution of its abundance within the whole studied area through
+  simulation time</p></dd>
+  <dt><code class="file">GRAPHIC_A <br /> pixels</code></dt><dd><p>to visualize for each PFG the
+  evolution of its abundance within each selected pixel through
+  simulation time, as well as the evolution of light and soil resources</p></dd>
+  <dt><code class="file">GRAPHIC_B <br /> validationStatistics</code></dt><dd><p>to assess the modeling 
+  quality of each PFG based on given observations within the studied area</p></dd>
+  <dt><code class="file">GRAPHIC_B <br /> PFGvsHS</code></dt><dd><p>to visualize the PFG presence
+  within the studied area (probability and simulated occurrence)</p></dd>
+  <dt><code class="file">GRAPHIC_C <br /> PFGrichness</code></dt><dd><p>to visualize the PFG richness
+  within the studied area</p></dd>
+  <dt><code class="file">GRAPHIC_C <br /> PFGcover</code></dt><dd><p>to visualize the PFG cover
+  within the studied area</p></dd>
+  <dt><code class="file">GRAPHIC_C <br /> PFGlight</code></dt><dd><p>to visualize the light CWM
+  within the studied area</p></dd>
+  <dt><code class="file">GRAPHIC_C <br /> PFGlsoil</code></dt><dd><p>to visualize the soil CWM
+  within the studied area</p></dd>
+
+</dl>
+
+<p>Three folders are created :</p><dl class='dl-horizontal'>
+  <dt><code class="file">ABUND_REL_perPFG <br />_allStrata</code></dt><dd><p>containing relative abundance 
+  raster maps for each PFG across all strata (see 
+  <code><a href='POST_FATE.relativeAbund.html'>POST_FATE.relativeAbund</a></code>)</p></dd>
+  <dt><code class="file">BIN_perPFG <br />_allStrata</code></dt><dd><p>containing presence / absence  
+  raster maps for each PFG across all strata (see 
+  <code><a href='POST_FATE.graphic_validationStatistics.html'>POST_FATE.graphic_validationStatistics</a></code>)</p></dd>
+  <dt><code class="file">BIN_perPFG <br />_perStrata</code></dt><dd><p>containing presence / absence  
+  raster maps for each PFG for each stratum (see 
+  <code><a href='POST_FATE.graphic_validationStatistics.html'>POST_FATE.graphic_validationStatistics</a></code>)</p></dd>
+
+</dl>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -435,25 +477,38 @@ before the maps are compressed again :</p>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='POST_FATE.relativeAbund.html'>POST_FATE.relativeAbund</a></code>, 
+    <div class='dont-index'><p><code><a href='POST_FATE.temporalEvolution.html'>POST_FATE.temporalEvolution</a></code>, 
+<code><a href='POST_FATE.graphic_evolutionCoverage.html'>POST_FATE.graphic_evolutionCoverage</a></code>, 
+<code><a href='POST_FATE.graphic_evolutionPixels.html'>POST_FATE.graphic_evolutionPixels</a></code>,
+<code><a href='POST_FATE.relativeAbund.html'>POST_FATE.relativeAbund</a></code>, 
 <code><a href='POST_FATE.graphic_validationStatistics.html'>POST_FATE.graphic_validationStatistics</a></code>, 
 <code><a href='POST_FATE.graphic_mapPFGvsHS.html'>POST_FATE.graphic_mapPFGvsHS</a></code>, 
-<code><a href='POST_FATE.graphic_mapPFGcover.html'>POST_FATE.graphic_mapPFGcover</a></code>, 
 <code><a href='POST_FATE.graphic_mapPFGrichness.html'>POST_FATE.graphic_mapPFGrichness</a></code>, 
+<code><a href='POST_FATE.graphic_mapPFGcover.html'>POST_FATE.graphic_mapPFGcover</a></code>, 
 <code><a href='POST_FATE.graphic_mapPFGlight.html'>POST_FATE.graphic_mapPFGlight</a></code>, 
-<code><a href='POST_FATE.graphic_mapPFGsoil.html'>POST_FATE.graphic_mapPFGsoil</a></code>, 
-<code><a href='POST_FATE.graphic_evolutionCoverage.html'>POST_FATE.graphic_evolutionCoverage</a></code>, 
-<code>POST_FATE.graphic_evolutionAbund_pixels</code>, 
-<code>POST_FATE.graphic_evolutionLight_pixels</code>, 
-<code>POST_FATE.graphic_evolutionSoil_pixels</code></p></div>
+<code><a href='POST_FATE.graphic_mapPFGsoil.html'>POST_FATE.graphic_mapPFGsoil</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"></pre>
+    <pre class="examples">
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'>POST_FATE.graphics</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
+                                    , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
+                                    , <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>100</span>
+                                    , <span class='kw'>no.years</span> <span class='kw'>=</span> <span class='fl'>10</span>)
+
+<span class='fu'>POST_FATE.graphics</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
+                                    , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
+                                    , <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>100</span>
+                                    , <span class='kw'>no.years</span> <span class='kw'>=</span> <span class='fl'>10</span>
+                                    , <span class='kw'>opt.abund_fixedScale</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+                                    , <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>4</span>)
+}</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#value">Value</a></li>
       <li><a href="#details">Details</a></li>
       <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>

@@ -565,7 +565,9 @@ combinations.</p>
                             , <span class='kw'>no_simulations</span> <span class='kw'>=</span> <span class='fl'>30</span>
 )
 
-<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/files2.html'>dir.exists</a></span>(<span class='st'>"FATE_simulation_MULTIPLE_SET"</span>)) <span class='fu'><a href='https://rdrr.io/r/base/unlink.html'>unlink</a></span>(<span class='st'>"FATE_simulation_MULTIPLE_SET"</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/files2.html'>dir.exists</a></span>(<span class='st'>"FATE_simulation_MULTIPLE_SET"</span>)){
+  <span class='fu'><a href='https://rdrr.io/r/base/unlink.html'>unlink</a></span>(<span class='st'>"FATE_simulation_MULTIPLE_SET"</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+}
 <span class='fu'>PRE_FATE.params_multipleSet</span>(<span class='kw'>name.simulation.1</span> <span class='kw'>=</span> <span class='st'>"FATE_PNE"</span>
                             , <span class='kw'>file.simulParam.1</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
                             , <span class='kw'>no_simulations</span> <span class='kw'>=</span> <span class='fl'>5</span>

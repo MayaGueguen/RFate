@@ -233,9 +233,13 @@
 ##' name.simul = "SIMUL_V1"
 ##' dir1 = paste0(name.folder, "/RESULTS/", name.simul, "/ABUND_perPFG_allStrata")
 ##' dir2 = paste0(name.folder, "/RESULTS/", name.simul, "/ABUND_perPFG_perStrata")
+##' dir3 = paste0(name.folder, "/RESULTS/", name.simul, "/LIGHT")
+##' dir4 = paste0(name.folder, "/RESULTS/", name.simul, "/SOIL")
 ##' 
 ##' dir.create(dir1, recursive = TRUE)
 ##' dir.create(dir2, recursive = TRUE)
+##' dir.create(dir3, recursive = TRUE)
+##' dir.create(dir4, recursive = TRUE)
 ##' 
 ##' ## Create results files
 ##' PFG.names = PNE_PARAM$succ_light$PFG

@@ -92,8 +92,9 @@ will occur, be saved and returned.}
 corresponding \code{POST_FATE.graphic_...} function will be run.}
 
 \item{opt.doFunc.evolutionPixels}{default TRUE (\emph{optional}).If TRUE, 
-corresponding \code{POST_FATE.graphic_...} function will be run.
- @param opt.doFunc.validation default TRUE (\emph{optional}). If TRUE, 
+corresponding \code{POST_FATE.graphic_...} function will be run.}
+
+\item{opt.doFunc.validation}{default TRUE (\emph{optional}). If TRUE, 
 corresponding \code{POST_FATE.graphic_...} function will be run.}
 
 \item{opt.doFunc.mapPFGvsHS}{default TRUE (\emph{optional}). If TRUE, 
@@ -110,6 +111,44 @@ corresponding \code{POST_FATE.graphic_...} function will be run.}
 
 \item{opt.doFunc.mapPFGsoil}{default TRUE (\emph{optional}). If TRUE, 
 corresponding \code{POST_FATE.graphic_...} function will be run.}
+}
+\value{
+The following \code{POST_FATE_[...].pdf} files are created : 
+\describe{
+  \item{\file{GRAPHIC_A \cr spaceOccupancy}}{to visualize for each PFG the
+  evolution of its occupation of the studied area through simulation time}
+  \item{\file{GRAPHIC_A \cr abundance}}{to visualize for each PFG the
+  evolution of its abundance within the whole studied area through
+  simulation time}
+  \item{\file{GRAPHIC_A \cr pixels}}{to visualize for each PFG the
+  evolution of its abundance within each selected pixel through
+  simulation time, as well as the evolution of light and soil resources}
+  \item{\file{GRAPHIC_B \cr validationStatistics}}{to assess the modeling 
+  quality of each PFG based on given observations within the studied area}
+  \item{\file{GRAPHIC_B \cr PFGvsHS}}{to visualize the PFG presence
+  within the studied area (probability and simulated occurrence)}
+  \item{\file{GRAPHIC_C \cr PFGrichness}}{to visualize the PFG richness
+  within the studied area}
+  \item{\file{GRAPHIC_C \cr PFGcover}}{to visualize the PFG cover
+  within the studied area}
+  \item{\file{GRAPHIC_C \cr PFGlight}}{to visualize the light CWM
+  within the studied area}
+  \item{\file{GRAPHIC_C \cr PFGlsoil}}{to visualize the soil CWM
+  within the studied area}
+}
+
+Three folders are created :
+\describe{
+  \item{\file{ABUND_REL_perPFG \cr_allStrata}}{containing relative abundance 
+  raster maps for each PFG across all strata (see 
+  \code{\link{POST_FATE.relativeAbund}})}
+  \item{\file{BIN_perPFG \cr_allStrata}}{containing presence / absence  
+  raster maps for each PFG across all strata (see 
+  \code{\link{POST_FATE.graphic_validationStatistics}})}
+  \item{\file{BIN_perPFG \cr_perStrata}}{containing presence / absence  
+  raster maps for each PFG for each stratum (see 
+  \code{\link{POST_FATE.graphic_validationStatistics}})}
+}
 }
 \description{
 This script is designed to produce a set of graphical 
@@ -192,7 +231,7 @@ POST_FATE.graphics(name.simulation = "FATE_simulation"
 POST_FATE.graphics(name.simulation = "FATE_simulation"
                                     , file.simulParam = "Simul_parameters_V1.txt"
                                     , year = 100
-                                    , no.years = 10)
+                                    , no.years = 10
                                     , opt.abund_fixedScale = FALSE
                                     , opt.no_CPU = 4)
 }
@@ -201,17 +240,16 @@ POST_FATE.graphics(name.simulation = "FATE_simulation"
 
 }
 \seealso{
+\code{\link{POST_FATE.temporalEvolution}}, 
+\code{\link{POST_FATE.graphic_evolutionCoverage}}, 
+\code{\link{POST_FATE.graphic_evolutionPixels}},
 \code{\link{POST_FATE.relativeAbund}}, 
 \code{\link{POST_FATE.graphic_validationStatistics}}, 
 \code{\link{POST_FATE.graphic_mapPFGvsHS}}, 
-\code{\link{POST_FATE.graphic_mapPFGcover}}, 
 \code{\link{POST_FATE.graphic_mapPFGrichness}}, 
+\code{\link{POST_FATE.graphic_mapPFGcover}}, 
 \code{\link{POST_FATE.graphic_mapPFGlight}}, 
-\code{\link{POST_FATE.graphic_mapPFGsoil}}, 
-\code{\link{POST_FATE.graphic_evolutionCoverage}}, 
-\code{\link{POST_FATE.graphic_evolutionAbund_pixels}}, 
-\code{\link{POST_FATE.graphic_evolutionLight_pixels}}, 
-\code{\link{POST_FATE.graphic_evolutionSoil_pixels}}
+\code{\link{POST_FATE.graphic_mapPFGsoil}}
 }
 \author{
 Maya Guéguen

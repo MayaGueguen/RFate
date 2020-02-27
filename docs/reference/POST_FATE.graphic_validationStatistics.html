@@ -453,9 +453,13 @@ functions</strong> :</p>
 <span class='no'>name.simul</span> <span class='kw'>=</span> <span class='st'>"SIMUL_V1"</span>
 <span class='no'>dir1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='no'>name.folder</span>, <span class='st'>"/RESULTS/"</span>, <span class='no'>name.simul</span>, <span class='st'>"/ABUND_perPFG_allStrata"</span>)
 <span class='no'>dir2</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='no'>name.folder</span>, <span class='st'>"/RESULTS/"</span>, <span class='no'>name.simul</span>, <span class='st'>"/ABUND_perPFG_perStrata"</span>)
+<span class='no'>dir3</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='no'>name.folder</span>, <span class='st'>"/RESULTS/"</span>, <span class='no'>name.simul</span>, <span class='st'>"/LIGHT"</span>)
+<span class='no'>dir4</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='no'>name.folder</span>, <span class='st'>"/RESULTS/"</span>, <span class='no'>name.simul</span>, <span class='st'>"/SOIL"</span>)
 
 <span class='fu'><a href='https://rdrr.io/r/base/files2.html'>dir.create</a></span>(<span class='no'>dir1</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/files2.html'>dir.create</a></span>(<span class='no'>dir2</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/files2.html'>dir.create</a></span>(<span class='no'>dir3</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/files2.html'>dir.create</a></span>(<span class='no'>dir4</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'>## Create results files</span>
 <span class='no'>PFG.names</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>succ_light</span>$<span class='no'>PFG</span>

@@ -267,7 +267,6 @@
 ##'   \item SEEDING_DURATION
 ##'   \item SEEDING_TIMESTEP
 ##'   \item SEEDING_INPUT
-##'   \item MAX_BY_COHORT
 ##'   \item MAX_ABUND_LOW
 ##'   \item MAX_ABUND_MEDIUM 
 ##'   \item MAX_ABUND_HIGH \cr \cr
@@ -341,7 +340,7 @@
 ##' @seealso \code{\link{PRE_FATE.skeletonDirectory}},
 ##' \code{\link{PRE_FATE.params_PFGsuccession}},
 ##' \code{\link{PRE_FATE.params_PFGlight}},
-##' \code{\link{PRE_FATE.params_PFG}},
+##' \code{\link{PRE_FATE.params_PFGsoil}},
 ##' \code{\link{PRE_FATE.params_PFGdispersal}},
 ##' \code{\link{PRE_FATE.params_PFGdisturbance}},
 ##' \code{\link{PRE_FATE.params_simulParameters}}
@@ -444,7 +443,6 @@ PRE_FATE.params_globalParameters = function(
   , required.seeding_duration
   , required.seeding_timestep
   , required.seeding_input
-  , required.max_by_cohort
   , required.max_abund_low
   , required.max_abund_medium
   , required.max_abund_high

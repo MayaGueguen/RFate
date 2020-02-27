@@ -178,7 +178,6 @@
 ##'                                  , required.seeding_duration = PNE_PARAM$global["SEEDING_DURATION"]
 ##'                                  , required.seeding_timestep = PNE_PARAM$global["SEEDING_TIMESTEP"]
 ##'                                  , required.seeding_input = PNE_PARAM$global["SEEDING_INPUT"]
-##'                                  , required.max_by_cohort = PNE_PARAM$global["MAX_BY_COHORT"]
 ##'                                  , required.max_abund_low = PNE_PARAM$global["MAX_ABUND_LOW"]
 ##'                                  , required.max_abund_medium = PNE_PARAM$global["MAX_ABUND_MEDIUM"]
 ##'                                  , required.max_abund_high = PNE_PARAM$global["MAX_ABUND_HIGH"]
@@ -215,9 +214,13 @@
 ##' name.simul = "SIMUL_V1"
 ##' dir1 = paste0(name.folder, "/RESULTS/", name.simul, "/ABUND_perPFG_allStrata")
 ##' dir2 = paste0(name.folder, "/RESULTS/", name.simul, "/ABUND_perPFG_perStrata")
+##' dir3 = paste0(name.folder, "/RESULTS/", name.simul, "/LIGHT")
+##' dir4 = paste0(name.folder, "/RESULTS/", name.simul, "/SOIL")
 ##' 
 ##' dir.create(dir1, recursive = TRUE)
 ##' dir.create(dir2, recursive = TRUE)
+##' dir.create(dir3, recursive = TRUE)
+##' dir.create(dir4, recursive = TRUE)
 ##' 
 ##' ## Create results files
 ##' PFG.names = PNE_PARAM$succ_light$PFG
@@ -230,6 +233,12 @@
 ##'   writeRaster(ras
 ##'               , filename = paste0(dir1, "/Abund_YEAR_800_", pfg, "_STRATA_all.tif")
 ##'               , overwrite = TRUE)
+##'               
+##'   for (ye in seq(100, 700, 100))
+##'   {
+##'     file.copy(from = paste0(dir1, "/Abund_YEAR_800_", pfg, "_STRATA_all.tif")
+##'               , to = paste0(dir1, "/Abund_YEAR_", ye, "_", pfg, "_STRATA_all.tif"))
+##'   }
 ##' }
 ##' 
 ##' 

@@ -124,7 +124,6 @@
 ##'                                  , required.seeding_duration = PNE_PARAM$global["SEEDING_DURATION"]
 ##'                                  , required.seeding_timestep = PNE_PARAM$global["SEEDING_TIMESTEP"]
 ##'                                  , required.seeding_input = PNE_PARAM$global["SEEDING_INPUT"]
-##'                                  , required.max_by_cohort = PNE_PARAM$global["MAX_BY_COHORT"]
 ##'                                  , required.max_abund_low = PNE_PARAM$global["MAX_ABUND_LOW"]
 ##'                                  , required.max_abund_medium = PNE_PARAM$global["MAX_ABUND_MEDIUM"]
 ##'                                  , required.max_abund_high = PNE_PARAM$global["MAX_ABUND_HIGH"]

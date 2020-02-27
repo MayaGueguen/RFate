@@ -390,7 +390,6 @@ contain information about the pixel habitat. <br /> <br /></p>
                                  , <span class='kw'>required.seeding_duration</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"SEEDING_DURATION"</span>]
                                  , <span class='kw'>required.seeding_timestep</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"SEEDING_TIMESTEP"</span>]
                                  , <span class='kw'>required.seeding_input</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"SEEDING_INPUT"</span>]
-                                 , <span class='kw'>required.max_by_cohort</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"MAX_BY_COHORT"</span>]
                                  , <span class='kw'>required.max_abund_low</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"MAX_ABUND_LOW"</span>]
                                  , <span class='kw'>required.max_abund_medium</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"MAX_ABUND_MEDIUM"</span>]
                                  , <span class='kw'>required.max_abund_high</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"MAX_ABUND_HIGH"</span>]
@@ -427,9 +426,13 @@ contain information about the pixel habitat. <br /> <br /></p>
 <span class='no'>name.simul</span> <span class='kw'>=</span> <span class='st'>"SIMUL_V1"</span>
 <span class='no'>dir1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='no'>name.folder</span>, <span class='st'>"/RESULTS/"</span>, <span class='no'>name.simul</span>, <span class='st'>"/ABUND_perPFG_allStrata"</span>)
 <span class='no'>dir2</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='no'>name.folder</span>, <span class='st'>"/RESULTS/"</span>, <span class='no'>name.simul</span>, <span class='st'>"/ABUND_perPFG_perStrata"</span>)
+<span class='no'>dir3</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='no'>name.folder</span>, <span class='st'>"/RESULTS/"</span>, <span class='no'>name.simul</span>, <span class='st'>"/LIGHT"</span>)
+<span class='no'>dir4</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='no'>name.folder</span>, <span class='st'>"/RESULTS/"</span>, <span class='no'>name.simul</span>, <span class='st'>"/SOIL"</span>)
 
 <span class='fu'><a href='https://rdrr.io/r/base/files2.html'>dir.create</a></span>(<span class='no'>dir1</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/files2.html'>dir.create</a></span>(<span class='no'>dir2</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/files2.html'>dir.create</a></span>(<span class='no'>dir3</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/files2.html'>dir.create</a></span>(<span class='no'>dir4</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'>## Create results files</span>
 <span class='no'>PFG.names</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>succ_light</span>$<span class='no'>PFG</span>
@@ -442,6 +445,12 @@ contain information about the pixel habitat. <br /> <br /></p>
   <span class='fu'><a href='https://rdrr.io/pkg/raster/man/writeRaster.html'>writeRaster</a></span>(<span class='no'>ras</span>
               , <span class='kw'>filename</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='no'>dir1</span>, <span class='st'>"/Abund_YEAR_800_"</span>, <span class='no'>pfg</span>, <span class='st'>"_STRATA_all.tif"</span>)
               , <span class='kw'>overwrite</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+  <span class='kw'>for</span> (<span class='no'>ye</span> <span class='kw'>in</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>100</span>, <span class='fl'>700</span>, <span class='fl'>100</span>))
+  {
+    <span class='fu'><a href='https://rdrr.io/r/base/files.html'>file.copy</a></span>(<span class='kw'>from</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='no'>dir1</span>, <span class='st'>"/Abund_YEAR_800_"</span>, <span class='no'>pfg</span>, <span class='st'>"_STRATA_all.tif"</span>)
+              , <span class='kw'>to</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='no'>dir1</span>, <span class='st'>"/Abund_YEAR_"</span>, <span class='no'>ye</span>, <span class='st'>"_"</span>, <span class='no'>pfg</span>, <span class='st'>"_STRATA_all.tif"</span>))
+  }
 }
 
 

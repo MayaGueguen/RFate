@@ -65,7 +65,7 @@
 ##' corresponding \code{POST_FATE.graphic_...} function will be run.
 ##' @param opt.doFunc.evolutionPixels default TRUE (\emph{optional}).If TRUE, 
 ##' corresponding \code{POST_FATE.graphic_...} function will be run.
-##'  @param opt.doFunc.validation default TRUE (\emph{optional}). If TRUE, 
+##' @param opt.doFunc.validation default TRUE (\emph{optional}). If TRUE, 
 ##' corresponding \code{POST_FATE.graphic_...} function will be run.
 ##' @param opt.doFunc.mapPFGvsHS default TRUE (\emph{optional}). If TRUE, 
 ##' corresponding \code{POST_FATE.graphic_...} function will be run.
@@ -152,7 +152,7 @@
 ##'   simulation time}
 ##'   \item{\file{GRAPHIC_A \cr pixels}}{to visualize for each PFG the
 ##'   evolution of its abundance within each selected pixel through
-##'   simulation time}, as well as the evolution of light and soil resources}
+##'   simulation time, as well as the evolution of light and soil resources}
 ##'   \item{\file{GRAPHIC_B \cr validationStatistics}}{to assess the modeling 
 ##'   quality of each PFG based on given observations within the studied area}
 ##'   \item{\file{GRAPHIC_B \cr PFGvsHS}}{to visualize the PFG presence
@@ -183,17 +183,17 @@
 ##' 
 ##' @keywords FATE, outputs, abundance through time
 ##' 
-##' @seealso \code{\link{POST_FATE.relativeAbund}}, 
+##' @seealso \code{\link{POST_FATE.temporalEvolution}}, 
+##' \code{\link{POST_FATE.graphic_evolutionCoverage}}, 
+##' \code{\link{POST_FATE.graphic_evolutionPixels}},
+##' \code{\link{POST_FATE.relativeAbund}}, 
 ##' \code{\link{POST_FATE.graphic_validationStatistics}}, 
 ##' \code{\link{POST_FATE.graphic_mapPFGvsHS}}, 
-##' \code{\link{POST_FATE.graphic_mapPFGcover}}, 
 ##' \code{\link{POST_FATE.graphic_mapPFGrichness}}, 
+##' \code{\link{POST_FATE.graphic_mapPFGcover}}, 
 ##' \code{\link{POST_FATE.graphic_mapPFGlight}}, 
-##' \code{\link{POST_FATE.graphic_mapPFGsoil}}, 
-##' \code{\link{POST_FATE.graphic_evolutionCoverage}}, 
-##' \code{\link{POST_FATE.graphic_evolutionAbund_pixels}}, 
-##' \code{\link{POST_FATE.graphic_evolutionLight_pixels}}, 
-##' \code{\link{POST_FATE.graphic_evolutionSoil_pixels}}
+##' \code{\link{POST_FATE.graphic_mapPFGsoil}}
+##' 
 ##' 
 ##' @examples
 ##' 
@@ -206,7 +206,7 @@
 ##' POST_FATE.graphics(name.simulation = "FATE_simulation"
 ##'                                     , file.simulParam = "Simul_parameters_V1.txt"
 ##'                                     , year = 100
-##'                                     , no.years = 10)
+##'                                     , no.years = 10
 ##'                                     , opt.abund_fixedScale = FALSE
 ##'                                     , opt.no_CPU = 4)
 ##' }

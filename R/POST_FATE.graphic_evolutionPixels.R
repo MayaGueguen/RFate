@@ -98,7 +98,7 @@
 ##' 
 ##' @keywords FATE, outputs, abundance through time
 ##' 
-##' @seealso \code{\link{POST_FATE.temporalAbund}}
+##' @seealso \code{\link{POST_FATE.temporalEvolution}}
 ##' 
 ##' @examples
 ##' 

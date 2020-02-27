@@ -6,39 +6,40 @@
 ##'
 ##' @author Maya Guéguen
 ##' 
-##' @description This script is designed to produce a raster map of PFG cover
+##' @description This script is designed to produce a raster map of PFG cover 
 ##' for one (or several) specific \code{FATE-HD} simulation year.
 ##'              
-##' @param name.simulation a \code{string} that corresponds to the main directory
-##' or simulation name of the \code{FATE-HD} simulation
-##' @param file.simulParam a \code{string} that corresponds to the name of a
-##' parameter file that will be contained into the \code{PARAM_SIMUL} folder
+##' @param name.simulation a \code{string} that corresponds to the main 
+##' directory or simulation name of the \code{FATE-HD} simulation
+##' @param file.simulParam a \code{string} that corresponds to the name of a 
+##' parameter file that will be contained into the \code{PARAM_SIMUL} folder 
 ##' of the \code{FATE-HD} simulation
 ##' @param year an \code{integer} corresponding to the simulation year(s) that 
 ##' will be used to extract PFG abundance and binary maps
-##' @param strata_min an \code{integer} corresponding to the lowest stratum from
-##' which PFG abundances are summed up to the highest stratum
-##' @param opt.mat.cover.obs default NULL (\emph{optional}). A \code{data.frame}
-##' with 3 columns : X, Y, obs
-##' @param opt.ras.cover.obs default NULL (\emph{optional}). A \code{string} that
-##' corresponds to the file name of a raster containing observed values for 
-##' vegetation cover
-##' @param opt.no_CPU default 1 (\emph{optional}). The number of resources that 
-##' can be used to parallelize the \code{unzip/zip} of raster files
-##' @param opt.doPlot default TRUE (\emph{optional}). If TRUE, plot(s) will be
-##' processed, otherwise only the calculation and reorganization of outputs
-##' will occur, be saved and returned.
+##' @param strata_min an \code{integer} corresponding to the lowest stratum 
+##' from which PFG abundances are summed up to the highest stratum
+##' @param opt.mat.cover.obs default \code{NULL} (\emph{optional}). A 
+##' \code{data.frame} with 3 columns : \code{X}, \code{Y}, \code{obs}
+##' @param opt.ras.cover.obs default \code{NULL} (\emph{optional}). A 
+##' \code{string} that corresponds to the file name of a raster containing 
+##' observed values for vegetation cover
+##' @param opt.no_CPU default \code{1} (\emph{optional}). The number of 
+##' resources that can be used to parallelize the \code{unzip/zip} of raster 
+##' files
+##' @param opt.doPlot default \code{TRUE} (\emph{optional}). If \code{TRUE}, 
+##' plot(s) will be processed, otherwise only the calculation and 
+##' reorganization of outputs will occur, be saved and returned.
 ##' 
 ##' 
 ##' @details 
 ##' 
 ##' This function allows one to obtain, for a specific \code{FATE-HD} simulation
-##' and a specific parameter file within this simulation, one preanalytical
-##' graphic. \cr
+##' and a specific parameter file within this simulation, one raster 
+##' maps of PFG relative cover and one preanalytical graphic. \cr \cr
 ##' 
-##' For each PFG and each selected simulation year, raster maps are retrieved
+##' For each PFG and each selected simulation year, raster maps are retrieved 
 ##' from the results folders \code{ABUND_perPFG_perStrata} and 
-##' \code{BIN_perPFG_perStrata} and unzipped.
+##' \code{BIN_perPFG_perStrata} and unzipped. 
 ##' Informations extracted lead to the production of one graphic before the
 ##' maps are compressed again :
 ##' 
@@ -51,9 +52,34 @@
 ##' 
 ##' 
 ##' 
-##' @return One \code{POST_FATE_[...].pdf} file is created : 
+##' @return A \code{list} containing one or several (one for each simulation 
+##' year) \code{list} of \code{raster} and \code{data.frame} with the following 
+##' columns, and one or two \code{ggplot2} objects :
+##' 
 ##' \describe{
-##'   \item{\file{GRAPHIC_B \cr PFGcover}}{to visualize the PFG cover
+##'   \item{tab}{ 
+##'     \describe{ 
+##'       \item{raster}{}
+##'       \item{ccr}{ 
+##'         \describe{
+##'           \item{\code{PFG}}{the concerned Plant Functional Group}
+##'           \item{\code{AUC.sd}}{standard deviation of the AUC values}
+##'         }
+##'       }
+##'     }
+##'   }
+##'   \item{plot}{
+##'     \describe{
+##'       \item{plot.cover}{\code{ggplot2} object, representing the }
+##'       \item{plot.ccr}{\code{ggplot2} object, representing the \cr \cr}
+##'     }
+##'   }
+##' }
+##' 
+##' 
+##' One \code{POST_FATE_[...].pdf} file is created : 
+##' \describe{
+##'   \item{\file{GRAPHIC_C \cr map_PFGcover}}{to visualize the PFG cover
 ##'   within the studied area}
 ##' }
 ##' 

@@ -331,7 +331,9 @@ PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_PNE"
                             , no_simulations = 30
 )
 
-if (dir.exists("FATE_simulation_MULTIPLE_SET")) unlink("FATE_simulation_MULTIPLE_SET", recursive = TRUE)
+if (dir.exists("FATE_simulation_MULTIPLE_SET")){
+  unlink("FATE_simulation_MULTIPLE_SET", recursive = TRUE)
+}
 PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_PNE"
                             , file.simulParam.1 = "Simul_parameters_V1.txt"
                             , no_simulations = 5
