@@ -96,7 +96,6 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : name.si
                                    , required.seeding_duration = c(10,50)
                                    , required.seeding_timestep = 1
                                    , required.seeding_input = 100
-                                   , required.max_by_cohort = 5000000
                                    , required.max_abund_low = 3000000
                                    , required.max_abund_medium = 5000000
                                    , required.max_abund_high = 9000000
@@ -111,7 +110,9 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : name.si
                                    , doLight = TRUE
                                    , LIGHT.thresh_medium = 13000000
                                    , LIGHT.thresh_low = 19000000
-                                   , doSoil = TRUE)
+                                   , doSoil = TRUE
+                                   , SOIL.init = 2.5
+                                   , SOIL.retention = 0.5)
   expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif")
                , "There is not the same number of files (`.txt` file starting with `SUCC`) into the FATE_simulation/DATA/PFGS/SUCC/ folder as the number of PFG indicated into the file"
                , fixed = T)
@@ -124,16 +125,6 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : name.si
                                                             , maturity = c(5, 5, 3, 3, 8, 9)
                                                             , longevity = c(12, 200, 25, 4, 110, 70)))
   expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif")
-               , "There is not the same number of files (`.txt` file starting with `DISP`) into the FATE_simulation/DATA/PFGS/DISP/ folder as the number of PFG indicated into the file"
-               , fixed = T)
-  
-  ## Create PFG dispersal parameter files
-  PRE_FATE.params_PFGdispersal(name.simulation = "FATE_simulation"
-                               , mat.PFG.disp = data.frame(PFG = paste0("PFG", 1:6)
-                                                           , d50 = rep(c(500, 500, 100),2)
-                                                           , d99 = rep(c(10000, 15000, 20000),2)
-                                                           , ldd = rep(c(100000, 50000, 100000),2)))
-  expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif")
                , "There is not the same number of files (`.txt` file starting with `LIGHT`) into the FATE_simulation/DATA/PFGS/LIGHT/ folder as the number of PFG indicated into the file"
                , fixed = T)
   
@@ -145,7 +136,6 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : name.si
                                                        , maturity = c(5, 5, 3, 3, 8, 9)
                                                        , longevity = c(12, 200, 25, 4, 110, 70)
                                                        , light = c(1, 1, 1, 2, 2, 3)))
-  
   expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif")
                , "There is not the same number of files (`.txt` file starting with `SOIL`) into the FATE_simulation/DATA/PFGS/SOIL/ folder as the number of PFG indicated into the file"
                , fixed = T)
@@ -157,6 +147,16 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : name.si
                                                       , soil_contrib = c(1.5, 1.2, 1, 2.6, 2.3, 3.9)
                                                       , soil_tol_min = c(1, 1, 1, 2, 2, 3)
                                                       , soil_tol_max = c(3, 3, 3, 3, 3, 4)))
+  expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif")
+               , "There is not the same number of files (`.txt` file starting with `DISP`) into the FATE_simulation/DATA/PFGS/DISP/ folder as the number of PFG indicated into the file"
+               , fixed = T)
+  
+  ## Create PFG dispersal parameter files
+  PRE_FATE.params_PFGdispersal(name.simulation = "FATE_simulation"
+                               , mat.PFG.disp = data.frame(PFG = paste0("PFG", 1:6)
+                                                           , d50 = rep(c(500, 500, 100),2)
+                                                           , d99 = rep(c(10000, 15000, 20000),2)
+                                                           , ldd = rep(c(100000, 50000, 100000),2)))
   
   expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.mask = "mask.tif")
                , "`name.simulation` does not exist or does not contain a DATA/PFGS/DIST/ folder"

@@ -33,7 +33,7 @@ test_that(".getParam gives error with wrong data", {
                , "`flag.split` must be either ` ` or `^--.*--$`", fixed = T)
   expect_error(.getParam(params.lines = "TEST_getParam.txt", flag = "PARAM1", flag.split = "aa")
                , "`flag.split` must be either ` ` or `^--.*--$`", fixed = T)
-
+  
   expect_error(.getParam(params.lines = "TEST_getParam.txt", flag = "PARAM1", flag.split = " ")
                , "`flag` (PARAM1) is not found within `params.lines` (TEST_getParam.txt)", fixed = T)
   expect_error(.getParam(params.lines = "TEST_getParam.txt", flag = "PARAM1", flag.split = "^--.*--$")

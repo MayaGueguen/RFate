@@ -14,7 +14,7 @@ test_that(".createParams gives error with wrong data", {
   expect_error(.createParams(factor(1)), "`params.file` must contain a character value of length > 0")
   expect_error(.createParams(params.file = "fake"), "`params.file` must be a file name with .txt extension")
   expect_error(.createParams(params.file = "FAKE_dir/fake.txt"), "does not exist")
-
+  
   expect_error(.createParams(params.file = "fake.txt"), "`params.list` must be a list")
   expect_error(.createParams(params.file = "fake.txt", params.list = NA), "`params.list` must be a list")
   expect_error(.createParams(params.file = "fake.txt", params.list = NULL), "`params.list` must be a list")

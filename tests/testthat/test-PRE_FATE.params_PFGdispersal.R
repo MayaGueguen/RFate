@@ -58,7 +58,7 @@ test_that("PRE_FATE.params_PFGdispersal gives error with wrong data : mat.PFG.di
                                             , mat.PFG.disp = data.frame(PFG = "", d50 = NA, d99 = 3, ldd = 4))
                , "`mat.PFG.disp$PFG` must contain a character value of length > 0", fixed = T)
   
-
+  
   expect_error(PRE_FATE.params_PFGdispersal(name.simulation = "FATE_simulation"
                                             , mat.PFG.disp = data.frame(PFG = c(1,2), d50 = c(2,NA), d99 = 3, ldd = 4))
                , "Wrong type of data!\n Columns `d50`, `d99` and `ldd` of `mat.PFG.disp` must not contain NA values")
@@ -114,8 +114,8 @@ test_that("PRE_FATE.params_PFGdispersal gives correct output", {
   if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
   PRE_FATE.skeletonDirectory()
   expect_message(PRE_FATE.params_PFGdispersal(name.simulation = "FATE_simulation"
-                                            , mat.PFG.disp = data.frame(PFG = 1, d50 = 2, d99 = 3, ldd = 4))
-               , "The parameter file FATE_simulation/DATA/PFGS/DISP/DISP_1.txt has been successfully created !")
+                                              , mat.PFG.disp = data.frame(PFG = 1, d50 = 2, d99 = 3, ldd = 4))
+                 , "The parameter file FATE_simulation/DATA/PFGS/DISP/DISP_1.txt has been successfully created !")
   expect_warning(PRE_FATE.params_PFGdispersal(name.simulation = "FATE_simulation"
                                               , mat.PFG.disp = data.frame(PFG = 1, d50 = 2, d99 = 3, ldd = 4)
                                               , opt.folder.name = "")

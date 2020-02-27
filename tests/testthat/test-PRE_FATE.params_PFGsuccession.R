@@ -185,7 +185,7 @@ test_that("PRE_FATE.params_PFGsuccession gives error with wrong data : mat.PFG.s
                                              , mat.PFG.succ = data.frame(PFG = c(1,2), type = "H", height = 3, maturity = 4
                                                                          , longevity = 10, potential_fecundity = c(10,NA)))
                , "Columns `potential_fecundity` of `mat.PFG.succ` must not contain NA values")
-
+  
   
   expect_error(PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
                                              , mat.PFG.succ = data.frame(PFG = 1, type = "H", height = 3, maturity = 4

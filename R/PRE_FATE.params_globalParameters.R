@@ -645,9 +645,9 @@ PRE_FATE.params_globalParameters = function(
   if (doDispersal)
   {
     params.DISP = list(as.numeric(doDispersal)
-                          , DISPERSAL.mode)
+                       , DISPERSAL.mode)
     names.params.list.DISP = c("DO_DISPERSAL"
-                                  , "DISPERSAL_MODE")
+                               , "DISPERSAL_MODE")
   } else
   {
     params.DISP = list(as.numeric(doDispersal))
@@ -752,7 +752,7 @@ PRE_FATE.params_globalParameters = function(
       no.start = length(previous.files) + 1
     }
   }
-
+  
   names.params.list = paste0("V", no.start:length(params.list))
   names.params.list.sub = c("NB_CPUS"
                             , "NB_FG"

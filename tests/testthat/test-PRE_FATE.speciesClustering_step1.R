@@ -45,23 +45,24 @@ test_that("PRE_FATE.speciesClustering_step1 gives error with wrong data", {
 
 ## OUTPUTS
 test_that("PRE_FATE.speciesClustering_step1 gives right output", {
-  expect_output(str(PRE_FATE.speciesClustering_step1(matrix(seq(9), ncol=3))), "List")
-  expect_equal(length(PRE_FATE.speciesClustering_step1(matrix(seq(9), ncol=3))), 2)
+  tmp1 = PRE_FATE.speciesClustering_step1(matrix(seq(9), ncol=3))
+
+  expect_output(str(tmp1), "List")
+  expect_equal(length(tmp1), 2)
   
-  expect_output(str(PRE_FATE.speciesClustering_step1(matrix(seq(9), ncol=3))$clust.dendograms), "List")
-  expect_equal(length(PRE_FATE.speciesClustering_step1(matrix(seq(9), ncol=3))$clust.dendograms), 1)
-  
-  expect_output(str(PRE_FATE.speciesClustering_step1(list(matrix(seq(9), ncol=3)
-                                                          , matrix(seq(9), ncol=3)))$clust.dendograms), "List")
-  expect_equal(length(PRE_FATE.speciesClustering_step1(list(matrix(seq(9), ncol=3)
-                                                            , matrix(seq(9), ncol=3)))$clust.dendograms), 2)
+  expect_output(str(tmp1$clust.dendrograms), "List")
+  expect_equal(length(tmp1$clust.dendrograms), 1)
   
   expect_output(str(PRE_FATE.speciesClustering_step1(as.dist(matrix(seq(9), ncol=3)))$clust.evaluation), "data.frame")
-  expect_output(str(PRE_FATE.speciesClustering_step1(matrix(seq(9), ncol=3))$clust.evaluation), "data.frame")
-  expect_output(str(PRE_FATE.speciesClustering_step1(matrix(seq(9), ncol=3))$clust.evaluation), "4 variables")
+  expect_output(str(tmp1$clust.evaluation), "data.frame")
+  expect_output(str(tmp1$clust.evaluation), "4 variables")
   
-  expect_output(str(PRE_FATE.speciesClustering_step1(list(matrix(seq(9), ncol=3)
-                                                          , matrix(seq(9), ncol=3)))$clust.evaluation), "data.frame")
-  expect_output(str(PRE_FATE.speciesClustering_step1(list(matrix(seq(9), ncol=3)
-                                                          , matrix(seq(9), ncol=3)))$clust.evaluation), "4 variables")
+  tmp2 = PRE_FATE.speciesClustering_step1(list(matrix(seq(9), ncol=3)
+                                               , matrix(seq(9), ncol=3)))
+  
+  expect_output(str(tmp2$clust.dendrograms), "List")
+  expect_equal(length(tmp2$clust.dendrograms), 2)
+  
+  expect_output(str(tmp2$clust.evaluation), "data.frame")
+  expect_output(str(tmp2$clust.evaluation), "4 variables")
 })

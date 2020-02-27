@@ -525,15 +525,15 @@ PRE_FATE.params_multipleSet = function(
   GLOBAL.names.params = c("max_abund_low" = "MAX_ABUND_LOW"
                           , "max_abund_medium" = "MAX_ABUND_MEDIUM"
                           , "max_abund_high" = "MAX_ABUND_HIGH"
-                          , "habsuit_ref_option" = "HABSUIT_OPTION"
                           , "seeding_duration" = "SEEDING_DURATION"
                           , "seeding_timestep" = "SEEDING_TIMESTEP"
                           , "seeding_input" = "SEEDING_INPUT"
-                          , "dispersal_mode" = "DISPERSAL_MODE"
-                          , "soil_init" = "SOIL_INIT"
-                          , "soil_retention" = "SOIL_RETENTION"
                           , "light_thresh_medium" = "LIGHT_THRESH_MEDIUM"
                           , "light_thresh_low" = "LIGHT_THRESH_LOW"
+                          , "soil_init" = "SOIL_INIT"
+                          , "soil_retention" = "SOIL_RETENTION"
+                          , "habsuit_ref_option" = "HABSUIT_OPTION"
+                          , "dispersal_mode" = "DISPERSAL_MODE"
                           , "nb_stratum" = "NB_STRATUM")
   
   
@@ -660,7 +660,7 @@ PRE_FATE.params_multipleSet = function(
     }
     
     ## Get parameters value
-    PARAMS = lapply(params[c(1:3, 6)], function(y) {
+    PARAMS = lapply(params[c(1:4, 7)], function(y) {
       sapply(y, function(x) {
         if (!is.null(x))
         {
@@ -694,7 +694,7 @@ PRE_FATE.params_multipleSet = function(
     
     if (is.null(unlist(PARAMS1)))
     { 
-      if (c("dispersal_mode", "habsuit_ref_option") %in% get_checked)
+      if ("dispersal_mode" %in% get_checked || "habsuit_ref_option" %in% get_checked)
       {
         return(list(PARAMS.range = data.frame()
                     , TOKEEP.global = TOKEEP1.global
@@ -736,11 +736,11 @@ PRE_FATE.params_multipleSet = function(
       PARAMS.min = ff()
       todo = function(x, y) { return(as.vector(PARAMS1[[y]][x]) + PARAMS.ecart[[y]][x]) }
       PARAMS.max = ff()
-      
+
       PARAMS.range = rbind(as.integer(unlist(PARAMS.min))
                            , as.integer(unlist(PARAMS.max)))
       PARAMS.range = as.data.frame(PARAMS.range)
-      colnames(PARAMS.range) = names(PARAMS.min)
+      colnames(PARAMS.range) = names(unlist(PARAMS.min))
       rownames(PARAMS.range) = c("min", "max")
       if ("soil_init" %in% colnames(PARAMS.range))
       {
@@ -767,7 +767,7 @@ PRE_FATE.params_multipleSet = function(
       }
       if ("nb_stratum" %in% colnames(PARAMS.range))
       {
-        PARAMS.range[, "nb_stratum"] = c(1, PARAMS1[[4]][1])
+        PARAMS.range[, "nb_stratum"] = c(1, PARAMS1[[5]][1])
       }
       return(list(PARAMS.range = PARAMS.range
                   , TOKEEP.global = TOKEEP1.global
@@ -814,7 +814,7 @@ PRE_FATE.params_multipleSet = function(
         PARAMS.range = rbind(as.integer(unlist(PARAMS.min))
                              , as.integer(unlist(PARAMS.max)))
         PARAMS.range = as.data.frame(PARAMS.range)
-        colnames(PARAMS.range) = names(PARAMS.min)
+        colnames(PARAMS.range) = names(unlist(PARAMS.min))
         rownames(PARAMS.range) = c("min", "max")
         if ("soil_init" %in% colnames(PARAMS.range))
         {
@@ -839,9 +839,9 @@ PRE_FATE.params_multipleSet = function(
         {
           PARAMS.range[1, which(PARAMS.range[1, ind_notSoil] < 1)] = 1
         }
-        if ("nb_stratum" %in% unlist(get_checked))
+        if ("nb_stratum" %in% colnames(PARAMS.range))
         {
-          PARAMS.range[, "nb_stratum"] = c(1, max(c(PARAMS1[[4]][1], PARAMS2[[4]][1])))
+          PARAMS.range[, "nb_stratum"] = c(1, max(c(PARAMS1[[5]][1], PARAMS2[[5]][1])))
         }
         return(list(PARAMS.range = PARAMS.range
                     , TOKEEP.global = TOKEEP1.global
@@ -890,14 +890,14 @@ PRE_FATE.params_multipleSet = function(
     }
     
     ## Round some parameters to avoid too much precision
-    ind = which(colnames(params.ranges) %in% c("max_abund_low"
-                                               , "max_abund_medium"
-                                               , "max_abund_high"
-                                               , "light_thresh_medium"
-                                               , "light_thresh_low"))
-    params.ranges[, ind] = round(params.ranges[, ind] / 1000)
-    ind = which(colnames(params.ranges) %in% c("seeding_duration", "seeding_input"))
-    params.ranges[, ind] = round(params.ranges[, ind] / 10)
+    # ind = which(colnames(params.ranges) %in% c("max_abund_low"
+    #                                            , "max_abund_medium"
+    #                                            , "max_abund_high"
+    #                                            , "light_thresh_medium"
+    #                                            , "light_thresh_low"))
+    # params.ranges[, ind] = round(params.ranges[, ind] / 1000)
+    # ind = which(colnames(params.ranges) %in% c("seeding_duration", "seeding_input"))
+    # params.ranges[, ind] = round(params.ranges[, ind] / 10)
     
     if (sum(c("max_abund_low"
               , "max_abund_medium"
@@ -961,14 +961,14 @@ PRE_FATE.params_multipleSet = function(
     }
     
     ## Upscale rounded parameters to have correct ranges
-    ind = which(colnames(params.space) %in% c("max_abund_low"
-                                              , "max_abund_medium"
-                                              , "max_abund_high"
-                                              , "light_thresh_medium"
-                                              , "light_thresh_low"))
-    if (length(ind) > 0) params.space[, ind] = params.space[, ind] * 1000
-    ind = which(colnames(params.space) %in% c("seeding_duration", "seeding_input"))
-    if (length(ind) > 0) params.space[, ind] = params.space[, ind] * 10
+    # ind = which(colnames(params.space) %in% c("max_abund_low"
+    #                                           , "max_abund_medium"
+    #                                           , "max_abund_high"
+    #                                           , "light_thresh_medium"
+    #                                           , "light_thresh_low"))
+    # if (length(ind) > 0) params.space[, ind] = params.space[, ind] * 1000
+    # ind = which(colnames(params.space) %in% c("seeding_duration", "seeding_input"))
+    # if (length(ind) > 0) params.space[, ind] = params.space[, ind] * 10
   }
   if ("habsuit_ref_option" %in% unlist(get_checked))
   {

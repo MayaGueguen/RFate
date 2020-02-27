@@ -174,46 +174,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : requir
 })
 
 ## INPUTS
-test_that("PRE_FATE.params_globalParameters gives error with wrong data : required.max_by_cohort", {
-  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = NA)
-               , "`required.max_by_cohort` must be an integer > 0")
-  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = NULL)
-               , "`required.max_by_cohort` must be an integer > 0")
-  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = "")
-               , "`required.max_by_cohort` must be an integer > 0")
-  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_STRATA = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_by_cohort = -1)
-               , "`required.max_by_cohort` must be an integer > 0")
-})
-
-## INPUTS
 test_that("PRE_FATE.params_globalParameters gives error with wrong data : required.max_abund_low", {
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.no_PFG = 5
@@ -222,7 +182,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : requir
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
                                                 , required.max_abund_low = NA)
                , "`required.max_abund_low` must be an integer > 0")
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
@@ -232,7 +191,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : requir
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
                                                 , required.max_abund_low = NULL)
                , "`required.max_abund_low` must be an integer > 0")
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
@@ -242,7 +200,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : requir
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
                                                 , required.max_abund_low = "")
                , "`required.max_abund_low` must be an integer > 0")
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
@@ -252,7 +209,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : requir
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
                                                 , required.max_abund_low = -1)
                , "`required.max_abund_low` must be an integer > 0")
 })
@@ -266,7 +222,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : requir
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
                                                 , required.max_abund_low = 3000000
                                                 , required.max_abund_medium = NA)
                , "`required.max_abund_medium` must be an integer > 0")
@@ -277,7 +232,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : requir
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
                                                 , required.max_abund_low = 3000000
                                                 , required.max_abund_medium = NULL)
                , "`required.max_abund_medium` must be an integer > 0")
@@ -288,7 +242,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : requir
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
                                                 , required.max_abund_low = 3000000
                                                 , required.max_abund_medium = "")
                , "`required.max_abund_medium` must be an integer > 0")
@@ -299,7 +252,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : requir
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
                                                 , required.max_abund_low = 3000000
                                                 , required.max_abund_medium = -1)
                , "`required.max_abund_medium` must be an integer > 0")
@@ -314,7 +266,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : requir
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
                                                 , required.max_abund_low = 3000000
                                                 , required.max_abund_medium = 5000000
                                                 , required.max_abund_high = NA)
@@ -326,7 +277,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : requir
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
                                                 , required.max_abund_low = 3000000
                                                 , required.max_abund_medium = 5000000
                                                 , required.max_abund_high = NULL)
@@ -338,7 +288,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : requir
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
                                                 , required.max_abund_low = 3000000
                                                 , required.max_abund_medium = 5000000
                                                 , required.max_abund_high = "")
@@ -350,7 +299,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : requir
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
                                                 , required.max_abund_low = 3000000
                                                 , required.max_abund_medium = 5000000
                                                 , required.max_abund_high = -1)
@@ -366,7 +314,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : LIGHT.
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
                                                 , required.max_abund_low = 3000000
                                                 , required.max_abund_medium = 5000000
                                                 , required.max_abund_high = 9000000
@@ -380,7 +327,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : LIGHT.
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
                                                 , required.max_abund_low = 3000000
                                                 , required.max_abund_medium = 5000000
                                                 , required.max_abund_high = 9000000
@@ -394,7 +340,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : LIGHT.
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
                                                 , required.max_abund_low = 3000000
                                                 , required.max_abund_medium = 5000000
                                                 , required.max_abund_high = 9000000
@@ -408,7 +353,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : LIGHT.
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
                                                 , required.max_abund_low = 3000000
                                                 , required.max_abund_medium = 5000000
                                                 , required.max_abund_high = 9000000
@@ -426,7 +370,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : LIGHT.
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
                                                 , required.max_abund_low = 3000000
                                                 , required.max_abund_medium = 5000000
                                                 , required.max_abund_high = 9000000
@@ -441,7 +384,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : LIGHT.
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
                                                 , required.max_abund_low = 3000000
                                                 , required.max_abund_medium = 5000000
                                                 , required.max_abund_high = 9000000
@@ -456,7 +398,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : LIGHT.
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
                                                 , required.max_abund_low = 3000000
                                                 , required.max_abund_medium = 5000000
                                                 , required.max_abund_high = 9000000
@@ -471,7 +412,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : LIGHT.
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
                                                 , required.max_abund_low = 3000000
                                                 , required.max_abund_medium = 5000000
                                                 , required.max_abund_high = 9000000
@@ -490,7 +430,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : DISPER
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
                                                 , required.max_abund_low = 3000000
                                                 , required.max_abund_medium = 5000000
                                                 , required.max_abund_high = 9000000
@@ -505,7 +444,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : DISPER
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
                                                 , required.max_abund_low = 3000000
                                                 , required.max_abund_medium = 5000000
                                                 , required.max_abund_high = 9000000
@@ -520,7 +458,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : DISPER
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
                                                 , required.max_abund_low = 3000000
                                                 , required.max_abund_medium = 5000000
                                                 , required.max_abund_high = 9000000
@@ -539,7 +476,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : HABSUI
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
                                                 , required.max_abund_low = 3000000
                                                 , required.max_abund_medium = 5000000
                                                 , required.max_abund_high = 9000000
@@ -553,7 +489,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : HABSUI
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
                                                 , required.max_abund_low = 3000000
                                                 , required.max_abund_medium = 5000000
                                                 , required.max_abund_high = 9000000
@@ -567,7 +502,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : HABSUI
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
                                                 , required.max_abund_low = 3000000
                                                 , required.max_abund_medium = 5000000
                                                 , required.max_abund_high = 9000000
@@ -587,7 +521,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : DIST.n
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
                                                 , required.max_abund_low = 3000000
                                                 , required.max_abund_medium = 5000000
                                                 , required.max_abund_high = 9000000
@@ -601,7 +534,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : DIST.n
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
                                                 , required.max_abund_low = 3000000
                                                 , required.max_abund_medium = 5000000
                                                 , required.max_abund_high = 9000000
@@ -615,7 +547,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : DIST.n
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
                                                 , required.max_abund_low = 3000000
                                                 , required.max_abund_medium = 5000000
                                                 , required.max_abund_high = 9000000
@@ -629,7 +560,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : DIST.n
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
                                                 , required.max_abund_low = 3000000
                                                 , required.max_abund_medium = 5000000
                                                 , required.max_abund_high = 9000000
@@ -647,7 +577,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : DIST.n
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
                                                 , required.max_abund_low = 3000000
                                                 , required.max_abund_medium = 5000000
                                                 , required.max_abund_high = 9000000
@@ -662,7 +591,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : DIST.n
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
                                                 , required.max_abund_low = 3000000
                                                 , required.max_abund_medium = 5000000
                                                 , required.max_abund_high = 9000000
@@ -677,7 +605,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : DIST.n
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
                                                 , required.max_abund_low = 3000000
                                                 , required.max_abund_medium = 5000000
                                                 , required.max_abund_high = 9000000
@@ -692,7 +619,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : DIST.n
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
                                                 , required.max_abund_low = 3000000
                                                 , required.max_abund_medium = 5000000
                                                 , required.max_abund_high = 9000000
@@ -711,7 +637,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : DIST.f
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
                                                 , required.max_abund_low = 3000000
                                                 , required.max_abund_medium = 5000000
                                                 , required.max_abund_high = 9000000
@@ -727,7 +652,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : DIST.f
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
                                                 , required.max_abund_low = 3000000
                                                 , required.max_abund_medium = 5000000
                                                 , required.max_abund_high = 9000000
@@ -743,7 +667,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : DIST.f
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
                                                 , required.max_abund_low = 3000000
                                                 , required.max_abund_medium = 5000000
                                                 , required.max_abund_high = 9000000
@@ -759,7 +682,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : DIST.f
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
                                                 , required.max_abund_low = 3000000
                                                 , required.max_abund_medium = 5000000
                                                 , required.max_abund_high = 9000000
@@ -775,7 +697,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : DIST.f
                                                 , required.seeding_duration = 100
                                                 , required.seeding_timestep = 100
                                                 , required.seeding_input = 100
-                                                , required.max_by_cohort = 5000000
                                                 , required.max_abund_low = 3000000
                                                 , required.max_abund_medium = 5000000
                                                 , required.max_abund_high = 9000000
@@ -785,6 +706,125 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : DIST.f
                                                 , DIST.freq = c(2,0))
                , "`DIST.freq` must be a vector of integer > 0")
 })
+
+
+## INPUTS
+test_that("PRE_FATE.params_globalParameters gives error with wrong data : SOIL.init", {
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.simul_duration = 100
+                                                , required.seeding_duration = 100
+                                                , required.seeding_timestep = 100
+                                                , required.seeding_input = 100
+                                                , required.max_abund_low = 3000000
+                                                , required.max_abund_medium = 5000000
+                                                , required.max_abund_high = 9000000
+                                                , doSoil = T
+                                                , SOIL.init = NA)
+               , "`SOIL.init` must contain numeric value > 0")
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.simul_duration = 100
+                                                , required.seeding_duration = 100
+                                                , required.seeding_timestep = 100
+                                                , required.seeding_input = 100
+                                                , required.max_abund_low = 3000000
+                                                , required.max_abund_medium = 5000000
+                                                , required.max_abund_high = 9000000
+                                                , doSoil = T
+                                                , SOIL.init = NULL)
+               , "`SOIL.init` must contain numeric value > 0")
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.simul_duration = 100
+                                                , required.seeding_duration = 100
+                                                , required.seeding_timestep = 100
+                                                , required.seeding_input = 100
+                                                , required.max_abund_low = 3000000
+                                                , required.max_abund_medium = 5000000
+                                                , required.max_abund_high = 9000000
+                                                , doSoil = T
+                                                , SOIL.init = "")
+               , "`SOIL.init` must contain numeric value > 0")
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.simul_duration = 100
+                                                , required.seeding_duration = 100
+                                                , required.seeding_timestep = 100
+                                                , required.seeding_input = 100
+                                                , required.max_abund_low = 3000000
+                                                , required.max_abund_medium = 5000000
+                                                , required.max_abund_high = 9000000
+                                                , doSoil = T
+                                                , SOIL.init = 2)
+               , "`SOIL.retention` must contain numeric value between 0 and 1")
+})
+
+
+## INPUTS
+test_that("PRE_FATE.params_globalParameters gives error with wrong data : SOIL.retention", {
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.simul_duration = 100
+                                                , required.seeding_duration = 100
+                                                , required.seeding_timestep = 100
+                                                , required.seeding_input = 100
+                                                , required.max_abund_low = 3000000
+                                                , required.max_abund_medium = 5000000
+                                                , required.max_abund_high = 9000000
+                                                , doSoil = T
+                                                , SOIL.init = 2
+                                                , SOIL.retention = NA)
+               , "`SOIL.retention` must contain numeric value between 0 and 1")
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.simul_duration = 100
+                                                , required.seeding_duration = 100
+                                                , required.seeding_timestep = 100
+                                                , required.seeding_input = 100
+                                                , required.max_abund_low = 3000000
+                                                , required.max_abund_medium = 5000000
+                                                , required.max_abund_high = 9000000
+                                                , doSoil = T
+                                                , SOIL.init = 2
+                                                , SOIL.retention = NULL)
+               , "`SOIL.retention` must contain numeric value between 0 and 1")
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.simul_duration = 100
+                                                , required.seeding_duration = 100
+                                                , required.seeding_timestep = 100
+                                                , required.seeding_input = 100
+                                                , required.max_abund_low = 3000000
+                                                , required.max_abund_medium = 5000000
+                                                , required.max_abund_high = 9000000
+                                                , doSoil = T
+                                                , SOIL.init = 2
+                                                , SOIL.retention = "")
+               , "`SOIL.retention` must contain numeric value between 0 and 1")
+  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                                , required.no_PFG = 5
+                                                , required.no_STRATA = 2
+                                                , required.simul_duration = 100
+                                                , required.seeding_duration = 100
+                                                , required.seeding_timestep = 100
+                                                , required.seeding_input = 100
+                                                , required.max_abund_low = 3000000
+                                                , required.max_abund_medium = 5000000
+                                                , required.max_abund_high = 9000000
+                                                , doSoil = T
+                                                , SOIL.init = 2
+                                                , SOIL.retention = 2)
+               , "`SOIL.retention` must contain numeric value between 0 and 1")
+})
+
 
 
 ## OUTPUTS
@@ -799,7 +839,6 @@ test_that("PRE_FATE.params_globalParameters gives correct output", {
                                                   , required.seeding_duration = 100
                                                   , required.seeding_timestep = 100
                                                   , required.seeding_input = 100
-                                                  , required.max_by_cohort = 5000000
                                                   , required.max_abund_low = 3000000
                                                   , required.max_abund_medium = 5000000
                                                   , required.max_abund_high = 9000000)
@@ -812,7 +851,6 @@ test_that("PRE_FATE.params_globalParameters gives correct output", {
                                                   , required.seeding_duration = 100
                                                   , required.seeding_timestep = 100
                                                   , required.seeding_input = 100
-                                                  , required.max_by_cohort = 5000000
                                                   , required.max_abund_low = 3000000
                                                   , required.max_abund_medium = 5000000
                                                   , required.max_abund_high = 9000000)
@@ -825,7 +863,6 @@ test_that("PRE_FATE.params_globalParameters gives correct output", {
                                                   , required.seeding_duration = 100
                                                   , required.seeding_timestep = 100
                                                   , required.seeding_input = 100
-                                                  , required.max_by_cohort = 5000000
                                                   , required.max_abund_low = 3000000
                                                   , required.max_abund_medium = 5000000
                                                   , required.max_abund_high = 9000000)
@@ -838,7 +875,6 @@ test_that("PRE_FATE.params_globalParameters gives correct output", {
                                                   , required.seeding_duration = 100
                                                   , required.seeding_timestep = 100
                                                   , required.seeding_input = 100
-                                                  , required.max_by_cohort = 5000000
                                                   , required.max_abund_low = 3000000
                                                   , required.max_abund_medium = 5000000
                                                   , required.max_abund_high = 9000000
@@ -856,21 +892,6 @@ test_that("PRE_FATE.params_globalParameters gives correct output", {
                                                   , required.seeding_duration = 100
                                                   , required.seeding_timestep = 100
                                                   , required.seeding_input = 100
-                                                  , required.max_by_cohort = 5000000.5
-                                                  , required.max_abund_low = 3000000
-                                                  , required.max_abund_medium = 5000000
-                                                  , required.max_abund_high = 9000000)
-                 , "`required.max_by_cohort` is a double. It will be converted (rounded) to an integer"
-                 , fixed = TRUE)
-  expect_warning(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
-                                                  , opt.replacePrevious = TRUE
-                                                  , required.no_PFG = 5
-                                                  , required.no_STRATA = 2
-                                                  , required.simul_duration = 100
-                                                  , required.seeding_duration = 100
-                                                  , required.seeding_timestep = 100
-                                                  , required.seeding_input = 100
-                                                  , required.max_by_cohort = 5000000
                                                   , required.max_abund_low = 3000000.5
                                                   , required.max_abund_medium = 5000000
                                                   , required.max_abund_high = 9000000)
@@ -884,7 +905,6 @@ test_that("PRE_FATE.params_globalParameters gives correct output", {
                                                   , required.seeding_duration = 100
                                                   , required.seeding_timestep = 100
                                                   , required.seeding_input = 100
-                                                  , required.max_by_cohort = 5000000
                                                   , required.max_abund_low = 3000000
                                                   , required.max_abund_medium = 5000000.5
                                                   , required.max_abund_high = 9000000)
@@ -898,7 +918,6 @@ test_that("PRE_FATE.params_globalParameters gives correct output", {
                                                   , required.seeding_duration = 100
                                                   , required.seeding_timestep = 100
                                                   , required.seeding_input = 100
-                                                  , required.max_by_cohort = 5000000
                                                   , required.max_abund_low = 3000000
                                                   , required.max_abund_medium = 5000000
                                                   , required.max_abund_high = 9000000.5)
@@ -912,7 +931,6 @@ test_that("PRE_FATE.params_globalParameters gives correct output", {
                                                   , required.seeding_duration = 100
                                                   , required.seeding_timestep = 100
                                                   , required.seeding_input = 100
-                                                  , required.max_by_cohort = 5000000
                                                   , required.max_abund_low = 3000000
                                                   , required.max_abund_medium = 5000000
                                                   , required.max_abund_high = 9000000
@@ -929,7 +947,6 @@ test_that("PRE_FATE.params_globalParameters gives correct output", {
                                                   , required.seeding_duration = 100
                                                   , required.seeding_timestep = 100
                                                   , required.seeding_input = 100
-                                                  , required.max_by_cohort = 5000000
                                                   , required.max_abund_low = 3000000
                                                   , required.max_abund_medium = 5000000
                                                   , required.max_abund_high = 9000000
