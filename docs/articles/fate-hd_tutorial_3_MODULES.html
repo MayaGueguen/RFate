@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FATE-HD tutorial - Modules • RFate</title>
+<title>FATE-HD tutorial 3 - Modules • RFate</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="FATE-HD tutorial - Modules">
+<script src="../pkgdown.js"></script><meta property="og:title" content="FATE-HD tutorial 3 - Modules">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -122,10 +122,10 @@
       <a href="../articles/fate-hd_tutorial_1_PFG.html">FATE-HD tutorial 1 - Building PFG</a>
     </li>
     <li>
-      <a href="../articles/fate-hd_tutorial_2_GETTING_STARTED.html">FATE-HD tutorial - Getting Started</a>
+      <a href="../articles/fate-hd_tutorial_2_GETTING_STARTED.html">FATE-HD tutorial 2 - Getting Started</a>
     </li>
     <li>
-      <a href="../articles/fate-hd_tutorial_3_MODULES.html">FATE-HD tutorial - Modules</a>
+      <a href="../articles/fate-hd_tutorial_3_MODULES.html">FATE-HD tutorial 3 - Modules</a>
     </li>
   </ul>
 </li>
@@ -157,7 +157,7 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>FATE-HD tutorial - Modules</h1>
+      <h1>FATE-HD tutorial 3 - Modules</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/MayaGueguen/RFate.git/blob/master/vignettes/fate-hd_tutorial_3_MODULES.Rmd"><code>vignettes/fate-hd_tutorial_3_MODULES.Rmd</code></a></small>
@@ -189,6 +189,7 @@ All of these modules require
 <pre class="bash">mandatory parameters</pre>
 and sometimes, some others that are
 <pre class="grey">optional</pre>
+<p>that can all be created with <a href="https://mayagueguen.github.io/RFate/">RFate</a> functions.</p>
 <p><br><br></p>
 <div id="core-module-succession" class="section level1">
 <h1 class="hasAnchor">
@@ -198,7 +199,7 @@ and sometimes, some others that are
 <h4 class="hasAnchor">
 <a href="#required-parameters" class="anchor"></a>Required parameters</h4>
 <ul>
-<li>In <em>GlobalParameters</em> file :</li>
+<li>In <a href="reference/PRE_FATE.params_globalParameters.html">GlobalParameters</a> file :</li>
 </ul>
 <pre class="bash">
 NB_FG 16
@@ -214,7 +215,7 @@ MAX_ABUND_HIGH 8000
 <p>The number of computer resources can also be given : <code>NB_CPUS 6</code>.<br>
 If so, some parts of the main loop of the code will be parallelized on the amount of indicated resources.</p>
 <ul>
-<li>In <em>ParamSimulation</em> file :</li>
+<li>In <a href="reference/PRE_FATE.params_simulParameters.html">SimulParameters</a> file :</li>
 </ul>
 <pre class="bash">
 --GLOBAL_PARAMS--
@@ -237,8 +238,7 @@ FATE_simulation/DATA/SAVE/arraysSavingYears.txt
 FATE_simulation/DATA/SAVE/objectsSavingYears.txt
 </pre>
 <ul>
-<li>In <em>SUCCESSION</em> files (given with the <code>--PFG_LIFE_HISTORY_PARAMS--</code> flag in <em>ParamSimulation</em> file) :<br>
-(see <a href="reference/PRE_FATE.params_PFGsuccession.html">PRE_FATE.params_PFGsuccession</a>)</li>
+<li>In <a href="reference/PRE_FATE.params_PFGsuccession.html">SUCCESSION</a> files (given with the <code>--PFG_LIFE_HISTORY_PARAMS--</code> flag in <em>SimulParameters</em> file) :</li>
 </ul>
 <pre class="bash">
 NAME PFG1
@@ -265,7 +265,7 @@ POTENTIAL_FECUNDITY 100
 <h4 class="hasAnchor">
 <a href="#required-parameters-1" class="anchor"></a>Required parameters</h4>
 <ul>
-<li>In <em>GlobalParameters</em> file :</li>
+<li>In <a href="reference/PRE_FATE.params_globalParameters.html">GlobalParameters</a> file :</li>
 </ul>
 <pre class="bash">
 DO_LIGHT_COMPETITION 1
@@ -273,7 +273,7 @@ LIGHT_THRESH_LOW 19000
 LIGHT_THRESH_MEDIUM 13000
 </pre>
 <ul>
-<li>In <em>ParamSimulation</em> file :</li>
+<li>In <a href="reference/PRE_FATE.params_simulParameters.html">SimulParameters</a> file :</li>
 </ul>
 <pre class="bash">
 --PFG_LIGHT_PARAMS--
@@ -281,8 +281,7 @@ FATE_simulation/DATA/PFGS/SUCC/SUCC_PFG1.txt
 FATE_simulation/DATA/PFGS/SUCC/SUCC_PFG2.txt
 </pre>
 <ul>
-<li>In <em>LIGHT</em> files (given with the <code>--PFG_LIGHT_PARAMS--</code> flag in <em>ParamSimulation</em> file) :<br>
-(see <a href="reference/PRE_FATE.params_PFGlight.html">PRE_FATE.params_PFGlight</a>)</li>
+<li>In <a href="reference/PRE_FATE.params_PFGlight.html">LIGHT</a> files (given with the <code>--PFG_LIGHT_PARAMS--</code> flag in <em>SimulParameters</em> file) :</li>
 </ul>
 <pre class="bash">
 NAME PFG1
@@ -301,7 +300,7 @@ SHADE_TOL 1 1 1 1 1 1 1 1 1
 <h4 class="hasAnchor">
 <a href="#required-parameters-2" class="anchor"></a>Required parameters</h4>
 <ul>
-<li>In <em>GlobalParameters</em> file :</li>
+<li>In <a href="reference/PRE_FATE.params_globalParameters.html">GlobalParameters</a> file :</li>
 </ul>
 <pre class="bash">
 DO_SOIL_COMPETITION 1
@@ -309,7 +308,7 @@ SOIL_INIT 2.5
 SOIL_RETENTION 0.8
 </pre>
 <ul>
-<li>In <em>ParamSimulation</em> file :</li>
+<li>In <a href="reference/PRE_FATE.params_simulParameters.html">SimulParameters</a> file :</li>
 </ul>
 <pre class="bash">
 --PFG_SOIL_PARAMS--
@@ -317,8 +316,7 @@ FATE_simulation/DATA/PFGS/SOIL/SOIL_PFG1.txt
 FATE_simulation/DATA/PFGS/SOIL/SOIL_PFG2.txt
 </pre>
 <ul>
-<li>In <em>SOIL</em> files (given with the <code>--PFG_SOIL_PARAMS--</code> flag in <em>ParamSimulation</em> file) :<br>
-(see <a href="reference/PRE_FATE.params_PFGsoil.html">PRE_FATE.params_PFGsoil</a>)</li>
+<li>In <a href="reference/PRE_FATE.params_PFGsoil.html">SOIL</a> files (given with the <code>--PFG_SOIL_PARAMS--</code> flag in <em>SimulParameters</em> file) :</li>
 </ul>
 <pre class="bash">
 NAME PFG1
@@ -339,14 +337,14 @@ SOIL_TOL 1 10 0 5 10 4 9 10 8
 <h4 class="hasAnchor">
 <a href="#required-parameters-3" class="anchor"></a>Required parameters</h4>
 <ul>
-<li>In <em>GlobalParameters</em> file :</li>
+<li>In <a href="reference/PRE_FATE.params_globalParameters.html">GlobalParameters</a> file :</li>
 </ul>
 <pre class="bash">
 DO_DISPERSAL 1
 DISPERSAL_MODE 1
 </pre>
 <ul>
-<li>In <em>ParamSimulation</em> file :</li>
+<li>In <a href="reference/PRE_FATE.params_simulParameters.html">SimulParameters</a> file :</li>
 </ul>
 <pre class="bash">
 --PFG_DISPERSAL_PARAMS--
@@ -354,8 +352,7 @@ FATE_simulation/DATA/PFGS/DISP/DISP_PFG1.txt
 FATE_simulation/DATA/PFGS/DISP/DISP_PFG2.txt
 </pre>
 <ul>
-<li>In <em>DISPERSAL</em> files (given with the <code>--PFG_DISPERSAL_PARAMS--</code> flag in <em>ParamSimulation</em> file) :<br>
-(see <a href="reference/PRE_FATE.params_PFGdispersal.html">PRE_FATE.params_PFGdispersal</a>)</li>
+<li>In <a href="reference/PRE_FATE.params_PFGdispersal.html">DISPERSAL</a> files (given with the <code>--PFG_DISPERSAL_PARAMS--</code> flag in <em>SimulParameters</em> file) :</li>
 </ul>
 <pre class="bash">
 NAME PFG1
@@ -372,14 +369,14 @@ DISPERS_DIST 100 500 79000
 <h4 class="hasAnchor">
 <a href="#required-parameters-4" class="anchor"></a>Required parameters</h4>
 <ul>
-<li>In <em>GlobalParameters</em> file :</li>
+<li>In <a href="reference/PRE_FATE.params_globalParameters.html">GlobalParameters</a> file :</li>
 </ul>
 <pre class="bash">
 DO_HAB_SUITABILITY 1
 HABSUIT_OPTION 1
 </pre>
 <ul>
-<li>In <em>ParamSimulation</em> file :</li>
+<li>In <a href="reference/PRE_FATE.params_simulParameters.html">SimulParameters</a> file :</li>
 </ul>
 <pre class="bash">
 --PFG_HAB_MASK--
@@ -409,7 +406,7 @@ FATE_simulation/DATA/SCENARIO/HABSUIT/HS_changing_masks_t100.txt
 <h4 class="hasAnchor">
 <a href="#required-parameters-5" class="anchor"></a>Required parameters</h4>
 <ul>
-<li>In <em>GlobalParameters</em> file :</li>
+<li>In <a href="reference/PRE_FATE.params_globalParameters.html">GlobalParameters</a> file :</li>
 </ul>
 <pre class="bash">
 DO_DISTURBANCES 1
@@ -418,7 +415,7 @@ NB_SUBDISTURBANCES 4
 FREQ_DISTURBANCES 1 1 1 1
 </pre>
 <ul>
-<li>In <em>ParamSimulation</em> file :</li>
+<li>In <a href="reference/PRE_FATE.params_simulParameters.html">SimulParameters</a> file :</li>
 </ul>
 <pre class="bash">
 --PFG_DISTURBANCES_PARAMS--
@@ -442,8 +439,7 @@ FATE_simulation/DATA/SCENARIO/dist_scenario1/disturbances_changing_masks_t100.tx
 FATE_simulation/DATA/SCENARIO/dist_scenario1/disturbances_changing_masks_t150.txt
 </pre>
 <ul>
-<li>In <em>DISTURBANCE</em> files (given with the <code>--PFG_DISTURBANCES_PARAMS--</code> flag in <em>ParamSimulation</em> file) :<br>
-(see <a href="reference/PRE_FATE.params_PFGdisturbance.html">PRE_FATE.params_PFGdisturbance</a>)</li>
+<li>In <a href="reference/PRE_FATE.params_PFGdisturbance.html">DISTURBANCE</a> files (given with the <code>--PFG_DISTURBANCES_PARAMS--</code> flag in <em>SimulParameters</em> file) :</li>
 </ul>
 <pre class="bash">
 NAME PFG1
@@ -464,14 +460,14 @@ ACTIVATED_SEED 0 0 0 0
 <h4 class="hasAnchor">
 <a href="#required-parameters-6" class="anchor"></a>Required parameters</h4>
 <ul>
-<li>In <em>GlobalParameters</em> file :</li>
+<li>In <a href="reference/PRE_FATE.params_globalParameters.html">GlobalParameters</a> file :</li>
 </ul>
 <pre class="bash">
 DO_HAB_STABILITY 1
 NB_HABITATS 5
 </pre>
 <ul>
-<li>In <em>ParamSimulation</em> file :</li>
+<li>In <a href="reference/PRE_FATE.params_simulParameters.html">SimulParameters</a> file :</li>
 </ul>
 <pre class="bash">
 --HAB_MASK--
@@ -498,7 +494,7 @@ FATE_simulation/DATA/MASK/Habitat_BL_5.tif
 <h4 class="hasAnchor">
 <a href="#required-parameters-7" class="anchor"></a>Required parameters</h4>
 <ul>
-<li>In <em>GlobalParameters</em> file :</li>
+<li>In <a href="reference/PRE_FATE.params_globalParameters.html">GlobalParameters</a> file :</li>
 </ul>
 <pre class="bash">
 DO_DROUGHT_DISTURBANCES 1
@@ -507,7 +503,7 @@ CHRONO_POST_DROUGHT 0
 CHRONO_CURR_DROUGHT 1
 </pre>
 <ul>
-<li>In <em>ParamSimulation</em> file :</li>
+<li>In <a href="reference/PRE_FATE.params_simulParameters.html">SimulParameters</a> file :</li>
 </ul>
 <pre class="bash">
 --PFG_DROUGHT_PARAMS--
@@ -528,7 +524,7 @@ FATE_simulation/DATA/SCENARIO/moistureIndex_changing_masks_t30.txt
 FATE_simulation/DATA/SCENARIO/moistureIndex_changing_masks_t45.txt
 </pre>
 <ul>
-<li>In <em>DROUGHT</em> files (given with the <code>--PFG_DROUGHT_PARAMS--</code> flag in <em>ParamSimulation</em> file) :</li>
+<li>In <em>DROUGHT</em> files (given with the <code>--PFG_DROUGHT_PARAMS--</code> flag in <em>SimulParameters</em> file) :</li>
 </ul>
 <pre class="bash">
 NAME PFG1
@@ -553,14 +549,14 @@ DROUGHT_RECOVERY 1
 <h4 class="hasAnchor">
 <a href="#required-parameters-8" class="anchor"></a>Required parameters</h4>
 <ul>
-<li>In <em>GlobalParameters</em> file :</li>
+<li>In <a href="reference/PRE_FATE.params_globalParameters.html">GlobalParameters</a> file :</li>
 </ul>
 <pre class="bash">
 DO_ALIENS_DISTURBANCE 1
 FREQ_ALIENS 
 </pre>
 <ul>
-<li>In <em>ParamSimulation</em> file :</li>
+<li>In <a href="reference/PRE_FATE.params_simulParameters.html">SimulParameters</a> file :</li>
 </ul>
 <pre class="bash">
 --ALIENS_MASK--
@@ -597,7 +593,7 @@ FATE_simulation/DATA/SCENARIO/aliens_changing_frequencies_t20.txt
 FATE_simulation/DATA/SCENARIO/aliens_changing_frequencies_t25.txt
 </pre>
 <ul>
-<li>In <em>SUCCESSION</em> files (given with the <code>--PFG_LIFE_HISTORY_PARAMS--</code> flag in <em>ParamSimulation</em> file) :</li>
+<li>In <em>SUCCESSION</em> files (given with the <code>--PFG_LIFE_HISTORY_PARAMS--</code> flag in <em>SimulParameters</em> file) :</li>
 </ul>
 <pre class="bash">
 IS_ALIEN 1

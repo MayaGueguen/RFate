@@ -1,7 +1,5 @@
 ---
-title: "FATE-HD tutorial - Getting Started"
-# author: "LECA Grenoble"
-# date: "10/05/2016"
+title: "FATE-HD tutorial 2 - Getting Started"
 output:
   html_document:
     theme: lumen
@@ -15,13 +13,28 @@ output:
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 
+<style>
+pre.bash {
+ background-color: black;
+ color: #9ea1a3;
+ font-family: Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;
+}
+pre.grey {
+ background-color: white;
+ border-style: solid;
+ border-color: #8b8d8f;
+ color: #8b8d8f;
+ font-family: Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;
+}
+</style>
+
 <br/> <br/>
 
 
 "*The recurring suggestions are that models should explicitly (i) include spatiotemporal dynamics; (ii) consider
 multiple species in interactions and (iii) account for the processes shaping biodiversity distribution.*"
 
-`FATE-HD` is a "*a biodiversity model that meets this challenge at regional scale by combining phenomenological and process-based approaches and using well-defined plant functional group*". ([Boulangeat, 2014](http://www.will.chez-alice.fr/pdf/BoulangeatGCB2014.pdf "Boulangeat, I., Georges, D., Thuiller, W., FATE-HD: A spatially and temporally explicit integrated model for predicting vegetation structure and diversity at regional scale. Global Change Biology, 20, 2368–2378."))
+`FATE-HD` is a "*a biodiversity model that meets this challenge at regional scale by combining phenomenological and process-based approaches and using well-defined plant functional group*". ([Boulangeat, 2014](papers/Boulangeat_2014_GCB.pdf "Boulangeat, I., Georges, D., Thuiller, W., FATE-HD: A spatially and temporally explicit integrated model for predicting vegetation structure and diversity at regional scale. Global Change Biology, 20, 2368–2378."))
 
 <br/> <br/>
 
@@ -52,7 +65,7 @@ It contains documentation and functions to create and organize all input files r
 
 As `FATE-HD` needs quite a lot of parameters given into different parameter files, it is important to organize them in a clear and intuitive way.
 
-While this is not mandatory to run a `FATE-HD` simulation, a specific and methodical folder architecture can be obtained with [this function](https://mayagueguen.github.io/RFate/reference/PRE_FATE.skeletonDirectory.html) from the [RFate](https://mayagueguen.github.io/RFate/) package.
+While this is not mandatory to run a `FATE-HD` simulation, a specific and methodical folder architecture can be obtained with [the PRE_FATE.skeletonDirectory function](reference/PRE_FATE.skeletonDirectory.html) from the [RFate](https://mayagueguen.github.io/RFate/) package.
 
 A good way to start is to create this skeleton directory, and then copy or create the needed files inside to have all simulation data into the same place.
 
@@ -65,21 +78,22 @@ A good way to start is to create this skeleton directory, and then copy or creat
 
 <br/>
 
-When all data and parameter files have been produced and correctly referred in a [`Simul_parameters`](https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_simulParameters.html) file, a `FATE-HD` simulation can be run by just typing something like :
+When all data and parameter files have been produced and correctly referred in a [SimulParameters](reference/PRE_FATE.params_simulParameters.html) file, a `FATE-HD` simulation can be run by just typing something like :
 
-```R
-./FATEHDD_6.0-0_UNIX <path_to_your_ParamSimul_file>
-```
-Then the simulation will start, and the software will print messages into the console indicating what the software is doing.   Depending on the simulation duration, the size and the resolution of the study area, the number of PFG involved, ... running the full simulation *could take a while*.
+<pre class = "bash">
+./FATEHDD_6.0-0_UNIX path_to_your_ParamSimul_file
+</pre>
+
+Then the simulation will start, and the software will print messages into the console indicating what the software is doing.   Depending on the simulation duration, the size and the resolution of the study area, the number of Plant Functional Groups (PFG) involved, ... running the full simulation **could take a while**.
 
 **Note :** the folder from which the command is sent must be adapted based on how paths to files have been given :
 
 - If all paths are **absolute**  
-(i.e. including the root, such as */home/username/FATE_simulation/DATA/GLOBAL_PARAMETERS/Global_parameters_V1.txt*),  
+(i.e. including the root, such as *`/home/username/FATE_simulation/DATA/GLOBAL_PARAMETERS/Global_parameters_V1.txt`*),  
 there should not be any problem. The only requirement then is to run the simulation from the folder containing the `FATE-HD` executable file, or to also give absolute path for the executable file.
 
 - If all paths are **relative**  
-(i.e. starting from a specific folder, such as *FATE_simulation/DATA/GLOBAL_PARAMETERS/Global_parameters_V1.txt*), then the `FATE-HD` simulation must be run from this specific folder (i.e. here from the folder containing the *FATE_simulation* folder).
+(i.e. starting from a specific folder, such as *`FATE_simulation/DATA/GLOBAL_PARAMETERS/Global_parameters_V1.txt`*), then the `FATE-HD` simulation must be run from this specific folder (i.e. here from the folder containing the *`FATE_simulation`* folder).
 
 <br/> <br/>
 
@@ -87,17 +101,17 @@ there should not be any problem. The only requirement then is to run the simulat
 
 <br/>
 
-Once the simulation is completed, the directory defined under the flag `--SAVING_DIR--` within the `Simul_parameters` file must contain the following directories :
+Once the simulation is completed, the directory defined under the flag `--SAVING_DIR--` within the [SimulParameters](reference/PRE_FATE.params_simulParameters.html) file must contain the following directories :
 
-- *ABUND_allPFG_perStrata/*
-- *ABUND_perPFG_allStrata/*
-- *ABUND_perPFG_perStrata/*
+- *`ABUND_allPFG_perStrata/`*
+- *`ABUND_perPFG_allStrata/`*
+- *`ABUND_perPFG_perStrata/`*
 
-Each of them contains raster files with the amount of shade (which should be considered as a proxy for the vegetation coverage/abundance) contained within each pixel of the study area. The files within each folder show different informations :
+Each of them contains raster files with the abundance of Plant Functional Groups (PFG) (which should be considered as a proxy for the vegetation coverage/abundance) contained within each pixel of the study area. The files within each folder show different informations :
 
-- *ABUND_perPFG_perStrata/* : a file represents **one specific year**, and the amount of shade for **a specific PFG** in **a specific stratum**
-- *ABUND_allPFG_perStrata/* : a file represents **one specific year**, and the amount of shade for **all PFGs** in **a specific stratum**
-- *ABUND_perPFG_allStrata/* : a file represents **one specific year**, and the amount of shade for **a specific PFG** within **all strata**
+- *`ABUND_perPFG_perStrata/`* : a file represents **one specific year**, and the abundance of **a specific PFG** in **a specific stratum**
+- *`ABUND_allPFG_perStrata`/* : a file represents **one specific year**, and the abundance of **all PFGs** in **a specific stratum**
+- *`ABUND_perPFG_allStrata/`* : a file represents **one specific year**, and the abundance of **a specific PFG** within **all strata**
 
 These ouputs can then be used as is, or post-treated with functions from the [RFate](https://mayagueguen.github.io/RFate/) package to obtain more specific results (e.g. evolution of abundance curves, cover or diversity maps, etc).
 

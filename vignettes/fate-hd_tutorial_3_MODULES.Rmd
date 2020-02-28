@@ -1,5 +1,5 @@
 ---
-title: "FATE-HD tutorial - Modules"
+title: "FATE-HD tutorial 3 - Modules"
 ---
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
@@ -27,7 +27,7 @@ pre.grey {
 
 <br/>
 
-All of these modules require <pre class = "bash">mandatory parameters</pre> and sometimes, some others that are <pre class = "grey">optional</pre>
+All of these modules require <pre class = "bash">mandatory parameters</pre> and sometimes, some others that are <pre class = "grey">optional</pre> that can all be created with [RFate](https://mayagueguen.github.io/RFate/) functions.
 
 <br/> <br/>
 
@@ -38,7 +38,7 @@ All of these modules require <pre class = "bash">mandatory parameters</pre> and 
 
 #### Required parameters
 
-- In *GlobalParameters* file :
+- In [GlobalParameters](reference/PRE_FATE.params_globalParameters.html) file :
 
 <pre class = "bash">
 NB_FG 16
@@ -55,7 +55,7 @@ MAX_ABUND_HIGH 8000
 The number of computer resources can also be given : `NB_CPUS 6`.  
 If so, some parts of the main loop of the code will be parallelized on the amount of indicated resources.
 
-- In *ParamSimulation* file :
+- In [SimulParameters](reference/PRE_FATE.params_simulParameters.html) file :
 
 <pre class = "bash">
 --GLOBAL_PARAMS--
@@ -80,8 +80,7 @@ FATE_simulation/DATA/SAVE/arraysSavingYears.txt
 FATE_simulation/DATA/SAVE/objectsSavingYears.txt
 </pre>
 
-- In *SUCCESSION* files (given with the `--PFG_LIFE_HISTORY_PARAMS--` flag in *ParamSimulation* file) :  
-(see [PRE_FATE.params_PFGsuccession](reference/PRE_FATE.params_PFGsuccession.html))
+- In [SUCCESSION](reference/PRE_FATE.params_PFGsuccession.html) files (given with the `--PFG_LIFE_HISTORY_PARAMS--` flag in *SimulParameters* file) :
 
 <pre class = "bash">
 NAME PFG1
@@ -109,7 +108,7 @@ POTENTIAL_FECUNDITY 100
 
 #### Required parameters
 
-- In *GlobalParameters* file :
+- In [GlobalParameters](reference/PRE_FATE.params_globalParameters.html) file :
 
 <pre class = "bash">
 DO_LIGHT_COMPETITION 1
@@ -117,7 +116,7 @@ LIGHT_THRESH_LOW 19000
 LIGHT_THRESH_MEDIUM 13000
 </pre>
 
-- In *ParamSimulation* file :
+- In [SimulParameters](reference/PRE_FATE.params_simulParameters.html) file :
 
 <pre class = "bash">
 --PFG_LIGHT_PARAMS--
@@ -125,8 +124,7 @@ FATE_simulation/DATA/PFGS/SUCC/SUCC_PFG1.txt
 FATE_simulation/DATA/PFGS/SUCC/SUCC_PFG2.txt
 </pre>
 
-- In *LIGHT* files (given with the `--PFG_LIGHT_PARAMS--` flag in *ParamSimulation* file) :  
-(see [PRE_FATE.params_PFGlight](reference/PRE_FATE.params_PFGlight.html))
+- In [LIGHT](reference/PRE_FATE.params_PFGlight.html) files (given with the `--PFG_LIGHT_PARAMS--` flag in *SimulParameters* file) :  
 
 <pre class = "bash">
 NAME PFG1
@@ -146,7 +144,7 @@ SHADE_TOL 1 1 1 1 1 1 1 1 1
 
 #### Required parameters
 
-- In *GlobalParameters* file :
+- In [GlobalParameters](reference/PRE_FATE.params_globalParameters.html) file :
 
 <pre class = "bash">
 DO_SOIL_COMPETITION 1
@@ -154,7 +152,7 @@ SOIL_INIT 2.5
 SOIL_RETENTION 0.8
 </pre>
 
-- In *ParamSimulation* file :
+- In [SimulParameters](reference/PRE_FATE.params_simulParameters.html) file :
 
 <pre class = "bash">
 --PFG_SOIL_PARAMS--
@@ -162,8 +160,7 @@ FATE_simulation/DATA/PFGS/SOIL/SOIL_PFG1.txt
 FATE_simulation/DATA/PFGS/SOIL/SOIL_PFG2.txt
 </pre>
 
-- In *SOIL* files (given with the `--PFG_SOIL_PARAMS--` flag in *ParamSimulation* file) :  
-(see [PRE_FATE.params_PFGsoil](reference/PRE_FATE.params_PFGsoil.html))
+- In [SOIL](reference/PRE_FATE.params_PFGsoil.html) files (given with the `--PFG_SOIL_PARAMS--` flag in *SimulParameters* file) :  
 
 <pre class = "bash">
 NAME PFG1
@@ -184,14 +181,14 @@ SOIL_TOL 1 10 0 5 10 4 9 10 8
 
 #### Required parameters
 
-- In *GlobalParameters* file :
+- In [GlobalParameters](reference/PRE_FATE.params_globalParameters.html) file :
 
 <pre class = "bash">
 DO_DISPERSAL 1
 DISPERSAL_MODE 1
 </pre>
 
-- In *ParamSimulation* file :
+- In [SimulParameters](reference/PRE_FATE.params_simulParameters.html) file :
 
 <pre class = "bash">
 --PFG_DISPERSAL_PARAMS--
@@ -199,8 +196,7 @@ FATE_simulation/DATA/PFGS/DISP/DISP_PFG1.txt
 FATE_simulation/DATA/PFGS/DISP/DISP_PFG2.txt
 </pre>
 
-- In *DISPERSAL* files (given with the `--PFG_DISPERSAL_PARAMS--` flag in *ParamSimulation* file) :  
-(see [PRE_FATE.params_PFGdispersal](reference/PRE_FATE.params_PFGdispersal.html))
+- In [DISPERSAL](reference/PRE_FATE.params_PFGdispersal.html) files (given with the `--PFG_DISPERSAL_PARAMS--` flag in *SimulParameters* file) :  
 
 <pre class = "bash">
 NAME PFG1
@@ -218,14 +214,14 @@ DISPERS_DIST 100 500 79000
 
 #### Required parameters
 
-- In *GlobalParameters* file :
+- In [GlobalParameters](reference/PRE_FATE.params_globalParameters.html) file :
 
 <pre class = "bash">
 DO_HAB_SUITABILITY 1
 HABSUIT_OPTION 1
 </pre>
 
-- In *ParamSimulation* file :
+- In [SimulParameters](reference/PRE_FATE.params_simulParameters.html) file :
 
 <pre class = "bash">
 --PFG_HAB_MASK--
@@ -260,7 +256,7 @@ FATE_simulation/DATA/SCENARIO/HABSUIT/HS_changing_masks_t100.txt
 
 #### Required parameters
 
-- In *GlobalParameters* file :
+- In [GlobalParameters](reference/PRE_FATE.params_globalParameters.html) file :
 
 <pre class = "bash">
 DO_DISTURBANCES 1
@@ -269,7 +265,7 @@ NB_SUBDISTURBANCES 4
 FREQ_DISTURBANCES 1 1 1 1
 </pre>
 
-- In *ParamSimulation* file :
+- In [SimulParameters](reference/PRE_FATE.params_simulParameters.html) file :
 
 <pre class = "bash">
 --PFG_DISTURBANCES_PARAMS--
@@ -297,8 +293,7 @@ FATE_simulation/DATA/SCENARIO/dist_scenario1/disturbances_changing_masks_t100.tx
 FATE_simulation/DATA/SCENARIO/dist_scenario1/disturbances_changing_masks_t150.txt
 </pre>
 
-- In *DISTURBANCE* files (given with the `--PFG_DISTURBANCES_PARAMS--` flag in *ParamSimulation* file) :  
-(see [PRE_FATE.params_PFGdisturbance](reference/PRE_FATE.params_PFGdisturbance.html))
+- In [DISTURBANCE](reference/PRE_FATE.params_PFGdisturbance.html) files (given with the `--PFG_DISTURBANCES_PARAMS--` flag in *SimulParameters* file) :  
 
 <pre class = "bash">
 NAME PFG1
@@ -318,14 +313,14 @@ ACTIVATED_SEED 0 0 0 0
 
 #### Required parameters
 
-- In *GlobalParameters* file :
+- In [GlobalParameters](reference/PRE_FATE.params_globalParameters.html) file :
 
 <pre class = "bash">
 DO_HAB_STABILITY 1
 NB_HABITATS 5
 </pre>
 
-- In *ParamSimulation* file :
+- In [SimulParameters](reference/PRE_FATE.params_simulParameters.html) file :
 
 <pre class = "bash">
 --HAB_MASK--
@@ -353,7 +348,7 @@ FATE_simulation/DATA/MASK/Habitat_BL_5.tif
 
 #### Required parameters
 
-- In *GlobalParameters* file :
+- In [GlobalParameters](reference/PRE_FATE.params_globalParameters.html) file :
 
 <pre class = "bash">
 DO_DROUGHT_DISTURBANCES 1
@@ -362,7 +357,7 @@ CHRONO_POST_DROUGHT 0
 CHRONO_CURR_DROUGHT 1
 </pre>
 
-- In *ParamSimulation* file :
+- In [SimulParameters](reference/PRE_FATE.params_simulParameters.html) file :
 
 <pre class = "bash">
 --PFG_DROUGHT_PARAMS--
@@ -387,7 +382,7 @@ FATE_simulation/DATA/SCENARIO/moistureIndex_changing_masks_t30.txt
 FATE_simulation/DATA/SCENARIO/moistureIndex_changing_masks_t45.txt
 </pre>
 
-- In *DROUGHT* files (given with the `--PFG_DROUGHT_PARAMS--` flag in *ParamSimulation* file) :
+- In *DROUGHT* files (given with the `--PFG_DROUGHT_PARAMS--` flag in *SimulParameters* file) :
 
 <pre class = "bash">
 NAME PFG1
@@ -413,14 +408,14 @@ DROUGHT_RECOVERY 1
 
 #### Required parameters
 
-- In *GlobalParameters* file :
+- In [GlobalParameters](reference/PRE_FATE.params_globalParameters.html) file :
 
 <pre class = "bash">
 DO_ALIENS_DISTURBANCE 1
 FREQ_ALIENS 
 </pre>
 
-- In *ParamSimulation* file :
+- In [SimulParameters](reference/PRE_FATE.params_simulParameters.html) file :
 
 <pre class = "bash">
 --ALIENS_MASK--
@@ -459,7 +454,7 @@ FATE_simulation/DATA/SCENARIO/aliens_changing_frequencies_t20.txt
 FATE_simulation/DATA/SCENARIO/aliens_changing_frequencies_t25.txt
 </pre>
 
-- In *SUCCESSION* files (given with the `--PFG_LIFE_HISTORY_PARAMS--` flag in *ParamSimulation* file) :
+- In *SUCCESSION* files (given with the `--PFG_LIFE_HISTORY_PARAMS--` flag in *SimulParameters* file) :
 
 <pre class = "bash">
 IS_ALIEN 1

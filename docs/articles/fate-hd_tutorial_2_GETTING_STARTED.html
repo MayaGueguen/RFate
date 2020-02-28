@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FATE-HD tutorial - Getting Started • RFate</title>
+<title>FATE-HD tutorial 2 - Getting Started • RFate</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="FATE-HD tutorial - Getting Started">
+<script src="../pkgdown.js"></script><meta property="og:title" content="FATE-HD tutorial 2 - Getting Started">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -122,10 +122,10 @@
       <a href="../articles/fate-hd_tutorial_1_PFG.html">FATE-HD tutorial 1 - Building PFG</a>
     </li>
     <li>
-      <a href="../articles/fate-hd_tutorial_2_GETTING_STARTED.html">FATE-HD tutorial - Getting Started</a>
+      <a href="../articles/fate-hd_tutorial_2_GETTING_STARTED.html">FATE-HD tutorial 2 - Getting Started</a>
     </li>
     <li>
-      <a href="../articles/fate-hd_tutorial_3_MODULES.html">FATE-HD tutorial - Modules</a>
+      <a href="../articles/fate-hd_tutorial_3_MODULES.html">FATE-HD tutorial 3 - Modules</a>
     </li>
   </ul>
 </li>
@@ -157,7 +157,7 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>FATE-HD tutorial - Getting Started</h1>
+      <h1>FATE-HD tutorial 2 - Getting Started</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/MayaGueguen/RFate.git/blob/master/vignettes/fate-hd_tutorial_2_GETTING_STARTED.Rmd"><code>vignettes/fate-hd_tutorial_2_GETTING_STARTED.Rmd</code></a></small>
@@ -168,9 +168,23 @@
     
     
 <p><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous"></p>
+<style>
+pre.bash {
+ background-color: black;
+ color: #9ea1a3;
+ font-family: Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;
+}
+pre.grey {
+ background-color: white;
+ border-style: solid;
+ border-color: #8b8d8f;
+ color: #8b8d8f;
+ font-family: Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;
+}
+</style>
 <p><br><br></p>
 <p>“<em>The recurring suggestions are that models should explicitly (i) include spatiotemporal dynamics; (ii) consider multiple species in interactions and (iii) account for the processes shaping biodiversity distribution.</em>”</p>
-<p><code>FATE-HD</code> is a “<em>a biodiversity model that meets this challenge at regional scale by combining phenomenological and process-based approaches and using well-defined plant functional group</em>”. (<a href="http://www.will.chez-alice.fr/pdf/BoulangeatGCB2014.pdf" title="Boulangeat, I., Georges, D., Thuiller, W., FATE-HD: A spatially and temporally explicit integrated model for predicting vegetation structure and diversity at regional scale. Global Change Biology, 20, 2368–2378.">Boulangeat, 2014</a>)</p>
+<p><code>FATE-HD</code> is a “<em>a biodiversity model that meets this challenge at regional scale by combining phenomenological and process-based approaches and using well-defined plant functional group</em>”. (<a href="papers/Boulangeat_2014_GCB.pdf" title="Boulangeat, I., Georges, D., Thuiller, W., FATE-HD: A spatially and temporally explicit integrated model for predicting vegetation structure and diversity at regional scale. Global Change Biology, 20, 2368–2378.">Boulangeat, 2014</a>)</p>
 <p><br><br></p>
 <div id="what-fate-hd-needs-to-be-run" class="section level1">
 <h1 class="hasAnchor">
@@ -206,7 +220,7 @@
 <h3 class="hasAnchor">
 <a href="#the-fate-hd-friendly-directory-organization" class="anchor"></a><i class="fas fa-folder-open"></i> The FATE-HD friendly directory organization</h3>
 <p>As <code>FATE-HD</code> needs quite a lot of parameters given into different parameter files, it is important to organize them in a clear and intuitive way.</p>
-<p>While this is not mandatory to run a <code>FATE-HD</code> simulation, a specific and methodical folder architecture can be obtained with <a href="https://mayagueguen.github.io/RFate/reference/PRE_FATE.skeletonDirectory.html">this function</a> from the <a href="https://mayagueguen.github.io/RFate/">RFate</a> package.</p>
+<p>While this is not mandatory to run a <code>FATE-HD</code> simulation, a specific and methodical folder architecture can be obtained with <a href="reference/PRE_FATE.skeletonDirectory.html">the PRE_FATE.skeletonDirectory function</a> from the <a href="https://mayagueguen.github.io/RFate/">RFate</a> package.</p>
 <p>A good way to start is to create this skeleton directory, and then copy or create the needed files inside to have all simulation data into the same place.</p>
 <div style="text-align:center">
 <img src="pictures/skeleton_directory_2.PNG" style="width:65.0%">
@@ -218,16 +232,18 @@
 <h1 class="hasAnchor">
 <a href="#how-to-run-a-fate-hd-simulation" class="anchor"></a>How to run a FATE-HD Simulation ?</h1>
 <p><br></p>
-<p>When all data and parameter files have been produced and correctly referred in a <a href="https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_simulParameters.html"><code>Simul_parameters</code></a> file, a <code>FATE-HD</code> simulation can be run by just typing something like :</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">.<span class="op">/</span>FATEHDD_<span class="fl">6.0</span><span class="dv">-0</span>_UNIX <span class="op">&lt;</span>path_to_your_ParamSimul_file<span class="op">&gt;</span></a></code></pre></div>
-<p>Then the simulation will start, and the software will print messages into the console indicating what the software is doing. Depending on the simulation duration, the size and the resolution of the study area, the number of PFG involved, … running the full simulation <em>could take a while</em>.</p>
+<p>When all data and parameter files have been produced and correctly referred in a <a href="reference/PRE_FATE.params_simulParameters.html">SimulParameters</a> file, a <code>FATE-HD</code> simulation can be run by just typing something like :</p>
+<pre class="bash">
+./FATEHDD_6.0-0_UNIX path_to_your_ParamSimul_file
+</pre>
+<p>Then the simulation will start, and the software will print messages into the console indicating what the software is doing. Depending on the simulation duration, the size and the resolution of the study area, the number of Plant Functional Groups (PFG) involved, … running the full simulation <strong>could take a while</strong>.</p>
 <p><strong>Note :</strong> the folder from which the command is sent must be adapted based on how paths to files have been given :</p>
 <ul>
 <li><p>If all paths are <strong>absolute</strong><br>
-(i.e. including the root, such as <em>/home/username/FATE_simulation/DATA/GLOBAL_PARAMETERS/Global_parameters_V1.txt</em>),<br>
+(i.e. including the root, such as <em><code>/home/username/FATE_simulation/DATA/GLOBAL_PARAMETERS/Global_parameters_V1.txt</code></em>),<br>
 there should not be any problem. The only requirement then is to run the simulation from the folder containing the <code>FATE-HD</code> executable file, or to also give absolute path for the executable file.</p></li>
 <li><p>If all paths are <strong>relative</strong><br>
-(i.e. starting from a specific folder, such as <em>FATE_simulation/DATA/GLOBAL_PARAMETERS/Global_parameters_V1.txt</em>), then the <code>FATE-HD</code> simulation must be run from this specific folder (i.e. here from the folder containing the <em>FATE_simulation</em> folder).</p></li>
+(i.e. starting from a specific folder, such as <em><code>FATE_simulation/DATA/GLOBAL_PARAMETERS/Global_parameters_V1.txt</code></em>), then the <code>FATE-HD</code> simulation must be run from this specific folder (i.e. here from the folder containing the <em><code>FATE_simulation</code></em> folder).</p></li>
 </ul>
 <p><br><br></p>
 </div>
@@ -235,22 +251,22 @@ there should not be any problem. The only requirement then is to run the simulat
 <h1 class="hasAnchor">
 <a href="#how-to-handle-the-results" class="anchor"></a>How to handle the results ?</h1>
 <p><br></p>
-<p>Once the simulation is completed, the directory defined under the flag <code>--SAVING_DIR--</code> within the <code>Simul_parameters</code> file must contain the following directories :</p>
+<p>Once the simulation is completed, the directory defined under the flag <code>--SAVING_DIR--</code> within the <a href="reference/PRE_FATE.params_simulParameters.html">SimulParameters</a> file must contain the following directories :</p>
 <ul>
-<li><em>ABUND_allPFG_perStrata/</em></li>
-<li><em>ABUND_perPFG_allStrata/</em></li>
-<li><em>ABUND_perPFG_perStrata/</em></li>
+<li><em><code>ABUND_allPFG_perStrata/</code></em></li>
+<li><em><code>ABUND_perPFG_allStrata/</code></em></li>
+<li><em><code>ABUND_perPFG_perStrata/</code></em></li>
 </ul>
-<p>Each of them contains raster files with the amount of shade (which should be considered as a proxy for the vegetation coverage/abundance) contained within each pixel of the study area. The files within each folder show different informations :</p>
+<p>Each of them contains raster files with the abundance of Plant Functional Groups (PFG) (which should be considered as a proxy for the vegetation coverage/abundance) contained within each pixel of the study area. The files within each folder show different informations :</p>
 <ul>
 <li>
-<em>ABUND_perPFG_perStrata/</em> : a file represents <strong>one specific year</strong>, and the amount of shade for <strong>a specific PFG</strong> in <strong>a specific stratum</strong>
+<em><code>ABUND_perPFG_perStrata/</code></em> : a file represents <strong>one specific year</strong>, and the abundance of <strong>a specific PFG</strong> in <strong>a specific stratum</strong>
 </li>
 <li>
-<em>ABUND_allPFG_perStrata/</em> : a file represents <strong>one specific year</strong>, and the amount of shade for <strong>all PFGs</strong> in <strong>a specific stratum</strong>
+<em><code>ABUND_allPFG_perStrata</code>/</em> : a file represents <strong>one specific year</strong>, and the abundance of <strong>all PFGs</strong> in <strong>a specific stratum</strong>
 </li>
 <li>
-<em>ABUND_perPFG_allStrata/</em> : a file represents <strong>one specific year</strong>, and the amount of shade for <strong>a specific PFG</strong> within <strong>all strata</strong>
+<em><code>ABUND_perPFG_allStrata/</code></em> : a file represents <strong>one specific year</strong>, and the abundance of <strong>a specific PFG</strong> within <strong>all strata</strong>
 </li>
 </ul>
 <p>These ouputs can then be used as is, or post-treated with functions from the <a href="https://mayagueguen.github.io/RFate/">RFate</a> package to obtain more specific results (e.g. evolution of abundance curves, cover or diversity maps, etc).</p>
