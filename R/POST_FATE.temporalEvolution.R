@@ -339,10 +339,19 @@ POST_FATE.temporalEvolution = function(
       years = years[round(seq(1, length(years), length.out = min(no.years, length(years))))]
       no_years = length(years)
       
+      cat("\n Selected years : ", years)
+      cat("\n Number of years : ", no_years)
+      cat("\n")
+      
       ## UNZIP the raster saved ------------------------------------------------------
       .unzip_ALL(folder_name = dir.output.perPFG.allStrata, nb_cores = opt.no_CPU)
       if (doLight) .unzip_ALL(folder_name = dir.output.light, nb_cores = opt.no_CPU)
       if (doSoil) .unzip_ALL(folder_name = dir.output.soil, nb_cores = opt.no_CPU)
+      
+      doWriting.abund = TRUE
+      doWriting.light = ifelse(doLight, TRUE, FALSE)
+      doWriting.soil = ifelse(doSoil, TRUE, FALSE)
+      
       
       ## get the data inside the rasters ---------------------------------------------
       cat("\n GETTING ABUNDANCE for pfg")
@@ -408,12 +417,19 @@ POST_FATE.temporalEvolution = function(
       tabAbund = rbindlist(tabAbund.list, fill = TRUE)
       tabAbund = as.data.frame(tabAbund)
       
-      fwrite(tabAbund
-             , file = paste0(name.simulation
-                             , "/RESULTS/POST_FATE_TABLE_PIXEL_evolution_abundance_"
-                             , basename(dir.save)
-                             , ".csv")
-             , row.names = FALSE)
+      if (nrow(tabAbund) > 0 && ncol(tabAbund) > 0)
+      {
+        fwrite(tabAbund
+               , file = paste0(name.simulation
+                               , "/RESULTS/POST_FATE_TABLE_PIXEL_evolution_abundance_"
+                               , basename(dir.save)
+                               , ".csv")
+               , row.names = FALSE)
+      } else
+      {
+        doWriting.abund = FALSE
+        warning("No abundance values were found! Please check.")
+      }
       
       
       ## get the data inside the rasters ---------------------------------------------
@@ -471,12 +487,19 @@ POST_FATE.temporalEvolution = function(
         tabLight = rbindlist(tabLight.list, fill = TRUE)
         tabLight = as.data.frame(tabLight)
         
-        fwrite(tabLight
-               , file = paste0(name.simulation
-                               , "/RESULTS/POST_FATE_TABLE_PIXEL_evolution_light_"
-                               , basename(dir.save)
-                               , ".csv")
-               , row.names = FALSE)
+        if (nrow(tabLight) > 0 && ncol(tabLight) > 0)
+        {
+          fwrite(tabLight
+                 , file = paste0(name.simulation
+                                 , "/RESULTS/POST_FATE_TABLE_PIXEL_evolution_light_"
+                                 , basename(dir.save)
+                                 , ".csv")
+                 , row.names = FALSE)
+        } else
+        {
+          doWriting.light = FALSE
+          warning("No light values were found! Please check.")
+        }
       } else
       {
         tabLight = NA
@@ -520,12 +543,19 @@ POST_FATE.temporalEvolution = function(
           }
           tabSoil = ras.df[, c("ID", "X", "Y", "HAB", ye)]
           
-          fwrite(tabSoil
-                 , file = paste0(name.simulation
-                                 , "/RESULTS/POST_FATE_TABLE_PIXEL_evolution_soil_"
-                                 , basename(dir.save)
-                                 , ".csv")
-                 , row.names = FALSE)
+          if (nrow(tabSoil) > 0 && ncol(tabSoil) > 0)
+          {
+            fwrite(tabSoil
+                   , file = paste0(name.simulation
+                                   , "/RESULTS/POST_FATE_TABLE_PIXEL_evolution_soil_"
+                                   , basename(dir.save)
+                                   , ".csv")
+                   , row.names = FALSE)
+          } else
+          {
+            doWriting.soil = FALSE
+            warning("No soil values were found! Please check.")
+          }
         }
       } else
       {
@@ -542,25 +572,30 @@ POST_FATE.temporalEvolution = function(
       cat("\n> Done!\n")
       cat("\n")
       
-      message(paste0("\n The output files \n"
-                     , " > POST_FATE_TABLE_PIXEL_evolution_abundance_"
-                     , basename(dir.save)
-                     , ".csv \n"
-                     , ifelse(doLight
-                            , paste0(" > POST_FATE_TABLE_PIXEL_evolution_light_"
-                                     , basename(dir.save)
-                                     , ".csv \n")
-                            , "")
-                     , ifelse(doSoil
-                            , paste0(" > POST_FATE_TABLE_PIXEL_evolution_soil_"
-                                     , basename(dir.save)
-                                     , ".csv \n")
-                            , "")
-                     , "have been successfully created !\n"))
-      
-      return(list(tab.abundance = tabAbund
-                  , tab.light = tabLight
-                  , tab.soil = tabSoil))
+      if(doWriting.abund || doWriting.light || doWriting.soil)
+      {
+        message(paste0("\n The output files \n"
+                       , ifelse(doWriting.abund
+                                , paste0(" > POST_FATE_TABLE_PIXEL_evolution_abundance_"
+                                         , basename(dir.save)
+                                         , ".csv \n")
+                                , "")
+                       , ifelse(doWriting.light
+                                , paste0(" > POST_FATE_TABLE_PIXEL_evolution_light_"
+                                         , basename(dir.save)
+                                         , ".csv \n")
+                                , "")
+                       , ifelse(doWriting.soil
+                                , paste0(" > POST_FATE_TABLE_PIXEL_evolution_soil_"
+                                         , basename(dir.save)
+                                         , ".csv \n")
+                                , "")
+                       , "have been successfully created !\n"))
+        
+        return(list(tab.abundance = tabAbund
+                    , tab.light = tabLight
+                    , tab.soil = tabSoil))
+      }
     } ## END loop on abs.simulParams
   names(res) = abs.simulParams
   

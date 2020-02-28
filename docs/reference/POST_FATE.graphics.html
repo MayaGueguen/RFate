@@ -41,9 +41,9 @@ simulation — POST_FATE.graphics" />
 <meta property="og:description" content="This script is designed to produce a set of graphical 
 representations for a FATE-HD simulation. Graphics can be of three 
 types : 1) representing an evolution through time (of abundance, light, 
-soil) ; 2) representing a spatial distribution for a specific year 
-(richness, abundance, light, soil) ; 3) or vizualising the goodness of the 
-modelisation (presence/absence, validation statistics)." />
+soil) ; 2) vizualising the goodness of the modelisation (presence/absence, 
+validation statistics) : 3) or representing a spatial distribution for a 
+specific year (richness, abundance, light, soil)." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -212,9 +212,9 @@ simulation</h1>
     <p>This script is designed to produce a set of graphical 
 representations for a <code>FATE-HD</code> simulation. Graphics can be of three 
 types : 1) representing an evolution through time (of abundance, light, 
-soil) ; 2) representing a spatial distribution for a specific year 
-(richness, abundance, light, soil) ; 3) or vizualising the goodness of the 
-modelisation (presence/absence, validation statistics).</p>
+soil) ; 2) vizualising the goodness of the modelisation (presence/absence, 
+validation statistics) : 3) or representing a spatial distribution for a 
+specific year (richness, abundance, light, soil).</p>
     </div>
 
     <pre class="usage"><span class='fu'>POST_FATE.graphics</span>(<span class='no'>name.simulation</span>, <span class='no'>file.simulParam</span>, <span class='no'>year</span>, <span class='no'>no.years</span>,
@@ -241,14 +241,15 @@ directory or simulation name of the <code>FATE-HD</code> simulation</p></td>
     </tr>
     <tr>
       <th>file.simulParam</th>
-      <td><p>a <code>string</code> that corresponds to the name of a
-parameter file that will be contained into the <code>PARAM_SIMUL</code> folder
+      <td><p>a <code>string</code> that corresponds to the name of a 
+parameter file that will be contained into the <code>PARAM_SIMUL</code> folder 
 of the <code>FATE-HD</code> simulation</p></td>
     </tr>
     <tr>
       <th>year</th>
       <td><p>an <code>integer</code> corresponding to the simulation year(s) that 
-will be used to extract PFG abundance and/or binary maps</p></td>
+will be used to extract PFG abundance and/or binary maps, as well as light 
+or soil resources</p></td>
     </tr>
     <tr>
       <th>no.years</th>
@@ -257,167 +258,179 @@ years that will be used to extract PFG abundance maps</p></td>
     </tr>
     <tr>
       <th>opt.strata_min</th>
-      <td><p>default 1 (<em>optional</em>). An <code>integer</code> 
+      <td><p>default <code>1</code> (<em>optional</em>). An <code>integer</code> 
 corresponding to the lowest stratum from which PFG abundances are summed up 
 to the highest stratum</p></td>
     </tr>
     <tr>
       <th>opt.strata</th>
-      <td><p>default ALL (<em>optional</em>). The stratum number from 
-which to extract PFG binary maps</p></td>
+      <td><p>default <code>ALL</code> (<em>optional</em>). The stratum number 
+from which to extract PFG binary maps</p></td>
     </tr>
     <tr>
       <th>opt.mat.PFG.succ</th>
-      <td><p>default NULL (<em>optional</em>). A <code>data.frame</code> 
-with 2 or 3 columns : PFG, light, soil_contrib</p></td>
+      <td><p>default <code>NULL</code> (<em>optional</em>). A 
+<code>data.frame</code> with 2 or 3 columns : <code>PFG</code>, <code>light</code>, 
+<code>soil_contrib</code></p></td>
     </tr>
     <tr>
       <th>opt.mat.PFG.obs</th>
-      <td><p>default NULL (<em>optional</em>). A <code>data.frame</code> 
-with 4 columns : PFG, X, Y, obs (0/1)</p></td>
+      <td><p>default <code>NULL</code> (<em>optional</em>). A 
+<code>data.frame</code> with 4 columns : <code>PFG</code>, <code>X</code>, <code>Y</code>, 
+<code>obs</code> (0/1)</p></td>
     </tr>
     <tr>
       <th>opt.mat.CWM.obs</th>
-      <td><p>default NULL (<em>optional</em>). A <code>data.frame</code> 
-with 3 or 4 columns : X, Y, light (CWM), soil (CWM)</p></td>
+      <td><p>default <code>NULL</code> (<em>optional</em>). A 
+<code>data.frame</code> with 3 or 4 columns : <code>X</code>, <code>Y</code>, <code>light</code> 
+(CWM), <code>soil</code> (CWM)</p></td>
     </tr>
     <tr>
       <th>opt.mat.cover.obs</th>
-      <td><p>default NULL (<em>optional</em>). A <code>data.frame</code>
-with 3 columns : X, Y, obs (0/1)</p></td>
+      <td><p>default <code>NULL</code> (<em>optional</em>). A 
+<code>data.frame</code> with 3 columns : <code>X</code>, <code>Y</code>, <code>obs</code> (0/1)</p></td>
     </tr>
     <tr>
       <th>opt.mat.light.obs</th>
-      <td><p>default NULL (<em>optional</em>). A <code>data.frame</code>
-with 3 columns : X, Y, obs (0/1)</p></td>
+      <td><p>default <code>NULL</code> (<em>optional</em>). A 
+<code>data.frame</code> with 3 columns : <code>X</code>, <code>Y</code>, <code>obs</code> (0/1)</p></td>
     </tr>
     <tr>
       <th>opt.mat.soil.obs</th>
-      <td><p>default NULL (<em>optional</em>). A <code>data.frame</code>
-with 3 columns : X, Y, obs (0/1)</p></td>
+      <td><p>default <code>NULL</code> (<em>optional</em>). A 
+<code>data.frame</code> with 3 columns : <code>X</code>, <code>Y</code>, <code>obs</code> (0/1)</p></td>
     </tr>
     <tr>
       <th>opt.ras.cover.obs</th>
-      <td><p>default NULL (<em>optional</em>). A <code>string</code> 
-that corresponds to the file name of a raster containing observed values for 
-vegetation cover</p></td>
+      <td><p>default <code>NULL</code> (<em>optional</em>). A 
+<code>string</code> that corresponds to the file name of a raster containing 
+observed values for vegetation cover</p></td>
     </tr>
     <tr>
       <th>opt.ras.light.obs</th>
-      <td><p>default NULL (<em>optional</em>). A <code>string</code> 
-that corresponds to the file name of a raster containing observed values for 
-community weighted mean of light</p></td>
+      <td><p>default <code>NULL</code> (<em>optional</em>). A 
+<code>string</code> that corresponds to the file name of a raster containing 
+observed values for community weighted mean of light</p></td>
     </tr>
     <tr>
       <th>opt.ras.soil.obs</th>
-      <td><p>default NULL (<em>optional</em>). A <code>string</code> 
-that corresponds to the file name of a raster containing observed values for 
-community weighted mean of soil</p></td>
+      <td><p>default <code>NULL</code> (<em>optional</em>). A 
+<code>string</code> that corresponds to the file name of a raster containing 
+observed values for community weighted mean of soil</p></td>
     </tr>
     <tr>
       <th>opt.ras_habitat</th>
-      <td><p>default NULL (<em>optional</em>). A <code>string</code> that 
-corresponds to the file name of a raster mask, with an <code>integer</code> value 
-within each pixel, corresponding to a specific habitat</p></td>
+      <td><p>default <code>NULL</code> (<em>optional</em>). A 
+<code>string</code> that  corresponds to the file name of a raster mask, with an 
+<code>integer</code> value within each pixel, corresponding to a specific habitat</p></td>
     </tr>
     <tr>
       <th>opt.cells_ID</th>
-      <td><p>default NULL (<em>optional</em>). The cells ID of the 
-studied area for which light resources will be extracted.</p></td>
+      <td><p>default <code>NULL</code> (<em>optional</em>). The cells ID of 
+the studied area for which abund / light / soil resources will be extracted</p></td>
     </tr>
     <tr>
       <th>opt.abund_fixedScale</th>
       <td><p>default <code>TRUE</code>. If <code>FALSE</code>, the 
-ordinate scale will be adapted for each PFG for the graphical representation 
-of the  evolution of abundances through time</p></td>
+ordinate scale will be adapted for each PFG for the graphical 
+representation of the  evolution of abundances through time</p></td>
     </tr>
     <tr>
       <th>opt.no_CPU</th>
-      <td><p>default 1 (<em>optional</em>). The number of resources that 
-can be used to parallelize the <code>unzip/zip</code> of raster files</p></td>
+      <td><p>default <code>1</code> (<em>optional</em>). The number of 
+resources that can be used to parallelize the <code>unzip/zip</code> of raster 
+files</p></td>
     </tr>
     <tr>
       <th>opt.doPlot</th>
-      <td><p>default TRUE (<em>optional</em>). If TRUE, plot(s) will be 
-processed, otherwise only the calculation and reorganization of outputs 
-will occur, be saved and returned.</p></td>
+      <td><p>default <code>TRUE</code> (<em>optional</em>). If <code>TRUE</code>, 
+plot(s) will be processed, otherwise only the calculation and 
+reorganization of outputs will occur, be saved and returned</p></td>
     </tr>
     <tr>
       <th>opt.doFunc.evolutionCoverage</th>
-      <td><p>default TRUE (<em>optional</em>). If TRUE, 
-corresponding <code>POST_FATE.graphic_...</code> function will be run.</p></td>
+      <td><p>default <code>TRUE</code> (<em>optional</em>). 
+If <code>TRUE</code>, corresponding <code>POST_FATE.graphic_...</code> function will 
+be run.</p></td>
     </tr>
     <tr>
       <th>opt.doFunc.evolutionPixels</th>
-      <td><p>default TRUE (<em>optional</em>).If TRUE, 
-corresponding <code>POST_FATE.graphic_...</code> function will be run.</p></td>
+      <td><p>default <code>TRUE</code> (<em>optional</em>). 
+If <code>TRUE</code>, corresponding <code>POST_FATE.graphic_...</code> function will 
+be run.</p></td>
     </tr>
     <tr>
       <th>opt.doFunc.validation</th>
-      <td><p>default TRUE (<em>optional</em>). If TRUE, 
-corresponding <code>POST_FATE.graphic_...</code> function will be run.</p></td>
+      <td><p>default <code>TRUE</code> (<em>optional</em>). 
+If <code>TRUE</code>, corresponding <code>POST_FATE.graphic_...</code> function will 
+be run.</p></td>
     </tr>
     <tr>
       <th>opt.doFunc.mapPFGvsHS</th>
-      <td><p>default TRUE (<em>optional</em>). If TRUE, 
-corresponding <code>POST_FATE.graphic_...</code> function will be run.</p></td>
+      <td><p>default <code>TRUE</code> (<em>optional</em>). 
+If <code>TRUE</code>, corresponding <code>POST_FATE.graphic_...</code> function will 
+be run.</p></td>
     </tr>
     <tr>
       <th>opt.doFunc.mapPFGrichness</th>
-      <td><p>default TRUE (<em>optional</em>).If TRUE, 
-corresponding <code>POST_FATE.graphic_...</code> function will be run.</p></td>
+      <td><p>default <code>TRUE</code> (<em>optional</em>). 
+If <code>TRUE</code>, corresponding <code>POST_FATE.graphic_...</code> function will 
+be run.</p></td>
     </tr>
     <tr>
       <th>opt.doFunc.mapPFGcover</th>
-      <td><p>default TRUE (<em>optional</em>). If TRUE, 
-corresponding <code>POST_FATE.graphic_...</code> function will be run.</p></td>
+      <td><p>default <code>TRUE</code> (<em>optional</em>). 
+If <code>TRUE</code>, corresponding <code>POST_FATE.graphic_...</code> function will 
+be run.</p></td>
     </tr>
     <tr>
       <th>opt.doFunc.mapPFGlight</th>
-      <td><p>default TRUE (<em>optional</em>). If TRUE, 
-corresponding <code>POST_FATE.graphic_...</code> function will be run.</p></td>
+      <td><p>default <code>TRUE</code> (<em>optional</em>). 
+If <code>TRUE</code>, corresponding <code>POST_FATE.graphic_...</code> function will 
+be run.</p></td>
     </tr>
     <tr>
       <th>opt.doFunc.mapPFGsoil</th>
-      <td><p>default TRUE (<em>optional</em>). If TRUE, 
-corresponding <code>POST_FATE.graphic_...</code> function will be run.</p></td>
+      <td><p>default <code>TRUE</code> (<em>optional</em>). 
+If <code>TRUE</code>, corresponding <code>POST_FATE.graphic_...</code> function will 
+be run.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>The following <code>POST_FATE_[...].pdf</code> files are created :</p><dl class='dl-horizontal'>
-  <dt><code class="file">GRAPHIC_A <br /> spaceOccupancy</code></dt><dd><p>to visualize for each PFG the
+  <dt><code class="file">GRAPHIC_A <br /> spaceOccupancy</code></dt><dd><p>to visualize for each PFG the 
   evolution of its occupation of the studied area through simulation time</p></dd>
-  <dt><code class="file">GRAPHIC_A <br /> abundance</code></dt><dd><p>to visualize for each PFG the
-  evolution of its abundance within the whole studied area through
+  <dt><code class="file">GRAPHIC_A <br /> abundance</code></dt><dd><p>to visualize for each PFG the 
+  evolution of its abundance within the whole studied area through 
   simulation time</p></dd>
-  <dt><code class="file">GRAPHIC_A <br /> pixels</code></dt><dd><p>to visualize for each PFG the
-  evolution of its abundance within each selected pixel through
+  <dt><code class="file">GRAPHIC_A <br /> pixels</code></dt><dd><p>to visualize for each PFG the 
+  evolution of its abundance within each selected pixel through 
   simulation time, as well as the evolution of light and soil resources</p></dd>
   <dt><code class="file">GRAPHIC_B <br /> validationStatistics</code></dt><dd><p>to assess the modeling 
   quality of each PFG based on given observations within the studied area</p></dd>
-  <dt><code class="file">GRAPHIC_B <br /> PFGvsHS</code></dt><dd><p>to visualize the PFG presence
+  <dt><code class="file">GRAPHIC_B <br /> PFGvsHS</code></dt><dd><p>to visualize the PFG presence 
   within the studied area (probability and simulated occurrence)</p></dd>
-  <dt><code class="file">GRAPHIC_C <br /> PFGrichness</code></dt><dd><p>to visualize the PFG richness
+  <dt><code class="file">GRAPHIC_C <br /> PFGrichness</code></dt><dd><p>to visualize the PFG richness 
   within the studied area</p></dd>
-  <dt><code class="file">GRAPHIC_C <br /> PFGcover</code></dt><dd><p>to visualize the PFG cover
+  <dt><code class="file">GRAPHIC_C <br /> PFGcover</code></dt><dd><p>to visualize the PFG cover 
   within the studied area</p></dd>
-  <dt><code class="file">GRAPHIC_C <br /> PFGlight</code></dt><dd><p>to visualize the light CWM
+  <dt><code class="file">GRAPHIC_C <br /> PFGlight</code></dt><dd><p>to visualize the light CWM 
   within the studied area</p></dd>
-  <dt><code class="file">GRAPHIC_C <br /> PFGlsoil</code></dt><dd><p>to visualize the soil CWM
+  <dt><code class="file">GRAPHIC_C <br /> PFGlsoil</code></dt><dd><p>to visualize the soil CWM 
   within the studied area</p></dd>
 
 </dl>
 
 <p>Three folders are created :</p><dl class='dl-horizontal'>
-  <dt><code class="file">ABUND_REL_perPFG <br />_allStrata</code></dt><dd><p>containing relative abundance 
-  raster maps for each PFG across all strata (see 
+  <dt><code class="file">ABUND_REL_perPFG <br />_allStrata</code></dt><dd><p>containing relative 
+  abundance raster maps for each PFG across all strata (see 
   <code><a href='POST_FATE.relativeAbund.html'>POST_FATE.relativeAbund</a></code>)</p></dd>
-  <dt><code class="file">BIN_perPFG <br />_allStrata</code></dt><dd><p>containing presence / absence  
+  <dt><code class="file">BIN_perPFG <br />_allStrata</code></dt><dd><p>containing presence / absence 
   raster maps for each PFG across all strata (see 
   <code><a href='POST_FATE.graphic_validationStatistics.html'>POST_FATE.graphic_validationStatistics</a></code>)</p></dd>
-  <dt><code class="file">BIN_perPFG <br />_perStrata</code></dt><dd><p>containing presence / absence  
+  <dt><code class="file">BIN_perPFG <br />_perStrata</code></dt><dd><p>containing presence / absence 
   raster maps for each PFG for each stratum (see 
   <code><a href='POST_FATE.graphic_validationStatistics.html'>POST_FATE.graphic_validationStatistics</a></code>)</p></dd>
 
@@ -425,10 +438,10 @@ corresponding <code>POST_FATE.graphic_...</code> function will be run.</p></td>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function allows one to obtain, for a specific <code>FATE-HD</code> simulation 
-and a specific parameter file within this simulation, up to ten 
-preanalytical graphics. <br /></p>
-<p>For each PFG and each selected simulation year, raster maps are retrieved
+    <p>This function allows one to obtain, for a specific <code>FATE-HD</code> 
+simulation and a specific parameter file within this simulation, up to ten 
+preanalytical graphics. <br /> <br /></p>
+<p>For each PFG and each selected simulation year, raster maps are retrieved 
 from the results folders (<code>ABUND_perPFG_allStrata</code> or 
 <code>ABUND_perPFG_allStrata</code> or <code>ABUND_REL_perPFG_allStrata</code> or 
 <code>BIN_perPFG_perStrata</code> or <code>BIN_perPFG_allStrata</code> or <code>LIGHT</code> 
@@ -436,43 +449,42 @@ or <code>SOIL</code>) and unzipped.
 Informations extracted lead to the production of the following graphics 
 before the maps are compressed again :</p>
 <ul>
-<li><p>the evolution of <strong>space occupancy</strong> of each Plant Functional
-  Group through simulation time, with <em>space occupancy</em> representing
-  the percentage of pixels within the mask of studied area where the PFG
+<li><p>the evolution of <strong>space occupancy</strong> of each Plant Functional 
+  Group through simulation time, with <em>space occupancy</em> representing 
+  the percentage of pixels within the mask of studied area where the PFG 
   is present (see <code><a href='POST_FATE.graphic_evolutionCoverage.html'>POST_FATE.graphic_evolutionCoverage</a></code>)</p></li>
-<li><p>the evolution of <strong>abundance</strong> of each Plant Functional
-  Group through simulation time, with <em>abundance</em> being the sum over
-  the whole studied area of the PFG abundances (<code>FATE-HD</code> 
-  <em>arbitrary unit</em>) (see 
-  <code><a href='POST_FATE.graphic_evolutionCoverage.html'>POST_FATE.graphic_evolutionCoverage</a></code>)</p></li>
-<li><p>the evolution of <strong>abundance</strong> of each Plant Functional
-  Group through simulation time, within 5 (or more) randomly selected pixels
-  of the studied area (<code>FATE-HD</code> <em>arbitrary unit</em>), as well as 
-  <strong>light resources</strong> of each stratum (<em>1: Low, 2: Medium, 3: High</em>) 
-  and <strong>soil resources</strong> if these modules are selected 
-  (see <code><a href='POST_FATE.graphic_evolutionPixels.html'>POST_FATE.graphic_evolutionPixels</a></code>)</p></li>
-<li><p>the value of <strong>several statistics for the predictive quality
-  of the model for each Plant Functional Group</strong> and for each selected
+<li><p>the evolution of <strong>abundance</strong> of each Plant Functional Group 
+  through simulation time, with <em>abundance</em> being the sum over the 
+  whole studied area of the PFG abundances (<code>FATE-HD</code> <em>arbitrary 
+  unit</em>) (see <code><a href='POST_FATE.graphic_evolutionCoverage.html'>POST_FATE.graphic_evolutionCoverage</a></code>)</p></li>
+<li><p>the evolution of <strong>abundance</strong> of each Plant Functional Group 
+  through simulation time, within 5 (or more) randomly selected pixels of 
+  the studied area (<code>FATE-HD</code> <em>arbitrary unit</em>), as well as 
+  <strong>light resources</strong> of each stratum (<em>1: Low, 2: Medium, 3: 
+  High</em>) and <strong>soil resources</strong> if these modules are selected (see 
+  <code><a href='POST_FATE.graphic_evolutionPixels.html'>POST_FATE.graphic_evolutionPixels</a></code>)</p></li>
+<li><p>the value of <strong>several statistics for the predictive quality 
+  of the model for each Plant Functional Group</strong> and for each selected 
   simulation year(s) (see 
   <code><a href='POST_FATE.graphic_validationStatistics.html'>POST_FATE.graphic_validationStatistics</a></code>)</p></li>
-<li><p>the maps of <strong>Plant Functional Group habitat suitability and
+<li><p>the maps of <strong>Plant Functional Group habitat suitability and 
   occurrences</strong> for each selected simulation year(s), representing the 
-  probability of presence of each PFG in each pixel compared to its
+  probability of presence of each PFG in each pixel compared to its 
   simulated presence (see <code><a href='POST_FATE.graphic_mapPFGvsHS.html'>POST_FATE.graphic_mapPFGvsHS</a></code>)</p></li>
-<li><p>the map of <strong>Plant Functional Group richness</strong> for each selected
-  simulation year(s), representing the number of PFG present in each pixel 
-  (see <code><a href='POST_FATE.graphic_mapPFGrichness.html'>POST_FATE.graphic_mapPFGrichness</a></code>)</p></li>
-<li><p>the map of <strong>Plant Functional Group cover</strong> for each selected
+<li><p>the map of <strong>Plant Functional Group richness</strong> for each 
+  selected simulation year(s), representing the number of PFG present in 
+  each pixel (see <code><a href='POST_FATE.graphic_mapPFGrichness.html'>POST_FATE.graphic_mapPFGrichness</a></code>)</p></li>
+<li><p>the map of <strong>Plant Functional Group cover</strong> for each selected 
   simulation year(s), representing the relative cumulated abundance of PFG 
   present in each pixel above a height threshold (see 
   <code><a href='POST_FATE.graphic_mapPFGcover.html'>POST_FATE.graphic_mapPFGcover</a></code>)</p></li>
-<li><p>the map of <strong>light Community Weighted Mean</strong> for each selected
-  simulation year(s), representing the simulated value of light (Landolt)
-  within each pixel above a height threshold (see 
+<li><p>the map of <strong>light Community Weighted Mean</strong> for each selected 
+  simulation year(s), representing the simulated value of light within each 
+  pixel above a height threshold (see 
   <code><a href='POST_FATE.graphic_mapPFGlight.html'>POST_FATE.graphic_mapPFGlight</a></code>)</p></li>
-<li><p>the map of <strong>soil Community Weighted Mean</strong> for each selected
-  simulation year(s), representing the simulated value of soil (Landolt)
-  within each pixel (see <code><a href='POST_FATE.graphic_mapPFGsoil.html'>POST_FATE.graphic_mapPFGsoil</a></code>)</p></li>
+<li><p>the map of <strong>soil Community Weighted Mean</strong> for each selected 
+  simulation year(s), representing the simulated value of soil within each 
+  pixel (see <code><a href='POST_FATE.graphic_mapPFGsoil.html'>POST_FATE.graphic_mapPFGsoil</a></code>)</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>

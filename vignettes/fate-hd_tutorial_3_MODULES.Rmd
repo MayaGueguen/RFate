@@ -20,13 +20,16 @@ pre.grey {
 </style>
 
 
+
 <br/> <br/>
 
 `FATE-HD` model is built like a [LEGO](https://i.pinimg.com/originals/47/7b/f3/477bf37d4d316285108b62e2e852a014.gif) tool : it has a **core module**, which corresponds to the fundamental succession, and then can be complemented with **other modules**. Some of these modules can be regarded as equally important as the core module (from an ecological likelihood point of view, like light, dispersal, soil, etc), and some others are more specific (drought, aliens, fire, etc).
 
+<br/>
+
+All of these modules require <pre class = "bash">mandatory parameters</pre> and sometimes, some others that are <pre class = "grey">optional</pre>
+
 <br/> <br/>
-
-
 
 # <i class="fa fa-heart"></i> `CORE` module (succession)
 
@@ -34,6 +37,23 @@ pre.grey {
 
 
 #### Required parameters
+
+- In *GlobalParameters* file :
+
+<pre class = "bash">
+NB_FG 16
+NB_STRATUM 6
+SIMULATION_DURATION 950
+SEEDING_DURATION 300
+SEEDING_TIMESTEP 1
+SEEDING_INPUT 100
+MAX_ABUND_LOW 1000
+MAX_ABUND_MEDIUM 5000
+MAX_ABUND_HIGH 8000
+</pre>
+
+The number of computer resources can also be given : `NB_CPUS 6`.  
+If so, some parts of the main loop of the code will be parallelized on the amount of indicated resources.
 
 - In *ParamSimulation* file :
 
@@ -60,24 +80,8 @@ FATE_simulation/DATA/SAVE/arraysSavingYears.txt
 FATE_simulation/DATA/SAVE/objectsSavingYears.txt
 </pre>
 
-- In *Global Parameters* file :
-
-<pre class = "bash">
-NB_FG 16
-NB_STRATUM 6
-SIMULATION_DURATION 950
-SEEDING_DURATION 300
-SEEDING_TIMESTEP 1
-SEEDING_INPUT 100
-MAX_ABUND_LOW 1000
-MAX_ABUND_MEDIUM 5000
-MAX_ABUND_HIGH 8000
-</pre>
-
-The number of computer resources can also be given : `NB_CPUS 6`.  
-If so, some parts of the main loop of the code will be parallelized on the amount of indicated resources.
-
-- In *SUCCESSION* files :
+- In *SUCCESSION* files (given with the `--PFG_LIFE_HISTORY_PARAMS--` flag in *ParamSimulation* file) :  
+(see [PRE_FATE.params_PFGsuccession](reference/PRE_FATE.params_PFGsuccession.html))
 
 <pre class = "bash">
 NAME PFG1
@@ -98,13 +102,20 @@ POTENTIAL_FECUNDITY 100
 
 
 
-
 # <i class="fa fa-sun"></i> `LIGHT` module (competition)
 
 "*Vegetation height is represented by a limited number of strata to incorporate the shading process (Fig. 1a). Within a pixel, the light resource for each stratum is calculated from the total abundance of all PFGs across all the upper strata. Within-pixel spatial heterogeneity in light resources is not taken into consideration*" ([Boulangeat, 2014](papers/Boulangeat_2014_GCB.pdf "Boulangeat, I., Georges, D., Thuiller, W., FATE-HD: A spatially and temporally explicit integrated model for predicting vegetation structure and diversity at regional scale. Global Change Biology, 20, 2368–2378."))
 
 
 #### Required parameters
+
+- In *GlobalParameters* file :
+
+<pre class = "bash">
+DO_LIGHT_COMPETITION 1
+LIGHT_THRESH_LOW 19000
+LIGHT_THRESH_MEDIUM 13000
+</pre>
 
 - In *ParamSimulation* file :
 
@@ -114,15 +125,8 @@ FATE_simulation/DATA/PFGS/SUCC/SUCC_PFG1.txt
 FATE_simulation/DATA/PFGS/SUCC/SUCC_PFG2.txt
 </pre>
 
-- In *Global Parameters* file :
-
-<pre class = "bash">
-DO_LIGHT_COMPETITION 1
-LIGHT_THRESH_LOW 19000
-LIGHT_THRESH_MEDIUM 13000
-</pre>
-
-- In *LIGHT* files :
+- In *LIGHT* files (given with the `--PFG_LIGHT_PARAMS--` flag in *ParamSimulation* file) :  
+(see [PRE_FATE.params_PFGlight](reference/PRE_FATE.params_PFGlight.html))
 
 <pre class = "bash">
 NAME PFG1
@@ -142,6 +146,14 @@ SHADE_TOL 1 1 1 1 1 1 1 1 1
 
 #### Required parameters
 
+- In *GlobalParameters* file :
+
+<pre class = "bash">
+DO_SOIL_COMPETITION 1
+SOIL_INIT 2.5
+SOIL_RETENTION 0.8
+</pre>
+
 - In *ParamSimulation* file :
 
 <pre class = "bash">
@@ -150,15 +162,8 @@ FATE_simulation/DATA/PFGS/SOIL/SOIL_PFG1.txt
 FATE_simulation/DATA/PFGS/SOIL/SOIL_PFG2.txt
 </pre>
 
-- In *Global Parameters* file :
-
-<pre class = "bash">
-DO_SOIL_COMPETITION 1
-SOIL_INIT 2.5
-SOIL_RETENTION 0.8
-</pre>
-
-- In *SOIL* files :
+- In *SOIL* files (given with the `--PFG_SOIL_PARAMS--` flag in *ParamSimulation* file) :  
+(see [PRE_FATE.params_PFGsoil](reference/PRE_FATE.params_PFGsoil.html))
 
 <pre class = "bash">
 NAME PFG1
@@ -179,6 +184,13 @@ SOIL_TOL 1 10 0 5 10 4 9 10 8
 
 #### Required parameters
 
+- In *GlobalParameters* file :
+
+<pre class = "bash">
+DO_DISPERSAL 1
+DISPERSAL_MODE 1
+</pre>
+
 - In *ParamSimulation* file :
 
 <pre class = "bash">
@@ -187,14 +199,8 @@ FATE_simulation/DATA/PFGS/DISP/DISP_PFG1.txt
 FATE_simulation/DATA/PFGS/DISP/DISP_PFG2.txt
 </pre>
 
-- In *Global Parameters* file :
-
-<pre class = "bash">
-DO_DISPERSAL 1
-DISPERSAL_MODE 1
-</pre>
-
-- In *DISPERSAL* files :
+- In *DISPERSAL* files (given with the `--PFG_DISPERSAL_PARAMS--` flag in *ParamSimulation* file) :  
+(see [PRE_FATE.params_PFGdispersal](reference/PRE_FATE.params_PFGdispersal.html))
 
 <pre class = "bash">
 NAME PFG1
@@ -211,6 +217,13 @@ DISPERS_DIST 100 500 79000
 
 
 #### Required parameters
+
+- In *GlobalParameters* file :
+
+<pre class = "bash">
+DO_HAB_SUITABILITY 1
+HABSUIT_OPTION 1
+</pre>
 
 - In *ParamSimulation* file :
 
@@ -236,13 +249,6 @@ FATE_simulation/DATA/SCENARIO/HABSUIT/HS_changing_masks_t50.txt
 FATE_simulation/DATA/SCENARIO/HABSUIT/HS_changing_masks_t100.txt
 </pre>
 
-- In *Global Parameters* file :
-
-<pre class = "bash">
-DO_HAB_SUITABILITY 1
-HABSUIT_OPTION 1
-</pre>
-
 <br/>
 
 
@@ -253,6 +259,15 @@ HABSUIT_OPTION 1
 
 
 #### Required parameters
+
+- In *GlobalParameters* file :
+
+<pre class = "bash">
+DO_DISTURBANCES 1
+NB_DISTURBANCES 4
+NB_SUBDISTURBANCES 4
+FREQ_DISTURBANCES 1 1 1 1
+</pre>
 
 - In *ParamSimulation* file :
 
@@ -282,16 +297,8 @@ FATE_simulation/DATA/SCENARIO/dist_scenario1/disturbances_changing_masks_t100.tx
 FATE_simulation/DATA/SCENARIO/dist_scenario1/disturbances_changing_masks_t150.txt
 </pre>
 
-- In *Global Parameters* file :
-
-<pre class = "bash">
-DO_DISTURBANCES 1
-NB_DISTURBANCES 4
-NB_SUBDISTURBANCES 4
-FREQ_DISTURBANCES 1 1 1 1
-</pre>
-
-- In *DISTURBANCE* files :
+- In *DISTURBANCE* files (given with the `--PFG_DISTURBANCES_PARAMS--` flag in *ParamSimulation* file) :  
+(see [PRE_FATE.params_PFGdisturbance](reference/PRE_FATE.params_PFGdisturbance.html))
 
 <pre class = "bash">
 NAME PFG1
@@ -307,8 +314,16 @@ ACTIVATED_SEED 0 0 0 0
 
 # <i class="fa fa-balance-scale"></i> `HABITAT STABILITY` module
 
+"*To detect changes in ecosystem states, we propose building n-dimensional hypervolumes using time series of n-ecosystem components at equilibrium [...] the choice of components depends on what properties and changes are under focus. For instance, if the user wishes tofocus on changes in community structure and evenness patterns, relative species abundances should be considered, while changes in overall species abundances should be followed using raw abundances if the rareness of species is important for the research question. [...] For a deeper analysis on how pre- and post-perturbation states differed, we calculated yearly complementary metrics for each habitat-land-use combination and each scenario. Yearly PFG a-diversity was calculated as the inverse Simpson concentration to reflect changes in taxonomic richness and evenness (Leinster & Cobbold 2012).*" ([Barros, 2016](papers/Barros_2016_Ecology_Letters.pdf "Barros C., Thuiller W., Georges D., Boulangeat I., Münkemüller T. and Bellwood D. (2016), N‐dimensional hypervolumes to study stability of complex ecosystems. Ecol Lett, 19: 729-742."))
 
 #### Required parameters
+
+- In *GlobalParameters* file :
+
+<pre class = "bash">
+DO_HAB_STABILITY 1
+NB_HABITATS 5
+</pre>
 
 - In *ParamSimulation* file :
 
@@ -327,13 +342,6 @@ FATE_simulation/DATA/MASK/Habitat_BL_4.tif
 FATE_simulation/DATA/MASK/Habitat_BL_5.tif
 </pre>
 
-- In *Global Parameters* file :
-
-<pre class = "bash">
-DO_HAB_STABILITY 1
-NB_HABITATS 5
-</pre>
-
 <br/>
 
 
@@ -344,6 +352,15 @@ NB_HABITATS 5
 
 
 #### Required parameters
+
+- In *GlobalParameters* file :
+
+<pre class = "bash">
+DO_DROUGHT_DISTURBANCES 1
+NB_SUBDROUGHT 4
+CHRONO_POST_DROUGHT 0
+CHRONO_CURR_DROUGHT 1
+</pre>
 
 - In *ParamSimulation* file :
 
@@ -370,16 +387,7 @@ FATE_simulation/DATA/SCENARIO/moistureIndex_changing_masks_t30.txt
 FATE_simulation/DATA/SCENARIO/moistureIndex_changing_masks_t45.txt
 </pre>
 
-- In *Global Parameters* file :
-
-<pre class = "bash">
-DO_DROUGHT_DISTURBANCES 1
-NB_SUBDROUGHT 4
-CHRONO_POST_DROUGHT 0
-CHRONO_CURR_DROUGHT 1
-</pre>
-
-- In *DROUGHT* files :
+- In *DROUGHT* files (given with the `--PFG_DROUGHT_PARAMS--` flag in *ParamSimulation* file) :
 
 <pre class = "bash">
 NAME PFG1
@@ -405,6 +413,13 @@ DROUGHT_RECOVERY 1
 
 #### Required parameters
 
+- In *GlobalParameters* file :
+
+<pre class = "bash">
+DO_ALIENS_DISTURBANCE 1
+FREQ_ALIENS 
+</pre>
+
 - In *ParamSimulation* file :
 
 <pre class = "bash">
@@ -416,6 +431,7 @@ FATE_simulation/DATA/MASK/Introduction_ALIEN3.tif
 
 Like habitat suitability or disturbances maps, aliens introduction masks can be changed through simulation time.  
 Two supplementary type of files are then needed :
+
 1. a file with each row indicating each simulation year of change
 2. as many files as the number of years indicated in the previous file,  
 and inside them, as many lines as PFG, with a path for a new mask for each of them
@@ -430,6 +446,7 @@ FATE_simulation/DATA/SCENARIO/aliens_changing_masks_t25.txt
 
 Once introduction maps have been set, frequency of introduction can also be changed through simulation time.  
 Two supplementary type of files are then needed :
+
 1. a file with each row indicating each simulation year of change
 2. as many files as the number of years indicated in the previous file,  
 and inside them, as many lines as PFG, with a number for each of them representing its introduction frequency
@@ -442,14 +459,7 @@ FATE_simulation/DATA/SCENARIO/aliens_changing_frequencies_t20.txt
 FATE_simulation/DATA/SCENARIO/aliens_changing_frequencies_t25.txt
 </pre>
 
-- In *Global Parameters* file :
-
-<pre class = "bash">
-DO_ALIENS_DISTURBANCE 1
-FREQ_ALIENS 
-</pre>
-
-- In *SUCCESSION* files :
+- In *SUCCESSION* files (given with the `--PFG_LIFE_HISTORY_PARAMS--` flag in *ParamSimulation* file) :
 
 <pre class = "bash">
 IS_ALIEN 1
@@ -461,6 +471,5 @@ IS_ALIEN 1
 
 # <i class="fa fa-fire"></i> `FIRE` module
 
-
-<br/>
+"*To be written*" ()
 

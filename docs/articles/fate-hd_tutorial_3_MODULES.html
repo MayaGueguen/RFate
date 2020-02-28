@@ -184,6 +184,11 @@ pre.grey {
 </style>
 <p><br><br></p>
 <p><code>FATE-HD</code> model is built like a <a href="https://i.pinimg.com/originals/47/7b/f3/477bf37d4d316285108b62e2e852a014.gif">LEGO</a> tool : it has a <strong>core module</strong>, which corresponds to the fundamental succession, and then can be complemented with <strong>other modules</strong>. Some of these modules can be regarded as equally important as the core module (from an ecological likelihood point of view, like light, dispersal, soil, etc), and some others are more specific (drought, aliens, fire, etc).</p>
+<p><br></p>
+All of these modules require
+<pre class="bash">mandatory parameters</pre>
+and sometimes, some others that are
+<pre class="grey">optional</pre>
 <p><br><br></p>
 <div id="core-module-succession" class="section level1">
 <h1 class="hasAnchor">
@@ -192,6 +197,22 @@ pre.grey {
 <div id="required-parameters" class="section level4">
 <h4 class="hasAnchor">
 <a href="#required-parameters" class="anchor"></a>Required parameters</h4>
+<ul>
+<li>In <em>GlobalParameters</em> file :</li>
+</ul>
+<pre class="bash">
+NB_FG 16
+NB_STRATUM 6
+SIMULATION_DURATION 950
+SEEDING_DURATION 300
+SEEDING_TIMESTEP 1
+SEEDING_INPUT 100
+MAX_ABUND_LOW 1000
+MAX_ABUND_MEDIUM 5000
+MAX_ABUND_HIGH 8000
+</pre>
+<p>The number of computer resources can also be given : <code>NB_CPUS 6</code>.<br>
+If so, some parts of the main loop of the code will be parallelized on the amount of indicated resources.</p>
 <ul>
 <li>In <em>ParamSimulation</em> file :</li>
 </ul>
@@ -216,23 +237,8 @@ FATE_simulation/DATA/SAVE/arraysSavingYears.txt
 FATE_simulation/DATA/SAVE/objectsSavingYears.txt
 </pre>
 <ul>
-<li>In <em>Global Parameters</em> file :</li>
-</ul>
-<pre class="bash">
-NB_FG 16
-NB_STRATUM 6
-SIMULATION_DURATION 950
-SEEDING_DURATION 300
-SEEDING_TIMESTEP 1
-SEEDING_INPUT 100
-MAX_ABUND_LOW 1000
-MAX_ABUND_MEDIUM 5000
-MAX_ABUND_HIGH 8000
-</pre>
-<p>The number of computer resources can also be given : <code>NB_CPUS 6</code>.<br>
-If so, some parts of the main loop of the code will be parallelized on the amount of indicated resources.</p>
-<ul>
-<li>In <em>SUCCESSION</em> files :</li>
+<li>In <em>SUCCESSION</em> files (given with the <code>--PFG_LIFE_HISTORY_PARAMS--</code> flag in <em>ParamSimulation</em> file) :<br>
+(see <a href="reference/PRE_FATE.params_PFGsuccession.html">PRE_FATE.params_PFGsuccession</a>)</li>
 </ul>
 <pre class="bash">
 NAME PFG1
@@ -259,6 +265,14 @@ POTENTIAL_FECUNDITY 100
 <h4 class="hasAnchor">
 <a href="#required-parameters-1" class="anchor"></a>Required parameters</h4>
 <ul>
+<li>In <em>GlobalParameters</em> file :</li>
+</ul>
+<pre class="bash">
+DO_LIGHT_COMPETITION 1
+LIGHT_THRESH_LOW 19000
+LIGHT_THRESH_MEDIUM 13000
+</pre>
+<ul>
 <li>In <em>ParamSimulation</em> file :</li>
 </ul>
 <pre class="bash">
@@ -267,15 +281,8 @@ FATE_simulation/DATA/PFGS/SUCC/SUCC_PFG1.txt
 FATE_simulation/DATA/PFGS/SUCC/SUCC_PFG2.txt
 </pre>
 <ul>
-<li>In <em>Global Parameters</em> file :</li>
-</ul>
-<pre class="bash">
-DO_LIGHT_COMPETITION 1
-LIGHT_THRESH_LOW 19000
-LIGHT_THRESH_MEDIUM 13000
-</pre>
-<ul>
-<li>In <em>LIGHT</em> files :</li>
+<li>In <em>LIGHT</em> files (given with the <code>--PFG_LIGHT_PARAMS--</code> flag in <em>ParamSimulation</em> file) :<br>
+(see <a href="reference/PRE_FATE.params_PFGlight.html">PRE_FATE.params_PFGlight</a>)</li>
 </ul>
 <pre class="bash">
 NAME PFG1
@@ -294,6 +301,14 @@ SHADE_TOL 1 1 1 1 1 1 1 1 1
 <h4 class="hasAnchor">
 <a href="#required-parameters-2" class="anchor"></a>Required parameters</h4>
 <ul>
+<li>In <em>GlobalParameters</em> file :</li>
+</ul>
+<pre class="bash">
+DO_SOIL_COMPETITION 1
+SOIL_INIT 2.5
+SOIL_RETENTION 0.8
+</pre>
+<ul>
 <li>In <em>ParamSimulation</em> file :</li>
 </ul>
 <pre class="bash">
@@ -302,15 +317,8 @@ FATE_simulation/DATA/PFGS/SOIL/SOIL_PFG1.txt
 FATE_simulation/DATA/PFGS/SOIL/SOIL_PFG2.txt
 </pre>
 <ul>
-<li>In <em>Global Parameters</em> file :</li>
-</ul>
-<pre class="bash">
-DO_SOIL_COMPETITION 1
-SOIL_INIT 2.5
-SOIL_RETENTION 0.8
-</pre>
-<ul>
-<li>In <em>SOIL</em> files :</li>
+<li>In <em>SOIL</em> files (given with the <code>--PFG_SOIL_PARAMS--</code> flag in <em>ParamSimulation</em> file) :<br>
+(see <a href="reference/PRE_FATE.params_PFGsoil.html">PRE_FATE.params_PFGsoil</a>)</li>
 </ul>
 <pre class="bash">
 NAME PFG1
@@ -331,6 +339,13 @@ SOIL_TOL 1 10 0 5 10 4 9 10 8
 <h4 class="hasAnchor">
 <a href="#required-parameters-3" class="anchor"></a>Required parameters</h4>
 <ul>
+<li>In <em>GlobalParameters</em> file :</li>
+</ul>
+<pre class="bash">
+DO_DISPERSAL 1
+DISPERSAL_MODE 1
+</pre>
+<ul>
 <li>In <em>ParamSimulation</em> file :</li>
 </ul>
 <pre class="bash">
@@ -339,14 +354,8 @@ FATE_simulation/DATA/PFGS/DISP/DISP_PFG1.txt
 FATE_simulation/DATA/PFGS/DISP/DISP_PFG2.txt
 </pre>
 <ul>
-<li>In <em>Global Parameters</em> file :</li>
-</ul>
-<pre class="bash">
-DO_DISPERSAL 1
-DISPERSAL_MODE 1
-</pre>
-<ul>
-<li>In <em>DISPERSAL</em> files :</li>
+<li>In <em>DISPERSAL</em> files (given with the <code>--PFG_DISPERSAL_PARAMS--</code> flag in <em>ParamSimulation</em> file) :<br>
+(see <a href="reference/PRE_FATE.params_PFGdispersal.html">PRE_FATE.params_PFGdispersal</a>)</li>
 </ul>
 <pre class="bash">
 NAME PFG1
@@ -362,6 +371,13 @@ DISPERS_DIST 100 500 79000
 <div id="required-parameters-4" class="section level4">
 <h4 class="hasAnchor">
 <a href="#required-parameters-4" class="anchor"></a>Required parameters</h4>
+<ul>
+<li>In <em>GlobalParameters</em> file :</li>
+</ul>
+<pre class="bash">
+DO_HAB_SUITABILITY 1
+HABSUIT_OPTION 1
+</pre>
 <ul>
 <li>In <em>ParamSimulation</em> file :</li>
 </ul>
@@ -382,13 +398,6 @@ FATE_simulation/DATA/SCENARIO/HABSUIT/HS_changing_masks_t30.txt
 FATE_simulation/DATA/SCENARIO/HABSUIT/HS_changing_masks_t50.txt
 FATE_simulation/DATA/SCENARIO/HABSUIT/HS_changing_masks_t100.txt
 </pre>
-<ul>
-<li>In <em>Global Parameters</em> file :</li>
-</ul>
-<pre class="bash">
-DO_HAB_SUITABILITY 1
-HABSUIT_OPTION 1
-</pre>
 <p><br></p>
 </div>
 </div>
@@ -399,6 +408,15 @@ HABSUIT_OPTION 1
 <div id="required-parameters-5" class="section level4">
 <h4 class="hasAnchor">
 <a href="#required-parameters-5" class="anchor"></a>Required parameters</h4>
+<ul>
+<li>In <em>GlobalParameters</em> file :</li>
+</ul>
+<pre class="bash">
+DO_DISTURBANCES 1
+NB_DISTURBANCES 4
+NB_SUBDISTURBANCES 4
+FREQ_DISTURBANCES 1 1 1 1
+</pre>
 <ul>
 <li>In <em>ParamSimulation</em> file :</li>
 </ul>
@@ -424,16 +442,8 @@ FATE_simulation/DATA/SCENARIO/dist_scenario1/disturbances_changing_masks_t100.tx
 FATE_simulation/DATA/SCENARIO/dist_scenario1/disturbances_changing_masks_t150.txt
 </pre>
 <ul>
-<li>In <em>Global Parameters</em> file :</li>
-</ul>
-<pre class="bash">
-DO_DISTURBANCES 1
-NB_DISTURBANCES 4
-NB_SUBDISTURBANCES 4
-FREQ_DISTURBANCES 1 1 1 1
-</pre>
-<ul>
-<li>In <em>DISTURBANCE</em> files :</li>
+<li>In <em>DISTURBANCE</em> files (given with the <code>--PFG_DISTURBANCES_PARAMS--</code> flag in <em>ParamSimulation</em> file) :<br>
+(see <a href="reference/PRE_FATE.params_PFGdisturbance.html">PRE_FATE.params_PFGdisturbance</a>)</li>
 </ul>
 <pre class="bash">
 NAME PFG1
@@ -449,9 +459,17 @@ ACTIVATED_SEED 0 0 0 0
 <div id="habitat-stability-module" class="section level1">
 <h1 class="hasAnchor">
 <a href="#habitat-stability-module" class="anchor"></a><i class="fa fa-balance-scale"></i> <code>HABITAT STABILITY</code> module</h1>
+<p>“<em>To detect changes in ecosystem states, we propose building n-dimensional hypervolumes using time series of n-ecosystem components at equilibrium […] the choice of components depends on what properties and changes are under focus. For instance, if the user wishes tofocus on changes in community structure and evenness patterns, relative species abundances should be considered, while changes in overall species abundances should be followed using raw abundances if the rareness of species is important for the research question. […] For a deeper analysis on how pre- and post-perturbation states differed, we calculated yearly complementary metrics for each habitat-land-use combination and each scenario. Yearly PFG a-diversity was calculated as the inverse Simpson concentration to reflect changes in taxonomic richness and evenness (Leinster &amp; Cobbold 2012).</em>” (<a href="papers/Barros_2016_Ecology_Letters.pdf" title="Barros C., Thuiller W., Georges D., Boulangeat I., Münkemüller T. and Bellwood D. (2016), N‐dimensional hypervolumes to study stability of complex ecosystems. Ecol Lett, 19: 729-742.">Barros, 2016</a>)</p>
 <div id="required-parameters-6" class="section level4">
 <h4 class="hasAnchor">
 <a href="#required-parameters-6" class="anchor"></a>Required parameters</h4>
+<ul>
+<li>In <em>GlobalParameters</em> file :</li>
+</ul>
+<pre class="bash">
+DO_HAB_STABILITY 1
+NB_HABITATS 5
+</pre>
 <ul>
 <li>In <em>ParamSimulation</em> file :</li>
 </ul>
@@ -469,13 +487,6 @@ FATE_simulation/DATA/MASK/Habitat_BL_3.tif
 FATE_simulation/DATA/MASK/Habitat_BL_4.tif
 FATE_simulation/DATA/MASK/Habitat_BL_5.tif
 </pre>
-<ul>
-<li>In <em>Global Parameters</em> file :</li>
-</ul>
-<pre class="bash">
-DO_HAB_STABILITY 1
-NB_HABITATS 5
-</pre>
 <p><br></p>
 </div>
 </div>
@@ -486,6 +497,15 @@ NB_HABITATS 5
 <div id="required-parameters-7" class="section level4">
 <h4 class="hasAnchor">
 <a href="#required-parameters-7" class="anchor"></a>Required parameters</h4>
+<ul>
+<li>In <em>GlobalParameters</em> file :</li>
+</ul>
+<pre class="bash">
+DO_DROUGHT_DISTURBANCES 1
+NB_SUBDROUGHT 4
+CHRONO_POST_DROUGHT 0
+CHRONO_CURR_DROUGHT 1
+</pre>
 <ul>
 <li>In <em>ParamSimulation</em> file :</li>
 </ul>
@@ -508,16 +528,7 @@ FATE_simulation/DATA/SCENARIO/moistureIndex_changing_masks_t30.txt
 FATE_simulation/DATA/SCENARIO/moistureIndex_changing_masks_t45.txt
 </pre>
 <ul>
-<li>In <em>Global Parameters</em> file :</li>
-</ul>
-<pre class="bash">
-DO_DROUGHT_DISTURBANCES 1
-NB_SUBDROUGHT 4
-CHRONO_POST_DROUGHT 0
-CHRONO_CURR_DROUGHT 1
-</pre>
-<ul>
-<li>In <em>DROUGHT</em> files :</li>
+<li>In <em>DROUGHT</em> files (given with the <code>--PFG_DROUGHT_PARAMS--</code> flag in <em>ParamSimulation</em> file) :</li>
 </ul>
 <pre class="bash">
 NAME PFG1
@@ -542,6 +553,13 @@ DROUGHT_RECOVERY 1
 <h4 class="hasAnchor">
 <a href="#required-parameters-8" class="anchor"></a>Required parameters</h4>
 <ul>
+<li>In <em>GlobalParameters</em> file :</li>
+</ul>
+<pre class="bash">
+DO_ALIENS_DISTURBANCE 1
+FREQ_ALIENS 
+</pre>
+<ul>
 <li>In <em>ParamSimulation</em> file :</li>
 </ul>
 <pre class="bash">
@@ -551,8 +569,12 @@ FATE_simulation/DATA/MASK/Introduction_ALIEN2.tif
 FATE_simulation/DATA/MASK/Introduction_ALIEN3.tif
 </pre>
 <p>Like habitat suitability or disturbances maps, aliens introduction masks can be changed through simulation time.<br>
-Two supplementary type of files are then needed : 1. a file with each row indicating each simulation year of change 2. as many files as the number of years indicated in the previous file,<br>
-and inside them, as many lines as PFG, with a path for a new mask for each of them</p>
+Two supplementary type of files are then needed :</p>
+<ol style="list-style-type: decimal">
+<li>a file with each row indicating each simulation year of change</li>
+<li>as many files as the number of years indicated in the previous file,<br>
+and inside them, as many lines as PFG, with a path for a new mask for each of them</li>
+</ol>
 <pre class="grey">
 --ALIENS_CHANGE_TIME--
 FATE_simulation/DATA/SCENARIO/aliens_changing_times.txt
@@ -561,8 +583,12 @@ FATE_simulation/DATA/SCENARIO/aliens_changing_masks_t20.txt
 FATE_simulation/DATA/SCENARIO/aliens_changing_masks_t25.txt
 </pre>
 <p>Once introduction maps have been set, frequency of introduction can also be changed through simulation time.<br>
-Two supplementary type of files are then needed : 1. a file with each row indicating each simulation year of change 2. as many files as the number of years indicated in the previous file,<br>
-and inside them, as many lines as PFG, with a number for each of them representing its introduction frequency</p>
+Two supplementary type of files are then needed :</p>
+<ol style="list-style-type: decimal">
+<li>a file with each row indicating each simulation year of change</li>
+<li>as many files as the number of years indicated in the previous file,<br>
+and inside them, as many lines as PFG, with a number for each of them representing its introduction frequency</li>
+</ol>
 <pre class="grey">
 --ALIENS_FREQ_CHANGE_TIME--
 FATE_simulation/DATA/SCENARIO/aliens_freq_changing_times.txt
@@ -571,14 +597,7 @@ FATE_simulation/DATA/SCENARIO/aliens_changing_frequencies_t20.txt
 FATE_simulation/DATA/SCENARIO/aliens_changing_frequencies_t25.txt
 </pre>
 <ul>
-<li>In <em>Global Parameters</em> file :</li>
-</ul>
-<pre class="bash">
-DO_ALIENS_DISTURBANCE 1
-FREQ_ALIENS 
-</pre>
-<ul>
-<li>In <em>SUCCESSION</em> files :</li>
+<li>In <em>SUCCESSION</em> files (given with the <code>--PFG_LIFE_HISTORY_PARAMS--</code> flag in <em>ParamSimulation</em> file) :</li>
 </ul>
 <pre class="bash">
 IS_ALIEN 1
@@ -589,7 +608,7 @@ IS_ALIEN 1
 <div id="fire-module" class="section level1">
 <h1 class="hasAnchor">
 <a href="#fire-module" class="anchor"></a><i class="fa fa-fire"></i> <code>FIRE</code> module</h1>
-<p><br></p>
+<p>“<em>To be written</em>” ()</p>
 </div>
   </div>
 
