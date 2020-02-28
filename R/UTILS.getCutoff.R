@@ -12,6 +12,14 @@
 ##' 
 ##' @examples
 ##' 
+##' vec.obs = c(rep(0, 60), rep(1, 40))
+##' vec.pred = c(sample(x = seq(0, 0.2, 0.01), size = 50, replace = TRUE)
+##'              , sample(x = seq(0.15, 1, 0.01), size = 50, replace = TRUE))
+##' ## plot(vec.obs, vec.pred)
+##' 
+##' cutoff = .getCutoff(Obs = vec.obs, Fit = vec.pred)
+##' str(cutoff)
+##' 
 ##' @export
 ##'
 ## END OF HEADER ###############################################################
@@ -24,7 +32,7 @@
   }
   if (.testParam_notNum(Fit))
   {
-    .stopMessage_content("Fit", c("0", "1"))
+    stop("Wrong data given!\n `Fit` must be between 0 and 1")
   }
   
   SumObs = sum(Obs)

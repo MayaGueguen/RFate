@@ -317,7 +317,7 @@
 ##' PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_PNE"
 ##'                             , file.simulParam.1 = "Simul_parameters_V1.txt"
 ##'                             , no_simulations = 5
-##'                             , do.max_abund_low = FALSE
+##'                             , do.max_abund_low = TRUE
 ##'                             , do.max_abund_medium = FALSE
 ##'                             , do.max_abund_high = FALSE
 ##'                             , do.seeding_duration = FALSE

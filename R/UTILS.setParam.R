@@ -168,7 +168,7 @@
   {
     .stopMessage_content("flag.split", c(" ", "^--.*--$"))
   }
-  if (.testParam_notDef(value) || nchar(value) == 0)
+  if (.testParam_notDef(value) || sum(nchar(value) == 0) > 0)
   {
     stop("No data given!\n (missing `value` information)")
   }
