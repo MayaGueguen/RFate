@@ -1,5 +1,5 @@
 ---
-title: "FATE-HD tutorial 2 - Getting Started"
+title: "FATE-HD tutorial 2 - Run a simulation"
 output:
   html_document:
     theme: lumen

@@ -27,10 +27,12 @@ navbar:
         - text: Publications
           href: articles/fate-hd_tutorial_0_publications.html
         - text: Modelling framework
+          href: articles/fate-hd_tutorial_0_modelling_framework.html
+        - text: a. Build PFG
           href: articles/fate-hd_tutorial_1_PFG.html
-        - text: Run a simulation
-          href: articles/fate-hd_tutorial_2_GETTING_STARTED.html
-        - text: Use a module
+        - text: b. Run a FATE-HD simulation
+          href: articles/fate-hd_tutorial_2_RUN_SIMULATION.html
+        - text: c. Use a FATE-HD module
           href: articles/fate-hd_tutorial_3_MODULES.html
     RFate:
       text: RFate
