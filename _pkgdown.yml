@@ -41,13 +41,13 @@ navbar:
         - text: "---------"
         - text: Build PFG
           icon: fa-battery-quarter
-          href: index.html#pre_fate---build-plant-functional-groups-pfg
+          href: articles/rfate_tutorial_1_PFG.html
         - text: Build parameter files
           icon: fa-battery-half
-          href: index.html#pre_fate---build-parameter-files
-        - text: Evaluate simulation
+          href: articles/rfate_tutorial_2_params.html
+        - text: Build graphics
           icon: fa-battery-three-quarters
-          href: index.html#post_fate---evaluation-of-simulation
+          href: articles/rfate_tutorial_3_graphics.html
         - text: "---------"
     download:
       text: 'Download Current Version'

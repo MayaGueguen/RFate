@@ -5,12 +5,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FATE-HD tutorial 1 - Build PFG • RFate</title>
+<title>
+<font color="#068f96"><i class="fa fa-battery-quarter"></i> `PRE_FATE` - build Plant Functional Groups (PFG)</font> • RFate</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="FATE-HD tutorial 1 - Build PFG">
+<script src="../pkgdown.js"></script><meta property="og:title" content="&lt;font color='#068f96'&gt;&lt;i class='fa fa-battery-quarter'&gt;&lt;/i&gt; `PRE_FATE` - build Plant Functional Groups (PFG)&lt;/font&gt;">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -133,6 +134,15 @@
     <li>
       <a href="../articles/fate-hd_tutorial_3_MODULES.html">FATE-HD tutorial 3 - Use a module</a>
     </li>
+    <li>
+      <a href="../articles/rfate_tutorial_1_PFG.html">&lt;font color='#068f96'&gt;&lt;i class='fa fa-battery-quarter'&gt;&lt;/i&gt; `PRE_FATE` - build Plant Functional Groups (PFG)&lt;/font&gt;</a>
+    </li>
+    <li>
+      <a href="../articles/rfate_tutorial_2_params.html">&lt;font color='#068f96'&gt; &lt;i class='fa fa-battery-half'&gt;&lt;/i&gt; `PRE_FATE` - build parameter files &lt;/font&gt;</a>
+    </li>
+    <li>
+      <a href="../articles/rfate_tutorial_3_graphics.html">UNKNOWN TITLE</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -163,55 +173,61 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>FATE-HD tutorial 1 - Build PFG</h1>
+      <h1><font color="#068f96"><i class="fa fa-battery-quarter"></i> <code>PRE_FATE</code> - build Plant Functional Groups (PFG)</font></h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/MayaGueguen/RFate.git/blob/master/vignettes/fate-hd_tutorial_1_PFG.Rmd"><code>vignettes/fate-hd_tutorial_1_PFG.Rmd</code></a></small>
-      <div class="hidden name"><code>fate-hd_tutorial_1_PFG.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/MayaGueguen/RFate.git/blob/master/vignettes/rfate_tutorial_1_PFG.Rmd"><code>vignettes/rfate_tutorial_1_PFG.Rmd</code></a></small>
+      <div class="hidden name"><code>rfate_tutorial_1_PFG.Rmd</code></div>
 
     </div>
 
     
     
-<p><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous"></p>
+<p><br></p>
+<p>“<em>The recurring suggestions are that models should explicitly (i) include spatiotemporal dynamics; (ii) consider multiple species in interactions and (iii) account for the processes shaping biodiversity distribution.</em>”</p>
+<p><code>FATE-HD</code> is a “<em>a biodiversity model that meets this challenge at regional scale by combining phenomenological and process-based approaches and using well-defined</em> <strong><em>plant</em> <em>functional</em> <em>group</em></strong>”. (<a href="http://www.will.chez-alice.fr/pdf/BoulangeatGCB2014.pdf" title="Boulangeat, I., Georges, D., Thuiller, W., FATE-HD: A spatially and temporally explicit integrated model for predicting vegetation structure and diversity at regional scale. Global Change Biology, 20, 2368–2378.">Boulangeat, 2014</a>)</p>
+<p><br></p>
+<p>A plant functional group, or <strong>PFG</strong>, is “<em>A set of representative species is classified based on key biological characteristics, to determine groups of species sharing ecological strategies</em>” (<a href="http://j.boulangeat.free.fr/pdfs/Boulangeat2012_GCB_published.pdf" title="Boulangeat, I., Philippe, P., Abdulhak, S., Douzet, R., Garraud, L., Lavergne, S., Lavorel, S., Van Es J., Vittoz, P. and Thuiller, W. Improving plant functional groups for dynamic models of biodiversity: at the crossroad between functional and community ecology. Global Change Biology, 18, 3464-3475.">Boulangeat, 2012</a>). PFGs are based on their distribution, physiological characteristics, competition traits…</p>
 <p><br><br></p>
-<p>A plant functional group, or <strong>PFG</strong>, is “<em>A set of representative species is classified based on key biological characteristics, to determine groups of species sharing ecological strategies</em>” (<a href="http://j.boulangeat.free.fr/pdfs/Boulangeat2012_GCB_published.pdf" title="Boulangeat, I., Philippe, P., Abdulhak, S., Douzet, R., Garraud, L., Lavergne, S., Lavorel, S., Van Es J., Vittoz, P. and Thuiller, W. Improving plant functional groups for dynamic models of biodiversity: at the crossroad between functional and community ecology. Global Change Biology, 18, 3464-3475.">Boulangeat, 2012</a>).</p>
-<p><br><br></p>
-<p><a href="https://mayagueguen.github.io/RFate/">RFate</a> is a <a href="https://www.r-project.org/">R</a> package available on <a href="https://github.com/MayaGueguen/RFate">github</a> and designed to provide support function to the <code>FATE-HD</code> software.</p>
-<p>It contains documentation and functions to create and organize all input files required by the model, and <strong>building PFG</strong> is the first step to run a <code>FATE-HD</code> simulation. The procedure presented below is based on <code>RFate</code> functions.</p>
-<p><br><br></p>
-<div id="what-are-the-key-steps-of-this-process" class="section level1">
-<h1 class="hasAnchor">
-<a href="#what-are-the-key-steps-of-this-process" class="anchor"></a><i class="fa fa-shoe-prints"></i> What are the key steps of this process ?</h1>
-<p><br> Since the basic idea of building Functional Group is to gather a lot of elements into a few, this implies two requirements :</p>
+<div id="what-are-the-main-steps-of-this-process" class="section level2">
+<h2 class="hasAnchor">
+<a href="#what-are-the-main-steps-of-this-process" class="anchor"></a>What are the main steps of this process ?</h2>
+<p><br></p>
+<p><strong>1. Selection of dominant species</strong></p>
 <ul>
-<li>that these elements are not too numerous</li>
-<li>and that they are representative of the studied area, meaning not rare or outlier elements.<br><strong>This is the first step of selecting dominant species.</strong>
+<li>with the function <a href="https://mayagueguen.github.io/RFate/reference/PRE_FATE.selectDominant.html">PRE_FATE.selectDominant</a>
 </li>
 </ul>
-<p>In order to identify similarities between selected dominant species in terms of habitat, the climatic or environmental niche of each species is calculated and is compared with all the other dominant species niches.<br><strong>The overlap of species climatic niches is obtained in second step.</strong></p>
-<p>Functional traits related to the fundamental process of growth are retrieved for each dominant species and mixed together to calculate functional distances between species.<br><strong>Overlap of climatic niches and functional distances are combined to form a matrix of species pairwise distances.</strong></p>
-<p>Finally, based on this distance matrix, <strong>species are clustered to find the best combination and obtain Functional Groups.</strong></p>
+<p><strong>2. Overlap of species climatic niches</strong></p>
+<ul>
+<li>with either Principal Component Analysis (PCA) or Species Distribution Models (SDM)</li>
+</ul>
+<p><strong>3. Calculation of species pairwise distance</strong></p>
+<ul>
+<li>by combining overlap and functional distances with the function <a href="https://mayagueguen.github.io/RFate/reference/PRE_FATE.speciesDistance.html">PRE_FATE.speciesDistance</a>
+</li>
+</ul>
+<p><strong>4. Clustering of species :</strong></p>
+<ul>
+<li>calculate all possible clusters, and the corresponding evaluation metrics<br>
+with the function <a href="https://mayagueguen.github.io/RFate/reference/PRE_FATE.speciesClustering_step1.html">PRE_FATE.speciesClustering_step1</a>
+</li>
+<li>choose the best number of clusters from the previous step and find determinant species<br>
+with the function <a href="https://mayagueguen.github.io/RFate/reference/PRE_FATE.speciesClustering_step2.html">PRE_FATE.speciesClustering_step2</a>
+</li>
+</ul>
 <p><br><br></p>
 </div>
-<div id="what-do-you-need" class="section level1">
-<h1 class="hasAnchor">
-<a href="#what-do-you-need" class="anchor"></a><i class="fa fa-shopping-basket"></i> What do you need ?</h1>
+<div id="what-do-you-need" class="section level2">
+<h2 class="hasAnchor">
+<a href="#what-do-you-need" class="anchor"></a>What do you need ?</h2>
 <p><br></p>
-<div id="selection-of-dominant-species" class="section level3">
-<h3 class="hasAnchor">
-<a href="#selection-of-dominant-species" class="anchor"></a>1. Selection of dominant species</h3>
+<p><em>1. Selection of dominant species</em></p>
 <ul>
 <li>Gather <strong>occurrences</strong> for all species within the studied area</li>
 <li>Identify <strong>dominant species</strong> based on abundances and frequençy of sampling</li>
 </ul>
-<p>with the function <a href="https://mayagueguen.github.io/RFate/reference/PRE_FATE.selectDominant.html">PRE_FATE.selectDominant</a></p>
-<p><br></p>
-</div>
-<div id="overlap-of-species-climatic-niches" class="section level3">
-<h3 class="hasAnchor">
-<a href="#overlap-of-species-climatic-niches" class="anchor"></a>2. Overlap of species climatic niches</h3>
-<p>with either Principal Component Analysis (PCA) or Species Distribution Models (SDM)</p>
+<p><em>2. Overlap of species climatic niches :</em></p>
 <ul>
 <li>
 <em>Option 1: Principal Component analysis</em>
@@ -224,9 +240,6 @@
 </li>
 </ul>
 </li>
-</ul>
-<p><br></p>
-<ul>
 <li>
 <em>Option 2: Species Distribution Models</em>
 <ul>
@@ -237,33 +250,16 @@ combining environmental data and occurrences to determine the <em>climatic niche
 </ul>
 </li>
 </ul>
-<p><br></p>
-</div>
-<div id="calculation-of-species-pairwise-distance" class="section level3">
-<h3 class="hasAnchor">
-<a href="#calculation-of-species-pairwise-distance" class="anchor"></a>3. Calculation of species pairwise distance</h3>
-<p>by combining overlap and functional distances with the function <a href="https://mayagueguen.github.io/RFate/reference/PRE_FATE.speciesDistance.html">PRE_FATE.speciesDistance</a></p>
+<p><em>3. Calculation of species pairwise distance</em></p>
 <ul>
 <li>Gather <strong>traits data</strong> for all dominant species within the studied area<br>
 (traits need to be related to fundamental process of growth : light tolerance, dispersal, height…)</li>
 <li>Compute <strong>dissimilarity distances</strong> between pairs of species based on these traits and taking also into account the overlap of the 2 species within the <em>climatic space</em> (see previous step)</li>
 </ul>
-<p><em>For further details about the data, please refer to</em> <a href="http://j.boulangeat.free.fr/pdfs/Boulangeat2012_GCB_published.pdf" title="Boulangeat, I., Philippe, P., Abdulhak, S., Douzet, R., Garraud, L., Lavergne, S., Lavorel, S., Van Es J., Vittoz, P. and Thuiller, W. Improving plant functional groups for dynamic models of biodiversity: at the crossroad between functional and community ecology. Global Change Biology, 18, 3464-3475.">Boulangeat, 2012</a>.</p>
-<p><br></p>
-</div>
-<div id="clustering-of-species" class="section level3">
-<h3 class="hasAnchor">
-<a href="#clustering-of-species" class="anchor"></a>4. Clustering of species</h3>
-<p>using the <strong>dissimilarity distances</strong> from previous step :</p>
+<p><em>4. Clustering of species :</em></p>
 <ul>
-<li>calculate all possible clusters, and the corresponding evaluation metrics<br>
-with the function <a href="https://mayagueguen.github.io/RFate/reference/PRE_FATE.speciesClustering_step1.html">PRE_FATE.speciesClustering_step1</a>
-</li>
-<li>choose the best number of clusters from the previous step and find determinant species<br>
-with the function <a href="https://mayagueguen.github.io/RFate/reference/PRE_FATE.speciesClustering_step2.html">PRE_FATE.speciesClustering_step2</a>
-</li>
+<li>Using the <strong>dissimilarity distances</strong> from previous step, apply hierarchical clustering</li>
 </ul>
-</div>
 </div>
   </div>
 
@@ -273,8 +269,8 @@ with the function <a href="https://mayagueguen.github.io/RFate/reference/PRE_FAT
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#what-are-the-key-steps-of-this-process"><i class="fa fa-shoe-prints"></i> What are the key steps of this process ?</a></li>
-      <li><a href="#what-do-you-need"><i class="fa fa-shopping-basket"></i> What do you need ?</a></li>
+<li><a href="#what-are-the-main-steps-of-this-process">What are the main steps of this process ?</a></li>
+      <li><a href="#what-do-you-need">What do you need ?</a></li>
       </ul>
 </div>
       </div>
