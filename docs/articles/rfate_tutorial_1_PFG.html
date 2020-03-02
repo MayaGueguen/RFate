@@ -61,7 +61,7 @@
       <a href="../articles/fate-hd_tutorial_0_modelling_framework.html">Modelling framework</a>
     </li>
     <li>
-      <a href="../articles/fate-hd_tutorial_1_PFG.html">a. Build PFG</a>
+      <a href="../articles/fate-hd_tutorial_1_PFG.html">a. Principle of PFG</a>
     </li>
     <li>
       <a href="../articles/fate-hd_tutorial_2_RUN_SIMULATION.html">b. Run a FATE-HD simulation</a>
@@ -99,7 +99,7 @@
       <a href="../articles/rfate_tutorial_3_graphics.html">
         <span class="fa fa-battery-three-quarters"></span>
          
-        Evaluate simulation
+        Build graphics
       </a>
     </li>
     <li class="divider">
@@ -126,7 +126,7 @@
       <a href="../articles/fate-hd_tutorial_0_publications.html">FATE-HD tutorial 0 - Publications</a>
     </li>
     <li>
-      <a href="../articles/fate-hd_tutorial_1_PFG.html">FATE-HD tutorial 1 - Build PFG</a>
+      <a href="../articles/fate-hd_tutorial_1_PFG.html">FATE-HD tutorial 1 - Principle of PFG</a>
     </li>
     <li>
       <a href="../articles/fate-hd_tutorial_2_RUN_SIMULATION.html">FATE-HD tutorial 2 - Run a simulation</a>
@@ -141,7 +141,7 @@
       <a href="../articles/rfate_tutorial_2_params.html">&lt;font color='#068f96'&gt; &lt;i class='fa fa-battery-half'&gt;&lt;/i&gt; `PRE_FATE` - build parameter files &lt;/font&gt;</a>
     </li>
     <li>
-      <a href="../articles/rfate_tutorial_3_graphics.html">UNKNOWN TITLE</a>
+      <a href="../articles/rfate_tutorial_3_graphics.html">&lt;font color='#068f96'&gt; &lt;i class='fa fa-battery-three-quarters'&gt;&lt;/i&gt; `POST_FATE` - graphics &lt;/font&gt;</a>
     </li>
   </ul>
 </li>
@@ -184,18 +184,22 @@
     
     
 <p><br></p>
-<p>“<em>The recurring suggestions are that models should explicitly (i) include spatiotemporal dynamics; (ii) consider multiple species in interactions and (iii) account for the processes shaping biodiversity distribution.</em>”</p>
-<p><code>FATE-HD</code> is a “<em>a biodiversity model that meets this challenge at regional scale by combining phenomenological and process-based approaches and using well-defined</em> <strong><em>plant</em> <em>functional</em> <em>group</em></strong>”. (<a href="http://www.will.chez-alice.fr/pdf/BoulangeatGCB2014.pdf" title="Boulangeat, I., Georges, D., Thuiller, W., FATE-HD: A spatially and temporally explicit integrated model for predicting vegetation structure and diversity at regional scale. Global Change Biology, 20, 2368–2378.">Boulangeat, 2014</a>)</p>
+<div style="text-align:center;">
+See <a href="fate-hd_tutorial_1_PFG.html">Principle of PFG</a> <code>FATE-HD</code> tutorial
+</div>
 <p><br></p>
-<p>A plant functional group, or <strong>PFG</strong>, is “<em>A set of representative species is classified based on key biological characteristics, to determine groups of species sharing ecological strategies</em>” (<a href="http://j.boulangeat.free.fr/pdfs/Boulangeat2012_GCB_published.pdf" title="Boulangeat, I., Philippe, P., Abdulhak, S., Douzet, R., Garraud, L., Lavergne, S., Lavorel, S., Van Es J., Vittoz, P. and Thuiller, W. Improving plant functional groups for dynamic models of biodiversity: at the crossroad between functional and community ecology. Global Change Biology, 18, 3464-3475.">Boulangeat, 2012</a>). PFGs are based on their distribution, physiological characteristics, competition traits…</p>
+<p>A plant functional group, or <strong>PFG</strong>, is “<em>a set of representative species [that] is classified based on key biological characteristics, to determine groups of species sharing ecological strategies</em>” (<a href="http://j.boulangeat.free.fr/pdfs/Boulangeat2012_GCB_published.pdf" title="Boulangeat, I., Philippe, P., Abdulhak, S., Douzet, R., Garraud, L., Lavergne, S., Lavorel, S., Van Es J., Vittoz, P. and Thuiller, W. Improving plant functional groups for dynamic models of biodiversity: at the crossroad between functional and community ecology. Global Change Biology, 18, 3464-3475.">Boulangeat, 2012</a>).</p>
 <p><br><br></p>
-<div id="what-are-the-main-steps-of-this-process" class="section level2">
+<p><a href="">RFate</a> is a <a href="https://www.r-project.org/">R</a> package available on <a href="https://github.com/MayaGueguen/RFate">github</a> and designed to provide support function to the <code>FATE-HD</code> software.</p>
+<p>It contains documentation and functions to create and organize all input files required by the model, and <strong>building PFG</strong> is the first step to run a <code>FATE-HD</code> simulation. The procedure presented below is based on <code>RFate</code> functions.</p>
+<p><br><br></p>
+<div id="what-are-the-key-steps-of-this-process" class="section level2">
 <h2 class="hasAnchor">
-<a href="#what-are-the-main-steps-of-this-process" class="anchor"></a>What are the main steps of this process ?</h2>
+<a href="#what-are-the-key-steps-of-this-process" class="anchor"></a><i class="fa fa-shoe-prints"></i> What are the key steps of this process ?</h2>
 <p><br></p>
 <p><strong>1. Selection of dominant species</strong></p>
 <ul>
-<li>with the function <a href="https://mayagueguen.github.io/RFate/reference/PRE_FATE.selectDominant.html">PRE_FATE.selectDominant</a>
+<li>with the function <a href="reference/PRE_FATE.selectDominant.html">PRE_FATE.selectDominant</a>
 </li>
 </ul>
 <p><strong>2. Overlap of species climatic niches</strong></p>
@@ -204,30 +208,38 @@
 </ul>
 <p><strong>3. Calculation of species pairwise distance</strong></p>
 <ul>
-<li>by combining overlap and functional distances with the function <a href="https://mayagueguen.github.io/RFate/reference/PRE_FATE.speciesDistance.html">PRE_FATE.speciesDistance</a>
+<li>by combining overlap and functional distances with the function <a href="reference/PRE_FATE.speciesDistance.html">PRE_FATE.speciesDistance</a>
 </li>
 </ul>
 <p><strong>4. Clustering of species :</strong></p>
 <ul>
 <li>calculate all possible clusters, and the corresponding evaluation metrics<br>
-with the function <a href="https://mayagueguen.github.io/RFate/reference/PRE_FATE.speciesClustering_step1.html">PRE_FATE.speciesClustering_step1</a>
+with the function <a href="reference/PRE_FATE.speciesClustering_step1.html">PRE_FATE.speciesClustering_step1</a>
 </li>
 <li>choose the best number of clusters from the previous step and find determinant species<br>
-with the function <a href="https://mayagueguen.github.io/RFate/reference/PRE_FATE.speciesClustering_step2.html">PRE_FATE.speciesClustering_step2</a>
+with the function <a href="reference/PRE_FATE.speciesClustering_step2.html">PRE_FATE.speciesClustering_step2</a>
+</li>
+<li>toto <a href="reference/PRE_FATE.speciesClustering_step3.html">PRE_FATE.speciesClustering_step3</a>
 </li>
 </ul>
 <p><br><br></p>
 </div>
 <div id="what-do-you-need" class="section level2">
 <h2 class="hasAnchor">
-<a href="#what-do-you-need" class="anchor"></a>What do you need ?</h2>
-<p><br></p>
-<p><em>1. Selection of dominant species</em></p>
+<a href="#what-do-you-need" class="anchor"></a><i class="fa fa-shopping-basket"></i> What do you need ?</h2>
+<div id="selection-of-dominant-species" class="section level4">
+<h4 class="hasAnchor">
+<a href="#selection-of-dominant-species" class="anchor"></a>1. Selection of dominant species</h4>
 <ul>
 <li>Gather <strong>occurrences</strong> for all species within the studied area</li>
 <li>Identify <strong>dominant species</strong> based on abundances and frequençy of sampling</li>
 </ul>
-<p><em>2. Overlap of species climatic niches :</em></p>
+<p>with the function <a href="reference/PRE_FATE.selectDominant.html">PRE_FATE.selectDominant</a></p>
+</div>
+<div id="overlap-of-species-climatic-niches" class="section level4">
+<h4 class="hasAnchor">
+<a href="#overlap-of-species-climatic-niches" class="anchor"></a>2. Overlap of species climatic niches</h4>
+<p>with either Principal Component Analysis (PCA) or Species Distribution Models (SDM)</p>
 <ul>
 <li>
 <em>Option 1: Principal Component analysis</em>
@@ -240,6 +252,9 @@ with the function <a href="https://mayagueguen.github.io/RFate/reference/PRE_FAT
 </li>
 </ul>
 </li>
+</ul>
+<p><br></p>
+<ul>
 <li>
 <em>Option 2: Species Distribution Models</em>
 <ul>
@@ -250,16 +265,33 @@ combining environmental data and occurrences to determine the <em>climatic niche
 </ul>
 </li>
 </ul>
-<p><em>3. Calculation of species pairwise distance</em></p>
+</div>
+<div id="calculation-of-species-pairwise-distance" class="section level4">
+<h4 class="hasAnchor">
+<a href="#calculation-of-species-pairwise-distance" class="anchor"></a>3. Calculation of species pairwise distance</h4>
+<p>by combining overlap and functional distances with the function <a href="reference/PRE_FATE.speciesDistance.html">PRE_FATE.speciesDistance</a></p>
 <ul>
 <li>Gather <strong>traits data</strong> for all dominant species within the studied area<br>
 (traits need to be related to fundamental process of growth : light tolerance, dispersal, height…)</li>
 <li>Compute <strong>dissimilarity distances</strong> between pairs of species based on these traits and taking also into account the overlap of the 2 species within the <em>climatic space</em> (see previous step)</li>
 </ul>
-<p><em>4. Clustering of species :</em></p>
+<p><em>For further details about the data, please refer to</em> <a href="http://j.boulangeat.free.fr/pdfs/Boulangeat2012_GCB_published.pdf" title="Boulangeat, I., Philippe, P., Abdulhak, S., Douzet, R., Garraud, L., Lavergne, S., Lavorel, S., Van Es J., Vittoz, P. and Thuiller, W. Improving plant functional groups for dynamic models of biodiversity: at the crossroad between functional and community ecology. Global Change Biology, 18, 3464-3475.">Boulangeat, 2012</a>.</p>
+</div>
+<div id="clustering-of-species" class="section level4">
+<h4 class="hasAnchor">
+<a href="#clustering-of-species" class="anchor"></a>4. Clustering of species</h4>
+<p>using the <strong>dissimilarity distances</strong> from previous step :</p>
 <ul>
-<li>Using the <strong>dissimilarity distances</strong> from previous step, apply hierarchical clustering</li>
+<li>calculate all possible clusters, and the corresponding evaluation metrics<br>
+with the function <a href="reference/PRE_FATE.speciesClustering_step1.html">PRE_FATE.speciesClustering_step1</a>
+</li>
+<li>choose the best number of clusters from the previous step and find determinant species<br>
+with the function <a href="reference/PRE_FATE.speciesClustering_step2.html">PRE_FATE.speciesClustering_step2</a>
+</li>
+<li>combine traits data and clustering to calculate mean / median trait values per PFG <a href="reference/PRE_FATE.speciesClustering_step3.html">PRE_FATE.speciesClustering_step3</a>
+</li>
 </ul>
+</div>
 </div>
   </div>
 
@@ -269,8 +301,8 @@ combining environmental data and occurrences to determine the <em>climatic niche
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#what-are-the-main-steps-of-this-process">What are the main steps of this process ?</a></li>
-      <li><a href="#what-do-you-need">What do you need ?</a></li>
+<li><a href="#what-are-the-key-steps-of-this-process"><i class="fa fa-shoe-prints"></i> What are the key steps of this process ?</a></li>
+      <li><a href="#what-do-you-need"><i class="fa fa-shopping-basket"></i> What do you need ?</a></li>
       </ul>
 </div>
       </div>

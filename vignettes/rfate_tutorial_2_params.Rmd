@@ -2,9 +2,24 @@
 title: "<font color='#068f96'> <i class='fa fa-battery-half'></i> `PRE_FATE` - build parameter files </font>"
 ---
 
+<style>
+pre.bash {
+ background-color: black;
+ color: #9ea1a3;
+ font-family: Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;
+}
+pre.grey {
+ background-color: white;
+ border-style: solid;
+ border-color: #8b8d8f;
+ color: #8b8d8f;
+ font-family: Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;
+}
+</style>
+
 <br/>
 
-## The different type of parameters and *flags*
+## <i class="fa fa-copy"></i> The different type of parameters and *flags*
 
 <br/>
 
@@ -20,7 +35,7 @@ title: "<font color='#068f96'> <i class='fa fa-battery-half'></i> `PRE_FATE` - b
 To enumerate these settings, **2 types of flag** can be found and used within the parameter files :
 
 1. To give one or several links to other files containing parameter values or to raster files : **`--PARAM_NAME--`**
-```Shell
+<pre class = "bash">
 --GLOBAL_PARAMS--
 SAVE_OBJ/DATA/Global_parameters.txt
 --MASK--
@@ -29,24 +44,26 @@ SAVE_OBJ/DATA/MASK/mask_studiedArea.asc
 SAVE_OBJ/DATA/PFGS/SUCC/SUCC_PFG1.txt
 SAVE_OBJ/DATA/PFGS/SUCC/SUCC_PFG2.txt
 ...
-```
+</pre>
+
 In this way, each parameter can have several values (filenames), and **each line corresponds to a value**. The transition to a new parameter is made thanks to the presence of a new flag on the next line.
 
 2. To give parameter values : **`PARAM_NAME`**
-```Shell
+<pre class = "bash">
 NAME H2_dryGrass
 MATURITY 3
 LONGEVITY 11
 MAX_ABUNDANCE 1
 IMM_SIZE 4
 CHANG_STR_AGES 0 10000 10000 10000 10000
-```
+</pre>
+
 Each line corresponds to a parameter, given by the **flag** (parameter name in capital letters) **followed by all values linked to this flag on the same line**. Each value has to be separated from another by a **space**.
 
 <br/><br/>
 
 
-## Which files for which settings ?
+## <i class="fas fa-wrench"></i> Which files for which settings ?
 
 <br/>
 

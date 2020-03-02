@@ -61,6 +61,10 @@ It contains documentation and functions to create and organize all input files r
 
 <br/>
 
+<div style = "text-align:center;">See [Build parameter files](rfate_tutorial_2_params.html) `RFate` tutorial</div>
+
+<br/>
+
 ### <i class="fas fa-folder-open"></i> The FATE-HD friendly directory organization
 
 As `FATE-HD` needs quite a lot of parameters given into different parameter files, it is important to organize them in a clear and intuitive way.
@@ -115,17 +119,8 @@ Each of them contains raster files with the abundance of Plant Functional Groups
 
 These ouputs can then be used as is, or post-treated with functions from the [RFate](https://mayagueguen.github.io/RFate/) package to obtain more specific results (e.g. evolution of abundance curves, cover or diversity maps, etc).
 
-<br/> <br/> 
+<br/>
 
-
-<!-- **NOTE :** Sensibility analysis can be done on subset areas to try to optimise these values, but work still need to be done onto this. -->
-
-<!-- **TO BE KEPT IN MIND :** -->
-
-<!--   - In case one wishes to use `FATE-HD` for modeling dynamics in a specific area, PFGs need to be defined based on the species that occur in that specific area. -->
-<!--   - Suitability maps can be produced using Species Distribution Models (SDM), for example. -->
-<!--   - [Boulangeat, 2012](http://www.will.chez-alice.fr/pdf/Boulangeat2012GCB.pdf "Boulangeat, I., Philippe, P., Abdulhak, S., Douzet, R., Garraud, L., Lavergne, S., Lavorel, S., Van Es J., Vittoz, P. & Thuiller, W. (2012) Optimising plant functional groups for dynamic models of biodiversity: at the crossroad between functional and community ecology. Global Change Biology, 18, 3464-3475.") proposes a framework *to build meaningful PFGs that are representative of plant biodiversity, and consistent with the parameters and processes of hybrid-DVMs* ( Hybrid dynamic vegetation models of intermediate complexity). -->
-
-
+<div style = "text-align:center;">See [Build graphics](rfate_tutorial_3_graphics.html) `RFate` tutorial</div>
 
 

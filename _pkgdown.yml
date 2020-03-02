@@ -7,7 +7,6 @@ navbar:
     - FATE-HD
     - RFate
     - reference
-    - news
     right:
     - download
     - github
@@ -28,7 +27,7 @@ navbar:
           href: articles/fate-hd_tutorial_0_publications.html
         - text: Modelling framework
           href: articles/fate-hd_tutorial_0_modelling_framework.html
-        - text: a. Build PFG
+        - text: a. Principle of PFG
           href: articles/fate-hd_tutorial_1_PFG.html
         - text: b. Run a FATE-HD simulation
           href: articles/fate-hd_tutorial_2_RUN_SIMULATION.html

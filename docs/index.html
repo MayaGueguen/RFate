@@ -64,7 +64,7 @@
       <a href="articles/fate-hd_tutorial_0_modelling_framework.html">Modelling framework</a>
     </li>
     <li>
-      <a href="articles/fate-hd_tutorial_1_PFG.html">a. Build PFG</a>
+      <a href="articles/fate-hd_tutorial_1_PFG.html">a. Principle of PFG</a>
     </li>
     <li>
       <a href="articles/fate-hd_tutorial_2_RUN_SIMULATION.html">b. Run a FATE-HD simulation</a>
@@ -129,7 +129,7 @@
       <a href="articles/fate-hd_tutorial_0_publications.html">FATE-HD tutorial 0 - Publications</a>
     </li>
     <li>
-      <a href="articles/fate-hd_tutorial_1_PFG.html">FATE-HD tutorial 1 - Build PFG</a>
+      <a href="articles/fate-hd_tutorial_1_PFG.html">FATE-HD tutorial 1 - Principle of PFG</a>
     </li>
     <li>
       <a href="articles/fate-hd_tutorial_2_RUN_SIMULATION.html">FATE-HD tutorial 2 - Run a simulation</a>
@@ -177,266 +177,56 @@
   <div class="contents col-md-9">
 
 
-<hr>
-<div id="rfate-package---to-be-used-with-fate-hd" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#rfate-package---to-be-used-with-fate-hd" class="anchor"></a><font color="#52962b"> <i class="fa fa-pagelines"></i> <code>RFate</code> package - to be used with <code>FATE-HD</code> </font>
-</h1></div>
-<p>This package aims at presenting support functions to the software <code>FATE-HD</code>.<br>
-Functions are classified in two categories :</p>
-<ul>
-<li>
-<code>PRE_FATE.</code> functions :
-<ul>
-<li>to build Plant Functional Groups</li>
-<li>to prepare parameter files</li>
-</ul>
-</li>
-<li>
-<code>POST_FATE.</code> functions :
-<ul>
-<li>to organize results from <code>FATE-HD</code>
-</li>
-<li>to plot graphics</li>
-<li>etc</li>
-</ul>
-</li>
-</ul>
-<hr>
-<hr>
-<div id="pre_fate---build-plant-functional-groups-pfg" class="section level2">
-<h2 class="hasAnchor">
-<a href="#pre_fate---build-plant-functional-groups-pfg" class="anchor"></a><font color="#068f96"><i class="fa fa-battery-quarter"></i> <code>PRE_FATE</code> - build Plant Functional Groups (PFG)</font>
-</h2>
-<hr>
-<p>“<em>The recurring suggestions are that models should explicitly (i) include spatiotemporal dynamics; (ii) consider multiple species in interactions and (iii) account for the processes shaping biodiversity distribution.</em>”</p>
-<p><code>FATE-HD</code> is a “<em>a biodiversity model that meets this challenge at regional scale by combining phenomenological and process-based approaches and using well-defined</em> <strong><em>plant</em> <em>functional</em> <em>group</em></strong>”. (<a href="http://www.will.chez-alice.fr/pdf/BoulangeatGCB2014.pdf" title="Boulangeat, I., Georges, D., Thuiller, W., FATE-HD: A spatially and temporally explicit integrated model for predicting vegetation structure and diversity at regional scale. Global Change Biology, 20, 2368–2378.">Boulangeat, 2014</a>)</p>
-<hr>
-<p>A plant functional group, or <strong>PFG</strong>, is “<em>A set of representative species is classified based on key biological characteristics, to determine groups of species sharing ecological strategies</em>” (<a href="http://j.boulangeat.free.fr/pdfs/Boulangeat2012_GCB_published.pdf" title="Boulangeat, I., Philippe, P., Abdulhak, S., Douzet, R., Garraud, L., Lavergne, S., Lavorel, S., Van Es J., Vittoz, P. and Thuiller, W. Improving plant functional groups for dynamic models of biodiversity: at the crossroad between functional and community ecology. Global Change Biology, 18, 3464-3475.">Boulangeat, 2012</a>). PFGs are based on their distribution, physiological characteristics, competition traits…</p>
-<div id="what-are-the-main-steps-of-this-process" class="section level3">
-<h3 class="hasAnchor">
-<a href="#what-are-the-main-steps-of-this-process" class="anchor"></a>What are the main steps of this process ?</h3>
-<ol>
-<li><p><strong>Selection of dominant species</strong><br>
-with the function <a href="https://mayagueguen.github.io/RFate/reference/PRE_FATE.selectDominant.html">PRE_FATE.selectDominant</a></p></li>
-<li><p><strong>Overlap of species climatic niches</strong><br>
-with either Principal Component Analysis (PCA) or Species Distribution Models (SDM)</p></li>
-<li><p><strong>Calculation of species pairwise distance</strong><br>
-by combining overlap and functional distances with the function <a href="https://mayagueguen.github.io/RFate/reference/PRE_FATE.speciesDistance.html">PRE_FATE.speciesDistance</a></p></li>
-<li>
-<strong>Clustering of species :</strong><br>
-</li>
-</ol>
-<ul>
-<li>calculate all possible clusters, and the corresponding evaluation metrics<br>
-with the function <a href="https://mayagueguen.github.io/RFate/reference/PRE_FATE.speciesClustering_step1.html">PRE_FATE.speciesClustering_step1</a>
-</li>
-<li>choose the best number of clusters from the previous step and find determinant species<br>
-with the function <a href="https://mayagueguen.github.io/RFate/reference/PRE_FATE.speciesClustering_step2.html">PRE_FATE.speciesClustering_step2</a>
-</li>
-</ul>
-</div>
-<div id="what-do-you-need" class="section level3">
-<h3 class="hasAnchor">
-<a href="#what-do-you-need" class="anchor"></a>What do you need ?</h3>
-<p><em>1. Selection of dominant species</em></p>
-<ul>
-<li>Gather <strong>occurrences</strong> for all species within the studied area</li>
-<li>Identify <strong>dominant species</strong> based on abundances and frequençy of sampling</li>
-</ul>
-<p><em>2. Overlap of species climatic niches :</em></p>
-<ul>
-<li>
-<em>Option 1: Principal Component analysis</em>
-<ul>
-<li>Gather <strong>environmental data</strong> for the studied area</li>
-<li>Compute <strong>PCA</strong> over environment to create a <em>climatic space</em>
-</li>
-<li>Calculate the <strong>density of each species</strong> within this <em>climatic space</em> from the PCA</li>
-<li>For each pair of species, compute the <strong>overlap</strong> of the 2 considered species within the <em>climatic space</em>
-</li>
-</ul>
-</li>
-<li>
-<em>Option 2: Species Distribution Models</em>
-<ul>
-<li>Gather <strong>environmental data</strong> for the studied area</li>
-<li>For each dominant species, compute a <strong>species distribution model</strong> (SDM)<br>
-combining environmental data and occurrences to determine the <em>climatic niche</em> of the species</li>
-<li>With these SDMs, calculate the <strong>niche overlap</strong> of each pair of species</li>
-</ul>
-</li>
-</ul>
-<p><em>3. Calculation of species pairwise distance</em></p>
-<ul>
-<li>Gather <strong>traits data</strong> for all dominant species within the studied area<br>
-(traits need to be related to fundamental process of growth : light tolerance, dispersal, height…)</li>
-<li>Compute <strong>dissimilarity distances</strong> between pairs of species based on these traits and taking also into account the overlap of the 2 species within the <em>climatic space</em> (see previous step)</li>
-</ul>
-<p><em>4. Clustering of species :</em></p>
-<ul>
-<li>Using the <strong>dissimilarity distances</strong> from previous step, apply hierarchical clustering</li>
-</ul>
-<hr>
-<hr>
-</div>
-</div>
-<div id="pre_fate---build-parameter-files" class="section level2">
-<h2 class="hasAnchor">
-<a href="#pre_fate---build-parameter-files" class="anchor"></a><font color="#068f96"> <i class="fa fa-battery-half"></i> <code>PRE_FATE</code> - build parameter files </font>
-</h2>
-<div id="the-different-type-of-parameters-and-flags" class="section level3">
-<h3 class="hasAnchor">
-<a href="#the-different-type-of-parameters-and-flags" class="anchor"></a>The different type of parameters and <em>flags</em>
-</h3>
-<p><code>FATE-HD</code> requires a quite large number of parameters, which are stored into <code>.txt</code> files, presented to and recovered by the software. These <strong>parameters</strong> can be of 3 types :</p>
-<ol>
-<li>
-<strong>Filenames</strong>, to guide the application to other parameter files that should be read</li>
-<li>These filenames either correspond to :
-<ul>
-<li>other parameter files that contain <strong>values</strong> to be actually read and used</li>
-<li>
-<strong>raster</strong> files, with the extension <code>.tif</code> (lighter) or <code>.img</code>
-</li>
-</ul>
-</li>
-</ol>
+<style>
+pre.bash {
+ background-color: black;
+ color: #9ea1a3;
+ font-family: Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;
+}
+pre.grey {
+ background-color: white;
+ border-style: solid;
+ border-color: #8b8d8f;
+ color: #8b8d8f;
+ font-family: Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;
+}
+</style>
 <p><br></p>
-<p>To enumerate these settings, <strong>2 types of flag</strong> can be found and used within the parameter files :</p>
-<ol>
-<li>To give one or several links to other files containing parameter values or to raster files : <strong><code>--PARAM_NAME--</code></strong>
-</li>
-</ol>
-<pre class="shell"><code>--GLOBAL_PARAMS--
-SAVE_OBJ/DATA/Global_parameters.txt
---MASK--
-SAVE_OBJ/DATA/MASK/mask_studiedArea.asc
---PFG_LIFE_HISTORY_PARAMS--
-SAVE_OBJ/DATA/PFGS/SUCC/SUCC_PFG1.txt
-SAVE_OBJ/DATA/PFGS/SUCC/SUCC_PFG2.txt
-...</code></pre>
-<p>In this way, each parameter can have several values (filenames), and <strong>each line corresponds to a value</strong>. The transition to a new parameter is made thanks to the presence of a new flag on the next line.</p>
-<ol>
-<li>To give parameter values : <strong><code>PARAM_NAME</code></strong>
-</li>
-</ol>
-<pre class="shell"><code>NAME H2_dryGrass
-MATURITY 3
-LONGEVITY 11
-MAX_ABUNDANCE 1
-IMM_SIZE 4
-CHANG_STR_AGES 0 10000 10000 10000 10000</code></pre>
-<p>Each line corresponds to a parameter, given by the <strong>flag</strong> (parameter name in capital letters) <strong>followed by all values linked to this flag on the same line</strong>. Each value has to be separated from another by a <strong>space</strong>.</p>
-</div>
-<div id="which-files-for-which-settings" class="section level3">
-<h3 class="hasAnchor">
-<a href="#which-files-for-which-settings" class="anchor"></a>Which files for which settings ?</h3>
-<p>The function <a href="https://mayagueguen.github.io/RFate/reference/PRE_FATE.skeletonDirectory.html">PRE_FATE.skeletonDirectory</a> allows to create a user-friendly directory tree to store all parameter files and data.</p>
-<p><br></p>
-<p><em>1. Simulation parameterization</em></p>
-<ul>
-<li>
-<strong>Global parameters</strong> : related to the simulation definition<br>
-(number of PFG and strata, simulation duration, computer resources, manage abundance values, modules loaded…)<br>
-with the function <a href="https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_globalParameters.html">PRE_FATE.params_globalParameters</a>
-</li>
-<li>
-<strong>Years to save abundance rasters and simulation outputs</strong> with the function <a href="https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_saveYears.html">PRE_FATE.params_saveYears</a>
-</li>
-<li>
-<strong>Years and files to change rasters</strong> for the succession, habitat suitability or disturbance modules<br>
-with the function <a href="https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_changingYears.html">PRE_FATE.params_changingYears</a>
-</li>
-</ul>
-<p><em>2. For each PFG : behavior and characteristics</em></p>
-<ul>
-<li>
-<strong>Succession files</strong> : related to the life history with the function <a href="https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGsuccession.html">PRE_FATE.params_PFGsuccession</a>
-</li>
-<li>
-<strong>Dispersal files</strong> : related to the dispersal ability with the function <a href="https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGdispersal.html">PRE_FATE.params_PFGdispersal</a>
-</li>
-<li>
-<strong>Light files</strong> : related to the light competition with the function <a href="https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGlight.html">PRE_FATE.params_PFGlight</a>
-</li>
-<li>
-<strong>Soil files</strong> : related to the soil competition with the function <a href="https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGsoil.html">PRE_FATE.params_PFGsoil</a>
-</li>
-<li>
-<strong>Disturbance files</strong> : related to the response to perturbations in terms of resprouting and mortality<br>
-with the function <a href="https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGdisturbance.html">PRE_FATE.params_PFGdisturbance</a>
-</li>
-</ul>
-<p><em>3. Parameter management</em></p>
-<ul>
-<li>
-<strong>ParamSimulation file</strong> : containing all links to the files created with the previous functions.<br>
-This is the file that will be given as the only argument to the <code>FATE-HD</code> executable file into the command line.<br>
-It can be created with the function <a href="https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_simulParameters.html">PRE_FATE.params_simulParameters</a>
-</li>
-</ul>
-<hr>
-<hr>
-</div>
-</div>
-<div id="post_fate---evaluation-of-simulation" class="section level2">
+<div id="installing-rfate-package" class="section level2">
 <h2 class="hasAnchor">
-<a href="#post_fate---evaluation-of-simulation" class="anchor"></a><font color="#068f96"> <i class="fa fa-battery-three-quarters"></i> <code>POST_FATE</code> - evaluation of simulation </font>
-</h2>
-<p><br></p>
-<p><em>0. Transformation of outputs</em></p>
-<ul>
-<li>
-<strong>Create relative abundance maps</strong> : transform absolute abundance values into relative with the function <a href="https://mayagueguen.github.io/RFate/reference/POST_FATE.relativeAbund.html">POST_FATE.relativeAbund</a>
-</li>
-</ul>
-<p><em>A. Evolution of simulation through time</em></p>
-<ul>
-<li>
-<strong>Abundance over all studied area</strong> : with the function <a href="https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_evolutionCoverage.html">POST_FATE.graphic_evolutionCoverage</a>
-</li>
-<li>
-<strong>Abundance within some pixels</strong> : with the function <a href="https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_evolutionAbund_pixels.html">POST_FATE.graphic_evolutionAbund_pixels</a>
-</li>
-<li>
-<strong>Light within some pixels over all studied area</strong> : with the function <a href="https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_evolutionLight_pixels.html">POST_FATE.graphic_evolutionLight_pixels</a>
-</li>
-<li>
-<strong>Soil within some pixels over all studied area</strong> : with the function <a href="https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_evolutionSoil_pixels.html">POST_FATE.graphic_evolutionSoil_pixels</a>
-</li>
-</ul>
-<p><em>B. Visualization of outputs</em></p>
-<ul>
-<li>
-<strong>PFG richness</strong> : create map of number of PFG alive within each pixel<br>
-with the function <a href="https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFGrichness.html">POST_FATE.graphic_mapPFGrichness</a>
-</li>
-<li>
-<strong>PFG cover</strong> : create map of PFG abundance above 1.5 meters within each pixel<br>
-with the function <a href="https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFGcover.html">POST_FATE.graphic_mapPFGcover</a>
-</li>
-<li>
-<strong>PFG CWM of light</strong> : create map of light community weighted mean within each pixel<br>
-with the function <a href="https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFGlight.html">POST_FATE.graphic_mapPFGlight</a>
-</li>
-<li>
-<strong>PFG CWM of soil</strong> : create map of soil community weighted mean within each pixel<br>
-with the function <a href="https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFGsoil.html">POST_FATE.graphic_mapPFGsoil</a>
-</li>
-</ul>
-<p><em>C. Evaluation of outputs</em></p>
-<ul>
-<li>
-<strong>Validation statistics</strong> : calculate evaluation metrics (TSS, AUC) for each PFG, and transform relative abundance maps into presence / absence<br>
-with the function <a href="https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_validationStatistics.html">POST_FATE.graphic_validationStatistics</a>
-</li>
-<li>
-<strong>PFG outputs vs Habitat suitability</strong> : compare binary maps (outputs) with habitat suitability maps (inputs)<br>
-with the function <a href="https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFGvsHS.html">POST_FATE.graphic_mapPFGvsHS</a>
-</li>
-</ul>
+<a href="#installing-rfate-package" class="anchor"></a><i class="fa fa-tools"></i> Installing <code>RFate</code> package</h2>
+<p>From <a href="https://github.com/mayagueguen/RFate">GitHub</a> using <a href="https://cran.r-project.org/web/packages/devtools/index.html">devtools</a> :</p>
+<pre class="bash">
+library(devtools)
+devtools::install_github(repo="mayagueguen/RFate")
+</pre>
+<p><br><br></p>
 </div>
+<div id="rfate-workflow" class="section level2">
+<h2 class="hasAnchor">
+<a href="#rfate-workflow" class="anchor"></a><i class="fas fa-shoe-prints"></i> <code>RFate</code> workflow</h2>
+<p><br></p>
+<p><strong>0. Understand how <code>FATE-HD</code> works :</strong></p>
+<ul>
+<li><a href="articles/fate-hd_tutorial_0_publications.html">the litterature</a></li>
+<li><a href="articles/fate-hd_tutorial_0_modelling_framework.html">and the software</a></li>
+</ul>
+<p><strong>1. Building PFG :</strong></p>
+<ul>
+<li><a href="articles/fate-hd_tutorial_1_PFG.html">the principle</a></li>
+<li><a href="articles/rfate_tutorial_1_PFG.html">and the tools</a></li>
+</ul>
+<p><strong>2. Run a <code>FATE-HD</code> simulation :</strong></p>
+<ul>
+<li><a href="articles/fate-hd_tutorial_2_RUN_SIMULATION.html">understand how to run a simulation,</a></li>
+<li><a href="articles/fate-hd_tutorial_3_MODULES.html">the different modules that can be used,</a></li>
+<li><a href="articles/rfate_tutorial_2_params.html">and how to prepare the corresponding parameter files</a></li>
+</ul>
+<p><strong>3. Analyze the outputs :</strong></p>
+<ul>
+<li><a href="articles/rfate_tutorial_3_graphics.html">transform results and produce graphics</a></li>
+</ul>
+<p><img src="articles/pictures/SCHEMA_FATE_WORKFLOW.png" alt="Main workflow" style="width:800px;"></p>
 </div>
 
   </div>

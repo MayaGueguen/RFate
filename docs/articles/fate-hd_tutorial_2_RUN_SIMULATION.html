@@ -60,7 +60,7 @@
       <a href="../articles/fate-hd_tutorial_0_modelling_framework.html">Modelling framework</a>
     </li>
     <li>
-      <a href="../articles/fate-hd_tutorial_1_PFG.html">a. Build PFG</a>
+      <a href="../articles/fate-hd_tutorial_1_PFG.html">a. Principle of PFG</a>
     </li>
     <li>
       <a href="../articles/fate-hd_tutorial_2_RUN_SIMULATION.html">b. Run a FATE-HD simulation</a>
@@ -98,7 +98,7 @@
       <a href="../articles/rfate_tutorial_3_graphics.html">
         <span class="fa fa-battery-three-quarters"></span>
          
-        Evaluate simulation
+        Build graphics
       </a>
     </li>
     <li class="divider">
@@ -125,13 +125,22 @@
       <a href="../articles/fate-hd_tutorial_0_publications.html">FATE-HD tutorial 0 - Publications</a>
     </li>
     <li>
-      <a href="../articles/fate-hd_tutorial_1_PFG.html">FATE-HD tutorial 1 - Build PFG</a>
+      <a href="../articles/fate-hd_tutorial_1_PFG.html">FATE-HD tutorial 1 - Principle of PFG</a>
     </li>
     <li>
       <a href="../articles/fate-hd_tutorial_2_RUN_SIMULATION.html">FATE-HD tutorial 2 - Run a simulation</a>
     </li>
     <li>
       <a href="../articles/fate-hd_tutorial_3_MODULES.html">FATE-HD tutorial 3 - Use a module</a>
+    </li>
+    <li>
+      <a href="../articles/rfate_tutorial_1_PFG.html">&lt;font color='#068f96'&gt;&lt;i class='fa fa-battery-quarter'&gt;&lt;/i&gt; `PRE_FATE` - build Plant Functional Groups (PFG)&lt;/font&gt;</a>
+    </li>
+    <li>
+      <a href="../articles/rfate_tutorial_2_params.html">&lt;font color='#068f96'&gt; &lt;i class='fa fa-battery-half'&gt;&lt;/i&gt; `PRE_FATE` - build parameter files &lt;/font&gt;</a>
+    </li>
+    <li>
+      <a href="../articles/rfate_tutorial_3_graphics.html">&lt;font color='#068f96'&gt; &lt;i class='fa fa-battery-three-quarters'&gt;&lt;/i&gt; `POST_FATE` - graphics &lt;/font&gt;</a>
     </li>
   </ul>
 </li>
@@ -221,6 +230,10 @@ pre.grey {
 <p><a href="https://mayagueguen.github.io/RFate/">RFate</a> is a <a href="https://www.r-project.org/">R</a> package available on <a href="https://github.com/MayaGueguen/RFate">github</a> and designed to provide support function to the <code>FATE-HD</code> software.</p>
 <p>It contains documentation and functions to create and organize all input files required by the model, as well as scripts to help analyze the resulting outputs.</p>
 <p><br></p>
+<div style="text-align:center;">
+See <a href="rfate_tutorial_2_params.html">Build parameter files</a> <code>RFate</code> tutorial
+</div>
+<p><br></p>
 </div>
 <div id="the-fate-hd-friendly-directory-organization" class="section level3">
 <h3 class="hasAnchor">
@@ -276,12 +289,10 @@ there should not be any problem. The only requirement then is to run the simulat
 </li>
 </ul>
 <p>These ouputs can then be used as is, or post-treated with functions from the <a href="https://mayagueguen.github.io/RFate/">RFate</a> package to obtain more specific results (e.g. evolution of abundance curves, cover or diversity maps, etc).</p>
-<p><br><br></p>
-<!-- **NOTE :** Sensibility analysis can be done on subset areas to try to optimise these values, but work still need to be done onto this. -->
-<!-- **TO BE KEPT IN MIND :** -->
-<!--   - In case one wishes to use `FATE-HD` for modeling dynamics in a specific area, PFGs need to be defined based on the species that occur in that specific area. -->
-<!--   - Suitability maps can be produced using Species Distribution Models (SDM), for example. -->
-<!--   - [Boulangeat, 2012](http://www.will.chez-alice.fr/pdf/Boulangeat2012GCB.pdf "Boulangeat, I., Philippe, P., Abdulhak, S., Douzet, R., Garraud, L., Lavergne, S., Lavorel, S., Van Es J., Vittoz, P. & Thuiller, W. (2012) Optimising plant functional groups for dynamic models of biodiversity: at the crossroad between functional and community ecology. Global Change Biology, 18, 3464-3475.") proposes a framework *to build meaningful PFGs that are representative of plant biodiversity, and consistent with the parameters and processes of hybrid-DVMs* ( Hybrid dynamic vegetation models of intermediate complexity). -->
+<p><br></p>
+<div style="text-align:center;">
+See <a href="rfate_tutorial_3_graphics.html">Build graphics</a> <code>RFate</code> tutorial
+</div>
 </div>
   </div>
 
