@@ -1,71 +1,64 @@
 ---
-output:
-  html_document:
-    theme: lumen
-    highlight: zenburn
-    number_sections: no
-    toc: yes
-    toc_float:
-      collapsed: false
-      smooth_scroll: true
+title: "FATE-HD tutorial 0 - Modelling framework"
 ---
 
+<style>
+<!-- .zoom { -->
+<!-- height:600px; -->
+<!-- } -->
+<!-- .zoom p { -->
+<!-- text-align:center; -->
+<!-- } -->
+<!-- .zoom img { -->
+<!-- width:600px; -->
+<!-- } -->
+<!-- .zoom img:hover { -->
+<!-- width:1200px; -->
+<!-- } -->
 
-<br/>
-<br/>
+.zoom p {
+width:600px;
+margin-left: auto;
+margin-right: auto;
+}
+.zoom p:hover {
+width:1200px;
+}
+</style>
 
-For more details, please check [Boulangeat, 2014](papers/Boulangeat_2014_GCB.pdf "Boulangeat, I., Georges, D., Thuiller, W., FATE-HD: A spatially and temporally explicit integrated model for predicting vegetation structure and diversity at regional scale. Global Change Biology, 20, 2368–2378.") or the [Publications page](https://mayagueguen.github.io/FATE-WEBSITE/publications.html).
+<div style = "text-align:center;">See [Boulangeat, 2014](papers/Boulangeat_2014_GCB.pdf "Boulangeat, I., Georges, D., Thuiller, W., FATE-HD: A spatially and temporally explicit integrated model for predicting vegetation structure and diversity at regional scale. Global Change Biology, 20, 2368–2378.") or the [Publications](fate-hd_tutorial_0_publications.html) page</div>
+
 
 <br/><br/>
 
-## Global view
 
-<br/>
+## <i class="fas fa-boxes"></i> Conceptual diagram
 
-### Conceptual diagram of `FATE-HD`
+The whole area is divided in grid-cells in which an independent **demographic model** regulates the PFG life cycle. PFG abundances are structured by age into cohorts and each cohort is attributed to a height stratum according to the growth parameters.
 
-The whole area is divided in grid-cells in which an independent **succession model A)** regulates the PFG life cycle. 
-PFG abundances are structured by age into cohorts and each cohort is attributed to a height stratum according to the growth parameters.
+Different submodels affect this cycle at various levels :
 
-Four submodels affect this cycle at various levels :
+- **Competition through <i class="fas fa-sun"></i> light and/or <i class="fas fa-recycle"></i> soil resources** regulates interactions between cohorts affecting germination, recruitment and survival.
 
-**B) Shading** regulates interactions between cohorts affecting germination, recruitment and survival.
+- **<i class="fas fa-globe"></i> Habitat suitability** affects the recruitment and fecundity rates.
 
-**C) Habitat suitability** affects the recruitment and fecundity rates.
-
-**D) The seed dispersal model** makes `FATE-HD` spatially explicit by connecting grid-cells.  
+- **<i class="fas fa-seedling"></i> The seed dispersal model** makes `FATE-HD` spatially explicit by connecting grid-cells.  
 It depends on the amount of seeds produced by mature plants and affects each PFG’s seed bank in each cell.
 
-**E) Disturbances** affect PFG survival and fecundity.
+- **<i class="fas fa-bolt"></i> Disturbances** affect PFG survival and fecundity.
+
 
 <br/>
 
-<img src="pictures/FATE_loop_1.png" alt="Global scheme" style="width:800px;">
+<div style="text-align:center;">
+<img src="pictures/SCHEMA_FATE_successionCycle_0.png" alt="SCHEMA FATE successionCycle 0" style="width:800px;"></img>
+</div>
 
 <br/><br/>
 
-### Life cycle of each PFG within `FATE-HD` and influences from sub-models
-
-Only three age classes are considered : germinant, juvenile and mature.
-
-The **recruitment** is influenced by the habitat suitability and the biotic interactions.
-
-**Mortality** occurs when light or soil conditions are not favorable or when the PFG completes its life span.
-
-In addition, the disturbance regime directly affects juvenile or mature PFG and may for instance result in PFG death, impede **seed production** by reducing mature PFG age to N-1, or **revitalize senescents** by reducing their age to M-1.
-
-<br/>
-
-<img src="pictures/FATE_loop_3.png" alt="Internal loop" style="width:800px;">
 
 
-<br/><br/><br/>
-
-## Source code
-
-<br/>
-
-### Class diagram
+## <i class="fas fa-code"></i> Class diagram
 
 A `FATE-HD` simulation is based on a map whose pixels each contain a succession model (`SuFate`). This model can depend or not on habitat suitability (`SuFateH`).
 
@@ -80,127 +73,146 @@ Input parameters are given to the software via the simulation parameter file (`F
 <br/><br/>
 
 
-### Structural equations
+
+## <i class="fas fa-recycle"></i> Life cycle of each PFG and influences from sub-models
+
+Only three age classes are considered : **germinant**, **juvenile** and **mature**.
+
+- The **recruitment** is influenced by the habitat suitability and the biotic interactions.
+- **Mortality** occurs when light or soil conditions are not favorable or when the PFG completes its life span.
+- In addition, the disturbance regime directly affects juvenile or mature PFG and may for instance result in PFG death, impede **seed production** by reducing mature PFG age to N-1, or **revitalize senescents** by reducing their age to M-1.
+
+<br/>
+<div class="zoom">
+<p><img src="pictures/SCHEMA_FATE_successionCycle_1.png" alt="SCHEMA FATE successionCycle 1"></img></p>
+<p><img src="pictures/SCHEMA_FATE_successionCycle_2.png" alt="SCHEMA FATE successionCycle 2"></img></p>
+</div>
+
+<!-- <img src="pictures/SCHEMA_FATE_successionCycle_1.png" alt="SCHEMA FATE successionCycle 1" style="width:1200px;"></img> -->
+<!-- <img src="pictures/SCHEMA_FATE_successionCycle_2.png" alt="SCHEMA FATE successionCycle 2" style="width:1200px;"></img> -->
+
+
+<br/><br/>
+
+
+## <i class="fas fa-square-root-alt"></i> Structural equations
 
 <br/>
 
 
-#### Life cycle
+**Influence of environment (habitat suitability) :**  
+
+- **getEnv...() functions** :  
+All the $\text{getEnv}...()$ functions represent the influence of the habitat suitability if the `SuFateh` model is selected.  
+They can have effect on different processes, such as mortality, recruitment or fecundity, depending on whether the habitat within the pixel is suitable or not for the considered PFG.
+  
+<br/>
+
+- **Is the habitat suitable ?** :  
+Each year (timestep), the values contained in each PFG habitat suitability maps will be compared to a reference value :
+
+  - if superior, the environment is considered suitable for the PFG (hence $\text{getEnv}...()$ functions will return `1`)
+  - otherwise, the environment is considered unsuitable for the PFG (hence $\text{getEnv}...()$ functions will return `0`)
+
+Depending on the parameterisation chosen, (see `HABSUIT_OPTION` parameter in [GlobalParameter](reference/PRE_FATE.params_globalParameters.html) file), the reference value can be set in two different ways.
 
 <br/>
 
-The succession model within `FATE-HD` describes the PFG demography with 5 processes :
+**Lifespan & maturity :**  
 
-- germination
-- recruitment
-- growth
-- survival
-- fecundity
+- **Lifespan** :  
+In theory, the lifetime of a species could be influenced by the environment, but this is currently not the case.  
+Hence, habitat or not, $\text{getEnvMort}() = 1$.
 
-Below are detailed these different steps, in the order in which they are executed within the model.  
-All the `getEnv...()` functions represent the influence of the habitat suitability if the `SuFateh` model is selected. These functions return either 1 or 0 depending if the habitat within the pixel is suitable or not for the considered PFG. They will influence of specific process, like mortality, recruitment or fecundity.
-
+$$\text{LifeSpan} * \text{getEnvMort}()$$
 <br/>
 
-1. **Lifespan :**  
-In theory, the lifetime of a species could be influenced by the environment.  
-Currently, habitat or not, $getEnvMort() = 1$.
-
-$$LifeSpan * getEnvMort()$$
-<br/>
-
-2. **Maturation time :**  
-The time at which a PFG is able to produce seeds can also be influenced by its habitat, in a negative way.  
-If it is the case (`SuFateh` model selected), then $maturation = LifeSpan$.  
-Which means there will be no fecundity, and then no seeds produced.
-
- \begin{align}
-maturation &= (LifeSpan - Maturity) * (1.0 - getEnvGrowth()) + Maturity \\
-maturation &= ceil(maturation)
-\end{align}
-
-<br/>
-
-
-3. **Germination rate :**  
-The number of seeds available as well as the resource level in stratum 0 (which represents the enforced dormancy) allow to determine the proportion of seeds that will germinate.  
-
-$$GerminationRate = AvailSeeds * \frac{MaxRecruitment}{100}$$
-with $MaxRecruitment = getMaxRecruit(\text{strata 0}) =$ proportion of seeds that can germinate.
-
-<br/>
-
-4. **Recruitment rate :**  
-The establishment of the seeds that are able to germinate then depends on the ability of those germinants to withstand the conditions within stratum 0. If the habitat is not favorable, then the recruitment is null.
+- **Maturity time** :  
+The time from which a PFG is able to produce seeds can also be influenced by its habitat, in a negative way :
 
 \begin{align}
-&\text{if ( } abund < 10 * MaxAbund \text{ )} \\
+\text{maturityTime} &= (\text{LifeSpan} - \text{Maturity}) * (1.0 - \text{getEnvGrowth}()) + \text{Maturity} \\
+\text{maturityTime} &= ceil(\text{maturityTime})
+\end{align}
+
+If `SuFateh` model is NOT selected, or the habitat is suitable, then $\text{maturityTime} = \text{Maturity}$.  
+Otherwise, it the habitat is NOT suitable, $\text{maturityTime} = \text{LifeSpan}$, which means there will be no fecundity, and then no seeds produced.
+
+<br/>
+
+- **Maturity duration** :  
+The period during which a PFG can produce seeds.
+
+$$\text{Lifespan} - \text{Maturity}$$
+<br/>
+
+**Carrying capacity (mature vs immature) :**  
+
+- **Immature** :  
+Depending on the PFG life-form (herbaceous, chamaephytes, phanerophytes), immature individuals may no take as much space as mature individuals (e.g. young tree vs old tree). Hence, when calculating total abundance of plants, which is used as a proxy of space occupation, abundance of immature individuals is weighted by their relative size compare to mature individuals : $\text{ImmSize}$ (see `IMM_SIZE` parameter in [Succession](reference/PRE_FATE.params_PFGsuccession.html) files).
+
+<br/>
+
+
+- **Mature - Global carrying capacity** :  
+$\text{MaxAbund} \in {1,2,3}$ defines the maximum space occupied by a mature PFG. It should be proportional to the number of strata the PFG can occupy, with taller PFG generally occupying more space (see `MAX_ABUNDANCE` parameter in [Succession](reference/PRE_FATE.params_PFGsuccession.html) files and `MAX_ABUND_{...}` parameters in [GlobalParameter](reference/PRE_FATE.params_globalParameters.html) file).
+
+<br/>
+
+
+- **Mature - Annual carrying capacity** :  
+Hence, the maximum space occupied by a mature PFG per year of maturity is defined by :
+
+$$\frac{\text{MaxAbund}}{\text{Lifespan} - \text{Maturity}}$$
+
+<br/>
+
+<div style="text-align:center;">
+<img src="pictures/SCHEMA_FATE_seedCycle.png" alt="SCHEMA FATE seedCycle" style="width:600px;"></img>
+</div>
+
+<br/>
+
+**Germination :**  
+
+- **Condition on carrying capacity** :  
+A condition is set to help regulate populations : new individuals only grow if there is not yet too many individuals within the pixel, i.e. if the total abundance of the PFG does not exceed its global carrying capacity :
+
+\begin{align}
+\text{totAbund} &= \text{AbundMature} &+ \text{AbundImmature} * \text{ImmSize} \\
+\text{globalCC} &= \text{MaxAbund} &+ \text{MaxAbund} * \text{ImmSize}\\
+&\text{if (totAbund} < \text{globalCC)} \\
 &\{ \\
-& RecruitmentRate = 1.0 * GerminationRate * (\frac{MaxAbund}{LifeSpan - Maturity}) * getEnvRecrRate() \\
+& ... \\
 &\}
 \end{align}
 
-with $MaxAbund \in {1,2,3}$ and representing the maximum shade a PFG can produce in a pixel (i.e. similar to a number of individuals), proportionally to the number of strata it can occupy, taller PFG producing naturally more shade.
-
-The condition $abund < 10 * MaxAbund$ helps regulate populations : new individuals only grow if there is no too many individuals yet within the pixel.
-
 <br/>
 
-5. **Mature abundance :**  
-The number of mature individuals (i.e. whose age is between maturity and lifetime) is corrected by the maximum capacity of each PFG ($MaxAbund$) within each stratum.
-
-$$MatureAbund = \frac{getAbundBetween(maturation, LifeSpan)}{\frac{MaxAbund}{nbStrata}}$$
-<br/>
-
-6. **Fecundity :**  
-The new number of seeds that will be produced is also affected by the habitat. If the habitat is not favorable, then the fecundity is null and no seeds are produced.
-
-$$fecundity = min(1, MatureAbund) * PotentialFecund * getEnvFecund()$$
-with $PotentialFecund = 100$.  
-
-<br/> <br/>
-
-
-#### !! Code specificities !!
-
-<br/>
-
-- **Save raster abundances :**  
-The fraction must be $> 1$, meaning $totalNumAbund(pfg, stratum)$ must be $> GLOBAL\_HIGH\_ABUND$.
+- **Condition on pixel resources** :  
+$MaxRecruit$ corresponds to percentage of seeds that will germinate depending on the pixel resources (light, soil) in stratum 0 (which represents the enforced dormancy) (see `ACTIVE_GERM` parameter in [Light](reference/PRE_FATE.params_PFGlight.html) and [Soil](reference/PRE_FATE.params_PFGsoil.html) files).  
+The number of germinating seeds is obtained by weighting the number of available seeds by this germination rate.  
+If `SuFateh` model is selected, the habitat must be suitable, otherwise the recruitment will be null.
 
 \begin{align}
-Abund &= 10,000 * \frac{totalNumAbund(pfg, stratum)}{GLOBAL\_HIGH\_ABUND} \\
-Abund &= min(10,000, Abund)
+\text{RecruitmentRate} &= \text{GerminationRate} &* \text{ getEnvRecrRate}() \\
+ &= \text{AvailSeeds} * \text{MaxRecruitment} &* \text{ getEnvRecrRate}() 
 \end{align}
 
+<br/>
+
+
+**Fecundity :**  
+
+- **Potential fecundity** :  
+Each PFG can produce a fixed maximum amount of seeds in optimal conditions (see `POTENTIAL_FECUNDITY` parameter in [Succession](reference/PRE_FATE.params_PFGsuccession.html) files). Due to lack of empirical data, this amount is often set at the same value for all PFG.
 
 <br/>
 
-- **Light of strata :**
+- **Produced seeds** :  
+At each time step, the number of seeds that will be produced by a PFG depends both on the number of mature individuals of this PFG within the considered pixel, and on the suitability of the pixel if the `SuFateh` model is selected (no seeds produced if the habitat is not suitable) :
 
-$$ImmSize * CohortSize * AgeRange$$
-with AgeRange = old - young, brkStra - young, old - MatAge, MatAge - young
+$$\text{Fecundity} = min(1, \frac{\text{AbundMature}}{\frac{\text{MaxAbund}}{\text{Lifespan} - \text{Maturity}}}) * \text{PotentialFecund} * \text{getEnvFecund}()$$
 
-<br/>
+If $\frac{\text{AbundMature}}{\frac{\text{MaxAbund}}{\text{Lifespan} - \text{Maturity}}} \geqslant 1$, the PFG has reached its annual carrying capacity : it is in optimal conditions and will produce its maximum amount of seeds ($\text{PotentialFecund}$). Otherwise, this amount will be reduced in proportion.
 
-- **Simplify legions :**  
-Round abundances to save space, by setting size to :
-
-$$min(MAX\_BY\_COHORT, \frac{size(pfg, cohort) + 5000}{10,000} * 10,000)$$
-
-<br/>
-
-- **Set light resources :**
-
-\begin{align}
-&\text{if ( } abund < GLOBAL\_MEDIUM\_RESOURCES\_TRESH \text{ )} \\
-&\{ \\
-& light = HIGH \\
-&\} \text{ else if ( } abund < GLOBAL\_LOW\_RESOURCES\_TRESH \text{ )} \\
-&\{ \\
-& light = MEDIUM \\
-&\} \text{ else} \\
-&\{ \\
-& light = LOW \\
-&\}
-\end{align}
