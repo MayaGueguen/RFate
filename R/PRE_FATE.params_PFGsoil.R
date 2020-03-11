@@ -24,7 +24,7 @@
 ##' @param mat.PFG.tol a \code{data.frame} with 2 to 4 columns : \cr 
 ##' \itemize{
 ##'   \item \code{PFG},
-##'   \item \code{lifeStage}, \code{resources}, \code{soil_tol} 
+##'   \item \code{lifeStage}, \code{resources}, \code{tolerance} 
 ##'   (\emph{or \code{strategy_tol}})
 ##' }
 ##' (see \code{\href{PRE_FATE.params_PFGsoil.html#details}{Details}})
@@ -67,7 +67,7 @@
 ##'   \code{Immature}, \code{Mature})}
 ##'   \item{resources}{the concerned soil condition (\code{Low}, 
 ##'   \code{Medium}, \code{High})}
-##'   \item{soil_tol}{the proportion of surviving individuals}
+##'   \item{tolerance}{the proportion of surviving individuals}
 ##'   \item{(\emph{strategy_tol})}{a \code{string} to choose the tolerance 
 ##'   strategy : \cr \code{ubiquist}, \code{tobedefined} \cr \cr}
 ##' }
@@ -122,6 +122,7 @@
 ##'       \code{soil_tol_min} and \code{soil_tol_max} columns, if provided \cr \cr}
 ##'   }
 ##'   }
+##'   
 ##'   \item{SOIL_TOL}{ defined for each life stage (\code{Germinant}, 
 ##'   \code{Immature}, \code{Mature}) \cr and each soil condition (\code{Low}, 
 ##'   \code{Medium}, \code{High}) \cr \cr
@@ -164,7 +165,7 @@
 ##'       }
 ##'     \item from \strong{user data} : \cr
 ##'       \emph{with the values contained within the \code{lifeStage}, 
-##'       \code{resources} and \code{soil_tol} columns, if provided}
+##'       \code{resources} and \code{tolerance} columns, if provided}
 ##'   }
 ##'   }
 ##' }
@@ -370,18 +371,18 @@ PRE_FATE.params_PFGsoil = function(
     {
       if (nrow(mat.PFG.tol) == 0 || (ncol(mat.PFG.tol) != 2 || ncol(mat.PFG.tol) != 4))
       {
-        .stopMessage_numRowCol("mat.PFG.tol", c("PFG", "lifeStage", "resources", "soil_tol", "(strategy_tol)"))
+        .stopMessage_numRowCol("mat.PFG.tol", c("PFG", "lifeStage", "resources", "tolerance", "(strategy_tol)"))
       } else if (ncol(mat.PFG.tol) == 4)
       {
-        if (sum(colnames(mat.PFG.tol) == c("PFG", "lifeStage", "resources", "soil_tol")) < 4)
+        if (sum(colnames(mat.PFG.tol) == c("PFG", "lifeStage", "resources", "tolerance")) < 4)
         {
-          .stopMessage_columnNames("mat.PFG.tol", c("PFG", "lifeStage", "resources", "soil_tol", "(strategy_tol)"))
+          .stopMessage_columnNames("mat.PFG.tol", c("PFG", "lifeStage", "resources", "tolerance", "(strategy_tol)"))
         }
       } else if (ncol(mat.PFG.tol) == 2)
       {
         if (sum(colnames(mat.PFG.tol) == c("PFG", "strategy_tol")) < 2)
         {
-          .stopMessage_columnNames("mat.PFG.tol", c("PFG", "lifeStage", "resources", "soil_tol", "(strategy_tol)"))
+          .stopMessage_columnNames("mat.PFG.tol", c("PFG", "lifeStage", "resources", "tolerance", "(strategy_tol)"))
         }
       }
       mat.PFG.tol$PFG = as.character(mat.PFG.tol$PFG)
@@ -400,14 +401,14 @@ PRE_FATE.params_PFGsoil = function(
         {
           .stopMessage_content("mat.PFG.tol$resources", c("Low", "Medium", "High"))
         }
-        if (!is.numeric(mat.PFG.tol$soil_tol)) {
-          .stopMessage_columnNumeric("mat.PFG.tol", c("soil_tol"))
+        if (!is.numeric(mat.PFG.tol$tolerance)) {
+          .stopMessage_columnNumeric("mat.PFG.tol", c("tolerance"))
         }
-        if (length(which(is.na(mat.PFG.tol$soil_tol))) > 0) {
-          .stopMessage_columnNoNA("mat.PFG.tol", c("soil_tol"))
+        if (length(which(is.na(mat.PFG.tol$tolerance))) > 0) {
+          .stopMessage_columnNoNA("mat.PFG.tol", c("tolerance"))
         }
-        if (sum(mat.PFG.tol$soil_tol %in% seq(0,10)) < nrow(mat.PFG.tol)){
-          .stopMessage_columnBetween("mat.PFG.tol", "soil_tol", 0, 10)
+        if (sum(mat.PFG.tol$tolerance %in% seq(0,10)) < nrow(mat.PFG.tol)){
+          .stopMessage_columnBetween("mat.PFG.tol", "tolerance", 0, 10)
         }
       }
       ## CHECKS for strategy_tol column
@@ -467,21 +468,21 @@ PRE_FATE.params_PFGsoil = function(
     ## herbaceous germinate less in richer soil
     ACTIVE_GERM[1, which(mat.PFG.soil$type == "H")] = 8 ## low soil conditions
     ACTIVE_GERM[3, which(mat.PFG.soil$type == "H")] = 5 ## high soil conditions
-  } else if (sum(colnames(mat.PFG.succ) == "active_germ_low") == 1 ||
-             sum(colnames(mat.PFG.succ) == "active_germ_medium") == 1 ||
-             sum(colnames(mat.PFG.succ) == "active_germ_high") == 1)
+  } else if (sum(colnames(mat.PFG.soil) == "active_germ_low") == 1 ||
+             sum(colnames(mat.PFG.soil) == "active_germ_medium") == 1 ||
+             sum(colnames(mat.PFG.soil) == "active_germ_high") == 1)
   {
-    if (sum(colnames(mat.PFG.succ) == "active_germ_low") == 1)
+    if (sum(colnames(mat.PFG.soil) == "active_germ_low") == 1)
     {
-      ACTIVE_GERM[1, ] = mat.PFG.succ$active_germ_low ## low light conditions
+      ACTIVE_GERM[1, ] = mat.PFG.soil$active_germ_low ## low light conditions
     }
-    if (sum(colnames(mat.PFG.succ) == "active_germ_medium") == 1)
+    if (sum(colnames(mat.PFG.soil) == "active_germ_medium") == 1)
     {
-      ACTIVE_GERM[2, ] = mat.PFG.succ$active_germ_medium ## low light conditions
+      ACTIVE_GERM[2, ] = mat.PFG.soil$active_germ_medium ## low light conditions
     }
-    if (sum(colnames(mat.PFG.succ) == "active_germ_high") == 1)
+    if (sum(colnames(mat.PFG.soil) == "active_germ_high") == 1)
     {
-      ACTIVE_GERM[3, ] = mat.PFG.succ$active_germ_high ## low light conditions
+      ACTIVE_GERM[3, ] = mat.PFG.soil$active_germ_high ## low light conditions
     }
   } else if (sum(colnames(mat.PFG.soil) == "strategy_ag") == 1)
   {
@@ -588,7 +589,7 @@ PRE_FATE.params_PFGsoil = function(
                         , Mature_Medium = 8
                         , Mature_High = 9
         )
-        SOIL_TOL[ind_ii, which(NAME == mat.PFG.tol$PFG[ii])] = mat.PFG.tol$soil_tol[ii]
+        SOIL_TOL[ind_ii, which(NAME == mat.PFG.tol$PFG[ii])] = mat.PFG.tol$tolerance[ii]
       }
     } else if (sum(colnames(mat.PFG.tol) == "strategy_tol") == 1)
     {
