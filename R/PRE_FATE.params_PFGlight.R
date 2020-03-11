@@ -1,24 +1,28 @@
 ### HEADER #####################################################################
-##' @title Create \emph{LIGHT} parameter files for a \code{FATE-HD}
-##' simulation
+##' @title Create \emph{LIGHT} parameter files for a \code{FATE-HD} simulation
 ##' 
 ##' @name PRE_FATE.params_PFGlight
 ##'
 ##' @author Maya Guéguen
 ##' 
 ##' @description This script is designed to create parameter files containing 
-##' light tolerance parameters for each PFG (one file for each of them) used 
-##' in the light module of \code{FATE-HD}.
+##' light-related parameters for each PFG (one file for each of them) used in 
+##' the light module of \code{FATE-HD}.
 ##'              
 ##' @param name.simulation a \code{string} that corresponds to the main 
 ##' directory or simulation name of the \code{FATE-HD} simulation
-##' @param mat.PFG.succ a \code{data.frame} with 6 columns : \code{PFG}, 
-##' \code{type}, \code{height}, \code{maturity}, \code{longevity}, \code{light}
+##' @param mat.PFG.succ a \code{data.frame} with at least 6 columns : \cr 
+##' \code{PFG}, \code{type}, \code{height}, \code{maturity}, \code{longevity}, 
+##' \code{light} \cr (and optionally, \code{immature_size}, 
+##' \code{active_germ_low}, \code{active_germ_medium}, \code{active_germ_high}) 
+##' \cr (see \code{\href{PRE_FATE.params_PFGlight.html#details}{Details}})
+##' @param mat.PFG.tol (\emph{optional}) \cr a \code{data.frame} with 4 columns 
+##' : \code{PFG}, \code{lifeStage}, \code{lightResources}, \code{light_tol}
 ##' @param strata.limits a \code{vector} of \code{integer} containing values 
 ##' among which height strata limits will be chosen
 ##' @param strata.limits_reduce default \code{TRUE}. If \code{TRUE}, stratum 
 ##' height limits are checked to try and bring several PFGs together in a same 
-##' stratum
+##' stratum.
 ##' @param opt.folder.name (\emph{optional}) \cr a \code{string} that 
 ##' corresponds to the name of the folder that will be created into the 
 ##' \code{name.simulation/DATA/PFGS/LIGHT/} directory to store the results
@@ -37,9 +41,24 @@
 ##'   (herbaceous), \code{C} (chamaephyte) or \code{P} (phanerophyte) for now}
 ##'   \item{height}{the maximum or average height that reach the PFG}
 ##'   \item{maturity}{the age from which the PFG can reproduce}
-##'   \item{longevity}{the maximum or average lifespan of the PFG \cr \cr}
-##'   \item{light}{a value between \code{0} and \code{5} corresponding to the 
-##'   light value of the PFG (e.g. from Flora Indicativa)\cr \cr}
+##'   \item{longevity}{the maximum or average lifespan of the PFG}
+##'   \item{light}{two options :
+##'     \itemize{
+##'       \item a value between \code{0} and \code{5} corresponding to the 
+##'       light preference of the PFG (e.g. from Flora Indicativa)
+##'       \item a \code{string} to choose the light strategy : \cr
+##'       \code{full_light}, \code{pioneer}, \code{ubiquist}, 
+##'       \code{semi_shade}, \code{undergrowth}
+##'     }
+##'   }
+##'   \item{(\emph{immature_size})}{the relative size of immature versus mature 
+##'   plants}
+##'   \item{(\emph{active_germ_low})}{the proportion of seeds that will 
+##'   germinate for \code{Low} light condition}
+##'   \item{(\emph{active_germ_medium})}{the proportion of seeds that will 
+##'   germinate for \code{Medium} light condition}
+##'   \item{(\emph{active_germ_high})}{the proportion of seeds that will 
+##'   germinate for \code{High} light condition \cr \cr}
 ##' }
 ##' 
 ##' 
@@ -53,43 +72,77 @@
 ##'   \item{STRATA}{(see \code{\link{PRE_FATE.params_PFGsuccession}})}
 ##'   \item{MAX_ABUNDANCE}{(see \code{\link{PRE_FATE.params_PFGsuccession}})}
 ##'   \item{IMM_SIZE}{(see \code{\link{PRE_FATE.params_PFGsuccession}})}
-##'   \item{CHANG_STR_AGES}{(see \code{\link{PRE_FATE.params_PFGsuccession}})}
+##'   \item{CHANG_STR_AGES}{(see \code{\link{PRE_FATE.params_PFGsuccession}}) 
+##'   \cr \cr}
 ##'   \item{ACTIVE_GERM}{proportion of seeds that will germinate for each light 
-##'   condition (\code{Low}, \code{Medium}, \code{High})}
+##'   condition (\code{Low}, \code{Medium}, \code{High}) :
+##'   \itemize{
+##'     \item for \code{H} (herbaceous) : \code{50\%, 80\%, 90\%}
+##'     \item for \code{C} (chamaephyte) : \code{90\%, 90\%, 90\%}
+##'     \item for \code{P} (phanerophyte) : \code{90\%, 90\%, 90\%}
+##'   }
+##'   \emph{or the values contained within the \code{active_germ_low}, 
+##'   \code{active_germ_medium} and \code{active_germ_high} columns, if provided 
+##'   \cr \cr}
+##'   }
 ##'   \item{SHADE_TOL}{ defined for each life stage (Germinant, Immature, 
 ##'   Mature) and each light condition (\code{Low}, \code{Medium}, 
-##'   \code{High}) :
+##'   \code{High}) \cr \cr
+##'   Two methods to define these tolerances are available :
 ##'   \itemize{
-##'     \item (A) PFG are tolerant to \code{Low} light if \code{light <= 2}
-##'     \item (A) PFG are tolerant to \code{Medium} light if 
-##'     \code{2 <= light <= 4}
-##'     \item (A) PFG are tolerant to \code{High} light if \code{light >= 3}
-##'     \item (B) all germinants are assumed to be tolerant to \code{Low} light
-##'     \item (C) all mature trees or chamaephytes are assumed to be tolerant 
-##'     to \code{Medium} and \code{High} light conditions
-##'     \item (D) all immature trees that grow in the penultimate stratum are 
-##'     assumed to be tolerant to \code{High} light
+##'     \item from \strong{predefined scenarios} : \cr
+##'       \itemize{
+##'         \item \code{.} means \emph{Not tolerant}, \code{1} means 
+##'         \emph{Tolerant}
+##'         \item with \code{g}: Germinant, \code{i}: Immature, \code{m}: Mature
+##'         \item with \code{L}: low light, \code{M}: medium light, \code{H}: 
+##'         high light \cr \cr
+##'       }
+##'     \describe{
+##'       \item{}{\strong{\code{| _ g _ | _ i _ | _ m _ |}}}
+##'       \item{}{\strong{\code{| L M H | L M H | L M H |}}}
+##'       \item{}{\code{_________________________}}
+##'       \item{full_light}{\code{| 1 1 1 | . . 1 | . . 1 |}}
+##'       \item{pioneer}{\code{| 1 1 1 | . 1 1 | . 1 1 |}}
+##'       \item{ubiquist}{\code{| 1 1 1 | 1 1 1 | 1 1 1 |}}
+##'       \item{semi_shade}{\code{| 1 1 . | 1 1 . | 1 1 1 |}}
+##'       \item{undergrowth}{\code{| 1 1 . | 1 1 . | 1 1 . |}}
+##'     }
+##'     \item from \strong{specific data and rules} :
+##'       \describe{
+##'         \item{(A)}{PFG are tolerant to \code{Low} light if \code{light <= 2}}
+##'         \item{(A)}{PFG are tolerant to \code{Medium} light if 
+##'         \code{2 <= light <= 4}}
+##'         \item{(A)}{PFG are tolerant to \code{High} light if 
+##'         \code{light >= 3}}
+##'         \item{(B)}{all germinants are assumed to be tolerant to \code{Low} 
+##'         light}
+##'         \item{(C)}{all mature trees or chamaephytes are assumed to be 
+##'         tolerant to \code{Medium} and \code{High} light conditions}
+##'         \item{(D)}{all immature trees that grow in the penultimate stratum 
+##'         are assumed to be tolerant to \code{High} light}
+##'       }
+##'       \itemize{
+##'         \item \code{.} means \emph{Not tolerant}
+##'         \item \code{A, B, C, D} mean \emph{Tolerant} according to one of 
+##'         the rule defined above
+##'         \item with \code{g}: Germinant, \code{i}: Immature, \code{m}: Mature
+##'         \item with \code{L}: low light, \code{M}: medium light, \code{H}: 
+##'         high light \cr \cr
+##'       }
+##'       \describe{
+##'         \item{}{\strong{\code{| _ g _ | _ i _ | _ m _ |}}}
+##'         \item{}{\strong{\code{| L M H | L M H | L M H |}}}
+##'         \item{}{\code{_________________________}}
+##'         \item{1}{\code{| A . . | A . D | A C C |}}
+##'         \item{2}{\code{| A A . | A A D | A A C |}}
+##'         \item{3}{\code{| B A . | . A D | . A C |}}
+##'         \item{4}{\code{| B A A | . A A | . A A |}}
+##'         \item{5}{\code{| B . A | . . A | . C A |}}
+##'       }
 ##'   }
 ##'   }
 ##' }
-##' 
-##' \emph{Summary table of 'basic' parametrisation of SHADE_TOL :}
-##' \itemize{
-##'   \item \code{.} means \emph{Not tolerant}
-##'   \item \code{A, B, C, D} mean \emph{Tolerant} according to one of the rule
-##'   defined above
-##'   \item with \code{g}: Germinant, \code{i}: Immature, \code{m}: Mature \cr \cr
-##' }
-##' 
-##' 
-##' \code{| . D C | . D C | . D C | A A A | A A A |} \strong{HIGH} \cr
-##' \code{| . . C | A A A | A A A | A A A | . . C |} \strong{MEDIUM} \cr
-##' \code{| A A A | A A A | B . . | B . . | B . . |} \strong{LOW} \cr
-##' __________________________________________________ \cr
-##' \code{| g i m | g i m | g i m | g i m | g i m |} \strong{Life stage} \cr
-##' __________________________________________________ \cr
-##' \code{| _ 1 _ | _ 2 _ | _ 3 _ | _ 4 _ | _ 5 _ |} \strong{Light} \cr
-##' \cr
 ##' 
 ##' 
 ##' 
@@ -99,6 +152,7 @@
 ##' 
 ##' \describe{
 ##'   \item{NAME}{name of the PFG}
+##'   \item{LIGHT}{light value or strategy of the PFG}
 ##'   \item{ACTIVE_GERM}{the germination rates depending on light conditions 
 ##'   \cr \emph{(0: 0\% 1: 10\% 2: 20\% 3: 30\% 4: 40\% 5: 50\% 6: 60\% 7: 70\% 
 ##'   8: 80\% 9: 90\% 10: 100\%)}}
@@ -111,34 +165,15 @@
 ##'     \item under different light conditions \emph{(Low (L), Medium (M) or 
 ##'     High (H))}.
 ##'   }
-##'   These parameters should be given in this order : GeL, GeM, GeH, ImL, ImM,
+##'   These parameters should be given in this order : GeL, GeM, GeH, ImL, ImM, 
 ##'   ImH, MaL, MaM, MaH.}
 ##' }
-
-
-# \itemize{
-#   \item NAME : name of the PFG
-#   \item ACTIVE_GERM : the germination rates depending on light conditions
-#   \cr \emph{(0: 0\% 1: 10\% 2: 20\% 3: 30\% 4: 40\% 5: 50\% 6: 60\% 7: 70\%
-#   8: 80\% 9: 90\% 10: 100\%)}
-#   \item SHADE_TOL : the PFG shade tolerance table (in a single row). \cr
-#   This is a vector of 9 numbers \emph{(0: Die 1: Survive)} corresponding
-#   to the ability of the PFG to survive or not :
-#   \itemize{
-#     \item at different life stages \emph{(Germinant (Ge), Immature (Im),
-#     Mature (Ma))}
-#     \item under different light conditions \emph{(Low (L), Medium (M) or
-#     High (H))}.
-#   }
-#   These parameters should be given in this order : GeL, GeM, GeH, ImL, ImM,
-#   ImH, MaL, MaM, MaH.
-# }
 ##' 
-##' A \code{LIGHT_COMPLETE_TABLE.csv} file summarizing information for all groups into the
-##' \code{name.simulation/DATA/PFGS/} directory.  
+##' A \code{LIGHT_COMPLETE_TABLE.csv} file summarizing information for all 
+##' groups into the \code{name.simulation/DATA/PFGS/} directory.  
 ##'
-##' If the \code{opt.folder.name} has been used, the files will be into the folder
-##' \code{name.simulation/DATA/PFGS/LIGHT/opt.folder.name/}
+##' If the \code{opt.folder.name} has been used, the files will be into the 
+##' folder \code{name.simulation/DATA/PFGS/LIGHT/opt.folder.name/}
 ##' 
 ##' 
 ##' 
@@ -159,8 +194,28 @@
 ##'                                                      , maturity = c(5, 5, 3, 3, 8, 9)
 ##'                                                      , longevity = c(12, 200, 25, 4, 110, 70)
 ##'                                                      , light = c(4, 6, 3, 6, 5, 5)))
+##'                                                      
+##' ## Create PFG light parameter files
+##' PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
+##'                          , mat.PFG.succ = data.frame(PFG = paste0("PFG",1:6)
+##'                                                      , type = c("C", "C", "H", "H", "P", "P")
+##'                                                      , height = c(10, 250, 36, 68, 1250, 550)
+##'                                                      , maturity = c(5, 5, 3, 3, 8, 9)
+##'                                                      , longevity = c(12, 200, 25, 4, 110, 70)
+##'                                                      , light = c(4, 6, 3, 6, 5, 5)
+##'                                                      , immature_size = c(10, 8, 10, 10, 1, 5)))
 ##' 
 ##' 
+##' ## Create PFG light parameter files
+##' PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
+##'                          , mat.PFG.succ = data.frame(PFG = paste0("PFG",1:6)
+##'                                                      , type = c("C", "C", "H", "H", "P", "P")
+##'                                                      , height = c(10, 250, 36, 68, 1250, 550)
+##'                                                      , maturity = c(5, 5, 3, 3, 8, 9)
+##'                                                      , longevity = c(12, 200, 25, 4, 110, 70)
+##'                                                      , light = c("ubiquist", "ubiquist"
+##'                                                                  , "semi_shade", "ubiquist"
+##'                                                                  , "full_light", "pioneer")))
 ##' 
 ##' ## ----------------------------------------------------------------------------------------- ##
 ##' 
@@ -221,6 +276,7 @@ PRE_FATE.params_PFGlight = function(
                                                  , "(immature_size)", "(active_germ_low)", "(active_germ_medium)", "(active_germ_high)"))
     }
   }
+  
   mat.PFG.succ$PFG = as.character(mat.PFG.succ$PFG)
   mat.PFG.succ$type = as.character(mat.PFG.succ$type)
   if (length(which(is.na(mat.PFG.succ$PFG))) > 0 ||
@@ -237,10 +293,9 @@ PRE_FATE.params_PFGlight = function(
   }
   if (!is.numeric(mat.PFG.succ$height) ||
       !is.numeric(mat.PFG.succ$maturity) ||
-      !is.numeric(mat.PFG.succ$longevity) ||
-      !is.numeric(mat.PFG.succ$light))
+      !is.numeric(mat.PFG.succ$longevity))
   {
-    .stopMessage_columnNumeric("mat.PFG.succ", c("height", "maturity", "longevity", "light"))
+    .stopMessage_columnNumeric("mat.PFG.succ", c("height", "maturity", "longevity"))
   }
   if (length(which(is.na(mat.PFG.succ$height))) > 0 ||
       length(which(is.na(mat.PFG.succ$maturity))) > 0 ||
@@ -249,8 +304,22 @@ PRE_FATE.params_PFGlight = function(
   {
     .stopMessage_columnNoNA("mat.PFG.succ", c("height", "maturity", "longevity", "light"))
   }
-  if (sum(mat.PFG.succ$light %in% seq(0,10)) < nrow(mat.PFG.succ)){
-    stop("Wrong type of data!\n Column `light` of `mat.PFG.succ` must contain values between 0 and 10")
+  doLightStrategy = FALSE
+  if(!is.numeric(mat.PFG.succ$light))
+  {
+    mat.PFG.succ$light = as.character(mat.PFG.succ$light)
+    if (.testParam_notInChar(mat.PFG.succ$light, inList = c("full_light", "pioneer", "ubiquist", "semi_shade", "undergrowth")))
+    {
+      .stopMessage_content("mat.PFG.succ$light", c("full_light", "pioneer", "ubiquist", "semi_shade", "undergrowth"))
+    } else
+    {
+      doLightStrategy = TRUE
+    }
+  } else
+  {
+    if (sum(mat.PFG.succ$light %in% seq(0,10)) < nrow(mat.PFG.succ)){
+      stop("Wrong type of data!\n Column `light` of `mat.PFG.succ` must contain values between 0 and 10")
+    }
   }
   if (sum(colnames(mat.PFG.succ) == "immature_size") == 1)
   {
@@ -440,35 +509,38 @@ PRE_FATE.params_PFGlight = function(
   
   #################################################################################################
   
-  ## GET CHANGE STRATA AGES
-  ## Logistic growth curve with 2 points to parameterize it :
-  ## at age = maturity/2, height = IMM_SIZE * height	
-  ## at age = longevity, height = height
-  CHANG_STR_AGES = matrix(0, nrow = no.strata, ncol = no.PFG)
-  if (no.strata > 1)
+  if (doLightStrategy)
   {
-    CHANG_STR_AGES[2:no.strata, ] = 10000
-    for (i in 1:no.PFG)
+    ## GET CHANGE STRATA AGES
+    ## Logistic growth curve with 2 points to parameterize it :
+    ## at age = maturity/2, height = IMM_SIZE * height	
+    ## at age = longevity, height = height
+    CHANG_STR_AGES = matrix(0, nrow = no.strata, ncol = no.PFG)
+    if (no.strata > 1)
     {
-      ## If not in first stratum / herbaceous (or potentially chamaephytes) :
-      if (!(IMM_SIZE[i] == 10))
+      CHANG_STR_AGES[2:no.strata, ] = 10000
+      for (i in 1:no.PFG)
       {
-        k = -log(1 - IMM_SIZE[i] / 10) / (MATURITY[i] / 2)
-        A = 1:LONGEVITY[i]
-        
-        ## negative binomiale curve
-        H = mat.PFG.succ$height[i] * (1 - exp(-k * A))
-        
-        # calculation of transition ages depending on strata heights
-        for (str in 2:no.strata) {
-          age.brk = A[which(H >= STRATA_LIMITS[str])][1]
-          CHANG_STR_AGES[str, i] = ifelse(is.na(age.brk), CHANG_STR_AGES[str, i], age.brk)
+        ## If not in first stratum / herbaceous (or potentially chamaephytes) :
+        if (!(IMM_SIZE[i] == 10))
+        {
+          k = -log(1 - IMM_SIZE[i] / 10) / (MATURITY[i] / 2)
+          A = 1:LONGEVITY[i]
+          
+          ## negative binomiale curve
+          H = mat.PFG.succ$height[i] * (1 - exp(-k * A))
+          
+          # calculation of transition ages depending on strata heights
+          for (str in 2:no.strata) {
+            age.brk = A[which(H >= STRATA_LIMITS[str])][1]
+            CHANG_STR_AGES[str, i] = ifelse(is.na(age.brk), CHANG_STR_AGES[str, i], age.brk)
+          }
         }
+        # else if (mat.PFG.succ$height[i] > STRATA_LIMITS[2])
+        # {
+        #   CHANG_STR_AGES[2, i] = 0 ## direct into strata max
+        # }
       }
-      # else if (mat.PFG.succ$height[i] > STRATA_LIMITS[2])
-      # {
-      #   CHANG_STR_AGES[2, i] = 0 ## direct into strata max
-      # }
     }
   }
   
@@ -539,34 +611,48 @@ PRE_FATE.params_PFGlight = function(
   ##   9 = full light (only open and sunny)
 
   SHADE_TOL = matrix(0, nrow = 3 * 3, ncol = no.PFG)
-  
-  for (i in 1:no.PFG){
-    ## Low light condition
-    if (mat.PFG.succ$light[i] <= 2)
-    {
-      SHADE_TOL[c(1, 4, 7), i] = 1
+
+  if(doLightStrategy)
+  {
+    for (i in 1:no.PFG){
+      SHADE_TOL[, i] = switch(mat.PFG.succ$light[i]
+                              , full_light = c(1,1,1,0,0,1,0,0,1)
+                              , pioneer = c(1,1,1,0,1,1,0,1,1)
+                              , ubiquist = c(1,1,1,1,1,1,1,1,1)
+                              , semi_shade = c(1,1,0,1,1,0,1,1,1)
+                              , undergrowth = c(1,1,0,1,1,0,1,1,0)
+      )
     }
-    ## Medium light condition
-    if (mat.PFG.succ$light[i] >= 2 && mat.PFG.succ$light[i] <= 4)
-    {
-      SHADE_TOL[c(2, 5, 8), i] = 1
+  } else
+  {
+    for (i in 1:no.PFG){
+      ## Low light condition
+      if (mat.PFG.succ$light[i] <= 2)
+      {
+        SHADE_TOL[c(1, 4, 7), i] = 1
+      }
+      ## Medium light condition
+      if (mat.PFG.succ$light[i] >= 2 && mat.PFG.succ$light[i] <= 4)
+      {
+        SHADE_TOL[c(2, 5, 8), i] = 1
+      }
+      ## High light condition
+      if (mat.PFG.succ$light[i] >= 3)
+      {
+        SHADE_TOL[c(3, 6, 9), i] = 1
+      }
     }
-    ## High light condition
-    if (mat.PFG.succ$light[i] >= 3)
-    {
-      SHADE_TOL[c(3, 6, 9), i] = 1
-    }
+    
+    ## All germinants are assumed to be tolerant to Low light
+    SHADE_TOL[c(1),] = 1
+    ## All mature trees and shrubs are assumed to be tolerant to Low and Medium Light
+    SHADE_TOL[c(8, 9), which(mat.PFG.succ$type %in% c("C", "P"))] = 1
+    ## All immature trees that grow in the penultimate stratum are assumed to be tolerant to High light
+    SHADE_TOL[c(6), which(mat.PFG.succ$type == "P" & CHANG_STR_AGES[nrow(CHANG_STR_AGES) - 1,] < MATURITY)] = 1
+    
+    ## What about all germinant tolerant to Medium light ?
+    ## What about all mature trees and shrubs tolerant to Low light ?
   }
-  
-  ## All germinants are assumed to be tolerant to Low light
-  SHADE_TOL[c(1),] = 1
-  ## All mature trees and shrubs are assumed to be tolerant to Low and Medium Light
-  SHADE_TOL[c(8, 9), which(mat.PFG.succ$type %in% c("C", "P"))] = 1
-  ## All immature trees that grow in the penultimate stratum are assumed to be tolerant to High light
-  SHADE_TOL[c(6), which(mat.PFG.succ$type == "P" & CHANG_STR_AGES[nrow(CHANG_STR_AGES) - 1,] < MATURITY)] = 1
-  
-  ## What about all germinant tolerant to Medium light ?
-  ## What about all mature trees and shrubs tolerant to Low light ?
   
   #################################################################################################
 

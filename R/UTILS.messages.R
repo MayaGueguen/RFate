@@ -78,6 +78,20 @@
               , "` of `", param1, "` must not contain NA values"))
 }
 
+.stopMessage_columnBetween = function(param1, param2, val1, val2)
+{
+  if (length(param2) == 1)
+  {
+    end_message = param2
+  } else
+  {
+    end_message = paste0(paste0(param2[-length(param2)], collapse = "`, `")
+                         , "` and `", param2[length(param2)])
+  }
+  stop(paste0("Wrong type of data!\n Columns `", end_message
+              , "` of `", param1, "` must contain values between ", val1, " and ", val2))
+}
+
 
 #################################################################################################
 

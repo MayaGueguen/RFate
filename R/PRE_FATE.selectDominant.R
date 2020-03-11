@@ -18,7 +18,7 @@
 ##' @param habitat a \code{vector} with habitat ID
 ##' 
 ##' @param selectionRule.quanti default \code{0}. Minimum quantile of total 
-##' number of sites that must occupy the species (between 0 and 1)
+##' number of sites that must occupy the species (between \code{0} and \code{1})
 ##' @param selectionRule.min_mean_abund default \code{0}. Minimal average 
 ##' abundance of the species
 ##' @param selectionRule.min_no_abund_over25 default \code{0}. Minimum number 
@@ -27,7 +27,7 @@
 ##' is also done including constraints on habitat class
 ##' @param selectionRule.min_percent_habitat default \code{0.05} 
 ##' (\emph{optional}). Minimum percentage of habitat class occupied by the 
-##' species (between 0 and 1)
+##' species (between \code{0} and \code{1})
 ##' @param selectionRule.min_no_habitat default \code{5} (\emph{optional}). 
 ##' Minimum number of sites of specific habitat occupied by the species
 ##' 

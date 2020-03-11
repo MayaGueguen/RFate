@@ -10,11 +10,24 @@
 ##' used in the soil module of \code{FATE-HD}.
 ##'              
 ##' @param name.simulation a \code{string} that corresponds to the main 
-##' directory or simulation name of the \code{FATE-HD} simulation
-##' @param mat.PFG.soil a \code{data.frame} with 5 columns : \code{PFG}, 
-##' \code{type}, \code{soil_contrib}, \code{soil_tol_min}, \code{soil_tol_max}
-##' @param mat.PFG.tol a \code{data.frame} with 4 columns : \code{PFG}, 
-##' \code{lifeStage}, \code{soilResources}, \code{soil_tol}
+##' directory or simulation name of the \code{FATE-HD} simulation 
+##' @param mat.PFG.soil a \code{data.frame} with 3 to 7 columns : \cr 
+##' \itemize{
+##'   \item \code{PFG},
+##'   \item \code{type}, (\emph{or \code{active_germ_low}, 
+##'   \code{active_germ_medium}, \code{active_germ_high}}) (\emph{or
+##'   \code{strategy_ag}})
+##'   \item \code{soil_contrib}, \code{soil_tol_min}, \code{soil_tol_max} 
+##'   (\emph{or \code{strategy_contrib}})
+##' }
+##' (see \code{\href{PRE_FATE.params_PFGsoil.html#details}{Details}})
+##' @param mat.PFG.tol a \code{data.frame} with 2 to 4 columns : \cr 
+##' \itemize{
+##'   \item \code{PFG},
+##'   \item \code{lifeStage}, \code{resources}, \code{soil_tol} 
+##'   (\emph{or \code{strategy_tol}})
+##' }
+##' (see \code{\href{PRE_FATE.params_PFGsoil.html#details}{Details}})
 ##' @param opt.folder.name (\emph{optional}) \cr a \code{string} that
 ##' corresponds to the name of the folder that will be created into the 
 ##' \code{name.simulation/DATA/PFGS/SOIL/} directory to store the results
@@ -23,79 +36,139 @@
 ##' @details
 ##' 
 ##' The soil module allows the user to simulate a primary vegetation succession 
-##' based on soil competition. \cr
+##' based on soil competition. \cr \cr
 ##' 
-##' Several parameters, given within \code{mat.PFG.soil}, are required for each 
-##' PFG in order to set up the soil competition :
+##' Several parameters, given within \code{mat.PFG.soil} or \code{mat.PFG.tol}, 
+##' are required for each PFG in order to set up the soil competition :
 ##' 
 ##' \describe{
-##'   \item{type}{or life-form, based on Raunkier. It should be either \code{H} 
-##'   (herbaceous), \code{C} (chamaephyte) or \code{P} (phanerophyte) for now}
+##'   \item{type}{or life-form, based on Raunkier. \cr It should be either 
+##'   \code{H} (herbaceous), \code{C} (chamaephyte) or \code{P} (phanerophyte) 
+##'   for now}
+##'   \item{(\emph{active_germ_low})}{the proportion of seeds that will 
+##'   germinate for \code{Low} soil condition}
+##'   \item{(\emph{active_germ_medium})}{the proportion of seeds that will 
+##'   germinate for \code{Medium} soil condition}
+##'   \item{(\emph{active_germ_high})}{the proportion of seeds that will 
+##'   germinate for \code{High} soil condition}
+##'   \item{(\emph{strategy_ag})}{a \code{string} to choose the germination 
+##'   strategy : \cr \code{ubiquist}, \code{tobedefined} \cr \cr}
+##'   
 ##'   \item{soil_contrib}{a value corresponding to the PFG preference for soil 
 ##'   fertility \cr (e.g. nitrogen value from Ellenberg or Flora Indicativa)}
 ##'   \item{soil_tol_min}{the minimum soil value tolerated by the PFG (on the 
-##'   same scale than \emph{soil_contrib})}
+##'   same scale than \code{soil_contrib})}
 ##'   \item{soil_tol_max}{the maximum soil value tolerated by the PFG (on the 
-##'   same scale than \emph{soil_contrib})}
+##'   same scale than \code{soil_contrib})}
+##'   \item{(\emph{strategy_contrib})}{a \code{string} to choose the 
+##'   contribution strategy : \cr \code{ubiquist}, \code{tobedefined} \cr \cr}
+##'   
+##'   \item{lifeStage}{the concerned life stage (\code{Germinant}, 
+##'   \code{Immature}, \code{Mature})}
+##'   \item{resources}{the concerned soil condition (\code{Low}, 
+##'   \code{Medium}, \code{High})}
+##'   \item{soil_tol}{the proportion of surviving individuals}
+##'   \item{(\emph{strategy_tol})}{a \code{string} to choose the tolerance 
+##'   strategy : \cr \code{ubiquist}, \code{tobedefined} \cr \cr}
 ##' }
-##' 
 ##' 
 ##' These values will allow to calculate or define a set of characteristics for 
 ##' each PFG :
 ##' 
 ##' \describe{
-##'   \item{SOIL_CONTRIB}{PFG contribution to the soil value}
-##'   \item{SOIL_LOW}{minimum soil value tolerated by the PFG}
-##'   \item{SOIL_HIGH}{maximum soil value tolerated by the PFG}
 ##'   \item{ACTIVE_GERM}{proportion of seeds that will germinate for each soil 
-##'   condition (\code{Low}, \code{Medium}, \code{High}) :
+##'   condition (\code{Low}, \code{Medium}, \code{High}) \cr \cr
+##'   Three methods to define these proportions are available :
 ##'   \itemize{
-##'     \item woody species have little variation in germination rate : 
-##'     \code{90\%} for \code{Low} and \code{High} conditions, \code{100\%} for 
-##'     \code{Medium} condition
-##'     \item herbaceous germinate less in richer soil : \code{80\%} for 
-##'     \code{Low}, \code{100\%} for \code{Medium} and \code{50\%} for 
-##'     \code{High} conditions
+##'     \item from \strong{predefined scenarios} (using \code{strategy_ag}) :
+##'     \describe{
+##'       \item{}{\strong{\code{| _L _M_ H_ |}}}
+##'       \item{}{\code{_____________}}
+##'       \item{ubiquist}{\code{| 90 100 90 |}}
+##'       \item{to be filled}{}
+##'     }
+##'     \item from \strong{predefined rules} (using \code{type}) :
+##'     \itemize{
+##'       \item for \code{H} (herbaceous) : \code{80\%, 100\%, 50\%}
+##'       \item for \code{C} (chamaephyte) or \code{P} (phanerophyte): 
+##'       \code{90\%, 100\%, 90\%}
+##'     }
+##'     \item from \strong{user data} : \cr
+##'     \emph{with the values contained within the \code{active_germ_low}, 
+##'     \code{active_germ_medium} and \code{active_germ_high} columns, if 
+##'     provided \cr \cr}
 ##'   }
 ##'   }
-##' }
-##' 
-##' A second file, \code{mat.PFG.tol}, can be given to define the importance of 
-##' the response of each PFG to each soil condition :
-##' 
-##' \describe{
-##'   \item{PFG}{the name of the PFG concerned}
-##'   \item{lifeStage}{the concerned life stage (Germinant, Immature, Mature)}
-##'   \item{soilResources}{the concerned soil condition (\code{Low}, 
-##'   \code{Medium}, \code{High})}
-##'   \item{soil_tol}{the proportion of surviving individuals}
-##' }
-##' 
-##' If these values are not given by the user, default rules are defined below :
-##' 
-##' \describe{
-##'   \item{SOIL_TOL}{ defined for each life stage (Germinant, Immature, 
-##'   Mature) and each soil condition (\code{Low}, \code{Medium}, \code{High}) :
+##'   
+##'   \item{SOIL_CONTRIB \cr SOIL_LOW \cr SOIL_HIGH}{
+##'   Two methods to define these values are available :
 ##'   \itemize{
-##'     \item (A) germinants are severely impacted by wrong soil conditions :
-##'     \itemize{
-##'       \item only \code{10\%} of the cohorts survive in \code{Low} soil 
-##'       condition
-##'       \item all cohorts die in \code{High} soil condition
-##'     }
-##'     \item (B) immatures are half impacted by wrong soil conditions :
-##'     \itemize{
-##'       \item \code{50\%} of the cohorts survive in \code{Low} soil condition
-##'       \item \code{40\%} of the cohorts survive in \code{High} soil condition
-##'     }
-##'     \item (C) matures are little affected by wrong soil conditions :
-##'     \itemize{
-##'       \item \code{90\%} of the cohorts survive in \code{Low} soil condition
-##'       \item \code{80\%} of the cohorts survive in \code{High} soil condition
-##'     }
+##'     \item from \strong{predefined scenarios} (using 
+##'     \code{strategy_contrib}) : \cr
+##'       \itemize{
+##'         \item the values give the \code{soil_tol_min}, \code{soil_contrib} 
+##'         and \code{soil_tol_max}
+##'         \item with \code{L}: low soil, \code{M}: medium soil, \code{H}: 
+##'         high soil \cr \cr
+##'       }
+##'       \describe{
+##'         \item{}{\strong{\code{| ___ L ___ | ___ M ___ | ___ H ___ |}}}
+##'         \item{}{\code{_____________________________________}}
+##'         \item{ubiquist}{\code{__________ 1.5 _ 2.5 _ 4.5 __________}}
+##'         \item{to be filled}{}
+##'       }
+##'     \item from \strong{user data} : \cr
+##'       \emph{with the values contained within the \code{soil_contrib}, 
+##'       \code{soil_tol_min} and \code{soil_tol_max} columns, if provided \cr \cr}
+##'   }
+##'   }
+##'   \item{SOIL_TOL}{ defined for each life stage (\code{Germinant}, 
+##'   \code{Immature}, \code{Mature}) \cr and each soil condition (\code{Low}, 
+##'   \code{Medium}, \code{High}) \cr \cr
+##'   Three methods to define these tolerances are available :
+##'   \itemize{
+##'     \item from \strong{predefined scenarios} (using 
+##'     \code{strategy_tol}) : \cr
+##'       \itemize{
+##'         \item the values give the percentage of surviving individuals to the 
+##'         concerned conditions
+##'         \item with \code{g}: Germinant, \code{i}: Immature, \code{m}: Mature
+##'         \item with \code{L}: low soil, \code{M}: medium soil, \code{H}: 
+##'         high soil \cr \cr
+##'       }
+##'       \describe{
+##'         \item{}{\strong{\code{| ___ g ___ | ___ i ___ | ___ m ___ |}}}
+##'         \item{}{\strong{\code{| _L _M_ H_ | _L _M_ H_ | _L _M_ H_ |}}}
+##'         \item{}{\code{_____________________________________}}
+##'         \item{ubiquist}{\code{| 90 100 90 | 90 100 90 | 90 100 90 |}}
+##'         \item{to be filled}{}
+##'       }
+##'     \item from \strong{predefined rules} :
+##'       \describe{
+##'         \item{(A)}{germinants are severely impacted by wrong soil conditions}
+##'         \item{(B)}{immatures are half impacted by wrong soil conditions}
+##'         \item{(C)}{matures are little impacted by wrong soil conditions}
+##'       }
+##'       \itemize{
+##'         \item the values give the percentage of surviving individuals to the 
+##'         concerned conditions
+##'         \item with \code{g}: Germinant, \code{i}: Immature, \code{m}: Mature
+##'         \item with \code{L}: low soil, \code{M}: medium soil, \code{H}: 
+##'         high soil \cr \cr
+##'       }
+##'       \describe{
+##'         \item{}{\strong{\code{| ___ g ___ | ___ i ___ | ___ m ___ |}}}
+##'         \item{}{\strong{\code{| _L _M_ H_ | _L _M_ H_ | _L _M_ H_ |}}}
+##'         \item{}{\code{_____________________________________}}
+##'         \item{}{\code{| 10 100 30 | 40 100 60 | 70 100 90 |}}
+##'       }
+##'     \item from \strong{user data} : \cr
+##'       \emph{with the values contained within the \code{lifeStage}, 
+##'       \code{resources} and \code{soil_tol} columns, if provided}
 ##'   }
 ##'   }
 ##' }
+##' 
 ##' 
 ##' 
 ##' @return A \code{.txt} file per PFG into the 
@@ -104,13 +177,16 @@
 ##' 
 ##' \describe{
 ##'   \item{NAME}{name of the PFG}
-##'   \item{SOIL_CONTRIB}{the contribution (influence) of the PFG on the
-##'   soil value of the pixel}
-##'   \item{SOIL_LOW}{the lower value of soil supported by the PFG}
-##'   \item{SOIL_HIGH}{the upper value of soil supported by the PFG}
 ##'   \item{ACTIVE_GERM}{the germination rates depending on soil conditions
 ##'   \cr \emph{(0: 0\% 1: 10\% 2: 20\% 3: 30\% 4: 40\% 5: 50\% 6: 60\% 7: 70\% 
 ##'   8: 80\% 9: 90\% 10: 100\%)}}
+##'   \item{SOIL_CONTRIB}{the PFG contribution to the soil value of the pixel}
+##'   \item{SOIL_LOW}{the lower value of soil supported by the PFG, \cr 
+##'   defining the limit between \code{Low} and \code{Medium} soil resources 
+##'   for this PFG}
+##'   \item{SOIL_HIGH}{the upper value of soil supported by the PFG, \cr 
+##'   defining the limit between \code{Medium} and \code{High} soil resources 
+##'   for this PFG}
 ##'   \item{SOIL_TOL}{the PFG soil tolerance table (in a single row). \cr 
 ##'   This is a vector of 9 numbers corresponding to the ability of the PFG to 
 ##'   survive or not :
@@ -170,19 +246,44 @@ PRE_FATE.params_PFGsoil = function(
     .stopMessage_beDataframe("mat.PFG.soil")
   } else
   {
-    if (nrow(mat.PFG.soil) == 0 || ncol(mat.PFG.soil) != 5)
+    if (nrow(mat.PFG.soil) == 0 || ncol(mat.PFG.soil) < 3 || ncol(mat.PFG.soil) > 7)
     {
-      .stopMessage_numRowCol("mat.PFG.soil", c("PFG", "type", "soil_contrib", "soil_tol_min", "soil_tol_max"))
-    }
-    if (ncol(mat.PFG.soil) == 5)
+      .stopMessage_numRowCol("mat.PFG.soil", c("PFG", "type", "(active_germ_low)", "(active_germ_medium)"
+                                               , "(active_germ_high)", "(strategy_ag)", "soil_contrib"
+                                               , "soil_tol_min", "soil_tol_max", "(strategy_contrib)"))
+    } else if (ncol(mat.PFG.soil) == 3)
     {
-      if (sum(colnames(mat.PFG.soil) == c("PFG", "type", "soil_contrib", "soil_tol_min", "soil_tol_max")) == 5)
+      if ((sum(colnames(mat.PFG.soil) == c("PFG", "type", "strategy_contrib")) < 3) &&
+          (sum(colnames(mat.PFG.soil) == c("PFG", "strategy_ag", "strategy_contrib")) < 3))
       {
-        mat.PFG.soil = mat.PFG.soil[ , c("PFG", "type", "soil_contrib", "soil_tol_min", "soil_tol_max")]
-      } else
-      {
-        .stopMessage_columnNames("mat.PFG.soil", c("PFG", "type", "soil_contrib", "soil_tol_min", "soil_tol_max"))
+        .stopMessage_columnNames("mat.PFG.soil", c("PFG", "type", "(active_germ_low)", "(active_germ_medium)"
+                                                   , "(active_germ_high)", "(strategy_ag)", "soil_contrib"
+                                                   , "soil_tol_min", "soil_tol_max", "(strategy_contrib)"))
       }
+    } else if (ncol(mat.PFG.soil) == 5)
+    {
+      if ((sum(colnames(mat.PFG.soil) %in% c("PFG", "type", "soil_contrib", "soil_tol_min", "soil_tol_max")) < 5) &&
+          (sum(colnames(mat.PFG.soil) %in% c("PFG", "active_germ_low", "active_germ_medium", "active_germ_high", "strategy_contrib")) < 5) &&
+          (sum(colnames(mat.PFG.soil) %in% c("PFG", "strategy_ag", "soil_contrib", "soil_tol_min", "soil_tol_max")) < 5))
+      {
+        .stopMessage_columnNames("mat.PFG.soil", c("PFG", "type", "(active_germ_low)", "(active_germ_medium)"
+                                                   , "(active_germ_high)", "(strategy_ag)", "soil_contrib"
+                                                   , "soil_tol_min", "soil_tol_max", "(strategy_contrib)"))
+      }
+    } else if (ncol(mat.PFG.soil) == 7)
+    {
+      if (sum(colnames(mat.PFG.soil) == c("PFG", "active_germ_low", "active_germ_medium", "active_germ_high"
+                                          , "soil_contrib", "soil_tol_min", "soil_tol_max")) < 7)
+      {
+        .stopMessage_columnNames("mat.PFG.soil", c("PFG", "type", "(active_germ_low)", "(active_germ_medium)"
+                                                   , "(active_germ_high)", "(strategy_ag)", "soil_contrib"
+                                                   , "soil_tol_min", "soil_tol_max", "(strategy_contrib)"))
+      }
+    } else
+    {
+      .stopMessage_columnNames("mat.PFG.soil", c("PFG", "type", "(active_germ_low)", "(active_germ_medium)"
+                                                 , "(active_germ_high)", "(strategy_ag)", "soil_contrib"
+                                                 , "soil_tol_min", "soil_tol_max", "(strategy_contrib)"))
     }
     mat.PFG.soil$PFG = as.character(mat.PFG.soil$PFG)
     if (length(which(is.na(mat.PFG.soil$PFG))) > 0 ||
@@ -193,25 +294,70 @@ PRE_FATE.params_PFGsoil = function(
     {
       .stopMessage_beChar("mat.PFG.soil$PFG")
     }
-    if (.testParam_notInChar(mat.PFG.soil$type, inList = c("H", "C", "P")))
+    ## CHECKS for type column
+    if (sum(colnames(mat.PFG.soil) == "type") == 1)
     {
-      .stopMessage_content("mat.PFG.soil$type", c("H", "C", "P"))
+      if (.testParam_notInChar(mat.PFG.soil$type, inList = c("H", "C", "P")))
+      {
+        .stopMessage_content("mat.PFG.soil$type", c("H", "C", "P"))
+      }
     }
-    if (!is.numeric(mat.PFG.soil$soil_contrib) ||
-        !is.numeric(mat.PFG.soil$soil_tol_min) ||
-        !is.numeric(mat.PFG.soil$soil_tol_max)) {
-      .stopMessage_columnNumeric("mat.PFG.soil", c("soil_contrib", "soil_tol_min", "soil_tol_max"))
+    ## CHECKS for active_germ_... columns
+    if (sum(colnames(mat.PFG.soil) == "active_germ_low") == 1)
+    {
+      if (!is.numeric(mat.PFG.soil$active_germ_low) ||
+          !is.numeric(mat.PFG.soil$active_germ_medium) ||
+          !is.numeric(mat.PFG.soil$active_germ_high)) {
+        .stopMessage_columnNumeric("mat.PFG.soil", c("active_germ_low", "active_germ_medium", "active_germ_high"))
+      }
+      if (length(which(is.na(mat.PFG.soil$active_germ_low))) > 0 ||
+          length(which(is.na(mat.PFG.soil$active_germ_medium))) > 0 ||
+          length(which(is.na(mat.PFG.soil$active_germ_high))) > 0) {
+        .stopMessage_columnNoNA("mat.PFG.soil", c("active_germ_low", "active_germ_medium", "active_germ_high"))
+      }
+      if (sum(mat.PFG.soil$active_germ_low %in% seq(0,10)) < nrow(mat.PFG.soil) ||
+          sum(mat.PFG.soil$active_germ_medium %in% seq(0,10)) < nrow(mat.PFG.soil) ||
+          sum(mat.PFG.soil$active_germ_high %in% seq(0,10)) < nrow(mat.PFG.soil)) {
+        .stopMessage_columnBetween("mat.PFG.soil", c("active_germ_low", "active_germ_medium", "active_germ_high"), 0, 10)
+      }
     }
-    if (length(which(is.na(mat.PFG.soil$soil_contrib))) > 0 ||
-        length(which(is.na(mat.PFG.soil$soil_tol_min))) > 0 ||
-        length(which(is.na(mat.PFG.soil$soil_tol_max))) > 0) {
-      .stopMessage_columnNoNA("mat.PFG.soil", c("soil_contrib", "soil_tol_min", "soil_tol_max"))
+    ## CHECKS for strategy_ag column
+    if (sum(colnames(mat.PFG.soil) == "strategy_ag") == 1)
+    {
+      mat.PFG.soil$strategy_ag = as.character(mat.PFG.soil$strategy_ag)
+      if (.testParam_notInChar(mat.PFG.soil$strategy_ag, inList = c("full_light", "pioneer", "ubiquist", "semi_shade", "undergrowth")))
+      {
+        .stopMessage_content("mat.PFG.soil$strategy_ag", c("full_light", "pioneer", "ubiquist", "semi_shade", "undergrowth"))
+      }
     }
-    if (sum(mat.PFG.soil$soil_tol_min > mat.PFG.soil$soil_contrib) > 0){
-      stop("Wrong type of data!\n Column `soil_tol_min` of `mat.PFG.soil` must contain values equal or inferior to `soil_contrib`")
+    ## CHECKS for soil_... columns
+    if (sum(colnames(mat.PFG.soil) == "soil_contrib") == 1)
+    {
+      if (!is.numeric(mat.PFG.soil$soil_contrib) ||
+          !is.numeric(mat.PFG.soil$soil_tol_min) ||
+          !is.numeric(mat.PFG.soil$soil_tol_max)) {
+        .stopMessage_columnNumeric("mat.PFG.soil", c("soil_contrib", "soil_tol_min", "soil_tol_max"))
+      }
+      if (length(which(is.na(mat.PFG.soil$soil_contrib))) > 0 ||
+          length(which(is.na(mat.PFG.soil$soil_tol_min))) > 0 ||
+          length(which(is.na(mat.PFG.soil$soil_tol_max))) > 0) {
+        .stopMessage_columnNoNA("mat.PFG.soil", c("soil_contrib", "soil_tol_min", "soil_tol_max"))
+      }
+      if (sum(mat.PFG.soil$soil_tol_min > mat.PFG.soil$soil_contrib) > 0){
+        stop("Wrong type of data!\n Column `soil_tol_min` of `mat.PFG.soil` must contain values equal or inferior to `soil_contrib`")
+      }
+      if (sum(mat.PFG.soil$soil_tol_max < mat.PFG.soil$soil_contrib) > 0){
+        stop("Wrong type of data!\n Column `soil_tol_max` of `mat.PFG.soil` must contain values equal or superior to `soil_contrib`")
+      }
     }
-    if (sum(mat.PFG.soil$soil_tol_max < mat.PFG.soil$soil_contrib) > 0){
-      stop("Wrong type of data!\n Column `soil_tol_max` of `mat.PFG.soil` must contain values equal or superior to `soil_contrib`")
+    ## CHECKS for strategy_contrib column
+    if (sum(colnames(mat.PFG.soil) == "strategy_contrib") == 1)
+    {
+      mat.PFG.soil$strategy_contrib = as.character(mat.PFG.soil$strategy_contrib)
+      if (.testParam_notInChar(mat.PFG.soil$strategy_contrib, inList = c("full_light", "pioneer", "ubiquist", "semi_shade", "undergrowth")))
+      {
+        .stopMessage_content("mat.PFG.soil$strategy_contrib", c("full_light", "pioneer", "ubiquist", "semi_shade", "undergrowth"))
+      }
     }
   }
   ## CHECKS for parameter mat.PFG.tol
@@ -222,18 +368,20 @@ PRE_FATE.params_PFGsoil = function(
       .stopMessage_beDataframe("mat.PFG.tol")
     } else
     {
-      if (nrow(mat.PFG.tol) == 0 || ncol(mat.PFG.tol) != 4)
+      if (nrow(mat.PFG.tol) == 0 || (ncol(mat.PFG.tol) != 2 || ncol(mat.PFG.tol) != 4))
       {
-        .stopMessage_numRowCol("mat.PFG.tol", c("PFG", "lifeStage", "soilResources", "soil_tol"))
-      }
-      if (ncol(mat.PFG.tol) == 4)
+        .stopMessage_numRowCol("mat.PFG.tol", c("PFG", "lifeStage", "resources", "soil_tol", "(strategy_tol)"))
+      } else if (ncol(mat.PFG.tol) == 4)
       {
-        if (sum(colnames(mat.PFG.tol) == c("PFG", "lifeStage", "soilResources", "soil_tol")) == 4)
+        if (sum(colnames(mat.PFG.tol) == c("PFG", "lifeStage", "resources", "soil_tol")) < 4)
         {
-          mat.PFG.tol = mat.PFG.tol[ , c("PFG", "lifeStage", "soilResources", "soil_tol")]
-        } else
+          .stopMessage_columnNames("mat.PFG.tol", c("PFG", "lifeStage", "resources", "soil_tol", "(strategy_tol)"))
+        }
+      } else if (ncol(mat.PFG.tol) == 2)
+      {
+        if (sum(colnames(mat.PFG.tol) == c("PFG", "strategy_tol")) < 2)
         {
-          .stopMessage_columnNames("mat.PFG.tol", c("PFG", "lifeStage", "soilResources", "soil_tol"))
+          .stopMessage_columnNames("mat.PFG.tol", c("PFG", "lifeStage", "resources", "soil_tol", "(strategy_tol)"))
         }
       }
       mat.PFG.tol$PFG = as.character(mat.PFG.tol$PFG)
@@ -241,22 +389,35 @@ PRE_FATE.params_PFGsoil = function(
       {
         .stopMessage_beChar("mat.PFG.tol$PFG")
       }
-      if (.testParam_notInChar(mat.PFG.tol$lifeStage, inList = c("Germinant", "Immature", "Mature")))
+      ## CHECKS for user data option
+      if (sum(colnames(mat.PFG.tol) == "lifeStage") == 1)
       {
-        .stopMessage_content("mat.PFG.tol$lifeStage", c("Germinant", "Immature", "Mature"))
+        if (.testParam_notInChar(mat.PFG.tol$lifeStage, inList = c("Germinant", "Immature", "Mature")))
+        {
+          .stopMessage_content("mat.PFG.tol$lifeStage", c("Germinant", "Immature", "Mature"))
+        }
+        if (.testParam_notInChar(mat.PFG.tol$resources, inList = c("Low", "Medium", "High")))
+        {
+          .stopMessage_content("mat.PFG.tol$resources", c("Low", "Medium", "High"))
+        }
+        if (!is.numeric(mat.PFG.tol$soil_tol)) {
+          .stopMessage_columnNumeric("mat.PFG.tol", c("soil_tol"))
+        }
+        if (length(which(is.na(mat.PFG.tol$soil_tol))) > 0) {
+          .stopMessage_columnNoNA("mat.PFG.tol", c("soil_tol"))
+        }
+        if (sum(mat.PFG.tol$soil_tol %in% seq(0,10)) < nrow(mat.PFG.tol)){
+          .stopMessage_columnBetween("mat.PFG.tol", "soil_tol", 0, 10)
+        }
       }
-      if (.testParam_notInChar(mat.PFG.tol$soilResources, inList = c("Low", "Medium", "High")))
+      ## CHECKS for strategy_tol column
+      if (sum(colnames(mat.PFG.tol) == "strategy_tol") == 1)
       {
-        .stopMessage_content("mat.PFG.tol$soilResources", c("Low", "Medium", "High"))
-      }
-      if (!is.numeric(mat.PFG.tol$soil_tol)) {
-        .stopMessage_columnNumeric("mat.PFG.tol", c("soil_tol"))
-      }
-      if (length(which(is.na(mat.PFG.tol$soil_tol))) > 0) {
-        .stopMessage_columnNoNA("mat.PFG.tol", c("soil_tol"))
-      }
-      if (sum(mat.PFG.tol$soil_tol %in% seq(0,10)) < nrow(mat.PFG.tol)){
-        stop("Wrong type of data!\n Column `soil_tol` of `mat.PFG.tol` must contain values between 0 and 10")
+        mat.PFG.tol$strategy_tol = as.character(mat.PFG.tol$strategy_tol)
+        if (.testParam_notInChar(mat.PFG.tol$strategy_tol, inList = c("full_light", "pioneer", "ubiquist", "semi_shade", "undergrowth")))
+        {
+          .stopMessage_content("mat.PFG.tol$strategy_tol", c("full_light", "pioneer", "ubiquist", "semi_shade", "undergrowth"))
+        }
       }
     }
   }
@@ -355,7 +516,7 @@ PRE_FATE.params_PFGsoil = function(
   {
     for (ii in 1:nrow(mat.PFG.tol))
     {
-      LS_res = paste0(mat.PFG.tol$lifeStage[ii], "_", mat.PFG.tol$soilResources[ii])
+      LS_res = paste0(mat.PFG.tol$lifeStage[ii], "_", mat.PFG.tol$resources[ii])
       ind_ii = switch(LS_res
                       , Germinant_Low = 1
                       , Germinant_Medium = 2

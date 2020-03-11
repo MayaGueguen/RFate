@@ -12,8 +12,11 @@
 ##'              
 ##' @param name.simulation a \code{string} that corresponds to the main 
 ##' directory or simulation name of the \code{FATE-HD} simulation
-##' @param mat.PFG.succ a \code{data.frame} with 5 columns : \code{PFG}, 
-##' \code{type}, \code{height}, \code{maturity}, \code{longevity}
+##' @param mat.PFG.succ a \code{data.frame} with at least 5 columns : \cr 
+##' \code{PFG}, \code{type}, \code{height}, \code{maturity}, \code{longevity} 
+##' \cr (and optionally, \code{max_abundance}, \code{potential_fecundity}, 
+##' \code{immature_size}) 
+##' \cr (see \code{\href{PRE_FATE.params_PFGsuccession.html#details}{Details}})
 ##' @param strata.limits a \code{vector} of \code{integer} containing values 
 ##' among which height strata limits will be chosen
 ##' @param strata.limits_reduce default \code{TRUE}. If \code{TRUE}, stratum 
@@ -37,6 +40,12 @@
 ##'   \item{height}{the maximum or average height that reach the PFG}
 ##'   \item{maturity}{the age from which the PFG can reproduce}
 ##'   \item{longevity}{the maximum or average lifespan of the PFG \cr \cr}
+##'   \item{(max_abundance)}{the maximum abundance of mature PFG in favorable 
+##'   conditions}
+##'   \item{(potential_fecundity)}{the maximum number of seeds produced by the 
+##'   PFG}
+##'   \item{(immature_size)}{the relative size of immature versus mature plants 
+##'   \cr \cr}
 ##' }
 ##' 
 ##' 
@@ -56,10 +65,10 @@
 ##'     among \cr \code{0, 20, 50, 150, 400, 1000, 2000, 5000, 10000}
 ##'     \item PFG are divided according to their \code{height} and these 
 ##'     \code{strata limits} and then grouped in order to have per stratum a 
-##'     number of PFG \code{>= (no.PFG.perStrata - 2)}
+##'     number of PFG \code{>= (no.PFG.perStrata - 2) \cr \cr}
 ##'   }
 ##'   }
-##'   \item{STRATA}{= the maximum stratum that each PFG can reach}
+##'   \item{STRATA}{= the maximum stratum that each PFG can reach \cr \cr}
 ##'   \item{MAX_ABUNDANCE}{= maximum abundance of mature PFG in favorable 
 ##'   conditions \cr \cr
 ##'   It can be seen as a proxy of maximum carrying capacity for mature 
@@ -80,6 +89,8 @@
 ##'     \item chamaephytes in stratum > 3 take lot of place (\emph{and make 
 ##'     lot of shade}) (\code{3})
 ##'   }
+##'   \emph{or the values contained within the \code{max_abundance} column, if 
+##'   provided \cr \cr}
 ##'   }
 ##'   \item{IMM_SIZE}{= relative size of immature versus mature plants \cr
 ##'   \itemize{
@@ -99,18 +110,21 @@
 ##'     space than mature phanerophytes \cr (\emph{and contribute to shade half 
 ##'     less}) (\code{50 \%})
 ##'   }
+##'   \emph{or the values contained within the \code{immature_size} column, if 
+##'   provided \cr \cr}
 ##'   }
 ##'   \item{CHANG_STR_AGES}{= at what age each PFG goes into the upper stratum. 
 ##'   \cr \cr It is defined using a logistic growth curve with 2 points to 
 ##'   parameterize it :
 ##'   \enumerate{
 ##'     \item at \code{age = maturity/2}, \code{height = IMM_SIZE * height}
-##'     \item at \code{age = longevity}, \code{height = height}
+##'     \item at \code{age = longevity}, \code{height = height} \cr \cr
 ##'   }
 ##'   }
 ##'   \item{POTENTIAL_FECUNDITY}{= maximum number of seeds produced by the PFG. 
-##'   \cr \cr By default, defined to the same value for all PFG (\code{100}), 
-##'   but can be changed by hand directly into the produced files.
+##'   \cr \cr By default, defined to the same value for all PFG (\code{100}) \cr
+##'   \emph{or the values contained within the \code{potential_fecundity} 
+##'   column, if provided \cr \cr}
 ##'   }
 ##' }
 ##' 
@@ -137,7 +151,7 @@
 ##'   survive (for active and dormant pool)}
 ##'   \item{SEED_DORMANCY}{are the seeds dormant or not \emph{(0: No 1: Yes)}}
 ##'   \item{POTENTIAL_\cr FECUNDITY}{the maximum number of seeds produced by 
-##'   the PFG \cr \emph{(currently set by default to 100)}\cr \cr}
+##'   the PFG \cr \emph{(set by default to 100)}\cr \cr}
 ##' }
 ##' 
 ##' A \code{SUCC_COMPLETE_TABLE.csv} file summarizing information for all 
@@ -166,6 +180,15 @@
 ##'                                                         , maturity = c(5, 5, 3, 3, 8, 9)
 ##'                                                         , longevity = c(12, 200, 25, 4, 110, 70)))
 ##'                                                         
+##' 
+##' ## Create PFG succession parameter files
+##' PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
+##'                             , mat.PFG.succ = data.frame(PFG = paste0("PFG", 1:6)
+##'                                                         , type = c("C", "C", "H", "H", "P", "P")  
+##'                                                         , height = c(10, 250, 36, 68, 1250, 550)
+##'                                                         , maturity = c(5, 5, 3, 3, 8, 9)
+##'                                                         , longevity = c(12, 200, 25, 4, 110, 70)
+##'                                                         , immature_size = c(10, 8, 10, 10, 1, 5)))
 ##'                                                         
 ##'                                                         
 ##' ## ----------------------------------------------------------------------------------------- ##
