@@ -468,22 +468,24 @@ PRE_FATE.params_PFGsoil = function(
     ## herbaceous germinate less in richer soil
     ACTIVE_GERM[1, which(mat.PFG.soil$type == "H")] = 8 ## low soil conditions
     ACTIVE_GERM[3, which(mat.PFG.soil$type == "H")] = 5 ## high soil conditions
+    
   } else if (sum(colnames(mat.PFG.soil) == "active_germ_low") == 1 ||
              sum(colnames(mat.PFG.soil) == "active_germ_medium") == 1 ||
              sum(colnames(mat.PFG.soil) == "active_germ_high") == 1)
   {
     if (sum(colnames(mat.PFG.soil) == "active_germ_low") == 1)
     {
-      ACTIVE_GERM[1, ] = mat.PFG.soil$active_germ_low ## low light conditions
+      ACTIVE_GERM[1, ] = mat.PFG.soil$active_germ_low
     }
     if (sum(colnames(mat.PFG.soil) == "active_germ_medium") == 1)
     {
-      ACTIVE_GERM[2, ] = mat.PFG.soil$active_germ_medium ## low light conditions
+      ACTIVE_GERM[2, ] = mat.PFG.soil$active_germ_medium
     }
     if (sum(colnames(mat.PFG.soil) == "active_germ_high") == 1)
     {
-      ACTIVE_GERM[3, ] = mat.PFG.soil$active_germ_high ## low light conditions
+      ACTIVE_GERM[3, ] = mat.PFG.soil$active_germ_high
     }
+    
   } else if (sum(colnames(mat.PFG.soil) == "strategy_ag") == 1)
   {
     for (i in 1:no.PFG){
