@@ -441,25 +441,6 @@ PRE_FATE.params_PFGsoil = function(
   ## GET PFG NAME
   NAME = as.character(mat.PFG.soil$PFG)
   
-  ## GET SOIL CONTRIBUTION
-  SOIL_CONTRIB = as.numeric(mat.PFG.soil$soil_contrib)
-  
-  ## GET SOIL TOLERANCE LIMITS
-  SOIL_LOW = as.numeric(mat.PFG.soil$soil_tol_min)
-  SOIL_HIGH = as.numeric(mat.PFG.soil$soil_tol_max)
-  
-  
-  no.class = seq(min(round(mat.PFG.soil$soil_contrib))
-                 , max(round(mat.PFG.soil$soil_contrib))
-                 , 1)
-  
-  cat("\n ############## CLASS INFORMATIONS ############## \n")
-  cat("\n Classes : ", no.class)
-  cat("\n Number of classes : ", max(no.class))
-  cat("\n Number of PFG within each class (contribution) : ", table(cut(mat.PFG.soil$soil_contrib
-                                                                        , breaks = 1:max(no.class))))
-  cat("\n")
-  
   #################################################################################################
   
   ## GET GERMINATION RATE depending on soil conditions
@@ -478,11 +459,88 @@ PRE_FATE.params_PFGsoil = function(
   ##             9 = 90 %
   ##             10 = 100 %
   ACTIVE_GERM = matrix(10, nrow = 3, ncol = no.PFG)
-  ## woody species have little variation in germination rate depending on soil conditions
-  ACTIVE_GERM[c(1,3), which(mat.PFG.soil$type %in% c("C", "P"))] = 9
-  ## herbaceous germinate less in richer soil
-  ACTIVE_GERM[1, which(mat.PFG.soil$type == "H")] = 8 ## low soil conditions
-  ACTIVE_GERM[3, which(mat.PFG.soil$type == "H")] = 5 ## high soil conditions
+  
+  if (sum(colnames(mat.PFG.soil) == "type") == 1)
+  {
+    ## woody species have little variation in germination rate depending on soil conditions
+    ACTIVE_GERM[c(1,3), which(mat.PFG.soil$type %in% c("C", "P"))] = 9
+    ## herbaceous germinate less in richer soil
+    ACTIVE_GERM[1, which(mat.PFG.soil$type == "H")] = 8 ## low soil conditions
+    ACTIVE_GERM[3, which(mat.PFG.soil$type == "H")] = 5 ## high soil conditions
+  } else if (sum(colnames(mat.PFG.succ) == "active_germ_low") == 1 ||
+             sum(colnames(mat.PFG.succ) == "active_germ_medium") == 1 ||
+             sum(colnames(mat.PFG.succ) == "active_germ_high") == 1)
+  {
+    if (sum(colnames(mat.PFG.succ) == "active_germ_low") == 1)
+    {
+      ACTIVE_GERM[1, ] = mat.PFG.succ$active_germ_low ## low light conditions
+    }
+    if (sum(colnames(mat.PFG.succ) == "active_germ_medium") == 1)
+    {
+      ACTIVE_GERM[2, ] = mat.PFG.succ$active_germ_medium ## low light conditions
+    }
+    if (sum(colnames(mat.PFG.succ) == "active_germ_high") == 1)
+    {
+      ACTIVE_GERM[3, ] = mat.PFG.succ$active_germ_high ## low light conditions
+    }
+  } else if (sum(colnames(mat.PFG.soil) == "strategy_ag") == 1)
+  {
+    for (i in 1:no.PFG){
+      ACTIVE_GERM[, i] = switch(mat.PFG.soil$strategy_ag[i]
+                                # , full_light = c(1,1,1,0,0,1,0,0,1)
+                                # , pioneer = c(1,1,1,0,1,1,0,1,1)
+                                , ubiquist = c(9, 10, 9)
+                                # , semi_shade = c(1,1,0,1,1,0,1,1,1)
+                                # , undergrowth = c(1,1,0,1,1,0,1,1,0)
+      )
+    }
+  } else
+  {
+    # warning()
+  }
+  
+  #################################################################################################
+  
+  if (sum(colnames(mat.PFG.tol) == "soil_contrib") == 1)
+  {
+    ## GET SOIL CONTRIBUTION
+    SOIL_CONTRIB = as.numeric(mat.PFG.soil$soil_contrib)
+    
+    ## GET SOIL TOLERANCE LIMITS
+    SOIL_LOW = as.numeric(mat.PFG.soil$soil_tol_min)
+    SOIL_HIGH = as.numeric(mat.PFG.soil$soil_tol_max)
+  } else if (sum(colnames(mat.PFG.soil) == "strategy_contrib") == 1)
+  {
+    SOIL_CONTRIB = SOIL_LOW = SOIL_HIGH = vector(length = no.PFG)
+    for (i in 1:no.PFG){
+      tmp = switch(mat.PFG.soil$strategy_contrib[i]
+                   # , full_light = c(1,1,1,0,0,1,0,0,1)
+                   # , pioneer = c(1,1,1,0,1,1,0,1,1)
+                   , ubiquist = c(9, 10, 9)
+                   # , semi_shade = c(1,1,0,1,1,0,1,1,1)
+                   # , undergrowth = c(1,1,0,1,1,0,1,1,0)
+      )
+      SOIL_CONTRIB[i] = tmp[1]
+      SOIL_LOW[i] = tmp[2]
+      SOIL_HIGH[i] = tmp[3]
+    }
+  } else
+  {
+    # warning()
+  }
+  
+  no.class = seq(min(round(mat.PFG.soil$soil_contrib))
+                 , max(round(mat.PFG.soil$soil_contrib))
+                 , 1)
+  
+  cat("\n ############## CLASS INFORMATIONS ############## \n")
+  cat("\n Classes : ", no.class)
+  cat("\n Number of classes : ", max(no.class))
+  cat("\n Number of PFG within each class (contribution) : ", table(cut(mat.PFG.soil$soil_contrib
+                                                                        , breaks = 1:max(no.class))))
+  cat("\n")
+  
+  
   
   #################################################################################################
   
@@ -505,30 +563,47 @@ PRE_FATE.params_PFGsoil = function(
   if (is.null(mat.PFG.tol))
   {
     SOIL_TOL[1, ] = 1 ## Germinant - Low soil conditions
-    SOIL_TOL[3, ] = 0 ## Germinant - High soil conditions
+    SOIL_TOL[3, ] = 3 ## Germinant - High soil conditions
     
-    SOIL_TOL[4, ] = 5 ## Immature - Low soil conditions
-    SOIL_TOL[6, ] = 4 ## Immature - High soil conditions
+    SOIL_TOL[4, ] = 4 ## Immature - Low soil conditions
+    SOIL_TOL[6, ] = 6 ## Immature - High soil conditions
     
-    SOIL_TOL[7, ] = 9 ## Mature - Low soil conditions
-    SOIL_TOL[9, ] = 8 ## Mature - High soil conditions
+    SOIL_TOL[7, ] = 7 ## Mature - Low soil conditions
+    SOIL_TOL[9, ] = 9 ## Mature - High soil conditions
   } else
   {
-    for (ii in 1:nrow(mat.PFG.tol))
+    if (sum(colnames(mat.PFG.tol) == "lifeStage") == 1)
     {
-      LS_res = paste0(mat.PFG.tol$lifeStage[ii], "_", mat.PFG.tol$resources[ii])
-      ind_ii = switch(LS_res
-                      , Germinant_Low = 1
-                      , Germinant_Medium = 2
-                      , Germinant_High = 3
-                      , Immature_Low = 4
-                      , Immature_Medium = 5
-                      , Immature_High = 6
-                      , Mature_Low = 7
-                      , Mature_Medium = 8
-                      , Mature_High = 9
-      )
-      SOIL_TOL[ind_ii, which(NAME == mat.PFG.tol$PFG[ii])] = mat.PFG.tol$soil_tol[ii]
+      for (ii in 1:nrow(mat.PFG.tol))
+      {
+        LS_res = paste0(mat.PFG.tol$lifeStage[ii], "_", mat.PFG.tol$resources[ii])
+        ind_ii = switch(LS_res
+                        , Germinant_Low = 1
+                        , Germinant_Medium = 2
+                        , Germinant_High = 3
+                        , Immature_Low = 4
+                        , Immature_Medium = 5
+                        , Immature_High = 6
+                        , Mature_Low = 7
+                        , Mature_Medium = 8
+                        , Mature_High = 9
+        )
+        SOIL_TOL[ind_ii, which(NAME == mat.PFG.tol$PFG[ii])] = mat.PFG.tol$soil_tol[ii]
+      }
+    } else if (sum(colnames(mat.PFG.tol) == "strategy_tol") == 1)
+    {
+      for (i in 1:no.PFG){
+        SOIL_TOL[, i] = switch(mat.PFG.tol$strategy_tol[i]
+                               # , full_light = c(1,1,1,0,0,1,0,0,1)
+                               # , pioneer = c(1,1,1,0,1,1,0,1,1)
+                               , ubiquist = c(9,10,9,9,10,9,9,10,9)
+                               # , semi_shade = c(1,1,0,1,1,0,1,1,1)
+                               # , undergrowth = c(1,1,0,1,1,0,1,1,0)
+        )
+      }
+    } else
+    {
+      # warning()
     }
   }
   
