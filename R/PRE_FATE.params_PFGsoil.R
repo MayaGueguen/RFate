@@ -52,7 +52,8 @@
 ##'   \item{(\emph{active_germ_high})}{the proportion of seeds that will 
 ##'   germinate for \code{High} soil condition}
 ##'   \item{(\emph{strategy_ag})}{a \code{string} to choose the germination 
-##'   strategy : \cr \code{ubiquist}, \code{tobedefined} \cr \cr}
+##'   strategy : \cr \code{poor_lover}, \code{indifferent}, \code{rich_lover} 
+##'   \cr \cr}
 ##'   
 ##'   \item{soil_contrib}{a value corresponding to the PFG preference for soil 
 ##'   fertility \cr (e.g. nitrogen value from Ellenberg or Flora Indicativa)}
@@ -82,15 +83,16 @@
 ##'   \itemize{
 ##'     \item from \strong{predefined scenarios} (using \code{strategy_ag}) :
 ##'     \describe{
-##'       \item{}{\strong{\code{| _L _M_ H_ |}}}
-##'       \item{}{\code{_____________}}
-##'       \item{ubiquist}{\code{| 90 100 90 |}}
-##'       \item{to be filled}{}
+##'       \item{}{\strong{\code{| _L_ _M_ _H_ |}}}
+##'       \item{}{\code{_______________}}
+##'       \item{poor_lover}{\code{| 80\% 90\% 50\% |}}
+##'       \item{indifferent}{\code{| 90\% 90\% 90\% |}}
+##'       \item{rich_lover}{\code{| 50\% 90\% 80\% |}}
 ##'     }
 ##'     \item from \strong{predefined rules} (using \code{type}) :
 ##'     \itemize{
 ##'       \item for \code{H} (herbaceous) : \code{80\%, 100\%, 50\%}
-##'       \item for \code{C} (chamaephyte) or \code{P} (phanerophyte): 
+##'       \item for \code{C} (chamaephyte) or \code{P} (phanerophyte) : 
 ##'       \code{90\%, 100\%, 90\%}
 ##'     }
 ##'     \item from \strong{user data} : \cr
@@ -326,9 +328,9 @@ PRE_FATE.params_PFGsoil = function(
     if (sum(colnames(mat.PFG.soil) == "strategy_ag") == 1)
     {
       mat.PFG.soil$strategy_ag = as.character(mat.PFG.soil$strategy_ag)
-      if (.testParam_notInChar(mat.PFG.soil$strategy_ag, inList = c("full_light", "pioneer", "ubiquist", "semi_shade", "undergrowth")))
+      if (.testParam_notInChar(mat.PFG.soil$strategy_ag, inList = c("poor_lover", "indifferent", "rich_lover")))
       {
-        .stopMessage_content("mat.PFG.soil$strategy_ag", c("full_light", "pioneer", "ubiquist", "semi_shade", "undergrowth"))
+        .stopMessage_content("mat.PFG.soil$strategy_ag", c("poor_lover", "indifferent", "rich_lover"))
       }
     }
     ## CHECKS for soil_... columns
@@ -490,16 +492,14 @@ PRE_FATE.params_PFGsoil = function(
   {
     for (i in 1:no.PFG){
       ACTIVE_GERM[, i] = switch(mat.PFG.soil$strategy_ag[i]
-                                # , full_light = c(1,1,1,0,0,1,0,0,1)
-                                # , pioneer = c(1,1,1,0,1,1,0,1,1)
-                                , ubiquist = c(9, 10, 9)
-                                # , semi_shade = c(1,1,0,1,1,0,1,1,1)
-                                # , undergrowth = c(1,1,0,1,1,0,1,1,0)
+                                , poor_lover = c(8, 9, 5)
+                                , indifferent = c(9, 9, 9)
+                                , rich_lover = c(5, 9, 8)
       )
     }
   } else
   {
-    # warning()
+    warning("Missing data! The `ACTIVE_GERM` parameter has not been set. Please check.")
   }
   
   #################################################################################################
@@ -529,7 +529,7 @@ PRE_FATE.params_PFGsoil = function(
     }
   } else
   {
-    # warning()
+    warning("Missing data! The `SOIL_CONTRIB`, `SOIL_LOW` and `SOIL_HIGH` parameters have not been set. Please check.")
   }
   
   no.class = seq(min(round(mat.PFG.soil$soil_contrib))
@@ -606,7 +606,7 @@ PRE_FATE.params_PFGsoil = function(
       }
     } else
     {
-      # warning()
+      warning("Missing data! The `SOIL_TOL` parameter has not been set. Please check.")
     }
   }
   

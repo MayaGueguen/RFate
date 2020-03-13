@@ -32,13 +32,13 @@ ________________________________________________________________________________
 
 <br/>
 
-<a href="papers/Boulangeat_2012_GCB.pdf" class="download" title="Download as PDF">
+<a href="papers/Boulangeat_2012_Global_Change_Biology.pdf" class="download" title="Download as PDF">
 <img src="pictures/art_2012_Boulangeat_GCB_1.png" alt="Boulangeat 2012 Global Change Biology (PAPER)" style="width:350px">
 </a>
 <a href="papers/Boulangeat_2012_Global_Change_Biology_SupMat.pdf" class="download" title="Download as PDF">
 <img src="pictures/art_2012_Boulangeat_GCB_2.png" alt="Boulangeat 2012 Global Change Biology (SupMat)" style="width:350px">
 </a>
-<a href="papers/Boulangeat_2014_GCB.pdf" class="download" title="Download as PDF">
+<a href="papers/Boulangeat_2014_Global_Change_Biology.pdf" class="download" title="Download as PDF">
 <img src="pictures/art_2014_Boulangeat_GCB_1.png" alt="Boulangeat 2014 Global Change Biology (PAPER)" style="width:350px">
 </a>
 <a href="papers/Boulangeat_2014_Global_Change_Biology_SupMat.pdf" class="download" title="Download as PDF">
@@ -64,9 +64,7 @@ ________________________________________________________________________________
 <a href="papers/Boulangeat_2014_Ecography.pdf" class="download" title="Download as PDF">
 <img src="pictures/art_2014_Boulangeat_Ecography.png" alt="Boulangeat 2014 Ecography" style="width:350px">
 </a>
-<a href="" class="download" title="Download as PDF">
-<img src="" alt="" style="width:350px">
-</a>
+<div style="width:350px"></div>
 <a href="papers/Barros_2016_Ecology_Letters.pdf" class="download" title="Download as PDF">
 <img src="pictures/art_2016_Barros_EL_1.png" alt="Barros 2016 Ecology Letters (PAPER)" style="width:350px">
 </a>

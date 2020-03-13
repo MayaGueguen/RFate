@@ -11,11 +11,24 @@ PRE_FATE.params_PFGsoil(name.simulation, mat.PFG.soil,
 \item{name.simulation}{a \code{string} that corresponds to the main 
 directory or simulation name of the \code{FATE-HD} simulation}
 
-\item{mat.PFG.soil}{a \code{data.frame} with 5 columns : \code{PFG}, 
-\code{type}, \code{soil_contrib}, \code{soil_tol_min}, \code{soil_tol_max}}
+\item{mat.PFG.soil}{a \code{data.frame} with 3 to 7 columns : \cr 
+\itemize{
+  \item \code{PFG},
+  \item \code{type}, (\emph{or \code{active_germ_low}, 
+  \code{active_germ_medium}, \code{active_germ_high}}) (\emph{or
+  \code{strategy_ag}})
+  \item \code{soil_contrib}, \code{soil_tol_min}, \code{soil_tol_max} 
+  (\emph{or \code{strategy_contrib}})
+}
+(see \code{\href{PRE_FATE.params_PFGsoil.html#details}{Details}})}
 
-\item{mat.PFG.tol}{a \code{data.frame} with 4 columns : \code{PFG}, 
-\code{lifeStage}, \code{soilResources}, \code{soil_tol}}
+\item{mat.PFG.tol}{a \code{data.frame} with 2 to 4 columns : \cr 
+\itemize{
+  \item \code{PFG},
+  \item \code{lifeStage}, \code{resources}, \code{tolerance} 
+  (\emph{or \code{strategy_tol}})
+}
+(see \code{\href{PRE_FATE.params_PFGsoil.html#details}{Details}})}
 
 \item{opt.folder.name}{(\emph{optional}) \cr a \code{string} that
 corresponds to the name of the folder that will be created into the 
@@ -28,13 +41,16 @@ parameters :
 
 \describe{
   \item{NAME}{name of the PFG}
-  \item{SOIL_CONTRIB}{the contribution (influence) of the PFG on the
-  soil value of the pixel}
-  \item{SOIL_LOW}{the lower value of soil supported by the PFG}
-  \item{SOIL_HIGH}{the upper value of soil supported by the PFG}
   \item{ACTIVE_GERM}{the germination rates depending on soil conditions
   \cr \emph{(0: 0\% 1: 10\% 2: 20\% 3: 30\% 4: 40\% 5: 50\% 6: 60\% 7: 70\% 
   8: 80\% 9: 90\% 10: 100\%)}}
+  \item{SOIL_CONTRIB}{the PFG contribution to the soil value of the pixel}
+  \item{SOIL_LOW}{the lower value of soil supported by the PFG, \cr 
+  defining the limit between \code{Low} and \code{Medium} soil resources 
+  for this PFG}
+  \item{SOIL_HIGH}{the upper value of soil supported by the PFG, \cr 
+  defining the limit between \code{Medium} and \code{High} soil resources 
+  for this PFG}
   \item{SOIL_TOL}{the PFG soil tolerance table (in a single row). \cr 
   This is a vector of 9 numbers corresponding to the ability of the PFG to 
   survive or not :
@@ -63,76 +79,138 @@ used in the soil module of \code{FATE-HD}.
 }
 \details{
 The soil module allows the user to simulate a primary vegetation succession 
-based on soil competition. \cr
+based on soil competition. \cr \cr
 
-Several parameters, given within \code{mat.PFG.soil}, are required for each 
-PFG in order to set up the soil competition :
+Several parameters, given within \code{mat.PFG.soil} or \code{mat.PFG.tol}, 
+are required for each PFG in order to set up the soil competition :
 
 \describe{
-  \item{type}{or life-form, based on Raunkier. It should be either \code{H} 
-  (herbaceous), \code{C} (chamaephyte) or \code{P} (phanerophyte) for now}
+  \item{type}{or life-form, based on Raunkier. \cr It should be either 
+  \code{H} (herbaceous), \code{C} (chamaephyte) or \code{P} (phanerophyte) 
+  for now}
+  \item{(\emph{active_germ_low})}{the proportion of seeds that will 
+  germinate for \code{Low} soil condition}
+  \item{(\emph{active_germ_medium})}{the proportion of seeds that will 
+  germinate for \code{Medium} soil condition}
+  \item{(\emph{active_germ_high})}{the proportion of seeds that will 
+  germinate for \code{High} soil condition}
+  \item{(\emph{strategy_ag})}{a \code{string} to choose the germination 
+  strategy : \cr \code{poor_lover}, \code{indifferent}, \code{rich_lover} 
+  \cr \cr}
+  
   \item{soil_contrib}{a value corresponding to the PFG preference for soil 
   fertility \cr (e.g. nitrogen value from Ellenberg or Flora Indicativa)}
   \item{soil_tol_min}{the minimum soil value tolerated by the PFG (on the 
-  same scale than \emph{soil_contrib})}
+  same scale than \code{soil_contrib})}
   \item{soil_tol_max}{the maximum soil value tolerated by the PFG (on the 
-  same scale than \emph{soil_contrib})}
+  same scale than \code{soil_contrib})}
+  \item{(\emph{strategy_contrib})}{a \code{string} to choose the 
+  contribution strategy : \cr \code{ubiquist}, \code{tobedefined} \cr \cr}
+  
+  \item{lifeStage}{the concerned life stage (\code{Germinant}, 
+  \code{Immature}, \code{Mature})}
+  \item{resources}{the concerned soil condition (\code{Low}, 
+  \code{Medium}, \code{High})}
+  \item{tolerance}{the proportion of surviving individuals}
+  \item{(\emph{strategy_tol})}{a \code{string} to choose the tolerance 
+  strategy : \cr \code{ubiquist}, \code{tobedefined} \cr \cr}
 }
-
 
 These values will allow to calculate or define a set of characteristics for 
 each PFG :
 
 \describe{
-  \item{SOIL_CONTRIB}{PFG contribution to the soil value}
-  \item{SOIL_LOW}{minimum soil value tolerated by the PFG}
-  \item{SOIL_HIGH}{maximum soil value tolerated by the PFG}
   \item{ACTIVE_GERM}{proportion of seeds that will germinate for each soil 
-  condition (\code{Low}, \code{Medium}, \code{High}) :
+  condition (\code{Low}, \code{Medium}, \code{High}) \cr \cr
+  Three methods to define these proportions are available :
   \itemize{
-    \item woody species have little variation in germination rate : 
-    \code{90\%} for \code{Low} and \code{High} conditions, \code{100\%} for 
-    \code{Medium} condition
-    \item herbaceous germinate less in richer soil : \code{80\%} for 
-    \code{Low}, \code{100\%} for \code{Medium} and \code{50\%} for 
-    \code{High} conditions
+    \item from \strong{predefined scenarios} (using \code{strategy_ag}) :
+    \describe{
+      \item{}{\strong{\code{| _L_ _M_ _H_ |}}}
+      \item{}{\code{_______________}}
+      \item{poor_lover}{\code{| 80\% 90\% 50\% |}}
+      \item{indifferent}{\code{| 90\% 90\% 90\% |}}
+      \item{rich_lover}{\code{| 50\% 90\% 80\% |}}
+    }
+    \item from \strong{predefined rules} (using \code{type}) :
+    \itemize{
+      \item for \code{H} (herbaceous) : \code{80\%, 100\%, 50\%}
+      \item for \code{C} (chamaephyte) or \code{P} (phanerophyte) : 
+      \code{90\%, 100\%, 90\%}
+    }
+    \item from \strong{user data} : \cr
+    \emph{with the values contained within the \code{active_germ_low}, 
+    \code{active_germ_medium} and \code{active_germ_high} columns, if 
+    provided \cr \cr}
   }
   }
-}
-
-A second file, \code{mat.PFG.tol}, can be given to define the importance of 
-the response of each PFG to each soil condition :
-
-\describe{
-  \item{PFG}{the name of the PFG concerned}
-  \item{lifeStage}{the concerned life stage (Germinant, Immature, Mature)}
-  \item{soilResources}{the concerned soil condition (\code{Low}, 
-  \code{Medium}, \code{High})}
-  \item{soil_tol}{the proportion of surviving individuals}
-}
-
-If these values are not given by the user, default rules are defined below :
-
-\describe{
-  \item{SOIL_TOL}{ defined for each life stage (Germinant, Immature, 
-  Mature) and each soil condition (\code{Low}, \code{Medium}, \code{High}) :
+  
+  \item{SOIL_CONTRIB \cr SOIL_LOW \cr SOIL_HIGH}{
+  Two methods to define these values are available :
   \itemize{
-    \item (A) germinants are severely impacted by wrong soil conditions :
-    \itemize{
-      \item only \code{10\%} of the cohorts survive in \code{Low} soil 
-      condition
-      \item all cohorts die in \code{High} soil condition
-    }
-    \item (B) immatures are half impacted by wrong soil conditions :
-    \itemize{
-      \item \code{50\%} of the cohorts survive in \code{Low} soil condition
-      \item \code{40\%} of the cohorts survive in \code{High} soil condition
-    }
-    \item (C) matures are little affected by wrong soil conditions :
-    \itemize{
-      \item \code{90\%} of the cohorts survive in \code{Low} soil condition
-      \item \code{80\%} of the cohorts survive in \code{High} soil condition
-    }
+    \item from \strong{predefined scenarios} (using 
+    \code{strategy_contrib}) : \cr
+      \itemize{
+        \item the values give the \code{soil_tol_min}, \code{soil_contrib} 
+        and \code{soil_tol_max}
+        \item with \code{L}: low soil, \code{M}: medium soil, \code{H}: 
+        high soil \cr \cr
+      }
+      \describe{
+        \item{}{\strong{\code{| ___ L ___ | ___ M ___ | ___ H ___ |}}}
+        \item{}{\code{_____________________________________}}
+        \item{ubiquist}{\code{__________ 1.5 _ 2.5 _ 4.5 __________}}
+        \item{to be filled}{}
+      }
+    \item from \strong{user data} : \cr
+      \emph{with the values contained within the \code{soil_contrib}, 
+      \code{soil_tol_min} and \code{soil_tol_max} columns, if provided \cr \cr}
+  }
+  }
+  
+  \item{SOIL_TOL}{ defined for each life stage (\code{Germinant}, 
+  \code{Immature}, \code{Mature}) \cr and each soil condition (\code{Low}, 
+  \code{Medium}, \code{High}) \cr \cr
+  Three methods to define these tolerances are available :
+  \itemize{
+    \item from \strong{predefined scenarios} (using 
+    \code{strategy_tol}) : \cr
+      \itemize{
+        \item the values give the percentage of surviving individuals to the 
+        concerned conditions
+        \item with \code{g}: Germinant, \code{i}: Immature, \code{m}: Mature
+        \item with \code{L}: low soil, \code{M}: medium soil, \code{H}: 
+        high soil \cr \cr
+      }
+      \describe{
+        \item{}{\strong{\code{| ___ g ___ | ___ i ___ | ___ m ___ |}}}
+        \item{}{\strong{\code{| _L _M_ H_ | _L _M_ H_ | _L _M_ H_ |}}}
+        \item{}{\code{_____________________________________}}
+        \item{ubiquist}{\code{| 90 100 90 | 90 100 90 | 90 100 90 |}}
+        \item{to be filled}{}
+      }
+    \item from \strong{predefined rules} :
+      \describe{
+        \item{(A)}{germinants are severely impacted by wrong soil conditions}
+        \item{(B)}{immatures are half impacted by wrong soil conditions}
+        \item{(C)}{matures are little impacted by wrong soil conditions}
+      }
+      \itemize{
+        \item the values give the percentage of surviving individuals to the 
+        concerned conditions
+        \item with \code{g}: Germinant, \code{i}: Immature, \code{m}: Mature
+        \item with \code{L}: low soil, \code{M}: medium soil, \code{H}: 
+        high soil \cr \cr
+      }
+      \describe{
+        \item{}{\strong{\code{| ___ g ___ | ___ i ___ | ___ m ___ |}}}
+        \item{}{\strong{\code{| _L _M_ H_ | _L _M_ H_ | _L _M_ H_ |}}}
+        \item{}{\code{_____________________________________}}
+        \item{}{\code{| 10 100 30 | 40 100 60 | 70 100 90 |}}
+      }
+    \item from \strong{user data} : \cr
+      \emph{with the values contained within the \code{lifeStage}, 
+      \code{resources} and \code{tolerance} columns, if provided}
   }
   }
 }

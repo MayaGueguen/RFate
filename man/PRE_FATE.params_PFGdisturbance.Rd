@@ -6,22 +6,28 @@
 simulation}
 \usage{
 PRE_FATE.params_PFGdisturbance(name.simulation, mat.PFG.dist,
-  mat.PFG.succ = paste0(name.simulation,
-  "/DATA/PFGS/SUCC_COMPLETE_TABLE.csv"), opt.folder.name = NULL)
+  mat.PFG.tol = NULL, opt.folder.name = NULL)
 }
 \arguments{
 \item{name.simulation}{a \code{string} that corresponds to the main 
 directory or simulation name of the \code{FATE-HD} simulation}
 
-\item{mat.PFG.dist}{a \code{data.frame} with 5 columns : \cr \code{name}, 
-\code{responseStage}, \code{PFG}, \code{KilledIndiv}, \code{ResproutIndiv} 
-(see \code{Details})}
+\item{mat.PFG.dist}{a \code{data.frame} with 3 to 5 columns : \cr 
+\itemize{
+  \item \code{PFG},
+  \item \code{type}, \code{maturity}, \code{longevity}, 
+  \code{age_above_150cm}, (\emph{or \code{breakAge}, \code{resproutAge}})
+}
+(see \code{\href{PRE_FATE.params_PFGdisturbance.html#details}{Details}})}
 
-\item{mat.PFG.succ}{a \code{data.frame} with at least 6 columns : \cr
-\code{PFG}, \code{type}, \code{MATURITY}, \code{LONGEVITY}, \code{STRATA} 
-and \code{CHANG_STR_AGES_to_str_3}. \cr
-Such an object can be obtained with the 
-\code{\link{PRE_FATE.params_PFGsuccession}} function.}
+\item{mat.PFG.tol}{a \code{data.frame} with 3 to 5 columns : \cr 
+\itemize{
+  \item \code{nameDist},
+  \item \code{PFG},
+  \item \code{responseStage}, \code{killedIndiv}, \code{resproutIndiv} 
+  (\emph{or \code{strategy_tol}})
+}
+(see \code{\href{PRE_FATE.params_PFGdisturbance.html#details}{Details}})}
 
 \item{opt.folder.name}{(\emph{optional}) \cr a \code{string} that 
 corresponds to the name of the folder that will be created into the 
@@ -38,7 +44,7 @@ directory with the following parameters :
   corresponding to the age at which each living PFG can be rejuvenated (younger 
   than the actual one) :
   \itemize{
-    \item at different response stages \emph{(!currently 4, not yet editable!)}
+    \item at different response stages
     \item for each disturbance.
   }
   }
@@ -49,7 +55,7 @@ directory with the following parameters :
   corresponding to the proportion of individuals :
   \itemize{
     \item that will be killed or resprout
-    \item at different response stages \emph{(!currently 4, not yet editable!)}
+    \item at different response stages
     \item for each disturbance.
   }
   }
@@ -73,21 +79,36 @@ response to disturbance parameters for each PFG (one file for each of them)
 used in the disturbance module of \code{FATE-HD}.
 }
 \details{
-The disturbance module of \code{FATE-HD} allows the user to simulate 
-spatial perturbation(s) that will impact each PFG in terms of 
-\emph{resprouting} and \emph{mortality} on the different response stages 
-\emph{(!currently 4, not yet editable!)}. \cr
+The disturbance module of \code{FATE-HD} allows the user to simulate spatial 
+perturbation(s) that will impact each PFG in terms of \emph{resprouting} and 
+\emph{mortality} on the different response stages. \cr \cr
 
-Several parameters, given within \code{mat.PFG.succ}, are required for each 
-PFG in order to set up these responses :
+Several parameters, given within \code{mat.PFG.dist} or \code{mat.PFG.tol}, 
+are required for each PFG in order to set up these responses :
 
 \describe{
-  \item{type}{or life-form, based on Raunkier. It should be either \code{H} 
-  (herbaceous), \code{C} (chamaephyte) or \code{P} (phanerophyte) for now}
-  \item{MATURITY}{the age from which the PFG can reproduce}
-  \item{LONGEVITY}{the maximum or average lifespan of the PFG}
-  \item{STRATA}{the maximum height stratum that the PFG can reach}
-  \item{CHANG_STR_AGES}{at what age each PFG goes into the upper stratum}
+  \item{PFG}{the concerned plant functional group}
+  \item{type}{or life-form, based on Raunkier. \cr It should be either 
+  \code{H} (herbaceous), \code{C} (chamaephyte) or \code{P} (phanerophyte) 
+  for now}
+  \item{maturity}{the age from which the PFG can reproduce}
+  \item{longevity}{the maximum or average lifespan of the PFG}
+  \item{age_above_150cm}{the maximum height stratum that the PFG can reach}
+  \item{(\emph{responseStage})}{the concerned response class}
+  \item{(\emph{breakAge})}{the age from which the PFG is associated with 
+  this response class}
+  \item{(\emph{resproutAge})}{the age at which the plants will grow back, 
+  if they grow back \cr \cr}
+  
+  \item{nameDist}{the name of each perturbation (several can be defined at 
+  the same time)}
+  \item{killedIndiv}{the proportion of killed individuals}
+  \item{resproutIndiv}{the proportion of resprouting individuals}
+  \item{(\emph{strategy_dist})}{a \code{string} to choose the response to 
+  disturbance strategy : \cr \code{indifferent}, \code{mowing_herbs}, 
+  \code{mowing_trees}, \code{grazing_herbs_1}, \code{grazing_herbs_2}, 
+  \code{grazing_herbs_3}, \code{grazing_trees_1}, \code{grazing_trees_2}, 
+  \code{grazing_trees_3} \cr \cr}
 }
 
 
@@ -96,97 +117,108 @@ each PFG :
 
 \describe{
   \item{BREAK_AGE}{ = each PFG can respond to a disturbance in several 
-  different ways \emph{(!currently 4, not yet editable!)} that depend 
-  on the PFG age \cr
+  different ways that depend on the PFG age \cr
    = ages at which each PFG changes of response stage \cr \cr
-   
-   These response classes are the same for all disturbances for each PFG. 
-   \cr These ages are defined according to the maturity and longevity of 
-   the PFG, its life form and its ability to grow above 1.5 meter :
-   \itemize{
-     \item age from class \code{1} to \code{2} :
-     \itemize{
-       \item \code{maturity - 2} for herbaceous
-       \item \code{1} for chamaephytes and phanerophytes
-     }
-     \item age from class \code{2} to \code{3} :
-     \itemize{
-       \item \code{maturity} for herbaceous
-       \item \code{min(maturity - 2 , age_above_150cm)} for chamaephytes 
-       and phanerophytes
-     }
-     \item age from class \code{3} to \code{4} :
-     \itemize{
-       \item \code{longevity - 2} for herbaceous
-       \item \code{min(longevity - 2 , age_above_150cm)} for chamaephytes 
-       and phanerophytes
-     }
-   }
-   Some corrections are made for short-living plants (annuals and 
-   biennials) : as they die after 1 or 2 years, they are not affected 
-   differently according to life stages. Break ages from class \code{1} to 
-   \code{3} are set to 1, and break age from \code{3} to \code{4} is set 
-   to their longevity (1 or 2).
+  Two methods to define these ages are available :
+  \itemize{
+    \item from \strong{predefined rules} (using \code{type}, 
+    \code{maturity}, \code{longevity}, \code{age_above_150cm}) : \cr \cr
+    4 classes are defined that can be labelled as : \cr \strong{JustBorn 
+    (\code{1})}, \strong{Juveniles (\code{2})}, \strong{Matures (\code{3})}, 
+    \strong{Senescents (\code{4})} \cr \cr
+    \tabular{r|c|c}{
+       \tab \strong{\code{H} (herbaceous)} \tab \strong{\code{C} 
+       (chamaephyte) or \code{P} (phanerophyte)} \cr
+      \strong{from class \code{1} to \code{2}} \tab \code{maturity - 2} 
+      \tab \code{1} \cr
+      \strong{from class \code{2} to \code{3}} \tab \code{maturity} \tab 
+      \code{min}(\code{maturity - 2 , age_above_150cm}) \cr
+      \strong{from class \code{3} to \code{4}} \tab \code{longevity - 2} 
+      \tab \code{min}(\code{longevity - 2 , age_above_150cm})
+    }
+    
+    Some corrections are made for short-living plants (annuals and 
+    biennials) :
+    \itemize{
+      \item as they die after 1 or 2 years, they are not affected 
+      differently according to life stages
+      \item break ages from class \code{1} to \code{3} are set to \code{1}, 
+      and break age from \code{3} to \code{4} is set to their longevity 
+      (\code{1} or \code{2}) \cr \cr
+    }
+    \item from \strong{user data} : \cr
+      \emph{with the values contained within the \code{breakAge} column, 
+      if provided \cr \cr}
+  }
   }
   \item{RESPR_AGE}{ = when subject to a perturbation, each PFG can either 
-  stay undisturbed, be killed, or resprout \emph{(in years)} \cr
+  stay undisturbed, be killed, or resprout at a particular age 
+  \emph{(in years)} \cr
    = ages at which each PFG will be rejuvenated by a disturbance \cr \cr
-  It does not impact dead inviduals, only living ones. \cr
-  It is defined according to the maturity and longevity of the PFG, and 
-  its ability to grow above 1.5 meter :
+  Two methods to define these ages are available :
   \itemize{
-    \item individuals within response stages \code{1} and \code{2} are too 
-    young to resprout
-    \item individuals within response stage \code{3}: \cr
-    \code{min(maturity - 2, age_above_150cm)}
-    \item individuals within response stage \code{4} : \code{longevity - 2}
-    \item short-living plants (annuals and biennials) always start back 
-    at 0
+    \item from \strong{predefined rules} (using \code{maturity}, 
+    \code{longevity}, \code{age_above_150cm}) :
+    \itemize{
+      \item classes \code{1} and \code{2} : too young to resprout
+      \item class \code{3} : 
+      \code{min}(\code{maturity - 2 , age_above_150cm})
+      \item class \code{4} : \code{longevity - 2}
+      \item short-living plants (annuals and biennials) always start back 
+      at \code{0} \cr \cr
+    }
+    \item from \strong{user data} : \cr
+      \emph{with the values contained within the \code{resproutAge} column, 
+      if provided \cr \cr}
   }
   }
-}
-
-A second file, \code{mat.PFG.dist}, is required to define the importance of 
-the response of each PFG to each disturbance :
-
-\describe{
-  \item{name}{the name of each perturbation (several can be defined at the 
-  same time)}
-  \item{responseStage}{the concerned response class \emph{(!currently 4, 
-  not yet editable!)}}
-  \item{PFG}{the concerned plant functional group \emph{(!should match with 
-  the ones given within \code{mat.PFG.succ}!)}}
-  \item{KilledIndiv}{the proportion of killed individuals}
-  \item{ResproutIndiv}{the proportion of resprouting individuals}
-}
-
-These values will allow to define a third parameter for each PFG :
-
-\describe{
-  \item{FATES}{ = proportion of killed or resprouting individuals \cr
-   = for each disturbance and for each response stage \cr
-   Two methods are available to give the proportion of killed and 
-   resprouting individuals :
-   \itemize{
-     \item for each life form : \code{H} (herbaceous), \code{C}
-     (chamaephyte) or \code{P} (phanerophyte)
-     \item for each PFG
-   }
-   Both methods can be combined (but are applied in the order given by the 
-   PFG column).
+  \item{FATES}{ = proportion of killed and resprouting individuals \cr
+   = for each disturbance and for each response stage \cr \cr
+  Two methods to define these tolerances are available :
+  \itemize{
+    \item from \strong{predefined scenarios} (using 
+    \code{strategy_tol}) : \cr
+      \itemize{
+        \item the values give the percentage of killed or resprouting 
+        individuals
+        \item with \code{1, 2, 3, 4}: response classes
+        \item with \code{K}: killed individuals, \code{R}: resprouting 
+        individuals \cr \cr
+      }
+      \describe{
+        \item{}{\strong{\code{| ___1___ | ___2___ | ___3___ | ___4___ |}}}
+        \item{}{\strong{\code{| _K_ _R_ | _K_ _R_ | _K_ _R_ | _K_ _R_ |}}}
+        \item{}{\code{_________________________________________}}
+        \item{indifferent}{\code{| _0_ _0_ | _0_ _0_ | _0_ _0_ | .0. .0. |}}
+        \item{mowing_herbs}{\code{| _0_ _0_ | _0_ _0_ | 50\% 50\% | 100\% 0_ |}}
+        \item{mowing_trees}{\code{| _0_ _0_ | 100\% 0_ | 100\% 0_ | 100\% 0_ |}}
+        \item{grazing_herbs_1}{\code{| _0_ _0_ | 10\% _0_ | _0_ 50\% | _0_ 10\% |}}
+        \item{grazing_herbs_2}{\code{| _0_ _0_ | 50\% _0_ | _0_ 80\% | 10\% 50\% |}}
+        \item{grazing_herbs_3}{\code{| _0_ _0_ | 90\% _0_ | 10\% 90\% | 50\% 50\% |}}
+        \item{}{\strong{\code{| ___1___ | _<1.5m_ |}}}
+        \item{}{\strong{\code{| _K_ _R_ | _K_ _R_ |}}}
+        \item{}{\code{____________________}}
+        \item{grazing_trees_1}{\code{| 40\% _0_ | _0_ _0_ |}}
+        \item{grazing_trees_2}{\code{| 80\% _0_ | _0_ _0_ |}}
+        \item{grazing_trees_3}{\code{| 100\% 0_ | 40\% _0_ |}}
+      }
+    \item from \strong{user data} : \cr
+      \emph{with the values contained within the \code{responseStage}, 
+      \code{killedIndiv} and \code{resproutIndiv} columns, if provided \cr
+      The \code{PFG} column can contain either the life form (\code{H}, 
+      \code{C} or \code{P}) the PFG name. Both methods can be combined 
+      (but are applied in the order given by the \code{PFG} column). \cr \cr
+      }
   }
-}
-
-Two parameters are also defined, but currently set to 0 :
-
-\describe{
+  }
   \item{PROP_KILLED}{ = the proportion of propagules killed by each 
-  disturbance \cr \cr
-  It is currently set to 0 for all PFG and disturbances.
+  disturbance \cr
+  (\emph{currently set to \code{0} for all PFG and disturbances})
   }
   \item{ACTIVATED_SEED}{ = the proportion of seeds activated by each 
-  disturbance \cr \cr
-  It is currently set to 0 for all PFG and disturbances.}
+  disturbance \cr
+  (\emph{currently set to \code{0} for all PFG and disturbances})
+  }
 }
 }
 \examples{
@@ -206,10 +238,10 @@ PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
 tab.dist = data.frame(name = rep(c("DIST1","DIST2"), each = 4 * 3)
                       , responseStage = rep(1:4, 2 * 3)
                       , PFG = rep(c("C", "H", "P"), each = 2 * 4)
-                      , KilledIndiv = c(c(0,10,10,10,1,1,0,0)
+                      , killedIndiv = c(c(0,10,10,10,1,1,0,0)
                                         , c(0,0,0,0,1,1,0,0)
                                         , c(10,10,10,10,10,0,0,0))
-                      , ResproutIndiv = c(c(0,0,0,0,0,0,5,1)
+                      , resproutIndiv = c(c(0,0,0,0,0,0,5,1)
                                           , c(0,0,9,10,0,0,5,1)
                                           , c(0,0,0,0,0,0,0,0)))
 

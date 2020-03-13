@@ -6,8 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create <em>LIGHT</em> parameter files for a <code>FATE-HD</code>
-simulation — PRE_FATE.params_PFGlight • RFate</title>
+<title>Create <em>LIGHT</em> parameter files for a <code>FATE-HD</code> simulation — PRE_FATE.params_PFGlight • RFate</title>
 
 
 <!-- jquery -->
@@ -36,11 +35,10 @@ simulation — PRE_FATE.params_PFGlight • RFate</title>
 
 
 
-<meta property="og:title" content="Create <em>LIGHT</em> parameter files for a <code>FATE-HD</code>
-simulation — PRE_FATE.params_PFGlight" />
+<meta property="og:title" content="Create <em>LIGHT</em> parameter files for a <code>FATE-HD</code> simulation — PRE_FATE.params_PFGlight" />
 <meta property="og:description" content="This script is designed to create parameter files containing 
-light tolerance parameters for each PFG (one file for each of them) used 
-in the light module of FATE-HD." />
+light-related parameters for each PFG (one file for each of them) used in 
+the light module of FATE-HD." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -96,19 +94,20 @@ in the light module of FATE-HD." />
   <ul class="dropdown-menu" role="menu">
     <li class="divider"></li>
     <li>
-      <a href="../articles/fate-hd_tutorial_0_publications.html">Publications</a>
+      <a href="../vignettes/fate-hd_tutorial_0_publications.html">Publications</a>
     </li>
     <li>
-      <a href="../articles/fate-hd_tutorial_0_modelling_framework.html">Modelling framework</a>
+      <a href="../vignettes/fate-hd_tutorial_0_modelling_framework.html">Modelling framework</a>
+    </li>
+    <li class="divider"></li>
+    <li>
+      <a href="../vignettes/fate-hd_tutorial_1_PFG.html">a. Principle of PFG</a>
     </li>
     <li>
-      <a href="../articles/fate-hd_tutorial_1_PFG.html">a. Principle of PFG</a>
+      <a href="../vignettes/fate-hd_tutorial_2_RUN_SIMULATION.html">b. Run a FATE-HD simulation</a>
     </li>
     <li>
-      <a href="../articles/fate-hd_tutorial_2_RUN_SIMULATION.html">b. Run a FATE-HD simulation</a>
-    </li>
-    <li>
-      <a href="../articles/fate-hd_tutorial_3_MODULES.html">c. Use a FATE-HD module</a>
+      <a href="../vignettes/fate-hd_tutorial_3_MODULES.html">c. Use a FATE-HD module</a>
     </li>
   </ul>
 </li>
@@ -123,21 +122,21 @@ in the light module of FATE-HD." />
   <ul class="dropdown-menu" role="menu">
     <li class="divider"></li>
     <li>
-      <a href="../articles/rfate_tutorial_1_PFG.html">
+      <a href="../vignettes/rfate_tutorial_1_PFG.html">
         <span class="fa fa-battery-quarter"></span>
          
         Build PFG
       </a>
     </li>
     <li>
-      <a href="../articles/rfate_tutorial_2_params.html">
+      <a href="../vignettes/rfate_tutorial_2_params.html">
         <span class="fa fa-battery-half"></span>
          
         Build parameter files
       </a>
     </li>
     <li>
-      <a href="../articles/rfate_tutorial_3_graphics.html">
+      <a href="../vignettes/rfate_tutorial_3_graphics.html">
         <span class="fa fa-battery-three-quarters"></span>
          
         Build graphics
@@ -161,7 +160,7 @@ in the light module of FATE-HD." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/fate-hd_tutorial_0_modelling_framework.html">UNKNOWN TITLE</a>
+      <a href="../articles/fate-hd_tutorial_0_modelling_framework.html">FATE-HD tutorial 0 - Modelling framework</a>
     </li>
     <li>
       <a href="../articles/fate-hd_tutorial_0_publications.html">FATE-HD tutorial 0 - Publications</a>
@@ -214,21 +213,19 @@ in the light module of FATE-HD." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create <em>LIGHT</em> parameter files for a <code>FATE-HD</code>
-simulation</h1>
+    <h1>Create <em>LIGHT</em> parameter files for a <code>FATE-HD</code> simulation</h1>
     <small class="dont-index">Source: <a href='https://github.com/MayaGueguen/RFate.git/blob/master/R/PRE_FATE.params_PFGlight.R'><code>R/PRE_FATE.params_PFGlight.R</code></a></small>
     <div class="hidden name"><code>PRE_FATE.params_PFGlight.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>This script is designed to create parameter files containing 
-light tolerance parameters for each PFG (one file for each of them) used 
-in the light module of <code>FATE-HD</code>.</p>
+light-related parameters for each PFG (one file for each of them) used in 
+the light module of <code>FATE-HD</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>PRE_FATE.params_PFGlight</span>(<span class='no'>name.simulation</span>, <span class='no'>mat.PFG.succ</span>,
-  <span class='kw'>strata.limits</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>20</span>, <span class='fl'>50</span>, <span class='fl'>150</span>, <span class='fl'>400</span>, <span class='fl'>1000</span>, <span class='fl'>2000</span>, <span class='fl'>5000</span>, <span class='fl'>10000</span>),
-  <span class='kw'>strata.limits_reduce</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>opt.folder.name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>PRE_FATE.params_PFGlight</span>(<span class='no'>name.simulation</span>, <span class='no'>mat.PFG.light</span>,
+  <span class='kw'>mat.PFG.tol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>opt.folder.name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -239,20 +236,22 @@ in the light module of <code>FATE-HD</code>.</p>
 directory or simulation name of the <code>FATE-HD</code> simulation</p></td>
     </tr>
     <tr>
-      <th>mat.PFG.succ</th>
-      <td><p>a <code>data.frame</code> with 6 columns : <code>PFG</code>, 
-<code>type</code>, <code>height</code>, <code>maturity</code>, <code>longevity</code>, <code>light</code></p></td>
+      <th>mat.PFG.light</th>
+      <td><p>a <code>data.frame</code> with 2 to 6 columns : <br /></p><ul>
+<li><p><code>PFG</code>,</p></li>
+<li><p><code>type</code>, (<em>or <code>active_germ_low</code>, 
+  <code>active_germ_medium</code>, <code>active_germ_high</code></em>) (<em>or
+  <code>strategy_ag</code></em>)</p></li>
+<li><p><em><code>type</code>, <code>light_need</code></em></p></li>
+</ul><p>(see <code><a href='PRE_FATE.params_PFGlight.html#details'>Details</a></code>)</p></td>
     </tr>
     <tr>
-      <th>strata.limits</th>
-      <td><p>a <code>vector</code> of <code>integer</code> containing values 
-among which height strata limits will be chosen</p></td>
-    </tr>
-    <tr>
-      <th>strata.limits_reduce</th>
-      <td><p>default <code>TRUE</code>. If <code>TRUE</code>, stratum 
-height limits are checked to try and bring several PFGs together in a same 
-stratum</p></td>
+      <th>mat.PFG.tol</th>
+      <td><p>a <code>data.frame</code> with 2 to 4 columns : <br /></p><ul>
+<li><p><code>PFG</code>,</p></li>
+<li><p><code>lifeStage</code>, <code>resources</code>, <code>tolerance</code> 
+  (<em>or <code>strategy_tol</code></em>)</p></li>
+</ul><p>(see <code><a href='PRE_FATE.params_PFGlight.html#details'>Details</a></code>)</p></td>
     </tr>
     <tr>
       <th>opt.folder.name</th>
@@ -272,38 +271,59 @@ parameters :</p>
   <dt>ACTIVE_GERM</dt><dd><p>the germination rates depending on light conditions 
   <br /> <em>(0: 0% 1: 10% 2: 20% 3: 30% 4: 40% 5: 50% 6: 60% 7: 70% 
   8: 80% 9: 90% 10: 100%)</em></p></dd>
-  <dt>SHADE_TOL</dt><dd><p>the PFG shade tolerance table (in a single row). <br /> 
-  This is a vector of 9 numbers <em>(0: Die 1: Survive)</em> corresponding 
-  to the ability of the PFG to survive or not :
+  <dt>LIGHT</dt><dd><p>light value or strategy of the PFG</p></dd>
+  <dt>LIGHT_TOL</dt><dd><p>the PFG light tolerance table (in a single row). <br /> 
+  This is a vector of 9 numbers corresponding to the ability of the PFG to 
+  survive or not :
   <ul>
 <li><p>at different life stages <em>(Germinant (Ge), Immature (Im), 
     Mature (Ma))</em></p></li>
 <li><p>under different light conditions <em>(Low (L), Medium (M) or 
     High (H))</em>.</p></li>
 </ul>
-  These parameters should be given in this order : GeL, GeM, GeH, ImL, ImM,
-  ImH, MaL, MaM, MaH.</p></dd>
+  These parameters should be given in this order : GeL, GeM, GeH, ImL, ImM, 
+  ImH, MaL, MaM, MaH.
+  <br /> <em>(0: 0% 1: 10% 2: 20% 3: 30% 4: 40% 5: 50% 6: 60% 7: 70% 
+  8: 80% 9: 90% 10: 100%)</em></p></dd>
 
 </dl>
 
-<p>A <code>LIGHT_COMPLETE_TABLE.csv</code> file summarizing information for all groups into the
-<code>name.simulation/DATA/PFGS/</code> directory.</p>
-<p>If the <code>opt.folder.name</code> has been used, the files will be into the folder
-<code>name.simulation/DATA/PFGS/LIGHT/opt.folder.name/</code></p>
+<p>A <code>LIGHT_COMPLETE_TABLE.csv</code> file summarizing information for all 
+groups into the <code>name.simulation/DATA/PFGS/</code> directory.</p>
+<p>If the <code>opt.folder.name</code> has been used, the files will be into the 
+folder <code>name.simulation/DATA/PFGS/LIGHT/opt.folder.name/</code></p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The light module allows the user to simulate a primary vegetation 
-succession based on light competition. <br />
-Several parameters are required for each PFG in order to set up this life 
-cycle :</p>
+    <p>The light module allows the user to simulate a primary vegetation succession 
+based on light competition. <br /> <br /></p>
+<p>Several parameters, given within <code>mat.PFG.light</code> or <code>mat.PFG.tol</code>, 
+are required for each PFG in order to set up the light competition :</p>
 <dl class='dl-horizontal'>
-  <dt>type</dt><dd><p>or life-form, based on Raunkier. It should be either <code>H</code> 
-  (herbaceous), <code>C</code> (chamaephyte) or <code>P</code> (phanerophyte) for now</p></dd>
-  <dt>height</dt><dd><p>the maximum or average height that reach the PFG</p></dd>
-  <dt>maturity</dt><dd><p>the age from which the PFG can reproduce</p></dd>
-  <dt>longevity</dt><dd><p>the maximum or average lifespan of the PFG <br /> <br /></p></dd>
-  <dt>light</dt><dd><p>a value between <code>0</code> and <code>5</code> corresponding to the 
-  light value of the PFG (e.g. from Flora Indicativa)<br /> <br /></p></dd>
+  <dt>type</dt><dd><p>or life-form, based on Raunkier. <br /> It should be either 
+  <code>H</code> (herbaceous), <code>C</code> (chamaephyte) or <code>P</code> (phanerophyte) 
+  for now</p></dd>
+  <dt>(<em>active_germ_low</em>)</dt><dd><p>the proportion of seeds that will 
+  germinate for <code>Low</code> light condition</p></dd>
+  <dt>(<em>active_germ_medium</em>)</dt><dd><p>the proportion of seeds that will 
+  germinate for <code>Medium</code> light condition</p></dd>
+  <dt>(<em>active_germ_high</em>)</dt><dd><p>the proportion of seeds that will 
+  germinate for <code>High</code> light condition</p></dd>
+  <dt>(<em>strategy_ag</em>)</dt><dd><p>a <code>string</code> to choose the germination 
+  strategy : <br /> <code>light_lover</code>, <code>indifferent</code>, <code>shade_lover</code> 
+  <br /> <br /></p></dd>
+  
+  <dt>(<em>light_need</em>)</dt><dd><p>a value between <code>0</code> and <code>5</code> 
+  corresponding to the light preference of the PFG (e.g. from Flora 
+  Indicativa)<br /> <br /></p></dd>
+  
+  <dt>lifeStage</dt><dd><p>the concerned life stage (<code>Germinant</code>, 
+  <code>Immature</code>, <code>Mature</code>)</p></dd>
+  <dt>resources</dt><dd><p>the concerned light condition (<code>Low</code>, 
+  <code>Medium</code>, <code>High</code>)</p></dd>
+  <dt>tolerance</dt><dd><p>the proportion of surviving individuals</p></dd>
+  <dt>(<em>strategy_tol</em>)</dt><dd><p>a <code>string</code> to choose the tolerance 
+  strategy : <br /> <code>full_light</code>, <code>pioneer</code>, <code>ubiquist</code>, 
+  <code>semi_shade</code>, <code>undergrowth</code> <br /> <br /></p></dd>
 
 </dl>
 
@@ -313,46 +333,84 @@ cycle :</p>
 <p>These values will allow to calculate or define a set of characteristics for 
 each PFG :</p>
 <dl class='dl-horizontal'>
-  <dt>STRATA_LIMITS</dt><dd><p>(see <code><a href='PRE_FATE.params_PFGsuccession.html'>PRE_FATE.params_PFGsuccession</a></code>)</p></dd>
-  <dt>STRATA</dt><dd><p>(see <code><a href='PRE_FATE.params_PFGsuccession.html'>PRE_FATE.params_PFGsuccession</a></code>)</p></dd>
-  <dt>MAX_ABUNDANCE</dt><dd><p>(see <code><a href='PRE_FATE.params_PFGsuccession.html'>PRE_FATE.params_PFGsuccession</a></code>)</p></dd>
-  <dt>IMM_SIZE</dt><dd><p>(see <code><a href='PRE_FATE.params_PFGsuccession.html'>PRE_FATE.params_PFGsuccession</a></code>)</p></dd>
-  <dt>CHANG_STR_AGES</dt><dd><p>(see <code><a href='PRE_FATE.params_PFGsuccession.html'>PRE_FATE.params_PFGsuccession</a></code>)</p></dd>
   <dt>ACTIVE_GERM</dt><dd><p>proportion of seeds that will germinate for each light 
-  condition (<code>Low</code>, <code>Medium</code>, <code>High</code>)</p></dd>
-  <dt>SHADE_TOL</dt><dd><p>defined for each life stage (Germinant, Immature, 
-  Mature) and each light condition (<code>Low</code>, <code>Medium</code>, 
-  <code>High</code>) :
+  condition (<code>Low</code>, <code>Medium</code>, <code>High</code>) <br /> <br />
+  Three methods to define these proportions are available :
   <ul>
-<li><p>(A) PFG are tolerant to <code>Low</code> light if <code>light &lt;= 2</code></p></li>
-<li><p>(A) PFG are tolerant to <code>Medium</code> light if 
-    <code>2 &lt;= light &lt;= 4</code></p></li>
-<li><p>(A) PFG are tolerant to <code>High</code> light if <code>light &gt;= 3</code></p></li>
-<li><p>(B) all germinants are assumed to be tolerant to <code>Low</code> light</p></li>
-<li><p>(C) all mature trees or chamaephytes are assumed to be tolerant 
-    to <code>Medium</code> and <code>High</code> light conditions</p></li>
-<li><p>(D) all immature trees that grow in the penultimate stratum are 
-    assumed to be tolerant to <code>High</code> light</p></li>
+<li><p>from <strong>predefined scenarios</strong> (using <code>strategy_ag</code>) :</p><dl class='dl-horizontal'>
+      <dt></dt><dd><p><strong><code>| _L_ _M_ _H_ |</code></strong></p></dd>
+      <dt></dt><dd><p><code>_______________</code></p></dd>
+      <dt>light_lover</dt><dd><p><code>| 50% 80% 90% |</code></p></dd>
+      <dt>indifferent</dt><dd><p><code>| 90% 90% 90% |</code></p></dd>
+      <dt>shade_lover</dt><dd><p><code>| 90% 80% 50% |</code></p></dd></dl></li>
+<li><p>from <strong>predefined rules</strong> (using <code>type</code>) :</p><ul>
+<li><p>for <code>H</code> (herbaceous) : <code>50%, 80%, 90%</code></p></li>
+<li><p>for <code>C</code> (chamaephyte) or <code>P</code> (phanerophyte): 
+      <code>90%, 90%, 90%</code></p></li>
+</ul></li>
+<li><p>from <strong>user data</strong> : <br />
+    <em>with the values contained within the <code>active_germ_low</code>, 
+    <code>active_germ_medium</code> and <code>active_germ_high</code> columns, if 
+    provided <br /> <br /></em></p></li>
+</ul></p></dd>
+
+  <dt>LIGHT_TOL</dt><dd><p>defined for each life stage (<code>Germinant</code>, 
+  <code>Immature</code>, <code>Mature</code>) <br /> and each soil condition (<code>Low</code>, 
+  <code>Medium</code>, <code>High</code>) <br /> <br />
+  Three methods to define these tolerances are available :
+  <ul>
+<li><p>from <strong>predefined scenarios</strong> (using 
+    <code>strategy_tol</code>) : <br /></p><ul>
+<li><p><code>.</code> means <em>Not tolerant</em>, <code>1</code> means 
+        <em>Tolerant</em> (<code>100%</code>)</p></li>
+<li><p>with <code>g</code>: Germinant, <code>i</code>: Immature, <code>m</code>: Mature</p></li>
+<li><p>with <code>L</code>: low light, <code>M</code>: medium light, <code>H</code>: 
+        high light <br /> <br /></p></li>
+</ul><p></p><dl class='dl-horizontal'>
+      <dt></dt><dd><p><strong><code>| _ g _ | _ i _ | _ m _ |</code></strong></p></dd>
+      <dt></dt><dd><p><strong><code>| L M H | L M H | L M H |</code></strong></p></dd>
+      <dt></dt><dd><p><code>_________________________</code></p></dd>
+      <dt>full_light</dt><dd><p><code>| 1 1 1 | . . 1 | . . 1 |</code></p></dd>
+      <dt>pioneer</dt><dd><p><code>| 1 1 1 | . 1 1 | . 1 1 |</code></p></dd>
+      <dt>ubiquist</dt><dd><p><code>| 1 1 1 | 1 1 1 | 1 1 1 |</code></p></dd>
+      <dt>semi_shade</dt><dd><p><code>| 1 1 . | 1 1 . | 1 1 1 |</code></p></dd>
+      <dt>undergrowth</dt><dd><p><code>| 1 1 . | 1 1 . | 1 1 . |</code></p></dd></dl></li>
+<li><p>from <strong>predefined rules</strong> (using <code>type</code> and 
+    <code>light_need</code>):</p><dl class='dl-horizontal'>
+        <dt>(A)</dt><dd><p>PFG are tolerant to <code>Low</code> light if <code>light &lt;= 2</code></p></dd>
+        <dt>(A)</dt><dd><p>PFG are tolerant to <code>Medium</code> light if 
+        <code>2 &lt;= light &lt;= 4</code></p></dd>
+        <dt>(A)</dt><dd><p>PFG are tolerant to <code>High</code> light if 
+        <code>light &gt;= 3</code></p></dd>
+        <dt>(B)</dt><dd><p>all germinants are assumed to be tolerant to <code>Low</code> 
+        light</p></dd>
+        <dt>(C)</dt><dd><p>all mature trees or chamaephytes are assumed to be 
+        tolerant to <code>Medium</code> and <code>High</code> light conditions</p></dd>
+        <dt><em>(D)</em></dt><dd><p><em>all immature trees that grow in the 
+        penultimate stratum are assumed to be tolerant to <code>High</code> light</em> 
+        <strong>!! desactivated !!</strong></p></dd></dl><p></p><ul>
+<li><p><code>.</code> means <em>Not tolerant</em></p></li>
+<li><p><code>A, B, C, D</code> mean <em>Tolerant</em> according to one of 
+        the rule defined above</p></li>
+<li><p>with <code>g</code>: Germinant, <code>i</code>: Immature, <code>m</code>: Mature</p></li>
+<li><p>with <code>L</code>: low light, <code>M</code>: medium light, <code>H</code>: 
+        high light <br /> <br /></p></li>
+</ul><p></p><dl class='dl-horizontal'>
+        <dt></dt><dd><p><strong><code>| _ g _ | _ i _ | _ m _ |</code></strong></p></dd>
+        <dt></dt><dd><p><strong><code>| L M H | L M H | L M H |</code></strong></p></dd>
+        <dt></dt><dd><p><code>_________________________</code></p></dd>
+        <dt>1</dt><dd><p><code>| A . . | A . D | A C C |</code></p></dd>
+        <dt>2</dt><dd><p><code>| A A . | A A D | A A C |</code></p></dd>
+        <dt>3</dt><dd><p><code>| B A . | . A D | . A C |</code></p></dd>
+        <dt>4</dt><dd><p><code>| B A A | . A A | . A A |</code></p></dd>
+        <dt>5</dt><dd><p><code>| B . A | . . A | . C A |</code></p></dd></dl></li>
+<li><p>from <strong>user data</strong> : <br />
+      <em>with the values contained within the <code>lifeStage</code>, 
+      <code>resources</code> and <code>tolerance</code> columns, if provided</em></p></li>
 </ul></p></dd>
 
 </dl>
 
-<p><em>Summary table of 'basic' parametrisation of SHADE_TOL :</em></p><ul>
-<li><p><code>.</code> means <em>Not tolerant</em></p></li>
-<li><p><code>A, B, C, D</code> mean <em>Tolerant</em> according to one of the rule
-  defined above</p></li>
-<li><p>with <code>g</code>: Germinant, <code>i</code>: Immature, <code>m</code>: Mature <br /> <br /></p></li>
-</ul>
-
-
-<p><code>| . D C | . D C | . D C | A A A | A A A |</code> <strong>HIGH</strong> <br />
-<code>| . . C | A A A | A A A | A A A | . . C |</code> <strong>MEDIUM</strong> <br />
-<code>| A A A | A A A | B . . | B . . | B . . |</code> <strong>LOW</strong> <br />
-__________________________________________________ <br />
-<code>| g i m | g i m | g i m | g i m | g i m |</code> <strong>Life stage</strong> <br />
-__________________________________________________ <br />
-<code>| _ 1 _ | _ 2 _ | _ 3 _ | _ 4 _ | _ 5 _ |</code> <strong>Light</strong> <br />
-<br /></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='PRE_FATE.skeletonDirectory.html'>PRE_FATE.skeletonDirectory</a></code></p></div>
@@ -364,14 +422,19 @@ __________________________________________________ <br />
 
 <span class='co'>## Create PFG light parameter files</span>
 <span class='fu'>PRE_FATE.params_PFGlight</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
-                         , <span class='kw'>mat.PFG.succ</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>PFG</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"PFG"</span>,<span class='fl'>1</span>:<span class='fl'>6</span>)
+                         , <span class='kw'>mat.PFG.light</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>PFG</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"PFG"</span>,<span class='fl'>1</span>:<span class='fl'>6</span>)
                                                      , <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"C"</span>, <span class='st'>"C"</span>, <span class='st'>"H"</span>, <span class='st'>"H"</span>, <span class='st'>"P"</span>, <span class='st'>"P"</span>)
-                                                     , <span class='kw'>height</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>10</span>, <span class='fl'>250</span>, <span class='fl'>36</span>, <span class='fl'>68</span>, <span class='fl'>1250</span>, <span class='fl'>550</span>)
-                                                     , <span class='kw'>maturity</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>5</span>, <span class='fl'>5</span>, <span class='fl'>3</span>, <span class='fl'>3</span>, <span class='fl'>8</span>, <span class='fl'>9</span>)
-                                                     , <span class='kw'>longevity</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>12</span>, <span class='fl'>200</span>, <span class='fl'>25</span>, <span class='fl'>4</span>, <span class='fl'>110</span>, <span class='fl'>70</span>)
-                                                     , <span class='kw'>light</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>4</span>, <span class='fl'>6</span>, <span class='fl'>3</span>, <span class='fl'>6</span>, <span class='fl'>5</span>, <span class='fl'>5</span>)))
+                                                     , <span class='kw'>light_need</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>4</span>, <span class='fl'>6</span>, <span class='fl'>3</span>, <span class='fl'>6</span>, <span class='fl'>5</span>, <span class='fl'>5</span>)))
 
 
+<span class='co'>## Create PFG light parameter files</span>
+<span class='fu'>PRE_FATE.params_PFGlight</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
+                         , <span class='kw'>mat.PFG.light</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>PFG</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"PFG"</span>,<span class='fl'>1</span>:<span class='fl'>6</span>)
+                                                     , <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"C"</span>, <span class='st'>"C"</span>, <span class='st'>"H"</span>, <span class='st'>"H"</span>, <span class='st'>"P"</span>, <span class='st'>"P"</span>))
+                         , <span class='kw'>mat.PFG.tol</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>PFG</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"PFG"</span>,<span class='fl'>1</span>:<span class='fl'>6</span>)
+                                                    , <span class='kw'>light</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ubiquist"</span>, <span class='st'>"ubiquist"</span>
+                                                                , <span class='st'>"semi_shade"</span>, <span class='st'>"ubiquist"</span>
+                                                                , <span class='st'>"full_light"</span>, <span class='st'>"pioneer"</span>)))
 
 <span class='co'>## ----------------------------------------------------------------------------------------- ##</span>
 
@@ -379,19 +442,13 @@ __________________________________________________ <br />
 <span class='no'>PNE_PARAM</span> <span class='kw'>=</span> <span class='fu'><a href='dot-loadData.html'>.loadData</a></span>(<span class='st'>"PNE_PARAM"</span>)
 
 <span class='co'>## PNE_PARAM$succ_light : data.frame</span>
-<span class='co'>## PNE_PARAM$strata_limits : vector</span>
 
-<span class='no'>tab</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>succ_light</span>[, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"PFG"</span>, <span class='st'>"type"</span>, <span class='st'>"height"</span>, <span class='st'>"maturity"</span>, <span class='st'>"longevity"</span>, <span class='st'>"light"</span>)]
+<span class='no'>tab</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>succ_light</span>[, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"PFG"</span>, <span class='st'>"type"</span>, <span class='st'>"light"</span>)]
+<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>tab</span>)[<span class='fl'>3</span>] <span class='kw'>=</span> <span class='st'>"light_need"</span>
 
-<span class='co'>## Create PFG light parameter files : automatic definition of strata limits</span>
+<span class='co'>## Create PFG light parameter files : </span>
 <span class='fu'>PRE_FATE.params_PFGlight</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
-                         , <span class='kw'>mat.PFG.succ</span> <span class='kw'>=</span> <span class='no'>tab</span>)
-
-<span class='co'>## Create PFG light parameter files : predefined of strata limits</span>
-<span class='fu'>PRE_FATE.params_PFGlight</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
-                         , <span class='kw'>mat.PFG.succ</span> <span class='kw'>=</span> <span class='no'>tab</span>
-                         , <span class='kw'>strata.limits</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>strata_limits</span>
-                         , <span class='kw'>strata.limits_reduce</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+                         , <span class='kw'>mat.PFG.light</span> <span class='kw'>=</span> <span class='no'>tab</span>)</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

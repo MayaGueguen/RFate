@@ -26,7 +26,7 @@ with \code{NA} when no information}
 \item{habitat}{a \code{vector} with habitat ID}
 
 \item{selectionRule.quanti}{default \code{0}. Minimum quantile of total 
-number of sites that must occupy the species (between 0 and 1)}
+number of sites that must occupy the species (between \code{0} and \code{1})}
 
 \item{selectionRule.min_mean_abund}{default \code{0}. Minimal average 
 abundance of the species}
@@ -39,7 +39,7 @@ is also done including constraints on habitat class}
 
 \item{selectionRule.min_percent_habitat}{default \code{0.05} 
 (\emph{optional}). Minimum percentage of habitat class occupied by the 
-species (between 0 and 1)}
+species (between \code{0} and \code{1})}
 
 \item{selectionRule.min_no_habitat}{default \code{5} (\emph{optional}). 
 Minimum number of sites of specific habitat occupied by the species}

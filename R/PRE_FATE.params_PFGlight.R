@@ -52,7 +52,8 @@
 ##'   \item{(\emph{active_germ_high})}{the proportion of seeds that will 
 ##'   germinate for \code{High} light condition}
 ##'   \item{(\emph{strategy_ag})}{a \code{string} to choose the germination 
-##'   strategy : \cr \code{ubiquist}, \code{tobedefined} \cr \cr}
+##'   strategy : \cr \code{light_lover}, \code{indifferent}, \code{shade_lover} 
+##'   \cr \cr}
 ##'   
 ##'   \item{(\emph{light_need})}{a value between \code{0} and \code{5} 
 ##'   corresponding to the light preference of the PFG (e.g. from Flora 
@@ -81,10 +82,11 @@
 ##'   \itemize{
 ##'     \item from \strong{predefined scenarios} (using \code{strategy_ag}) :
 ##'     \describe{
-##'       \item{}{\strong{\code{| _L _M_ H_ |}}}
-##'       \item{}{\code{_____________}}
-##'       \item{ubiquist}{\code{| 90 100 90 |}}
-##'       \item{to be filled}{}
+##'       \item{}{\strong{\code{| _L_ _M_ _H_ |}}}
+##'       \item{}{\code{_______________}}
+##'       \item{light_lover}{\code{| 50\% 80\% 90\% |}}
+##'       \item{indifferent}{\code{| 90\% 90\% 90\% |}}
+##'       \item{shade_lover}{\code{| 90\% 80\% 50\% |}}
 ##'     }
 ##'     \item from \strong{predefined rules} (using \code{type}) :
 ##'     \itemize{
@@ -108,7 +110,7 @@
 ##'     \code{strategy_tol}) : \cr
 ##'       \itemize{
 ##'         \item \code{.} means \emph{Not tolerant}, \code{1} means 
-##'         \emph{Tolerant}
+##'         \emph{Tolerant} (\code{100\%})
 ##'         \item with \code{g}: Germinant, \code{i}: Immature, \code{m}: Mature
 ##'         \item with \code{L}: low light, \code{M}: medium light, \code{H}: 
 ##'         high light \cr \cr
@@ -175,7 +177,7 @@
 ##'   \item{ACTIVE_GERM}{the germination rates depending on light conditions 
 ##'   \cr \emph{(0: 0\% 1: 10\% 2: 20\% 3: 30\% 4: 40\% 5: 50\% 6: 60\% 7: 70\% 
 ##'   8: 80\% 9: 90\% 10: 100\%)}}
-##'   \item{LIGHT_NEED}{light value or strategy of the PFG}
+##'   \item{LIGHT}{light value or strategy of the PFG}
 ##'   \item{LIGHT_TOL}{the PFG light tolerance table (in a single row). \cr 
 ##'   This is a vector of 9 numbers corresponding to the ability of the PFG to 
 ##'   survive or not :
@@ -356,9 +358,9 @@ PRE_FATE.params_PFGlight = function(
     if (sum(colnames(mat.PFG.light) == "strategy_ag") == 1)
     {
       mat.PFG.light$strategy_ag = as.character(mat.PFG.light$strategy_ag)
-      if (.testParam_notInChar(mat.PFG.light$strategy_ag, inList = c("full_light", "pioneer", "ubiquist", "semi_shade", "undergrowth")))
+      if (.testParam_notInChar(mat.PFG.light$strategy_ag, inList = c("light_lover", "indifferent", "shade_lover")))
       {
-        .stopMessage_content("mat.PFG.light$strategy_ag", c("full_light", "pioneer", "ubiquist", "semi_shade", "undergrowth"))
+        .stopMessage_content("mat.PFG.light$strategy_ag", c("light_lover", "indifferent", "shade_lover"))
       }
     }
   }
@@ -443,6 +445,19 @@ PRE_FATE.params_PFGlight = function(
   ## GET PFG NAME
   NAME = as.character(mat.PFG.light$PFG)
   
+  ## GET PFG LIGHT
+  LIGHT = rep("", no.PFG)
+  if (sum(colnames(mat.PFG.light) == "light_need") == 1)
+  {
+    LIGHT = as.character(mat.PFG.light$light_need)
+  } else if (sum(colnames(mat.PFG.tol) == "strategy_tol") == 1)
+  {
+    LIGHT = as.character(mat.PFG.tol$strategy_tol)
+  } else
+  {
+    warning("Missing data! The `LIGHT` parameter has not been set. Please check.")
+  }
+  
   #################################################################################################
   
   ## GET GERMINATION RATE depending on light conditions
@@ -492,28 +507,15 @@ PRE_FATE.params_PFGlight = function(
   {
     for (i in 1:no.PFG){
       ACTIVE_GERM[, i] = switch(mat.PFG.light$strategy_ag[i]
-                                # , full_light = c(1,1,1,0,0,1,0,0,1)
-                                # , pioneer = c(1,1,1,0,1,1,0,1,1)
-                                , ubiquist = c(9, 10, 9)
-                                # , semi_shade = c(1,1,0,1,1,0,1,1,1)
-                                # , undergrowth = c(1,1,0,1,1,0,1,1,0)
+                                , light_lover = c(5, 8, 9)
+                                , indifferent = c(9, 9, 9)
+                                , shade_lover = c(9, 8, 5)
       )
     }
   } else
   {
-    # warning()
+    warning("Missing data! The `ACTIVE_GERM` parameter has not been set. Please check.")
   }
-  
-  
-
-  #################################################################################################
-  
-  ## GET LIGHT
-  # LIGHT = mat.PFG.light$light_need
-  
-  ## GET PFG TYPE
-  # TYPE = as.character(mat.PFG.light$type)
-  
 
   #################################################################################################
   
@@ -541,6 +543,9 @@ PRE_FATE.params_PFGlight = function(
   
   if (is.null(mat.PFG.tol))
   {
+    if (sum(colnames(mat.PFG.light) == "type") == 1 &&
+        sum(colnames(mat.PFG.light) == "light_need") == 1)
+    {
     for (i in 1:no.PFG){
       ## Low light condition
       if (mat.PFG.light$light_need[i] <= 2)
@@ -568,6 +573,11 @@ PRE_FATE.params_PFGlight = function(
     
     ## What about all germinant tolerant to Medium light ?
     ## What about all mature trees and shrubs tolerant to Low light ?
+    
+    } else
+    {
+      warning("Missing data! The `LIGHT_TOL` parameter has not been set. Please check.")
+    }
   } else
   {
     if (sum(colnames(mat.PFG.tol) == "lifeStage") == 1)
@@ -601,7 +611,7 @@ PRE_FATE.params_PFGlight = function(
       }
     } else
     {
-      # warning()
+      warning("Missing data! The `LIGHT_TOL` parameter has not been set. Please check.")
     }
   }
   

@@ -2,26 +2,32 @@
 % Please edit documentation in R/PRE_FATE.params_PFGlight.R
 \name{PRE_FATE.params_PFGlight}
 \alias{PRE_FATE.params_PFGlight}
-\title{Create \emph{LIGHT} parameter files for a \code{FATE-HD}
-simulation}
+\title{Create \emph{LIGHT} parameter files for a \code{FATE-HD} simulation}
 \usage{
-PRE_FATE.params_PFGlight(name.simulation, mat.PFG.succ,
-  strata.limits = c(0, 20, 50, 150, 400, 1000, 2000, 5000, 10000),
-  strata.limits_reduce = TRUE, opt.folder.name = NULL)
+PRE_FATE.params_PFGlight(name.simulation, mat.PFG.light,
+  mat.PFG.tol = NULL, opt.folder.name = NULL)
 }
 \arguments{
 \item{name.simulation}{a \code{string} that corresponds to the main 
 directory or simulation name of the \code{FATE-HD} simulation}
 
-\item{mat.PFG.succ}{a \code{data.frame} with 6 columns : \code{PFG}, 
-\code{type}, \code{height}, \code{maturity}, \code{longevity}, \code{light}}
+\item{mat.PFG.light}{a \code{data.frame} with 2 to 6 columns : \cr 
+\itemize{
+  \item \code{PFG},
+  \item \code{type}, (\emph{or \code{active_germ_low}, 
+  \code{active_germ_medium}, \code{active_germ_high}}) (\emph{or
+  \code{strategy_ag}})
+  \item \emph{\code{type}, \code{light_need}}
+}
+(see \code{\href{PRE_FATE.params_PFGlight.html#details}{Details}})}
 
-\item{strata.limits}{a \code{vector} of \code{integer} containing values 
-among which height strata limits will be chosen}
-
-\item{strata.limits_reduce}{default \code{TRUE}. If \code{TRUE}, stratum 
-height limits are checked to try and bring several PFGs together in a same 
-stratum}
+\item{mat.PFG.tol}{a \code{data.frame} with 2 to 4 columns : \cr 
+\itemize{
+  \item \code{PFG},
+  \item \code{lifeStage}, \code{resources}, \code{tolerance} 
+  (\emph{or \code{strategy_tol}})
+}
+(see \code{\href{PRE_FATE.params_PFGlight.html#details}{Details}})}
 
 \item{opt.folder.name}{(\emph{optional}) \cr a \code{string} that 
 corresponds to the name of the folder that will be created into the 
@@ -37,44 +43,66 @@ parameters :
   \item{ACTIVE_GERM}{the germination rates depending on light conditions 
   \cr \emph{(0: 0\% 1: 10\% 2: 20\% 3: 30\% 4: 40\% 5: 50\% 6: 60\% 7: 70\% 
   8: 80\% 9: 90\% 10: 100\%)}}
-  \item{SHADE_TOL}{the PFG shade tolerance table (in a single row). \cr 
-  This is a vector of 9 numbers \emph{(0: Die 1: Survive)} corresponding 
-  to the ability of the PFG to survive or not :
+  \item{LIGHT}{light value or strategy of the PFG}
+  \item{LIGHT_TOL}{the PFG light tolerance table (in a single row). \cr 
+  This is a vector of 9 numbers corresponding to the ability of the PFG to 
+  survive or not :
   \itemize{
     \item at different life stages \emph{(Germinant (Ge), Immature (Im), 
     Mature (Ma))}
     \item under different light conditions \emph{(Low (L), Medium (M) or 
     High (H))}.
   }
-  These parameters should be given in this order : GeL, GeM, GeH, ImL, ImM,
-  ImH, MaL, MaM, MaH.}
+  These parameters should be given in this order : GeL, GeM, GeH, ImL, ImM, 
+  ImH, MaL, MaM, MaH.
+  \cr \emph{(0: 0\% 1: 10\% 2: 20\% 3: 30\% 4: 40\% 5: 50\% 6: 60\% 7: 70\% 
+  8: 80\% 9: 90\% 10: 100\%)}}
 }
 
-A \code{LIGHT_COMPLETE_TABLE.csv} file summarizing information for all groups into the
-\code{name.simulation/DATA/PFGS/} directory.  
+A \code{LIGHT_COMPLETE_TABLE.csv} file summarizing information for all 
+groups into the \code{name.simulation/DATA/PFGS/} directory.  
 
-If the \code{opt.folder.name} has been used, the files will be into the folder
-\code{name.simulation/DATA/PFGS/LIGHT/opt.folder.name/}
+If the \code{opt.folder.name} has been used, the files will be into the 
+folder \code{name.simulation/DATA/PFGS/LIGHT/opt.folder.name/}
 }
 \description{
 This script is designed to create parameter files containing 
-light tolerance parameters for each PFG (one file for each of them) used 
-in the light module of \code{FATE-HD}.
+light-related parameters for each PFG (one file for each of them) used in 
+the light module of \code{FATE-HD}.
 }
 \details{
-The light module allows the user to simulate a primary vegetation 
-succession based on light competition. \cr
-Several parameters are required for each PFG in order to set up this life 
-cycle :
+The light module allows the user to simulate a primary vegetation succession 
+based on light competition. \cr \cr
+
+Several parameters, given within \code{mat.PFG.light} or \code{mat.PFG.tol}, 
+are required for each PFG in order to set up the light competition :
 
 \describe{
-  \item{type}{or life-form, based on Raunkier. It should be either \code{H} 
-  (herbaceous), \code{C} (chamaephyte) or \code{P} (phanerophyte) for now}
-  \item{height}{the maximum or average height that reach the PFG}
-  \item{maturity}{the age from which the PFG can reproduce}
-  \item{longevity}{the maximum or average lifespan of the PFG \cr \cr}
-  \item{light}{a value between \code{0} and \code{5} corresponding to the 
-  light value of the PFG (e.g. from Flora Indicativa)\cr \cr}
+  \item{type}{or life-form, based on Raunkier. \cr It should be either 
+  \code{H} (herbaceous), \code{C} (chamaephyte) or \code{P} (phanerophyte) 
+  for now}
+  \item{(\emph{active_germ_low})}{the proportion of seeds that will 
+  germinate for \code{Low} light condition}
+  \item{(\emph{active_germ_medium})}{the proportion of seeds that will 
+  germinate for \code{Medium} light condition}
+  \item{(\emph{active_germ_high})}{the proportion of seeds that will 
+  germinate for \code{High} light condition}
+  \item{(\emph{strategy_ag})}{a \code{string} to choose the germination 
+  strategy : \cr \code{light_lover}, \code{indifferent}, \code{shade_lover} 
+  \cr \cr}
+  
+  \item{(\emph{light_need})}{a value between \code{0} and \code{5} 
+  corresponding to the light preference of the PFG (e.g. from Flora 
+  Indicativa)\cr \cr}
+  
+  \item{lifeStage}{the concerned life stage (\code{Germinant}, 
+  \code{Immature}, \code{Mature})}
+  \item{resources}{the concerned light condition (\code{Low}, 
+  \code{Medium}, \code{High})}
+  \item{tolerance}{the proportion of surviving individuals}
+  \item{(\emph{strategy_tol})}{a \code{string} to choose the tolerance 
+  strategy : \cr \code{full_light}, \code{pioneer}, \code{ubiquist}, 
+  \code{semi_shade}, \code{undergrowth} \cr \cr}
 }
 
 
@@ -84,47 +112,95 @@ These values will allow to calculate or define a set of characteristics for
 each PFG :
 
 \describe{
-  \item{STRATA_LIMITS}{(see \code{\link{PRE_FATE.params_PFGsuccession}})}
-  \item{STRATA}{(see \code{\link{PRE_FATE.params_PFGsuccession}})}
-  \item{MAX_ABUNDANCE}{(see \code{\link{PRE_FATE.params_PFGsuccession}})}
-  \item{IMM_SIZE}{(see \code{\link{PRE_FATE.params_PFGsuccession}})}
-  \item{CHANG_STR_AGES}{(see \code{\link{PRE_FATE.params_PFGsuccession}})}
   \item{ACTIVE_GERM}{proportion of seeds that will germinate for each light 
-  condition (\code{Low}, \code{Medium}, \code{High})}
-  \item{SHADE_TOL}{ defined for each life stage (Germinant, Immature, 
-  Mature) and each light condition (\code{Low}, \code{Medium}, 
-  \code{High}) :
+  condition (\code{Low}, \code{Medium}, \code{High}) \cr \cr
+  Three methods to define these proportions are available :
   \itemize{
-    \item (A) PFG are tolerant to \code{Low} light if \code{light <= 2}
-    \item (A) PFG are tolerant to \code{Medium} light if 
-    \code{2 <= light <= 4}
-    \item (A) PFG are tolerant to \code{High} light if \code{light >= 3}
-    \item (B) all germinants are assumed to be tolerant to \code{Low} light
-    \item (C) all mature trees or chamaephytes are assumed to be tolerant 
-    to \code{Medium} and \code{High} light conditions
-    \item (D) all immature trees that grow in the penultimate stratum are 
-    assumed to be tolerant to \code{High} light
+    \item from \strong{predefined scenarios} (using \code{strategy_ag}) :
+    \describe{
+      \item{}{\strong{\code{| _L_ _M_ _H_ |}}}
+      \item{}{\code{_______________}}
+      \item{light_lover}{\code{| 50\% 80\% 90\% |}}
+      \item{indifferent}{\code{| 90\% 90\% 90\% |}}
+      \item{shade_lover}{\code{| 90\% 80\% 50\% |}}
+    }
+    \item from \strong{predefined rules} (using \code{type}) :
+    \itemize{
+      \item for \code{H} (herbaceous) : \code{50\%, 80\%, 90\%}
+      \item for \code{C} (chamaephyte) or \code{P} (phanerophyte): 
+      \code{90\%, 90\%, 90\%}
+    }
+    \item from \strong{user data} : \cr
+    \emph{with the values contained within the \code{active_germ_low}, 
+    \code{active_germ_medium} and \code{active_germ_high} columns, if 
+    provided \cr \cr}
+  }
+  }
+
+  \item{LIGHT_TOL}{ defined for each life stage (\code{Germinant}, 
+  \code{Immature}, \code{Mature}) \cr and each soil condition (\code{Low}, 
+  \code{Medium}, \code{High}) \cr \cr
+  Three methods to define these tolerances are available :
+  \itemize{
+    \item from \strong{predefined scenarios} (using 
+    \code{strategy_tol}) : \cr
+      \itemize{
+        \item \code{.} means \emph{Not tolerant}, \code{1} means 
+        \emph{Tolerant} (\code{100\%})
+        \item with \code{g}: Germinant, \code{i}: Immature, \code{m}: Mature
+        \item with \code{L}: low light, \code{M}: medium light, \code{H}: 
+        high light \cr \cr
+      }
+    \describe{
+      \item{}{\strong{\code{| _ g _ | _ i _ | _ m _ |}}}
+      \item{}{\strong{\code{| L M H | L M H | L M H |}}}
+      \item{}{\code{_________________________}}
+      \item{full_light}{\code{| 1 1 1 | . . 1 | . . 1 |}}
+      \item{pioneer}{\code{| 1 1 1 | . 1 1 | . 1 1 |}}
+      \item{ubiquist}{\code{| 1 1 1 | 1 1 1 | 1 1 1 |}}
+      \item{semi_shade}{\code{| 1 1 . | 1 1 . | 1 1 1 |}}
+      \item{undergrowth}{\code{| 1 1 . | 1 1 . | 1 1 . |}}
+    }
+    \item from \strong{predefined rules} (using \code{type} and 
+    \code{light_need}):
+      \describe{
+        \item{(A)}{PFG are tolerant to \code{Low} light if \code{light <= 2}}
+        \item{(A)}{PFG are tolerant to \code{Medium} light if 
+        \code{2 <= light <= 4}}
+        \item{(A)}{PFG are tolerant to \code{High} light if 
+        \code{light >= 3}}
+        \item{(B)}{all germinants are assumed to be tolerant to \code{Low} 
+        light}
+        \item{(C)}{all mature trees or chamaephytes are assumed to be 
+        tolerant to \code{Medium} and \code{High} light conditions}
+        \item{\emph{(D)}}{\emph{all immature trees that grow in the 
+        penultimate stratum are assumed to be tolerant to \code{High} light} 
+        \strong{!! desactivated !!}}
+      }
+      \itemize{
+        \item \code{.} means \emph{Not tolerant}
+        \item \code{A, B, C, D} mean \emph{Tolerant} according to one of 
+        the rule defined above
+        \item with \code{g}: Germinant, \code{i}: Immature, \code{m}: Mature
+        \item with \code{L}: low light, \code{M}: medium light, \code{H}: 
+        high light \cr \cr
+      }
+      \describe{
+        \item{}{\strong{\code{| _ g _ | _ i _ | _ m _ |}}}
+        \item{}{\strong{\code{| L M H | L M H | L M H |}}}
+        \item{}{\code{_________________________}}
+        \item{1}{\code{| A . . | A . D | A C C |}}
+        \item{2}{\code{| A A . | A A D | A A C |}}
+        \item{3}{\code{| B A . | . A D | . A C |}}
+        \item{4}{\code{| B A A | . A A | . A A |}}
+        \item{5}{\code{| B . A | . . A | . C A |}}
+      }
+    \item from \strong{user data} : \cr
+      \emph{with the values contained within the \code{lifeStage}, 
+      \code{resources} and \code{tolerance} columns, if provided}
   }
   }
 }
-
-\emph{Summary table of 'basic' parametrisation of SHADE_TOL :}
-\itemize{
-  \item \code{.} means \emph{Not tolerant}
-  \item \code{A, B, C, D} mean \emph{Tolerant} according to one of the rule
-  defined above
-  \item with \code{g}: Germinant, \code{i}: Immature, \code{m}: Mature \cr \cr
-}
-
-
-\code{| . D C | . D C | . D C | A A A | A A A |} \strong{HIGH} \cr
-\code{| . . C | A A A | A A A | A A A | . . C |} \strong{MEDIUM} \cr
-\code{| A A A | A A A | B . . | B . . | B . . |} \strong{LOW} \cr
-__________________________________________________ \cr
-\code{| g i m | g i m | g i m | g i m | g i m |} \strong{Life stage} \cr
-__________________________________________________ \cr
-\code{| _ 1 _ | _ 2 _ | _ 3 _ | _ 4 _ | _ 5 _ |} \strong{Light} \cr
-\cr
 }
 \examples{
 
@@ -133,14 +209,19 @@ PRE_FATE.skeletonDirectory()
 
 ## Create PFG light parameter files
 PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
-                         , mat.PFG.succ = data.frame(PFG = paste0("PFG",1:6)
+                         , mat.PFG.light = data.frame(PFG = paste0("PFG",1:6)
                                                      , type = c("C", "C", "H", "H", "P", "P")
-                                                     , height = c(10, 250, 36, 68, 1250, 550)
-                                                     , maturity = c(5, 5, 3, 3, 8, 9)
-                                                     , longevity = c(12, 200, 25, 4, 110, 70)
-                                                     , light = c(4, 6, 3, 6, 5, 5)))
+                                                     , light_need = c(4, 6, 3, 6, 5, 5)))
 
 
+## Create PFG light parameter files
+PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
+                         , mat.PFG.light = data.frame(PFG = paste0("PFG",1:6)
+                                                     , type = c("C", "C", "H", "H", "P", "P"))
+                         , mat.PFG.tol = data.frame(PFG = paste0("PFG",1:6)
+                                                    , light = c("ubiquist", "ubiquist"
+                                                                , "semi_shade", "ubiquist"
+                                                                , "full_light", "pioneer")))
 
 ## ----------------------------------------------------------------------------------------- ##
 
@@ -148,19 +229,14 @@ PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
 PNE_PARAM = .loadData("PNE_PARAM")
 
 ## PNE_PARAM$succ_light : data.frame
-## PNE_PARAM$strata_limits : vector
 
-tab = PNE_PARAM$succ_light[, c("PFG", "type", "height", "maturity", "longevity", "light")]
+tab = PNE_PARAM$succ_light[, c("PFG", "type", "light")]
+colnames(tab)[3] = "light_need"
 
-## Create PFG light parameter files : automatic definition of strata limits
+## Create PFG light parameter files : 
 PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
-                         , mat.PFG.succ = tab)
-                            
-## Create PFG light parameter files : predefined of strata limits
-PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
-                         , mat.PFG.succ = tab
-                         , strata.limits = PNE_PARAM$strata_limits
-                         , strata.limits_reduce = FALSE)
+                         , mat.PFG.light = tab)
+                         
 
 }
 \seealso{
@@ -170,7 +246,6 @@ PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
 Maya Guéguen
 }
 \keyword{FATE,}
-\keyword{light,}
-\keyword{shade}
+\keyword{light}
 \keyword{simulation,}
 \keyword{tolerance}

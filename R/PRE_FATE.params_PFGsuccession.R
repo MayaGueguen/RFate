@@ -14,12 +14,12 @@
 ##' directory or simulation name of the \code{FATE-HD} simulation
 ##' @param mat.PFG.succ a \code{data.frame} with at least 5 columns : \cr 
 ##' \code{PFG}, \code{type}, \code{height}, \code{maturity}, \code{longevity} 
-##' \cr (and optionally, \code{max_abundance}, \code{potential_fecundity}, 
-##' \code{immature_size}) 
+##' \cr (\emph{and optionally, \code{max_abundance}, \code{potential_fecundity}, 
+##' \code{immature_size}}) 
 ##' \cr (see \code{\href{PRE_FATE.params_PFGsuccession.html#details}{Details}})
 ##' @param strata.limits a \code{vector} of \code{integer} containing values 
 ##' among which height strata limits will be chosen
-##' @param strata.limits_reduce default \code{TRUE}. If \code{TRUE}, stratum 
+##' @param strata.limits_reduce default \code{TRUE}. \cr If \code{TRUE}, stratum 
 ##' height limits are checked to try and bring several PFGs together in a same 
 ##' stratum
 ##' @param opt.folder.name (\emph{optional}) \cr a \code{string} that 
