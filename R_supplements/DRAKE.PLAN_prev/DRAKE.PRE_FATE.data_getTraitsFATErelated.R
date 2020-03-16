@@ -11,6 +11,7 @@ getTraitsFATE_names = function()
                      "PL_VEG_H",
                      "PL_VEG_H_max",
                      "LHIST", #"LHIST_INDK",
+                     "SLA",
                      "WOODY")
   
   ## Dispersal related traits

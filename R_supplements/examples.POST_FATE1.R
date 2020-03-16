@@ -1,8 +1,10 @@
 ## ----------------------------------------------------------------------------------------- ##
+library(RFate)
+
 ## Load example data
-data("PNE_PFG")
-data("PNE_PARAM")
-data("PNE_RESULTS")
+PNE_PFG = .loadData("PNE_PFG")
+PNE_PARAM = .loadData("PNE_PARAM")
+PNE_RESULTS = .loadData("PNE_RESULTS")
 
 ## PNE_PFG$PFG.observations : data.frame
 ## PNE_PARAM$succ_light : data.frame
@@ -131,6 +133,34 @@ validStats = POST_FATE.graphic_validationStatistics(name.simulation = "FATE_PNE"
 str(validStats$`FATE_PNE/PARAM_SIMUL/Simul_parameters_V1.txt`$tab$`800`)
 plot(validStats$`FATE_PNE/PARAM_SIMUL/Simul_parameters_V1.txt`$plot$`800`$ALL)
 
+
+# setwd("/home/gueguema/Documents/_FATE_SIMULATIONS/")
+# POST_FATE.relativeAbund(name.simulation = "FATE_PNE_v233"
+#                         , file.simulParam = "paramSimul_1.2CC_Abandon.txt"
+#                         , year = 900
+#                         , opt.no_CPU = 7)
+# validStats2 = POST_FATE.graphic_validationStatistics(name.simulation = "FATE_PNE_v233"
+#                                                     , file.simulParam = "paramSimul_1.2CC_Abandon.txt"
+#                                                     , year = 900
+#                                                     , mat.PFG.obs = tab
+#                                                     , opt.no_CPU = 7)
+# 
+# tab1 = validStats1$`FATE_PNE_v233/PARAM_SIMUL/paramSimul_1.2CC_Abandon.txt`$tab$`900`
+# tab1 = tab1[which(tab1$variable == "AUC"), c("PFG", "value")]
+# colnames(tab1) = c("PFG", "TSS.1")
+# tab2 = validStats2$`FATE_PNE_v233/PARAM_SIMUL/paramSimul_1.2CC_Abandon.txt`$tab$`900`
+# tab2 = tab2[which(tab2$variable == "AUC"), c("PFG", "value")]
+# colnames(tab2) = c("PFG", "TSS.2")
+# tab.all = merge(tab1, tab2, by = "PFG")
+# 
+# ggplot(tab.all, aes(x = PFG)) +
+#   geom_segment(aes(xend = PFG, y = TSS.1, yend = TSS.2)) +
+#   geom_point(aes(y = TSS.1), color = "darkgreen") +
+#   geom_point(aes(y = TSS.2), color = "brown") +
+#   theme_fivethirtyeight() +
+#   theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+
 ## ----------------------------------------------------------------------------------------- ##
 ## Comparison of TSS values obtained for :
 ##  - (1) Habitat Suitability maps (HS)
@@ -149,6 +179,8 @@ tab2 = PNE_RESULTS$evaluation[, c("PFG", "TSS.FATE", "TSS.HS")]
 
 ## Merge (1), (2) and (3)
 tab.all = merge(tab1, tab2, by = "PFG")
+tab.all$HSbetterFATE = (tab.all$TSS.HS > tab.all$TSS.FATE & tab.all$TSS.HS > tab.all$TSS.new)
+tab.all$NewbetterFATE = (tab.all$TSS.new > tab.all$TSS.FATE)
 
 library(ggplot2)
 library(ggthemes) ## theme_fivethirtyeight
@@ -156,17 +188,29 @@ library(grid) ## arrow
 
 ggplot(tab.all, aes(x = PFG)) +
   geom_segment(aes(xend = PFG
+                   , y = -0.1
+                   , yend = 0.65
+                   , alpha = HSbetterFATE)
+               , lwd = 5, color = "brown") +
+  scale_alpha_discrete("HS > FATE", range = c(0, 0.3)) +
+  geom_segment(aes(xend = PFG
                    , y = TSS.FATE
-                   , yend = TSS.new + c(1, -1)[as.numeric(tab.all$TSS.FATE < tab.all$TSS.new) + 1] * 0.005)
-               , arrow = arrow(length = unit(0.1, "inches"), type = "closed")
-               , lwd = 0.7
-               , color = "grey30"
-               , alpha = 0.7) +
+                   , yend = TSS.new + c(1, -1)[as.numeric(tab.all$TSS.FATE < tab.all$TSS.new) + 1] * 0.005
+                   , lty = NewbetterFATE
+  )
+  , arrow = arrow(length = unit(0.1, "inches"), type = "closed")
+  , lwd = 0.7
+  # , color = "grey30"
+  , alpha = 0.7) +
+  scale_linetype_discrete("FATE_newOcc > FATE_Boulangeat") +
   geom_point(aes(y = TSS.HS, color = "1"), size = 3) +
   geom_point(aes(y = TSS.FATE, color = "2"), size = 2) +
   geom_point(aes(y = TSS.new, color = "3"), size = 2) +
   scale_color_manual(""
                      , values = c("3" = "darkgreen", "2" = "darkblue", "1" = "brown")
-                     , labels = c("3" = "TSS.new", "2" = "TSS.FATE", "1" = "TSS.HS")) +
-  labs(x = "", y = "TSS") +
-  theme_fivethirtyeight() 
+                     , labels = c("3" = "TSS.FATE_newOcc", "2" = "TSS.FATE_Boulangeat", "1" = "TSS.HS")) +
+  labs(x = "", y = "", subtitle = "TSS") +
+  theme_fivethirtyeight()
+
+ggsave(filename = "/home/gueguema/Documents/_PAPERS/2015_01_FATE_Presentation/Version_2020/FATE_validation_examplePNE.pdf"
+       , width = 12, height = 8)

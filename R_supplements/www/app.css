@@ -1,0 +1,68 @@
+    @import url('https://fonts.googleapis.com/css?family=Londrina+Solid:200,300|Medula+One|Slabo+27px|Francois+One');
+                    .icon-helpd { color: Darkblue; }
+                    h1 {
+                    font-family: 'Londrina Solid', cursive;
+                    font-weight: 300;
+                    line-height: 1.1;
+                    background-color: #3a7da8;
+                    padding: 20px;
+                    margin-top: 20px;
+                    margin-bottom: 20px;
+                    border-radius: 0px;
+                    color: #FFFFFF;
+                    }
+                    .tabbable > .nav > li > a {
+                    background-color: #e0dbd9;
+                    color: #8c8582;
+                    border-radius: 0px;
+                    }
+                    .tabbable > .nav > li > a:hover {
+                    background-color: #3a7da8;
+                    color:#FFFFFF;
+                    border-radius: 0px;
+                    }
+                    .tabbable > .nav > li[class=active] > a {
+                    background-color: #3a7da8;
+                    color:#FFFFFF;
+                    border-radius: 0px;
+                    }
+                    .navbar-default .navbar-nav > not(.active) > a {
+                    color: #8c8582;
+                    }
+                    .navbar-default .navbar-nav > .active > a, 
+                    .navbar-default .navbar-nav > .active > a:focus, 
+                    .navbar-default .navbar-nav > .active > a:hover {
+                    background-color: #e0dbd9;
+                    }
+                    .panel_title {
+                    font-family: 'Londrina Solid', cursive;
+                    font-size: 20px;
+                    font-weight: 200;
+                    padding: 0px;
+                    margin-top: 0px;
+                    }
+                    .tabPanel_title {
+                    font-family: 'Londrina Solid', cursive;
+                    font-size: 20px;
+                    font-weight: 200;
+                    padding: 0px;
+                    margin-top: 0px;
+                    }
+                    .tabPanel_subtitle {
+                    font-family: 'Londrina Solid', cursive;
+                    font-size: 18px;
+                    font-weight: 200;
+                    padding: 0px;
+                    margin-top: 0px;
+                    }
+                    .radioGroupButtons .btn {
+                    background-color: rgba(96, 129, 150, 0.5);
+                    color: #FFFFFF;
+                    border-radius: 5px;
+                    }
+                    .radioGroupButtons .btn:hover {
+                    background-color: #3a7da8;
+                    }
+                    .radioGroupButtons .btn-panelgraph.active {
+                    background-color: #3a7da8;
+                    }
