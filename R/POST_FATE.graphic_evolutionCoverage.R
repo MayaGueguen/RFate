@@ -12,44 +12,44 @@
 ##' of the abundance of each PFG. These graphics represent both the evolution 
 ##' over the whole area. 
 ##'              
-##' @param name.simulation a \code{string} that corresponds to the main 
-##' directory or simulation name of the \code{FATE-HD} simulation
-##' @param file.simulParam a \code{string} that corresponds to the name of a 
-##' parameter file that will be contained into the \code{PARAM_SIMUL} folder 
-##' of the \code{FATE-HD} simulation
+##' @param name.simulation a \code{string} corresponding to the main directory 
+##' or simulation name of the \code{FATE-HD} simulation
+##' @param file.simulParam default \code{NULL}. A \code{string} corresponding to 
+##' the name of a parameter file that will be contained into the 
+##' \code{PARAM_SIMUL} folder of the \code{FATE-HD} simulation
 ##' @param opt.abund_fixedScale default \code{TRUE}. If \code{FALSE}, the 
-##' ordinate scale will be adapted for each PFG for the graphical 
-##' representation of the  evolution of abundances through time
-##' @param opt.doPlot default \code{TRUE} (\emph{optional}). If TRUE, plot(s) 
-##' will be processed, otherwise only the calculation and reorganization of 
-##' outputs will occur, be saved and returned.
+##' ordinate scale will be adapted for each PFG for the graphical representation 
+##' of the  evolution of abundances through time
+##' @param opt.doPlot (\emph{optional}) default \code{TRUE}. \cr If TRUE, 
+##' plot(s) will be processed, otherwise only the calculation and reorganization 
+##' of outputs will occur, be saved and returned
 ##' 
 ##' @details 
 ##' 
-##' This function allows one to obtain, for a specific \code{FATE-HD} 
-##' simulation and a specific parameter file within this simulation, two 
-##' preanalytical graphics : 
+##' This function allows to obtain, for a specific \code{FATE-HD} simulation and 
+##' a specific parameter file within this simulation, two preanalytical 
+##' graphics : 
 ##' 
 ##' \itemize{
-##'   \item{the evolution of \strong{space occupancy} of each Plant Functional 
-##'   Group through simulation time, with \emph{space occupancy} representing 
-##'   the percentage of pixels within the mask of studied area where the PFG 
-##'   is present
+##'   \item{the evolution of \strong{space occupancy} of each plant functional 
+##'   group through simulation time, \cr with \emph{space occupancy} 
+##'   representing the percentage of pixels within the mask of studied area 
+##'   where the PFG is present
 ##'   }
-##'   \item{the evolution of \strong{abundance} of each Plant Functional Group 
-##'   through simulation time, with \emph{abundance} being the sum over the 
-##'   whole studied area of the PFG abundances (\code{FATE-HD} \emph{arbitrary 
-##'   unit})
+##'   \item{the evolution of \strong{total abundance} of each plant functional 
+##'   group through simulation time, \cr with \emph{total abundance} being the 
+##'   sum over the whole studied area of the PFG abundances (\code{FATE-HD} 
+##'   \emph{arbitrary unit})
 ##'   }
 ##' }
 ##' 
-##' If the information has been provided, the graphics will be also
-##' done per habitat. \cr \cr
+##' If the information has been provided (see 
+##' \code{\link{POST_FATE.temporalEvolution}}), the graphics will be also done 
+##' per habitat. \cr \cr
 ##' 
-##' It requires that the \code{\link{POST_FATE.temporalEvolution}} function has 
-##' been run and that the file 
-##' \code{POST_FATE.evolution_abundance_PIXEL_[...].csv} exists.
-##' 
+##' \strong{It requires} that the \code{\link{POST_FATE.temporalEvolution}} 
+##' function has been run and that the file 
+##' \code{POST_FATE_TABLE_PIXEL_evolution_abundance.csv} exists.
 ##' 
 ##' 
 ##' 
@@ -59,44 +59,42 @@
 ##' \describe{
 ##'   \item{tab.spaceOccupancy}{
 ##'     \describe{
-##'       \item{\code{PFG}}{the concerned Plant Functional Group (for 
-##'       abundance)}
-##'       \item{\code{HAB}}{the concerned habitat}
-##'       \item{\emph{YEAR}}{the concerned simulation year}
-##'       \item{\code{Occupancy}}{the number of occupied pixels divided by the 
+##'       \item{\code{PFG}}{concerned plant functional group (for abundance)}
+##'       \item{\code{HAB}}{concerned habitat}
+##'       \item{\emph{year}}{concerned simulation year}
+##'       \item{\code{spaceOccupancy}}{number of occupied pixels divided by the 
 ##'       total number of pixels within the studied area}
 ##'     }
 ##'   }
-##'   \item{tab.abundance}{
+##'   \item{tab.totalAbundance}{
 ##'     \describe{
-##'       \item{\code{PFG}}{the concerned Plant Functional Group (for 
-##'       abundance)}
-##'       \item{\code{HAB}}{the concerned habitat}
-##'       \item{\emph{YEAR}}{the concerned simulation year}
-##'       \item{\code{Abund}}{the total abundance over all the pixels within 
-##'       the studied area}
+##'       \item{\code{PFG}}{concerned plant functional group (for abundance)}
+##'       \item{\code{HAB}}{concerned habitat}
+##'       \item{\emph{year}}{concerned simulation year}
+##'       \item{\code{totalAbundance}}{total abundance over all the pixels 
+##'       within the studied area}
 ##'     }
 ##'   }
 ##'   \item{graph.spaceOccupancy}{\code{ggplot2} object, representing the 
 ##'   evolution of each PFG space occupancy}
-##'   \item{graph.abundance}{\code{ggplot2} object, representing the evolution 
-##'   of each PFG total abundance \cr \cr}
+##'   \item{graph.totalAbundance}{\code{ggplot2} object, representing the 
+##'   evolution of each PFG total abundance \cr \cr}
 ##' }
 ##' 
 ##' 
 ##' Two \code{POST_FATE_TABLE_ZONE_evolution_[...].csv} files are created : 
 ##' \describe{
 ##'   \item{\file{spaceOccupancy}}{always, containing \code{tab.spaceOccupancy}}
-##'   \item{\file{abundance}}{always, containing \code{tab.abundance}}
+##'   \item{\file{totalAbundance}}{always, containing \code{tab.totalAbundance}}
 ##' }
 ##' 
 ##' 
 ##' Two \code{POST_FATE_[...].pdf} files are created : 
 ##' \describe{
-##'   \item{\file{GRAPHIC_A \cr spaceOccupancy}}{to visualize for each PFG the
+##'   \item{\file{GRAPHIC_A \cr spaceOccupancy}}{to visualize for each PFG the 
 ##'   evolution of its occupation of the studied area through simulation time}
-##'   \item{\file{GRAPHIC_A \cr abundance}}{to visualize for each PFG the
-##'   evolution of its abundance within the whole studied area through
+##'   \item{\file{GRAPHIC_A \cr totalAbundance}}{to visualize for each PFG the 
+##'   evolution of its abundance within the whole studied area through 
 ##'   simulation time}
 ##' }
 ##' 
@@ -246,12 +244,11 @@
 ##' @importFrom utils write.csv
 ##' @importFrom data.table fread
 ##' 
-##' @importFrom ggplot2 ggplot aes aes_string ggsave
-##' geom_line geom_point geom_hline geom_vline geom_label geom_errorbar geom_path
-##' element_text element_blank element_rect
-##' scale_color_discrete scale_color_manual scale_shape_manual facet_grid labs theme
+##' @importFrom ggplot2 ggplot ggsave aes_string 
+##' geom_line 
+##' scale_color_manual
+##' facet_wrap labs theme element_text element_blank
 ##' @importFrom ggthemes theme_fivethirtyeight
-##' @importFrom ggrepel geom_label_repel
 ##'
 ## END OF HEADER ###############################################################
 
@@ -264,27 +261,18 @@ POST_FATE.graphic_evolutionCoverage = function(
   , opt.doPlot = TRUE
 ){
   
+  #############################################################################
+  
+  ## CHECK parameter name.simulation
   .testParam_existFolder(name.simulation, "PARAM_SIMUL/")
   .testParam_existFolder(name.simulation, "RESULTS/")
   .testParam_existFolder(name.simulation, "DATA/")
   name.simulation = sub("/", "", name.simulation)
+  ## CHECK parameter file.simulParam
+  abs.simulParams = .getParam_abs.simulParams(file.simulParam, name.simulation)
   
-  if (.testParam_notDef(file.simulParam) || nchar(file.simulParam) == 0)
-  {
-    abs.simulParams = list.files(paste0(name.simulation, "/PARAM_SIMUL/"))
-    if (length(abs.simulParams) == 0)
-    {
-      stop(paste0("Missing data!\n The folder ", name.simulation, "/PARAM_SIMUL/ does not contain adequate files"))
-    }
-    abs.simulParams = paste0(name.simulation, "/PARAM_SIMUL/", abs.simulParams)
-  } else
-  {
-    file.simulParam = basename(file.simulParam)
-    abs.simulParams = paste0(name.simulation, "/PARAM_SIMUL/", file.simulParam)
-    .testParam_existFile(abs.simulParams)
-  }
   
-  #################################################################################################
+  #############################################################################
   
   res = foreach (abs.simulParam = abs.simulParams) %do%
   {
@@ -294,64 +282,80 @@ POST_FATE.graphic_evolutionCoverage = function(
     cat("\n Simulation file : ", abs.simulParam)
     cat("\n")
     
-    ## Get results directories -----------------------------------------------------
+    ## Get results directories ------------------------------------------------
     .getGraphics_results(name.simulation  = name.simulation
                          , abs.simulParam = abs.simulParam)
     
-    ## Get number of PFGs ----------------------------------------------------------
-    ## Get PFG names ---------------------------------------------------------------
+    ## Get number of PFGs -----------------------------------------------------
+    ## Get PFG names ----------------------------------------------------------
     .getGraphics_PFG(name.simulation  = name.simulation
                      , abs.simulParam = abs.simulParam)
     
-    ## Get raster mask -------------------------------------------------------------
+    ## Get raster mask --------------------------------------------------------
     .getGraphics_mask(name.simulation  = name.simulation
                       , abs.simulParam = abs.simulParam)
     
-    ## Get the abundance table -----------------------------------------------------
+    ## Get the abundance table ------------------------------------------------
     file.abundance = paste0(name.simulation
                             , "/RESULTS/POST_FATE_TABLE_PIXEL_evolution_abundance_"
                             , basename(dir.save)
                             , ".csv")
     .testParam_existFile(file.abundance)
-    tab.abundance = fread(file.abundance)
-    tab.abundance = as.data.frame(tab.abundance)
+    tab.totalAbundance = fread(file.abundance)
+    tab.totalAbundance = as.data.frame(tab.totalAbundance, stringAsFactors = FALSE)
     
-    years = colnames(tab.abundance)
-    years = years[which(!(years %in% c("PFG", "ID", "X", "Y", "HAB")))]
+    years = colnames(tab.totalAbundance)
+    years = years[which(!(years %in% c("PFG", "ID.pixel", "X", "Y", "HAB")))]
     years = as.numeric(years)
     
-    hab_names = unique(tab.abundance$HAB)
+    hab_names = unique(tab.totalAbundance$HAB)
     no_hab = length(hab_names)
     
-    ## Transform the data inside the table -----------------------------------------
+    cat("\n Number of years : ", length(years))
+    cat("\n Number of habitat : ", no_hab)
+    cat("\n")
+    
+    ## Transform the data inside the table ------------------------------------
     cat("\n GETTING COVERAGE and ABUNDANCE over the whole area...")
     
-    tab.abundance.split = split(tab.abundance, list(tab.abundance$PFG, tab.abundance$HAB))
-    distriAbund.melt = foreach(i = 1:length(tab.abundance.split), .combine = "rbind") %do%
+    tab.totalAbundance.split = split(tab.totalAbundance
+                                     , list(tab.totalAbundance$PFG
+                                            , tab.totalAbundance$HAB))
+    distriAbund.melt = foreach(i = 1:length(tab.totalAbundance.split)
+                               , .combine = "rbind"
+    ) %do%
+    {
+      pfg = strsplit(names(tab.totalAbundance.split)[i], "[.]")[[1]][1]
+      hab = strsplit(names(tab.totalAbundance.split)[i], "[.]")[[1]][2]
+      tab = tab.totalAbundance.split[[i]]
+      if (nrow(tab) > 0)
       {
-        pfg = strsplit(names(tab.abundance.split)[i], "[.]")[[1]][1]
-        hab = strsplit(names(tab.abundance.split)[i], "[.]")[[1]][2]
-        tab = tab.abundance.split[[i]]
-        tab = tab[, as.character(years)]
+        tab = tab[, as.character(years), drop = FALSE]
         
         return(data.frame(PFG = pfg, HAB = hab, YEAR = years
-                          , Abund = colSums(tab, na.rm = TRUE)
-                          , stringsAsFactors = FALSE))
+                          , totalAbundance = colSums(tab, na.rm = TRUE)
+                          , stringsAsFactors = FALSE)) 
       }
+    }
     
-    distri.melt = foreach(i = 1:length(tab.abundance.split), .combine = "rbind") %do%
+    distri.melt = foreach(i = 1:length(tab.totalAbundance.split)
+                          , .combine = "rbind"
+    ) %do%
+    {
+      pfg = strsplit(names(tab.totalAbundance.split)[i], "[.]")[[1]][1]
+      hab = strsplit(names(tab.totalAbundance.split)[i], "[.]")[[1]][2]
+      tab = tab.totalAbundance.split[[i]]
+      if (nrow(tab) > 0)
       {
-        pfg = strsplit(names(tab.abundance.split)[i], "[.]")[[1]][1]
-        hab = strsplit(names(tab.abundance.split)[i], "[.]")[[1]][2]
-        tab = tab.abundance.split[[i]]
-        tab = tab[, as.character(years)]
+        tab = tab[, as.character(years), drop = FALSE]
         tab = as.matrix(tab)
         tab = apply(tab, 2, function(x) length(which(x > 0)))
         
         return(data.frame(PFG = pfg, HAB = hab, YEAR = years
-                          , Occupancy = tab / no_1_mask
+                          , spaceOccupancy = tab / no_1_mask
                           , stringsAsFactors = FALSE))
       }
+    }
     cat("\n")
     
     write.csv(distri.melt
@@ -363,7 +367,7 @@ POST_FATE.graphic_evolutionCoverage = function(
     
     write.csv(distriAbund.melt
               , file = paste0(name.simulation
-                              , "/RESULTS/POST_FATE_TABLE_ZONE_evolution_abundance_"
+                              , "/RESULTS/POST_FATE_TABLE_ZONE_evolution_totalAbundance_"
                               , basename(dir.save)
                               , ".csv")
               , row.names = TRUE)
@@ -372,13 +376,13 @@ POST_FATE.graphic_evolutionCoverage = function(
                    , " > POST_FATE_TABLE_ZONE_evolution_spaceOccupancy_"
                    , basename(dir.save)
                    , ".csv \n"
-                   , " > POST_FATE_TABLE_ZONE_evolution_abundance_"
+                   , " > POST_FATE_TABLE_ZONE_evolution_totalAbundance_"
                    , basename(dir.save)
                    , ".csv \n"
                    , "have been successfully created !\n"))
-
     
-    ## produce the plot ------------------------------------------------------------
+    
+    ## produce the plot -------------------------------------------------------
     if (opt.doPlot)
     {
       cat("\n PRODUCING PLOT(S)...")
@@ -386,38 +390,58 @@ POST_FATE.graphic_evolutionCoverage = function(
       col_fun = colorRampPalette(col_vec)
       
       ## Evolution of space occupation
-      pp1 = ggplot(distri.melt, aes_string(x = "YEAR", y = "Occupancy * 100", color = "factor(HAB)")) +
+      pp1 = ggplot(distri.melt, aes_string(x = "YEAR"
+                                           , y = "spaceOccupancy * 100"
+                                           , color = "factor(HAB)")) +
         geom_line(lwd = 1) +
         facet_wrap("~ PFG") +
         scale_color_manual("Habitat", values = col_fun(no_hab)) +
-        labs(x = "", y = "", title = paste0("GRAPH A : evolution of species' space occupation"),
-             subtitle = paste0("For each PFG, the line represents the evolution through time of its space occupancy,\n",
-                               "meaning the percentage of pixels in which the abundance of the species is greater than 0.\n")) +
+        labs(x = "", y = ""
+             , title = paste0("GRAPH A : evolution of species' space occupation")
+             , subtitle = paste0("For each PFG, the line represents the "
+                                 , "evolution through time of its space "
+                                 , "occupancy,\n meaning the percentage of "
+                                 , "pixels in which the abundance of the "
+                                 , "species is greater than 0.\n")) +
         .getGraphics_theme()
-      ggsave(filename = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_A_evolution_spaceOccupancy_", basename(dir.save), ".pdf")
+      ggsave(filename = paste0(name.simulation
+                               , "/RESULTS/POST_FATE_GRAPHIC_A_evolution_spaceOccupancy_"
+                               , basename(dir.save), ".pdf")
              , plot = pp1, width = 10, height = 8)
       
       ## Evolution of abundance
-      pp2 = ggplot(distriAbund.melt, aes_string(x = "YEAR", y = "Abund", color = "HAB")) +
+      pp2 = ggplot(distriAbund.melt, aes_string(x = "YEAR"
+                                                , y = "totalAbundance"
+                                                , color = "HAB")) +
         geom_line(lwd = 1) +
         facet_wrap("~ PFG", scales = ifelse(opt.abund_fixedScale, "fixed", "free_y")) +
         scale_color_manual("Habitat", values = col_fun(no_hab)) +
-        labs(x = "", y = "", title = paste0("GRAPH A : evolution of species' abundance"),
-             subtitle = paste0("For each PFG, the line represents the evolution through time of its abundance\n",
-                               "over the whole studied area, meaning the sum of its abundances in every pixel.\n")) +
+        labs(x = "", y = ""
+             , title = paste0("GRAPH A : evolution of species' abundance")
+             , subtitle = paste0("For each PFG, the line represents the "
+                                 , "evolution through time of its abundance\n"
+                                 , "over the whole studied area, meaning the "
+                                 , "sum of its abundances in every pixel.\n")) +
         .getGraphics_theme()
-      ggsave(filename = paste0(name.simulation, "/RESULTS/POST_FATE_GRAPHIC_A_evolution_abundance_", basename(dir.save), ".pdf")
+      ggsave(filename = paste0(name.simulation
+                               , "/RESULTS/POST_FATE_GRAPHIC_A_evolution_abundance_"
+                               , basename(dir.save), ".pdf")
              , plot = pp2, width = 10, height = 8)
+    } else
+    {
+      pp1 = pp2 = NULL
     } ## END opt.doPlot
     
+    
+    ## ------------------------------------------------------------------------
     
     cat("\n> Done!\n")
     cat("\n")
     
     return(list(tab.spaceOccupancy = distri.melt
-                , tab.abundance = distriAbund.melt
+                , tab.totalAbundance = distriAbund.melt
                 , graph.spaceOccupancy = pp1
-                , graph.abundance = pp2))
+                , graph.totalAbundance = pp2))
   } ## END loop on abs.simulParams
   names(res) = abs.simulParams
   

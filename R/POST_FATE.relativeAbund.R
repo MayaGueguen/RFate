@@ -10,41 +10,43 @@
 ##' simulated relative abundances for one (or several) specific \code{FATE-HD} 
 ##' simulation year.
 ##'              
-##' @param name.simulation a \code{string} that corresponds to the main 
-##' directory or simulation name of the \code{FATE-HD} simulation
-##' @param file.simulParam a \code{string} that corresponds to the name of a 
-##' parameter file that will be contained into the \code{PARAM_SIMUL} folder 
-##' of the \code{FATE-HD} simulation
-##' @param year an \code{integer} corresponding to the simulation year(s) that 
-##' will be used to extract PFG abundance maps
-##' @param opt.no_CPU default \code{1} (\emph{optional}). The number of 
+##' @param name.simulation a \code{string} corresponding to the main directory 
+##' or simulation name of the \code{FATE-HD} simulation
+##' @param file.simulParam default \code{NULL}. A \code{string} corresponding to 
+##' the name of a parameter file that will be contained into the 
+##' \code{PARAM_SIMUL} folder of the \code{FATE-HD} simulation
+##' @param years an \code{integer}, or a \code{vector} of \code{integer}, 
+##' corresponding to the simulation year(s) that will be used to extract PFG 
+##' abundance maps
+##' @param opt.no_CPU (\emph{optional}) default \code{1}. \cr The number of 
 ##' resources that can be used to parallelize the \code{unzip/zip} of raster 
 ##' files
 ##' 
 ##' 
 ##' @details 
 ##' 
-##' This function allows one to obtain, for a specific \code{FATE-HD} 
-##' simulation and a specific parameter file within this simulation, raster 
-##' maps of PFG relative abundance. \cr
+##' This function allows to obtain, for a specific \code{FATE-HD} simulation and 
+##' a specific parameter file within this simulation, \strong{raster maps of PFG 
+##' relative abundance}. \cr \cr
 ##' 
 ##' For each PFG and each selected simulation year, raster maps are retrieved 
-##' from the results folder \code{ABUND_perPFG_perStrata} and unzipped. 
+##' from the results folder \code{ABUND_perPFG_allStrata} and unzipped. 
 ##' Informations extracted lead to the production of the same number of raster 
 ##' before the maps are compressed again :
 ##' 
 ##' \itemize{
 ##'   \item{for each selected simulation year(s), \strong{relative abundances} 
-##'   within each stratum are calculated :
-##'   \deqn{\frac{abund_{\text{PFG}_i, \text{Stratum}_j}}{abund_{allPFG, 
-##'   allStrata}}} \cr \cr
+##'   for all strata combined are calculated :
+##'   \deqn{\frac{abund_{\text{ PFG}_i\text{, }\text{Stratum}_{all}}}
+##'   {abund_{\text{ PFG}_{all}\text{, }\text{Stratum}_{all}}}} \cr \cr
 ##'   }
 ##' }
 ##' 
 ##' \strong{These \code{raster} files can then be used by other functions} :
 ##' 
 ##' \itemize{
-##'   \item to produce presence/absence maps and graphics (see 
+##'   \item to produce \emph{presence/absence maps} and \emph{validation 
+##'   statistics}, and associated graphics \cr (see 
 ##'   \code{\link{POST_FATE.graphic_validationStatistics}})
 ##' }
 ##' 
@@ -185,9 +187,7 @@
 ##' 
 ##' @export
 ##' 
-##' @importFrom foreach foreach
-##' @importFrom raster raster stack as.data.frame
-##' rasterToPoints writeRaster
+##' @importFrom raster stack writeRaster
 ##'
 ## END OF HEADER ###############################################################
 
@@ -195,34 +195,24 @@
 POST_FATE.relativeAbund = function(
   name.simulation
   , file.simulParam = NULL
-  , year
+  , years
   , opt.no_CPU = 1
 ){
+  
+  #############################################################################
+  
+  ## CHECK parameter name.simulation
   .testParam_existFolder(name.simulation, "PARAM_SIMUL/")
   .testParam_existFolder(name.simulation, "RESULTS/")
   .testParam_existFolder(name.simulation, "DATA/")
-  name.simulation = sub("/$", "", name.simulation)
+  name.simulation = sub("/", "", name.simulation)
+  ## CHECK parameter file.simulParam
+  abs.simulParams = .getParam_abs.simulParams(file.simulParam, name.simulation)
+  ## CHECK parameter years
+  .testParam_notInteger.m("years", years)
   
-  if (.testParam_notDef(file.simulParam) || nchar(file.simulParam) == 0)
-  {
-    abs.simulParams = list.files(paste0(name.simulation, "/PARAM_SIMUL/"))
-    if (length(abs.simulParams) == 0)
-    {
-      stop(paste0("Missing data!\n The folder ", name.simulation, "/PARAM_SIMUL/ does not contain adequate files"))
-    }
-    abs.simulParams = paste0(name.simulation, "/PARAM_SIMUL/", abs.simulParams)
-  } else
-  {
-    file.simulParam = basename(file.simulParam)
-    abs.simulParams = paste0(name.simulation, "/PARAM_SIMUL/", file.simulParam)
-    .testParam_existFile(abs.simulParams)
-  }
-  if (.testParam_notNum(year))
-  {
-    .stopMessage_beInteger("year")
-  }
 
-  #################################################################################################
+  #############################################################################
   
   for (abs.simulParam in abs.simulParams)
   {
@@ -232,31 +222,34 @@ POST_FATE.relativeAbund = function(
     cat("\n Simulation file : ", abs.simulParam)
     cat("\n")
     
-    ## Get results directories -----------------------------------------------------
+    ## Get results directories ------------------------------------------------
     .getGraphics_results(name.simulation  = name.simulation
                          , abs.simulParam = abs.simulParam)
 
-    ## Get number of PFGs ----------------------------------------------------------
-    ## Get PFG names ---------------------------------------------------------------
+    ## Get number of PFGs -----------------------------------------------------
+    ## Get PFG names ----------------------------------------------------------
     .getGraphics_PFG(name.simulation  = name.simulation
                      , abs.simulParam = abs.simulParam)
     
-    ## Get raster mask -------------------------------------------------------------
+    ## Get raster mask --------------------------------------------------------
     .getGraphics_mask(name.simulation  = name.simulation
                       , abs.simulParam = abs.simulParam)
     
     
-    ## Get list of arrays and extract years of simulation --------------------------
-    years = sort(unique(as.numeric(year)))
+    ## Get list of arrays and extract years of simulation ---------------------
+    years = sort(unique(as.numeric(years)))
     no_years = length(years)
     
-    ## UNZIP the raster saved ------------------------------------------------------
+    ## UNZIP the raster saved -------------------------------------------------
     raster.perPFG.allStrata = grep(paste0("Abund_YEAR_", years, "_", collapse = "|")
-                                   , list.files(dir.output.perPFG.allStrata, full.names = TRUE)
+                                   , list.files(dir.output.perPFG.allStrata
+                                                , full.names = TRUE)
                                    , value = TRUE)
     if (length(raster.perPFG.allStrata) == 0)
     {
-      stop(paste0("Missing data!\n The folder ", dir.output.perPFG.allStrata, " does not contain adequate files"))
+      stop(paste0("Missing data!\n The folder "
+                  , dir.output.perPFG.allStrata
+                  , " does not contain adequate files"))
     }
 
     .unzip(folder_name = dir.output.perPFG.allStrata
@@ -264,18 +257,18 @@ POST_FATE.relativeAbund = function(
            , nb_cores = opt.no_CPU)
     
     
-    ## get the data inside the rasters ---------------------------------------------
+    ## get the data inside the rasters ----------------------------------------
     cat("\n GETTING RELATIVE ABUNDANCES for year")
     for (y in years)
     {
       cat(" ", y)
       
-      file_name = paste0(dir.output.perPFG.allStrata,
-                         "Abund_YEAR_",
-                         y,
-                         "_",
-                         PFG,
-                         "_STRATA_all")
+      file_name = paste0(dir.output.perPFG.allStrata
+                         , "Abund_YEAR_"
+                         , y
+                         , "_"
+                         , PFG
+                         , "_STRATA_all")
       if (length(which(file.exists(paste0(file_name, ".tif")))) > 0)
       {
         file_name = paste0(file_name, ".tif")
@@ -286,14 +279,16 @@ POST_FATE.relativeAbund = function(
       {
         file_name = paste0(file_name, ".asc")
       }
-      if (length(which(file.exists(file_name))) == 0)
-      {
-        stop(paste0("Missing data!\n The names of PFG extracted from files within ", name.simulation, "/DATA/PFGS/SUCC/ : "
-                    , paste0("\n", PFG, collapse = "\n")
-                    , "\n is different from the files contained in ", dir.output.perPFG.allStrata
-                    , "They should be : "
-                    , paste0("\n", file_name, collapse = "\n")))
-      }
+      # if (length(which(file.exists(file_name))) == 0)
+      # {
+      #   stop(paste0("Missing data!\n The names of PFG extracted from files within "
+      #               , name.simulation, "/DATA/PFGS/SUCC/ : "
+      #               , paste0("\n", PFG, collapse = "\n")
+      #               , "\n is different from the files contained in "
+      #               , dir.output.perPFG.allStrata
+      #               , "They should be : "
+      #               , paste0("\n", file_name, collapse = "\n")))
+      # }
       gp = PFG[which(file.exists(file_name))]
       file_name = file_name[which(file.exists(file_name))]
       
@@ -314,10 +309,15 @@ POST_FATE.relativeAbund = function(
                     , filename = new_name
                     , overwrite = TRUE
                     , bylayer = TRUE)
+        
+        message(paste0("\n The output files \n"
+                       , paste0(" > ", basename(new_name), " \n"
+                                , collapse = "")
+                       , "have been successfully created !\n"))
       }
     } ## end loop on years
     
-    ## ZIP the raster saved ------------------------------------------------------
+    ## ZIP the raster saved ---------------------------------------------------
     .zip(folder_name = dir.output.perPFG.allStrata
          , list_files = raster.perPFG.allStrata
          , nb_cores = opt.no_CPU)

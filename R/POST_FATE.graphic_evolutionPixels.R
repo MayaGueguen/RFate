@@ -6,57 +6,55 @@
 ##'
 ##' @author Maya Guéguen
 ##' 
-##' @description This script is designed to produce one graphical 
-##' representation for a \code{FATE-HD} simulation : the evolution through time 
-##' of the abundance of each PFG for 5 (or more) randomly selected cells of the 
-##' studied area.
-##'              
-##' @param name.simulation a \code{string} that corresponds to the main 
-##' directory or simulation name of the \code{FATE-HD} simulation
-##' @param file.simulParam a \code{string} that corresponds to the name of a 
-##' parameter file that will be contained into the \code{PARAM_SIMUL} folder 
-##' of the \code{FATE-HD} simulation
+##' @description This script is designed to produce one graphical representation 
+##' for a \code{FATE-HD} simulation : the evolution through time of the 
+##' abundance of each PFG for 5 (or more) randomly selected cells of the studied 
+##' area.
+##' 
+##' @param name.simulation a \code{string} corresponding to the main directory 
+##' or simulation name of the \code{FATE-HD} simulation
+##' @param file.simulParam default \code{NULL}. A \code{string} corresponding to 
+##' the name of a parameter file that will be contained into the 
+##' \code{PARAM_SIMUL} folder of the \code{FATE-HD} simulation
+##' @param opt.cells_ID (\emph{optional}) default \code{NULL}. \cr The cells ID 
+##' of the studied area for which PFG abundances will be extracted
 ##' @param opt.abund_fixedScale default \code{TRUE}. If \code{FALSE}, the 
-##' ordinate scale will be adapted for each PFG for the graphical 
-##' representation of the evolution of abundances through time
-##' @param opt.cells_ID default \code{NULL} (\emph{optional}). The cells ID of 
-##' the studied area for which PFG abundances will be extracted.
-##' @param opt.doPlot default \code{TRUE} (\emph{optional}). If \code{TRUE}, 
-##' plot(s) will be processed, otherwise only the calculation and 
-##' reorganization of outputs will occur, be saved and returned.
+##' ordinate scale will be adapted for each PFG for the graphical representation 
+##' of the  evolution of abundances through time
+##' @param opt.doPlot (\emph{optional}) default \code{TRUE}. \cr If TRUE, 
+##' plot(s) will be processed, otherwise only the calculation and reorganization 
+##' of outputs will occur, be saved and returned
+##' 
 ##' 
 ##' 
 ##' @details 
 ##' 
-##' This function allows one to obtain, for a specific \code{FATE-HD} 
-##' simulation and a specific parameter file within this simulation, one 
-##' preanalytical graphics :
+##' This function allows to obtain, for a specific \code{FATE-HD} simulation and 
+##' a specific parameter file within this simulation, one preanalytical graphic :
 ##' 
 ##' \itemize{
 ##'   \item{the evolution of \strong{abundance} of each Plant Functional Group 
 ##'   through simulation time, within 5 (or more) randomly selected pixels of 
 ##'   the studied area (\code{FATE-HD} \emph{arbitrary unit})
 ##'   }
-##'   \item{\strong{if LIGHT is activated} (see 
-##'   \code{\link{PRE_FATE.params_globalParameters}}), evolution of 
+##'   \item{\strong{if light was activated} (see 
+##'   \code{\link{PRE_FATE.params_globalParameters}}), \cr evolution of 
 ##'   \strong{light resources} within the selected pixels is also represented 
-##'   (\emph{1: Low, 2: Medium, 3: High})
+##'   (\emph{\code{1}: Low, \code{2}: Medium, \code{3}: High})
 ##'   }
-##'   \item{\strong{if SOIL is activated} (see 
-##'   \code{\link{PRE_FATE.params_globalParameters}}), evolution of 
+##'   \item{\strong{if soil was activated} (see 
+##'   \code{\link{PRE_FATE.params_globalParameters}}), \cr evolution of 
 ##'   \strong{soil resources} within the selected pixels is also represented 
 ##'   (user-defined scale) \cr \cr
 ##'   }
 ##' }
 ##' 
-##' 
-##' It requires that the \code{\link{POST_FATE.temporalEvolution}} function has 
-##' been run and that the file 
-##' \code{POST_FATE.evolution_abundance_PIXEL_[...].csv} exists (as well as the 
-##' files \code{POST_FATE.evolution_light_PIXEL_[...].csv} and 
-##' \code{POST_FATE.evolution_soil_PIXEL_[...].csv} if those modules are 
+##' \strong{It requires} that the \code{\link{POST_FATE.temporalEvolution}} 
+##' function has been run and that the file 
+##' \code{POST_FATE_TABLE_PIXEL_evolution_abundance.csv} exists (as well as the 
+##' \code{POST_FATE_TABLE_PIXEL_evolution_light.csv} and 
+##' \code{POST_FATE_TABLE_PIXEL_evolution_soil.csv} files if those modules were 
 ##' activated).
-##' 
 ##' 
 ##' 
 ##' @return A \code{list} containing one \code{data.frame} object with the 
@@ -65,34 +63,34 @@
 ##' \describe{
 ##'   \item{tab}{
 ##'     \describe{
-##'       \item{\code{TYPE}}{the concerned information (either '\code{light}', 
+##'       \item{\code{TYPE}}{concerned information (either '\code{light}', 
 ##'       '\code{abundance}' or '\code{soil}')}
-##'       \item{\code{GROUP}}{the concerned entity (either 
+##'       \item{\code{GROUP}}{concerned entity (either 
 ##'       '\code{STRATUM_[...]}', PFG name or '\code{soil}')}
-##'       \item{\code{ID}}{the id of the concerned pixel}
-##'       \item{\code{HAB}}{the habitat of the concerned pixel}
-##'       \item{\emph{YEAR}}{the concerned simulation year}
-##'       \item{\code{Occupancy}}{the number of occupied pixels divided by the 
-##'       total number of pixels within the studied area}
+##'       \item{\code{ID.pixel}}{number of the concerned pixel}
+##'       \item{\code{HAB}}{habitat of the concerned pixel}
+##'       \item{\code{YEAR}}{concerned simulation year}
+##'       \item{\code{value}}{concerned value extracted from \code{.csv} files 
+##'       produced by \code{\link{POST_FATE.temporalEvolution}}}
 ##'     }
 ##'   }
-##'   \item{plot}{\code{ggplot2} object, representing the evolution 
-##'   of each PFG abundance, \emph{and light and soil resources if those 
-##'   modules are activated} \cr \cr}
+##'   \item{plot}{\code{ggplot2} object, representing the evolution of each PFG 
+##'   abundance, \emph{and light and soil resources if those modules were 
+##'   activated} \cr \cr}
 ##' }
 ##' 
 ##' 
 ##' One \code{POST_FATE_TABLE_PIXEL_evolution_pixels_[...].csv} file is created : 
 ##' \describe{
-##'   \item{\file{pixels ids}}{always, containing the \code{data.frame} detailed above}
+##'   \item{\emph{pixels ids}}{always, containing the \code{data.frame} detailed 
+##'   above}
 ##' }
 ##' 
 ##' 
 ##' One \code{POST_FATE_[...].pdf} file is created : 
 ##' \describe{
-##'   \item{\file{GRAPHIC_A \cr pixels}}{to visualize for each PFG the 
-##'   evolution of its abundance within each selected pixel through 
-##'   simulation time}
+##'   \item{\file{GRAPHIC_A \cr pixels}}{to visualize for each PFG the evolution 
+##'   of its abundance within each selected pixel through simulation time}
 ##' }
 ##' 
 ##' 
@@ -246,17 +244,13 @@
 ##' @importFrom utils write.csv
 ##' @importFrom grDevices colorRampPalette
 ##' @importFrom reshape2 melt
-##' @importFrom foreach foreach
+##' @importFrom foreach foreach %do%
 ##' 
-##' @importFrom ggplot2 ggplot aes aes_string ggsave
-##' geom_line geom_point geom_hline geom_vline geom_label 
-##' geom_errorbar geom_path geom_area
-##' element_text element_blank element_rect
-##' scale_color_discrete scale_color_manual 
-##' scale_shape_manual scale_fill_manual
-##' facet_grid labs theme
+##' @importFrom ggplot2 ggplot ggsave aes_string 
+##' geom_line geom_area
+##' scale_color_manual scale_fill_manual
+##' facet_grid labs theme element_text element_blank
 ##' @importFrom ggthemes theme_fivethirtyeight
-##' @importFrom ggrepel geom_label_repel
 ##'
 ## END OF HEADER ###############################################################
 
@@ -269,27 +263,18 @@ POST_FATE.graphic_evolutionPixels = function(
   , opt.doPlot = TRUE
 ){
   
+  #############################################################################
+  
+  ## CHECK parameter name.simulation
   .testParam_existFolder(name.simulation, "PARAM_SIMUL/")
   .testParam_existFolder(name.simulation, "RESULTS/")
   .testParam_existFolder(name.simulation, "DATA/")
   name.simulation = sub("/", "", name.simulation)
+  ## CHECK parameter file.simulParam
+  abs.simulParams = .getParam_abs.simulParams(file.simulParam, name.simulation)
   
-  if (.testParam_notDef(file.simulParam) || nchar(file.simulParam) == 0)
-  {
-    abs.simulParams = list.files(paste0(name.simulation, "/PARAM_SIMUL/"))
-    if (length(abs.simulParams) == 0)
-    {
-      stop(paste0("Missing data!\n The folder ", name.simulation, "/PARAM_SIMUL/ does not contain adequate files"))
-    }
-    abs.simulParams = paste0(name.simulation, "/PARAM_SIMUL/", abs.simulParams)
-  } else
-  {
-    file.simulParam = basename(file.simulParam)
-    abs.simulParams = paste0(name.simulation, "/PARAM_SIMUL/", file.simulParam)
-    .testParam_existFile(abs.simulParams)
-  }
   
-  #################################################################################################
+  #############################################################################
   
   res = foreach (abs.simulParam = abs.simulParams) %do%
   {
@@ -299,20 +284,20 @@ POST_FATE.graphic_evolutionPixels = function(
     cat("\n Simulation file : ", abs.simulParam)
     cat("\n")
     
-    ## Get results directories -----------------------------------------------------
+    ## Get results directories ------------------------------------------------
     .getGraphics_results(name.simulation  = name.simulation
                          , abs.simulParam = abs.simulParam)
     
-    ## Get number of PFGs ----------------------------------------------------------
-    ## Get PFG names ---------------------------------------------------------------
+    ## Get number of PFGs -----------------------------------------------------
+    ## Get PFG names ----------------------------------------------------------
     .getGraphics_PFG(name.simulation  = name.simulation
                      , abs.simulParam = abs.simulParam)
     
-    ## Get raster mask -------------------------------------------------------------
+    ## Get raster mask --------------------------------------------------------
     .getGraphics_mask(name.simulation  = name.simulation
                       , abs.simulParam = abs.simulParam)
-
-    ## Get the abundance table -----------------------------------------------------
+    
+    ## Get the abundance table ------------------------------------------------
     file.abundance = paste0(name.simulation
                             , "/RESULTS/POST_FATE_TABLE_PIXEL_evolution_abundance_"
                             , basename(dir.save)
@@ -324,19 +309,19 @@ POST_FATE.graphic_evolutionPixels = function(
     colnames(tab.abundance)[which(colnames(tab.abundance) == "PFG")] = "GROUP"
     
     years = colnames(tab.abundance)
-    years = years[which(!(years %in% c("TYPE", "GROUP", "ID", "X", "Y", "HAB")))]
+    years = years[which(!(years %in% c("TYPE", "GROUP", "ID.pixel", "X", "Y", "HAB")))]
     years = as.numeric(years)
     no_years = length(years)
     
     strata = paste0("Stratum ", (no_STRATA - 1):0)
     
-    ## Get resources tables --------------------------------------------------------
+    ## Get resources tables ---------------------------------------------------
     if (doLight)
     {
       file.light = paste0(name.simulation
-                              , "/RESULTS/POST_FATE_TABLE_PIXEL_evolution_light_"
-                              , basename(dir.save)
-                              , ".csv")
+                          , "/RESULTS/POST_FATE_TABLE_PIXEL_evolution_light_"
+                          , basename(dir.save)
+                          , ".csv")
       .testParam_existFile(file.light)
       tab.light = fread(file.light)
       tab.light = as.data.frame(tab.light)
@@ -350,9 +335,9 @@ POST_FATE.graphic_evolutionPixels = function(
     if (doSoil)
     {
       file.soil = paste0(name.simulation
-                          , "/RESULTS/POST_FATE_TABLE_PIXEL_evolution_soil_"
-                          , basename(dir.save)
-                          , ".csv")
+                         , "/RESULTS/POST_FATE_TABLE_PIXEL_evolution_soil_"
+                         , basename(dir.save)
+                         , ".csv")
       .testParam_existFile(file.soil)
       tab.soil = fread(file.soil)
       tab.soil = as.data.frame(tab.soil)
@@ -361,10 +346,10 @@ POST_FATE.graphic_evolutionPixels = function(
       
       tab.abundance = rbind(tab.abundance, tab.soil)
     }
-
     
-    ## Get concerned cells id ------------------------------------------------------
-    IDS = sample(unique(tab.abundance$ID), 5)
+    
+    ## Get concerned cells id -------------------------------------------------
+    IDS = sample(unique(tab.abundance$ID.pixel), 5)
     if (!is.null(opt.cells_ID))
     {
       if (sum(opt.cells_ID %in% ind_1_mask) == length(opt.cells_ID))
@@ -372,7 +357,8 @@ POST_FATE.graphic_evolutionPixels = function(
         IDS = opt.cells_ID
       } else
       {
-        warning(paste0("The values given in `opt.cells_ID` do not match with any cells of the studied area \n"
+        warning(paste0("The values given in `opt.cells_ID` do not match "
+                       , "with any cells of the studied area \n"
                        , "(obtained from the raster file `"
                        , file.mask
                        , "`)\n"
@@ -385,11 +371,11 @@ POST_FATE.graphic_evolutionPixels = function(
     cat("\n Selected cells : ", IDS)
     cat("\n")
     
-    ## Transform the data inside the table -----------------------------------------
-    distriAbund = tab.abundance[which(tab.abundance$ID %in% IDS), , drop = FALSE]
-    distriAbund = distriAbund[, c("TYPE", "GROUP", "ID", "HAB", as.character(years))]
-    distriAbund = melt(distriAbund, id.vars = c("TYPE", "GROUP", "ID", "HAB"))
-    colnames(distriAbund) = c("TYPE", "GROUP", "ID", "HAB", "YEAR", "value")
+    ## Transform the data inside the table ------------------------------------
+    distriAbund = tab.abundance[which(tab.abundance$ID.pixel %in% IDS), , drop = FALSE]
+    distriAbund = distriAbund[, c("TYPE", "GROUP", "ID.pixel", "HAB", as.character(years))]
+    distriAbund = melt(distriAbund, id.vars = c("TYPE", "GROUP", "ID.pixel", "HAB"))
+    colnames(distriAbund) = c("TYPE", "GROUP", "ID.pixel", "HAB", "YEAR", "value")
     distriAbund$YEAR = as.numeric(as.character(distriAbund$YEAR))
     distriAbund$TYPE = factor(distriAbund$TYPE, c("light", "abundance", "soil"))
     distriAbund$GROUP = factor(distriAbund$GROUP, c(strata, PFG, "soil"))
@@ -415,14 +401,14 @@ POST_FATE.graphic_evolutionPixels = function(
                    , ".csv \n"
                    , "has been successfully created !\n"))
     
-    ## produce the plot ------------------------------------------------------------
+    ## produce the plot -------------------------------------------------------
     if (opt.doPlot)
     {
       cat("\n PRODUCING PLOT...")
       vec_col1 = c('#0077BB', '#33BBEE', '#009988', '#EE7733', '#CC3311', '#EE3377')
       val_col1 = c(rep(rgb(1,1,1,1), no_STRATA)
-                  , colorRampPalette(vec_col1)(no_PFG)
-                  , "grey30")
+                   , colorRampPalette(vec_col1)(no_PFG)
+                   , "grey30")
       names(val_col1) = c(strata, PFG, "soil")
       
       vec_col2 = c('#FEC44F', '#FB9A29', '#EC7014', '#CC4C02', '#993404', '#662506')
@@ -442,10 +428,14 @@ POST_FATE.graphic_evolutionPixels = function(
                   , aes_string(fill = "GROUP")
                   , position = "identity", alpha= 0.4) +
         scale_fill_manual("", values = val_col2) +
-        facet_grid("TYPE ~ ID", scales = ifelse(opt.abund_fixedScale, "fixed", "free_y")) +
-        labs(x = "", y = "", title = paste0("GRAPH A : evolution of species' abundance"),
-             subtitle = paste0("For each PFG, the line represents the evolution through time of its abundance\n",
-                               "for 5 randomly selected pixels within the studied area.\n")) +
+        facet_grid("TYPE ~ ID.pixel"
+                   , scales = ifelse(opt.abund_fixedScale, "fixed", "free_y")) +
+        labs(x = "", y = ""
+             , title = paste0("GRAPH A : evolution of species' abundance")
+             , subtitle = paste0("For each PFG, the line represents the "
+                                 , "evolution through time of its abundance\n"
+                                 , "for 5 randomly selected pixels within the "
+                                 , "studied area.\n")) +
         .getGraphics_theme()
       
       ggsave(filename = paste0(name.simulation
@@ -457,7 +447,13 @@ POST_FATE.graphic_evolutionPixels = function(
                                , basename(dir.save)
                                , ".pdf")
              , plot = pp, width = 10, height = 8)
+    } else
+    {
+      pp = NULL
     } ## END opt.doPlot
+    
+    
+    ## ------------------------------------------------------------------------
     
     cat("\n> Done!\n")
     cat("\n")
