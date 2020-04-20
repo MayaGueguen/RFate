@@ -5,9 +5,17 @@
 \title{Create a map of the community weighted mean (CWM) of light
  \cr for one (or several) specific year of a \code{FATE-HD} simulation}
 \usage{
-POST_FATE.graphic_mapPFGlight(name.simulation, file.simulParam = NULL,
-  year, strata_min = 1, mat.PFG.succ, opt.mat.light.obs = NULL,
-  opt.ras.light.obs = NULL, opt.no_CPU = 1, opt.doPlot = TRUE)
+POST_FATE.graphic_mapPFGlight(
+  name.simulation,
+  file.simulParam = NULL,
+  year,
+  strata_min = 1,
+  mat.PFG.succ,
+  opt.mat.light.obs = NULL,
+  opt.ras.light.obs = NULL,
+  opt.no_CPU = 1,
+  opt.doPlot = TRUE
+)
 }
 \arguments{
 \item{name.simulation}{a \code{string} that corresponds to the main directory

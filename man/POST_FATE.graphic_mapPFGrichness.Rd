@@ -5,8 +5,13 @@
 \title{Create a map of the Plant Functional Group richness 
  \cr for one (or several) specific year of a \code{FATE-HD} simulation}
 \usage{
-POST_FATE.graphic_mapPFGrichness(name.simulation, file.simulParam = NULL,
-  year, opt.no_CPU = 1, opt.doPlot = TRUE)
+POST_FATE.graphic_mapPFGrichness(
+  name.simulation,
+  file.simulParam = NULL,
+  year,
+  opt.no_CPU = 1,
+  opt.doPlot = TRUE
+)
 }
 \arguments{
 \item{name.simulation}{a \code{string} that corresponds to the main 

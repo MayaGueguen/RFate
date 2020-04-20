@@ -11,23 +11,27 @@ simulation — PRE_FATE.params_globalParameters • RFate</title>
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -38,9 +42,8 @@ simulation — PRE_FATE.params_globalParameters • RFate</title>
 
 <meta property="og:title" content="Create <em>Global_parameters</em> parameter file for a <code>FATE-HD</code>
 simulation — PRE_FATE.params_globalParameters" />
-<meta property="og:description" content="This script is designed to create one parameter file 
+<meta property="og:description" content="This script is designed to create parameter file(s) 
 containing GLOBAL PARAMETERS used in FATE-HD model." />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -58,7 +61,7 @@ containing GLOBAL PARAMETERS used in FATE-HD model." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -72,7 +75,7 @@ containing GLOBAL PARAMETERS used in FATE-HD model." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RFate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.9000</span>
       </span>
     </div>
 
@@ -153,38 +156,8 @@ containing GLOBAL PARAMETERS used in FATE-HD model." />
     Reference
   </a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/fate-hd_tutorial_0_modelling_framework.html">FATE-HD tutorial 0 - Modelling framework</a>
-    </li>
-    <li>
-      <a href="../articles/fate-hd_tutorial_0_publications.html">FATE-HD tutorial 0 - Publications</a>
-    </li>
-    <li>
-      <a href="../articles/fate-hd_tutorial_1_PFG.html">FATE-HD tutorial 1 - Principle of PFG</a>
-    </li>
-    <li>
-      <a href="../articles/fate-hd_tutorial_2_RUN_SIMULATION.html">FATE-HD tutorial 2 - Run a simulation</a>
-    </li>
-    <li>
-      <a href="../articles/fate-hd_tutorial_3_MODULES.html">FATE-HD tutorial 3 - Use a module</a>
-    </li>
-    <li>
-      <a href="../articles/rfate_tutorial_1_PFG.html">&lt;font color='#068f96'&gt;&lt;i class='fa fa-battery-quarter'&gt;&lt;/i&gt; `PRE_FATE` - build Plant Functional Groups (PFG)&lt;/font&gt;</a>
-    </li>
-    <li>
-      <a href="../articles/rfate_tutorial_2_params.html">&lt;font color='#068f96'&gt; &lt;i class='fa fa-battery-half'&gt;&lt;/i&gt; `PRE_FATE` - build parameter files &lt;/font&gt;</a>
-    </li>
-    <li>
-      <a href="../articles/rfate_tutorial_3_graphics.html">&lt;font color='#068f96'&gt; &lt;i class='fa fa-battery-three-quarters'&gt;&lt;/i&gt; `POST_FATE` - graphics &lt;/font&gt;</a>
-    </li>
-  </ul>
+<li>
+  <a href="../articles/index.html">Articles</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -221,39 +194,63 @@ simulation</h1>
     </div>
 
     <div class="ref-description">
-    <p>This script is designed to create one parameter file 
+    <p>This script is designed to create parameter file(s) 
 containing <code>GLOBAL PARAMETERS</code> used in <code>FATE-HD</code> model.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>PRE_FATE.params_globalParameters</span>(<span class='no'>name.simulation</span>, <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>opt.replacePrevious</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>required.no_PFG</span>, <span class='no'>required.no_STRATA</span>,
-  <span class='no'>required.simul_duration</span>, <span class='no'>required.seeding_duration</span>,
-  <span class='no'>required.seeding_timestep</span>, <span class='no'>required.seeding_input</span>,
-  <span class='no'>required.max_abund_low</span>, <span class='no'>required.max_abund_medium</span>,
-  <span class='no'>required.max_abund_high</span>, <span class='kw'>doLight</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>LIGHT.thresh_medium</span>,
-  <span class='no'>LIGHT.thresh_low</span>, <span class='kw'>doSoil</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>SOIL.init</span>, <span class='no'>SOIL.retention</span>,
-  <span class='kw'>doDispersal</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>DISPERSAL.mode</span>, <span class='kw'>doHabSuitability</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>HABSUIT.ref_option</span>, <span class='kw'>doDisturbances</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>DIST.no</span>, <span class='no'>DIST.no_sub</span>,
-  <span class='no'>DIST.freq</span>, <span class='kw'>doFire</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>doDrought</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>doHabStability</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>doAliens</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>PRE_FATE.params_globalParameters</span>(
+  <span class='no'>name.simulation</span>,
+  <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>opt.replacePrevious</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>required.no_PFG</span>,
+  <span class='no'>required.no_strata</span>,
+  <span class='no'>required.simul_duration</span>,
+  <span class='no'>required.seeding_duration</span>,
+  <span class='no'>required.seeding_timestep</span>,
+  <span class='no'>required.seeding_input</span>,
+  <span class='no'>required.max_abund_low</span>,
+  <span class='no'>required.max_abund_medium</span>,
+  <span class='no'>required.max_abund_high</span>,
+  <span class='kw'>doLight</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>LIGHT.thresh_medium</span>,
+  <span class='no'>LIGHT.thresh_low</span>,
+  <span class='kw'>doSoil</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>SOIL.init</span>,
+  <span class='no'>SOIL.retention</span>,
+  <span class='kw'>doDispersal</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>DISPERSAL.mode</span>,
+  <span class='kw'>doHabSuitability</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>HABSUIT.ref_option</span>,
+  <span class='kw'>doDisturbances</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>DIST.no</span>,
+  <span class='no'>DIST.no_sub</span>,
+  <span class='no'>DIST.freq</span>,
+  <span class='kw'>doDrought</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>DROUGHT.no_sub</span>,
+  <span class='kw'>doAliens</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>ALIEN.no</span>,
+  <span class='no'>ALIEN.freq</span>,
+  <span class='kw'>doFire</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>name.simulation</th>
-      <td><p>a <code>string</code> that corresponds to the main
-directory or simulation name of the <code>FATE-HD</code> simulation</p></td>
+      <td><p>a <code>string</code> corresponding to the main directory 
+or simulation name of the <code>FATE-HD</code> simulation</p></td>
     </tr>
     <tr>
       <th>opt.no_CPU</th>
-      <td><p>default <code>1</code> (<em>optional</em>). The number of 
-resources that can be used to parallelize the <code>FATE-HD</code> simulation</p></td>
+      <td><p>(<em>optional</em>) default <code>1</code>. <br /> an <code>integer</code> 
+corresponding to the number of resources that can be used to parallelize 
+the <code>FATE-HD</code> simulation</p></td>
     </tr>
     <tr>
       <th>opt.replacePrevious</th>
-      <td><p>default <code>FALSE</code> (<em>optional</em>). If 
-<code>TRUE</code>, pre-existing files inside
+      <td><p>(<em>optional</em>) default <code>FALSE</code>. <br /> 
+If <code>TRUE</code>, pre-existing files inside 
 <code>name.simulation/DATA/GLOBAL_PARAMETERS</code> folder will be replaced</p></td>
     </tr>
     <tr>
@@ -261,7 +258,7 @@ resources that can be used to parallelize the <code>FATE-HD</code> simulation</p
       <td><p>an <code>integer</code> corresponding to the number of PFG</p></td>
     </tr>
     <tr>
-      <th>required.no_STRATA</th>
+      <th>required.no_strata</th>
       <td><p>an <code>integer</code> corresponding to the number of 
 height strata</p></td>
     </tr>
@@ -283,9 +280,9 @@ is not over (<em>in years</em>)</p></td>
     </tr>
     <tr>
       <th>required.seeding_input</th>
-      <td><p>an <code>integer</code> corresponding to the 
-number of seeds attributed to each PFG at each time step, and until the
-seeding duration is not over</p></td>
+      <td><p>an <code>integer</code> corresponding to the number 
+of seeds attributed to each PFG at each time step, and until the seeding 
+duration is not over</p></td>
     </tr>
     <tr>
       <th>required.max_abund_low</th>
@@ -304,111 +301,135 @@ seeding duration is not over</p></td>
     </tr>
     <tr>
       <th>doLight</th>
-      <td><p>default <code>FALSE</code>. If <code>TRUE</code>, light competition is 
-activated in the <code>FATE-HD</code> simulation, and associated parameters are 
+      <td><p>default <code>FALSE</code>.<br /> If <code>TRUE</code>, light competition 
+is activated in the <code>FATE-HD</code> simulation, and associated parameters are 
 required</p></td>
     </tr>
     <tr>
       <th>LIGHT.thresh_medium</th>
-      <td><p>an <code>integer</code> in the order of <code>1 000</code> 
-to convert PFG abundances in each stratum into light resources. It 
-corresponds to the limit of abundances above which light resources are
-<code>medium</code>. PFG abundances lower than this threshold imply <strong>high 
-amount of light</strong>. It is consequently lower than <code>LIGHT.thresh_low</code>.</p></td>
+      <td><p>(<em>optional</em>) <br /> an <code>integer</code> in the 
+order of <code>1 000</code> to convert PFG abundances in each stratum into light 
+resources. It corresponds to the limit of abundances above which light 
+resources are <code>medium</code>. PFG abundances lower than this threshold imply 
+<strong>high amount of light</strong>. It is consequently lower than 
+<code>LIGHT.thresh_low</code>.</p></td>
     </tr>
     <tr>
       <th>LIGHT.thresh_low</th>
-      <td><p>an <code>integer</code> in the order of <code>1 000</code> 
-to convert PFG abundances in each strata into light resources. It 
-corresponds to the limit of abundances above which light resources are 
-<code>low</code>. PFG abundances higher than <code>LIGHT.thresh_medium</code> and 
-lower than this threshold imply <strong>medium amount of light</strong>.</p></td>
+      <td><p>(<em>optional</em>) <br /> an <code>integer</code> in the order 
+of <code>1 000</code> to convert PFG abundances in each strata into light 
+resources. It corresponds to the limit of abundances above which light 
+resources are <code>low</code>. PFG abundances higher than 
+<code>LIGHT.thresh_medium</code> and lower than this threshold imply 
+<strong>medium amount of light</strong>.</p></td>
     </tr>
     <tr>
       <th>doSoil</th>
-      <td><p>default <code>FALSE</code>. If <code>TRUE</code>, soil competition is 
+      <td><p>default <code>FALSE</code>. <br /> If <code>TRUE</code>, soil competition is 
 activated in the <code>FATE-HD</code> simulation, and associated parameters 
 are required</p></td>
     </tr>
     <tr>
       <th>SOIL.init</th>
-      <td><p>a <code>double</code> corresponding to the soil value to 
-initialize all pixels when starting the <code>FATE-HD</code> simulation</p></td>
+      <td><p>(<em>optional</em>) <br /> a <code>double</code> corresponding to the 
+soil value to initialize all pixels when starting the <code>FATE-HD</code> 
+simulation</p></td>
     </tr>
     <tr>
       <th>SOIL.retention</th>
-      <td><p>a <code>double</code> corresponding to the percentage of 
-soil value of the previous simulation year that will be kept in the 
-calculation of the soil value of the current simulation year</p></td>
+      <td><p>(<em>optional</em>) <br /> a <code>double</code> corresponding 
+to the percentage of soil value of the previous simulation year that will 
+be kept in the calculation of the soil value of the current simulation year</p></td>
     </tr>
     <tr>
       <th>doDispersal</th>
-      <td><p>default <code>FALSE</code>. If <code>TRUE</code>, seed dispersal is 
-activated in the <code>FATE-HD</code> simulation, and associated parameters are 
+      <td><p>default <code>FALSE</code>. <br /> If <code>TRUE</code>, seed dispersal 
+is activated in the <code>FATE-HD</code> simulation, and associated parameters are 
 required</p></td>
     </tr>
     <tr>
       <th>DISPERSAL.mode</th>
-      <td><p>an <code>integer</code> corresponding to the way of 
-simulating the seed dispersal for each PFG, either uniform kernel (1), 
-exponential kernel (2) or exponential kernel with probability (3)</p></td>
+      <td><p>(<em>optional</em>) <br /> an <code>integer</code> corresponding 
+to the way of simulating the seed dispersal for each PFG, either packets 
+kernel (<code>1</code>), exponential kernel (<code>2</code>) or exponential kernel with 
+probability (<code>3</code>)</p></td>
     </tr>
     <tr>
       <th>doHabSuitability</th>
-      <td><p>default <code>FALSE</code>. If <code>TRUE</code>, habitat 
+      <td><p>default <code>FALSE</code>. <br /> If <code>TRUE</code>, habitat 
 suitability is activated in the <code>FATE-HD</code> simulation, and associated 
 parameters are required</p></td>
     </tr>
     <tr>
       <th>HABSUIT.ref_option</th>
-      <td><p>an <code>integer</code> corresponding to the way of 
-simulating the habitat suitability variation between years for each PFG, 
-either random (1) or PFG specific (2)</p></td>
+      <td><p>(<em>optional</em>) <br /> an <code>integer</code> 
+corresponding to the way of simulating the habitat suitability variation 
+between years for each PFG, either random (<code>1</code>) or PFG specific 
+(<code>2</code>)</p></td>
     </tr>
     <tr>
       <th>doDisturbances</th>
-      <td><p>default <code>FALSE</code>. If <code>TRUE</code>, disturbances 
-are applied in the <code>FATE-HD</code> simulation, and associated parameters 
-are required</p></td>
+      <td><p>default <code>FALSE</code>. <br /> If <code>TRUE</code>, disturbances 
+are applied in the <code>FATE-HD</code> simulation, and associated parameters are 
+required</p></td>
     </tr>
     <tr>
       <th>DIST.no</th>
-      <td><p>the number of disturbances</p></td>
+      <td><p>(<em>optional</em>) <br /> an <code>integer</code> corresponding to the 
+number of disturbances</p></td>
     </tr>
     <tr>
       <th>DIST.no_sub</th>
-      <td><p>the number of way a PFG could react to a disturbance</p></td>
+      <td><p>(<em>optional</em>) <br /> an <code>integer</code> corresponding to 
+the number of way a PFG could react to a disturbance</p></td>
     </tr>
     <tr>
       <th>DIST.freq</th>
-      <td><p>the frequency of each disturbance (<em>in years</em>)</p></td>
-    </tr>
-    <tr>
-      <th>doFire</th>
-      <td><p><em>to be filled</em></p></td>
+      <td><p>(<em>optional</em>) <br /> a <code>vector</code> of <code>integer</code> 
+corresponding to the frequency of each disturbance (<em>in years</em>)</p></td>
     </tr>
     <tr>
       <th>doDrought</th>
-      <td><p><em>to be filled</em></p></td>
+      <td><p>default <code>FALSE</code>. <br /> If <code>TRUE</code>, drought 
+disturbances are applied in the <code>FATE-HD</code> simulation, and associated 
+parameters are required</p></td>
     </tr>
     <tr>
-      <th>doHabStability</th>
-      <td><p><em>to be filled</em></p></td>
+      <th>DROUGHT.no_sub</th>
+      <td><p>(<em>optional</em>) <br /> an <code>integer</code> corresponding 
+to the number of way a PFG could react to a drought disturbance</p></td>
     </tr>
     <tr>
       <th>doAliens</th>
+      <td><p>default <code>FALSE</code>. <br /> If <code>TRUE</code>, invasive plant 
+introduction is activated in the <code>FATE-HD</code> simulation, and associated 
+parameters are required</p></td>
+    </tr>
+    <tr>
+      <th>ALIEN.no</th>
+      <td><p>(<em>optional</em>) <br /> an <code>integer</code> corresponding to the 
+number of introductions</p></td>
+    </tr>
+    <tr>
+      <th>ALIEN.freq</th>
+      <td><p>(<em>optional</em>) <br /> a <code>vector</code> of <code>integer</code> 
+corresponding to the frequency of each introduction (<em>in years</em>)</p></td>
+    </tr>
+    <tr>
+      <th>doFire</th>
       <td><p><em>to be filled</em></p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>.txt</code> file into the <code>name.simulation/DATA/GLOBAL_PARAMETERS</code>
-directory with the following parameters :</p>
+    <p>A <code>.txt</code> file into the 
+<code>name.simulation/DATA/GLOBAL_PARAMETERS</code> directory with the following 
+parameters :</p>
 <ul>
-<li><p>NB_CPUS</p></li>
-<li><p>NB_FG</p></li>
-<li><p>NB_STRATUM</p></li>
+<li><p>NO_CPU</p></li>
+<li><p>NO_PFG</p></li>
+<li><p>NO_STRATA</p></li>
 <li><p>SIMULATION_DURATION</p></li>
 <li><p>SEEDING_DURATION</p></li>
 <li><p>SEEDING_TIMESTEP</p></li>
@@ -447,122 +468,117 @@ directory with the following parameters :</p>
 <p>If the simulation includes <em>disturbances</em> :</p>
 <ul>
 <li><p>DO_DISTURBANCES</p></li>
-<li><p>NB_DISTURBANCES</p></li>
-<li><p>NB_SUBDISTURBANCES</p></li>
-<li><p>FREQ_DISTURBANCES</p></li>
+<li><p>DIST_NO</p></li>
+<li><p>DIST_NOSUB</p></li>
+<li><p>DIST_FREQ</p></li>
 </ul>
-
-<p>If the simulation includes <em>drought disturbances</em> :</p>
+ 
+<p>If the simulation includes <em>drought disturbance</em> :</p>
 <ul>
-<li><p>DO_DROUGHT_DISTURBANCES</p></li>
-<li><p>NB_SUBDROUGHT</p></li>
-<li><p>CHRONO_POST_DROUGHT</p></li>
-<li><p>CHRONO_CURR_DROUGHT</p></li>
-</ul>
-
-<p>If the simulation includes <em>habitat stability check</em> :</p>
-<ul>
-<li><p>DO_HAB_STABILITY</p></li>
-<li><p>NB_HABITATS</p></li>
+<li><p>DO_DROUGHT_DISTURBANCE</p></li>
+<li><p>DROUGHT_NOSUB</p></li>
 </ul>
 
 <p>If the simulation includes <em>aliens introduction</em> :</p>
 <ul>
-<li><p>DO_ALIENS_DISTURBANCE</p></li>
-<li><p>FREQ_ALIENS</p></li>
+<li><p>DO_ALIENS_INTRODUCTION</p></li>
+<li><p>ALIENS_NO</p></li>
+<li><p>ALIENS_FREQ</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The core module of <code>FATE-HD</code> requires several parameters to define 
-general characteristics of the simulation :</p>
-<dl class='dl-horizontal'>
-  <dt>Studied system</dt><dd><p><ul>
-<li><p><em>required.no_PFG</em> : the number of Plant Functional Groups 
-    that will be included into the simulation.  
-    This number should match with the number of files that will be given 
-    with the characteristics of each group (SUCC, DISP, ...).</p></li>
-<li><p><em>required.no_STRATA</em> : the number of height strata that 
-    will be used into the succession module.  
-    This number should match with the maximum number of strata possible 
-    defined into the PFG SUCC files. <br /> <br /></p></li>
-</ul></p></dd>
-  <dt>Simulation timing</dt><dd><p><ul>
-<li><p><em>required.simul_duration</em> : the duration of simulation 
-    (<em>in years</em>)</p></li>
-<li><p><em>required.seeding_duration</em> : the duration of seeding 
-    (<em>in years</em>)</p></li>
-<li><p><em>required.seeding_timestep</em> : the time interval at which 
-    occurs the seeding, and until the seeding duration is not over 
-    (<em>in years</em>)</p></li>
-<li><p><em>required.seeding_input</em> : the number of seeds dispersed 
-    for each PFG at each time step, and until the seeding duration is 
-    not over <br /> <br /></p></li>
-</ul></p></dd>
+    <p>The <strong>core module</strong> of <code>FATE-HD</code> requires several parameters to 
+define general characteristics of the simulation :</p>
+<dl'>
+  <dt>Studied system</dt><dd><p><br />
+  <dl'>
+    <dt>no_PFG</dt><dd><p>the number of plant functional groups that will be 
+    included into the simulation. <br /> This number should match with the 
+    number of files that will be given to parameterize the different 
+    activated modules with the characteristics of each group (<code class="file">SUCC</code>, 
+    <code class="file">DISP</code>, ...).</p></dd>
+    <dt>no_STRATA</dt><dd><p>the number of height strata that will be used into the 
+    succession module. <br /> This number should match with the maximum number 
+    of strata possible defined into the PFG <code class="file">SUCC</code> files.</p></dd></dl></p></dd>
+  <dt>Simulation timing</dt><dd><p><br />
+  <dl'>
+    <dt>simul_duration</dt><dd><p>the duration of simulation (<em>in years</em>)</p></dd>
+    <dt>seeding_duration</dt><dd><p>the duration of seeding (<em>in years</em>)</p></dd>
+    <dt>seeding_timestep</dt><dd><p>the time interval at which occurs the seeding, 
+    and until the seeding duration is not over (<em>in years</em>)</p></dd>
+    <dt>seeding_input</dt><dd><p>the number of seeds dispersed for each PFG at each 
+    time step, and until the seeding duration is not over <br /> <br /></p></dd></dl></p></dd>
 
 </dl>
 
 
-<p>The other modules of <code>FATE-HD</code> can be activated within this file, and 
-if so, some additional parameters will be required :</p>
-<dl class='dl-horizontal'>
-  <dt>LIGHT</dt><dd><p>= to influence seed recruitment and plant mortality 
-  according to PFG preferences for light conditions (see 
+<p>The <strong>other modules</strong> of <code>FATE-HD</code> can be activated within this 
+file, and if so, some additional parameters will be required :</p>
+<dl'>
+  <dt>LIGHT</dt><dd><p>= to influence seed recruitment and plant mortality according 
+  to PFG preferences for light conditions <br /> (see 
   <code><a href='PRE_FATE.params_PFGlight.html'>PRE_FATE.params_PFGlight</a></code>)<br />
-  = light resources are calculated as a proxy of PFG abundances
-  within each height stratum <br />
-  <ul>
-<li><p>To transform PFG <br /> abundances into <br /> light resources
-    $$abund &lt; \text{LIGHT.thresh_medium} \Leftrightarrow Light = High$$
-    $$abund &gt; \text{LIGHT.thresh_medium } \&amp; \\
-    abund &lt; \text{LIGHT.thresh_low} \Leftrightarrow Light = Medium$$
-    $$abund &gt; \text{LIGHT.thresh_low} \Leftrightarrow Light = Low$$</p></li>
-</ul>
-  <br /> <em>As light resources are directly obtained from PFG abundances, 
+  = light resources are calculated as a proxy of PFG abundances within each 
+  height stratum <br /> <br />
+  To transform PFG abundances into light resources :
+  $$abund_{\text{ PFG}_{all}\text{, }\text{Stratum}_k} &lt; 
+  \text{LIGHT.thresh_medium} \;\; \Leftrightarrow \;\; 
+  light_{\text{ Stratum}_k} = \text{High}$$  $$\text{LIGHT.thresh_medium } &lt; 
+  abund_{\text{ PFG}_{all}\text{, }\text{Stratum}_k} &lt; 
+  \text{LIGHT.thresh_low} \\ \Leftrightarrow \;\; 
+  light_{\text{ Stratum}_k} = \text{Medium}$$  $$abund_{\text{ PFG}_{all}\text{, }\text{Stratum}_k} &gt; 
+  \text{LIGHT.thresh_low} \;\; \Leftrightarrow \;\; 
+  light_{\text{ Stratum}_k} = \text{Low}$$
+  <em>As light resources are directly obtained from PFG abundances, 
   <code>LIGHT.thresh_medium</code> and <code>LIGHT.thresh_low</code> parameters should 
   be on the same scale than <code>required.max_abund_low</code>, 
   <code>required.max_abund_medium</code> and <code>required.max_abund_high</code> 
-  parameters from the core module.</em>
-  <br /> <br /></p></dd>
+  parameters from the core module.</em> <br /> <br /></p></dd>
   <dt>SOIL</dt><dd><p>= to influence seed recruitment and plant mortality 
-  according to PFG preferences for soil conditions (see 
-  <code><a href='PRE_FATE.params_PFGsoil.html'>PRE_FATE.params_PFGsoil</a></code>)<br />
+  according to PFG preferences for soil conditions <br /> (see 
+  <code><a href='PRE_FATE.params_PFGsoil.html'>PRE_FATE.params_PFGsoil</a></code>) <br />
   = soil composition is calculated as the weighted mean of each PFG's 
   contribution with a possible retention of the soil value of the previous 
   simulation year 
-  $$Soil_n + \text{coeffRet} * (Soil_{n-1} - Soil_n)$$
+  $$Soil_y + \text{SOIL.retention} * (Soil_{y-1} - Soil_y)$$
   with
-  $$Soil_n =  \sum abund_{\text{PFG}_i, n} * \text{contrib}_i$$
+  $$Soil_y =  \sum abund_{\text{ PFG}_i\text{, }y} * 
+  \text{contrib}_{\text{ PFG}_i}$$
   <br /> <br /></p></dd>
   <dt>DISPERSAL</dt><dd><p>= to allow plants to disperse seeds according to 3 
-  user-defined distances (see <code><a href='PRE_FATE.params_PFGdispersal.html'>PRE_FATE.params_PFGdispersal</a></code>)
-  <ul>
-<li><p><em>DISPERSAL.mode</em> : three modes of dispersal are available :</p><ol>
-<li><p><em>uniform kernel [1]</em> : homogeneous dispersal within the 
-      <code>d50</code>, <code>d99</code> and <code>ldd</code> circles</p></li>
-<li><p><em>exponential kernel [2]</em> : seeds are dispersed within 
-      each concentric circle (<code>d50</code>, <code>d99</code> and <code>ldd</code>) 
-      according to a decreasing exponential density law (lambda = 1)</p></li>
-<li><p><em>exponential kernel with probability [3]</em> : seeds are 
-      dispersed within each concentric circle (<code>d50</code>, <code>d99</code> and 
-      <code>ldd</code>) according to a decreasing exponential density law 
-      (lambda = 1) and a continuous decreasing probability with distance</p></li>
-<li><p><em>homogeneous dispersal <br /> EVERYWHERE</em> : 
-      <em>(!not available YET!)</em> <br /> <br /></p></li>
-</ol></li>
-</ul></p></dd>
+  user-defined distances <br /> (see <code><a href='PRE_FATE.params_PFGdispersal.html'>PRE_FATE.params_PFGdispersal</a></code>)
+  <br /> <br /> Three modes of dispersal (<code>DISPERSAL.mode</code>) are available :
+    <ol>
+<li><p><em>packets kernel</em> :</p><ul>
+<li><p>homogeneous dispersal of 50% of the seeds within the 
+        <code>d50</code> circle</p></li>
+<li><p>dispersal of 49% of the seeds within the <code>d99 - d50</code> 
+        ring with the same concentration as in the first circle but by pairs 
+        of pixel (see <em>Boulangeat et al, 2014</em>)</p></li>
+<li><p>dispersal of 1% of the seeds within the <code>ldd - d99</code> ring 
+        into one random pixel</p></li>
+</ul></li>
+<li><p><em>exponential kernel</em> : seeds are dispersed within each 
+      concentric circle (<code>d50</code>, <code>d99</code> and <code>ldd</code>) according to 
+      a decreasing exponential density law (lambda = 1)</p></li>
+<li><p><em>exponential kernel with probability</em> : seeds are dispersed 
+      within each concentric circle (<code>d50</code>, <code>d99</code> and <code>ldd</code>) 
+      according to a decreasing exponential density law (lambda = 1) and a 
+      continuous decreasing probability with distance <br /> <br /></p></li>
+</ol></p></dd>
   <dt>HABITAT SUITABILITY</dt><dd><p>= to influence plants fecundity and seed 
   recruitment according to PFG preferences for habitat conditions <br />
   = filter based on maps given for each PFG within the 
-  <em>Simul_parameters</em> file with the <code>PFG_HAB_MASK</code> flag (see 
-  <code><a href='PRE_FATE.params_simulParameters.html'>PRE_FATE.params_simulParameters</a></code>). <br /> <br />
-  These maps must contain values between 0 and 1 corresponding to the 
-  probability of presence of the group in each pixel. Each year (timestep), 
-  this value will be compared to a reference value, and if superior, the 
-  PFG will be able to grow and survive.
-  <ul>
-<li><p><em>HABSUIT.ref_option</em> : the habitat suitability reference 
-    value can be set in two possible ways :</p><ol>
+  <em>Simul_parameters</em> file with the <code>PFG_HAB_MASK</code> flag <br /> (see 
+  <code><a href='PRE_FATE.params_simulParameters.html'>PRE_FATE.params_simulParameters</a></code>) <br /> <br />
+  These maps must contain values between <code>0</code> and <code>1</code> corresponding 
+  to the probability of presence of the PFG in each pixel. Each year 
+  (timestep), this value will be compared to a reference value, and if 
+  superior, the PFG will be able to grow and survive. <br />
+  Two methods to define this habitat suitability reference value are 
+  available (<code>HABSUIT.ref_option</code>) :
+    <ol>
 <li><p><em>random</em> : for each pixel, the reference value is drawn 
       from a uniform distribution, and the same value is used for each PFG 
       within this pixel.</p></li>
@@ -571,64 +587,87 @@ if so, some additional parameters will be required :</p>
       each pixel and for each PFG, the reference value is drawn from a 
       normal distribution of parameters the mean and standard deviation of 
       the PFG. <br /> <br /></p></li>
-</ol></li>
-</ul></p></dd>
+</ol></p></dd>
   <dt>DISTURBANCES</dt><dd><p>= to influence plant mortality and / or resprouting 
-  according to PFG tolerances to these events (see 
+  according to PFG tolerances to these events <br /> (see 
   <code><a href='PRE_FATE.params_PFGdisturbance.html'>PRE_FATE.params_PFGdisturbance</a></code>)<br />
   = defined for events such as mowing, grazing, but also urbanization, 
-  crops, etc. <br /> <br />
-  The impact zone is defined with a mask (map with 0 or 1) and the user 
-  will have to define how each PFG will be impacted depending on age and 
-  life stage. 
-  <ul>
-<li><p><em>DIST.no</em> : the number of different disturbances</p></li>
-<li><p><em>DIST.no_sub</em> : the number of way a PFG could react to a 
-    perturbation</p></li>
-<li><p><em>DIST.freq</em> : the frequency of each disturbance 
-    (<em>in years</em>) <br /> <br /></p></li>
-</ul></p></dd>
+  crops, etc <br />
+  = filter based on maps given for each disturbance within the 
+  <em>Simul_parameters</em> file with the <code>DIST_MASK</code> flag <br /> (see 
+  <code><a href='PRE_FATE.params_simulParameters.html'>PRE_FATE.params_simulParameters</a></code>) <br /> <br />
+  These maps, containing either <code>0</code> or <code>1</code>, define the impact zone 
+  of each perturbation, and the user will have to define how each PFG will 
+  be impacted depending on age and life stage. 
+  <dl'>
+    <dt>DIST.no</dt><dd><p>the number of different disturbances</p></dd>
+    <dt>DIST.no_sub</dt><dd><p>the number of way a PFG could react to a 
+    perturbation</p></dd>
+    <dt>DIST.freq</dt><dd><p>the frequency of each disturbance 
+    (<em>in years</em>) <br /> <br /></p></dd></dl></p></dd>
   <dt>DROUGHT</dt><dd><p>= to experience extreme events with a direct and a 
-  delayed response on PFG. <br /> <br />
-  The PFG's past drought exposure is compared to current moisture values as 
-  a proxy of drought index. Developed canopy closure helps to reduce these 
-  values. Each PFG is impacted if submitted one year to drought, and also 
-  (and more consequently) if submitted several years in a row.
-  <ul>
-<li><p><em>DROUGHT.no_sub</em> : the number of way a PFG could react to a 
-    perturbation</p></li>
-<li><p><em>DROUGHT.chrono_post</em> : if post-drought effects will occur 
-    previously to succession (0) or after (1)</p></li>
-<li><p><em>DROUGHT.chrono_curr</em> : if current-drought effects will 
-    occur previously to succession (0) or after (1) <br /> <br /></p></li>
-</ul></p></dd>
-  <dt>HABITAT STABILITY</dt><dd><p>= to evaluate the stability of different 
-  habitats through the evolution of their PFG composition <br /> <br />
-  The habitat distribution is given with a categorical map with each value 
-  corresponding to a specific habitat. Every year, the abundance of each 
-  PFG within each habitat is recorded, as well as the evenness of the 
-  habitat :
-  $$
-  \text{evenness} = - \frac{\Sigma(\text{PFG.proportion} * 
-  log(\text{PFG.proportion}))}{log(\text{no.PFG} - 1)}
-  $$
-  with
-  $$\text{PFG.proportion} = \frac{abund_{\text{PFG}_i, \text{Habitat}_j}}
-  {abund_{allPFG, \text{Habitat}_j}}$$
-  Every 5 years, a stability check is done to see if the abundance or the 
-  evenness have values out of the usual distribution.
-  <ul>
-<li><p><em>HABSTAB.no_hab</em> : the number of different habitats <br /> <br /></p></li>
-</ul></p></dd>
-  <dt>INVASIVE <br /> INTRODUCTION</dt><dd><p>= to add new PFG during the simulation. 
-  <br /> <br />
-  The introduction areas are defined with a mask (map with 0 or 1). If the 
-  habitat suitability filter is on, suitability maps will also be needed 
-  for these new groups.
-  <ul>
-<li><p><em>ALIEN.freq</em> : the frequency of each introduction 
-    (<em>in years</em>)</p></li>
-</ul></p></dd>
+  delayed response on PFG <br />
+  = based on a map given within the <em>Simul_parameters</em> file with the 
+  <code>DROUGHT_MASK</code> flag <br /> (see 
+  <code><a href='PRE_FATE.params_simulParameters.html'>PRE_FATE.params_simulParameters</a></code>) <br /> <br />
+  This map must contain values representing proxies for drought intensity, 
+  like moisture values, in the sense that the lower the values, the higher 
+  the chance of experiencing a drought event. Developed canopy closure helps 
+  to reduce these values. The intensity of the drought event (moderate or 
+  severe) is determined based on thresholds defined for each PFG according 
+  to, for example, their moisture preference, as well as the number of 
+  cumulated consecutive years during which the PFG experienced a drought 
+  (see <code><a href='PRE_FATE.params_PFGdrought.html'>PRE_FATE.params_PFGdrought</a></code>).
+  <dl'>
+    <dt>no drought</dt><dd><p>if \(di_y &gt; \text{threshold.MOD}_{\text{ PFG}_i}\), 
+    the counter of cumulated consecutive years of drought experienced by the 
+    PFG will decrease : $$\text{counter}_{\text{ PFG}_i} = 
+    \text{counter}_{\text{ PFG}_i} - 
+    \text{counter.RECOVERY}_{\text{ PFG}_i}$$</p></dd>
+    <dt>moderate drought</dt><dd><p><ul>
+<li><p>if \(\text{threshold.SEV}_{\text{ PFG}_i} &lt; di_y &lt; 
+      \text{threshold.MOD}_{\text{ PFG}_i}\)</p></li>
+<li><p>if \(di_y &lt; \text{threshold.SEV}_{\text{ PFG}_i} \;\; 
+      \text{  &amp;  } \;\; \text{counter}_{\text{ PFG}_i} = 0\)</p></li>
+</ul>
+    then fecundity and recruitment are set to <code>0</code> for this year, and 
+    counter is incremented : \(\text{counter}_{\text{ PFG}_i} ++\)</p></dd>
+    <dt>severe drought</dt><dd><p><ul>
+<li><p>if \(di_y &lt; \text{threshold.SEV}_{\text{ PFG}_i} \;\; 
+      \text{  &amp;  } \;\; \text{counter.SENS}_{\text{ PFG}_i} \leq 
+      \text{counter}_{\text{ PFG}_i} &lt; \text{counter.CUM}_{\text{ PFG}_i}\)</p></li>
+<li><p>if \(\text{counter}_{\text{ PFG}_i} \geq 
+      \text{counter.CUM}_{\text{ PFG}_i}\)</p></li>
+</ul>
+    then PFG experiences <code>immediate</code> drought-related mortality ; 
+    and the year after, fecundity and recruitment will be set to <code>0</code> 
+    and PFG will experience <code>delayed</code> drought-related mortality. <br /> <br /></p></dd></dl>
+  As for the disturbances module, the user will have to define how each PFG 
+  will be impacted depending on age and life stage. 
+  <dl'>
+    <dt>(<em>DROUGHT.no</em>)</dt><dd><p><em>!not required!</em> <br /> = 2, the 
+    <code>immediate</code> and <code>delayed</code> responses</p></dd>
+    <dt>DROUGHT.no_sub</dt><dd><p>the number of way a PFG could react to each of 
+    these two perturbations</p></dd>
+    <dt>(<em>DROUGHT.freq</em>)</dt><dd><p><em>!not required!</em> <br /> the map of 
+    drought intensity proxy defined within the <em>Simul_parameters</em> file 
+    with the <code>DROUGHT_MASK</code> flag, as well as the 
+    <code>DROUGHT_CHANGEMASK_YEARS</code> and <code>DROUGHT_CHANGEMASK_FILES</code> 
+    flags, make it possible to manage the frequency and the variation of 
+    drought values (see <code><a href='PRE_FATE.params_simulParameters.html'>PRE_FATE.params_simulParameters</a></code>)
+    <br /> <br /></p></dd></dl></p></dd>
+  <dt>INVASIVE <br /> INTRODUCTION</dt><dd><p>= to add new PFG during the simulation <br />
+  = defined for events such as invasive introduction, colonization, but also 
+  new crops development, reintroduction, etc <br />
+  = filter based on maps given for each PFG within the 
+  <em>Simul_parameters</em> file with the <code>PFG_MASK_ALIENS</code> flag <br /> (see 
+  <code><a href='PRE_FATE.params_simulParameters.html'>PRE_FATE.params_simulParameters</a></code>) <br /> <br />
+  These maps, containing either <code>0</code> or <code>1</code>, define the 
+  introduction areas. <br /> If the habitat suitability filter is on, 
+  suitability maps will also be needed for these new groups.
+  <dl'>
+    <dt>ALIEN.no</dt><dd><p>the number of different introductions</p></dd>
+    <dt>ALIEN.freq</dt><dd><p>the frequency of each introduction (<em>in years</em>)</p></dd></dl></p></dd>
 
 </dl>
 
@@ -640,6 +679,7 @@ if so, some additional parameters will be required :</p>
 <code><a href='PRE_FATE.params_PFGsoil.html'>PRE_FATE.params_PFGsoil</a></code>,
 <code><a href='PRE_FATE.params_PFGdispersal.html'>PRE_FATE.params_PFGdispersal</a></code>,
 <code><a href='PRE_FATE.params_PFGdisturbance.html'>PRE_FATE.params_PFGdisturbance</a></code>,
+<code><a href='PRE_FATE.params_PFGdrought.html'>PRE_FATE.params_PFGdrought</a></code>,
 <code><a href='PRE_FATE.params_simulParameters.html'>PRE_FATE.params_simulParameters</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -650,7 +690,7 @@ if so, some additional parameters will be required :</p>
 <span class='co'>## Create a Global_parameters file</span>
 <span class='fu'>PRE_FATE.params_globalParameters</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
                                  , <span class='kw'>required.no_PFG</span> <span class='kw'>=</span> <span class='fl'>3</span>
-                                 , <span class='kw'>required.no_STRATA</span> <span class='kw'>=</span> <span class='fl'>5</span>
+                                 , <span class='kw'>required.no_strata</span> <span class='kw'>=</span> <span class='fl'>5</span>
                                  , <span class='kw'>required.simul_duration</span> <span class='kw'>=</span> <span class='fl'>100</span>
                                  , <span class='kw'>required.seeding_duration</span> <span class='kw'>=</span> <span class='fl'>10</span>
                                  , <span class='kw'>required.seeding_timestep</span> <span class='kw'>=</span> <span class='fl'>1</span>
@@ -670,7 +710,7 @@ if so, some additional parameters will be required :</p>
 <span class='co'>## Create SEVERAL Global_parameters files</span>
 <span class='fu'>PRE_FATE.params_globalParameters</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
                                  , <span class='kw'>required.no_PFG</span> <span class='kw'>=</span> <span class='fl'>3</span>
-                                 , <span class='kw'>required.no_STRATA</span> <span class='kw'>=</span> <span class='fl'>5</span>
+                                 , <span class='kw'>required.no_strata</span> <span class='kw'>=</span> <span class='fl'>5</span>
                                  , <span class='kw'>required.simul_duration</span> <span class='kw'>=</span> <span class='fl'>100</span>
                                  , <span class='kw'>required.seeding_duration</span> <span class='kw'>=</span> <span class='fl'>10</span>
                                  , <span class='kw'>required.seeding_timestep</span> <span class='kw'>=</span> <span class='fl'>1</span>
@@ -701,8 +741,8 @@ if so, some additional parameters will be required :</p>
 
 <span class='co'>## Create a Global_parameters file</span>
 <span class='fu'>PRE_FATE.params_globalParameters</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_PNE"</span>
-                                 , <span class='kw'>required.no_PFG</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"NB_FG"</span>]
-                                 , <span class='kw'>required.no_STRATA</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"NB_STRATUM"</span>]
+                                 , <span class='kw'>required.no_PFG</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"NO_PFG"</span>]
+                                 , <span class='kw'>required.no_strata</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"NO_STRATA"</span>]
                                  , <span class='kw'>required.simul_duration</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"SIMULATION_DURATION"</span>]
                                  , <span class='kw'>required.seeding_duration</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"SEEDING_DURATION"</span>]
                                  , <span class='kw'>required.seeding_timestep</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"SEEDING_TIMESTEP"</span>]
@@ -724,18 +764,10 @@ if so, some additional parameters will be required :</p>
                                                    , <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"DIST.no"</span>])
                                  )</pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#details">Details</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Maya Guéguen</p>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -746,7 +778,7 @@ if so, some additional parameters will be required :</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
 </div>
 
       </footer>

@@ -10,23 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -38,7 +42,6 @@
 <meta property="og:title" content="Selection of dominant species from abundance releves — PRE_FATE.selectDominant" />
 <meta property="og:description" content="This script is designed to select dominant species from 
 abundance records, and habitat if the information is available." />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -56,7 +59,7 @@ abundance records, and habitat if the information is available." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -70,7 +73,7 @@ abundance records, and habitat if the information is available." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RFate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.9000</span>
       </span>
     </div>
 
@@ -151,38 +154,8 @@ abundance records, and habitat if the information is available." />
     Reference
   </a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/fate-hd_tutorial_0_modelling_framework.html">FATE-HD tutorial 0 - Modelling framework</a>
-    </li>
-    <li>
-      <a href="../articles/fate-hd_tutorial_0_publications.html">FATE-HD tutorial 0 - Publications</a>
-    </li>
-    <li>
-      <a href="../articles/fate-hd_tutorial_1_PFG.html">FATE-HD tutorial 1 - Principle of PFG</a>
-    </li>
-    <li>
-      <a href="../articles/fate-hd_tutorial_2_RUN_SIMULATION.html">FATE-HD tutorial 2 - Run a simulation</a>
-    </li>
-    <li>
-      <a href="../articles/fate-hd_tutorial_3_MODULES.html">FATE-HD tutorial 3 - Use a module</a>
-    </li>
-    <li>
-      <a href="../articles/rfate_tutorial_1_PFG.html">&lt;font color='#068f96'&gt;&lt;i class='fa fa-battery-quarter'&gt;&lt;/i&gt; `PRE_FATE` - build Plant Functional Groups (PFG)&lt;/font&gt;</a>
-    </li>
-    <li>
-      <a href="../articles/rfate_tutorial_2_params.html">&lt;font color='#068f96'&gt; &lt;i class='fa fa-battery-half'&gt;&lt;/i&gt; `PRE_FATE` - build parameter files &lt;/font&gt;</a>
-    </li>
-    <li>
-      <a href="../articles/rfate_tutorial_3_graphics.html">&lt;font color='#068f96'&gt; &lt;i class='fa fa-battery-three-quarters'&gt;&lt;/i&gt; `POST_FATE` - graphics &lt;/font&gt;</a>
-    </li>
-  </ul>
+<li>
+  <a href="../articles/index.html">Articles</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -222,168 +195,248 @@ abundance records, and habitat if the information is available." />
 abundance records, and habitat if the information is available.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>PRE_FATE.selectDominant</span>(<span class='kw'>mat.site.species.abund</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>sites</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>species</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>abund</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>habitat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>selectionRule.quanti</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>selectionRule.min_mean_abund</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>selectionRule.min_no_abund_over25</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>doHabitatSelection</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>selectionRule.min_percent_habitat</span> <span class='kw'>=</span> <span class='fl'>0.05</span>,
-  <span class='kw'>selectionRule.min_no_habitat</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>opt.doPlot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>PRE_FATE.selectDominant</span>(
+  <span class='no'>mat.observations</span>,
+  <span class='kw'>doRuleA</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>rule.A1</span> <span class='kw'>=</span> <span class='fl'>10</span>,
+  <span class='kw'>rule.A2_quantile</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
+  <span class='kw'>doRuleB</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>rule.B1_percentage</span> <span class='kw'>=</span> <span class='fl'>0.25</span>,
+  <span class='kw'>rule.B1_number</span> <span class='kw'>=</span> <span class='fl'>5</span>,
+  <span class='kw'>rule.B2</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
+  <span class='kw'>doRuleC</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>opt.doRobustness</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>opt.robustness_percent</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>0.1</span>, <span class='fl'>0.9</span>, <span class='fl'>0.1</span>),
+  <span class='kw'>opt.robustness_rep</span> <span class='kw'>=</span> <span class='fl'>10</span>,
+  <span class='kw'>opt.doPlot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>mat.site.species.abund</th>
-      <td><p>a <code>data.frame</code> with at least 3 columns : 
-sites ID, species ID, abundance values as frequence values (e.g. Braun 
-Blanquet) with <code>NA</code> when no information, habitat ID (optional)</p></td>
+      <th>mat.observations</th>
+      <td><p>a <code>data.frame</code> with at least 3 columns : <br />
+<code>sites</code>, <code>species</code>, <code>abund</code>
+<br /> (<em>and optionally, <code>habitat</code></em>) 
+<br /> (see <code><a href='PRE_FATE.selectDominant#details'>Details</a></code>)</p></td>
     </tr>
     <tr>
-      <th>sites</th>
-      <td><p>a <code>vector</code> with sites ID</p></td>
+      <th>doRuleA</th>
+      <td><p>default <code>TRUE</code>. <br /> If <code>TRUE</code>, selection 
+is done including constraints on number of occurrences</p></td>
     </tr>
     <tr>
-      <th>species</th>
-      <td><p>a <code>vector</code> with species ID</p></td>
+      <th>rule.A1</th>
+      <td><p>default <code>10</code>. <br /> If <code>doRuleA = TRUE</code> or 
+<code>doRuleC = TRUE</code>, minimum number of releves required for each species</p></td>
     </tr>
     <tr>
-      <th>abund</th>
-      <td><p>a <code>vector</code> with abundance values (e.g. Braun Blanquet) 
-with <code>NA</code> when no information</p></td>
+      <th>rule.A2_quantile</th>
+      <td><p>default <code>0.9</code>. <br /> If <code>doRuleA = TRUE</code> 
+or <code>doRuleC = TRUE</code>, quantile corresponding to the minimum number of 
+total occurrences required for each species (between <code>0</code> and <code>1</code>)</p></td>
     </tr>
     <tr>
-      <th>habitat</th>
-      <td><p>a <code>vector</code> with habitat ID</p></td>
+      <th>doRuleB</th>
+      <td><p>default <code>FALSE</code>. <br /> If <code>TRUE</code>, selection is done 
+including constraints on relative abundances</p></td>
     </tr>
     <tr>
-      <th>selectionRule.quanti</th>
-      <td><p>default <code>0</code>. Minimum quantile of total 
-number of sites that must occupy the species (between <code>0</code> and <code>1</code>)</p></td>
+      <th>rule.B1_percentage</th>
+      <td><p>default <code>0.25</code>. <br /> If <code>doRuleB = TRUE</code>, 
+minimum relative abundance required for each species in at least 
+<code>rule.B1_number</code> sites (between <code>0</code> and <code>1</code>)</p></td>
     </tr>
     <tr>
-      <th>selectionRule.min_mean_abund</th>
-      <td><p>default <code>0</code>. Minimal average 
-abundance of the species</p></td>
+      <th>rule.B1_number</th>
+      <td><p>default <code>5</code>. <br /> If <code>doRuleB = TRUE</code>, 
+minimum number of sites in which each species has relative abundance 
+<code>&gt;= rule.B1_percentage</code></p></td>
     </tr>
     <tr>
-      <th>selectionRule.min_no_abund_over25</th>
-      <td><p>default <code>0</code>. Minimum number 
-of sites where species is dominant (<code>&gt;= 25 %</code> of coverage)</p></td>
+      <th>rule.B2</th>
+      <td><p>default <code>0.5</code>. <br /> If <code>doRuleB = TRUE</code>, minimum 
+average relative abundance required for each species (between <code>0</code> and 
+<code>1</code>)</p></td>
     </tr>
     <tr>
-      <th>doHabitatSelection</th>
-      <td><p>default <code>FALSE</code>. If <code>TRUE</code>, selection 
-is also done including constraints on habitat class</p></td>
+      <th>doRuleC</th>
+      <td><p>default <code>FALSE</code>. <br /> If <code>TRUE</code>, selection is done 
+including constraints on number of occurrences at the habitat level (with 
+the values of <code>rule.A1</code> and <code>rule.A2_quantile</code>)</p></td>
     </tr>
     <tr>
-      <th>selectionRule.min_percent_habitat</th>
-      <td><p>default <code>0.05</code> 
-(<em>optional</em>). Minimum percentage of habitat class occupied by the 
-species (between <code>0</code> and <code>1</code>)</p></td>
+      <th>opt.doRobustness</th>
+      <td><p>(<em>optional</em>) default <code>FALSE</code>. <br /> 
+If <code>TRUE</code>, selection is also done on subsets of 
+<code>mat.observations</code>, keeping only a percentage of releves or sites, to 
+visualize the robustness of the selection</p></td>
     </tr>
     <tr>
-      <th>selectionRule.min_no_habitat</th>
-      <td><p>default <code>5</code> (<em>optional</em>). 
-Minimum number of sites of specific habitat occupied by the species</p></td>
+      <th>opt.robustness_percent</th>
+      <td><p>(<em>optional</em>) default <code><a href='https://rdrr.io/r/base/c.html'>c(0.1, 0.2, 
+0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9)</a></code>. <br /> If <code>opt.doRobustness = TRUE</code>, 
+<code>vector</code> containing values between <code>0</code> and <code>1</code> corresponding 
+to the percentages with which to build subsets to evaluate robustness</p></td>
+    </tr>
+    <tr>
+      <th>opt.robustness_rep</th>
+      <td><p>(<em>optional</em>) default <code>10</code>. <br /> If 
+<code>opt.doRobustness = TRUE</code>, number of repetitions for each percentage 
+value defined by <code>opt.robustness_percent</code> to evaluate robustness</p></td>
     </tr>
     <tr>
       <th>opt.doPlot</th>
-      <td><p>default <code>TRUE</code> (<em>optional</em>). If <code>TRUE</code>, 
-plot(s) will be processed, otherwise only the calculation and 
-reorganization of outputs will occur, be saved and returned.</p></td>
+      <td><p>(<em>optional</em>) default <code>TRUE</code>. <br /> If <code>TRUE</code>, 
+plot(s) will be processed, otherwise only the calculation and reorganization 
+of outputs will occur, be saved and returned.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>data.frame</code> with all the species selected and the values of 
-parameters used to make the selection :</p>
-<dl class='dl-horizontal'>
-  <dt>stat.no_sites_recorded</dt><dd><p>number of sites with information
-  (presence-absence or abundance)</p></dd>
-  <dt>stat.no_sites_abund</dt><dd><p>number of sites with abundance information</p></dd>
-  <dt>stat.abund_median</dt><dd><p>median abundance (coverage percentage)</p></dd>
-  <dt>stat.abund_mean</dt><dd><p>mean abundance (coverage percentage)</p></dd>
-  <dt>stat.abund_max</dt><dd><p>maximal abundance (coverage percentage)</p></dd>
-  <dt>stat.no_sites <br /> abund_max</dt><dd><p>number of sites with maximal abundance</p></dd>
-  <dt>stat.no_sites <br /> abund_over25</dt><dd><p>number of sites with abundance 
-  <code>&gt;= 25</code></p></dd>
-  <dt>SELECTION</dt><dd><p>dataset in which the species has been selected as 
-  dominant <br /> (global = all data, or habitat, or global + habitat...)</p></dd>
+    <p>A <code>list</code> containing one <code>vector</code>, two <code>data.frame</code> 
+objects with the following columns, and up to five <code>ggplot2</code> objects :</p>
+<dl'>
+  <dt>species.selected</dt><dd><p>the names of the selected species</p></dd>
+  <dt>tab.rules</dt><dd><p><br />
+    <dl'>
+      <dt><code>A1,A2,B1,B2, hab</code></dt><dd><p>if the rule has been used, if the 
+      species fullfills this condition or not</p></dd>
+      <dt><code>species</code></dt><dd><p>the concerned species</p></dd>
+      <dt><code>SELECTION</code></dt><dd><p>the summary of rules with which the species 
+      was selected, or not</p></dd>
+      <dt><code>SELECTED</code></dt><dd><p><code>TRUE</code> if the species fullfills <code>A1</code> 
+      and at least one other condition, <code>FALSE</code> otherwise</p></dd></dl></p></dd>
+  <dt>tab.robustness</dt><dd><p><dl'>
+      <dt><code>...</code></dt><dd><p>same as <code>tab.rules</code></p></dd>
+      <dt><code>type</code></dt><dd><p>the type of subset (either <code>releves</code> or 
+      <code>sites</code>)</p></dd>
+      <dt><code>percent</code></dt><dd><p>the concerned percentage of values extraction</p></dd>
+      <dt><code>rep</code></dt><dd><p>the repetition ID</p></dd></dl></p></dd>
+  <dt>plot.A</dt><dd><p><code>ggplot2</code> object, representing the selection of 
+  species according to rules A1 and A2</p></dd>
+  <dt>plot.B</dt><dd><p><code>ggplot2</code> object, representing the selection of 
+  species according to rules B</p></dd>
+  <dt>plot.C</dt><dd><p><code>ggplot2</code> object, representing the selection of 
+  species according to rules C (A1 and A2 per habitat)</p></dd>
+  <dt>plot.pco</dt><dd><p><code>ggplot2</code> object, representing selected species with 
+  Principal Coordinates Analysis (see <code><a href='https://rdrr.io/pkg/ade4/man/dudi.pco.html'>dudi.pco</a></code>)</p></dd>
+  <dt>plot.robustness</dt><dd><p><code>ggplot2</code> object, representing the robustness 
+  of the selection of species for each rule <br /> <br /></p></dd>
 
 </dl>
+
 
 
 <p>The information is written in 
-<code>PRE_FATE_DOMINANT_species_selected_[...].csv</code> files :</p><dl class='dl-horizontal'>
-  <dt><code class="file">COMPLETE_TABLE</code></dt><dd><p>the complete
-  table of selected species with all the statistics described above</p></dd>
-  <dt><code class="file">SPECIES_ONLY</code></dt><dd><p>only the names /
-  ID of the species selected</p></dd>
+<code class="file">PRE_FATE_DOMINANT_[...].csv</code> files :</p><dl'>
+  <dt><code class="file">TABLE_COMPLETE</code></dt><dd><p>the complete table of all species and the 
+  selection rules described above (<code>tab.rules</code>)</p></dd>
+  <dt><code class="file">TABLE_SPECIES</code></dt><dd><p>only the names / ID of the species selected</p></dd>
 
 </dl>
 
-<p>Two <code>PRE_FATE_DOMINANT_[...].pdf</code> files are also created :</p><dl class='dl-horizontal'>
-  <dt><code class="file">STEP_1 <br /> selectionCriteria</code></dt><dd><p>to visualize the values of 
-  species metrics, and the criteria used to make the selection</p></dd>
-  <dt><code class="file">STEP_2 <br /> selectedSpecies</code></dt><dd><p>to visualize the values of 
-  species metrics, for the selected dominant species</p></dd>
+<p>Up to six <code class="file">PRE_FATE_DOMINANT_[...].pdf</code> files are also created :</p><dl'>
+  <dt><code class="file">STEP_1_rule_A</code></dt><dd><p><strong><code class="file">STEP_2_selectedSpecies_PHYLO</code></strong></p></dd>
+  <dt><code class="file">STEP_1_rule_B</code></dt><dd><p><strong><code class="file">STEP_2_selectedSpecies_PCO</code></strong></p></dd>
+  <dt><code class="file">STEP_1_rule_C</code></dt><dd><p><strong><code class="file">STEP_2_selectedSpecies_robustness</code></strong></p></dd>
 
 </dl>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This function provides a way to <strong>select dominant species based on 
-abundance sampling information</strong>. <br />
-This information can be given either directly in the form of a 
-<code>data.frame</code>, or indirectly with a <code>vector</code> for each required 
-information (sites, species, abundance, habitat class - <em>optional</em>).</p>
+presence/abundance sampling information</strong>. <br /> <br /></p>
 
-<p>2 rules are applied to make the species selection :</p>
-<dl class='dl-horizontal'>
-  <dt><strong>1. Presence releves</strong></dt><dd><p><dl class='dl-horizontal'>
-    <dt><strong>on number of sites</strong></dt><dd><p>the species should be found in a 
-    certain number of sites, which corresponds to the quantile 
-    <code>selectionRule.quanti</code> of all the number of records per species 
-    <br /> <em>This should ensure that the selected species are covering all 
-    the studied area (or at least a determining part of it, assuming that 
-    the releves are well distributed over all the zone).</em></p></dd></dl></p></dd>
-  <dt><strong>2. Abundance releves : </strong></dt><dd><p>both conditions must be fullfilled
-  <dl class='dl-horizontal'>
-    <dt><strong>on average abundance</strong></dt><dd><p>the species should have a mean
-    abundance superior or equal to <code>selectionRule.min_mean_abund</code></p></dd>
-    <dt><strong>on dominancy</strong></dt><dd><p>the species should be dominant (i.e. 
-    represent at least <code>25 %</code> of the coverage of the site) in at 
-    least <code>selectionRule.min_no_abund_over25</code> sites</p></dd>
-    <dt></dt><dd><p><em>This should ensure that the selected species, besides 
-    being abundant, are</em> frequently <em>abundant, meaning not ultra 
-    specific to a particular area.</em></p></dd></dl></p></dd>
-
-</dl>
-
-<p>If habitat information is available (e.g. type of environment : urban, 
-desert, grassland... ; type of vegetation : shrubs, forest, alpine 
-grasslands... ; etc), 1 rule with 2 conditions can be added to the 
-selection steps, <em>in order to keep species that are not dominant at 
-the large scale but could be representative of a specific habitat</em> :</p>
-<dl class='dl-horizontal'>
-  <dt><strong>3. Releves per habitat : </strong></dt><dd><p>both conditions must be 
-  fullfilled
-  <dl class='dl-horizontal'>
-    <dt><strong>on occupancy</strong></dt><dd><p>the species should occupy at least 
-    <code>selectionRule.min_percent_habitat</code> % of a landclass</p></dd>
-    <dt><strong>on representation</strong></dt><dd><p>the species should be found in at 
-    least <code>selectionRule.min_no_habitat</code> sites of a landclass</p></dd>
-    <dt></dt><dd><p><em>In the same way than for rule 2., this should allow to 
-    select species that are not globally dominant but that can be 
-    representative of a specific habitat, both in terms of abundance and 
-    dominancy.</em></p></dd></dl></p></dd>
+<p>Three rules can be applied to make the species selection :</p>
+<dl'>
+  <dt>A. Presence releves</dt><dd><p>both conditions must be fullfilled
+  <dl'>
+    <dt>on number of releves</dt><dd><p>the species should be found a minimum 
+    number of times (<code>rule.A1</code>)
+    <br /> <em>This should ensure that the species has been given sufficient 
+    minimum sampling effort. This criterion MUST ALWAYS be fullfilled.</em></p></dd>
+    <dt>on number of sites</dt><dd><p>the species should be found in a certain 
+    number of sites, which corresponds to the quantile 
+    <code>rule.A2_quantile</code> of the total number of records per species 
+    <br /> <em>This should ensure that the species is covering all the 
+    studied area (or at least a determining part of it, assuming that 
+    the releves are well distributed throughout the area).</em></p></dd></dl></p></dd>
+  <dt>B. Abundance releves : </dt><dd><p>at least one of the two conditions is 
+  required
+  <dl'>
+    <dt>on dominancy</dt><dd><p>the species should be dominant (i.e. represent at 
+    least <code>rule.B1_percentage %</code> of the coverage of the site) in at 
+    least <code>rule.B1_number</code> sites
+    <br /> <em>This should ensure the selection of species frequently 
+    abundant.</em></p></dd>
+    <dt>on average abundance</dt><dd><p>the species should have a mean relative
+    abundance superior or equal to <code>rule.B2</code> 
+    <br /> <em>This should ensure the selection of species not frequent but 
+    representative of the sites in which it is found. <br /> <br /></em></p></dd></dl></p></dd>
+  <dt>C. Presence releves <br /> per habitat : </dt><dd><p>If habitat information is 
+  available (e.g. type of environment : urban, desert, grassland... ; type 
+  of vegetation : shrubs, forest, alpine grasslands... ; etc), the same 
+  rules than <strong>A</strong> can be applied but for each habitat.
+  <br /> <em>This should help to keep species that are not dominant at the 
+  large scale but could be representative of a specific habitat. <br /> <br /></em></p></dd>
 
 </dl>
 
+
+<p>A table is created containing for each species whether or not it fullfills 
+the conditions selected, for example :</p>
+<p></p><dl'>
+      <dt></dt><dd><p><strong><code>| ___A1 ___A2 ___B1 ___B2 grass lands |</code></strong></p></dd>
+      <dt></dt><dd><p><code>_______________________________________</code></p></dd>
+      <dt>species a</dt><dd><p><code>| _TRUE FALSE FALSE _TRUE _TRUE FALSE |</code></p></dd>
+      <dt>species b</dt><dd><p><code>| _TRUE _TRUE _TRUE FALSE FALSE FALSE |</code></p></dd>
+      <dt>species c</dt><dd><p><code>| FALSE FALSE FALSE FALSE FALSE _TRUE |</code></p></dd>
+    
+</dl>
+    
+<p>This table is transformed into Euclidean distance matrix (with 
+<code><a href='https://rdrr.io/pkg/FD/man/gowdis.html'>gowdis</a></code> and <code><a href='https://rdrr.io/pkg/ade4/man/quasieuclid.html'>quasieuclid</a></code> functions) <br />
+to cluster and represent species (see 
+<code><a href='PRE_FATE.selectDominant#value'><code>.pdf</code> output files</a></code>) :</p><ul>
+<li><p>through phylogenetic tree (with <code><a href='https://rdrr.io/r/stats/hclust.html'>hclust</a></code> and 
+  <code><a href='https://rdrr.io/pkg/ape/man/as.phylo.html'>as.phylo</a></code> functions)</p></li>
+<li><p>through Principal Component Analysis (with 
+  <code><a href='https://rdrr.io/pkg/ade4/man/dudi.pco.html'>dudi.pco</a></code>)</p></li>
+</ul><p>according to their selection rules :</p><ul>
+<li><p><strong>A2</strong> : spatial dominancy (<em>widespread but poorly 
+  abundant</em>)</p></li>
+<li><p><strong>B1</strong> : local dominancy (<em>relatively abundant or 
+  dominant in a certain number of sites</em>)</p></li>
+<li><p><strong>B2</strong> : local dominancy (<em>not widespread but dominant in 
+  few sites</em>)</p></li>
+<li><p><strong>C</strong> : habitat dominancy (<em>not widespread but dominant in 
+  a specific habitat</em>)</p></li>
+<li><p><strong>A2 &amp; B1</strong> : (<em>widespread and relatively abundant</em>)</p></li>
+<li><p><strong>A2 &amp; B2</strong> : (<em>widespread and dominant in few sites</em>)</p></li>
+<li><p><strong>A2 &amp; B1 &amp; B2</strong> : (<em>widespread and dominant</em>)</p></li>
+<li><p><strong>B1 &amp; B2</strong> : (<em>relatively widespread but dominant</em>) 
+  <br /> <br /></p></li>
+</ul>
+
+<p><strong>NB :</strong> <br /> 
+Species not meeting any criteria or only A1 are considered as 
+"<em>Not selected</em>". <br /> Priority is set to A2, B1 and B2 rules, rather 
+than C. Hence, species selected according to A2, B1 and/or B2 can also meet 
+criterion C while species selected according to C do not meet any of the 
+three criteria. <br /> Species selected according to one (or more) criterion 
+but not meeting criterion A1 are also considered as "<em>Not selected</em>".</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='PRE_FATE.abundBraunBlanquet.html'>PRE_FATE.abundBraunBlanquet</a></code></p></div>
+    <div class='dont-index'><p><code><a href='PRE_FATE.abundBraunBlanquet.html'>PRE_FATE.abundBraunBlanquet</a></code>,
+<code><a href='https://rdrr.io/r/stats/quantile.html'>quantile</a></code>,
+<code><a href='https://rdrr.io/pkg/FD/man/gowdis.html'>gowdis</a></code>,
+<code><a href='https://rdrr.io/pkg/ade4/man/quasieuclid.html'>quasieuclid</a></code>,
+<code><a href='https://rdrr.io/r/stats/hclust.html'>hclust</a></code>,
+<code><a href='https://rdrr.io/pkg/ape/man/as.phylo.html'>as.phylo</a></code>,
+<code><a href='https://rdrr.io/pkg/ade4/man/dudi.pco.html'>dudi.pco</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples">
@@ -399,13 +452,13 @@ the large scale but could be representative of a specific habitat</em> :</p>
 <span class='co'>## EXAMPLE 1 : With default parametrization</span>
 <span class='co'>#########################################################################################</span>
 
-<span class='no'>sp.DOM</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.selectDominant</span>(<span class='kw'>mat.site.species.abund</span> <span class='kw'>=</span> <span class='no'>tab</span>)
+<span class='no'>sp.DOM</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.selectDominant</span>(<span class='kw'>mat.observations</span> <span class='kw'>=</span> <span class='no'>tab</span>)
 
 <span class='co'>#########################################################################################</span>
 <span class='co'>## EXAMPLE 2 : Redefinition of global selection rules</span>
 <span class='co'>#########################################################################################</span>
 
-<span class='no'>sp.DOM</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.selectDominant</span>(<span class='kw'>mat.site.species.abund</span> <span class='kw'>=</span> <span class='no'>tab</span>
+<span class='no'>sp.DOM</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.selectDominant</span>(<span class='kw'>mat.observations</span> <span class='kw'>=</span> <span class='no'>tab</span>
                                  , <span class='kw'>selectionRule.quanti</span> <span class='kw'>=</span> <span class='fl'>0.9</span>
                                  , <span class='kw'>selectionRule.min_mean_abund</span> <span class='kw'>=</span> <span class='fl'>25</span>
                                  , <span class='kw'>selectionRule.min_no_abund_over25</span> <span class='kw'>=</span> <span class='fl'>10</span>)
@@ -414,7 +467,7 @@ the large scale but could be representative of a specific habitat</em> :</p>
 <span class='co'>## EXAMPLE 3 : Add habitat selection with default parametrization</span>
 <span class='co'>#########################################################################################</span>
 
-<span class='no'>sp.DOM</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.selectDominant</span>(<span class='kw'>mat.site.species.abund</span> <span class='kw'>=</span> <span class='no'>tab</span>
+<span class='no'>sp.DOM</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.selectDominant</span>(<span class='kw'>mat.observations</span> <span class='kw'>=</span> <span class='no'>tab</span>
                                  , <span class='kw'>selectionRule.quanti</span> <span class='kw'>=</span> <span class='fl'>0.9</span>
                                  , <span class='kw'>selectionRule.min_mean_abund</span> <span class='kw'>=</span> <span class='fl'>25</span>
                                  , <span class='kw'>selectionRule.min_no_abund_over25</span> <span class='kw'>=</span> <span class='fl'>10</span>
@@ -424,7 +477,7 @@ the large scale but could be representative of a specific habitat</em> :</p>
 <span class='co'>## EXAMPLE 4 : Redefinition of habitat selection rules</span>
 <span class='co'>#########################################################################################</span>
 
-<span class='no'>sp.DOM</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.selectDominant</span>(<span class='kw'>mat.site.species.abund</span> <span class='kw'>=</span> <span class='no'>tab</span>
+<span class='no'>sp.DOM</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.selectDominant</span>(<span class='kw'>mat.observations</span> <span class='kw'>=</span> <span class='no'>tab</span>
                                  , <span class='kw'>selectionRule.quanti</span> <span class='kw'>=</span> <span class='fl'>0.9</span>
                                  , <span class='kw'>selectionRule.min_mean_abund</span> <span class='kw'>=</span> <span class='fl'>25</span>
                                  , <span class='kw'>selectionRule.min_no_abund_over25</span> <span class='kw'>=</span> <span class='fl'>10</span>
@@ -437,18 +490,10 @@ the large scale but could be representative of a specific habitat</em> :</p>
 <span class='co'>## 2 .csv and 2 .pdf files have been produced</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>sp.DOM</span>)</pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#details">Details</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Maya Guéguen</p>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -459,7 +504,7 @@ the large scale but could be representative of a specific habitat</em> :</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
 </div>
 
       </footer>

@@ -5,124 +5,131 @@
 \title{Create multiple set(s) of parameter files for a \code{FATE-HD} 
 simulation}
 \usage{
-PRE_FATE.params_multipleSet(name.simulation.1, name.simulation.2 = NULL,
-  file.simulParam.1, file.simulParam.2 = NULL, no_simulations,
-  opt.percent_max = 0.5, opt.percent_seeding = 0.5,
-  opt.percent_light = 0.5, opt.percent_soil = 0.5,
-  do.max_abund_low = TRUE, do.max_abund_medium = TRUE,
-  do.max_abund_high = TRUE, do.seeding_duration = TRUE,
-  do.seeding_timestep = TRUE, do.seeding_input = TRUE,
-  do.nb_stratum = TRUE, do.LIGHT.thresh_medium = TRUE,
-  do.LIGHT.thresh_low = TRUE, do.SOIL.init = TRUE,
-  do.SOIL.retention = TRUE, do.DISPERSAL.mode = TRUE,
-  do.HABSUIT.ref_option = TRUE)
+PRE_FATE.params_multipleSet(
+  name.simulation.1,
+  name.simulation.2 = NULL,
+  file.simulParam.1,
+  file.simulParam.2 = NULL,
+  no_simulations,
+  opt.percent_maxAbund = 0.5,
+  opt.percent_seeding = 0.5,
+  opt.percent_light = 0.5,
+  opt.percent_soil = 0.5,
+  do.max_abund_low = TRUE,
+  do.max_abund_medium = TRUE,
+  do.max_abund_high = TRUE,
+  do.seeding_duration = TRUE,
+  do.seeding_timestep = TRUE,
+  do.seeding_input = TRUE,
+  do.no_strata = TRUE,
+  do.LIGHT.thresh_medium = TRUE,
+  do.LIGHT.thresh_low = TRUE,
+  do.SOIL.init = TRUE,
+  do.SOIL.retention = TRUE,
+  do.DISPERSAL.mode = TRUE,
+  do.HABSUIT.ref_option = TRUE
+)
 }
 \arguments{
-\item{name.simulation.1}{a \code{string} that corresponds to the main 
-directory or simulation name of the \code{FATE-HD} simulation from which to 
+\item{name.simulation.1}{a \code{string} corresponding to the main directory 
+or simulation name of the \code{FATE-HD} simulation from which to 
 retrieve the first parameter simulation file (\code{file.simulParam.1}), 
 and the second if given (\code{file.simulParam.2}) and no other directory 
 provided (\code{name.simulation.2 = NULL})}
 
-\item{name.simulation.2}{default \code{NULL} (\emph{optional}). \cr 
-A \code{string} that corresponds to the main directory or simulation name 
-of the \code{FATE-HD} simulation from which to retrieve the second 
-parameter simulation file (\code{file.simulParam.2})}
+\item{name.simulation.2}{(\emph{optional}) default \code{NULL}. \cr 
+A \code{string} corresponding to the main directory or simulation name of 
+the \code{FATE-HD} simulation from which to retrieve the second parameter 
+simulation file (\code{file.simulParam.2})}
 
-\item{file.simulParam.1}{a \code{string} that corresponds to the name of 
-the simulation parameter file from which to retrieve parameter values that 
-will be used to build the multiple set of new parameters}
+\item{file.simulParam.1}{a \code{string} corresponding to the name of the 
+simulation parameter file from which to retrieve parameter values that will 
+be used to build the multiple set of new parameters}
 
-\item{file.simulParam.2}{default \code{NULL} (\emph{optional}). \cr 
-A \code{string} that corresponds to the name of the second simulation 
-parameter file from which to retrieve parameter values that will be used 
-to build parameter ranges in comparison with values from 
-\code{file.simulParam.1}}
+\item{file.simulParam.2}{(\emph{optional}) default \code{NULL}. \cr 
+A \code{string} corresponding to the name of the second simulation parameter 
+file from which to retrieve parameter values that will be used to build 
+parameter ranges in comparison with values from \code{file.simulParam.1}}
 
 \item{no_simulations}{an \code{integer} corresponding to the number of set 
 of parameters that will be produced according to Latin Hypercube Sampling 
 (LHS)}
 
-\item{opt.percent_max}{default \code{0.5}. Amount of variation (between 0 
-and 1) around the original value of \code{MAX_ABUND_LOW}, 
-\code{MAX_ABUND_MEDIUM}, \code{MAX_ABUND_HIGH} if selected}
+\item{opt.percent_maxAbund}{default \code{0.5}. Amount of variation 
+(between \code{0} and \code{1}) around the original value of 
+\code{MAX_ABUND_LOW}, \code{MAX_ABUND_MEDIUM}, \code{MAX_ABUND_HIGH} if 
+selected}
 
 \item{opt.percent_seeding}{default \code{0.5}. Amount of variation (between 
-0 and 1) around the original value of \code{SEEDING_DURATION}, 
+\code{0} and \code{1}) around the original value of \code{SEEDING_DURATION}, 
 \code{SEEDING_TIMESTEP}, \code{SEEDING_INPUT} if selected}
 
-\item{opt.percent_light}{default \code{0.5}. Amount of variation (between 0 
-and 1) around the original value of \code{LIGHT_THRESH_MEDIUM}, 
-\code{LIGHT_THRESH_LOW} if selected}
+\item{opt.percent_light}{default \code{0.5}. Amount of variation (between 
+\code{0} and \code{1}) around the original value of 
+\code{LIGHT_THRESH_MEDIUM}, \code{LIGHT_THRESH_LOW} if selected}
 
-\item{opt.percent_soil}{default \code{0.5}. Amount of variation (between 0 
-and 1) around the original value of \code{SOIL_INIT}, 
+\item{opt.percent_soil}{default \code{0.5}. Amount of variation (between 
+\code{0} and \code{1}) around the original value of \code{SOIL_INIT}, 
 \code{SOIL_RETENTION} if selected}
 
 \item{do.max_abund_low}{default \code{TRUE}. If \code{TRUE}, 
-\code{MAX_ABUND_LOW} parameter within \code{Global_parameters} file will be 
+\code{MAX_ABUND_LOW} parameter within \emph{Global_parameters} file will be 
 declined into a range of values}
 
 \item{do.max_abund_medium}{default \code{TRUE}. If \code{TRUE}, 
-\code{MAX_ABUND_MEDIUM} parameter within \code{Global_parameters} file will 
+\code{MAX_ABUND_MEDIUM} parameter within \emph{Global_parameters} file will 
 be declined into a range of values}
 
 \item{do.max_abund_high}{default \code{TRUE}. If \code{TRUE}, 
-\code{MAX_ABUND_HIGH} parameter within \code{Global_parameters} file will 
+\code{MAX_ABUND_HIGH} parameter within \emph{Global_parameters} file will 
 be declined into a range of values}
 
 \item{do.seeding_duration}{default \code{TRUE}. If \code{TRUE}, 
-\code{SEEDING_DURATION} parameter within \code{Global_parameters} file will 
+\code{SEEDING_DURATION} parameter within \emph{Global_parameters} file will 
 be declined into a range of values}
 
 \item{do.seeding_timestep}{default \code{TRUE}. If \code{TRUE}, 
-\code{SEEDING_TIMESTEP} parameter within \code{Global_parameters} file will 
+\code{SEEDING_TIMESTEP} parameter within \emph{Global_parameters} file will 
 be declined into a range of values}
 
 \item{do.seeding_input}{default \code{TRUE}. If \code{TRUE}, 
-\code{SEEDING_INPUT} parameter within \code{Global_parameters} file will 
-be declined into a range of values}
+\code{SEEDING_INPUT} parameter within \emph{Global_parameters} file will be 
+declined into a range of values}
 
-\item{do.nb_stratum}{default \code{TRUE}. If \code{TRUE}, 
-\code{NB_STRATUM} parameter within \code{Global_parameters} file will 
-be declined into a range of values, with potential impact on some 
-parameters within PFG succession (and light) files (parameters 
-\code{STRATA}, \code{MAX_ABUNDANCE}, \code{IMM_SIZE}, \code{CHANG_STR_AGES} 
-(and \code{SHADE_TOL})) \cr
-(see \code{\link{PRE_FATE.params_PFGsuccession}} 
-(and \code{\link{PRE_FATE.params_PFGlight}}))}
+\item{do.no_strata}{default \code{TRUE}. If \code{TRUE}, \code{NO_STRATA} 
+parameter within \emph{Global_parameters} file will be declined into a range 
+of values, with potential impact on some parameters within PFG succession 
+(and light) files (parameters \code{STRATA}, \code{MAX_ABUNDANCE}, 
+\code{IMM_SIZE}, \code{CHANG_STR_AGES} (and \code{LIGHT_TOL}), see 
+\code{\link{PRE_FATE.params_PFGsuccession}} (and 
+\code{\link{PRE_FATE.params_PFGlight}}))}
 
 \item{do.LIGHT.thresh_medium}{default \code{TRUE}. If \code{TRUE}, 
-\code{LIGHT_THRESH_MEDIUM} parameter within \code{Global_parameters} file 
-will be declined into a range of values \cr (see 
-\code{\link{PRE_FATE.params_globalParameters}})}
+\code{LIGHT_THRESH_MEDIUM} parameter within \emph{Global_parameters} file 
+will be declined into a range of values}
 
 \item{do.LIGHT.thresh_low}{default \code{TRUE}. If \code{TRUE}, 
-\code{LIGHT_THRESH_LOW} parameter within \code{Global_parameters} file 
-will be declined into a range of values \cr (see 
-\code{\link{PRE_FATE.params_globalParameters}})}
+\code{LIGHT_THRESH_LOW} parameter within \emph{Global_parameters} file 
+will be declined into a range of values}
 
-\item{do.SOIL.init}{default \code{TRUE}. If \code{TRUE}, 
-\code{SOIL_INIT} parameter within \code{Global_parameters} file 
-will be declined into a range of values \cr (see 
-\code{\link{PRE_FATE.params_globalParameters}})}
+\item{do.SOIL.init}{default \code{TRUE}. If \code{TRUE}, \code{SOIL_INIT} 
+parameter within \emph{Global_parameters} file will be declined into a range 
+of values}
 
 \item{do.SOIL.retention}{default \code{TRUE}. If \code{TRUE}, 
-\code{SOIL_RETENTION} parameter within \code{Global_parameters} file 
-will be declined into a range of values \cr (see 
-\code{\link{PRE_FATE.params_globalParameters}})}
+\code{SOIL_RETENTION} parameter within \emph{Global_parameters} file will be 
+declined into a range of values}
 
 \item{do.DISPERSAL.mode}{default \code{TRUE}. If \code{TRUE}, 
-\code{DISPERSAL_MODE} parameter within \code{Global_parameters} file will 
-be declined into its 3 possible values (either uniform kernel (\code{1}), 
-exponential kernel (\code{2}) or exponential kernel with probability 
-(\code{3})) \cr (see \code{\link{PRE_FATE.params_globalParameters}})}
+\code{DISPERSAL_MODE} parameter within \emph{Global_parameters} file will be 
+declined into its three possible values (either either packets kernel 
+(\code{1}), exponential kernel (\code{2}) or exponential kernel with 
+probability (\code{3}), see \code{\link{PRE_FATE.params_globalParameters}})}
 
 \item{do.HABSUIT.ref_option}{default \code{TRUE}. If \code{TRUE}, 
-\code{HABSUIT_OPTION} parameter within \code{Global_parameters} file will 
-be declined into its 2 possible values (either random (\code{1}) or PFG 
-specific (\code{2})) \cr (see 
-\code{\link{PRE_FATE.params_globalParameters}})}
+\code{HABSUIT_OPTION} parameter within \emph{Global_parameters} file will be 
+declined into its two possible values (either random (\code{1}) or PFG 
+specific (\code{2}), see \code{\link{PRE_FATE.params_globalParameters}})}
 }
 \value{
 A new folder containing the different sets of parameters asked. 
@@ -141,7 +148,7 @@ file :
 \itemize{
   \item Into the \code{name.simulation/DATA/GLOBAL_PARAMETERS} folder :
   \itemize{
-    \item NB_STRATUM
+    \item NO_STRATA
     \item SEEDING_DURATION
     \item SEEDING_TIMESTEP
     \item SEEDING_INPUT
@@ -176,7 +183,7 @@ file :
   }
   \item Into the \code{name.simulation/DATA/PFGS/LIGHT} folder :
   \itemize{
-    \item SHADE_TOL
+    \item LIGHT_TOL
   }
 }
 }
@@ -188,7 +195,7 @@ using Latin Hypercube Sampling to help find best combination of parameters
 \details{
 A \code{FATE-HD} simulation requires several parameters to define general 
 characteristics of the simulation : they are saved within a 
-\code{Global_parameters} file (see 
+\emph{Global_parameters} file (see 
 \code{\link{PRE_FATE.params_globalParameters}}). To fit the model to a 
 particular area and set of Plant Functional Groups (PFG), these are the 
 parameters that should be optimized, since they are not data-dependant, 
@@ -201,7 +208,7 @@ files.})
 
 \strong{The main idea is to start from a complete simulation folder, to 
 select the parameters that should vary, and to create new parameter files 
-with new parameter values based on pre-existing values. \cr}
+with new parameter values based on pre-existing values. \cr \cr}
 
 Three possible scenarios are available :
 \describe{
@@ -234,18 +241,17 @@ Three possible scenarios are available :
   \item{2 folders - \cr 2 simulation files}{
   \itemize{
     \item same as 2nd scenario, except that the two given simulation files 
-    come from two different simulation folders
+    come from two different simulation folders \cr \cr
   }
   }
 }
 
 \strong{Latin Hypercube Sampling} is a statistical method to generate a 
 sampling of parameter values from a multidimensional space, while ensuring 
-a good representation of the real variability.
-The range of each parameter is known, and depending on the number of set of 
-parameters asked to be obtained at the end, each range is more or less 
-finely cut and values are drawn in order to explore the whole space of 
-combinations.
+a good representation of the real variability. The range of each parameter 
+is known, and depending on the number of set of parameters asked to be 
+obtained at the end, each range is more or less finely cut and values are 
+drawn in order to explore the whole space of combinations.
 }
 \examples{
 
@@ -288,8 +294,8 @@ PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_PNE"
 
 ## Create a Global_parameters file
 PRE_FATE.params_globalParameters(name.simulation = "FATE_PNE"
-                                 , required.no_PFG = PNE_PARAM$global["NB_FG"]
-                                 , required.no_STRATA = PNE_PARAM$global["NB_STRATUM"]
+                                 , required.no_PFG = PNE_PARAM$global["NO_PFG"]
+                                 , required.no_strata = PNE_PARAM$global["NO_STRATA"]
                                  , required.simul_duration = PNE_PARAM$global["SIMULATION_DURATION"]
                                  , required.seeding_duration = PNE_PARAM$global["SEEDING_DURATION"]
                                  , required.seeding_timestep = PNE_PARAM$global["SEEDING_TIMESTEP"]
@@ -322,8 +328,8 @@ writeRaster(PNE_PARAM$masks$noDisturb
 
 ## Create simulation parameters file
 PRE_FATE.params_simulParameters(name.simulation = "FATE_PNE"
-                                , name.mask = "mask.tif"
-                                , name.dist = "noDisturb.tif")
+                                , name.MASK = "mask.tif"
+                                , name.DIST = "noDisturb.tif")
 
 ## Create multiple set of parameters
 PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_PNE"
@@ -343,7 +349,7 @@ PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_PNE"
                             , do.seeding_duration = FALSE
                             , do.seeding_timestep = FALSE
                             , do.seeding_input = FALSE
-                            , do.nb_stratum = FALSE
+                            , do.no_strata = FALSE
                             , do.LIGHT.thresh_medium = FALSE
                             , do.LIGHT.thresh_low = FALSE
                             , do.SOIL.init = FALSE
@@ -357,6 +363,7 @@ PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_PNE"
 \seealso{
 \code{\link[SPOT]{designLHD}},
 \code{\link{PRE_FATE.skeletonDirectory}},
+\code{\link{PRE_FATE.params_globalParameters}},
 \code{\link{PRE_FATE.params_PFGsuccession}},
 \code{\link{PRE_FATE.params_PFGlight}},
 }

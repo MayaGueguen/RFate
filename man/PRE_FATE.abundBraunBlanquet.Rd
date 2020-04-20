@@ -11,7 +11,8 @@ PRE_FATE.abundBraunBlanquet(abund)
 (\code{+, r, 1, 2, 3, 4, 5}), and with \code{NA} when no information}
 }
 \value{
-A \code{vector} with numerical values between 0 and 100 corresponding to the median of each recovery class.
+A \code{vector} with numerical values between \code{0} and 
+\code{100} corresponding to the median of each recovery class.
 }
 \description{
 This script is designed to transform Braun-Blanquet abundance 
@@ -35,14 +36,16 @@ ____________________________________________________________ \cr
 
 
 \emph{\cr \cr
-Braun-Blanquet J., Roussine N. & Nègre R., 1952. Les groupements végétaux de la France méditerranéenne.
-Dir. Carte Group. Vég. Afr. Nord , CNRS, 292 p.}
+Braun-Blanquet J., Roussine N. & Nègre R., 1952. Les groupements végétaux de 
+la France méditerranéenne. Dir. Carte Group. Vég. Afr. Nord , CNRS, 292 p.}
 
-\emph{Baudière A. & Serve L., 1975. Les groupements végétaux du Plade Gorra-Blanc (massif du Puigmal, Pyrénées Orientales).
-Essai d'interprétation phytosociologique et phytogéographique. Nat. Monsp., sér. Bot., 25, 5-21.}
+\emph{Baudière A. & Serve L., 1975. Les groupements végétaux du Plade 
+Gorra-Blanc (massif du Puigmal, Pyrénées Orientales). Essai d'interprétation 
+phytosociologique et phytogéographique. Nat. Monsp., sér. Bot., 25, 5-21.}
 
-\emph{Foucault B. (de), 1980. Les prairies du bocage virois (Basse-Normandie, France). Typologie phytosociologique et 
-essai de reconstitution des séries évolutives herbagères. Doc. Phytosoc., N.S., 5, 1-109.}
+\emph{Foucault B. (de), 1980. Les prairies du bocage virois (Basse-Normandie, 
+France). Typologie phytosociologique et essai de reconstitution des séries 
+évolutives herbagères. Doc. Phytosoc., N.S., 5, 1-109.}
 }
 \examples{
 

@@ -4,12 +4,16 @@
 \alias{PRE_FATE.params_PFGsoil}
 \title{Create \emph{SOIL} parameter files for a \code{FATE-HD} simulation}
 \usage{
-PRE_FATE.params_PFGsoil(name.simulation, mat.PFG.soil,
-  mat.PFG.tol = NULL, opt.folder.name = NULL)
+PRE_FATE.params_PFGsoil(
+  name.simulation,
+  mat.PFG.soil,
+  mat.PFG.tol = NULL,
+  opt.folder.name = NULL
+)
 }
 \arguments{
-\item{name.simulation}{a \code{string} that corresponds to the main 
-directory or simulation name of the \code{FATE-HD} simulation}
+\item{name.simulation}{a \code{string} corresponding to the main directory 
+or simulation name of the \code{FATE-HD} simulation}
 
 \item{mat.PFG.soil}{a \code{data.frame} with 3 to 7 columns : \cr 
 \itemize{
@@ -22,7 +26,8 @@ directory or simulation name of the \code{FATE-HD} simulation}
 }
 (see \code{\href{PRE_FATE.params_PFGsoil.html#details}{Details}})}
 
-\item{mat.PFG.tol}{a \code{data.frame} with 2 to 4 columns : \cr 
+\item{mat.PFG.tol}{(\emph{optional}) \cr 
+a \code{data.frame} with 2 to 4 columns : \cr 
 \itemize{
   \item \code{PFG},
   \item \code{lifeStage}, \code{resources}, \code{tolerance} 
@@ -30,8 +35,8 @@ directory or simulation name of the \code{FATE-HD} simulation}
 }
 (see \code{\href{PRE_FATE.params_PFGsoil.html#details}{Details}})}
 
-\item{opt.folder.name}{(\emph{optional}) \cr a \code{string} that
-corresponds to the name of the folder that will be created into the 
+\item{opt.folder.name}{(\emph{optional}) \cr a \code{string} corresponding 
+to the name of the folder that will be created into the 
 \code{name.simulation/DATA/PFGS/SOIL/} directory to store the results}
 }
 \value{
@@ -41,36 +46,35 @@ parameters :
 
 \describe{
   \item{NAME}{name of the PFG}
-  \item{ACTIVE_GERM}{the germination rates depending on soil conditions
-  \cr \emph{(0: 0\% 1: 10\% 2: 20\% 3: 30\% 4: 40\% 5: 50\% 6: 60\% 7: 70\% 
-  8: 80\% 9: 90\% 10: 100\%)}}
-  \item{SOIL_CONTRIB}{the PFG contribution to the soil value of the pixel}
-  \item{SOIL_LOW}{the lower value of soil supported by the PFG, \cr 
+  \item{ACTIVE_GERM}{germination rates depending on soil conditions
+  \cr \emph{(from \code{0} to \code{10}, corresponding to 0 to 100\%)}}
+  \item{SOIL_CONTRIB}{contribution to the soil value of the pixel}
+  \item{SOIL_LOW}{lower value of soil supported by the PFG, \cr 
   defining the limit between \code{Low} and \code{Medium} soil resources 
   for this PFG}
-  \item{SOIL_HIGH}{the upper value of soil supported by the PFG, \cr 
+  \item{SOIL_HIGH}{upper value of soil supported by the PFG, \cr 
   defining the limit between \code{Medium} and \code{High} soil resources 
   for this PFG}
-  \item{SOIL_TOL}{the PFG soil tolerance table (in a single row). \cr 
+  \item{SOIL_TOL}{soil tolerance table (in a single row). \cr 
   This is a vector of 9 numbers corresponding to the ability of the PFG to 
   survive or not :
   \itemize{
-    \item at different life stages \emph{(Germinant (Ge), Immature (Im), 
-    Mature (Ma))}
-    \item under different soil conditions \emph{(Low (L), Medium (M) or 
-    High (H))}.
+    \item at different life stages \emph{(Germinant (\code{Ge}), Immature 
+    (\code{Im}), Mature (\code{Ma}))}
+    \item under different soil conditions \emph{(Low (\code{L}), Medium 
+    (\code{M}) or High (\code{H}))}.
   }
-  These parameters should be given in this order : GeL, GeM, GeH, ImL, ImM, 
-  ImH, MaL, MaM, MaH.
-  \cr \emph{(0: 0\% 1: 10\% 2: 20\% 3: 30\% 4: 40\% 5: 50\% 6: 60\% 7: 70\% 
-  8: 80\% 9: 90\% 10: 100\%)}}
+  These parameters should be given in this order : \code{GeL, GeM, GeH, ImL, 
+  ImM, ImH, MaL, MaM, MaH}
+  \cr \emph{(from \code{0} to \code{10}, corresponding to 0 to 100\%)}. 
+  \cr \cr}
 }
 
-A \code{SOIL_COMPLETE_TABLE.csv} file summarizing information for all groups
-into the \code{name.simulation/DATA/PFGS/} directory.
+A \code{SOIL_COMPLETE_TABLE.csv} file summarizing information for all 
+groups into the \code{name.simulation/DATA/PFGS/} directory.  
 
-If the \code{opt.folder.name} has been used, the files will be into the folder
-\code{name.simulation/DATA/PFGS/SOIL/opt.folder.name/}
+If the \code{opt.folder.name} has been used, the files will be into the 
+folder \code{name.simulation/DATA/PFGS/SOIL/opt.folder.name/}.
 }
 \description{
 This script is designed to create parameter files containing 
@@ -78,22 +82,27 @@ soil contribution and tolerance for each PFG (one file for each of them)
 used in the soil module of \code{FATE-HD}.
 }
 \details{
-The soil module allows the user to simulate a primary vegetation succession 
-based on soil competition. \cr \cr
+The \strong{soil module} allows the user to add the effect of 
+\strong{soil competition} within a primary vegetation succession. \cr \cr
 
 Several parameters, given within \code{mat.PFG.soil} or \code{mat.PFG.tol}, 
 are required for each PFG in order to set up the soil competition :
 
 \describe{
+  \item{PFG}{the concerned plant functional group \cr \cr}
+  
   \item{type}{or life-form, based on Raunkier. \cr It should be either 
   \code{H} (herbaceous), \code{C} (chamaephyte) or \code{P} (phanerophyte) 
   for now}
-  \item{(\emph{active_germ_low})}{the proportion of seeds that will 
-  germinate for \code{Low} soil condition}
-  \item{(\emph{active_germ_medium})}{the proportion of seeds that will 
-  germinate for \code{Medium} soil condition}
-  \item{(\emph{active_germ_high})}{the proportion of seeds that will 
-  germinate for \code{High} soil condition}
+  \item{(\emph{active_germ_low})}{an \code{integer} between \code{0} and 
+  \code{10} corresponding to the proportion of seeds that will germinate for 
+  \code{Low} soil condition}
+  \item{(\emph{active_germ_medium})}{an \code{integer} between \code{0} and 
+  \code{10} corresponding to the proportion of seeds that will germinate for 
+  \code{Medium} soil condition}
+  \item{(\emph{active_germ_high})}{an \code{integer} between \code{0} and 
+  \code{10} corresponding to the proportion of seeds that will germinate for 
+  \code{High} soil condition}
   \item{(\emph{strategy_ag})}{a \code{string} to choose the germination 
   strategy : \cr \code{poor_lover}, \code{indifferent}, \code{rich_lover} 
   \cr \cr}
@@ -111,7 +120,8 @@ are required for each PFG in order to set up the soil competition :
   \code{Immature}, \code{Mature})}
   \item{resources}{the concerned soil condition (\code{Low}, 
   \code{Medium}, \code{High})}
-  \item{tolerance}{the proportion of surviving individuals}
+  \item{tolerance}{an \code{integer} between \code{0} and \code{10} 
+  corresponding to the proportion of surviving individuals}
   \item{(\emph{strategy_tol})}{a \code{string} to choose the tolerance 
   strategy : \cr \code{ubiquist}, \code{tobedefined} \cr \cr}
 }
@@ -230,7 +240,8 @@ PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
 
 }
 \seealso{
-\code{\link{PRE_FATE.skeletonDirectory}}
+\code{\link{PRE_FATE.skeletonDirectory}},
+\code{\link{PRE_FATE.params_PFGsuccession}}
 }
 \author{
 Maya Guéguen

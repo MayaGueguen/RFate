@@ -11,23 +11,27 @@ and abundance through time for a <code>FATE-HD</code> simulation — POST_FATE.g
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -43,7 +47,6 @@ representations for a FATE-HD simulation : 1) the evolution through
 time of the space occupation of each PFG ; 2) the evolution through time
 of the abundance of each PFG. These graphics represent both the evolution 
 over the whole area." />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -61,7 +64,7 @@ over the whole area." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -75,7 +78,7 @@ over the whole area." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RFate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.9000</span>
       </span>
     </div>
 
@@ -156,38 +159,8 @@ over the whole area." />
     Reference
   </a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/fate-hd_tutorial_0_modelling_framework.html">FATE-HD tutorial 0 - Modelling framework</a>
-    </li>
-    <li>
-      <a href="../articles/fate-hd_tutorial_0_publications.html">FATE-HD tutorial 0 - Publications</a>
-    </li>
-    <li>
-      <a href="../articles/fate-hd_tutorial_1_PFG.html">FATE-HD tutorial 1 - Principle of PFG</a>
-    </li>
-    <li>
-      <a href="../articles/fate-hd_tutorial_2_RUN_SIMULATION.html">FATE-HD tutorial 2 - Run a simulation</a>
-    </li>
-    <li>
-      <a href="../articles/fate-hd_tutorial_3_MODULES.html">FATE-HD tutorial 3 - Use a module</a>
-    </li>
-    <li>
-      <a href="../articles/rfate_tutorial_1_PFG.html">&lt;font color='#068f96'&gt;&lt;i class='fa fa-battery-quarter'&gt;&lt;/i&gt; `PRE_FATE` - build Plant Functional Groups (PFG)&lt;/font&gt;</a>
-    </li>
-    <li>
-      <a href="../articles/rfate_tutorial_2_params.html">&lt;font color='#068f96'&gt; &lt;i class='fa fa-battery-half'&gt;&lt;/i&gt; `PRE_FATE` - build parameter files &lt;/font&gt;</a>
-    </li>
-    <li>
-      <a href="../articles/rfate_tutorial_3_graphics.html">&lt;font color='#068f96'&gt; &lt;i class='fa fa-battery-three-quarters'&gt;&lt;/i&gt; `POST_FATE` - graphics &lt;/font&gt;</a>
-    </li>
-  </ul>
+<li>
+  <a href="../articles/index.html">Articles</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -231,35 +204,38 @@ of the abundance of each PFG. These graphics represent both the evolution
 over the whole area.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>POST_FATE.graphic_evolutionCoverage</span>(<span class='no'>name.simulation</span>,
-  <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>opt.abund_fixedScale</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>opt.doPlot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>POST_FATE.graphic_evolutionCoverage</span>(
+  <span class='no'>name.simulation</span>,
+  <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>opt.abund_fixedScale</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>opt.doPlot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>name.simulation</th>
-      <td><p>a <code>string</code> that corresponds to the main 
-directory or simulation name of the <code>FATE-HD</code> simulation</p></td>
+      <td><p>a <code>string</code> corresponding to the main directory 
+or simulation name of the <code>FATE-HD</code> simulation</p></td>
     </tr>
     <tr>
       <th>file.simulParam</th>
-      <td><p>a <code>string</code> that corresponds to the name of a 
-parameter file that will be contained into the <code>PARAM_SIMUL</code> folder 
-of the <code>FATE-HD</code> simulation</p></td>
+      <td><p>default <code>NULL</code>. A <code>string</code> corresponding to 
+the name of a parameter file that will be contained into the 
+<code>PARAM_SIMUL</code> folder of the <code>FATE-HD</code> simulation</p></td>
     </tr>
     <tr>
       <th>opt.abund_fixedScale</th>
       <td><p>default <code>TRUE</code>. If <code>FALSE</code>, the 
-ordinate scale will be adapted for each PFG for the graphical 
-representation of the  evolution of abundances through time</p></td>
+ordinate scale will be adapted for each PFG for the graphical representation 
+of the  evolution of abundances through time</p></td>
     </tr>
     <tr>
       <th>opt.doPlot</th>
-      <td><p>default <code>TRUE</code> (<em>optional</em>). If TRUE, plot(s) 
-will be processed, otherwise only the calculation and reorganization of 
-outputs will occur, be saved and returned.</p></td>
+      <td><p>(<em>optional</em>) default <code>TRUE</code>. <br /> If TRUE, 
+plot(s) will be processed, otherwise only the calculation and reorganization 
+of outputs will occur, be saved and returned</p></td>
     </tr>
     </table>
 
@@ -267,66 +243,65 @@ outputs will occur, be saved and returned.</p></td>
 
     <p>A <code>list</code> containing two <code>data.frame</code> objects with the 
 following columns, and two <code>ggplot2</code> objects :</p>
-<dl class='dl-horizontal'>
-  <dt>tab.spaceOccupancy</dt><dd><p><dl class='dl-horizontal'>
-      <dt><code>PFG</code></dt><dd><p>the concerned Plant Functional Group (for 
-      abundance)</p></dd>
-      <dt><code>HAB</code></dt><dd><p>the concerned habitat</p></dd>
-      <dt><em>YEAR</em></dt><dd><p>the concerned simulation year</p></dd>
-      <dt><code>Occupancy</code></dt><dd><p>the number of occupied pixels divided by the 
+<dl'>
+  <dt>tab.spaceOccupancy</dt><dd><p><dl'>
+      <dt><code>PFG</code></dt><dd><p>concerned plant functional group (for abundance)</p></dd>
+      <dt><code>HAB</code></dt><dd><p>concerned habitat</p></dd>
+      <dt><em>year</em></dt><dd><p>concerned simulation year</p></dd>
+      <dt><code>spaceOccupancy</code></dt><dd><p>number of occupied pixels divided by the 
       total number of pixels within the studied area</p></dd></dl></p></dd>
-  <dt>tab.abundance</dt><dd><p><dl class='dl-horizontal'>
-      <dt><code>PFG</code></dt><dd><p>the concerned Plant Functional Group (for 
-      abundance)</p></dd>
-      <dt><code>HAB</code></dt><dd><p>the concerned habitat</p></dd>
-      <dt><em>YEAR</em></dt><dd><p>the concerned simulation year</p></dd>
-      <dt><code>Abund</code></dt><dd><p>the total abundance over all the pixels within 
-      the studied area</p></dd></dl></p></dd>
+  <dt>tab.totalAbundance</dt><dd><p><dl'>
+      <dt><code>PFG</code></dt><dd><p>concerned plant functional group (for abundance)</p></dd>
+      <dt><code>HAB</code></dt><dd><p>concerned habitat</p></dd>
+      <dt><em>year</em></dt><dd><p>concerned simulation year</p></dd>
+      <dt><code>totalAbundance</code></dt><dd><p>total abundance over all the pixels 
+      within the studied area</p></dd></dl></p></dd>
   <dt>graph.spaceOccupancy</dt><dd><p><code>ggplot2</code> object, representing the 
   evolution of each PFG space occupancy</p></dd>
-  <dt>graph.abundance</dt><dd><p><code>ggplot2</code> object, representing the evolution 
-  of each PFG total abundance <br /> <br /></p></dd>
+  <dt>graph.totalAbundance</dt><dd><p><code>ggplot2</code> object, representing the 
+  evolution of each PFG total abundance <br /> <br /></p></dd>
 
 </dl>
 
 
-<p>Two <code>POST_FATE_TABLE_ZONE_evolution_[...].csv</code> files are created :</p><dl class='dl-horizontal'>
+<p>Two <code>POST_FATE_TABLE_ZONE_evolution_[...].csv</code> files are created :</p><dl'>
   <dt><code class="file">spaceOccupancy</code></dt><dd><p>always, containing <code>tab.spaceOccupancy</code></p></dd>
-  <dt><code class="file">abundance</code></dt><dd><p>always, containing <code>tab.abundance</code></p></dd>
+  <dt><code class="file">totalAbundance</code></dt><dd><p>always, containing <code>tab.totalAbundance</code></p></dd>
 
 </dl>
 
 
-<p>Two <code>POST_FATE_[...].pdf</code> files are created :</p><dl class='dl-horizontal'>
-  <dt><code class="file">GRAPHIC_A <br /> spaceOccupancy</code></dt><dd><p>to visualize for each PFG the
+<p>Two <code>POST_FATE_[...].pdf</code> files are created :</p><dl'>
+  <dt><code class="file">GRAPHIC_A <br /> spaceOccupancy</code></dt><dd><p>to visualize for each PFG the 
   evolution of its occupation of the studied area through simulation time</p></dd>
-  <dt><code class="file">GRAPHIC_A <br /> abundance</code></dt><dd><p>to visualize for each PFG the
-  evolution of its abundance within the whole studied area through
+  <dt><code class="file">GRAPHIC_A <br /> totalAbundance</code></dt><dd><p>to visualize for each PFG the 
+  evolution of its abundance within the whole studied area through 
   simulation time</p></dd>
 
 </dl>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function allows one to obtain, for a specific <code>FATE-HD</code> 
-simulation and a specific parameter file within this simulation, two 
-preanalytical graphics :</p>
+    <p>This function allows to obtain, for a specific <code>FATE-HD</code> simulation and 
+a specific parameter file within this simulation, two preanalytical 
+graphics :</p>
 <ul>
-<li><p>the evolution of <strong>space occupancy</strong> of each Plant Functional 
-  Group through simulation time, with <em>space occupancy</em> representing 
-  the percentage of pixels within the mask of studied area where the PFG 
-  is present</p></li>
-<li><p>the evolution of <strong>abundance</strong> of each Plant Functional Group 
-  through simulation time, with <em>abundance</em> being the sum over the 
-  whole studied area of the PFG abundances (<code>FATE-HD</code> <em>arbitrary 
-  unit</em>)</p></li>
+<li><p>the evolution of <strong>space occupancy</strong> of each plant functional 
+  group through simulation time, <br /> with <em>space occupancy</em> 
+  representing the percentage of pixels within the mask of studied area 
+  where the PFG is present</p></li>
+<li><p>the evolution of <strong>total abundance</strong> of each plant functional 
+  group through simulation time, <br /> with <em>total abundance</em> being the 
+  sum over the whole studied area of the PFG abundances (<code>FATE-HD</code> 
+  <em>arbitrary unit</em>)</p></li>
 </ul>
 
-<p>If the information has been provided, the graphics will be also
-done per habitat. <br /> <br /></p>
-<p>It requires that the <code><a href='POST_FATE.temporalEvolution.html'>POST_FATE.temporalEvolution</a></code> function has 
-been run and that the file 
-<code>POST_FATE.evolution_abundance_PIXEL_[...].csv</code> exists.</p>
+<p>If the information has been provided (see 
+<code><a href='POST_FATE.temporalEvolution.html'>POST_FATE.temporalEvolution</a></code>), the graphics will be also done 
+per habitat. <br /> <br /></p>
+<p><strong>It requires</strong> that the <code><a href='POST_FATE.temporalEvolution.html'>POST_FATE.temporalEvolution</a></code> 
+function has been run and that the file 
+<code>POST_FATE_TABLE_PIXEL_evolution_abundance.csv</code> exists.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='POST_FATE.temporalEvolution.html'>POST_FATE.temporalEvolution</a></code></p></div>
@@ -466,18 +441,10 @@ been run and that the file
                                             , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>graph</span>)</pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#details">Details</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Maya Guéguen</p>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -488,7 +455,7 @@ been run and that the file
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
 </div>
 
       </footer>

@@ -11,7 +11,7 @@ PRE_FATE.skeletonDirectory(name.simulation = "FATE_simulation")
 directory and simulation name}
 }
 \value{
-A directory tree with folder to contain the parameter files, the
+A directory tree with folders to contain the parameter files, the
 simulation files and the results.
 }
 \description{
@@ -20,44 +20,67 @@ tree to run a \code{FATE-HD} simulation.
 }
 \details{
 \code{FATE-HD} requires only one input parameter (see 
-\code{\link{PRE_FATE.params_simulParameters}}), which is a file containing 
-the names of parameter files, which may themselves contain parameters (e.g. 
-succession, dispersal files...) or other file names (e.g. disturbance or 
-environmental change masks. \cr
-The point is : the user could give names of files stored everywhere on a 
-machine, and does not have to put them all in one same place.
+\code{\link{PRE_FATE.params_simulParameters}}), 
 
-But as this is more practical, this function proposes a way to organize all
-those files or parameter files that will or could be used by a \code{FATE-HD}
-simulation.
+\itemize{
+  \item which is a file containing the names of parameter files,
+  \item which may themselves contain 
+  \itemize{
+    \item parameters (e.g. succession, dispersal files...)
+    \item or other file names (e.g. disturbance or environmental change 
+    masks).
+  }
+}
+
+The user could give names of files stored everywhere on a machine, and does 
+not have to put them all in one same place. \cr
+But as this is more practical, this function proposes a way to 
+\strong{organize all those files or parameter files} that will or could be 
+used by a \code{FATE-HD} simulation. \cr \cr
 
 The tree structure is detailed below :
 
 \describe{
-  \item{DATA}{this folder will contain all the data or parameters that are
-  needed by the model
-  \itemize{
-    \item \strong{GLOBAL_PARAMETERS} : files containing global parameters for the simulation
-    \item \strong{MASK} : all maps used in the model
-    \item \strong{SCENARIO} : files containing information about changes in
-    input data ( e.g. habitat suitability maps, disturbances maps, etc) 
-    \item \strong{SAVE} : files containing information about times to save outputs
-    \item \strong{PFGS} :
-    \itemize{
-      \item \strong{SUCC} : all the PFG life history parameter files
-      \item \strong{LIGHT} : all the PFG light parameter files
-      \item \strong{DISP} : all the PFG dispersal parameter files
-      \item \strong{DIST} : all the PFG-response to disturbances parameter files
-      \item \strong{SOIL} : all the PFG soil parameter files
-      \item \strong{HABSUIT} : all the PFG habitat suitability maps
+  \item{\code{DATA}}{this folder will contain all the data or parameters 
+  that are needed by the model
+  \describe{
+    \item{\code{GLOBAL_PARAMETERS}}{files containing global parameters for 
+    the simulation \cr (see \code{\link{PRE_FATE.params_globalParameters}})}
+    \item{\code{MASK}}{raster maps used in the model}
+    \item{\code{SCENARIO}}{files containing information about changes in
+    raster maps input \cr (see \code{\link{PRE_FATE.params_changingYears}})}
+    \item{\code{SAVE}}{files containing information about simulation times 
+    to save outputs \cr (see \code{\link{PRE_FATE.params_saveYears}})}
+    \item{\code{PFGS}}{ \cr
+    \describe{
+      \item{\code{SUCC}}{life history parameter files \cr 
+      (see \code{\link{PRE_FATE.params_PFGsuccession}})}
+      \item{\code{LIGHT}}{response to light competition parameter files \cr 
+      (see \code{\link{PRE_FATE.params_PFGlight}})}
+      \item{\code{SOIL}}{response to soil competition parameter files \cr 
+      (see \code{\link{PRE_FATE.params_PFGsoil}})}
+      \item{\code{DISP}}{dispersal parameter files \cr 
+      (see \code{\link{PRE_FATE.params_PFGdispersal}})}
+      \item{\code{HABSUIT}}{habitat suitability maps}
+      \item{\code{DIST}}{response to disturbances parameter files \cr 
+      (see \code{\link{PRE_FATE.params_PFGdisturbance}})}
+      \item{\code{DROUGHT}}{response to drought disturbance parameter files 
+      \cr (see \code{\link{PRE_FATE.params_PFGdrought}})}
+      \item{\code{ALIENS}}{aliens introduction maps}
+    }
     }
   }
   }
-  \item{PARAM_SIMUL}{this folder will contain simulation files that can be
-  given as input to the software}
-  \item{RESULTS}{this folder will collect all the results produced by the
+  \item{\code{PARAM_SIMUL}}{this folder will contain simulation files that can be
+  given as input to the software \cr (see 
+  \code{\link{PRE_FATE.params_simulParameters}})}
+  \item{\code{RESULTS}}{this folder will collect all the results produced by the
   software with a folder for each simulation}
 }
+
+\strong{NB :} \cr
+All the functions of the \code{RFate} package are based on this folder 
+structure.
 }
 \examples{
 
@@ -72,15 +95,16 @@ PRE_FATE.skeletonDirectory(name.simulation = "FATE_AlpineForest")
 \code{\link{PRE_FATE.params_globalParameters}},
 \code{\link{PRE_FATE.params_PFGsuccession}},
 \code{\link{PRE_FATE.params_PFGlight}},
+\code{\link{PRE_FATE.params_PFGsoil}},
 \code{\link{PRE_FATE.params_PFGdispersal}},
 \code{\link{PRE_FATE.params_PFGdisturbance}},
-\code{\link{PRE_FATE.params_PFGsoil}},
-\code{\link{PRE_FATE.params_saveYears}},
+\code{\link{PRE_FATE.params_PFGdrought}},
 \code{\link{PRE_FATE.params_changingYears}},
+\code{\link{PRE_FATE.params_saveYears}},
 \code{\link{PRE_FATE.params_simulParameters}}
 }
 \author{
 Maya Guéguen
 }
+\keyword{folder}
 \keyword{structure}
-\keyword{tree}

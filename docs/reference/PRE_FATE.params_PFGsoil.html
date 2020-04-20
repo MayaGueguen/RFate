@@ -10,23 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -39,7 +43,6 @@
 <meta property="og:description" content="This script is designed to create parameter files containing 
 soil contribution and tolerance for each PFG (one file for each of them) 
 used in the soil module of FATE-HD." />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -57,7 +60,7 @@ used in the soil module of FATE-HD." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -71,7 +74,7 @@ used in the soil module of FATE-HD." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RFate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.9000</span>
       </span>
     </div>
 
@@ -152,38 +155,8 @@ used in the soil module of FATE-HD." />
     Reference
   </a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/fate-hd_tutorial_0_modelling_framework.html">FATE-HD tutorial 0 - Modelling framework</a>
-    </li>
-    <li>
-      <a href="../articles/fate-hd_tutorial_0_publications.html">FATE-HD tutorial 0 - Publications</a>
-    </li>
-    <li>
-      <a href="../articles/fate-hd_tutorial_1_PFG.html">FATE-HD tutorial 1 - Principle of PFG</a>
-    </li>
-    <li>
-      <a href="../articles/fate-hd_tutorial_2_RUN_SIMULATION.html">FATE-HD tutorial 2 - Run a simulation</a>
-    </li>
-    <li>
-      <a href="../articles/fate-hd_tutorial_3_MODULES.html">FATE-HD tutorial 3 - Use a module</a>
-    </li>
-    <li>
-      <a href="../articles/rfate_tutorial_1_PFG.html">&lt;font color='#068f96'&gt;&lt;i class='fa fa-battery-quarter'&gt;&lt;/i&gt; `PRE_FATE` - build Plant Functional Groups (PFG)&lt;/font&gt;</a>
-    </li>
-    <li>
-      <a href="../articles/rfate_tutorial_2_params.html">&lt;font color='#068f96'&gt; &lt;i class='fa fa-battery-half'&gt;&lt;/i&gt; `PRE_FATE` - build parameter files &lt;/font&gt;</a>
-    </li>
-    <li>
-      <a href="../articles/rfate_tutorial_3_graphics.html">&lt;font color='#068f96'&gt; &lt;i class='fa fa-battery-three-quarters'&gt;&lt;/i&gt; `POST_FATE` - graphics &lt;/font&gt;</a>
-    </li>
-  </ul>
+<li>
+  <a href="../articles/index.html">Articles</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -224,16 +197,20 @@ soil contribution and tolerance for each PFG (one file for each of them)
 used in the soil module of <code>FATE-HD</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>PRE_FATE.params_PFGsoil</span>(<span class='no'>name.simulation</span>, <span class='no'>mat.PFG.soil</span>,
-  <span class='kw'>mat.PFG.tol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>opt.folder.name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>PRE_FATE.params_PFGsoil</span>(
+  <span class='no'>name.simulation</span>,
+  <span class='no'>mat.PFG.soil</span>,
+  <span class='kw'>mat.PFG.tol</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>opt.folder.name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>name.simulation</th>
-      <td><p>a <code>string</code> that corresponds to the main 
-directory or simulation name of the <code>FATE-HD</code> simulation</p></td>
+      <td><p>a <code>string</code> corresponding to the main directory 
+or simulation name of the <code>FATE-HD</code> simulation</p></td>
     </tr>
     <tr>
       <th>mat.PFG.soil</th>
@@ -248,7 +225,8 @@ directory or simulation name of the <code>FATE-HD</code> simulation</p></td>
     </tr>
     <tr>
       <th>mat.PFG.tol</th>
-      <td><p>a <code>data.frame</code> with 2 to 4 columns : <br /></p><ul>
+      <td><p>(<em>optional</em>) <br /> 
+a <code>data.frame</code> with 2 to 4 columns : <br /></p><ul>
 <li><p><code>PFG</code>,</p></li>
 <li><p><code>lifeStage</code>, <code>resources</code>, <code>tolerance</code> 
   (<em>or <code>strategy_tol</code></em>)</p></li>
@@ -256,8 +234,8 @@ directory or simulation name of the <code>FATE-HD</code> simulation</p></td>
     </tr>
     <tr>
       <th>opt.folder.name</th>
-      <td><p>(<em>optional</em>) <br /> a <code>string</code> that
-corresponds to the name of the folder that will be created into the 
+      <td><p>(<em>optional</em>) <br /> a <code>string</code> corresponding 
+to the name of the folder that will be created into the 
 <code>name.simulation/DATA/PFGS/SOIL/</code> directory to store the results</p></td>
     </tr>
     </table>
@@ -267,54 +245,58 @@ corresponds to the name of the folder that will be created into the
     <p>A <code>.txt</code> file per PFG into the 
 <code>name.simulation/DATA/PFGS/SOIL/</code> directory with the following 
 parameters :</p>
-<dl class='dl-horizontal'>
+<dl'>
   <dt>NAME</dt><dd><p>name of the PFG</p></dd>
-  <dt>ACTIVE_GERM</dt><dd><p>the germination rates depending on soil conditions
-  <br /> <em>(0: 0% 1: 10% 2: 20% 3: 30% 4: 40% 5: 50% 6: 60% 7: 70% 
-  8: 80% 9: 90% 10: 100%)</em></p></dd>
-  <dt>SOIL_CONTRIB</dt><dd><p>the PFG contribution to the soil value of the pixel</p></dd>
-  <dt>SOIL_LOW</dt><dd><p>the lower value of soil supported by the PFG, <br /> 
+  <dt>ACTIVE_GERM</dt><dd><p>germination rates depending on soil conditions
+  <br /> <em>(from <code>0</code> to <code>10</code>, corresponding to 0 to 100%)</em></p></dd>
+  <dt>SOIL_CONTRIB</dt><dd><p>contribution to the soil value of the pixel</p></dd>
+  <dt>SOIL_LOW</dt><dd><p>lower value of soil supported by the PFG, <br /> 
   defining the limit between <code>Low</code> and <code>Medium</code> soil resources 
   for this PFG</p></dd>
-  <dt>SOIL_HIGH</dt><dd><p>the upper value of soil supported by the PFG, <br /> 
+  <dt>SOIL_HIGH</dt><dd><p>upper value of soil supported by the PFG, <br /> 
   defining the limit between <code>Medium</code> and <code>High</code> soil resources 
   for this PFG</p></dd>
-  <dt>SOIL_TOL</dt><dd><p>the PFG soil tolerance table (in a single row). <br /> 
+  <dt>SOIL_TOL</dt><dd><p>soil tolerance table (in a single row). <br /> 
   This is a vector of 9 numbers corresponding to the ability of the PFG to 
   survive or not :
   <ul>
-<li><p>at different life stages <em>(Germinant (Ge), Immature (Im), 
-    Mature (Ma))</em></p></li>
-<li><p>under different soil conditions <em>(Low (L), Medium (M) or 
-    High (H))</em>.</p></li>
+<li><p>at different life stages <em>(Germinant (<code>Ge</code>), Immature 
+    (<code>Im</code>), Mature (<code>Ma</code>))</em></p></li>
+<li><p>under different soil conditions <em>(Low (<code>L</code>), Medium 
+    (<code>M</code>) or High (<code>H</code>))</em>.</p></li>
 </ul>
-  These parameters should be given in this order : GeL, GeM, GeH, ImL, ImM, 
-  ImH, MaL, MaM, MaH.
-  <br /> <em>(0: 0% 1: 10% 2: 20% 3: 30% 4: 40% 5: 50% 6: 60% 7: 70% 
-  8: 80% 9: 90% 10: 100%)</em></p></dd>
+  These parameters should be given in this order : <code>GeL, GeM, GeH, ImL, 
+  ImM, ImH, MaL, MaM, MaH</code>
+  <br /> <em>(from <code>0</code> to <code>10</code>, corresponding to 0 to 100%)</em>. 
+  <br /> <br /></p></dd>
 
 </dl>
 
-<p>A <code>SOIL_COMPLETE_TABLE.csv</code> file summarizing information for all groups
-into the <code>name.simulation/DATA/PFGS/</code> directory.</p>
-<p>If the <code>opt.folder.name</code> has been used, the files will be into the folder
-<code>name.simulation/DATA/PFGS/SOIL/opt.folder.name/</code></p>
+<p>A <code>SOIL_COMPLETE_TABLE.csv</code> file summarizing information for all 
+groups into the <code>name.simulation/DATA/PFGS/</code> directory.</p>
+<p>If the <code>opt.folder.name</code> has been used, the files will be into the 
+folder <code>name.simulation/DATA/PFGS/SOIL/opt.folder.name/</code>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The soil module allows the user to simulate a primary vegetation succession 
-based on soil competition. <br /> <br /></p>
+    <p>The <strong>soil module</strong> allows the user to add the effect of 
+<strong>soil competition</strong> within a primary vegetation succession. <br /> <br /></p>
 <p>Several parameters, given within <code>mat.PFG.soil</code> or <code>mat.PFG.tol</code>, 
 are required for each PFG in order to set up the soil competition :</p>
-<dl class='dl-horizontal'>
+<dl'>
+  <dt>PFG</dt><dd><p>the concerned plant functional group <br /> <br /></p></dd>
+  
   <dt>type</dt><dd><p>or life-form, based on Raunkier. <br /> It should be either 
   <code>H</code> (herbaceous), <code>C</code> (chamaephyte) or <code>P</code> (phanerophyte) 
   for now</p></dd>
-  <dt>(<em>active_germ_low</em>)</dt><dd><p>the proportion of seeds that will 
-  germinate for <code>Low</code> soil condition</p></dd>
-  <dt>(<em>active_germ_medium</em>)</dt><dd><p>the proportion of seeds that will 
-  germinate for <code>Medium</code> soil condition</p></dd>
-  <dt>(<em>active_germ_high</em>)</dt><dd><p>the proportion of seeds that will 
-  germinate for <code>High</code> soil condition</p></dd>
+  <dt>(<em>active_germ_low</em>)</dt><dd><p>an <code>integer</code> between <code>0</code> and 
+  <code>10</code> corresponding to the proportion of seeds that will germinate for 
+  <code>Low</code> soil condition</p></dd>
+  <dt>(<em>active_germ_medium</em>)</dt><dd><p>an <code>integer</code> between <code>0</code> and 
+  <code>10</code> corresponding to the proportion of seeds that will germinate for 
+  <code>Medium</code> soil condition</p></dd>
+  <dt>(<em>active_germ_high</em>)</dt><dd><p>an <code>integer</code> between <code>0</code> and 
+  <code>10</code> corresponding to the proportion of seeds that will germinate for 
+  <code>High</code> soil condition</p></dd>
   <dt>(<em>strategy_ag</em>)</dt><dd><p>a <code>string</code> to choose the germination 
   strategy : <br /> <code>poor_lover</code>, <code>indifferent</code>, <code>rich_lover</code> 
   <br /> <br /></p></dd>
@@ -332,7 +314,8 @@ are required for each PFG in order to set up the soil competition :</p>
   <code>Immature</code>, <code>Mature</code>)</p></dd>
   <dt>resources</dt><dd><p>the concerned soil condition (<code>Low</code>, 
   <code>Medium</code>, <code>High</code>)</p></dd>
-  <dt>tolerance</dt><dd><p>the proportion of surviving individuals</p></dd>
+  <dt>tolerance</dt><dd><p>an <code>integer</code> between <code>0</code> and <code>10</code> 
+  corresponding to the proportion of surviving individuals</p></dd>
   <dt>(<em>strategy_tol</em>)</dt><dd><p>a <code>string</code> to choose the tolerance 
   strategy : <br /> <code>ubiquist</code>, <code>tobedefined</code> <br /> <br /></p></dd>
 
@@ -340,12 +323,12 @@ are required for each PFG in order to set up the soil competition :</p>
 
 <p>These values will allow to calculate or define a set of characteristics for 
 each PFG :</p>
-<dl class='dl-horizontal'>
+<dl'>
   <dt>ACTIVE_GERM</dt><dd><p>proportion of seeds that will germinate for each soil 
   condition (<code>Low</code>, <code>Medium</code>, <code>High</code>) <br /> <br />
   Three methods to define these proportions are available :
   <ul>
-<li><p>from <strong>predefined scenarios</strong> (using <code>strategy_ag</code>) :</p><dl class='dl-horizontal'>
+<li><p>from <strong>predefined scenarios</strong> (using <code>strategy_ag</code>) :</p><dl'>
       <dt></dt><dd><p><strong><code>| _L_ _M_ _H_ |</code></strong></p></dd>
       <dt></dt><dd><p><code>_______________</code></p></dd>
       <dt>poor_lover</dt><dd><p><code>| 80% 90% 50% |</code></p></dd>
@@ -370,7 +353,7 @@ each PFG :</p>
         and <code>soil_tol_max</code></p></li>
 <li><p>with <code>L</code>: low soil, <code>M</code>: medium soil, <code>H</code>: 
         high soil <br /> <br /></p></li>
-</ul><p></p><dl class='dl-horizontal'>
+</ul><p></p><dl'>
         <dt></dt><dd><p><strong><code>| ___ L ___ | ___ M ___ | ___ H ___ |</code></strong></p></dd>
         <dt></dt><dd><p><code>_____________________________________</code></p></dd>
         <dt>ubiquist</dt><dd><p><code>__________ 1.5 _ 2.5 _ 4.5 __________</code></p></dd>
@@ -392,13 +375,13 @@ each PFG :</p>
 <li><p>with <code>g</code>: Germinant, <code>i</code>: Immature, <code>m</code>: Mature</p></li>
 <li><p>with <code>L</code>: low soil, <code>M</code>: medium soil, <code>H</code>: 
         high soil <br /> <br /></p></li>
-</ul><p></p><dl class='dl-horizontal'>
+</ul><p></p><dl'>
         <dt></dt><dd><p><strong><code>| ___ g ___ | ___ i ___ | ___ m ___ |</code></strong></p></dd>
         <dt></dt><dd><p><strong><code>| _L _M_ H_ | _L _M_ H_ | _L _M_ H_ |</code></strong></p></dd>
         <dt></dt><dd><p><code>_____________________________________</code></p></dd>
         <dt>ubiquist</dt><dd><p><code>| 90 100 90 | 90 100 90 | 90 100 90 |</code></p></dd>
         <dt>to be filled</dt><dd><p></p></dd></dl></li>
-<li><p>from <strong>predefined rules</strong> :</p><dl class='dl-horizontal'>
+<li><p>from <strong>predefined rules</strong> :</p><dl'>
         <dt>(A)</dt><dd><p>germinants are severely impacted by wrong soil conditions</p></dd>
         <dt>(B)</dt><dd><p>immatures are half impacted by wrong soil conditions</p></dd>
         <dt>(C)</dt><dd><p>matures are little impacted by wrong soil conditions</p></dd></dl><p></p><ul>
@@ -407,7 +390,7 @@ each PFG :</p>
 <li><p>with <code>g</code>: Germinant, <code>i</code>: Immature, <code>m</code>: Mature</p></li>
 <li><p>with <code>L</code>: low soil, <code>M</code>: medium soil, <code>H</code>: 
         high soil <br /> <br /></p></li>
-</ul><p></p><dl class='dl-horizontal'>
+</ul><p></p><dl'>
         <dt></dt><dd><p><strong><code>| ___ g ___ | ___ i ___ | ___ m ___ |</code></strong></p></dd>
         <dt></dt><dd><p><strong><code>| _L _M_ H_ | _L _M_ H_ | _L _M_ H_ |</code></strong></p></dd>
         <dt></dt><dd><p><code>_____________________________________</code></p></dd>
@@ -421,7 +404,8 @@ each PFG :</p>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='PRE_FATE.skeletonDirectory.html'>PRE_FATE.skeletonDirectory</a></code></p></div>
+    <div class='dont-index'><p><code><a href='PRE_FATE.skeletonDirectory.html'>PRE_FATE.skeletonDirectory</a></code>,
+<code><a href='PRE_FATE.params_PFGsuccession.html'>PRE_FATE.params_PFGsuccession</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples">
@@ -436,18 +420,10 @@ each PFG :</p>
                                                     , <span class='kw'>soil_tol_min</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>3</span>)
                                                     , <span class='kw'>soil_tol_max</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3</span>, <span class='fl'>3</span>, <span class='fl'>6</span>)))</pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#details">Details</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Maya Guéguen</p>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -458,7 +434,7 @@ each PFG :</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
 </div>
 
       </footer>

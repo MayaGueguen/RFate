@@ -6,8 +6,13 @@
 each Plant Functional Group \cr for one (or several) specific year of a 
 \code{FATE-HD} simulation}
 \usage{
-POST_FATE.graphic_mapPFGvsHS(name.simulation, file.simulParam = NULL,
-  year, opt.no_CPU = 1, opt.strata = "all")
+POST_FATE.graphic_mapPFGvsHS(
+  name.simulation,
+  file.simulParam = NULL,
+  year,
+  opt.no_CPU = 1,
+  opt.strata = "all"
+)
 }
 \arguments{
 \item{name.simulation}{a \code{string} that corresponds to the main 

@@ -5,72 +5,87 @@
 \title{Calculate PFG traits values based on determinant species traits 
 values}
 \usage{
-PRE_FATE.speciesClustering_step3(mat.species.traits)
+PRE_FATE.speciesClustering_step3(mat.traits)
 }
 \arguments{
-\item{mat.species.traits}{a \code{data.frame} with at least 3 columns :
+\item{mat.traits}{a \code{data.frame} with at least 3 columns :
 \describe{
   \item{\code{species}}{the ID of each determinant species (see 
   \code{\link{PRE_FATE.speciesClustering_step2}})}
-  \item{\code{PFG}}{a factor variable containing grouping information to
-  divide the species into Plant Functional Groups (see 
+  \item{\code{PFG}}{the corresponding Plant Functional Group (see 
   \code{\link{PRE_FATE.speciesClustering_step2}})}
   \item{\code{...}}{one column for each functional trait (see 
-  \code{Details})}
+  \code{\href{PRE_FATE.speciesClustering_step3#details}{Details}})}
 }}
 }
 \value{
-A \code{data.frame} containing new trait values for each Plant 
-Functional Group (PFG) :
+A \code{list} containing one \code{data.frame} with the following 
+columns, and one \code{list} with as many \code{ggplot2} objects as 
+functional traits given in \code{mat.traits} :
 
 \describe{
-  \item{type}{either \code{H} (herbaceous), \code{C} (chamaephyte) or 
-  \code{P} (phanerophyte) for now}
-  \item{height}{mean}
-  \item{maturity}{mean}
-  \item{longevity}{mean}
-  \item{dispersal}{median}
-  \item{light}{median}
-  \item{soil_contrib}{mean + round to one digit}
-  \item{soil_tolerance}{mean + round to one digit}
-  \item{palatability}{mean + round to one digit
-   \cr \cr}
+  \item{tab}{ \cr
+  \describe{
+    \item{\code{PFG}}{the concerned plant functional group}
+    \item{\code{no.species}}{the number of species contained in this PFG}
+    \item{\code{...}}{one column for each functional trait, computed as the 
+    \code{mean} (for numeric traits) or the \code{median} (for categorical 
+    traits) of the values of the determinant species of this PFG}
+  }
+  }
+  \item{plot}{\cr
+  \describe{
+    \item{\code{...}}{one for each functional trait, 'specific' cases 
+    excepted (see 
+    \code{\href{PRE_FATE.speciesClustering_step3#details}{Details}})}
+  }
+  }
 }
-
-The information is written in \code{PRE_FATE_PFG_TRAITS_TABLE.csv} file. \cr
-This file can be used to build parameter files to run a \code{FATE-HD} 
-simulation.
+    
+The information is written in \file{PRE_FATE_PFG_TRAITS_TABLE.csv} and 
+\file{PRE_FATE_CLUSTERING_STEP_3D_PFGtraitsValues.pdf} files. \cr
+This \code{.csv} file can be used to build parameter files to run a 
+\code{FATE-HD} simulation (e.g. \code{\link{PRE_FATE.params_PFGsuccession}}).
 }
 \description{
 This script is designed to calculate PFG traits values based 
-on determinant species traits values. Either the \code{mean} or the 
-\code{median} is used depending on the trait class (i.e. numeric or 
+on determinant species traits values. Either the mean or the 
+median is used depending on the trait class (i.e. numeric or 
 categorical).
 }
 \details{
-This function allows one to obtain '\emph{average}' functional trait values 
-for each Plant Functional Group, based on values at the determinant species
-level.
+This function allows to \strong{obtain '\emph{average}' functional trait 
+values for each Plant Functional Group}, based on values at the determinant 
+species level. \cr \cr
 
-Those functional traits can be :
 
+\emph{A graphic is automatically produced for each functional 
+trait given, with boxplot representing the values of determinant species, 
+and colored points the values calculated for each PFG. \cr
+However, some traits can have 'specific' representation, as long as their 
+names within \code{mat.traits} match one of the configuration detailed 
+below :}
 \describe{
-  \item{PFG}{name of the PFG}
-  \item{type}{or life-form, based on Raunkier. \cr It should be either 
-  \code{H} (herbaceous), \code{C} (chamaephyte) or \code{P} (phanerophyte) 
-  for now}
-  \item{height}{the maximum or average height that reach the species}
-  \item{maturity}{the age from which the species can reproduce}
-  \item{longevity}{the maximum or average lifespan of the species}
-  \item{dispersal}{the age from which the species can reproduce}
-  \item{light}{a value corresponding to the light preference of the species 
-  (from shade-lover to preference for full light)}
-  \item{soil_contrib}{a value corresponding to the preference of the 
-  species for soil fertility (e.g. Ellenberg, Flora Indicativa)}
-  \item{soil_tolerance}{the range of soil tolerance : 1 (small) or 2 
-  (large)}
-  \item{palatability}{the appetence of each species from null to high
-   \cr \cr}
+  \item{\code{maturity}, \code{longevity}}{to visualize the difference 
+  between these two values, for the maturity time has an impact on the 
+  fecundity of the PFG within \code{FATE-HD} (see XXX, CORE module) \cr
+  \emph{If there is NO values for longevity within one PFG, and some 
+  maturity values are available, some values might be inferred as 
+  \eqn{\text{maturity} * 2}. If there is NO values for maturity within 
+  one PFG, and some longevity values are available, some values might be 
+  inferred as \eqn{\text{longevity} / 2}.}
+  }
+  \item{\code{height}, \code{light}}{to visualize the PFG light 
+  preference, and help decide and understand the choice of the height 
+  limits of strata in \code{FATE-HD} (see XXX, LIGHT competition module)}
+  \item{\code{soil_contrib}, \cr \code{soil_tol_min}, \cr 
+  \code{soil_tol_max}}{to visualize the PFG soil preference, and help 
+  parameterize the global parameters of the soil competition module 
+  within \code{FATE-HD} (see XXX, SOIL competition module)}
+  \item{\cr \code{soil_contrib}, \cr \code{soil_tolerance}}{same as the 
+  previous one, but \code{soil_tol_min} and \code{soil_tol_max} values 
+  are obtained by adding or removing \code{soil_tolerance} to 
+  \code{soil_contrib}}
 }
 }
 \examples{
@@ -85,7 +100,7 @@ tab1 = PNE_PFG$dom.determ[which(PNE_PFG$dom.determ$determinant == TRUE), c("spec
 tab2 = PNE_PFG$dom.traits[, c("species", "height", "dispersal", "palatability", "light")]
 determ.traits = merge(tab1, tab2, by = "species")
 
-PFG.traits = PRE_FATE.speciesClustering_step3(mat.species.traits = determ.traits)
+PFG.traits = PRE_FATE.speciesClustering_step3(mat.traits = determ.traits)
 summary(PFG.traits)
 
 }

@@ -5,59 +5,63 @@
 \title{Create tables of pixel temporal evolution of PFG abundances (and 
 light and soil resources if activated) for a \code{FATE-HD} simulation}
 \usage{
-POST_FATE.temporalEvolution(name.simulation, file.simulParam = NULL,
-  no.years = 10, opt.ras_habitat = NULL, opt.no_CPU = 1)
+POST_FATE.temporalEvolution(
+  name.simulation,
+  file.simulParam = NULL,
+  no_years,
+  opt.ras_habitat = NULL,
+  opt.no_CPU = 1
+)
 }
 \arguments{
-\item{name.simulation}{a \code{string} that corresponds to the main 
-directory or simulation name of the \code{FATE-HD} simulation}
+\item{name.simulation}{a \code{string} corresponding to the main directory 
+or simulation name of the \code{FATE-HD} simulation}
 
-\item{file.simulParam}{a \code{string} that corresponds to the name of a 
-parameter file that will be contained into the \code{PARAM_SIMUL} folder 
-of the \code{FATE-HD} simulation}
+\item{file.simulParam}{default \code{NULL}. A \code{string} corresponding to 
+the name of a parameter file that will be contained into the 
+\code{PARAM_SIMUL} folder of the \code{FATE-HD} simulation}
 
-\item{no.years}{an \code{integer} corresponding to the number of simulation 
+\item{no_years}{an \code{integer} corresponding to the number of simulation 
 years that will be used to extract PFG abundance / light / soil maps}
 
-\item{opt.ras_habitat}{default \code{NULL} (\emph{optional}). A \code{string} that 
-corresponds to the file name of a raster mask, with an \code{integer} value 
-within each pixel, corresponding to a specific habitat}
+\item{opt.ras_habitat}{(\emph{optional}) default \code{NULL}. \cr 
+A \code{string} corresponding to the file name of a raster mask, with an 
+\code{integer} value within each pixel, corresponding to a specific habitat}
 
-\item{opt.no_CPU}{default \code{1} (\emph{optional}). The number of 
+\item{opt.no_CPU}{(\emph{optional}) default \code{1}. \cr The number of 
 resources that can be used to parallelize the \code{unzip/zip} of raster 
-files}
+files, as well as the extraction of values from raster files}
 }
 \value{
 A \code{list} containing three \code{data.frame} objects with the 
 following columns :
 \describe{
-  \item{\code{PFG}}{the concerned Plant Functional Group (for abundance)}
-  \item{\code{STRATUM}}{the concerned height stratum (for LIGHT)}
-  \item{\code{ID}}{the concerned pixel}
-  \item{\code{X, Y}}{the coordinates of the concerned pixel}
-  \item{\code{HAB}}{the habitat of the concerned pixel}
-  \item{\emph{years}}{values of the corresponding object for each 
-  selected simulation year(s)}
+  \item{\code{PFG}}{concerned plant functional group (for abundance)}
+  \item{\code{STRATUM}}{concerned height stratum (for LIGHT)}
+  \item{\code{ID.pixel}}{number of the concerned pixel}
+  \item{\code{X, Y}}{coordinates of the concerned pixel}
+  \item{\code{HAB}}{habitat of the concerned pixel}
+  \item{\emph{years}}{values of the corresponding object (abundance / LIGHT 
+  / SOIL) for each selected simulation year(s) \cr \cr}
 }
 
-One to three \code{POST_FATE_TABLE_PIXEL_evolution_[...].csv} files are created : 
+One to three \file{POST_FATE_TABLE_PIXEL_evolution_[...].csv} files are created : 
 \describe{
   \item{\file{abundance}}{always}
-  \item{\file{light}}{\emph{if LIGHT module was activated}}
-  \item{\file{soil}}{\emph{if SOIL module was activated}}
+  \item{\file{light}}{\emph{if light module was activated}}
+  \item{\file{soil}}{\emph{if soil module was activated}}
 }
 }
 \description{
 This script is designed to produce from 1 to 3 tables 
-containing pixel temporal evolution of PFG abundances as well as light and 
-soil resources if those modules were activated in a \code{FATE-HD} 
+containing pixel temporal evolution of PFG abundances, as well as light and 
+soil resources if those modules were activated, in a \code{FATE-HD} 
 simulation.
 }
 \details{
-This function allows one to obtain, for a specific \code{FATE-HD} 
-simulation and a specific parameter file within this simulation, one to 
-three preanalytical tables that can then be used to create graphics.
-\cr \cr
+This function allows to obtain, for a specific \code{FATE-HD} simulation and 
+a specific parameter file within this simulation, \strong{one to three 
+preanalytical tables that can then be used to create graphics}. \cr \cr
 
 For each PFG and each selected simulation year, raster maps are retrieved 
 from the results folder \code{ABUND_perPFG_allStrata} and unzipped.
@@ -71,7 +75,7 @@ are compressed again :
   }
 }
 
-IF the \code{LIGHT} module was activated (see 
+\strong{If the light module was activated} (see 
 \code{\link{PRE_FATE.params_globalParameters}}), for each height stratum 
 and each selected simulation year, raster maps are retrieved from the 
 results folder \code{LIGHT} and unzipped.
@@ -84,7 +88,7 @@ are compressed again :
   }
 }
 
-IF the \code{SOIL} module was activated (see 
+\strong{If the soil module was activated} (see 
 \code{\link{PRE_FATE.params_globalParameters}}), for each selected 
 simulation year, raster maps are retrieved from the results folder 
 \code{SOIL} and unzipped.
@@ -97,19 +101,22 @@ are compressed again :
   }
 }
 
-If a raster mask for habitat has been provided, the tables will also 
-contain information about the pixel habitat. \cr \cr
+\strong{If a raster mask for habitat has been provided}, the tables will 
+also contain information about the pixel habitat. \cr \cr
 
 
 \strong{These \code{.csv} files can then be used by other functions} :
 
 \itemize{
   \item to produce graphics of temporal evolution of modelled abundances 
-  and space occupancy at the whole area level \cr (see 
+  and space occupancy at the \emph{whole area level} \cr (see 
   \code{\link{POST_FATE.graphic_evolutionCoverage}})
   \item to produce graphics of temporal evolution of modelled abundances 
-  and / or resources at the pixel level \cr (see 
+  and / or resources at the \emph{pixel level} \cr (see 
   \code{\link{POST_FATE.graphic_evolutionPixels}})
+  \item to produce graphics of temporal evolution of community composition 
+  at the \emph{habitat level} \cr (see 
+  \code{\link{POST_FATE.graphic_evolutionStability}})
 }
 }
 \examples{
@@ -121,7 +128,7 @@ POST_FATE.temporalEvolution(name.simulation = "FATE_simulation"
                                     
 POST_FATE.temporalEvolution(name.simulation = "FATE_simulation"
                                        , file.simulParam = "Simul_parameters_V1.txt"
-                                       , no.years = 50
+                                       , no_years = 50
                                        , opt.no_CPU = 1)
 }
                                                         
@@ -252,7 +259,8 @@ str(tempEvol$`FATE_PNE/PARAM_SIMUL/Simul_parameters_V1.txt`)
 \seealso{
 \code{\link{PRE_FATE.params_globalParameters}},
 \code{\link{POST_FATE.graphic_evolutionCoverage}},
-\code{\link{POST_FATE.graphic_evolutionPixels}}
+\code{\link{POST_FATE.graphic_evolutionPixels}},
+\code{\link{POST_FATE.graphic_evolutionStability}}
 }
 \author{
 Maya Guéguen

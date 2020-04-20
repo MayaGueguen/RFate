@@ -11,23 +11,27 @@ simulation — PRE_FATE.params_changingYears • RFate</title>
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -42,7 +46,6 @@ simulation — PRE_FATE.params_changingYears" />
 manage the update of simulation maps : 1) simulation years at which the 
 maps should be changed ; 2) filenames corresponding to the new simulation 
 maps to be used." />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -60,7 +63,7 @@ maps to be used." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -74,7 +77,7 @@ maps to be used." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RFate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.9000</span>
       </span>
     </div>
 
@@ -155,38 +158,8 @@ maps to be used." />
     Reference
   </a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/fate-hd_tutorial_0_modelling_framework.html">FATE-HD tutorial 0 - Modelling framework</a>
-    </li>
-    <li>
-      <a href="../articles/fate-hd_tutorial_0_publications.html">FATE-HD tutorial 0 - Publications</a>
-    </li>
-    <li>
-      <a href="../articles/fate-hd_tutorial_1_PFG.html">FATE-HD tutorial 1 - Principle of PFG</a>
-    </li>
-    <li>
-      <a href="../articles/fate-hd_tutorial_2_RUN_SIMULATION.html">FATE-HD tutorial 2 - Run a simulation</a>
-    </li>
-    <li>
-      <a href="../articles/fate-hd_tutorial_3_MODULES.html">FATE-HD tutorial 3 - Use a module</a>
-    </li>
-    <li>
-      <a href="../articles/rfate_tutorial_1_PFG.html">&lt;font color='#068f96'&gt;&lt;i class='fa fa-battery-quarter'&gt;&lt;/i&gt; `PRE_FATE` - build Plant Functional Groups (PFG)&lt;/font&gt;</a>
-    </li>
-    <li>
-      <a href="../articles/rfate_tutorial_2_params.html">&lt;font color='#068f96'&gt; &lt;i class='fa fa-battery-half'&gt;&lt;/i&gt; `PRE_FATE` - build parameter files &lt;/font&gt;</a>
-    </li>
-    <li>
-      <a href="../articles/rfate_tutorial_3_graphics.html">&lt;font color='#068f96'&gt; &lt;i class='fa fa-battery-three-quarters'&gt;&lt;/i&gt; `POST_FATE` - graphics &lt;/font&gt;</a>
-    </li>
-  </ul>
+<li>
+  <a href="../articles/index.html">Articles</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -229,98 +202,137 @@ maps should be changed ; 2) filenames corresponding to the new simulation
 maps to be used.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>PRE_FATE.params_changingYears</span>(<span class='no'>name.simulation</span>, <span class='no'>type.changing</span>, <span class='no'>mat.changing</span>,
-  <span class='kw'>opt.folder.name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>PRE_FATE.params_changingYears</span>(
+  <span class='no'>name.simulation</span>,
+  <span class='no'>type.changing</span>,
+  <span class='no'>mat.changing</span>,
+  <span class='kw'>opt.folder.name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>name.simulation</th>
-      <td><p>a <code>string</code> that corresponds to the main 
-directory or simulation name of the <code>FATE-HD</code> simulation</p></td>
+      <td><p>a <code>string</code> corresponding to the main directory 
+or simulation name of the <code>FATE-HD</code> simulation</p></td>
     </tr>
     <tr>
       <th>type.changing</th>
-      <td><p>a <code>string</code> to choose the concerned module : <br />
-<code>MASK</code> (succession), <code>HS</code> (habitat suitability) or <code>DIST</code> 
-(disturbances)</p></td>
+      <td><p>a <code>string</code> to choose the concerned module :</p><ul>
+<li><p><code>MASK</code> (succession),</p></li>
+<li><p><code>HABSUIT</code> (habitat suitability),</p></li>
+<li><p><code>DIST</code> (disturbances),</p></li>
+<li><p><code>DROUGHT</code> (drought disturbances),</p></li>
+<li><p><code>ALIENS</code> or <code>ALIENS_F</code> (aliens introduction, masks or 
+  frequencies)</p></li>
+</ul></td>
     </tr>
     <tr>
       <th>mat.changing</th>
-      <td><p>a <code>data.frame</code> with 3 columns : <code>year</code>, 
-<code>order</code>, <code>file.name</code></p></td>
+      <td><p>a <code>data.frame</code> with 3 columns : <br /> <code>year</code>, 
+<code>order</code>, <code>new.value</code></p></td>
     </tr>
     <tr>
       <th>opt.folder.name</th>
-      <td><p>(<em>optional</em>) <br /> a <code>string</code> that 
-corresponds to the name of the folder that will be created into the 
+      <td><p>(<em>optional</em>) <br /> a <code>string</code> corresponding 
+to the name of the folder that will be created into the 
 <code>name.simulation/DATA/SCENARIO/</code> directory to store the results</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Several <code>.txt</code> files into the 
+    <p>Several <code class="file">.txt</code> files into the 
 <code>name.simulation/DATA/SCENARIO/</code> :</p><ul>
-<li><p><code>type.changing_changing_times.txt</code> : one line for each 
+<li><p>..<em>type.changing</em>..<code class="file">.changingmask_years.txt</code> : one line for each 
   simulation year</p></li>
-<li><p><code>type.changing_changing_masks_t</code>..<em>year</em>..<code>.txt</code> : 
+<li><p>..<em>type.changing</em>..<code class="file">.changingmask_files_t</code>..<em>year</em>..<code class="file">.txt</code> : 
   one line for each new raster file <br /> <br /></p></li>
 </ul>
 
+<p>OR</p><ul>
+<li><p>..<em>type.changing</em>..<code class="file">.changingfreq_years.txt</code> : one line for each 
+  simulation year</p></li>
+<li><p>..<em>type.changing</em>..<code class="file">.changingfreq_files_t</code>..<em>year</em>..<code class="file">.txt</code> : 
+  one line for each new frequency <br /> <br /></p></li>
+</ul>
+
+
 <p>If the <code>opt.folder.name</code> has been used, the files will be into the folder
-<code>name.simulation/DATA/SCENARIO/opt.folder.name/</code></p>
+<code>name.simulation/DATA/SCENARIO/opt.folder.name/</code>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>Several modules of the <code>FATE-HD</code> software allow the user to simulate 
 changes over time :</p>
-<dl class='dl-horizontal'>
-  <dt>succession</dt><dd><p>the CORE module is based on a raster mask given within 
-  the <em>Simul_parameters</em> file with the <code>MASK</code> flag (see 
-  <code><a href='PRE_FATE.params_simulParameters.html'>PRE_FATE.params_simulParameters</a></code>), <strong>with either 0 or 
-  1</strong> within each pixel, 1 corresponding to the cells in which the PFG can 
-  try to colonize. The available pixels can change through time, to 
-  simulate habitat loss (e.g. urbanization) or gain (e.g. glacial retreat).</p></dd>
-  <dt>habitat suitability</dt><dd><p><strong>if this MODULE is activated</strong> (see 
+<dl'>
+  <dt>succession</dt><dd><p>the <strong>core module</strong> is based on a raster mask given 
+  within the <em>Simul_parameters</em> file with the <code>MASK</code> flag (see 
+  <code><a href='PRE_FATE.params_simulParameters.html'>PRE_FATE.params_simulParameters</a></code>), <strong>with either 
+  <code>0</code> or <code>1</code></strong> within each pixel, <code>1</code> corresponding to the 
+  cells in which the PFG can try to colonize. The available pixels can 
+  change through time, to simulate habitat loss (e.g. urbanization) or gain 
+  (e.g. glacial retreat).</p></dd>
+  <dt>habitat suitability</dt><dd><p><strong>if this module is activated</strong> (see 
   <code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>), PFG colonization depends 
   on maps given for each PFG within the <em>Simul_parameters</em> file with 
   the <code>PFG_HAB_MASK</code> flag (see 
   <code><a href='PRE_FATE.params_simulParameters.html'>PRE_FATE.params_simulParameters</a></code>). <br /> These maps must 
-  contain <strong>values between 0 and 1</strong> corresponding to the probability 
-  of presence of the group in each pixel. These probabilities can change 
-  through time, as they often come from Species Distribution Models (SDM) 
-  that can be based for example on climatic variables.</p></dd>
-  <dt>disturbances</dt><dd><p><strong>if this MODULE is activated</strong> (see 
+  contain <strong>values between <code>0</code> and <code>1</code></strong> corresponding to the 
+  probability of presence of the PFG in each pixel. These probabilities 
+  can change through time, as they often come from Species Distribution 
+  Models (SDM) that can be based for example on climatic variables (e.g. 
+  simulating regional warming).</p></dd>
+  <dt>disturbances</dt><dd><p><strong>if this module is activated</strong> (see 
   <code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>), each disturbance relies 
   on a raster given within the <em>Simul_parameters</em> file with the 
   <code>DIST_MASK</code> flag (see <code><a href='PRE_FATE.params_simulParameters.html'>PRE_FATE.params_simulParameters</a></code>).
-   <br /> As for succession, this mask is filled <strong>with either 0 or 1</strong> 
-  to define where the perturbation occurs. The impacted pixels can also 
-  change through time (e.g. change in forestry practices, expansion of 
-  grazing areas, etc). <br /> <br /></p></dd>
+  <br /> As for succession, this mask is filled <strong>with either <code>0</code> 
+  or <code>1</code></strong> to define where the perturbation occurs. The impacted pixels 
+  can also change through time (e.g. change in forestry practices, expansion 
+  of grazing areas, etc).</p></dd>
+  <dt>drought disturbance</dt><dd><p><strong>if this module is activated</strong> (see 
+  <code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>), drought disturbance 
+  relies on a raster given within the <em>Simul_parameters</em> file with the 
+  <code>DROUGHT_MASK</code> flag (see 
+  <code><a href='PRE_FATE.params_simulParameters.html'>PRE_FATE.params_simulParameters</a></code>).
+  <br /> This map contains values defining the drought intensity experienced by 
+  the area. This intensity can change through time and space (e.g. regional 
+  warming, extreme years, change in agriculture practices that can leave a 
+  place more exposed, etc).</p></dd>
+  <dt>aliens introduction</dt><dd><p><strong>if this module is activated</strong> (see 
+  <code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>), aliens introduction 
+  depends on maps given for each alien within the <em>Simul_parameters</em> 
+  file with the <code>PFG_ALIENS_MASK</code> flag (see 
+  <code><a href='PRE_FATE.params_simulParameters.html'>PRE_FATE.params_simulParameters</a></code>).
+  <br /> As for succession, these masks are filled <strong>with either <code>0</code> 
+  or <code>1</code></strong> to define where the introductions occur. The impacted pixels 
+  can also change through time (e.g. colonization, eradication campaign, 
+  etc), as well as the frequencies of introduction (see <code>ALIENS_FREQ</code> 
+  flag in <code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>). <br /> <br /></p></dd>
 
 </dl>
 
-
-<p>These changes require two types of information, that must be presented 
-within two different files :</p>
-<dl class='dl-horizontal'>
-  <dt>Years of change <br /> <code>column</code> year</dt><dd><p>all simulation years at 
-  which the raster files of a specific module (succession, habitat 
-  suitability, disturbance) will be changed. To each given year must 
-  correspond a file with the names of the new maps.</p></dd>
-  <dt>New maps / mask <br /> <code>column</code> file.name</dt><dd><p>for a specific year 
-  of change, the names of the new raster files, always in the same order. 
-  <br /> It can be either <code>.img</code> or <code>.tif</code>.</p></dd>
-  <dt>Order of the filenames <br /> <code>column</code> order</dt><dd><p><code>integer</code> to 
-  be sure to always give the raster maps in the same order.</p></dd>
+<p>Several parameters, given within <code>mat.changing</code>, are required to set up 
+these temporal changes :</p>
+<dl'>
+  <dt>year</dt><dd><p>all simulation years at which the raster files of a specific 
+  module <em>(succession <code>MASK</code>, habitat suitability <code>HABSUIT</code>, 
+  disturbance <code>DIST</code>, drought <code>DROUGHT</code>, aliens introduction 
+  <code>ALIENS</code> or <code>ALIENS_F</code>)</em> will be changed</p></dd>
+  <dt>new.value</dt><dd><p>the names of the new raster files for each year of 
+  change. It can be either <code>.img</code> or <code>.tif</code>.<br />
+  There is an exception if <code>ALIENS_F</code> is selected : the values should 
+  be <code>integer</code> representing the frequencies of aliens introduction.</p></dd>
+  <dt>order</dt><dd><p>an <code>integer</code> associated to each new map in order to 
+  always give the raster maps in the same order throughout the years <br /> <br /></p></dd>
 
 </dl>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='PRE_FATE.skeletonDirectory.html'>PRE_FATE.skeletonDirectory</a></code>,
+    <div class='dont-index'><p><code><a href='PRE_FATE.skeletonDirectory.html'>PRE_FATE.skeletonDirectory</a></code>, 
+<code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>,
 <code><a href='PRE_FATE.params_PFGdisturbance.html'>PRE_FATE.params_PFGdisturbance</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -333,23 +345,15 @@ within two different files :</p>
                               , <span class='kw'>type.changing</span> <span class='kw'>=</span> <span class='st'>"DIST"</span>
                               , <span class='kw'>mat.changing</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>year</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>50</span>,<span class='fl'>50</span>,<span class='fl'>80</span>,<span class='fl'>80</span>)
                                                           , <span class='kw'>order</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>2</span>,<span class='fl'>1</span>,<span class='fl'>2</span>)
-                                                          , <span class='kw'>file.name</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"MASK_DIST1_50.tif"</span>
+                                                          , <span class='kw'>new.value</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"MASK_DIST1_50.tif"</span>
                                                                           , <span class='st'>"MASK_DIST2_50.tif"</span>
                                                                           , <span class='st'>"MASK_DIST1_80.tif"</span>
                                                                           , <span class='st'>"MASK_DIST2_80.tif"</span>)))</pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#details">Details</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Maya Guéguen</p>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -360,7 +364,7 @@ within two different files :</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
 </div>
 
       </footer>

@@ -5,8 +5,12 @@
 \title{Replace a pattern with a new within all parameter files of a 
 \code{FATE-HD} simulation folder}
 \usage{
-.setPattern(name.simulation, opt.name.file = NULL, pattern.tofind,
-  pattern.toreplace)
+.setPattern(
+  name.simulation,
+  opt.name.file = NULL,
+  pattern.tofind,
+  pattern.toreplace
+)
 }
 \arguments{
 \item{name.simulation}{a \code{string} that corresponds to the main 

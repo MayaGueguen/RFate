@@ -6,28 +6,31 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create <em>SUCCESSION</em> parameter files for a <code>FATE-HD</code> 
-simulation — PRE_FATE.params_PFGsuccession • RFate</title>
+<title>Create SUCCESSION parameter files for a FATE-HD simulation — PRE_FATE.params_PFGsuccession • RFate</title>
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -36,12 +39,10 @@ simulation — PRE_FATE.params_PFGsuccession • RFate</title>
 
 
 
-<meta property="og:title" content="Create <em>SUCCESSION</em> parameter files for a <code>FATE-HD</code> 
-simulation — PRE_FATE.params_PFGsuccession" />
+<meta property="og:title" content="Create SUCCESSION parameter files for a FATE-HD simulation — PRE_FATE.params_PFGsuccession" />
 <meta property="og:description" content="This script is designed to create parameter files containing 
 succession parameters for each PFG (one file for each of them) used in the 
 core module of FATE-HD." />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -59,7 +60,7 @@ core module of FATE-HD." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -73,7 +74,7 @@ core module of FATE-HD." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RFate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.9000</span>
       </span>
     </div>
 
@@ -154,38 +155,8 @@ core module of FATE-HD." />
     Reference
   </a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/fate-hd_tutorial_0_modelling_framework.html">FATE-HD tutorial 0 - Modelling framework</a>
-    </li>
-    <li>
-      <a href="../articles/fate-hd_tutorial_0_publications.html">FATE-HD tutorial 0 - Publications</a>
-    </li>
-    <li>
-      <a href="../articles/fate-hd_tutorial_1_PFG.html">FATE-HD tutorial 1 - Principle of PFG</a>
-    </li>
-    <li>
-      <a href="../articles/fate-hd_tutorial_2_RUN_SIMULATION.html">FATE-HD tutorial 2 - Run a simulation</a>
-    </li>
-    <li>
-      <a href="../articles/fate-hd_tutorial_3_MODULES.html">FATE-HD tutorial 3 - Use a module</a>
-    </li>
-    <li>
-      <a href="../articles/rfate_tutorial_1_PFG.html">&lt;font color='#068f96'&gt;&lt;i class='fa fa-battery-quarter'&gt;&lt;/i&gt; `PRE_FATE` - build Plant Functional Groups (PFG)&lt;/font&gt;</a>
-    </li>
-    <li>
-      <a href="../articles/rfate_tutorial_2_params.html">&lt;font color='#068f96'&gt; &lt;i class='fa fa-battery-half'&gt;&lt;/i&gt; `PRE_FATE` - build parameter files &lt;/font&gt;</a>
-    </li>
-    <li>
-      <a href="../articles/rfate_tutorial_3_graphics.html">&lt;font color='#068f96'&gt; &lt;i class='fa fa-battery-three-quarters'&gt;&lt;/i&gt; `POST_FATE` - graphics &lt;/font&gt;</a>
-    </li>
-  </ul>
+<li>
+  <a href="../articles/index.html">Articles</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -215,8 +186,7 @@ core module of FATE-HD." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create <em>SUCCESSION</em> parameter files for a <code>FATE-HD</code> 
-simulation</h1>
+    <h1>Create SUCCESSION parameter files for a FATE-HD simulation</h1>
     <small class="dont-index">Source: <a href='https://github.com/MayaGueguen/RFate.git/blob/master/R/PRE_FATE.params_PFGsuccession.R'><code>R/PRE_FATE.params_PFGsuccession.R</code></a></small>
     <div class="hidden name"><code>PRE_FATE.params_PFGsuccession.Rd</code></div>
     </div>
@@ -227,24 +197,28 @@ succession parameters for each PFG (one file for each of them) used in the
 core module of <code>FATE-HD</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>PRE_FATE.params_PFGsuccession</span>(<span class='no'>name.simulation</span>, <span class='no'>mat.PFG.succ</span>,
+    <pre class="usage"><span class='fu'>PRE_FATE.params_PFGsuccession</span>(
+  <span class='no'>name.simulation</span>,
+  <span class='no'>mat.PFG.succ</span>,
   <span class='kw'>strata.limits</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>20</span>, <span class='fl'>50</span>, <span class='fl'>150</span>, <span class='fl'>400</span>, <span class='fl'>1000</span>, <span class='fl'>2000</span>, <span class='fl'>5000</span>, <span class='fl'>10000</span>),
-  <span class='kw'>strata.limits_reduce</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>opt.folder.name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>strata.limits_reduce</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>opt.folder.name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>name.simulation</th>
-      <td><p>a <code>string</code> that corresponds to the main 
-directory or simulation name of the <code>FATE-HD</code> simulation</p></td>
+      <td><p>a <code>string</code> corresponding to the main directory 
+or simulation name of the <code>FATE-HD</code> simulation</p></td>
     </tr>
     <tr>
       <th>mat.PFG.succ</th>
       <td><p>a <code>data.frame</code> with at least 5 columns : <br /> 
 <code>PFG</code>, <code>type</code>, <code>height</code>, <code>maturity</code>, <code>longevity</code> 
 <br /> (<em>and optionally, <code>max_abundance</code>, <code>potential_fecundity</code>, 
-<code>immature_size</code></em>) 
+<code>immature_size</code>, <code>is_alien</code></em>) 
 <br /> (see <code><a href='PRE_FATE.params_PFGsuccession.html#details'>Details</a></code>)</p></td>
     </tr>
     <tr>
@@ -260,8 +234,8 @@ stratum</p></td>
     </tr>
     <tr>
       <th>opt.folder.name</th>
-      <td><p>(<em>optional</em>) <br /> a <code>string</code> that 
-corresponds to the name of the folder that will be created into the 
+      <td><p>(<em>optional</em>) <br /> a <code>string</code> corresponding 
+to the name of the folder that will be created into the 
 <code>name.simulation/DATA/PFGS/SUCC/</code> directory to store the results</p></td>
     </tr>
     </table>
@@ -269,133 +243,153 @@ corresponds to the name of the folder that will be created into the
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A <code>.txt</code> file per PFG into the 
-<code>name.simulation/DATA/PFGS/SUCC/</code> directory with the following 
+<code class="file">name.simulation/DATA/PFGS/SUCC/</code> directory with the following 
 parameters :</p>
-<dl class='dl-horizontal'>
+<dl'>
   <dt>NAME</dt><dd><p>name of the PFG</p></dd>
-  <dt>MATURITY</dt><dd><p>the maturity age of the PFG <em>(in years)</em></p></dd>
-  <dt>LONGEVITY</dt><dd><p>the PFG life span <em>(in years)</em></p></dd>
-  <dt>MAX_ABUNDANCE</dt><dd><p>the maximal (qualitative) abundance / space that 
-  the PFG is able to produce / occupy <br /> (qualitative) 
-  <em>(1: Low 2: Medium 3: High)</em></p></dd>
-  <dt>IMM_SIZE</dt><dd><p>the relative size of the immature PFG <br />
-  <em>(0: 0% 1: 10% 2: 20% 3: 30% 4: 40% 5: 50% 6: 60% 7: 70% 
-  8: 80% 9: 90% 10: 100%)</em></p></dd>
-  <dt>CHANG_STR_AGES</dt><dd><p>the ages at which the PFG goes in the upper stratum 
+  <dt>MATURITY</dt><dd><p>PFG maturity age <em>(in years)</em></p></dd>
+  <dt>LONGEVITY</dt><dd><p>PFG life span <em>(in years)</em></p></dd>
+  <dt>MAX_ABUNDANCE</dt><dd><p>maximum abundance / space (qualitative) that the PFG 
+  is able to produce / occupy <br /> <em>(<code>1</code>: Low <code>2</code>: Medium 
+  <code>3</code>: High)</em></p></dd>
+  <dt>IMM_SIZE</dt><dd><p>PFG immature relative size <em>(from <code>0</code> to 
+  <code>10</code>, corresponding to 0 to 100%)</em></p></dd>
+  <dt>CHANG_STR_AGES</dt><dd><p>ages at which the PFG goes in the upper stratum 
   <br /> <em>(in years, put a value higher than the PFG life span if it is 
   not supposed to rise a stratum)</em></p></dd>
-  <dt>SEED_POOL_LIFE</dt><dd><p>the maximal number of years seeds are able to
-  survive (for active and dormant pool)</p></dd>
-  <dt>SEED_DORMANCY</dt><dd><p>are the seeds dormant or not <em>(0: No 1: Yes)</em></p></dd>
-  <dt>POTENTIAL_<br /> FECUNDITY</dt><dd><p>the maximum number of seeds produced by 
-  the PFG <br /> <em>(set by default to 100)</em><br /> <br /></p></dd>
+  <dt>SEED_POOL_LIFE</dt><dd><p>maximum number of years seeds are able to survive 
+  (for active and dormant pool)</p></dd>
+  <dt>SEED_DORMANCY</dt><dd><p>are the seeds dormant or not <em>(<code>0</code>: No 
+  <code>1</code>: Yes)</em></p></dd>
+  <dt>POTENTIAL_<br /> FECUNDITY</dt><dd><p>maximum number of seeds produced by the 
+  PFG <br /> <em>(set by default to <code>100</code>)</em></p></dd>
+  <dt>IS_ALIEN</dt><dd><p>is the PFG an alien or not <em>(<code>0</code>: No <code>1</code>: 
+  Yes)</em><br /> <br /></p></dd>
 
 </dl>
 
-<p>A <code>SUCC_COMPLETE_TABLE.csv</code> file summarizing information for all 
-groups into the <code>name.simulation/DATA/PFGS/</code> directory. <br />
-This file can be used to parameterize the disturbance files.</p>
+<p>A <code class="file">SUCC_COMPLETE_TABLE.csv</code> file summarizing information for all 
+groups into the <code class="file">name.simulation/DATA/PFGS/</code> directory. <br />
+This file can be used to parameterize the disturbance files (see 
+<code><a href='PRE_FATE.params_PFGdisturbance.html'>PRE_FATE.params_PFGdisturbance</a></code>).</p>
 <p>If the <code>opt.folder.name</code> has been used, the files will be into the 
-folder <code>name.simulation/DATA/PFGS/SUCC/opt.folder.name/</code></p>
+folder <code class="file">name.simulation/DATA/PFGS/SUCC/opt.folder.name/</code>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The core module of <code>FATE-HD</code> allows the user to simulate a primary 
-vegetation succession based on life history traits. <br />
-Several parameters are required for each PFG in order to set up this life 
-cycle :</p>
-<dl class='dl-horizontal'>
-  <dt>type</dt><dd><p>or life-form, based on Raunkier. It should be either <code>H</code> 
-  (herbaceous), <code>C</code> (chamaephyte) or <code>P</code> (phanerophyte) for now</p></dd>
+    <p>The <strong>core module</strong> of <code>FATE-HD</code> allows the user to simulate a 
+primary vegetation succession based on a <strong>demography model</strong>. <br /> <br /></p>
+<p>Several parameters, given within <code>mat.PFG.succ</code>, are required for 
+each PFG in order to set up this life cycle :</p>
+<dl'>
+  <dt>type</dt><dd><p>or life-form, based on Raunkier. <br /> It should be either 
+  <code>H</code> (herbaceous), <code>C</code> (chamaephyte) or <code>P</code> (phanerophyte) 
+  for now</p></dd>
   <dt>height</dt><dd><p>the maximum or average height that reach the PFG</p></dd>
   <dt>maturity</dt><dd><p>the age from which the PFG can reproduce</p></dd>
   <dt>longevity</dt><dd><p>the maximum or average lifespan of the PFG <br /> <br /></p></dd>
-  <dt>(max_abundance)</dt><dd><p>the maximum abundance of mature PFG in favorable 
-  conditions</p></dd>
-  <dt>(potential_fecundity)</dt><dd><p>the maximum number of seeds produced by the 
-  PFG</p></dd>
-  <dt>(immature_size)</dt><dd><p>the relative size of immature versus mature plants 
-  <br /> <br /></p></dd>
+  <dt>(<em>max_abundance</em>)</dt><dd><p>the maximum abundance of mature PFG in 
+  favorable conditions</p></dd>
+  <dt>(<em>potential_fecundity</em>)</dt><dd><p>the maximum number of seeds produced 
+  by the PFG</p></dd>
+  <dt>(<em>immature_size</em>)</dt><dd><p>the relative size of immature versus mature 
+  plants</p></dd>
+  <dt>(<em>is_alien</em>)</dt><dd><p>if the PFG is to be considered as an alien 
+  (<code>1</code>) or not (<code>0</code>) <br /> <br /></p></dd>
 
 </dl>
 
 
-
-
-<p>These values will allow to calculate or define a set of characteristics for
-each PFG :</p>
-<dl class='dl-horizontal'>
-  <dt>STRATA_LIMITS</dt><dd><p>= the height values that define each stratum.<br /> <br />
-  The steps are detailed below and try to homogenize the number of PFG
-  within each stratum :
+<p>These values will allow to calculate or define a set of characteristics for 
+all PFG :</p>
+<dl'>
+  <dt>STRATA_LIMITS</dt><dd><p>= height values that define each stratum.<br /> <br />
+  Two methods to define these limits are available :
   <ul>
-<li><p>the average number of PFG per stratum should be close to 
-    the square root of the total number of PFG (<code>no.PFG.perStrata</code>)</p></li>
-<li><p><code>strata limits</code> should go exponentially and will be selected
-    among <br /> <code>0, 20, 50, 150, 400, 1000, 2000, 5000, 10000</code></p></li>
-<li><p>PFG are divided according to their <code>height</code> and these 
-    <code>strata limits</code> and then grouped in order to have per stratum a 
-    number of PFG <code>&gt;= (no.PFG.perStrata - 2) <br /> <br /></code></p></li>
+<li><p>from <strong>predefined rules</strong> (using <code>strata.limits_reduce 
+    = TRUE</code>, <code>strata.limits</code>, <code>height</code>) : <br /> <br /></p><ul>
+<li><p>limits should go exponentially and are selected among 
+      <code>strata.limits</code></p></li>
+<li><p>PFG are separated according to these <code>strata.limits</code> and 
+      then grouped making sure to have 
+      $$\text{number of PFG per stratum} \geq \sqrt{\text{total number 
+      of PFG}} - 2$$
+      to try to homogenize the number of PFG within each stratum. <br /> <br /></p></li>
+</ul></li>
+<li><p>from <strong>user data</strong> : (using <code>strata.limits_reduce = 
+    FALSE</code>) <br />
+      <em>with the values contained within the <code>strata.limits</code> 
+      column, if provided <br /> <br /></em></p></li>
 </ul></p></dd>
-  <dt>STRATA</dt><dd><p>= the maximum stratum that each PFG can reach <br /> <br /></p></dd>
+
+</dl>
+
+<p>and a set of characteristics for each PFG :</p>
+<dl'>
+  <dt>STRATA</dt><dd><p>= maximum stratum that each PFG can reach</p></dd>
   <dt>MAX_ABUNDANCE</dt><dd><p>= maximum abundance of mature PFG in favorable 
-  conditions <br /> <br />
-  It can be seen as a proxy of maximum carrying capacity for mature 
-  individuals (<em>and therefore as a proxy a quantity of shade produced 
-  as well, if the light module is activated</em>), and it is defined according 
-  to the number of strata potentially occupied by a PFG and its life form :
+  conditions <br />
+   = It can be seen as a proxy of maximum carrying capacity for mature 
+  individuals <br /> (<em>and therefore as a proxy a quantity of shade 
+  produced as well, if the light module is activated</em>). <br /> <br />
+  Two methods to define these abundances are available :
   <ul>
-<li><p>herbaceous take little place (<em>and make little shade</em>) 
-    (<code>1</code>), <br /> chamaephytes take medium place (<em>and make medium 
-    shade</em>) (<code>2</code>) <br /> and phanerophytes take a lot of place 
-    (<em>and make lot of shade</em>) (<code>3</code>)</p></li>
-<li><p>all plants in first stratum take little place (<em>and make 
-    little shade</em>) (<code>1</code>)</p></li>
-<li><p>plants other than herbaceous in stratum 2 take medium place 
-    (<em>and make medium shade</em>) (<code>2</code>)</p></li>
-<li><p>herbaceous in stratum &gt; 2 take medium place (<em>and make 
-    medium shade</em>) (<code>2</code>)</p></li>
-<li><p>chamaephytes in stratum &gt; 3 take lot of place (<em>and make 
-    lot of shade</em>) (<code>3</code>)</p></li>
-</ul>
-  <em>or the values contained within the <code>max_abundance</code> column, if 
-  provided <br /> <br /></em></p></dd>
+<li><p>from <strong>predefined rules</strong> (using <code>type</code>, 
+    <code>STRATA</code>) : <br /> <br /></p><table class='table'>
+<tr><td><strong>STRATA</strong></td><td><strong>1</strong></td><td><strong>2</strong></td><td><strong>3</strong></td><td><strong>+</strong></td></tr>
+<tr><td><strong><code>H</code> (herbaceous)</strong></td><td><code>1</code></td><td><code>1</code></td><td><code>2</code></td><td><code>2</code></td></tr>
+<tr><td><strong><code>C</code> (chamaephyte)</strong></td><td><code>1</code></td><td><code>2</code></td><td><code>2</code></td><td><code>3</code></td></tr>
+<tr><td><strong><code>P</code> (phanerophyte)</strong></td><td><code>1</code></td><td><code>2</code></td><td><code>3</code></td><td><code>3</code></td></tr>
+</table>
+</li>
+<li><p>from <strong>user data</strong> : <br />
+      <em>with the values contained within the <code>max_abundance</code> 
+      column, if provided <br /> <br /></em></p></li>
+</ul></p></dd>
   <dt>IMM_SIZE</dt><dd><p>= relative size of immature versus mature plants <br />
+  = for example, immature herbaceous take as much space as mature 
+  herbaceous, while immature phanerophytes take less space (<em>and 
+  contribute to shade half less</em>) than mature individuals <br /> <br />
+  Two methods to define these sizes are available :
   <ul>
-<li><p>immature herbaceous take as much space as mature herbaceous <br />
-    (<em>and contribute to shade in the same way</em>) (<code>100 %</code>)</p></li>
-<li><p>immature chamaephytes take two times less space than mature
-    chamaephytes <br /> (<em>and contribute to shade half less</em>) 
-    (<code>50 %</code>)</p></li>
-<li><p>immature phanerophytes take only <code>10 %</code> of their full space 
-    (<em>and shade</em>) capacity</p></li>
-<li><p>intermediate percentages for herbaceous in stratum 2 
-    (<code>80 %</code>) and in stratum &gt; 2 (<code>50 %</code>)</p></li>
-<li><p>immature chamaephytes in 1st stratum take as much space as mature 
-    chamaephytes <br /> (<em>and contribute to shade in the same way</em>) 
-    (<code>100 %</code>)</p></li>
-<li><p>immature phanerophytes with height &lt; 10m take two times less 
-    space than mature phanerophytes <br /> (<em>and contribute to shade half 
-    less</em>) (<code>50 %</code>)</p></li>
-</ul>
-  <em>or the values contained within the <code>immature_size</code> column, if 
-  provided <br /> <br /></em></p></dd>
-  <dt>CHANG_STR_AGES</dt><dd><p>= at what age each PFG goes into the upper stratum. 
+<li><p>from <strong>predefined rules</strong> (using <code>type</code>, <code>STRATA</code>) 
+    : <br /> <br /></p>    
+<p></p><table class='table'>
+<tr><td><strong>STRATA</strong></td><td><strong>1</strong></td><td><strong>2</strong></td><td><strong>3</strong></td><td><strong>+</strong></td></tr>
+<tr><td><strong><code>H</code> (herbaceous)</strong></td><td><code>100%</code></td><td><code>80%</code></td><td><code>50%</code></td><td><code>50%</code></td></tr>
+<tr><td><strong><code>C</code> (chamaephyte)</strong></td><td><code>100%</code></td><td><code>50%</code></td><td><code>50%</code></td><td><code>50%</code></td></tr>
+<tr><td><strong><code>P</code> (phanerophyte)</strong></td><td><code>50%</code></td><td><code>50%</code></td><td><code>50%</code></td><td><code>10%</code></td></tr>
+</table>
+</li>
+<li><p>from <strong>user data</strong> : <br />
+      <em>with the values contained within the <code>immature_size</code> 
+      column, if provided <br /> <br /></em></p></li>
+</ul></p></dd>
+  <dt>CHANG_STR_AGES</dt><dd><p>= at what age each PFG goes into the upper stratum 
   <br /> <br /> It is defined using a logistic growth curve with 2 points to 
   parameterize it :
   <ol>
-<li><p>at <code>age = maturity/2</code>, <code>height = IMM_SIZE * height</code></p></li>
-<li><p>at <code>age = longevity</code>, <code>height = height</code> <br /> <br /></p></li>
+<li><p>at \(age = \text{maturity}/2\), \(height = \text{IMM_SIZE} * \text{height}\)</p></li>
+<li><p>at \(age = \text{longevity}\), \(height = \text{height}\) <br /> <br /></p></li>
 </ol></p></dd>
-  <dt>POTENTIAL_FECUNDITY</dt><dd><p>= maximum number of seeds produced by the PFG. 
-  <br /> <br /> By default, defined to the same value for all PFG (<code>100</code>) <br />
-  <em>or the values contained within the <code>potential_fecundity</code> 
-  column, if provided <br /> <br /></em></p></dd>
+  <dt>POTENTIAL_FECUNDITY</dt><dd><p>= maximum number of seeds produced by the PFG 
+  <br /> <br />
+  Two methods to define this number are available :
+  <ul>
+<li><p>from <strong>predefined rules</strong> : same value for all PFG 
+    (<code>100%</code>)</p></li>
+<li><p>from <strong>user data</strong> : <br />
+      <em>with the values contained within the <code>potential_fecundity</code> 
+      column, if provided <br /> <br /></em></p></li>
+</ul></p></dd>
+  <dt>IS_ALIEN</dt><dd><p>= if the PFG is to be considered as an alien (<code>1</code>) or 
+  not (<code>0</code>)</p></dd>
 
 </dl>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='PRE_FATE.skeletonDirectory.html'>PRE_FATE.skeletonDirectory</a></code>, 
+<code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>, 
 <code><a href='PRE_FATE.params_PFGdisturbance.html'>PRE_FATE.params_PFGdisturbance</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -442,18 +436,10 @@ each PFG :</p>
                             , <span class='kw'>strata.limits</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>strata_limits</span>
                             , <span class='kw'>strata.limits_reduce</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#details">Details</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Maya Guéguen</p>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -464,7 +450,7 @@ each PFG :</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
 </div>
 
       </footer>

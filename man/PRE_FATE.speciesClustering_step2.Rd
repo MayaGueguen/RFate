@@ -4,54 +4,58 @@
 \alias{PRE_FATE.speciesClustering_step2}
 \title{Choose clusters and select determinant species}
 \usage{
-PRE_FATE.speciesClustering_step2(clust.dendrograms, no.clusters,
-  mat.species.DIST)
+PRE_FATE.speciesClustering_step2(
+  clust.dendrograms,
+  no.clusters,
+  mat.species.DIST
+)
 }
 \arguments{
-\item{clust.dendrograms}{a dendrogram or a \code{list} of dendrograms with one
-for each \code{GROUP} value, as can be obtained with the 
-\code{\link{PRE_FATE.speciesClustering_step1}} function.}
+\item{clust.dendrograms}{a dendrogram, or a \code{list} of dendrograms (one 
+for each \code{GROUP} value). \cr Such an object can be obtained 
+with the \code{\link{PRE_FATE.speciesClustering_step1}} function.}
 
-\item{no.clusters}{a \code{vector} with the number of clusters to be kept
-in each subset of data (if the data is split).}
+\item{no.clusters}{an \code{integer}, or a \code{vector} of \code{integer} 
+(one for each \code{GROUP} value), with the number of clusters to be kept}
 
-\item{mat.species.DIST}{a \code{dist} object corresponding to the distance
-between each pair of species, or a \code{list} of \code{dist} objects,
-one for each \code{GROUP} value. Such an object can be obtained with the
-\code{PRE_FATE.speciesDistance} function.}
+\item{mat.species.DIST}{a \code{dist} object, or a \code{list} of 
+\code{dist} objects (one for each \code{GROUP} value), corresponding to the 
+distance between each pair of species. \cr Such an object can be obtained 
+with the \code{\link{PRE_FATE.speciesDistance}} function.}
 }
 \value{
-A \code{list} object with 2 elements :
+A \code{list} containing one \code{vector} and one 
+\code{data.frame} with the following columns :
 
 \describe{
-  \item{determ.sp}{a \code{vector} with the names of all determinant 
-  species}
-  \item{determ.all}{a \code{data.frame} containing all species 
-  (determinant and non-determinant) with 10 columns :
-  \itemize{
-    \item \code{pfg} : the ID of the PFG (group + no.cluster)
-    \item \code{group} : name of data subset
-    \item \code{no.cluster} : cluster number
-    \item \code{sp} : name of species
-    \item \code{ID} : species number in each PFG
-    \item \code{sp.mean.dist} : species mean distance to other species of 
-    the same PFG
-    \item \code{allSp.mean} : \code{mean(sp.mean.dist)} within the PFG
-    \item \code{allSp.min} : \code{mean(sp.mean.dist) - 1.64 * 
-    sd(sp.mean.dist)} within the PFG
-    \item \code{allSp.max} : \code{mean(sp.mean.dist) + 1.64 * 
-    sd(sp.mean.dist)} within the PFG
-    \item \code{toSuppr} : 0 if determinant species, 1 otherwise
+  \item{determ.sp}{the names of all determinant species}
+  \item{determ.all}{(\emph{determinant and non-determinant species})
+  \describe{
+    \item{\code{PFG}}{ID of the plant functional group 
+    (\code{GROUP} + \code{ID.cluster})}
+    \item{\code{GROUP}}{name of data subset}
+    \item{\code{ID.cluster}}{cluster number}
+    \item{\code{species}}{name of species}
+    \item{\code{ID.species}}{species number in each PFG}
+    \item{\code{sp.mean.dist}}{species mean distance to other species of 
+    the same PFG}
+    \item{\code{allSp.mean}}{\eqn{mean(\text{sp.mean.dist})} within the PFG}
+    \item{\code{allSp.min}}{\eqn{mean(\text{sp.mean.dist}) - 1.64 * 
+    sd(\text{sp.mean.dist})} within the PFG}
+    \item{\code{allSp.max}}{\eqn{mean(\text{sp.mean.dist}) + 1.64 * 
+    sd(\text{sp.mean.dist})} within the PFG}
+    \item{\code{DETERMINANT}}{\code{TRUE} if determinant species, \code{FALSE} 
+    otherwise}
   }
   }
 }
 
-Two \code{PRE_FATE_CLUSTERING_[...].pdf} files are created : 
+Two \file{PRE_FATE_CLUSTERING_[...].pdf} files are created : 
 \describe{
   \item{\file{STEP_2C \cr distantSpecies}}{to visualize in each PFG the 
   distribution of mean distance of each species to other species, and 
   non-determinant species which are outside the distribution}
-  \item{\file{STEP_2C \cr PCO}}{to visualize in each PFG the distribution 
+  \item{\file{STEP_2C_PCO}}{to visualize in each PFG the distribution 
   of species, with and without non-determinant species}
 }
 }
@@ -62,9 +66,9 @@ the \code{\link{PRE_FATE.speciesClustering_step1}} function ; 2) refining
 these groups by identifying determinant species in each of them.
 }
 \details{
-This function allows one to obtain a classification of \emph{dominant} 
-species into Plant Functional Groups (PFG), and the \emph{determinant} 
-species based on these PFGs.
+This function allows to obtain a classification of \strong{dominant} 
+species into Plant Functional Groups (PFG), and the \strong{determinant} 
+species based on these PFG. \cr \cr
 
 \strong{What is the difference between \code{dominant} and
 \code{determinant} species ?}
@@ -73,12 +77,12 @@ species based on these PFGs.
   \item{\strong{Dominant} species are species representative of an 
   environment or a studied area, in terms of number of releves or 
   abundance values. They can be found with the 
-  \code{\link{PRE_FATE.selectDominant}} function of this package. 
-  These dominant species are used to build PFG with the 
+  \code{\link{PRE_FATE.selectDominant}} function of this package. These 
+  dominant species are used to build PFG with the 
   \code{\link{PRE_FATE.speciesClustering_step1}} function.
   }
   \item{Once PFG are built, \strong{determinant} species are defined as 
-  refined subsets of dominant species within each PFG. The process is 
+  refined subsets of dominant species within each PFG. \cr The process is 
   detailed below :
   \itemize{
     \item each dominant species is assigned to a PFG
@@ -131,6 +135,7 @@ str(sp.DETERM)
 }
 \seealso{
 \code{\link[stats]{cutree}},
+\code{\link[ade4]{quasieuclid}},
 \code{\link[ade4]{dudi.pco}},
 \code{\link{PRE_FATE.speciesDistance}},
 \code{\link{PRE_FATE.speciesClustering_step1}},

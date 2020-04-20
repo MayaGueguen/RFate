@@ -5,32 +5,56 @@
 \title{Create \emph{Global_parameters} parameter file for a \code{FATE-HD}
 simulation}
 \usage{
-PRE_FATE.params_globalParameters(name.simulation, opt.no_CPU = 1,
-  opt.replacePrevious = FALSE, required.no_PFG, required.no_STRATA,
-  required.simul_duration, required.seeding_duration,
-  required.seeding_timestep, required.seeding_input,
-  required.max_abund_low, required.max_abund_medium,
-  required.max_abund_high, doLight = FALSE, LIGHT.thresh_medium,
-  LIGHT.thresh_low, doSoil = FALSE, SOIL.init, SOIL.retention,
-  doDispersal = FALSE, DISPERSAL.mode, doHabSuitability = FALSE,
-  HABSUIT.ref_option, doDisturbances = FALSE, DIST.no, DIST.no_sub,
-  DIST.freq, doFire = FALSE, doDrought = FALSE,
-  doHabStability = FALSE, doAliens = FALSE)
+PRE_FATE.params_globalParameters(
+  name.simulation,
+  opt.no_CPU = 1,
+  opt.replacePrevious = FALSE,
+  required.no_PFG,
+  required.no_strata,
+  required.simul_duration,
+  required.seeding_duration,
+  required.seeding_timestep,
+  required.seeding_input,
+  required.max_abund_low,
+  required.max_abund_medium,
+  required.max_abund_high,
+  doLight = FALSE,
+  LIGHT.thresh_medium,
+  LIGHT.thresh_low,
+  doSoil = FALSE,
+  SOIL.init,
+  SOIL.retention,
+  doDispersal = FALSE,
+  DISPERSAL.mode,
+  doHabSuitability = FALSE,
+  HABSUIT.ref_option,
+  doDisturbances = FALSE,
+  DIST.no,
+  DIST.no_sub,
+  DIST.freq,
+  doDrought = FALSE,
+  DROUGHT.no_sub,
+  doAliens = FALSE,
+  ALIEN.no,
+  ALIEN.freq,
+  doFire = FALSE
+)
 }
 \arguments{
-\item{name.simulation}{a \code{string} that corresponds to the main
-directory or simulation name of the \code{FATE-HD} simulation}
+\item{name.simulation}{a \code{string} corresponding to the main directory 
+or simulation name of the \code{FATE-HD} simulation}
 
-\item{opt.no_CPU}{default \code{1} (\emph{optional}). The number of 
-resources that can be used to parallelize the \code{FATE-HD} simulation}
+\item{opt.no_CPU}{(\emph{optional}) default \code{1}. \cr an \code{integer} 
+corresponding to the number of resources that can be used to parallelize 
+the \code{FATE-HD} simulation}
 
-\item{opt.replacePrevious}{default \code{FALSE} (\emph{optional}). If 
-\code{TRUE}, pre-existing files inside
+\item{opt.replacePrevious}{(\emph{optional}) default \code{FALSE}. \cr 
+If \code{TRUE}, pre-existing files inside 
 \code{name.simulation/DATA/GLOBAL_PARAMETERS} folder will be replaced}
 
 \item{required.no_PFG}{an \code{integer} corresponding to the number of PFG}
 
-\item{required.no_STRATA}{an \code{integer} corresponding to the number of 
+\item{required.no_strata}{an \code{integer} corresponding to the number of 
 height strata}
 
 \item{required.simul_duration}{an \code{integer} corresponding to the 
@@ -43,9 +67,9 @@ duration of seeding (\emph{in years})}
 time interval at which occurs the seeding, and until the seeding duration 
 is not over (\emph{in years})}
 
-\item{required.seeding_input}{an \code{integer} corresponding to the 
-number of seeds attributed to each PFG at each time step, and until the
-seeding duration is not over}
+\item{required.seeding_input}{an \code{integer} corresponding to the number 
+of seeds attributed to each PFG at each time step, and until the seeding 
+duration is not over}
 
 \item{required.max_abund_low}{an \code{integer} in the order of 
 \code{1 000} to rescale abundance values of small PFG}
@@ -56,75 +80,95 @@ seeding duration is not over}
 \item{required.max_abund_high}{an \code{integer} in the order of 
 \code{1 000} to rescale abundance values of tall PFG}
 
-\item{doLight}{default \code{FALSE}. If \code{TRUE}, light competition is 
-activated in the \code{FATE-HD} simulation, and associated parameters are 
+\item{doLight}{default \code{FALSE}.\cr If \code{TRUE}, light competition 
+is activated in the \code{FATE-HD} simulation, and associated parameters are 
 required}
 
-\item{LIGHT.thresh_medium}{an \code{integer} in the order of \code{1 000} 
-to convert PFG abundances in each stratum into light resources. It 
-corresponds to the limit of abundances above which light resources are
-\code{medium}. PFG abundances lower than this threshold imply \strong{high 
-amount of light}. It is consequently lower than \code{LIGHT.thresh_low}.}
+\item{LIGHT.thresh_medium}{(\emph{optional}) \cr an \code{integer} in the 
+order of \code{1 000} to convert PFG abundances in each stratum into light 
+resources. It corresponds to the limit of abundances above which light 
+resources are \code{medium}. PFG abundances lower than this threshold imply 
+\strong{high amount of light}. It is consequently lower than 
+\code{LIGHT.thresh_low}.}
 
-\item{LIGHT.thresh_low}{an \code{integer} in the order of \code{1 000} 
-to convert PFG abundances in each strata into light resources. It 
-corresponds to the limit of abundances above which light resources are 
-\code{low}. PFG abundances higher than \code{LIGHT.thresh_medium} and 
-lower than this threshold imply \strong{medium amount of light}.}
+\item{LIGHT.thresh_low}{(\emph{optional}) \cr an \code{integer} in the order 
+of \code{1 000} to convert PFG abundances in each strata into light 
+resources. It corresponds to the limit of abundances above which light 
+resources are \code{low}. PFG abundances higher than 
+\code{LIGHT.thresh_medium} and lower than this threshold imply 
+\strong{medium amount of light}.}
 
-\item{doSoil}{default \code{FALSE}. If \code{TRUE}, soil competition is 
+\item{doSoil}{default \code{FALSE}. \cr If \code{TRUE}, soil competition is 
 activated in the \code{FATE-HD} simulation, and associated parameters 
 are required}
 
-\item{SOIL.init}{a \code{double} corresponding to the soil value to 
-initialize all pixels when starting the \code{FATE-HD} simulation}
+\item{SOIL.init}{(\emph{optional}) \cr a \code{double} corresponding to the 
+soil value to initialize all pixels when starting the \code{FATE-HD} 
+simulation}
 
-\item{SOIL.retention}{a \code{double} corresponding to the percentage of 
-soil value of the previous simulation year that will be kept in the 
-calculation of the soil value of the current simulation year}
+\item{SOIL.retention}{(\emph{optional}) \cr a \code{double} corresponding 
+to the percentage of soil value of the previous simulation year that will 
+be kept in the calculation of the soil value of the current simulation year}
 
-\item{doDispersal}{default \code{FALSE}. If \code{TRUE}, seed dispersal is 
-activated in the \code{FATE-HD} simulation, and associated parameters are 
+\item{doDispersal}{default \code{FALSE}. \cr If \code{TRUE}, seed dispersal 
+is activated in the \code{FATE-HD} simulation, and associated parameters are 
 required}
 
-\item{DISPERSAL.mode}{an \code{integer} corresponding to the way of 
-simulating the seed dispersal for each PFG, either uniform kernel (1), 
-exponential kernel (2) or exponential kernel with probability (3)}
+\item{DISPERSAL.mode}{(\emph{optional}) \cr an \code{integer} corresponding 
+to the way of simulating the seed dispersal for each PFG, either packets 
+kernel (\code{1}), exponential kernel (\code{2}) or exponential kernel with 
+probability (\code{3})}
 
-\item{doHabSuitability}{default \code{FALSE}. If \code{TRUE}, habitat 
+\item{doHabSuitability}{default \code{FALSE}. \cr If \code{TRUE}, habitat 
 suitability is activated in the \code{FATE-HD} simulation, and associated 
 parameters are required}
 
-\item{HABSUIT.ref_option}{an \code{integer} corresponding to the way of 
-simulating the habitat suitability variation between years for each PFG, 
-either random (1) or PFG specific (2)}
+\item{HABSUIT.ref_option}{(\emph{optional}) \cr an \code{integer} 
+corresponding to the way of simulating the habitat suitability variation 
+between years for each PFG, either random (\code{1}) or PFG specific 
+(\code{2})}
 
-\item{doDisturbances}{default \code{FALSE}. If \code{TRUE}, disturbances 
-are applied in the \code{FATE-HD} simulation, and associated parameters 
-are required}
+\item{doDisturbances}{default \code{FALSE}. \cr If \code{TRUE}, disturbances 
+are applied in the \code{FATE-HD} simulation, and associated parameters are 
+required}
 
-\item{DIST.no}{the number of disturbances}
+\item{DIST.no}{(\emph{optional}) \cr an \code{integer} corresponding to the 
+number of disturbances}
 
-\item{DIST.no_sub}{the number of way a PFG could react to a disturbance}
+\item{DIST.no_sub}{(\emph{optional}) \cr an \code{integer} corresponding to 
+the number of way a PFG could react to a disturbance}
 
-\item{DIST.freq}{the frequency of each disturbance (\emph{in years})}
+\item{DIST.freq}{(\emph{optional}) \cr a \code{vector} of \code{integer} 
+corresponding to the frequency of each disturbance (\emph{in years})}
+
+\item{doDrought}{default \code{FALSE}. \cr If \code{TRUE}, drought 
+disturbances are applied in the \code{FATE-HD} simulation, and associated 
+parameters are required}
+
+\item{DROUGHT.no_sub}{(\emph{optional}) \cr an \code{integer} corresponding 
+to the number of way a PFG could react to a drought disturbance}
+
+\item{doAliens}{default \code{FALSE}. \cr If \code{TRUE}, invasive plant 
+introduction is activated in the \code{FATE-HD} simulation, and associated 
+parameters are required}
+
+\item{ALIEN.no}{(\emph{optional}) \cr an \code{integer} corresponding to the 
+number of introductions}
+
+\item{ALIEN.freq}{(\emph{optional}) \cr a \code{vector} of \code{integer} 
+corresponding to the frequency of each introduction (\emph{in years})}
 
 \item{doFire}{\emph{to be filled}}
-
-\item{doDrought}{\emph{to be filled}}
-
-\item{doHabStability}{\emph{to be filled}}
-
-\item{doAliens}{\emph{to be filled}}
 }
 \value{
-A \code{.txt} file into the \code{name.simulation/DATA/GLOBAL_PARAMETERS}
-directory with the following parameters :
+A \code{.txt} file into the 
+\code{name.simulation/DATA/GLOBAL_PARAMETERS} directory with the following 
+parameters :
 
 \itemize{
-  \item NB_CPUS
-  \item NB_FG
-  \item NB_STRATUM
+  \item NO_CPU
+  \item NO_PFG
+  \item NO_STRATA
   \item SIMULATION_DURATION
   \item SEEDING_DURATION
   \item SEEDING_TIMESTEP
@@ -168,138 +212,134 @@ If the simulation includes \emph{disturbances} :
 
 \itemize{
   \item DO_DISTURBANCES
-  \item NB_DISTURBANCES
-  \item NB_SUBDISTURBANCES
-  \item FREQ_DISTURBANCES
+  \item DIST_NO
+  \item DIST_NOSUB
+  \item DIST_FREQ
 }
-
-If the simulation includes \emph{drought disturbances} :
+ 
+If the simulation includes \emph{drought disturbance} :
 
 \itemize{
-  \item DO_DROUGHT_DISTURBANCES
-  \item NB_SUBDROUGHT
-  \item CHRONO_POST_DROUGHT
-  \item CHRONO_CURR_DROUGHT
-}
-
-If the simulation includes \emph{habitat stability check} :
-
-\itemize{
-  \item DO_HAB_STABILITY
-  \item NB_HABITATS
+  \item DO_DROUGHT_DISTURBANCE
+  \item DROUGHT_NOSUB
 }
 
 If the simulation includes \emph{aliens introduction} :
 
 \itemize{
-  \item DO_ALIENS_DISTURBANCE
-  \item FREQ_ALIENS
+  \item DO_ALIENS_INTRODUCTION
+  \item ALIENS_NO
+  \item ALIENS_FREQ
 }
 }
 \description{
-This script is designed to create one parameter file 
+This script is designed to create parameter file(s) 
 containing \code{GLOBAL PARAMETERS} used in \code{FATE-HD} model.
 }
 \details{
-The core module of \code{FATE-HD} requires several parameters to define 
-general characteristics of the simulation :
+The \strong{core module} of \code{FATE-HD} requires several parameters to 
+define general characteristics of the simulation :
 
 \describe{
-  \item{Studied system}{
-  \itemize{
-    \item \emph{required.no_PFG} : the number of Plant Functional Groups 
-    that will be included into the simulation.  
-    This number should match with the number of files that will be given 
-    with the characteristics of each group (SUCC, DISP, ...).
-    \item \emph{required.no_STRATA} : the number of height strata that 
-    will be used into the succession module.  
-    This number should match with the maximum number of strata possible 
-    defined into the PFG SUCC files. \cr \cr
+  \item{Studied system}{ \cr
+  \describe{
+    \item{no_PFG}{the number of plant functional groups that will be 
+    included into the simulation. \cr This number should match with the 
+    number of files that will be given to parameterize the different 
+    activated modules with the characteristics of each group (\file{SUCC}, 
+    \file{DISP}, ...).}
+    \item{no_STRATA}{the number of height strata that will be used into the 
+    succession module. \cr This number should match with the maximum number 
+    of strata possible defined into the PFG \file{SUCC} files.}
   }
   }
-  \item{Simulation timing}{
-  \itemize{
-    \item \emph{required.simul_duration} : the duration of simulation 
-    (\emph{in years})
-    \item \emph{required.seeding_duration} : the duration of seeding 
-    (\emph{in years})
-    \item \emph{required.seeding_timestep} : the time interval at which 
-    occurs the seeding, and until the seeding duration is not over 
-    (\emph{in years})
-    \item \emph{required.seeding_input} : the number of seeds dispersed 
-    for each PFG at each time step, and until the seeding duration is 
-    not over \cr \cr
+  \item{Simulation timing}{ \cr
+  \describe{
+    \item{simul_duration}{the duration of simulation (\emph{in years})}
+    \item{seeding_duration}{the duration of seeding (\emph{in years})}
+    \item{seeding_timestep}{the time interval at which occurs the seeding, 
+    and until the seeding duration is not over (\emph{in years})}
+    \item{seeding_input}{the number of seeds dispersed for each PFG at each 
+    time step, and until the seeding duration is not over \cr \cr}
   }
   }
 }
 
 
-The other modules of \code{FATE-HD} can be activated within this file, and 
-if so, some additional parameters will be required :
+The \strong{other modules} of \code{FATE-HD} can be activated within this 
+file, and if so, some additional parameters will be required :
 
 \describe{
-  \item{LIGHT}{= to influence seed recruitment and plant mortality 
-  according to PFG preferences for light conditions (see 
+  \item{LIGHT}{= to influence seed recruitment and plant mortality according 
+  to PFG preferences for light conditions \cr (see 
   \code{\link{PRE_FATE.params_PFGlight}})\cr
-  = light resources are calculated as a proxy of PFG abundances
-  within each height stratum \cr
-  \itemize{
-  \item{To transform PFG \cr abundances into \cr light resources}{
-    \deqn{abund < \text{LIGHT.thresh_medium} \Leftrightarrow Light = High}
-    \deqn{abund > \text{LIGHT.thresh_medium } \& \\
-    abund < \text{LIGHT.thresh_low} \Leftrightarrow Light = Medium}
-    \deqn{abund > \text{LIGHT.thresh_low} \Leftrightarrow Light = Low}
-  }
-  }
-  \cr \emph{As light resources are directly obtained from PFG abundances, 
+  = light resources are calculated as a proxy of PFG abundances within each 
+  height stratum \cr \cr
+  To transform PFG abundances into light resources :
+  \deqn{abund_{\text{ PFG}_{all}\text{, }\text{Stratum}_k} < 
+  \text{LIGHT.thresh_medium} \;\; \Leftrightarrow \;\; 
+  light_{\text{ Stratum}_k} = \text{High}}
+  
+  \deqn{\text{LIGHT.thresh_medium } < 
+  abund_{\text{ PFG}_{all}\text{, }\text{Stratum}_k} < 
+  \text{LIGHT.thresh_low} \\ \Leftrightarrow \;\; 
+  light_{\text{ Stratum}_k} = \text{Medium}}
+  
+  \deqn{abund_{\text{ PFG}_{all}\text{, }\text{Stratum}_k} > 
+  \text{LIGHT.thresh_low} \;\; \Leftrightarrow \;\; 
+  light_{\text{ Stratum}_k} = \text{Low}}
+  \emph{As light resources are directly obtained from PFG abundances, 
   \code{LIGHT.thresh_medium} and \code{LIGHT.thresh_low} parameters should 
   be on the same scale than \code{required.max_abund_low}, 
   \code{required.max_abund_medium} and \code{required.max_abund_high} 
-  parameters from the core module.}
-  \cr \cr
+  parameters from the core module.} \cr \cr
   }
   \item{SOIL}{= to influence seed recruitment and plant mortality 
-  according to PFG preferences for soil conditions (see 
-  \code{\link{PRE_FATE.params_PFGsoil}})\cr
+  according to PFG preferences for soil conditions \cr (see 
+  \code{\link{PRE_FATE.params_PFGsoil}}) \cr
   = soil composition is calculated as the weighted mean of each PFG's 
   contribution with a possible retention of the soil value of the previous 
   simulation year 
-  \deqn{Soil_n + \text{coeffRet} * (Soil_{n-1} - Soil_n)}
+  \deqn{Soil_y + \text{SOIL.retention} * (Soil_{y-1} - Soil_y)}
   with
-  \deqn{Soil_n =  \sum abund_{\text{PFG}_i, n} * \text{contrib}_i}
+  \deqn{Soil_y =  \sum abund_{\text{ PFG}_i\text{, }y} * 
+  \text{contrib}_{\text{ PFG}_i}}
   \cr \cr
   }
   \item{DISPERSAL}{= to allow plants to disperse seeds according to 3 
-  user-defined distances (see \code{\link{PRE_FATE.params_PFGdispersal}})
-  \itemize{
-    \item \emph{DISPERSAL.mode} : three modes of dispersal are available :
+  user-defined distances \cr (see \code{\link{PRE_FATE.params_PFGdispersal}})
+  \cr \cr Three modes of dispersal (\code{DISPERSAL.mode}) are available :
     \enumerate{
-      \item \emph{uniform kernel [1]} : homogeneous dispersal within the 
-      \code{d50}, \code{d99} and \code{ldd} circles
-      \item \emph{exponential kernel [2]} : seeds are dispersed within 
-      each concentric circle (\code{d50}, \code{d99} and \code{ldd}) 
-      according to a decreasing exponential density law (lambda = 1)
-      \item \emph{exponential kernel with probability [3]} : seeds are 
-      dispersed within each concentric circle (\code{d50}, \code{d99} and 
-      \code{ldd}) according to a decreasing exponential density law 
-      (lambda = 1) and a continuous decreasing probability with distance
-      \item \emph{homogeneous dispersal \cr EVERYWHERE} : 
-      \emph{(!not available YET!)} \cr \cr
+      \item \emph{packets kernel} :
+      \itemize{
+        \item homogeneous dispersal of 50\% of the seeds within the 
+        \code{d50} circle
+        \item dispersal of 49\% of the seeds within the \code{d99 - d50} 
+        ring with the same concentration as in the first circle but by pairs 
+        of pixel (see \emph{Boulangeat et al, 2014})
+        \item dispersal of 1\% of the seeds within the \code{ldd - d99} ring 
+        into one random pixel
+      }
+      \item \emph{exponential kernel} : seeds are dispersed within each 
+      concentric circle (\code{d50}, \code{d99} and \code{ldd}) according to 
+      a decreasing exponential density law (lambda = 1)
+      \item \emph{exponential kernel with probability} : seeds are dispersed 
+      within each concentric circle (\code{d50}, \code{d99} and \code{ldd}) 
+      according to a decreasing exponential density law (lambda = 1) and a 
+      continuous decreasing probability with distance \cr \cr
     }
-  }
   }
   \item{HABITAT SUITABILITY}{= to influence plants fecundity and seed 
   recruitment according to PFG preferences for habitat conditions \cr
   = filter based on maps given for each PFG within the 
-  \emph{Simul_parameters} file with the \code{PFG_HAB_MASK} flag (see 
-  \code{\link{PRE_FATE.params_simulParameters}}). \cr \cr
-  These maps must contain values between 0 and 1 corresponding to the 
-  probability of presence of the group in each pixel. Each year (timestep), 
-  this value will be compared to a reference value, and if superior, the 
-  PFG will be able to grow and survive.
-  \itemize{
-    \item \emph{HABSUIT.ref_option} : the habitat suitability reference 
-    value can be set in two possible ways :
+  \emph{Simul_parameters} file with the \code{PFG_HAB_MASK} flag \cr (see 
+  \code{\link{PRE_FATE.params_simulParameters}}) \cr \cr
+  These maps must contain values between \code{0} and \code{1} corresponding 
+  to the probability of presence of the PFG in each pixel. Each year 
+  (timestep), this value will be compared to a reference value, and if 
+  superior, the PFG will be able to grow and survive. \cr
+  Two methods to define this habitat suitability reference value are 
+  available (\code{HABSUIT.ref_option}) :
     \enumerate{
       \item \emph{random} : for each pixel, the reference value is drawn 
       from a uniform distribution, and the same value is used for each PFG 
@@ -311,65 +351,95 @@ if so, some additional parameters will be required :
       the PFG. \cr \cr
     }
   }
-  }
   \item{DISTURBANCES}{= to influence plant mortality and / or resprouting 
-  according to PFG tolerances to these events (see 
+  according to PFG tolerances to these events \cr (see 
   \code{\link{PRE_FATE.params_PFGdisturbance}})\cr
   = defined for events such as mowing, grazing, but also urbanization, 
-  crops, etc. \cr \cr
-  The impact zone is defined with a mask (map with 0 or 1) and the user 
-  will have to define how each PFG will be impacted depending on age and 
-  life stage. 
-  \itemize{
-    \item \emph{DIST.no} : the number of different disturbances
-    \item \emph{DIST.no_sub} : the number of way a PFG could react to a 
-    perturbation
-    \item \emph{DIST.freq} : the frequency of each disturbance 
-    (\emph{in years}) \cr \cr
+  crops, etc \cr
+  = filter based on maps given for each disturbance within the 
+  \emph{Simul_parameters} file with the \code{DIST_MASK} flag \cr (see 
+  \code{\link{PRE_FATE.params_simulParameters}}) \cr \cr
+  These maps, containing either \code{0} or \code{1}, define the impact zone 
+  of each perturbation, and the user will have to define how each PFG will 
+  be impacted depending on age and life stage. 
+  \describe{
+    \item{DIST.no}{the number of different disturbances}
+    \item{DIST.no_sub}{the number of way a PFG could react to a 
+    perturbation}
+    \item{DIST.freq}{the frequency of each disturbance 
+    (\emph{in years}) \cr \cr}
   }
   }
   \item{DROUGHT}{= to experience extreme events with a direct and a 
-  delayed response on PFG. \cr \cr
-  The PFG's past drought exposure is compared to current moisture values as 
-  a proxy of drought index. Developed canopy closure helps to reduce these 
-  values. Each PFG is impacted if submitted one year to drought, and also 
-  (and more consequently) if submitted several years in a row.
-  \itemize{
-    \item \emph{DROUGHT.no_sub} : the number of way a PFG could react to a 
-    perturbation
-    \item \emph{DROUGHT.chrono_post} : if post-drought effects will occur 
-    previously to succession (0) or after (1)
-    \item \emph{DROUGHT.chrono_curr} : if current-drought effects will 
-    occur previously to succession (0) or after (1) \cr \cr
+  delayed response on PFG \cr
+  = based on a map given within the \emph{Simul_parameters} file with the 
+  \code{DROUGHT_MASK} flag \cr (see 
+  \code{\link{PRE_FATE.params_simulParameters}}) \cr \cr
+  This map must contain values representing proxies for drought intensity, 
+  like moisture values, in the sense that the lower the values, the higher 
+  the chance of experiencing a drought event. Developed canopy closure helps 
+  to reduce these values. The intensity of the drought event (moderate or 
+  severe) is determined based on thresholds defined for each PFG according 
+  to, for example, their moisture preference, as well as the number of 
+  cumulated consecutive years during which the PFG experienced a drought 
+  (see \code{\link{PRE_FATE.params_PFGdrought}}).
+  \describe{
+    \item{no drought}{if \eqn{di_y > \text{threshold.MOD}_{\text{ PFG}_i}}, 
+    the counter of cumulated consecutive years of drought experienced by the 
+    PFG will decrease : \deqn{\text{counter}_{\text{ PFG}_i} = 
+    \text{counter}_{\text{ PFG}_i} - 
+    \text{counter.RECOVERY}_{\text{ PFG}_i}}}
+    \item{moderate drought}{
+    \itemize{
+      \item if \eqn{\text{threshold.SEV}_{\text{ PFG}_i} < di_y < 
+      \text{threshold.MOD}_{\text{ PFG}_i}}
+      \item if \eqn{di_y < \text{threshold.SEV}_{\text{ PFG}_i} \;\; 
+      \text{  &  } \;\; \text{counter}_{\text{ PFG}_i} = 0}
+    }
+    then fecundity and recruitment are set to \code{0} for this year, and 
+    counter is incremented : \eqn{\text{counter}_{\text{ PFG}_i} ++}
+    }
+    \item{severe drought}{
+    \itemize{
+      \item if \eqn{di_y < \text{threshold.SEV}_{\text{ PFG}_i} \;\; 
+      \text{  &  } \;\; \text{counter.SENS}_{\text{ PFG}_i} \leq 
+      \text{counter}_{\text{ PFG}_i} < \text{counter.CUM}_{\text{ PFG}_i}}
+      \item if \eqn{\text{counter}_{\text{ PFG}_i} \geq 
+      \text{counter.CUM}_{\text{ PFG}_i}}
+    }
+    then PFG experiences \code{immediate} drought-related mortality ; 
+    and the year after, fecundity and recruitment will be set to \code{0} 
+    and PFG will experience \code{delayed} drought-related mortality. \cr \cr
+    }
+  }
+  As for the disturbances module, the user will have to define how each PFG 
+  will be impacted depending on age and life stage. 
+  \describe{
+    \item{(\emph{DROUGHT.no})}{\emph{!not required!} \cr = 2, the 
+    \code{immediate} and \code{delayed} responses}
+    \item{DROUGHT.no_sub}{the number of way a PFG could react to each of 
+    these two perturbations}
+    \item{(\emph{DROUGHT.freq})}{\emph{!not required!} \cr the map of 
+    drought intensity proxy defined within the \emph{Simul_parameters} file 
+    with the \code{DROUGHT_MASK} flag, as well as the 
+    \code{DROUGHT_CHANGEMASK_YEARS} and \code{DROUGHT_CHANGEMASK_FILES} 
+    flags, make it possible to manage the frequency and the variation of 
+    drought values (see \code{\link{PRE_FATE.params_simulParameters}})
+    \cr \cr}
   }
   }
-  \item{HABITAT STABILITY}{= to evaluate the stability of different 
-  habitats through the evolution of their PFG composition \cr \cr
-  The habitat distribution is given with a categorical map with each value 
-  corresponding to a specific habitat. Every year, the abundance of each 
-  PFG within each habitat is recorded, as well as the evenness of the 
-  habitat :
-  \deqn{
-  \text{evenness} = - \frac{\Sigma(\text{PFG.proportion} * 
-  log(\text{PFG.proportion}))}{log(\text{no.PFG} - 1)}
-  }
-  with
-  \deqn{\text{PFG.proportion} = \frac{abund_{\text{PFG}_i, \text{Habitat}_j}}
-  {abund_{allPFG, \text{Habitat}_j}}}
-  Every 5 years, a stability check is done to see if the abundance or the 
-  evenness have values out of the usual distribution.
-  \itemize{
-    \item \emph{HABSTAB.no_hab} : the number of different habitats \cr \cr
-  }
-  }
-  \item{INVASIVE \cr INTRODUCTION}{= to add new PFG during the simulation. 
-  \cr \cr
-  The introduction areas are defined with a mask (map with 0 or 1). If the 
-  habitat suitability filter is on, suitability maps will also be needed 
-  for these new groups.
-  \itemize{
-    \item \emph{ALIEN.freq} : the frequency of each introduction 
-    (\emph{in years})
+  \item{INVASIVE \cr INTRODUCTION}{= to add new PFG during the simulation \cr
+  = defined for events such as invasive introduction, colonization, but also 
+  new crops development, reintroduction, etc \cr
+  = filter based on maps given for each PFG within the 
+  \emph{Simul_parameters} file with the \code{PFG_MASK_ALIENS} flag \cr (see 
+  \code{\link{PRE_FATE.params_simulParameters}}) \cr \cr
+  These maps, containing either \code{0} or \code{1}, define the 
+  introduction areas. \cr If the habitat suitability filter is on, 
+  suitability maps will also be needed for these new groups.
+  \describe{
+    \item{ALIEN.no}{the number of different introductions}
+    \item{ALIEN.freq}{the frequency of each introduction (\emph{in years})}
   }
   }
 }
@@ -382,7 +452,7 @@ PRE_FATE.skeletonDirectory()
 ## Create a Global_parameters file
 PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                  , required.no_PFG = 3
-                                 , required.no_STRATA = 5
+                                 , required.no_strata = 5
                                  , required.simul_duration = 100
                                  , required.seeding_duration = 10
                                  , required.seeding_timestep = 1
@@ -402,7 +472,7 @@ PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
 ## Create SEVERAL Global_parameters files
 PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                  , required.no_PFG = 3
-                                 , required.no_STRATA = 5
+                                 , required.no_strata = 5
                                  , required.simul_duration = 100
                                  , required.seeding_duration = 10
                                  , required.seeding_timestep = 1
@@ -433,8 +503,8 @@ PRE_FATE.skeletonDirectory(name.simulation = "FATE_PNE")
 
 ## Create a Global_parameters file
 PRE_FATE.params_globalParameters(name.simulation = "FATE_PNE"
-                                 , required.no_PFG = PNE_PARAM$global["NB_FG"]
-                                 , required.no_STRATA = PNE_PARAM$global["NB_STRATUM"]
+                                 , required.no_PFG = PNE_PARAM$global["NO_PFG"]
+                                 , required.no_strata = PNE_PARAM$global["NO_STRATA"]
                                  , required.simul_duration = PNE_PARAM$global["SIMULATION_DURATION"]
                                  , required.seeding_duration = PNE_PARAM$global["SEEDING_DURATION"]
                                  , required.seeding_timestep = PNE_PARAM$global["SEEDING_TIMESTEP"]
@@ -465,6 +535,7 @@ PRE_FATE.params_globalParameters(name.simulation = "FATE_PNE"
 \code{\link{PRE_FATE.params_PFGsoil}},
 \code{\link{PRE_FATE.params_PFGdispersal}},
 \code{\link{PRE_FATE.params_PFGdisturbance}},
+\code{\link{PRE_FATE.params_PFGdrought}},
 \code{\link{PRE_FATE.params_simulParameters}}
 }
 \author{

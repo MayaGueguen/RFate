@@ -5,20 +5,25 @@
 \title{Computation of distances between species based on traits and niche 
 overlap}
 \usage{
-PRE_FATE.speciesDistance(mat.species.traits, mat.species.overlap,
-  opt.max.percent.NA = 0, opt.max.percent.similarSpecies = 0.25,
-  opt.min.sd = 0.3)
+PRE_FATE.speciesDistance(
+  mat.traits,
+  mat.overlap,
+  opt.maxPercent.NA = 0,
+  opt.maxPercent.similarSpecies = 0.25,
+  opt.min.sd = 0.3
+)
 }
 \arguments{
-\item{mat.species.traits}{a \code{data.frame} with at least 3 columns :
+\item{mat.traits}{a \code{data.frame} with at least 3 columns :
 \describe{
 \item{\code{species}}{the ID of each studied species}
 \item{\code{GROUP}}{a factor variable containing grouping information to 
-divide the species into data subsets (see \code{Details})}
+divide the species into data subsets (see 
+\code{\href{PRE_FATE.speciesDistance#details}{Details}})}
 \item{\code{...}}{one column for each functional trait}
 }}
 
-\item{mat.species.overlap}{two options :
+\item{mat.overlap}{two options :
 \itemize{
   \item a \code{data.frame} with 2 columns :
   \describe{
@@ -30,20 +35,24 @@ divide the species into data subsets (see \code{Details})}
   \code{niolap} object, or simply a \code{matrix}.
 }}
 
-\item{opt.max.percent.NA}{default \code{0} (\emph{optional}). Maximum 
-percentage of missing values (NA) allowed for each trait (between 0 and 1)}
+\item{opt.maxPercent.NA}{(\emph{optional}) default \code{0}. \cr Maximum 
+percentage of missing values (\code{NA}) allowed for each trait (between 
+\code{0} and \code{1})}
 
-\item{opt.max.percent.similarSpecies}{default \code{0.25} 
-(\emph{optional}). Maximum percentage of similar species (same value) 
-allowed for each trait (between 0 and 1)}
+\item{opt.maxPercent.similarSpecies}{(\emph{optional}) default \code{0.25}. 
+\cr Maximum percentage of similar species (same value) 
+allowed for each trait (between \code{0} and \code{1})}
 
-\item{opt.min.sd}{default \code{0.5} (\emph{optional}). Minimum standard 
-deviation allowed for each trait (trait unit)}
+\item{opt.min.sd}{(\emph{optional}) default \code{0.5}. \cr Minimum 
+standard deviation allowed for each trait (trait unit)}
 }
 \value{
-A \code{dist} object corresponding to the distance between each pair
+A \code{dist} object corresponding to the distance between each pair 
 of species, or a \code{list} of \code{dist} objects, one for each
-\code{GROUP} value.
+\code{GROUP} value. \cr \cr
+
+The information is written in \file{PRE_FATE_DOMINANT_speciesDistance.csv} 
+file (or if necessary, one file is created for each group).
 }
 \description{
 This script is designed to create a distance matrix between 
@@ -51,28 +60,29 @@ species, combining functional distances (based on functional trait values)
 and niche overlap (based on co-occurrence of species).
 }
 \details{
-This function allows one to obtain a distance matrix between species, based 
-on two types of distance information :
+This function allows to obtain a \strong{distance matrix between species}, 
+based on two types of distance information :
 
 \enumerate{
   \item{\strong{Functional traits : }}{
   \itemize{
     \item The \code{GROUP} column is required if species must be separated 
-    to have one final distance matrix per \code{GROUP} value. If the column 
-    is missing, all species will be considered as part of a unique dataset.
-    \item The traits can be qualitative or quantitative, but previously
-    identified as such (i.e. with the use of functions such as 
+    to have one final distance matrix per \code{GROUP} value. \cr If the 
+    column is missing, all species will be considered as part of a unique 
+    dataset.
+    \item The traits can be qualitative or quantitative, but previously 
+    identified as such \cr (i.e. with the use of functions such as 
     \code{as.numeric}, \code{as.factor} and \code{ordered}).
-    \item Functional distance matrix is calculated with Gower 
-    dissimilarity, using the \code{gowdis} function from \pkg{FD} package.
-    \item This function allows \code{NA} values. However, too many missing 
-    values lead to misleading results. Hence, 3 parameters allow the user 
-    to play with the place given to missing values and help the function to 
-    select traits that will be used for the distance computation :
+    \item Functional distance matrix is calculated with Gower dissimilarity, 
+    using the \code{\link[FD]{gowdis}} function.
+    \item This function allows \code{NA} values. \cr However, too many 
+    missing values lead to misleading results. Hence, 3 parameters allow the 
+    user to play with the place given to missing values, and therefore the 
+    selection of traits that will be used for the distance computation :
     \describe{
-      \item{opt.max.percent.NA}{traits with too many missing values are 
+      \item{opt.maxPercent.NA}{traits with too many missing values are 
       removed}
-      \item{opt.max.percent \cr .similarSpecies}{traits with too many 
+      \item{opt.maxPercent \cr .similarSpecies}{traits with too many 
       similar values are removed}
       \item{opt.min.sd}{traits with too little variability are removed}
     }
@@ -81,8 +91,7 @@ on two types of distance information :
   \item{\strong{Niche overlap : }}{
   \itemize{
     \item If a \code{data.frame} is given, the degree of niche overlap will 
-    be computed using the \code{niche.overlap} function from 
-    \pkg{phyloclim} package. \cr \cr \cr
+    be computed using the \code{\link[phyloclim]{niche.overlap}}. \cr \cr \cr
   }
   }
 }
@@ -105,26 +114,31 @@ PNE_PFG = .loadData("PNE_PFG")
 ## PNE_PFG$dom.dist_overlap : niolap object
 
 ## GIVING ERROR : too many NA
-# sp.DIST = PRE_FATE.speciesDistance(mat.species.traits = PNE_PFG$dom.traits
-#                                    , mat.species.overlap = PNE_PFG$dom.dist_overlap
-#                                    , opt.max.percent.NA = 0
-#                                    , opt.max.percent.similarSpecies = 0.25
+# sp.DIST = PRE_FATE.speciesDistance(mat.traits = PNE_PFG$dom.traits
+#                                    , mat.overlap = PNE_PFG$dom.dist_overlap
+#                                    , opt.maxPercent.NA = 0
+#                                    , opt.maxPercent.similarSpecies = 0.25
 #                                    , opt.min.sd = 0.3)
                                    
-sp.DIST = PRE_FATE.speciesDistance(mat.species.traits = PNE_PFG$dom.traits
-                                   , mat.species.overlap = PNE_PFG$dom.dist_overlap
-                                   , opt.max.percent.NA = 0.1
-                                   , opt.max.percent.similarSpecies = 0.25
+sp.DIST = PRE_FATE.speciesDistance(mat.traits = PNE_PFG$dom.traits
+                                   , mat.overlap = PNE_PFG$dom.dist_overlap
+                                   , opt.maxPercent.NA = 0.1
+                                   , opt.maxPercent.similarSpecies = 0.25
                                    , opt.min.sd = 0.3)
 
 str(sp.DIST)
 
 }
 \seealso{
-\code{\link[FD]{gowdis}}, \code{\link[phyloclim]{niche.overlap}}
+\code{\link[FD]{gowdis}},
+\code{\link[phyloclim]{niche.overlap}}
 }
 \author{
 Maya Guéguen
 }
 \keyword{Gower}
-\keyword{distance}
+\keyword{distance,}
+\keyword{functional}
+\keyword{niche}
+\keyword{overlap}
+\keyword{traits,}

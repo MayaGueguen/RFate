@@ -11,23 +11,27 @@ simulation — PRE_FATE.params_multipleSet • RFate</title>
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -41,7 +45,6 @@ simulation — PRE_FATE.params_multipleSet" />
 <meta property="og:description" content="This script is designed to create multiple sets of parameters 
 using Latin Hypercube Sampling to help find best combination of parameters 
 (see Details)" />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -59,7 +62,7 @@ using Latin Hypercube Sampling to help find best combination of parameters
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -73,7 +76,7 @@ using Latin Hypercube Sampling to help find best combination of parameters
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">RFate</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0.9000</span>
       </span>
     </div>
 
@@ -154,38 +157,8 @@ using Latin Hypercube Sampling to help find best combination of parameters
     Reference
   </a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/fate-hd_tutorial_0_modelling_framework.html">FATE-HD tutorial 0 - Modelling framework</a>
-    </li>
-    <li>
-      <a href="../articles/fate-hd_tutorial_0_publications.html">FATE-HD tutorial 0 - Publications</a>
-    </li>
-    <li>
-      <a href="../articles/fate-hd_tutorial_1_PFG.html">FATE-HD tutorial 1 - Principle of PFG</a>
-    </li>
-    <li>
-      <a href="../articles/fate-hd_tutorial_2_RUN_SIMULATION.html">FATE-HD tutorial 2 - Run a simulation</a>
-    </li>
-    <li>
-      <a href="../articles/fate-hd_tutorial_3_MODULES.html">FATE-HD tutorial 3 - Use a module</a>
-    </li>
-    <li>
-      <a href="../articles/rfate_tutorial_1_PFG.html">&lt;font color='#068f96'&gt;&lt;i class='fa fa-battery-quarter'&gt;&lt;/i&gt; `PRE_FATE` - build Plant Functional Groups (PFG)&lt;/font&gt;</a>
-    </li>
-    <li>
-      <a href="../articles/rfate_tutorial_2_params.html">&lt;font color='#068f96'&gt; &lt;i class='fa fa-battery-half'&gt;&lt;/i&gt; `PRE_FATE` - build parameter files &lt;/font&gt;</a>
-    </li>
-    <li>
-      <a href="../articles/rfate_tutorial_3_graphics.html">&lt;font color='#068f96'&gt; &lt;i class='fa fa-battery-three-quarters'&gt;&lt;/i&gt; `POST_FATE` - graphics &lt;/font&gt;</a>
-    </li>
-  </ul>
+<li>
+  <a href="../articles/index.html">Articles</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -227,49 +200,61 @@ using Latin Hypercube Sampling to help find best combination of parameters
 (see <code>Details</code>)</p>
     </div>
 
-    <pre class="usage"><span class='fu'>PRE_FATE.params_multipleSet</span>(<span class='no'>name.simulation.1</span>, <span class='kw'>name.simulation.2</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>file.simulParam.1</span>, <span class='kw'>file.simulParam.2</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>no_simulations</span>,
-  <span class='kw'>opt.percent_max</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>opt.percent_seeding</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
-  <span class='kw'>opt.percent_light</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>opt.percent_soil</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
-  <span class='kw'>do.max_abund_low</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>do.max_abund_medium</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>do.max_abund_high</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>do.seeding_duration</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>do.seeding_timestep</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>do.seeding_input</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>do.nb_stratum</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>do.LIGHT.thresh_medium</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>do.LIGHT.thresh_low</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>do.SOIL.init</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>do.SOIL.retention</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>do.DISPERSAL.mode</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>do.HABSUIT.ref_option</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>PRE_FATE.params_multipleSet</span>(
+  <span class='no'>name.simulation.1</span>,
+  <span class='kw'>name.simulation.2</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>file.simulParam.1</span>,
+  <span class='kw'>file.simulParam.2</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>no_simulations</span>,
+  <span class='kw'>opt.percent_maxAbund</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
+  <span class='kw'>opt.percent_seeding</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
+  <span class='kw'>opt.percent_light</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
+  <span class='kw'>opt.percent_soil</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
+  <span class='kw'>do.max_abund_low</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>do.max_abund_medium</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>do.max_abund_high</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>do.seeding_duration</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>do.seeding_timestep</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>do.seeding_input</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>do.no_strata</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>do.LIGHT.thresh_medium</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>do.LIGHT.thresh_low</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>do.SOIL.init</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>do.SOIL.retention</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>do.DISPERSAL.mode</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>do.HABSUIT.ref_option</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>name.simulation.1</th>
-      <td><p>a <code>string</code> that corresponds to the main 
-directory or simulation name of the <code>FATE-HD</code> simulation from which to 
+      <td><p>a <code>string</code> corresponding to the main directory 
+or simulation name of the <code>FATE-HD</code> simulation from which to 
 retrieve the first parameter simulation file (<code>file.simulParam.1</code>), 
 and the second if given (<code>file.simulParam.2</code>) and no other directory 
 provided (<code>name.simulation.2 = NULL</code>)</p></td>
     </tr>
     <tr>
       <th>name.simulation.2</th>
-      <td><p>default <code>NULL</code> (<em>optional</em>). <br /> 
-A <code>string</code> that corresponds to the main directory or simulation name 
-of the <code>FATE-HD</code> simulation from which to retrieve the second 
-parameter simulation file (<code>file.simulParam.2</code>)</p></td>
+      <td><p>(<em>optional</em>) default <code>NULL</code>. <br /> 
+A <code>string</code> corresponding to the main directory or simulation name of 
+the <code>FATE-HD</code> simulation from which to retrieve the second parameter 
+simulation file (<code>file.simulParam.2</code>)</p></td>
     </tr>
     <tr>
       <th>file.simulParam.1</th>
-      <td><p>a <code>string</code> that corresponds to the name of 
-the simulation parameter file from which to retrieve parameter values that 
-will be used to build the multiple set of new parameters</p></td>
+      <td><p>a <code>string</code> corresponding to the name of the 
+simulation parameter file from which to retrieve parameter values that will 
+be used to build the multiple set of new parameters</p></td>
     </tr>
     <tr>
       <th>file.simulParam.2</th>
-      <td><p>default <code>NULL</code> (<em>optional</em>). <br /> 
-A <code>string</code> that corresponds to the name of the second simulation 
-parameter file from which to retrieve parameter values that will be used 
-to build parameter ranges in comparison with values from 
-<code>file.simulParam.1</code></p></td>
+      <td><p>(<em>optional</em>) default <code>NULL</code>. <br /> 
+A <code>string</code> corresponding to the name of the second simulation parameter 
+file from which to retrieve parameter values that will be used to build 
+parameter ranges in comparison with values from <code>file.simulParam.1</code></p></td>
     </tr>
     <tr>
       <th>no_simulations</th>
@@ -278,119 +263,114 @@ of parameters that will be produced according to Latin Hypercube Sampling
 (LHS)</p></td>
     </tr>
     <tr>
-      <th>opt.percent_max</th>
-      <td><p>default <code>0.5</code>. Amount of variation (between 0 
-and 1) around the original value of <code>MAX_ABUND_LOW</code>, 
-<code>MAX_ABUND_MEDIUM</code>, <code>MAX_ABUND_HIGH</code> if selected</p></td>
+      <th>opt.percent_maxAbund</th>
+      <td><p>default <code>0.5</code>. Amount of variation 
+(between <code>0</code> and <code>1</code>) around the original value of 
+<code>MAX_ABUND_LOW</code>, <code>MAX_ABUND_MEDIUM</code>, <code>MAX_ABUND_HIGH</code> if 
+selected</p></td>
     </tr>
     <tr>
       <th>opt.percent_seeding</th>
       <td><p>default <code>0.5</code>. Amount of variation (between 
-0 and 1) around the original value of <code>SEEDING_DURATION</code>, 
+<code>0</code> and <code>1</code>) around the original value of <code>SEEDING_DURATION</code>, 
 <code>SEEDING_TIMESTEP</code>, <code>SEEDING_INPUT</code> if selected</p></td>
     </tr>
     <tr>
       <th>opt.percent_light</th>
-      <td><p>default <code>0.5</code>. Amount of variation (between 0 
-and 1) around the original value of <code>LIGHT_THRESH_MEDIUM</code>, 
-<code>LIGHT_THRESH_LOW</code> if selected</p></td>
+      <td><p>default <code>0.5</code>. Amount of variation (between 
+<code>0</code> and <code>1</code>) around the original value of 
+<code>LIGHT_THRESH_MEDIUM</code>, <code>LIGHT_THRESH_LOW</code> if selected</p></td>
     </tr>
     <tr>
       <th>opt.percent_soil</th>
-      <td><p>default <code>0.5</code>. Amount of variation (between 0 
-and 1) around the original value of <code>SOIL_INIT</code>, 
+      <td><p>default <code>0.5</code>. Amount of variation (between 
+<code>0</code> and <code>1</code>) around the original value of <code>SOIL_INIT</code>, 
 <code>SOIL_RETENTION</code> if selected</p></td>
     </tr>
     <tr>
       <th>do.max_abund_low</th>
       <td><p>default <code>TRUE</code>. If <code>TRUE</code>, 
-<code>MAX_ABUND_LOW</code> parameter within <code>Global_parameters</code> file will be 
+<code>MAX_ABUND_LOW</code> parameter within <em>Global_parameters</em> file will be 
 declined into a range of values</p></td>
     </tr>
     <tr>
       <th>do.max_abund_medium</th>
       <td><p>default <code>TRUE</code>. If <code>TRUE</code>, 
-<code>MAX_ABUND_MEDIUM</code> parameter within <code>Global_parameters</code> file will 
+<code>MAX_ABUND_MEDIUM</code> parameter within <em>Global_parameters</em> file will 
 be declined into a range of values</p></td>
     </tr>
     <tr>
       <th>do.max_abund_high</th>
       <td><p>default <code>TRUE</code>. If <code>TRUE</code>, 
-<code>MAX_ABUND_HIGH</code> parameter within <code>Global_parameters</code> file will 
+<code>MAX_ABUND_HIGH</code> parameter within <em>Global_parameters</em> file will 
 be declined into a range of values</p></td>
     </tr>
     <tr>
       <th>do.seeding_duration</th>
       <td><p>default <code>TRUE</code>. If <code>TRUE</code>, 
-<code>SEEDING_DURATION</code> parameter within <code>Global_parameters</code> file will 
+<code>SEEDING_DURATION</code> parameter within <em>Global_parameters</em> file will 
 be declined into a range of values</p></td>
     </tr>
     <tr>
       <th>do.seeding_timestep</th>
       <td><p>default <code>TRUE</code>. If <code>TRUE</code>, 
-<code>SEEDING_TIMESTEP</code> parameter within <code>Global_parameters</code> file will 
+<code>SEEDING_TIMESTEP</code> parameter within <em>Global_parameters</em> file will 
 be declined into a range of values</p></td>
     </tr>
     <tr>
       <th>do.seeding_input</th>
       <td><p>default <code>TRUE</code>. If <code>TRUE</code>, 
-<code>SEEDING_INPUT</code> parameter within <code>Global_parameters</code> file will 
-be declined into a range of values</p></td>
+<code>SEEDING_INPUT</code> parameter within <em>Global_parameters</em> file will be 
+declined into a range of values</p></td>
     </tr>
     <tr>
-      <th>do.nb_stratum</th>
-      <td><p>default <code>TRUE</code>. If <code>TRUE</code>, 
-<code>NB_STRATUM</code> parameter within <code>Global_parameters</code> file will 
-be declined into a range of values, with potential impact on some 
-parameters within PFG succession (and light) files (parameters 
-<code>STRATA</code>, <code>MAX_ABUNDANCE</code>, <code>IMM_SIZE</code>, <code>CHANG_STR_AGES</code> 
-(and <code>SHADE_TOL</code>)) <br />
-(see <code><a href='PRE_FATE.params_PFGsuccession.html'>PRE_FATE.params_PFGsuccession</a></code> 
-(and <code><a href='PRE_FATE.params_PFGlight.html'>PRE_FATE.params_PFGlight</a></code>))</p></td>
+      <th>do.no_strata</th>
+      <td><p>default <code>TRUE</code>. If <code>TRUE</code>, <code>NO_STRATA</code> 
+parameter within <em>Global_parameters</em> file will be declined into a range 
+of values, with potential impact on some parameters within PFG succession 
+(and light) files (parameters <code>STRATA</code>, <code>MAX_ABUNDANCE</code>, 
+<code>IMM_SIZE</code>, <code>CHANG_STR_AGES</code> (and <code>LIGHT_TOL</code>), see 
+<code><a href='PRE_FATE.params_PFGsuccession.html'>PRE_FATE.params_PFGsuccession</a></code> (and 
+<code><a href='PRE_FATE.params_PFGlight.html'>PRE_FATE.params_PFGlight</a></code>))</p></td>
     </tr>
     <tr>
       <th>do.LIGHT.thresh_medium</th>
       <td><p>default <code>TRUE</code>. If <code>TRUE</code>, 
-<code>LIGHT_THRESH_MEDIUM</code> parameter within <code>Global_parameters</code> file 
-will be declined into a range of values <br /> (see 
-<code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>)</p></td>
+<code>LIGHT_THRESH_MEDIUM</code> parameter within <em>Global_parameters</em> file 
+will be declined into a range of values</p></td>
     </tr>
     <tr>
       <th>do.LIGHT.thresh_low</th>
       <td><p>default <code>TRUE</code>. If <code>TRUE</code>, 
-<code>LIGHT_THRESH_LOW</code> parameter within <code>Global_parameters</code> file 
-will be declined into a range of values <br /> (see 
-<code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>)</p></td>
+<code>LIGHT_THRESH_LOW</code> parameter within <em>Global_parameters</em> file 
+will be declined into a range of values</p></td>
     </tr>
     <tr>
       <th>do.SOIL.init</th>
-      <td><p>default <code>TRUE</code>. If <code>TRUE</code>, 
-<code>SOIL_INIT</code> parameter within <code>Global_parameters</code> file 
-will be declined into a range of values <br /> (see 
-<code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>)</p></td>
+      <td><p>default <code>TRUE</code>. If <code>TRUE</code>, <code>SOIL_INIT</code> 
+parameter within <em>Global_parameters</em> file will be declined into a range 
+of values</p></td>
     </tr>
     <tr>
       <th>do.SOIL.retention</th>
       <td><p>default <code>TRUE</code>. If <code>TRUE</code>, 
-<code>SOIL_RETENTION</code> parameter within <code>Global_parameters</code> file 
-will be declined into a range of values <br /> (see 
-<code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>)</p></td>
+<code>SOIL_RETENTION</code> parameter within <em>Global_parameters</em> file will be 
+declined into a range of values</p></td>
     </tr>
     <tr>
       <th>do.DISPERSAL.mode</th>
       <td><p>default <code>TRUE</code>. If <code>TRUE</code>, 
-<code>DISPERSAL_MODE</code> parameter within <code>Global_parameters</code> file will 
-be declined into its 3 possible values (either uniform kernel (<code>1</code>), 
-exponential kernel (<code>2</code>) or exponential kernel with probability 
-(<code>3</code>)) <br /> (see <code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>)</p></td>
+<code>DISPERSAL_MODE</code> parameter within <em>Global_parameters</em> file will be 
+declined into its three possible values (either either packets kernel 
+(<code>1</code>), exponential kernel (<code>2</code>) or exponential kernel with 
+probability (<code>3</code>), see <code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>)</p></td>
     </tr>
     <tr>
       <th>do.HABSUIT.ref_option</th>
       <td><p>default <code>TRUE</code>. If <code>TRUE</code>, 
-<code>HABSUIT_OPTION</code> parameter within <code>Global_parameters</code> file will 
-be declined into its 2 possible values (either random (<code>1</code>) or PFG 
-specific (<code>2</code>)) <br /> (see 
-<code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>)</p></td>
+<code>HABSUIT_OPTION</code> parameter within <em>Global_parameters</em> file will be 
+declined into its two possible values (either random (<code>1</code>) or PFG 
+specific (<code>2</code>), see <code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>)</p></td>
     </tr>
     </table>
 
@@ -408,7 +388,7 @@ files can have been modified :</p><ol>
 file :</p>
 <ul>
 <li><p>Into the <code>name.simulation/DATA/GLOBAL_PARAMETERS</code> folder :</p><ul>
-<li><p>NB_STRATUM</p></li>
+<li><p>NO_STRATA</p></li>
 <li><p>SEEDING_DURATION</p></li>
 <li><p>SEEDING_TIMESTEP</p></li>
 <li><p>SEEDING_INPUT</p></li>
@@ -433,7 +413,7 @@ file :</p>
 <li><p>CHANG_STR_AGES <br /> <br /></p></li>
 </ul></li>
 <li><p>Into the <code>name.simulation/DATA/PFGS/LIGHT</code> folder :</p><ul>
-<li><p>SHADE_TOL</p></li>
+<li><p>LIGHT_TOL</p></li>
 </ul></li>
 </ul>
 
@@ -441,7 +421,7 @@ file :</p>
 
     <p>A <code>FATE-HD</code> simulation requires several parameters to define general 
 characteristics of the simulation : they are saved within a 
-<code>Global_parameters</code> file (see 
+<em>Global_parameters</em> file (see 
 <code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>). To fit the model to a 
 particular area and set of Plant Functional Groups (PFG), these are the 
 parameters that should be optimized, since they are not data-dependant, 
@@ -452,8 +432,8 @@ will have an impact on some parameters within SUCC and LIGHT PFG parameter
 files.</em>)</p>
 <p><strong>The main idea is to start from a complete simulation folder, to 
 select the parameters that should vary, and to create new parameter files 
-with new parameter values based on pre-existing values. <br /></strong></p>
-<p>Three possible scenarios are available :</p><dl class='dl-horizontal'>
+with new parameter values based on pre-existing values. <br /> <br /></strong></p>
+<p>Three possible scenarios are available :</p><dl'>
   <dt>1 folder - <br /> 1 simulation file</dt><dd><p><ul>
 <li><p>requested parameter values are extracted from the given 
     simulation file</p></li>
@@ -478,22 +458,22 @@ with new parameter values based on pre-existing values. <br /></strong></p>
 </ul></p></dd>
   <dt>2 folders - <br /> 2 simulation files</dt><dd><p><ul>
 <li><p>same as 2nd scenario, except that the two given simulation files 
-    come from two different simulation folders</p></li>
+    come from two different simulation folders <br /> <br /></p></li>
 </ul></p></dd>
 
 </dl>
 
 <p><strong>Latin Hypercube Sampling</strong> is a statistical method to generate a 
 sampling of parameter values from a multidimensional space, while ensuring 
-a good representation of the real variability.
-The range of each parameter is known, and depending on the number of set of 
-parameters asked to be obtained at the end, each range is more or less 
-finely cut and values are drawn in order to explore the whole space of 
-combinations.</p>
+a good representation of the real variability. The range of each parameter 
+is known, and depending on the number of set of parameters asked to be 
+obtained at the end, each range is more or less finely cut and values are 
+drawn in order to explore the whole space of combinations.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/SPOT/man/designLHD.html'>designLHD</a></code>,
 <code><a href='PRE_FATE.skeletonDirectory.html'>PRE_FATE.skeletonDirectory</a></code>,
+<code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>,
 <code><a href='PRE_FATE.params_PFGsuccession.html'>PRE_FATE.params_PFGsuccession</a></code>,
 <code><a href='PRE_FATE.params_PFGlight.html'>PRE_FATE.params_PFGlight</a></code>,</p></div>
 
@@ -538,8 +518,8 @@ combinations.</p>
 
 <span class='co'>## Create a Global_parameters file</span>
 <span class='fu'><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_PNE"</span>
-                                 , <span class='kw'>required.no_PFG</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"NB_FG"</span>]
-                                 , <span class='kw'>required.no_STRATA</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"NB_STRATUM"</span>]
+                                 , <span class='kw'>required.no_PFG</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"NO_PFG"</span>]
+                                 , <span class='kw'>required.no_strata</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"NO_STRATA"</span>]
                                  , <span class='kw'>required.simul_duration</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"SIMULATION_DURATION"</span>]
                                  , <span class='kw'>required.seeding_duration</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"SEEDING_DURATION"</span>]
                                  , <span class='kw'>required.seeding_timestep</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"SEEDING_TIMESTEP"</span>]
@@ -572,8 +552,8 @@ combinations.</p>
 
 <span class='co'>## Create simulation parameters file</span>
 <span class='fu'><a href='PRE_FATE.params_simulParameters.html'>PRE_FATE.params_simulParameters</a></span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_PNE"</span>
-                                , <span class='kw'>name.mask</span> <span class='kw'>=</span> <span class='st'>"mask.tif"</span>
-                                , <span class='kw'>name.dist</span> <span class='kw'>=</span> <span class='st'>"noDisturb.tif"</span>)
+                                , <span class='kw'>name.MASK</span> <span class='kw'>=</span> <span class='st'>"mask.tif"</span>
+                                , <span class='kw'>name.DIST</span> <span class='kw'>=</span> <span class='st'>"noDisturb.tif"</span>)
 
 <span class='co'>## Create multiple set of parameters</span>
 <span class='fu'>PRE_FATE.params_multipleSet</span>(<span class='kw'>name.simulation.1</span> <span class='kw'>=</span> <span class='st'>"FATE_PNE"</span>
@@ -593,7 +573,7 @@ combinations.</p>
                             , <span class='kw'>do.seeding_duration</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
                             , <span class='kw'>do.seeding_timestep</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
                             , <span class='kw'>do.seeding_input</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
-                            , <span class='kw'>do.nb_stratum</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+                            , <span class='kw'>do.no_strata</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
                             , <span class='kw'>do.LIGHT.thresh_medium</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
                             , <span class='kw'>do.LIGHT.thresh_low</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
                             , <span class='kw'>do.SOIL.init</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
@@ -602,18 +582,10 @@ combinations.</p>
                             , <span class='kw'>do.HABSUIT.ref_option</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
 )</pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#details">Details</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Maya Guéguen</p>
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -624,7 +596,7 @@ combinations.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
 </div>
 
       </footer>

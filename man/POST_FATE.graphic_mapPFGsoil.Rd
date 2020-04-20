@@ -5,9 +5,17 @@
 \title{Create a map of the community weighted mean (CWM) of soil
  \cr for one (or several) specific year of a \code{FATE-HD} simulation}
 \usage{
-POST_FATE.graphic_mapPFGsoil(name.simulation, file.simulParam = NULL,
-  year, strata_min = 1, mat.PFG.succ, opt.mat.soil.obs = NULL,
-  opt.ras.soil.obs = NULL, opt.no_CPU = 1, opt.doPlot = TRUE)
+POST_FATE.graphic_mapPFGsoil(
+  name.simulation,
+  file.simulParam = NULL,
+  year,
+  strata_min = 1,
+  mat.PFG.succ,
+  opt.mat.soil.obs = NULL,
+  opt.ras.soil.obs = NULL,
+  opt.no_CPU = 1,
+  opt.doPlot = TRUE
+)
 }
 \arguments{
 \item{name.simulation}{a \code{string} that corresponds to the main directory

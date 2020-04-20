@@ -5,19 +5,36 @@
 \title{Create all possible graphical representations for a \code{FATE-HD} 
 simulation}
 \usage{
-POST_FATE.graphics(name.simulation, file.simulParam, year, no.years,
-  opt.strata_min = 1, opt.strata = "ALL", opt.mat.PFG.succ = NULL,
-  opt.mat.PFG.obs = NULL, opt.mat.CWM.obs = NULL,
-  opt.mat.cover.obs = NULL, opt.mat.light.obs = NULL,
-  opt.mat.soil.obs = NULL, opt.ras.cover.obs = NULL,
-  opt.ras.light.obs = NULL, opt.ras.soil.obs = NULL,
-  opt.ras_habitat = NULL, opt.cells_ID = NULL,
-  opt.abund_fixedScale = TRUE, opt.no_CPU = 1, opt.doPlot = TRUE,
+POST_FATE.graphics(
+  name.simulation,
+  file.simulParam,
+  year,
+  no.years,
+  opt.strata_min = 1,
+  opt.strata = "ALL",
+  opt.mat.PFG.succ = NULL,
+  opt.mat.PFG.obs = NULL,
+  opt.mat.CWM.obs = NULL,
+  opt.mat.cover.obs = NULL,
+  opt.mat.light.obs = NULL,
+  opt.mat.soil.obs = NULL,
+  opt.ras.cover.obs = NULL,
+  opt.ras.light.obs = NULL,
+  opt.ras.soil.obs = NULL,
+  opt.ras_habitat = NULL,
+  opt.cells_ID = NULL,
+  opt.abund_fixedScale = TRUE,
+  opt.no_CPU = 1,
+  opt.doPlot = TRUE,
   opt.doFunc.evolutionCoverage = TRUE,
-  opt.doFunc.evolutionPixels = TRUE, opt.doFunc.validation = TRUE,
-  opt.doFunc.mapPFGvsHS = TRUE, opt.doFunc.mapPFGrichness = TRUE,
-  opt.doFunc.mapPFGcover = TRUE, opt.doFunc.mapPFGlight = TRUE,
-  opt.doFunc.mapPFGsoil = TRUE)
+  opt.doFunc.evolutionPixels = TRUE,
+  opt.doFunc.validation = TRUE,
+  opt.doFunc.mapPFGvsHS = TRUE,
+  opt.doFunc.mapPFGrichness = TRUE,
+  opt.doFunc.mapPFGcover = TRUE,
+  opt.doFunc.mapPFGlight = TRUE,
+  opt.doFunc.mapPFGsoil = TRUE
+)
 }
 \arguments{
 \item{name.simulation}{a \code{string} that corresponds to the main 

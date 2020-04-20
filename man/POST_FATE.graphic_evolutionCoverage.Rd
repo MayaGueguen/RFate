@@ -5,25 +5,28 @@
 \title{Create a graphical representation of the evolution of PFG coverage
 and abundance through time for a \code{FATE-HD} simulation}
 \usage{
-POST_FATE.graphic_evolutionCoverage(name.simulation,
-  file.simulParam = NULL, opt.abund_fixedScale = TRUE,
-  opt.doPlot = TRUE)
+POST_FATE.graphic_evolutionCoverage(
+  name.simulation,
+  file.simulParam = NULL,
+  opt.abund_fixedScale = TRUE,
+  opt.doPlot = TRUE
+)
 }
 \arguments{
-\item{name.simulation}{a \code{string} that corresponds to the main 
-directory or simulation name of the \code{FATE-HD} simulation}
+\item{name.simulation}{a \code{string} corresponding to the main directory 
+or simulation name of the \code{FATE-HD} simulation}
 
-\item{file.simulParam}{a \code{string} that corresponds to the name of a 
-parameter file that will be contained into the \code{PARAM_SIMUL} folder 
-of the \code{FATE-HD} simulation}
+\item{file.simulParam}{default \code{NULL}. A \code{string} corresponding to 
+the name of a parameter file that will be contained into the 
+\code{PARAM_SIMUL} folder of the \code{FATE-HD} simulation}
 
 \item{opt.abund_fixedScale}{default \code{TRUE}. If \code{FALSE}, the 
-ordinate scale will be adapted for each PFG for the graphical 
-representation of the  evolution of abundances through time}
+ordinate scale will be adapted for each PFG for the graphical representation 
+of the  evolution of abundances through time}
 
-\item{opt.doPlot}{default \code{TRUE} (\emph{optional}). If TRUE, plot(s) 
-will be processed, otherwise only the calculation and reorganization of 
-outputs will occur, be saved and returned.}
+\item{opt.doPlot}{(\emph{optional}) default \code{TRUE}. \cr If TRUE, 
+plot(s) will be processed, otherwise only the calculation and reorganization 
+of outputs will occur, be saved and returned}
 }
 \value{
 A \code{list} containing two \code{data.frame} objects with the 
@@ -32,44 +35,42 @@ following columns, and two \code{ggplot2} objects :
 \describe{
   \item{tab.spaceOccupancy}{
     \describe{
-      \item{\code{PFG}}{the concerned Plant Functional Group (for 
-      abundance)}
-      \item{\code{HAB}}{the concerned habitat}
-      \item{\emph{YEAR}}{the concerned simulation year}
-      \item{\code{Occupancy}}{the number of occupied pixels divided by the 
+      \item{\code{PFG}}{concerned plant functional group (for abundance)}
+      \item{\code{HAB}}{concerned habitat}
+      \item{\emph{year}}{concerned simulation year}
+      \item{\code{spaceOccupancy}}{number of occupied pixels divided by the 
       total number of pixels within the studied area}
     }
   }
-  \item{tab.abundance}{
+  \item{tab.totalAbundance}{
     \describe{
-      \item{\code{PFG}}{the concerned Plant Functional Group (for 
-      abundance)}
-      \item{\code{HAB}}{the concerned habitat}
-      \item{\emph{YEAR}}{the concerned simulation year}
-      \item{\code{Abund}}{the total abundance over all the pixels within 
-      the studied area}
+      \item{\code{PFG}}{concerned plant functional group (for abundance)}
+      \item{\code{HAB}}{concerned habitat}
+      \item{\emph{year}}{concerned simulation year}
+      \item{\code{totalAbundance}}{total abundance over all the pixels 
+      within the studied area}
     }
   }
   \item{graph.spaceOccupancy}{\code{ggplot2} object, representing the 
   evolution of each PFG space occupancy}
-  \item{graph.abundance}{\code{ggplot2} object, representing the evolution 
-  of each PFG total abundance \cr \cr}
+  \item{graph.totalAbundance}{\code{ggplot2} object, representing the 
+  evolution of each PFG total abundance \cr \cr}
 }
 
 
 Two \code{POST_FATE_TABLE_ZONE_evolution_[...].csv} files are created : 
 \describe{
   \item{\file{spaceOccupancy}}{always, containing \code{tab.spaceOccupancy}}
-  \item{\file{abundance}}{always, containing \code{tab.abundance}}
+  \item{\file{totalAbundance}}{always, containing \code{tab.totalAbundance}}
 }
 
 
 Two \code{POST_FATE_[...].pdf} files are created : 
 \describe{
-  \item{\file{GRAPHIC_A \cr spaceOccupancy}}{to visualize for each PFG the
+  \item{\file{GRAPHIC_A \cr spaceOccupancy}}{to visualize for each PFG the 
   evolution of its occupation of the studied area through simulation time}
-  \item{\file{GRAPHIC_A \cr abundance}}{to visualize for each PFG the
-  evolution of its abundance within the whole studied area through
+  \item{\file{GRAPHIC_A \cr totalAbundance}}{to visualize for each PFG the 
+  evolution of its abundance within the whole studied area through 
   simulation time}
 }
 }
@@ -81,29 +82,30 @@ of the abundance of each PFG. These graphics represent both the evolution
 over the whole area.
 }
 \details{
-This function allows one to obtain, for a specific \code{FATE-HD} 
-simulation and a specific parameter file within this simulation, two 
-preanalytical graphics : 
+This function allows to obtain, for a specific \code{FATE-HD} simulation and 
+a specific parameter file within this simulation, two preanalytical 
+graphics : 
 
 \itemize{
-  \item{the evolution of \strong{space occupancy} of each Plant Functional 
-  Group through simulation time, with \emph{space occupancy} representing 
-  the percentage of pixels within the mask of studied area where the PFG 
-  is present
+  \item{the evolution of \strong{space occupancy} of each plant functional 
+  group through simulation time, \cr with \emph{space occupancy} 
+  representing the percentage of pixels within the mask of studied area 
+  where the PFG is present
   }
-  \item{the evolution of \strong{abundance} of each Plant Functional Group 
-  through simulation time, with \emph{abundance} being the sum over the 
-  whole studied area of the PFG abundances (\code{FATE-HD} \emph{arbitrary 
-  unit})
+  \item{the evolution of \strong{total abundance} of each plant functional 
+  group through simulation time, \cr with \emph{total abundance} being the 
+  sum over the whole studied area of the PFG abundances (\code{FATE-HD} 
+  \emph{arbitrary unit})
   }
 }
 
-If the information has been provided, the graphics will be also
-done per habitat. \cr \cr
+If the information has been provided (see 
+\code{\link{POST_FATE.temporalEvolution}}), the graphics will be also done 
+per habitat. \cr \cr
 
-It requires that the \code{\link{POST_FATE.temporalEvolution}} function has 
-been run and that the file 
-\code{POST_FATE.evolution_abundance_PIXEL_[...].csv} exists.
+\strong{It requires} that the \code{\link{POST_FATE.temporalEvolution}} 
+function has been run and that the file 
+\code{POST_FATE_TABLE_PIXEL_evolution_abundance.csv} exists.
 }
 \examples{
 

@@ -6,8 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create <em>DISTURBANCE</em> parameter files for a <code>FATE-HD</code>
-simulation — PRE_FATE.params_PFGdisturbance • RFate</title>
+<title>Create <em>DROUGHT</em> parameter files for a <code>FATE-HD</code>
+simulation — PRE_FATE.params_PFGdrought • RFate</title>
 
 
 <!-- jquery -->
@@ -40,11 +40,11 @@ simulation — PRE_FATE.params_PFGdisturbance • RFate</title>
 
 
 
-<meta property="og:title" content="Create <em>DISTURBANCE</em> parameter files for a <code>FATE-HD</code>
-simulation — PRE_FATE.params_PFGdisturbance" />
+<meta property="og:title" content="Create <em>DROUGHT</em> parameter files for a <code>FATE-HD</code>
+simulation — PRE_FATE.params_PFGdrought" />
 <meta property="og:description" content="This script is designed to create parameter files containing 
-response to disturbance parameters for each PFG (one file for each of them) 
-used in the disturbance module of FATE-HD." />
+response to drought disturbance parameters for each PFG (one file for each 
+of them) used in the drought disturbance module of FATE-HD." />
 
 
 
@@ -188,22 +188,23 @@ used in the disturbance module of FATE-HD." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create <em>DISTURBANCE</em> parameter files for a <code>FATE-HD</code>
+    <h1>Create <em>DROUGHT</em> parameter files for a <code>FATE-HD</code>
 simulation</h1>
-    <small class="dont-index">Source: <a href='https://github.com/MayaGueguen/RFate.git/blob/master/R/PRE_FATE.params_PFGdisturbance.R'><code>R/PRE_FATE.params_PFGdisturbance.R</code></a></small>
-    <div class="hidden name"><code>PRE_FATE.params_PFGdisturbance.Rd</code></div>
+    <small class="dont-index">Source: <a href='https://github.com/MayaGueguen/RFate.git/blob/master/R/PRE_FATE.params_PFGdrought.R'><code>R/PRE_FATE.params_PFGdrought.R</code></a></small>
+    <div class="hidden name"><code>PRE_FATE.params_PFGdrought.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>This script is designed to create parameter files containing 
-response to disturbance parameters for each PFG (one file for each of them) 
-used in the disturbance module of <code>FATE-HD</code>.</p>
+response to drought disturbance parameters for each PFG (one file for each 
+of them) used in the drought disturbance module of <code>FATE-HD</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>PRE_FATE.params_PFGdisturbance</span>(
+    <pre class="usage"><span class='fu'>PRE_FATE.params_PFGdrought</span>(
   <span class='no'>name.simulation</span>,
   <span class='kw'>mat.PFG.dist</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='no'>mat.PFG.tol</span>,
+  <span class='no'>mat.PFG.drought</span>,
   <span class='kw'>opt.folder.name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
 )</pre>
 
@@ -221,7 +222,7 @@ or simulation name of the <code>FATE-HD</code> simulation</p></td>
 a <code>data.frame</code> with 5 columns : <br /> 
 <code>PFG</code>, <code>type</code>, <code>maturity</code>, <code>longevity</code>, 
 <code>age_above_150cm</code> (see 
-<code><a href='PRE_FATE.params_PFGdisturbance.html#details'>Details</a></code>)</p></td>
+<code><a href='PRE_FATE.params_PFGdrought.html#details'>Details</a></code>)</p></td>
     </tr>
     <tr>
       <th>mat.PFG.tol</th>
@@ -231,26 +232,35 @@ a <code>data.frame</code> with 5 columns : <br />
 <li><p>(<em><code>responseStage</code>, <code>breakAge</code>, <code>resproutAge</code></em>),</p></li>
 <li><p><code>responseStage</code>, <code>killedIndiv</code>, <code>resproutIndiv</code>  
   (<em>or <code>strategy_tol</code></em>)</p></li>
-</ul><p>(see <code><a href='PRE_FATE.params_PFGdisturbance.html#details'>Details</a></code>)</p></td>
+</ul><p>(see <code><a href='PRE_FATE.params_PFGdrought.html#details'>Details</a></code>)</p></td>
+    </tr>
+    <tr>
+      <th>mat.PFG.drought</th>
+      <td><p>a <code>data.frame</code> with 4 or 6 columns : <br /></p><ul>
+<li><p><code>PFG</code>,</p></li>
+<li><p><code>threshold_moderate</code>, <code>threshold_severe</code>,</p></li>
+<li><p><code>counter_recovery</code>, <code>counter_sens</code>, <code>counter_cum</code>
+  (<em>or <code>strategy_drou</code></em>)</p></li>
+</ul></td>
     </tr>
     <tr>
       <th>opt.folder.name</th>
       <td><p>(<em>optional</em>) <br /> a <code>string</code> corresponding 
 to the name of the folder that will be created into the 
-<code>name.simulation/DATA/PFGS/DIST/</code> directory to store the results</p></td>
+<code>name.simulation/DATA/PFGS/DROUGHT/</code> directory to store the results</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A <code>.txt</code> file per PFG into the 
-<code>name.simulation/DATA/PFGS/DIST/</code> directory with the following 
+<code>name.simulation/DATA/PFGS/DROUGHT/</code> directory with the following 
 parameters :</p>
 <dl'>
   <dt>BREAK_AGE</dt><dd><p>ages at which the PFG changes of response stage 
   <em>(in years)</em></p></dd>
   <dt>RESPR_AGE</dt><dd><p>resprouting age table (in a single row) <br />
-  This is a vector of <code>no.DIST * no.responseStages</code> numbers 
+  This is a vector of <code>no.DIST (=2) * no.responseStages</code> numbers 
   corresponding <br /> to the age at which the PFG can be rejuvenated 
   (younger than the actual one) :
   <ul>
@@ -261,7 +271,7 @@ parameters :</p>
   stages) : <br /> <code>DI1_RS1, DI1_RS2, DI1_RS3, DI2_RS1...</code> <em>(in 
   years)</em>.</p></dd>
   <dt>FATES</dt><dd><p>disturbance response table (in a single row) <br />
-  This is a vector of <code>no.DIST * no.responseStages * 2</code> numbers 
+  This is a vector of <code>no.DIST (=2) * no.responseStages * 2</code> numbers 
   corresponding <br /> to the proportion of individuals :
   <ul>
 <li><p>that will be killed <em>(<code>Ki</code>)</em> or resprout 
@@ -277,54 +287,52 @@ parameters :</p>
   <em>(from <code>0</code> to <code>10</code>, corresponding to 0 to 100%)</em></p></dd>
   <dt>ACTIVATED_SEED</dt><dd><p>proportion of seeds activated by each disturbance <br />
   <em>(from <code>0</code> to <code>10</code>, corresponding to 0 to 100%)</em> <br /> <br /></p></dd>
+  <dt>THRESHOLD_MOD</dt><dd><p>threshold below which the PFG will experience 
+  moderate drought <br /> <em>(same unit as that of the map given with the 
+  <code>DROUGHT_MASK</code> flag in 
+  <code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>)</em></p></dd>
+  <dt>THRESHOLD_SEV</dt><dd><p>threshold below which the PFG will experience 
+  severe drought <br /> <em>(same unit as that of the map given with the 
+  <code>DROUGHT_MASK</code> flag in 
+  <code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>)</em></p></dd>
+  <dt>COUNTER_RECOVERY</dt><dd><p>number of years removed from the PFG counter of 
+  cumulated consecutive years of drought events, during non-drought years</p></dd>
+  <dt>COUNTER_SENS</dt><dd><p>number of consecutive years of drought the PFG must 
+  experience before suffering severe effects due to a severe drought <br /> 
+  (<em>sensitivity to severe drought</em>)</p></dd>
+  <dt>COUNTER_CUM</dt><dd><p>number of consecutive years of drought the PFG must 
+  experience before any subsequent drought event start having severe effects 
+  <br /> (<em>cumulative drought response</em>) <br /> <br /></p></dd>
 
 </dl>
 
-<p>A <code>DIST_COMPLETE_TABLE.csv</code> file summarizing information for all 
+<p>A <code>DROUGHT_COMPLETE_TABLE.csv</code> file summarizing information for all 
 groups into the <code>name.simulation/DATA/PFGS/</code> directory.</p>
 <p>If the <code>opt.folder.name</code> has been used, the files will be into the 
-folder <code>name.simulation/DATA/PFGS/DIST/opt.folder.name/</code>.</p>
+folder <code>name.simulation/DATA/PFGS/DROUGHT/opt.folder.name/</code>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The <strong>disturbance module</strong> allows the user to simulate spatial 
+    <p>The <strong>drought disturbance module</strong> is a specific case of the 
+<code>disturbance module</code>. It also allows the user to simulate spatial 
 perturbation(s) that will impact each PFG in terms of <em>resprouting</em> and 
-<em>mortality</em> at different response stages. <br /> <br /></p>
+<em>mortality</em> at different response stages, but with specific rules to 
+determine when the PFG is affected (see 
+<code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>). <br /> <br /></p>
 
 <p>Several parameters, given within <code>mat.PFG.dist</code> or <code>mat.PFG.tol</code>, 
-are required for each PFG in order to set up these responses :</p>
+are required for each PFG in order to set up these responses. The 
+explanations are the same than those that can be found in 
+<code><a href='PRE_FATE.params_PFGdisturbance.html'>PRE_FATE.params_PFGdisturbance</a></code> function. Therefore, 
+<strong>only parameters whose values or descriptions change are detailed 
+below :</strong></p>
 <dl'>
-  <dt>PFG</dt><dd><p>the concerned plant functional group <br /> <br /></p></dd>
-  
-  <dt>(<em>type</em>)</dt><dd><p>or life-form, based on Raunkier. <br /> It should be 
-  either <code>H</code> (herbaceous), <code>C</code> (chamaephyte) or <code>P</code> 
-  (phanerophyte) for now</p></dd>
-  <dt>(<em>maturity</em>)</dt><dd><p>the age from which the PFG can reproduce</p></dd>
-  <dt>(<em>longevity</em>)</dt><dd><p>the maximum or average lifespan of the PFG</p></dd>
-  <dt>(<em>age_above_150cm</em>)</dt><dd><p>the maximum height stratum that the PFG 
-  can reach <br /> <br /></p></dd>
-  
-  <dt>nameDist</dt><dd><p>the name of each perturbation (several can be defined at 
-  the same time) <br /> <br /></p></dd>
-  
-  <dt>(<em>responseStage</em>)</dt><dd><p>an <code>integer</code> corresponding to the 
-  concerned response class</p></dd>
-  <dt>(<em>breakAge</em>)</dt><dd><p>the age from which the PFG is associated with 
-  this response class</p></dd>
-  <dt>(<em>resproutAge</em>)</dt><dd><p>the age at which the plants will grow back, 
-  if they grow back <br /> <br /></p></dd>
-  
-  <dt>responseStage</dt><dd><p>an <code>integer</code> corresponding to the concerned 
-  response class</p></dd>
-  <dt>killedIndiv</dt><dd><p>an <code>integer</code> between <code>0</code> and <code>10</code> 
-  corresponding to the proportion of killed individuals</p></dd>
-  <dt>resproutIndiv</dt><dd><p>an <code>integer</code> between <code>0</code> and <code>10</code> 
-  corresponding to the proportion of resprouting individuals <br /> <br /></p></dd>
+  <dt>nameDist</dt><dd><p>a <code>string</code> to choose the concerned drought 
+  disturbance : <br /> <code>immediate</code> or <code>delayed</code> <br /> <br /></p></dd>
   
   <dt>(<em>strategy_tol</em>)</dt><dd><p>a <code>string</code> to choose the response to 
-  disturbance strategy : <br /> <code>indifferent</code>, <code>mowing_herbs</code>, 
-  <code>mowing_trees</code>, <code>grazing_herbs_1</code>, <code>grazing_herbs_2</code>, 
-  <code>grazing_herbs_3</code>, <code>grazing_trees_1</code>, <code>grazing_trees_2</code>, 
-  <code>grazing_trees_3</code> <br /> <br /></p></dd>
+  drought strategy : <br /> <code>herbs_cham_1</code>, <code>herbs_cham_2</code>, 
+  <code>herbs_cham_3</code>, <code>trees_1</code>, <code>trees_2</code>, <code>trees_3</code> 
+  <br /> <br /></p></dd>
 
 </dl>
 
@@ -332,52 +340,6 @@ are required for each PFG in order to set up these responses :</p>
 <p>These values will allow to calculate or define a set of characteristics for 
 each PFG :</p>
 <dl'>
-  <dt>BREAK_AGE</dt><dd><p>= each PFG can respond to a disturbance in several 
-  different ways that depend on the PFG age <br />
-   = ages at which each PFG changes of response stage <br /> <br />
-  Two methods to define these ages are available :
-  <ul>
-<li><p>from <strong>predefined rules</strong> (using <code>type</code>, 
-    <code>maturity</code>, <code>longevity</code>, <code>age_above_150cm</code>) : <br /> <br />
-    4 classes are defined that can be labelled as : <br /> <strong>JustBorn 
-    (<code>1</code>)</strong>, <strong>Juveniles (<code>2</code>)</strong>, <strong>Matures (<code>3</code>)</strong>, 
-    <strong>Senescents (<code>4</code>)</strong> <br /> <br /></p><table class='table'>
-<tr><td></td><td><strong><code>H</code> (herbaceous)</strong></td><td><strong><code>C</code> 
-       (chamaephyte) or <code>P</code> (phanerophyte)</strong></td></tr>
-<tr><td><strong>from class <code>1</code> to <code>2</code></strong></td><td><code>maturity - 2</code></td><td><code>1</code></td></tr>
-<tr><td><strong>from class <code>2</code> to <code>3</code></strong></td><td><code>maturity</code></td><td><code>min</code>(<code>maturity - 2 , age_above_150cm</code>)</td></tr>
-<tr><td><strong>from class <code>3</code> to <code>4</code></strong></td><td><code>longevity - 2</code></td><td><code>min</code>(<code>longevity - 2 , age_above_150cm</code>)</td></tr>
-</table><p>Some corrections are made for short-living plants (annuals and 
-    biennials) :</p><ul>
-<li><p>as they die after 1 or 2 years, they are not affected 
-      differently according to life stages</p></li>
-<li><p>break ages from class <code>1</code> to <code>3</code> are set to <code>1</code>, 
-      and break age from <code>3</code> to <code>4</code> is set to their longevity 
-      (<code>1</code> or <code>2</code>) <br /> <br /></p></li>
-</ul></li>
-<li><p>from <strong>user data</strong> : <br />
-      <em>with the values contained within the <code>breakAge</code> column, 
-      if provided <br /> <br /></em></p></li>
-</ul></p></dd>
-  <dt>RESPR_AGE</dt><dd><p>= when subject to a perturbation, each PFG can either 
-  stay undisturbed, be killed, or resprout at a particular age 
-  <em>(in years)</em> <br />
-   = ages at which each PFG will be rejuvenated by a disturbance <br /> <br />
-  Two methods to define these ages are available :
-  <ul>
-<li><p>from <strong>predefined rules</strong> (using <code>maturity</code>, 
-    <code>longevity</code>, <code>age_above_150cm</code>) :</p><ul>
-<li><p>classes <code>1</code> and <code>2</code> : too young to resprout</p></li>
-<li><p>class <code>3</code> : 
-      <code>min</code>(<code>maturity - 2 , age_above_150cm</code>)</p></li>
-<li><p>class <code>4</code> : <code>longevity - 2</code></p></li>
-<li><p>short-living plants (annuals and biennials) always start back 
-      at <code>0</code> <br /> <br /></p></li>
-</ul></li>
-<li><p>from <strong>user data</strong> : <br />
-      <em>with the values contained within the <code>resproutAge</code> column, 
-      if provided <br /> <br /></em></p></li>
-</ul></p></dd>
   <dt>FATES</dt><dd><p>= proportion of killed and resprouting individuals <br />
    = for each disturbance and for each response stage <br /> <br />
   Two methods to define these tolerances are available :
@@ -392,27 +354,20 @@ each PFG :</p>
 </ul><p></p><dl'>
         <dt></dt><dd><p><strong><code>| ___1___ | ___2___ | ___3___ | ___4___ |</code></strong></p></dd>
         <dt></dt><dd><p><strong><code>| _K_ _R_ | _K_ _R_ | _K_ _R_ | _K_ _R_ |</code></strong></p></dd>
-        <dt></dt><dd><p><code>_________________________________________</code></p></dd>
-        <dt>indifferent</dt><dd><p><code>| _0_ _0_ | _0_ _0_ | _0_ _0_ | _0_ _0_ |</code></p></dd>
-        <dt></dt><dd><p><code>_________________________________________</code></p></dd>
-        <dt>mowing_herbs</dt><dd><p><code>| _0_ _0_ | _0_ _0_ | 50% 50% | 100% 
-        0_ |</code></p></dd>
-        <dt>mowing_trees</dt><dd><p><code>| _0_ _0_ | 100% 0_ | 100% 0_ | 100% 
-        0_ |</code></p></dd>
-        <dt></dt><dd><p><code>_________________________________________</code></p></dd>
-        <dt>grazing_herbs_1</dt><dd><p><code>| _0_ _0_ | 10% _0_ | _0_ 50% | _0_ 
-        10% |</code></p></dd>
-        <dt>grazing_herbs_2</dt><dd><p><code>| _0_ _0_ | 50% _0_ | _0_ 80% | 10% 
-        50% |</code></p></dd>
-        <dt>grazing_herbs_3</dt><dd><p><code>| _0_ _0_ | 90% _0_ | 10% 90% | 50% 
-        50% |</code></p></dd>
-        <dt></dt><dd><p><code>_________________________________________</code></p></dd>
-        <dt>grazing_trees_1</dt><dd><p><code>| 40% _0_ | _0_ _0_ | _0_ _0_ | _0_ 
-        _0_ |</code></p></dd>
-        <dt>grazing_trees_2</dt><dd><p><code>| 80% _0_ | _0_ _0_ | _0_ _0_ | _0_ 
-        _0_ |</code></p></dd>
-        <dt>grazing_trees_3</dt><dd><p><code>| 100% 0_ | 40% _0_ | _0_ _0_ | _0_ 
-        _0_ |</code></p></dd></dl></li>
+        <dt></dt><dd><p><code>________________IMMEDIATE________________</code></p></dd>
+        <dt>herbs_cham_1</dt><dd><p><code>| 10% _0_ | _0_ _0_ | _0_ _0_ | _0_ _0_ |</code></p></dd>
+        <dt>herbs_cham_2</dt><dd><p><code>| 20% _0_ | _0_ _0_ | _0_ _0_ | 10% _0_ |</code></p></dd>
+        <dt>herbs_cham_3</dt><dd><p><code>| 40% _0_ | 10% _0_ | 10% _0_ | 20% _0_ |</code></p></dd>
+        <dt>trees_1</dt><dd><p><code>| 10% _0_ | _0_ _0_ | _0_ 40% | _0_ 40% |</code></p></dd>
+        <dt>trees_2</dt><dd><p><code>| 20% _0_ | _0_ 10% | _0_ 50% | 10% 50% |</code></p></dd>
+        <dt>trees_3</dt><dd><p><code>| 40% _0_ | 10% 40% | 10% 80% | 20% 80% |</code></p></dd>
+        <dt></dt><dd><p><code>_________________DELAYED_________________</code></p></dd>
+        <dt>herbs_cham_1</dt><dd><p><code>| _0_ _0_ | _0_ 10% | _0_ 10% | _0_ 10% |</code></p></dd>
+        <dt>herbs_cham_2</dt><dd><p><code>| _0_ _0_ | _0_ 10% | _0_ 10% | _0_ 10% |</code></p></dd>
+        <dt>herbs_cham_3</dt><dd><p><code>| _0_ _0_ | _0_ 10% | _0_ 10% | _0_ 10% |</code></p></dd>
+        <dt>trees_1</dt><dd><p><code>| _0_ _0_ | _0_ 10% | _0_ 40% | _0_ 40% |</code></p></dd>
+        <dt>trees_2</dt><dd><p><code>| 10% _0_ | _0_ 40% | _0_ 40% | _0_ 40% |</code></p></dd>
+        <dt>trees_3</dt><dd><p><code>| 20% _0_ | 10% 40% | 10% 50% | 10% 50% |</code></p></dd></dl></li>
 <li><p>from <strong>user data</strong> : <br />
       <em>with the values contained within the <code>responseStage</code>, 
       <code>killedIndiv</code> and <code>resproutIndiv</code> columns, if provided <br />
@@ -421,19 +376,52 @@ each PFG :</p>
       (but are applied in the order given by the <code>PFG</code> column). <br /> <br />
       </em></p></li>
 </ul></p></dd>
-  <dt>PROP_KILLED</dt><dd><p>= the proportion of propagules killed by each 
-  disturbance <br />
-  (<em>currently set to <code>0</code> for all PFG and disturbances</em>)</p></dd>
-  <dt>ACTIVATED_SEED</dt><dd><p>= the proportion of seeds activated by each 
-  disturbance <br />
-  (<em>currently set to <code>0</code> for all PFG and disturbances</em>)</p></dd>
+
+</dl>
+
+
+<p>Supplementary parameters related to drought, given within 
+<code>mat.PFG.drought</code>, are required for each PFG :</p>
+<dl'>
+  <dt>threshold_moderate</dt><dd><p>a value corresponding to the threshold below 
+  which the PFG will experience moderate drought (on the same scale than 
+  <code>threshold_severe</code> and the map given with the <code>DROUGHT_MASK</code> 
+  flag in <code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>)</p></dd>
+  <dt>threshold_severe</dt><dd><p>a value corresponding to the threshold below 
+  which the PFG will experience severe drought (on the same scale than 
+  <code>threshold_moderate</code> and the map given with the <code>DROUGHT_MASK</code> 
+  flag in <code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>). It should be 
+  inferior or equal to <code>threshold_moderate</code>. <br /> <br /></p></dd>
+  <dt>counter_recovery</dt><dd><p>an <code>integer</code> corresponding to the number of 
+  years removed from the PFG counter of cumulated consecutive years of 
+  drought events, during non-drought years</p></dd>
+  <dt>counter_sens</dt><dd><p>an <code>integer</code> corresponding to the number of 
+  consecutive years of drought the PFG must experience before suffering 
+  severe effects due to a severe drought (<em>sensitivity to severe 
+  drought</em>)</p></dd>
+  <dt>counter_cum</dt><dd><p>an <code>integer</code> corresponding to the number of 
+  consecutive years of drought the PFG must experience before any subsequent 
+  drought event start having severe effects (<em>cumulative drought 
+  response</em>). It should be superior or equal to <code>counter_sens</code>.</p></dd>
+  <dt>(<em>strategy_drou</em>)</dt><dd><p>a <code>string</code> to choose the "counter" 
+  strategy : <br /> <code>herbs</code>, <code>chamaephytes</code>, <code>trees_shrubs</code> 
+  <br /> <br /></p></dd>
+
+</dl>
+
+<p>These values will allow to define a set of characteristics for each PFG :</p><dl'>
+  <dt>sensitivity to values</dt><dd><p>with the <strong>THRESHOLD_MODERATE</strong> and 
+  <strong>THRESHOLD_SEVERE</strong> parameters</p></dd>
+  <dt>sensitivity through time</dt><dd><p>with the <strong>COUNTER_RECOVERY</strong>, 
+  <strong>COUNTER_SENS</strong> and <strong>COUNTER_CUM</strong> parameters</p></dd>
 
 </dl>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='PRE_FATE.skeletonDirectory.html'>PRE_FATE.skeletonDirectory</a></code>, 
-<code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code></p></div>
+<code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>,
+<code><a href='PRE_FATE.params_PFGdisturbance.html'>PRE_FATE.params_PFGdisturbance</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples">
@@ -459,7 +447,7 @@ each PFG :</p>
                                           , <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>9</span>,<span class='fl'>10</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>5</span>,<span class='fl'>1</span>)
                                           , <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>)))
 
-<span class='fu'>PRE_FATE.params_PFGdisturbance</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
+<span class='fu'>PRE_FATE.params_PFGdrought</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
                                , <span class='kw'>mat.PFG.dist</span> <span class='kw'>=</span> <span class='no'>tab.dist</span>)
 
 
@@ -482,7 +470,7 @@ each PFG :</p>
                             , <span class='kw'>strata.limits_reduce</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 
 <span class='co'>## Create PFG disturbance parameter files</span>
-<span class='fu'>PRE_FATE.params_PFGdisturbance</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
+<span class='fu'>PRE_FATE.params_PFGdrought</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
                                , <span class='kw'>mat.PFG.dist</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>dist</span>)</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -4,12 +4,16 @@
 \alias{PRE_FATE.params_PFGlight}
 \title{Create \emph{LIGHT} parameter files for a \code{FATE-HD} simulation}
 \usage{
-PRE_FATE.params_PFGlight(name.simulation, mat.PFG.light,
-  mat.PFG.tol = NULL, opt.folder.name = NULL)
+PRE_FATE.params_PFGlight(
+  name.simulation,
+  mat.PFG.light,
+  mat.PFG.tol = NULL,
+  opt.folder.name = NULL
+)
 }
 \arguments{
-\item{name.simulation}{a \code{string} that corresponds to the main 
-directory or simulation name of the \code{FATE-HD} simulation}
+\item{name.simulation}{a \code{string} corresponding to the main directory 
+or simulation name of the \code{FATE-HD} simulation}
 
 \item{mat.PFG.light}{a \code{data.frame} with 2 to 6 columns : \cr 
 \itemize{
@@ -21,7 +25,8 @@ directory or simulation name of the \code{FATE-HD} simulation}
 }
 (see \code{\href{PRE_FATE.params_PFGlight.html#details}{Details}})}
 
-\item{mat.PFG.tol}{a \code{data.frame} with 2 to 4 columns : \cr 
+\item{mat.PFG.tol}{(\emph{optional}) \cr 
+a \code{data.frame} with 2 to 4 columns : \cr 
 \itemize{
   \item \code{PFG},
   \item \code{lifeStage}, \code{resources}, \code{tolerance} 
@@ -29,8 +34,8 @@ directory or simulation name of the \code{FATE-HD} simulation}
 }
 (see \code{\href{PRE_FATE.params_PFGlight.html#details}{Details}})}
 
-\item{opt.folder.name}{(\emph{optional}) \cr a \code{string} that 
-corresponds to the name of the folder that will be created into the 
+\item{opt.folder.name}{(\emph{optional}) \cr a \code{string} corresponding 
+to the name of the folder that will be created into the 
 \code{name.simulation/DATA/PFGS/LIGHT/} directory to store the results}
 }
 \value{
@@ -40,30 +45,29 @@ parameters :
 
 \describe{
   \item{NAME}{name of the PFG}
-  \item{ACTIVE_GERM}{the germination rates depending on light conditions 
-  \cr \emph{(0: 0\% 1: 10\% 2: 20\% 3: 30\% 4: 40\% 5: 50\% 6: 60\% 7: 70\% 
-  8: 80\% 9: 90\% 10: 100\%)}}
+  \item{ACTIVE_GERM}{germination rates depending on light conditions 
+  \cr \emph{(from \code{0} to \code{10}, corresponding to 0 to 100\%)}}
   \item{LIGHT}{light value or strategy of the PFG}
-  \item{LIGHT_TOL}{the PFG light tolerance table (in a single row). \cr 
+  \item{LIGHT_TOL}{light tolerance table (in a single row). \cr 
   This is a vector of 9 numbers corresponding to the ability of the PFG to 
   survive or not :
   \itemize{
-    \item at different life stages \emph{(Germinant (Ge), Immature (Im), 
-    Mature (Ma))}
-    \item under different light conditions \emph{(Low (L), Medium (M) or 
-    High (H))}.
+    \item at different life stages \emph{(Germinant (\code{Ge}), Immature 
+    (\code{Im}), Mature (\code{Ma}))}
+    \item under different light conditions \emph{(Low (\code{L}), Medium 
+    (\code{M}) or High (\code{H}))}.
   }
-  These parameters should be given in this order : GeL, GeM, GeH, ImL, ImM, 
-  ImH, MaL, MaM, MaH.
-  \cr \emph{(0: 0\% 1: 10\% 2: 20\% 3: 30\% 4: 40\% 5: 50\% 6: 60\% 7: 70\% 
-  8: 80\% 9: 90\% 10: 100\%)}}
+  These parameters should be given in this order : \code{GeL, GeM, GeH, ImL, 
+  ImM, ImH, MaL, MaM, MaH}
+  \cr \emph{(from \code{0} to \code{10}, corresponding to 0 to 100\%)}. 
+  \cr \cr}
 }
 
 A \code{LIGHT_COMPLETE_TABLE.csv} file summarizing information for all 
 groups into the \code{name.simulation/DATA/PFGS/} directory.  
 
 If the \code{opt.folder.name} has been used, the files will be into the 
-folder \code{name.simulation/DATA/PFGS/LIGHT/opt.folder.name/}
+folder \code{name.simulation/DATA/PFGS/LIGHT/opt.folder.name/}.
 }
 \description{
 This script is designed to create parameter files containing 
@@ -71,27 +75,32 @@ light-related parameters for each PFG (one file for each of them) used in
 the light module of \code{FATE-HD}.
 }
 \details{
-The light module allows the user to simulate a primary vegetation succession 
-based on light competition. \cr \cr
+The \strong{light module} allows the user to add the effect of 
+\strong{light competition} within a primary vegetation succession. \cr \cr
 
 Several parameters, given within \code{mat.PFG.light} or \code{mat.PFG.tol}, 
-are required for each PFG in order to set up the light competition :
+are required for each PFG in order to set up this light competition :
 
 \describe{
+  \item{PFG}{the concerned plant functional group \cr \cr}
+  
   \item{type}{or life-form, based on Raunkier. \cr It should be either 
   \code{H} (herbaceous), \code{C} (chamaephyte) or \code{P} (phanerophyte) 
   for now}
-  \item{(\emph{active_germ_low})}{the proportion of seeds that will 
-  germinate for \code{Low} light condition}
-  \item{(\emph{active_germ_medium})}{the proportion of seeds that will 
-  germinate for \code{Medium} light condition}
-  \item{(\emph{active_germ_high})}{the proportion of seeds that will 
-  germinate for \code{High} light condition}
+  \item{(\emph{active_germ_low})}{an \code{integer} between \code{0} and 
+  \code{10} corresponding to the proportion of seeds that will germinate for 
+  \code{Low} light condition}
+  \item{(\emph{active_germ_medium})}{an \code{integer} between \code{0} and 
+  \code{10} corresponding to the proportion of seeds that will germinate for 
+  \code{Medium} light condition}
+  \item{(\emph{active_germ_high})}{an \code{integer} between \code{0} and 
+  \code{10} corresponding to the proportion of seeds that will germinate for 
+  \code{High} light condition}
   \item{(\emph{strategy_ag})}{a \code{string} to choose the germination 
   strategy : \cr \code{light_lover}, \code{indifferent}, \code{shade_lover} 
   \cr \cr}
   
-  \item{(\emph{light_need})}{a value between \code{0} and \code{5} 
+  \item{(\emph{light_need})}{an \code{integer} between \code{0} and \code{5} 
   corresponding to the light preference of the PFG (e.g. from Flora 
   Indicativa)\cr \cr}
   
@@ -99,13 +108,12 @@ are required for each PFG in order to set up the light competition :
   \code{Immature}, \code{Mature})}
   \item{resources}{the concerned light condition (\code{Low}, 
   \code{Medium}, \code{High})}
-  \item{tolerance}{the proportion of surviving individuals}
+  \item{tolerance}{an \code{integer} between \code{0} and \code{10} 
+  corresponding to the proportion of surviving individuals}
   \item{(\emph{strategy_tol})}{a \code{string} to choose the tolerance 
   strategy : \cr \code{full_light}, \code{pioneer}, \code{ubiquist}, 
   \code{semi_shade}, \code{undergrowth} \cr \cr}
 }
-
-
 
 
 These values will allow to calculate or define a set of characteristics for 
@@ -240,7 +248,9 @@ PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
 
 }
 \seealso{
-\code{\link{PRE_FATE.skeletonDirectory}}
+\code{\link{PRE_FATE.skeletonDirectory}},
+\code{\link{PRE_FATE.params_globalParameters}}, 
+\code{\link{PRE_FATE.params_PFGsuccession}}
 }
 \author{
 Maya Guéguen

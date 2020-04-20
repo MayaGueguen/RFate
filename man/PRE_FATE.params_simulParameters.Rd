@@ -5,32 +5,46 @@
 \title{Create \emph{Simul_parameters} parameter file for a \code{FATE-HD} 
 simulation}
 \usage{
-PRE_FATE.params_simulParameters(name.simulation, name.mask,
-  name.dist = NULL, opt.global.name = NULL, opt.folder.name = NULL)
+PRE_FATE.params_simulParameters(
+  name.simulation,
+  name.MASK,
+  name.DIST = NULL,
+  name.DROUGHT = NULL,
+  opt.global.name = NULL,
+  opt.folder.name = NULL
+)
 }
 \arguments{
-\item{name.simulation}{a \code{string} that corresponds to the main 
-directory or simulation name of the \code{FATE-HD} simulation}
+\item{name.simulation}{a \code{string} corresponding to the main directory 
+or simulation name of the \code{FATE-HD} simulation}
 
-\item{name.mask}{a \code{string} that corresponds to the file name of a 
-raster mask, with either 0 or 1 within each pixel, 1 corresponding to the 
-cells of the studied area in which the succession module of the 
-\code{FATE-HD} simulation will take place}
+\item{name.MASK}{a \code{string} corresponding to the file name of a raster 
+mask, with either \code{0} or \code{1} within each pixel, \code{1} 
+corresponding to the cells of the studied area in which the succession 
+(core) module of the \code{FATE-HD} simulation will take place (see 
+\code{\href{PRE_FATE.params_globalParameters.html#details}{PRE_FATE.params_globalParameters}})}
 
-\item{name.dist}{(\emph{optional}) \cr a \code{string} that corresponds 
-to the file name of a raster mask, with either 0 or 1 within each pixel, 
-1 corresponding to the cells of the studied area in which the disturbance 
-module of the \code{FATE-HD} simulation will take place}
+\item{name.DIST}{(\emph{optional}) \cr a \code{string} corresponding to the 
+file name of a raster mask, with either \code{0} or \code{1} within each 
+pixel, \code{1} corresponding to the cells of the studied area in which the 
+disturbance module of the \code{FATE-HD} simulation will take place (see 
+\code{\href{PRE_FATE.params_globalParameters.html#details}{PRE_FATE.params_globalParameters}})}
 
-\item{opt.global.name}{(\emph{optional}) \cr a \code{string} that 
-corresponds to the name of the global parameter file in the folder
+\item{name.DROUGHT}{(\emph{optional}) \cr a \code{string} corresponding to 
+the name of a raster file, with a \code{numeric} value within each pixel 
+corresponding to the drought intensity experienced by this pixel throught 
+the drought disturbance module of the \code{FATE-HD} simulation (see 
+\code{\href{PRE_FATE.params_globalParameters.html#details}{PRE_FATE.params_globalParameters}})}
+
+\item{opt.global.name}{(\emph{optional}) \cr a \code{string} corresponding 
+to the name of the global parameter file in the folder 
 \code{name.simulation/DATA/GLOBAL_PARAMETERS/} that will be used to build 
 the simulation parameter file}
 
-\item{opt.folder.name}{(\emph{optional}) \cr a \code{string} that 
-corresponds to the name of the folder in each 
-\code{name.simulation/DATA/PFGS/module/} from which PFG file names will be 
-extracted to build the simulation parameter file}
+\item{opt.folder.name}{(\emph{optional}) \cr a \code{string} corresponding 
+to the name of the folder in each \code{name.simulation/DATA/PFGS/module/} 
+from which PFG file names will be extracted to build the simulation 
+parameter file}
 }
 \value{
 A \code{.txt} file into the \code{name.simulation/PARAM_SIMUL/}
@@ -38,24 +52,39 @@ directory with the following parameters :
 
 \itemize{
   \item \strong{--GLOBAL_PARAMS--}
-  \item \strong{--SAVE_DIR--}
-  \item --ARRAYS_SAVING_YEARS-- (\emph{optional})
-  \item --OBJECTS_SAVING_YEARS-- (\emph{optional})
+  \item \strong{--SAVING_DIR--}
+  \itemize{
+  \item --SAVING_YEARS_ARRAYS-- (\emph{optional})
+  \item --SAVING_YEARS_OBJECTS-- (\emph{optional})
+  }
   \item \strong{--MASK--}
-  \item --MASK_CHANGE_TIME-- (\emph{optional})
-  \item --MASK_CHANGE_MASK-- (\emph{optional})
-  \item \strong{--PFG_LIFE_HISTORY_PARAMS--}
-  \item --PFG_LIGHT_PARAMS-- (\emph{optional})
-  \item --PFG_SOIL_PARAMS-- (\emph{optional})
-  \item --PFG_DISPERSAL_PARAMS-- (\emph{optional})
-  \item --PFG_HAB_MASK-- (\emph{optional})
-  \item --HAB_CHANGE_TIME-- (\emph{optional})
-  \item --HAB_CHANGE_MASK-- (\emph{optional})
-  \item --PFG_DISTURBANCES_PARAMS-- (\emph{optional})
+  \itemize{
+  \item --MASK_CHANGEMASK_YEARS-- (\emph{optional})
+  \item --MASK_CHANGEMASK_FILES-- (\emph{optional})
+  }
+  \item \strong{--PFG_PARAMS_LIFE_HISTORY--}
+  \itemize{
+  \item --PFG_PARAMS_LIGHT-- (\emph{optional})
+  \item --PFG_PARAMS_SOIL-- (\emph{optional})
+  \item --PFG_PARAMS_DISPERSAL-- (\emph{optional})
+  \item --PFG_MASK_HABSUIT-- (\emph{optional})
+  \item --HABSUIT_CHANGEMASK_YEARS-- (\emph{optional})
+  \item --HABSUIT_CHANGEMASK_FILES-- (\emph{optional})
+  \item --PFG_PARAMS_DISTURBANCES-- (\emph{optional})
   \item --DIST_MASK-- (\emph{optional})
-  \item --DIST_CHANGE_TIME-- (\emph{optional})
-  \item --DIST_CHANGE_MASK-- (\emph{optional})
-  \item --END_OF_FILE--
+  \item --DIST_CHANGEMASK_YEARS-- (\emph{optional})
+  \item --DIST_CHANGEMASK_FILES-- (\emph{optional})
+  \item --PFG_PARAMS_DROUGHT-- (\emph{optional})
+  \item --DROUGHT_MASK-- (\emph{optional})
+  \item --DROUGHT_CHANGEMASK_YEARS-- (\emph{optional})
+  \item --DROUGHT_CHANGEMASK_FILES-- (\emph{optional})
+  \item --PFG_MASK_ALIENS-- (\emph{optional})
+  \item --ALIENS_CHANGEMASK_YEARS-- (\emph{optional})
+  \item --ALIENS_CHANGEMASK_FILES-- (\emph{optional})
+  \item --ALIENS_CHANGEFREQ_YEARS-- (\emph{optional})
+  \item --ALIENS_CHANGEFREQ_FILES-- (\emph{optional})
+}
+  \item \strong{--END_OF_FILE--}
 }
 }
 \description{
@@ -71,80 +100,106 @@ needed by the program to run.
 \describe{
   \item{GLOBAL_PARAMS}{file where parameters related to the simulation 
   definition are referred (e.g. number of PFG involved, number of height 
-  strata, simulation duration, computer resources, modules loaded, ...) \cr
+  strata, simulation duration, computer resources, modules loaded, etc) \cr
   (see \code{\link{PRE_FATE.params_globalParameters}}) \cr \cr
   }
-  \item{SAVE_DIR}{directory where simulation outputs will be stored}
-  \item{ARRAYS_SAVING_ \cr YEARS (\emph{optional})}{file containing the 
+  \item{SAVING_DIR}{directory where simulation outputs will be stored}
+  \item{SAVING_YEARS_ \cr ARRAYS (\emph{optional})}{file containing the 
   years for which simulation maps will be saved \cr
   (see \code{\link{PRE_FATE.params_saveYears}})
   }
-  \item{OBJECTS_SAVING_ \cr YEARS (\emph{optional})}{file containing the 
+  \item{SAVING_YEARS_ \cr OBJECTS (\emph{optional})}{file containing the 
   years for which simulation outputs will be saved \cr
   (see \code{\link{PRE_FATE.params_saveYears}}) \cr \cr
   }
   \item{MASK}{raster mask that will define the study area}
-  \item{MASK_CHANGE_TIME \cr (\emph{optional})}{file containing the years 
+  \item{MASK_CHANGEMASK_YEARS \cr (\emph{optional})}{file containing the years 
   to change rasters for the succession module \cr
   (see \code{\link{PRE_FATE.params_changingYears}})
   }
-  \item{MASK_CHANGE_MASK \cr (\emph{optional})}{file containing the files 
+  \item{MASK_CHANGEMASK_FILES \cr (\emph{optional})}{file containing the files 
   to change rasters for the succession module \cr
   (see \code{\link{PRE_FATE.params_changingYears}}) \cr \cr
   }
-  \item{PFG_LIFE_HISTORY_ \cr PARAMS}{PFG life history related parameters 
+  \item{PFG_PARAMS_ \cr LIFE_HISTORY}{PFG life history related parameters 
   (one by PFG) \cr
   (see \code{\link{PRE_FATE.params_PFGsuccession}}) \cr \cr
   }
-  \item{PFG_LIGHT_ \cr PARAMS (\emph{optional})}{PFG light preferences and 
+  \item{PFG_PARAMS_ \cr LIGHT (\emph{optional})}{PFG light preferences and 
   tolerance related parameters (one by PFG) \cr
   (see \code{\link{PRE_FATE.params_PFGlight}}) \cr \cr
   }
-  \item{PFG_SOIL_ \cr PARAMS (\emph{optional})}{PFG soil contribution and 
+  \item{PFG_PARAMS_ \cr SOIL (\emph{optional})}{PFG soil contribution and 
   tolerance related parameters (one by PFG) \cr
   (see \code{\link{PRE_FATE.params_PFGsoil}}) \cr \cr
   }
-  \item{PFG_DISPERSAL_ \cr PARAMS (\emph{optional})}{PFG dispersal 
+  \item{PFG_PARAMS_ \cr DISPERSAL (\emph{optional})}{PFG dispersal 
   capacity related parameters (one by PFG) \cr
   (see \code{\link{PRE_FATE.params_PFGdispersal}}) \cr \cr
   }
-  \item{PFG_HAB_MASK \cr (\emph{optional})}{raster masks (one by PFG) 
+  \item{PFG_MASK_HABSUIT \cr (\emph{optional})}{raster masks (one by PFG) 
   containing PFG habitat suitability for the study area}
-  \item{HAB_CHANGE_TIME \cr (\emph{optional})}{file containing the years 
+  \item{HABSUIT_CHANGEMASK_YEARS \cr (\emph{optional})}{file containing the years 
   to change rasters for the habitat suitability module \cr
   (see \code{\link{PRE_FATE.params_changingYears}})
   }
-  \item{HAB_CHANGE_MASK \cr (\emph{optional})}{file containing the files 
+  \item{HABSUIT_CHANGEMASK_FILES \cr (\emph{optional})}{file containing the files 
   to change rasters for the habitat suitability module \cr
   (see \code{\link{PRE_FATE.params_changingYears}}) \cr \cr
   }
-  \item{PFG_DISTURBANCES_ \cr PARAMS (\emph{optional})}{PFG disturbance 
+  \item{PFG_PARAMS_ \cr DISTURBANCES (\emph{optional})}{PFG disturbance 
   related parameters in terms of resprouting and mortality (one by PFG) \cr
   (see \code{\link{PRE_FATE.params_PFGdisturbance}})
   }
   \item{DIST_MASK \cr (\emph{optional})}{raster masks that will define the 
   disturbance areas}
-  \item{DIST_CHANGE_TIME \cr (\emph{optional})}{file containing the years 
+  \item{DIST_CHANGEMASK_YEARS \cr (\emph{optional})}{file containing the years 
   to change rasters for the disturbance module \cr
   (see \code{\link{PRE_FATE.params_changingYears}})
   }
-  \item{DIST_CHANGE_MASK \cr (\emph{optional})}{file containing the files 
+  \item{DIST_CHANGEMASK_FILES \cr (\emph{optional})}{file containing the files 
   to change rasters for the disturbance module \cr
-  (see \code{\link{PRE_FATE.params_changingYears}})
+  (see \code{\link{PRE_FATE.params_changingYears}}) \cr \cr
   }
+  \item{PFG_PARAMS_DROUGHT \cr (\emph{optional})}{PFG drought disturbance 
+  related parameters in terms of resprouting and mortality (one by PFG) \cr
+  (see \code{\link{PRE_FATE.params_PFGdrought}})}
+  \item{DROUGHT_MASK \cr (\emph{optional})}{raster mask that will define the 
+  drought intensity of the area}
+  \item{DROUGHT_CHANGEMASK_YEARS \cr (\emph{optional})}{file containing the 
+  years to change rasters for the drought disturbances module \cr
+  (see \code{\link{PRE_FATE.params_changingYears}})}
+  \item{DROUGHT_CHANGEMASK_FILES \cr (\emph{optional})}{file containing the 
+  files to change rasters for the drought disturbances module \cr
+  (see \code{\link{PRE_FATE.params_changingYears}}) \cr \cr}
+  \item{PFG_MASK_ALIENS \cr (\emph{optional})}{raster masks (one by alien) 
+  containing alien introduction zones for the study area}
+  \item{ALIENS_CHANGEMASK_YEARS \cr (\emph{optional})}{file containing the 
+  years to change rasters for the aliens introduction module \cr
+  (see \code{\link{PRE_FATE.params_changingYears}})}
+  \item{ALIENS_CHANGEMASK_FILES \cr (\emph{optional})}{file containing the 
+  files to change rasters for the aliens introduction module \cr
+  (see \code{\link{PRE_FATE.params_changingYears}})}
+  \item{ALIENS_CHANGEFREQ_YEARS \cr (\emph{optional})}{file containing the 
+  years to change frequencies for the aliens introduction module \cr
+  (see \code{\link{PRE_FATE.params_changingYears}})}
+  \item{ALIENS_CHANGEFREQ_FILES \cr (\emph{optional})}{file containing the 
+  files to change frequencies for the aliens introduction module \cr
+  (see \code{\link{PRE_FATE.params_changingYears}})}
 }
 }
 \note{
 \itemize{
-  \item The links to files are \strong{NOT absolute paths}. \cr
+  \item The function produces links to files that are \strong{NOT absolute 
+  paths BUT relative ones}. \cr
   \emph{When relative paths are used}, the user should be careful of the 
   folder from which the simulation is launched. \cr
   \emph{A function allows to transform these relative paths into absolute 
-  ones. (see \code{\link{.setPattern}})}
+  ones. (see examples of \code{\link{.setPattern}})}.
   \item \strong{The order of files matters!} \cr
-  For instance the first link below \code{--PFG_LIFE_HISTORY_PARAMS--} 
-  flag has to match (the same PFG) with the first item below the 
-  \code{--PFG_DISPERSAL_PARAMS--} flag.
+  For instance the first link below \code{--PFG_PARAMS_LIFE_HISTORY--} flag 
+  (e.g. \emph{PFG Albert}) has to match with the first item below the 
+  \code{--PFG_PARAMS_DISPERSAL--} flag (must be \emph{PFG Albert} too).
 }
 }
 \examples{
@@ -268,8 +323,8 @@ PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_PNE"
 
 ## Create a Global_parameters file
 PRE_FATE.params_globalParameters(name.simulation = "FATE_PNE"
-                                 , required.no_PFG = PNE_PARAM$global["NB_FG"]
-                                 , required.no_STRATA = PNE_PARAM$global["NB_STRATUM"]
+                                 , required.no_PFG = PNE_PARAM$global["NO_FG"]
+                                 , required.no_STRATA = PNE_PARAM$global["NO_STRATUM"]
                                  , required.simul_duration = PNE_PARAM$global["SIMULATION_DURATION"]
                                  , required.seeding_duration = PNE_PARAM$global["SEEDING_DURATION"]
                                  , required.seeding_timestep = PNE_PARAM$global["SEEDING_TIMESTEP"]
@@ -313,6 +368,7 @@ PRE_FATE.params_simulParameters(name.simulation = "FATE_PNE"
 \code{\link{PRE_FATE.params_PFGsoil}},
 \code{\link{PRE_FATE.params_PFGdispersal}},
 \code{\link{PRE_FATE.params_PFGdisturbance}},
+\code{\link{PRE_FATE.params_PFGdrought}},
 \code{\link{PRE_FATE.params_saveYears}},
 \code{\link{PRE_FATE.params_changingYears}},
 \code{\link{.setPattern}}

@@ -5,21 +5,26 @@
 \title{Create relative abundance maps for each Plant Functional Group for 
 one (or several) specific year of a \code{FATE-HD} simulation}
 \usage{
-POST_FATE.relativeAbund(name.simulation, file.simulParam = NULL, year,
-  opt.no_CPU = 1)
+POST_FATE.relativeAbund(
+  name.simulation,
+  file.simulParam = NULL,
+  years,
+  opt.no_CPU = 1
+)
 }
 \arguments{
-\item{name.simulation}{a \code{string} that corresponds to the main 
-directory or simulation name of the \code{FATE-HD} simulation}
+\item{name.simulation}{a \code{string} corresponding to the main directory 
+or simulation name of the \code{FATE-HD} simulation}
 
-\item{file.simulParam}{a \code{string} that corresponds to the name of a 
-parameter file that will be contained into the \code{PARAM_SIMUL} folder 
-of the \code{FATE-HD} simulation}
+\item{file.simulParam}{default \code{NULL}. A \code{string} corresponding to 
+the name of a parameter file that will be contained into the 
+\code{PARAM_SIMUL} folder of the \code{FATE-HD} simulation}
 
-\item{year}{an \code{integer} corresponding to the simulation year(s) that 
-will be used to extract PFG abundance maps}
+\item{years}{an \code{integer}, or a \code{vector} of \code{integer}, 
+corresponding to the simulation year(s) that will be used to extract PFG 
+abundance maps}
 
-\item{opt.no_CPU}{default \code{1} (\emph{optional}). The number of 
+\item{opt.no_CPU}{(\emph{optional}) default \code{1}. \cr The number of 
 resources that can be used to parallelize the \code{unzip/zip} of raster 
 files}
 }
@@ -36,27 +41,28 @@ simulated relative abundances for one (or several) specific \code{FATE-HD}
 simulation year.
 }
 \details{
-This function allows one to obtain, for a specific \code{FATE-HD} 
-simulation and a specific parameter file within this simulation, raster 
-maps of PFG relative abundance. \cr
+This function allows to obtain, for a specific \code{FATE-HD} simulation and 
+a specific parameter file within this simulation, \strong{raster maps of PFG 
+relative abundance}. \cr \cr
 
 For each PFG and each selected simulation year, raster maps are retrieved 
-from the results folder \code{ABUND_perPFG_perStrata} and unzipped. 
+from the results folder \code{ABUND_perPFG_allStrata} and unzipped. 
 Informations extracted lead to the production of the same number of raster 
 before the maps are compressed again :
 
 \itemize{
   \item{for each selected simulation year(s), \strong{relative abundances} 
-  within each stratum are calculated :
-  \deqn{\frac{abund_{\text{PFG}_i, \text{Stratum}_j}}{abund_{allPFG, 
-  allStrata}}} \cr \cr
+  for all strata combined are calculated :
+  \deqn{\frac{abund_{\text{ PFG}_i\text{, }\text{Stratum}_{all}}}
+  {abund_{\text{ PFG}_{all}\text{, }\text{Stratum}_{all}}}} \cr \cr
   }
 }
 
 \strong{These \code{raster} files can then be used by other functions} :
 
 \itemize{
-  \item to produce presence/absence maps and graphics (see 
+  \item to produce \emph{presence/absence maps} and \emph{validation 
+  statistics}, and associated graphics \cr (see 
   \code{\link{POST_FATE.graphic_validationStatistics}})
 }
 }
