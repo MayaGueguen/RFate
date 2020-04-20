@@ -5,8 +5,6 @@
 ##'
 ##' @author Maya Guéguen
 ##' 
-# @date 15/03/2018
-##' 
 ##' @description This script is designed to transform Braun-Blanquet abundance 
 ##' information into relative abundances or average recovery values
 ##' (between 0 and 100).
@@ -32,16 +30,19 @@
 ##' 
 ##' 
 ##' \emph{\cr \cr
-##' Braun-Blanquet J., Roussine N. & Nègre R., 1952. Les groupements végétaux de la France méditerranéenne.
-##' Dir. Carte Group. Vég. Afr. Nord , CNRS, 292 p.}
+##' Braun-Blanquet J., Roussine N. & Nègre R., 1952. Les groupements végétaux de 
+##' la France méditerranéenne. Dir. Carte Group. Vég. Afr. Nord , CNRS, 292 p.}
 ##' 
-##' \emph{Baudière A. & Serve L., 1975. Les groupements végétaux du Plade Gorra-Blanc (massif du Puigmal, Pyrénées Orientales).
-##' Essai d'interprétation phytosociologique et phytogéographique. Nat. Monsp., sér. Bot., 25, 5-21.}
+##' \emph{Baudière A. & Serve L., 1975. Les groupements végétaux du Plade 
+##' Gorra-Blanc (massif du Puigmal, Pyrénées Orientales). Essai d'interprétation 
+##' phytosociologique et phytogéographique. Nat. Monsp., sér. Bot., 25, 5-21.}
 ##' 
-##' \emph{Foucault B. (de), 1980. Les prairies du bocage virois (Basse-Normandie, France). Typologie phytosociologique et 
-##' essai de reconstitution des séries évolutives herbagères. Doc. Phytosoc., N.S., 5, 1-109.}
+##' \emph{Foucault B. (de), 1980. Les prairies du bocage virois (Basse-Normandie, 
+##' France). Typologie phytosociologique et essai de reconstitution des séries 
+##' évolutives herbagères. Doc. Phytosoc., N.S., 5, 1-109.}
 ##' 
-##' @return A \code{vector} with numerical values between 0 and 100 corresponding to the median of each recovery class.
+##' @return A \code{vector} with numerical values between \code{0} and 
+##' \code{100} corresponding to the median of each recovery class.
 ##' 
 ##' @keywords abundance, Braun-Blanquet
 ##' 
@@ -60,26 +61,22 @@
 ##' summary(abund)
 ##' 
 ##' @export
+##' 
+##' @importFrom stats na.exclude
 ##'
 ## END OF HEADER ###############################################################
 
 
 PRE_FATE.abundBraunBlanquet = function(abund){
-  if (.testParam_notInClass(abund, inList = c("character", "factor", "numeric", "logical")))
+  ## CHECK parameter abund
+  if (.testParam_notDef(abund))
   {
-    stop("Wrong type of data!\n `abund` must be a vector with character values")
+    .stopMessage_notDef("abund")
   } else
   {
-    if (class(abund) == "factor")
-    {
-      abund = as.character(abund)
-    }
-    if (sum(abund %in% c(NA,"NA","","+","r",1:5)) < length(abund))
-    {
-      stop("Wrong type of data!\n `abund` must contain values such as NA, +, r, 1, 2, 3, 4 or 5")
-    }
+    abund = as.character(abund)
+    .testParam_notInValues.m("abund", abund, c(NA, "NA", "+", "r", 1:5))
   }
-
   
   ## Convert Braun-Blanquet abundance classes into median coverage percentage
   if (length(na.exclude(abund)) > 0) {

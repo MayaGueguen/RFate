@@ -1,20 +1,32 @@
 library(RFate)
 context("PRE_FATE.abundBraunBlanquet() function")
 
+## INPUTS
+test_that("PRE_FATE.abundBraunBlanquet gives error with missing data", {
+  expect_error(PRE_FATE.abundBraunBlanquet()
+               , "No data given!\n (missing `abund` information)", fixed = TRUE)
+  expect_error(PRE_FATE.abundBraunBlanquet(NA)
+               , "No data given!\n (missing `abund` information)", fixed = TRUE)
+  expect_error(PRE_FATE.abundBraunBlanquet(NULL)
+               , "No data given!\n (missing `abund` information)", fixed = TRUE)
+})
 
 ## INPUT
-test_that("PRE_FATE.abundBraunBlanquet gives error with wrong type of data", {
-  expect_error(PRE_FATE.abundBraunBlanquet(list(1,NA)), "Wrong type of data!")
-  expect_error(PRE_FATE.abundBraunBlanquet(matrix(c(1,NA,2,2), ncol=2)), "Wrong type of data!")
-  expect_error(PRE_FATE.abundBraunBlanquet(data.frame("1")), "Wrong type of data!")
-  
-  expect_error(PRE_FATE.abundBraunBlanquet(TRUE), "Wrong type of data!")
-  expect_error(PRE_FATE.abundBraunBlanquet(-1), "Wrong type of data!")
-  expect_error(PRE_FATE.abundBraunBlanquet(6), "Wrong type of data!")
-  expect_error(PRE_FATE.abundBraunBlanquet(19856394), "Wrong type of data!")
-  expect_error(PRE_FATE.abundBraunBlanquet(c(12, -789)), "Wrong type of data!")
-  expect_error(PRE_FATE.abundBraunBlanquet("a"), "Wrong type of data!")
-  expect_error(PRE_FATE.abundBraunBlanquet("abc"), "Wrong type of data!")
+test_that("PRE_FATE.abundBraunBlanquet gives error with wrong data : abund", {
+
+  ## TEST abund : correct values
+  expect_error(PRE_FATE.abundBraunBlanquet(TRUE)
+               , "`abund` must be either `NA`, `NA`, `+`, `r`, `1`, `2`, `3`, `4` or `5`"
+               , fixed = TRUE)
+  expect_error(PRE_FATE.abundBraunBlanquet(-1)
+               , "`abund` must be either `NA`, `NA`, `+`, `r`, `1`, `2`, `3`, `4` or `5`"
+               , fixed = TRUE)
+  expect_error(PRE_FATE.abundBraunBlanquet("a")
+               , "`abund` must be either `NA`, `NA`, `+`, `r`, `1`, `2`, `3`, `4` or `5`"
+               , fixed = TRUE)
+  expect_error(PRE_FATE.abundBraunBlanquet(c("1", "6"))
+               , "`abund` must be either `NA`, `NA`, `+`, `r`, `1`, `2`, `3`, `4` or `5`"
+               , fixed = TRUE)
 })
 
 
@@ -48,13 +60,11 @@ test_that("PRE_FATE.abundBraunBlanquet of BB values give right results", {
 
 ## OUTPUTS
 test_that("PRE_FATE.abundBraunBlanquet of missing give NA", {
-  expect_equal(PRE_FATE.abundBraunBlanquet(NA), as.numeric(NA))
   expect_equal(PRE_FATE.abundBraunBlanquet("NA"), as.numeric(NA))
 })
 
 ## OUTPUTS
 test_that("PRE_FATE.abundBraunBlanquet does not modify length", {
-  expect_equal(length(PRE_FATE.abundBraunBlanquet(NA)), 1)
   expect_equal(length(PRE_FATE.abundBraunBlanquet("NA")), 1)
   expect_equal(length(PRE_FATE.abundBraunBlanquet("1")), 1)
   expect_equal(length(PRE_FATE.abundBraunBlanquet(c("1", NA))), 2)
@@ -64,7 +74,6 @@ test_that("PRE_FATE.abundBraunBlanquet does not modify length", {
 
 ## OUTPUTS
 test_that("PRE_FATE.abundBraunBlanquet gives numeric output", {
-  expect_output(str(PRE_FATE.abundBraunBlanquet(NA)), "num")
   expect_output(str(PRE_FATE.abundBraunBlanquet(1)), "num")
   expect_output(str(PRE_FATE.abundBraunBlanquet("1")), "num")
   expect_output(str(PRE_FATE.abundBraunBlanquet(c(1, NA))), "num")

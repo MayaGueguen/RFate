@@ -5,128 +5,173 @@ context("PRE_FATE.speciesClustering_step3() function")
 ## INPUTS
 test_that("PRE_FATE.speciesClustering_step3 gives error with missing data", {
   expect_error(PRE_FATE.speciesClustering_step3()
-               , "Wrong type of data!\n `mat.species.traits` must be a data.frame")
+               , "`mat.traits` must be a data.frame")
   expect_error(PRE_FATE.speciesClustering_step3(NA)
-               , "Wrong type of data!\n `mat.species.traits` must be a data.frame")
+               , "`mat.traits` must be a data.frame")
   expect_error(PRE_FATE.speciesClustering_step3(NULL)
-               , "Wrong type of data!\n `mat.species.traits` must be a data.frame")
+               , "`mat.traits` must be a data.frame")
 })
 
 ## INPUTS
-test_that("PRE_FATE.speciesClustering_step3 gives error with wrong data : mat.species.traits", {
-  expect_error(PRE_FATE.speciesClustering_step3(mat.species.traits = 1)
-               , "Wrong type of data!\n `mat.species.traits` must be a data.frame")
-  expect_error(PRE_FATE.speciesClustering_step3(mat.species.traits = factor(1))
-               , "Wrong type of data!\n `mat.species.traits` must be a data.frame")
-  expect_error(PRE_FATE.speciesClustering_step3(mat.species.traits = matrix(1))
-               , "Wrong type of data!\n `mat.species.traits` must be a data.frame")
+test_that("PRE_FATE.speciesClustering_step3 gives error with wrong data : mat.traits", {
   
-  expect_error(PRE_FATE.speciesClustering_step3(mat.species.traits = data.frame())
-               , "Wrong dimension(s) of data!\n `mat.species.traits` does not have the appropriate number of rows (>0) or columns (species, PFG, (type), (height), (maturity), (longevity), (dispersal), (light), (soil_contrib), (soil_tol_min), (soil_tol_max), (palatability))"
-               , fixed = TRUE)
-  expect_error(PRE_FATE.speciesClustering_step3(mat.species.traits = data.frame(1))
-               , "Wrong dimension(s) of data!\n `mat.species.traits` does not have the appropriate number of rows (>0) or columns (species, PFG, (type), (height), (maturity), (longevity), (dispersal), (light), (soil_contrib), (soil_tol_min), (soil_tol_max), (palatability))"
-               , fixed = TRUE)
-  expect_error(PRE_FATE.speciesClustering_step3(mat.species.traits = data.frame(1,2))
-               , "Wrong dimension(s) of data!\n `mat.species.traits` does not have the appropriate number of rows (>0) or columns (species, PFG, (type), (height), (maturity), (longevity), (dispersal), (light), (soil_contrib), (soil_tol_min), (soil_tol_max), (palatability))"
-               , fixed = TRUE)
-  expect_error(PRE_FATE.speciesClustering_step3(mat.species.traits = data.frame(1,2,3))
-               , "Wrong type of data!\n Column names of `mat.species.traits` must be `species` and `PFG`")
+  ## TEST mat.traits : data.frame
+  expect_error(PRE_FATE.speciesClustering_step3(mat.traits = 1)
+               , "`mat.traits` must be a data.frame")
+  expect_error(PRE_FATE.speciesClustering_step3(mat.traits = factor(1))
+               , "`mat.traits` must be a data.frame")
+  expect_error(PRE_FATE.speciesClustering_step3(mat.traits = matrix(1))
+               , "`mat.traits` must be a data.frame")
   
-  expect_error(PRE_FATE.speciesClustering_step3(mat.species.traits = data.frame(species = 1, PFG = NA, trait = 3))
-               , "Wrong type of data!\n Columns `PFG` of `mat.species.traits` must not contain NA values")
-  expect_error(PRE_FATE.speciesClustering_step3(mat.species.traits = data.frame(species = 1, PFG = c(2, NA), trait = 3))
-               , "Wrong type of data!\n Columns `PFG` of `mat.species.traits` must not contain NA values")
-  
-  expect_error(PRE_FATE.speciesClustering_step3(mat.species.traits = data.frame(species = 1, PFG = "A", type = NA))
-               , "Wrong type of data!\n Columns `type` of `mat.species.traits` must not contain NA values")
-  expect_error(PRE_FATE.speciesClustering_step3(mat.species.traits = data.frame(species = 1, PFG = "A", type = 3))
-               , "Wrong type of data!\n `mat.species.traits$type` must be either `H`, `C` or `P`"
+  ## TEST mat.traits : correct number of rows and columns
+  expect_error(PRE_FATE.speciesClustering_step3(mat.traits = data.frame())
+               , "`mat.traits` does not have the appropriate number of rows (>=2, at least 2 species) or columns (>=3, at least 1 trait)"
                , fixed = TRUE)
-  expect_error(PRE_FATE.speciesClustering_step3(mat.species.traits = data.frame(species = 1, PFG = "A", type = "Herb"))
-               , "Wrong type of data!\n `mat.species.traits$type` must be either `H`, `C` or `P`"
+  expect_error(PRE_FATE.speciesClustering_step3(mat.traits = data.frame(1))
+               , "`mat.traits` does not have the appropriate number of rows (>=2, at least 2 species) or columns (>=3, at least 1 trait)"
+               , fixed = TRUE)
+  expect_error(PRE_FATE.speciesClustering_step3(mat.traits = data.frame(1,2,3))
+               , "`mat.traits` does not have the appropriate number of rows (>=2, at least 2 species) or columns (>=3, at least 1 trait)"
                , fixed = TRUE)
   
-  expect_error(PRE_FATE.speciesClustering_step3(mat.species.traits = data.frame(species = 1, PFG = "A", height = NA))
-               , "Wrong type of data!\n Columns `height` of `mat.species.traits` must contain numeric values")
-  expect_error(PRE_FATE.speciesClustering_step3(mat.species.traits = data.frame(species = 1, PFG = "A", height = factor(1)))
-               , "Wrong type of data!\n Columns `height` of `mat.species.traits` must contain numeric values")
-  expect_error(PRE_FATE.speciesClustering_step3(mat.species.traits = data.frame(species = 1, PFG = "A", height = "1"))
-               , "Wrong type of data!\n Columns `height` of `mat.species.traits` must contain numeric values")
+  ## TEST mat.traits : correct names of columns
+  expect_error(PRE_FATE.speciesClustering_step3(mat.traits = data.frame(c(1,1),2,3))
+               , "Column names of `mat.traits` must be `species`, `PFG`, `(trait1)`, `(trait2)` and `...`"
+               , fixed = TRUE)
+  expect_error(PRE_FATE.speciesClustering_step3(mat.traits = data.frame(species = c(1,1),2,3))
+               , "Column names of `mat.traits` must be `species`, `PFG`, `(trait1)`, `(trait2)` and `...`"
+               , fixed = TRUE)
   
-  expect_error(PRE_FATE.speciesClustering_step3(mat.species.traits = data.frame(species = 1, PFG = "A", maturity = NA))
-               , "Wrong type of data!\n Columns `maturity` of `mat.species.traits` must contain numeric values")
-  expect_error(PRE_FATE.speciesClustering_step3(mat.species.traits = data.frame(species = 1, PFG = "A", maturity = factor(1)))
-               , "Wrong type of data!\n Columns `maturity` of `mat.species.traits` must contain numeric values")
-  expect_error(PRE_FATE.speciesClustering_step3(mat.species.traits = data.frame(species = 1, PFG = "A", maturity = "1"))
-               , "Wrong type of data!\n Columns `maturity` of `mat.species.traits` must contain numeric values")
+  ## TEST mat.traits$species : different values
+  expect_error(PRE_FATE.speciesClustering_step3(mat.traits = data.frame(species = c(1,1), PFG = 2, 3))
+               , "`mat.traits$species` must contain different values"
+               , fixed = TRUE)
+  expect_error(PRE_FATE.speciesClustering_step3(mat.traits = data.frame(species = c(1,NA), PFG = 2, 3))
+               , "`mat.traits$species` must contain different values"
+               , fixed = TRUE)
   
-  expect_error(PRE_FATE.speciesClustering_step3(mat.species.traits = data.frame(species = 1, PFG = "A", longevity = NA))
-               , "Wrong type of data!\n Columns `longevity` of `mat.species.traits` must contain numeric values")
-  expect_error(PRE_FATE.speciesClustering_step3(mat.species.traits = data.frame(species = 1, PFG = "A", longevity = factor(1)))
-               , "Wrong type of data!\n Columns `longevity` of `mat.species.traits` must contain numeric values")
-  expect_error(PRE_FATE.speciesClustering_step3(mat.species.traits = data.frame(species = 1, PFG = "A", longevity = "1"))
-               , "Wrong type of data!\n Columns `longevity` of `mat.species.traits` must contain numeric values")
+  ## TEST mat.traits$species : length > 0
+  expect_error(PRE_FATE.speciesClustering_step3(mat.traits = data.frame(species = c(1,""), PFG = 2, 3))
+               , "`mat.traits$species` must contain a character value of length > 0"
+               , fixed = TRUE)
   
-  expect_error(PRE_FATE.speciesClustering_step3(mat.species.traits = data.frame(species = 1, PFG = "A", soil_contrib = NA))
-               , "Wrong type of data!\n Columns `soil_contrib` of `mat.species.traits` must contain numeric values")
-  expect_error(PRE_FATE.speciesClustering_step3(mat.species.traits = data.frame(species = 1, PFG = "A", soil_contrib = factor(1)))
-               , "Wrong type of data!\n Columns `soil_contrib` of `mat.species.traits` must contain numeric values")
-  expect_error(PRE_FATE.speciesClustering_step3(mat.species.traits = data.frame(species = 1, PFG = "A", soil_contrib = "1"))
-               , "Wrong type of data!\n Columns `soil_contrib` of `mat.species.traits` must contain numeric values")
   
-  expect_error(PRE_FATE.speciesClustering_step3(mat.species.traits = data.frame(species = 1, PFG = "A", soil_contrib = 1))
-               , "Missing data!\n Column names of `mat.species.traits` must contain `soil_contrib` and `soil_tolerance`")
-  expect_error(PRE_FATE.speciesClustering_step3(mat.species.traits = data.frame(species = 1, PFG = "A"
-                                                                                , soil_tolerance = "NA"))
-               , "Missing data!\n Column names of `mat.species.traits` must contain `soil_contrib` and `soil_tolerance`")
+  ## TEST mat.traits$PFG : no NA values
+  expect_error(PRE_FATE.speciesClustering_step3(mat.traits = data.frame(species = c(1, 2)
+                                                                        , PFG = c(2, NA)
+                                                                        , trait = 3))
+               , "`mat.traits$PFG` must not contain NA values", fixed = TRUE)
   
-  expect_error(PRE_FATE.speciesClustering_step3(mat.species.traits = data.frame(species = 1, PFG = "A"
-                                                                                , soil_contrib = 1, soil_tolerance = "NA"))
-               , "Wrong type of data!\n Column `soil_tolerance` of `mat.species.traits` must contain values between 1 and 2")
-  expect_error(PRE_FATE.speciesClustering_step3(mat.species.traits = data.frame(species = 1, PFG = "A"
-                                                                                , soil_contrib = 1, soil_tolerance = 3))
-               , "Wrong type of data!\n Column `soil_tolerance` of `mat.species.traits` must contain values between 1 and 2")
-  
+  ## TEST mat.traits$PFG : length > 0
+  expect_error(PRE_FATE.speciesClustering_step3(mat.traits = data.frame(species = c(1, 2)
+                                                                        , PFG = c(2, "")
+                                                                        , trait = 3))
+               , "`mat.traits$PFG` must contain a character value of length > 0"
+               , fixed = TRUE)
 })
+
 
 ## OUTPUTS
 test_that("PRE_FATE.speciesClustering_step3 gives correct output", {
-  expect_output(str(PRE_FATE.speciesClustering_step3(mat.species.traits = data.frame(species = 1
-                                                                                     , PFG = "A"
-                                                                                     , type = "H"
-                                                                                     , height = 10
-                                                                                     , maturity = 5
-                                                                                     , longevity = 2
-                                                                                     , soil_contrib = 0.5, soil_tolerance = 1))), "data.frame")
-  expect_output(str(PRE_FATE.speciesClustering_step3(mat.species.traits = data.frame(species = 1
-                                                                                     , PFG = "A"
-                                                                                     , type = "H"
-                                                                                     , height = 10
-                                                                                     , maturity = c(5, NA, 10)
-                                                                                     , longevity = c(10, 14, NA)
-                                                                                     , soil_contrib = 0.5, soil_tolerance = 1))), "data.frame")
-  expect_output(str(PRE_FATE.speciesClustering_step3(mat.species.traits = data.frame(species = 1
-                                                                                     , PFG = "A"
-                                                                                     , type = "H"
-                                                                                     , dispersal = 2
-                                                                                     , light = 8
-                                                                                     , palatability = 1))), "data.frame")
-  expect_output(str(PRE_FATE.speciesClustering_step3(mat.species.traits = data.frame(species = 1
-                                                                                     , PFG = "A"
-                                                                                     , type = "H"
-                                                                                     , height = 10
-                                                                                     , light = 8))), "data.frame")
+  
+  ## TEST classic input
+  mat.traits = data.frame(species = c(1,2)
+                          , PFG = "A"
+                          , height = 10)
+  tmp1 = PRE_FATE.speciesClustering_step3(mat.traits = mat.traits)
+  expect_output(str(tmp1), "List")
+  expect_equal(length(tmp1), 2)
+  expect_output(str(tmp1$tab), "3 variables")
+  expect_equal(length(tmp1$plot), 1)
   
   
-  expect_output(str(PRE_FATE.speciesClustering_step3(mat.species.traits = data.frame(species = 1
-                                                                                     , PFG = c("A", "A", "B", "C")
-                                                                                     , type = "H"
-                                                                                     , height = 10
-                                                                                     , maturity = c(NA, NA, 10, NA)
-                                                                                     , longevity = c(10, 14, NA, NA)
-                                                                                     , soil_contrib = 0.5, soil_tolerance = 1))), "data.frame")
+  ## TEST maturity & longevity
+  mat.traits = data.frame(species = c(1, 2, 3)
+                          , PFG = "A"
+                          , maturity = c(5, NA, 10)
+                          , longevity = c(10, 14, NA))
+  tmp2 = PRE_FATE.speciesClustering_step3(mat.traits = mat.traits)
+  expect_output(str(tmp2), "List")
+  expect_output(str(tmp2$tab), "4 variables")
+  expect_equal(length(tmp2$plot), 1)
+  expect_equal(tmp2$tab$maturity, 8)
+  expect_equal(tmp2$tab$longevity, 12)
+  
+  mat.traits = data.frame(species = c(1, 2, 3)
+                          , PFG = c("A", "B", "B")
+                          , maturity = c(5, NA, NA)
+                          , longevity = c(10, 14, NA))
+  tmp3 = PRE_FATE.speciesClustering_step3(mat.traits = mat.traits)
+  expect_output(str(tmp3), "List")
+  expect_output(str(tmp3$tab), "4 variables")
+  expect_equal(length(tmp3$plot), 1)
+  expect_equal(tmp3$tab$maturity[2], 7)
+  expect_equal(tmp3$tab$longevity[2], 14)
+  
+  mat.traits = data.frame(species = c(1, 2, 3)
+                          , PFG = c("A", "B", "B")
+                          , maturity = c(5, NA, 10)
+                          , longevity = c(10, NA, NA))
+  tmp3 = PRE_FATE.speciesClustering_step3(mat.traits = mat.traits)
+  expect_output(str(tmp3), "List")
+  expect_output(str(tmp3$tab), "4 variables")
+  expect_equal(length(tmp3$plot), 1)
+  expect_equal(tmp3$tab$maturity[2], 10)
+  expect_equal(tmp3$tab$longevity[2], 20)
+  
+  
+  ## TEST height & light
+  mat.traits = data.frame(species = c(1, 2, 3)
+                          , PFG = "A"
+                          , height = c(5, NA, 10)
+                          , light = c(10, 14, NA))
+  tmp4 = PRE_FATE.speciesClustering_step3(mat.traits = mat.traits)
+  expect_output(str(tmp4), "List")
+  expect_output(str(tmp4$tab), "4 variables")
+  expect_equal(length(tmp4$plot), 1)
+  
+  
+  ## TEST soil_contrib & tolerance
+  mat.traits = data.frame(species = c(1, 2, 3)
+                          , PFG = "A"
+                          , soil_contrib = c(1, 2.5, 2)
+                          , soil_tolerance = c(1, 1, 2))
+  tmp5 = PRE_FATE.speciesClustering_step3(mat.traits = mat.traits)
+  expect_output(str(tmp5), "List")
+  expect_output(str(tmp5$tab), "5 variables")
+  expect_equal(length(tmp5$plot), 1)
+  expect_equal(tmp5$tab$soil_contrib, 1.83)
+  expect_equal(tmp5$tab$soil_tol_min, 0.5)
+  expect_equal(tmp5$tab$soil_tol_max, 3.17)
+  
+  mat.traits = data.frame(species = c(1, 2, 3)
+                          , PFG = "A"
+                          , soil_contrib = c(1, 2.5, 2)
+                          , soil_tol_min = c(1, 2.5, 2) - c(1, 1, 2)
+                          , soil_tol_max = c(1, 2.5, 2) + c(1, 1, 2))
+  tmp5 = PRE_FATE.speciesClustering_step3(mat.traits = mat.traits)
+  expect_output(str(tmp5), "List")
+  expect_output(str(tmp5$tab), "5 variables")
+  expect_equal(length(tmp5$plot), 1)
+  expect_equal(tmp5$tab$soil_contrib, 1.83)
+  expect_equal(tmp5$tab$soil_tol_min, 0.5)
+  expect_equal(tmp5$tab$soil_tol_max, 3.17)
+  
+  
+  ## TEST other traits
+  mat.traits = data.frame(species = 1:30
+                          , PFG = c(rep("A", 10), rep("B", 5), rep("C", 15))
+                          , light = sample(1:5, 30, replace = TRUE)
+                          , LDMC = rnorm(30)
+                          , type = sample(c("H", "C", "P")
+                                          , size = 30
+                                          , replace = TRUE
+                                          , prob = c(0.5, 0.3, 0.2))
+                          , stringsAsFactors = FALSE)
+  mat.traits$light = ordered(factor(mat.traits$light, 1:5))
+  tmp6 = PRE_FATE.speciesClustering_step3(mat.traits = mat.traits)
+  expect_output(str(tmp6), "List")
+  expect_output(str(tmp6$tab), "5 variables")
+  expect_equal(length(tmp6$plot), 3)
   
 })
-
-

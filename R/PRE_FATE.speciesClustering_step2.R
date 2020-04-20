@@ -5,29 +5,27 @@
 ##'
 ##' @author Maya Guéguen
 ##' 
-# @date 21/03/2018
-##' 
 ##' @description This script is designed to obtain functional groups by : 1) 
 ##' selecting the number of clusters to be kept from an object obtained with 
 ##' the \code{\link{PRE_FATE.speciesClustering_step1}} function ; 2) refining 
 ##' these groups by identifying determinant species in each of them.
 ##'              
-##' @param clust.dendrograms a dendrogram or a \code{list} of dendrograms with one
-##' for each \code{GROUP} value, as can be obtained with the 
-##' \code{\link{PRE_FATE.speciesClustering_step1}} function.
-##' @param no.clusters a \code{vector} with the number of clusters to be kept
-##' in each subset of data (if the data is split).
-##' @param mat.species.DIST a \code{dist} object corresponding to the distance
-##' between each pair of species, or a \code{list} of \code{dist} objects,
-##' one for each \code{GROUP} value. Such an object can be obtained with the
-##' \code{PRE_FATE.speciesDistance} function.
+##' @param clust.dendrograms a dendrogram, or a \code{list} of dendrograms (one 
+##' for each \code{GROUP} value). \cr Such an object can be obtained 
+##' with the \code{\link{PRE_FATE.speciesClustering_step1}} function.
+##' @param no.clusters an \code{integer}, or a \code{vector} of \code{integer} 
+##' (one for each \code{GROUP} value), with the number of clusters to be kept
+##' @param mat.species.DIST a \code{dist} object, or a \code{list} of 
+##' \code{dist} objects (one for each \code{GROUP} value), corresponding to the 
+##' distance between each pair of species. \cr Such an object can be obtained 
+##' with the \code{\link{PRE_FATE.speciesDistance}} function.
 ##' 
 ##' 
 ##' @details 
 ##' 
-##' This function allows one to obtain a classification of \emph{dominant} 
-##' species into Plant Functional Groups (PFG), and the \emph{determinant} 
-##' species based on these PFGs.
+##' This function allows to obtain a classification of \strong{dominant} 
+##' species into Plant Functional Groups (PFG), and the \strong{determinant} 
+##' species based on these PFG. \cr \cr
 ##' 
 ##' \strong{What is the difference between \code{dominant} and
 ##' \code{determinant} species ?}
@@ -36,12 +34,12 @@
 ##'   \item{\strong{Dominant} species are species representative of an 
 ##'   environment or a studied area, in terms of number of releves or 
 ##'   abundance values. They can be found with the 
-##'   \code{\link{PRE_FATE.selectDominant}} function of this package. 
-##'   These dominant species are used to build PFG with the 
+##'   \code{\link{PRE_FATE.selectDominant}} function of this package. These 
+##'   dominant species are used to build PFG with the 
 ##'   \code{\link{PRE_FATE.speciesClustering_step1}} function.
 ##'   }
 ##'   \item{Once PFG are built, \strong{determinant} species are defined as 
-##'   refined subsets of dominant species within each PFG. The process is 
+##'   refined subsets of dominant species within each PFG. \cr The process is 
 ##'   detailed below :
 ##'   \itemize{
 ##'     \item each dominant species is assigned to a PFG
@@ -60,43 +58,45 @@
 ##'   }
 ##' }
 ##' 
-##' @return A \code{list} object with 2 elements :
+##' @return A \code{list} containing one \code{vector} and one 
+##' \code{data.frame} with the following columns :
 ##' 
 ##' \describe{
-##'   \item{determ.sp}{a \code{vector} with the names of all determinant 
-##'   species}
-##'   \item{determ.all}{a \code{data.frame} containing all species 
-##'   (determinant and non-determinant) with 10 columns :
-##'   \itemize{
-##'     \item \code{pfg} : the ID of the PFG (group + no.cluster)
-##'     \item \code{group} : name of data subset
-##'     \item \code{no.cluster} : cluster number
-##'     \item \code{sp} : name of species
-##'     \item \code{ID} : species number in each PFG
-##'     \item \code{sp.mean.dist} : species mean distance to other species of 
-##'     the same PFG
-##'     \item \code{allSp.mean} : \code{mean(sp.mean.dist)} within the PFG
-##'     \item \code{allSp.min} : \code{mean(sp.mean.dist) - 1.64 * 
-##'     sd(sp.mean.dist)} within the PFG
-##'     \item \code{allSp.max} : \code{mean(sp.mean.dist) + 1.64 * 
-##'     sd(sp.mean.dist)} within the PFG
-##'     \item \code{toSuppr} : 0 if determinant species, 1 otherwise
+##'   \item{determ.sp}{the names of all determinant species}
+##'   \item{determ.all}{(\emph{determinant and non-determinant species})
+##'   \describe{
+##'     \item{\code{PFG}}{ID of the plant functional group 
+##'     (\code{GROUP} + \code{ID.cluster})}
+##'     \item{\code{GROUP}}{name of data subset}
+##'     \item{\code{ID.cluster}}{cluster number}
+##'     \item{\code{species}}{name of species}
+##'     \item{\code{ID.species}}{species number in each PFG}
+##'     \item{\code{sp.mean.dist}}{species mean distance to other species of 
+##'     the same PFG}
+##'     \item{\code{allSp.mean}}{\eqn{mean(\text{sp.mean.dist})} within the PFG}
+##'     \item{\code{allSp.min}}{\eqn{mean(\text{sp.mean.dist}) - 1.64 * 
+##'     sd(\text{sp.mean.dist})} within the PFG}
+##'     \item{\code{allSp.max}}{\eqn{mean(\text{sp.mean.dist}) + 1.64 * 
+##'     sd(\text{sp.mean.dist})} within the PFG}
+##'     \item{\code{DETERMINANT}}{\code{TRUE} if determinant species, \code{FALSE} 
+##'     otherwise}
 ##'   }
 ##'   }
 ##' }
 ##' 
-##' Two \code{PRE_FATE_CLUSTERING_[...].pdf} files are created : 
+##' Two \file{PRE_FATE_CLUSTERING_[...].pdf} files are created : 
 ##' \describe{
 ##'   \item{\file{STEP_2C \cr distantSpecies}}{to visualize in each PFG the 
 ##'   distribution of mean distance of each species to other species, and 
 ##'   non-determinant species which are outside the distribution}
-##'   \item{\file{STEP_2C \cr PCO}}{to visualize in each PFG the distribution 
+##'   \item{\file{STEP_2C_PCO}}{to visualize in each PFG the distribution 
 ##'   of species, with and without non-determinant species}
 ##' }
 ##' 
 ##' @keywords hierarchical clustering, Principal Component Ordination
 ##' 
 ##' @seealso \code{\link[stats]{cutree}},
+##' \code{\link[ade4]{quasieuclid}},
 ##' \code{\link[ade4]{dudi.pco}},
 ##' \code{\link{PRE_FATE.speciesDistance}},
 ##' \code{\link{PRE_FATE.speciesClustering_step1}},
@@ -136,33 +136,35 @@
 ##' @export
 ##' 
 ##' @importFrom grDevices colorRampPalette pdf dev.off
-##' @importFrom graphics abline hist par plot text title
-##' @importFrom methods as
-##' @importFrom stats as.dist cutree model.matrix sd
+##' @importFrom stats as.dist cutree sd
 ##' 
-##' @importFrom ggplot2 ggplot aes aes_string ggsave
-##' geom_line geom_point geom_hline geom_vline geom_label geom_errorbar geom_path
-##' element_text element_blank element_rect
+##' @importFrom ade4 quasieuclid dudi.pco inertia.dudi
+##' 
+##' @importFrom ggplot2 ggplot ggsave aes_string 
+##' geom_point geom_hline geom_vline geom_errorbar geom_path
 ##' scale_color_discrete scale_color_manual scale_shape_manual scale_size_manual
-##' facet_grid labs theme
+##' facet_grid labs theme element_text element_blank
 ##' @importFrom ggthemes theme_fivethirtyeight
 ##' @importFrom ggrepel geom_label_repel
-##' @importFrom ade4 quasieuclid dudi.pco inertia.dudi
 ##' 
 ## END OF HEADER ###############################################################
 
 
 PRE_FATE.speciesClustering_step2 = function(clust.dendrograms
-                                            , no.clusters ## vector
+                                            , no.clusters
                                             , mat.species.DIST
 ){
   
-  if (.testParam_notInClass(clust.dendrograms, inList = c("list","hclust")))
+  #############################################################################
+  
+  ## CHECK parameter clust.dendrograms
+  if (.testParam_notInClass(clust.dendrograms, c("list","hclust")))
   {
     stop("No data given!\n (missing `clust.dendrograms` information which must be of class `hclust` or a list `hclust` objects)")
   } else
   {
-    if (class(clust.dendrograms) == "list" && length(which(sapply(clust.dendrograms, class) == "hclust")) < length(clust.dendrograms))
+    if (class(clust.dendrograms) == "list" &&
+        length(which(sapply(clust.dendrograms, class) == "hclust")) < length(clust.dendrograms))
     {
       stop("Wrong type of data!\n each element of `clust.dendrograms` must be of class `hclust`")
     }
@@ -173,10 +175,12 @@ PRE_FATE.speciesClustering_step2 = function(clust.dendrograms
     if(!is.null(names(clust.dendrograms)))
     {
       group_names = names(clust.dendrograms)
-    } else {
+    } else
+    {
       group_names = paste0("GROUP", 1:length(clust.dendrograms))
     }
   }
+  ## CHECK parameter no.clusters
   if (.testParam_notNum(no.clusters))
   {
     stop("No data given!\n (missing `no.clusters` information)")
@@ -187,12 +191,15 @@ PRE_FATE.speciesClustering_step2 = function(clust.dendrograms
       stop("Wrong type of data!\n `no.clusters` must have the same length than `clust.dendrograms`")
     }
   }
-  if (.testParam_notInClass(mat.species.DIST, inList = c("list", "dist")))
+  ## CHECK parameter mat.species.DIST
+  if (.testParam_notInClass(mat.species.DIST, c("list","dist")))
+    
   {
     stop("No data given!\n (missing `mat.species.DIST` information which must be a dist object, or a list of dist objects)")
   } else
   {
-    if (class(mat.species.DIST) == "list" && length(mat.species.DIST) != length(clust.dendrograms))
+    if (class(mat.species.DIST) == "list" &&
+        length(mat.species.DIST) != length(clust.dendrograms))
     {
       stop("Wrong type of data!\n `mat.species.DIST` must have the same length than `clust.dendrograms`")
     }
@@ -203,13 +210,15 @@ PRE_FATE.speciesClustering_step2 = function(clust.dendrograms
   }
   
   
-  ################################################################################################################################
+  #############################################################################
   ## DEFINITION OF CLUSTERED GROUPS
-  ################################################################################################################################
+  #############################################################################
   
   ### CUT dendrogramS (or trees) RESULTING FROM hclust INTO SEVERAL GROUPS (nb = k)
-  ### Number of groups for each group has been chosen according to the previous plot (CLUSTERING_STEP_1B)
-  clust.groups = lapply(1:length(group_names), function(x) cutree(clust.dendrograms[[x]], k = no.clusters[x]))
+  ## Number of groups for each group has been chosen 
+  ## according to the previous plot (CLUSTERING_STEP_1B)
+  clust.groups = lapply(1:length(group_names), function(x) 
+    cutree(clust.dendrograms[[x]], k = no.clusters[x]))
   clust.groups = lapply(1:length(group_names), function(x) {
     tmp.names = names(clust.groups[[x]])
     tmp = paste0(group_names[x], ".", clust.groups[[x]])
@@ -220,9 +229,9 @@ PRE_FATE.speciesClustering_step2 = function(clust.dendrograms
   
   PFG_names = sort(unique(clust.groups))
   
-  ################################################################################################################################
+  #############################################################################
   ## IDENTIFY DETERMINANT SPECIES
-  ################################################################################################################################
+  #############################################################################
   
   cat("\n ############## DETERMINANT SPECIES ############## \n")
   cat("\n Identification...")
@@ -231,7 +240,6 @@ PRE_FATE.speciesClustering_step2 = function(clust.dendrograms
   ## DETERMINANT SPECIES are the ones whose mean distance to other species
   ## is in the distribution of mean distances of every species to other species
   
-  pfg = NULL
   determ = foreach(pfg = PFG_names) %do%
     {
       ## get the SPECIES names
@@ -241,21 +249,31 @@ PRE_FATE.speciesClustering_step2 = function(clust.dendrograms
       {
         ## get the GROUP information
         group = strsplit(pfg, "[.]")[[1]][1]
-        no.cluster = strsplit(pfg, "[.]")[[1]][2]
+        ID.cluster = strsplit(pfg, "[.]")[[1]][2]
         ## get the DISTANCE information
         mat = as.matrix(mat.species.DIST[[group]])[sp, sp]
         
         ## compute for each species its mean distance to other species
         sp.mean.dist = apply(mat, 1, mean, na.rm = T)
         
-        return(data.frame(pfg, group, no.cluster, sp, ID = 1:length(sp), sp.mean.dist
+        return(data.frame(PFG = pfg
+                          , GROUP = group
+                          , ID.cluster
+                          , species = sp
+                          , ID = 1:length(sp)
+                          , sp.mean.dist
                           , allSp.mean = mean(sp.mean.dist)
                           , allSp.min = mean(sp.mean.dist) - 1.64 * sd(sp.mean.dist)
                           , allSp.max = mean(sp.mean.dist) + 1.64 * sd(sp.mean.dist)
                           , stringsAsFactors = FALSE))
       } else if (length(sp) == 1)
       {
-        return(data.frame(pfg, group, no.cluster, sp, ID = 1, sp.mean.dist = NA
+        return(data.frame(PFG = pfg
+                          , GROUP = group
+                          , ID.cluster
+                          , species = sp
+                          , ID = 1
+                          , sp.mean.dist = NA
                           , allSp.mean = NA
                           , allSp.min = NA
                           , allSp.max = NA
@@ -267,76 +285,82 @@ PRE_FATE.speciesClustering_step2 = function(clust.dendrograms
   {
     stop("No determinant species have been selected. Please check your data")
   }
-  determ$toSuppr = 0
-  determ$toSuppr[which(determ$sp.mean.dist > determ$allSp.max)] = 1
-  determ$toSuppr[which(determ$sp.mean.dist < determ$allSp.min)] = 1
-  determ$toSuppr = factor(determ$toSuppr, c(0,1))
+  determ$DETERMINANT = TRUE
+  determ$DETERMINANT[which(determ$sp.mean.dist > determ$allSp.max)] = FALSE
+  determ$DETERMINANT[which(determ$sp.mean.dist < determ$allSp.min)] = FALSE
+  determ$DETERMINANT = factor(determ$DETERMINANT, c(TRUE, FALSE))
   
   ## SAVE DETERM
   ## CAT INFO ABOUT HOW MANY SPECIES ARE REMOVED
   ## CAT INFO ABOUT HOW MANY SPECIES in each PFG
   
-  ################################################################################################################################
+  #############################################################################
   ## GRAPHICAL REPRESENTATIONS
-  ################################################################################################################################
+  #############################################################################
   
-  ## GRAPHICAL REPRESENTATION 1
+  ## GRAPHICAL REPRESENTATION 1 -----------------------------------------------
   colRamp = colorRampPalette(c('#8e0152','#c51b7d','#de77ae','#7fbc41','#4d9221','#276419'))
-  colLev = levels(interaction(determ$toSuppr, determ$group))
+  colLev = levels(interaction(determ$DETERMINANT, determ$GROUP))
   
   pp3 = ggplot(determ, aes_string(x = "pfg", y = "sp.mean.dist"
-                                  , color = interaction(determ$toSuppr, determ$group)
-                                  , shape = ("toSuppr"))) +
+                                  , color = interaction(determ$DETERMINANT, determ$GROUP)
+                                  , shape = "DETERMINANT")) +
     scale_color_manual(guide = F, values = colRamp(length(colLev))) +
     scale_shape_manual(guide = F, values = c("0" = 20, "1" = 8)) +
-    geom_errorbar(aes_string(ymin = "allSp.min", ymax = "allSp.max"), color = "darkblue") +
+    geom_errorbar(aes_string(ymin = "allSp.min", ymax = "allSp.max")
+                  , color = "darkblue") +
     geom_point(position = "jitter") +
-    geom_point(aes_string(y = "allSp.mean"), pch = 18, lwd = 5, color = "darkblue") +
-    facet_grid("~ group", scales = "free_x") +
-    labs(x = "", y = "Mean distance to other species", title = "STEP C : Removal of distant species",
-         subtitle = paste0("Only species whose mean distance to other species is included in the distribution\n",
-                           "of all PFG's species mean distances to other species are kept.\n",
-                           "Species indicated with * will be removed from PFGs.\n",
-                           "Non-represented PFG might be one-species-only.")) +
-    theme_fivethirtyeight() +
+    geom_point(aes_string(y = "allSp.mean")
+               , pch = 18
+               , lwd = 5
+               , color = "darkblue") +
+    facet_grid("~ GROUP", scales = "free_x") +
+    labs(x = "", y = "Mean distance to other species"
+         , title = "STEP C : Removal of distant species"
+         , subtitle = paste0("Only species whose mean distance to other species "
+                             , "is included in the distribution\n"
+                             , "of all PFG's species mean distances to other species are kept.\n"
+                             , "Species indicated with * will be removed from PFGs.\n"
+                             , "Non-represented PFG might be one-species-only.")) +
+    .getGraphics_theme() +
     theme(axis.ticks.x = element_blank()
-          , panel.background = element_rect(fill = "transparent", colour = NA)
-          , plot.background = element_rect(fill = "transparent", colour = NA)
-          , legend.background = element_rect(fill = "transparent", colour = NA)
-          , legend.box.background = element_rect(fill = "transparent", colour = NA)
-          , legend.key = element_rect(fill = "transparent", colour = NA)
           , axis.text.x = element_text(angle = 90))
   
   plot(pp3)
   
-  ggsave(filename = "PRE_FATE_CLUSTERING_STEP_2C_distantSpecies.pdf", plot = pp3, width = 10, height = 8)
   
-  ## GRAPHICAL REPRESENTATION 2
-  ## Compute Principal Coordinates Analysis (PCO) for the determinantes of each group
-  ## to see the position in "distance space" (overlap + traits) between species and groups
+  ## GRAPHICAL REPRESENTATION 2 -----------------------------------------------
+  ## Compute Principal Coordinates Analysis (PCO) for the determinantes of 
+  ## each group to see the position in "distance space" (overlap + traits) 
+  ## between species and groups
   
   colRamp = colorRampPalette(c('#8e0152','#c51b7d','#de77ae','#7fbc41','#4d9221','#276419'))
   
   pp4_list = foreach(group = group_names) %do%
     {
-      tmp = determ[which(determ$group == group),]
+      ## Transform results of clustering into distance matrix
+      tmp = determ[which(determ$GROUP == group),]
       mat = mat.species.DIST[[group]]
       mat = quasieuclid(as.dist(mat))
       
+      ## Transform distance matrix into PCO
       PCO = dudi.pco(mat, scannf = FALSE, nf = 3) ## PCO
       PCO.li = PCO$li
-      PCO.li$det = ifelse(rownames(PCO.li) %in% tmp$sp[which(tmp$toSuppr == 1)], 0, 1)
+      PCO.li$det = ifelse(rownames(PCO.li) %in% tmp$sp[which(tmp$DETERMINANT == FALSE)], 0, 1)
       PCO.li$det = factor(PCO.li$det, c(0, 1))
       PCO.li$PFG = clust.groups[rownames(PCO.li)]
       
+      ## GET inertia values
       inert = inertia.dudi(PCO)$tot.inertia
       inert = c(inert$`cum(%)`[1]
                 , inert$`cum(%)`[2] - inert$`cum(%)`[1]
                 , inert$`cum(%)`[3] - inert$`cum(%)`[2])
       
+      ## GET ellipses
       PCO.li.ELL = .getELLIPSE(xy = PCO.li[, c("A1", "A2")], fac = PCO.li$PFG)
       PCO.li.ELL.det = .getELLIPSE(xy = PCO.li[which(PCO.li$det == 1), c("A1", "A2")]
                                    , fac = PCO.li$PFG[which(PCO.li$det == 1)])
+      
       
       pp4 = ggplot(PCO.li, aes_string(x = "A1", y = "A2", color = "PFG")) +
         geom_hline(yintercept = 0, color = "grey30", lwd = 1) +
@@ -351,23 +375,28 @@ PRE_FATE.speciesClustering_step2 = function(clust.dendrograms
         scale_color_discrete(guide = F) +
         labs(x = paste0("\n1st axis = ", round(inert[1], 1), "% of inertia")
              , y = paste0("2nd axis = ", round(inert[2], 1), "% of inertia\n")
-             , title = paste0("STEP C : Removal of distant species : group ", group),
-             subtitle = paste0("Only species whose mean distance to other species is included in the distribution\n",
-                               "of all PFG's species mean distances to other species are kept.\n",
-                               "Species indicated with * will be removed from PFGs.\n",
-                               "Inertia ellipse are represented, with (dashed) and without (solid) non-determinant species.")) +
-        theme_fivethirtyeight() +
-        theme(panel.background = element_rect(fill = "transparent", colour = NA)
-              , plot.background = element_rect(fill = "transparent", colour = NA)
-              , legend.background = element_rect(fill = "transparent", colour = NA)
-              , legend.box.background = element_rect(fill = "transparent", colour = NA)
-              , legend.key = element_rect(fill = "transparent", colour = NA)
-              , axis.title = element_text(inherit.blank = FALSE))
+             , title = paste0("STEP C : Removal of distant species : group ", group)
+             , subtitle = paste0("Only species whose mean distance to other species "
+                                 , "is included in the distribution\n"
+                                 , "of all PFG's species mean distances to other species are kept.\n"
+                                 , "Species indicated with * will be removed from PFGs.\n"
+                                 , "Inertia ellipse are represented, with (dashed) and "
+                                 , "without (solid) non-determinant species.")) +
+        .getGraphics_theme() +
+        theme(axis.title = element_text(inherit.blank = FALSE))
       
       plot(pp4)
       return(pp4)
     }
   names(pp4_list) = group_names
+  
+  
+  #############################################################################
+  
+  cat("\n> Done!\n")
+  
+  ggsave(filename = "PRE_FATE_CLUSTERING_STEP_2C_distantSpecies.pdf"
+         , plot = pp3, width = 10, height = 8)
   
   pdf(file = "PRE_FATE_CLUSTERING_STEP_2C_PCO.pdf", width = 10, height = 8)
   for(group in group_names)
@@ -376,9 +405,7 @@ PRE_FATE.speciesClustering_step2 = function(clust.dendrograms
   }
   dev.off()
   
-  
-  ################################################################################################################################
-  
-  return(list(determ.sp = determ$sp[which(determ$toSuppr == 0)], determ.all = determ))
+  return(list(determ.sp = determ$sp[which(determ$DETERMINANT == TRUE)]
+              , determ.all = determ))
 }
 

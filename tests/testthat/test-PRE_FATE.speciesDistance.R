@@ -1,257 +1,360 @@
 library(RFate)
-library(raster)
 context("PRE_FATE.speciesDistance() function")
 
 ## INPUTS
 test_that("PRE_FATE.speciesDistance gives error with missing data", {
-  expect_error(PRE_FATE.speciesDistance(), "No data given!\n (missing", fixed = T)
-  expect_error(PRE_FATE.speciesDistance(NA), "No data given!\n (missing", fixed = T)
-  expect_error(PRE_FATE.speciesDistance(NULL), "No data given!\n (missing", fixed = T)
-  
-  expect_error(PRE_FATE.speciesDistance(mat.species.traits = NA), "No data given!\n (missing", fixed = T)
-  expect_error(PRE_FATE.speciesDistance(mat.species.traits = NA, mat.species.overlap = NA), "must be a data.frame", fixed = T)
-  expect_error(PRE_FATE.speciesDistance(mat.species.overlap = NA), "No data given!\n (missing", fixed = T)
-})
-
-
-## INPUTS
-test_that("PRE_FATE.speciesDistance gives error with wrong data : mat.species.traits", {  
-  expect_error(PRE_FATE.speciesDistance(mat.species.traits = list(1,NA)), "No data given!\n (missing", fixed = T)
-  expect_error(PRE_FATE.speciesDistance(mat.species.traits = matrix(0, ncol = 1)
-                                        , mat.species.overlap = matrix(seq(9), ncol = 3))
-               , "must be a data.frame")
-  expect_error(PRE_FATE.speciesDistance(mat.species.traits = data.frame(1)
-                                        , mat.species.overlap = matrix(seq(9), ncol = 3))
-               , "does not have the appropriate number of cols (>=3, at least 2 traits)", fixed = T)
-  expect_error(PRE_FATE.speciesDistance(mat.species.traits = data.frame(1, 2, 3)
-                                        , mat.species.overlap = matrix(seq(9), ncol = 3))
-               , "must contain a column whose name is `species`")
-  expect_error(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = 1)
-                                        , mat.species.overlap = matrix(seq(9), ncol = 3))
-               , "does not have the appropriate number of cols (>=3, at least 2 traits)", fixed = T)
-  expect_error(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = 1, 2, 3)
-                                        , mat.species.overlap = matrix(seq(9), ncol = 3))
-               , "does not have the appropriate number of rows (>=2)", fixed = T)
-  expect_error(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = rep(1,2), 2, 3)
-                                        , mat.species.overlap = matrix(seq(9), ncol = 3))
-               , "Column `species` of `mat.species.traits` must contain different values", fixed = T)
+  expect_error(PRE_FATE.speciesDistance()
+               , "`mat.traits` must be a data.frame", fixed = TRUE)
+  expect_error(PRE_FATE.speciesDistance(NA)
+               , "`mat.traits` must be a data.frame", fixed = TRUE)
+  expect_error(PRE_FATE.speciesDistance(NULL)
+               , "`mat.traits` must be a data.frame", fixed = TRUE)
 })
 
 ## INPUTS
-test_that("PRE_FATE.speciesDistance gives error with wrong data : mat.species.overlap", {  
-  expect_error(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("A", "B"), 2, 3)), "No data given!\n (missing", fixed = T)
-  expect_error(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("A", "B"), 2, 3)
-                                        , mat.species.overlap = 1)
-               , "must be either a data.frame or a dissimilarity object (`dist`, `niolap`, `matrix`)", fixed = T)
+test_that("PRE_FATE.speciesDistance gives error with wrong data : mat.traits", {
   
-  expect_error(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("A", "B"), 2, 3)
-                                        , mat.species.overlap = data.frame(1))
-               , "must contain a column whose name is `species`", fixed = T)
-  expect_error(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("A", "B"), 2, 3)
-                                        , mat.species.overlap = data.frame(species = 1))
-               , "must contain a column whose name is `raster`", fixed = T)
-  expect_error(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("A", "B"), 2, 3)
-                                        , mat.species.overlap = data.frame(species = 1, raster = 1))
-               , "must contain file names which exist", fixed = T)
+  ## TEST mat.traits : data.frame
+  expect_error(PRE_FATE.speciesDistance(mat.traits = NA)
+               , "`mat.traits` must be a data.frame", fixed = TRUE)
+  expect_error(PRE_FATE.speciesDistance(mat.traits = list(1,NA))
+               , "`mat.traits` must be a data.frame", fixed = TRUE)
   
+  ## TEST mat.traits : correct number of rows and columns
+  expect_error(PRE_FATE.speciesDistance(mat.traits = data.frame())
+               , "`mat.traits` does not have the appropriate number of rows (>=2, at least 2 species) or columns (>=3, at least 2 traits)"
+               , fixed = TRUE)
+  expect_error(PRE_FATE.speciesDistance(mat.traits = data.frame(1))
+               , "`mat.traits` does not have the appropriate number of rows (>=2, at least 2 species) or columns (>=3, at least 2 traits)"
+               , fixed = TRUE)
+  expect_error(PRE_FATE.speciesDistance(mat.traits = data.frame(1,2))
+               , "`mat.traits` does not have the appropriate number of rows (>=2, at least 2 species) or columns (>=3, at least 2 traits)"
+               , fixed = TRUE)
+  expect_error(PRE_FATE.speciesDistance(mat.traits = data.frame(1, 2, 3))
+               , "`mat.traits` does not have the appropriate number of rows (>=2, at least 2 species) or columns (>=3, at least 2 traits)"
+               , fixed = TRUE)
+  
+  ## TEST mat.traits : correct names of columns
+  expect_error(PRE_FATE.speciesDistance(mat.traits = data.frame(c(1,1), 2, 3))
+               , "Column names of `mat.traits` must be `species`, `(GROUP)`, `(trait1)`, `(trait2)` and `...`"
+               , fixed = TRUE)
+  
+  
+  ## TEST mat.traits$species : different values
+  expect_error(PRE_FATE.speciesDistance(mat.traits = data.frame(species = c(1,1), 2, 3))
+               , "`mat.traits$species` must contain different values", fixed = TRUE)
+})
+
+## INPUTS
+test_that("PRE_FATE.speciesDistance gives error with wrong data : mat.overlap", {
+  
+  ## TEST mat.overlap : correct object
+  expect_error(PRE_FATE.speciesDistance(mat.traits = data.frame(species = c("A", "B"), 2, 3))
+               , "`mat.overlap` must be either a data.frame or a dissimilarity object (`dist`, `niolap`, `matrix`)"
+               , fixed = TRUE)
+  expect_error(PRE_FATE.speciesDistance(mat.traits = data.frame(species = c("A", "B"), 2, 3)
+                                        , mat.overlap = 1)
+               , "`mat.overlap` must be either a data.frame or a dissimilarity object (`dist`, `niolap`, `matrix`)"
+               , fixed = TRUE)
+  
+  ## TEST mat.overlap : correct number of rows and columns
+  expect_error(PRE_FATE.speciesDistance(mat.traits = data.frame(species = c("A", "B"), 2, 3)
+                                        , mat.overlap = data.frame())
+               , "`mat.overlap` does not have the appropriate number of rows (>=2, at least 2 species) or columns (species, raster)"
+               , fixed = TRUE)
+  expect_error(PRE_FATE.speciesDistance(mat.traits = data.frame(species = c("A", "B"), 2, 3)
+                                        , mat.overlap = data.frame(1, 2))
+               , "`mat.overlap` does not have the appropriate number of rows (>=2, at least 2 species) or columns (species, raster)"
+               , fixed = TRUE)
+  
+  ## TEST mat.overlap : correct names of columns
+  expect_error(PRE_FATE.speciesDistance(mat.traits = data.frame(species = c("A", "B"), 2, 3)
+                                        , mat.overlap = data.frame(c(1, 1), 2))
+               , "Column names of `mat.overlap` must be `species` and `raster`", fixed = TRUE)
+  expect_error(PRE_FATE.speciesDistance(mat.traits = data.frame(species = c("A", "B"), 2, 3)
+                                        , mat.overlap = data.frame(species = c(1, 1), 2))
+               , "Column names of `mat.overlap` must be `species` and `raster`", fixed = TRUE)
+  
+  ## TEST mat.overlap$species : different values
+  expect_error(PRE_FATE.speciesDistance(mat.traits = data.frame(species = c("A", "B"), 2, 3)
+                                        , mat.overlap = data.frame(species = c(1, 1)
+                                                                   , raster = 2))
+               , "`mat.overlap$species` must contain different values", fixed = TRUE)
+  
+  ## TEST mat.overlap$raster : exist
+  expect_error(PRE_FATE.speciesDistance(mat.traits = data.frame(species = c("A", "B"), 2, 3)
+                                        , mat.overlap = data.frame(species = c(1, 2)
+                                                                   , raster = 2))
+               , "`mat.overlap$raster` must contain file names which exist", fixed = TRUE)
+  
+  ## TEST mat.overlap$raster : correct values
   file.create("a.txt")
-  expect_error(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("a", "b", "c", "d", "e")
-                                                                        , TRAIT_1 = 1:5
-                                                                        , TRAIT_2 = 5:9
-                                                                        , GROUP = c("A", "A", "A", "B", "B"))
-                                        , mat.species.overlap = data.frame(species = "A", raster = "a.txt"))
-               , "`mat.species.overlap` does not have the appropriate number of rows (>=2)", fixed = TRUE)
+  expect_error(PRE_FATE.speciesDistance(mat.traits = data.frame(species = c("A", "B"), 2, 3)
+                                        , mat.overlap = data.frame(species = c(1, 2)
+                                                                   , raster = "a.txt"))
+               , "`mat.overlap$raster` must contain file names with appropriate extension (`.tif`, `.img`, `.asc`)"
+               , fixed = TRUE)
   
-  expect_error(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("a", "b", "c", "d", "e")
-                                                                        , TRAIT_1 = 1:5
-                                                                        , TRAIT_2 = 5:9
-                                                                        , GROUP = c("A", "A", "A", "B", "B"))
-                                        , mat.species.overlap = data.frame(species = rep("A", 2), raster = "a.txt"))
-               , "Column `species` of `mat.species.overlap` must contain different values", fixed = TRUE)
-  
-  expect_error(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("a", "b", "c", "d", "e")
-                                                                        , TRAIT_1 = 1:5
-                                                                        , TRAIT_2 = 5:9
-                                                                        , GROUP = c("A", "A", "A", "B", "B"))
-                                        , mat.species.overlap = data.frame(species = c("A", "B"), raster = "a.txt"))
-               , "must contain file names with appropriate extension (`.tif`, `.img`, `.asc`)", fixed = TRUE)
-  file.create("a.tif")
-  # expect_error(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("a", "b", "c", "d", "e")
-  #                                                                       , TRAIT_1 = 1:5
-  #                                                                       , TRAIT_2 = 5:9
-  #                                                                       , GROUP = c("A", "A", "A", "B", "B"))
-  #                                       , mat.species.overlap = data.frame(species = c("A", "B"), raster = "a.tif"))
-  #              , "Cannot create a RasterLayer object from this file.")
-  
-  expect_error(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("A", "B"), 2, 3)
-                                        , mat.species.overlap = matrix(seq(2), ncol=2))
-               , "Wrong dimension(s) of data!\n `mat.species.overlap` does not have the same number of rows", fixed = T)
-  expect_error(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("A", "B"), 2, 3)
-                                        , mat.species.overlap = matrix(seq(2), ncol=1))
-               , "Wrong dimension(s) of data!\n `mat.species.overlap` does not have the same number of rows", fixed = T)
+  ## TEST mat.overlap : matrix
+  expect_error(PRE_FATE.speciesDistance(mat.traits = data.frame(species = c("A", "B"), 2, 3)
+                                        , mat.overlap = matrix(seq(2), ncol=2))
+               , "`mat.overlap` does not have the same number of rows (1) and columns (2)"
+               , fixed = TRUE)
+  expect_error(PRE_FATE.speciesDistance(mat.traits = data.frame(species = c("A", "B"), 2, 3)
+                                        , mat.overlap = matrix(seq(2), ncol=1))
+               , "`mat.overlap` does not have the same number of rows (2) and columns (1)"
+               , fixed = TRUE)
   
 })
 
 ## INPUTS
-test_that("PRE_FATE.speciesDistance gives error with wrong data : opt.max.percent.NA", {
-  expect_error(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("A", "B"), 2, 3)
-                                        , mat.species.overlap = matrix(1)
-                                        , opt.max.percent.NA = "a")
-               , "must be a number between 0 and 1", fixed = T)
-  expect_error(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("A", "B"), 2, 3)
-                                        , mat.species.overlap = matrix(1)
-                                        , opt.max.percent.NA = factor(1))
-               , "must be a number between 0 and 1", fixed = T)
-  expect_error(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("A", "B"), 2, 3)
-                                        , mat.species.overlap = matrix(1)
-                                        , opt.max.percent.NA = 1.1)
-               , "must be a number between 0 and 1", fixed = T)
-  expect_error(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("A", "B"), 2, 3)
-                                        , mat.species.overlap = matrix(1)
-                                        , opt.max.percent.NA = -1.1)
-               , "must be a number between 0 and 1", fixed = T)
+test_that("PRE_FATE.speciesDistance gives error with wrong data : opt.maxPercent.NA", {
+  expect_error(PRE_FATE.speciesDistance(mat.traits = data.frame(species = c("A", "B"), 2, 3)
+                                        , mat.overlap = matrix(1)
+                                        , opt.maxPercent.NA = "a")
+               , "`opt.maxPercent.NA` must contain values between `0` and `1`", fixed = TRUE)
+  expect_error(PRE_FATE.speciesDistance(mat.traits = data.frame(species = c("A", "B"), 2, 3)
+                                        , mat.overlap = matrix(1)
+                                        , opt.maxPercent.NA = factor(1))
+               , "`opt.maxPercent.NA` must contain values between `0` and `1`", fixed = TRUE)
+  expect_error(PRE_FATE.speciesDistance(mat.traits = data.frame(species = c("A", "B"), 2, 3)
+                                        , mat.overlap = matrix(1)
+                                        , opt.maxPercent.NA = 1.1)
+               , "`opt.maxPercent.NA` must contain values between `0` and `1`", fixed = TRUE)
+  expect_error(PRE_FATE.speciesDistance(mat.traits = data.frame(species = c("A", "B"), 2, 3)
+                                        , mat.overlap = matrix(1)
+                                        , opt.maxPercent.NA = -1.1)
+               , "`opt.maxPercent.NA` must contain values between `0` and `1`", fixed = TRUE)
 })
 
 ## INPUTS
-test_that("PRE_FATE.speciesDistance gives error with wrong data : opt.max.percent.similarSpecies", {
-  expect_error(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("A", "B"), 2, 3)
-                                        , mat.species.overlap = matrix(1)
-                                        , opt.max.percent.similarSpecies = "a")
-               , "must be a number between 0 and 1", fixed = T)
-  expect_error(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("A", "B"), 2, 3)
-                                        , mat.species.overlap = matrix(1)
-                                        , opt.max.percent.similarSpecies = factor(1))
-               , "must be a number between 0 and 1", fixed = T)
-  expect_error(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("A", "B"), 2, 3)
-                                        , mat.species.overlap = matrix(1)
-                                        , opt.max.percent.similarSpecies = 1.1)
-               , "must be a number between 0 and 1", fixed = T)
-  expect_error(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("A", "B"), 2, 3)
-                                        , mat.species.overlap = matrix(1)
-                                        , opt.max.percent.similarSpecies = -1.1)
-               , "must be a number between 0 and 1", fixed = T)
+test_that("PRE_FATE.speciesDistance gives error with wrong data : opt.maxPercent.similarSpecies", {
+  expect_error(PRE_FATE.speciesDistance(mat.traits = data.frame(species = c("A", "B"), 2, 3)
+                                        , mat.overlap = matrix(1)
+                                        , opt.maxPercent.similarSpecies = "a")
+               , "`opt.maxPercent.similarSpecies` must contain values between `0` and `1`", fixed = TRUE)
+  expect_error(PRE_FATE.speciesDistance(mat.traits = data.frame(species = c("A", "B"), 2, 3)
+                                        , mat.overlap = matrix(1)
+                                        , opt.maxPercent.similarSpecies = factor(1))
+               , "`opt.maxPercent.similarSpecies` must contain values between `0` and `1`", fixed = TRUE)
+  expect_error(PRE_FATE.speciesDistance(mat.traits = data.frame(species = c("A", "B"), 2, 3)
+                                        , mat.overlap = matrix(1)
+                                        , opt.maxPercent.similarSpecies = 1.1)
+               , "`opt.maxPercent.similarSpecies` must contain values between `0` and `1`", fixed = TRUE)
+  expect_error(PRE_FATE.speciesDistance(mat.traits = data.frame(species = c("A", "B"), 2, 3)
+                                        , mat.overlap = matrix(1)
+                                        , opt.maxPercent.similarSpecies = -1.1)
+               , "`opt.maxPercent.similarSpecies` must contain values between `0` and `1`", fixed = TRUE)
 })
 
 ## INPUTS
 test_that("PRE_FATE.speciesDistance gives error with wrong data : opt.min.sd", {
-  expect_error(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("A", "B"), 2, 3)
-                                        , mat.species.overlap = matrix(1)
+  expect_error(PRE_FATE.speciesDistance(mat.traits = data.frame(species = c("A", "B"), 2, 3)
+                                        , mat.overlap = matrix(1)
                                         , opt.min.sd = "a")
-               , "must be a number between 0 and 1", fixed = T)
-  expect_error(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("A", "B"), 2, 3)
-                                        , mat.species.overlap = matrix(1)
+               , "`opt.min.sd` must contain values between `0` and `1`", fixed = TRUE)
+  expect_error(PRE_FATE.speciesDistance(mat.traits = data.frame(species = c("A", "B"), 2, 3)
+                                        , mat.overlap = matrix(1)
                                         , opt.min.sd = factor(1))
-               , "must be a number between 0 and 1", fixed = T)
-  expect_error(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("A", "B"), 2, 3)
-                                        , mat.species.overlap = matrix(1)
+               , "`opt.min.sd` must contain values between `0` and `1`", fixed = TRUE)
+  expect_error(PRE_FATE.speciesDistance(mat.traits = data.frame(species = c("A", "B"), 2, 3)
+                                        , mat.overlap = matrix(1)
                                         , opt.min.sd = 1.1)
-               , "must be a number between 0 and 1", fixed = T)
-  expect_error(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("A", "B"), 2, 3)
-                                        , mat.species.overlap = matrix(1)
+               , "`opt.min.sd` must contain values between `0` and `1`", fixed = TRUE)
+  expect_error(PRE_FATE.speciesDistance(mat.traits = data.frame(species = c("A", "B"), 2, 3)
+                                        , mat.overlap = matrix(1)
                                         , opt.min.sd = -1.1)
-               , "must be a number between 0 and 1", fixed = T)
+               , "`opt.min.sd` must contain values between `0` and `1`", fixed = TRUE)
 })
 
-
-## INPUTS
-# test_that("PRE_FATE.speciesDistance gives error with missing data : mat.species.traits", {
-#   expect_error(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("a", "b", "c")
-#                                                                         , TRAIT_1 = 1:3
-#                                                                         , TRAIT_2 = c(NA, 6:7)
-#                                                                         , GROUP = c("A", "A", "A"))
-#                                         , mat.species.overlap = matrix(runif(9)
-#                                                                        , ncol = 3
-#                                                                        , dimnames = list(c("a", "b", "c"), c("a", "b", "c")))
-#                                         , opt.max.percent.NA = 0.3)
-#                , "`mat.species.traits` contains traits with too many missing values", fixed = T)
-# })
 
 
 ## OUTPUTS
 test_that("PRE_FATE.speciesDistance gives correct output", {
-  expect_output(str(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("a", "b", "c")
-                                                                             , TRAIT_1 = 1:3
-                                                                             , TRAIT_2 = 5:7
-                                                                             , GROUP = c("A", "A", "A"))
-                                             , mat.species.overlap = matrix(runif(9)
-                                                                            , ncol = 3
-                                                                            , dimnames = list(c("a", "b", "c"), c("a", "b", "c")))
-                                             , opt.max.percent.NA = 1
-                                             , opt.max.percent.similarSpecies = 0.25
-                                             , opt.min.sd = 0.3)), "dist")
-  expect_output(str(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("a", "b", "c")
-                                                                             , TRAIT_1 = 1:3
-                                                                             , TRAIT_2 = 5:7
-                                                                             , GROUP = c("A", "A", "A"))
-                                             , mat.species.overlap = as.dist(matrix(runif(9)
-                                                                                    , ncol = 3
-                                                                                    , dimnames = list(c("a", "b", "c"), c("a", "b", "c"))))
-                                             , opt.max.percent.NA = 1
-                                             , opt.max.percent.similarSpecies = 0.25
-                                             , opt.min.sd = 0.3)), "dist")
+  mat.traits = data.frame(species = c("a", "b", "c")
+                          , TRAIT_1 = 1:3
+                          , TRAIT_2 = 5:7
+                          , GROUP = c("A", "A", "A"))
+  mat.overlap = matrix(runif(9)
+                       , ncol = 3
+                       , dimnames = list(c("a", "b", "c")
+                                         , c("a", "b", "c")))
   
-  expect_output(str(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("a", "b", "c", "d", "e")
-                                                                             , TRAIT_1 = 1:5
-                                                                             , TRAIT_2 = 5:9
-                                                                             , GROUP = c("A", "A", "A", "B", "B"))
-                                             , mat.species.overlap = matrix(runif(25)
-                                                                            , ncol = 5
-                                                                            , dimnames = list(c("a", "b", "c", "d", "e")
-                                                                                              , c("a", "b", "c", "d", "e")))
-                                             , opt.max.percent.NA = 1
-                                             , opt.max.percent.similarSpecies = 0.25
-                                             , opt.min.sd = 0.3)), "List")
-  expect_equal(length(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("a", "b", "c", "d", "e")
-                                                                               , TRAIT_1 = 1:5
-                                                                               , TRAIT_2 = 5:9
-                                                                               , GROUP = c("A", "A", "A", "B", "B"))
-                                               , mat.species.overlap = matrix(runif(25)
-                                                                              , ncol = 5
-                                                                              , dimnames = list(c("a", "b", "c", "d", "e")
-                                                                                                , c("a", "b", "c", "d", "e")))
-                                               , opt.max.percent.NA = 1
-                                               , opt.max.percent.similarSpecies = 0.25
-                                               , opt.min.sd = 0.3)), 2)
+  
+  tmp1 = PRE_FATE.speciesDistance(mat.traits = mat.traits
+                                  , mat.overlap = mat.overlap
+                                  , opt.maxPercent.NA = 1
+                                  , opt.maxPercent.similarSpecies = 0.25
+                                  , opt.min.sd = 0.3)
+  tmp2 = PRE_FATE.speciesDistance(mat.traits = mat.traits
+                                  , mat.overlap = as.dist(mat.overlap)
+                                  , opt.maxPercent.NA = 1
+                                  , opt.maxPercent.similarSpecies = 0.25
+                                  , opt.min.sd = 0.3)
+  expect_output(str(tmp1), "dist")
+  expect_equal(ncol(as.matrix(tmp1)), 3)
+  expect_output(str(tmp2), "dist")
+  expect_equal(ncol(as.matrix(tmp2)), 3)
+  
+  
+  
+  mat.traits = data.frame(species = c("a", "b", "c", "d", "e")
+                          , TRAIT_1 = 1:5
+                          , TRAIT_2 = 5:9
+                          , GROUP = c("A", "A", "A", "B", "B"))
+  mat.overlap = matrix(runif(25)
+                       , ncol = 5
+                       , dimnames = list(c("a", "b", "c", "d", "e")
+                                         , c("a", "b", "c", "d", "e")))
+  
+  tmp3 = PRE_FATE.speciesDistance(mat.traits = mat.traits
+                                  , mat.overlap = mat.overlap
+                                  , opt.maxPercent.NA = 1
+                                  , opt.maxPercent.similarSpecies = 0.25
+                                  , opt.min.sd = 0.3)
+  
+  expect_output(str(tmp3), "List")
+  expect_equal(length(tmp3), 2)
+  expect_equal(ncol(as.matrix(tmp3[[1]])), 3)
+  expect_equal(ncol(as.matrix(tmp3[[2]])), 2)
+  
 })
 
+
 ## OUTPUTS
-test_that("PRE_FATE.speciesDistance gives correct output : with mat.species.overlap", {
+test_that("PRE_FATE.speciesDistance gives correct output : warning", {
+  mat.overlap = matrix(runif(25)
+                       , ncol = 5
+                       , dimnames = list(c("a", "b", "c", "d", "e")
+                                         , c("a", "b", "c", "d", "e")))
   
-  PNE_RESULTS = .loadData("PNE_RESULTS")
-  PFG.names = names(PNE_RESULTS$abund_str.equilibrium)
-  PFG.names = sub("PNE_year_800_", "", PFG.names)
-  PFG.names = sapply(PFG.names, function(x) strsplit(x, "_")[[1]][1])
-  for (pfg in PFG.names[1])
+  ## TEST no GROUP information provide
+  mat.traits = data.frame(species = c("a", "b", "c", "d", "e")
+                          , TRAIT_1 = 1:5
+                          , TRAIT_2 = 5:9)
+  expect_warning(PRE_FATE.speciesDistance(mat.traits = mat.traits
+                                          , mat.overlap = mat.overlap)
+                 , "Data will be considered as one unique dataset.")
+  
+  ## TEST species with no trait values
+  mat.traits = data.frame(species = c("a", "b", "c", "d", "e")
+                          , TRAIT_1 = c(NA, 2:5)
+                          , TRAIT_2 = c(NA, 6:9))
+  expect_warning(PRE_FATE.speciesDistance(mat.traits = mat.traits
+                                          , mat.overlap = mat.overlap)
+                 , "`mat.traits` contains some species with no trait values : ")
+  
+  ## TEST too many NA
+  mat.traits = data.frame(species = c("a", "b", "c", "d", "e")
+                          , TRAIT_1 = NA
+                          , TRAIT_2 = NA)
+  expect_error(PRE_FATE.speciesDistance(mat.traits = mat.traits
+                                        , mat.overlap = mat.overlap)
+               , "`mat.traits` does not have the appropriate number of rows (>=2)"
+               , fixed = TRUE)
+  
+  ## TEST GROUP with only 1 species
+  mat.traits = data.frame(species = c("a", "b", "c", "d", "e")
+                          , TRAIT_1 = 1:5
+                          , TRAIT_2 = 5:9
+                          , GROUP = c("A", rep("B", 4)))
+  expect_warning(PRE_FATE.speciesDistance(mat.traits = mat.traits
+                                          , mat.overlap = mat.overlap)
+                 , "`mat.traits` contains some groups with only one species : ")
+  
+  ## TEST traits with too many NA
+  mat.traits = data.frame(species = c("a", "b", "c", "d", "e")
+                          , TRAIT_1 = 1:5
+                          , TRAIT_2 = c(NA, 6, NA, NA, 9)
+                          , TRAIT_3 = 10:14)
+  expect_warning(PRE_FATE.speciesDistance(mat.traits = mat.traits
+                                          , mat.overlap = mat.overlap
+                                          , opt.maxPercent.NA = 0.2)
+                 , "`mat.traits` contains some traits with too many missing values or not enough variation between species."
+                 , fixed = TRUE)
+  
+  mat.traits = data.frame(species = c("a", "b", "c", "d", "e")
+                          , TRAIT_1 = rep(1, 5)
+                          , TRAIT_2 = c(NA, 6, NA, NA, 9)
+                          , TRAIT_3 = c(NA, NA, 12, NA, 9))
+  expect_error(PRE_FATE.speciesDistance(mat.traits = mat.traits
+                                        , mat.overlap = mat.overlap
+                                        , opt.maxPercent.NA = 0.2)
+               , "`mat.traits` contains traits with too many missing values or not enough variation between species."
+               , fixed = TRUE)
+})
+
+
+## OUTPUTS
+test_that("PRE_FATE.speciesDistance gives correct output : with raster", {
+  mat.traits = data.frame(species = c("a", "b", "c", "d", "e")
+                          , TRAIT_1 = 1:5
+                          , TRAIT_2 = 5:9
+                          , GROUP = c("A", "A", "A", "B", "B"))
+  
+  library(raster)
+  map_0 = raster(nrows = 5, ncols = 5)
+  for (sp in mat.traits$species)
   {
-    ind = grep(pfg, names(PNE_RESULTS$abund_str.equilibrium))
-    stk = PNE_RESULTS$abund_str.equilibrium[[ind]]
-    ras = sum(stk)
-    writeRaster(ras
-                , filename = paste0("Abund_YEAR_800_", pfg, "_STRATA_all.tif")
-                , overwrite = TRUE)
+    map_sp = map_0
+    map_sp[] = runif(25)
+    writeRaster(map_sp, filename = paste0("map_", sp, ".tif"), overwrite = TRUE)
   }
   
-  expect_equal(length(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("a", "b", "c", "d", "e")
-                                                                               , TRAIT_1 = 1:5
-                                                                               , TRAIT_2 = 5:9
-                                                                               , GROUP = c("A", "A", "A", "B", "B"))
-                                               , mat.species.overlap = data.frame(species = c("a", "b", "d", "e")
-                                                                                  , raster = "Abund_YEAR_800_C1_STRATA_all.tif")
-  )), 2)
+  mat.overlap = data.frame(species = mat.traits$species
+                           , raster = paste0("map_", mat.traits$species, ".tif"))
   
-  expect_error(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("a", "b", "c", "d", "e")
-                                                                        , TRAIT_1 = 1:5
-                                                                        , TRAIT_2 = 5:9
-                                                                        , GROUP = c("A", "A", "A", "B", "B"))
-                                        , mat.species.overlap = data.frame(species = c("a", "d")
-                                                                           , raster = "Abund_YEAR_800_C1_STRATA_all.tif"))
-               , "`mat.species.traits` does not have the appropriate number of rows (>=2)", fixed = TRUE)
   
-  expect_warning(PRE_FATE.speciesDistance(mat.species.traits = data.frame(species = c("a", "b", "c", "d", "e")
-                                                                          , TRAIT_1 = 1:5
-                                                                          , TRAIT_2 = 5:9
-                                                                          , GROUP = c("A", "A", "A", "B", "B"))
-                                          , mat.species.overlap = data.frame(species = c("a", "c", "d")
-                                                                             , raster = "Abund_YEAR_800_C1_STRATA_all.tif"))
-                 , "`mat.species.traits` contains some groups with only one species : B", fixed = TRUE)
+  tmp1 = PRE_FATE.speciesDistance(mat.traits = mat.traits
+                                  , mat.overlap = mat.overlap
+                                  , opt.maxPercent.NA = 1
+                                  , opt.maxPercent.similarSpecies = 0.25
+                                  , opt.min.sd = 0.3)
+  expect_output(str(tmp1), "List")
+  expect_equal(length(tmp1), 2)
+  expect_equal(ncol(as.matrix(tmp1[[1]])), 3)
+  expect_equal(ncol(as.matrix(tmp1[[2]])), 2)
 })
+
+
+## OUTPUTS
+# test_that("PRE_FATE.speciesDistance gives correct output : with mat.overlap", {
+#   
+#   PNE_RESULTS = .loadData("PNE_RESULTS")
+#   PFG.names = names(PNE_RESULTS$abund_str.equilibrium)
+#   PFG.names = sub("PNE_year_800_", "", PFG.names)
+#   PFG.names = sapply(PFG.names, function(x) strsplit(x, "_")[[1]][1])
+#   for (pfg in PFG.names[1])
+#   {
+#     ind = grep(pfg, names(PNE_RESULTS$abund_str.equilibrium))
+#     stk = PNE_RESULTS$abund_str.equilibrium[[ind]]
+#     ras = sum(stk)
+#     writeRaster(ras
+#                 , filename = paste0("Abund_YEAR_800_", pfg, "_STRATA_all.tif")
+#                 , overwrite = TRUE)
+#   }
+#   
+#   expect_equal(length(PRE_FATE.speciesDistance(mat.traits = data.frame(species = c("a", "b", "c", "d", "e")
+#                                                                                , TRAIT_1 = 1:5
+#                                                                                , TRAIT_2 = 5:9
+#                                                                                , GROUP = c("A", "A", "A", "B", "B"))
+#                                                , mat.overlap = data.frame(species = c("a", "b", "d", "e")
+#                                                                                   , raster = "Abund_YEAR_800_C1_STRATA_all.tif")
+#   )), 2)
+#   
+#   expect_error(PRE_FATE.speciesDistance(mat.traits = data.frame(species = c("a", "b", "c", "d", "e")
+#                                                                         , TRAIT_1 = 1:5
+#                                                                         , TRAIT_2 = 5:9
+#                                                                         , GROUP = c("A", "A", "A", "B", "B"))
+#                                         , mat.overlap = data.frame(species = c("a", "d")
+#                                                                            , raster = "Abund_YEAR_800_C1_STRATA_all.tif"))
+#                , "`mat.traits` does not have the appropriate number of rows (>=2)", fixed = TRUE)
+#   
+#   expect_warning(PRE_FATE.speciesDistance(mat.traits = data.frame(species = c("a", "b", "c", "d", "e")
+#                                                                           , TRAIT_1 = 1:5
+#                                                                           , TRAIT_2 = 5:9
+#                                                                           , GROUP = c("A", "A", "A", "B", "B"))
+#                                           , mat.overlap = data.frame(species = c("a", "c", "d")
+#                                                                              , raster = "Abund_YEAR_800_C1_STRATA_all.tif"))
+#                  , "`mat.traits` contains some groups with only one species : B", fixed = TRUE)
+# })
