@@ -3,9 +3,12 @@ context(".getCutoff() function")
 
 ## INPUTS
 test_that(".getCutoff gives error with missing data", {
+  
+  ## TEST Obs : correct values
   expect_error(.getCutoff(NA), "Wrong type of data!\n `Obs` must be either `0` or `1`")
   expect_error(.getCutoff(NULL), "Wrong type of data!\n `Obs` must be either `0` or `1`")
   
+  ## TEST Fit : correct values
   expect_error(.getCutoff(0), "Wrong data given!\n `Fit` must be between 0 and 1")
   expect_error(.getCutoff(0, NA), "Wrong data given!\n `Fit` must be between 0 and 1")
   expect_error(.getCutoff(0, NULL), "Wrong data given!\n `Fit` must be between 0 and 1")

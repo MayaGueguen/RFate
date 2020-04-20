@@ -1,4 +1,8 @@
 
+.stopMessage_notDef = function(param)
+{
+  stop(paste0("No data given!\n (missing `", param, "` information)"))
+}
 
 .stopMessage_existFile = function(param)
 {
@@ -15,15 +19,41 @@
   stop(paste0("Wrong type of data!\n `", param, "` must be a data.frame"))
 }
 
+.stopMessage_beNumeric = function(param)
+{
+  stop(paste0("Wrong type of data!\n `", param, "` must contain numeric values"))
+}
+
 .stopMessage_beInteger = function(param)
 {
   stop(paste0("Wrong type of data!\n `", param, "` must be an integer > 0"))
+}
+
+.warnMessage_beRounded = function(param)
+{
+  warning(paste0("`", param, "` is a double. It will be converted (rounded) to an integer"))
+}
+
+.stopMessage_between = function(param, value1, value2)
+{
+  stop(paste0("Wrong type of data!\n `", param, "` must contain values between `", value1, "` and `", value2, "`"))
 }
 
 .stopMessage_beChar = function(param)
 {
   stop(paste0("Wrong type of data!\n `", param, "` must contain a character value of length > 0"))
 }
+
+.stopMessage_NAvalues = function(param)
+{
+  stop(paste0("Wrong type of data!\n `", param, "` must not contain NA values"))
+}
+
+.stopMessage_samevalues = function(param)
+{
+  stop(paste0("Wrong type of data!\n `", param, "` must contain different values"))
+}
+
 
 #################################################################################################
 

@@ -180,7 +180,7 @@
   }
   
   if(flag.split == " "){
-    value.line = grep(flag, params.lines, value = TRUE) #params.lines[ind.flag]
+    value.line = grep(paste0(flag, " "), params.lines, value = TRUE)
     value.line = unlist(strsplit(value.line, split = flag.split))[-1]
   } else {
     ind.flag.split = grep(flag.split, params.lines)

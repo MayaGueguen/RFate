@@ -73,8 +73,7 @@
   }
   m = paste0(m, "\n Support functions for the software FATE.")
   m = paste0(m, "\n More informations can be find here :")
-  m = paste0(m, "\n - https://mayagueguen.github.io/RFate/")
-  m = paste0(m, "\n - https://mayagueguen.github.io/FATE-WEBSITE/")
+  m = paste0(m, "\n - https://rleca.github.io/RFate/")
   
   packageStartupMessage(m)
   options(warn = previouswarn)

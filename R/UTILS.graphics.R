@@ -4,7 +4,7 @@
 {
   ## Get results directories -----------------------------------------------------
   dir.save <<- .getParam(params.lines = abs.simulParam
-                         , flag = "SAVE_DIR"
+                         , flag = "SAVING_DIR"
                          , flag.split = "^--.*--$"
                          , is.num = FALSE)
   .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/"))
@@ -53,31 +53,31 @@
                                , is.num = FALSE)
   no_PFG <<- .getParam(params.lines = paste0(sub(basename(name.simulation), "", name.simulation)
                                              , file.globalParam)
-                       , flag = "NB_FG"
+                       , flag = "NO_PFG"
                        , flag.split = " "
                        , is.num = TRUE)
   if (length(no_PFG) == 0 || .testParam_notNum(no_PFG))
   {
-    stop(paste0("Missing data!\n The number of PFG (NB_FG) within ", file.globalParam, " does not contain any value"))
+    stop(paste0("Missing data!\n The number of PFG (NO_PFG) within ", file.globalParam, " does not contain any value"))
   }
   
   ## Get PFG names ---------------------------------------------------------------
   PFG <<- .getParam(params.lines = abs.simulParam
-                    , flag = "PFG_LIFE_HISTORY_PARAMS"
+                    , flag = "PFG_PARAMS_LIFE_HISTORY"
                     , flag.split = "^--.*--$"
                     , is.num = FALSE)
   pattern = ".*SUCC_"
   PFG <<- sub(".txt", "", sub(pattern, "", basename(PFG)))
   if (length(PFG) != no_PFG)
   {
-    stop(paste0("Missing data!\n The number of PFG (NB_FG) within ", file.globalParam
+    stop(paste0("Missing data!\n The number of PFG (NO_PFG) within ", file.globalParam
                 , " is different from the number of PFG files contained in ", name.simulation, "/DATA/PFGS/SUCC/"))
   }
   
   ## Get MODULES ---------------------------------------------------------------
   no_STRATA <<- .getParam(params.lines = paste0(sub(basename(name.simulation), "", name.simulation)
                                                 , file.globalParam)
-                          , flag = "NB_STRATUM"
+                          , flag = "NO_STRATA"
                           , flag.split = " "
                           , is.num = TRUE)
   doLight <<- .getParam(params.lines = paste0(sub(basename(name.simulation), "", name.simulation)
