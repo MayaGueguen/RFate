@@ -88,6 +88,7 @@ reference:
       - "PRE_FATE.params_PFGsoil"
       - "PRE_FATE.params_PFGdispersal"
       - "PRE_FATE.params_PFGdisturbance"
+      - "PRE_FATE.params_PFGdrought"
       - "PRE_FATE.params_changingYears"
       - "PRE_FATE.params_saveYears"
       - "PRE_FATE.params_globalParameters"
@@ -112,3 +113,7 @@ reference:
       - "POST_FATE.graphic_mapPFGlight"
       - "POST_FATE.graphic_mapPFGsoil"
       - ".getCutoff"
+  - title: Tool box
+    desc:  Utility functions.  <br/> ..
+    contents:
+      - ".getOS"

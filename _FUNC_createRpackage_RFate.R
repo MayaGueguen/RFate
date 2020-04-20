@@ -1,7 +1,7 @@
 
 rm(list=ls())
-setwd("/home/gueguema/Documents/_TUTOS/3_R/_PACKAGES/")
-# setwd("/Users/gueguen/Documents/PACKAGES/")
+# setwd("/home/gueguema/Documents/_TUTOS/3_R/_PACKAGES/")
+setwd("/Users/gueguen/Documents/PACKAGES/")
 
 library(devtools)
 library(tools)
@@ -17,7 +17,7 @@ library(raster)
 ## INFORMATION / PARAMETERS
 
 package_name = "RFate"
-package_version = "0.1.0.9000"
+package_version = "0.2.0.9000"
 
 #####################################################################
 
@@ -92,6 +92,8 @@ Rcmd(args = paste0("build ", package_name)) ## or with a shell : R CMD build MyP
 # Rcmd(args = paste0("check ",package_name)) ## or with a shell : R CMD check MyPackage
 # devtools::check(pkg = package_name, document = FALSE)
 devtools::check(pkg = package_name)
+# testthat::auto_test(code_path = "RFate/R/", test_path = "RFate/tests/testthat/")
+testthat::auto_test(code_path = "AA_R/", test_path = "AA_testthat/")
 
 ## INSTALL THE PACKAGE ----------------------------------------------
 

@@ -1,6 +1,6 @@
 Package: RFate
-Version: 0.1.0.9000
-Date: 2018-03-27
+Version: 0.2.0.9000
+Date: 2020-04-06
 Type: Package
 Encoding: UTF-8
 Title: Vegetation modelling with the FATE-HD model
@@ -19,7 +19,7 @@ Imports:
     raster, rgdal,
     phyloclim, FD, fpc, clValid, ade4, PresenceAbsence, Hmisc,
     viridis, RColorBrewer, colorspace,
-    ape, phangorn, shiny,
+    ape, shiny,
     parallel, doParallel
 Suggests:
     spelling, 
@@ -28,6 +28,6 @@ Suggests:
 License:
     file LICENSE
 URL: https://github.com/MayaGueguen/RFate.git
-RoxygenNote: 6.1.1
+RoxygenNote: 7.1.0
 Language: en-US
 LazyData: true
