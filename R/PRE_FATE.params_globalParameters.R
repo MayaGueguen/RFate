@@ -6,18 +6,19 @@
 ##'
 ##' @author Maya Guéguen
 ##' 
-##' @description This script is designed to create one parameter file 
+##' @description This script is designed to create parameter file(s) 
 ##' containing \code{GLOBAL PARAMETERS} used in \code{FATE-HD} model.
 ##'              
-##' @param name.simulation a \code{string} that corresponds to the main
-##' directory or simulation name of the \code{FATE-HD} simulation
-##' @param opt.no_CPU default \code{1} (\emph{optional}). The number of 
-##' resources that can be used to parallelize the \code{FATE-HD} simulation
-##' @param opt.replacePrevious default \code{FALSE} (\emph{optional}). If 
-##' \code{TRUE}, pre-existing files inside
+##' @param name.simulation a \code{string} corresponding to the main directory 
+##' or simulation name of the \code{FATE-HD} simulation
+##' @param opt.no_CPU (\emph{optional}) default \code{1}. \cr an \code{integer} 
+##' corresponding to the number of resources that can be used to parallelize 
+##' the \code{FATE-HD} simulation
+##' @param opt.replacePrevious (\emph{optional}) default \code{FALSE}. \cr 
+##' If \code{TRUE}, pre-existing files inside 
 ##' \code{name.simulation/DATA/GLOBAL_PARAMETERS} folder will be replaced
 ##' @param required.no_PFG an \code{integer} corresponding to the number of PFG
-##' @param required.no_STRATA an \code{integer} corresponding to the number of 
+##' @param required.no_strata an \code{integer} corresponding to the number of 
 ##' height strata
 ##' @param required.simul_duration an \code{integer} corresponding to the 
 ##' duration of simulation (\emph{in years})
@@ -26,161 +27,194 @@
 ##' @param required.seeding_timestep an \code{integer} corresponding to the 
 ##' time interval at which occurs the seeding, and until the seeding duration 
 ##' is not over (\emph{in years})
-##' @param required.seeding_input an \code{integer} corresponding to the 
-##' number of seeds attributed to each PFG at each time step, and until the
-##' seeding duration is not over
+##' @param required.seeding_input an \code{integer} corresponding to the number 
+##' of seeds attributed to each PFG at each time step, and until the seeding 
+##' duration is not over
 ##' @param required.max_abund_low an \code{integer} in the order of 
 ##' \code{1 000} to rescale abundance values of small PFG
 ##' @param required.max_abund_medium an \code{integer} in the order of 
 ##' \code{1 000} to rescale abundance values of intermediate PFG
 ##' @param required.max_abund_high an \code{integer} in the order of 
 ##' \code{1 000} to rescale abundance values of tall PFG
-##' @param doLight default \code{FALSE}. If \code{TRUE}, light competition is 
-##' activated in the \code{FATE-HD} simulation, and associated parameters are 
+##' @param doLight default \code{FALSE}.\cr If \code{TRUE}, light competition 
+##' is activated in the \code{FATE-HD} simulation, and associated parameters are 
 ##' required
-##' @param LIGHT.thresh_medium an \code{integer} in the order of \code{1 000} 
-##' to convert PFG abundances in each stratum into light resources. It 
-##' corresponds to the limit of abundances above which light resources are
-##' \code{medium}. PFG abundances lower than this threshold imply \strong{high 
-##' amount of light}. It is consequently lower than \code{LIGHT.thresh_low}.
-##' @param LIGHT.thresh_low an \code{integer} in the order of \code{1 000} 
-##' to convert PFG abundances in each strata into light resources. It 
-##' corresponds to the limit of abundances above which light resources are 
-##' \code{low}. PFG abundances higher than \code{LIGHT.thresh_medium} and 
-##' lower than this threshold imply \strong{medium amount of light}.
-##' @param doSoil default \code{FALSE}. If \code{TRUE}, soil competition is 
+##' @param LIGHT.thresh_medium (\emph{optional}) \cr an \code{integer} in the 
+##' order of \code{1 000} to convert PFG abundances in each stratum into light 
+##' resources. It corresponds to the limit of abundances above which light 
+##' resources are \code{medium}. PFG abundances lower than this threshold imply 
+##' \strong{high amount of light}. It is consequently lower than 
+##' \code{LIGHT.thresh_low}.
+##' @param LIGHT.thresh_low (\emph{optional}) \cr an \code{integer} in the order 
+##' of \code{1 000} to convert PFG abundances in each strata into light 
+##' resources. It corresponds to the limit of abundances above which light 
+##' resources are \code{low}. PFG abundances higher than 
+##' \code{LIGHT.thresh_medium} and lower than this threshold imply 
+##' \strong{medium amount of light}.
+##' @param doSoil default \code{FALSE}. \cr If \code{TRUE}, soil competition is 
 ##' activated in the \code{FATE-HD} simulation, and associated parameters 
 ##' are required
-##' @param SOIL.init a \code{double} corresponding to the soil value to 
-##' initialize all pixels when starting the \code{FATE-HD} simulation
-##' @param SOIL.retention a \code{double} corresponding to the percentage of 
-##' soil value of the previous simulation year that will be kept in the 
-##' calculation of the soil value of the current simulation year
-##' @param doDispersal default \code{FALSE}. If \code{TRUE}, seed dispersal is 
-##' activated in the \code{FATE-HD} simulation, and associated parameters are 
+##' @param SOIL.init (\emph{optional}) \cr a \code{double} corresponding to the 
+##' soil value to initialize all pixels when starting the \code{FATE-HD} 
+##' simulation
+##' @param SOIL.retention (\emph{optional}) \cr a \code{double} corresponding 
+##' to the percentage of soil value of the previous simulation year that will 
+##' be kept in the calculation of the soil value of the current simulation year
+##' @param doDispersal default \code{FALSE}. \cr If \code{TRUE}, seed dispersal 
+##' is activated in the \code{FATE-HD} simulation, and associated parameters are 
 ##' required
-##' @param DISPERSAL.mode an \code{integer} corresponding to the way of 
-##' simulating the seed dispersal for each PFG, either uniform kernel (1), 
-##' exponential kernel (2) or exponential kernel with probability (3)
-##' @param doHabSuitability default \code{FALSE}. If \code{TRUE}, habitat 
+##' @param DISPERSAL.mode (\emph{optional}) \cr an \code{integer} corresponding 
+##' to the way of simulating the seed dispersal for each PFG, either packets 
+##' kernel (\code{1}), exponential kernel (\code{2}) or exponential kernel with 
+##' probability (\code{3})
+##' @param doHabSuitability default \code{FALSE}. \cr If \code{TRUE}, habitat 
 ##' suitability is activated in the \code{FATE-HD} simulation, and associated 
 ##' parameters are required
-##' @param HABSUIT.ref_option an \code{integer} corresponding to the way of 
-##' simulating the habitat suitability variation between years for each PFG, 
-##' either random (1) or PFG specific (2)
-##' @param doDisturbances default \code{FALSE}. If \code{TRUE}, disturbances 
-##' are applied in the \code{FATE-HD} simulation, and associated parameters 
-##' are required
-##' @param DIST.no the number of disturbances
-##' @param DIST.no_sub the number of way a PFG could react to a disturbance
-##' @param DIST.freq the frequency of each disturbance (\emph{in years})
+##' @param HABSUIT.ref_option (\emph{optional}) \cr an \code{integer} 
+##' corresponding to the way of simulating the habitat suitability variation 
+##' between years for each PFG, either random (\code{1}) or PFG specific 
+##' (\code{2})
+##' @param doDisturbances default \code{FALSE}. \cr If \code{TRUE}, disturbances 
+##' are applied in the \code{FATE-HD} simulation, and associated parameters are 
+##' required
+##' @param DIST.no (\emph{optional}) \cr an \code{integer} corresponding to the 
+##' number of disturbances
+##' @param DIST.no_sub (\emph{optional}) \cr an \code{integer} corresponding to 
+##' the number of way a PFG could react to a disturbance
+##' @param DIST.freq (\emph{optional}) \cr a \code{vector} of \code{integer} 
+##' corresponding to the frequency of each disturbance (\emph{in years})
+## @param doHabStability default \code{FALSE}. \cr If \code{TRUE}, check of 
+## habitat stability is activated in the \code{FATE-HD} simulation, and 
+## associated parameters are required
+## @param HABSTAB.no_hab (\emph{optional}) \cr an \code{integer} corresponding 
+## to the number of different habitats
+##' @param doDrought default \code{FALSE}. \cr If \code{TRUE}, drought 
+##' disturbances are applied in the \code{FATE-HD} simulation, and associated 
+##' parameters are required
+##' @param DROUGHT.no_sub (\emph{optional}) \cr an \code{integer} corresponding 
+##' to the number of way a PFG could react to a drought disturbance
+## @param DROUGHT.chrono_post (\emph{optional}) \cr an \code{integer} 
+## corresponding to the post-drought effects timing, either pre-succession 
+## (\code{0}) or post (\code{1})
+## @param DROUGHT.chrono_curr (\emph{optional}) \cr an \code{integer} 
+## corresponding to the current-drought effects timing, either pre-succession 
+## (\code{0}) or post (\code{1})
+##' @param doAliens default \code{FALSE}. \cr If \code{TRUE}, invasive plant 
+##' introduction is activated in the \code{FATE-HD} simulation, and associated 
+##' parameters are required
+##' @param ALIEN.no (\emph{optional}) \cr an \code{integer} corresponding to the 
+##' number of introductions
+##' @param ALIEN.freq (\emph{optional}) \cr a \code{vector} of \code{integer} 
+##' corresponding to the frequency of each introduction (\emph{in years})
 ##' @param doFire \emph{to be filled}
-##' @param doDrought \emph{to be filled}
-##' @param doHabStability \emph{to be filled}
-##' @param doAliens \emph{to be filled}
+##' 
 ##' 
 ##' 
 ##' @details 
 ##' 
-##' The core module of \code{FATE-HD} requires several parameters to define 
-##' general characteristics of the simulation :
+##' The \strong{core module} of \code{FATE-HD} requires several parameters to 
+##' define general characteristics of the simulation :
 ##' 
 ##' \describe{
-##'   \item{Studied system}{
-##'   \itemize{
-##'     \item \emph{required.no_PFG} : the number of Plant Functional Groups 
-##'     that will be included into the simulation.  
-##'     This number should match with the number of files that will be given 
-##'     with the characteristics of each group (SUCC, DISP, ...).
-##'     \item \emph{required.no_STRATA} : the number of height strata that 
-##'     will be used into the succession module.  
-##'     This number should match with the maximum number of strata possible 
-##'     defined into the PFG SUCC files. \cr \cr
+##'   \item{Studied system}{ \cr
+##'   \describe{
+##'     \item{no_PFG}{the number of plant functional groups that will be 
+##'     included into the simulation. \cr This number should match with the 
+##'     number of files that will be given to parameterize the different 
+##'     activated modules with the characteristics of each group (\file{SUCC}, 
+##'     \file{DISP}, ...).}
+##'     \item{no_STRATA}{the number of height strata that will be used into the 
+##'     succession module. \cr This number should match with the maximum number 
+##'     of strata possible defined into the PFG \file{SUCC} files.}
 ##'   }
 ##'   }
-##'   \item{Simulation timing}{
-##'   \itemize{
-##'     \item \emph{required.simul_duration} : the duration of simulation 
-##'     (\emph{in years})
-##'     \item \emph{required.seeding_duration} : the duration of seeding 
-##'     (\emph{in years})
-##'     \item \emph{required.seeding_timestep} : the time interval at which 
-##'     occurs the seeding, and until the seeding duration is not over 
-##'     (\emph{in years})
-##'     \item \emph{required.seeding_input} : the number of seeds dispersed 
-##'     for each PFG at each time step, and until the seeding duration is 
-##'     not over \cr \cr
+##'   \item{Simulation timing}{ \cr
+##'   \describe{
+##'     \item{simul_duration}{the duration of simulation (\emph{in years})}
+##'     \item{seeding_duration}{the duration of seeding (\emph{in years})}
+##'     \item{seeding_timestep}{the time interval at which occurs the seeding, 
+##'     and until the seeding duration is not over (\emph{in years})}
+##'     \item{seeding_input}{the number of seeds dispersed for each PFG at each 
+##'     time step, and until the seeding duration is not over \cr \cr}
 ##'   }
 ##'   }
 ##' }
 ##' 
 ##' 
-##' The other modules of \code{FATE-HD} can be activated within this file, and 
-##' if so, some additional parameters will be required :
+##' The \strong{other modules} of \code{FATE-HD} can be activated within this 
+##' file, and if so, some additional parameters will be required :
 ##' 
 ##' \describe{
-##'   \item{LIGHT}{= to influence seed recruitment and plant mortality 
-##'   according to PFG preferences for light conditions (see 
+##'   \item{LIGHT}{= to influence seed recruitment and plant mortality according 
+##'   to PFG preferences for light conditions \cr (see 
 ##'   \code{\link{PRE_FATE.params_PFGlight}})\cr
-##'   = light resources are calculated as a proxy of PFG abundances
-##'   within each height stratum \cr
-##'   \itemize{
-##'   \item{To transform PFG \cr abundances into \cr light resources}{
-##'     \deqn{abund < \text{LIGHT.thresh_medium} \Leftrightarrow Light = High}
-##'     \deqn{abund > \text{LIGHT.thresh_medium } \& \\
-##'     abund < \text{LIGHT.thresh_low} \Leftrightarrow Light = Medium}
-##'     \deqn{abund > \text{LIGHT.thresh_low} \Leftrightarrow Light = Low}
-##'   }
-##'   }
-##'   \cr \emph{As light resources are directly obtained from PFG abundances, 
+##'   = light resources are calculated as a proxy of PFG abundances within each 
+##'   height stratum \cr \cr
+##'   To transform PFG abundances into light resources :
+##'   \deqn{abund_{\text{ PFG}_{all}\text{, }\text{Stratum}_k} < 
+##'   \text{LIGHT.thresh_medium} \;\; \Leftrightarrow \;\; 
+##'   light_{\text{ Stratum}_k} = \text{High}}
+##'   
+##'   \deqn{\text{LIGHT.thresh_medium } < 
+##'   abund_{\text{ PFG}_{all}\text{, }\text{Stratum}_k} < 
+##'   \text{LIGHT.thresh_low} \\ \Leftrightarrow \;\; 
+##'   light_{\text{ Stratum}_k} = \text{Medium}}
+##'   
+##'   \deqn{abund_{\text{ PFG}_{all}\text{, }\text{Stratum}_k} > 
+##'   \text{LIGHT.thresh_low} \;\; \Leftrightarrow \;\; 
+##'   light_{\text{ Stratum}_k} = \text{Low}}
+##'   \emph{As light resources are directly obtained from PFG abundances, 
 ##'   \code{LIGHT.thresh_medium} and \code{LIGHT.thresh_low} parameters should 
 ##'   be on the same scale than \code{required.max_abund_low}, 
 ##'   \code{required.max_abund_medium} and \code{required.max_abund_high} 
-##'   parameters from the core module.}
-##'   \cr \cr
+##'   parameters from the core module.} \cr \cr
 ##'   }
 ##'   \item{SOIL}{= to influence seed recruitment and plant mortality 
-##'   according to PFG preferences for soil conditions (see 
-##'   \code{\link{PRE_FATE.params_PFGsoil}})\cr
+##'   according to PFG preferences for soil conditions \cr (see 
+##'   \code{\link{PRE_FATE.params_PFGsoil}}) \cr
 ##'   = soil composition is calculated as the weighted mean of each PFG's 
 ##'   contribution with a possible retention of the soil value of the previous 
 ##'   simulation year 
-##'   \deqn{Soil_n + \text{coeffRet} * (Soil_{n-1} - Soil_n)}
+##'   \deqn{Soil_y + \text{SOIL.retention} * (Soil_{y-1} - Soil_y)}
 ##'   with
-##'   \deqn{Soil_n =  \sum abund_{\text{PFG}_i, n} * \text{contrib}_i}
+##'   \deqn{Soil_y =  \sum abund_{\text{ PFG}_i\text{, }y} * 
+##'   \text{contrib}_{\text{ PFG}_i}}
 ##'   \cr \cr
 ##'   }
 ##'   \item{DISPERSAL}{= to allow plants to disperse seeds according to 3 
-##'   user-defined distances (see \code{\link{PRE_FATE.params_PFGdispersal}})
-##'   \itemize{
-##'     \item \emph{DISPERSAL.mode} : three modes of dispersal are available :
+##'   user-defined distances \cr (see \code{\link{PRE_FATE.params_PFGdispersal}})
+##'   \cr \cr Three modes of dispersal (\code{DISPERSAL.mode}) are available :
 ##'     \enumerate{
-##'       \item \emph{uniform kernel [1]} : homogeneous dispersal within the 
-##'       \code{d50}, \code{d99} and \code{ldd} circles
-##'       \item \emph{exponential kernel [2]} : seeds are dispersed within 
-##'       each concentric circle (\code{d50}, \code{d99} and \code{ldd}) 
-##'       according to a decreasing exponential density law (lambda = 1)
-##'       \item \emph{exponential kernel with probability [3]} : seeds are 
-##'       dispersed within each concentric circle (\code{d50}, \code{d99} and 
-##'       \code{ldd}) according to a decreasing exponential density law 
-##'       (lambda = 1) and a continuous decreasing probability with distance
-##'       \item \emph{homogeneous dispersal \cr EVERYWHERE} : 
-##'       \emph{(!not available YET!)} \cr \cr
+##'       \item \emph{packets kernel} :
+##'       \itemize{
+##'         \item homogeneous dispersal of 50\% of the seeds within the 
+##'         \code{d50} circle
+##'         \item dispersal of 49\% of the seeds within the \code{d99 - d50} 
+##'         ring with the same concentration as in the first circle but by pairs 
+##'         of pixel (see \emph{Boulangeat et al, 2014})
+##'         \item dispersal of 1\% of the seeds within the \code{ldd - d99} ring 
+##'         into one random pixel
+##'       }
+##'       \item \emph{exponential kernel} : seeds are dispersed within each 
+##'       concentric circle (\code{d50}, \code{d99} and \code{ldd}) according to 
+##'       a decreasing exponential density law (lambda = 1)
+##'       \item \emph{exponential kernel with probability} : seeds are dispersed 
+##'       within each concentric circle (\code{d50}, \code{d99} and \code{ldd}) 
+##'       according to a decreasing exponential density law (lambda = 1) and a 
+##'       continuous decreasing probability with distance \cr \cr
 ##'     }
-##'   }
 ##'   }
 ##'   \item{HABITAT SUITABILITY}{= to influence plants fecundity and seed 
 ##'   recruitment according to PFG preferences for habitat conditions \cr
 ##'   = filter based on maps given for each PFG within the 
-##'   \emph{Simul_parameters} file with the \code{PFG_HAB_MASK} flag (see 
-##'   \code{\link{PRE_FATE.params_simulParameters}}). \cr \cr
-##'   These maps must contain values between 0 and 1 corresponding to the 
-##'   probability of presence of the group in each pixel. Each year (timestep), 
-##'   this value will be compared to a reference value, and if superior, the 
-##'   PFG will be able to grow and survive.
-##'   \itemize{
-##'     \item \emph{HABSUIT.ref_option} : the habitat suitability reference 
-##'     value can be set in two possible ways :
+##'   \emph{Simul_parameters} file with the \code{PFG_HAB_MASK} flag \cr (see 
+##'   \code{\link{PRE_FATE.params_simulParameters}}) \cr \cr
+##'   These maps must contain values between \code{0} and \code{1} corresponding 
+##'   to the probability of presence of the PFG in each pixel. Each year 
+##'   (timestep), this value will be compared to a reference value, and if 
+##'   superior, the PFG will be able to grow and survive. \cr
+##'   Two methods to define this habitat suitability reference value are 
+##'   available (\code{HABSUIT.ref_option}) :
 ##'     \enumerate{
 ##'       \item \emph{random} : for each pixel, the reference value is drawn 
 ##'       from a uniform distribution, and the same value is used for each PFG 
@@ -192,77 +226,133 @@
 ##'       the PFG. \cr \cr
 ##'     }
 ##'   }
-##'   }
 ##'   \item{DISTURBANCES}{= to influence plant mortality and / or resprouting 
-##'   according to PFG tolerances to these events (see 
+##'   according to PFG tolerances to these events \cr (see 
 ##'   \code{\link{PRE_FATE.params_PFGdisturbance}})\cr
 ##'   = defined for events such as mowing, grazing, but also urbanization, 
-##'   crops, etc. \cr \cr
-##'   The impact zone is defined with a mask (map with 0 or 1) and the user 
-##'   will have to define how each PFG will be impacted depending on age and 
-##'   life stage. 
-##'   \itemize{
-##'     \item \emph{DIST.no} : the number of different disturbances
-##'     \item \emph{DIST.no_sub} : the number of way a PFG could react to a 
-##'     perturbation
-##'     \item \emph{DIST.freq} : the frequency of each disturbance 
-##'     (\emph{in years}) \cr \cr
+##'   crops, etc \cr
+##'   = filter based on maps given for each disturbance within the 
+##'   \emph{Simul_parameters} file with the \code{DIST_MASK} flag \cr (see 
+##'   \code{\link{PRE_FATE.params_simulParameters}}) \cr \cr
+##'   These maps, containing either \code{0} or \code{1}, define the impact zone 
+##'   of each perturbation, and the user will have to define how each PFG will 
+##'   be impacted depending on age and life stage. 
+##'   \describe{
+##'     \item{DIST.no}{the number of different disturbances}
+##'     \item{DIST.no_sub}{the number of way a PFG could react to a 
+##'     perturbation}
+##'     \item{DIST.freq}{the frequency of each disturbance 
+##'     (\emph{in years}) \cr \cr}
 ##'   }
 ##'   }
+##   \item{HABITAT STABILITY}{= to evaluate the stability of different 
+##   habitats through the evolution of their PFG composition over time \cr
+##   = based on a map given within the \emph{Simul_parameters} file with the 
+##   \code{HABSTAB_MASK} flag \cr (see 
+##   \code{\link{PRE_FATE.params_simulParameters}}) \cr \cr
+##   
+##   This map must be categorical, with each value corresponding to a specific 
+##   habitat. \cr Every year, the abundance of each PFG within each habitat is 
+##   recorded, as well as the evenness of the habitat :
+##   \deqn{
+##   \text{evenness} = - \frac{\Sigma(\text{proportion}_{\text{ PFG}_i} * 
+##   log(\text{proportion}_{\text{ PFG}_i}))}{log(\text{no.PFG} - 1)}
+##   }
+##   with
+##   \deqn{\text{proportion}_{\text{ PFG}_i} = \frac{abund_{\text{ PFG}_i
+##   \text{, }\text{Habitat}_j}}{abund_{\text{ PFG}_{all}\text{, }
+##   \text{Habitat}_j}}}
+##   A temporal stability check can then 
+##   
+##   Every 5 years, a stability check is done to see if the abundance or the 
+##   evenness have values out of the usual distribution.
+##   \describe{
+##     \item{HABSTAB.no_hab}{the number of different habitats \cr \cr}
+##   }
+##   }
 ##'   \item{DROUGHT}{= to experience extreme events with a direct and a 
-##'   delayed response on PFG. \cr \cr
-##'   The PFG's past drought exposure is compared to current moisture values as 
-##'   a proxy of drought index. Developed canopy closure helps to reduce these 
-##'   values. Each PFG is impacted if submitted one year to drought, and also 
-##'   (and more consequently) if submitted several years in a row.
-##'   \itemize{
-##'     \item \emph{DROUGHT.no_sub} : the number of way a PFG could react to a 
-##'     perturbation
-##'     \item \emph{DROUGHT.chrono_post} : if post-drought effects will occur 
-##'     previously to succession (0) or after (1)
-##'     \item \emph{DROUGHT.chrono_curr} : if current-drought effects will 
-##'     occur previously to succession (0) or after (1) \cr \cr
+##'   delayed response on PFG \cr
+##'   = based on a map given within the \emph{Simul_parameters} file with the 
+##'   \code{DROUGHT_MASK} flag \cr (see 
+##'   \code{\link{PRE_FATE.params_simulParameters}}) \cr \cr
+##'   This map must contain values representing proxies for drought intensity, 
+##'   like moisture values, in the sense that the lower the values, the higher 
+##'   the chance of experiencing a drought event. Developed canopy closure helps 
+##'   to reduce these values. The intensity of the drought event (moderate or 
+##'   severe) is determined based on thresholds defined for each PFG according 
+##'   to, for example, their moisture preference, as well as the number of 
+##'   cumulated consecutive years during which the PFG experienced a drought 
+##'   (see \code{\link{PRE_FATE.params_PFGdrought}}).
+##'   \describe{
+##'     \item{no drought}{if \eqn{di_y > \text{threshold.MOD}_{\text{ PFG}_i}}, 
+##'     the counter of cumulated consecutive years of drought experienced by the 
+##'     PFG will decrease : \deqn{\text{counter}_{\text{ PFG}_i} = 
+##'     \text{counter}_{\text{ PFG}_i} - 
+##'     \text{counter.RECOVERY}_{\text{ PFG}_i}}}
+##'     \item{moderate drought}{
+##'     \itemize{
+##'       \item if \eqn{\text{threshold.SEV}_{\text{ PFG}_i} < di_y < 
+##'       \text{threshold.MOD}_{\text{ PFG}_i}}
+##'       \item if \eqn{di_y < \text{threshold.SEV}_{\text{ PFG}_i} \;\; 
+##'       \text{  &  } \;\; \text{counter}_{\text{ PFG}_i} = 0}
+##'     }
+##'     then fecundity and recruitment are set to \code{0} for this year, and 
+##'     counter is incremented : \eqn{\text{counter}_{\text{ PFG}_i} ++}
+##'     }
+##'     \item{severe drought}{
+##'     \itemize{
+##'       \item if \eqn{di_y < \text{threshold.SEV}_{\text{ PFG}_i} \;\; 
+##'       \text{  &  } \;\; \text{counter.SENS}_{\text{ PFG}_i} \leq 
+##'       \text{counter}_{\text{ PFG}_i} < \text{counter.CUM}_{\text{ PFG}_i}}
+##'       \item if \eqn{\text{counter}_{\text{ PFG}_i} \geq 
+##'       \text{counter.CUM}_{\text{ PFG}_i}}
+##'     }
+##'     then PFG experiences \code{immediate} drought-related mortality ; 
+##'     and the year after, fecundity and recruitment will be set to \code{0} 
+##'     and PFG will experience \code{delayed} drought-related mortality. \cr \cr
+##'     }
+##'   }
+##'   As for the disturbances module, the user will have to define how each PFG 
+##'   will be impacted depending on age and life stage. 
+##'   \describe{
+##'     \item{(\emph{DROUGHT.no})}{\emph{!not required!} \cr = 2, the 
+##'     \code{immediate} and \code{delayed} responses}
+##'     \item{DROUGHT.no_sub}{the number of way a PFG could react to each of 
+##'     these two perturbations}
+##'     \item{(\emph{DROUGHT.freq})}{\emph{!not required!} \cr the map of 
+##'     drought intensity proxy defined within the \emph{Simul_parameters} file 
+##'     with the \code{DROUGHT_MASK} flag, as well as the 
+##'     \code{DROUGHT_CHANGEMASK_YEARS} and \code{DROUGHT_CHANGEMASK_FILES} 
+##'     flags, make it possible to manage the frequency and the variation of 
+##'     drought values (see \code{\link{PRE_FATE.params_simulParameters}})
+##'     \cr \cr}
 ##'   }
 ##'   }
-##'   \item{HABITAT STABILITY}{= to evaluate the stability of different 
-##'   habitats through the evolution of their PFG composition \cr \cr
-##'   The habitat distribution is given with a categorical map with each value 
-##'   corresponding to a specific habitat. Every year, the abundance of each 
-##'   PFG within each habitat is recorded, as well as the evenness of the 
-##'   habitat :
-##'   \deqn{
-##'   \text{evenness} = - \frac{\Sigma(\text{PFG.proportion} * 
-##'   log(\text{PFG.proportion}))}{log(\text{no.PFG} - 1)}
-##'   }
-##'   with
-##'   \deqn{\text{PFG.proportion} = \frac{abund_{\text{PFG}_i, \text{Habitat}_j}}
-##'   {abund_{allPFG, \text{Habitat}_j}}}
-##'   Every 5 years, a stability check is done to see if the abundance or the 
-##'   evenness have values out of the usual distribution.
-##'   \itemize{
-##'     \item \emph{HABSTAB.no_hab} : the number of different habitats \cr \cr
-##'   }
-##'   }
-##'   \item{INVASIVE \cr INTRODUCTION}{= to add new PFG during the simulation. 
-##'   \cr \cr
-##'   The introduction areas are defined with a mask (map with 0 or 1). If the 
-##'   habitat suitability filter is on, suitability maps will also be needed 
-##'   for these new groups.
-##'   \itemize{
-##'     \item \emph{ALIEN.freq} : the frequency of each introduction 
-##'     (\emph{in years})
+##'   \item{INVASIVE \cr INTRODUCTION}{= to add new PFG during the simulation \cr
+##'   = defined for events such as invasive introduction, colonization, but also 
+##'   new crops development, reintroduction, etc \cr
+##'   = filter based on maps given for each PFG within the 
+##'   \emph{Simul_parameters} file with the \code{PFG_MASK_ALIENS} flag \cr (see 
+##'   \code{\link{PRE_FATE.params_simulParameters}}) \cr \cr
+##'   These maps, containing either \code{0} or \code{1}, define the 
+##'   introduction areas. \cr If the habitat suitability filter is on, 
+##'   suitability maps will also be needed for these new groups.
+##'   \describe{
+##'     \item{ALIEN.no}{the number of different introductions}
+##'     \item{ALIEN.freq}{the frequency of each introduction (\emph{in years})}
 ##'   }
 ##'   }
 ##' }
 ##' 
 ##' 
-##' @return A \code{.txt} file into the \code{name.simulation/DATA/GLOBAL_PARAMETERS}
-##' directory with the following parameters :
+##' @return A \code{.txt} file into the 
+##' \code{name.simulation/DATA/GLOBAL_PARAMETERS} directory with the following 
+##' parameters :
 ##' 
 ##' \itemize{
-##'   \item NB_CPUS
-##'   \item NB_FG
-##'   \item NB_STRATUM
+##'   \item NO_CPU
+##'   \item NO_PFG
+##'   \item NO_STRATA
 ##'   \item SIMULATION_DURATION
 ##'   \item SEEDING_DURATION
 ##'   \item SEEDING_TIMESTEP
@@ -306,32 +396,24 @@
 ##' 
 ##' \itemize{
 ##'   \item DO_DISTURBANCES
-##'   \item NB_DISTURBANCES
-##'   \item NB_SUBDISTURBANCES
-##'   \item FREQ_DISTURBANCES
+##'   \item DIST_NO
+##'   \item DIST_NOSUB
+##'   \item DIST_FREQ
 ##' }
-##' 
-##' If the simulation includes \emph{drought disturbances} :
+##'  
+##' If the simulation includes \emph{drought disturbance} :
 ##' 
 ##' \itemize{
-##'   \item DO_DROUGHT_DISTURBANCES
-##'   \item NB_SUBDROUGHT
-##'   \item CHRONO_POST_DROUGHT
-##'   \item CHRONO_CURR_DROUGHT
-##' }
-##' 
-##' If the simulation includes \emph{habitat stability check} :
-##' 
-##' \itemize{
-##'   \item DO_HAB_STABILITY
-##'   \item NB_HABITATS
+##'   \item DO_DROUGHT_DISTURBANCE
+##'   \item DROUGHT_NOSUB
 ##' }
 ##' 
 ##' If the simulation includes \emph{aliens introduction} :
 ##' 
 ##' \itemize{
-##'   \item DO_ALIENS_DISTURBANCE
-##'   \item FREQ_ALIENS
+##'   \item DO_ALIENS_INTRODUCTION
+##'   \item ALIENS_NO
+##'   \item ALIENS_FREQ
 ##' }
 ##' 
 ##' 
@@ -343,6 +425,7 @@
 ##' \code{\link{PRE_FATE.params_PFGsoil}},
 ##' \code{\link{PRE_FATE.params_PFGdispersal}},
 ##' \code{\link{PRE_FATE.params_PFGdisturbance}},
+##' \code{\link{PRE_FATE.params_PFGdrought}},
 ##' \code{\link{PRE_FATE.params_simulParameters}}
 ##' 
 ##' @examples
@@ -353,7 +436,7 @@
 ##' ## Create a Global_parameters file
 ##' PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
 ##'                                  , required.no_PFG = 3
-##'                                  , required.no_STRATA = 5
+##'                                  , required.no_strata = 5
 ##'                                  , required.simul_duration = 100
 ##'                                  , required.seeding_duration = 10
 ##'                                  , required.seeding_timestep = 1
@@ -373,7 +456,7 @@
 ##' ## Create SEVERAL Global_parameters files
 ##' PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
 ##'                                  , required.no_PFG = 3
-##'                                  , required.no_STRATA = 5
+##'                                  , required.no_strata = 5
 ##'                                  , required.simul_duration = 100
 ##'                                  , required.seeding_duration = 10
 ##'                                  , required.seeding_timestep = 1
@@ -404,8 +487,8 @@
 ##' 
 ##' ## Create a Global_parameters file
 ##' PRE_FATE.params_globalParameters(name.simulation = "FATE_PNE"
-##'                                  , required.no_PFG = PNE_PARAM$global["NB_FG"]
-##'                                  , required.no_STRATA = PNE_PARAM$global["NB_STRATUM"]
+##'                                  , required.no_PFG = PNE_PARAM$global["NO_PFG"]
+##'                                  , required.no_strata = PNE_PARAM$global["NO_STRATA"]
 ##'                                  , required.simul_duration = PNE_PARAM$global["SIMULATION_DURATION"]
 ##'                                  , required.seeding_duration = PNE_PARAM$global["SEEDING_DURATION"]
 ##'                                  , required.seeding_timestep = PNE_PARAM$global["SEEDING_TIMESTEP"]
@@ -429,7 +512,7 @@
 ##'                                  
 ##' 
 ##' @export
-##'
+##' 
 ## END OF HEADER ###############################################################
 
 
@@ -438,7 +521,7 @@ PRE_FATE.params_globalParameters = function(
   , opt.no_CPU = 1
   , opt.replacePrevious = FALSE
   , required.no_PFG
-  , required.no_STRATA
+  , required.no_strata
   , required.simul_duration
   , required.seeding_duration
   , required.seeding_timestep
@@ -460,6 +543,11 @@ PRE_FATE.params_globalParameters = function(
   , DIST.no
   , DIST.no_sub
   , DIST.freq
+  , doDrought = FALSE
+  , DROUGHT.no_sub
+  , doAliens = FALSE
+  , ALIEN.no
+  , ALIEN.freq
   , doFire = FALSE
   # , FIRE.no
   # , FIRE.no_sub
@@ -476,15 +564,9 @@ PRE_FATE.params_globalParameters = function(
   # , FIRE.logit_init
   # , FIRE.logit_spread
   # , FIRE.DI_no_clim
-  , doDrought = FALSE
-  # , DROUGHT.no_sub
-  # , DROUGHT.chrono_post
-  # , DROUGHT.chrono_curr
-  , doHabStability = FALSE
-  # , HABSTAB.no_hab
-  , doAliens = FALSE
-  # , ALIEN.freq
 ){
+  
+  #############################################################################
   
   .testParam_existFolder(name.simulation, "DATA/GLOBAL_PARAMETERS/")
   
@@ -495,124 +577,77 @@ PRE_FATE.params_globalParameters = function(
     warning(paste0("Wrong type of data!\n `opt.no_CPU` must be an integer > 0\n"
                    , " ==> Automatically set to 1"))
   }
-  if (.testParam_notNum(required.no_PFG) ||
-      sum(required.no_PFG <= 0) > 0 ){
-    .stopMessage_beInteger("required.no_PFG")
-  }
-  if (.testParam_notNum(required.no_STRATA) ||
-      sum(required.no_STRATA <= 0) > 0 ){
-    .stopMessage_beInteger("required.no_STRATA")
-  }
-  if (.testParam_notNum(required.simul_duration) ||
-      sum(required.simul_duration <= 0) > 0 ){
-    .stopMessage_beInteger("required.simul_duration")
-  }
-  if (.testParam_notNum(required.seeding_duration) ||
-      sum(required.seeding_duration < 0) > 0 ){
-    stop("Wrong type of data!\n `required.seeding_duration` must be an integer >= 0")
-  }
-  if (.testParam_notNum(required.seeding_timestep) ||
-      sum(required.seeding_timestep <= 0) > 0 ){
-    .stopMessage_beInteger("required.seeding_timestep")
-  }
-  if (.testParam_notNum(required.seeding_input) ||
-      sum(required.seeding_input <= 0) > 0 ){
-    .stopMessage_beInteger("required.seeding_input")
-  }
-  if (.testParam_notNum(required.max_abund_low) ||
-      sum(required.max_abund_low <= 0) > 0 )
+  .testParam_notInteger.m("required.no_PFG", required.no_PFG)
+  .testParam_notInteger.m("required.no_strata", required.no_strata)
+  .testParam_notInteger.m("required.simul_duration", required.simul_duration)
+  .testParam_notInteger.m("required.seeding_duration", required.seeding_duration)
+  .testParam_notInteger.m("required.seeding_timestep", required.seeding_timestep)
+  .testParam_notInteger.m("required.seeding_input", required.seeding_input)
+  .testParam_notInteger.m("required.max_abund_low", required.max_abund_low)
+  .testParam_notRound.m("required.max_abund_low", required.max_abund_low)
+  .testParam_notInteger.m("required.max_abund_medium", required.max_abund_medium)
+  .testParam_notRound.m("required.max_abund_medium", required.max_abund_medium)
+  .testParam_notInteger.m("required.max_abund_high", required.max_abund_high)
+  .testParam_notRound.m("required.max_abund_high", required.max_abund_high)
+  if (sum(required.max_abund_low > required.max_abund_medium) > 0)
   {
-    .stopMessage_beInteger("required.max_abund_low")
-  } else if (round(required.max_abund_low) != required.max_abund_low)
-  {
-    warning("`required.max_abund_low` is a double. It will be converted (rounded) to an integer")
+    stop(paste0("Wrong type of data!\n `required.max_abund_low` must contain "
+                , "values equal or inferior to `required.max_abund_medium`"))
   }
-  if (.testParam_notNum(required.max_abund_medium) ||
-      sum(required.max_abund_medium <= 0) > 0 )
+  if (sum(required.max_abund_medium > required.max_abund_high) > 0)
   {
-    .stopMessage_beInteger("required.max_abund_medium")
-  } else if (round(required.max_abund_medium) != required.max_abund_medium)
-  {
-    warning("`required.max_abund_medium` is a double. It will be converted (rounded) to an integer")
+    stop(paste0("Wrong type of data!\n `required.max_abund_medium` must contain "
+                , "values equal or inferior to `required.max_abund_high`"))
   }
-  if (.testParam_notNum(required.max_abund_high) ||
-      sum(required.max_abund_high <= 0) > 0 )
-  {
-    .stopMessage_beInteger("required.max_abund_high")
-  } else if (round(required.max_abund_high) != required.max_abund_high)
-  {
-    warning("`required.max_abund_high` is a double. It will be converted (rounded) to an integer")
-  }
-  
   if (doLight)
   {
-    if (.testParam_notNum(LIGHT.thresh_medium) ||
-        LIGHT.thresh_medium <= 0 )
-    {
-      .stopMessage_beInteger("LIGHT.thresh_medium")
-    } else if (round(LIGHT.thresh_medium) != LIGHT.thresh_medium)
-    {
-      warning("`LIGHT.thresh_medium` is a double. It will be converted (rounded) to an integer")
-    }
-    if (.testParam_notNum(LIGHT.thresh_low) ||
-        LIGHT.thresh_low <= 0 )
-    {
-      .stopMessage_beInteger("LIGHT.thresh_low")
-    } else if (round(LIGHT.thresh_low) != LIGHT.thresh_low)
-    {
-      warning("`LIGHT.thresh_low` is a double. It will be converted (rounded) to an integer")
+    .testParam_notInteger.m("LIGHT.thresh_medium", LIGHT.thresh_medium)
+    .testParam_notRound.m("LIGHT.thresh_medium", LIGHT.thresh_medium)
+    .testParam_notInteger.m("LIGHT.thresh_low", LIGHT.thresh_low)
+    .testParam_notRound.m("LIGHT.thresh_low", LIGHT.thresh_low)
+    if (sum(LIGHT.thresh_medium > LIGHT.thresh_low) > 0){
+      stop(paste0("Wrong type of data!\n `LIGHT.thresh_medium` must contain "
+                  , "values equal or inferior to `LIGHT.thresh_low`"))
     }
   }
-  
   if (doSoil)
   {
-    if (.testParam_notNum(SOIL.init) || SOIL.init < 0)
-    {
-      stop("Wrong type of data!\n `SOIL.init` must contain numeric value > 0")
-    }
-    if (.testParam_notNum(SOIL.retention) || SOIL.retention < 0 || SOIL.retention > 1)
-    {
-      stop("Wrong type of data!\n `SOIL.retention` must contain numeric value between 0 and 1")
-    }
+    .testParam_notNum.m("SOIL.init", SOIL.init)
+    .testParam_notBetween.m("SOIL.retention", SOIL.retention, 0, 1)
   }
-  
   if (doDispersal)
   {
-    if (.testParam_notNum(DISPERSAL.mode) ||
-        sum(!(DISPERSAL.mode %in% c(1,2,3))) > 0){
-      .stopMessage_content("DISPERSAL.mode", c("1 (uniform kernel)"
-                                               , "2 (exponential kernel)"
-                                               , "3 (exponential kernel with probability)"))
-    }
+    .testParam_notInValues.m("DISPERSAL.mode", DISPERSAL.mode, c(1, 2, 3))
   }
-  
   if (doHabSuitability)
   {
-    if (.testParam_notNum(HABSUIT.ref_option) ||
-        sum(!(HABSUIT.ref_option %in% c(1,2))) > 0){
-      .stopMessage_content("HABSUIT.ref_option", c("1 (random)", "2 (distribution per PFG)"))
-    }
+    .testParam_notInValues.m("HABSUIT.ref_option", HABSUIT.ref_option, c(1, 2))
   }
-  
   if (doDisturbances)
   {
-    if (.testParam_notNum(DIST.no) ||
-        DIST.no <= 0 ){
-      .stopMessage_beInteger("DIST.no")
+    .testParam_notInteger.m("DIST.no", DIST.no)
+    .testParam_notInteger.m("DIST.no_sub", DIST.no_sub)
+    .testParam_notInteger.m("DIST.freq", DIST.freq)
+    if (length(DIST.freq) != DIST.no){
+      stop(paste0("Wrong type of data!\n `DIST.freq` must contain as many "
+                  , "values as the number of disturbances (`DIST.no`)"))
     }
-    if (.testParam_notNum(DIST.no_sub) ||
-        DIST.no_sub <= 0 ){
-      .stopMessage_beInteger("DIST.no_sub")
-    }
-    if (.testParam_notNum(DIST.freq) ||
-        sum(DIST.freq <= 0) > 0){
-      stop("Wrong type of data!\n `DIST.freq` must be a vector of integer > 0")
-    } else if (length(DIST.freq) != DIST.no){
-      stop("Wrong type of data!\n `DIST.freq` must contain as many values as the number of disturbances (`DIST.no`)")
+  }
+  if (doDrought)
+  {
+    .testParam_notInteger.m("DROUGHT.no_sub", DROUGHT.no_sub)
+  }
+  if (doAliens)
+  {
+    .testParam_notInteger.m("ALIEN.no", ALIEN.no)
+    .testParam_notInteger.m("ALIEN.freq", ALIEN.freq)
+    if (length(ALIEN.freq) != ALIEN.no){
+      stop(paste0("Wrong type of data!\n `ALIEN.freq` must contain as many "
+                  , "values as the number of introductions (`ALIEN.no`)"))
     }
   }
   
-  #################################################################################################
+  #############################################################################
   
   if (doLight)
   {
@@ -669,9 +704,9 @@ PRE_FATE.params_globalParameters = function(
                        , DIST.no_sub
                        , DIST.freq)
     names.params.list.DIST = c("DO_DISTURBANCES"
-                               , "NB_DISTURBANCES"
-                               , "NB_SUBDISTURBANCES"
-                               , "FREQ_DISTURBANCES")
+                               , "DIST_NO"
+                               , "DIST_NOSUB"
+                               , "DIST_FREQ")
   } else
   {
     params.DIST = list(as.numeric(doDisturbances))
@@ -679,47 +714,34 @@ PRE_FATE.params_globalParameters = function(
   }
   if (doDrought)
   {
-    # params.DROUGHT = list(as.numeric(doDrought)
-    #                       , DROUGHT.no_sub
-    #                       , DROUGHT.chrono_post
-    #                       , DROUGHT.chrono_curr)
-    # names.params.list.DROUGHT = c("DO_DROUGHT_DISTURBANCES"
-    #                               , "NB_SUBDROUGHT"
-    #                               , "CHRONO_POST_DROUGHT"
-    #                               , "CHRONO_CURR_DROUGHT")
+    params.DROUGHT = list(as.numeric(doDrought)
+                          , DROUGHT.no_sub)
+    names.params.list.DROUGHT = c("DO_DROUGHT_DISTURBANCE"
+                                  , "DROUGHT_NOSUB")
   } else
   {
     params.DROUGHT = list(as.numeric(doDrought))
-    names.params.list.DROUGHT = "DO_DROUGHT_DISTURBANCES"
-  }
-  if (doHabStability)
-  {
-    # params.HABSTAB = list(as.numeric(doHabStability)
-    #                       , HABSTAB.no_hab)
-    # names.params.list.HABSTAB = c("DO_HAB_STABILITY"
-    #                               , "NB_HABITATS")
-  } else
-  {
-    params.HABSTAB = list(as.numeric(doHabStability))
-    names.params.list.HABSTAB = "DO_HAB_STABILITY"
+    names.params.list.DROUGHT = "DO_DROUGHT_DISTURBANCE"
   }
   if (doAliens)
   {
-    # params.ALIEN = list(as.numeric(doAliens)
-    #                     , ALIEN.freq)
-    # names.params.list.ALIEN = c("DO_ALIENS_DISTURBANCE"
-    #                             , "FREQ_ALIENS")
+    params.ALIEN = list(as.numeric(doAliens)
+                        , ALIEN.no
+                        , ALIEN.freq)
+    names.params.list.ALIEN = c("DO_ALIENS_INTRODUCTION"
+                                , "ALIENS_NO"
+                                , "ALIENS_FREQ")
   } else
   {
     params.ALIEN = list(as.numeric(doAliens))
-    names.params.list.ALIEN = "DO_ALIENS_DISTURBANCE"
+    names.params.list.ALIEN = "DO_ALIENS_INTRODUCTION"
   } 
   
-  #################################################################################################
+  #############################################################################
   
   params.combi = expand.grid(opt.no_CPU
                              , required.no_PFG
-                             , required.no_STRATA
+                             , required.no_strata
                              , required.simul_duration
                              , required.seeding_duration
                              , required.seeding_timestep
@@ -737,14 +759,14 @@ PRE_FATE.params_globalParameters = function(
     res = c(res, params.HABSUIT)
     res = c(res, params.DIST)
     res = c(res, params.DROUGHT)
-    res = c(res, params.HABSTAB)
     res = c(res, params.ALIEN)
   })
   
   no.start = 1
   if (!opt.replacePrevious)
   {
-    previous.files = list.files(path = paste0(name.simulation, "/DATA/GLOBAL_PARAMETERS/")
+    previous.files = list.files(path = paste0(name.simulation
+                                              , "/DATA/GLOBAL_PARAMETERS/")
                                 , pattern = "^Global_parameters_")
     if (length(previous.files) > 0) {
       no.start = length(previous.files) + 1
@@ -752,9 +774,9 @@ PRE_FATE.params_globalParameters = function(
   }
   
   names.params.list = paste0("V", no.start:length(params.list))
-  names.params.list.sub = c("NB_CPUS"
-                            , "NB_FG"
-                            , "NB_STRATUM"
+  names.params.list.sub = c("NO_CPU"
+                            , "NO_PFG"
+                            , "NO_STRATA"
                             , "SIMULATION_DURATION"
                             , "SEEDING_DURATION"
                             , "SEEDING_TIMESTEP"
@@ -769,7 +791,6 @@ PRE_FATE.params_globalParameters = function(
   names.params.list.sub = c(names.params.list.sub, names.params.list.HABSUIT)
   names.params.list.sub = c(names.params.list.sub, names.params.list.DIST)
   names.params.list.sub = c(names.params.list.sub, names.params.list.DROUGHT)
-  names.params.list.sub = c(names.params.list.sub, names.params.list.HABSTAB)
   names.params.list.sub = c(names.params.list.sub, names.params.list.ALIEN)
   
   
@@ -777,10 +798,10 @@ PRE_FATE.params_globalParameters = function(
     params = params.list[[i]]
     names(params) = names.params.list.sub
     
-    .createParams(params.file = paste0(name.simulation,
-                                       "/DATA/GLOBAL_PARAMETERS/Global_parameters_",
-                                       names.params.list[i],
-                                       ".txt")
+    .createParams(params.file = paste0(name.simulation
+                                       , "/DATA/GLOBAL_PARAMETERS/Global_parameters_"
+                                       , names.params.list[i]
+                                       , ".txt")
                   , params.list = params)
   }
   

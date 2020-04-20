@@ -9,24 +9,42 @@
 ##' @description This script is designed to create one (or several) parameter 
 ##' file containing \code{PARAMETER FILENAMES} used in \code{FATE-HD} model.
 ##'              
-##' @param name.simulation a \code{string} that corresponds to the main 
-##' directory or simulation name of the \code{FATE-HD} simulation
-##' @param name.mask a \code{string} that corresponds to the file name of a 
-##' raster mask, with either 0 or 1 within each pixel, 1 corresponding to the 
-##' cells of the studied area in which the succession module of the 
-##' \code{FATE-HD} simulation will take place
-##' @param name.dist (\emph{optional}) \cr a \code{string} that corresponds 
-##' to the file name of a raster mask, with either 0 or 1 within each pixel, 
-##' 1 corresponding to the cells of the studied area in which the disturbance 
-##' module of the \code{FATE-HD} simulation will take place
-##' @param opt.global.name (\emph{optional}) \cr a \code{string} that 
-##' corresponds to the name of the global parameter file in the folder
+##' @param name.simulation a \code{string} corresponding to the main directory 
+##' or simulation name of the \code{FATE-HD} simulation
+##' @param name.MASK a \code{string} corresponding to the file name of a raster 
+##' mask, with either \code{0} or \code{1} within each pixel, \code{1} 
+##' corresponding to the cells of the studied area in which the succession 
+##' (core) module of the \code{FATE-HD} simulation will take place (see 
+##' \code{\href{PRE_FATE.params_globalParameters.html#details}{PRE_FATE.params_globalParameters}})
+##' @param name.DIST (\emph{optional}) \cr a \code{string} corresponding to the 
+##' file name of a raster mask, with either \code{0} or \code{1} within each 
+##' pixel, \code{1} corresponding to the cells of the studied area in which the 
+##' disturbance module of the \code{FATE-HD} simulation will take place (see 
+##' \code{\href{PRE_FATE.params_globalParameters.html#details}{PRE_FATE.params_globalParameters}})
+## @param name.HABSTAB (\emph{optional}) \cr a \code{vector} containing 2 
+## \code{string} corresponding to :
+## \enumerate{
+##   \item the name of a raster file, with an \code{integer} within each pixel 
+##   corresponding to the ID of its habitat
+##   \item the name of a \code{.txt} file, containing baseline statistics for 
+##   each habitat defined in the above-mentioned raster
+## }
+## These files will be used by the habitat stability module of the 
+## \code{FATE-HD} simulation (see 
+## \code{\href{PRE_FATE.params_globalParameters.html#details}{PRE_FATE.params_globalParameters}})
+##' @param name.DROUGHT (\emph{optional}) \cr a \code{string} corresponding to 
+##' the name of a raster file, with a \code{numeric} value within each pixel 
+##' corresponding to the drought intensity experienced by this pixel throught 
+##' the drought disturbance module of the \code{FATE-HD} simulation (see 
+##' \code{\href{PRE_FATE.params_globalParameters.html#details}{PRE_FATE.params_globalParameters}})
+##' @param opt.global.name (\emph{optional}) \cr a \code{string} corresponding 
+##' to the name of the global parameter file in the folder 
 ##' \code{name.simulation/DATA/GLOBAL_PARAMETERS/} that will be used to build 
 ##' the simulation parameter file
-##' @param opt.folder.name (\emph{optional}) \cr a \code{string} that 
-##' corresponds to the name of the folder in each 
-##' \code{name.simulation/DATA/PFGS/module/} from which PFG file names will be 
-##' extracted to build the simulation parameter file
+##' @param opt.folder.name (\emph{optional}) \cr a \code{string} corresponding 
+##' to the name of the folder in each \code{name.simulation/DATA/PFGS/module/} 
+##' from which PFG file names will be extracted to build the simulation 
+##' parameter file
 ##' 
 ##' 
 ##' 
@@ -40,67 +58,95 @@
 ##' \describe{
 ##'   \item{GLOBAL_PARAMS}{file where parameters related to the simulation 
 ##'   definition are referred (e.g. number of PFG involved, number of height 
-##'   strata, simulation duration, computer resources, modules loaded, ...) \cr
+##'   strata, simulation duration, computer resources, modules loaded, etc) \cr
 ##'   (see \code{\link{PRE_FATE.params_globalParameters}}) \cr \cr
 ##'   }
-##'   \item{SAVE_DIR}{directory where simulation outputs will be stored}
-##'   \item{ARRAYS_SAVING_ \cr YEARS (\emph{optional})}{file containing the 
+##'   \item{SAVING_DIR}{directory where simulation outputs will be stored}
+##'   \item{SAVING_YEARS_ \cr ARRAYS (\emph{optional})}{file containing the 
 ##'   years for which simulation maps will be saved \cr
 ##'   (see \code{\link{PRE_FATE.params_saveYears}})
 ##'   }
-##'   \item{OBJECTS_SAVING_ \cr YEARS (\emph{optional})}{file containing the 
+##'   \item{SAVING_YEARS_ \cr OBJECTS (\emph{optional})}{file containing the 
 ##'   years for which simulation outputs will be saved \cr
 ##'   (see \code{\link{PRE_FATE.params_saveYears}}) \cr \cr
 ##'   }
 ##'   \item{MASK}{raster mask that will define the study area}
-##'   \item{MASK_CHANGE_TIME \cr (\emph{optional})}{file containing the years 
+##'   \item{MASK_CHANGEMASK_YEARS \cr (\emph{optional})}{file containing the years 
 ##'   to change rasters for the succession module \cr
 ##'   (see \code{\link{PRE_FATE.params_changingYears}})
 ##'   }
-##'   \item{MASK_CHANGE_MASK \cr (\emph{optional})}{file containing the files 
+##'   \item{MASK_CHANGEMASK_FILES \cr (\emph{optional})}{file containing the files 
 ##'   to change rasters for the succession module \cr
 ##'   (see \code{\link{PRE_FATE.params_changingYears}}) \cr \cr
 ##'   }
-##'   \item{PFG_LIFE_HISTORY_ \cr PARAMS}{PFG life history related parameters 
+##'   \item{PFG_PARAMS_ \cr LIFE_HISTORY}{PFG life history related parameters 
 ##'   (one by PFG) \cr
 ##'   (see \code{\link{PRE_FATE.params_PFGsuccession}}) \cr \cr
 ##'   }
-##'   \item{PFG_LIGHT_ \cr PARAMS (\emph{optional})}{PFG light preferences and 
+##'   \item{PFG_PARAMS_ \cr LIGHT (\emph{optional})}{PFG light preferences and 
 ##'   tolerance related parameters (one by PFG) \cr
 ##'   (see \code{\link{PRE_FATE.params_PFGlight}}) \cr \cr
 ##'   }
-##'   \item{PFG_SOIL_ \cr PARAMS (\emph{optional})}{PFG soil contribution and 
+##'   \item{PFG_PARAMS_ \cr SOIL (\emph{optional})}{PFG soil contribution and 
 ##'   tolerance related parameters (one by PFG) \cr
 ##'   (see \code{\link{PRE_FATE.params_PFGsoil}}) \cr \cr
 ##'   }
-##'   \item{PFG_DISPERSAL_ \cr PARAMS (\emph{optional})}{PFG dispersal 
+##'   \item{PFG_PARAMS_ \cr DISPERSAL (\emph{optional})}{PFG dispersal 
 ##'   capacity related parameters (one by PFG) \cr
 ##'   (see \code{\link{PRE_FATE.params_PFGdispersal}}) \cr \cr
 ##'   }
-##'   \item{PFG_HAB_MASK \cr (\emph{optional})}{raster masks (one by PFG) 
+##'   \item{PFG_MASK_HABSUIT \cr (\emph{optional})}{raster masks (one by PFG) 
 ##'   containing PFG habitat suitability for the study area}
-##'   \item{HAB_CHANGE_TIME \cr (\emph{optional})}{file containing the years 
+##'   \item{HABSUIT_CHANGEMASK_YEARS \cr (\emph{optional})}{file containing the years 
 ##'   to change rasters for the habitat suitability module \cr
 ##'   (see \code{\link{PRE_FATE.params_changingYears}})
 ##'   }
-##'   \item{HAB_CHANGE_MASK \cr (\emph{optional})}{file containing the files 
+##'   \item{HABSUIT_CHANGEMASK_FILES \cr (\emph{optional})}{file containing the files 
 ##'   to change rasters for the habitat suitability module \cr
 ##'   (see \code{\link{PRE_FATE.params_changingYears}}) \cr \cr
 ##'   }
-##'   \item{PFG_DISTURBANCES_ \cr PARAMS (\emph{optional})}{PFG disturbance 
+##'   \item{PFG_PARAMS_ \cr DISTURBANCES (\emph{optional})}{PFG disturbance 
 ##'   related parameters in terms of resprouting and mortality (one by PFG) \cr
 ##'   (see \code{\link{PRE_FATE.params_PFGdisturbance}})
 ##'   }
 ##'   \item{DIST_MASK \cr (\emph{optional})}{raster masks that will define the 
 ##'   disturbance areas}
-##'   \item{DIST_CHANGE_TIME \cr (\emph{optional})}{file containing the years 
+##'   \item{DIST_CHANGEMASK_YEARS \cr (\emph{optional})}{file containing the years 
 ##'   to change rasters for the disturbance module \cr
 ##'   (see \code{\link{PRE_FATE.params_changingYears}})
 ##'   }
-##'   \item{DIST_CHANGE_MASK \cr (\emph{optional})}{file containing the files 
+##'   \item{DIST_CHANGEMASK_FILES \cr (\emph{optional})}{file containing the files 
 ##'   to change rasters for the disturbance module \cr
-##'   (see \code{\link{PRE_FATE.params_changingYears}})
+##'   (see \code{\link{PRE_FATE.params_changingYears}}) \cr \cr
 ##'   }
+##   \item{HABSTAB_MASK \cr (\emph{optional})}{raster mask that will define the 
+##   habitat areas}
+##   \item{HABSTAB_BASELINE \cr (\emph{optional})}{tobefilled \cr \cr}
+##'   \item{PFG_PARAMS_DROUGHT \cr (\emph{optional})}{PFG drought disturbance 
+##'   related parameters in terms of resprouting and mortality (one by PFG) \cr
+##'   (see \code{\link{PRE_FATE.params_PFGdrought}})}
+##'   \item{DROUGHT_MASK \cr (\emph{optional})}{raster mask that will define the 
+##'   drought intensity of the area}
+##'   \item{DROUGHT_CHANGEMASK_YEARS \cr (\emph{optional})}{file containing the 
+##'   years to change rasters for the drought disturbances module \cr
+##'   (see \code{\link{PRE_FATE.params_changingYears}})}
+##'   \item{DROUGHT_CHANGEMASK_FILES \cr (\emph{optional})}{file containing the 
+##'   files to change rasters for the drought disturbances module \cr
+##'   (see \code{\link{PRE_FATE.params_changingYears}}) \cr \cr}
+##'   \item{PFG_MASK_ALIENS \cr (\emph{optional})}{raster masks (one by alien) 
+##'   containing alien introduction zones for the study area}
+##'   \item{ALIENS_CHANGEMASK_YEARS \cr (\emph{optional})}{file containing the 
+##'   years to change rasters for the aliens introduction module \cr
+##'   (see \code{\link{PRE_FATE.params_changingYears}})}
+##'   \item{ALIENS_CHANGEMASK_FILES \cr (\emph{optional})}{file containing the 
+##'   files to change rasters for the aliens introduction module \cr
+##'   (see \code{\link{PRE_FATE.params_changingYears}})}
+##'   \item{ALIENS_CHANGEFREQ_YEARS \cr (\emph{optional})}{file containing the 
+##'   years to change frequencies for the aliens introduction module \cr
+##'   (see \code{\link{PRE_FATE.params_changingYears}})}
+##'   \item{ALIENS_CHANGEFREQ_FILES \cr (\emph{optional})}{file containing the 
+##'   files to change frequencies for the aliens introduction module \cr
+##'   (see \code{\link{PRE_FATE.params_changingYears}})}
 ##' }
 ##' 
 ##' 
@@ -108,15 +154,16 @@
 ##' @note 
 ##' 
 ##' \itemize{
-##'   \item The links to files are \strong{NOT absolute paths}. \cr
+##'   \item The function produces links to files that are \strong{NOT absolute 
+##'   paths BUT relative ones}. \cr
 ##'   \emph{When relative paths are used}, the user should be careful of the 
 ##'   folder from which the simulation is launched. \cr
 ##'   \emph{A function allows to transform these relative paths into absolute 
-##'   ones. (see \code{\link{.setPattern}})}
+##'   ones. (see examples of \code{\link{.setPattern}})}.
 ##'   \item \strong{The order of files matters!} \cr
-##'   For instance the first link below \code{--PFG_LIFE_HISTORY_PARAMS--} 
-##'   flag has to match (the same PFG) with the first item below the 
-##'   \code{--PFG_DISPERSAL_PARAMS--} flag.
+##'   For instance the first link below \code{--PFG_PARAMS_LIFE_HISTORY--} flag 
+##'   (e.g. \emph{PFG Albert}) has to match with the first item below the 
+##'   \code{--PFG_PARAMS_DISPERSAL--} flag (must be \emph{PFG Albert} too).
 ##' }
 ##' 
 ##' 
@@ -127,24 +174,39 @@
 ##' 
 ##' \itemize{
 ##'   \item \strong{--GLOBAL_PARAMS--}
-##'   \item \strong{--SAVE_DIR--}
-##'   \item --ARRAYS_SAVING_YEARS-- (\emph{optional})
-##'   \item --OBJECTS_SAVING_YEARS-- (\emph{optional})
+##'   \item \strong{--SAVING_DIR--}
+##'   \itemize{
+##'   \item --SAVING_YEARS_ARRAYS-- (\emph{optional})
+##'   \item --SAVING_YEARS_OBJECTS-- (\emph{optional})
+##'   }
 ##'   \item \strong{--MASK--}
-##'   \item --MASK_CHANGE_TIME-- (\emph{optional})
-##'   \item --MASK_CHANGE_MASK-- (\emph{optional})
-##'   \item \strong{--PFG_LIFE_HISTORY_PARAMS--}
-##'   \item --PFG_LIGHT_PARAMS-- (\emph{optional})
-##'   \item --PFG_SOIL_PARAMS-- (\emph{optional})
-##'   \item --PFG_DISPERSAL_PARAMS-- (\emph{optional})
-##'   \item --PFG_HAB_MASK-- (\emph{optional})
-##'   \item --HAB_CHANGE_TIME-- (\emph{optional})
-##'   \item --HAB_CHANGE_MASK-- (\emph{optional})
-##'   \item --PFG_DISTURBANCES_PARAMS-- (\emph{optional})
+##'   \itemize{
+##'   \item --MASK_CHANGEMASK_YEARS-- (\emph{optional})
+##'   \item --MASK_CHANGEMASK_FILES-- (\emph{optional})
+##'   }
+##'   \item \strong{--PFG_PARAMS_LIFE_HISTORY--}
+##'   \itemize{
+##'   \item --PFG_PARAMS_LIGHT-- (\emph{optional})
+##'   \item --PFG_PARAMS_SOIL-- (\emph{optional})
+##'   \item --PFG_PARAMS_DISPERSAL-- (\emph{optional})
+##'   \item --PFG_MASK_HABSUIT-- (\emph{optional})
+##'   \item --HABSUIT_CHANGEMASK_YEARS-- (\emph{optional})
+##'   \item --HABSUIT_CHANGEMASK_FILES-- (\emph{optional})
+##'   \item --PFG_PARAMS_DISTURBANCES-- (\emph{optional})
 ##'   \item --DIST_MASK-- (\emph{optional})
-##'   \item --DIST_CHANGE_TIME-- (\emph{optional})
-##'   \item --DIST_CHANGE_MASK-- (\emph{optional})
-##'   \item --END_OF_FILE--
+##'   \item --DIST_CHANGEMASK_YEARS-- (\emph{optional})
+##'   \item --DIST_CHANGEMASK_FILES-- (\emph{optional})
+##'   \item --PFG_PARAMS_DROUGHT-- (\emph{optional})
+##'   \item --DROUGHT_MASK-- (\emph{optional})
+##'   \item --DROUGHT_CHANGEMASK_YEARS-- (\emph{optional})
+##'   \item --DROUGHT_CHANGEMASK_FILES-- (\emph{optional})
+##'   \item --PFG_MASK_ALIENS-- (\emph{optional})
+##'   \item --ALIENS_CHANGEMASK_YEARS-- (\emph{optional})
+##'   \item --ALIENS_CHANGEMASK_FILES-- (\emph{optional})
+##'   \item --ALIENS_CHANGEFREQ_YEARS-- (\emph{optional})
+##'   \item --ALIENS_CHANGEFREQ_FILES-- (\emph{optional})
+##' }
+##'   \item \strong{--END_OF_FILE--}
 ##' }
 ##' 
 ##' 
@@ -157,6 +219,7 @@
 ##' \code{\link{PRE_FATE.params_PFGsoil}},
 ##' \code{\link{PRE_FATE.params_PFGdispersal}},
 ##' \code{\link{PRE_FATE.params_PFGdisturbance}},
+##' \code{\link{PRE_FATE.params_PFGdrought}},
 ##' \code{\link{PRE_FATE.params_saveYears}},
 ##' \code{\link{PRE_FATE.params_changingYears}},
 ##' \code{\link{.setPattern}}
@@ -282,8 +345,8 @@
 ##' 
 ##' ## Create a Global_parameters file
 ##' PRE_FATE.params_globalParameters(name.simulation = "FATE_PNE"
-##'                                  , required.no_PFG = PNE_PARAM$global["NB_FG"]
-##'                                  , required.no_STRATA = PNE_PARAM$global["NB_STRATUM"]
+##'                                  , required.no_PFG = PNE_PARAM$global["NO_FG"]
+##'                                  , required.no_STRATA = PNE_PARAM$global["NO_STRATUM"]
 ##'                                  , required.simul_duration = PNE_PARAM$global["SIMULATION_DURATION"]
 ##'                                  , required.seeding_duration = PNE_PARAM$global["SEEDING_DURATION"]
 ##'                                  , required.seeding_timestep = PNE_PARAM$global["SEEDING_TIMESTEP"]
@@ -320,18 +383,21 @@
 ##' 
 ##' @export
 ##' 
-##' @importFrom foreach foreach
+##' @importFrom foreach foreach %do%
 ##'
 ## END OF HEADER ###############################################################
 
 
 PRE_FATE.params_simulParameters = function(
   name.simulation
-  , name.mask
-  , name.dist = NULL
+  , name.MASK
+  , name.DIST = NULL
+  , name.DROUGHT = NULL
   , opt.global.name = NULL
   , opt.folder.name = NULL
 ){
+  
+  ############################################################################# 
   
   .testParam_existFolder(name.simulation, "PARAM_SIMUL/")
   .testParam_existFolder(name.simulation, "DATA/GLOBAL_PARAMETERS/")
@@ -339,51 +405,38 @@ PRE_FATE.params_simulParameters = function(
   .testParam_existFolder(name.simulation, "DATA/SCENARIO/")
   .testParam_existFolder(name.simulation, "DATA/MASK/")
   .testParam_existFolder(name.simulation, "DATA/PFGS/SUCC/")
-  .testParam_existFolder(name.simulation, "DATA/PFGS/DISP/")
-  .testParam_existFolder(name.simulation, "DATA/PFGS/HABSUIT/")
-  .testParam_existFolder(name.simulation, "DATA/PFGS/LIGHT/")
-  .testParam_existFolder(name.simulation, "DATA/PFGS/SOIL/")
   .testParam_existFolder(name.simulation, "RESULTS/")
-  if (.testParam_notChar(name.mask))
-  {
-    .stopMessage_beChar("name.mask") 
-  } else
-  {
-    .testParam_existFile(paste0(name.simulation, "/DATA/MASK/", name.mask))
-  }
-  ## CHECKS for parameter opt.global.name
-  if (is.null(opt.global.name)){
-    opt.global.name = ""
-  } else if (!is.null(opt.global.name) && !is.character(opt.global.name)){
-    warning("As `opt.global.name` does not contain character value, it will be ignored")
-    opt.global.name = ""
-  } else if (nchar(opt.global.name) > 0){
-    opt.global.name = basename(opt.global.name)
-  } else {
-    opt.global.name = ""
-  }
-  ## CHECKS for parameter opt.folder.name
-  if (is.null(opt.folder.name)){
-    opt.folder.name = ""
-  } else if (!is.null(opt.folder.name) && !is.character(opt.folder.name)){
-    warning("As `opt.folder.name` does not contain character value, it will be ignored")
-    opt.folder.name = ""
-  } else if (nchar(opt.folder.name) > 0){
-    opt.folder.name = paste0(opt.folder.name, "/")
-  } else {
-    opt.folder.name = ""
-  }
+  .testParam_notChar.m("name.MASK", name.MASK)
+  .testParam_existFile(paste0(name.simulation, "/DATA/MASK/", name.MASK))
+  ## CHECK parameter opt.global.name
+  opt.global.name = .getParam_opt.folder.name(opt.global.name
+                                              , basename(opt.global.name)
+                                              , create.dir = FALSE)
+  opt.global.name = sub("/$", "", opt.global.name)
+  ## CHECK parameter opt.folder.name
+  opt.folder.name = .getParam_opt.folder.name(opt.folder.name
+                                              , paste0(opt.folder.name, "/")
+                                              , create.dir = FALSE)
   
-  #################################################################################################
+  type.changing1 = c("MASK", "HABSUIT", "DIST", "DROUGHT", "ALIENS") #, "ALIENS_F")
+  type.changing2 = c("HABSUIT", "ALIENS")
+  
+  
+  #############################################################################
+  ## Get the name(s) of global parameter file(s) that will
+  ## be used to create the simulation parameter file(s)
   
   if (opt.global.name == "")
   {
-    files.GLOBAL = list.files(path = paste0(name.simulation, "/DATA/GLOBAL_PARAMETERS")
+    files.GLOBAL = list.files(path = paste0(name.simulation
+                                            , "/DATA/GLOBAL_PARAMETERS")
                               , pattern = "^Global_parameters.*.txt"
                               , full.names = TRUE)
   } else
   {
-    files.GLOBAL = paste0(name.simulation, "/DATA/GLOBAL_PARAMETERS/", opt.global.name)
+    files.GLOBAL = paste0(name.simulation
+                          , "/DATA/GLOBAL_PARAMETERS/"
+                          , opt.global.name)
   }
   if (length(files.GLOBAL) == 0)
   {
@@ -392,7 +445,8 @@ PRE_FATE.params_simulParameters = function(
                 , "into the DATA/GLOBAL_PARAMETERS/ folder"))
   }
   
-  #################################################################################################
+  #############################################################################
+  ## Get the name(s) of SAVE directory
   
   dirs.SAVE = list.dirs(path = paste0(name.simulation, "/DATA/SAVE")
                         , full.names = FALSE
@@ -405,7 +459,8 @@ PRE_FATE.params_simulParameters = function(
     dirs.SAVE = paste0(name.simulation, "/DATA/SAVE")
   }
   
-  #################################################################################################
+  #############################################################################
+  ## Get the name(s) of SCENARIO directory
   
   dirs.SCENARIO = list.dirs(path = paste0(name.simulation, "/DATA/SCENARIO")
                             , full.names = FALSE
@@ -419,87 +474,102 @@ PRE_FATE.params_simulParameters = function(
     dirs.SCENARIO = paste0(name.simulation, "/DATA/SCENARIO")
   }
   
-  dirs.SCENARIO.MASK = dirs.SCENARIO.HS = dirs.SCENARIO.DIST = vector()
-  for (di in dirs.SCENARIO)
+  for (ty in type.changing1)
   {
-    for (ty in c("MASK", "HS", "DIST"))
+    assign(x = paste0("dirs.SCENARIO.", ty), value = vector())
+    for (di in dirs.SCENARIO)
     {
       files.ty = list.files(path = di
-                            , pattern = paste0("^", ty, "_changing_times")
+                            , pattern = paste0("^", ty, "_changingmask_years")
                             , full.names = TRUE)
       if (length(files.ty) > 0)
       {
-        eval(parse(text = paste0("dirs.SCENARIO.", ty, " = c(dirs.SCENARIO.", ty, ", di)")))
+        eval(parse(text = paste0("dirs.SCENARIO.", ty
+                                 , " = c(dirs.SCENARIO.", ty
+                                 , ", di)")))
       } else
       {
-        warning(paste0("There is no adequate file (`.txt` file starting with `", ty, "_changing_times`) "
+        warning(paste0("There is no adequate file (`.txt` file starting with `"
+                       , ty, "_changingmask_years`) "
                        , "into the folder ", di))
       }
     }
   }
   
-  #################################################################################################
+  #############################################################################
+  ## Get the name(s) of HABSUIT / ALIENS directory
   
-  dirs.HAB = list.dirs(path = paste0(name.simulation, "/DATA/PFGS/HABSUIT")
-                       , full.names = FALSE
-                       , recursive = FALSE)
-  if (length(dirs.HAB) > 0)
+  for (ty in type.changing2)
   {
-    dirs.HAB = paste0(name.simulation, "/DATA/PFGS/HABSUIT/", dirs.HAB)
-  } else
-  {
-    dirs.HAB = paste0(name.simulation, "/DATA/PFGS/HABSUIT")
-  }
-  
-  dirs.HABSUIT = vector()
-  for (di in dirs.HAB)
-  {
-    files.hs = list.files(path = di
-                          # , pattern = paste0("^", ty, "_changing_times")
-                          , full.names = TRUE)
-    if (length(files.hs) > 0)
+    name.dir = paste0(name.simulation, "/DATA/PFGS/", ty)
+    dirs.SCE = list.dirs(path = name.dir
+                         , full.names = FALSE
+                         , recursive = FALSE)
+    if (length(dirs.SCE) > 0)
     {
-      dirs.HABSUIT = c(dirs.HABSUIT, di)
+      dirs.SCE = paste0(name.dir, "/", dirs.SCE)
+    } else
+    {
+      dirs.SCE = name.dir
+    }
+    
+    assign(x = paste0("dirs.", ty), value = vector())
+    for (di in dirs.SCE)
+    {
+      files.di = list.files(path = di, full.names = TRUE)
+      if (length(files.di) > 0)
+      {
+        eval(parse(text = paste0("dirs.", ty, " = c(dirs.", ty, ", di)")))
+      }
     }
   }
   
-  #################################################################################################
-  #################################################################################################
+  #############################################################################
+  #############################################################################
+  ## Combine the names found (global parameters, SAVE directory, 
+  ## SCENARIO directory, HABSUIT directory)
   
-  sce.mask = sce.hs = sce.dist = ras.hs = 0
+  sce.mask = sce.habsuit = sce.dist = sce.drought = sce.aliens = 0
+  ras.habsuit = ras.aliens = 0
   if (length(dirs.SCENARIO.MASK) > 0) sce.mask = 1:length(dirs.SCENARIO.MASK)
-  if (length(dirs.SCENARIO.HS) > 0) sce.hs = 1:length(dirs.SCENARIO.HS)
+  if (length(dirs.SCENARIO.HABSUIT) > 0) sce.habsuit = 1:length(dirs.SCENARIO.HABSUIT)
   if (length(dirs.SCENARIO.DIST) > 0) sce.dist = 1:length(dirs.SCENARIO.DIST)
-  if (length(dirs.HABSUIT) > 0) ras.hs = 1:length(dirs.HABSUIT)
+  if (length(dirs.SCENARIO.DROUGHT) > 0) sce.drought = 1:length(dirs.SCENARIO.DROUGHT)
+  if (length(dirs.SCENARIO.ALIENS) > 0) sce.aliens = 1:length(dirs.SCENARIO.ALIENS)
+  if (length(dirs.HABSUIT) > 0) ras.habsuit = 1:length(dirs.HABSUIT)
+  if (length(dirs.ALIENS) > 0) ras.aliens = 1:length(dirs.ALIENS)
   
   PARAMS.combi = expand.grid(GLOBAL = 1:length(files.GLOBAL)
                              , SAVE = 1:length(dirs.SAVE)
                              , SCENARIO.MASK = sce.mask
-                             , SCENARIO.HS = sce.hs
+                             , SCENARIO.HABSUIT = sce.habsuit
                              , SCENARIO.DIST = sce.dist
-                             , PFG.HABSUIT = ras.hs)
+                             , SCENARIO.DROUGHT = sce.drought
+                             , SCENARIO.ALIENS = sce.aliens
+                             , PFG.HABSUIT = ras.habsuit
+                             , PFG.ALIENS = ras.aliens)
   
-  #################################################################################################
-  #################################################################################################
+  #############################################################################
+  #############################################################################
+  ## Build a simulation parameter file for each combination found
   
   for (i in 1:nrow(PARAMS.combi))
   {
     
     params.combi = data.frame(GLOBAL = files.GLOBAL[PARAMS.combi$GLOBAL[i]]
-                              , MASK = paste0(name.simulation, "/DATA/MASK/", name.mask))
+                              , MASK = paste0(name.simulation
+                                              , "/DATA/MASK/"
+                                              , name.MASK)
+                              , stringsAsFactors = FALSE)
+    names.params.combi = c("--GLOBAL_PARAMS--", "--MASK--")
     
-    names.params.combi = c("--GLOBAL_PARAMS--"
-                           , "--MASK--")
-    
-    #################################################################################################
+    #############################################################################
     
     di = dirs.SAVE[PARAMS.combi$SAVE[i]]
-    
-    ### -------------------------------------------------------------------- ###
-    
     di.opt = data.frame(pat = c("SAVE_YEARS_maps", "SAVE_YEARS_objects")
                         , nam = c("SAVE.maps", "SAVE.obj")
-                        , param = c("ARRAYS_SAVING_YEARS", "OBJECTS_SAVING_YEARS"))
+                        , param = c("SAVING_YEARS_ARRAYS", "SAVING_YEARS_OBJECTS")
+                        , stringsAsFactors = FALSE)
     
     for (ii in 1:nrow(di.opt))
     {
@@ -513,8 +583,9 @@ PRE_FATE.params_simulParameters = function(
                        , "into the folder ", di))
       } else if (length(files.found) == 1)
       {
-        eval(parse(text = paste0("params.combi$", di.opt$nam[ii], " = files.found")))
-        names.params.combi = c(names.params.combi, paste0("--", di.opt$param[ii], "--"))
+        params.combi[[di.opt$nam[ii]]] = files.found
+        names.params.combi = c(names.params.combi
+                               , paste0("--", di.opt$param[ii], "--"))
       } else
       {
         stop(paste0("There is too many adequate files (`.txt` file starting with `"
@@ -523,67 +594,55 @@ PRE_FATE.params_simulParameters = function(
       }
     }
     
-    #################################################################################################
+    #############################################################################
     
-    for (ty in c("MASK", "HS", "DIST"))
+    for (ty in type.changing1)
     {
       if (PARAMS.combi[, paste0("SCENARIO.", ty)][i] > 0)
       {
-        eval(parse(text = paste0("di = dirs.SCENARIO.", ty, "[PARAMS.combi$SCENARIO.", ty, "[i]]")))
+        eval(parse(text = paste0("di = dirs.SCENARIO.", ty
+                                 , "[PARAMS.combi$SCENARIO.", ty, "[i]]")))
         
-        files.SCENARIO.times = list.files(path = di
-                                          , pattern = paste0("^", ty, "_changing_times")
-                                          , full.names = TRUE)
-        # if (length(files.SCENARIO.times) == 0)
-        # {
-        #   warning(paste0("There is no adequate file (`.txt` file starting with `", ty, "_changing_times`) "
-        #                  , "into the folder ", di))
-        # } else 
-        if (length(files.SCENARIO.times) == 1)
+        ## Changing years
+        files.SCE.years = list.files(path = di
+                                     , pattern = paste0("^", ty, "_changingmask_years")
+                                     , full.names = TRUE)
+        if (length(files.SCE.years) == 1)
         {
-          eval(parse(text = paste0("params.combi$SCENARIO.", ty, " = files.SCENARIO.times")))
-          if (ty == "HS"){
-            names.params.combi = c(names.params.combi, paste0("--HAB_CHANGE_TIME--"))
-          } else {
-            names.params.combi = c(names.params.combi, paste0("--", ty, "_CHANGE_TIME--"))
-          }
+          params.combi[[paste0("SCENARIO.", ty)]] = files.SCE.years
+          names.params.combi = c(names.params.combi
+                                 , paste0("--", ty, "_CHANGEMASK_YEARS--"))
         } else
         {
-          stop(paste0("There is too many adequate files (`.txt` file starting with `", ty, "_changing_times`) "
+          stop(paste0("There is too many adequate files (`.txt` file starting with `"
+                      , ty, "_changingmask_years`) "
                       , "into the folder ", di))
         }
-      }
-    }
-    
-    ### -------------------------------------------------------------------- ###
-    
-    for (ty in c("MASK", "HS", "DIST"))
-    {
-      if (PARAMS.combi[, paste0("SCENARIO.", ty)][i] > 0)
-      {
-        eval(parse(text = paste0("di = dirs.SCENARIO.", ty, "[PARAMS.combi$SCENARIO.", ty, "[i]]")))
-        files.SCENARIO.masks = list.files(path = di
-                                          , pattern = paste0("^", ty, "_changing_masks")
-                                          , full.names = TRUE)
-        if (length(files.SCENARIO.masks) == 0)
+        
+        ## Changing files
+        files.SCE.masks = list.files(path = di
+                                     , pattern = paste0("^", ty, "_changingmask_files")
+                                     , full.names = TRUE)
+        if (length(files.SCE.masks) == 0)
         {
-          warning(paste0("There is no adequate file (`.txt` file starting with `", ty, "_changing_masks`) "
+          warning(paste0("There is no adequate file (`.txt` file starting with `"
+                         , ty, "_changingmask_files`) "
                          , "into the folder ", di))
-        } else if (length(files.SCENARIO.masks) > 0)
+        } else if (length(files.SCE.masks) > 0)
         {
-          eval(parse(text = paste0("SCENARIO.", ty, " = files.SCENARIO.masks")))
+          assign(x = paste0("SCENARIO.", ty), value = files.SCE.masks)
         }
       }
     }
     
-    #################################################################################################
+    #############################################################################
     
     globi = as.character(files.GLOBAL[PARAMS.combi$GLOBAL[i]])
     
     ### -------------------------------------------------------------------- ###
     
     no_PFG = .getParam(params.lines = globi
-                       , flag = "NB_FG"
+                       , flag = "NO_PFG"
                        , flag.split = " "
                        , is.num = TRUE)
     no_PFG = as.numeric(no_PFG)
@@ -601,56 +660,56 @@ PRE_FATE.params_simulParameters = function(
                         , flag = "DO_DISPERSAL"
                         , flag.split = " "
                         , is.num = TRUE)
+    do.HABSUIT = .getParam(params.lines = globi
+                           , flag = "DO_HAB_SUITABILITY"
+                           , flag.split = " "
+                           , is.num = TRUE)
     do.DIST = .getParam(params.lines = globi
                         , flag = "DO_DISTURBANCES"
                         , flag.split = " "
                         , is.num = TRUE)
-
+    do.DROUGHT = .getParam(params.lines = globi
+                           , flag = "DO_DROUGHT_DISTURBANCE"
+                           , flag.split = " "
+                           , is.num = TRUE)
+    do.ALIENS = .getParam(params.lines = globi
+                          , flag = "DO_ALIENS_INTRODUCTION"
+                          , flag.split = " "
+                          , is.num = TRUE)
+    
     ### -------------------------------------------------------------------- ###
     
-    MODULES = c("SUCC", "LIGHT", "SOIL", "DISP", "DIST")
-    
+    MODULES = c("SUCC", "LIGHT", "SOIL", "DISP", "DIST", "DROUGHT")
     for (mod in MODULES)
     {
       if (get(paste0("do.", mod)))
       {
         .testParam_existFolder(name.simulation, paste0("DATA/PFGS/", mod, "/"))
+        name.dir = paste0(name.simulation, "/DATA/PFGS/", mod)
         
         ## Get folders
-        if (opt.folder.name == "")
+        if (opt.folder.name != "")
         {
-          dirs.mod = list.dirs(path = paste0(name.simulation, "/DATA/PFGS/", mod)
+          dirs.mod = paste0(name.dir, "/", opt.folder.name)
+        }
+        if (opt.folder.name == "" || !dir.exists(dirs.mod))
+        {
+          dirs.mod = list.dirs(path = name.dir
                                , full.names = FALSE
                                , recursive = FALSE)
           if (length(dirs.mod) > 0)
           {
-            dirs.mod = paste0(name.simulation, "/DATA/PFGS/", mod, "/", dirs.mod)
+            dirs.mod = paste0(name.dir, "/", dirs.mod)
           } else
           {
-            dirs.mod = paste0(name.simulation, "/DATA/PFGS/", mod)
-          }
-        } else
-        {
-          dirs.mod = paste0(name.simulation, "/DATA/PFGS/", mod, "/", opt.folder.name)
-          if (!dir.exists(dirs.mod))
-          {
-            dirs.mod = list.dirs(path = paste0(name.simulation, "/DATA/PFGS/", mod)
-                                 , full.names = FALSE
-                                 , recursive = FALSE)
-            if (length(dirs.mod) > 0)
-            {
-              dirs.mod = paste0(name.simulation, "/DATA/PFGS/", mod, "/", dirs.mod)
-            } else
-            {
-              dirs.mod = paste0(name.simulation, "/DATA/PFGS/", mod)
-            }
+            dirs.mod = name.dir
           }
         }
         
         ## Get files
         files.PFG = foreach (di.mod = dirs.mod, .combine = "cbind") %do%
         {
-          files.PFG = list.files(path = di.mod #paste0(name.simulation, "/DATA/PFGS/", mod)
+          files.PFG = list.files(path = di.mod
                                  , pattern = paste0("^", mod)
                                  , full.names = TRUE)
           if (length(files.PFG) != no_PFG)
@@ -661,14 +720,14 @@ PRE_FATE.params_simulParameters = function(
                         , "indicated into the file "
                         , globi))
           }
-          return(data.frame(files.PFG))
+          return(data.frame(files.PFG, stringsAsFactors = FALSE))
         }
-        assign(x = paste0("files.PFG.", mod)
-               , value = files.PFG)
+        assign(x = paste0("files.PFG.", mod), value = files.PFG)
         assign(x = paste0("no_files.PFG.", mod)
                , value = ncol(get(paste0("files.PFG.", mod))))
       } else
       {
+        assign(x = paste0("files.PFG.", mod), value = "")
         assign(x = paste0("no_files.PFG.", mod), value = 0)
       }
     }
@@ -680,130 +739,182 @@ PRE_FATE.params_simulParameters = function(
       PFG.combi = expand.grid(sapply(no_files.PFG, function(x) 1:x))
     } else
     {
-      PFG.combi = as.data.frame(matrix(rep(0, length(no_files.PFG) * unique(no_files.PFG))
-                                       , ncol = length(no_files.PFG)))
+      PFG.combi = matrix(rep(0, length(no_files.PFG) * unique(no_files.PFG))
+                         , ncol = length(no_files.PFG))
+      PFG.combi = as.data.frame(PFG.combi)
       colnames(PFG.combi) = names(no_files.PFG)
       for (mod in 1:length(no_files.PFG))
       {
-        eval(parse(text = paste0("PFG.combi$", names(no_files.PFG)[mod], " = 1:no_files.PFG[mod]")))
+        PFG.combi[[names(no_files.PFG)[mod]]] = 1:no_files.PFG[mod]
       }
     }
     
-    #################################################################################################
+    ### -------------------------------------------------------------------- ###
     
-    if (do.DIST)
+    MODULES = c("DIST", "DROUGHT")
+    for (mod in MODULES)
     {
-      if (.testParam_notChar(name.dist))
+      if (get(paste0("do.", mod)))
       {
-        .stopMessage_beChar("name.dist") 
+        .testParam_notChar.m(paste0("name.", mod), get(paste0("name.", mod)))
+        .testParam_existFile(paste0(name.simulation
+                                    , "/DATA/MASK/"
+                                    , get(paste0("name.", mod))))
+        assign(x = paste0("no.", mod)
+               , value = .getParam(params.lines = globi
+                                   , flag = paste0(mod, "_NO")
+                                   , flag.split = " "
+                                   , is.num = TRUE))
       } else
       {
-        .testParam_existFile(paste0(name.simulation, "/DATA/MASK/", name.dist))
+        assign(x = paste0("no.", mod), value = 0)
       }
-      nbDisturbances = .getParam(params.lines = globi
-                                 , flag = "NB_DISTURBANCES"
-                                 , flag.split = " "
-                                 , is.num = TRUE)
     }
     
-    #################################################################################################
+    ### -------------------------------------------------------------------- ###
     
-    doHabSuit = .getParam(params.lines = globi
-                          , flag = "DO_HAB_SUITABILITY"
-                          , flag.split = " "
-                          , is.num = TRUE)
-    if (doHabSuit)
+    MODULES = c("HABSUIT", "ALIENS")
+    for (mod in MODULES)
     {
-      .testParam_existFolder(name.simulation, "DATA/PFGS/HABSUIT/")
-      
-      files.PFG.HS = vector()
-      if (PARAMS.combi[, "PFG.HABSUIT"][i] > 0)
+      if (get(paste0("do.", mod)))
       {
-        di = dirs.HABSUIT[PARAMS.combi$PFG.HABSUIT[i]]
+        .testParam_existFolder(name.simulation, paste0("DATA/PFGS/", mod, "/"))
         
-        files.PFG.HS = list.files(path = di
-                                  , full.names = TRUE)
-        if (length(files.PFG.HS) != no_PFG)
+        if (PARAMS.combi[[paste0("PFG.", mod)]][i] > 0)
         {
-          warning(paste0("There is not the same number of files "
-                         , "into the DATA/PFGS/HABSUIT/ folder as the number of PFG "
-                         , "indicated into the file "
-                         , globi))
+          eval(parse(text = paste0("di = dirs.", mod
+                                   , "[PARAMS.combi$PFG.", mod, "[i]]")))
+          assign(x = paste0("files.PFG.", mod)
+                 , value = list.files(path = di, full.names = TRUE))
+          if (length(get(paste0("files.PFG.", mod))) != no_PFG)
+          {
+            warning(paste0("There is not the same number of files into the "
+                           , "DATA/PFGS/", mod, "/ folder as the number of PFG "
+                           , "indicated into the file "
+                           , globi))
+          }
+        } else
+        {
+          assign(x = paste0("files.PFG.", mod), value = "")
         }
+      } else
+      {
+        assign(x = paste0("files.PFG.", mod), value = "")
       }
     }
+    
+    #############################################################################
     
     FILE_NUMBER = 0
     if (nrow(PARAMS.combi) == 1 && nrow(PFG.combi) == 1)
     {
-      FILE_NUMBER = length(list.files(path = paste0(name.simulation
-                                                    , "/PARAM_SIMUL/")
+      FILE_NUMBER = length(list.files(path = paste0(name.simulation, "/PARAM_SIMUL/")
                                       , pattern = "^Simul_parameters_V"
                                       , recursive = FALSE
                                       , include.dirs = FALSE)) + 1
     }
     
-    #################################################################################################
-    #################################################################################################    
+    #############################################################################
+    #############################################################################
     
     for (ii in 1:nrow(PFG.combi))
     {
-      params.list = lapply(1:ncol(params.combi), function(x) { as.character(params.combi[, x]) })
+      params.list = lapply(1:ncol(params.combi)
+                           , function(x) { as.character(params.combi[, x]) })
       names.params.list = names.params.combi
       
       if (FILE_NUMBER == 0)
       {
-        params.list = c(params.list, list(paste0(name.simulation, "/RESULTS/SIMUL_V", i, ".", ii)))
+        params.list = c(params.list, list(paste0(name.simulation
+                                                 , "/RESULTS/SIMUL_V"
+                                                 , i, ".", ii)))
       } else
       {
-        params.list = c(params.list, list(paste0(name.simulation, "/RESULTS/SIMUL_V", FILE_NUMBER)))
+        params.list = c(params.list, list(paste0(name.simulation
+                                                 , "/RESULTS/SIMUL_V"
+                                                 , FILE_NUMBER)))
       }
-      names.params.list = c(names.params.list, "--SAVE_DIR--")
+      names.params.list = c(names.params.list, "--SAVING_DIR--")
       
       params.list = c(params.list, list(files.PFG.SUCC[, PFG.combi$SUCC[ii]]))
-      names.params.list = c(names.params.list, "--PFG_LIFE_HISTORY_PARAMS--")
+      names.params.list = c(names.params.list, "--PFG_PARAMS_LIFE_HISTORY--")
       
       if (exists("SCENARIO.MASK"))
       {
         params.list = c(params.list, list(SCENARIO.MASK))
-        names.params.list = c(names.params.list, "--MASK_CHANGE_MASK--")
+        names.params.list = c(names.params.list, "--MASK_CHANGEMASK_FILES--")
       }
       
-      if (do.LIGHT){
-        params.list = c(params.list, list(files.PFG.LIGHT[, PFG.combi$LIGHT[ii]]))
-        names.params.list = c(names.params.list, "--PFG_LIGHT_PARAMS--")
-      }
-      if (do.SOIL){
-        params.list = c(params.list, list(files.PFG.SOIL[, PFG.combi$SOIL[ii]]))
-        names.params.list = c(names.params.list, "--PFG_SOIL_PARAMS--")
-      }
-      if (do.DISP){
-        params.list = c(params.list, list(files.PFG.DISP[, PFG.combi$DISP[ii]]))
-        names.params.list = c(names.params.list, "--PFG_DISPERSAL_PARAMS--")
-      }
-      if (doHabSuit){
-        params.list = c(params.list, list(files.PFG.HS))
-        names.params.list = c(names.params.list, "--PFG_HAB_MASK--")
-      }
-      if (exists("SCENARIO.HS"))
+      if (do.LIGHT)
       {
-        params.list = c(params.list, list(SCENARIO.HS))
-        names.params.list = c(names.params.list, "--HAB_CHANGE_MASK--")
+        params.list = c(params.list, list(files.PFG.LIGHT[, PFG.combi$LIGHT[ii]]))
+        names.params.list = c(names.params.list, "--PFG_PARAMS_LIGHT--")
       }
-      if (do.DIST){
+      if (do.SOIL)
+      {
+        params.list = c(params.list, list(files.PFG.SOIL[, PFG.combi$SOIL[ii]]))
+        names.params.list = c(names.params.list, "--PFG_PARAMS_SOIL--")
+      }
+      if (do.DISP)
+      {
+        params.list = c(params.list, list(files.PFG.DISP[, PFG.combi$DISP[ii]]))
+        names.params.list = c(names.params.list, "--PFG_PARAMS_DISPERSAL--")
+      }
+      if (do.HABSUIT)
+      {
+        params.list = c(params.list, list(files.PFG.HABSUIT))
+        names.params.list = c(names.params.list, "--PFG_MASK_HABSUIT--")
+        if (exists("SCENARIO.HABSUIT"))
+        {
+          params.list = c(params.list, list(SCENARIO.HABSUIT))
+          names.params.list = c(names.params.list, "--HABSUIT_CHANGEMASK_FILES--")
+        }
+      }
+      if (do.DIST)
+      {
         params.list = c(params.list
                         , list(files.PFG.DIST[, PFG.combi$DIST[ii]])
-                        , list(rep(paste0(name.simulation, "/DATA/MASK/", name.dist)
-                                   , nbDisturbances)))
+                        , list(rep(paste0(name.simulation
+                                          , "/DATA/MASK/"
+                                          , name.DIST)
+                                   , no.DIST)))
         names.params.list = c(names.params.list
-                              , "--PFG_DISTURBANCES_PARAMS--"
+                              , "--PFG_PARAMS_DISTURBANCES--"
                               , "--DIST_MASK--")
+        if (exists("SCENARIO.DIST"))
+        {
+          params.list = c(params.list, list(SCENARIO.DIST))
+          names.params.list = c(names.params.list, "--DIST_CHANGEMASK_FILES--")
+        }
       }
-      if (exists("SCENARIO.DIST"))
+      if (do.DROUGHT)
       {
-        params.list = c(params.list, list(SCENARIO.DIST))
-        names.params.list = c(names.params.list, "--DIST_CHANGE_MASK--")
+        params.list = c(params.list
+                        , list(files.PFG.DROUGHT[, PFG.combi$DROUGHT[ii]])
+                        , list(paste0(name.simulation
+                                      , "/DATA/MASK/"
+                                      , name.DROUGHT)))
+        names.params.list = c(names.params.list
+                              , "--PFG_PARAMS_DROUGHT--"
+                              , "--DROUGHT_MASK--")
+        if (exists("SCENARIO.DROUGHT"))
+        {
+          params.list = c(params.list, list(SCENARIO.DROUGHT))
+          names.params.list = c(names.params.list, "--DROUGHT_CHANGEMASK_FILES--")
+        }
       }
+      if (do.ALIENS)
+      {
+        params.list = c(params.list, list(files.PFG.ALIENS))
+        names.params.list = c(names.params.list, "--PFG_MASK_ALIENS--")
+        if (exists("SCENARIO.ALIENS"))
+        {
+          params.list = c(params.list, list(SCENARIO.ALIENS))
+          names.params.list = c(names.params.list, "--ALIENS_CHANGEMASK_FILES--")
+        }
+      }
+      
+      ### -------------------------------------------------------------------- ###
       
       params = c(params.list, list(""))
       names(params) = c(names.params.list, "--END_OF_FILE--")

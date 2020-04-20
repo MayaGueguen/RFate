@@ -29,6 +29,8 @@ test_that("PRE_FATE.params_PFGsoil gives error with wrong data : name.simulation
 test_that("PRE_FATE.params_PFGsoil gives error with wrong data : mat.PFG.soil", {
   if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
   PRE_FATE.skeletonDirectory()
+  
+  ## TEST mat.PFG.soil : data.frame
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation")
                , "`mat.PFG.soil` must be a data.frame")
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation", mat.PFG.soil = NA)
@@ -44,227 +46,582 @@ test_that("PRE_FATE.params_PFGsoil gives error with wrong data : mat.PFG.soil", 
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation", mat.PFG.soil = matrix(1))
                , "`mat.PFG.soil` must be a data.frame")
   
+  ## TEST mat.PFG.soil : correct number of rows and columns
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation", mat.PFG.soil = data.frame())
-               , "`mat.PFG.soil` does not have the appropriate number of rows (>0) or columns (PFG, type, soil_contrib, soil_tol_min, soil_tol_max)", fixed = T)
+               , "`mat.PFG.soil` does not have the appropriate number of rows (>0) or columns (PFG, type, (active_germ_low), (active_germ_medium), (active_germ_high), (strategy_ag), soil_contrib, soil_tol_min, soil_tol_max, (strategy_contrib))"
+               , fixed = TRUE)
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation", mat.PFG.soil = data.frame(1))
-               , "`mat.PFG.soil` does not have the appropriate number of rows (>0) or columns (PFG, type, soil_contrib, soil_tol_min, soil_tol_max)", fixed = T)
+               , "`mat.PFG.soil` does not have the appropriate number of rows (>0) or columns (PFG, type, (active_germ_low), (active_germ_medium), (active_germ_high), (strategy_ag), soil_contrib, soil_tol_min, soil_tol_max, (strategy_contrib))"
+               , fixed = TRUE)
+  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation", mat.PFG.soil = data.frame(1,2,3,4,5,6,7,8))
+               , "`mat.PFG.soil` does not have the appropriate number of rows (>0) or columns (PFG, type, (active_germ_low), (active_germ_medium), (active_germ_high), (strategy_ag), soil_contrib, soil_tol_min, soil_tol_max, (strategy_contrib))"
+               , fixed = TRUE)
+  
+  ## TEST mat.PFG.soil : correct names of columns
+  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation", mat.PFG.soil = data.frame(1,2,3))
+               , "Column names of `mat.PFG.soil` must be `PFG`, `type`, `(active_germ_low)`, `(active_germ_medium)`, `(active_germ_high)`, `(strategy_ag)`, `soil_contrib`, `soil_tol_min`, `soil_tol_max` and `(strategy_contrib)`"
+               , fixed = TRUE)
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation", mat.PFG.soil = data.frame(1,2,3,4,5))
-               , "Column names of `mat.PFG.soil` must be `PFG`, `type`, `soil_contrib`, `soil_tol_min` and `soil_tol_max`")
+               , "Column names of `mat.PFG.soil` must be `PFG`, `type`, `(active_germ_low)`, `(active_germ_medium)`, `(active_germ_high)`, `(strategy_ag)`, `soil_contrib`, `soil_tol_min`, `soil_tol_max` and `(strategy_contrib)`"
+               , fixed = TRUE)
   
-  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                       , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 1, soil_tol_min = c(2,2), soil_tol_max = 3))
-               , "Column `PFG` of `mat.PFG.soil` must contain different values")
-  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                       , mat.PFG.soil = data.frame(PFG = "", type = "H", soil_contrib = 1, soil_tol_min = 2, soil_tol_max = 3))
-               , "`mat.PFG.soil$PFG` must contain a character value of length > 0", fixed = T)
   
+  ## TEST mat.PFG.soil$PFG : different values
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                       , mat.PFG.soil = data.frame(PFG = 1, type = NA, soil_contrib = 1, soil_tol_min = 2, soil_tol_max = 3))
-               , "`mat.PFG.soil$type` must be either `H`, `C` or `P`", fixed = T)
+                                       , mat.PFG.soil = data.frame(PFG = 1, type = rep("H", 2), strategy_contrib = "indifferent"))
+               , "`mat.PFG.soil$PFG` must contain different values", fixed = TRUE)
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                       , mat.PFG.soil = data.frame(PFG = 1, type = 2, soil_contrib = 1, soil_tol_min = 2, soil_tol_max = 3))
-               , "`mat.PFG.soil$type` must be either `H`, `C` or `P`", fixed = T)
-  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                       , mat.PFG.soil = data.frame(PFG = 1, type = "", soil_contrib = 1, soil_tol_min = 2, soil_tol_max = 3))
-               , "`mat.PFG.soil$type` must be either `H`, `C` or `P`", fixed = T)
+                                       , mat.PFG.soil = data.frame(PFG = NA, type = "H", strategy_contrib = "indifferent"))
+               , "`mat.PFG.soil$PFG` must contain different values", fixed = TRUE)
   
+  ## TEST mat.PFG.soil$PFG : length > 0
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                       , mat.PFG.soil = data.frame(PFG = c(1,2), type = "H", soil_contrib = c(NA, 1), soil_tol_min = 2, soil_tol_max = 3))
-               , "Wrong type of data!\n Columns `soil_contrib`, `soil_tol_min` and `soil_tol_max` of `mat.PFG.soil` must not contain NA values")
-  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                       , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = NA, soil_tol_min = 2, soil_tol_max = 3))
-               , "Wrong type of data!\n Columns `soil_contrib`, `soil_tol_min` and `soil_tol_max` of `mat.PFG.soil` must contain numeric values")
-  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                       , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = "a", soil_tol_min = 2, soil_tol_max = 3))
-               , "Wrong type of data!\n Columns `soil_contrib`, `soil_tol_min` and `soil_tol_max` of `mat.PFG.soil` must contain numeric values")
-  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                       , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = factor(1), soil_tol_min = 2, soil_tol_max = 3))
-               , "Wrong type of data!\n Columns `soil_contrib`, `soil_tol_min` and `soil_tol_max` of `mat.PFG.soil` must contain numeric values")
-  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                       , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = factor("a"), soil_tol_min = 2, soil_tol_max = 3))
-               , "Wrong type of data!\n Columns `soil_contrib`, `soil_tol_min` and `soil_tol_max` of `mat.PFG.soil` must contain numeric values")
+                                       , mat.PFG.soil = data.frame(PFG = "", type = "H", strategy_contrib = "indifferent"))
+               , "`mat.PFG.soil$PFG` must contain a character value of length > 0"
+               , fixed = TRUE)
   
+  ## TEST mat.PFG.soil$type : correct values
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                       , mat.PFG.soil = data.frame(PFG = c(1,2), type = "H", soil_contrib = 1, soil_tol_min = c(NA, 1), soil_tol_max = 3))
-               , "Wrong type of data!\n Columns `soil_contrib`, `soil_tol_min` and `soil_tol_max` of `mat.PFG.soil` must not contain NA values")
+                                       , mat.PFG.soil = data.frame(PFG = 1, type = NA, strategy_contrib = "indifferent"))
+               , "`mat.PFG.soil$type` must be either `H`, `C` or `P`", fixed = TRUE)
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                       , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 1, soil_tol_min = NA, soil_tol_max = 3))
-               , "Wrong type of data!\n Columns `soil_contrib`, `soil_tol_min` and `soil_tol_max` of `mat.PFG.soil` must contain numeric values")
+                                       , mat.PFG.soil = data.frame(PFG = 1, type = 2, strategy_contrib = "indifferent"))
+               , "`mat.PFG.soil$type` must be either `H`, `C` or `P`", fixed = TRUE)
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                       , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 1, soil_tol_min = "a", soil_tol_max = 3))
-               , "Wrong type of data!\n Columns `soil_contrib`, `soil_tol_min` and `soil_tol_max` of `mat.PFG.soil` must contain numeric values")
-  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                       , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 1, soil_tol_min = factor(1), soil_tol_max = 3))
-               , "Wrong type of data!\n Columns `soil_contrib`, `soil_tol_min` and `soil_tol_max` of `mat.PFG.soil` must contain numeric values")
-  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                       , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 1, soil_tol_min = factor("a"), soil_tol_max = 3))
-               , "Wrong type of data!\n Columns `soil_contrib`, `soil_tol_min` and `soil_tol_max` of `mat.PFG.soil` must contain numeric values")
+                                       , mat.PFG.soil = data.frame(PFG = 1, type = "", strategy_contrib = "indifferent"))
+               , "`mat.PFG.soil$type` must be either `H`, `C` or `P`", fixed = TRUE)
   
+  ## TEST mat.PFG.soil$strategy_contrib : correct values
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                       , mat.PFG.soil = data.frame(PFG = c(1,2), type = "H", soil_contrib = 1, soil_tol_min = 2, soil_tol_max = c(NA, 1)))
-               , "Wrong type of data!\n Columns `soil_contrib`, `soil_tol_min` and `soil_tol_max` of `mat.PFG.soil` must not contain NA values")
+                                       , mat.PFG.soil = data.frame(PFG = 1, type = "H", strategy_contrib = 1))
+               , "`mat.PFG.soil$strategy_contrib` must be either `full_light`, `pioneer`, `ubiquist`, `semi_shade` or `undergrowth`"
+               , fixed = TRUE)
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                       , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 1, soil_tol_min = 2, soil_tol_max = NA))
-               , "Wrong type of data!\n Columns `soil_contrib`, `soil_tol_min` and `soil_tol_max` of `mat.PFG.soil` must contain numeric values")
+                                       , mat.PFG.soil = data.frame(PFG = 1, type = "H", strategy_contrib = NA))
+               , "`mat.PFG.soil$strategy_contrib` must be either `full_light`, `pioneer`, `ubiquist`, `semi_shade` or `undergrowth`"
+               , fixed = TRUE)
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                       , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 1, soil_tol_min = 2, soil_tol_max = "a"))
-               , "Wrong type of data!\n Columns `soil_contrib`, `soil_tol_min` and `soil_tol_max` of `mat.PFG.soil` must contain numeric values")
-  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                       , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 1, soil_tol_min = 2, soil_tol_max = factor(1)))
-               , "Wrong type of data!\n Columns `soil_contrib`, `soil_tol_min` and `soil_tol_max` of `mat.PFG.soil` must contain numeric values")
-  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                       , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 1, soil_tol_min = 2, soil_tol_max = factor("a")))
-               , "Wrong type of data!\n Columns `soil_contrib`, `soil_tol_min` and `soil_tol_max` of `mat.PFG.soil` must contain numeric values")
+                                       , mat.PFG.soil = data.frame(PFG = 1, type = "H", strategy_contrib = ""))
+               , "`mat.PFG.soil$strategy_contrib` must be either `full_light`, `pioneer`, `ubiquist`, `semi_shade` or `undergrowth`"
+               , fixed = TRUE)
   
+  
+  ## TEST mat.PFG.soil$strategy_ag : correct values
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                       , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 1, soil_tol_min = 2, soil_tol_max = 3))
-               , "Wrong type of data!\n Column `soil_tol_min` of `mat.PFG.soil` must contain values equal or inferior to `soil_contrib`")
+                                       , mat.PFG.soil = data.frame(PFG = 1, strategy_ag = 1, strategy_contrib = "ubiquist"))
+               , "`mat.PFG.soil$strategy_ag` must be either `poor_lover`, `indifferent` or `rich_lover`"
+               , fixed = TRUE)
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                       , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 1, soil_tol_min = 1, soil_tol_max = 0))
-               , "Wrong type of data!\n Column `soil_tol_max` of `mat.PFG.soil` must contain values equal or superior to `soil_contrib`")
+                                       , mat.PFG.soil = data.frame(PFG = 1, strategy_ag = NA, strategy_contrib = "ubiquist"))
+               , "`mat.PFG.soil$strategy_ag` must be either `poor_lover`, `indifferent` or `rich_lover`"
+               , fixed = TRUE)
+  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                       , mat.PFG.soil = data.frame(PFG = 1, strategy_ag = "", strategy_contrib = "ubiquist"))
+               , "`mat.PFG.soil$strategy_ag` must be either `poor_lover`, `indifferent` or `rich_lover`"
+               , fixed = TRUE)
+  
+  
+  ## TEST mat.PFG.soil$active_germ_low : numeric values
+  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                       , mat.PFG.soil = data.frame(PFG = 1, active_germ_low = NA
+                                                                   , active_germ_medium = 1, active_germ_high = 1
+                                                                   , soil_contrib = 1, soil_tol_min = 1, soil_tol_max = 1))
+               , "`mat.PFG.soil$active_germ_low` must contain numeric values", fixed = TRUE)
+  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                       , mat.PFG.soil = data.frame(PFG = 1, active_germ_low = "a"
+                                                                   , active_germ_medium = 1, active_germ_high = 1
+                                                                   , soil_contrib = 1, soil_tol_min = 1, soil_tol_max = 1))
+               , "`mat.PFG.soil$active_germ_low` must contain numeric values", fixed = TRUE)
+  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                       , mat.PFG.soil = data.frame(PFG = 1, active_germ_low = factor(1)
+                                                                   , active_germ_medium = 1, active_germ_high = 1
+                                                                   , soil_contrib = 1, soil_tol_min = 1, soil_tol_max = 1))
+               , "`mat.PFG.soil$active_germ_low` must contain numeric values", fixed = TRUE)
+  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                       , mat.PFG.soil = data.frame(PFG = 1, active_germ_low = factor("a")
+                                                                   , active_germ_medium = 1, active_germ_high = 1
+                                                                   , soil_contrib = 1, soil_tol_min = 1, soil_tol_max = 1))
+               , "`mat.PFG.soil$active_germ_low` must contain numeric values", fixed = TRUE)
+  
+  ## TEST mat.PFG.soil$active_germ_low : no NA values
+  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                       , mat.PFG.soil = data.frame(PFG = c(1,2), active_germ_low = c(NA, 1)
+                                                                   , active_germ_medium = 1, active_germ_high = 1
+                                                                   , soil_contrib = 1, soil_tol_min = 1, soil_tol_max = 1))
+               , "`mat.PFG.soil$active_germ_low` must not contain NA values", fixed = TRUE)
+  
+  ## TEST mat.PFG.soil$active_germ_medium : numeric values
+  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                       , mat.PFG.soil = data.frame(PFG = 1, active_germ_low = 1
+                                                                   , active_germ_medium = NA, active_germ_high = 1
+                                                                   , soil_contrib = 1, soil_tol_min = 1, soil_tol_max = 1))
+               , "`mat.PFG.soil$active_germ_medium` must contain numeric values", fixed = TRUE)
+  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                       , mat.PFG.soil = data.frame(PFG = 1, active_germ_low = 1
+                                                                   , active_germ_medium = "a", active_germ_high = 1
+                                                                   , soil_contrib = 1, soil_tol_min = 1, soil_tol_max = 1))
+               , "`mat.PFG.soil$active_germ_medium` must contain numeric values", fixed = TRUE)
+  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                       , mat.PFG.soil = data.frame(PFG = 1, active_germ_low = 1
+                                                                   , active_germ_medium = factor(1), active_germ_high = 1
+                                                                   , soil_contrib = 1, soil_tol_min = 1, soil_tol_max = 1))
+               , "`mat.PFG.soil$active_germ_medium` must contain numeric values", fixed = TRUE)
+  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                       , mat.PFG.soil = data.frame(PFG = 1, active_germ_low = 1
+                                                                   , active_germ_medium = factor("a"), active_germ_high = 1
+                                                                   , soil_contrib = 1, soil_tol_min = 1, soil_tol_max = 1))
+               , "`mat.PFG.soil$active_germ_medium` must contain numeric values", fixed = TRUE)
+  
+  ## TEST mat.PFG.soil$active_germ_medium : no NA values
+  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                       , mat.PFG.soil = data.frame(PFG = c(1,2), active_germ_low = 1
+                                                                   , active_germ_medium = c(NA, 1), active_germ_high = 1
+                                                                   , soil_contrib = 1, soil_tol_min = 1, soil_tol_max = 1))
+               , "`mat.PFG.soil$active_germ_medium` must not contain NA values", fixed = TRUE)
+  
+  ## TEST mat.PFG.soil$active_germ_high : numeric values
+  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                       , mat.PFG.soil = data.frame(PFG = 1, active_germ_low = 1
+                                                                   , active_germ_medium = 1, active_germ_high = NA
+                                                                   , soil_contrib = 1, soil_tol_min = 1, soil_tol_max = 1))
+               , "`mat.PFG.soil$active_germ_high` must contain numeric values", fixed = TRUE)
+  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                       , mat.PFG.soil = data.frame(PFG = 1, active_germ_low = 1
+                                                                   , active_germ_medium = 1, active_germ_high = "a"
+                                                                   , soil_contrib = 1, soil_tol_min = 1, soil_tol_max = 1))
+               , "`mat.PFG.soil$active_germ_high` must contain numeric values", fixed = TRUE)
+  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                       , mat.PFG.soil = data.frame(PFG = 1, active_germ_low = 1
+                                                                   , active_germ_medium = 1, active_germ_high = factor(1)
+                                                                   , soil_contrib = 1, soil_tol_min = 1, soil_tol_max = 1))
+               , "`mat.PFG.soil$active_germ_high` must contain numeric values", fixed = TRUE)
+  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                       , mat.PFG.soil = data.frame(PFG = 1, active_germ_low = 1
+                                                                   , active_germ_medium = 1, active_germ_high = factor("a")
+                                                                   , soil_contrib = 1, soil_tol_min = 1, soil_tol_max = 1))
+               , "`mat.PFG.soil$active_germ_high` must contain numeric values", fixed = TRUE)
+  
+  ## TEST mat.PFG.soil$active_germ_high : no NA values
+  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                       , mat.PFG.soil = data.frame(PFG = c(1,2), active_germ_low = 1
+                                                                   , active_germ_medium = 1, active_germ_high = c(NA, 1)
+                                                                   , soil_contrib = 1, soil_tol_min = 1, soil_tol_max = 1))
+               , "`mat.PFG.soil$active_germ_high` must not contain NA values", fixed = TRUE)
+  
+  
+  ## TEST mat.PFG.soil$soil_contrib : numeric values
+  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                       , mat.PFG.soil = data.frame(PFG = 1, active_germ_low = 1
+                                                                   , active_germ_medium = 1, active_germ_high = 1
+                                                                   , soil_contrib = NA, soil_tol_min = 1, soil_tol_max = 1))
+               , "`mat.PFG.soil$soil_contrib` must contain numeric values", fixed = TRUE)
+  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                       , mat.PFG.soil = data.frame(PFG = 1, active_germ_low = 1
+                                                                   , active_germ_medium = 1, active_germ_high = 1
+                                                                   , soil_contrib = "a", soil_tol_min = 1, soil_tol_max = 1))
+               , "`mat.PFG.soil$soil_contrib` must contain numeric values", fixed = TRUE)
+  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                       , mat.PFG.soil = data.frame(PFG = 1, active_germ_low = 1
+                                                                   , active_germ_medium = 1, active_germ_high = 1
+                                                                   , soil_contrib = factor(1), soil_tol_min = 1, soil_tol_max = 1))
+               , "`mat.PFG.soil$soil_contrib` must contain numeric values", fixed = TRUE)
+  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                       , mat.PFG.soil = data.frame(PFG = 1, active_germ_low = 1
+                                                                   , active_germ_medium = 1, active_germ_high = 1
+                                                                   , soil_contrib = factor("a"), soil_tol_min = 1, soil_tol_max = 1))
+               , "`mat.PFG.soil$soil_contrib` must contain numeric values", fixed = TRUE)
+  
+  ## TEST mat.PFG.soil$soil_contrib : no NA values
+  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                       , mat.PFG.soil = data.frame(PFG = c(1,2), active_germ_low = 1
+                                                                   , active_germ_medium = 1, active_germ_high = 1
+                                                                   , soil_contrib = c(NA, 1), soil_tol_min = 1, soil_tol_max = 1))
+               , "`mat.PFG.soil$soil_contrib` must not contain NA values", fixed = TRUE)
+  
+  ## TEST mat.PFG.soil$soil_tol_min : numeric values
+  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                       , mat.PFG.soil = data.frame(PFG = 1, active_germ_low = 1
+                                                                   , active_germ_medium = 1, active_germ_high = 1
+                                                                   , soil_contrib = 1, soil_tol_min = NA, soil_tol_max = 1))
+               , "`mat.PFG.soil$soil_tol_min` must contain numeric values", fixed = TRUE)
+  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                       , mat.PFG.soil = data.frame(PFG = 1, active_germ_low = 1
+                                                                   , active_germ_medium = 1, active_germ_high = 1
+                                                                   , soil_contrib = 1, soil_tol_min = "a", soil_tol_max = 1))
+               , "`mat.PFG.soil$soil_tol_min` must contain numeric values", fixed = TRUE)
+  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                       , mat.PFG.soil = data.frame(PFG = 1, active_germ_low = 1
+                                                                   , active_germ_medium = 1, active_germ_high = 1
+                                                                   , soil_contrib = 1, soil_tol_min = factor(1), soil_tol_max = 1))
+               , "`mat.PFG.soil$soil_tol_min` must contain numeric values", fixed = TRUE)
+  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                       , mat.PFG.soil = data.frame(PFG = 1, active_germ_low = 1
+                                                                   , active_germ_medium = 1, active_germ_high = 1
+                                                                   , soil_contrib = 1, soil_tol_min = factor("a"), soil_tol_max = 1))
+               , "`mat.PFG.soil$soil_tol_min` must contain numeric values", fixed = TRUE)
+  
+  ## TEST mat.PFG.soil$soil_tol_min : no NA values
+  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                       , mat.PFG.soil = data.frame(PFG = c(1,2), active_germ_low = 1
+                                                                   , active_germ_medium = 1, active_germ_high = 1
+                                                                   , soil_contrib = 1, soil_tol_min = c(NA, 1), soil_tol_max = 1))
+               , "`mat.PFG.soil$soil_tol_min` must not contain NA values", fixed = TRUE)
+  
+  ## TEST mat.PFG.soil$soil_tol_max : numeric values
+  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                       , mat.PFG.soil = data.frame(PFG = 1, active_germ_low = 1
+                                                                   , active_germ_medium = 1, active_germ_high = 1
+                                                                   , soil_contrib = 1, soil_tol_min = 1, soil_tol_max = NA))
+               , "`mat.PFG.soil$soil_tol_max` must contain numeric values", fixed = TRUE)
+  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                       , mat.PFG.soil = data.frame(PFG = 1, active_germ_low = 1
+                                                                   , active_germ_medium = 1, active_germ_high = 1
+                                                                   , soil_contrib = 1, soil_tol_min = 1, soil_tol_max = "a"))
+               , "`mat.PFG.soil$soil_tol_max` must contain numeric values", fixed = TRUE)
+  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                       , mat.PFG.soil = data.frame(PFG = 1, active_germ_low = 1
+                                                                   , active_germ_medium = 1, active_germ_high = 1
+                                                                   , soil_contrib = 1, soil_tol_min = 1, soil_tol_max = factor(1)))
+               , "`mat.PFG.soil$soil_tol_max` must contain numeric values", fixed = TRUE)
+  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                       , mat.PFG.soil = data.frame(PFG = 1, active_germ_low = 1
+                                                                   , active_germ_medium = 1, active_germ_high = 1
+                                                                   , soil_contrib = 1, soil_tol_min = 1, soil_tol_max = factor("a")))
+               , "`mat.PFG.soil$soil_tol_max` must contain numeric values", fixed = TRUE)
+  
+  ## TEST mat.PFG.soil$soil_tol_max : no NA values
+  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                       , mat.PFG.soil = data.frame(PFG = c(1,2), active_germ_low = 1
+                                                                   , active_germ_medium = 1, active_germ_high = 1
+                                                                   , soil_contrib = 1, soil_tol_min = 1, soil_tol_max = c(NA, 1)))
+               , "`mat.PFG.soil$soil_tol_max` must not contain NA values", fixed = TRUE)
+  
+  
+  
+  ## TEST mat.PFG.soil$soil_tol_min : correct values
+  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                       , mat.PFG.soil = data.frame(PFG = 1, active_germ_low = 1
+                                                                   , active_germ_medium = 1, active_germ_high = 1
+                                                                   , soil_contrib = 1, soil_tol_min = 2, soil_tol_max = 1))
+               , "`mat.PFG.soil$soil_tol_min` must contain values equal or inferior to `mat.PFG.soil$soil_contrib`"
+               , fixed = TRUE)
+  
+  ## TEST mat.PFG.soil$soil_tol_max : correct values
+  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                       , mat.PFG.soil = data.frame(PFG = 1, active_germ_low = 1
+                                                                   , active_germ_medium = 1, active_germ_high = 1
+                                                                   , soil_contrib = 1, soil_tol_min = 1, soil_tol_max = 0))
+               , "`mat.PFG.soil$soil_tol_max` must contain values equal or superior to `mat.PFG.soil$soil_contrib`"
+               , fixed = TRUE)
+  
 })
+
+
+
 
 ## INPUTS
 test_that("PRE_FATE.params_PFGsoil gives error with wrong data : mat.PFG.tol", {
-  # if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
-  # PRE_FATE.skeletonDirectory()
-  # expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-  #                                      , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 2, soil_tol_min = 1, soil_tol_max = 3))
-  #              , "`mat.PFG.tol` must be a data.frame")
+  
+  ## TEST mat.PFG.tol : data.frame
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                       , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 2, soil_tol_min = 1, soil_tol_max = 3)
+                                       , mat.PFG.soil = data.frame(PFG = 1
+                                                                   , strategy_ag = "indifferent"
+                                                                   , strategy_contrib = "ubiquist")
                                        , mat.PFG.tol = NA)
                , "`mat.PFG.tol` must be a data.frame")
-  # expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-  #                                      , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 2, soil_tol_min = 1, soil_tol_max = 3)
-  #                                      , mat.PFG.tol = NULL)
-  #              , "`mat.PFG.tol` must be a data.frame")
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                       , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 2, soil_tol_min = 1, soil_tol_max = 3)
+                                       , mat.PFG.soil = data.frame(PFG = 1
+                                                                   , strategy_ag = "indifferent"
+                                                                   , strategy_contrib = "ubiquist")
                                        , mat.PFG.tol = "")
                , "`mat.PFG.tol` must be a data.frame")
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                       , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 2, soil_tol_min = 1, soil_tol_max = 3)
+                                       , mat.PFG.soil = data.frame(PFG = 1
+                                                                   , strategy_ag = "indifferent"
+                                                                   , strategy_contrib = "ubiquist")
                                        , mat.PFG.tol = 1)
                , "`mat.PFG.tol` must be a data.frame")
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                       , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 2, soil_tol_min = 1, soil_tol_max = 3)
-                                       , mat.PFG.tol = factor(1))
-               , "`mat.PFG.tol` must be a data.frame")
-  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                       , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 2, soil_tol_min = 1, soil_tol_max = 3)
+                                       , mat.PFG.soil = data.frame(PFG = 1
+                                                                   , strategy_ag = "indifferent"
+                                                                   , strategy_contrib = "ubiquist")
                                        , mat.PFG.tol = matrix(1))
                , "`mat.PFG.tol` must be a data.frame")
   
+  
+  ## TEST mat.PFG.tol : correct number of rows and columns
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                       , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 2, soil_tol_min = 1, soil_tol_max = 3)
+                                       , mat.PFG.soil = data.frame(PFG = 1
+                                                                   , strategy_ag = "indifferent"
+                                                                   , strategy_contrib = "ubiquist")
                                        , mat.PFG.tol = data.frame())
-               , "`mat.PFG.tol` does not have the appropriate number of rows (>0) or columns (PFG, lifeStage, soilResources, soil_tol)", fixed = T)
+               , "`mat.PFG.tol` does not have the appropriate number of rows (>0) or columns (PFG, lifeStage, resources, tolerance, (strategy_tol)"
+               , fixed = TRUE)
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                       , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 2, soil_tol_min = 1, soil_tol_max = 3)
+                                       , mat.PFG.soil = data.frame(PFG = 1
+                                                                   , strategy_ag = "indifferent"
+                                                                   , strategy_contrib = "ubiquist")
                                        , mat.PFG.tol = data.frame(1))
-               , "`mat.PFG.tol` does not have the appropriate number of rows (>0) or columns (PFG, lifeStage, soilResources, soil_tol)", fixed = T)
+               , "`mat.PFG.tol` does not have the appropriate number of rows (>0) or columns (PFG, lifeStage, resources, tolerance, (strategy_tol)"
+               , fixed = TRUE)
+  
+  ## TEST mat.PFG.tol : correct names of columns
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                       , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 2, soil_tol_min = 1, soil_tol_max = 3)
+                                       , mat.PFG.soil = data.frame(PFG = 1
+                                                                   , strategy_ag = "indifferent"
+                                                                   , strategy_contrib = "ubiquist")
+                                       , mat.PFG.tol = data.frame(1,2))
+               , "Column names of `mat.PFG.tol` must be `PFG`, `lifeStage`, `resources`, `tolerance` and `(strategy_tol)`"
+               , fixed = TRUE)
+  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                       , mat.PFG.soil = data.frame(PFG = 1
+                                                                   , strategy_ag = "indifferent"
+                                                                   , strategy_contrib = "ubiquist")
                                        , mat.PFG.tol = data.frame(1,2,3,4))
-               , "Column names of `mat.PFG.tol` must be `PFG`, `lifeStage`, `soilResources` and `soil_tol`")
+               , "Column names of `mat.PFG.tol` must be `PFG`, `lifeStage`, `resources`, `tolerance` and `(strategy_tol)`"
+               , fixed = TRUE)
   
-  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                       , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 2, soil_tol_min = 1, soil_tol_max = 3)
-                                       , mat.PFG.tol = data.frame(PFG = "", lifeStage = "Germinant", soilResources = "Low", soil_tol = 2))
-               , "`mat.PFG.tol$PFG` must contain a character value of length > 0", fixed = T)
   
+  ## TEST mat.PFG.tol$PFG : length > 0
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                       , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 2, soil_tol_min = 1, soil_tol_max = 3)
-                                       , mat.PFG.tol = data.frame(PFG = 1, lifeStage = NA, soilResources = "Low", soil_tol = 2))
-               , "`mat.PFG.tol$lifeStage` must be either `Germinant`, `Immature` or `Mature`", fixed = T)
-  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                       , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 2, soil_tol_min = 1, soil_tol_max = 3)
-                                       , mat.PFG.tol = data.frame(PFG = 1, lifeStage = 2, soilResources = "Low", soil_tol = 2))
-               , "`mat.PFG.tol$lifeStage` must be either `Germinant`, `Immature` or `Mature`", fixed = T)
-  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                       , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 2, soil_tol_min = 1, soil_tol_max = 3)
-                                       , mat.PFG.tol = data.frame(PFG = 1, lifeStage = "", soilResources = "Low", soil_tol = 2))
-               , "`mat.PFG.tol$lifeStage` must be either `Germinant`, `Immature` or `Mature`", fixed = T)
+                                       , mat.PFG.soil = data.frame(PFG = 1
+                                                                   , strategy_ag = "indifferent"
+                                                                   , strategy_contrib = "ubiquist")
+                                       , mat.PFG.tol = data.frame(PFG = NA, lifeStage = 1
+                                                                  , resources = 1, tolerance = 1))
+               , "`mat.PFG.tol$PFG` must contain a character value of length > 0"
+               , fixed = TRUE)
   
+  ## TEST mat.PFG.tol$lifeStage : correct values
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                       , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 2, soil_tol_min = 1, soil_tol_max = 3)
-                                       , mat.PFG.tol = data.frame(PFG = 1, lifeStage = "Germinant", soilResources = NA, soil_tol = 2))
-               , "`mat.PFG.tol$soilResources` must be either `Low`, `Medium` or `High`", fixed = T)
+                                       , mat.PFG.soil = data.frame(PFG = 1
+                                                                   , strategy_ag = "indifferent"
+                                                                   , strategy_contrib = "ubiquist")
+                                       , mat.PFG.tol = data.frame(PFG = 1, lifeStage = 1
+                                                                  , resources = 1, tolerance = 1))
+               , "`mat.PFG.tol$lifeStage` must be either `Germinant`, `Immature` or `Mature`"
+               , fixed = TRUE)
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                       , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 2, soil_tol_min = 1, soil_tol_max = 3)
-                                       , mat.PFG.tol = data.frame(PFG = 1, lifeStage = "Germinant", soilResources = 2, soil_tol = 2))
-               , "`mat.PFG.tol$soilResources` must be either `Low`, `Medium` or `High`", fixed = T)
+                                       , mat.PFG.soil = data.frame(PFG = 1
+                                                                   , strategy_ag = "indifferent"
+                                                                   , strategy_contrib = "ubiquist")
+                                       , mat.PFG.tol = data.frame(PFG = 1, lifeStage = NA
+                                                                  , resources = 1, tolerance = 1))
+               , "`mat.PFG.tol$lifeStage` must be either `Germinant`, `Immature` or `Mature`"
+               , fixed = TRUE)
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                       , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 2, soil_tol_min = 1, soil_tol_max = 3)
-                                       , mat.PFG.tol = data.frame(PFG = 1, lifeStage = "Germinant", soilResources = "", soil_tol = 2))
-               , "`mat.PFG.tol$soilResources` must be either `Low`, `Medium` or `High`", fixed = T)
+                                       , mat.PFG.soil = data.frame(PFG = 1
+                                                                   , strategy_ag = "indifferent"
+                                                                   , strategy_contrib = "ubiquist")
+                                       , mat.PFG.tol = data.frame(PFG = 1, lifeStage = ""
+                                                                  , resources = 1, tolerance = 1))
+               , "`mat.PFG.tol$lifeStage` must be either `Germinant`, `Immature` or `Mature`"
+               , fixed = TRUE)
   
+  ## TEST mat.PFG.tol$resources : correct values
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                       , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 2, soil_tol_min = 1, soil_tol_max = 3)
-                                       , mat.PFG.tol = data.frame(PFG = 1, lifeStage = "Germinant", soilResources = "Low", soil_tol = NA))
-               , "Wrong type of data!\n Columns `soil_tol` of `mat.PFG.tol` must contain numeric values")
+                                       , mat.PFG.soil = data.frame(PFG = 1
+                                                                   , strategy_ag = "indifferent"
+                                                                   , strategy_contrib = "ubiquist")
+                                       , mat.PFG.tol = data.frame(PFG = 1, lifeStage = "Germinant"
+                                                                  , resources = 1, tolerance = 1))
+               , "`mat.PFG.tol$resources` must be either `Low`, `Medium` or `High`"
+               , fixed = TRUE)
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                       , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 2, soil_tol_min = 1, soil_tol_max = 3)
-                                       , mat.PFG.tol = data.frame(PFG = 1, lifeStage = "Germinant", soilResources = "Low", soil_tol = "a"))
-               , "Wrong type of data!\n Columns `soil_tol` of `mat.PFG.tol` must contain numeric values")
+                                       , mat.PFG.soil = data.frame(PFG = 1
+                                                                   , strategy_ag = "indifferent"
+                                                                   , strategy_contrib = "ubiquist")
+                                       , mat.PFG.tol = data.frame(PFG = 1, lifeStage = "Germinant"
+                                                                  , resources = NA, tolerance = 1))
+               , "`mat.PFG.tol$resources` must be either `Low`, `Medium` or `High`"
+               , fixed = TRUE)
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                       , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 2, soil_tol_min = 1, soil_tol_max = 3)
-                                       , mat.PFG.tol = data.frame(PFG = 1, lifeStage = "Germinant", soilResources = "Low", soil_tol = factor(1)))
-               , "Wrong type of data!\n Columns `soil_tol` of `mat.PFG.tol` must contain numeric values")
-  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                       , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 2, soil_tol_min = 1, soil_tol_max = 3)
-                                       , mat.PFG.tol = data.frame(PFG = 1, lifeStage = "Germinant", soilResources = "Low", soil_tol = factor("a")))
-               , "Wrong type of data!\n Columns `soil_tol` of `mat.PFG.tol` must contain numeric values")
+                                       , mat.PFG.soil = data.frame(PFG = 1
+                                                                   , strategy_ag = "indifferent"
+                                                                   , strategy_contrib = "ubiquist")
+                                       , mat.PFG.tol = data.frame(PFG = 1, lifeStage = "Germinant"
+                                                                  , resources = "", tolerance = 1))
+               , "`mat.PFG.tol$resources` must be either `Low`, `Medium` or `High`"
+               , fixed = TRUE)
   
+
+  ## TEST mat.PFG.tol$tolerance : numeric values
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                       , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 2, soil_tol_min = 1, soil_tol_max = 3)
-                                       , mat.PFG.tol = data.frame(PFG = 1, lifeStage = "Germinant", soilResources = "Low", soil_tol = c(2,NA)))
-               , "Columns `soil_tol` of `mat.PFG.tol` must not contain NA values")
+                                       , mat.PFG.soil = data.frame(PFG = 1
+                                                                   , strategy_ag = "indifferent"
+                                                                   , strategy_contrib = "ubiquist")
+                                       , mat.PFG.tol = data.frame(PFG = 1, lifeStage = "Germinant"
+                                                                  , resources = "Low", tolerance = NA))
+               , "`mat.PFG.tol$tolerance` must contain numeric values", fixed = TRUE)
+  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                       , mat.PFG.soil = data.frame(PFG = 1
+                                                                   , strategy_ag = "indifferent"
+                                                                   , strategy_contrib = "ubiquist")
+                                       , mat.PFG.tol = data.frame(PFG = 1, lifeStage = "Germinant"
+                                                                  , resources = "Low", tolerance = factor(1)))
+               , "`mat.PFG.tol$tolerance` must contain numeric values", fixed = TRUE)
   
+  ## TEST mat.PFG.tol$tolerance : no NA values
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                       , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 2, soil_tol_min = 1, soil_tol_max = 3)
-                                       , mat.PFG.tol = data.frame(PFG = 1, lifeStage = "Germinant", soilResources = "Low", soil_tol = -1))
-               , "Column `soil_tol` of `mat.PFG.tol` must contain values between 0 and 10")
+                                       , mat.PFG.soil = data.frame(PFG = 1
+                                                                   , strategy_ag = "indifferent"
+                                                                   , strategy_contrib = "ubiquist")
+                                       , mat.PFG.tol = data.frame(PFG = 1, lifeStage = "Germinant"
+                                                                  , resources = "Low", tolerance = c(NA, 1)))
+               , "`mat.PFG.tol$tolerance` must not contain NA values", fixed = TRUE)
+  
+  ## TEST mat.PFG.tol$tolerance : correct values
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                       , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 2, soil_tol_min = 1, soil_tol_max = 3)
-                                       , mat.PFG.tol = data.frame(PFG = 1, lifeStage = "Germinant", soilResources = "Low", soil_tol = 1.5))
-               , "Column `soil_tol` of `mat.PFG.tol` must contain values between 0 and 10")
+                                       , mat.PFG.soil = data.frame(PFG = 1
+                                                                   , strategy_ag = "indifferent"
+                                                                   , strategy_contrib = "ubiquist")
+                                       , mat.PFG.tol = data.frame(PFG = 1, lifeStage = "Germinant"
+                                                                  , resources = "Low", tolerance = -1))
+               , "`mat.PFG.tol$tolerance` must be either `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9` or `10`"
+               , fixed = TRUE)
   expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                       , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 2, soil_tol_min = 1, soil_tol_max = 3)
-                                       , mat.PFG.tol = data.frame(PFG = 1, lifeStage = "Germinant", soilResources = "Low", soil_tol = 11))
-               , "Column `soil_tol` of `mat.PFG.tol` must contain values between 0 and 10")
+                                       , mat.PFG.soil = data.frame(PFG = 1
+                                                                   , strategy_ag = "indifferent"
+                                                                   , strategy_contrib = "ubiquist")
+                                       , mat.PFG.tol = data.frame(PFG = 1, lifeStage = "Germinant"
+                                                                  , resources = "Low", tolerance = 1.5))
+               , "`mat.PFG.tol$tolerance` must be either `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9` or `10`"
+               , fixed = TRUE)
+  
+  ## TEST mat.PFG.tol$strategy_tol : correct values
+  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                       , mat.PFG.soil = data.frame(PFG = 1
+                                                                   , strategy_ag = "indifferent"
+                                                                   , strategy_contrib = "ubiquist")
+                                       , mat.PFG.tol = data.frame(PFG = 1, strategy_tol = 1))
+               , "`mat.PFG.tol$strategy_tol` must be either `full_light`, `pioneer`, `ubiquist`, `semi_shade` or `undergrowth`"
+               , fixed = TRUE)
+  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                       , mat.PFG.soil = data.frame(PFG = 1
+                                                                   , strategy_ag = "indifferent"
+                                                                   , strategy_contrib = "ubiquist")
+                                       , mat.PFG.tol = data.frame(PFG = 1, strategy_tol = NA))
+               , "`mat.PFG.tol$strategy_tol` must be either `full_light`, `pioneer`, `ubiquist`, `semi_shade` or `undergrowth`"
+               , fixed = TRUE)
+  expect_error(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                       , mat.PFG.soil = data.frame(PFG = 1
+                                                                   , strategy_ag = "indifferent"
+                                                                   , strategy_contrib = "ubiquist")
+                                       , mat.PFG.tol = data.frame(PFG = 1, strategy_tol = factor("a")))
+               , "`mat.PFG.tol$strategy_tol` must be either `full_light`, `pioneer`, `ubiquist`, `semi_shade` or `undergrowth`"
+               , fixed = TRUE)
+})
+
+
+
+## OUTPUTS
+test_that("PRE_FATE.params_PFGsoil gives correct output : ACTIVE_GERM scenario 1, CONTRIB scenario 1, SOIL_TOL scenario 1", {
+  if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
+  PRE_FATE.skeletonDirectory()
+  expect_message(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                         , mat.PFG.soil = data.frame(PFG = 1, type = "H"
+                                                                     , soil_contrib = 2
+                                                                     , soil_tol_min = 1
+                                                                     , soil_tol_max = 3)
+                                         , mat.PFG.tol = NULL)
+                 , "The parameter file FATE_simulation/DATA/PFGS/SOIL/SOIL_1.txt has been successfully created !")
+  expect_warning(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                         , mat.PFG.soil = data.frame(PFG = 1, type = "H"
+                                                                     , soil_contrib = 2
+                                                                     , soil_tol_min = 1
+                                                                     , soil_tol_max = 3)
+                                         , mat.PFG.tol = NULL
+                                         , opt.folder.name = "")
+                 , "already exists. It will be replaced.")
+  expect_warning(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                         , mat.PFG.soil = data.frame(PFG = 1, type = "H"
+                                                                     , soil_contrib = 2
+                                                                     , soil_tol_min = 1
+                                                                     , soil_tol_max = 3)
+                                         , mat.PFG.tol = NULL
+                                         , opt.folder.name = NA)
+                 , "As `opt.folder.name` does not contain character value, it will be ignored")
+  expect_message(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                         , mat.PFG.soil = data.frame(PFG = 1, type = "H"
+                                                                     , soil_contrib = 2
+                                                                     , soil_tol_min = 1
+                                                                     , soil_tol_max = 3)
+                                         , mat.PFG.tol = NULL
+                                         , opt.folder.name = "TEST")
+                 , "The parameter file FATE_simulation/DATA/PFGS/SOIL/TEST/SOIL_1.txt has been successfully created !")
+})
+
+
+
+## OUTPUTS
+test_that("PRE_FATE.params_PFGsoil gives correct output : ACTIVE_GERM scenario 2, CONTRIB scenario 1, SOIL_TOL scenario 1", {
+  if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
+  PRE_FATE.skeletonDirectory()
+  expect_message(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                         , mat.PFG.soil = data.frame(PFG = 1
+                                                                     , active_germ_low = 1
+                                                                     , active_germ_medium = 5
+                                                                     , active_germ_high = 9
+                                                                     , soil_contrib = 2
+                                                                     , soil_tol_min = 1
+                                                                     , soil_tol_max = 3)
+                                         , mat.PFG.tol = NULL)
+                 , "The parameter file FATE_simulation/DATA/PFGS/SOIL/SOIL_1.txt has been successfully created !")
 })
 
 
 ## OUTPUTS
-test_that("PRE_FATE.params_PFGsoil gives correct output", {
+test_that("PRE_FATE.params_PFGsoil gives correct output : ACTIVE_GERM scenario 3, CONTRIB scenario 1, SOIL_TOL scenario 1", {
   if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
   PRE_FATE.skeletonDirectory()
   expect_message(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                         , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 2, soil_tol_min = 2, soil_tol_max = 3))
+                                         , mat.PFG.soil = data.frame(PFG = 1
+                                                                     , strategy_ag = "poor_lover"
+                                                                     , soil_contrib = 2
+                                                                     , soil_tol_min = 1
+                                                                     , soil_tol_max = 3)
+                                         , mat.PFG.tol = NULL)
                  , "The parameter file FATE_simulation/DATA/PFGS/SOIL/SOIL_1.txt has been successfully created !")
-  expect_warning(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                         , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 2, soil_tol_min = 2, soil_tol_max = 3)
-                                         , opt.folder.name = "")
-                 , "already exists. It will be replaced.")
-  
+})
+
+
+
+## OUTPUTS
+test_that("PRE_FATE.params_PFGsoil gives correct output : ACTIVE_GERM scenario 3, CONTRIB scenario 2, SOIL_TOL scenario 1", {
+  if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
+  PRE_FATE.skeletonDirectory()
   expect_message(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                         , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 2, soil_tol_min = 2, soil_tol_max = 3)
-                                         , mat.PFG.tol = data.frame(PFG = 1, lifeStage = "Germinant", soilResources = "Low", soil_tol = 9))
+                                         , mat.PFG.soil = data.frame(PFG = 1
+                                                                     , strategy_ag = "poor_lover"
+                                                                     , strategy_contrib = "ubiquist")
+                                         , mat.PFG.tol = NULL)
                  , "The parameter file FATE_simulation/DATA/PFGS/SOIL/SOIL_1.txt has been successfully created !")
-  
-  expect_warning(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                         , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 2, soil_tol_min = 2, soil_tol_max = 3)
-                                         , opt.folder.name = NA)
-                 , "As `opt.folder.name` does not contain character value, it will be ignored")
-  expect_warning(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                         , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 2, soil_tol_min = 2, soil_tol_max = 3)
-                                         , opt.folder.name = 1)
-                 , "As `opt.folder.name` does not contain character value, it will be ignored")
-  
+})
+
+
+## OUTPUTS
+test_that("PRE_FATE.params_PFGsoil gives correct output : ACTIVE_GERM scenario 3, CONTRIB scenario 2, SOIL_TOL scenario 2", {
+  if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
+  PRE_FATE.skeletonDirectory()
   expect_message(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                                         , mat.PFG.soil = data.frame(PFG = 1, type = "H", soil_contrib = 2, soil_tol_min = 2, soil_tol_max = 3)
-                                         , opt.folder.name = "scen1")
-                 , "The parameter file FATE_simulation/DATA/PFGS/SOIL/scen1/SOIL_1.txt has been successfully created !")
+                                         , mat.PFG.soil = data.frame(PFG = 1
+                                                                     , strategy_ag = "poor_lover"
+                                                                     , strategy_contrib = "ubiquist")
+                                         , mat.PFG.tol = data.frame(PFG = 1, lifeStage = "Germinant"
+                                                                    , resources = "Low", tolerance = 3))
+                 , "The parameter file FATE_simulation/DATA/PFGS/SOIL/SOIL_1.txt has been successfully created !")
+})
+
+
+
+
+## OUTPUTS
+test_that("PRE_FATE.params_PFGsoil gives correct output : ACTIVE_GERM scenario 3, CONTRIB scenario 2, SOIL_TOL scenario 3", {
+  if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
+  PRE_FATE.skeletonDirectory()
+  expect_message(PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                                         , mat.PFG.soil = data.frame(PFG = 1, strategy_ag = "poor_lover"
+                                                                     , strategy_contrib = "ubiquist")
+                                         , mat.PFG.tol = data.frame(PFG = 1, strategy_tol = "ubiquist"))
+                 , "The parameter file FATE_simulation/DATA/PFGS/SOIL/SOIL_1.txt has been successfully created !")
 })

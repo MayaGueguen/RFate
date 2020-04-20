@@ -28,6 +28,8 @@ test_that("PRE_FATE.params_saveYears gives error with wrong data : name.simulati
 ## INPUTS
 test_that("PRE_FATE.params_saveYears gives error with wrong data : years.maps and years.objects", {
   PRE_FATE.skeletonDirectory()
+  
+  ## TEST years.maps / years.objects : NULL
   expect_warning(PRE_FATE.params_saveYears(name.simulation = "FATE_simulation")
                  , "Both `years.maps` and `years.objects` parameters are NULL. No parameter file will be created")
   expect_warning(PRE_FATE.params_saveYears(name.simulation = "FATE_simulation", years.maps = NULL)
@@ -37,27 +39,13 @@ test_that("PRE_FATE.params_saveYears gives error with wrong data : years.maps an
   expect_warning(PRE_FATE.params_saveYears(name.simulation = "FATE_simulation", years.maps = NULL, years.objects = NULL)
                  , "Both `years.maps` and `years.objects` parameters are NULL. No parameter file will be created")
   
+  ## TEST years.maps : numeric values
   expect_error(PRE_FATE.params_saveYears(name.simulation = "FATE_simulation", years.maps = NA)
                , "years.maps` and/or `years.objects` must contain numeric values")
   expect_error(PRE_FATE.params_saveYears(name.simulation = "FATE_simulation", years.maps = "")
                , "years.maps` and/or `years.objects` must contain numeric values")
   expect_error(PRE_FATE.params_saveYears(name.simulation = "FATE_simulation", years.maps = factor(1))
                , "years.maps` and/or `years.objects` must contain numeric values")
-  
-  expect_error(PRE_FATE.params_saveYears(name.simulation = "FATE_simulation", years.objects = NA)
-               , "years.maps` and/or `years.objects` must contain numeric values")
-  expect_error(PRE_FATE.params_saveYears(name.simulation = "FATE_simulation", years.objects = "")
-               , "years.maps` and/or `years.objects` must contain numeric values")
-  expect_error(PRE_FATE.params_saveYears(name.simulation = "FATE_simulation", years.objects = factor(1))
-               , "years.maps` and/or `years.objects` must contain numeric values")
-  
-  expect_error(PRE_FATE.params_saveYears(name.simulation = "FATE_simulation", years.maps = 1, years.objects = NA)
-               , "years.maps` and/or `years.objects` must contain numeric values")
-  expect_error(PRE_FATE.params_saveYears(name.simulation = "FATE_simulation", years.maps = 1, years.objects = "")
-               , "years.maps` and/or `years.objects` must contain numeric values")
-  expect_error(PRE_FATE.params_saveYears(name.simulation = "FATE_simulation", years.maps = 1, years.objects = factor(1))
-               , "years.maps` and/or `years.objects` must contain numeric values")
-  
   expect_error(PRE_FATE.params_saveYears(name.simulation = "FATE_simulation", years.maps = NA, years.objects = 1)
                , "years.maps` and/or `years.objects` must contain numeric values")
   expect_error(PRE_FATE.params_saveYears(name.simulation = "FATE_simulation", years.maps = "", years.objects = 1)
@@ -65,7 +53,19 @@ test_that("PRE_FATE.params_saveYears gives error with wrong data : years.maps an
   expect_error(PRE_FATE.params_saveYears(name.simulation = "FATE_simulation", years.maps = factor(1), years.objects = 1)
                , "years.maps` and/or `years.objects` must contain numeric values")
   
-  
+  ## TEST years.objects : numeric values
+  expect_error(PRE_FATE.params_saveYears(name.simulation = "FATE_simulation", years.objects = NA)
+               , "years.maps` and/or `years.objects` must contain numeric values")
+  expect_error(PRE_FATE.params_saveYears(name.simulation = "FATE_simulation", years.objects = "")
+               , "years.maps` and/or `years.objects` must contain numeric values")
+  expect_error(PRE_FATE.params_saveYears(name.simulation = "FATE_simulation", years.objects = factor(1))
+               , "years.maps` and/or `years.objects` must contain numeric values")
+  expect_error(PRE_FATE.params_saveYears(name.simulation = "FATE_simulation", years.maps = 1, years.objects = NA)
+               , "years.maps` and/or `years.objects` must contain numeric values")
+  expect_error(PRE_FATE.params_saveYears(name.simulation = "FATE_simulation", years.maps = 1, years.objects = "")
+               , "years.maps` and/or `years.objects` must contain numeric values")
+  expect_error(PRE_FATE.params_saveYears(name.simulation = "FATE_simulation", years.maps = 1, years.objects = factor(1))
+               , "years.maps` and/or `years.objects` must contain numeric values")
   
 })
 

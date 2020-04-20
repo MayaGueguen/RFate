@@ -1,14 +1,14 @@
 ### HEADER #####################################################################
-##' @title Create \emph{DISTURBANCE} parameter files for a \code{FATE-HD}
+##' @title Create \emph{DROUGHT} parameter files for a \code{FATE-HD}
 ##' simulation
 ##' 
-##' @name PRE_FATE.params_PFGdisturbance
+##' @name PRE_FATE.params_PFGdrought
 ##'
 ##' @author Maya Guéguen
 ##' 
 ##' @description This script is designed to create parameter files containing 
-##' response to disturbance parameters for each PFG (one file for each of them) 
-##' used in the disturbance module of \code{FATE-HD}.
+##' response to drought disturbance parameters for each PFG (one file for each 
+##' of them) used in the drought disturbance module of \code{FATE-HD}.
 ##'              
 ##' @param name.simulation a \code{string} corresponding to the main directory 
 ##' or simulation name of the \code{FATE-HD} simulation
@@ -16,7 +16,7 @@
 ##' a \code{data.frame} with 5 columns : \cr 
 ##' \code{PFG}, \code{type}, \code{maturity}, \code{longevity}, 
 ##' \code{age_above_150cm} (see 
-##' \code{\href{PRE_FATE.params_PFGdisturbance.html#details}{Details}})
+##' \code{\href{PRE_FATE.params_PFGdrought.html#details}{Details}})
 ##' @param mat.PFG.tol a \code{data.frame} with 3 to 7 columns : \cr 
 ##' \itemize{
 ##'   \item \code{nameDist},
@@ -25,55 +25,44 @@
 ##'   \item \code{responseStage}, \code{killedIndiv}, \code{resproutIndiv}  
 ##'   (\emph{or \code{strategy_tol}})
 ##' }
-##' (see \code{\href{PRE_FATE.params_PFGdisturbance.html#details}{Details}})
+##' (see \code{\href{PRE_FATE.params_PFGdrought.html#details}{Details}})
+##' @param mat.PFG.drought a \code{data.frame} with 4 or 6 columns : \cr 
+##' \itemize{
+##'   \item \code{PFG},
+##'   \item \code{threshold_moderate}, \code{threshold_severe},
+##'   \item \code{counter_recovery}, \code{counter_sens}, \code{counter_cum}
+##'   (\emph{or \code{strategy_drou}})
+##' }
 ##' @param opt.folder.name (\emph{optional}) \cr a \code{string} corresponding 
 ##' to the name of the folder that will be created into the 
-##' \code{name.simulation/DATA/PFGS/DIST/} directory to store the results
+##' \code{name.simulation/DATA/PFGS/DROUGHT/} directory to store the results
 ##' 
 ##' 
 ##' @details
 ##' 
-##' The \strong{disturbance module} allows the user to simulate spatial 
+##' The \strong{drought disturbance module} is a specific case of the 
+##' \code{disturbance module}. It also allows the user to simulate spatial 
 ##' perturbation(s) that will impact each PFG in terms of \emph{resprouting} and 
-##' \emph{mortality} at different response stages. \cr \cr
+##' \emph{mortality} at different response stages, but with specific rules to 
+##' determine when the PFG is affected (see 
+##' \code{\link{PRE_FATE.params_globalParameters}}). \cr \cr
 ##' 
 ##' 
 ##' Several parameters, given within \code{mat.PFG.dist} or \code{mat.PFG.tol}, 
-##' are required for each PFG in order to set up these responses :
+##' are required for each PFG in order to set up these responses. The 
+##' explanations are the same than those that can be found in 
+##' \code{\link{PRE_FATE.params_PFGdisturbance}} function. Therefore, 
+##' \strong{only parameters whose values or descriptions change are detailed 
+##' below :}
 ##' 
 ##' \describe{
-##'   \item{PFG}{the concerned plant functional group \cr \cr}
-##'   
-##'   \item{(\emph{type})}{or life-form, based on Raunkier. \cr It should be 
-##'   either \code{H} (herbaceous), \code{C} (chamaephyte) or \code{P} 
-##'   (phanerophyte) for now}
-##'   \item{(\emph{maturity})}{the age from which the PFG can reproduce}
-##'   \item{(\emph{longevity})}{the maximum or average lifespan of the PFG}
-##'   \item{(\emph{age_above_150cm})}{the maximum height stratum that the PFG 
-##'   can reach \cr \cr}
-##'   
-##'   \item{nameDist}{the name of each perturbation (several can be defined at 
-##'   the same time) \cr \cr}
-##'   
-##'   \item{(\emph{responseStage})}{an \code{integer} corresponding to the 
-##'   concerned response class}
-##'   \item{(\emph{breakAge})}{the age from which the PFG is associated with 
-##'   this response class}
-##'   \item{(\emph{resproutAge})}{the age at which the plants will grow back, 
-##'   if they grow back \cr \cr}
-##'   
-##'   \item{responseStage}{an \code{integer} corresponding to the concerned 
-##'   response class}
-##'   \item{killedIndiv}{an \code{integer} between \code{0} and \code{10} 
-##'   corresponding to the proportion of killed individuals}
-##'   \item{resproutIndiv}{an \code{integer} between \code{0} and \code{10} 
-##'   corresponding to the proportion of resprouting individuals \cr \cr}
+##'   \item{nameDist}{a \code{string} to choose the concerned drought 
+##'   disturbance : \cr \code{immediate} or \code{delayed} \cr \cr}
 ##'   
 ##'   \item{(\emph{strategy_tol})}{a \code{string} to choose the response to 
-##'   disturbance strategy : \cr \code{indifferent}, \code{mowing_herbs}, 
-##'   \code{mowing_trees}, \code{grazing_herbs_1}, \code{grazing_herbs_2}, 
-##'   \code{grazing_herbs_3}, \code{grazing_trees_1}, \code{grazing_trees_2}, 
-##'   \code{grazing_trees_3} \cr \cr}
+##'   drought strategy : \cr \code{herbs_cham_1}, \code{herbs_cham_2}, 
+##'   \code{herbs_cham_3}, \code{trees_1}, \code{trees_2}, \code{trees_3} 
+##'   \cr \cr}
 ##' }
 ##' 
 ##' 
@@ -81,62 +70,6 @@
 ##' each PFG :
 ##' 
 ##' \describe{
-##'   \item{BREAK_AGE}{ = each PFG can respond to a disturbance in several 
-##'   different ways that depend on the PFG age \cr
-##'    = ages at which each PFG changes of response stage \cr \cr
-##'   Two methods to define these ages are available :
-##'   \itemize{
-##'     \item from \strong{predefined rules} (using \code{type}, 
-##'     \code{maturity}, \code{longevity}, \code{age_above_150cm}) : \cr \cr
-##'     4 classes are defined that can be labelled as : \cr \strong{JustBorn 
-##'     (\code{1})}, \strong{Juveniles (\code{2})}, \strong{Matures (\code{3})}, 
-##'     \strong{Senescents (\code{4})} \cr \cr
-##'     \tabular{rcc}{
-##'        \tab \strong{\code{H} (herbaceous)} \tab \strong{\code{C} 
-##'        (chamaephyte) or \code{P} (phanerophyte)} \cr
-##'       \strong{from class \code{1} to \code{2}} \tab \code{maturity - 2} 
-##'       \tab \code{1} \cr
-##'       \strong{from class \code{2} to \code{3}} \tab \code{maturity} \tab 
-##'       \code{min}(\code{maturity - 2 , age_above_150cm}) \cr
-##'       \strong{from class \code{3} to \code{4}} \tab \code{longevity - 2} 
-##'       \tab \code{min}(\code{longevity - 2 , age_above_150cm})
-##'     }
-##'     
-##'     Some corrections are made for short-living plants (annuals and 
-##'     biennials) :
-##'     \itemize{
-##'       \item as they die after 1 or 2 years, they are not affected 
-##'       differently according to life stages
-##'       \item break ages from class \code{1} to \code{3} are set to \code{1}, 
-##'       and break age from \code{3} to \code{4} is set to their longevity 
-##'       (\code{1} or \code{2}) \cr \cr
-##'     }
-##'     \item from \strong{user data} : \cr
-##'       \emph{with the values contained within the \code{breakAge} column, 
-##'       if provided \cr \cr}
-##'   }
-##'   }
-##'   \item{RESPR_AGE}{ = when subject to a perturbation, each PFG can either 
-##'   stay undisturbed, be killed, or resprout at a particular age 
-##'   \emph{(in years)} \cr
-##'    = ages at which each PFG will be rejuvenated by a disturbance \cr \cr
-##'   Two methods to define these ages are available :
-##'   \itemize{
-##'     \item from \strong{predefined rules} (using \code{maturity}, 
-##'     \code{longevity}, \code{age_above_150cm}) :
-##'     \itemize{
-##'       \item classes \code{1} and \code{2} : too young to resprout
-##'       \item class \code{3} : 
-##'       \code{min}(\code{maturity - 2 , age_above_150cm})
-##'       \item class \code{4} : \code{longevity - 2}
-##'       \item short-living plants (annuals and biennials) always start back 
-##'       at \code{0} \cr \cr
-##'     }
-##'     \item from \strong{user data} : \cr
-##'       \emph{with the values contained within the \code{resproutAge} column, 
-##'       if provided \cr \cr}
-##'   }
-##'   }
 ##'   \item{FATES}{ = proportion of killed and resprouting individuals \cr
 ##'    = for each disturbance and for each response stage \cr \cr
 ##'   Two methods to define these tolerances are available :
@@ -153,27 +86,20 @@
 ##'       \describe{
 ##'         \item{}{\strong{\code{| ___1___ | ___2___ | ___3___ | ___4___ |}}}
 ##'         \item{}{\strong{\code{| _K_ _R_ | _K_ _R_ | _K_ _R_ | _K_ _R_ |}}}
-##'         \item{}{\code{_________________________________________}}
-##'         \item{indifferent}{\code{| _0_ _0_ | _0_ _0_ | _0_ _0_ | _0_ _0_ |}}
-##'         \item{}{\code{_________________________________________}}
-##'         \item{mowing_herbs}{\code{| _0_ _0_ | _0_ _0_ | 50\% 50\% | 100\% 
-##'         0_ |}}
-##'         \item{mowing_trees}{\code{| _0_ _0_ | 100\% 0_ | 100\% 0_ | 100\% 
-##'         0_ |}}
-##'         \item{}{\code{_________________________________________}}
-##'         \item{grazing_herbs_1}{\code{| _0_ _0_ | 10\% _0_ | _0_ 50\% | _0_ 
-##'         10\% |}}
-##'         \item{grazing_herbs_2}{\code{| _0_ _0_ | 50\% _0_ | _0_ 80\% | 10\% 
-##'         50\% |}}
-##'         \item{grazing_herbs_3}{\code{| _0_ _0_ | 90\% _0_ | 10\% 90\% | 50\% 
-##'         50\% |}}
-##'         \item{}{\code{_________________________________________}}
-##'         \item{grazing_trees_1}{\code{| 40\% _0_ | _0_ _0_ | _0_ _0_ | _0_ 
-##'         _0_ |}}
-##'         \item{grazing_trees_2}{\code{| 80\% _0_ | _0_ _0_ | _0_ _0_ | _0_ 
-##'         _0_ |}}
-##'         \item{grazing_trees_3}{\code{| 100\% 0_ | 40\% _0_ | _0_ _0_ | _0_ 
-##'         _0_ |}}
+##'         \item{}{\code{________________IMMEDIATE________________}}
+##'         \item{herbs_cham_1}{\code{| 10\% _0_ | _0_ _0_ | _0_ _0_ | _0_ _0_ |}}
+##'         \item{herbs_cham_2}{\code{| 20\% _0_ | _0_ _0_ | _0_ _0_ | 10\% _0_ |}}
+##'         \item{herbs_cham_3}{\code{| 40\% _0_ | 10\% _0_ | 10\% _0_ | 20\% _0_ |}}
+##'         \item{trees_1}{\code{| 10\% _0_ | _0_ _0_ | _0_ 40\% | _0_ 40\% |}}
+##'         \item{trees_2}{\code{| 20\% _0_ | _0_ 10\% | _0_ 50\% | 10\% 50\% |}}
+##'         \item{trees_3}{\code{| 40\% _0_ | 10\% 40\% | 10\% 80\% | 20\% 80\% |}}
+##'         \item{}{\code{_________________DELAYED_________________}}
+##'         \item{herbs_cham_1}{\code{| _0_ _0_ | _0_ 10\% | _0_ 10\% | _0_ 10\% |}}
+##'         \item{herbs_cham_2}{\code{| _0_ _0_ | _0_ 10\% | _0_ 10\% | _0_ 10\% |}}
+##'         \item{herbs_cham_3}{\code{| _0_ _0_ | _0_ 10\% | _0_ 10\% | _0_ 10\% |}}
+##'         \item{trees_1}{\code{| _0_ _0_ | _0_ 10\% | _0_ 40\% | _0_ 40\% |}}
+##'         \item{trees_2}{\code{| 10\% _0_ | _0_ 40\% | _0_ 40\% | _0_ 40\% |}}
+##'         \item{trees_3}{\code{| 20\% _0_ | 10\% 40\% | 10\% 50\% | 10\% 50\% |}}
 ##'       }
 ##'     \item from \strong{user data} : \cr
 ##'       \emph{with the values contained within the \code{responseStage}, 
@@ -184,26 +110,56 @@
 ##'       }
 ##'   }
 ##'   }
-##'   \item{PROP_KILLED}{ = the proportion of propagules killed by each 
-##'   disturbance \cr
-##'   (\emph{currently set to \code{0} for all PFG and disturbances})
-##'   }
-##'   \item{ACTIVATED_SEED}{ = the proportion of seeds activated by each 
-##'   disturbance \cr
-##'   (\emph{currently set to \code{0} for all PFG and disturbances})
-##'   }
+##' }
+##' 
+##' 
+##' Supplementary parameters related to drought, given within 
+##' \code{mat.PFG.drought}, are required for each PFG :
+##' 
+##' \describe{
+##'   \item{threshold_moderate}{a value corresponding to the threshold below 
+##'   which the PFG will experience moderate drought (on the same scale than 
+##'   \code{threshold_severe} and the map given with the \code{DROUGHT_MASK} 
+##'   flag in \code{\link{PRE_FATE.params_globalParameters}})}
+##'   \item{threshold_severe}{a value corresponding to the threshold below 
+##'   which the PFG will experience severe drought (on the same scale than 
+##'   \code{threshold_moderate} and the map given with the \code{DROUGHT_MASK} 
+##'   flag in \code{\link{PRE_FATE.params_globalParameters}}). It should be 
+##'   inferior or equal to \code{threshold_moderate}. \cr \cr}
+##'   \item{counter_recovery}{an \code{integer} corresponding to the number of 
+##'   years removed from the PFG counter of cumulated consecutive years of 
+##'   drought events, during non-drought years}
+##'   \item{counter_sens}{an \code{integer} corresponding to the number of 
+##'   consecutive years of drought the PFG must experience before suffering 
+##'   severe effects due to a severe drought (\emph{sensitivity to severe 
+##'   drought})}
+##'   \item{counter_cum}{an \code{integer} corresponding to the number of 
+##'   consecutive years of drought the PFG must experience before any subsequent 
+##'   drought event start having severe effects (\emph{cumulative drought 
+##'   response}). It should be superior or equal to \code{counter_sens}.}
+##'   \item{(\emph{strategy_drou})}{a \code{string} to choose the "counter" 
+##'   strategy : \cr \code{herbs}, \code{chamaephytes}, \code{trees_shrubs} 
+##'   \cr \cr}
+##' }
+##' 
+##' These values will allow to define a set of characteristics for each PFG :
+##' \describe{
+##'   \item{sensitivity to values}{with the \strong{THRESHOLD_MODERATE} and 
+##'   \strong{THRESHOLD_SEVERE} parameters}
+##'   \item{sensitivity through time}{with the \strong{COUNTER_RECOVERY}, 
+##'   \strong{COUNTER_SENS} and \strong{COUNTER_CUM} parameters}
 ##' }
 ##' 
 ##' 
 ##' @return A \code{.txt} file per PFG into the 
-##' \code{name.simulation/DATA/PFGS/DIST/} directory with the following 
+##' \code{name.simulation/DATA/PFGS/DROUGHT/} directory with the following 
 ##' parameters :
 ##' 
 ##' \describe{
 ##'   \item{BREAK_AGE}{ages at which the PFG changes of response stage 
 ##'   \emph{(in years)}}
 ##'   \item{RESPR_AGE}{resprouting age table (in a single row) \cr
-##'   This is a vector of \code{no.DIST * no.responseStages} numbers 
+##'   This is a vector of \code{no.DIST (=2) * no.responseStages} numbers 
 ##'   corresponding \cr to the age at which the PFG can be rejuvenated 
 ##'   (younger than the actual one) :
 ##'   \itemize{
@@ -215,7 +171,7 @@
 ##'   years)}. 
 ##'   }
 ##'   \item{FATES}{disturbance response table (in a single row) \cr
-##'   This is a vector of \code{no.DIST * no.responseStages * 2} numbers 
+##'   This is a vector of \code{no.DIST (=2) * no.responseStages * 2} numbers 
 ##'   corresponding \cr to the proportion of individuals :
 ##'   \itemize{
 ##'     \item that will be killed \emph{(\code{Ki})} or resprout 
@@ -232,20 +188,37 @@
 ##'   \emph{(from \code{0} to \code{10}, corresponding to 0 to 100\%)}}
 ##'   \item{ACTIVATED_SEED}{proportion of seeds activated by each disturbance \cr
 ##'   \emph{(from \code{0} to \code{10}, corresponding to 0 to 100\%)} \cr \cr}
+##'   \item{THRESHOLD_MOD}{threshold below which the PFG will experience 
+##'   moderate drought \cr \emph{(same unit as that of the map given with the 
+##'   \code{DROUGHT_MASK} flag in 
+##'   \code{\link{PRE_FATE.params_globalParameters}})}}
+##'   \item{THRESHOLD_SEV}{threshold below which the PFG will experience 
+##'   severe drought \cr \emph{(same unit as that of the map given with the 
+##'   \code{DROUGHT_MASK} flag in 
+##'   \code{\link{PRE_FATE.params_globalParameters}})}}
+##'   \item{COUNTER_RECOVERY}{number of years removed from the PFG counter of 
+##'   cumulated consecutive years of drought events, during non-drought years}
+##'   \item{COUNTER_SENS}{number of consecutive years of drought the PFG must 
+##'   experience before suffering severe effects due to a severe drought \cr 
+##'   (\emph{sensitivity to severe drought})}
+##'   \item{COUNTER_CUM}{number of consecutive years of drought the PFG must 
+##'   experience before any subsequent drought event start having severe effects 
+##'   \cr (\emph{cumulative drought response}) \cr \cr}
 ##' }
 ##' 
-##' A \code{DIST_COMPLETE_TABLE.csv} file summarizing information for all 
+##' A \code{DROUGHT_COMPLETE_TABLE.csv} file summarizing information for all 
 ##' groups into the \code{name.simulation/DATA/PFGS/} directory.  
 ##'
 ##' If the \code{opt.folder.name} has been used, the files will be into the 
-##' folder \code{name.simulation/DATA/PFGS/DIST/opt.folder.name/}.
+##' folder \code{name.simulation/DATA/PFGS/DROUGHT/opt.folder.name/}.
 ##' 
 ##' 
 ##' 
 ##' @keywords FATE, simulation, disturbance, killing, resprouting
 ##' 
 ##' @seealso \code{\link{PRE_FATE.skeletonDirectory}}, 
-##' \code{\link{PRE_FATE.params_globalParameters}}
+##' \code{\link{PRE_FATE.params_globalParameters}},
+##' \code{\link{PRE_FATE.params_PFGdisturbance}}
 ##' 
 ##' 
 ##' @examples
@@ -272,7 +245,7 @@
 ##'                                           , c(0,0,9,10,0,0,5,1)
 ##'                                           , c(0,0,0,0,0,0,0,0)))
 ##' 
-##' PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
+##' PRE_FATE.params_PFGdrought(name.simulation = "FATE_simulation"
 ##'                                , mat.PFG.dist = tab.dist)
 ##' 
 ##' 
@@ -295,7 +268,7 @@
 ##'                             , strata.limits_reduce = FALSE)
 ##'                             
 ##' ## Create PFG disturbance parameter files
-##' PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
+##' PRE_FATE.params_PFGdrought(name.simulation = "FATE_simulation"
 ##'                                , mat.PFG.dist = PNE_PARAM$dist)
 ##'                                                            
 ##' 
@@ -308,16 +281,17 @@
 
 
 
-PRE_FATE.params_PFGdisturbance = function(
+PRE_FATE.params_PFGdrought = function(
   name.simulation
   , mat.PFG.dist = NULL
   , mat.PFG.tol
+  , mat.PFG.drought
   , opt.folder.name = NULL
 ){
   
   #############################################################################
   
-  .testParam_existFolder(name.simulation, "DATA/PFGS/DIST/")
+  .testParam_existFolder(name.simulation, "DATA/PFGS/DROUGHT/")
   
   ## CHECK parameter mat.PFG.dist
   if (!is.null(mat.PFG.dist))
@@ -381,7 +355,7 @@ PRE_FATE.params_PFGdisturbance = function(
       }
     }
     mat.PFG.tol$nameDist = as.character(mat.PFG.tol$nameDist)
-    .testParam_notChar.m("mat.PFG.tol$nameDist", mat.PFG.tol$nameDist)
+    .testParam_notInValues.m("mat.PFG.tol$nameDist", mat.PFG.tol$nameDist, c("immediate", "delayed"))
     mat.PFG.tol$PFG = as.character(mat.PFG.tol$PFG)
     .testParam_notChar.m("mat.PFG.tol$PFG", mat.PFG.tol$PFG)
     if (!is.null(mat.PFG.dist))
@@ -414,22 +388,81 @@ PRE_FATE.params_PFGdisturbance = function(
     {
       mat.PFG.tol$strategy_tol = as.character(mat.PFG.tol$strategy_tol)
       .testParam_notInValues.m("mat.PFG.tol$strategy_tol", mat.PFG.tol$strategy_tol
-                               , c("indifferent", "mowing_herbs", "mowing_trees"
-                                   , "grazing_herbs_1", "grazing_herbs_2", "grazing_herbs_3"
-                                   , "grazing_trees_1", "grazing_trees_2", "grazing_trees_3"))
+                               , c("herbs_cham_1", "herbs_cham_2", "herbs_cham_3"
+                                   , "trees_1", "trees_2", "trees_3"))
+    }
+  }
+  ## CHECK parameter mat.PFG.drought
+  if (.testParam_notDf(mat.PFG.drought))
+  {
+    .stopMessage_beDataframe("mat.PFG.drought")
+  } else
+  {
+    if (nrow(mat.PFG.drought) == 0 || !(ncol(mat.PFG.drought) %in% c(4, 6)))
+    {
+      .stopMessage_numRowCol("mat.PFG.drought", c("PFG", "threshold_moderate"
+                                                  , "threshold_severe", "counter_recovery"
+                                                  , "counter_sens", "counter_cum"
+                                                  , "(strategy_drou)"))
+    } else
+    {
+      notCorrect = switch(as.character(ncol(mat.PFG.drought))
+                          , "4" = .testParam_notColnames(mat.PFG.drought
+                                                         , c("PFG", "threshold_moderate"
+                                                             , "threshold_severe","strategy_drou"))
+                          , "6" = .testParam_notColnames(mat.PFG.drought
+                                                         , c("PFG", "threshold_moderate"
+                                                             , "threshold_severe", "counter_recovery"
+                                                             , "counter_sens", "counter_cum"))
+                          , TRUE)
+      if (notCorrect){
+        .stopMessage_columnNames("mat.PFG.drought", c("PFG", "threshold_moderate"
+                                                      , "threshold_severe", "counter_recovery"
+                                                      , "counter_sens", "counter_cum"
+                                                      , "(strategy_drou)"))
+      }
+    }
+    mat.PFG.drought$PFG = as.character(mat.PFG.drought$PFG)
+    .testParam_notChar.m("mat.PFG.drought$PFG", mat.PFG.drought$PFG)
+    .testParam_notNum.m("mat.PFG.drought$threshold_moderate", mat.PFG.drought$threshold_moderate)
+    .testParam_NAvalues.m("mat.PFG.drought$threshold_moderate", mat.PFG.drought$threshold_moderate)
+    .testParam_notNum.m("mat.PFG.drought$threshold_severe", mat.PFG.drought$threshold_severe)
+    .testParam_NAvalues.m("mat.PFG.drought$threshold_severe", mat.PFG.drought$threshold_severe)
+    if (sum(mat.PFG.drought$threshold_severe > mat.PFG.drought$threshold_moderate) > 0){
+      stop(paste0("Wrong type of data!\n `mat.PFG.drought$threshold_severe` must contain "
+                  , "values equal or inferior to `mat.PFG.drought$threshold_moderate`"))
+    }
+    if (ncol(mat.PFG.drought) == 6)
+    {
+      .testParam_NAvalues.m("mat.PFG.drought$counter_recovery", mat.PFG.drought$counter_recovery)
+      .testParam_notInteger.m("mat.PFG.drought$counter_recovery", mat.PFG.drought$counter_recovery)
+      .testParam_NAvalues.m("mat.PFG.drought$counter_sens", mat.PFG.drought$counter_sens)
+      .testParam_notInteger.m("mat.PFG.drought$counter_sens", mat.PFG.drought$counter_sens)
+      .testParam_NAvalues.m("mat.PFG.drought$counter_cum", mat.PFG.drought$counter_cum)
+      .testParam_notInteger.m("mat.PFG.drought$counter_cum", mat.PFG.drought$counter_cum)
+      if (sum(mat.PFG.drought$counter_sens > mat.PFG.drought$counter_cum) > 0){
+        stop(paste0("Wrong type of data!\n `mat.PFG.drought$counter_sens` must contain "
+                    , "values equal or inferior to `mat.PFG.drought$counter_cum`"))
+      }
+    }
+    if (sum(colnames(mat.PFG.drought) == "strategy_drou") == 1)
+    {
+      mat.PFG.drought$strategy_drou = as.character(mat.PFG.drought$strategy_drou)
+      .testParam_notInValues.m("mat.PFG.drought$strategy_drou", mat.PFG.drought$strategy_drou
+                               , c("herbs", "chamaephytes", "trees_shrubs"))
     }
   }
   ## CHECK parameter opt.folder.name
   opt.folder.name = .getParam_opt.folder.name(opt.folder.name
-                                              , paste0(name.simulation, "/DATA/PFGS/DIST/"))
-  
+                                              , paste0(name.simulation, "/DATA/PFGS/DROUGHT/"))
+
   
   #############################################################################
   
   ## GET informations
   NAME = unique(as.character(mat.PFG.tol$PFG))
   no.PFG = length(NAME)
-  DIST_NAME = unique(as.character(mat.PFG.tol$nameDist))
+  DIST_NAME = c("immediate", "delayed")
   no.DIST = length(DIST_NAME)
   no.STAGES = 4
   if (sum(colnames(mat.PFG.tol) == "responseStage") == 1){
@@ -444,6 +477,50 @@ PRE_FATE.params_PFGdisturbance = function(
   cat("\n Names of disturbances : ", DIST_NAME)
   cat("\n Number of response stages : ", no.STAGES)
   cat("\n")
+  
+  
+  
+  #############################################################################
+  
+  ## GET drought informations
+  THRESHOLD_MOD = THRESHOLD_SEV = rep(0, no.PFG)
+  for (i in 1:no.PFG)
+  {
+    ind.i = which(mat.PFG.drought$PFG == NAME[i])
+    THRESHOLD_MOD[i] = mat.PFG.drought$threshold_moderate[ind.i]
+    THRESHOLD_SEV[i] = mat.PFG.drought$threshold_severe[ind.i]
+  }
+  
+  ## GET drought informations
+  COUNTER_CUM = COUNTER_SENS = COUNTER_RECOVERY = rep(0, no.PFG)
+  
+  if (sum(colnames(mat.PFG.drought) == "strategy_drou") == 1)
+  {
+    for (i in 1:no.PFG){
+      ind.i = which(mat.PFG.drought$PFG == NAME[i])
+      COUNTER_RECOVERY[i] = switch(mat.PFG.drought$strategy_drou[ind.i]
+                                   , herbs = 2
+                                   , chamaephytes = 2
+                                   , trees_shrubs = 1 )
+      COUNTER_SENS[i] = switch(mat.PFG.drought$strategy_drou[ind.i]
+                               , herbs = 1
+                               , chamaephytes = 2
+                               , trees_shrubs = 3 )
+      COUNTER_CUM[i] = switch(mat.PFG.drought$strategy_drou[ind.i]
+                                   , herbs = 2
+                                   , chamaephytes = 3
+                                   , trees_shrubs = 5 )
+    }
+  } else
+  {
+    for (i in 1:no.PFG)
+    {
+      ind.i = which(mat.PFG.drought$PFG == NAME[i])
+      COUNTER_RECOVERY[i] = mat.PFG.drought$counter_recovery[ind.i]
+      COUNTER_SENS[i] = mat.PFG.drought$counter_sens[ind.i]
+      COUNTER_CUM[i] = mat.PFG.drought$counter_cum[ind.i]
+    }
+  }
   
   
   #############################################################################
@@ -664,16 +741,12 @@ PRE_FATE.params_PFGdisturbance = function(
   {
     for (i in 1:no.PFG){
       FATES[, i] = switch(mat.PFG.tol$strategy_tol[i]
-                          , indifferent = c(0,0,0,0,0,0,0,0)
-                          , mowing_herbs = c(0,0,0,0,5,5,10,0)
-                          , mowing_trees = c(0,0,10,0,10,0,10,0)
-                          , grazing_herbs_1 = c(0,0,1,0,0,5,0,1)
-                          , grazing_herbs_2 = c(0,0,5,0,0,8,1,5)
-                          , grazing_herbs_3 = c(0,0,9,0,1,9,5,5)
-                          , grazing_trees_1 = c(4,0,0,0,0,0,0,0)
-                          , grazing_trees_2 = c(8,0,0,0,0,0,0,0)
-                          , grazing_trees_3 = c(10,0,4,0,0,0,0,0)
-                          
+                          , herbs_cham_1 = c(1,0,0,0,0,0,0,0,0,0,0,1,0,1,0,1)
+                          , herbs_cham_2 = c(2,0,0,0,0,0,1,0,0,0,0,1,0,1,0,1)
+                          , herbs_cham_3 = c(4,0,1,0,1,0,2,0,0,0,0,1,0,1,0,1)
+                          , trees_1 = c(1,0,0,0,0,4,0,4,0,0,0,1,0,4,0,4)
+                          , trees_2 = c(2,0,0,1,0,5,1,5,1,0,0,4,0,4,0,4)
+                          , trees_3 = c(4,0,1,4,1,8,2,8,2,0,1,4,1,5,1,5)
       )
     }
   }
@@ -722,7 +795,12 @@ PRE_FATE.params_PFGdisturbance = function(
                             , "RESPR_AGE"
                             , "FATES"
                             , "PROP_KILLED"
-                            , "ACTIVATED_SEED")
+                            , "ACTIVATED_SEED"
+                            , "THRESHOLD_MOD"
+                            , "THRESHOLD_SEV"
+                            , "COUNTER_RECOVERY"
+                            , "COUNTER_SENS"
+                            , "COUNTER_CUM")
   
   params.list = lapply(names.params.list.sub, function(x) { return(get(x)) })
   
@@ -740,7 +818,12 @@ PRE_FATE.params_PFGdisturbance = function(
                                     , paste0(rep(1:no.STAGES, each = 2)
                                              , c("_kill","_respr")))
                            , paste0("PROP_KILLED_", DIST_NAME)
-                           , paste0("ACTIVATED_SEED_", DIST_NAME))
+                           , paste0("ACTIVATED_SEED_", DIST_NAME)
+                           , "THRESHOLD_MOD"
+                           , "THRESHOLD_SEV"
+                           , "COUNTER_RECOVERY"
+                           , "COUNTER_SENS"
+                           , "COUNTER_CUM")
   
   write.table(params.csv
               , file = paste0(name.simulation
@@ -748,7 +831,7 @@ PRE_FATE.params_PFGdisturbance = function(
                               , ifelse(opt.folder.name == ""
                                        , ""
                                        , sub("/$", "_", opt.folder.name))
-                              , "DIST_COMPLETE_TABLE.csv")
+                              , "DROUGHT_COMPLETE_TABLE.csv")
               , row.names = T
               , col.names = F)
   
@@ -771,16 +854,16 @@ PRE_FATE.params_PFGdisturbance = function(
     names(params) = names.params.list.sub
     
     .createParams(params.file = paste0(name.simulation
-                                       , "/DATA/PFGS/DIST/"
+                                       , "/DATA/PFGS/DROUGHT/"
                                        , opt.folder.name
-                                       , "DIST_"
+                                       , "DROUGHT_"
                                        , names.params.list[i],
                                        ".txt")
                   , params.list = params)
   }
   
   cat("\n> Done!\n")
-  cat("\n  Complete table of information about PFG disturbance parameters can be find in "
+  cat("\n  Complete table of information about PFG drought parameters can be find in "
       , paste0(name.simulation, "/DATA/PFGS/"), "folder.")
   cat("\n")
   

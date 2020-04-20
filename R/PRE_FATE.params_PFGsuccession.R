@@ -1,6 +1,5 @@
 ### HEADER #####################################################################
-##' @title Create \emph{SUCCESSION} parameter files for a \code{FATE-HD} 
-##' simulation
+##' @title Create SUCCESSION parameter files for a FATE-HD simulation
 ##' 
 ##' @name PRE_FATE.params_PFGsuccession
 ##'
@@ -10,161 +9,191 @@
 ##' succession parameters for each PFG (one file for each of them) used in the 
 ##' core module of \code{FATE-HD}.
 ##'              
-##' @param name.simulation a \code{string} that corresponds to the main 
-##' directory or simulation name of the \code{FATE-HD} simulation
+##' @param name.simulation a \code{string} corresponding to the main directory 
+##' or simulation name of the \code{FATE-HD} simulation
 ##' @param mat.PFG.succ a \code{data.frame} with at least 5 columns : \cr 
 ##' \code{PFG}, \code{type}, \code{height}, \code{maturity}, \code{longevity} 
 ##' \cr (\emph{and optionally, \code{max_abundance}, \code{potential_fecundity}, 
-##' \code{immature_size}}) 
+##' \code{immature_size}, \code{is_alien}}) 
 ##' \cr (see \code{\href{PRE_FATE.params_PFGsuccession.html#details}{Details}})
 ##' @param strata.limits a \code{vector} of \code{integer} containing values 
 ##' among which height strata limits will be chosen
 ##' @param strata.limits_reduce default \code{TRUE}. \cr If \code{TRUE}, stratum 
 ##' height limits are checked to try and bring several PFGs together in a same 
 ##' stratum
-##' @param opt.folder.name (\emph{optional}) \cr a \code{string} that 
-##' corresponds to the name of the folder that will be created into the 
+##' @param opt.folder.name (\emph{optional}) \cr a \code{string} corresponding 
+##' to the name of the folder that will be created into the 
 ##' \code{name.simulation/DATA/PFGS/SUCC/} directory to store the results
 ##' 
 ##' 
 ##' @details
 ##' 
-##' The core module of \code{FATE-HD} allows the user to simulate a primary 
-##' vegetation succession based on life history traits. \cr
-##' Several parameters are required for each PFG in order to set up this life 
-##' cycle :
+##' The \strong{core module} of \code{FATE-HD} allows the user to simulate a 
+##' primary vegetation succession based on a \strong{demography model}. \cr \cr
+##' 
+##' Several parameters, given within \code{mat.PFG.succ}, are required for 
+##' each PFG in order to set up this life cycle :
 ##' 
 ##' \describe{
-##'   \item{type}{or life-form, based on Raunkier. It should be either \code{H} 
-##'   (herbaceous), \code{C} (chamaephyte) or \code{P} (phanerophyte) for now}
+##'   \item{type}{or life-form, based on Raunkier. \cr It should be either 
+##'   \code{H} (herbaceous), \code{C} (chamaephyte) or \code{P} (phanerophyte) 
+##'   for now}
 ##'   \item{height}{the maximum or average height that reach the PFG}
 ##'   \item{maturity}{the age from which the PFG can reproduce}
 ##'   \item{longevity}{the maximum or average lifespan of the PFG \cr \cr}
-##'   \item{(max_abundance)}{the maximum abundance of mature PFG in favorable 
-##'   conditions}
-##'   \item{(potential_fecundity)}{the maximum number of seeds produced by the 
-##'   PFG}
-##'   \item{(immature_size)}{the relative size of immature versus mature plants 
-##'   \cr \cr}
+##'   \item{(\emph{max_abundance})}{the maximum abundance of mature PFG in 
+##'   favorable conditions}
+##'   \item{(\emph{potential_fecundity})}{the maximum number of seeds produced 
+##'   by the PFG}
+##'   \item{(\emph{immature_size})}{the relative size of immature versus mature 
+##'   plants}
+##'   \item{(\emph{is_alien})}{if the PFG is to be considered as an alien 
+##'   (\code{1}) or not (\code{0}) \cr \cr}
 ##' }
 ##' 
 ##' 
-##' 
-##' 
-##' These values will allow to calculate or define a set of characteristics for
-##' each PFG :
+##' These values will allow to calculate or define a set of characteristics for 
+##' all PFG :
 ##' 
 ##' \describe{
-##'   \item{STRATA_LIMITS}{= the height values that define each stratum.\cr \cr
-##'   The steps are detailed below and try to homogenize the number of PFG
-##'   within each stratum :
+##'   \item{STRATA_LIMITS}{= height values that define each stratum.\cr \cr
+##'   Two methods to define these limits are available :
 ##'   \itemize{
-##'     \item the average number of PFG per stratum should be close to 
-##'     the square root of the total number of PFG (\code{no.PFG.perStrata})
-##'     \item \code{strata limits} should go exponentially and will be selected
-##'     among \cr \code{0, 20, 50, 150, 400, 1000, 2000, 5000, 10000}
-##'     \item PFG are divided according to their \code{height} and these 
-##'     \code{strata limits} and then grouped in order to have per stratum a 
-##'     number of PFG \code{>= (no.PFG.perStrata - 2) \cr \cr}
+##'     \item from \strong{predefined rules} (using \code{strata.limits_reduce 
+##'     = TRUE}, \code{strata.limits}, \code{height}) : \cr \cr
+##'     \itemize{
+##'       \item limits should go exponentially and are selected among 
+##'       \code{strata.limits}
+##'       \item PFG are separated according to these \code{strata.limits} and 
+##'       then grouped making sure to have 
+##'       \deqn{\text{number of PFG per stratum} \geq \sqrt{\text{total number 
+##'       of PFG}} - 2}
+##'       to try to homogenize the number of PFG within each stratum. \cr \cr
+##'     }
+##'     \item from \strong{user data} : (using \code{strata.limits_reduce = 
+##'     FALSE}) \cr
+##'       \emph{with the values contained within the \code{strata.limits} 
+##'       column, if provided \cr \cr}
 ##'   }
 ##'   }
-##'   \item{STRATA}{= the maximum stratum that each PFG can reach \cr \cr}
+##' }
+##' 
+##' and a set of characteristics for each PFG :
+##' 
+##' \describe{
+##'   \item{STRATA}{= maximum stratum that each PFG can reach}
 ##'   \item{MAX_ABUNDANCE}{= maximum abundance of mature PFG in favorable 
-##'   conditions \cr \cr
-##'   It can be seen as a proxy of maximum carrying capacity for mature 
-##'   individuals (\emph{and therefore as a proxy a quantity of shade produced 
-##'   as well, if the light module is activated}), and it is defined according 
-##'   to the number of strata potentially occupied by a PFG and its life form :
+##'   conditions \cr
+##'    = It can be seen as a proxy of maximum carrying capacity for mature 
+##'   individuals \cr (\emph{and therefore as a proxy a quantity of shade 
+##'   produced as well, if the light module is activated}). \cr \cr
+##'   Two methods to define these abundances are available :
 ##'   \itemize{
-##'     \item herbaceous take little place (\emph{and make little shade}) 
-##'     (\code{1}), \cr chamaephytes take medium place (\emph{and make medium 
-##'     shade}) (\code{2}) \cr and phanerophytes take a lot of place 
-##'     (\emph{and make lot of shade}) (\code{3})
-##'     \item all plants in first stratum take little place (\emph{and make 
-##'     little shade}) (\code{1})
-##'     \item plants other than herbaceous in stratum 2 take medium place 
-##'     (\emph{and make medium shade}) (\code{2})
-##'     \item herbaceous in stratum > 2 take medium place (\emph{and make 
-##'     medium shade}) (\code{2})
-##'     \item chamaephytes in stratum > 3 take lot of place (\emph{and make 
-##'     lot of shade}) (\code{3})
+##'     \item from \strong{predefined rules} (using \code{type}, 
+##'     \code{STRATA}) : \cr \cr
+##'     \tabular{rcccc}{
+##'       \strong{STRATA} \tab \strong{1} \tab \strong{2} \tab 
+##'       \strong{3} \tab \strong{+}\cr
+##'       \strong{\code{H} (herbaceous)} \tab \code{1} \tab \code{1} \tab 
+##'       \code{2} \tab \code{2} \cr
+##'       \strong{\code{C} (chamaephyte)} \tab \code{1} \tab \code{2} \tab 
+##'       \code{2} \tab \code{3} \cr
+##'       \strong{\code{P} (phanerophyte)} \tab \code{1} \tab \code{2} \tab 
+##'       \code{3} \tab \code{3}
+##'     }
+##'     \item from \strong{user data} : \cr
+##'       \emph{with the values contained within the \code{max_abundance} 
+##'       column, if provided \cr \cr}
 ##'   }
-##'   \emph{or the values contained within the \code{max_abundance} column, if 
-##'   provided \cr \cr}
 ##'   }
 ##'   \item{IMM_SIZE}{= relative size of immature versus mature plants \cr
+##'   = for example, immature herbaceous take as much space as mature 
+##'   herbaceous, while immature phanerophytes take less space (\emph{and 
+##'   contribute to shade half less}) than mature individuals \cr \cr
+##'   Two methods to define these sizes are available :
 ##'   \itemize{
-##'     \item immature herbaceous take as much space as mature herbaceous \cr
-##'     (\emph{and contribute to shade in the same way}) (\code{100 \%})
-##'     \item immature chamaephytes take two times less space than mature
-##'     chamaephytes \cr (\emph{and contribute to shade half less}) 
-##'     (\code{50 \%})
-##'     \item immature phanerophytes take only \code{10 \%} of their full space 
-##'     (\emph{and shade}) capacity
-##'     \item intermediate percentages for herbaceous in stratum 2 
-##'     (\code{80 \%}) and in stratum > 2 (\code{50 \%})
-##'     \item immature chamaephytes in 1st stratum take as much space as mature 
-##'     chamaephytes \cr (\emph{and contribute to shade in the same way}) 
-##'     (\code{100 \%})
-##'     \item immature phanerophytes with height < 10m take two times less 
-##'     space than mature phanerophytes \cr (\emph{and contribute to shade half 
-##'     less}) (\code{50 \%})
+##'     \item from \strong{predefined rules} (using \code{type}, \code{STRATA}) 
+##'     : \cr \cr
+##'     
+##'     \tabular{rcccc}{
+##'       \strong{STRATA} \tab \strong{1} \tab \strong{2} \tab 
+##'       \strong{3} \tab \strong{+}\cr
+##'       \strong{\code{H} (herbaceous)} \tab \code{100\%} \tab \code{80\%} 
+##'       \tab \code{50\%} \tab \code{50\%} \cr
+##'       \strong{\code{C} (chamaephyte)} \tab \code{100\%} \tab \code{50\%} 
+##'       \tab \code{50\%} \tab \code{50\%} \cr
+##'       \strong{\code{P} (phanerophyte)} \tab \code{50\%} \tab \code{50\%} 
+##'       \tab \code{50\%} \tab \code{10\%}
+##'     }
+##'     \item from \strong{user data} : \cr
+##'       \emph{with the values contained within the \code{immature_size} 
+##'       column, if provided \cr \cr}
 ##'   }
-##'   \emph{or the values contained within the \code{immature_size} column, if 
-##'   provided \cr \cr}
 ##'   }
-##'   \item{CHANG_STR_AGES}{= at what age each PFG goes into the upper stratum. 
+##'   \item{CHANG_STR_AGES}{= at what age each PFG goes into the upper stratum 
 ##'   \cr \cr It is defined using a logistic growth curve with 2 points to 
 ##'   parameterize it :
 ##'   \enumerate{
-##'     \item at \code{age = maturity/2}, \code{height = IMM_SIZE * height}
-##'     \item at \code{age = longevity}, \code{height = height} \cr \cr
+##'     \item at \eqn{age = \text{maturity}/2}, \eqn{height = \text{IMM_SIZE} * \text{height}}
+##'     \item at \eqn{age = \text{longevity}}, \eqn{height = \text{height}} \cr \cr
 ##'   }
 ##'   }
-##'   \item{POTENTIAL_FECUNDITY}{= maximum number of seeds produced by the PFG. 
-##'   \cr \cr By default, defined to the same value for all PFG (\code{100}) \cr
-##'   \emph{or the values contained within the \code{potential_fecundity} 
-##'   column, if provided \cr \cr}
+##'   \item{POTENTIAL_FECUNDITY}{= maximum number of seeds produced by the PFG 
+##'   \cr \cr
+##'   Two methods to define this number are available :
+##'   \itemize{
+##'     \item from \strong{predefined rules} : same value for all PFG 
+##'     (\code{100\%})
+##'     \item from \strong{user data} : \cr
+##'       \emph{with the values contained within the \code{potential_fecundity} 
+##'       column, if provided \cr \cr}
 ##'   }
+##'   }
+##'   \item{IS_ALIEN}{= if the PFG is to be considered as an alien (\code{1}) or 
+##'   not (\code{0})}
 ##' }
 ##' 
 ##' 
 ##' 
 ##' @return A \code{.txt} file per PFG into the 
-##' \code{name.simulation/DATA/PFGS/SUCC/} directory with the following 
+##' \file{name.simulation/DATA/PFGS/SUCC/} directory with the following 
 ##' parameters :
 ##' 
 ##' \describe{
 ##'   \item{NAME}{name of the PFG}
-##'   \item{MATURITY}{the maturity age of the PFG \emph{(in years)}}
-##'   \item{LONGEVITY}{the PFG life span \emph{(in years)}}
-##'   \item{MAX_ABUNDANCE}{the maximal (qualitative) abundance / space that 
-##'   the PFG is able to produce / occupy \cr (qualitative) 
-##'   \emph{(1: Low 2: Medium 3: High)}}
-##'   \item{IMM_SIZE}{the relative size of the immature PFG \cr
-##'   \emph{(0: 0\% 1: 10\% 2: 20\% 3: 30\% 4: 40\% 5: 50\% 6: 60\% 7: 70\% 
-##'   8: 80\% 9: 90\% 10: 100\%)}}
-##'   \item{CHANG_STR_AGES}{the ages at which the PFG goes in the upper stratum 
+##'   \item{MATURITY}{PFG maturity age \emph{(in years)}}
+##'   \item{LONGEVITY}{ PFG life span \emph{(in years)}}
+##'   \item{MAX_ABUNDANCE}{maximum abundance / space (qualitative) that the PFG 
+##'   is able to produce / occupy \cr \emph{(\code{1}: Low \code{2}: Medium 
+##'   \code{3}: High)}}
+##'   \item{IMM_SIZE}{PFG immature relative size \emph{(from \code{0} to 
+##'   \code{10}, corresponding to 0 to 100\%)}}
+##'   \item{CHANG_STR_AGES}{ages at which the PFG goes in the upper stratum 
 ##'   \cr \emph{(in years, put a value higher than the PFG life span if it is 
 ##'   not supposed to rise a stratum)}}
-##'   \item{SEED_POOL_LIFE}{the maximal number of years seeds are able to
-##'   survive (for active and dormant pool)}
-##'   \item{SEED_DORMANCY}{are the seeds dormant or not \emph{(0: No 1: Yes)}}
-##'   \item{POTENTIAL_\cr FECUNDITY}{the maximum number of seeds produced by 
-##'   the PFG \cr \emph{(set by default to 100)}\cr \cr}
+##'   \item{SEED_POOL_LIFE}{maximum number of years seeds are able to survive 
+##'   (for active and dormant pool)}
+##'   \item{SEED_DORMANCY}{are the seeds dormant or not \emph{(\code{0}: No 
+##'   \code{1}: Yes)}}
+##'   \item{POTENTIAL_\cr FECUNDITY}{maximum number of seeds produced by the 
+##'   PFG \cr \emph{(set by default to \code{100})}}
+##'   \item{IS_ALIEN}{is the PFG an alien or not \emph{(\code{0}: No \code{1}: 
+##'   Yes)}\cr \cr}
 ##' }
 ##' 
-##' A \code{SUCC_COMPLETE_TABLE.csv} file summarizing information for all 
-##' groups into the \code{name.simulation/DATA/PFGS/} directory. \cr
-##' This file can be used to parameterize the disturbance files.
+##' A \file{SUCC_COMPLETE_TABLE.csv} file summarizing information for all 
+##' groups into the \file{name.simulation/DATA/PFGS/} directory. \cr
+##' This file can be used to parameterize the disturbance files (see 
+##' \code{\link{PRE_FATE.params_PFGdisturbance}}).
 ##' 
 ##' If the \code{opt.folder.name} has been used, the files will be into the 
-##' folder \code{name.simulation/DATA/PFGS/SUCC/opt.folder.name/}
+##' folder \file{name.simulation/DATA/PFGS/SUCC/opt.folder.name/}.
 ##' 
 ##' 
 ##' @keywords FATE, simulation, height, longevity, maturity
 ##' 
 ##' @seealso \code{\link{PRE_FATE.skeletonDirectory}}, 
+##' \code{\link{PRE_FATE.params_globalParameters}}, 
 ##' \code{\link{PRE_FATE.params_PFGdisturbance}}
 ##' 
 ##' @examples
@@ -227,135 +256,137 @@ PRE_FATE.params_PFGsuccession = function(
   , opt.folder.name = NULL
 ){
   
+  #############################################################################
+  
   .testParam_existFolder(name.simulation, "DATA/PFGS/SUCC/")
   
+  ## CHECK parameter mat.PFG.succ
   if (.testParam_notDf(mat.PFG.succ))
   {
     .stopMessage_beDataframe("mat.PFG.succ")
-  }
-  if (nrow(mat.PFG.succ) == 0 || ncol(mat.PFG.succ) < 5)
+  } else
   {
-    .stopMessage_numRowCol("mat.PFG.succ", c("PFG", "type","height", "maturity", "longevity"))
-  } else if (ncol(mat.PFG.succ) == 5)
-  {
-    if (sum(colnames(mat.PFG.succ) %in% c("PFG", "type","height", "maturity", "longevity")) < 5)
+    if (nrow(mat.PFG.succ) == 0 || !(ncol(mat.PFG.succ) %in% c(5, 6, 7, 8, 9)))
     {
-      .stopMessage_columnNames("mat.PFG.succ", c("PFG", "type","height", "maturity", "longevity"))
+      .stopMessage_numRowCol("mat.PFG.succ", c("PFG", "type","height", "maturity", "longevity"
+                                               , "(max_abundance)", "(potential_fecundity)"
+                                               , "(immature_size)", "(is_alien)"))
+    } else
+    {
+      notCorrect = switch(as.character(ncol(mat.PFG.succ))
+                          , "5" = .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity", "longevity"))
+                          , "6" = (.testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
+                                                                          , "longevity", "max_abundance")) &&
+                                     .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
+                                                                            , "longevity", "potential_fecundity")) &&
+                                     .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
+                                                                            , "longevity", "immature_size")) &&
+                                     .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
+                                                                            , "longevity", "is_alien")))
+                          , "7" = (.testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
+                                                                          , "longevity", "max_abundance"
+                                                                          , "potential_fecundity")) &&
+                                     .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
+                                                                            , "longevity", "max_abundance"
+                                                                            , "immature_size")) &&
+                                     .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
+                                                                            , "longevity", "max_abundance"
+                                                                            , "is_alien")) &&
+                                     .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
+                                                                            , "longevity", "potential_fecundity"
+                                                                            , "immature_size")) &&
+                                     .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
+                                                                            , "longevity", "potential_fecundity"
+                                                                            , "is_alien")) &&
+                                     .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
+                                                                            , "longevity", "immature_size"
+                                                                            , "is_alien")))
+                          , "8" = (.testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
+                                                                          , "longevity", "max_abundance"
+                                                                          , "potential_fecundity", "immature_size")) &&
+                                     .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
+                                                                            , "longevity", "(max_abundance)"
+                                                                            , "potential_fecundity", "is_alien")) &&
+                                     .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
+                                                                            , "longevity", "max_abundance"
+                                                                            , "immature_size", "is_alien")) &&
+                                     .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
+                                                                            , "longevity", "potential_fecundity"
+                                                                            , "potential_fecundity", "is_alien")))
+                          , "9" = .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity", "longevity"
+                                                                         , "max_abundance", "potential_fecundity"
+                                                                         , "immature_size", "is_alien"))
+                          , TRUE)
+      if (notCorrect){
+        .stopMessage_columnNames("mat.PFG.succ", c("PFG", "type","height", "maturity", "longevity"
+                                                   , "(max_abundance)", "(potential_fecundity)"
+                                                   , "(immature_size)", "(is_alien)"))
+      }
     }
-  } else if (ncol(mat.PFG.succ) > 5)
-  {
-    if (!((sum(colnames(mat.PFG.succ) %in% c("PFG", "type","height", "maturity", "longevity")) == 5) &&
-          (sum(colnames(mat.PFG.succ) %in% c("max_abundance", "potential_fecundity", "immature_size")) == (ncol(mat.PFG.succ) - 5))))
+    mat.PFG.succ$PFG = as.character(mat.PFG.succ$PFG)
+    .testParam_samevalues.m("mat.PFG.succ$PFG", mat.PFG.succ$PFG)
+    .testParam_notChar.m("mat.PFG.succ$PFG", mat.PFG.succ$PFG)
+    mat.PFG.succ$type = as.character(mat.PFG.succ$type)
+    .testParam_notInValues.m("mat.PFG.succ$type", mat.PFG.succ$type, c("H", "C", "P"))
+    .testParam_notNum.m("mat.PFG.succ$height", mat.PFG.succ$height)
+    .testParam_NAvalues.m("mat.PFG.succ$height", mat.PFG.succ$height)
+    .testParam_notNum.m("mat.PFG.succ$maturity", mat.PFG.succ$maturity)
+    .testParam_NAvalues.m("mat.PFG.succ$maturity", mat.PFG.succ$maturity)
+    .testParam_notNum.m("mat.PFG.succ$longevity", mat.PFG.succ$longevity)
+    .testParam_NAvalues.m("mat.PFG.succ$longevity", mat.PFG.succ$longevity)
+    if (sum(mat.PFG.succ$maturity > mat.PFG.succ$longevity) > 0){
+      stop(paste0("Wrong type of data!\n `mat.PFG.succ$maturity` must contain "
+                  , "values equal or inferior to `mat.PFG.succ$longevity`"))
+    }
+    
+    if (sum(colnames(mat.PFG.succ) == "max_abundance") == 1)
     {
-      .stopMessage_columnNames("mat.PFG.succ", c("PFG", "type","height", "maturity", "longevity"
-                                                 , "(max_abundance)", "(potential_fecundity)", "(immature_size)"))
+      .testParam_NAvalues.m("mat.PFG.succ$max_abundance", mat.PFG.succ$max_abundance)
+      .testParam_notInValues.m("mat.PFG.succ$max_abundance", mat.PFG.succ$max_abundance, 1:3)
+    }
+    if (sum(colnames(mat.PFG.succ) == "potential_fecundity") == 1)
+    {
+      .testParam_notNum.m("mat.PFG.succ$potential_fecundity", mat.PFG.succ$potential_fecundity)
+      .testParam_NAvalues.m("mat.PFG.succ$potential_fecundity", mat.PFG.succ$potential_fecundity)
+    }
+    if (sum(colnames(mat.PFG.succ) == "immature_size") == 1)
+    {
+      .testParam_NAvalues.m("mat.PFG.succ$immature_size", mat.PFG.succ$immature_size)
+      .testParam_notInValues.m("mat.PFG.succ$immature_size", mat.PFG.succ$immature_size, 0:10)
+    }
+    if (sum(colnames(mat.PFG.succ) == "is_alien") == 1)
+    {
+      .testParam_NAvalues.m("mat.PFG.succ$is_alien", mat.PFG.succ$is_alien)
+      .testParam_notInValues.m("mat.PFG.succ$is_alien", mat.PFG.succ$is_alien, 0:1)
     }
   }
-  mat.PFG.succ$PFG = as.character(mat.PFG.succ$PFG)
-  mat.PFG.succ$type = as.character(mat.PFG.succ$type)
-  if (length(which(is.na(mat.PFG.succ$PFG))) > 0 ||
-      length(unique(mat.PFG.succ$PFG)) < nrow(mat.PFG.succ)){
-    stop("Wrong type of data!\n Column `PFG` of `mat.PFG.succ` must contain different values")
-  }
-  if (.testParam_notChar(mat.PFG.succ$PFG))
-  {
-    .stopMessage_beChar("mat.PFG.succ$PFG")
-  }
-  if (.testParam_notInChar(mat.PFG.succ$type, inList = c("H", "C", "P")))
-  {
-    .stopMessage_content("mat.PFG.succ$type", c("H", "C", "P"))
-  }
-  if (!is.numeric(mat.PFG.succ$height) ||
-      !is.numeric(mat.PFG.succ$maturity) ||
-      !is.numeric(mat.PFG.succ$longevity))
-  {
-    .stopMessage_columnNumeric("mat.PFG.succ", c("height", "maturity", "longevity"))
-  }
-  if (length(which(is.na(mat.PFG.succ$height))) > 0 ||
-      length(which(is.na(mat.PFG.succ$maturity))) > 0 ||
-      length(which(is.na(mat.PFG.succ$longevity))) > 0)
-  {
-    .stopMessage_columnNoNA("mat.PFG.succ", c("height", "maturity", "longevity"))
-  }
-  if (sum(colnames(mat.PFG.succ) == "max_abundance") == 1)
-  {
-    if (!is.numeric(mat.PFG.succ$max_abundance))
-    {
-      .stopMessage_columnNumeric("mat.PFG.succ", "max_abundance")
-    }
-    if (length(which(is.na(mat.PFG.succ$max_abundance))) > 0)
-    {
-      .stopMessage_columnNoNA("mat.PFG.succ", "max_abundance")
-    }
-    if (sum(mat.PFG.succ$max_abundance %in% c(1,2,3)) < nrow(mat.PFG.succ))
-    {
-      stop("Wrong type of data!\n Column `max_abundance` of `mat.PFG.succ` must contain values between 1 and 3")
-    }
-  }
-  if (sum(colnames(mat.PFG.succ) == "potential_fecundity") == 1)
-  {
-    if (!is.numeric(mat.PFG.succ$potential_fecundity))
-    {
-      .stopMessage_columnNumeric("mat.PFG.succ", "potential_fecundity")
-    }
-    if (length(which(is.na(mat.PFG.succ$potential_fecundity))) > 0)
-    {
-      .stopMessage_columnNoNA("mat.PFG.succ", "potential_fecundity")
-    }
-  }
-  if (sum(colnames(mat.PFG.succ) == "immature_size") == 1)
-  {
-    if (!is.numeric(mat.PFG.succ$immature_size))
-    {
-      .stopMessage_columnNumeric("mat.PFG.succ", "immature_size")
-    }
-    if (length(which(is.na(mat.PFG.succ$immature_size))) > 0)
-    {
-      .stopMessage_columnNoNA("mat.PFG.succ", "immature_size")
-    }
-    if (sum(mat.PFG.succ$immature_size %in% seq(0,10)) < nrow(mat.PFG.succ))
-    {
-      stop("Wrong type of data!\n Column `immature_size` of `mat.PFG.succ` must contain values between 0 and 10")
-    }
-  }
+  ## CHECK parameter strata.limits
   strata.limits = sort(unique(na.exclude(strata.limits)))
-  if (.testParam_notNum(strata.limits) ||
-      length(which(strata.limits < 0)) > 0)
-  {
-    .stopMessage_beInteger("strata.limits")
-  }
-  ## CHECKS for parameter opt.folder.name
-  if (is.null(opt.folder.name)){
-    opt.folder.name = ""
-  } else if (!is.null(opt.folder.name) && !is.character(opt.folder.name)){
-    warning("As `opt.folder.name` does not contain character value, it will be ignored")
-    opt.folder.name = ""
-  } else if (nchar(opt.folder.name) > 0){
-    opt.folder.name = paste0(opt.folder.name, "/")
-    dir.create(paste0(name.simulation, "/DATA/PFGS/SUCC/", opt.folder.name))
-  } else {
-    opt.folder.name = ""
-  }
+  .testParam_notInteger.m("strata.limits", strata.limits)
+  ## CHECK parameter opt.folder.name
+  opt.folder.name = .getParam_opt.folder.name(opt.folder.name
+                                              , paste0(name.simulation, "/DATA/PFGS/SUCC/"))
   
-  #################################################################################################
+  
+  #############################################################################
   
   no.PFG = nrow(mat.PFG.succ)
   
-  ## GET PFG NAME
+  ## GET informations
   NAME = as.character(mat.PFG.succ$PFG)
-  
-  ## GET PFG TYPE
   TYPE = as.character(mat.PFG.succ$type)
-
-  ## GET PFG HEIGHT
   HEIGHT = mat.PFG.succ$height
-  
-  ## GET MATURITY AGE values
   MATURITY = mat.PFG.succ$maturity
   
-  ## GET LONGEVITY values
-  ## Death precedes seed productivity in the model thus longevity param = longevity + 1
+  ## Death precedes seed productivity in the model 
+  ## thus longevity param = longevity + 1
   LONGEVITY = mat.PFG.succ$longevity + 1
+  
+  IS_ALIEN = rep(0, no.PFG)
+  if (sum(colnames(mat.PFG.succ) == "is_alien") == 1)
+  {
+    IS_ALIEN = mat.PFG.succ$is_alien
+  }
   
   cat("\n ############## GROUP INFORMATIONS ############## \n")
   cat("\n Number of groups : ", no.PFG)
@@ -363,9 +394,10 @@ PRE_FATE.params_PFGsuccession = function(
       , length(which(TYPE == "H")), " H, "
       , length(which(TYPE == "C")), " C, "
       , length(which(TYPE == "P")), " P, ")
+  cat("\n Number of aliens : ", length(which(IS_ALIEN == 1)))
   cat("\n")
   
-  #################################################################################################
+  #############################################################################
   
   ## GET height strata limits (for light competition and PFG growth)
   ## n strata (+ germinants = 0)
@@ -411,10 +443,12 @@ PRE_FATE.params_PFGsuccession = function(
   cat("\n ############## STRATA INFORMATIONS ############## \n")
   cat("\n Number of strata : ", no.strata)
   cat("\n Height limits of selected strata : ", STRATA_LIMITS)
-  cat("\n Number of PFG within each stratum : ", table(cut(mat.PFG.succ$height, breaks = STRATA_LIMITS)))
+  cat("\n Number of PFG within each stratum : "
+      , table(cut(mat.PFG.succ$height
+                  , breaks = STRATA_LIMITS)))
   cat("\n")
   
-  #################################################################################################
+  #############################################################################
   
   ## GET MAX ABUNDANCE
   ##  = maximum abundance of mature PFG in favorable conditions
@@ -426,17 +460,24 @@ PRE_FATE.params_PFGsuccession = function(
     MAX_ABUNDANCE = mat.PFG.succ$max_abundance
   } else
   {
+    ## herbaceous make little shade 
+    ## chamaephytes make medium shade 
+    ## phanerophytes make lot of shade 
+    ## all plants in first stratum make little shade 
+    ## plants other than herbaceous in stratum 2 make medium shade 
+    ## herbaceous in stratum > 2 make medium shade 
+    ## chamaephytes in stratum > 3 make lot of shade
     MAX_ABUNDANCE = rep(NA, no.PFG)
-    MAX_ABUNDANCE[which(mat.PFG.succ$type == "H")] = 1 ## herbaceous make little shade 
-    MAX_ABUNDANCE[which(mat.PFG.succ$type == "C")] = 2 ## chamaephytes make medium shade 
-    MAX_ABUNDANCE[which(mat.PFG.succ$type == "P")] = 3 ## phanerophytes make lot of shade 
-    MAX_ABUNDANCE[which(STRATA == 1)] = 1 ## all plants in first stratum make little shade
-    MAX_ABUNDANCE[which(STRATA == 2 & mat.PFG.succ$type != "H")] = 2 ## plants other than herbaceous in stratum 2 make medium shade
-    MAX_ABUNDANCE[which(STRATA > 2 & mat.PFG.succ$type == "H")] = 2 ## herbaceous in stratum > 2 make medium shade
-    MAX_ABUNDANCE[which(STRATA > 3 & mat.PFG.succ$type == "C")] = 3 ## chamaephytes in stratum > 3 make lot of shade
+    MAX_ABUNDANCE[which(mat.PFG.succ$type == "H")] = 1
+    MAX_ABUNDANCE[which(mat.PFG.succ$type == "C")] = 2
+    MAX_ABUNDANCE[which(mat.PFG.succ$type == "P")] = 3
+    MAX_ABUNDANCE[which(STRATA == 1)] = 1
+    MAX_ABUNDANCE[which(STRATA == 2 & mat.PFG.succ$type != "H")] = 2
+    MAX_ABUNDANCE[which(STRATA > 2 & mat.PFG.succ$type == "H")] = 2
+    MAX_ABUNDANCE[which(STRATA > 3 & mat.PFG.succ$type == "C")] = 3
   }
   
-  #################################################################################################
+  #############################################################################
   
   ## GET IMMATURE SIZE
   ##   = relative shade of immature plants
@@ -456,17 +497,24 @@ PRE_FATE.params_PFGsuccession = function(
     IMM_SIZE = mat.PFG.succ$immature_size
   } else
   {
+    ## immature herbaceous contribute to shade in the same way than mature herbaceous
+    ## immature chamaephytes contribute to shade half less than mature herbaceous
+    ## immature phanerophytes contribute to shade only by 10 % of their full capacity
+    ## intermediate percentage for herbaceous in stratum 2
+    ## intermediate percentage for herbaceous in stratum > 2
+    ## immature chamaephytes in 1st stratum contribute to shade in the same way than mature chamaephytes
+    ## immature phanerophytes with height < 10m contribute to shade half less than mature phanerophytes
     IMM_SIZE = rep(10, no.PFG)
-    IMM_SIZE[which(mat.PFG.succ$type == "H")] = 10 ## immature herbaceous contribute to shade in the same way than mature herbaceous
-    IMM_SIZE[which(mat.PFG.succ$type == "C")] = 5 ## immature chamaephytes contribute to shade half less than mature herbaceous
-    IMM_SIZE[which(mat.PFG.succ$type == "P")] = 1 ## immature phanerophytes contribute to shade only by 10 % of their full capacity
-    IMM_SIZE[which(mat.PFG.succ$type == "H" & STRATA == 2)] = 8 ## intermediate percentage for herbaceous in stratum 2
-    IMM_SIZE[which(mat.PFG.succ$type == "H" & STRATA > 2)] = 5 ## intermediate percentage for herbaceous in stratum > 2
-    IMM_SIZE[which(mat.PFG.succ$type == "C" & STRATA == 1)] = 10 ## immature chamaephytes in 1st stratum contribute to shade in the same way than mature chamaephytes
-    IMM_SIZE[which(mat.PFG.succ$type == "P" & mat.PFG.succ$height < 1000)] = 5 ## immature phanerophytes with height < 10m contribute to shade half less than mature phanerophytes
+    IMM_SIZE[which(mat.PFG.succ$type == "H")] = 10
+    IMM_SIZE[which(mat.PFG.succ$type == "C")] = 5
+    IMM_SIZE[which(mat.PFG.succ$type == "P")] = 1
+    IMM_SIZE[which(mat.PFG.succ$type == "H" & STRATA == 2)] = 8
+    IMM_SIZE[which(mat.PFG.succ$type == "H" & STRATA > 2)] = 5
+    IMM_SIZE[which(mat.PFG.succ$type == "C" & STRATA == 1)] = 10
+    IMM_SIZE[which(mat.PFG.succ$type == "P" & mat.PFG.succ$height < 1000)] = 5
   }
   
-  #################################################################################################
+  #############################################################################
   
   ## GET CHANGE STRATA AGES
   ## Logistic growth curve with 2 points to parameterize it :
@@ -493,14 +541,10 @@ PRE_FATE.params_PFGsuccession = function(
           CHANG_STR_AGES[str, i] = ifelse(is.na(age.brk), CHANG_STR_AGES[str, i], age.brk)
         }
       }
-      # else if (mat.PFG.succ$height[i] > STRATA_LIMITS[2])
-      # {
-      #   CHANG_STR_AGES[2, i] = 0 ## direct into strata max
-      # }
     }
   }
   
-  #################################################################################################
+  #############################################################################
   
   ## GET SEED POOLS (active and dormant) LIFE SPAN
   ##   = available seeds will exponentially decrease according to seed pool life span parameter
@@ -520,8 +564,8 @@ PRE_FATE.params_PFGsuccession = function(
     POTENTIAL_FECUNDITY = rep(100, no.PFG)
   }
   
-  #################################################################################################
-
+  #############################################################################
+  
   names.params.list = get("NAME")
   names.params.list.sub = c("NAME"
                             , "TYPE"
@@ -534,7 +578,8 @@ PRE_FATE.params_PFGsuccession = function(
                             , "CHANG_STR_AGES"
                             , "SEED_POOL_LIFE"
                             , "SEED_DORMANCY"
-                            , "POTENTIAL_FECUNDITY")
+                            , "POTENTIAL_FECUNDITY"
+                            , "IS_ALIEN")
   
   params.list = lapply(names.params.list.sub, function(x) { return(get(x)) })
   
@@ -547,20 +592,25 @@ PRE_FATE.params_PFGsuccession = function(
                            , "STRATA"
                            , "MAX_ABUNDANCE"
                            , "IMM_SIZE"
-                           , paste0("CHANG_STR_AGES_to_str_", 1:no.strata, "_", STRATA_LIMITS[1:no.strata])
+                           , paste0("CHANG_STR_AGES_to_str_"
+                                    , 1:no.strata, "_"
+                                    , STRATA_LIMITS[1:no.strata])
                            , paste0("SEED_POOL_LIFE_", c("active", "dormant"))
                            , "SEED_DORMANCY"
-                           , "POTENTIAL_FECUNDITY")
+                           , "POTENTIAL_FECUNDITY"
+                           , "IS_ALIEN")
   
   write.table(params.csv
-            , file = paste0(name.simulation
-                            , "/DATA/PFGS/"
-                            , ifelse(opt.folder.name == "", "", sub("/$", "_", opt.folder.name))
-                            , "SUCC_COMPLETE_TABLE.csv")
-            , row.names = F
-            , col.names = T)
+              , file = paste0(name.simulation
+                              , "/DATA/PFGS/"
+                              , ifelse(opt.folder.name == ""
+                                       , ""
+                                       , sub("/$", "_", opt.folder.name))
+                              , "SUCC_COMPLETE_TABLE.csv")
+              , row.names = F
+              , col.names = T)
   
-  #################################################################################################
+  #############################################################################
   
   params.list = lapply(1:no.PFG, function(x) {
     lapply(names.params.list.sub, function(y) {
@@ -573,11 +623,11 @@ PRE_FATE.params_PFGsuccession = function(
       return(val)
     })
   })
-
+  
   for (i in 1:length(params.list)) {
     params = params.list[[i]]
     names(params) = names.params.list.sub
-
+    
     .createParams(params.file = paste0(name.simulation
                                        , "/DATA/PFGS/SUCC/"
                                        , opt.folder.name

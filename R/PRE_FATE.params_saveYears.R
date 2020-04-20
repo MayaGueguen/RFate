@@ -10,15 +10,15 @@
 ##' PFG abundances (as well as light and soil resources if these modules are 
 ##' activated) and/or simulation objects.
 ##'              
-##' @param name.simulation a \code{string} that corresponds to the main 
-##' directory or simulation name of the \code{FATE-HD} simulation
-##' @param years.maps a \code{vector} of simulation years at which PFG 
-##' abundance maps (as well as maps of light and soil resources if these 
-##' modules are activated) will be saved
-##' @param years.objects a \code{vector} of simulation years at which 
-##' \code{FATE-HD} simulation state will be saved
-##' @param opt.folder.name (\emph{optional}) \cr a \code{string} that 
-##' corresponds to the name of the folder that will be created into the 
+##' @param name.simulation a \code{string} corresponding to the main directory  
+##' or simulation name of the \code{FATE-HD} simulation
+##' @param years.maps (\emph{optional}) \cr a \code{vector} of simulation years 
+##' at which PFG abundance maps will be saved \cr (\emph{as well as maps of 
+##' light and soil resources if these modules are activated})
+##' @param years.objects (\emph{optional}) \cr a \code{vector} of simulation 
+##' years at which \code{FATE-HD} simulation state will be saved
+##' @param opt.folder.name (\emph{optional}) \cr a \code{string} corresponding 
+##' to the name of the folder that will be created into the 
 ##' \code{name.simulation/DATA/SAVE/} directory to store the results
 ##' 
 ##' 
@@ -29,9 +29,10 @@
 ##' 
 ##' \describe{
 ##'   \item{Raster maps}{PFG abundance maps can be saved for all specified 
-##'   simulation years. It includes maps per PFG per strata and summary maps 
-##'   per PFG for all height strata combined. \cr If the light and / or soil 
-##'   modules are also activated (see 
+##'   simulation years. \cr It includes maps per PFG per strata 
+##'   (\code{ABUND_perPFG_perStrata} folder) and summary maps 
+##'   per PFG for all height strata combined (\code{ABUND_perPFG_allStrata} 
+##'   folder). \cr If the light and / or soil modules are activated (see 
 ##'   \code{\link{PRE_FATE.params_globalParameters}}), maps for light and / or 
 ##'   soil resources are also saved. \cr Raster format used is depending on 
 ##'   input data format. It can be either \code{.img} or \code{.tif}.}
@@ -45,21 +46,23 @@
 ##' 
 ##' 
 ##' @return Two \code{.txt} files into the \code{name.simulation/DATA/SAVE/}
-##' directory with one line for each simulation year for which the raster maps /
-##' \code{FATE-HD} object are to be saved :
+##' directory :
 ##' 
 ##'  \itemize{
-##'    \item \code{SAVE_YEARS_maps.txt}
-##'    \item \code{SAVE_YEARS_objects.txt} \cr \cr
+##'    \item \file{SAVE_YEARS_maps.txt} : one line for each simulation year for 
+##'    which the raster maps are to be saved
+##'    \item \file{SAVE_YEARS_objects.txt} : one line for each simulation year 
+##'    for which the \code{FATE-HD} objects are to be saved \cr \cr
 ##'  }
 ##' 
-##' If the \code{opt.folder.name} has been used, the files will be into the folder
-##' \code{name.simulation/DATA/SAVE/opt.folder.name/}
+##' If the \code{opt.folder.name} has been used, the files will be into the 
+##' folder \code{name.simulation/DATA/SAVE/opt.folder.name/}.
 ##' 
 ##' 
 ##' @keywords FATE, simulation
 ##' 
-##' @seealso \code{\link{PRE_FATE.skeletonDirectory}}
+##' @seealso \code{\link{PRE_FATE.skeletonDirectory}}, 
+##' \code{\link{PRE_FATE.params_globalParameters}}
 ##' 
 ##' @examples
 ##' 
@@ -83,34 +86,33 @@ PRE_FATE.params_saveYears = function(
   , opt.folder.name = NULL
 ){
   
+  #############################################################################
+  
   .testParam_existFolder(name.simulation, "DATA/SAVE/")
-
-    if ( (!is.null(years.maps) && !is.numeric(years.maps)) ||
+  
+  if ( (!is.null(years.maps) && !is.numeric(years.maps)) ||
        (!is.null(years.objects) && !is.numeric(years.objects))){
-    stop("Wrong type of data!\n `years.maps` and/or `years.objects` must contain numeric values")
+    stop(paste0("Wrong type of data!\n `years.maps` and/or `years.objects` "
+                , "must contain numeric values"))
   }
   if (is.null(years.maps) && is.null(years.objects)){
-    warning("Both `years.maps` and `years.objects` parameters are NULL. No parameter file will be created")
+    warning(paste0("Both `years.maps` and `years.objects` parameters are NULL. "
+                   , "No parameter file will be created"))
   } else
   {
-    if (is.null(opt.folder.name)){
-      opt.folder.name = ""
-    } else if (!is.null(opt.folder.name) && !is.character(opt.folder.name)){
-      warning("As `opt.folder.name` does not contain character value, it will be ignored")
-      opt.folder.name = ""
-    } else if (nchar(opt.folder.name) > 0){
-      opt.folder.name = paste0(opt.folder.name, "/")
-      dir.create(paste0(name.simulation, "/DATA/SAVE/", opt.folder.name))
-    } else {
-      opt.folder.name = ""
-    }
+    ## CHECK parameter opt.folder.name
+    opt.folder.name = .getParam_opt.folder.name(opt.folder.name
+                                                , paste0(name.simulation, "/DATA/SAVE/"))
+    
+    #############################################################################
     
     if (!is.null(years.maps))
     {
       params = lapply(years.maps, function(x) x)
       names(params) = rep("", length(params))
       
-      file.name = paste0(name.simulation, "/DATA/SAVE/", opt.folder.name, "SAVE_YEARS_maps.txt")
+      file.name = paste0(name.simulation, "/DATA/SAVE/"
+                         , opt.folder.name, "SAVE_YEARS_maps.txt")
       .createParams(params.file = file.name
                     , params.list = params)
       file.lines = readLines(file.name)
@@ -119,12 +121,15 @@ PRE_FATE.params_saveYears = function(
       cat(file.lines, sep = "\n", file = file.name, append = FALSE)
     }
     
+    #############################################################################
+    
     if (!is.null(years.objects))
     {
       params = lapply(years.objects, function(x) x)
       names(params) = rep("", length(params))
       
-      file.name = paste0(name.simulation, "/DATA/SAVE/", opt.folder.name, "SAVE_YEARS_objects.txt")
+      file.name = paste0(name.simulation, "/DATA/SAVE/"
+                         , opt.folder.name, "SAVE_YEARS_objects.txt")
       .createParams(params.file = file.name
                     , params.list = params)
       file.lines = readLines(file.name)
