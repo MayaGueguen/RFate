@@ -102,142 +102,17 @@
 ##' 
 ##' \dontrun{                      
 ##' POST_FATE.graphic_evolutionPixels(name.simulation = "FATE_simulation"
-##'                                     , file.simulParam = "Simul_parameters_V1.txt")
+##'                                   , file.simulParam = "Simul_parameters_V1.txt")
 ##'                                     
 ##' POST_FATE.graphic_evolutionPixels(name.simulation = "FATE_simulation"
-##'                                     , file.simulParam = "Simul_parameters_V1.txt"
-##'                                     , opt.abund_fixedScale = FALSE)
+##'                                   , file.simulParam = "Simul_parameters_V1.txt"
+##'                                   , opt.abund_fixedScale = FALSE)
 ##' }
 ##'                                     
 ##' 
 ##' 
 ##' ## ----------------------------------------------------------------------------------------- ##
 ##' ## Load example data
-##' PNE_PFG = .loadData("PNE_PFG")
-##' PNE_PARAM = .loadData("PNE_PARAM")
-##' PNE_RESULTS = .loadData("PNE_RESULTS")
-##' 
-##' ## PNE_PFG$PFG.observations : data.frame
-##' ## PNE_PARAM$succ_light : data.frame
-##' ## PNE_PARAM$strata_limits : vector
-##' ## PNE_PARAM$disp : data.frame
-##' ## PNE_PARAM$dist : data.frame
-##' ## PNE_PARAM$global : vector
-##' ## PNE_PARAM$masks : rasterStack
-##' ## PNE_RESULTS$abund_str.equilibrium : rasterStack
-##' 
-##' ## Create a skeleton folder
-##' PRE_FATE.skeletonDirectory(name.simulation = "FATE_PNE")
-##' 
-##' ## Create PFG succession parameter files : predefined of strata limits
-##' tab = PNE_PARAM$succ_light[, c("PFG", "type", "height", "maturity", "longevity")]
-##' PRE_FATE.params_PFGsuccession(name.simulation = "FATE_PNE"
-##'                               , mat.PFG.succ = tab
-##'                               , strata.limits = PNE_PARAM$strata_limits
-##'                               , strata.limits_reduce = FALSE)
-##' 
-##' ## Create PFG light parameter files : predefined of strata limits
-##' tab = PNE_PARAM$succ_light[, c("PFG", "type", "height", "maturity", "longevity", "light")]
-##' PRE_FATE.params_PFGlight(name.simulation = "FATE_PNE"
-##'                          , mat.PFG.succ = tab
-##'                          , strata.limits = PNE_PARAM$strata_limits
-##'                          , strata.limits_reduce = FALSE)
-##' 
-##' ## Create PFG dispersal parameter files
-##' PRE_FATE.params_PFGdispersal(name.simulation = "FATE_PNE"
-##'                              , mat.PFG.disp = PNE_PARAM$disp)
-##' 
-##' ## Create PFG disturbance parameter files
-##' PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_PNE"
-##'                                , mat.PFG.dist = PNE_PARAM$dist)
-##' 
-##' ## Create a Global_parameters file
-##' PRE_FATE.params_globalParameters(name.simulation = "FATE_PNE"
-##'                                  , required.no_PFG = PNE_PARAM$global["NB_FG"]
-##'                                  , required.no_STRATA = PNE_PARAM$global["NB_STRATUM"]
-##'                                  , required.simul_duration = PNE_PARAM$global["SIMULATION_DURATION"]
-##'                                  , required.seeding_duration = PNE_PARAM$global["SEEDING_DURATION"]
-##'                                  , required.seeding_timestep = PNE_PARAM$global["SEEDING_TIMESTEP"]
-##'                                  , required.seeding_input = PNE_PARAM$global["SEEDING_INPUT"]
-##'                                  , required.max_abund_low = PNE_PARAM$global["MAX_ABUND_LOW"]
-##'                                  , required.max_abund_medium = PNE_PARAM$global["MAX_ABUND_MEDIUM"]
-##'                                  , required.max_abund_high = PNE_PARAM$global["MAX_ABUND_HIGH"]
-##'                                  , doLight = TRUE
-##'                                  , LIGHT.thresh_medium = PNE_PARAM$global["LIGHT.thresh_medium"]
-##'                                  , LIGHT.thresh_low = PNE_PARAM$global["LIGHT.thresh_low"]
-##'                                  , doDispersal = TRUE
-##'                                  , DISPERSAL.mode = PNE_PARAM$global["DISPERSAL.mode"]
-##'                                  , doHabSuitability = TRUE
-##'                                  , HABSUIT.ref_option = PNE_PARAM$global["HABSUIT.ref_option"]
-##'                                  , doDisturbances = TRUE
-##'                                  , DIST.no = PNE_PARAM$global["DIST.no"]
-##'                                  , DIST.no_sub = PNE_PARAM$global["DIST.no_sub"]
-##'                                  , DIST.freq = rep(PNE_PARAM$global["DIST.freq"]
-##'                                                    , PNE_PARAM$global["DIST.no"])
-##' )
-##' 
-##' ## Create simulation masks
-##' library(raster)
-##' writeRaster(PNE_PARAM$masks$maskEcrins
-##'             , file = "FATE_PNE/DATA/MASK/mask.tif"
-##'             , overwrite = TRUE)
-##' writeRaster(PNE_PARAM$masks$noDisturb
-##'             , file = "FATE_PNE/DATA/MASK/noDisturb.tif"
-##'             , overwrite = TRUE)
-##' 
-##' ## Create simulation parameters file
-##' PRE_FATE.params_simulParameters(name.simulation = "FATE_PNE"
-##'                                 , name.mask = "mask.tif"
-##'                                 , name.dist = "noDisturb.tif")
-##' 
-##' ## Create results folders
-##' name.folder = "FATE_PNE"
-##' name.simul = "SIMUL_V1"
-##' dir1 = paste0(name.folder, "/RESULTS/", name.simul, "/ABUND_perPFG_allStrata")
-##' dir2 = paste0(name.folder, "/RESULTS/", name.simul, "/ABUND_perPFG_perStrata")
-##' dir3 = paste0(name.folder, "/RESULTS/", name.simul, "/LIGHT")
-##' dir4 = paste0(name.folder, "/RESULTS/", name.simul, "/SOIL")
-##' 
-##' dir.create(dir1, recursive = TRUE)
-##' dir.create(dir2, recursive = TRUE)
-##' dir.create(dir3, recursive = TRUE)
-##' dir.create(dir4, recursive = TRUE)
-##' 
-##' ## Create results files
-##' PFG.names = PNE_PARAM$succ_light$PFG
-##' PFG.short = sapply(PFG.names, function(x) strsplit(x, "_")[[1]][1])
-##' for (pfg in PFG.names)
-##' {
-##'   ind = grep(pfg, names(PNE_RESULTS$abund_str.equilibrium))
-##'   stk = PNE_RESULTS$abund_str.equilibrium[[ind]]
-##'   ras = sum(stk)
-##'   writeRaster(ras
-##'               , filename = paste0(dir1, "/Abund_YEAR_800_", pfg, "_STRATA_all.tif")
-##'               , overwrite = TRUE)
-##'   writeRaster(ras
-##'               , filename = paste0(dir3, "/Light_Resources_YEAR_800_STRATA_0.tif")
-##'               , overwrite = TRUE)
-##'               
-##'   for (ye in seq(100, 700, 100))
-##'   {
-##'     file.copy(from = paste0(dir1, "/Abund_YEAR_800_", pfg, "_STRATA_all.tif")
-##'               , to = paste0(dir1, "/Abund_YEAR_", ye, "_", pfg, "_STRATA_all.tif"))
-##'               
-##'     file.copy(from = paste0(dir3, "/Light_Resources_YEAR_800_STRATA_0.tif")
-##'               , to = paste0(dir3, "/Light_Resources_YEAR_", ye, "_STRATA_0.tif"))
-##'   }
-##' }
-##' 
-##' 
-##' ## Create temporal table
-##' tempEvol = POST_FATE.temporalEvolution(name.simulation = "FATE_PNE"
-##'                                        , file.simulParam = "Simul_parameters_V1.txt"
-##'                                        , opt.no_CPU = 1)
-##' 
-##' ## Create evolution coverage and space occupancy graphics
-##' graph = POST_FATE.graphic_evolutionPixels(name.simulation = "FATE_PNE"
-##'                                           , file.simulParam = "Simul_parameters_V1.txt")
-##' str(graph)                                  
 ##' 
 ##' @export
 ##' 

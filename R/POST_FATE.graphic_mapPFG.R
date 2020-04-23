@@ -155,16 +155,15 @@
 ##' 
 ##' \dontrun{                      
 ##' POST_FATE.graphic_mapPFG(name.simulation = "FATE_simulation"
-##'                               , file.simulParam = "Simul_parameters_V1.txt"
-##'                               , year = 850
-##'                               , opt.stratum_min = 3
-##'                               , opt.no_CPU = 1)
+##'                          , file.simulParam = "Simul_parameters_V1.txt"
+##'                          , years = 850
+##'                          , opt.stratum_min = 3
+##'                          , opt.no_CPU = 1)
 ##'                                     
 ##' POST_FATE.graphic_mapPFG(name.simulation = "FATE_simulation"
-##'                               , file.simulParam = "Simul_parameters_V1.txt"
-##'                               , year = c(850, 950)
-##'                               , opt.stratum_min = 3
-##'                               , opt.no_CPU = 1)
+##'                          , file.simulParam = "Simul_parameters_V1.txt"
+##'                          , year = c(850, 950)
+##'                          , opt.doBinary = FALSE)
 ##' }
 ##'                                     
 ##'                                     
