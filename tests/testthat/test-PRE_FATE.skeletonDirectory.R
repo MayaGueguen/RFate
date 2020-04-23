@@ -17,6 +17,6 @@ test_that("PRE_FATE.skeletonDirectory gives message / warning / error with missi
 ## OUTPUTS
 test_that("PRE_FATE.skeletonDirectory gives correct output", {
   if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
-  expect_message(PRE_FATE.skeletonDirectory(), "Your directory tree for your FATE-HD simulation")
+  expect_message(PRE_FATE.skeletonDirectory(), "Your directory tree for your FATE simulation")
   expect_warning(PRE_FATE.skeletonDirectory(), "Directory already exists!")
 })

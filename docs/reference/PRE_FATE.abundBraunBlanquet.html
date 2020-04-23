@@ -240,17 +240,8 @@ France). Typologie phytosociologique et essai de reconstitution des séries
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples">
-<span class='co'>## Load example data</span>
-<span class='no'>PNE_PFG</span> <span class='kw'>=</span> <span class='fu'><a href='dot-loadData.html'>.loadData</a></span>(<span class='st'>"PNE_PFG"</span>)
 
-<span class='co'>## PNE_PFG$sp.observations : data.frame</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>PNE_PFG</span>$<span class='no'>sp.observations</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>PNE_PFG</span>$<span class='no'>sp.observations</span>)
-
-<span class='co'>## Transformation of Braun-Blanquet abundances</span>
-<span class='no'>abund</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.abundBraunBlanquet</span>(<span class='kw'>abund</span> <span class='kw'>=</span> <span class='no'>PNE_PFG</span>$<span class='no'>sp.observations</span>$<span class='no'>abund_BB</span>)
-
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>abund</span>)</pre>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

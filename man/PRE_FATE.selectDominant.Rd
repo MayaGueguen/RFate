@@ -227,54 +227,6 @@ but not meeting criterion A1 are also considered as "\emph{Not selected}".
 \examples{
 
 ## Load example data
-PNE_PFG = .loadData("PNE_PFG")
-
-## PNE_PFG$sp.observations : data.frame
-tab = PNE_PFG$sp.observations[, c("sites", "species", "abund", "habitat")]
-
-## Selection of dominant species
-
-#########################################################################################
-## EXAMPLE 1 : With default parametrization
-#########################################################################################
-
-sp.DOM = PRE_FATE.selectDominant(mat.observations = tab)
-
-#########################################################################################
-## EXAMPLE 2 : Redefinition of global selection rules
-#########################################################################################
-
-sp.DOM = PRE_FATE.selectDominant(mat.observations = tab
-                                 , selectionRule.quanti = 0.9
-                                 , selectionRule.min_mean_abund = 25
-                                 , selectionRule.min_no_abund_over25 = 10)
-
-#########################################################################################
-## EXAMPLE 3 : Add habitat selection with default parametrization
-#########################################################################################
-
-sp.DOM = PRE_FATE.selectDominant(mat.observations = tab
-                                 , selectionRule.quanti = 0.9
-                                 , selectionRule.min_mean_abund = 25
-                                 , selectionRule.min_no_abund_over25 = 10
-                                 , doHabitatSelection = TRUE)
-                          
-#########################################################################################       
-## EXAMPLE 4 : Redefinition of habitat selection rules
-#########################################################################################
-
-sp.DOM = PRE_FATE.selectDominant(mat.observations = tab
-                                 , selectionRule.quanti = 0.9
-                                 , selectionRule.min_mean_abund = 25
-                                 , selectionRule.min_no_abund_over25 = 10
-                                 , doHabitatSelection = TRUE
-                                 , selectionRule.min_percent_habitat = 0.05
-                                 , selectionRule.min_no_habitat = 10)
-                                 
-#########################################################################################
-
-## 2 .csv and 2 .pdf files have been produced
-str(sp.DOM)
 
 }
 \seealso{

@@ -131,29 +131,11 @@
 ##' @examples
 ##' 
 ##' ## Load example data
-##' PNE_PFG = .loadData("PNE_PFG")
-##' 
-##' ## PNE_PFG$dom.traits : data.frame
-##' ## PNE_PFG$dom.dist_overlap : niolap object
-##' 
-##' ## Calculate distance between species
-##' sp.DIST = PRE_FATE.speciesDistance(mat.species.traits = PNE_PFG$dom.traits
-##'                                    , mat.species.overlap = PNE_PFG$dom.dist_overlap
-##'                                    , opt.max.percent.NA = 0.9
-##'                                    , opt.max.percent.similarSpecies = 0.25
-##'                                    , opt.min.sd = 0.3)
-##'                                    
-##' str(sp.DIST)
-##'              
-##' ## Run hierarchical clustering and number of clusters' selection                      
-##' sp.CLUST = PRE_FATE.speciesClustering_step1(mat.species.DIST = sp.DIST)
-##' 
-##' ## 2 .pdf files have been produced
-##' str(sp.CLUST)
 ##' 
 ##' @export
 ##' 
 ##' @importFrom grDevices colorRampPalette
+##' @importFrom graphics plot
 ##' @importFrom stats cor as.dist hclust cophenetic cutree
 ##' @importFrom utils tail
 ##' 

@@ -94,21 +94,12 @@
 ##' @examples
 ##' 
 ##' ## Load example data
-##' PNE_PFG = .loadData("PNE_PFG")
-##' 
-##' ## PNE_PFG$dom.traits : data.frame
-##' ## PNE_PFG$dom.determ : data.frame
-##' 
-##' tab1 = PNE_PFG$dom.determ[which(PNE_PFG$dom.determ$determinant == TRUE), c("species", "PFG")]
-##' tab2 = PNE_PFG$dom.traits[, c("species", "height", "dispersal", "palatability", "light")]
-##' determ.traits = merge(tab1, tab2, by = "species")
-##' 
-##' PFG.traits = PRE_FATE.speciesClustering_step3(mat.traits = determ.traits)
-##' summary(PFG.traits)
 ##' 
 ##' @export
 ##' 
 ##' @importFrom utils write.csv
+##' @importFrom graphics plot
+##' @importFrom stats median
 ##' 
 ##' @importFrom foreach foreach %do%
 ##' @importFrom reshape2 melt

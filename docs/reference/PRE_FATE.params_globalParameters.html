@@ -731,38 +731,7 @@ file, and if so, some additional parameters will be required :</p>
 
 <span class='co'>## ----------------------------------------------------------------------------------------- ##</span>
 
-<span class='co'>## Load example data</span>
-<span class='no'>PNE_PARAM</span> <span class='kw'>=</span> <span class='fu'><a href='dot-loadData.html'>.loadData</a></span>(<span class='st'>"PNE_PARAM"</span>)
-
-<span class='co'>## PNE_PARAM$global : vector</span>
-
-<span class='co'>## Create a skeleton folder</span>
-<span class='fu'><a href='PRE_FATE.skeletonDirectory.html'>PRE_FATE.skeletonDirectory</a></span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_PNE"</span>)
-
-<span class='co'>## Create a Global_parameters file</span>
-<span class='fu'>PRE_FATE.params_globalParameters</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_PNE"</span>
-                                 , <span class='kw'>required.no_PFG</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"NO_PFG"</span>]
-                                 , <span class='kw'>required.no_strata</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"NO_STRATA"</span>]
-                                 , <span class='kw'>required.simul_duration</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"SIMULATION_DURATION"</span>]
-                                 , <span class='kw'>required.seeding_duration</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"SEEDING_DURATION"</span>]
-                                 , <span class='kw'>required.seeding_timestep</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"SEEDING_TIMESTEP"</span>]
-                                 , <span class='kw'>required.seeding_input</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"SEEDING_INPUT"</span>]
-                                 , <span class='kw'>required.max_abund_low</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"MAX_ABUND_LOW"</span>]
-                                 , <span class='kw'>required.max_abund_medium</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"MAX_ABUND_MEDIUM"</span>]
-                                 , <span class='kw'>required.max_abund_high</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"MAX_ABUND_HIGH"</span>]
-                                 , <span class='kw'>doLight</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-                                 , <span class='kw'>LIGHT.thresh_medium</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"LIGHT.thresh_medium"</span>]
-                                 , <span class='kw'>LIGHT.thresh_low</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"LIGHT.thresh_low"</span>]
-                                 , <span class='kw'>doDispersal</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-                                 , <span class='kw'>DISPERSAL.mode</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"DISPERSAL.mode"</span>]
-                                 , <span class='kw'>doHabSuitability</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-                                 , <span class='kw'>HABSUIT.ref_option</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"HABSUIT.ref_option"</span>]
-                                 , <span class='kw'>doDisturbances</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-                                 , <span class='kw'>DIST.no</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"DIST.no"</span>]
-                                 , <span class='kw'>DIST.no_sub</span> <span class='kw'>=</span> <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"DIST.no_sub"</span>]
-                                 , <span class='kw'>DIST.freq</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"DIST.freq"</span>]
-                                                   , <span class='no'>PNE_PARAM</span>$<span class='no'>global</span>[<span class='st'>"DIST.no"</span>])
-                                 )</pre>
+<span class='co'>## Load example data</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -254,9 +254,9 @@ test_that("POST_FATE.graphic_validationStatistics gives error with wrong data : 
   expect_error(POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
                                                       , years = 1
                                                       , mat.PFG.obs = data.frame(PFG = "PFG1", X = 1, Y = 1, obs = 1))
-               , "The folder FATE_simulation/RESULTS/SIMUL_V1/ABUND_REL_perPFG_allStrata/ does not contain adequate files")
+               , "The folder FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_allStrata/ does not contain adequate files")
   
-  file.create("FATE_simulation/RESULTS/SIMUL_V1/ABUND_REL_perPFG_allStrata/Abund_relative_YEAR_1_PFG1_STRATA_all.tif")
+  file.create("FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_allStrata/Abund_YEAR_1_PFG1_STRATA_all.tif")
   # expect_error(POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
   #                                                     , years = 1
   #                                                     , mat.PFG.obs = data.frame(PFG = "PFG1", X = 1, Y = 1, obs = 1))

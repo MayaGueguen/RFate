@@ -223,53 +223,10 @@
 ##' 
 ##' @examples
 ##' 
-##' ## Create a skeleton folder with the default name ('FATE_simulation')
-##' PRE_FATE.skeletonDirectory()
-##' 
-##' ## Create PFG succession parameter files
-##' PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
-##'                             , mat.PFG.succ = data.frame(PFG = paste0("PFG",1:6)
-##'                                                         , type = c("C", "C", "H", "H", "P", "P")  
-##'                                                         , height = c(10, 250, 36, 68, 1250, 550)
-##'                                                         , maturity = c(5, 5, 3, 3, 8, 9)
-##'                                                         , longevity = c(12, 200, 25, 4, 110, 70)))
-##'                                                         
-##' ## Create PFG disturbance parameter files
-##' tab.dist = data.frame(name = rep(c("DIST1","DIST2"), each = 4 * 3)
-##'                       , responseStage = rep(1:4, 2 * 3)
-##'                       , PFG = rep(c("C", "H", "P"), each = 2 * 4)
-##'                       , killedIndiv = c(c(0,10,10,10,1,1,0,0)
-##'                                         , c(0,0,0,0,1,1,0,0)
-##'                                         , c(10,10,10,10,10,0,0,0))
-##'                       , resproutIndiv = c(c(0,0,0,0,0,0,5,1)
-##'                                           , c(0,0,9,10,0,0,5,1)
-##'                                           , c(0,0,0,0,0,0,0,0)))
-##' 
-##' PRE_FATE.params_PFGdrought(name.simulation = "FATE_simulation"
-##'                                , mat.PFG.dist = tab.dist)
-##' 
-##' 
 ##' 
 ##' ## ----------------------------------------------------------------------------------------- ##
 ##'                                     
 ##' ## Load example data
-##' PNE_PARAM = .loadData("PNE_PARAM")
-##' 
-##' ## PNE_PARAM$succ_light : data.frame
-##' ## PNE_PARAM$strata_limits : vector
-##' ## PNE_PARAM$dist : data.frame
-##' 
-##' tab = PNE_PARAM$succ_light[, c("PFG", "type", "height", "maturity", "longevity")]
-##' 
-##' ## Create PFG succession parameter files : predefined of strata limits
-##' PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
-##'                             , mat.PFG.succ = tab
-##'                             , strata.limits = PNE_PARAM$strata_limits
-##'                             , strata.limits_reduce = FALSE)
-##'                             
-##' ## Create PFG disturbance parameter files
-##' PRE_FATE.params_PFGdrought(name.simulation = "FATE_simulation"
-##'                                , mat.PFG.dist = PNE_PARAM$dist)
 ##'                                                            
 ##' 
 ##' @export

@@ -49,17 +49,6 @@ France). Typologie phytosociologique et essai de reconstitution des séries
 }
 \examples{
 
-## Load example data
-PNE_PFG = .loadData("PNE_PFG")
- 
-## PNE_PFG$sp.observations : data.frame
-str(PNE_PFG$sp.observations)
-summary(PNE_PFG$sp.observations)
-
-## Transformation of Braun-Blanquet abundances
-abund = PRE_FATE.abundBraunBlanquet(abund = PNE_PFG$sp.observations$abund_BB)
-
-summary(abund)
 
 }
 \author{

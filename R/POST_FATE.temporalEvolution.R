@@ -311,14 +311,14 @@ POST_FATE.temporalEvolution = function(
     if (doLight)
     {
       cat("\n GETTING LIGHT for stratum")
-      tabLight.list = foreach (str = c(1:no_STRATA)-1) %dopar%
+      tabLight.list = foreach (stra = c(1:no_STRATA)-1) %dopar%
       {
-        cat(" ", str)
-        file_name = paste0(dir.output.light,
-                           "Light_Resources_YEAR_",
-                           years,
-                           "_STRATA_",
-                           str)
+        cat(" ", stra)
+        file_name = paste0(dir.output.light
+                           , "Light_Resources_YEAR_"
+                           , years
+                           , "_STRATA_"
+                           , stra)
         if (length(which(file.exists(paste0(file_name, ".tif")))) > 0)
         {
           file_name = paste0(file_name, ".tif")
@@ -339,7 +339,7 @@ POST_FATE.temporalEvolution = function(
           ras.df = as.data.frame(ras.df)
           colnames(ras.df) = c("X", "Y", ye)
           ras.df$ID.pixel = cellFromXY(ras.mask, ras.df[, c("X", "Y")])
-          ras.df$STRATUM = str
+          ras.df$STRATUM = stra
           
           if (exists("ras.habitat"))
           {

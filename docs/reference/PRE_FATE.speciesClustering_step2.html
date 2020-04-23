@@ -306,34 +306,9 @@ species based on these PFG. <br /> <br /></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples">
-<span class='co'>## Load example data</span>
-<span class='no'>PNE_PFG</span> <span class='kw'>=</span> <span class='fu'><a href='dot-loadData.html'>.loadData</a></span>(<span class='st'>"PNE_PFG"</span>)
+## Load example data
 
-<span class='co'>## PNE_PFG$dom.traits : data.frame</span>
-<span class='co'>## PNE_PFG$dom.dist_overlap : niolap object</span>
-
-<span class='co'>## Calculate distance between species</span>
-<span class='no'>sp.DIST</span> <span class='kw'>=</span> <span class='fu'><a href='PRE_FATE.speciesDistance.html'>PRE_FATE.speciesDistance</a></span>(<span class='kw'>mat.species.traits</span> <span class='kw'>=</span> <span class='no'>PNE_PFG</span>$<span class='no'>dom.traits</span>
-                                   , <span class='kw'>mat.species.overlap</span> <span class='kw'>=</span> <span class='no'>PNE_PFG</span>$<span class='no'>dom.dist_overlap</span>
-                                   , <span class='kw'>opt.max.percent.NA</span> <span class='kw'>=</span> <span class='fl'>0.9</span>
-                                   , <span class='kw'>opt.max.percent.similarSpecies</span> <span class='kw'>=</span> <span class='fl'>0.25</span>
-                                   , <span class='kw'>opt.min.sd</span> <span class='kw'>=</span> <span class='fl'>0.3</span>)
-
-<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>sp.DIST</span>)
-
-<span class='co'>## Run hierarchical clustering and number of clusters' selection                      </span>
-<span class='no'>sp.CLUST</span> <span class='kw'>=</span> <span class='fu'><a href='PRE_FATE.speciesClustering_step1.html'>PRE_FATE.speciesClustering_step1</a></span>(<span class='kw'>mat.species.DIST</span> <span class='kw'>=</span> <span class='no'>sp.DIST</span>)
-
-<span class='co'>## 2 .pdf files have been produced</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>sp.CLUST</span>)
-
-<span class='co'>## Select number of clusters and find determinant species</span>
-<span class='no'>sp.DETERM</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.speciesClustering_step2</span>(<span class='kw'>clust.dendrograms</span> <span class='kw'>=</span> <span class='no'>sp.CLUST</span>$<span class='no'>clust.dendrograms</span>
-                                             , <span class='kw'>no.clusters</span> <span class='kw'>=</span> <span class='no'>PNE_PFG</span>$<span class='no'>nb.clusters</span>
-                                             , <span class='kw'>mat.species.DIST</span> <span class='kw'>=</span> <span class='no'>sp.DIST</span>)
-
-<span class='co'>## 2 .pdf files have been produced</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>sp.DETERM</span>)</pre>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

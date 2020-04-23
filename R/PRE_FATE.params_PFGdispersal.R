@@ -75,13 +75,6 @@
 ##' ## ----------------------------------------------------------------------------------------- ##
 ##'   
 ##' ## Load example data
-##' PNE_PARAM = .loadData("PNE_PARAM")
-##' 
-##' ## PNE_PARAM$disp : data.frame
-##' 
-##' ## Create PFG dispersal parameter files
-##' PRE_FATE.params_PFGdispersal(name.simulation = "FATE_simulation"
-##'                             , mat.PFG.disp = PNE_PARAM$disp)
 ##' 
 ##' @export
 ##' 

@@ -2,6 +2,7 @@
 % Please edit documentation in R/UTILS.upscaleMaps.R
 \name{.upscaleMaps}
 \alias{.upscaleMaps}
+\alias{.cropMaps}
 \title{Upscale / crop all raster maps of a \code{FATE} simulation folder}
 \usage{
 .upscaleMaps(name.simulation, resolution)
@@ -25,49 +26,6 @@ resolution / extent.
 \examples{
 
 ## Load example data
-PNE_PARAM = .loadData("PNE_PARAM")
-
-
-## Create a skeleton folder
-PRE_FATE.skeletonDirectory(name.simulation = "FATE_PNE")
-
-## Create simulation masks
-library(raster)
-writeRaster(PNE_PARAM$masks$maskEcrins
-            , file = "FATE_PNE/DATA/MASK/mask.tif"
-            , overwrite = TRUE)
-writeRaster(PNE_PARAM$masks$noDisturb
-            , file = "FATE_PNE/DATA/MASK/noDisturb.tif"
-            , overwrite = TRUE)
-writeRaster(PNE_PARAM$HS_0
-            , file = paste0("FATE_PNE/DATA/PFGS/HABSUIT/HS_0_PFG_"
-                            , 1:nlayers(PNE_PARAM$HS_0), ".tif")
-            , overwrite = TRUE
-            , bylayer = TRUE)
-
-
-## Upscale all simulation maps
-ras1 = raster("FATE_PNE/DATA/MASK/mask.tif")
-ras2 = raster("FATE_PNE/DATA/PFGS/HABSUIT/HS_0_PFG_3.tif")
-print(ras1)
-print(ras2)
-
-.upscaleMaps(name.simulation = "FATE_PNE"
-             , resolution = 250)
-
-ras1 = raster("FATE_PNE/DATA/MASK/mask.tif")
-ras2 = raster("FATE_PNE/DATA/PFGS/HABSUIT/HS_0_PFG_3.tif")
-print(ras1)
-print(ras2)
-
-## Crop all simulation maps
-.cropMaps(name.simulation = "FATE_PNE"
-          , extent = c(875576, 930000, 1946124, 2000000))
-
-ras1 = raster("FATE_PNE/DATA/MASK/mask.tif")
-ras2 = raster("FATE_PNE/DATA/PFGS/HABSUIT/HS_0_PFG_3.tif")
-print(ras1)
-print(ras2)
 
 
 }

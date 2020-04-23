@@ -266,12 +266,6 @@ test_that("POST_FATE.binaryMaps gives error with wrong data : rasters", {
   expect_error(POST_FATE.binaryMaps(name.simulation = "FATE_simulation"
                                     , years = 1
                                     , method = 1)
-               , "The folder FATE_simulation/RESULTS/SIMUL_V1/ABUND_REL_perPFG_allStrata/ does not contain adequate files")
-  file.create("FATE_simulation/RESULTS/SIMUL_V1/ABUND_REL_perPFG_allStrata/Abund_relative_YEAR_1_PFG1_STRATA_all.tif")
-  
-  expect_error(POST_FATE.binaryMaps(name.simulation = "FATE_simulation"
-                                    , years = 1
-                                    , method = 1)
                , "The folder FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_perStrata/ does not contain adequate files")
   file.create("FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_perStrata/Abund_YEAR_1_PFG1_STRATA_1.tif")
   

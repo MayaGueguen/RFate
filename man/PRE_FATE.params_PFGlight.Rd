@@ -212,38 +212,10 @@ each PFG :
 }
 \examples{
 
-## Create a skeleton folder with the default name ('FATE_simulation')
-PRE_FATE.skeletonDirectory()
-
-## Create PFG light parameter files
-PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
-                         , mat.PFG.light = data.frame(PFG = paste0("PFG",1:6)
-                                                     , type = c("C", "C", "H", "H", "P", "P")
-                                                     , light_need = c(4, 6, 3, 6, 5, 5)))
-
-
-## Create PFG light parameter files
-PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
-                         , mat.PFG.light = data.frame(PFG = paste0("PFG",1:6)
-                                                     , type = c("C", "C", "H", "H", "P", "P"))
-                         , mat.PFG.tol = data.frame(PFG = paste0("PFG",1:6)
-                                                    , light = c("ubiquist", "ubiquist"
-                                                                , "semi_shade", "ubiquist"
-                                                                , "full_light", "pioneer")))
 
 ## ----------------------------------------------------------------------------------------- ##
 
 ## Load example data
-PNE_PARAM = .loadData("PNE_PARAM")
-
-## PNE_PARAM$succ_light : data.frame
-
-tab = PNE_PARAM$succ_light[, c("PFG", "type", "light")]
-colnames(tab)[3] = "light_need"
-
-## Create PFG light parameter files : 
-PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
-                         , mat.PFG.light = tab)
                          
 
 }

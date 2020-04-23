@@ -203,42 +203,26 @@
 ##' 
 ##' ## Create PFG succession parameter files
 ##' PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
-##'                             , mat.PFG.succ = data.frame(PFG = paste0("PFG", 1:6)
-##'                                                         , type = c("C", "C", "H", "H", "P", "P")  
-##'                                                         , height = c(10, 250, 36, 68, 1250, 550)
-##'                                                         , maturity = c(5, 5, 3, 3, 8, 9)
-##'                                                         , longevity = c(12, 200, 25, 4, 110, 70)))
+##'                               , mat.PFG.succ = data.frame(PFG = paste0("PFG", 1:6)
+##'                                                           , type = c("C", "C", "H", "H", "P", "P")
+##'                                                           , height = c(10, 250, 36, 68, 1250, 550)
+##'                                                           , maturity = c(5, 5, 3, 3, 8, 9)
+##'                                                           , longevity = c(12, 200, 25, 4, 110, 70)))
 ##'                                                         
 ##' 
 ##' ## Create PFG succession parameter files
 ##' PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
-##'                             , mat.PFG.succ = data.frame(PFG = paste0("PFG", 1:6)
-##'                                                         , type = c("C", "C", "H", "H", "P", "P")  
-##'                                                         , height = c(10, 250, 36, 68, 1250, 550)
-##'                                                         , maturity = c(5, 5, 3, 3, 8, 9)
-##'                                                         , longevity = c(12, 200, 25, 4, 110, 70)
-##'                                                         , immature_size = c(10, 8, 10, 10, 1, 5)))
+##'                               , mat.PFG.succ = data.frame(PFG = paste0("PFG", 1:6)
+##'                                                           , type = c("C", "C", "H", "H", "P", "P")
+##'                                                           , height = c(10, 250, 36, 68, 1250, 550)
+##'                                                           , maturity = c(5, 5, 3, 3, 8, 9)
+##'                                                           , longevity = c(12, 200, 25, 4, 110, 70)
+##'                                                           , immature_size = c(10, 8, 10, 10, 1, 5)))
 ##'                                                         
 ##'                                                         
 ##' ## ----------------------------------------------------------------------------------------- ##
 ##' 
 ##' ## Load example data
-##' PNE_PARAM = .loadData("PNE_PARAM")
-##' 
-##' ## PNE_PARAM$succ_light : data.frame
-##' ## PNE_PARAM$strata_limits : vector
-##' 
-##' tab = PNE_PARAM$succ_light[, c("PFG", "type", "height", "maturity", "longevity")]
-##' 
-##' ## Create PFG succession parameter files : automatic definition of strata limits
-##' PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
-##'                             , mat.PFG.succ = tab)
-##'                             
-##' ## Create PFG succession parameter files : predefined of strata limits
-##' PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
-##'                             , mat.PFG.succ = tab
-##'                             , strata.limits = PNE_PARAM$strata_limits
-##'                             , strata.limits_reduce = FALSE)
 ##'                                                         
 ##' 
 ##' @export

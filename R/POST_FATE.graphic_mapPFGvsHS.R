@@ -100,6 +100,7 @@
 ##' @importFrom grid unit
 ##' @importFrom colorspace heat_hcl
 ##' @importFrom grDevices pdf
+##' @importFrom graphics plot
 ##' 
 ##' @importFrom ggplot2 ggplot aes_string 
 ##' geom_raster 

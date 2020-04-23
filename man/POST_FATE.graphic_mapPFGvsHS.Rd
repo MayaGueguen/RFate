@@ -80,17 +80,17 @@ and that the folders \code{BIN_perPFG_allStrata} and
 \dontrun{                      
 POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
                              , file.simulParam = "Simul_parameters_V1.txt"
-                             , year = 850
+                             , years = 850
                              , opt.no_CPU = 1)
                                     
 POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
                              , file.simulParam = "Simul_parameters_V1.txt"
-                             , year = c(850, 950)
+                             , years = c(850, 950)
                              , opt.no_CPU = 1)
                                     
 POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
                              , file.simulParam = "Simul_parameters_V1.txt"
-                             , year = 850
+                             , years = 850
                              , opt.no_CPU = 1
                              , opt.stratum = 2)
 }

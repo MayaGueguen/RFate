@@ -8,107 +8,46 @@ simulation}
 POST_FATE.graphics(
   name.simulation,
   file.simulParam,
-  year,
-  no.years,
-  opt.strata_min = 1,
-  opt.strata = "ALL",
-  opt.mat.PFG.succ = NULL,
-  opt.mat.PFG.obs = NULL,
-  opt.mat.CWM.obs = NULL,
-  opt.mat.cover.obs = NULL,
-  opt.mat.light.obs = NULL,
-  opt.mat.soil.obs = NULL,
-  opt.ras.cover.obs = NULL,
-  opt.ras.light.obs = NULL,
-  opt.ras.soil.obs = NULL,
+  years,
+  no_years,
   opt.ras_habitat = NULL,
-  opt.cells_ID = NULL,
-  opt.abund_fixedScale = TRUE,
-  opt.no_CPU = 1,
-  opt.doPlot = TRUE,
   opt.doFunc.evolutionCoverage = TRUE,
   opt.doFunc.evolutionPixels = TRUE,
+  opt.cells_ID = NULL,
+  opt.abund_fixedScale = TRUE,
   opt.doFunc.validation = TRUE,
+  opt.mat.PFG.obs,
+  opt.stratum = "all",
   opt.doFunc.mapPFGvsHS = TRUE,
-  opt.doFunc.mapPFGrichness = TRUE,
-  opt.doFunc.mapPFGcover = TRUE,
-  opt.doFunc.mapPFGlight = TRUE,
-  opt.doFunc.mapPFGsoil = TRUE
+  opt.doFunc.mapPFG = TRUE,
+  opt.method,
+  opt.method1.threshold = 0.05,
+  opt.method2.cutoff = NULL,
+  opt.stratum_min = 1,
+  opt.stratum_max = 10,
+  opt.doBinary = TRUE,
+  opt.doPlot = TRUE,
+  opt.no_CPU = 1
 )
 }
 \arguments{
-\item{name.simulation}{a \code{string} that corresponds to the main 
-directory or simulation name of the \code{FATE} simulation}
+\item{name.simulation}{a \code{string} corresponding to the main directory 
+or simulation name of the \code{FATE} simulation}
 
 \item{file.simulParam}{default \code{NULL}. \cr A \code{string} 
 corresponding to the name of a parameter file that will be contained into 
 the \code{PARAM_SIMUL} folder of the \code{FATE} simulation}
 
-\item{year}{an \code{integer} corresponding to the simulation year(s) that 
-will be used to extract PFG abundance and/or binary maps, as well as light 
-or soil resources}
+\item{years}{an \code{integer}, or a \code{vector} of \code{integer}, 
+corresponding to the simulation year(s) that will be used to extract PFG 
+abundance maps}
 
-\item{no.years}{an \code{integer} corresponding to the number of simulation 
-years that will be used to extract PFG abundance maps}
+\item{no_years}{an \code{integer} corresponding to the number of simulation 
+years that will be used to extract PFG abundance / light / soil maps}
 
-\item{opt.strata_min}{default \code{1} (\emph{optional}). An \code{integer} 
-corresponding to the lowest stratum from which PFG abundances are summed up 
-to the highest stratum}
-
-\item{opt.strata}{default \code{ALL} (\emph{optional}). The stratum number 
-from which to extract PFG binary maps}
-
-\item{opt.mat.PFG.succ}{default \code{NULL} (\emph{optional}). A 
-\code{data.frame} with 2 or 3 columns : \code{PFG}, \code{light}, 
-\code{soil_contrib}}
-
-\item{opt.mat.PFG.obs}{default \code{NULL} (\emph{optional}). A 
-\code{data.frame} with 4 columns : \code{PFG}, \code{X}, \code{Y}, 
-\code{obs} (0/1)}
-
-\item{opt.mat.CWM.obs}{default \code{NULL} (\emph{optional}). A 
-\code{data.frame} with 3 or 4 columns : \code{X}, \code{Y}, \code{light} 
-(CWM), \code{soil} (CWM)}
-
-\item{opt.mat.cover.obs}{default \code{NULL} (\emph{optional}). A 
-\code{data.frame} with 3 columns : \code{X}, \code{Y}, \code{obs} (0/1)}
-
-\item{opt.mat.light.obs}{default \code{NULL} (\emph{optional}). A 
-\code{data.frame} with 3 columns : \code{X}, \code{Y}, \code{obs} (0/1)}
-
-\item{opt.mat.soil.obs}{default \code{NULL} (\emph{optional}). A 
-\code{data.frame} with 3 columns : \code{X}, \code{Y}, \code{obs} (0/1)}
-
-\item{opt.ras.cover.obs}{default \code{NULL} (\emph{optional}). A 
-\code{string} that corresponds to the file name of a raster containing 
-observed values for vegetation cover}
-
-\item{opt.ras.light.obs}{default \code{NULL} (\emph{optional}). A 
-\code{string} that corresponds to the file name of a raster containing 
-observed values for community weighted mean of light}
-
-\item{opt.ras.soil.obs}{default \code{NULL} (\emph{optional}). A 
-\code{string} that corresponds to the file name of a raster containing 
-observed values for community weighted mean of soil}
-
-\item{opt.ras_habitat}{default \code{NULL} (\emph{optional}). A 
-\code{string} that  corresponds to the file name of a raster mask, with an 
+\item{opt.ras_habitat}{(\emph{optional}) default \code{NULL}. \cr 
+A \code{string} corresponding to the file name of a raster mask, with an 
 \code{integer} value within each pixel, corresponding to a specific habitat}
-
-\item{opt.cells_ID}{default \code{NULL} (\emph{optional}). The cells ID of 
-the studied area for which abund / light / soil resources will be extracted}
-
-\item{opt.abund_fixedScale}{default \code{TRUE}. If \code{FALSE}, the 
-ordinate scale will be adapted for each PFG for the graphical 
-representation of the  evolution of abundances through time}
-
-\item{opt.no_CPU}{default \code{1} (\emph{optional}). The number of 
-resources that can be used to parallelize the \code{unzip/zip} of raster 
-files}
-
-\item{opt.doPlot}{default \code{TRUE} (\emph{optional}). If \code{TRUE}, 
-plot(s) will be processed, otherwise only the calculation and 
-reorganization of outputs will occur, be saved and returned}
 
 \item{opt.doFunc.evolutionCoverage}{default \code{TRUE} (\emph{optional}). 
 If \code{TRUE}, corresponding \code{POST_FATE.graphic_...} function will 
@@ -118,29 +57,63 @@ be run.}
 If \code{TRUE}, corresponding \code{POST_FATE.graphic_...} function will 
 be run.}
 
+\item{opt.cells_ID}{(\emph{optional}) default \code{NULL}. \cr The cells ID 
+of the studied area for which PFG abundances will be extracted}
+
+\item{opt.abund_fixedScale}{default \code{TRUE}. If \code{FALSE}, the 
+ordinate scale will be adapted for each PFG for the graphical representation 
+of the  evolution of abundances through time}
+
 \item{opt.doFunc.validation}{default \code{TRUE} (\emph{optional}). 
 If \code{TRUE}, corresponding \code{POST_FATE.graphic_...} function will 
 be run.}
+
+\item{opt.mat.PFG.obs}{a \code{data.frame} with 4 columns : \code{PFG}, 
+\code{X}, \code{Y}, \code{obs}}
+
+\item{opt.stratum}{(\emph{optional}) default \code{all}. \cr The stratum 
+number from which to extract PFG binary maps}
 
 \item{opt.doFunc.mapPFGvsHS}{default \code{TRUE} (\emph{optional}). 
 If \code{TRUE}, corresponding \code{POST_FATE.graphic_...} function will 
 be run.}
 
-\item{opt.doFunc.mapPFGrichness}{default \code{TRUE} (\emph{optional}). 
+\item{opt.doFunc.mapPFG}{default \code{TRUE} (\emph{optional}). 
 If \code{TRUE}, corresponding \code{POST_FATE.graphic_...} function will 
 be run.}
 
-\item{opt.doFunc.mapPFGcover}{default \code{TRUE} (\emph{optional}). 
-If \code{TRUE}, corresponding \code{POST_FATE.graphic_...} function will 
-be run.}
+\item{opt.method}{an \code{integer} to choose the transformation method : \cr 
+\code{1} (relative abundance) or \code{2} (optimizing TSS) (see 
+\code{\href{POST_FATE.binaryMaps#details}{Details}})}
 
-\item{opt.doFunc.mapPFGlight}{default \code{TRUE} (\emph{optional}). 
-If \code{TRUE}, corresponding \code{POST_FATE.graphic_...} function will 
-be run.}
+\item{opt.method1.threshold}{default \code{0.05}. \cr If \code{method = 1}, 
+minimum relative abundance required for each PFG to be considered as present 
+in the concerned pixel}
 
-\item{opt.doFunc.mapPFGsoil}{default \code{TRUE} (\emph{optional}). 
-If \code{TRUE}, corresponding \code{POST_FATE.graphic_...} function will 
-be run.}
+\item{opt.method2.cutoff}{default \code{NULL}. \cr If \code{method = 2}, a 
+\code{data.frame} with 3 columns : \code{year}, \code{PFG}, \code{cutoff} \cr
+(see \code{\href{POST_FATE.binaryMaps#details}{Details}})}
+
+\item{opt.stratum_min}{(\emph{optional}) default \code{1}. \cr An 
+\code{integer} corresponding to the lowest stratum from which PFG 
+abundances will be summed up}
+
+\item{opt.stratum_max}{(\emph{optional}) default \code{10}. \cr An 
+\code{integer} corresponding to the highest stratum from which PFG 
+abundances will be summed up}
+
+\item{opt.doBinary}{(\emph{optional}) default \code{TRUE}. \cr If 
+\code{TRUE}, abundance maps (absolute or relative) are systematically 
+multiplied by binary maps (see 
+\code{\href{POST_FATE.graphic_mapPFG#details}{Details}})}
+
+\item{opt.doPlot}{(\emph{optional}) default \code{TRUE}. \cr If \code{TRUE}, 
+plot(s) will be processed, otherwise only the calculation and reorganization 
+of outputs will occur, be saved and returned}
+
+\item{opt.no_CPU}{(\emph{optional}) default \code{1}. \cr The number of 
+resources that can be used to parallelize the \code{unzip/zip} of raster 
+files, as well as the extraction of values from raster files}
 }
 \value{
 The following \code{POST_FATE_[...].pdf} files are created : 
@@ -231,21 +204,21 @@ before the maps are compressed again :
   }
   \item{the map of \strong{Plant Functional Group richness} for each 
   selected simulation year(s), representing the number of PFG present in 
-  each pixel (see \code{\link{POST_FATE.graphic_mapPFGrichness}})
+  each pixel (see \code{\link{POST_FATE.graphic_mapPFG}})
   }
   \item{the map of \strong{Plant Functional Group cover} for each selected 
   simulation year(s), representing the relative cumulated abundance of PFG 
   present in each pixel above a height threshold (see 
-  \code{\link{POST_FATE.graphic_mapPFGcover}})
+  \code{\link{POST_FATE.graphic_mapPFG}})
   }
   \item{the map of \strong{light Community Weighted Mean} for each selected 
   simulation year(s), representing the simulated value of light within each 
   pixel above a height threshold (see 
-  \code{\link{POST_FATE.graphic_mapPFGlight}})
+  \code{\link{POST_FATE.graphic_mapPFG}})
   }
   \item{the map of \strong{soil Community Weighted Mean} for each selected 
   simulation year(s), representing the simulated value of soil within each 
-  pixel (see \code{\link{POST_FATE.graphic_mapPFGsoil}})
+  pixel (see \code{\link{POST_FATE.graphic_mapPFG}})
   }
 }
 }
@@ -273,12 +246,10 @@ POST_FATE.graphics(name.simulation = "FATE_simulation"
 \code{\link{POST_FATE.graphic_evolutionCoverage}}, 
 \code{\link{POST_FATE.graphic_evolutionPixels}},
 \code{\link{POST_FATE.relativeAbund}}, 
+\code{\link{POST_FATE.binaryMaps}}, 
 \code{\link{POST_FATE.graphic_validationStatistics}}, 
 \code{\link{POST_FATE.graphic_mapPFGvsHS}}, 
-\code{\link{POST_FATE.graphic_mapPFGrichness}}, 
-\code{\link{POST_FATE.graphic_mapPFGcover}}, 
-\code{\link{POST_FATE.graphic_mapPFGlight}}, 
-\code{\link{POST_FATE.graphic_mapPFGsoil}}
+\code{\link{POST_FATE.graphic_mapPFG}}
 }
 \author{
 Maya Guéguen

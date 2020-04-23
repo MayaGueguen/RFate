@@ -104,31 +104,13 @@
 ##' @examples
 ##' 
 ##' ## Load example data
-##' PNE_PFG = .loadData("PNE_PFG")
-##' 
-##' ## PNE_PFG$dom.traits : data.frame
-##' ## PNE_PFG$dom.dist_overlap : niolap object
-##' 
-##' ## GIVING ERROR : too many NA
-##' # sp.DIST = PRE_FATE.speciesDistance(mat.traits = PNE_PFG$dom.traits
-##' #                                    , mat.overlap = PNE_PFG$dom.dist_overlap
-##' #                                    , opt.maxPercent.NA = 0
-##' #                                    , opt.maxPercent.similarSpecies = 0.25
-##' #                                    , opt.min.sd = 0.3)
-##'                                    
-##' sp.DIST = PRE_FATE.speciesDistance(mat.traits = PNE_PFG$dom.traits
-##'                                    , mat.overlap = PNE_PFG$dom.dist_overlap
-##'                                    , opt.maxPercent.NA = 0.1
-##'                                    , opt.maxPercent.similarSpecies = 0.25
-##'                                    , opt.min.sd = 0.3)
-##' 
-##' str(sp.DIST)
 ##' 
 ##' @export
 ##' 
 ##' @importFrom stats as.dist na.exclude var
+##' @importFrom methods as
 ##' 
-##' @importFrom raster raster
+##' @importFrom raster raster extension
 ##' @importFrom phyloclim niche.overlap
 ##' @importFrom FD gowdis
 ##' 

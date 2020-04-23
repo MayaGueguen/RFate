@@ -440,55 +440,9 @@ but not meeting criterion A1 are also considered as "<em>Not selected</em>".</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples">
-<span class='co'>## Load example data</span>
-<span class='no'>PNE_PFG</span> <span class='kw'>=</span> <span class='fu'><a href='dot-loadData.html'>.loadData</a></span>(<span class='st'>"PNE_PFG"</span>)
+## Load example data
 
-<span class='co'>## PNE_PFG$sp.observations : data.frame</span>
-<span class='no'>tab</span> <span class='kw'>=</span> <span class='no'>PNE_PFG</span>$<span class='no'>sp.observations</span>[, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"sites"</span>, <span class='st'>"species"</span>, <span class='st'>"abund"</span>, <span class='st'>"habitat"</span>)]
-
-<span class='co'>## Selection of dominant species</span>
-
-<span class='co'>#########################################################################################</span>
-<span class='co'>## EXAMPLE 1 : With default parametrization</span>
-<span class='co'>#########################################################################################</span>
-
-<span class='no'>sp.DOM</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.selectDominant</span>(<span class='kw'>mat.observations</span> <span class='kw'>=</span> <span class='no'>tab</span>)
-
-<span class='co'>#########################################################################################</span>
-<span class='co'>## EXAMPLE 2 : Redefinition of global selection rules</span>
-<span class='co'>#########################################################################################</span>
-
-<span class='no'>sp.DOM</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.selectDominant</span>(<span class='kw'>mat.observations</span> <span class='kw'>=</span> <span class='no'>tab</span>
-                                 , <span class='kw'>selectionRule.quanti</span> <span class='kw'>=</span> <span class='fl'>0.9</span>
-                                 , <span class='kw'>selectionRule.min_mean_abund</span> <span class='kw'>=</span> <span class='fl'>25</span>
-                                 , <span class='kw'>selectionRule.min_no_abund_over25</span> <span class='kw'>=</span> <span class='fl'>10</span>)
-
-<span class='co'>#########################################################################################</span>
-<span class='co'>## EXAMPLE 3 : Add habitat selection with default parametrization</span>
-<span class='co'>#########################################################################################</span>
-
-<span class='no'>sp.DOM</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.selectDominant</span>(<span class='kw'>mat.observations</span> <span class='kw'>=</span> <span class='no'>tab</span>
-                                 , <span class='kw'>selectionRule.quanti</span> <span class='kw'>=</span> <span class='fl'>0.9</span>
-                                 , <span class='kw'>selectionRule.min_mean_abund</span> <span class='kw'>=</span> <span class='fl'>25</span>
-                                 , <span class='kw'>selectionRule.min_no_abund_over25</span> <span class='kw'>=</span> <span class='fl'>10</span>
-                                 , <span class='kw'>doHabitatSelection</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
-<span class='co'>#########################################################################################       </span>
-<span class='co'>## EXAMPLE 4 : Redefinition of habitat selection rules</span>
-<span class='co'>#########################################################################################</span>
-
-<span class='no'>sp.DOM</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.selectDominant</span>(<span class='kw'>mat.observations</span> <span class='kw'>=</span> <span class='no'>tab</span>
-                                 , <span class='kw'>selectionRule.quanti</span> <span class='kw'>=</span> <span class='fl'>0.9</span>
-                                 , <span class='kw'>selectionRule.min_mean_abund</span> <span class='kw'>=</span> <span class='fl'>25</span>
-                                 , <span class='kw'>selectionRule.min_no_abund_over25</span> <span class='kw'>=</span> <span class='fl'>10</span>
-                                 , <span class='kw'>doHabitatSelection</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-                                 , <span class='kw'>selectionRule.min_percent_habitat</span> <span class='kw'>=</span> <span class='fl'>0.05</span>
-                                 , <span class='kw'>selectionRule.min_no_habitat</span> <span class='kw'>=</span> <span class='fl'>10</span>)
-
-<span class='co'>#########################################################################################</span>
-
-<span class='co'>## 2 .csv and 2 .pdf files have been produced</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>sp.DOM</span>)</pre>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

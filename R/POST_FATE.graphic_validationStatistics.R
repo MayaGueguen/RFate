@@ -147,6 +147,7 @@
 ##' @importFrom cowplot get_legend
 ##' @importFrom RColorBrewer brewer.pal
 ##' @importFrom grDevices pdf
+##' @importFrom graphics plot
 ##'
 ## END OF HEADER ###############################################################
 

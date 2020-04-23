@@ -1,3 +1,9 @@
+### HEADER #####################################################################
+##' @name .getELLIPSE
+##'
+##' @importFrom stats model.matrix
+##' 
+## END OF HEADER ###############################################################
 
 util.ellipse <- function(mx, my, vx, cxy, vy, coeff) {
   lig <- 100

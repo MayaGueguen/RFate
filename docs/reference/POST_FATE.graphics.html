@@ -209,32 +209,26 @@ specific year (richness, abundance, light, soil).</p>
     <pre class="usage"><span class='fu'>POST_FATE.graphics</span>(
   <span class='no'>name.simulation</span>,
   <span class='no'>file.simulParam</span>,
-  <span class='no'>year</span>,
-  <span class='no'>no.years</span>,
-  <span class='kw'>opt.strata_min</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>opt.strata</span> <span class='kw'>=</span> <span class='st'>"ALL"</span>,
-  <span class='kw'>opt.mat.PFG.succ</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>opt.mat.PFG.obs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>opt.mat.CWM.obs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>opt.mat.cover.obs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>opt.mat.light.obs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>opt.mat.soil.obs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>opt.ras.cover.obs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>opt.ras.light.obs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>opt.ras.soil.obs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>years</span>,
+  <span class='no'>no_years</span>,
   <span class='kw'>opt.ras_habitat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>opt.cells_ID</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>opt.abund_fixedScale</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>opt.doPlot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>opt.doFunc.evolutionCoverage</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>opt.doFunc.evolutionPixels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>opt.cells_ID</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>opt.abund_fixedScale</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>opt.doFunc.validation</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>opt.mat.PFG.obs</span>,
+  <span class='kw'>opt.stratum</span> <span class='kw'>=</span> <span class='st'>"all"</span>,
   <span class='kw'>opt.doFunc.mapPFGvsHS</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>opt.doFunc.mapPFGrichness</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>opt.doFunc.mapPFGcover</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>opt.doFunc.mapPFGlight</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>opt.doFunc.mapPFGsoil</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+  <span class='kw'>opt.doFunc.mapPFG</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>opt.method</span>,
+  <span class='kw'>opt.method1.threshold</span> <span class='kw'>=</span> <span class='fl'>0.05</span>,
+  <span class='kw'>opt.method2.cutoff</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>opt.stratum_min</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>opt.stratum_max</span> <span class='kw'>=</span> <span class='fl'>10</span>,
+  <span class='kw'>opt.doBinary</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>opt.doPlot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -242,8 +236,8 @@ specific year (richness, abundance, light, soil).</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>name.simulation</th>
-      <td><p>a <code>string</code> that corresponds to the main 
-directory or simulation name of the <code>FATE</code> simulation</p></td>
+      <td><p>a <code>string</code> corresponding to the main directory 
+or simulation name of the <code>FATE</code> simulation</p></td>
     </tr>
     <tr>
       <th>file.simulParam</th>
@@ -252,106 +246,21 @@ corresponding to the name of a parameter file that will be contained into
 the <code>PARAM_SIMUL</code> folder of the <code>FATE</code> simulation</p></td>
     </tr>
     <tr>
-      <th>year</th>
-      <td><p>an <code>integer</code> corresponding to the simulation year(s) that 
-will be used to extract PFG abundance and/or binary maps, as well as light 
-or soil resources</p></td>
+      <th>years</th>
+      <td><p>an <code>integer</code>, or a <code>vector</code> of <code>integer</code>, 
+corresponding to the simulation year(s) that will be used to extract PFG 
+abundance maps</p></td>
     </tr>
     <tr>
-      <th>no.years</th>
+      <th>no_years</th>
       <td><p>an <code>integer</code> corresponding to the number of simulation 
-years that will be used to extract PFG abundance maps</p></td>
-    </tr>
-    <tr>
-      <th>opt.strata_min</th>
-      <td><p>default <code>1</code> (<em>optional</em>). An <code>integer</code> 
-corresponding to the lowest stratum from which PFG abundances are summed up 
-to the highest stratum</p></td>
-    </tr>
-    <tr>
-      <th>opt.strata</th>
-      <td><p>default <code>ALL</code> (<em>optional</em>). The stratum number 
-from which to extract PFG binary maps</p></td>
-    </tr>
-    <tr>
-      <th>opt.mat.PFG.succ</th>
-      <td><p>default <code>NULL</code> (<em>optional</em>). A 
-<code>data.frame</code> with 2 or 3 columns : <code>PFG</code>, <code>light</code>, 
-<code>soil_contrib</code></p></td>
-    </tr>
-    <tr>
-      <th>opt.mat.PFG.obs</th>
-      <td><p>default <code>NULL</code> (<em>optional</em>). A 
-<code>data.frame</code> with 4 columns : <code>PFG</code>, <code>X</code>, <code>Y</code>, 
-<code>obs</code> (0/1)</p></td>
-    </tr>
-    <tr>
-      <th>opt.mat.CWM.obs</th>
-      <td><p>default <code>NULL</code> (<em>optional</em>). A 
-<code>data.frame</code> with 3 or 4 columns : <code>X</code>, <code>Y</code>, <code>light</code> 
-(CWM), <code>soil</code> (CWM)</p></td>
-    </tr>
-    <tr>
-      <th>opt.mat.cover.obs</th>
-      <td><p>default <code>NULL</code> (<em>optional</em>). A 
-<code>data.frame</code> with 3 columns : <code>X</code>, <code>Y</code>, <code>obs</code> (0/1)</p></td>
-    </tr>
-    <tr>
-      <th>opt.mat.light.obs</th>
-      <td><p>default <code>NULL</code> (<em>optional</em>). A 
-<code>data.frame</code> with 3 columns : <code>X</code>, <code>Y</code>, <code>obs</code> (0/1)</p></td>
-    </tr>
-    <tr>
-      <th>opt.mat.soil.obs</th>
-      <td><p>default <code>NULL</code> (<em>optional</em>). A 
-<code>data.frame</code> with 3 columns : <code>X</code>, <code>Y</code>, <code>obs</code> (0/1)</p></td>
-    </tr>
-    <tr>
-      <th>opt.ras.cover.obs</th>
-      <td><p>default <code>NULL</code> (<em>optional</em>). A 
-<code>string</code> that corresponds to the file name of a raster containing 
-observed values for vegetation cover</p></td>
-    </tr>
-    <tr>
-      <th>opt.ras.light.obs</th>
-      <td><p>default <code>NULL</code> (<em>optional</em>). A 
-<code>string</code> that corresponds to the file name of a raster containing 
-observed values for community weighted mean of light</p></td>
-    </tr>
-    <tr>
-      <th>opt.ras.soil.obs</th>
-      <td><p>default <code>NULL</code> (<em>optional</em>). A 
-<code>string</code> that corresponds to the file name of a raster containing 
-observed values for community weighted mean of soil</p></td>
+years that will be used to extract PFG abundance / light / soil maps</p></td>
     </tr>
     <tr>
       <th>opt.ras_habitat</th>
-      <td><p>default <code>NULL</code> (<em>optional</em>). A 
-<code>string</code> that  corresponds to the file name of a raster mask, with an 
+      <td><p>(<em>optional</em>) default <code>NULL</code>. <br /> 
+A <code>string</code> corresponding to the file name of a raster mask, with an 
 <code>integer</code> value within each pixel, corresponding to a specific habitat</p></td>
-    </tr>
-    <tr>
-      <th>opt.cells_ID</th>
-      <td><p>default <code>NULL</code> (<em>optional</em>). The cells ID of 
-the studied area for which abund / light / soil resources will be extracted</p></td>
-    </tr>
-    <tr>
-      <th>opt.abund_fixedScale</th>
-      <td><p>default <code>TRUE</code>. If <code>FALSE</code>, the 
-ordinate scale will be adapted for each PFG for the graphical 
-representation of the  evolution of abundances through time</p></td>
-    </tr>
-    <tr>
-      <th>opt.no_CPU</th>
-      <td><p>default <code>1</code> (<em>optional</em>). The number of 
-resources that can be used to parallelize the <code>unzip/zip</code> of raster 
-files</p></td>
-    </tr>
-    <tr>
-      <th>opt.doPlot</th>
-      <td><p>default <code>TRUE</code> (<em>optional</em>). If <code>TRUE</code>, 
-plot(s) will be processed, otherwise only the calculation and 
-reorganization of outputs will occur, be saved and returned</p></td>
     </tr>
     <tr>
       <th>opt.doFunc.evolutionCoverage</th>
@@ -366,10 +275,31 @@ If <code>TRUE</code>, corresponding <code>POST_FATE.graphic_...</code> function 
 be run.</p></td>
     </tr>
     <tr>
+      <th>opt.cells_ID</th>
+      <td><p>(<em>optional</em>) default <code>NULL</code>. <br /> The cells ID 
+of the studied area for which PFG abundances will be extracted</p></td>
+    </tr>
+    <tr>
+      <th>opt.abund_fixedScale</th>
+      <td><p>default <code>TRUE</code>. If <code>FALSE</code>, the 
+ordinate scale will be adapted for each PFG for the graphical representation 
+of the  evolution of abundances through time</p></td>
+    </tr>
+    <tr>
       <th>opt.doFunc.validation</th>
       <td><p>default <code>TRUE</code> (<em>optional</em>). 
 If <code>TRUE</code>, corresponding <code>POST_FATE.graphic_...</code> function will 
 be run.</p></td>
+    </tr>
+    <tr>
+      <th>opt.mat.PFG.obs</th>
+      <td><p>a <code>data.frame</code> with 4 columns : <code>PFG</code>, 
+<code>X</code>, <code>Y</code>, <code>obs</code></p></td>
+    </tr>
+    <tr>
+      <th>opt.stratum</th>
+      <td><p>(<em>optional</em>) default <code>all</code>. <br /> The stratum 
+number from which to extract PFG binary maps</p></td>
     </tr>
     <tr>
       <th>opt.doFunc.mapPFGvsHS</th>
@@ -378,28 +308,59 @@ If <code>TRUE</code>, corresponding <code>POST_FATE.graphic_...</code> function 
 be run.</p></td>
     </tr>
     <tr>
-      <th>opt.doFunc.mapPFGrichness</th>
+      <th>opt.doFunc.mapPFG</th>
       <td><p>default <code>TRUE</code> (<em>optional</em>). 
 If <code>TRUE</code>, corresponding <code>POST_FATE.graphic_...</code> function will 
 be run.</p></td>
     </tr>
     <tr>
-      <th>opt.doFunc.mapPFGcover</th>
-      <td><p>default <code>TRUE</code> (<em>optional</em>). 
-If <code>TRUE</code>, corresponding <code>POST_FATE.graphic_...</code> function will 
-be run.</p></td>
+      <th>opt.method</th>
+      <td><p>an <code>integer</code> to choose the transformation method : <br /> 
+<code>1</code> (relative abundance) or <code>2</code> (optimizing TSS) (see 
+<code><a href='POST_FATE.binaryMaps#details'>Details</a></code>)</p></td>
     </tr>
     <tr>
-      <th>opt.doFunc.mapPFGlight</th>
-      <td><p>default <code>TRUE</code> (<em>optional</em>). 
-If <code>TRUE</code>, corresponding <code>POST_FATE.graphic_...</code> function will 
-be run.</p></td>
+      <th>opt.method1.threshold</th>
+      <td><p>default <code>0.05</code>. <br /> If <code>method = 1</code>, 
+minimum relative abundance required for each PFG to be considered as present 
+in the concerned pixel</p></td>
     </tr>
     <tr>
-      <th>opt.doFunc.mapPFGsoil</th>
-      <td><p>default <code>TRUE</code> (<em>optional</em>). 
-If <code>TRUE</code>, corresponding <code>POST_FATE.graphic_...</code> function will 
-be run.</p></td>
+      <th>opt.method2.cutoff</th>
+      <td><p>default <code>NULL</code>. <br /> If <code>method = 2</code>, a 
+<code>data.frame</code> with 3 columns : <code>year</code>, <code>PFG</code>, <code>cutoff</code> <br />
+(see <code><a href='POST_FATE.binaryMaps#details'>Details</a></code>)</p></td>
+    </tr>
+    <tr>
+      <th>opt.stratum_min</th>
+      <td><p>(<em>optional</em>) default <code>1</code>. <br /> An 
+<code>integer</code> corresponding to the lowest stratum from which PFG 
+abundances will be summed up</p></td>
+    </tr>
+    <tr>
+      <th>opt.stratum_max</th>
+      <td><p>(<em>optional</em>) default <code>10</code>. <br /> An 
+<code>integer</code> corresponding to the highest stratum from which PFG 
+abundances will be summed up</p></td>
+    </tr>
+    <tr>
+      <th>opt.doBinary</th>
+      <td><p>(<em>optional</em>) default <code>TRUE</code>. <br /> If 
+<code>TRUE</code>, abundance maps (absolute or relative) are systematically 
+multiplied by binary maps (see 
+<code><a href='POST_FATE.graphic_mapPFG#details'>Details</a></code>)</p></td>
+    </tr>
+    <tr>
+      <th>opt.doPlot</th>
+      <td><p>(<em>optional</em>) default <code>TRUE</code>. <br /> If <code>TRUE</code>, 
+plot(s) will be processed, otherwise only the calculation and reorganization 
+of outputs will occur, be saved and returned</p></td>
+    </tr>
+    <tr>
+      <th>opt.no_CPU</th>
+      <td><p>(<em>optional</em>) default <code>1</code>. <br /> The number of 
+resources that can be used to parallelize the <code>unzip/zip</code> of raster 
+files, as well as the extraction of values from raster files</p></td>
     </tr>
     </table>
 
@@ -479,18 +440,18 @@ before the maps are compressed again :</p>
   simulated presence (see <code><a href='POST_FATE.graphic_mapPFGvsHS.html'>POST_FATE.graphic_mapPFGvsHS</a></code>)</p></li>
 <li><p>the map of <strong>Plant Functional Group richness</strong> for each 
   selected simulation year(s), representing the number of PFG present in 
-  each pixel (see <code><a href='POST_FATE.graphic_mapPFGrichness.html'>POST_FATE.graphic_mapPFGrichness</a></code>)</p></li>
+  each pixel (see <code><a href='POST_FATE.graphic_mapPFG.html'>POST_FATE.graphic_mapPFG</a></code>)</p></li>
 <li><p>the map of <strong>Plant Functional Group cover</strong> for each selected 
   simulation year(s), representing the relative cumulated abundance of PFG 
   present in each pixel above a height threshold (see 
-  <code><a href='POST_FATE.graphic_mapPFGcover.html'>POST_FATE.graphic_mapPFGcover</a></code>)</p></li>
+  <code><a href='POST_FATE.graphic_mapPFG.html'>POST_FATE.graphic_mapPFG</a></code>)</p></li>
 <li><p>the map of <strong>light Community Weighted Mean</strong> for each selected 
   simulation year(s), representing the simulated value of light within each 
   pixel above a height threshold (see 
-  <code><a href='POST_FATE.graphic_mapPFGlight.html'>POST_FATE.graphic_mapPFGlight</a></code>)</p></li>
+  <code><a href='POST_FATE.graphic_mapPFG.html'>POST_FATE.graphic_mapPFG</a></code>)</p></li>
 <li><p>the map of <strong>soil Community Weighted Mean</strong> for each selected 
   simulation year(s), representing the simulated value of soil within each 
-  pixel (see <code><a href='POST_FATE.graphic_mapPFGsoil.html'>POST_FATE.graphic_mapPFGsoil</a></code>)</p></li>
+  pixel (see <code><a href='POST_FATE.graphic_mapPFG.html'>POST_FATE.graphic_mapPFG</a></code>)</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
@@ -499,12 +460,10 @@ before the maps are compressed again :</p>
 <code><a href='POST_FATE.graphic_evolutionCoverage.html'>POST_FATE.graphic_evolutionCoverage</a></code>, 
 <code><a href='POST_FATE.graphic_evolutionPixels.html'>POST_FATE.graphic_evolutionPixels</a></code>,
 <code><a href='POST_FATE.relativeAbund.html'>POST_FATE.relativeAbund</a></code>, 
+<code><a href='POST_FATE.binaryMaps.html'>POST_FATE.binaryMaps</a></code>, 
 <code><a href='POST_FATE.graphic_validationStatistics.html'>POST_FATE.graphic_validationStatistics</a></code>, 
 <code><a href='POST_FATE.graphic_mapPFGvsHS.html'>POST_FATE.graphic_mapPFGvsHS</a></code>, 
-<code><a href='POST_FATE.graphic_mapPFGrichness.html'>POST_FATE.graphic_mapPFGrichness</a></code>, 
-<code><a href='POST_FATE.graphic_mapPFGcover.html'>POST_FATE.graphic_mapPFGcover</a></code>, 
-<code><a href='POST_FATE.graphic_mapPFGlight.html'>POST_FATE.graphic_mapPFGlight</a></code>, 
-<code><a href='POST_FATE.graphic_mapPFGsoil.html'>POST_FATE.graphic_mapPFGsoil</a></code></p></div>
+<code><a href='POST_FATE.graphic_mapPFG.html'>POST_FATE.graphic_mapPFG</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples">

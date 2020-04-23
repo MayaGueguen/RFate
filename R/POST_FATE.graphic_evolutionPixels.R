@@ -133,8 +133,8 @@
 POST_FATE.graphic_evolutionPixels = function(
   name.simulation
   , file.simulParam = NULL
-  , opt.abund_fixedScale = TRUE
   , opt.cells_ID = NULL
+  , opt.abund_fixedScale = TRUE
   , opt.doPlot = TRUE
 ){
   
