@@ -2,7 +2,7 @@
 % Please edit documentation in R/PRE_FATE.params_multipleSet.R
 \name{PRE_FATE.params_multipleSet}
 \alias{PRE_FATE.params_multipleSet}
-\title{Create multiple set(s) of parameter files for a \code{FATE-HD} 
+\title{Create multiple set(s) of parameter files for a \code{FATE} 
 simulation}
 \usage{
 PRE_FATE.params_multipleSet(
@@ -32,14 +32,14 @@ PRE_FATE.params_multipleSet(
 }
 \arguments{
 \item{name.simulation.1}{a \code{string} corresponding to the main directory 
-or simulation name of the \code{FATE-HD} simulation from which to 
+or simulation name of the \code{FATE} simulation from which to 
 retrieve the first parameter simulation file (\code{file.simulParam.1}), 
 and the second if given (\code{file.simulParam.2}) and no other directory 
 provided (\code{name.simulation.2 = NULL})}
 
 \item{name.simulation.2}{(\emph{optional}) default \code{NULL}. \cr 
 A \code{string} corresponding to the main directory or simulation name of 
-the \code{FATE-HD} simulation from which to retrieve the second parameter 
+the \code{FATE} simulation from which to retrieve the second parameter 
 simulation file (\code{file.simulParam.2})}
 
 \item{file.simulParam.1}{a \code{string} corresponding to the name of the 
@@ -193,7 +193,7 @@ using Latin Hypercube Sampling to help find best combination of parameters
 (see \code{Details})
 }
 \details{
-A \code{FATE-HD} simulation requires several parameters to define general 
+A \code{FATE} simulation requires several parameters to define general 
 characteristics of the simulation : they are saved within a 
 \emph{Global_parameters} file (see 
 \code{\link{PRE_FATE.params_globalParameters}}). To fit the model to a 

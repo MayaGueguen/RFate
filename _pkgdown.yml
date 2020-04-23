@@ -94,10 +94,6 @@ reference:
       - "PRE_FATE.params_globalParameters"
       - "PRE_FATE.params_simulParameters"
       - "PRE_FATE.params_multipleSet"
-      - ".getParam"
-      - ".setParam"
-      - ".setPattern"
-      - ".upscaleMaps"
   - title: Analyze FATE-HD outputs
     desc:  Evalute predicted maps, produce summary and dynamic graphics.  <br/> ..
     contents:
@@ -105,15 +101,18 @@ reference:
       - "POST_FATE.temporalEvolution"
       - "POST_FATE.graphic_evolutionCoverage"
       - "POST_FATE.graphic_evolutionPixels"
+      - "POST_FATE.graphic_evolutionStability"
       - "POST_FATE.relativeAbund"
       - "POST_FATE.graphic_validationStatistics"
+      - "POST_FATE.binaryMaps"
       - "POST_FATE.graphic_mapPFGvsHS"
-      - "POST_FATE.graphic_mapPFGrichness"
-      - "POST_FATE.graphic_mapPFGcover"
-      - "POST_FATE.graphic_mapPFGlight"
-      - "POST_FATE.graphic_mapPFGsoil"
-      - ".getCutoff"
+      - "POST_FATE.graphic_mapPFG"
   - title: Tool box
     desc:  Utility functions.  <br/> ..
     contents:
       - ".getOS"
+      - ".getParam"
+      - ".setParam"
+      - ".setPattern"
+      - ".upscaleMaps"
+      - ".getCutoff"

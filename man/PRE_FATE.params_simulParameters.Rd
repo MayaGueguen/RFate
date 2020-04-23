@@ -2,7 +2,7 @@
 % Please edit documentation in R/PRE_FATE.params_simulParameters.R
 \name{PRE_FATE.params_simulParameters}
 \alias{PRE_FATE.params_simulParameters}
-\title{Create \emph{Simul_parameters} parameter file for a \code{FATE-HD} 
+\title{Create \emph{Simul_parameters} parameter file for a \code{FATE} 
 simulation}
 \usage{
 PRE_FATE.params_simulParameters(
@@ -16,24 +16,24 @@ PRE_FATE.params_simulParameters(
 }
 \arguments{
 \item{name.simulation}{a \code{string} corresponding to the main directory 
-or simulation name of the \code{FATE-HD} simulation}
+or simulation name of the \code{FATE} simulation}
 
 \item{name.MASK}{a \code{string} corresponding to the file name of a raster 
 mask, with either \code{0} or \code{1} within each pixel, \code{1} 
 corresponding to the cells of the studied area in which the succession 
-(core) module of the \code{FATE-HD} simulation will take place (see 
+(core) module of the \code{FATE} simulation will take place (see 
 \code{\href{PRE_FATE.params_globalParameters.html#details}{PRE_FATE.params_globalParameters}})}
 
 \item{name.DIST}{(\emph{optional}) \cr a \code{string} corresponding to the 
 file name of a raster mask, with either \code{0} or \code{1} within each 
 pixel, \code{1} corresponding to the cells of the studied area in which the 
-disturbance module of the \code{FATE-HD} simulation will take place (see 
+disturbance module of the \code{FATE} simulation will take place (see 
 \code{\href{PRE_FATE.params_globalParameters.html#details}{PRE_FATE.params_globalParameters}})}
 
 \item{name.DROUGHT}{(\emph{optional}) \cr a \code{string} corresponding to 
 the name of a raster file, with a \code{numeric} value within each pixel 
 corresponding to the drought intensity experienced by this pixel throught 
-the drought disturbance module of the \code{FATE-HD} simulation (see 
+the drought disturbance module of the \code{FATE} simulation (see 
 \code{\href{PRE_FATE.params_globalParameters.html#details}{PRE_FATE.params_globalParameters}})}
 
 \item{opt.global.name}{(\emph{optional}) \cr a \code{string} corresponding 
@@ -89,10 +89,10 @@ directory with the following parameters :
 }
 \description{
 This script is designed to create one (or several) parameter 
-file containing \code{PARAMETER FILENAMES} used in \code{FATE-HD} model.
+file containing \code{PARAMETER FILENAMES} used in \code{FATE} model.
 }
 \details{
-The \code{FATE-HD} software takes only one input parameter : a file 
+The \code{FATE} software takes only one input parameter : a file 
 containing links to other files containing all the parameters and data 
 needed by the program to run.
 

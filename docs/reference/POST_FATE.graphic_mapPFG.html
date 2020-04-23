@@ -6,8 +6,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create a map of the community weighted mean (CWM) of light
- <br /> for one (or several) specific year of a <code>FATE-HD</code> simulation — POST_FATE.graphic_mapPFGlight • RFate</title>
+<title>Create a map related to plant functional group results (richness, 
+relative cover, light or soil CWM) for one (or several) specific year of a 
+<code>FATE</code> simulation — POST_FATE.graphic_mapPFG • RFate</title>
 
 
 <!-- jquery -->
@@ -40,11 +41,12 @@
 
 
 
-<meta property="og:title" content="Create a map of the community weighted mean (CWM) of light
- <br /> for one (or several) specific year of a <code>FATE-HD</code> simulation — POST_FATE.graphic_mapPFGlight" />
-<meta property="og:description" content="This script is designed to produce a raster map of community
-weighted mean (CWM) of light for one (or several) specific FATE-HD
-simulation year." />
+<meta property="og:title" content="Create a map related to plant functional group results (richness, 
+relative cover, light or soil CWM) for one (or several) specific year of a 
+<code>FATE</code> simulation — POST_FATE.graphic_mapPFG" />
+<meta property="og:description" content="This script is designed to produce one (or several) raster map 
+related to plant functional group results (richness, relative cover, light 
+or soil CWM) for one (or several) specific FATE simulation year." />
 
 
 
@@ -188,26 +190,26 @@ simulation year." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create a map of the community weighted mean (CWM) of light
- <br /> for one (or several) specific year of a <code>FATE-HD</code> simulation</h1>
-    <small class="dont-index">Source: <a href='https://github.com/MayaGueguen/RFate.git/blob/master/R/POST_FATE.graphic_mapPFGlight.R'><code>R/POST_FATE.graphic_mapPFGlight.R</code></a></small>
-    <div class="hidden name"><code>POST_FATE.graphic_mapPFGlight.Rd</code></div>
+    <h1>Create a map related to plant functional group results (richness, 
+relative cover, light or soil CWM) for one (or several) specific year of a 
+<code>FATE</code> simulation</h1>
+    <small class="dont-index">Source: <a href='https://github.com/MayaGueguen/RFate.git/blob/master/R/POST_FATE.graphic_mapPFG.R'><code>R/POST_FATE.graphic_mapPFG.R</code></a></small>
+    <div class="hidden name"><code>POST_FATE.graphic_mapPFG.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This script is designed to produce a raster map of community
-weighted mean (CWM) of light for one (or several) specific <code>FATE-HD</code>
-simulation year.</p>
+    <p>This script is designed to produce one (or several) raster map 
+related to plant functional group results (richness, relative cover, light 
+or soil CWM) for one (or several) specific <code>FATE</code> simulation year.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>POST_FATE.graphic_mapPFGlight</span>(
+    <pre class="usage"><span class='fu'>POST_FATE.graphic_mapPFG</span>(
   <span class='no'>name.simulation</span>,
   <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='no'>year</span>,
-  <span class='kw'>strata_min</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='no'>mat.PFG.succ</span>,
-  <span class='kw'>opt.mat.light.obs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>opt.ras.light.obs</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>years</span>,
+  <span class='kw'>opt.stratum_min</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>opt.stratum_max</span> <span class='kw'>=</span> <span class='fl'>10</span>,
+  <span class='kw'>opt.doBinary</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>,
   <span class='kw'>opt.doPlot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
 )</pre>
@@ -217,100 +219,162 @@ simulation year.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>name.simulation</th>
-      <td><p>a <code>string</code> that corresponds to the main directory
-or simulation name of the <code>FATE-HD</code> simulation</p></td>
+      <td><p>a <code>string</code> corresponding to the main directory 
+or simulation name of the <code>FATE</code> simulation</p></td>
     </tr>
     <tr>
       <th>file.simulParam</th>
-      <td><p>a <code>string</code> that corresponds to the name of a
-parameter file that will be contained into the <code>PARAM_SIMUL</code> folder
-of the <code>FATE-HD</code> simulation</p></td>
+      <td><p>default <code>NULL</code>. <br /> A <code>string</code> 
+corresponding to the name of a parameter file that will be contained into 
+the <code>PARAM_SIMUL</code> folder of the <code>FATE</code> simulation</p></td>
     </tr>
     <tr>
-      <th>year</th>
-      <td><p>an <code>integer</code> corresponding to the simulation year(s) that 
-will be used to extract PFG abundance and binary maps</p></td>
+      <th>years</th>
+      <td><p>an <code>integer</code>, or a <code>vector</code> of <code>integer</code>, 
+corresponding to the simulation year(s) that will be used to extract PFG 
+abundance and binary maps</p></td>
     </tr>
     <tr>
-      <th>strata_min</th>
-      <td><p>an <code>integer</code> corresponding to the lowest stratum from
-which PFG abundances are summed up to the highest stratum</p></td>
+      <th>opt.stratum_min</th>
+      <td><p>(<em>optional</em>) default <code>1</code>. <br /> An 
+<code>integer</code> corresponding to the lowest stratum from which PFG 
+abundances will be summed up</p></td>
     </tr>
     <tr>
-      <th>mat.PFG.succ</th>
-      <td><p>a <code>data.frame</code> with 2 columns : PFG, light</p></td>
+      <th>opt.stratum_max</th>
+      <td><p>(<em>optional</em>) default <code>10</code>. <br /> An 
+<code>integer</code> corresponding to the highest stratum from which PFG 
+abundances will be summed up</p></td>
     </tr>
     <tr>
-      <th>opt.mat.light.obs</th>
-      <td><p>default NULL (<em>optional</em>). A <code>data.frame</code>
-with 3 columns : X, Y, obs</p></td>
-    </tr>
-    <tr>
-      <th>opt.ras.light.obs</th>
-      <td><p>default NULL (<em>optional</em>). A <code>string</code> that
-corresponds to the file name of a raster containing observed values for 
-community weighted mean of light</p></td>
+      <th>opt.doBinary</th>
+      <td><p>(<em>optional</em>) default <code>TRUE</code>. <br /> If 
+<code>TRUE</code>, abundance maps (absolute or relative) are systematically 
+multiplied by binary maps (see 
+<code><a href='POST_FATE.graphic_mapPFG#details'>Details</a></code>)</p></td>
     </tr>
     <tr>
       <th>opt.no_CPU</th>
-      <td><p>default 1 (<em>optional</em>). The number of resources that 
-can be used to parallelize the <code>unzip/zip</code> of raster files</p></td>
+      <td><p>(<em>optional</em>) default <code>1</code>. <br /> The number of 
+resources that can be used to parallelize the <code>unzip/zip</code> of raster 
+files</p></td>
     </tr>
     <tr>
       <th>opt.doPlot</th>
-      <td><p>default TRUE (<em>optional</em>). If TRUE, plot(s) will be
-processed, otherwise only the calculation and reorganization of outputs
-will occur, be saved and returned.</p></td>
+      <td><p>(<em>optional</em>) default <code>TRUE</code>. <br /> If <code>TRUE</code>, 
+plot(s) will be processed, otherwise only the calculation and reorganization 
+of outputs will occur, be saved and returned</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>One <code>POST_FATE_[...].pdf</code> file is created :</p><dl'>
+    <p>A <code>list</code> containing one or several (one for each simulation 
+year) <code>list</code> of <code>raster</code> and <code>data.frame</code> with the following 
+columns, and one or two <code>ggplot2</code> objects :</p>
+<dl'>
+  <dt>tab</dt><dd><p><dl'>
+      <dt>raster</dt><dd><p></p></dd>
+      <dt>ccr</dt><dd><p><dl'>
+          <dt><code>PFG</code></dt><dd><p>the concerned Plant Functional Group</p></dd>
+          <dt><code>AUC.sd</code></dt><dd><p>standard deviation of the AUC values</p></dd></dl></p></dd></dl></p></dd>
+  <dt>plot</dt><dd><p><dl'>
+      <dt>plot.cover</dt><dd><p><code>ggplot2</code> object, representing the</p></dd>
+      <dt>plot.ccr</dt><dd><p><code>ggplot2</code> object, representing the <br /> <br /></p></dd></dl></p></dd>
+
+</dl>
+
+
+<p>Up to four <code class="file">POST_FATE_[...].pdf</code> file are created :</p><dl'>
+  <dt><code class="file">GRAPHIC_C <br /> map_PFGrichness</code></dt><dd><p>to visualize the PFG 
+  richness within the studied area</p></dd>
+  <dt><code class="file">GRAPHIC_C <br /> map_PFGcover</code></dt><dd><p>to visualize the PFG cover
+  within the studied area</p></dd>
   <dt><code class="file">GRAPHIC_B <br /> PFGlight</code></dt><dd><p>to visualize the light CWM
+  within the studied area</p></dd>
+  <dt><code class="file">GRAPHIC_B <br /> PFGsoil</code></dt><dd><p>to visualize the soil CWM
   within the studied area</p></dd>
 
 </dl>
 
-<p>A raster file is created into simulation results folder.</p>
+<p>Three <code class="file">PFGrichness_YEAR_[...]_STRATA_all_q[...].tif</code> files are created 
+into the simulation results folder :</p><dl'>
+  <dt><code class="file">q0</code></dt><dd><p>PFG richness</p></dd>
+  <dt><code class="file">q1</code></dt><dd><p>PFG Shannon entropy</p></dd>
+  <dt><code class="file">q2</code></dt><dd><p>PFG Simpson concentration</p></dd>
+
+</dl>
+
+<p>Raster files are also created for cover, and light and soil CWM if those 
+modules were selected (see <code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>).</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function allows one to obtain, for a specific <code>FATE-HD</code> simulation
-and a specific parameter file within this simulation, one preanalytical
-graphic. <br /></p>
-<p>For each PFG and each selected simulation year, raster maps are retrieved
+    <p>This function allows to obtain, for a specific <code>FATE</code> simulation and 
+a specific parameter file within this simulation, <strong>up to six raster 
+maps</strong> and preanalytical graphics. <br /> <br /></p>
+<p>For each PFG and each selected simulation year, raster maps are retrieved 
 from the results folders <code>ABUND_perPFG_perStrata</code> and 
-<code>BIN_perPFG_perStrata</code> and unzipped.
-Informations extracted lead to the production of one graphic before the
-maps are compressed again :</p>
+<code>BIN_perPFG_perStrata</code> and unzipped. 
+Informations extracted lead to the production of up to six graphics before 
+the maps are compressed again :</p>
 <ul>
-<li><p>the map of <strong>light Community Weighted Mean</strong> for each selected
-  simulation year(s), representing the simulated value of light (Landolt)
-  within each pixel above a height threshold</p></li>
+<li><p>map of <strong>PFG richness</strong> within each pixel, representing the sum 
+  of binary maps <br />
+  <strong>Richness</strong> is calculated with the 
+  <strong><a href='http://www.jstor.org/stable/23143936'>Leinster &amp; Cobbold 
+  2012 Ecology</a> framework</strong> which allows to give more or less importance to 
+  the commun species through the <code>q</code> parameter :
+  <dl'>
+    <dt><code>q = 0</code></dt><dd><p>species richness</p></dd>
+    <dt><code>q = 1</code></dt><dd><p>Shannon entropy</p></dd>
+    <dt><code>q = 2</code></dt><dd><p>Simpson concentration <br /> <br /></p></dd></dl></p></li>
+<li><p>map of <strong>PFG relative cover</strong>, representing the sum of relative 
+  abundance maps of all PFG <br /> (potentially above a height threshold 
+  defined by <code>opt.stratum_min</code>)</p></li>
+<li><p><strong>if light was activated</strong> (see 
+  <code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>), <strong>community 
+  weighted mean of PFG light preferences</strong> (extracted from <code>LIGHT</code> 
+  parameter within <code>LIGHT</code> files, see 
+  <code><a href='PRE_FATE.params_PFGlight.html'>PRE_FATE.params_PFGlight</a></code>)</p></li>
+<li><p><strong>if soil was activated</strong> (see 
+  <code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>), <strong>community 
+  weighted mean of PFG soil preferences</strong> (extracted from <code>SOIL_CONTRIB</code> 
+  parameter within <code>SOIL</code> files, see 
+  <code><a href='PRE_FATE.params_PFGsoil.html'>PRE_FATE.params_PFGsoil</a></code>) <br /> <br /></p></li>
 </ul>
 
+
+<p><strong>It requires</strong> that the <code><a href='POST_FATE.relativeAbund.html'>POST_FATE.relativeAbund</a></code>, 
+(<code><a href='POST_FATE.graphic_validationStatistics.html'>POST_FATE.graphic_validationStatistics</a></code>) and 
+<code><a href='POST_FATE.binaryMaps.html'>POST_FATE.binaryMaps</a></code> functions have been run and that the 
+folders <code>BIN_perPFG_allStrata</code> and <code>BIN_perPFG_perStrata</code> exist. 
+<br /> <br /></p>
+<p>If <code>opt.doBinary = TRUE</code>, abundance maps (absolute or relative) are 
+systematically multiplied by binary maps extracted from 
+<code>BIN_perPFG_allStrata</code> and <code>BIN_perPFG_perStrata</code> folders and 
+produced by <code><a href='POST_FATE.binaryMaps.html'>POST_FATE.binaryMaps</a></code> function. 
+This way, produced raster maps reflect the <em>validated/refined</em> predictions. 
+<code>opt.doBinary</code> can be set to <code>FALSE</code> to reflect <em>pure</em> 
+simulation results.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='POST_FATE.relativeAbund.html'>POST_FATE.relativeAbund</a></code>, 
-<code><a href='POST_FATE.graphic_validationStatistics.html'>POST_FATE.graphic_validationStatistics</a></code></p></div>
+<code><a href='POST_FATE.graphic_validationStatistics.html'>POST_FATE.graphic_validationStatistics</a></code>,
+<code><a href='POST_FATE.binaryMaps.html'>POST_FATE.binaryMaps</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples">
 <span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'>POST_FATE.graphic_mapPFGlight</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
+<span class='fu'>POST_FATE.graphic_mapPFG</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
                               , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
                               , <span class='kw'>year</span> <span class='kw'>=</span> <span class='fl'>850</span>
-                              , <span class='kw'>strata_min</span> <span class='kw'>=</span> <span class='fl'>1</span>
-                              , <span class='kw'>mat.PFG.succ</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>PFG</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"PFG"</span>, <span class='fl'>1</span>:<span class='fl'>3</span>)
-                                                          , <span class='kw'>light</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>5</span>, <span class='fl'>2</span>, <span class='fl'>3</span>))
+                              , <span class='kw'>opt.stratum_min</span> <span class='kw'>=</span> <span class='fl'>3</span>
                               , <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 
-<span class='fu'>POST_FATE.graphic_mapPFGlight</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
+<span class='fu'>POST_FATE.graphic_mapPFG</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
                               , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
                               , <span class='kw'>year</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>850</span>, <span class='fl'>950</span>)
-                              , <span class='kw'>strata_min</span> <span class='kw'>=</span> <span class='fl'>1</span>
-                              , <span class='kw'>mat.PFG.succ</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>PFG</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/paste.html'>paste0</a></span>(<span class='st'>"PFG"</span>, <span class='fl'>1</span>:<span class='fl'>3</span>)
-                                                          , <span class='kw'>light</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>5</span>, <span class='fl'>2</span>, <span class='fl'>3</span>))
+                              , <span class='kw'>opt.stratum_min</span> <span class='kw'>=</span> <span class='fl'>3</span>
                               , <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 }</pre>
   </div>

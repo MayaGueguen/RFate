@@ -3,8 +3,8 @@
 \name{POST_FATE.graphic_validationStatistics}
 \alias{POST_FATE.graphic_validationStatistics}
 \title{Create a graphical representation of several statistics for each PFG 
-to asses the quality of the model \cr for one (or several) specific year of 
-a \code{FATE-HD} simulation}
+to asses the quality of the model for one (or several) specific year of a 
+\code{FATE} simulation}
 \usage{
 POST_FATE.graphic_validationStatistics(
   name.simulation,
@@ -12,21 +12,20 @@ POST_FATE.graphic_validationStatistics(
   years,
   mat.PFG.obs,
   opt.ras_habitat = NULL,
-  opt.no_CPU = 1,
   opt.doPlot = TRUE
 )
 }
 \arguments{
 \item{name.simulation}{a \code{string} corresponding to the main directory 
-or simulation name of the \code{FATE-HD} simulation}
+or simulation name of the \code{FATE} simulation}
 
-\item{file.simulParam}{default \code{NULL}. A \code{string} corresponding to 
-the name of a parameter file that will be contained into the 
-\code{PARAM_SIMUL} folder of the \code{FATE-HD} simulation}
+\item{file.simulParam}{default \code{NULL}. \cr A \code{string} 
+corresponding to the name of a parameter file that will be contained into 
+the \code{PARAM_SIMUL} folder of the \code{FATE} simulation}
 
 \item{years}{an \code{integer}, or a \code{vector} of \code{integer}, 
 corresponding to the simulation year(s) that will be used to extract PFG 
-binary maps}
+relative abundance maps}
 
 \item{mat.PFG.obs}{a \code{data.frame} with 4 columns : \code{PFG}, 
 \code{X}, \code{Y}, \code{obs}}
@@ -35,11 +34,7 @@ binary maps}
 A \code{string} corresponding to the file name of a raster mask, with an 
 \code{integer} value within each pixel, corresponding to a specific habitat}
 
-\item{opt.no_CPU}{(\emph{optional}) default \code{1}. \cr The number of 
-resources that can be used to parallelize the \code{unzip/zip} of raster 
-files}
-
-\item{opt.doPlot}{(\emph{optional}) default \code{TRUE}. \cr If TRUE, 
+\item{opt.doPlot}{(\emph{optional}) default \code{TRUE}. \cr If \code{TRUE}, 
 plot(s) will be processed, otherwise only the calculation and reorganization 
 of outputs will occur, be saved and returned}
 }
@@ -66,21 +61,13 @@ following columns, and one \code{ggplot2} object :
   \cr \cr}
 }
 
-One \code{POST_FATE_TABLE_YEAR_[...].csv} file is created : 
+One \file{POST_FATE_TABLE_YEAR_[...].csv} file is created : 
 \describe{
   \item{\file{validationStatistics}}{containing the \code{data.frame} 
   detailed above}
 }
 
-Two folders are created :
-\describe{
-  \item{\file{BIN_perPFG \cr_allStrata}}{containing presence / absence 
-  raster maps for each PFG across all strata}
-  \item{\file{BIN_perPFG \cr_perStrata}}{containing presence / absence 
-  raster maps for each PFG for each stratum}
-}
-
-One \code{POST_FATE_[...].pdf} file is created : 
+One \file{POST_FATE_[...].pdf} file is created : 
 \describe{
   \item{\file{GRAPHIC_B \cr validationStatistics}}{to assess the modeling 
   quality of each PFG based on given observations within the studied area}
@@ -89,12 +76,12 @@ One \code{POST_FATE_[...].pdf} file is created :
 \description{
 This script is designed to produce a graphical representation 
 of several statistics (sensitivity, specificity, TSS, AUC) for quality 
-assessment for one (or several) specific \code{FATE-HD} simulation year.
+assessment for one (or several) specific \code{FATE} simulation year.
 }
 \details{
-This function allows to obtain, for a specific \code{FATE-HD} simulation and 
-a specific parameter file within this simulation, \strong{raster maps of PFG 
-presence / absence} and one preanalytical graphic. \cr \cr
+This function allows to obtain, for a specific \code{FATE} simulation and 
+a specific parameter file within this simulation, \strong{PFG validation 
+statistic values} and one preanalytical graphic. \cr \cr
 
 
 Observation records (presences and absences) are required for each PFG 
@@ -110,21 +97,16 @@ within the \code{mat.PFG.obs} object :
 
 
 For each PFG and each selected simulation year, raster maps are retrieved 
-from the results folder \code{ABUND_REL_perPFG_allStrata} and unzipped. 
-Informations extracted lead to the production of one table and as many maps 
-as those found before the maps are compressed again :
+from the results folder \code{ABUND_REL_perPFG_allStrata} and lead to the 
+production of one table :
 
 \itemize{
   \item{the value of \strong{several statistics to evaluate the predictive 
-  quality of the model} (\code{\link[PresenceAbsence]{sensitivity}}, 
+  quality of the model} for each plant functional group \cr 
+  (\code{\link[PresenceAbsence]{sensitivity}}, 
   \code{\link[PresenceAbsence]{specificity}}, 
   \code{\link[PresenceAbsence]{auc}}, 
-  \code{TSS = sensitivity + specificity - 1}) for each plant functional 
-  group}
-  \item{\strong{presence / absence map} of each plant functional group 
-  \strong{within each stratum} are obtained by finding the best cutoff to 
-  transform abundances in \code{0/1} while optimizing the values of 
-  sensitivity and specificity (see \code{\link{.getCutoff}})}
+  \code{TSS = sensitivity + specificity - 1})}
 }
 
 \strong{If a raster mask for habitat has been provided}, the values and 
@@ -134,13 +116,11 @@ graphics will be also calculated per habitat. \cr \cr
 function has been run and that the folder \code{ABUND_REL_perPFG_allStrata} 
 exists. \cr \cr
 
-\strong{These binary \code{raster} files can then be used by other 
-functions} :
+\strong{This \code{.csv} file can then be used by other functions} :
 
 \itemize{
-  \item to produce graphics of \emph{PFG modelled presence} \code{vs} 
-  \emph{PFG Habitat Suitability} maps \cr (see 
-  \code{\link{POST_FATE.graphic_mapPFGvsHS}})
+  \item to produce maps of PFG \emph{presence / absence} from modelled 
+  abundances \cr (see \code{\link{POST_FATE.binaryMaps}})
 }
 }
 \examples{
@@ -306,14 +286,13 @@ plot(validStats$`FATE_PNE/PARAM_SIMUL/Simul_parameters_V1.txt`$plot$`800`$ALL)
 \code{\link[PresenceAbsence]{specificity}},
 \code{\link[PresenceAbsence]{auc}},
 \code{\link{.getCutoff}},
-\code{\link{POST_FATE.graphic_mapPFGvsHS}}
+\code{\link{POST_FATE.binaryMaps}}
 }
 \author{
 Maya Guéguen
 }
 \keyword{FATE,}
 \keyword{area}
-\keyword{binary,}
 \keyword{curve,}
 \keyword{outputs,}
 \keyword{sensitivity,}

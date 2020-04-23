@@ -1,5 +1,5 @@
 ### HEADER #####################################################################
-##' @title Create multiple set(s) of parameter files for a \code{FATE-HD} 
+##' @title Create multiple set(s) of parameter files for a \code{FATE} 
 ##' simulation
 ##' 
 ##' @name PRE_FATE.params_multipleSet
@@ -11,13 +11,13 @@
 ##' (see \code{Details})
 ##'              
 ##' @param name.simulation.1 a \code{string} corresponding to the main directory 
-##' or simulation name of the \code{FATE-HD} simulation from which to 
+##' or simulation name of the \code{FATE} simulation from which to 
 ##' retrieve the first parameter simulation file (\code{file.simulParam.1}), 
 ##' and the second if given (\code{file.simulParam.2}) and no other directory 
 ##' provided (\code{name.simulation.2 = NULL})
 ##' @param name.simulation.2 (\emph{optional}) default \code{NULL}. \cr 
 ##' A \code{string} corresponding to the main directory or simulation name of 
-##' the \code{FATE-HD} simulation from which to retrieve the second parameter 
+##' the \code{FATE} simulation from which to retrieve the second parameter 
 ##' simulation file (\code{file.simulParam.2})
 ##' @param file.simulParam.1 a \code{string} corresponding to the name of the 
 ##' simulation parameter file from which to retrieve parameter values that will 
@@ -93,7 +93,7 @@
 ##' 
 ##' @details 
 ##' 
-##' A \code{FATE-HD} simulation requires several parameters to define general 
+##' A \code{FATE} simulation requires several parameters to define general 
 ##' characteristics of the simulation : they are saved within a 
 ##' \emph{Global_parameters} file (see 
 ##' \code{\link{PRE_FATE.params_globalParameters}}). To fit the model to a 

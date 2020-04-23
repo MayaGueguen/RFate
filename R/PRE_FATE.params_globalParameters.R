@@ -1,5 +1,5 @@
 ### HEADER #####################################################################
-##' @title Create \emph{Global_parameters} parameter file for a \code{FATE-HD}
+##' @title Create \emph{Global_parameters} parameter file for a \code{FATE}
 ##' simulation
 ##' 
 ##' @name PRE_FATE.params_globalParameters
@@ -7,13 +7,13 @@
 ##' @author Maya Guéguen
 ##' 
 ##' @description This script is designed to create parameter file(s) 
-##' containing \code{GLOBAL PARAMETERS} used in \code{FATE-HD} model.
+##' containing \code{GLOBAL PARAMETERS} used in \code{FATE} model.
 ##'              
 ##' @param name.simulation a \code{string} corresponding to the main directory 
-##' or simulation name of the \code{FATE-HD} simulation
+##' or simulation name of the \code{FATE} simulation
 ##' @param opt.no_CPU (\emph{optional}) default \code{1}. \cr an \code{integer} 
 ##' corresponding to the number of resources that can be used to parallelize 
-##' the \code{FATE-HD} simulation
+##' the \code{FATE} simulation
 ##' @param opt.replacePrevious (\emph{optional}) default \code{FALSE}. \cr 
 ##' If \code{TRUE}, pre-existing files inside 
 ##' \code{name.simulation/DATA/GLOBAL_PARAMETERS} folder will be replaced
@@ -37,7 +37,7 @@
 ##' @param required.max_abund_high an \code{integer} in the order of 
 ##' \code{1 000} to rescale abundance values of tall PFG
 ##' @param doLight default \code{FALSE}.\cr If \code{TRUE}, light competition 
-##' is activated in the \code{FATE-HD} simulation, and associated parameters are 
+##' is activated in the \code{FATE} simulation, and associated parameters are 
 ##' required
 ##' @param LIGHT.thresh_medium (\emph{optional}) \cr an \code{integer} in the 
 ##' order of \code{1 000} to convert PFG abundances in each stratum into light 
@@ -52,30 +52,30 @@
 ##' \code{LIGHT.thresh_medium} and lower than this threshold imply 
 ##' \strong{medium amount of light}.
 ##' @param doSoil default \code{FALSE}. \cr If \code{TRUE}, soil competition is 
-##' activated in the \code{FATE-HD} simulation, and associated parameters 
+##' activated in the \code{FATE} simulation, and associated parameters 
 ##' are required
 ##' @param SOIL.init (\emph{optional}) \cr a \code{double} corresponding to the 
-##' soil value to initialize all pixels when starting the \code{FATE-HD} 
+##' soil value to initialize all pixels when starting the \code{FATE} 
 ##' simulation
 ##' @param SOIL.retention (\emph{optional}) \cr a \code{double} corresponding 
 ##' to the percentage of soil value of the previous simulation year that will 
 ##' be kept in the calculation of the soil value of the current simulation year
 ##' @param doDispersal default \code{FALSE}. \cr If \code{TRUE}, seed dispersal 
-##' is activated in the \code{FATE-HD} simulation, and associated parameters are 
+##' is activated in the \code{FATE} simulation, and associated parameters are 
 ##' required
 ##' @param DISPERSAL.mode (\emph{optional}) \cr an \code{integer} corresponding 
 ##' to the way of simulating the seed dispersal for each PFG, either packets 
 ##' kernel (\code{1}), exponential kernel (\code{2}) or exponential kernel with 
 ##' probability (\code{3})
 ##' @param doHabSuitability default \code{FALSE}. \cr If \code{TRUE}, habitat 
-##' suitability is activated in the \code{FATE-HD} simulation, and associated 
+##' suitability is activated in the \code{FATE} simulation, and associated 
 ##' parameters are required
 ##' @param HABSUIT.ref_option (\emph{optional}) \cr an \code{integer} 
 ##' corresponding to the way of simulating the habitat suitability variation 
 ##' between years for each PFG, either random (\code{1}) or PFG specific 
 ##' (\code{2})
 ##' @param doDisturbances default \code{FALSE}. \cr If \code{TRUE}, disturbances 
-##' are applied in the \code{FATE-HD} simulation, and associated parameters are 
+##' are applied in the \code{FATE} simulation, and associated parameters are 
 ##' required
 ##' @param DIST.no (\emph{optional}) \cr an \code{integer} corresponding to the 
 ##' number of disturbances
@@ -84,12 +84,12 @@
 ##' @param DIST.freq (\emph{optional}) \cr a \code{vector} of \code{integer} 
 ##' corresponding to the frequency of each disturbance (\emph{in years})
 ## @param doHabStability default \code{FALSE}. \cr If \code{TRUE}, check of 
-## habitat stability is activated in the \code{FATE-HD} simulation, and 
+## habitat stability is activated in the \code{FATE} simulation, and 
 ## associated parameters are required
 ## @param HABSTAB.no_hab (\emph{optional}) \cr an \code{integer} corresponding 
 ## to the number of different habitats
 ##' @param doDrought default \code{FALSE}. \cr If \code{TRUE}, drought 
-##' disturbances are applied in the \code{FATE-HD} simulation, and associated 
+##' disturbances are applied in the \code{FATE} simulation, and associated 
 ##' parameters are required
 ##' @param DROUGHT.no_sub (\emph{optional}) \cr an \code{integer} corresponding 
 ##' to the number of way a PFG could react to a drought disturbance
@@ -100,7 +100,7 @@
 ## corresponding to the current-drought effects timing, either pre-succession 
 ## (\code{0}) or post (\code{1})
 ##' @param doAliens default \code{FALSE}. \cr If \code{TRUE}, invasive plant 
-##' introduction is activated in the \code{FATE-HD} simulation, and associated 
+##' introduction is activated in the \code{FATE} simulation, and associated 
 ##' parameters are required
 ##' @param ALIEN.no (\emph{optional}) \cr an \code{integer} corresponding to the 
 ##' number of introductions
@@ -112,7 +112,7 @@
 ##' 
 ##' @details 
 ##' 
-##' The \strong{core module} of \code{FATE-HD} requires several parameters to 
+##' The \strong{core module} of \code{FATE} requires several parameters to 
 ##' define general characteristics of the simulation :
 ##' 
 ##' \describe{
@@ -141,7 +141,7 @@
 ##' }
 ##' 
 ##' 
-##' The \strong{other modules} of \code{FATE-HD} can be activated within this 
+##' The \strong{other modules} of \code{FATE} can be activated within this 
 ##' file, and if so, some additional parameters will be required :
 ##' 
 ##' \describe{

@@ -2,7 +2,7 @@
 % Please edit documentation in R/PRE_FATE.params_PFGdisturbance.R
 \name{PRE_FATE.params_PFGdisturbance}
 \alias{PRE_FATE.params_PFGdisturbance}
-\title{Create \emph{DISTURBANCE} parameter files for a \code{FATE-HD}
+\title{Create \emph{DISTURBANCE} parameter files for a \code{FATE}
 simulation}
 \usage{
 PRE_FATE.params_PFGdisturbance(
@@ -14,7 +14,7 @@ PRE_FATE.params_PFGdisturbance(
 }
 \arguments{
 \item{name.simulation}{a \code{string} corresponding to the main directory 
-or simulation name of the \code{FATE-HD} simulation}
+or simulation name of the \code{FATE} simulation}
 
 \item{mat.PFG.dist}{(\emph{optional}) \cr 
 a \code{data.frame} with 5 columns : \cr 
@@ -85,7 +85,7 @@ folder \code{name.simulation/DATA/PFGS/DIST/opt.folder.name/}.
 \description{
 This script is designed to create parameter files containing 
 response to disturbance parameters for each PFG (one file for each of them) 
-used in the disturbance module of \code{FATE-HD}.
+used in the disturbance module of \code{FATE}.
 }
 \details{
 The \strong{disturbance module} allows the user to simulate spatial 

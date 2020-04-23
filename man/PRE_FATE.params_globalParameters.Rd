@@ -2,7 +2,7 @@
 % Please edit documentation in R/PRE_FATE.params_globalParameters.R
 \name{PRE_FATE.params_globalParameters}
 \alias{PRE_FATE.params_globalParameters}
-\title{Create \emph{Global_parameters} parameter file for a \code{FATE-HD}
+\title{Create \emph{Global_parameters} parameter file for a \code{FATE}
 simulation}
 \usage{
 PRE_FATE.params_globalParameters(
@@ -42,11 +42,11 @@ PRE_FATE.params_globalParameters(
 }
 \arguments{
 \item{name.simulation}{a \code{string} corresponding to the main directory 
-or simulation name of the \code{FATE-HD} simulation}
+or simulation name of the \code{FATE} simulation}
 
 \item{opt.no_CPU}{(\emph{optional}) default \code{1}. \cr an \code{integer} 
 corresponding to the number of resources that can be used to parallelize 
-the \code{FATE-HD} simulation}
+the \code{FATE} simulation}
 
 \item{opt.replacePrevious}{(\emph{optional}) default \code{FALSE}. \cr 
 If \code{TRUE}, pre-existing files inside 
@@ -81,7 +81,7 @@ duration is not over}
 \code{1 000} to rescale abundance values of tall PFG}
 
 \item{doLight}{default \code{FALSE}.\cr If \code{TRUE}, light competition 
-is activated in the \code{FATE-HD} simulation, and associated parameters are 
+is activated in the \code{FATE} simulation, and associated parameters are 
 required}
 
 \item{LIGHT.thresh_medium}{(\emph{optional}) \cr an \code{integer} in the 
@@ -99,11 +99,11 @@ resources are \code{low}. PFG abundances higher than
 \strong{medium amount of light}.}
 
 \item{doSoil}{default \code{FALSE}. \cr If \code{TRUE}, soil competition is 
-activated in the \code{FATE-HD} simulation, and associated parameters 
+activated in the \code{FATE} simulation, and associated parameters 
 are required}
 
 \item{SOIL.init}{(\emph{optional}) \cr a \code{double} corresponding to the 
-soil value to initialize all pixels when starting the \code{FATE-HD} 
+soil value to initialize all pixels when starting the \code{FATE} 
 simulation}
 
 \item{SOIL.retention}{(\emph{optional}) \cr a \code{double} corresponding 
@@ -111,7 +111,7 @@ to the percentage of soil value of the previous simulation year that will
 be kept in the calculation of the soil value of the current simulation year}
 
 \item{doDispersal}{default \code{FALSE}. \cr If \code{TRUE}, seed dispersal 
-is activated in the \code{FATE-HD} simulation, and associated parameters are 
+is activated in the \code{FATE} simulation, and associated parameters are 
 required}
 
 \item{DISPERSAL.mode}{(\emph{optional}) \cr an \code{integer} corresponding 
@@ -120,7 +120,7 @@ kernel (\code{1}), exponential kernel (\code{2}) or exponential kernel with
 probability (\code{3})}
 
 \item{doHabSuitability}{default \code{FALSE}. \cr If \code{TRUE}, habitat 
-suitability is activated in the \code{FATE-HD} simulation, and associated 
+suitability is activated in the \code{FATE} simulation, and associated 
 parameters are required}
 
 \item{HABSUIT.ref_option}{(\emph{optional}) \cr an \code{integer} 
@@ -129,7 +129,7 @@ between years for each PFG, either random (\code{1}) or PFG specific
 (\code{2})}
 
 \item{doDisturbances}{default \code{FALSE}. \cr If \code{TRUE}, disturbances 
-are applied in the \code{FATE-HD} simulation, and associated parameters are 
+are applied in the \code{FATE} simulation, and associated parameters are 
 required}
 
 \item{DIST.no}{(\emph{optional}) \cr an \code{integer} corresponding to the 
@@ -142,14 +142,14 @@ the number of way a PFG could react to a disturbance}
 corresponding to the frequency of each disturbance (\emph{in years})}
 
 \item{doDrought}{default \code{FALSE}. \cr If \code{TRUE}, drought 
-disturbances are applied in the \code{FATE-HD} simulation, and associated 
+disturbances are applied in the \code{FATE} simulation, and associated 
 parameters are required}
 
 \item{DROUGHT.no_sub}{(\emph{optional}) \cr an \code{integer} corresponding 
 to the number of way a PFG could react to a drought disturbance}
 
 \item{doAliens}{default \code{FALSE}. \cr If \code{TRUE}, invasive plant 
-introduction is activated in the \code{FATE-HD} simulation, and associated 
+introduction is activated in the \code{FATE} simulation, and associated 
 parameters are required}
 
 \item{ALIEN.no}{(\emph{optional}) \cr an \code{integer} corresponding to the 
@@ -234,10 +234,10 @@ If the simulation includes \emph{aliens introduction} :
 }
 \description{
 This script is designed to create parameter file(s) 
-containing \code{GLOBAL PARAMETERS} used in \code{FATE-HD} model.
+containing \code{GLOBAL PARAMETERS} used in \code{FATE} model.
 }
 \details{
-The \strong{core module} of \code{FATE-HD} requires several parameters to 
+The \strong{core module} of \code{FATE} requires several parameters to 
 define general characteristics of the simulation :
 
 \describe{
@@ -266,7 +266,7 @@ define general characteristics of the simulation :
 }
 
 
-The \strong{other modules} of \code{FATE-HD} can be activated within this 
+The \strong{other modules} of \code{FATE} can be activated within this 
 file, and if so, some additional parameters will be required :
 
 \describe{

@@ -3,7 +3,7 @@
 \name{POST_FATE.temporalEvolution}
 \alias{POST_FATE.temporalEvolution}
 \title{Create tables of pixel temporal evolution of PFG abundances (and 
-light and soil resources if activated) for a \code{FATE-HD} simulation}
+light and soil resources if activated) for a \code{FATE} simulation}
 \usage{
 POST_FATE.temporalEvolution(
   name.simulation,
@@ -15,11 +15,11 @@ POST_FATE.temporalEvolution(
 }
 \arguments{
 \item{name.simulation}{a \code{string} corresponding to the main directory 
-or simulation name of the \code{FATE-HD} simulation}
+or simulation name of the \code{FATE} simulation}
 
-\item{file.simulParam}{default \code{NULL}. A \code{string} corresponding to 
-the name of a parameter file that will be contained into the 
-\code{PARAM_SIMUL} folder of the \code{FATE-HD} simulation}
+\item{file.simulParam}{default \code{NULL}. \cr A \code{string} 
+corresponding to the name of a parameter file that will be contained into 
+the \code{PARAM_SIMUL} folder of the \code{FATE} simulation}
 
 \item{no_years}{an \code{integer} corresponding to the number of simulation 
 years that will be used to extract PFG abundance / light / soil maps}
@@ -55,11 +55,11 @@ One to three \file{POST_FATE_TABLE_PIXEL_evolution_[...].csv} files are created 
 \description{
 This script is designed to produce from 1 to 3 tables 
 containing pixel temporal evolution of PFG abundances, as well as light and 
-soil resources if those modules were activated, in a \code{FATE-HD} 
+soil resources if those modules were activated, in a \code{FATE} 
 simulation.
 }
 \details{
-This function allows to obtain, for a specific \code{FATE-HD} simulation and 
+This function allows to obtain, for a specific \code{FATE} simulation and 
 a specific parameter file within this simulation, \strong{one to three 
 preanalytical tables that can then be used to create graphics}. \cr \cr
 

@@ -1,5 +1,5 @@
 ### HEADER #####################################################################
-##' @title Upscale / crop all raster maps of a \code{FATE-HD} simulation folder
+##' @title Upscale / crop all raster maps of a \code{FATE} simulation folder
 ##' 
 ##' @name .upscaleMaps
 ##' 
@@ -10,11 +10,11 @@
 ##' @author Maya Guéguen
 ##' 
 ##' @description These functions scan all the raster files within a 
-##' \code{FATE-HD} simulation folder and upscale / crop them to the specified 
+##' \code{FATE} simulation folder and upscale / crop them to the specified 
 ##' resolution / extent.
 ##' 
 ##' @param name.simulation a \code{string} that corresponds to the main 
-##' directory or simulation name of the \code{FATE-HD} simulation
+##' directory or simulation name of the \code{FATE} simulation
 ##' @param resolution an \code{integer} that corresponds to the new resolution 
 ##' to upscale all the maps
 ##' @param extent a \code{vector} of 4 \code{numeric} values that corresponds 

@@ -257,12 +257,6 @@ test_that("POST_FATE.graphic_validationStatistics gives error with wrong data : 
                , "The folder FATE_simulation/RESULTS/SIMUL_V1/ABUND_REL_perPFG_allStrata/ does not contain adequate files")
   
   file.create("FATE_simulation/RESULTS/SIMUL_V1/ABUND_REL_perPFG_allStrata/Abund_relative_YEAR_1_PFG1_STRATA_all.tif")
-  expect_error(POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
-                                                      , years = 1
-                                                      , mat.PFG.obs = data.frame(PFG = "PFG1", X = 1, Y = 1, obs = 1))
-               , "The folder FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_perStrata/ does not contain adequate files")
-  
-  file.create("FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_perStrata/Abund_YEAR_1_PFG1_STRATA_1.tif")
   # expect_error(POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
   #                                                     , years = 1
   #                                                     , mat.PFG.obs = data.frame(PFG = "PFG1", X = 1, Y = 1, obs = 1))
@@ -319,13 +313,9 @@ test_that("POST_FATE.graphic_validationStatistics gives correct outputs : warnin
   {
     writeRaster(map_1, filename = paste0("FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_allStrata/"
                                          , "Abund_YEAR_1_PFG", i, "_STRATA_all.tif"), overwrite = TRUE)
-    writeRaster(map_1, filename = paste0("FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_perStrata/"
-                                         , "Abund_YEAR_1_PFG", i, "_STRATA_1.tif"), overwrite = TRUE)
   }
   writeRaster(map_0, filename = paste0("FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_allStrata/"
                                        , "Abund_YEAR_1_PFG6_STRATA_all.tif"), overwrite = TRUE)
-  writeRaster(map_0, filename = paste0("FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_perStrata/"
-                                       , "Abund_YEAR_1_PFG6_STRATA_1.tif"), overwrite = TRUE)
   
   POST_FATE.relativeAbund(name.simulation = "FATE_simulation", years = 1)
   
@@ -337,7 +327,7 @@ test_that("POST_FATE.graphic_validationStatistics gives correct outputs : warnin
                                                                                    , X = -144
                                                                                    , Y = 72
                                                                                    , obs = 1))
-                 , "No values for PFG PFG1.\n No binary maps will be produced!")
+                 , "No values for PFG PFG1.\n No validation statistics will be produced!")
   expect_warning(POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
                                                         , years = 1
                                                         , mat.PFG.obs = data.frame(PFG = paste0("PFG",1:6)
@@ -406,13 +396,9 @@ test_that("POST_FATE.graphic_validationStatistics gives correct outputs : correc
   {
     writeRaster(map_1, filename = paste0("FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_allStrata/"
                                          , "Abund_YEAR_1_PFG", i, "_STRATA_all.tif"), overwrite = TRUE)
-    writeRaster(map_1, filename = paste0("FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_perStrata/"
-                                         , "Abund_YEAR_1_PFG", i, "_STRATA_1.tif"), overwrite = TRUE)
   }
   writeRaster(map_0, filename = paste0("FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_allStrata/"
                                        , "Abund_YEAR_1_PFG6_STRATA_all.tif"), overwrite = TRUE)
-  writeRaster(map_0, filename = paste0("FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_perStrata/"
-                                       , "Abund_YEAR_1_PFG6_STRATA_1.tif"), overwrite = TRUE)
   
   POST_FATE.relativeAbund(name.simulation = "FATE_simulation", years = 1)
   

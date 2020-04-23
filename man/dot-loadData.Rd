@@ -120,13 +120,13 @@ Group :
 \strong{\cr\cr PNE_PARAM}
 
 A \code{list} object with 13 elements to help building the simulation 
-files and folders to run a \code{FATE-HD} simulation :
+files and folders to run a \code{FATE} simulation :
   
   \describe{
     \item{masks}{a \code{\link[raster]{stack}} object of dimension 
     \code{782 x 619} with a resolution of \code{100m} and Lambers (lcc) 
     projection, containing 7 mask layers with binary values (0 or 1) to be 
-    used in a \code{FATE-HD} simulation :
+    used in a \code{FATE} simulation :
     \itemize{
       \item \strong{maskEcrins} : simulation map, where occurs succession
       \item \strong{noDisturb} : perturbation map, when there is none
@@ -145,7 +145,7 @@ files and folders to run a \code{FATE-HD} simulation :
     projection, containing 24 layers with probability values (between 0 and 
     1) representing Habitat Suitability for initialization phase and 
     \emph{equilibrium} or \emph{current} time (0) for each PFG 
-    and to be used in a \code{FATE-HD} simulation. \cr
+    and to be used in a \code{FATE} simulation. \cr
     These maps are coming from Species Distribution Models and methods to 
     obtain them are described in Supplementary Materials of 
     \emph{\href{https://mayagueguen.github.io/FATE-WEBSITE/papers/Boulangeat_2014_GCB.pdf}{Boulangeat et al. 2014 GCB}}.}
@@ -174,7 +174,7 @@ files and folders to run a \code{FATE-HD} simulation :
     to be used with the \code{\link{PRE_FATE.params_PFGdisturbance}} 
     function \cr}
     \item{global}{a \code{vector} of length \code{18} \cr
-    containing global parameter values for a \code{FATE-HD} simulation in 
+    containing global parameter values for a \code{FATE} simulation in 
     the PNE \cr
     to be used with the \code{\link{PRE_FATE.params_globalParameters}} 
     function \cr
@@ -189,57 +189,57 @@ A \code{list} object with 5 elements :
 \describe{
   \item{evaluation}{a \code{data.frame} of dimension \code{24 x 11} \cr
     containing statistical metrics to evaluate the predictive quality of 
-    both Habitat Suitability models (HS) and \code{FATE-HD} simulation 
+    both Habitat Suitability models (HS) and \code{FATE} simulation 
     outputs \cr
     \itemize{
       \item \strong{PFG} : name of Plant Functional Group
       \item \strong{nb.obs.absences} : number of observed absences
       \item \strong{nb.obs.presences} : number of observed presences
       \item \strong{specificity.FATE} : proportion of actual negatives that 
-      are correctly identified as such by the \code{FATE-HD} model (true 
+      are correctly identified as such by the \code{FATE} model (true 
       negative rate)
       \item \strong{specificity.HS} : proportion of actual negatives that 
       are correctly identified as such by the Habitat Suitability model 
       (true negative rate)
       \item \strong{sensitivity.FATE} : proportion of actual positives that 
-      are correctly identified as such by the \code{FATE-HD} model (true 
+      are correctly identified as such by the \code{FATE} model (true 
       positive rate)
       \item \strong{sensitivity.HS} : proportion of actual positives that 
       are correctly identified as such by the Habitat Suitability model 
       (true positive rate)
-      \item \strong{TSS.FATE} : True Skill Statistic for \code{FATE-HD} 
+      \item \strong{TSS.FATE} : True Skill Statistic for \code{FATE} 
       model
       \item \strong{TSS.HS} : True Skill Statistic for Habitat Suitability 
       model
       \item \strong{error.rate.FATE} : percentage of bad predictions for 
-      \code{FATE-HD} model
+      \code{FATE} model
       \item \strong{error.rate.HS} : percentage of bad predictions for 
       Habitat Suitability model
     }
     }
   \item{abund_str.equilibrium}{a \code{\link[raster]{stack}} object of 
   dimension \code{782 x 619} with a resolution of \code{100m} and Lambers 
-  (lcc) projection, containing 120 layers representing \code{FATE-HD} 
+  (lcc) projection, containing 120 layers representing \code{FATE} 
   \strong{abundances for year 800 of initialization phase} (= 
   \emph{equilibrium} or \emph{current} time). \cr
   Maps are per PFG and per height stratum.}
   \item{forest_cover.init}{a \code{\link[raster]{stack}} object of 
   dimension \code{782 x 619} with a resolution of \code{100m} and Lambers 
-  (lcc) projection, containing 16 layers representing \code{FATE-HD} 
+  (lcc) projection, containing 16 layers representing \code{FATE} 
   \strong{relative forest cover through initialization phase (from year 50 
   to 800)}. \cr
   Maps are summing all PFGs through all height strata above 1.5 meters. \cr
   }
   \item{forest_cover \cr CC_BAU}{a \code{\link[raster]{stack}} object of 
   dimension \code{782 x 619} with a resolution of \code{100m} and Lambers 
-  (lcc) projection, containing 14 layers representing \code{FATE-HD} 
+  (lcc) projection, containing 14 layers representing \code{FATE} 
   \strong{relative forest cover through Climate Change (CC) + 
   Business-As-Usual (BAU) scenario (from year 850 to 1500)}. \cr
   Maps are summing all PFGs through all height strata above 1.5 meters. \cr
     }
   \item{forest_cover\cr CC_Abandon}{a \code{\link[raster]{stack}} object of 
   dimension \code{782 x 619} with a resolution of \code{100m} and Lambers 
-  (lcc) projection, containing 14 layers representing \code{FATE-HD} 
+  (lcc) projection, containing 14 layers representing \code{FATE} 
   \strong{relative forest cover through Climate Change (CC) + Abandonment 
   (BAU) scenario (from year 850 to 1500)}. \cr
   Maps are summing all PFGs through all height strata above 1.5 meters. \cr
@@ -254,10 +254,10 @@ containing :
   \item{PNE_PFG}{elements to create the Plant Functional Groups (PFG) 
   over the Ecrins National Park (PNE) \cr
   (\emph{\href{https://mayagueguen.github.io/FATE-WEBSITE/papers/Boulangeat_2012_GCB.pdf}{Boulangeat et al. 2012 GCB}})}
-  \item{PNE_PARAM}{all necessary files to build the \code{FATE-HD} 
+  \item{PNE_PARAM}{all necessary files to build the \code{FATE} 
   simulation folder as well as the parameter files \cr
   (\emph{\href{https://mayagueguen.github.io/FATE-WEBSITE/papers/Boulangeat_2014_GCB.pdf}{Boulangeat et al. 2014 GCB}})}
-  \item{PNE_RESULTS}{results obtained from outputs of \code{FATE-HD} 
+  \item{PNE_RESULTS}{results obtained from outputs of \code{FATE} 
   simulation \cr
   (\emph{\href{https://mayagueguen.github.io/FATE-WEBSITE/papers/Boulangeat_2014_GCB.pdf}{Boulangeat et al. 2014 GCB}})}
 }

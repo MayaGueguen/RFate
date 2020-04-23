@@ -2,7 +2,7 @@
 % Please edit documentation in R/PRE_FATE.params_PFGlight.R
 \name{PRE_FATE.params_PFGlight}
 \alias{PRE_FATE.params_PFGlight}
-\title{Create \emph{LIGHT} parameter files for a \code{FATE-HD} simulation}
+\title{Create \emph{LIGHT} parameter files for a \code{FATE} simulation}
 \usage{
 PRE_FATE.params_PFGlight(
   name.simulation,
@@ -13,7 +13,7 @@ PRE_FATE.params_PFGlight(
 }
 \arguments{
 \item{name.simulation}{a \code{string} corresponding to the main directory 
-or simulation name of the \code{FATE-HD} simulation}
+or simulation name of the \code{FATE} simulation}
 
 \item{mat.PFG.light}{a \code{data.frame} with 2 to 6 columns : \cr 
 \itemize{
@@ -72,7 +72,7 @@ folder \code{name.simulation/DATA/PFGS/LIGHT/opt.folder.name/}.
 \description{
 This script is designed to create parameter files containing 
 light-related parameters for each PFG (one file for each of them) used in 
-the light module of \code{FATE-HD}.
+the light module of \code{FATE}.
 }
 \details{
 The \strong{light module} allows the user to add the effect of 

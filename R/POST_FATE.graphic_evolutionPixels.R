@@ -1,27 +1,27 @@
 ### HEADER #####################################################################
 ##' @title Create a graphical representation of the evolution of PFG abundance 
-##' through time for 5 (or more) pixels of a \code{FATE-HD} simulation
+##' through time for 5 (or more) pixels of a \code{FATE} simulation
 ##' 
 ##' @name POST_FATE.graphic_evolutionPixels
 ##'
 ##' @author Maya Guéguen
 ##' 
 ##' @description This script is designed to produce one graphical representation 
-##' for a \code{FATE-HD} simulation : the evolution through time of the 
+##' for a \code{FATE} simulation : the evolution through time of the 
 ##' abundance of each PFG for 5 (or more) randomly selected cells of the studied 
 ##' area.
 ##' 
 ##' @param name.simulation a \code{string} corresponding to the main directory 
-##' or simulation name of the \code{FATE-HD} simulation
-##' @param file.simulParam default \code{NULL}. A \code{string} corresponding to 
-##' the name of a parameter file that will be contained into the 
-##' \code{PARAM_SIMUL} folder of the \code{FATE-HD} simulation
+##' or simulation name of the \code{FATE} simulation
+##' @param file.simulParam default \code{NULL}. \cr A \code{string} 
+##' corresponding to the name of a parameter file that will be contained into 
+##' the \code{PARAM_SIMUL} folder of the \code{FATE} simulation
 ##' @param opt.cells_ID (\emph{optional}) default \code{NULL}. \cr The cells ID 
 ##' of the studied area for which PFG abundances will be extracted
 ##' @param opt.abund_fixedScale default \code{TRUE}. If \code{FALSE}, the 
 ##' ordinate scale will be adapted for each PFG for the graphical representation 
 ##' of the  evolution of abundances through time
-##' @param opt.doPlot (\emph{optional}) default \code{TRUE}. \cr If TRUE, 
+##' @param opt.doPlot (\emph{optional}) default \code{TRUE}. \cr If \code{TRUE}, 
 ##' plot(s) will be processed, otherwise only the calculation and reorganization 
 ##' of outputs will occur, be saved and returned
 ##' 
@@ -29,13 +29,13 @@
 ##' 
 ##' @details 
 ##' 
-##' This function allows to obtain, for a specific \code{FATE-HD} simulation and 
+##' This function allows to obtain, for a specific \code{FATE} simulation and 
 ##' a specific parameter file within this simulation, one preanalytical graphic :
 ##' 
 ##' \itemize{
 ##'   \item{the evolution of \strong{abundance} of each Plant Functional Group 
 ##'   through simulation time, within 5 (or more) randomly selected pixels of 
-##'   the studied area (\code{FATE-HD} \emph{arbitrary unit})
+##'   the studied area (\code{FATE} \emph{arbitrary unit})
 ##'   }
 ##'   \item{\strong{if light was activated} (see 
 ##'   \code{\link{PRE_FATE.params_globalParameters}}), \cr evolution of 

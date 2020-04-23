@@ -1,5 +1,5 @@
 ### HEADER #####################################################################
-##' @title Create all possible graphical representations for a \code{FATE-HD} 
+##' @title Create all possible graphical representations for a \code{FATE} 
 ##' simulation
 ##' 
 ##' @name POST_FATE.graphics
@@ -7,17 +7,17 @@
 ##' @author Maya Guéguen
 ##' 
 ##' @description This script is designed to produce a set of graphical 
-##' representations for a \code{FATE-HD} simulation. Graphics can be of three 
+##' representations for a \code{FATE} simulation. Graphics can be of three 
 ##' types : 1) representing an evolution through time (of abundance, light, 
 ##' soil) ; 2) vizualising the goodness of the modelisation (presence/absence, 
 ##' validation statistics) : 3) or representing a spatial distribution for a 
 ##' specific year (richness, abundance, light, soil).
 ##'              
 ##' @param name.simulation a \code{string} that corresponds to the main 
-##' directory or simulation name of the \code{FATE-HD} simulation
-##' @param file.simulParam a \code{string} that corresponds to the name of a 
-##' parameter file that will be contained into the \code{PARAM_SIMUL} folder 
-##' of the \code{FATE-HD} simulation
+##' directory or simulation name of the \code{FATE} simulation
+##' @param file.simulParam default \code{NULL}. \cr A \code{string} 
+##' corresponding to the name of a parameter file that will be contained into 
+##' the \code{PARAM_SIMUL} folder of the \code{FATE} simulation
 ##' @param year an \code{integer} corresponding to the simulation year(s) that 
 ##' will be used to extract PFG abundance and/or binary maps, as well as light 
 ##' or soil resources
@@ -93,7 +93,7 @@
 ##' 
 ##' @details 
 ##' 
-##' This function allows one to obtain, for a specific \code{FATE-HD} 
+##' This function allows one to obtain, for a specific \code{FATE} 
 ##' simulation and a specific parameter file within this simulation, up to ten 
 ##' preanalytical graphics. \cr \cr
 ##' 
@@ -113,12 +113,12 @@
 ##'   }
 ##'   \item{the evolution of \strong{abundance} of each Plant Functional Group 
 ##'   through simulation time, with \emph{abundance} being the sum over the 
-##'   whole studied area of the PFG abundances (\code{FATE-HD} \emph{arbitrary 
+##'   whole studied area of the PFG abundances (\code{FATE} \emph{arbitrary 
 ##'   unit}) (see \code{\link{POST_FATE.graphic_evolutionCoverage}})
 ##'   }
 ##'   \item{the evolution of \strong{abundance} of each Plant Functional Group 
 ##'   through simulation time, within 5 (or more) randomly selected pixels of 
-##'   the studied area (\code{FATE-HD} \emph{arbitrary unit}), as well as 
+##'   the studied area (\code{FATE} \emph{arbitrary unit}), as well as 
 ##'   \strong{light resources} of each stratum (\emph{1: Low, 2: Medium, 3: 
 ##'   High}) and \strong{soil resources} if these modules are selected (see 
 ##'   \code{\link{POST_FATE.graphic_evolutionPixels}})

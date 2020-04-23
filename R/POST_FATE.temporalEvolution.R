@@ -1,6 +1,6 @@
 ### HEADER #####################################################################
 ##' @title Create tables of pixel temporal evolution of PFG abundances (and 
-##' light and soil resources if activated) for a \code{FATE-HD} simulation
+##' light and soil resources if activated) for a \code{FATE} simulation
 ##' 
 ##' @name POST_FATE.temporalEvolution
 ##'
@@ -8,15 +8,15 @@
 ##' 
 ##' @description This script is designed to produce from 1 to 3 tables 
 ##' containing pixel temporal evolution of PFG abundances, as well as light and 
-##' soil resources if those modules were activated, in a \code{FATE-HD} 
+##' soil resources if those modules were activated, in a \code{FATE} 
 ##' simulation.
 ##' 
 ##'              
 ##' @param name.simulation a \code{string} corresponding to the main directory 
-##' or simulation name of the \code{FATE-HD} simulation
-##' @param file.simulParam default \code{NULL}. A \code{string} corresponding to 
-##' the name of a parameter file that will be contained into the 
-##' \code{PARAM_SIMUL} folder of the \code{FATE-HD} simulation
+##' or simulation name of the \code{FATE} simulation
+##' @param file.simulParam default \code{NULL}. \cr A \code{string} 
+##' corresponding to the name of a parameter file that will be contained into 
+##' the \code{PARAM_SIMUL} folder of the \code{FATE} simulation
 ##' @param no_years an \code{integer} corresponding to the number of simulation 
 ##' years that will be used to extract PFG abundance / light / soil maps
 ##' @param opt.ras_habitat (\emph{optional}) default \code{NULL}. \cr 
@@ -29,7 +29,7 @@
 ##' 
 ##' @details 
 ##' 
-##' This function allows to obtain, for a specific \code{FATE-HD} simulation and 
+##' This function allows to obtain, for a specific \code{FATE} simulation and 
 ##' a specific parameter file within this simulation, \strong{one to three 
 ##' preanalytical tables that can then be used to create graphics}. \cr \cr
 ##' 
@@ -323,15 +323,7 @@ POST_FATE.temporalEvolution = function(
     }
     
     ## Get list of arrays and extract years of simulation -------------------
-    raster.perPFG.allStrata = grep("Abund_"
-                                   , list.files(dir.output.perPFG.allStrata)
-                                   , value = TRUE)
-    if (length(raster.perPFG.allStrata) == 0)
-    {
-      stop(paste0("Missing data!\n The folder "
-                  , dir.output.perPFG.allStrata
-                  , " does not contain adequate files"))
-    }
+    raster.perPFG.allStrata = .getRasterNames(years = NULL, "allStrata", "ABUND")
     years = sapply(sub("Abund_YEAR_", "", raster.perPFG.allStrata)
                    , function(x) strsplit(as.character(x), "_")[[1]][1])
     years = sort(unique(as.numeric(years)))

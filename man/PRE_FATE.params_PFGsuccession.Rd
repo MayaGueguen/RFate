@@ -2,7 +2,7 @@
 % Please edit documentation in R/PRE_FATE.params_PFGsuccession.R
 \name{PRE_FATE.params_PFGsuccession}
 \alias{PRE_FATE.params_PFGsuccession}
-\title{Create SUCCESSION parameter files for a FATE-HD simulation}
+\title{Create \emph{SUCCESSION} parameter files for a \code{FATE} simulation}
 \usage{
 PRE_FATE.params_PFGsuccession(
   name.simulation,
@@ -14,7 +14,7 @@ PRE_FATE.params_PFGsuccession(
 }
 \arguments{
 \item{name.simulation}{a \code{string} corresponding to the main directory 
-or simulation name of the \code{FATE-HD} simulation}
+or simulation name of the \code{FATE} simulation}
 
 \item{mat.PFG.succ}{a \code{data.frame} with at least 5 columns : \cr 
 \code{PFG}, \code{type}, \code{height}, \code{maturity}, \code{longevity} 
@@ -71,10 +71,10 @@ folder \file{name.simulation/DATA/PFGS/SUCC/opt.folder.name/}.
 \description{
 This script is designed to create parameter files containing 
 succession parameters for each PFG (one file for each of them) used in the 
-core module of \code{FATE-HD}.
+core module of \code{FATE}.
 }
 \details{
-The \strong{core module} of \code{FATE-HD} allows the user to simulate a 
+The \strong{core module} of \code{FATE} allows the user to simulate a 
 primary vegetation succession based on a \strong{demography model}. \cr \cr
 
 Several parameters, given within \code{mat.PFG.succ}, are required for 

@@ -1,19 +1,19 @@
 ### HEADER #####################################################################
-##' @title Create the skeleton folder for a \code{FATE-HD} simulation
+##' @title Create the skeleton folder for a \code{FATE} simulation
 ##' 
 ##' @name PRE_FATE.skeletonDirectory
 ##'
 ##' @author Maya Guéguen
 ##' 
 ##' @description This script is designed to create a user-friendly directory 
-##' tree to run a \code{FATE-HD} simulation.
+##' tree to run a \code{FATE} simulation.
 ##'              
 ##' @param name.simulation a \code{string} that will be used as the main 
 ##' directory and simulation name
 ##' 
 ##' @details 
 ##' 
-##' \code{FATE-HD} requires only one input parameter (see 
+##' \code{FATE} requires only one input parameter (see 
 ##' \code{\link{PRE_FATE.params_simulParameters}}), 
 ##' 
 ##' \itemize{
@@ -30,7 +30,7 @@
 ##' not have to put them all in one same place. \cr
 ##' But as this is more practical, this function proposes a way to 
 ##' \strong{organize all those files or parameter files} that will or could be 
-##' used by a \code{FATE-HD} simulation. \cr \cr
+##' used by a \code{FATE} simulation. \cr \cr
 ##' 
 ##' The tree structure is detailed below :
 ##' 
@@ -136,7 +136,7 @@ PRE_FATE.skeletonDirectory = function(name.simulation = "FATE_simulation")
     ## the RESULTS dir
     dir.create(file.path(name.simulation, "RESULTS"), showWarnings = FALSE)
     
-    message("\n Your directory tree for your FATE-HD simulation ("
+    message("\n Your directory tree for your FATE simulation ("
             , name.simulation, ") is ready!\n")
   }
 }

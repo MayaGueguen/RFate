@@ -2,7 +2,7 @@
 % Please edit documentation in R/PRE_FATE.skeletonDirectory.R
 \name{PRE_FATE.skeletonDirectory}
 \alias{PRE_FATE.skeletonDirectory}
-\title{Create the skeleton folder for a \code{FATE-HD} simulation}
+\title{Create the skeleton folder for a \code{FATE} simulation}
 \usage{
 PRE_FATE.skeletonDirectory(name.simulation = "FATE_simulation")
 }
@@ -16,10 +16,10 @@ simulation files and the results.
 }
 \description{
 This script is designed to create a user-friendly directory 
-tree to run a \code{FATE-HD} simulation.
+tree to run a \code{FATE} simulation.
 }
 \details{
-\code{FATE-HD} requires only one input parameter (see 
+\code{FATE} requires only one input parameter (see 
 \code{\link{PRE_FATE.params_simulParameters}}), 
 
 \itemize{
@@ -36,7 +36,7 @@ The user could give names of files stored everywhere on a machine, and does
 not have to put them all in one same place. \cr
 But as this is more practical, this function proposes a way to 
 \strong{organize all those files or parameter files} that will or could be 
-used by a \code{FATE-HD} simulation. \cr \cr
+used by a \code{FATE} simulation. \cr \cr
 
 The tree structure is detailed below :
 

@@ -1,16 +1,16 @@
 ### HEADER #####################################################################
 ##' @title Replace a pattern with a new within all parameter files of a 
-##' \code{FATE-HD} simulation folder
+##' \code{FATE} simulation folder
 ##' 
 ##' @name .setPattern
 ##'
 ##' @author Maya Guéguen
 ##' 
-##' @description This function scans all the files within a \code{FATE-HD} 
+##' @description This function scans all the files within a \code{FATE} 
 ##' simulation folder to find a specific pattern and replace it with a new one
 ##' 
 ##' @param name.simulation a \code{string} that corresponds to the main 
-##' directory or simulation name of the \code{FATE-HD} simulation
+##' directory or simulation name of the \code{FATE} simulation
 ##' @param opt.name.file (\emph{optional}) \cr a \code{string} that corresponds 
 ##' to the name of the file (or part) in which to search and change the pattern
 ##' @param pattern.tofind a \code{string} that corresponds to the pattern to 

@@ -1,5 +1,5 @@
 ### HEADER #####################################################################
-##' @title Create \emph{DISPERSAL} parameter files for a \code{FATE-HD} 
+##' @title Create \emph{DISPERSAL} parameter files for a \code{FATE} 
 ##' simulation
 ##' 
 ##' @name PRE_FATE.params_PFGdispersal
@@ -8,10 +8,10 @@
 ##' 
 ##' @description This script is designed to create parameter files containing 
 ##' dispersal distances for each PFG (one file for each of them) used in the 
-##' dispersal module of \code{FATE-HD}.
+##' dispersal module of \code{FATE}.
 ##'              
 ##' @param name.simulation a \code{string} corresponding to the main directory 
-##' or simulation name of the \code{FATE-HD} simulation
+##' or simulation name of the \code{FATE} simulation
 ##' @param mat.PFG.disp a \code{data.frame} with 4 columns : \code{PFG}, 
 ##' \code{d50}, \code{d99}, \code{ldd}
 ##' @param opt.folder.name (\emph{optional}) \cr a \code{string} corresponding 
@@ -21,7 +21,7 @@
 ##' 
 ##' @details
 ##' 
-##' A \strong{dispersal module} is available to make the \code{FATE-HD} model 
+##' A \strong{dispersal module} is available to make the \code{FATE} model 
 ##' spatially explicit by dispersing seeds of each PFG with a kernel (see 
 ##' \code{\link{PRE_FATE.params_globalParameters}}). \cr \cr
 ##' 

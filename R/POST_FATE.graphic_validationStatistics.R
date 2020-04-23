@@ -1,7 +1,7 @@
 ### HEADER #####################################################################
 ##' @title Create a graphical representation of several statistics for each PFG 
-##' to asses the quality of the model \cr for one (or several) specific year of 
-##' a \code{FATE-HD} simulation
+##' to asses the quality of the model for one (or several) specific year of a 
+##' \code{FATE} simulation
 ##' 
 ##' @name POST_FATE.graphic_validationStatistics
 ##'
@@ -9,34 +9,31 @@
 ##' 
 ##' @description This script is designed to produce a graphical representation 
 ##' of several statistics (sensitivity, specificity, TSS, AUC) for quality 
-##' assessment for one (or several) specific \code{FATE-HD} simulation year.
+##' assessment for one (or several) specific \code{FATE} simulation year.
 ##' 
 ##' @param name.simulation a \code{string} corresponding to the main directory 
-##' or simulation name of the \code{FATE-HD} simulation
-##' @param file.simulParam default \code{NULL}. A \code{string} corresponding to 
-##' the name of a parameter file that will be contained into the 
-##' \code{PARAM_SIMUL} folder of the \code{FATE-HD} simulation
+##' or simulation name of the \code{FATE} simulation
+##' @param file.simulParam default \code{NULL}. \cr A \code{string} 
+##' corresponding to the name of a parameter file that will be contained into 
+##' the \code{PARAM_SIMUL} folder of the \code{FATE} simulation
 ##' @param years an \code{integer}, or a \code{vector} of \code{integer}, 
 ##' corresponding to the simulation year(s) that will be used to extract PFG 
-##' binary maps
+##' relative abundance maps
 ##' @param mat.PFG.obs a \code{data.frame} with 4 columns : \code{PFG}, 
 ##' \code{X}, \code{Y}, \code{obs}
 ##' @param opt.ras_habitat (\emph{optional}) default \code{NULL}. \cr 
 ##' A \code{string} corresponding to the file name of a raster mask, with an 
 ##' \code{integer} value within each pixel, corresponding to a specific habitat
-##' @param opt.no_CPU (\emph{optional}) default \code{1}. \cr The number of 
-##' resources that can be used to parallelize the \code{unzip/zip} of raster 
-##' files
-##' @param opt.doPlot (\emph{optional}) default \code{TRUE}. \cr If TRUE, 
+##' @param opt.doPlot (\emph{optional}) default \code{TRUE}. \cr If \code{TRUE}, 
 ##' plot(s) will be processed, otherwise only the calculation and reorganization 
 ##' of outputs will occur, be saved and returned
 ##' 
 ##' 
 ##' @details 
 ##' 
-##' This function allows to obtain, for a specific \code{FATE-HD} simulation and 
-##' a specific parameter file within this simulation, \strong{raster maps of PFG 
-##' presence / absence} and one preanalytical graphic. \cr \cr
+##' This function allows to obtain, for a specific \code{FATE} simulation and 
+##' a specific parameter file within this simulation, \strong{PFG validation 
+##' statistic values} and one preanalytical graphic. \cr \cr
 ##' 
 ##' 
 ##' Observation records (presences and absences) are required for each PFG 
@@ -52,21 +49,16 @@
 ##' 
 ##' 
 ##' For each PFG and each selected simulation year, raster maps are retrieved 
-##' from the results folder \code{ABUND_REL_perPFG_allStrata} and unzipped. 
-##' Informations extracted lead to the production of one table and as many maps 
-##' as those found before the maps are compressed again :
+##' from the results folder \code{ABUND_REL_perPFG_allStrata} and lead to the 
+##' production of one table :
 ##' 
 ##' \itemize{
 ##'   \item{the value of \strong{several statistics to evaluate the predictive 
-##'   quality of the model} (\code{\link[PresenceAbsence]{sensitivity}}, 
+##'   quality of the model} for each plant functional group \cr 
+##'   (\code{\link[PresenceAbsence]{sensitivity}}, 
 ##'   \code{\link[PresenceAbsence]{specificity}}, 
 ##'   \code{\link[PresenceAbsence]{auc}}, 
-##'   \code{TSS = sensitivity + specificity - 1}) for each plant functional 
-##'   group}
-##'   \item{\strong{presence / absence map} of each plant functional group 
-##'   \strong{within each stratum} are obtained by finding the best cutoff to 
-##'   transform abundances in \code{0/1} while optimizing the values of 
-##'   sensitivity and specificity (see \code{\link{.getCutoff}})}
+##'   \code{TSS = sensitivity + specificity - 1})}
 ##' }
 ##' 
 ##' \strong{If a raster mask for habitat has been provided}, the values and 
@@ -76,13 +68,11 @@
 ##' function has been run and that the folder \code{ABUND_REL_perPFG_allStrata} 
 ##' exists. \cr \cr
 ##' 
-##' \strong{These binary \code{raster} files can then be used by other 
-##' functions} :
+##' \strong{This \code{.csv} file can then be used by other functions} :
 ##' 
 ##' \itemize{
-##'   \item to produce graphics of \emph{PFG modelled presence} \code{vs} 
-##'   \emph{PFG Habitat Suitability} maps \cr (see 
-##'   \code{\link{POST_FATE.graphic_mapPFGvsHS}})
+##'   \item to produce maps of PFG \emph{presence / absence} from modelled 
+##'   abundances \cr (see \code{\link{POST_FATE.binaryMaps}})
 ##' }
 ##' 
 ##' 
@@ -108,28 +98,20 @@
 ##'   \cr \cr}
 ##' }
 ##' 
-##' One \code{POST_FATE_TABLE_YEAR_[...].csv} file is created : 
+##' One \file{POST_FATE_TABLE_YEAR_[...].csv} file is created : 
 ##' \describe{
 ##'   \item{\file{validationStatistics}}{containing the \code{data.frame} 
 ##'   detailed above}
 ##' }
 ##' 
-##' Two folders are created :
-##' \describe{
-##'   \item{\file{BIN_perPFG \cr_allStrata}}{containing presence / absence 
-##'   raster maps for each PFG across all strata}
-##'   \item{\file{BIN_perPFG \cr_perStrata}}{containing presence / absence 
-##'   raster maps for each PFG for each stratum}
-##' }
-##' 
-##' One \code{POST_FATE_[...].pdf} file is created : 
+##' One \file{POST_FATE_[...].pdf} file is created : 
 ##' \describe{
 ##'   \item{\file{GRAPHIC_B \cr validationStatistics}}{to assess the modeling 
 ##'   quality of each PFG based on given observations within the studied area}
 ##' }
 ##' 
 ##' 
-##' @keywords FATE, outputs, binary, area under curve, sensitivity, specificity,
+##' @keywords FATE, outputs, area under curve, sensitivity, specificity,
 ##' true skill statistic
 ##' 
 ##' @seealso \code{\link{POST_FATE.relativeAbund}},
@@ -138,7 +120,7 @@
 ##' \code{\link[PresenceAbsence]{specificity}},
 ##' \code{\link[PresenceAbsence]{auc}},
 ##' \code{\link{.getCutoff}},
-##' \code{\link{POST_FATE.graphic_mapPFGvsHS}}
+##' \code{\link{POST_FATE.binaryMaps}}
 ##' 
 ##' @examples
 ##' 
@@ -323,7 +305,6 @@ POST_FATE.graphic_validationStatistics = function(
   , years
   , mat.PFG.obs
   , opt.ras_habitat = NULL
-  , opt.no_CPU = 1
   , opt.doPlot = TRUE
 ){
   
@@ -425,35 +406,11 @@ POST_FATE.graphic_validationStatistics = function(
     no_years = length(years)
     
     ## UNZIP the raster saved -------------------------------------------------
-    raster.perPFG.allStrata = grep(paste0("Abund_relative_YEAR_", years
-                                          , "_", collapse = "|")
-                                   , list.files(dir.output.perPFG.allStrata.REL)
-                                   , value = TRUE)
-    if (length(raster.perPFG.allStrata) == 0)
-    {
-      stop(paste0("Missing data!\n The folder "
-                  , dir.output.perPFG.allStrata.REL
-                  , " does not contain adequate files"))
-    }
-    raster.perPFG.perStrata = grep(paste0("Abund_YEAR_", years
-                                          , "_", collapse = "|")
-                                   , list.files(dir.output.perPFG.perStrata
-                                                , full.names = TRUE)
-                                   , value = TRUE)
-    if (length(raster.perPFG.perStrata) == 0)
-    {
-      stop(paste0("Missing data!\n The folder "
-                  , dir.output.perPFG.perStrata
-                  , " does not contain adequate files"))
-    }
-    .unzip(folder_name = dir.output.perPFG.perStrata
-           , list_files = raster.perPFG.perStrata
-           , nb_cores = opt.no_CPU)
-    
+    raster.perPFG.allStrata.REL = .getRasterNames(years, "allStrata", "REL")
     
     
     ## get the data inside the rasters ----------------------------------------
-    cat("\n GETTING STATISTICS and PRESENCE/ABSENCE maps for")
+    cat("\n GETTING STATISTICS for")
     mat.valid_list = list()
     plot_list = foreach (y = years) %do%
     {
@@ -547,56 +504,9 @@ POST_FATE.graphic_validationStatistics = function(
                     auc = auc(mat.bin[, c("ID", "obs", "fg")])
                     
                     mat.res.habi = data.frame(PFG = fg, HAB = habi
+                                              , cutoff = cutoff$Cut
                                               , auc, sens, spec, TSS
                                               , stringsAsFactors = FALSE)
-                    
-                    ## Produce binary maps ------------------------------------
-                    if (habi == "ALL")
-                    {
-                      ## ALL STRATA
-                      new_name = paste0(dir.output.perPFG.allStrata.BIN
-                                        , "Binary_YEAR_"
-                                        , y
-                                        , "_"
-                                        , fg
-                                        , "_STRATA_all.tif")
-                      if (!file.exists(new_name))
-                      {
-                        ras.bin = ras[[fg]]
-                        ras.bin[] = ifelse(ras.bin[] >= cutoff$Cut, 1, 0)
-                        writeRaster(x = ras.bin
-                                    , filename = new_name
-                                    , overwrite = TRUE)
-                      }
-                      
-                      ## SEPARATED STRATA
-                      prev_names = list.files(path = dir.output.perPFG.perStrata
-                                              , pattern = paste0("Abund_YEAR_"
-                                                                 , y
-                                                                 , "_"
-                                                                 , fg
-                                                                 , "_STRATA")
-                                              , full.names = TRUE)
-                      prev_names = prev_names[grep(".tif$", prev_names)]
-                      if (length(prev_names) > 0)
-                      {
-                        for (prev_name in prev_names)
-                        {
-                          new_name = sub(dir.output.perPFG.perStrata
-                                         , dir.output.perPFG.perStrata.BIN
-                                         , prev_name)
-                          new_name = sub("Abund_YEAR_", "Binary_YEAR_", new_name)
-                          if (!file.exists(new_name))
-                          {
-                            ras.bin = raster(prev_name)
-                            ras.bin[] = ifelse(ras.bin[] >= cutoff$Cut, 1, 0)
-                            writeRaster(x = ras.bin
-                                        , filename = new_name
-                                        , overwrite = TRUE)
-                          }
-                        }
-                      }
-                    }
                   }
                 } 
                 return(mat.res.habi)
@@ -613,8 +523,9 @@ POST_FATE.graphic_validationStatistics = function(
           if (!isThereValues)
           {
             warning(paste0("Missing data!\n No values for PFG ", fg
-                           , ".\n No binary maps will be produced!"))
+                           , ".\n No validation statistics will be produced!"))
             return(data.frame(PFG = fg
+                              , cutoff = NA
                               , HAB = "ALL"
                               , AUC = NA, AUC.sd = NA
                               , sensitivity = NA, sensitivity.sd = NA
@@ -793,10 +704,10 @@ POST_FATE.graphic_validationStatistics = function(
       dev.off()
     }
     
-    ## ZIP the raster saved ---------------------------------------------------
-    .zip(folder_name = dir.output.perPFG.perStrata
-         , list_files = raster.perPFG.perStrata
-         , nb_cores = opt.no_CPU)
+    ## ------------------------------------------------------------------------
+    
+    cat("\n> Done!\n")
+    cat("\n")
     
     return(list(tab = mat.valid_list, plot = plot_list))
   } ## END loop on abs.simulParams

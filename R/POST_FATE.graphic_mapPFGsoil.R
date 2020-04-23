@@ -91,7 +91,7 @@
 ##' 
 ##' @export
 ##' 
-##' @importFrom foreach foreach
+##' @importFrom foreach foreach %do%
 ##' @importFrom raster raster stack as.data.frame
 ##' rasterToPoints xyFromCell
 ##' @importFrom grid unit

@@ -1,20 +1,20 @@
 ### HEADER #####################################################################
 ##' @title Create relative abundance maps for each Plant Functional Group for 
-##' one (or several) specific year of a \code{FATE-HD} simulation
+##' one (or several) specific year of a \code{FATE} simulation
 ##' 
 ##' @name POST_FATE.relativeAbund
 ##'
 ##' @author Maya Guéguen
 ##' 
 ##' @description This script is designed to produce raster maps of PFG 
-##' simulated relative abundances for one (or several) specific \code{FATE-HD} 
+##' simulated relative abundances for one (or several) specific \code{FATE} 
 ##' simulation year.
 ##'              
 ##' @param name.simulation a \code{string} corresponding to the main directory 
-##' or simulation name of the \code{FATE-HD} simulation
-##' @param file.simulParam default \code{NULL}. A \code{string} corresponding to 
-##' the name of a parameter file that will be contained into the 
-##' \code{PARAM_SIMUL} folder of the \code{FATE-HD} simulation
+##' or simulation name of the \code{FATE} simulation
+##' @param file.simulParam default \code{NULL}. \cr A \code{string} 
+##' corresponding to the name of a parameter file that will be contained into 
+##' the \code{PARAM_SIMUL} folder of the \code{FATE} simulation
 ##' @param years an \code{integer}, or a \code{vector} of \code{integer}, 
 ##' corresponding to the simulation year(s) that will be used to extract PFG 
 ##' abundance maps
@@ -25,7 +25,7 @@
 ##' 
 ##' @details 
 ##' 
-##' This function allows to obtain, for a specific \code{FATE-HD} simulation and 
+##' This function allows to obtain, for a specific \code{FATE} simulation and 
 ##' a specific parameter file within this simulation, \strong{raster maps of PFG 
 ##' relative abundance}. \cr \cr
 ##' 
@@ -241,17 +241,7 @@ POST_FATE.relativeAbund = function(
     no_years = length(years)
     
     ## UNZIP the raster saved -------------------------------------------------
-    raster.perPFG.allStrata = grep(paste0("Abund_YEAR_", years, "_", collapse = "|")
-                                   , list.files(dir.output.perPFG.allStrata
-                                                , full.names = TRUE)
-                                   , value = TRUE)
-    if (length(raster.perPFG.allStrata) == 0)
-    {
-      stop(paste0("Missing data!\n The folder "
-                  , dir.output.perPFG.allStrata
-                  , " does not contain adequate files"))
-    }
-
+    raster.perPFG.allStrata = .getRasterNames(years, "allStrata", "ABUND")
     .unzip(folder_name = dir.output.perPFG.allStrata
            , list_files = raster.perPFG.allStrata
            , nb_cores = opt.no_CPU)
@@ -279,16 +269,6 @@ POST_FATE.relativeAbund = function(
       {
         file_name = paste0(file_name, ".asc")
       }
-      # if (length(which(file.exists(file_name))) == 0)
-      # {
-      #   stop(paste0("Missing data!\n The names of PFG extracted from files within "
-      #               , name.simulation, "/DATA/PFGS/SUCC/ : "
-      #               , paste0("\n", PFG, collapse = "\n")
-      #               , "\n is different from the files contained in "
-      #               , dir.output.perPFG.allStrata
-      #               , "They should be : "
-      #               , paste0("\n", file_name, collapse = "\n")))
-      # }
       gp = PFG[which(file.exists(file_name))]
       file_name = file_name[which(file.exists(file_name))]
       

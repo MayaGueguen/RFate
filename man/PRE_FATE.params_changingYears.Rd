@@ -2,7 +2,7 @@
 % Please edit documentation in R/PRE_FATE.params_changingYears.R
 \name{PRE_FATE.params_changingYears}
 \alias{PRE_FATE.params_changingYears}
-\title{Create \emph{SCENARIO} parameter files for a \code{FATE-HD}
+\title{Create \emph{SCENARIO} parameter files for a \code{FATE}
 simulation}
 \usage{
 PRE_FATE.params_changingYears(
@@ -14,7 +14,7 @@ PRE_FATE.params_changingYears(
 }
 \arguments{
 \item{name.simulation}{a \code{string} corresponding to the main directory 
-or simulation name of the \code{FATE-HD} simulation}
+or simulation name of the \code{FATE} simulation}
 
 \item{type.changing}{a \code{string} to choose the concerned module :
 \itemize{
@@ -62,7 +62,7 @@ maps should be changed ; 2) filenames corresponding to the new simulation
 maps to be used.
 }
 \details{
-Several modules of the \code{FATE-HD} software allow the user to simulate 
+Several modules of the \code{FATE} software allow the user to simulate 
 changes over time :
 
 \describe{

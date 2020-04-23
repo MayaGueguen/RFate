@@ -1,5 +1,5 @@
 ### HEADER #####################################################################
-##' @title Create \emph{SOIL} parameter files for a \code{FATE-HD} simulation
+##' @title Create \emph{SOIL} parameter files for a \code{FATE} simulation
 ##' 
 ##' @name PRE_FATE.params_PFGsoil
 ##'
@@ -7,10 +7,10 @@
 ##' 
 ##' @description This script is designed to create parameter files containing 
 ##' soil contribution and tolerance for each PFG (one file for each of them) 
-##' used in the soil module of \code{FATE-HD}.
+##' used in the soil module of \code{FATE}.
 ##'              
 ##' @param name.simulation a \code{string} corresponding to the main directory 
-##' or simulation name of the \code{FATE-HD} simulation 
+##' or simulation name of the \code{FATE} simulation 
 ##' @param mat.PFG.soil a \code{data.frame} with 3 to 7 columns : \cr 
 ##' \itemize{
 ##'   \item \code{PFG},

@@ -65,5 +65,5 @@
                          , text.to.paste)
   
   cat(text.to.paste, sep = "", file = params.file, append = FALSE)
-  message(paste0("\n The parameter file ", params.file, " has been successfully created !\n"))
+  message(paste0("The parameter file ", params.file, " has been successfully created !"))
 }

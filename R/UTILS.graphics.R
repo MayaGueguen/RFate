@@ -90,6 +90,11 @@
                        , flag = "DO_SOIL_COMPETITION"
                        , flag.split = " "
                        , is.num = TRUE)
+  doHabsuit <<- .getParam(params.lines = paste0(sub(basename(name.simulation), "", name.simulation)
+                                                , file.globalParam)
+                          , flag = "DO_HAB_SUITABILITY"
+                          , flag.split = " "
+                          , is.num = TRUE)
 }
 
 #################################################################################################
@@ -120,5 +125,41 @@
                  , legend.background = element_rect(fill = "transparent", colour = NA)
                  , legend.box.background = element_rect(fill = "transparent", colour = NA)
                  , legend.key = element_rect(fill = "transparent", colour = NA)))
+}
+
+
+#################################################################################################
+.getRasterNames = function(years
+                           , id.strata ## perStrata, allStrata
+                           , id.type ## ABUND, ABUND_REL, BIN
+)
+{
+  type.pattern = switch(as.character(id.type)
+                        , "ABUND" = "Abund"
+                        , "ABUND_REL" = "Abund_relative"
+                        , "BIN" = "Binary")
+  type.folder = switch(as.character(id.type)
+                       , "ABUND" = ""
+                       , "ABUND_REL" = ".REL"
+                       , "BIN" = ".BIN")
+  dir.name = paste0("dir.output.perPFG.", id.strata, type.folder)
+  
+  if (length(years) > 0)
+  {
+    years = paste0(years, "_")
+  }
+  
+  raster.names = grep(paste0(type.pattern, "_YEAR_", years, collapse = "|")
+                      , list.files(get(dir.name))
+                      , value = TRUE)
+  if (length(raster.names) == 0)
+  {
+    stop(paste0("Missing data!\n The folder "
+                , get(dir.name)
+                , " does not contain adequate files"))
+  } else
+  {
+    return(raster.names)
+  }
 }
 

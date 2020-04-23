@@ -45,7 +45,7 @@ functional traits given in \code{mat.traits} :
 The information is written in \file{PRE_FATE_PFG_TRAITS_TABLE.csv} and 
 \file{PRE_FATE_CLUSTERING_STEP_3D_PFGtraitsValues.pdf} files. \cr
 This \code{.csv} file can be used to build parameter files to run a 
-\code{FATE-HD} simulation (e.g. \code{\link{PRE_FATE.params_PFGsuccession}}).
+\code{FATE} simulation (e.g. \code{\link{PRE_FATE.params_PFGsuccession}}).
 }
 \description{
 This script is designed to calculate PFG traits values based 
@@ -68,7 +68,7 @@ below :}
 \describe{
   \item{\code{maturity}, \code{longevity}}{to visualize the difference 
   between these two values, for the maturity time has an impact on the 
-  fecundity of the PFG within \code{FATE-HD} (see XXX, CORE module) \cr
+  fecundity of the PFG within \code{FATE} (see XXX, CORE module) \cr
   \emph{If there is NO values for longevity within one PFG, and some 
   maturity values are available, some values might be inferred as 
   \eqn{\text{maturity} * 2}. If there is NO values for maturity within 
@@ -77,11 +77,11 @@ below :}
   }
   \item{\code{height}, \code{light}}{to visualize the PFG light 
   preference, and help decide and understand the choice of the height 
-  limits of strata in \code{FATE-HD} (see XXX, LIGHT competition module)}
+  limits of strata in \code{FATE} (see XXX, LIGHT competition module)}
   \item{\code{soil_contrib}, \cr \code{soil_tol_min}, \cr 
   \code{soil_tol_max}}{to visualize the PFG soil preference, and help 
   parameterize the global parameters of the soil competition module 
-  within \code{FATE-HD} (see XXX, SOIL competition module)}
+  within \code{FATE} (see XXX, SOIL competition module)}
   \item{\cr \code{soil_contrib}, \cr \code{soil_tolerance}}{same as the 
   previous one, but \code{soil_tol_min} and \code{soil_tol_max} values 
   are obtained by adding or removing \code{soil_tolerance} to 

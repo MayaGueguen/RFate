@@ -1,32 +1,32 @@
 ### HEADER #####################################################################
 ##' @title Create a graphical representation of the evolution of PFG coverage
-##' and abundance through time for a \code{FATE-HD} simulation
+##' and abundance through time for a \code{FATE} simulation
 ##' 
 ##' @name POST_FATE.graphic_evolutionCoverage
 ##'
 ##' @author Maya Guéguen
 ##' 
 ##' @description This script is designed to produce two graphical 
-##' representations for a \code{FATE-HD} simulation : 1) the evolution through
+##' representations for a \code{FATE} simulation : 1) the evolution through
 ##' time of the space occupation of each PFG ; 2) the evolution through time
 ##' of the abundance of each PFG. These graphics represent both the evolution 
 ##' over the whole area. 
 ##'              
 ##' @param name.simulation a \code{string} corresponding to the main directory 
-##' or simulation name of the \code{FATE-HD} simulation
-##' @param file.simulParam default \code{NULL}. A \code{string} corresponding to 
-##' the name of a parameter file that will be contained into the 
-##' \code{PARAM_SIMUL} folder of the \code{FATE-HD} simulation
+##' or simulation name of the \code{FATE} simulation
+##' @param file.simulParam default \code{NULL}. \cr A \code{string} 
+##' corresponding to the name of a parameter file that will be contained into 
+##' the \code{PARAM_SIMUL} folder of the \code{FATE} simulation
 ##' @param opt.abund_fixedScale default \code{TRUE}. If \code{FALSE}, the 
 ##' ordinate scale will be adapted for each PFG for the graphical representation 
 ##' of the  evolution of abundances through time
-##' @param opt.doPlot (\emph{optional}) default \code{TRUE}. \cr If TRUE, 
+##' @param opt.doPlot (\emph{optional}) default \code{TRUE}. \cr If \code{TRUE}, 
 ##' plot(s) will be processed, otherwise only the calculation and reorganization 
 ##' of outputs will occur, be saved and returned
 ##' 
 ##' @details 
 ##' 
-##' This function allows to obtain, for a specific \code{FATE-HD} simulation and 
+##' This function allows to obtain, for a specific \code{FATE} simulation and 
 ##' a specific parameter file within this simulation, two preanalytical 
 ##' graphics : 
 ##' 
@@ -38,7 +38,7 @@
 ##'   }
 ##'   \item{the evolution of \strong{total abundance} of each plant functional 
 ##'   group through simulation time, \cr with \emph{total abundance} being the 
-##'   sum over the whole studied area of the PFG abundances (\code{FATE-HD} 
+##'   sum over the whole studied area of the PFG abundances (\code{FATE} 
 ##'   \emph{arbitrary unit})
 ##'   }
 ##' }

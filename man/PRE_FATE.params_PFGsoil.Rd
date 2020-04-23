@@ -2,7 +2,7 @@
 % Please edit documentation in R/PRE_FATE.params_PFGsoil.R
 \name{PRE_FATE.params_PFGsoil}
 \alias{PRE_FATE.params_PFGsoil}
-\title{Create \emph{SOIL} parameter files for a \code{FATE-HD} simulation}
+\title{Create \emph{SOIL} parameter files for a \code{FATE} simulation}
 \usage{
 PRE_FATE.params_PFGsoil(
   name.simulation,
@@ -13,7 +13,7 @@ PRE_FATE.params_PFGsoil(
 }
 \arguments{
 \item{name.simulation}{a \code{string} corresponding to the main directory 
-or simulation name of the \code{FATE-HD} simulation}
+or simulation name of the \code{FATE} simulation}
 
 \item{mat.PFG.soil}{a \code{data.frame} with 3 to 7 columns : \cr 
 \itemize{
@@ -79,7 +79,7 @@ folder \code{name.simulation/DATA/PFGS/SOIL/opt.folder.name/}.
 \description{
 This script is designed to create parameter files containing 
 soil contribution and tolerance for each PFG (one file for each of them) 
-used in the soil module of \code{FATE-HD}.
+used in the soil module of \code{FATE}.
 }
 \details{
 The \strong{soil module} allows the user to add the effect of 

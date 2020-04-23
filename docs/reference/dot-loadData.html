@@ -46,10 +46,10 @@ containing :
   PNE_PFGelements to create the Plant Functional Groups (PFG) 
   over the Ecrins National Park (PNE) 
   (Boulangeat et al. 2012 GCB)
-  PNE_PARAMall necessary files to build the FATE-HD 
+  PNE_PARAMall necessary files to build the FATE 
   simulation folder as well as the parameter files 
   (Boulangeat et al. 2014 GCB)
-  PNE_RESULTSresults obtained from outputs of FATE-HD 
+  PNE_RESULTSresults obtained from outputs of FATE 
   simulation 
   (Boulangeat et al. 2014 GCB)
 
@@ -210,10 +210,10 @@ containing :</p>
   <dt>PNE_PFG</dt><dd><p>elements to create the Plant Functional Groups (PFG) 
   over the Ecrins National Park (PNE) <br />
   (<em><a href='https://mayagueguen.github.io/FATE-WEBSITE/papers/Boulangeat_2012_GCB.pdf'>Boulangeat et al. 2012 GCB</a></em>)</p></dd>
-  <dt>PNE_PARAM</dt><dd><p>all necessary files to build the <code>FATE-HD</code> 
+  <dt>PNE_PARAM</dt><dd><p>all necessary files to build the <code>FATE</code> 
   simulation folder as well as the parameter files <br />
   (<em><a href='https://mayagueguen.github.io/FATE-WEBSITE/papers/Boulangeat_2014_GCB.pdf'>Boulangeat et al. 2014 GCB</a></em>)</p></dd>
-  <dt>PNE_RESULTS</dt><dd><p>results obtained from outputs of <code>FATE-HD</code> 
+  <dt>PNE_RESULTS</dt><dd><p>results obtained from outputs of <code>FATE</code> 
   simulation <br />
   (<em><a href='https://mayagueguen.github.io/FATE-WEBSITE/papers/Boulangeat_2014_GCB.pdf'>Boulangeat et al. 2014 GCB</a></em>)</p></dd>
 
@@ -334,12 +334,12 @@ Group :</p>
 
 <p><strong><br /><br /> PNE_PARAM</strong></p>
 <p>A <code>list</code> object with 13 elements to help building the simulation 
-files and folders to run a <code>FATE-HD</code> simulation :</p>  
+files and folders to run a <code>FATE</code> simulation :</p>  
 <p></p><dl'>
     <dt>masks</dt><dd><p>a <code><a href='https://rdrr.io/pkg/raster/man/stack.html'>stack</a></code> object of dimension 
     <code>782 x 619</code> with a resolution of <code>100m</code> and Lambers (lcc) 
     projection, containing 7 mask layers with binary values (0 or 1) to be 
-    used in a <code>FATE-HD</code> simulation :
+    used in a <code>FATE</code> simulation :
     <ul>
 <li><p><strong>maskEcrins</strong> : simulation map, where occurs succession</p></li>
 <li><p><strong>noDisturb</strong> : perturbation map, when there is none</p></li>
@@ -357,7 +357,7 @@ files and folders to run a <code>FATE-HD</code> simulation :</p>
     projection, containing 24 layers with probability values (between 0 and 
     1) representing Habitat Suitability for initialization phase and 
     <em>equilibrium</em> or <em>current</em> time (0) for each PFG 
-    and to be used in a <code>FATE-HD</code> simulation. <br />
+    and to be used in a <code>FATE</code> simulation. <br />
     These maps are coming from Species Distribution Models and methods to 
     obtain them are described in Supplementary Materials of 
     <em><a href='https://mayagueguen.github.io/FATE-WEBSITE/papers/Boulangeat_2014_GCB.pdf'>Boulangeat et al. 2014 GCB</a></em>.</p></dd>
@@ -386,7 +386,7 @@ files and folders to run a <code>FATE-HD</code> simulation :</p>
     to be used with the <code><a href='PRE_FATE.params_PFGdisturbance.html'>PRE_FATE.params_PFGdisturbance</a></code> 
     function <br /></p></dd>
     <dt>global</dt><dd><p>a <code>vector</code> of length <code>18</code> <br />
-    containing global parameter values for a <code>FATE-HD</code> simulation in 
+    containing global parameter values for a <code>FATE</code> simulation in 
     the PNE <br />
     to be used with the <code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code> 
     function <br /></p></dd>
@@ -399,54 +399,54 @@ files and folders to run a <code>FATE-HD</code> simulation :</p>
 <dl'>
   <dt>evaluation</dt><dd><p>a <code>data.frame</code> of dimension <code>24 x 11</code> <br />
     containing statistical metrics to evaluate the predictive quality of 
-    both Habitat Suitability models (HS) and <code>FATE-HD</code> simulation 
+    both Habitat Suitability models (HS) and <code>FATE</code> simulation 
     outputs <br />
     <ul>
 <li><p><strong>PFG</strong> : name of Plant Functional Group</p></li>
 <li><p><strong>nb.obs.absences</strong> : number of observed absences</p></li>
 <li><p><strong>nb.obs.presences</strong> : number of observed presences</p></li>
 <li><p><strong>specificity.FATE</strong> : proportion of actual negatives that 
-      are correctly identified as such by the <code>FATE-HD</code> model (true 
+      are correctly identified as such by the <code>FATE</code> model (true 
       negative rate)</p></li>
 <li><p><strong>specificity.HS</strong> : proportion of actual negatives that 
       are correctly identified as such by the Habitat Suitability model 
       (true negative rate)</p></li>
 <li><p><strong>sensitivity.FATE</strong> : proportion of actual positives that 
-      are correctly identified as such by the <code>FATE-HD</code> model (true 
+      are correctly identified as such by the <code>FATE</code> model (true 
       positive rate)</p></li>
 <li><p><strong>sensitivity.HS</strong> : proportion of actual positives that 
       are correctly identified as such by the Habitat Suitability model 
       (true positive rate)</p></li>
-<li><p><strong>TSS.FATE</strong> : True Skill Statistic for <code>FATE-HD</code> 
+<li><p><strong>TSS.FATE</strong> : True Skill Statistic for <code>FATE</code> 
       model</p></li>
 <li><p><strong>TSS.HS</strong> : True Skill Statistic for Habitat Suitability 
       model</p></li>
 <li><p><strong>error.rate.FATE</strong> : percentage of bad predictions for 
-      <code>FATE-HD</code> model</p></li>
+      <code>FATE</code> model</p></li>
 <li><p><strong>error.rate.HS</strong> : percentage of bad predictions for 
       Habitat Suitability model</p></li>
 </ul></p></dd>
   <dt>abund_str.equilibrium</dt><dd><p>a <code><a href='https://rdrr.io/pkg/raster/man/stack.html'>stack</a></code> object of 
   dimension <code>782 x 619</code> with a resolution of <code>100m</code> and Lambers 
-  (lcc) projection, containing 120 layers representing <code>FATE-HD</code> 
+  (lcc) projection, containing 120 layers representing <code>FATE</code> 
   <strong>abundances for year 800 of initialization phase</strong> (= 
   <em>equilibrium</em> or <em>current</em> time). <br />
   Maps are per PFG and per height stratum.</p></dd>
   <dt>forest_cover.init</dt><dd><p>a <code><a href='https://rdrr.io/pkg/raster/man/stack.html'>stack</a></code> object of 
   dimension <code>782 x 619</code> with a resolution of <code>100m</code> and Lambers 
-  (lcc) projection, containing 16 layers representing <code>FATE-HD</code> 
+  (lcc) projection, containing 16 layers representing <code>FATE</code> 
   <strong>relative forest cover through initialization phase (from year 50 
   to 800)</strong>. <br />
   Maps are summing all PFGs through all height strata above 1.5 meters. <br /></p></dd>
   <dt>forest_cover <br /> CC_BAU</dt><dd><p>a <code><a href='https://rdrr.io/pkg/raster/man/stack.html'>stack</a></code> object of 
   dimension <code>782 x 619</code> with a resolution of <code>100m</code> and Lambers 
-  (lcc) projection, containing 14 layers representing <code>FATE-HD</code> 
+  (lcc) projection, containing 14 layers representing <code>FATE</code> 
   <strong>relative forest cover through Climate Change (CC) + 
   Business-As-Usual (BAU) scenario (from year 850 to 1500)</strong>. <br />
   Maps are summing all PFGs through all height strata above 1.5 meters. <br /></p></dd>
   <dt>forest_cover<br /> CC_Abandon</dt><dd><p>a <code><a href='https://rdrr.io/pkg/raster/man/stack.html'>stack</a></code> object of 
   dimension <code>782 x 619</code> with a resolution of <code>100m</code> and Lambers 
-  (lcc) projection, containing 14 layers representing <code>FATE-HD</code> 
+  (lcc) projection, containing 14 layers representing <code>FATE</code> 
   <strong>relative forest cover through Climate Change (CC) + Abandonment 
   (BAU) scenario (from year 850 to 1500)</strong>. <br />
   Maps are summing all PFGs through all height strata above 1.5 meters. <br /></p></dd>
@@ -469,7 +469,7 @@ files and folders to run a <code>FATE-HD</code> simulation :</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

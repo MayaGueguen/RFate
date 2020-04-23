@@ -3,7 +3,7 @@
 \name{POST_FATE.relativeAbund}
 \alias{POST_FATE.relativeAbund}
 \title{Create relative abundance maps for each Plant Functional Group for 
-one (or several) specific year of a \code{FATE-HD} simulation}
+one (or several) specific year of a \code{FATE} simulation}
 \usage{
 POST_FATE.relativeAbund(
   name.simulation,
@@ -14,11 +14,11 @@ POST_FATE.relativeAbund(
 }
 \arguments{
 \item{name.simulation}{a \code{string} corresponding to the main directory 
-or simulation name of the \code{FATE-HD} simulation}
+or simulation name of the \code{FATE} simulation}
 
-\item{file.simulParam}{default \code{NULL}. A \code{string} corresponding to 
-the name of a parameter file that will be contained into the 
-\code{PARAM_SIMUL} folder of the \code{FATE-HD} simulation}
+\item{file.simulParam}{default \code{NULL}. \cr A \code{string} 
+corresponding to the name of a parameter file that will be contained into 
+the \code{PARAM_SIMUL} folder of the \code{FATE} simulation}
 
 \item{years}{an \code{integer}, or a \code{vector} of \code{integer}, 
 corresponding to the simulation year(s) that will be used to extract PFG 
@@ -37,11 +37,11 @@ One result folder is created :
 }
 \description{
 This script is designed to produce raster maps of PFG 
-simulated relative abundances for one (or several) specific \code{FATE-HD} 
+simulated relative abundances for one (or several) specific \code{FATE} 
 simulation year.
 }
 \details{
-This function allows to obtain, for a specific \code{FATE-HD} simulation and 
+This function allows to obtain, for a specific \code{FATE} simulation and 
 a specific parameter file within this simulation, \strong{raster maps of PFG 
 relative abundance}. \cr \cr
 

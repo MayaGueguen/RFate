@@ -1,5 +1,5 @@
 ### HEADER #####################################################################
-##' @title Create \emph{DROUGHT} parameter files for a \code{FATE-HD}
+##' @title Create \emph{DROUGHT} parameter files for a \code{FATE}
 ##' simulation
 ##' 
 ##' @name PRE_FATE.params_PFGdrought
@@ -8,10 +8,10 @@
 ##' 
 ##' @description This script is designed to create parameter files containing 
 ##' response to drought disturbance parameters for each PFG (one file for each 
-##' of them) used in the drought disturbance module of \code{FATE-HD}.
+##' of them) used in the drought disturbance module of \code{FATE}.
 ##'              
 ##' @param name.simulation a \code{string} corresponding to the main directory 
-##' or simulation name of the \code{FATE-HD} simulation
+##' or simulation name of the \code{FATE} simulation
 ##' @param mat.PFG.dist (\emph{optional}) \cr 
 ##' a \code{data.frame} with 5 columns : \cr 
 ##' \code{PFG}, \code{type}, \code{maturity}, \code{longevity}, 
