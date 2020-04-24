@@ -321,7 +321,6 @@ PRE_FATE.params_PFGdrought = function(
     }
     if (sum(colnames(mat.PFG.tol) == "responseStage") == 1)
     {
-      .testParam_notNum.m("mat.PFG.tol$responseStage", mat.PFG.tol$responseStage)
       .testParam_NAvalues.m("mat.PFG.tol$responseStage", mat.PFG.tol$responseStage)
       .testParam_notInValues.m("mat.PFG.tol$responseStage", mat.PFG.tol$responseStage, 0:10)
       if (sum(colnames(mat.PFG.tol) == "breakAge") == 1)
@@ -333,10 +332,8 @@ PRE_FATE.params_PFGdrought = function(
       }
       if (sum(colnames(mat.PFG.tol) == "killedIndiv") == 1)
       {
-        .testParam_notNum.m("mat.PFG.tol$killedIndiv", mat.PFG.tol$killedIndiv)
         .testParam_NAvalues.m("mat.PFG.tol$killedIndiv", mat.PFG.tol$killedIndiv)
         .testParam_notInValues.m("mat.PFG.tol$killedIndiv", mat.PFG.tol$killedIndiv, 0:10)
-        .testParam_notNum.m("mat.PFG.tol$resproutIndiv", mat.PFG.tol$resproutIndiv)
         .testParam_NAvalues.m("mat.PFG.tol$resproutIndiv", mat.PFG.tol$resproutIndiv)
         .testParam_notInValues.m("mat.PFG.tol$resproutIndiv", mat.PFG.tol$resproutIndiv, 0:10)
       }

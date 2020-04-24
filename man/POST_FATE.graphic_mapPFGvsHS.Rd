@@ -10,8 +10,7 @@ POST_FATE.graphic_mapPFGvsHS(
   name.simulation,
   file.simulParam = NULL,
   years,
-  opt.stratum = "all",
-  opt.no_CPU = 1
+  opt.stratum = "all"
 )
 }
 \arguments{
@@ -28,10 +27,6 @@ binary maps}
 
 \item{opt.stratum}{(\emph{optional}) default \code{all}. \cr The stratum 
 number from which to extract PFG binary maps}
-
-\item{opt.no_CPU}{(\emph{optional}) default \code{1}. \cr The number of 
-resources that can be used to parallelize the \code{unzip/zip} of raster 
-files}
 }
 \value{
 A \code{list} containing one or several (one for each simulation 
@@ -80,18 +75,15 @@ and that the folders \code{BIN_perPFG_allStrata} and
 \dontrun{                      
 POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
                              , file.simulParam = "Simul_parameters_V1.txt"
-                             , years = 850
-                             , opt.no_CPU = 1)
+                             , years = 850)
                                     
 POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
                              , file.simulParam = "Simul_parameters_V1.txt"
-                             , years = c(850, 950)
-                             , opt.no_CPU = 1)
+                             , years = c(850, 950))
                                     
 POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
                              , file.simulParam = "Simul_parameters_V1.txt"
                              , years = 850
-                             , opt.no_CPU = 1
                              , opt.stratum = 2)
 }
                                     

@@ -207,8 +207,7 @@ suitability and simulated occurrences for one (or several) specific
   <span class='no'>name.simulation</span>,
   <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='no'>years</span>,
-  <span class='kw'>opt.stratum</span> <span class='kw'>=</span> <span class='st'>"all"</span>,
-  <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>
+  <span class='kw'>opt.stratum</span> <span class='kw'>=</span> <span class='st'>"all"</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -235,12 +234,6 @@ binary maps</p></td>
       <th>opt.stratum</th>
       <td><p>(<em>optional</em>) default <code>all</code>. <br /> The stratum 
 number from which to extract PFG binary maps</p></td>
-    </tr>
-    <tr>
-      <th>opt.no_CPU</th>
-      <td><p>(<em>optional</em>) default <code>1</code>. <br /> The number of 
-resources that can be used to parallelize the <code>unzip/zip</code> of raster 
-files</p></td>
     </tr>
     </table>
 
@@ -288,18 +281,15 @@ and that the folders <code>BIN_perPFG_allStrata</code> and
 <span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'>POST_FATE.graphic_mapPFGvsHS</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
                              , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
-                             , <span class='kw'>years</span> <span class='kw'>=</span> <span class='fl'>850</span>
-                             , <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+                             , <span class='kw'>years</span> <span class='kw'>=</span> <span class='fl'>850</span>)
 
 <span class='fu'>POST_FATE.graphic_mapPFGvsHS</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
                              , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
-                             , <span class='kw'>years</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>850</span>, <span class='fl'>950</span>)
-                             , <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+                             , <span class='kw'>years</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>850</span>, <span class='fl'>950</span>))
 
 <span class='fu'>POST_FATE.graphic_mapPFGvsHS</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
                              , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
                              , <span class='kw'>years</span> <span class='kw'>=</span> <span class='fl'>850</span>
-                             , <span class='kw'>opt.no_CPU</span> <span class='kw'>=</span> <span class='fl'>1</span>
                              , <span class='kw'>opt.stratum</span> <span class='kw'>=</span> <span class='fl'>2</span>)
 }</pre>
   </div>

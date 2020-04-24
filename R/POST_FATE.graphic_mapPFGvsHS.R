@@ -21,9 +21,6 @@
 ##' binary maps
 ##' @param opt.stratum (\emph{optional}) default \code{all}. \cr The stratum 
 ##' number from which to extract PFG binary maps
-##' @param opt.no_CPU (\emph{optional}) default \code{1}. \cr The number of 
-##' resources that can be used to parallelize the \code{unzip/zip} of raster 
-##' files
 ##' 
 ##' 
 ##' @details 
@@ -76,18 +73,15 @@
 ##' \dontrun{                      
 ##' POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
 ##'                              , file.simulParam = "Simul_parameters_V1.txt"
-##'                              , years = 850
-##'                              , opt.no_CPU = 1)
+##'                              , years = 850)
 ##'                                     
 ##' POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
 ##'                              , file.simulParam = "Simul_parameters_V1.txt"
-##'                              , years = c(850, 950)
-##'                              , opt.no_CPU = 1)
+##'                              , years = c(850, 950))
 ##'                                     
 ##' POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
 ##'                              , file.simulParam = "Simul_parameters_V1.txt"
 ##'                              , years = 850
-##'                              , opt.no_CPU = 1
 ##'                              , opt.stratum = 2)
 ##' }
 ##'                                     
@@ -116,7 +110,6 @@ POST_FATE.graphic_mapPFGvsHS = function(
   , file.simulParam = NULL
   , years
   , opt.stratum = "all"
-  , opt.no_CPU = 1
 ){
   
   #############################################################################

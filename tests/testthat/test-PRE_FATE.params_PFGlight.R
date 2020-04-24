@@ -95,36 +95,17 @@ test_that("PRE_FATE.params_PFGlight gives error with wrong data : mat.PFG.light"
                                         , mat.PFG.light = data.frame(PFG = c(1,2), type = c("H",NA)))
                , "`mat.PFG.light$type` must be either `H`, `C` or `P`", fixed = TRUE)
   
-  ## TEST mat.PFG.light$light_need : numeric and correct values
-  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
-                                        , mat.PFG.light = data.frame(PFG = 1, type = "H", light_need = NA))
-               , "`mat.PFG.light$light_need` must contain numeric values", fixed = TRUE)
-  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
-                                        , mat.PFG.light = data.frame(PFG = 1, type = "H", light_need = "a"))
-               , "`mat.PFG.light$light_need` must contain numeric values", fixed = TRUE)
-  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
-                                        , mat.PFG.light = data.frame(PFG = 1, type = "H", light_need = factor(1)))
-               , "`mat.PFG.light$light_need` must contain numeric values", fixed = TRUE)
   
   ## TEST mat.PFG.light$light_need : no NA values
   expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
                                         , mat.PFG.light = data.frame(PFG = c(1,2), type = "H", light_need = c(3,NA)))
+               , "`mat.PFG.light$light_need` must be either `0`, `1`, `2`, `3`, `4` or `5`", fixed = TRUE)
+  
+  ## TEST mat.PFG.light$light_need : correct values
+  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
+                                        , mat.PFG.light = data.frame(PFG = c(1,2), type = "H", light_need = c(3,NA)))
                , "`mat.PFG.light$light_need` must not contain NA values", fixed = TRUE)
   
-  
-  ## TEST mat.PFG.light$active_germ_low : numeric values
-  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
-                                        , mat.PFG.light = data.frame(PFG = 1, active_germ_low = NA
-                                                                     , active_germ_medium = 1, active_germ_high = 1))
-               , "`mat.PFG.light$active_germ_low` must contain numeric values", fixed = TRUE)
-  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
-                                        , mat.PFG.light = data.frame(PFG = 1, active_germ_low = "a"
-                                                                     , active_germ_medium = 1, active_germ_high = 1))
-               , "`mat.PFG.light$active_germ_low` must contain numeric values", fixed = TRUE)
-  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
-                                        , mat.PFG.light = data.frame(PFG = 1, active_germ_low = factor(1)
-                                                                     , active_germ_medium = 1, active_germ_high = 1))
-               , "`mat.PFG.light$active_germ_low` must contain numeric values", fixed = TRUE)
   
   ## TEST mat.PFG.light$active_germ_low : no NA values
   expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
@@ -144,19 +125,6 @@ test_that("PRE_FATE.params_PFGlight gives error with wrong data : mat.PFG.light"
                , "`mat.PFG.light$active_germ_low` must be either `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9` or `10`"
                , fixed = TRUE)  
   
-  ## TEST mat.PFG.light$active_germ_medium : numeric values
-  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
-                                        , mat.PFG.light = data.frame(PFG = 1, active_germ_low = 1
-                                                                     , active_germ_medium = NA, active_germ_high = 1))
-               , "`mat.PFG.light$active_germ_medium` must contain numeric values", fixed = TRUE)
-  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
-                                        , mat.PFG.light = data.frame(PFG = 1, active_germ_low = 1
-                                                                     , active_germ_medium = "a", active_germ_high = 1))
-               , "`mat.PFG.light$active_germ_medium` must contain numeric values", fixed = TRUE)
-  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
-                                        , mat.PFG.light = data.frame(PFG = 1, active_germ_low = 1
-                                                                     , active_germ_medium = factor(1), active_germ_high = 1))
-               , "`mat.PFG.light$active_germ_medium` must contain numeric values", fixed = TRUE)
   
   ## TEST mat.PFG.light$active_germ_medium : no NA values
   expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
@@ -176,19 +144,6 @@ test_that("PRE_FATE.params_PFGlight gives error with wrong data : mat.PFG.light"
                , "`mat.PFG.light$active_germ_medium` must be either `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9` or `10`"
                , fixed = TRUE)  
   
-  ## TEST mat.PFG.light$active_germ_high : numeric values
-  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
-                                        , mat.PFG.light = data.frame(PFG = 1, active_germ_low = 1
-                                                                     , active_germ_medium = 1, active_germ_high = NA))
-               , "`mat.PFG.light$active_germ_high` must contain numeric values", fixed = TRUE)
-  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
-                                        , mat.PFG.light = data.frame(PFG = 1, active_germ_low = 1
-                                                                     , active_germ_medium = 1, active_germ_high = "a"))
-               , "`mat.PFG.light$active_germ_high` must contain numeric values", fixed = TRUE)
-  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
-                                        , mat.PFG.light = data.frame(PFG = 1, active_germ_low = 1
-                                                                     , active_germ_medium = 1, active_germ_high = factor(1)))
-               , "`mat.PFG.light$active_germ_high` must contain numeric values", fixed = TRUE)
   
   ## TEST mat.PFG.light$active_germ_high : no NA values
   expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
@@ -313,15 +268,6 @@ test_that("PRE_FATE.params_PFGlight gives error with wrong data : mat.PFG.tol", 
                , "`mat.PFG.tol$resources` must be either `Low`, `Medium` or `High`"
                , fixed = TRUE)
   
-  ## TEST mat.PFG.tol$tolerance : numeric values
-  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
-                                        , mat.PFG.light = data.frame(PFG = 1, strategy_ag = "indifferent")
-                                        , mat.PFG.tol = data.frame(PFG = 1, lifeStage = "Germinant", resources = "Low", tolerance = NA))
-               , "`mat.PFG.tol$tolerance` must contain numeric values", fixed = TRUE)
-  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
-                                        , mat.PFG.light = data.frame(PFG = 1, strategy_ag = "indifferent")
-                                        , mat.PFG.tol = data.frame(PFG = 1, lifeStage = "Germinant", resources = "Low", tolerance = factor(1)))
-               , "`mat.PFG.tol$tolerance` must contain numeric values", fixed = TRUE)
   
   ## TEST mat.PFG.tol$tolerance : no NA values
   expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"

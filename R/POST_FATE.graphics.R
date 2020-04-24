@@ -281,7 +281,7 @@ POST_FATE.graphics = function(
         cat("\n")
         res.evolutionCoverage = POST_FATE.graphic_evolutionCoverage(name.simulation = name.simulation
                                                                     , file.simulParam = abs.simulParam
-                                                                    , evol.fixedScale = evol.fixedScale
+                                                                    , opt.fixedScale = evol.fixedScale
                                                                     , opt.doPlot = opt.doPlot)
       }
       if (doFunc.evolPix)
@@ -290,8 +290,8 @@ POST_FATE.graphics = function(
         cat("\n")
         res.evolutionPixels = POST_FATE.graphic_evolutionPixels(name.simulation = name.simulation
                                                                 , file.simulParam = abs.simulParam
-                                                                , evolPix.cells_ID = evolPix.cells_ID
-                                                                , evol.fixedScale = evol.fixedScale
+                                                                , opt.cells_ID = evolPix.cells_ID
+                                                                , opt.fixedScale = evol.fixedScale
                                                                 , opt.doPlot = opt.doPlot)
       }
     }
@@ -318,7 +318,6 @@ POST_FATE.graphics = function(
                                                                 , years = years
                                                                 , mat.PFG.obs = valid.mat.PFG.obs
                                                                 , opt.ras_habitat = opt.ras_habitat
-                                                                , opt.no_CPU = opt.no_CPU
                                                                 , opt.doPlot = opt.doPlot)
       }
       if (doFunc.mapPFGvsHS || doFunc.mapPFG)
@@ -340,8 +339,7 @@ POST_FATE.graphics = function(
         res.mapPFGvsHS = POST_FATE.graphic_mapPFGvsHS(name.simulation = name.simulation
                                                       , file.simulParam = abs.simulParam
                                                       , years = years
-                                                      , opt.stratum = mapPFGvsHS.stratum
-                                                      , opt.no_CPU = opt.no_CPU)
+                                                      , opt.stratum = mapPFGvsHS.stratum)
       }
       
       cat("\n ############## GET SPATIAL PLOTS for a specific year ############## \n")
@@ -352,9 +350,9 @@ POST_FATE.graphics = function(
         res.mapPFG = POST_FATE.graphic_mapPFG(name.simulation = name.simulation
                                               , file.simulParam = abs.simulParam
                                               , years = years
-                                              , mapPFG.stratum_min = mapPFG.stratum_min
-                                              , mapPFG.stratum_max = mapPFG.stratum_max
-                                              , mapPFG.doBinary = mapPFG.doBinary
+                                              , opt.stratum_min = mapPFG.stratum_min
+                                              , opt.stratum_max = mapPFG.stratum_max
+                                              , opt.doBinary = mapPFG.doBinary
                                               , opt.no_CPU = opt.no_CPU
                                               , opt.doPlot = opt.doPlot)
       }
@@ -366,6 +364,7 @@ POST_FATE.graphics = function(
     names.res = c("res.evolutionCoverage"
                   , "res.evolutionPixels"
                   , "res.validation"
+                  , "res.mapPFGvsHS"
                   , "res.mapPFG")
     res = list()
     for(i in names.res)

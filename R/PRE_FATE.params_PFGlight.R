@@ -278,19 +278,15 @@ PRE_FATE.params_PFGlight = function(
     }
     if (sum(colnames(mat.PFG.light) == "light_need") == 1)
     {
-      .testParam_notNum.m("mat.PFG.light$light_need", mat.PFG.light$light_need)
       .testParam_NAvalues.m("mat.PFG.light$light_need", mat.PFG.light$light_need)
       .testParam_notInValues.m("mat.PFG.light$light_need", mat.PFG.light$light_need, 0:5)
     }
     if (sum(colnames(mat.PFG.light) == "active_germ_low") == 1)
     {
-      .testParam_notNum.m("mat.PFG.light$active_germ_low", mat.PFG.light$active_germ_low)
       .testParam_NAvalues.m("mat.PFG.light$active_germ_low", mat.PFG.light$active_germ_low)
       .testParam_notInValues.m("mat.PFG.light$active_germ_low", mat.PFG.light$active_germ_low, 0:10)
-      .testParam_notNum.m("mat.PFG.light$active_germ_medium", mat.PFG.light$active_germ_medium)
       .testParam_NAvalues.m("mat.PFG.light$active_germ_medium", mat.PFG.light$active_germ_medium)
       .testParam_notInValues.m("mat.PFG.light$active_germ_medium", mat.PFG.light$active_germ_medium, 0:10)
-      .testParam_notNum.m("mat.PFG.light$active_germ_high", mat.PFG.light$active_germ_high)
       .testParam_NAvalues.m("mat.PFG.light$active_germ_high", mat.PFG.light$active_germ_high)
       .testParam_notInValues.m("mat.PFG.light$active_germ_high", mat.PFG.light$active_germ_high, 0:10)
     }
@@ -328,7 +324,6 @@ PRE_FATE.params_PFGlight = function(
       {
         .testParam_notInValues.m("mat.PFG.tol$lifeStage", mat.PFG.tol$lifeStage, c("Germinant", "Immature", "Mature"))
         .testParam_notInValues.m("mat.PFG.tol$resources", mat.PFG.tol$resources, c("Low", "Medium", "High"))
-        .testParam_notNum.m("mat.PFG.tol$tolerance", mat.PFG.tol$tolerance)
         .testParam_NAvalues.m("mat.PFG.tol$tolerance", mat.PFG.tol$tolerance)
         .testParam_notInValues.m("mat.PFG.tol$tolerance", mat.PFG.tol$tolerance, 0:10)
       }

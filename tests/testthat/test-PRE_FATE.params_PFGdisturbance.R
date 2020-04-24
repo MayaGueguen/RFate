@@ -288,40 +288,19 @@ test_that("PRE_FATE.params_PFGdisturbance gives error with wrong data : mat.PFG.
                , "`mat.PFG.tol$resproutAge` must not contain NA values", fixed = TRUE)
   
   
-  ## TEST mat.PFG.tol$responseStage : numeric values
-  expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
-                                              , mat.PFG.tol = data.frame(nameDist = 1, PFG = "A", responseStage = NA
-                                                                         , killedIndiv = 1, resproutIndiv = 1))
-               , "`mat.PFG.tol$responseStage` must contain numeric values", fixed = TRUE)
-  expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
-                                              , mat.PFG.tol = data.frame(nameDist = 1, PFG = "A", responseStage = "a"
-                                                                         , killedIndiv = 1, resproutIndiv = 1))
-               , "`mat.PFG.tol$responseStage` must contain numeric values", fixed = TRUE)
-  expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
-                                              , mat.PFG.tol = data.frame(nameDist = 1, PFG = "A", responseStage = factor(1)
-                                                                         , killedIndiv = 1, resproutIndiv = 1))
-               , "`mat.PFG.tol$responseStage` must contain numeric values", fixed = TRUE)
-  
   ## TEST mat.PFG.tol$responseStage : no NA values
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
                                               , mat.PFG.tol = data.frame(nameDist = 1, PFG = "A", responseStage = c(1,NA)
                                                                          , killedIndiv = 1, resproutIndiv = 1))
                , "`mat.PFG.tol$responseStage` must not contain NA values", fixed = TRUE)
   
+  ## TEST mat.PFG.tol$responseStage : correct values
+  expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
+                                              , mat.PFG.tol = data.frame(nameDist = 1, PFG = "A", responseStage = 1.5
+                                                                         , killedIndiv = 1, resproutIndiv = 1))
+               , "`mat.PFG.tol$responseStage` must be either `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9` or `10`"
+               , fixed = TRUE)
   
-  ## TEST mat.PFG.tol$killedIndiv : numeric values
-  expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
-                                              , mat.PFG.tol = data.frame(nameDist = 1, PFG = "A", responseStage = 1
-                                                                         , killedIndiv = NA, resproutIndiv = 1))
-               , "`mat.PFG.tol$killedIndiv` must contain numeric values", fixed = TRUE)
-  expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
-                                              , mat.PFG.tol = data.frame(nameDist = 1, PFG = "A", responseStage = 1
-                                                                         , killedIndiv = "a", resproutIndiv = 1))
-               , "`mat.PFG.tol$killedIndiv` must contain numeric values", fixed = TRUE)
-  expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
-                                              , mat.PFG.tol = data.frame(nameDist = 1, PFG = "A", responseStage = 1
-                                                                         , killedIndiv = factor(1), resproutIndiv = 1))
-               , "`mat.PFG.tol$killedIndiv` must contain numeric values", fixed = TRUE)
   
   ## TEST mat.PFG.tol$killedIndiv : no NA values
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
@@ -341,20 +320,6 @@ test_that("PRE_FATE.params_PFGdisturbance gives error with wrong data : mat.PFG.
                , "`mat.PFG.tol$killedIndiv` must be either `0`, `1`, `2`, `3`, `4`, `5`, `6`, `7`, `8`, `9` or `10`"
                , fixed = TRUE)
   
-  
-  ## TEST mat.PFG.tol$resproutIndiv : numeric values
-  expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
-                                              , mat.PFG.tol = data.frame(nameDist = 1, PFG = "A", responseStage = 1
-                                                                         , killedIndiv = 1, resproutIndiv = NA))
-               , "`mat.PFG.tol$resproutIndiv` must contain numeric values", fixed = TRUE)
-  expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
-                                              , mat.PFG.tol = data.frame(nameDist = 1, PFG = "A", responseStage = 1
-                                                                         , killedIndiv = 1, resproutIndiv = "a"))
-               , "`mat.PFG.tol$resproutIndiv` must contain numeric values", fixed = TRUE)
-  expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
-                                              , mat.PFG.tol = data.frame(nameDist = 1, PFG = "A", responseStage = 1
-                                                                         , killedIndiv = 1, resproutIndiv = factor(1)))
-               , "`mat.PFG.tol$resproutIndiv` must contain numeric values", fixed = TRUE)
   
   ## TEST mat.PFG.tol$resproutIndiv : no NA values
   expect_error(PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
