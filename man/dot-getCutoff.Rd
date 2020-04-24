@@ -7,12 +7,14 @@
 .getCutoff(Obs, Fit)
 }
 \arguments{
-\item{Obs}{a \code{vector} containing binary observed values (0/1)}
+\item{Obs}{a \code{vector} containing binary observed values (\code{0} or 
+\code{1})}
 
-\item{Fit}{a \code{vector} containing abundance values}
+\item{Fit}{a \code{vector} containing relative abundance values (between 
+\code{0} and \code{1})}
 }
 \description{
-This functions finds the best cutoff to transform abundance 
+This function finds the best cutoff to transform abundance 
 values into binary values while optimising sensitivity and specificity 
 values based on observations
 }

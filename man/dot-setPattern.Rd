@@ -13,16 +13,16 @@
 )
 }
 \arguments{
-\item{name.simulation}{a \code{string} that corresponds to the main 
-directory or simulation name of the \code{FATE} simulation}
+\item{name.simulation}{a \code{string} corresponding to the main directory 
+or simulation name of the \code{FATE} simulation}
 
-\item{opt.name.file}{(\emph{optional}) \cr a \code{string} that corresponds 
-to the name of the file (or part) in which to search and change the pattern}
+\item{opt.name.file}{(\emph{optional}) \cr a \code{string} corresponding
+to the complete or partial name of the file in which to search and change 
+the pattern}
 
-\item{pattern.tofind}{a \code{string} that corresponds to the pattern to 
-find}
+\item{pattern.tofind}{a \code{string} corresponding to the pattern to find}
 
-\item{pattern.toreplace}{a \code{string} that corresponds to the pattern to 
+\item{pattern.toreplace}{a \code{string} corresponding to the pattern to 
 replace}
 }
 \description{

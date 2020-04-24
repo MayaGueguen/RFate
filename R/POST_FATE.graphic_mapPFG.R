@@ -278,13 +278,13 @@ POST_FATE.graphic_mapPFG = function(
                , ".tif.gz"))
       .unzip(folder_name = dir.output.perPFG.perStrata
              , list_files = raster.perPFG.perStrata
-             , nb_cores = opt.no_CPU)
+             , no_cores = opt.no_CPU)
     } else
     {
       raster.perPFG.allStrata = .getRasterNames(years, "allStrata", "ABUND")
       .unzip(folder_name = dir.output.perPFG.allStrata
              , list_files = raster.perPFG.allStrata
-             , nb_cores = opt.no_CPU)
+             , no_cores = opt.no_CPU)
     }
     
     ## get the data inside the rasters --------------------------------------
@@ -391,19 +391,29 @@ POST_FATE.graphic_mapPFG = function(
       ras.REL = ras.PFG / ras.TOT
       
       ## GET richness map -----------------------------------------------------
-      ras.RICH = ras.REL
-      ras.RICH[which(ras.RICH[] > 0)] = 1
-      ras.RICH = sum(ras.RICH)
-      ras_list$richness = ras.RICH
-      
-      output.name = paste0(dir.save
-                           , "/PFGrichness_YEAR_"
-                           , y
-                           , "_STRATA_"
-                           , name_strata
-                           , ".tif")
-      output.names = c(output.names, output.name)
-      writeRaster(ras.RICH, filename = output.name, overwrite = TRUE)
+      ras.pts = as.data.frame(ras.REL)
+      ras.pts = as.matrix(ras.pts)
+      ras.DIV = foreach(qq = 0:2) %do%
+      {
+        div_q = divLeinster(spxp = ras.pts, q = qq)
+        ras.div = ras.mask
+        ras.div[] = div_q
+        ras.div[which(ras.mask[] == 0)] = NA
+        ras_list[[paste0("DIV.", qq)]] = ras.div
+        
+        output.name = paste0(dir.save
+                             , "/PFGrichness_YEAR_"
+                             , y
+                             , "_STRATA_"
+                             , name_strata
+                             , "_q"
+                             , qq
+                             , ".tif")
+        output.names = c(output.names, output.name)
+        writeRaster(ras.div, filename = output.name, overwrite = TRUE)
+        
+        return(ras.div)
+      }
       
       ## GET CWM map ----------------------------------------------------------
       if (doLight)
@@ -424,7 +434,7 @@ POST_FATE.graphic_mapPFG = function(
         {
           warning(paste0("Missing data!\n The files \n"
                          , paste0(" > ", light_files, " \n", collapse = "")
-                         , " do not contain `LIGHT`flag parameter. Please check."))
+                         , " do not contain `LIGHT` flag parameter. Please check."))
         } else
         {
           ras.CWM.light = ras.REL * light_need[names(ras.REL)]
@@ -454,25 +464,17 @@ POST_FATE.graphic_mapPFG = function(
                     , is.num = TRUE)
         }
         names(soil_contrib) = PFG
-        if (length(na.exclude(soil_contrib)) == 0)
-        {
-          warning(paste0("Missing data!\n The files "
-                         , paste0(" > ", soil_files, " \n", collapse = "")
-                         , " do not `SOIL_CONTRIB`flag parameter. Please check."))
-        } else
-        {
-          ras.CWM.soil = ras.REL * soil_contrib[names(ras.REL)]
-          ras_list$CWM.soil = ras.CWM.soil
-          
-          output.name = paste0(dir.save
-                               , "/PFGsoil_YEAR_"
-                               , y
-                               , "_STRATA_"
-                               , name_strata
-                               , ".tif")
-          output.names = c(output.names, output.name)
-          writeRaster(ras.CWM.soil, filename = output.name, overwrite = TRUE)
-        }
+        ras.CWM.soil = ras.REL * soil_contrib[names(ras.REL)]
+        ras_list$CWM.soil = ras.CWM.soil
+        
+        output.name = paste0(dir.save
+                             , "/PFGsoil_YEAR_"
+                             , y
+                             , "_STRATA_"
+                             , name_strata
+                             , ".tif")
+        output.names = c(output.names, output.name)
+        writeRaster(ras.CWM.soil, filename = output.name, overwrite = TRUE)
       }
       
       message(paste0("\n The output files \n"
@@ -527,7 +529,7 @@ POST_FATE.graphic_mapPFG = function(
                                                    , "by the maximum abundance obtained.\n"))
         
         ## PFG RICHNESS ---------------------------------------------------------
-        ras.pts = as.data.frame(rasterToPoints(ras.RICH))
+        ras.pts = as.data.frame(rasterToPoints(ras.DIV[[1]]))
         colnames(ras.pts) = c("X", "Y", "VALUE")
         pp_list$richness = pp.i(tab = ras.pts
                                 , i.col = "Greens"
@@ -599,12 +601,12 @@ POST_FATE.graphic_mapPFG = function(
     {
       .zip(folder_name = dir.output.perPFG.perStrata
            , list_files = raster.perPFG.perStrata
-           , nb_cores = opt.no_CPU)
+           , no_cores = opt.no_CPU)
     } else
     {
       .zip(folder_name = dir.output.perPFG.allStrata
            , list_files = raster.perPFG.allStrata
-           , nb_cores = opt.no_CPU)
+           , no_cores = opt.no_CPU)
     }
     
     ## ------------------------------------------------------------------------

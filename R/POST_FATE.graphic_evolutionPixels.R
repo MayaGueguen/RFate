@@ -18,9 +18,9 @@
 ##' the \code{PARAM_SIMUL} folder of the \code{FATE} simulation
 ##' @param opt.cells_ID (\emph{optional}) default \code{NULL}. \cr The cells ID 
 ##' of the studied area for which PFG abundances will be extracted
-##' @param opt.abund_fixedScale default \code{TRUE}. If \code{FALSE}, the 
-##' ordinate scale will be adapted for each PFG for the graphical representation 
-##' of the  evolution of abundances through time
+##' @param opt.fixedScale (\emph{optional}) default \code{TRUE}. \cr If 
+##' \code{FALSE}, the ordinate scale will be adapted for each PFG for the 
+##' graphical representation of the evolution of abundances through time
 ##' @param opt.doPlot (\emph{optional}) default \code{TRUE}. \cr If \code{TRUE}, 
 ##' plot(s) will be processed, otherwise only the calculation and reorganization 
 ##' of outputs will occur, be saved and returned
@@ -106,7 +106,7 @@
 ##'                                     
 ##' POST_FATE.graphic_evolutionPixels(name.simulation = "FATE_simulation"
 ##'                                   , file.simulParam = "Simul_parameters_V1.txt"
-##'                                   , opt.abund_fixedScale = FALSE)
+##'                                   , opt.fixedScale = FALSE)
 ##' }
 ##'                                     
 ##' 
@@ -134,7 +134,7 @@ POST_FATE.graphic_evolutionPixels = function(
   name.simulation
   , file.simulParam = NULL
   , opt.cells_ID = NULL
-  , opt.abund_fixedScale = TRUE
+  , opt.fixedScale = TRUE
   , opt.doPlot = TRUE
 ){
   
@@ -179,14 +179,13 @@ POST_FATE.graphic_evolutionPixels = function(
                             , ".csv")
     .testParam_existFile(file.abundance)
     tab.abundance = fread(file.abundance)
-    tab.abundance = as.data.frame(tab.abundance)
+    tab.abundance = as.data.frame(tab.abundance, stringAsFactors = FALSE)
     tab.abundance$TYPE = "abundance"
     colnames(tab.abundance)[which(colnames(tab.abundance) == "PFG")] = "GROUP"
     
     years = colnames(tab.abundance)
     years = years[which(!(years %in% c("TYPE", "GROUP", "ID.pixel", "X", "Y", "HAB")))]
     years = as.numeric(years)
-    no_years = length(years)
     
     strata = paste0("Stratum ", (no_STRATA - 1):0)
     
@@ -199,7 +198,7 @@ POST_FATE.graphic_evolutionPixels = function(
                           , ".csv")
       .testParam_existFile(file.light)
       tab.light = fread(file.light)
-      tab.light = as.data.frame(tab.light)
+      tab.light = as.data.frame(tab.light, stringAsFactors = FALSE)
       tab.light$STRATUM = paste0("Stratum ", tab.light$STRATUM)
       tab.light$TYPE = "light"
       colnames(tab.light)[which(colnames(tab.light) == "STRATUM")] = "GROUP"
@@ -215,7 +214,7 @@ POST_FATE.graphic_evolutionPixels = function(
                          , ".csv")
       .testParam_existFile(file.soil)
       tab.soil = fread(file.soil)
-      tab.soil = as.data.frame(tab.soil)
+      tab.soil = as.data.frame(tab.soil, stringAsFactors = FALSE)
       tab.soil$GROUP = "soil"
       tab.soil$TYPE = "soil"
       
@@ -241,7 +240,7 @@ POST_FATE.graphic_evolutionPixels = function(
       }
     }
     
-    cat("\n Number of years : ", no_years)
+    cat("\n Number of years : ", length(years))
     cat("\n Selected years : ", years)
     cat("\n Selected cells : ", IDS)
     cat("\n")
@@ -304,7 +303,7 @@ POST_FATE.graphic_evolutionPixels = function(
                   , position = "identity", alpha= 0.4) +
         scale_fill_manual("", values = val_col2) +
         facet_grid("TYPE ~ ID.pixel"
-                   , scales = ifelse(opt.abund_fixedScale, "fixed", "free_y")) +
+                   , scales = ifelse(opt.fixedScale, "fixed", "free_y")) +
         labs(x = "", y = ""
              , title = paste0("GRAPH A : evolution of species' abundance")
              , subtitle = paste0("For each PFG, the line represents the "

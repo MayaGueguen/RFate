@@ -17,9 +17,9 @@
 ##' @param file.simulParam default \code{NULL}. \cr A \code{string} 
 ##' corresponding to the name of a parameter file that will be contained into 
 ##' the \code{PARAM_SIMUL} folder of the \code{FATE} simulation
-##' @param opt.abund_fixedScale default \code{TRUE}. If \code{FALSE}, the 
-##' ordinate scale will be adapted for each PFG for the graphical representation 
-##' of the  evolution of abundances through time
+##' @param opt.fixedScale (\emph{optional}) default \code{TRUE}. \cr If 
+##' \code{FALSE}, the ordinate scale will be adapted for each PFG for the 
+##' graphical representation of the evolution of abundances through time
 ##' @param opt.doPlot (\emph{optional}) default \code{TRUE}. \cr If \code{TRUE}, 
 ##' plot(s) will be processed, otherwise only the calculation and reorganization 
 ##' of outputs will occur, be saved and returned
@@ -111,7 +111,7 @@
 ##'                                     
 ##' POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation"
 ##'                                     , file.simulParam = "Simul_parameters_V1.txt"
-##'                                     , opt.abund_fixedScale = FALSE)
+##'                                     , opt.fixedScale = FALSE)
 ##' }
 ##' 
 ##' 
@@ -138,7 +138,7 @@
 POST_FATE.graphic_evolutionCoverage = function(
   name.simulation
   , file.simulParam = NULL
-  , opt.abund_fixedScale = TRUE
+  , opt.fixedScale = TRUE
   , opt.doPlot = TRUE
 ){
   
@@ -295,7 +295,7 @@ POST_FATE.graphic_evolutionCoverage = function(
                                                 , y = "totalAbundance"
                                                 , color = "HAB")) +
         geom_line(lwd = 1) +
-        facet_wrap("~ PFG", scales = ifelse(opt.abund_fixedScale, "fixed", "free_y")) +
+        facet_wrap("~ PFG", scales = ifelse(opt.fixedScale, "fixed", "free_y")) +
         scale_color_manual("Habitat", values = col_fun(no_hab)) +
         labs(x = "", y = ""
              , title = paste0("GRAPH A : evolution of species' abundance")

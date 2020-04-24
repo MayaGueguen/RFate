@@ -8,18 +8,19 @@
 ##' @description This function extracts from a text file the value(s) of a 
 ##' given parameter.
 ##' 
-##' @param params.lines a \code{string} that corresponds to the name of the 
-##' file from which to extract the parameter value
-##' @param flag a \code{string} that corresponds to the parameter name to be 
+##' @param params.lines a \code{string} corresponding to the name of the file 
+##' from which to extract the parameter value
+##' @param flag a \code{string} corresponding to the parameter name to be 
 ##' extracted and that must be present into the \code{param.lines} file
-##' @param flag.split either "\code{ }" or "\code{^--.*--$}", depending on the 
-##' type of parameter file
-##' @param is.num default \code{TRUE}. If \code{TRUE}, the extracted parameter 
-##' is considered to be \code{numeric} and will be processed as such
+##' @param flag.split a \code{string} to choose the concerned type of parameter 
+##' (either "\code{ }" or "\code{^--.*--$}"), depending on the type of parameter 
+##' file (containing values or filenames)
+##' @param is.num default \code{TRUE}. \cr If \code{TRUE}, the extracted 
+##' parameter is considered to be \code{numeric} and will be processed as such
 ##' 
 ##' 
 ##' @return A \code{vector} containing one or more values of type \code{string} 
-##' or \code{numeric} depending on the value of\code{is.num} parameter.
+##' (if \code{is.num = FALSE}) or \code{numeric} (if \code{is.num = TRUE}).
 ##' 
 ##' @examples 
 ##' 
@@ -62,29 +63,18 @@
                      , is.num = TRUE
 ){
   
-  if (.testParam_notChar(params.lines))
-  {
-    .stopMessage_beChar("params.lines")
-  } else
-  {
-    .testParam_existFile(params.lines)
-  }
-  if (.testParam_notChar(flag) ||
-      nchar(flag) == 0)
-  {
-    .stopMessage_beChar("flag")
-  }
-  if (missing(flag.split) ||
-      is.na(flag.split) ||
-      !is.character(flag.split) ||
-      !(flag.split %in% c(" ", "^--.*--$")))
-  {
-    .stopMessage_content("flag.split", c(" ", "^--.*--$"))
-  }
+  #############################################################################
+  
+  .testParam_notChar.m("params.lines", params.lines)
+  .testParam_existFile(params.lines)
+  .testParam_notChar.m("flag", flag)
+  .testParam_notInValues.m("flag.split", flag.split, c(" ", "^--.*--$"))
   if (!is.logical(is.num))
   {
     stop("Wrong type of data!\n `is.num` must be logical")
   }
+  
+  #############################################################################
   
   param.name = params.lines
   params.lines = readLines(params.lines)
@@ -92,15 +82,20 @@
   {
     if (length(grep("--END_OF_FILE--", params.lines)) == 0)
     {
-      stop(paste0("Wrong type of data!\n `flag` (--END_OF_FILE--) is not found within `params.lines` (", param.name, ")"))
+      stop(paste0("Wrong type of data!\n `flag` (--END_OF_FILE--) "
+                  , "is not found within `params.lines` (", param.name, ")"))
     }
   }
   if (length(grep(flag.split, params.lines)) <= ifelse(flag.split == "^--.*--$", 1, 0)){
-    stop(paste0("Wrong type of data!\n `flag.split` (", flag.split, ") is not found within `params.lines` (", param.name, ")"))
+    stop(paste0("Wrong type of data!\n `flag.split` (", flag.split
+                , ") is not found within `params.lines` (", param.name, ")"))
   }
   if (length(grep(flag, params.lines)) == 0){
-    stop(paste0("Wrong type of data!\n `flag` (", flag, ") is not found within `params.lines` (", param.name, ")"))
+    stop(paste0("Wrong type of data!\n `flag` (", flag
+                , ") is not found within `params.lines` (", param.name, ")"))
   }
+  
+  #############################################################################
   
   if(flag.split == " "){
     value.line = grep(paste0(flag, " "), params.lines, value = TRUE)
@@ -110,12 +105,14 @@
     ind.flag = grep(paste0("--", flag, "--"), params.lines)
     if (length(ind.flag) == 0)
     {
-      stop(paste0("Wrong type of data!\n `flag` (", flag, ") is not found within `params.lines` (", param.name, ")"))
+      stop(paste0("Wrong type of data!\n `flag` (", flag
+                  , ") is not found within `params.lines` (", param.name, ")"))
     }
     ind.start = which(ind.flag.split == ind.flag)
     if (ind.flag.split[ind.start + 1] == ind.start + 1)
     {
-      stop(paste0("Wrong type of data!\n `flag` (", flag, ") does not contain any value"))
+      stop(paste0("Wrong type of data!\n `flag` (", flag
+                  , ") does not contain any value"))
     }
     
     ind1 = (ind.flag.split[ind.start] + 1)

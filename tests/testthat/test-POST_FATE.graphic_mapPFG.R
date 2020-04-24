@@ -327,7 +327,7 @@ test_that("POST_FATE.graphic_mapPFG gives correct outputs :", {
                  , "> FATE_simulation/RESULTS/SIMUL_V1/PFGcover_YEAR_1_STRATA_all.tif")
   expect_warning(POST_FATE.graphic_mapPFG(name.simulation = "FATE_simulation"
                                           , years = 1, opt.doBinary = TRUE)
-                 , "do not contain `LIGHT`flag parameter. Please check.")
+                 , "do not contain `LIGHT` flag parameter. Please check.")
   
   PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
                            , mat.PFG.light = data.frame(PFG = paste0("PFG",1:6)

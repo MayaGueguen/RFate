@@ -227,7 +227,9 @@ test_that("POST_FATE.graphic_mapPFGvsHS gives correct outputs :", {
   POST_FATE.binaryMaps(name.simulation = "FATE_simulation", years = 1, method = 1)
   
   
-  PFGvsHS = POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation", years = 1)
+  PFGvsHS = POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
+                                         , years = 1
+                                         , opt.stratum = 1)
 
   expect_output(str(PFGvsHS), "List")
   expect_equal(length(PFGvsHS), 1)

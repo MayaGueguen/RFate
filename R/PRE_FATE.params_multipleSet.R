@@ -861,7 +861,7 @@ PRE_FATE.params_multipleSet = function(
                                )
       )
       colnames(params.space) = colnames(params.ranges)
-      params.space = as.data.frame(params.space)
+      params.space = as.data.frame(params.space, stringAsFactors = FALSE)
     }
     
     ## Upscale rounded parameters to have correct ranges
@@ -945,7 +945,8 @@ PRE_FATE.params_multipleSet = function(
                         , type = res[[2]]
                         , height = res[[3]]
                         , maturity = res[[4]]
-                        , longevity = res[[5]]))
+                        , longevity = res[[5]]
+                        , stringAsFactors = FALSE))
     }
     cat("\n")
     if ("DO_LIGHT_COMPETITION 1" %in% TOKEEP.global)
@@ -969,7 +970,7 @@ PRE_FATE.params_multipleSet = function(
                                , flag = "LIGHT"
                                , flag.split = " "
                                , is.num = TRUE)
-        return(data.frame(PFG, light_need))
+        return(data.frame(PFG, light_need, stringAsFactors = FALSE))
       }
       cat("\n")
       LIGHT_table = merge(SUCC_table[, c("PFG", "type")]

@@ -164,13 +164,14 @@ test_that("POST_FATE.graphic_evolutionCoverage gives correct outputs :", {
                                          , no_years = 10
                                          , opt.ras_habitat = "FATE_simulation/DATA/MASK/map_hab.tif")
   
-  expect_message(POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation")
+  expect_message(POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation"
+                                                     , opt.doPlot = FALSE)
                  , "> POST_FATE_TABLE_ZONE_evolution_spaceOccupancy_SIMUL_V1")
   
   
   
   plotCover = POST_FATE.graphic_evolutionCoverage(name.simulation = "FATE_simulation"
-                                                  , opt.abund_fixedScale = FALSE)
+                                                  , opt.fixedScale = FALSE)
   expect_output(str(plotCover), "List")
   expect_equal(length(plotCover), 1)
   

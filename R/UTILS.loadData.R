@@ -20,8 +20,8 @@
 ##'   (\emph{\href{https://mayagueguen.github.io/FATE-WEBSITE/papers/Boulangeat_2014_GCB.pdf}{Boulangeat et al. 2014 GCB}})}
 ##' }
 ##' 
-##' @param data.name a \code{string} that corresponds to the name of the 
-##' dataset that will be loaded
+##' @param data.name a \code{string} corresponding to the name of the dataset 
+##' that will be loaded
 ##' 
 ##' @return 
 ##' 

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Load a <code>R</code> package and install it if necessary — .loadPackage • RFate</title>
+<title>Find cutoff to transform abundance values into binary values — divLeinster • RFate</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,10 @@
 
 
 
-<meta property="og:title" content="Load a <code>R</code> package and install it if necessary — .loadPackage" />
-<meta property="og:description" content="This function loads a R package and install it if 
-necessary." />
+<meta property="og:title" content="Find cutoff to transform abundance values into binary values — divLeinster" />
+<meta property="og:description" content="This function calculates the diversity of each site of a site 
+by species matrix according to the q parameter according to 
+Leinster &amp;amp; Cobbold 2012 Ecology." />
 
 
 
@@ -185,25 +186,41 @@ necessary." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Load a <code>R</code> package and install it if necessary</h1>
-    <small class="dont-index">Source: <a href='https://github.com/MayaGueguen/RFate.git/blob/master/R/UTILS.loadPackage.R'><code>R/UTILS.loadPackage.R</code></a></small>
-    <div class="hidden name"><code>dot-loadPackage.Rd</code></div>
+    <h1>Find cutoff to transform abundance values into binary values</h1>
+    <small class="dont-index">Source: <a href='https://github.com/MayaGueguen/RFate.git/blob/master/R/UTILS.abgFunctions.R'><code>R/UTILS.abgFunctions.R</code></a></small>
+    <div class="hidden name"><code>divLeinster.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function loads a <code>R</code> package and install it if 
-necessary.</p>
+    <p>This function calculates the diversity of each site of a site 
+by species matrix according to the q parameter according to 
+<a href='http://www.jstor.org/stable/23143936'>Leinster &amp; Cobbold 2012 Ecology</a>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>.loadPackage</span>(<span class='no'>package.name</span>)</pre>
+    <pre class="usage"><span class='fu'>divLeinster</span>(<span class='no'>spxp</span>, <span class='kw'>Z</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>q</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>check</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>package.name</th>
-      <td><p>a <code>string</code> corresponding to the name of the package 
-that will be loaded or installed</p></td>
+      <th>spxp</th>
+      <td><p>a site (row) by species (cols) <code>matrix</code> with or without 
+rownames and colnames</p></td>
+    </tr>
+    <tr>
+      <th>Z</th>
+      <td><p>default <code>NULL</code>. <br /> A species by species similarity 
+<code>matrix</code></p></td>
+    </tr>
+    <tr>
+      <th>q</th>
+      <td><p>default <code>2</code>. <br /> An <code>integer</code> corresponding to the 
+importance attributed to relative abundances</p></td>
+    </tr>
+    <tr>
+      <th>check</th>
+      <td><p>(<em>optional</em>) default <code>TRUE</code>. <br /> If <code>TRUE</code>, the 
+given arguments will be checked</p></td>
     </tr>
     </table>
 

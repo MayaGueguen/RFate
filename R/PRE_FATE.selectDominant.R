@@ -388,7 +388,8 @@ PRE_FATE.selectDominant = function(mat.observations
   #############################################################################
   
   ## Prepare combinations to run statistics calculation
-  combi = data.frame(rep = 1, percent = 1, type = "releves")
+  combi = data.frame(rep = 1, percent = 1, type = "releves"
+                     , stringAsFactors = FALSE)
   if (opt.doRobustness)
   {
     opt.robustness_percent = opt.robustness_percent[which(opt.robustness_percent > 0 & 
@@ -396,7 +397,8 @@ PRE_FATE.selectDominant = function(mat.observations
     combi = rbind(combi
                   , expand.grid(rep = 1:opt.robustness_rep
                                 , percent = opt.robustness_percent
-                                , type = c("releves", "sites")))
+                                , type = c("releves", "sites")
+                                , stringAsFactors = FALSE))
     PROGRESS = txtProgressBar(min = 0, max = nrow(combi), style = 3)
   }
   combi$iter = 1:nrow(combi)

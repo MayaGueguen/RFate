@@ -14,12 +14,12 @@
 ##' \code{FATE} simulation folder and upscale / crop them to the specified 
 ##' resolution / extent.
 ##' 
-##' @param name.simulation a \code{string} that corresponds to the main 
-##' directory or simulation name of the \code{FATE} simulation
-##' @param resolution an \code{integer} that corresponds to the new resolution 
-##' to upscale all the maps
-##' @param extent a \code{vector} of 4 \code{numeric} values that corresponds 
-##' to the new extent to crop all the maps
+##' @param name.simulation a \code{string} corresponding to the main directory 
+##' or simulation name of the \code{FATE} simulation
+##' @param resolution an \code{integer} corresponding to the new resolution to 
+##' upscale all the maps
+##' @param extent a \code{vector} of 4 \code{numeric} values corresponding to 
+##' the new extent to crop all the maps
 ##' 
 ##' 
 ##' @examples 
@@ -66,7 +66,8 @@ NULL
                              , recursive = TRUE
                              , include.dirs = FALSE)
       if (length(all.files) == 0){
-        stop(paste0("Missing data!\n The folder ", name.simulation, "/DATA does not contain adequate files (.tif, .img or .asc)"))
+        stop(paste0("Missing data!\n The folder ", name.simulation
+                    , "/DATA does not contain adequate files (.tif, .img or .asc)"))
       }
     }
   }
@@ -93,7 +94,8 @@ NULL
         message(paste0("\n The raster file ", fi, " has been successfully upscaled !"))
       } else
       {
-        warning(paste0("\n The raster file ", fi, " does not contain projection information. Please check."))
+        warning(paste0("\n The raster file ", fi
+                       , " does not contain projection information. Please check."))
       }
     } else
     {
@@ -136,7 +138,8 @@ NULL
                              , recursive = TRUE
                              , include.dirs = FALSE)
       if (length(all.files) == 0){
-        stop(paste0("Missing data!\n The folder ", name.simulation, "/DATA does not contain adequate files (.tif, .img or .asc)"))
+        stop(paste0("Missing data!\n The folder ", name.simulation
+                    , "/DATA does not contain adequate files (.tif, .img or .asc)"))
       }
     }
   }
@@ -148,10 +151,12 @@ NULL
     if (!is.na(old.proj))
     {
       ras.new = crop(x = ras, y = extent, filename = fi, overwrite = TRUE)
-      message(paste0("\n The raster file ", fi, " has been successfully cropped !"))
+      message(paste0("\n The raster file ", fi
+                     , " has been successfully cropped !"))
     } else
     {
-      warning(paste0("\n The raster file ", fi, " does not contain projection information. Please check."))
+      warning(paste0("\n The raster file ", fi
+                     , " does not contain projection information. Please check."))
     }
   }
 }

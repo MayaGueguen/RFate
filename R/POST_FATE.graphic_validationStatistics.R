@@ -256,7 +256,6 @@ POST_FATE.graphic_validationStatistics = function(
     
     ## Get list of arrays and extract years of simulation ---------------------
     years = sort(unique(as.numeric(years)))
-    no_years = length(years)
     
     ## UNZIP the raster saved -------------------------------------------------
     raster.perPFG.allStrata.REL = .getRasterNames(years, "allStrata", "REL")

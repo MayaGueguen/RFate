@@ -419,9 +419,6 @@ PRE_FATE.params_PFGlight = function(
                                 , shade_lover = c(9, 8, 5)
       )
     }
-  } else
-  {
-    warning("Missing data! The `ACTIVE_GERM` parameter has not been set. Please check.")
   }
   
   #############################################################################
@@ -516,9 +513,6 @@ PRE_FATE.params_PFGlight = function(
                                 , undergrowth = c(1,1,0,1,1,0,1,1,0)
         )
       }
-    } else
-    {
-      warning("Missing data! The `LIGHT_TOL` parameter has not been set. Please check.")
     }
   }
   

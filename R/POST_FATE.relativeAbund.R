@@ -137,13 +137,12 @@ POST_FATE.relativeAbund = function(
     
     ## Get list of arrays and extract years of simulation ---------------------
     years = sort(unique(as.numeric(years)))
-    no_years = length(years)
     
     ## UNZIP the raster saved -------------------------------------------------
     raster.perPFG.allStrata = .getRasterNames(years, "allStrata", "ABUND")
     .unzip(folder_name = dir.output.perPFG.allStrata
            , list_files = raster.perPFG.allStrata
-           , nb_cores = opt.no_CPU)
+           , no_cores = opt.no_CPU)
     
     
     ## get the data inside the rasters ----------------------------------------
@@ -199,7 +198,7 @@ POST_FATE.relativeAbund = function(
     ## ZIP the raster saved ---------------------------------------------------
     .zip(folder_name = dir.output.perPFG.allStrata
          , list_files = raster.perPFG.allStrata
-         , nb_cores = opt.no_CPU)
+         , no_cores = opt.no_CPU)
     
   }
 }

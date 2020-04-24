@@ -116,3 +116,4 @@ reference:
       - ".setPattern"
       - ".upscaleMaps"
       - ".getCutoff"
+      - ".unzip_ALL"

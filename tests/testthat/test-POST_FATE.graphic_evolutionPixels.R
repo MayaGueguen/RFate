@@ -307,12 +307,13 @@ test_that("POST_FATE.graphic_evolutionPixels gives correct outputs :", {
                  , "> POST_FATE_TABLE_PIXEL_evolution_pixels_")
   
   expect_warning(POST_FATE.graphic_evolutionPixels(name.simulation = "FATE_simulation"
-                                                   , opt.cells_ID = 42)
+                                                   , opt.cells_ID = 42
+                                                   , opt.doPlot = FALSE)
                  , "The values given in `opt.cells_ID` do not match with any cells of the studied area")
   
   plotPix = POST_FATE.graphic_evolutionPixels(name.simulation = "FATE_simulation"
                                               , opt.cells_ID = c(1,2,3)
-                                              , opt.abund_fixedScale = FALSE)
+                                              , opt.fixedScale = FALSE)
   expect_output(str(plotPix), "List")
   expect_equal(length(plotPix), 1)
   

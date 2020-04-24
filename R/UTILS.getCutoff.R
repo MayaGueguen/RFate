@@ -3,12 +3,14 @@
 ##' 
 ##' @name .getCutoff
 ##'
-##' @description This functions finds the best cutoff to transform abundance 
+##' @description This function finds the best cutoff to transform abundance 
 ##' values into binary values while optimising sensitivity and specificity 
 ##' values based on observations
 ##' 
-##' @param Obs a \code{vector} containing binary observed values (0/1)
-##' @param Fit a \code{vector} containing abundance values
+##' @param Obs a \code{vector} containing binary observed values (\code{0} or 
+##' \code{1})
+##' @param Fit a \code{vector} containing relative abundance values (between 
+##' \code{0} and \code{1})
 ##' 
 ##' @examples
 ##' 
@@ -24,16 +26,15 @@
 ##'
 ## END OF HEADER ###############################################################
 
+
 .getCutoff <- function(Obs, Fit)
 {
-  if (.testParam_notNum(Obs))
-  {
-    .stopMessage_content("Obs", c("0", "1"))
-  }
-  if (.testParam_notNum(Fit))
-  {
-    stop("Wrong data given!\n `Fit` must be between 0 and 1")
-  }
+  #############################################################################
+  
+  .testParam_notInValues.m("Obs", Obs, c(0, 1))
+  .testParam_notBetween.m("Fit", Fit, 0, 1)
+  
+  #############################################################################
   
   SumObs = sum(Obs)
   LengObs = length(Obs)

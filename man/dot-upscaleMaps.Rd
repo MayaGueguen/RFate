@@ -9,14 +9,14 @@
 .cropMaps(name.simulation, extent)
 }
 \arguments{
-\item{name.simulation}{a \code{string} that corresponds to the main 
-directory or simulation name of the \code{FATE} simulation}
+\item{name.simulation}{a \code{string} corresponding to the main directory 
+or simulation name of the \code{FATE} simulation}
 
-\item{resolution}{an \code{integer} that corresponds to the new resolution 
-to upscale all the maps}
+\item{resolution}{an \code{integer} corresponding to the new resolution to 
+upscale all the maps}
 
-\item{extent}{a \code{vector} of 4 \code{numeric} values that corresponds 
-to the new extent to crop all the maps}
+\item{extent}{a \code{vector} of 4 \code{numeric} values corresponding to 
+the new extent to crop all the maps}
 }
 \description{
 These functions scan all the raster files within a 

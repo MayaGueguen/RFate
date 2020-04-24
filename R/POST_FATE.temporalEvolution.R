@@ -215,9 +215,9 @@ POST_FATE.temporalEvolution = function(
     cat("\n")
     
     ## UNZIP the raster saved -----------------------------------------------
-    .unzip_ALL(folder_name = dir.output.perPFG.allStrata, nb_cores = opt.no_CPU)
-    if (doLight) .unzip_ALL(folder_name = dir.output.light, nb_cores = opt.no_CPU)
-    if (doSoil) .unzip_ALL(folder_name = dir.output.soil, nb_cores = opt.no_CPU)
+    .unzip_ALL(folder_name = dir.output.perPFG.allStrata, no_cores = opt.no_CPU)
+    if (doLight) .unzip_ALL(folder_name = dir.output.light, no_cores = opt.no_CPU)
+    if (doSoil) .unzip_ALL(folder_name = dir.output.soil, no_cores = opt.no_CPU)
     
     doWriting.abund = TRUE
     doWriting.light = ifelse(doLight, TRUE, FALSE)
@@ -289,7 +289,7 @@ POST_FATE.temporalEvolution = function(
     cat("\n")
     
     tabAbund = rbindlist(tabAbund.list, fill = TRUE)
-    tabAbund = as.data.frame(tabAbund)
+    tabAbund = as.data.frame(tabAbund, stringAsFactors = FALSE)
     
     if (nrow(tabAbund) > 0 && ncol(tabAbund) > 0)
     {
@@ -356,7 +356,7 @@ POST_FATE.temporalEvolution = function(
       cat("\n")
       
       tabLight = rbindlist(tabLight.list, fill = TRUE)
-      tabLight = as.data.frame(tabLight)
+      tabLight = as.data.frame(tabLight, stringAsFactors = FALSE)
       
       if (nrow(tabLight) > 0 && ncol(tabLight) > 0)
       {
@@ -441,9 +441,9 @@ POST_FATE.temporalEvolution = function(
     
     
     ## ZIP the raster saved -------------------------------------------------
-    .zip_ALL(folder_name = dir.output.perPFG.allStrata, nb_cores= opt.no_CPU)
-    if (doLight) .zip_ALL(folder_name = dir.output.light, nb_cores = opt.no_CPU)
-    if (doSoil) .zip_ALL(folder_name = dir.output.soil, nb_cores = opt.no_CPU)
+    .zip_ALL(folder_name = dir.output.perPFG.allStrata, no_cores= opt.no_CPU)
+    if (doLight) .zip_ALL(folder_name = dir.output.light, no_cores = opt.no_CPU)
+    if (doSoil) .zip_ALL(folder_name = dir.output.soil, no_cores = opt.no_CPU)
     
     cat("\n> Done!\n")
     cat("\n")

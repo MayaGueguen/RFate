@@ -7,25 +7,25 @@ simulation}
 \usage{
 POST_FATE.graphics(
   name.simulation,
-  file.simulParam,
+  file.simulParam = NULL,
   years,
   no_years,
   opt.ras_habitat = NULL,
-  opt.doFunc.evolutionCoverage = TRUE,
-  opt.doFunc.evolutionPixels = TRUE,
-  opt.cells_ID = NULL,
-  opt.abund_fixedScale = TRUE,
-  opt.doFunc.validation = TRUE,
-  opt.mat.PFG.obs,
-  opt.stratum = "all",
-  opt.doFunc.mapPFGvsHS = TRUE,
-  opt.doFunc.mapPFG = TRUE,
-  opt.method,
-  opt.method1.threshold = 0.05,
-  opt.method2.cutoff = NULL,
-  opt.stratum_min = 1,
-  opt.stratum_max = 10,
-  opt.doBinary = TRUE,
+  doFunc.evolCov = TRUE,
+  doFunc.evolPix = TRUE,
+  evolPix.cells_ID = NULL,
+  evol.fixedScale = TRUE,
+  doFunc.valid = TRUE,
+  valid.mat.PFG.obs,
+  doFunc.mapPFGvsHS = TRUE,
+  doFunc.mapPFG = TRUE,
+  mapPFGvsHS.stratum = "all",
+  binMap.method,
+  binMap.method1.threshold = 0.05,
+  binMap.method2.cutoff = NULL,
+  mapPFG.stratum_min = 1,
+  mapPFG.stratum_max = 10,
+  mapPFG.doBinary = TRUE,
   opt.doPlot = TRUE,
   opt.no_CPU = 1
 )
@@ -40,72 +40,76 @@ the \code{PARAM_SIMUL} folder of the \code{FATE} simulation}
 
 \item{years}{an \code{integer}, or a \code{vector} of \code{integer}, 
 corresponding to the simulation year(s) that will be used to extract PFG 
-abundance maps}
+abundance maps (see \code{\link{POST_FATE.relativeAbund}}, 
+\code{\link{POST_FATE.graphic_validationStatistics}}, 
+\code{\link{POST_FATE.graphic_mapPFGvsHS}})}
 
 \item{no_years}{an \code{integer} corresponding to the number of simulation 
-years that will be used to extract PFG abundance / light / soil maps}
+years that will be used to extract PFG abundance / light / soil maps (see 
+\code{\link{POST_FATE.temporalEvolution}})}
 
 \item{opt.ras_habitat}{(\emph{optional}) default \code{NULL}. \cr 
 A \code{string} corresponding to the file name of a raster mask, with an 
-\code{integer} value within each pixel, corresponding to a specific habitat}
+\code{integer} value within each pixel, corresponding to a specific habitat 
+(see \code{\link{POST_FATE.temporalEvolution}}, 
+\code{\link{POST_FATE.graphic_validationStatistics}})}
 
-\item{opt.doFunc.evolutionCoverage}{default \code{TRUE} (\emph{optional}). 
-If \code{TRUE}, corresponding \code{POST_FATE.graphic_...} function will 
-be run.}
+\item{doFunc.evolCov}{default \code{TRUE}. \cr If \code{TRUE}, 
+\code{\link{POST_FATE.graphic_evolutionCoverage}} function will be run.}
 
-\item{opt.doFunc.evolutionPixels}{default \code{TRUE} (\emph{optional}). 
-If \code{TRUE}, corresponding \code{POST_FATE.graphic_...} function will 
-be run.}
+\item{doFunc.evolPix}{default \code{TRUE}. \cr If \code{TRUE}, 
+\code{\link{POST_FATE.graphic_evolutionPixels}} function will be run.}
 
-\item{opt.cells_ID}{(\emph{optional}) default \code{NULL}. \cr The cells ID 
-of the studied area for which PFG abundances will be extracted}
+\item{evolPix.cells_ID}{(\emph{optional}) default \code{NULL}. \cr The cells ID 
+of the studied area for which PFG abundances will be extracted (see 
+\code{\link{POST_FATE.graphic_evolutionPixels}})}
 
-\item{opt.abund_fixedScale}{default \code{TRUE}. If \code{FALSE}, the 
-ordinate scale will be adapted for each PFG for the graphical representation 
-of the  evolution of abundances through time}
+\item{evol.fixedScale}{(\emph{optional}) default \code{TRUE}. \cr If 
+\code{FALSE}, the ordinate scale will be adapted for each PFG for the 
+graphical representation of the  evolution of abundances through time (see 
+\code{\link{POST_FATE.graphic_evolutionCoverage}}, 
+\code{\link{POST_FATE.graphic_evolutionPixels}})}
 
-\item{opt.doFunc.validation}{default \code{TRUE} (\emph{optional}). 
-If \code{TRUE}, corresponding \code{POST_FATE.graphic_...} function will 
-be run.}
+\item{doFunc.valid}{default \code{TRUE}. \cr If \code{TRUE}, 
+\code{\link{POST_FATE.graphic_validationStatistics}} function will be run.}
 
-\item{opt.mat.PFG.obs}{a \code{data.frame} with 4 columns : \code{PFG}, 
-\code{X}, \code{Y}, \code{obs}}
+\item{valid.mat.PFG.obs}{a \code{data.frame} with 4 columns : \code{PFG}, 
+\code{X}, \code{Y}, \code{obs} (see 
+\code{\link{POST_FATE.graphic_validationStatistics}})}
 
-\item{opt.stratum}{(\emph{optional}) default \code{all}. \cr The stratum 
-number from which to extract PFG binary maps}
+\item{doFunc.mapPFGvsHS}{default \code{TRUE}. \cr If \code{TRUE}, 
+\code{\link{POST_FATE.graphic_mapPFGvsHS}} function will be run.}
 
-\item{opt.doFunc.mapPFGvsHS}{default \code{TRUE} (\emph{optional}). 
-If \code{TRUE}, corresponding \code{POST_FATE.graphic_...} function will 
-be run.}
+\item{doFunc.mapPFG}{default \code{TRUE}. \cr If \code{TRUE}, 
+\code{\link{POST_FATE.graphic_mapPFG}} function will be run.}
 
-\item{opt.doFunc.mapPFG}{default \code{TRUE} (\emph{optional}). 
-If \code{TRUE}, corresponding \code{POST_FATE.graphic_...} function will 
-be run.}
+\item{mapPFGvsHS.stratum}{(\emph{optional}) default \code{all}. \cr The stratum 
+number from which to extract PFG binary maps (see 
+\code{\link{POST_FATE.graphic_mapPFGvsHS}})}
 
-\item{opt.method}{an \code{integer} to choose the transformation method : \cr 
+\item{binMap.method}{an \code{integer} to choose the transformation method : \cr 
 \code{1} (relative abundance) or \code{2} (optimizing TSS) (see 
-\code{\href{POST_FATE.binaryMaps#details}{Details}})}
+\code{\link{POST_FATE.binaryMaps}})}
 
-\item{opt.method1.threshold}{default \code{0.05}. \cr If \code{method = 1}, 
+\item{binMap.method1.threshold}{default \code{0.05}. \cr If \code{method = 1}, 
 minimum relative abundance required for each PFG to be considered as present 
-in the concerned pixel}
+in the concerned pixel (see \code{\link{POST_FATE.binaryMaps}})}
 
-\item{opt.method2.cutoff}{default \code{NULL}. \cr If \code{method = 2}, a 
+\item{binMap.method2.cutoff}{default \code{NULL}. \cr If \code{method = 2}, a 
 \code{data.frame} with 3 columns : \code{year}, \code{PFG}, \code{cutoff} \cr
-(see \code{\href{POST_FATE.binaryMaps#details}{Details}})}
+(see \code{\link{POST_FATE.binaryMaps}})}
 
-\item{opt.stratum_min}{(\emph{optional}) default \code{1}. \cr An 
+\item{mapPFG.stratum_min}{(\emph{optional}) default \code{1}. \cr An 
 \code{integer} corresponding to the lowest stratum from which PFG 
-abundances will be summed up}
+abundances will be summed up (see \code{\link{POST_FATE.graphic_mapPFG}})}
 
-\item{opt.stratum_max}{(\emph{optional}) default \code{10}. \cr An 
+\item{mapPFG.stratum_max}{(\emph{optional}) default \code{10}. \cr An 
 \code{integer} corresponding to the highest stratum from which PFG 
-abundances will be summed up}
+abundances will be summed up (see \code{\link{POST_FATE.graphic_mapPFG}})}
 
-\item{opt.doBinary}{(\emph{optional}) default \code{TRUE}. \cr If 
+\item{mapPFG.doBinary}{(\emph{optional}) default \code{TRUE}. \cr If 
 \code{TRUE}, abundance maps (absolute or relative) are systematically 
-multiplied by binary maps (see 
-\code{\href{POST_FATE.graphic_mapPFG#details}{Details}})}
+multiplied by binary maps (see \code{\link{POST_FATE.graphic_mapPFG}})}
 
 \item{opt.doPlot}{(\emph{optional}) default \code{TRUE}. \cr If \code{TRUE}, 
 plot(s) will be processed, otherwise only the calculation and reorganization 
@@ -147,10 +151,10 @@ Three folders are created :
   \code{\link{POST_FATE.relativeAbund}})}
   \item{\file{BIN_perPFG \cr_allStrata}}{containing presence / absence 
   raster maps for each PFG across all strata (see 
-  \code{\link{POST_FATE.graphic_validationStatistics}})}
+  \code{\link{POST_FATE.binaryMaps}})}
   \item{\file{BIN_perPFG \cr_perStrata}}{containing presence / absence 
   raster maps for each PFG for each stratum (see 
-  \code{\link{POST_FATE.graphic_validationStatistics}})}
+  \code{\link{POST_FATE.binaryMaps}})}
 }
 }
 \description{
@@ -162,83 +166,71 @@ validation statistics) : 3) or representing a spatial distribution for a
 specific year (richness, abundance, light, soil).
 }
 \details{
-This function allows one to obtain, for a specific \code{FATE} 
-simulation and a specific parameter file within this simulation, up to ten 
-preanalytical graphics. \cr \cr
+This function allows to obtain, for a specific \code{FATE} simulation and a 
+specific parameter file within this simulation, \strong{up to ten 
+preanalytical graphics}. \cr \cr
 
 For each PFG and each selected simulation year, raster maps are retrieved 
-from the results folders (\code{ABUND_perPFG_allStrata} or 
-\code{ABUND_perPFG_allStrata} or \code{ABUND_REL_perPFG_allStrata} or 
-\code{BIN_perPFG_perStrata} or \code{BIN_perPFG_allStrata} or \code{LIGHT} 
-or \code{SOIL}) and unzipped.
-Informations extracted lead to the production of the following graphics 
-before the maps are compressed again :
+from the results folders (\code{ABUND_perPFG_perStrata}, 
+\code{ABUND_perPFG_allStrata}, \code{ABUND_REL_perPFG_allStrata}, 
+\code{BIN_perPFG_perStrata}, \code{BIN_perPFG_allStrata}, \code{LIGHT} or 
+\code{SOIL}) and unzipped. Informations extracted lead to the production of 
+the following graphics before the maps are compressed again :
 
 \itemize{
-  \item{the evolution of \strong{space occupancy} of each Plant Functional 
-  Group through simulation time, with \emph{space occupancy} representing 
-  the percentage of pixels within the mask of studied area where the PFG 
-  is present (see \code{\link{POST_FATE.graphic_evolutionCoverage}})
+  \item{the evolution of \strong{space occupancy} of each plant functional 
+  group through simulation time, \cr with \emph{space occupancy} 
+  representing the percentage of pixels within the mask of studied area 
+  where the PFG is present \cr (see 
+  \code{\link{POST_FATE.graphic_evolutionCoverage}})
   }
-  \item{the evolution of \strong{abundance} of each Plant Functional Group 
-  through simulation time, with \emph{abundance} being the sum over the 
-  whole studied area of the PFG abundances (\code{FATE} \emph{arbitrary 
-  unit}) (see \code{\link{POST_FATE.graphic_evolutionCoverage}})
+  \item{the evolution of \strong{total abundance} of each plant functional 
+  group through simulation time, \cr with \emph{total abundance} being the 
+  sum over the whole studied area of the PFG abundances (\code{FATE} 
+  \emph{arbitrary unit}) \cr (see 
+  \code{\link{POST_FATE.graphic_evolutionCoverage}})
   }
   \item{the evolution of \strong{abundance} of each Plant Functional Group 
   through simulation time, within 5 (or more) randomly selected pixels of 
   the studied area (\code{FATE} \emph{arbitrary unit}), as well as 
-  \strong{light resources} of each stratum (\emph{1: Low, 2: Medium, 3: 
-  High}) and \strong{soil resources} if these modules are selected (see 
+  \strong{light resources} within each height stratum (\emph{\code{1}: Low, 
+  \code{2}: Medium, \code{3}: High}) and \strong{soil resources} 
+  (user-defined scale) if these modules were selected (see 
   \code{\link{POST_FATE.graphic_evolutionPixels}})
   }
-  \item{the value of \strong{several statistics for the predictive quality 
-  of the model for each Plant Functional Group} and for each selected 
-  simulation year(s) (see 
+  \item{the value of \strong{several statistics to evaluate the predictive 
+  quality of the model} for each plant functional group \cr 
+  (\code{\link[PresenceAbsence]{sensitivity}}, 
+  \code{\link[PresenceAbsence]{specificity}}, 
+  \code{\link[PresenceAbsence]{auc}}, 
+  \code{TSS = sensitivity + specificity - 1}) (see 
   \code{\link{POST_FATE.graphic_validationStatistics}})
   }
-  \item{the maps of \strong{Plant Functional Group habitat suitability and 
-  occurrences} for each selected simulation year(s), representing the 
-  probability of presence of each PFG in each pixel compared to its 
-  simulated presence (see \code{\link{POST_FATE.graphic_mapPFGvsHS}})
+  \item{the comparison between each \strong{PFG habitat suitability map and 
+  its simulated map of presence} \cr (see 
+  \code{\link{POST_FATE.graphic_mapPFGvsHS}})
   }
-  \item{the map of \strong{Plant Functional Group richness} for each 
-  selected simulation year(s), representing the number of PFG present in 
-  each pixel (see \code{\link{POST_FATE.graphic_mapPFG}})
+  \item{the map of \strong{PFG richness} within each pixel, representing the 
+  sum of binary maps (see \code{\link{POST_FATE.graphic_mapPFG}})
   }
-  \item{the map of \strong{Plant Functional Group cover} for each selected 
-  simulation year(s), representing the relative cumulated abundance of PFG 
-  present in each pixel above a height threshold (see 
+  \item{the map of \strong{PFG relative cover}, representing the sum of 
+  relative abundance maps of all PFG \cr (potentially above a height threshold 
+  defined by \code{opt.stratum_min}) (see 
   \code{\link{POST_FATE.graphic_mapPFG}})
   }
-  \item{the map of \strong{light Community Weighted Mean} for each selected 
-  simulation year(s), representing the simulated value of light within each 
-  pixel above a height threshold (see 
+  \item{the map of \strong{light Community Weighted Mean} \cr (potentially above 
+  a height threshold defined by \code{opt.stratum_min}) (see 
   \code{\link{POST_FATE.graphic_mapPFG}})
   }
-  \item{the map of \strong{soil Community Weighted Mean} for each selected 
-  simulation year(s), representing the simulated value of soil within each 
-  pixel (see \code{\link{POST_FATE.graphic_mapPFG}})
+  \item{the map of \strong{soil Community Weighted Mean} \cr (potentially above 
+  a height threshold defined by \code{opt.stratum_min}) (see 
+  \code{\link{POST_FATE.graphic_mapPFG}})
   }
 }
 }
 \examples{
 
-\dontrun{                      
-POST_FATE.graphics(name.simulation = "FATE_simulation"
-                                    , file.simulParam = "Simul_parameters_V1.txt"
-                                    , year = 100
-                                    , no.years = 10)
-                                    
-POST_FATE.graphics(name.simulation = "FATE_simulation"
-                                    , file.simulParam = "Simul_parameters_V1.txt"
-                                    , year = 100
-                                    , no.years = 10
-                                    , opt.abund_fixedScale = FALSE
-                                    , opt.no_CPU = 4)
-}
-                                    
-                                    
+## Load exemple data                                 
 
 }
 \seealso{

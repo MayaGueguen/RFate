@@ -6,7 +6,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Load a <code>R</code> package and install it if necessary — .loadPackage • RFate</title>
+<title>Compress (<code>.tif</code>, <code>.img</code>) or decompress (<code>.gz</code>) files 
+contained in results folder — .unzip_ALL • RFate</title>
 
 
 <!-- jquery -->
@@ -39,9 +40,10 @@
 
 
 
-<meta property="og:title" content="Load a <code>R</code> package and install it if necessary — .loadPackage" />
-<meta property="og:description" content="This function loads a R package and install it if 
-necessary." />
+<meta property="og:title" content="Compress (<code>.tif</code>, <code>.img</code>) or decompress (<code>.gz</code>) files 
+contained in results folder — .unzip_ALL" />
+<meta property="og:description" content="These functions compress (.tif, .img) or 
+decompress (.gz) files contained in a given folder." />
 
 
 
@@ -185,25 +187,39 @@ necessary." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Load a <code>R</code> package and install it if necessary</h1>
-    <small class="dont-index">Source: <a href='https://github.com/MayaGueguen/RFate.git/blob/master/R/UTILS.loadPackage.R'><code>R/UTILS.loadPackage.R</code></a></small>
-    <div class="hidden name"><code>dot-loadPackage.Rd</code></div>
+    <h1>Compress (<code>.tif</code>, <code>.img</code>) or decompress (<code>.gz</code>) files 
+contained in results folder</h1>
+    <small class="dont-index">Source: <a href='https://github.com/MayaGueguen/RFate.git/blob/master/R/UTILS.zipUnzip.R'><code>R/UTILS.zipUnzip.R</code></a></small>
+    <div class="hidden name"><code>dot-unzip_ALL.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function loads a <code>R</code> package and install it if 
-necessary.</p>
+    <p>These functions compress (<code>.tif</code>, <code>.img</code>) or 
+decompress (<code>.gz</code>) files contained in a given folder.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>.loadPackage</span>(<span class='no'>package.name</span>)</pre>
+    <pre class="usage"><span class='fu'>.unzip_ALL</span>(<span class='no'>folder_name</span>, <span class='no'>no_cores</span>)
+<span class='fu'>.unzip</span>(<span class='no'>folder_name</span>, <span class='no'>list_files</span>, <span class='no'>no_cores</span>)
+<span class='fu'>.zip_ALL</span>(<span class='no'>folder_name</span>, <span class='no'>no_cores</span>)
+<span class='fu'>.zip</span>(<span class='no'>folder_name</span>, <span class='no'>list_files</span>, <span class='no'>no_cores</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>package.name</th>
-      <td><p>a <code>string</code> corresponding to the name of the package 
-that will be loaded or installed</p></td>
+      <th>folder_name</th>
+      <td><p>a <code>string</code> corresponding to the directory to be 
+scanned</p></td>
+    </tr>
+    <tr>
+      <th>list_files</th>
+      <td><p>a <code>vector</code> containing filenames to be compress or 
+decompress, in order not to scan the whole given directory</p></td>
+    </tr>
+    <tr>
+      <th>no_cores</th>
+      <td><p>an <code>integer</code> corresponding to the number of computing 
+resources that can be used to parallelize the (de)compression</p></td>
     </tr>
     </table>
 

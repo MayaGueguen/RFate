@@ -1,6 +1,14 @@
 ### HEADER #####################################################################
+##' @title Obtain ellipse coordinates from (PCO) X,Y and a factor value
+##' 
 ##' @name .getELLIPSE
-##'
+##' 
+##' @param xy a \code{data.frame} or \code{matrix} with 2 columns corresponding 
+##' to individuals coordinates, extracted from example from 
+##' \code{\link[ade4]{dudi.pco}} analysis
+##' @param fac a \code{vector} containing group labels for individuals (with 
+##' \code{length(fac) = nrow(xy)})
+##' 
 ##' @importFrom stats model.matrix
 ##' 
 ## END OF HEADER ###############################################################
@@ -90,7 +98,8 @@ util.ELLIPSE = function(x, y, z){
   cooy = as.matrix(t(dfdistri)) %*% xy[, 2] # label
   
   pfg = NULL
-  DAT = foreach(pfg = colnames(dfdistri), .combine = "rbind") %do% {
+  DAT = foreach(pfg = colnames(dfdistri), .combine = "rbind") %do%
+  {
     ell = util.ELLIPSE(xy[, 1], xy[, 2], dfdistri[, pfg])
     if(length(ell$x) > 0){
       dat = data.frame(x = ell$x

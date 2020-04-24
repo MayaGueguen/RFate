@@ -130,7 +130,7 @@ POST_FATE.graphic_mapPFGvsHS = function(
   abs.simulParams = .getParam_abs.simulParams(file.simulParam, name.simulation)
   ## CHECK parameter years
   .testParam_notInteger.m("years", years)
-
+  
   #############################################################################
   
   res = foreach (abs.simulParam = abs.simulParams) %do%
@@ -175,11 +175,10 @@ POST_FATE.graphic_mapPFGvsHS = function(
       colnames(ras.hs.pts) = c("X", "Y", "layer")
       for (fg in PFG) ras.hs.pts[[fg]] = ras.hs.pts$layer
     }
-
+    
     
     ## Get list of arrays and extract years of simulation ---------------------
     years = sort(unique(as.numeric(years)))
-    no_years = length(years)
     
     if (opt.stratum == "all")
     {
@@ -193,7 +192,7 @@ POST_FATE.graphic_mapPFGvsHS = function(
     .testParam_existFolder(name.simulation, dir.tmp)
     dir.tmp = paste0(name.simulation, "/", dir.tmp)
     
-
+    
     ###########################################################################
     
     ## get the data inside the rasters ----------------------------------------
@@ -232,10 +231,13 @@ POST_FATE.graphic_mapPFGvsHS = function(
           if (pfg %in% colnames(ras.hs.pts))
           {
             tab.hs = data.frame(ras.hs.pts[, c("X", "Y", pfg)]
-                             , TYPE = "Habitat Suitability")
+                                , TYPE = "Habitat Suitability"
+                                , stringsAsFactors = FALSE)
             if (pfg %in% colnames(ras.pts))
             {
-              tab.pfg = data.frame(ras.pts[, c("X", "Y", pfg)], TYPE = "FATE")
+              tab.pfg = data.frame(ras.pts[, c("X", "Y", pfg)]
+                                   , TYPE = "FATE"
+                                   , stringsAsFactors = FALSE)
               tab = rbind(tab.hs, tab.pfg)
               
               pp = ggplot(tab, aes_string(x = "X", y = "Y", fill = pfg)) +

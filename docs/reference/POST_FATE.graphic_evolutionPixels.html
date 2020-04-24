@@ -206,7 +206,7 @@ area.</p>
   <span class='no'>name.simulation</span>,
   <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>opt.cells_ID</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>opt.abund_fixedScale</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>opt.fixedScale</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>opt.doPlot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
 )</pre>
 
@@ -230,10 +230,10 @@ the <code>PARAM_SIMUL</code> folder of the <code>FATE</code> simulation</p></td>
 of the studied area for which PFG abundances will be extracted</p></td>
     </tr>
     <tr>
-      <th>opt.abund_fixedScale</th>
-      <td><p>default <code>TRUE</code>. If <code>FALSE</code>, the 
-ordinate scale will be adapted for each PFG for the graphical representation 
-of the  evolution of abundances through time</p></td>
+      <th>opt.fixedScale</th>
+      <td><p>(<em>optional</em>) default <code>TRUE</code>. <br /> If 
+<code>FALSE</code>, the ordinate scale will be adapted for each PFG for the 
+graphical representation of the evolution of abundances through time</p></td>
     </tr>
     <tr>
       <th>opt.doPlot</th>
@@ -314,7 +314,7 @@ activated).</p>
 
 <span class='fu'>POST_FATE.graphic_evolutionPixels</span>(<span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='st'>"FATE_simulation"</span>
                                   , <span class='kw'>file.simulParam</span> <span class='kw'>=</span> <span class='st'>"Simul_parameters_V1.txt"</span>
-                                  , <span class='kw'>opt.abund_fixedScale</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+                                  , <span class='kw'>opt.fixedScale</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 }
 
 

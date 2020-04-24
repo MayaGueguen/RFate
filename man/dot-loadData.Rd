@@ -7,8 +7,8 @@
 .loadData(data.name)
 }
 \arguments{
-\item{data.name}{a \code{string} that corresponds to the name of the 
-dataset that will be loaded}
+\item{data.name}{a \code{string} corresponding to the name of the dataset 
+that will be loaded}
 }
 \value{
 \strong{\cr PNE_PFG}

@@ -230,7 +230,7 @@ POST_FATE.binaryMaps = function(
     raster.perPFG.perStrata = .getRasterNames(years, "perStrata", "ABUND")
     .unzip(folder_name = dir.output.perPFG.perStrata
            , list_files = raster.perPFG.perStrata
-           , nb_cores = opt.no_CPU)
+           , no_cores = opt.no_CPU)
     
     
     
@@ -315,7 +315,7 @@ POST_FATE.binaryMaps = function(
     ## ZIP the raster saved ---------------------------------------------------
     .zip(folder_name = dir.output.perPFG.perStrata
          , list_files = raster.perPFG.perStrata
-         , nb_cores = opt.no_CPU)
+         , no_cores = opt.no_CPU)
     
   } ## END loop on abs.simulParams
 }

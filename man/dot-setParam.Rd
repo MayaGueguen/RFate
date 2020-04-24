@@ -7,14 +7,15 @@
 .setParam(params.lines, flag, flag.split, value)
 }
 \arguments{
-\item{params.lines}{a \code{string} that corresponds to the name of the 
-file from which to extract the parameter value}
+\item{params.lines}{a \code{string} corresponding to the name of the file 
+from which to replace the parameter value}
 
-\item{flag}{a \code{string} that corresponds to the parameter name to be 
+\item{flag}{a \code{string} corresponding to the parameter name to be 
 extracted and that must be present into the \code{param.lines} file}
 
-\item{flag.split}{either "\code{ }" or "\code{^--.*--$}", depending on the 
-type of parameter file}
+\item{flag.split}{a \code{string} to choose the concerned type of parameter 
+(either "\code{ }" or "\code{^--.*--$}"), depending on the type of parameter 
+file (containing values or filenames)}
 
 \item{value}{a \code{string} or a \code{numeric} value (it can also be a 
 \code{vector}) containing the new value of the parameter to be changed}

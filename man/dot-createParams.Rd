@@ -7,15 +7,15 @@
 .createParams(params.file, params.list, separator = " ")
 }
 \arguments{
-\item{params.file}{a \code{string} that corresponds to the 
-name of the file that will be created}
+\item{params.file}{a \code{string} corresponding to the name of the file 
+that will be created}
 
-\item{params.list}{a \code{list} containing all the parameters
-that will be included into \code{params.file}, and whose names
-correspond to the parameter names}
+\item{params.list}{a \code{list} containing all the parameters that will be 
+included into \code{params.file}, and whose names correspond to the 
+parameter names}
 
-\item{separator}{a \code{string} to separate each parameter
-values within the parameter file}
+\item{separator}{a \code{string} to separate each parameter values within 
+the parameter file}
 }
 \description{
 Create a text file containing value(s) for one or several 

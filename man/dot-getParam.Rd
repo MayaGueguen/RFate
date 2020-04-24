@@ -7,21 +7,22 @@
 .getParam(params.lines, flag, flag.split, is.num = TRUE)
 }
 \arguments{
-\item{params.lines}{a \code{string} that corresponds to the name of the 
-file from which to extract the parameter value}
+\item{params.lines}{a \code{string} corresponding to the name of the file 
+from which to extract the parameter value}
 
-\item{flag}{a \code{string} that corresponds to the parameter name to be 
+\item{flag}{a \code{string} corresponding to the parameter name to be 
 extracted and that must be present into the \code{param.lines} file}
 
-\item{flag.split}{either "\code{ }" or "\code{^--.*--$}", depending on the 
-type of parameter file}
+\item{flag.split}{a \code{string} to choose the concerned type of parameter 
+(either "\code{ }" or "\code{^--.*--$}"), depending on the type of parameter 
+file (containing values or filenames)}
 
-\item{is.num}{default \code{TRUE}. If \code{TRUE}, the extracted parameter 
-is considered to be \code{numeric} and will be processed as such}
+\item{is.num}{default \code{TRUE}. \cr If \code{TRUE}, the extracted 
+parameter is considered to be \code{numeric} and will be processed as such}
 }
 \value{
 A \code{vector} containing one or more values of type \code{string} 
-or \code{numeric} depending on the value of\code{is.num} parameter.
+(if \code{is.num = FALSE}) or \code{numeric} (if \code{is.num = TRUE}).
 }
 \description{
 This function extracts from a text file the value(s) of a 
