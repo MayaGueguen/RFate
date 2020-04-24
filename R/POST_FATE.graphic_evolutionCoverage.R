@@ -183,7 +183,7 @@ POST_FATE.graphic_evolutionCoverage = function(
                             , ".csv")
     .testParam_existFile(file.abundance)
     tab.totalAbundance = fread(file.abundance)
-    tab.totalAbundance = as.data.frame(tab.totalAbundance, stringAsFactors = FALSE)
+    tab.totalAbundance = as.data.frame(tab.totalAbundance, stringsAsFactors = FALSE)
     
     years = colnames(tab.totalAbundance)
     years = years[which(!(years %in% c("PFG", "ID.pixel", "X", "Y", "HAB")))]

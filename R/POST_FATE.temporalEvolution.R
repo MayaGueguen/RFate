@@ -289,7 +289,7 @@ POST_FATE.temporalEvolution = function(
     cat("\n")
     
     tabAbund = rbindlist(tabAbund.list, fill = TRUE)
-    tabAbund = as.data.frame(tabAbund, stringAsFactors = FALSE)
+    tabAbund = as.data.frame(tabAbund, stringsAsFactors = FALSE)
     
     if (nrow(tabAbund) > 0 && ncol(tabAbund) > 0)
     {
@@ -356,7 +356,7 @@ POST_FATE.temporalEvolution = function(
       cat("\n")
       
       tabLight = rbindlist(tabLight.list, fill = TRUE)
-      tabLight = as.data.frame(tabLight, stringAsFactors = FALSE)
+      tabLight = as.data.frame(tabLight, stringsAsFactors = FALSE)
       
       if (nrow(tabLight) > 0 && ncol(tabLight) > 0)
       {

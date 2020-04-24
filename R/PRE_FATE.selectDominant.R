@@ -389,7 +389,7 @@ PRE_FATE.selectDominant = function(mat.observations
   
   ## Prepare combinations to run statistics calculation
   combi = data.frame(rep = 1, percent = 1, type = "releves"
-                     , stringAsFactors = FALSE)
+                     , stringsAsFactors = FALSE)
   if (opt.doRobustness)
   {
     opt.robustness_percent = opt.robustness_percent[which(opt.robustness_percent > 0 & 
@@ -398,7 +398,7 @@ PRE_FATE.selectDominant = function(mat.observations
                   , expand.grid(rep = 1:opt.robustness_rep
                                 , percent = opt.robustness_percent
                                 , type = c("releves", "sites")
-                                , stringAsFactors = FALSE))
+                                , stringsAsFactors = FALSE))
     PROGRESS = txtProgressBar(min = 0, max = nrow(combi), style = 3)
   }
   combi$iter = 1:nrow(combi)
@@ -508,7 +508,7 @@ PRE_FATE.selectDominant = function(mat.observations
         
         ## Calculate the number of relative abundance class per species
         mat.B1 = table(mat.obs_rel$species, mat.obs_rel$class_rel.sites)
-        mat.B1 = as.data.frame(mat.B1, stringAsFactors = FALSE)
+        mat.B1 = as.data.frame(mat.B1, stringsAsFactors = FALSE)
         colnames(mat.B1) = c("species", "class_rel.sites", "freq.class_rel.sites")
         mat.B1 = mat.B1[which(mat.B1$freq.class_rel.sites > 0), ]
         
@@ -541,7 +541,7 @@ PRE_FATE.selectDominant = function(mat.observations
                                      , mat.obs_rel$habitat)
                       , FUN = sum
                       , na.rm = TRUE)
-        mat5 = as.data.frame(mat5, stringAsFactors = FALSE)
+        mat5 = as.data.frame(mat5, stringsAsFactors = FALSE)
         mat5$species = rownames(mat5)
         mat5 = melt(mat5, id.vars = "species")
         colnames(mat5) = c("species", "habitat", "abund_tot.habitat")

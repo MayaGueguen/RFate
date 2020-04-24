@@ -179,7 +179,7 @@ POST_FATE.graphic_evolutionPixels = function(
                             , ".csv")
     .testParam_existFile(file.abundance)
     tab.abundance = fread(file.abundance)
-    tab.abundance = as.data.frame(tab.abundance, stringAsFactors = FALSE)
+    tab.abundance = as.data.frame(tab.abundance, stringsAsFactors = FALSE)
     tab.abundance$TYPE = "abundance"
     colnames(tab.abundance)[which(colnames(tab.abundance) == "PFG")] = "GROUP"
     
@@ -198,7 +198,7 @@ POST_FATE.graphic_evolutionPixels = function(
                           , ".csv")
       .testParam_existFile(file.light)
       tab.light = fread(file.light)
-      tab.light = as.data.frame(tab.light, stringAsFactors = FALSE)
+      tab.light = as.data.frame(tab.light, stringsAsFactors = FALSE)
       tab.light$STRATUM = paste0("Stratum ", tab.light$STRATUM)
       tab.light$TYPE = "light"
       colnames(tab.light)[which(colnames(tab.light) == "STRATUM")] = "GROUP"
@@ -214,7 +214,7 @@ POST_FATE.graphic_evolutionPixels = function(
                          , ".csv")
       .testParam_existFile(file.soil)
       tab.soil = fread(file.soil)
-      tab.soil = as.data.frame(tab.soil, stringAsFactors = FALSE)
+      tab.soil = as.data.frame(tab.soil, stringsAsFactors = FALSE)
       tab.soil$GROUP = "soil"
       tab.soil$TYPE = "soil"
       
