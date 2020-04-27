@@ -309,6 +309,11 @@ POST_FATE.graphic_mapPFG = function(
         {
           ras.PFG = stack(file_name) * ras.mask
           names(ras.PFG) = gp
+        } else
+        {
+          stop(paste0("Missing data!\n The folder "
+                      , dir.output.perPFG.allStrata
+                      , " does not contain adequate files"))
         }
       } else
       {
