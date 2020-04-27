@@ -128,6 +128,7 @@ test_that("POST_FATE.graphics gives correct outputs :", {
   dir.create("FATE_simulation/RESULTS/SIMUL_V1")
   dir.create("FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_allStrata")
   dir.create("FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_perStrata")
+  dir.create("FATE_simulation/RESULTS/SIMUL_V1/BIN_perPFG_allStrata")
   dir.create("FATE_simulation/RESULTS/SIMUL_V1/BIN_perPFG_perStrata")
   dir.create("FATE_simulation/RESULTS/SIMUL_V1/LIGHT")
   dir.create("FATE_simulation/RESULTS/SIMUL_V1/SOIL")
@@ -140,6 +141,8 @@ test_that("POST_FATE.graphics gives correct outputs :", {
                                          , "Abund_YEAR_1_PFG", i, "_STRATA_1.tif"), overwrite = TRUE)
     writeRaster(map_1, filename = paste0("FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_perStrata/"
                                          , "Abund_YEAR_1_PFG", i, "_STRATA_2.tif"), overwrite = TRUE)
+    writeRaster(map_1, filename = paste0("FATE_simulation/RESULTS/SIMUL_V1/BIN_perPFG_allStrata/"
+                                         , "Binary_YEAR_1_PFG", i, "_STRATA_all.tif"), overwrite = TRUE)
     writeRaster(map_1, filename = paste0("FATE_simulation/RESULTS/SIMUL_V1/BIN_perPFG_perStrata/"
                                          , "Binary_YEAR_1_PFG", i, "_STRATA_1.tif"), overwrite = TRUE)
     writeRaster(map_1, filename = paste0("FATE_simulation/RESULTS/SIMUL_V1/BIN_perPFG_perStrata/"

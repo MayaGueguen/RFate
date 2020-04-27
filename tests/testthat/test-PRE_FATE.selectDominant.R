@@ -299,9 +299,10 @@ test_that("PRE_FATE.selectDominant right results", {
 
   
   mat.obs = data.frame(sites = c(rep("A", 50), rep("B", 50))
-                       , species = sample(1:5, 100, replace = T)
+                       , species = as.character(sample(1:5, 100, replace = T))
                        , abund = sample(c(rep(1, 20), seq(30, 50)), 100, replace = T)
-                       , habitat = c("Landes", "Grassland"))
+                       , habitat = c("Landes", "Grassland")
+                       , stringsAsFactors = FALSE)
   tmp4 = PRE_FATE.selectDominant(mat.observations = mat.obs
                                  , doRuleC = TRUE
                                  , opt.doPlot = TRUE)
