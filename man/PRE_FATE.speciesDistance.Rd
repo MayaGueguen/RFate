@@ -19,7 +19,7 @@ PRE_FATE.speciesDistance(
 \item{\code{species}}{the ID of each studied species}
 \item{\code{GROUP}}{a factor variable containing grouping information to 
 divide the species into data subsets (see 
-\code{\href{PRE_FATE.speciesDistance#details}{Details}})}
+\href{PRE_FATE.speciesDistance#details}{\code{Details}})}
 \item{\code{...}}{one column for each functional trait}
 }}
 

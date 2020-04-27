@@ -49,6 +49,7 @@ France). Typologie phytosociologique et essai de reconstitution des séries
 }
 \examples{
 
+## Loading example data
 
 }
 \author{

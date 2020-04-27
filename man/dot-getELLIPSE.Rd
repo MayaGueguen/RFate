@@ -3,17 +3,43 @@
 \name{.getELLIPSE}
 \alias{.getELLIPSE}
 \alias{util.ellipse}
+\alias{util.ELLIPSE}
 \title{Obtain ellipse coordinates from (PCO) X,Y and a factor value}
 \usage{
 util.ellipse(mx, my, vx, cxy, vy, coeff)
+util.ELLIPSE(x, y, z)
+.getELLIPSE(xy, fac)
 }
 \arguments{
+\item{mx}{}
+
+\item{my}{}
+
+\item{vx}{}
+
+\item{cxy}{}
+
+\item{vy}{}
+
+\item{coeff}{default \code{1}}
+
 \item{xy}{a \code{data.frame} or \code{matrix} with 2 columns corresponding 
 to individuals coordinates, extracted from example from 
 \code{\link[ade4]{dudi.pco}} analysis}
 
 \item{fac}{a \code{vector} containing group labels for individuals (with 
 \code{length(fac) = nrow(xy)})}
+
+\item{x}{a \code{vector} corresponding to abscissa coordinates of 
+individuals (column \code{1} of \code{xy})}
+
+\item{y}{a \code{vector} corresponding to ordinate coordinates of 
+individuals (column \code{2} of \code{xy})}
+
+\item{z}{a \code{data.frame} with one column for each level represented in 
+\code{fac} and \code{nrow(z) = length(fac) = nrow(xy)}. Values are 
+corresponding to the relative representation of each level (for level 
+\code{i} : \eqn{\frac{1}{N_i}})}
 }
 \description{
 Obtain ellipse coordinates from (PCO) X,Y and a factor value

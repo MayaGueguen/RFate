@@ -24,7 +24,7 @@ PRE_FATE.selectDominant(
 \item{mat.observations}{a \code{data.frame} with at least 3 columns : \cr
 \code{sites}, \code{species}, \code{abund}
 \cr (\emph{and optionally, \code{habitat}}) 
-\cr (see \code{\href{PRE_FATE.selectDominant#details}{Details}})}
+\cr (see \href{PRE_FATE.selectDominant#details}{\code{Details}})}
 
 \item{doRuleA}{default \code{TRUE}. \cr If \code{TRUE}, selection 
 is done including constraints on number of occurrences}
@@ -192,7 +192,7 @@ the conditions selected, for example :
 This table is transformed into Euclidean distance matrix (with 
 \code{\link[FD]{gowdis}} and \code{\link[ade4]{quasieuclid}} functions) \cr
 to cluster and represent species (see 
-\code{\href{PRE_FATE.selectDominant#value}{\code{.pdf} output files}}) :
+\href{PRE_FATE.selectDominant#value}{\code{.pdf} output files}) :
 \itemize{
   \item through phylogenetic tree (with \code{\link[stats]{hclust}} and 
   \code{\link[ape]{as.phylo}} functions) 

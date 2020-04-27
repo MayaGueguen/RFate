@@ -232,7 +232,7 @@ abundance maps</p></td>
       <th>method</th>
       <td><p>an <code>integer</code> to choose the transformation method : <br /> 
 <code>1</code> (relative abundance) or <code>2</code> (optimizing TSS) (see 
-<code><a href='POST_FATE.binaryMaps#details'>Details</a></code>)</p></td>
+<a href='POST_FATE.binaryMaps#details'><code>Details</code></a>)</p></td>
     </tr>
     <tr>
       <th>method1.threshold</th>
@@ -244,7 +244,7 @@ in the concerned pixel</p></td>
       <th>method2.cutoff</th>
       <td><p>default <code>NULL</code>. <br /> If <code>method = 2</code>, a 
 <code>data.frame</code> with 3 columns : <code>year</code>, <code>PFG</code>, <code>cutoff</code> <br />
-(see <code><a href='POST_FATE.binaryMaps#details'>Details</a></code>)</p></td>
+(see <a href='POST_FATE.binaryMaps#details'><code>Details</code></a>)</p></td>
     </tr>
     <tr>
       <th>opt.no_CPU</th>
@@ -280,7 +280,7 @@ production of as many maps as those found :</p>
   $$abund\_rel_{\text{ PFG}_i} &gt; \text{method1.threshold} \;\; 
   \Leftrightarrow \;\; 1$$</p></dd>
   <dt><code>2</code> optimizing TSS</dt><dd><p>relative abundance maps are transformed 
-  into binary maps according to the <code><a href='.getCutoff'>cutoff</a></code> found 
+  into binary maps according to the <a href='.getCutoff'><code>cutoff</code></a> found 
   with the <code><a href='POST_FATE.graphic_validationStatistics.html'>POST_FATE.graphic_validationStatistics</a></code> function : 
   $$abund\_rel_{\text{ PFG}_i} &gt; \text{method2.cutoff}_{\text{ PFG}_i} \;\; 
   \Leftrightarrow \;\; 1$$</p></dd>

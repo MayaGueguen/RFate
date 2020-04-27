@@ -29,7 +29,7 @@ abundance maps}
 
 \item{method}{an \code{integer} to choose the transformation method : \cr 
 \code{1} (relative abundance) or \code{2} (optimizing TSS) (see 
-\code{\href{POST_FATE.binaryMaps#details}{Details}})}
+\href{POST_FATE.binaryMaps#details}{\code{Details}})}
 
 \item{method1.threshold}{default \code{0.05}. \cr If \code{method = 1}, 
 minimum relative abundance required for each PFG to be considered as present 
@@ -37,7 +37,7 @@ in the concerned pixel}
 
 \item{method2.cutoff}{default \code{NULL}. \cr If \code{method = 2}, a 
 \code{data.frame} with 3 columns : \code{year}, \code{PFG}, \code{cutoff} \cr
-(see \code{\href{POST_FATE.binaryMaps#details}{Details}})}
+(see \href{POST_FATE.binaryMaps#details}{\code{Details}})}
 
 \item{opt.no_CPU}{(\emph{optional}) default \code{1}. \cr The number of 
 resources that can be used to parallelize the \code{unzip/zip} of raster 
@@ -73,7 +73,7 @@ production of as many maps as those found :
   \deqn{abund\_rel_{\text{ PFG}_i} > \text{method1.threshold} \;\; 
   \Leftrightarrow \;\; 1}}
   \item{\code{2} optimizing TSS}{relative abundance maps are transformed 
-  into binary maps according to the \code{\href{.getCutoff}{cutoff}} found 
+  into binary maps according to the \href{.getCutoff}{\code{cutoff}} found 
   with the \code{\link{POST_FATE.graphic_validationStatistics}} function : 
   \deqn{abund\_rel_{\text{ PFG}_i} > \text{method2.cutoff}_{\text{ PFG}_i} \;\; 
   \Leftrightarrow \;\; 1}}

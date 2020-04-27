@@ -1098,7 +1098,8 @@ PRE_FATE.selectDominant = function(mat.observations
       mat.dist = RULES.sel[, -which(colnames(RULES.sel) %in% c("species", "SELECTION"))]
       mat.dist = as.matrix(mat.dist)
       mat.dist[] = as.numeric(mat.dist[])
-      mat.dist = quasieuclid(as.dist(gowdis(mat.dist)))
+      mat.dist = as.dist(gowdis(mat.dist))
+      if (!is.euclid(mat.dist)) mat.dist = quasieuclid(mat.dist)
       
       ## ----------------------------------------------------------------------
       ## Transform distance matrix into phylogeny -----------------------------

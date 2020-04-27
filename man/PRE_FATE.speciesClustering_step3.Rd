@@ -15,7 +15,7 @@ PRE_FATE.speciesClustering_step3(mat.traits)
   \item{\code{PFG}}{the corresponding Plant Functional Group (see 
   \code{\link{PRE_FATE.speciesClustering_step2}})}
   \item{\code{...}}{one column for each functional trait (see 
-  \code{\href{PRE_FATE.speciesClustering_step3#details}{Details}})}
+  \href{PRE_FATE.speciesClustering_step3#details}{\code{Details}})}
 }}
 }
 \value{
@@ -37,7 +37,7 @@ functional traits given in \code{mat.traits} :
   \describe{
     \item{\code{...}}{one for each functional trait, 'specific' cases 
     excepted (see 
-    \code{\href{PRE_FATE.speciesClustering_step3#details}{Details}})}
+    \href{PRE_FATE.speciesClustering_step3#details}{\code{Details}})}
   }
   }
 }

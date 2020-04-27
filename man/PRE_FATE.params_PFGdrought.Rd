@@ -21,7 +21,7 @@ or simulation name of the \code{FATE} simulation}
 a \code{data.frame} with 5 columns : \cr 
 \code{PFG}, \code{type}, \code{maturity}, \code{longevity}, 
 \code{age_above_150cm} (see 
-\code{\href{PRE_FATE.params_PFGdrought.html#details}{Details}})}
+\href{PRE_FATE.params_PFGdrought.html#details}{\code{Details}})}
 
 \item{mat.PFG.tol}{a \code{data.frame} with 3 to 7 columns : \cr 
 \itemize{
@@ -31,7 +31,7 @@ a \code{data.frame} with 5 columns : \cr
   \item \code{responseStage}, \code{killedIndiv}, \code{resproutIndiv}  
   (\emph{or \code{strategy_tol}})
 }
-(see \code{\href{PRE_FATE.params_PFGdrought.html#details}{Details}})}
+(see \href{PRE_FATE.params_PFGdrought.html#details}{\code{Details}})}
 
 \item{mat.PFG.drought}{a \code{data.frame} with 4 or 6 columns : \cr 
 \itemize{

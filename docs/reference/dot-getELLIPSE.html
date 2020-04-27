@@ -193,11 +193,37 @@
     <p>Obtain ellipse coordinates from (PCO) X,Y and a factor value</p>
     </div>
 
-    <pre class="usage"><span class='fu'>util.ellipse</span>(<span class='no'>mx</span>, <span class='no'>my</span>, <span class='no'>vx</span>, <span class='no'>cxy</span>, <span class='no'>vy</span>, <span class='no'>coeff</span>)</pre>
+    <pre class="usage"><span class='fu'>util.ellipse</span>(<span class='no'>mx</span>, <span class='no'>my</span>, <span class='no'>vx</span>, <span class='no'>cxy</span>, <span class='no'>vy</span>, <span class='no'>coeff</span>)
+<span class='fu'>util.ELLIPSE</span>(<span class='no'>x</span>, <span class='no'>y</span>, <span class='no'>z</span>)
+<span class='fu'>.getELLIPSE</span>(<span class='no'>xy</span>, <span class='no'>fac</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>mx</th>
+      <td></td>
+    </tr>
+    <tr>
+      <th>my</th>
+      <td></td>
+    </tr>
+    <tr>
+      <th>vx</th>
+      <td></td>
+    </tr>
+    <tr>
+      <th>cxy</th>
+      <td></td>
+    </tr>
+    <tr>
+      <th>vy</th>
+      <td></td>
+    </tr>
+    <tr>
+      <th>coeff</th>
+      <td><p>default <code>1</code></p></td>
+    </tr>
     <tr>
       <th>xy</th>
       <td><p>a <code>data.frame</code> or <code>matrix</code> with 2 columns corresponding 
@@ -208,6 +234,23 @@ to individuals coordinates, extracted from example from
       <th>fac</th>
       <td><p>a <code>vector</code> containing group labels for individuals (with 
 <code>length(fac) = nrow(xy)</code>)</p></td>
+    </tr>
+    <tr>
+      <th>x</th>
+      <td><p>a <code>vector</code> corresponding to abscissa coordinates of 
+individuals (column <code>1</code> of <code>xy</code>)</p></td>
+    </tr>
+    <tr>
+      <th>y</th>
+      <td><p>a <code>vector</code> corresponding to ordinate coordinates of 
+individuals (column <code>2</code> of <code>xy</code>)</p></td>
+    </tr>
+    <tr>
+      <th>z</th>
+      <td><p>a <code>data.frame</code> with one column for each level represented in 
+<code>fac</code> and <code>nrow(z) = length(fac) = nrow(xy)</code>. Values are 
+corresponding to the relative representation of each level (for level 
+<code>i</code> : \(\frac{1}{N_i}\))</p></td>
     </tr>
     </table>
 

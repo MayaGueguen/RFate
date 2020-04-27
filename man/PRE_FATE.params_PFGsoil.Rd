@@ -24,7 +24,7 @@ or simulation name of the \code{FATE} simulation}
   \item \code{soil_contrib}, \code{soil_tol_min}, \code{soil_tol_max} 
   (\emph{or \code{strategy_contrib}})
 }
-(see \code{\href{PRE_FATE.params_PFGsoil.html#details}{Details}})}
+(see \href{PRE_FATE.params_PFGsoil.html#details}{\code{Details}})}
 
 \item{mat.PFG.tol}{(\emph{optional}) \cr 
 a \code{data.frame} with 2 to 4 columns : \cr 
@@ -33,7 +33,7 @@ a \code{data.frame} with 2 to 4 columns : \cr
   \item \code{lifeStage}, \code{resources}, \code{tolerance} 
   (\emph{or \code{strategy_tol}})
 }
-(see \code{\href{PRE_FATE.params_PFGsoil.html#details}{Details}})}
+(see \href{PRE_FATE.params_PFGsoil.html#details}{\code{Details}})}
 
 \item{opt.folder.name}{(\emph{optional}) \cr a \code{string} corresponding 
 to the name of the folder that will be created into the 

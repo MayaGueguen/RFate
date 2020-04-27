@@ -22,19 +22,19 @@ or simulation name of the \code{FATE} simulation}
 mask, with either \code{0} or \code{1} within each pixel, \code{1} 
 corresponding to the cells of the studied area in which the succession 
 (core) module of the \code{FATE} simulation will take place (see 
-\code{\href{PRE_FATE.params_globalParameters.html#details}{PRE_FATE.params_globalParameters}})}
+\href{PRE_FATE.params_globalParameters.html#details}{\code{PRE_FATE.params_globalParameters}})}
 
 \item{name.DIST}{(\emph{optional}) \cr a \code{string} corresponding to the 
 file name of a raster mask, with either \code{0} or \code{1} within each 
 pixel, \code{1} corresponding to the cells of the studied area in which the 
 disturbance module of the \code{FATE} simulation will take place (see 
-\code{\href{PRE_FATE.params_globalParameters.html#details}{PRE_FATE.params_globalParameters}})}
+\href{PRE_FATE.params_globalParameters.html#details}{\code{PRE_FATE.params_globalParameters}})}
 
 \item{name.DROUGHT}{(\emph{optional}) \cr a \code{string} corresponding to 
 the name of a raster file, with a \code{numeric} value within each pixel 
 corresponding to the drought intensity experienced by this pixel throught 
 the drought disturbance module of the \code{FATE} simulation (see 
-\code{\href{PRE_FATE.params_globalParameters.html#details}{PRE_FATE.params_globalParameters}})}
+\href{PRE_FATE.params_globalParameters.html#details}{\code{PRE_FATE.params_globalParameters}})}
 
 \item{opt.global.name}{(\emph{optional}) \cr a \code{string} corresponding 
 to the name of the global parameter file in the folder 
