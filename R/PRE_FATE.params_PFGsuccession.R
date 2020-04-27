@@ -15,7 +15,7 @@
 ##' \code{PFG}, \code{type}, \code{height}, \code{maturity}, \code{longevity} 
 ##' \cr (\emph{and optionally, \code{max_abundance}, \code{potential_fecundity}, 
 ##' \code{immature_size}, \code{is_alien}}) 
-##' \cr (see \code{\href{PRE_FATE.params_PFGsuccession.html#details}{Details}})
+##' \cr (see \href{PRE_FATE.params_PFGsuccession.html#details}{\code{Details}})
 ##' @param strata.limits a \code{vector} of \code{integer} containing values 
 ##' among which height strata limits will be chosen
 ##' @param strata.limits_reduce default \code{TRUE}. \cr If \code{TRUE}, stratum 

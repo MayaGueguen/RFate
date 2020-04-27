@@ -15,12 +15,12 @@
 ##' mask, with either \code{0} or \code{1} within each pixel, \code{1} 
 ##' corresponding to the cells of the studied area in which the succession 
 ##' (core) module of the \code{FATE} simulation will take place (see 
-##' \code{\href{PRE_FATE.params_globalParameters.html#details}{PRE_FATE.params_globalParameters}})
+##' \href{PRE_FATE.params_globalParameters.html#details}{\code{PRE_FATE.params_globalParameters}})
 ##' @param name.DIST (\emph{optional}) \cr a \code{string} corresponding to the 
 ##' file name of a raster mask, with either \code{0} or \code{1} within each 
 ##' pixel, \code{1} corresponding to the cells of the studied area in which the 
 ##' disturbance module of the \code{FATE} simulation will take place (see 
-##' \code{\href{PRE_FATE.params_globalParameters.html#details}{PRE_FATE.params_globalParameters}})
+##' \href{PRE_FATE.params_globalParameters.html#details}{\code{PRE_FATE.params_globalParameters}})
 ## @param name.HABSTAB (\emph{optional}) \cr a \code{vector} containing 2 
 ## \code{string} corresponding to :
 ## \enumerate{
@@ -36,7 +36,7 @@
 ##' the name of a raster file, with a \code{numeric} value within each pixel 
 ##' corresponding to the drought intensity experienced by this pixel throught 
 ##' the drought disturbance module of the \code{FATE} simulation (see 
-##' \code{\href{PRE_FATE.params_globalParameters.html#details}{PRE_FATE.params_globalParameters}})
+##' \href{PRE_FATE.params_globalParameters.html#details}{\code{PRE_FATE.params_globalParameters}})
 ##' @param opt.global.name (\emph{optional}) \cr a \code{string} corresponding 
 ##' to the name of the global parameter file in the folder 
 ##' \code{name.simulation/DATA/GLOBAL_PARAMETERS/} that will be used to build 

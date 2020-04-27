@@ -16,7 +16,7 @@
 ##' a \code{data.frame} with 5 columns : \cr 
 ##' \code{PFG}, \code{type}, \code{maturity}, \code{longevity}, 
 ##' \code{age_above_150cm} (see 
-##' \code{\href{PRE_FATE.params_PFGdisturbance.html#details}{Details}})
+##' \href{PRE_FATE.params_PFGdisturbance.html#details}{\code{Details}})
 ##' @param mat.PFG.tol a \code{data.frame} with 3 to 7 columns : \cr 
 ##' \itemize{
 ##'   \item \code{nameDist},
@@ -25,7 +25,7 @@
 ##'   \item \code{responseStage}, \code{killedIndiv}, \code{resproutIndiv}  
 ##'   (\emph{or \code{strategy_tol}})
 ##' }
-##' (see \code{\href{PRE_FATE.params_PFGdisturbance.html#details}{Details}})
+##' (see \href{PRE_FATE.params_PFGdisturbance.html#details}{\code{Details}})
 ##' @param opt.folder.name (\emph{optional}) \cr a \code{string} corresponding 
 ##' to the name of the folder that will be created into the 
 ##' \code{name.simulation/DATA/PFGS/DIST/} directory to store the results

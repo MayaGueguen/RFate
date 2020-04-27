@@ -18,7 +18,7 @@
 ##'   \item{\code{PFG}}{the corresponding Plant Functional Group (see 
 ##'   \code{\link{PRE_FATE.speciesClustering_step2}})}
 ##'   \item{\code{...}}{one column for each functional trait (see 
-##'   \code{\href{PRE_FATE.speciesClustering_step3#details}{Details}})}
+##'   \href{PRE_FATE.speciesClustering_step3#details}{\code{Details}})}
 ##' }
 ##' 
 ##' @details
@@ -76,7 +76,7 @@
 ##'   \describe{
 ##'     \item{\code{...}}{one for each functional trait, 'specific' cases 
 ##'     excepted (see 
-##'     \code{\href{PRE_FATE.speciesClustering_step3#details}{Details}})}
+##'     \href{PRE_FATE.speciesClustering_step3#details}{\code{Details}})}
 ##'   }
 ##'   }
 ##' }
@@ -315,7 +315,7 @@ PRE_FATE.speciesClustering_step3 = function(mat.traits
     }
     
     if (i.facet) {
-      pp.i = pp.i + facet_wrap(~ variable, ncol = 1, scale = "free_y")
+      pp.i = pp.i + facet_wrap(~ variable, ncol = 1, scales = "free_y")
     }
     
     pp.i = pp.i +

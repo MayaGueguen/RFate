@@ -28,7 +28,7 @@
 ##' @param opt.doBinary (\emph{optional}) default \code{TRUE}. \cr If 
 ##' \code{TRUE}, abundance maps (absolute or relative) are systematically 
 ##' multiplied by binary maps (see 
-##' \code{\href{POST_FATE.graphic_mapPFG#details}{Details}})
+##' \href{POST_FATE.graphic_mapPFG#details}{\code{Details}})
 ##' @param opt.no_CPU (\emph{optional}) default \code{1}. \cr The number of 
 ##' resources that can be used to parallelize the \code{unzip/zip} of raster 
 ##' files

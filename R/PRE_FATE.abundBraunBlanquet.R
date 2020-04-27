@@ -48,6 +48,7 @@
 ##' 
 ##' @examples
 ##' 
+##' ## Loading example data
 ##' 
 ##' @export
 ##' 

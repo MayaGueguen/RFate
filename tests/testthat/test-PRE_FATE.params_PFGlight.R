@@ -95,17 +95,15 @@ test_that("PRE_FATE.params_PFGlight gives error with wrong data : mat.PFG.light"
                                         , mat.PFG.light = data.frame(PFG = c(1,2), type = c("H",NA)))
                , "`mat.PFG.light$type` must be either `H`, `C` or `P`", fixed = TRUE)
   
-  
-  ## TEST mat.PFG.light$light_need : no NA values
-  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
-                                        , mat.PFG.light = data.frame(PFG = c(1,2), type = "H", light_need = c(3,NA)))
-               , "`mat.PFG.light$light_need` must be either `0`, `1`, `2`, `3`, `4` or `5`", fixed = TRUE)
-  
   ## TEST mat.PFG.light$light_need : correct values
   expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
                                         , mat.PFG.light = data.frame(PFG = c(1,2), type = "H", light_need = c(3,NA)))
                , "`mat.PFG.light$light_need` must not contain NA values", fixed = TRUE)
   
+  ## TEST mat.PFG.light$light_need : no NA values
+  expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
+                                        , mat.PFG.light = data.frame(PFG = 1, type = "H", light_need = 1.5))
+               , "`mat.PFG.light$light_need` must be either `0`, `1`, `2`, `3`, `4` or `5`", fixed = TRUE)
   
   ## TEST mat.PFG.light$active_germ_low : no NA values
   expect_error(PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"

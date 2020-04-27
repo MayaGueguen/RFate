@@ -19,7 +19,7 @@
 ##'   \code{strategy_ag}})
 ##'   \item \emph{\code{type}, \code{light_need}}
 ##' }
-##' (see \code{\href{PRE_FATE.params_PFGlight.html#details}{Details}})
+##' (see \href{PRE_FATE.params_PFGlight.html#details}{\code{Details}})
 ##' @param mat.PFG.tol (\emph{optional}) \cr 
 ##' a \code{data.frame} with 2 to 4 columns : \cr 
 ##' \itemize{
@@ -27,7 +27,7 @@
 ##'   \item \code{lifeStage}, \code{resources}, \code{tolerance} 
 ##'   (\emph{or \code{strategy_tol}})
 ##' }
-##' (see \code{\href{PRE_FATE.params_PFGlight.html#details}{Details}})
+##' (see \href{PRE_FATE.params_PFGlight.html#details}{\code{Details}})
 ##' @param opt.folder.name (\emph{optional}) \cr a \code{string} corresponding 
 ##' to the name of the folder that will be created into the 
 ##' \code{name.simulation/DATA/PFGS/LIGHT/} directory to store the results
