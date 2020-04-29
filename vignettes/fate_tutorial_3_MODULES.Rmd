@@ -1,5 +1,5 @@
 ---
-title: "FATE-HD tutorial 3 - Use a module"
+title: "FATE tutorial 3 - Use a module"
 ---
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
@@ -23,7 +23,7 @@ pre.grey {
 
 <br/> <br/>
 
-`FATE-HD` model is built like a [LEGO](https://i.pinimg.com/originals/47/7b/f3/477bf37d4d316285108b62e2e852a014.gif) tool : it has a **core module**, which corresponds to the fundamental succession, and then can be complemented with **other modules**. Some of these modules can be regarded as equally important as the core module (from an ecological likelihood point of view, like light, dispersal, soil, etc), and some others are more specific (drought, aliens, fire, etc).
+`FATE` model is built like a [LEGO](https://i.pinimg.com/originals/47/7b/f3/477bf37d4d316285108b62e2e852a014.gif) tool : it has a **core module**, which corresponds to the fundamental succession, and then can be complemented with **other modules**. Some of these modules can be regarded as equally important as the core module (from an ecological likelihood point of view, like light, dispersal, soil, etc), and some others are more specific (drought, aliens, fire, etc).
 
 <br/>
 

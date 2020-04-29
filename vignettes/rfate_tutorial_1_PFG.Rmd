@@ -4,7 +4,7 @@ title: "<font color='#068f96'><i class='fa fa-battery-quarter'></i> `PRE_FATE` -
 
 <br/>
 
-<div style = "text-align:center;">See [Principle of PFG](fate-hd_tutorial_1_PFG.html) `FATE-HD` tutorial</div>
+<div style = "text-align:center;">See [Principle of PFG](fate_tutorial_1_PFG.html) `FATE` tutorial</div>
 
 <br/>
 
@@ -12,9 +12,9 @@ A plant functional group, or **PFG**, is "*a set of representative species [that
 
 <br/> <br/>
 
-[RFate]() is a [R](https://www.r-project.org/) package available on [github](https://github.com/MayaGueguen/RFate) and designed to provide support function to the `FATE-HD` software.
+[RFate]() is a [R](https://www.r-project.org/) package available on [github](https://github.com/MayaGueguen/RFate) and designed to provide support function to the `FATE` software.
 
-It contains documentation and functions to create and organize all input files required by the model, and **building PFG** is the first step to run a `FATE-HD` simulation. The procedure presented below is based on `RFate` functions.
+It contains documentation and functions to create and organize all input files required by the model, and **building PFG** is the first step to run a `FATE` simulation. The procedure presented below is based on `RFate` functions.
 
 <br/> <br/>
 

@@ -4,7 +4,7 @@ navbar:
     left:
     - home
     - intro
-    - FATE-HD
+    - FATE
     - RFate
     - reference
     right:
@@ -18,22 +18,22 @@ navbar:
       text: Reference
       icon: fa-book fa-lg
       href: reference/index.html
-    FATE-HD:
-      text: FATE-HD
+    FATE:
+      text: FATE
       icon: fab fa-pagelines
       menu:
         - text: "---------"
         - text: Publications
-          href: articles/fate-hd_tutorial_0_publications.html
+          href: articles/fate_tutorial_0_publications.html
         - text: Modelling framework
-          href: articles/fate-hd_tutorial_0_modelling_framework.html
+          href: articles/fate_tutorial_0_modelling_framework.html
         - text: "---------"
         - text: a. Principle of PFG
-          href: articles/fate-hd_tutorial_1_PFG.html
-        - text: b. Run a FATE-HD simulation
-          href: articles/fate-hd_tutorial_2_RUN_SIMULATION.html
-        - text: c. Use a FATE-HD module
-          href: articles/fate-hd_tutorial_3_MODULES.html
+          href: articles/fate_tutorial_1_PFG.html
+        - text: b. Run a FATE simulation
+          href: articles/fate_tutorial_2_RUN_SIMULATION.html
+        - text: c. Use a FATE module
+          href: articles/fate_tutorial_3_MODULES.html
     RFate:
       text: RFate
       icon: fas fa-toolbox
@@ -79,8 +79,8 @@ reference:
       - "PRE_FATE.speciesClustering_step1"
       - "PRE_FATE.speciesClustering_step2"
       - "PRE_FATE.speciesClustering_step3"
-  - title: Create FATE-HD parameter files
-    desc:  Create user-friendly directory tree, parameter and simulation files for FATE-HD simulation.  <br/> ..
+  - title: Create FATE parameter files
+    desc:  Create user-friendly directory tree, parameter and simulation files for FATE simulation.  <br/> ..
     contents:
       - "PRE_FATE.skeletonDirectory"
       - "PRE_FATE.params_PFGsuccession"
@@ -94,7 +94,7 @@ reference:
       - "PRE_FATE.params_globalParameters"
       - "PRE_FATE.params_simulParameters"
       - "PRE_FATE.params_multipleSet"
-  - title: Analyze FATE-HD outputs
+  - title: Analyze FATE outputs
     desc:  Evalute predicted maps, produce summary and dynamic graphics.  <br/> ..
     contents:
       - "POST_FATE.graphics"

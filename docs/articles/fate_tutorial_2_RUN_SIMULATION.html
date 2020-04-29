@@ -5,13 +5,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FATE-HD tutorial 2 - Run a simulation • RFate</title>
+<title>FATE tutorial 2 - Run a simulation • RFate</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="FATE-HD tutorial 2 - Run a simulation">
+<script src="../pkgdown.js"></script><meta property="og:title" content="FATE tutorial 2 - Run a simulation">
 <meta property="og:description" content="RFate">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -47,27 +47,27 @@
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     <span class="fab fa fab fa-pagelines"></span>
      
-    FATE-HD
+    FATE
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
 <li class="divider">
     <li>
-      <a href="../vignettes/fate-hd_tutorial_0_publications.html">Publications</a>
+      <a href="../articles/fate_tutorial_0_publications.html">Publications</a>
     </li>
     <li>
-      <a href="../vignettes/fate-hd_tutorial_0_modelling_framework.html">Modelling framework</a>
+      <a href="../articles/fate_tutorial_0_modelling_framework.html">Modelling framework</a>
     </li>
     <li class="divider">
     <li>
-      <a href="../vignettes/fate-hd_tutorial_1_PFG.html">a. Principle of PFG</a>
+      <a href="../articles/fate_tutorial_1_PFG.html">a. Principle of PFG</a>
     </li>
     <li>
-      <a href="../vignettes/fate-hd_tutorial_2_RUN_SIMULATION.html">b. Run a FATE-HD simulation</a>
+      <a href="../articles/fate_tutorial_2_RUN_SIMULATION.html">b. Run a FATE simulation</a>
     </li>
     <li>
-      <a href="../vignettes/fate-hd_tutorial_3_MODULES.html">c. Use a FATE-HD module</a>
+      <a href="../articles/fate_tutorial_3_MODULES.html">c. Use a FATE module</a>
     </li>
   </ul>
 </li>
@@ -82,21 +82,21 @@
   <ul class="dropdown-menu" role="menu">
 <li class="divider">
     <li>
-      <a href="../vignettes/rfate_tutorial_1_PFG.html">
+      <a href="../articles/rfate_tutorial_1_PFG.html">
         <span class="fa fa-battery-quarter"></span>
          
         Build PFG
       </a>
     </li>
     <li>
-      <a href="../vignettes/rfate_tutorial_2_params.html">
+      <a href="../articles/rfate_tutorial_2_params.html">
         <span class="fa fa-battery-half"></span>
          
         Build parameter files
       </a>
     </li>
     <li>
-      <a href="../vignettes/rfate_tutorial_3_graphics.html">
+      <a href="../articles/rfate_tutorial_3_graphics.html">
         <span class="fa fa-battery-three-quarters"></span>
          
         Build graphics
@@ -143,11 +143,11 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>FATE-HD tutorial 2 - Run a simulation</h1>
+      <h1 data-toc-skip>FATE tutorial 2 - Run a simulation</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/MayaGueguen/RFate.git/blob/master/vignettes/fate-hd_tutorial_2_RUN_SIMULATION.Rmd"><code>vignettes/fate-hd_tutorial_2_RUN_SIMULATION.Rmd</code></a></small>
-      <div class="hidden name"><code>fate-hd_tutorial_2_RUN_SIMULATION.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/MayaGueguen/RFate.git/blob/master/vignettes/fate_tutorial_2_RUN_SIMULATION.Rmd"><code>vignettes/fate_tutorial_2_RUN_SIMULATION.Rmd</code></a></small>
+      <div class="hidden name"><code>fate_tutorial_2_RUN_SIMULATION.Rmd</code></div>
 
     </div>
 
@@ -170,17 +170,17 @@ pre.grey {
 </style>
 <p><br><br></p>
 <p>“<em>The recurring suggestions are that models should explicitly (i) include spatiotemporal dynamics; (ii) consider multiple species in interactions and (iii) account for the processes shaping biodiversity distribution.</em>”</p>
-<p><code>FATE-HD</code> is a “<em>a biodiversity model that meets this challenge at regional scale by combining phenomenological and process-based approaches and using well-defined plant functional group</em>”. (<a href="papers/Boulangeat_2014_GCB.pdf" title="Boulangeat, I., Georges, D., Thuiller, W., FATE-HD: A spatially and temporally explicit integrated model for predicting vegetation structure and diversity at regional scale. Global Change Biology, 20, 2368–2378.">Boulangeat, 2014</a>)</p>
+<p><code>FATE</code> is a “<em>a biodiversity model that meets this challenge at regional scale by combining phenomenological and process-based approaches and using well-defined plant functional group</em>”. (<a href="papers/Boulangeat_2014_GCB.pdf" title="Boulangeat, I., Georges, D., Thuiller, W., FATE-HD: A spatially and temporally explicit integrated model for predicting vegetation structure and diversity at regional scale. Global Change Biology, 20, 2368–2378.">Boulangeat, 2014</a>)</p>
 <p><br><br></p>
-<div id="what-fate-hd-needs-to-be-run" class="section level1">
+<div id="what-fate-needs-to-be-run" class="section level1">
 <h1 class="hasAnchor">
-<a href="#what-fate-hd-needs-to-be-run" class="anchor"></a>What FATE-HD needs to be run?</h1>
+<a href="#what-fate-needs-to-be-run" class="anchor"></a>What FATE needs to be run?</h1>
 <p><br></p>
 <div id="the-different-type-of-parameters-and-flags" class="section level3">
 <h3 class="hasAnchor">
 <a href="#the-different-type-of-parameters-and-flags" class="anchor"></a><i class="fa fa-copy"></i> The different type of parameters and <em>flags</em>
 </h3>
-<p><code>FATE-HD</code> requires a quite large number of parameters, which are stored into <code>.txt</code> files, presented to and recovered by the software. These <strong>parameters</strong> can be of 3 types :</p>
+<p><code>FATE</code> requires a quite large number of parameters, which are stored into <code>.txt</code> files, presented to and recovered by the software. These <strong>parameters</strong> can be of 3 types :</p>
 <ol style="list-style-type: decimal">
 <li>
 <strong>Filenames</strong>, to guide the application to other parameter files that should be read</li>
@@ -198,7 +198,7 @@ pre.grey {
 <div id="how-to-produce-all-these-parameters-files" class="section level3">
 <h3 class="hasAnchor">
 <a href="#how-to-produce-all-these-parameters-files" class="anchor"></a><i class="fas fa-wrench"></i> How to produce all these parameters files ?</h3>
-<p><a href="https://mayagueguen.github.io/RFate/">RFate</a> is a <a href="https://www.r-project.org/">R</a> package available on <a href="https://github.com/MayaGueguen/RFate">github</a> and designed to provide support function to the <code>FATE-HD</code> software.</p>
+<p><a href="https://mayagueguen.github.io/RFate/">RFate</a> is a <a href="https://www.r-project.org/">R</a> package available on <a href="https://github.com/MayaGueguen/RFate">github</a> and designed to provide support function to the <code>FATE</code> software.</p>
 <p>It contains documentation and functions to create and organize all input files required by the model, as well as scripts to help analyze the resulting outputs.</p>
 <p><br></p>
 <div style="text-align:center;">
@@ -206,11 +206,11 @@ See <a href="rfate_tutorial_2_params.html">Build parameter files</a> <code>RFate
 </div>
 <p><br></p>
 </div>
-<div id="the-fate-hd-friendly-directory-organization" class="section level3">
+<div id="the-fate-friendly-directory-organization" class="section level3">
 <h3 class="hasAnchor">
-<a href="#the-fate-hd-friendly-directory-organization" class="anchor"></a><i class="fas fa-folder-open"></i> The FATE-HD friendly directory organization</h3>
-<p>As <code>FATE-HD</code> needs quite a lot of parameters given into different parameter files, it is important to organize them in a clear and intuitive way.</p>
-<p>While this is not mandatory to run a <code>FATE-HD</code> simulation, a specific and methodical folder architecture can be obtained with <a href="reference/PRE_FATE.skeletonDirectory.html">the PRE_FATE.skeletonDirectory function</a> from the <a href="https://mayagueguen.github.io/RFate/">RFate</a> package.</p>
+<a href="#the-fate-friendly-directory-organization" class="anchor"></a><i class="fas fa-folder-open"></i> The FATE friendly directory organization</h3>
+<p>As <code>FATE</code> needs quite a lot of parameters given into different parameter files, it is important to organize them in a clear and intuitive way.</p>
+<p>While this is not mandatory to run a <code>FATE</code> simulation, a specific and methodical folder architecture can be obtained with <a href="reference/PRE_FATE.skeletonDirectory.html">the PRE_FATE.skeletonDirectory function</a> from the <a href="https://mayagueguen.github.io/RFate/">RFate</a> package.</p>
 <p>A good way to start is to create this skeleton directory, and then copy or create the needed files inside to have all simulation data into the same place.</p>
 <div style="text-align:center">
 <img src="pictures/skeleton_directory_2.PNG" style="width:65.0%">
@@ -218,11 +218,11 @@ See <a href="rfate_tutorial_2_params.html">Build parameter files</a> <code>RFate
 <p><br><br></p>
 </div>
 </div>
-<div id="how-to-run-a-fate-hd-simulation" class="section level1">
+<div id="how-to-run-a-fate-simulation" class="section level1">
 <h1 class="hasAnchor">
-<a href="#how-to-run-a-fate-hd-simulation" class="anchor"></a>How to run a FATE-HD Simulation ?</h1>
+<a href="#how-to-run-a-fate-simulation" class="anchor"></a>How to run a FATE Simulation ?</h1>
 <p><br></p>
-<p>When all data and parameter files have been produced and correctly referred in a <a href="reference/PRE_FATE.params_simulParameters.html">SimulParameters</a> file, a <code>FATE-HD</code> simulation can be run by just typing something like :</p>
+<p>When all data and parameter files have been produced and correctly referred in a <a href="reference/PRE_FATE.params_simulParameters.html">SimulParameters</a> file, a <code>FATE</code> simulation can be run by just typing something like :</p>
 <pre class="bash">
 ./FATEHDD_6.0-0_UNIX path_to_your_ParamSimul_file
 </pre>
@@ -231,9 +231,9 @@ See <a href="rfate_tutorial_2_params.html">Build parameter files</a> <code>RFate
 <ul>
 <li><p>If all paths are <strong>absolute</strong><br>
 (i.e. including the root, such as <em><code>/home/username/FATE_simulation/DATA/GLOBAL_PARAMETERS/Global_parameters_V1.txt</code></em>),<br>
-there should not be any problem. The only requirement then is to run the simulation from the folder containing the <code>FATE-HD</code> executable file, or to also give absolute path for the executable file.</p></li>
+there should not be any problem. The only requirement then is to run the simulation from the folder containing the <code>FATE</code> executable file, or to also give absolute path for the executable file.</p></li>
 <li><p>If all paths are <strong>relative</strong><br>
-(i.e. starting from a specific folder, such as <em><code>FATE_simulation/DATA/GLOBAL_PARAMETERS/Global_parameters_V1.txt</code></em>), then the <code>FATE-HD</code> simulation must be run from this specific folder (i.e. here from the folder containing the <em><code>FATE_simulation</code></em> folder).</p></li>
+(i.e. starting from a specific folder, such as <em><code>FATE_simulation/DATA/GLOBAL_PARAMETERS/Global_parameters_V1.txt</code></em>), then the <code>FATE</code> simulation must be run from this specific folder (i.e. here from the folder containing the <em><code>FATE_simulation</code></em> folder).</p></li>
 </ul>
 <p><br><br></p>
 </div>

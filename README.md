@@ -15,6 +15,14 @@ pre.grey {
  color: #8b8d8f;
  font-family: Consolas,Monaco,Lucida Console,Liberation Mono,DejaVu Sans Mono,Bitstream Vera Sans Mono,Courier New, monospace;
 }
+.zoom p {
+width:600px;
+margin-left: auto;
+margin-right: auto;
+}
+.zoom p:hover {
+width:1200px;
+}
 </style>
 
 
@@ -38,20 +46,43 @@ devtools::install_github(repo="mayagueguen/RFate")
 
 <br/>
 
-**0. Understand how `FATE-HD` works :**
+`FATE` is a **spatially and temporally explicit vegetation model**. 
+It uses **plant functional groups (PFG)** and integrates important 
+mechanisms driving vegetation dynamics, structure and diversity, 
+such as **demographic cycle**, obviously, but also **seeds dispersal**, 
+**abiotic filtering** or **biotic interactions** (through the competition 
+for resources like light availability or soil suitability).
 
-- [the litterature](articles/fate-hd_tutorial_0_publications.html)
-- [and the software](articles/fate-hd_tutorial_0_modelling_framework.html)
+If **primary succession** is the most obvious ecological process that 
+can be modelled with `FATE` (*see chart*), events related to **secondary succession** 
+can be represented as well using the various **`FATE` add-on modules** : 
+disturbances (mowing, grazing, fire..), drought event, invasive species.
 
-**1. Building PFG :**
+<div style="text-align:center;"><img src="articles/pictures/SCHEMA_succession1.jpg" alt="Primary succession" style="width:600px;"></img></div>
 
-- [the principle](articles/fate-hd_tutorial_1_PFG.html)
+<br/>
+
+As vegetation modelling can be challenging (data gathering, parameterization, 
+handling results...), `RFate` provides **user-friendly functions** to go through 
+the **whole `FATE` workflow**. Links below present some **guidance documents**, for the 
+vegetation model as well as for the `R`package.
+
+<br/>
+
+**0. Understand how `FATE` works :**
+
+- [the litterature](articles/fate_tutorial_0_publications.html)
+- [and the software](articles/fate_tutorial_0_modelling_framework.html)
+
+**1. Build PFG :**
+
+- [the principle](articles/fate_tutorial_1_PFG.html)
 - [and the tools](articles/rfate_tutorial_1_PFG.html)
     
-**2. Run a `FATE-HD` simulation :**
+**2. Run a `FATE` simulation :**
 
-- [understand how to run a simulation,](articles/fate-hd_tutorial_2_RUN_SIMULATION.html)
-- [the different modules that can be used,](articles/fate-hd_tutorial_3_MODULES.html)
+- [understand how to run a simulation,](articles/fate_tutorial_2_RUN_SIMULATION.html)
+- [the different modules that can be used,](articles/fate_tutorial_3_MODULES.html)
 - [and how to prepare the corresponding parameter files](articles/rfate_tutorial_2_params.html)
     
 **3. Analyze the outputs :**
@@ -59,4 +90,7 @@ devtools::install_github(repo="mayagueguen/RFate")
 - [transform results and produce graphics](articles/rfate_tutorial_3_graphics.html)
 
 
-<img src="articles/pictures/SCHEMA_FATE_WORKFLOW.png" alt="Main workflow" style="width:800px;"></img>
+<div class="zoom">
+<p><img src="articles/pictures/SCHEMA_FATE_WORKFLOW.png" alt="Main workflow"></img></p>
+</div>
+

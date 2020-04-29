@@ -1,5 +1,5 @@
 ---
-title: "FATE-HD tutorial 0 - Publications"
+title: "FATE tutorial 0 - Publications"
 ---
 
 ## <i class="fa fa-battery-quarter"></i> BioMove
@@ -28,7 +28,7 @@ ________________________________________________________________________________
 ___________________________________________________________________________________________________
 
 
-## <i class="fa fa-battery-half"></i> FATE-HD model
+## <i class="fa fa-battery-half"></i> FATE model
 
 <br/>
 

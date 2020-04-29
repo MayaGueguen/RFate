@@ -23,7 +23,7 @@ pre.grey {
 
 <br/>
 
-`FATE-HD` requires a quite large number of parameters, which are stored into `.txt` files, presented to and recovered by the software. These **parameters** can be of 3 types :
+`FATE` requires a quite large number of parameters, which are stored into `.txt` files, presented to and recovered by the software. These **parameters** can be of 3 types :
 
 1. **Filenames**, to guide the application to other parameter files that should be read
 2. These filenames either correspond to :
@@ -92,7 +92,7 @@ with the function [PRE_FATE.params_PFGdisturbance](https://mayagueguen.github.io
 *3. Parameter management*
 
 - **SimulParameters file** : containing all links to the files created with the previous functions.  
-This is the file that will be given as the only argument to the `FATE-HD` executable file into the command line.  
+This is the file that will be given as the only argument to the `FATE` executable file into the command line.  
 It can be created with the function [PRE_FATE.params_simulParameters](https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_simulParameters.html)
 - **Multiple set of files** : to duplicate simulation folder and scan global parameters space with Latin Hypercube Sampling.  
 Folders can be created with the function [PRE_FATE.params_multipleSet](https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_multipleSet.html)
