@@ -46,19 +46,22 @@ NULL
 
 .unzip = function(folder_name, list_files, no_cores = 1)
 {
-  cat("\n UNZIP RASTER FILES from repository ", folder_name, "...\n")
-  if (no_cores > 1 && .getOS() == "windows")
+  if (length(list_files) > 0)
   {
-    no_cores = 1
-    warning("Parallelisation is not available for Windows. Sorry.")
+    cat("\n UNZIP RASTER FILES from repository ", folder_name, "...\n")
+    if (no_cores > 1 && .getOS() == "windows")
+    {
+      no_cores = 1
+      warning("Parallelisation is not available for Windows. Sorry.")
+    }
+    PROGRESS = txtProgressBar(min = 0, max = length(list_files), style = 3)
+    mclapply(1:length(list_files), function(x) {
+      setTxtProgressBar(pb = PROGRESS, value = x)
+      gunzip(list_files[x], skip = TRUE, remove = FALSE)
+    }, mc.cores = no_cores)
+    close(PROGRESS)
+    cat(" Done!\n")
   }
-  PROGRESS = txtProgressBar(min = 0, max = length(list_files), style = 3)
-  mclapply(1:length(list_files), function(x) {
-    setTxtProgressBar(pb = PROGRESS, value = x)
-    gunzip(list_files[x], skip = TRUE, remove = FALSE)
-  }, mc.cores = no_cores)
-  close(PROGRESS)
-  cat(" Done!\n")
 }
 
 
@@ -77,18 +80,21 @@ NULL
 
 .zip = function(folder_name, list_files, no_cores = 1)
 {
-  cat("\n ZIP RASTER FILES from repository ", folder_name, "...\n")
-  if (no_cores > 1 && .getOS() == "windows")
+  if (length(list_files) > 0)
   {
-    no_cores = 1
-    warning("Parallelisation is not available for Windows. Sorry.")
+    cat("\n ZIP RASTER FILES from repository ", folder_name, "...\n")
+    if (no_cores > 1 && .getOS() == "windows")
+    {
+      no_cores = 1
+      warning("Parallelisation is not available for Windows. Sorry.")
+    }
+    PROGRESS = txtProgressBar(min = 0, max = length(list_files), style = 3)
+    mclapply(1:length(list_files), function(x) {
+      setTxtProgressBar(pb = PROGRESS, value = x)
+      gzip(list_files[x], skip = TRUE, remove = TRUE)
+      if (file.exists(list_files[x])) file.remove(list_files[x])
+    }, mc.cores = no_cores)
+    close(PROGRESS)
+    cat(" Done!\n")
   }
-  PROGRESS = txtProgressBar(min = 0, max = length(list_files), style = 3)
-  mclapply(1:length(list_files), function(x) {
-    setTxtProgressBar(pb = PROGRESS, value = x)
-    gzip(list_files[x], skip = TRUE, remove = TRUE)
-    if (file.exists(list_files[x])) file.remove(list_files[x])
-  }, mc.cores = no_cores)
-  close(PROGRESS)
-  cat(" Done!\n")
 }
