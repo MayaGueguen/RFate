@@ -206,6 +206,7 @@ POST_FATE.graphic_evolutionStability = function(
     .testParam_existFile(file.abundance)
     tab.totalAbundance = fread(file.abundance)
     tab.totalAbundance = as.data.frame(tab.totalAbundance, stringsAsFactors = FALSE)
+    tab.totalAbundance$HAB = as.character(tab.totalAbundance$HAB)
     
     years = colnames(tab.totalAbundance)
     years = years[which(!(years %in% c("PFG", "ID.pixel", "X", "Y", "HAB")))]
@@ -224,6 +225,7 @@ POST_FATE.graphic_evolutionStability = function(
     cat("\n GETTING TOTAL ABUNDANCE and EVENNESS within each habitat...")
     
     ## Getting total abundance within each habitat
+    cat("\n >> Habitat total abundance...")
     tab.split = split(tab.totalAbundance, list(tab.totalAbundance$HAB))
     tab.hab = foreach(i = 1:length(tab.split), .combine = "rbind") %do%
     {
@@ -239,6 +241,7 @@ POST_FATE.graphic_evolutionStability = function(
     }
     
     ## Getting PFG relative abundance within each habitat
+    cat("\n >> PFG relative abundance...")
     tab.split = split(tab.totalAbundance, list(tab.totalAbundance$PFG
                                                , tab.totalAbundance$HAB))
     tab.prop = foreach(i = 1:length(tab.split), .combine = "rbind") %do%
@@ -260,6 +263,7 @@ POST_FATE.graphic_evolutionStability = function(
     }
     
     ## Calculating evenness within each habitat
+    cat("\n >> Habitat evenness...")
     tab.split = split(tab.prop, list(tab.prop$HAB, tab.prop$year))
     tab.even = foreach(i = 1:length(tab.split), .combine = "rbind") %do%
     {
@@ -275,7 +279,11 @@ POST_FATE.graphic_evolutionStability = function(
     }
     
     ## Merging total abundance and evenness for each habitat
-    tab.HAB = merge(tab.hab, tab.even, by = c("HAB", "year"))
+    if (nrow(tab.even) > 0) {
+      tab.HAB = merge(tab.hab, tab.even, by = c("HAB", "year"))
+    } else {
+      tab.HAB = tab.hab
+    }
     
     cat("\n")
     
@@ -296,22 +304,28 @@ POST_FATE.graphic_evolutionStability = function(
     
     .getSucc = function(vec.years)
     {
-      ## gaps between years
-      gaps = vec.years[2:length(vec.years)] - vec.years[1:(length(vec.years) - 1)]
-      ## periods with successive years
-      gaps = ifelse(gaps == movingWindow_step, 1, 0)
-      succ = c(gaps[1], rep(0, length(gaps) - 1))
-      for (i in 2:length(gaps))
+      if (length(vec.years) > 1)
       {
-        if (gaps[i] == 1){
-          succ[i] = succ[i - 1] + 1
-        } else {
-          succ[i] = 0
+        ## gaps between years
+        gaps = vec.years[2:length(vec.years)] - vec.years[1:(length(vec.years) - 1)]
+        ## periods with successive years
+        gaps = ifelse(gaps == movingWindow_step, 1, 0)
+        succ = c(gaps[1], rep(0, length(gaps) - 1))
+        for (i in 2:length(gaps))
+        {
+          if (gaps[i] == 1){
+            succ[i] = succ[i - 1] + 1
+          } else {
+            succ[i] = 0
+          }
         }
+        sel = vec.years[which(succ > 0) + 1]
+        if (succ[1] == 1) sel = c(vec.years[1], sel)
+        return(list(selected = sel, max = max(succ, na.rm = TRUE) + 1))
+      } else
+      {
+        return(list(selected = vec.years, max = length(vec.years)))
       }
-      sel = vec.years[which(succ > 0) + 1]
-      if (succ[1] == 1) sel = c(vec.years[1], sel)
-      return(list(selected = sel, max = max(succ, na.rm = TRUE)))
     }
     
     ## Calculate number of successive years -----------------------------------
@@ -415,7 +429,7 @@ POST_FATE.graphic_evolutionStability = function(
         
         
         ## plot
-        ggplot(tab.plot1, aes_string(x = "year", y = "value", color = "HAB")) +
+        pp = ggplot(tab.plot1, aes_string(x = "year", y = "value", color = "HAB")) +
           geom_rect(data = tab.plot2, inherit.aes = FALSE, alpha = 0.5
                     , aes_string(xmin = "yearStart", xmax = "yearEnd"
                                  , ymin = "mean - sd"
