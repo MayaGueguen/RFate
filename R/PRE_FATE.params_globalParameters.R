@@ -83,22 +83,11 @@
 ##' the number of way a PFG could react to a disturbance
 ##' @param DIST.freq (\emph{optional}) \cr a \code{vector} of \code{integer} 
 ##' corresponding to the frequency of each disturbance (\emph{in years})
-## @param doHabStability default \code{FALSE}. \cr If \code{TRUE}, check of 
-## habitat stability is activated in the \code{FATE} simulation, and 
-## associated parameters are required
-## @param HABSTAB.no_hab (\emph{optional}) \cr an \code{integer} corresponding 
-## to the number of different habitats
 ##' @param doDrought default \code{FALSE}. \cr If \code{TRUE}, drought 
 ##' disturbances are applied in the \code{FATE} simulation, and associated 
 ##' parameters are required
 ##' @param DROUGHT.no_sub (\emph{optional}) \cr an \code{integer} corresponding 
 ##' to the number of way a PFG could react to a drought disturbance
-## @param DROUGHT.chrono_post (\emph{optional}) \cr an \code{integer} 
-## corresponding to the post-drought effects timing, either pre-succession 
-## (\code{0}) or post (\code{1})
-## @param DROUGHT.chrono_curr (\emph{optional}) \cr an \code{integer} 
-## corresponding to the current-drought effects timing, either pre-succession 
-## (\code{0}) or post (\code{1})
 ##' @param doAliens default \code{FALSE}. \cr If \code{TRUE}, invasive plant 
 ##' introduction is activated in the \code{FATE} simulation, and associated 
 ##' parameters are required
@@ -245,31 +234,6 @@
 ##'     (\emph{in years}) \cr \cr}
 ##'   }
 ##'   }
-##   \item{HABITAT STABILITY}{= to evaluate the stability of different 
-##   habitats through the evolution of their PFG composition over time \cr
-##   = based on a map given within the \emph{Simul_parameters} file with the 
-##   \code{HABSTAB_MASK} flag \cr (see 
-##   \code{\link{PRE_FATE.params_simulParameters}}) \cr \cr
-##   
-##   This map must be categorical, with each value corresponding to a specific 
-##   habitat. \cr Every year, the abundance of each PFG within each habitat is 
-##   recorded, as well as the evenness of the habitat :
-##   \deqn{
-##   \text{evenness} = - \frac{\Sigma(\text{proportion}_{\text{ PFG}_i} * 
-##   log(\text{proportion}_{\text{ PFG}_i}))}{log(\text{no.PFG} - 1)}
-##   }
-##   with
-##   \deqn{\text{proportion}_{\text{ PFG}_i} = \frac{abund_{\text{ PFG}_i
-##   \text{, }\text{Habitat}_j}}{abund_{\text{ PFG}_{all}\text{, }
-##   \text{Habitat}_j}}}
-##   A temporal stability check can then 
-##   
-##   Every 5 years, a stability check is done to see if the abundance or the 
-##   evenness have values out of the usual distribution.
-##   \describe{
-##     \item{HABSTAB.no_hab}{the number of different habitats \cr \cr}
-##   }
-##   }
 ##'   \item{DROUGHT}{= to experience extreme events with a direct and a 
 ##'   delayed response on PFG \cr
 ##'   = based on a map given within the \emph{Simul_parameters} file with the 

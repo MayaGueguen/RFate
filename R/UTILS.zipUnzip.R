@@ -20,10 +20,13 @@
 ##' scanned
 ##' @param list_files a \code{vector} containing filenames to be compress or 
 ##' decompress, in order not to scan the whole given directory
-##' @param no_cores an \code{integer} corresponding to the number of computing 
-##' resources that can be used to parallelize the (de)compression
+##' @param no_cores default \code{1}. \cr an \code{integer} corresponding to the 
+##' number of computing resources that can be used to parallelize the 
+##' (de)compression
 ##' 
 ##' @importFrom parallel mclapply
+##' @importFrom R.utils gunzip gzip
+##' @importFrom utils txtProgressBar setTxtProgressBar
 ##'
 ## END OF HEADER ###############################################################
 
@@ -31,25 +34,17 @@ NULL
 
 ##' @export
 
-.unzip_ALL = function(folder_name, no_cores)
+.unzip_ALL = function(folder_name, no_cores = 1)
 {
-  cat("\n UNZIP RASTER FILES from repository ", folder_name, "...\n")
-  if (no_cores > 1 && .getOS() == "windows")
-  {
-    no_cores = 1
-    warning("Parallelisation is not available for Windows. Sorry.")
-  }
   list_files = list.files(folder_name, pattern = ".gz$", full.names = T)
-  mclapply(list_files, function(x)
-    system(paste0("gunzip ", x), ignore.stderr = T), mc.cores = no_cores)
-  cat(" Done!\n")
+  .unzip(folder_name = folder_name, list_files = list_files, no_cores = no_cores)
 }
 
 
 
 ##' @export
 
-.unzip = function(folder_name, list_files, no_cores)
+.unzip = function(folder_name, list_files, no_cores = 1)
 {
   cat("\n UNZIP RASTER FILES from repository ", folder_name, "...\n")
   if (no_cores > 1 && .getOS() == "windows")
@@ -57,8 +52,12 @@ NULL
     no_cores = 1
     warning("Parallelisation is not available for Windows. Sorry.")
   }
-  mclapply(list_files, function(x)
-    system(paste0("gunzip ", x), ignore.stderr = T), mc.cores = no_cores)
+  PROGRESS = txtProgressBar(min = 0, max = length(list_files), style = 3)
+  mclapply(1:length(list_files), function(x) {
+    setTxtProgressBar(pb = PROGRESS, value = x)
+    gunzip(list_files[x], skip = TRUE, remove = FALSE)
+  }, mc.cores = no_cores)
+  close(PROGRESS)
   cat(" Done!\n")
 }
 
@@ -66,25 +65,17 @@ NULL
 
 ##' @export
 
-.zip_ALL = function(folder_name, no_cores)
+.zip_ALL = function(folder_name, no_cores = 1)
 {
-  cat("\n ZIP RASTER FILES from repository ", folder_name, "...\n")
-  if (no_cores > 1 && .getOS() == "windows")
-  {
-    no_cores = 1
-    warning("Parallelisation is not available for Windows. Sorry.")
-  }
   list_files = list.files(folder_name, pattern = ".tif$|.img$", full.names = T)
-  mclapply(list_files, function(x)
-    system(paste0("gzip -9 ", x), ignore.stderr = T), mc.cores = no_cores)
-  cat(" Done!\n")
+  .zip(folder_name = folder_name, list_files = list_files, no_cores = no_cores)
 }
 
 
 
 ##' @export
 
-.zip = function(folder_name, list_files, no_cores)
+.zip = function(folder_name, list_files, no_cores = 1)
 {
   cat("\n ZIP RASTER FILES from repository ", folder_name, "...\n")
   if (no_cores > 1 && .getOS() == "windows")
@@ -92,7 +83,12 @@ NULL
     no_cores = 1
     warning("Parallelisation is not available for Windows. Sorry.")
   }
-  mclapply(list_files, function(x)
-    system(paste0("gzip -9 ", x), ignore.stderr = T), mc.cores = no_cores)
+  PROGRESS = txtProgressBar(min = 0, max = length(list_files), style = 3)
+  mclapply(1:length(list_files), function(x) {
+    setTxtProgressBar(pb = PROGRESS, value = x)
+    gzip(list_files[x], skip = TRUE, remove = TRUE)
+    if (file.exists(list_files[x])) file.remove(list_files[x])
+  }, mc.cores = no_cores)
+  close(PROGRESS)
   cat(" Done!\n")
 }

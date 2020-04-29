@@ -164,24 +164,24 @@ test_that("POST_FATE.graphics gives correct outputs :", {
   mat.PFG.obs$obs = sample(c(0, 1), nrow(mat.PFG.obs), prob = c(0.6, 0.4), replace = TRUE)
   
   
-  simulGraphics = POST_FATE.graphics(name.simulation = "FATE_simulation"
-                                     , years = 1
-                                     , no_years = 10
-                                     , opt.ras_habitat = "FATE_simulation/DATA/MASK/map_hab.tif"
-                                     , doFunc.evolCov = TRUE
-                                     , doFunc.evolPix = TRUE
-                                     , doFunc.valid = TRUE
-                                     , valid.mat.PFG.obs = mat.PFG.obs
-                                     , doFunc.mapPFGvsHS = TRUE
-                                     , doFunc.mapPFG = TRUE
-                                     , mapPFGvsHS.stratum = 2
-                                     , binMap.method = 1
-                                     , mapPFG.doBinary = TRUE
-                                     , opt.doPlot = TRUE)
-  
-  expect_output(str(simulGraphics), "List")
-  expect_equal(length(simulGraphics), 1)
-  
-  expect_output(str(simulGraphics[[1]]), "List")
-  expect_equal(length(simulGraphics[[1]]), 5)
+  # simulGraphics = POST_FATE.graphics(name.simulation = "FATE_simulation"
+  #                                    , years = 1
+  #                                    , no_years = 10
+  #                                    , opt.ras_habitat = "FATE_simulation/DATA/MASK/map_hab.tif"
+  #                                    , doFunc.evolCov = TRUE
+  #                                    , doFunc.evolPix = TRUE
+  #                                    , doFunc.valid = TRUE
+  #                                    , valid.mat.PFG.obs = mat.PFG.obs
+  #                                    , doFunc.mapPFGvsHS = TRUE
+  #                                    , doFunc.mapPFG = TRUE
+  #                                    , mapPFGvsHS.stratum = 2
+  #                                    , binMap.method = 1
+  #                                    , mapPFG.doBinary = TRUE
+  #                                    , opt.doPlot = TRUE)
+  # 
+  # expect_output(str(simulGraphics), "List")
+  # expect_equal(length(simulGraphics), 1)
+  # 
+  # expect_output(str(simulGraphics[[1]]), "List")
+  # expect_equal(length(simulGraphics[[1]]), 5)
 })

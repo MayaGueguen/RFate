@@ -13,7 +13,7 @@ Description: FATE-HD is a vegetation model based on Plant Functional Groups (PFG
 Depends:
     R (>= 3.4.0)
 Imports:
-    graphics, grDevices, methods, stats, utils,
+    graphics, grDevices, methods, stats, utils, R.utils,
     ggplot2, ggthemes, ggrepel, ggExtra, gridExtra, cowplot,
     reshape2, foreach, SPOT, data.table,
     raster, rgdal,

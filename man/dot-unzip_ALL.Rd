@@ -20,8 +20,9 @@ scanned}
 \item{list_files}{a \code{vector} containing filenames to be compress or 
 decompress, in order not to scan the whole given directory}
 
-\item{no_cores}{an \code{integer} corresponding to the number of computing 
-resources that can be used to parallelize the (de)compression}
+\item{no_cores}{default \code{1}. \cr an \code{integer} corresponding to the 
+number of computing resources that can be used to parallelize the 
+(de)compression}
 }
 \description{
 These functions compress (\code{.tif}, \code{.img}) or 

@@ -24,16 +24,16 @@ navbar:
       menu:
         - text: "---------"
         - text: Publications
-          href: vignettes/fate-hd_tutorial_0_publications.html
+          href: articles/fate-hd_tutorial_0_publications.html
         - text: Modelling framework
-          href: vignettes/fate-hd_tutorial_0_modelling_framework.html
+          href: articles/fate-hd_tutorial_0_modelling_framework.html
         - text: "---------"
         - text: a. Principle of PFG
-          href: vignettes/fate-hd_tutorial_1_PFG.html
+          href: articles/fate-hd_tutorial_1_PFG.html
         - text: b. Run a FATE-HD simulation
-          href: vignettes/fate-hd_tutorial_2_RUN_SIMULATION.html
+          href: articles/fate-hd_tutorial_2_RUN_SIMULATION.html
         - text: c. Use a FATE-HD module
-          href: vignettes/fate-hd_tutorial_3_MODULES.html
+          href: articles/fate-hd_tutorial_3_MODULES.html
     RFate:
       text: RFate
       icon: fas fa-toolbox
@@ -41,13 +41,13 @@ navbar:
         - text: "---------"
         - text: Build PFG
           icon: fa-battery-quarter
-          href: vignettes/rfate_tutorial_1_PFG.html
+          href: articles/rfate_tutorial_1_PFG.html
         - text: Build parameter files
           icon: fa-battery-half
-          href: vignettes/rfate_tutorial_2_params.html
+          href: articles/rfate_tutorial_2_params.html
         - text: Build graphics
           icon: fa-battery-three-quarters
-          href: vignettes/rfate_tutorial_3_graphics.html
+          href: articles/rfate_tutorial_3_graphics.html
         - text: "---------"
     download:
       text: 'Download Current Version'
