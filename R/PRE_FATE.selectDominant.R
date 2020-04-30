@@ -1080,208 +1080,214 @@ PRE_FATE.selectDominant = function(mat.observations
     
     {
       cat("\n> Illustration of selected species")
-      
-      ## Associate a color to each species according to selection rules
-      pal_col = c("Not selected" = "grey"
-                  , "A2" = "darkgoldenrod"
-                  , "A2 & B1" = "coral2"
-                  , "A2 & B2" = "hotpink3"
-                  , "A2 & B1 & B2" = "mediumorchid3"
-                  , "B1" = "dodgerblue4"
-                  , "B2" = "darkgreen"
-                  , "B1 & B2" = "darkolivegreen3"
-                  , "C" = "lightsalmon4")
-      tip_col = pal_col[RULES.sel$SELECTION]
-      pal_col = pal_col[which(names(pal_col) %in% unique(RULES.sel$SELECTION))]
-      
-      ## Transform results of selection rules into distance matrix
-      mat.dist = RULES.sel[, -which(colnames(RULES.sel) %in% c("species", "SELECTION"))]
-      mat.dist = as.matrix(mat.dist)
-      mat.dist[] = as.numeric(mat.dist[])
-      mat.dist = as.dist(gowdis(mat.dist))
-      if (!is.euclid(mat.dist)) mat.dist = quasieuclid(mat.dist)
-      
-      ## ----------------------------------------------------------------------
-      ## Transform distance matrix into phylogeny -----------------------------
-      hcp = as.phylo(hclust(mat.dist))
-      clust = cutree(hclust(mat.dist), h = 0.75)
-      clust.table = table(clust)
-      
-      .getAncestors = function(groups, group.i)
+      if (length(sel.sp) <= 1)
       {
-        ## tips corresponding to the class
-        ind_group.i = which(groups == group.i)
-        ind_tot = vector()
-        while(length(ind_tot) < (2 * table(groups)[group.i] - 2))
-        {
-          ind_tips = which(hcp$edge[, 2] %in% ind_group.i)
-          ## ancestors corresponding to the tips
-          ind_ancestors = unique(hcp$edge[ind_tips, 1])
-          
-          ind_tot = unique(c(ind_tot, ind_tips))
-          ind_group.i = ind_ancestors
-        }
-        return(ind_tot)
-      }
-      
-      ## GET edges color
-      edge_col = rep("grey", nrow(hcp$edge))
-      if (length(clust.table) > 1)
+        warning("Too few species selected for representation. No PCO graphic.")
+      } else
       {
-        for(i.class in 1:length(clust.table))
-        {
-          ind = .getAncestors(groups = clust, group.i = i.class)
-          edge_col[ind] = paste0("grey", round(seq(20, 80, length.out = length(clust.table))))[i.class]
-        }
-      }
-      
-      ## GET edges linetype
-      edge_lty = rep(1, nrow(hcp$edge))
-      if (doRuleA && length(which(RULES.sel$A1 == FALSE)) > 0)
-      {
-        ind = .getAncestors(groups = RULES.sel$A1, group.i = "FALSE")
-        edge_lty[ind] = 2
-      }
-      
-      ## GET tips color
-      tip_col = foreach(i = 1:length(tip_col), .combine = "c") %do%
-      {
-        aa = col2rgb(col = tip_col[i])[, 1]
-        bb = rgb(red = aa["red"]/255
-                 , green = aa["green"]/255
-                 , blue = aa["blue"]/255
-                 , alpha = ifelse(RULES.sel$A1[i] == TRUE, 1, 0.2))
-        return(bb)
-      }
-      
-      
-      ## ----------------------------------------------------------------------
-      pdf(file = "PRE_FATE_DOMINANT_STEP_2_selectedSpecies_PHYLO.pdf"
-          , width = 10, height = 10)
-      pp_phylo = {
-        plot(hcp
-             , type = "fan" ## unrooted, phylogram
-             , cex = 0.5
-             , label.offset = 0.01
-             , lab4ut = "axial"
-             , edge.color = edge_col
-             , edge.width = 1.5
-             , edge.lty = edge_lty
-             , tip.color = tip_col
-        )
-        legend("topleft"
-               , legend = names(pal_col)
-               , col = pal_col
-               , pch = 15
-               , pt.cex = 2
-               , bty ="n"
-               , xpd = TRUE)
-        title(main = "STEP 2 : Selected dominant species"
-              , sub = paste0("Colors highlight the rules of selection.\n"
-                             , "Species not meeting any criteria or only A1 have been removed.\n"
-                             , "Priority has been set to A2, B1 and B2 rules, rather than C. \n"
-                             , "Hence, species selected according to A2, B1 and/or B2 can also meet criterion C\n"
-                             , "while species selected according to C do not meet any of the three criteria.\n"
-                             , "Species selected according to one (or more) criterion but not meeting criterion A1 are transparent."
-                             , "\n")
-              , adj = 0)
-      }
-      dev.off()
-      
-      
-      ## ----------------------------------------------------------------------
-      ## Transform distance matrix into PCO -----------------------------------
-      PCO = dudi.pco(mat.dist, scannf = FALSE, nf = 3) ## PCO
-      
-      if (ncol(PCO$li) > 1)
-      {
-        PCO.li = PCO$li
-        PCO.li$PFG = factor(RULES.sel$SELECTION)
-        PCO.li$selected = RULES.sel$A1
-        ind_sel = which(PCO.li$selected == TRUE)
         
-        ## GET inertia values
-        inert = inertia.dudi(PCO)$tot.inertia
-        inert = c(inert$`cum(%)`[1]
-                  , inert$`cum(%)`[2] - inert$`cum(%)`[1]
-                  , inert$`cum(%)`[3] - inert$`cum(%)`[2])
+        ## Associate a color to each species according to selection rules
+        pal_col = c("Not selected" = "grey"
+                    , "A2" = "darkgoldenrod"
+                    , "A2 & B1" = "coral2"
+                    , "A2 & B2" = "hotpink3"
+                    , "A2 & B1 & B2" = "mediumorchid3"
+                    , "B1" = "dodgerblue4"
+                    , "B2" = "darkgreen"
+                    , "B1 & B2" = "darkolivegreen3"
+                    , "C" = "lightsalmon4")
+        tip_col = pal_col[RULES.sel$SELECTION]
+        pal_col = pal_col[which(names(pal_col) %in% unique(RULES.sel$SELECTION))]
         
-        ## --------------------------------------------------------------------
-        num.axis = 2:length(which(!is.na(inert)))
-        pp_pco.list = foreach(i.axis = num.axis) %do%
+        ## Transform results of selection rules into distance matrix
+        mat.dist = RULES.sel[, -which(colnames(RULES.sel) %in% c("species", "SELECTION"))]
+        mat.dist = as.matrix(mat.dist)
+        mat.dist[] = as.numeric(mat.dist[])
+        mat.dist = as.dist(gowdis(mat.dist))
+        if (!is.euclid(mat.dist)) mat.dist = quasieuclid(mat.dist)
+        
+        ## ----------------------------------------------------------------------
+        ## Transform distance matrix into phylogeny -----------------------------
+        hcp = as.phylo(hclust(mat.dist))
+        clust = cutree(hclust(mat.dist), h = 0.75)
+        clust.table = table(clust)
+        
+        .getAncestors = function(groups, group.i)
         {
-          ## GET ellipses when A1 = TRUE
-          PCO.ELL = .getELLIPSE(xy = PCO.li[ind_sel, c("A1", paste0("A", i.axis))]
-                                , fac = PCO.li$PFG[ind_sel])
-          PCO.ELL$selected = TRUE
-          PCO.pts = merge(PCO.li[ind_sel, ]
-                          , unique(PCO.ELL[, c("xlabel", "ylabel", "PFG")])
-                          , by = "PFG")
-          PCO.pts$selected = TRUE
-          labels.ELL = unique(PCO.ELL[, c("xlabel", "ylabel", "PFG", "selected")])
-          
-          ## GET ellipses when A1 = FALSE
-          if (length(unique(PCO.li$PFG[-ind_sel])) > 1)
+          ## tips corresponding to the class
+          ind_group.i = which(groups == group.i)
+          ind_tot = vector()
+          while(length(ind_tot) < (2 * table(groups)[group.i] - 2))
           {
-            tmp.ELL = .getELLIPSE(xy = PCO.li[-ind_sel, c("A1", paste0("A", i.axis))]
-                                  , fac = PCO.li$PFG[-ind_sel])
-            tmp.ELL$selected = FALSE
-            tmp.pts = merge(PCO.li[-ind_sel, ]
-                            , unique(tmp.ELL[, c("xlabel", "ylabel", "PFG")])
-                            , by = "PFG")
-            tmp.pts$selected = FALSE
+            ind_tips = which(hcp$edge[, 2] %in% ind_group.i)
+            ## ancestors corresponding to the tips
+            ind_ancestors = unique(hcp$edge[ind_tips, 1])
             
-            PCO.ELL = rbind(PCO.ELL, tmp.ELL)
-            PCO.pts = rbind(PCO.pts, tmp.pts)
+            ind_tot = unique(c(ind_tot, ind_tips))
+            ind_group.i = ind_ancestors
           }
-          
-          
-          pp_pco = ggplot(PCO.li, aes_string(x = "A1"
-                                             , y = paste0("A", i.axis)
-                                             , color = "PFG"
-                                             , alpha = "as.numeric(selected)"
-                                             , linetype = "selected")) +
-            geom_point() +
-            geom_hline(yintercept = 0, color = "grey30", lwd = 1) +
-            geom_vline(xintercept = 0, color = "grey30", lwd = 1) +
-            geom_segment(data = PCO.pts, aes_string(xend = "xlabel"
-                                                    , yend = "ylabel"
-                                                    , size = "selected")) +
-            geom_path(data = PCO.ELL, aes_string(x = "x", y = "y", size = "selected")) +
-            geom_label_repel(data = labels.ELL, aes_string(x = "xlabel"
-                                                           , y = "ylabel"
-                                                           , label = "PFG")) +
-            scale_y_continuous(position = "right", labels = NULL
-                               , sec.axis = sec_axis(~ . + 0)) +
-            scale_color_manual(guide = FALSE, values = pal_col) +
-            scale_alpha(guide = FALSE, range = c(0.2, 1)) +
-            scale_linetype_manual(guide = FALSE, values = c("TRUE" = 1, "FALSE" = 2)) +
-            scale_size_manual(guide = FALSE, values = c("TRUE" = 0.8, "FALSE" = 0.5)) +
-            labs(x = paste0("\nAXIS 1 = ", round(inert[1], 1), "% of inertia")
-                 , y = paste0("AXIS ", i.axis, " = ", round(inert[i.axis], 1), "% of inertia\n")
-                 , title = "STEP 2 : Selected dominant species"
-                 , subtitle = paste0("Colors highlight the rules of selection.\n"
-                                     , "Species not meeting any criteria or only A1 have been removed.\n"
-                                     , "Priority has been set to A2, B1 and B2 rules, rather than C. \n"
-                                     , "Hence, species selected according to A2, B1 and/or B2 can also meet criterion C\n"
-                                     , "while species selected according to C do not meet any of the three criteria.\n"
-                                     , "Species selected according to one (or more) criterion but not meeting criterion A1 are transparent."
-                                     , "\n")) +
-            .getGraphics_theme() +
-            theme(axis.title = element_text(size = 12))
-          
-          return(pp_pco)
+          return(ind_tot)
         }
-        names(pp_pco.list) = paste0("Axis1_Axis", num.axis)
-        pp_pco.list = pp_pco.list[names(pp_pco.list)[which(sapply(pp_pco.list, is.null) == FALSE)]]
         
-        ## --------------------------------------------------------------------
-        if (!is.null(pp_pco.list))
+        ## GET edges color
+        edge_col = rep("grey", nrow(hcp$edge))
+        if (length(clust.table) > 1)
         {
-          pdf(file = "PRE_FATE_DOMINANT_STEP_2_selectedSpecies_PCO.pdf"
-              , width = 10, height = 8)
-          for (pp in pp_pco.list) if (!is.null(pp)) plot(pp)
-          dev.off()
+          for(i.class in 1:length(clust.table))
+          {
+            ind = .getAncestors(groups = clust, group.i = i.class)
+            edge_col[ind] = paste0("grey", round(seq(20, 80, length.out = length(clust.table))))[i.class]
+          }
+        }
+        
+        ## GET edges linetype
+        edge_lty = rep(1, nrow(hcp$edge))
+        if (doRuleA && length(which(RULES.sel$A1 == FALSE)) > 0)
+        {
+          ind = .getAncestors(groups = RULES.sel$A1, group.i = "FALSE")
+          edge_lty[ind] = 2
+        }
+        
+        ## GET tips color
+        tip_col = foreach(i = 1:length(tip_col), .combine = "c") %do%
+        {
+          aa = col2rgb(col = tip_col[i])[, 1]
+          bb = rgb(red = aa["red"]/255
+                   , green = aa["green"]/255
+                   , blue = aa["blue"]/255
+                   , alpha = ifelse(RULES.sel$A1[i] == TRUE, 1, 0.2))
+          return(bb)
+        }
+        
+        
+        ## ----------------------------------------------------------------------
+        pdf(file = "PRE_FATE_DOMINANT_STEP_2_selectedSpecies_PHYLO.pdf"
+            , width = 10, height = 10)
+        pp_phylo = {
+          plot(hcp
+               , type = "fan" ## unrooted, phylogram
+               , cex = 0.5
+               , label.offset = 0.01
+               , lab4ut = "axial"
+               , edge.color = edge_col
+               , edge.width = 1.5
+               , edge.lty = edge_lty
+               , tip.color = tip_col
+          )
+          legend("topleft"
+                 , legend = names(pal_col)
+                 , col = pal_col
+                 , pch = 15
+                 , pt.cex = 2
+                 , bty ="n"
+                 , xpd = TRUE)
+          title(main = "STEP 2 : Selected dominant species"
+                , sub = paste0("Colors highlight the rules of selection.\n"
+                               , "Species not meeting any criteria or only A1 have been removed.\n"
+                               , "Priority has been set to A2, B1 and B2 rules, rather than C. \n"
+                               , "Hence, species selected according to A2, B1 and/or B2 can also meet criterion C\n"
+                               , "while species selected according to C do not meet any of the three criteria.\n"
+                               , "Species selected according to one (or more) criterion but not meeting criterion A1 are transparent."
+                               , "\n")
+                , adj = 0)
+        }
+        dev.off()
+        
+        
+        ## ----------------------------------------------------------------------
+        ## Transform distance matrix into PCO -----------------------------------
+        PCO = dudi.pco(mat.dist, scannf = FALSE, nf = 3) ## PCO
+        
+        if (ncol(PCO$li) > 1)
+        {
+          PCO.li = PCO$li
+          PCO.li$PFG = factor(RULES.sel$SELECTION)
+          PCO.li$selected = RULES.sel$A1
+          ind_sel = which(PCO.li$selected == TRUE)
+          
+          ## GET inertia values
+          inert = inertia.dudi(PCO)$tot.inertia
+          inert = c(inert$`cum(%)`[1]
+                    , inert$`cum(%)`[2] - inert$`cum(%)`[1]
+                    , inert$`cum(%)`[3] - inert$`cum(%)`[2])
+          
+          ## --------------------------------------------------------------------
+          num.axis = 2:length(which(!is.na(inert)))
+          pp_pco.list = foreach(i.axis = num.axis) %do%
+          {
+            ## GET ellipses when A1 = TRUE
+            PCO.ELL = .getELLIPSE(xy = PCO.li[ind_sel, c("A1", paste0("A", i.axis))]
+                                  , fac = PCO.li$PFG[ind_sel])
+            PCO.ELL$selected = TRUE
+            PCO.pts = merge(PCO.li[ind_sel, ]
+                            , unique(PCO.ELL[, c("xlabel", "ylabel", "PFG")])
+                            , by = "PFG")
+            PCO.pts$selected = TRUE
+            labels.ELL = unique(PCO.ELL[, c("xlabel", "ylabel", "PFG", "selected")])
+            
+            ## GET ellipses when A1 = FALSE
+            if (length(unique(PCO.li$PFG[-ind_sel])) > 1)
+            {
+              tmp.ELL = .getELLIPSE(xy = PCO.li[-ind_sel, c("A1", paste0("A", i.axis))]
+                                    , fac = PCO.li$PFG[-ind_sel])
+              tmp.ELL$selected = FALSE
+              tmp.pts = merge(PCO.li[-ind_sel, ]
+                              , unique(tmp.ELL[, c("xlabel", "ylabel", "PFG")])
+                              , by = "PFG")
+              tmp.pts$selected = FALSE
+              
+              PCO.ELL = rbind(PCO.ELL, tmp.ELL)
+              PCO.pts = rbind(PCO.pts, tmp.pts)
+            }
+            
+            
+            pp_pco = ggplot(PCO.li, aes_string(x = "A1"
+                                               , y = paste0("A", i.axis)
+                                               , color = "PFG"
+                                               , alpha = "as.numeric(selected)"
+                                               , linetype = "selected")) +
+              geom_point() +
+              geom_hline(yintercept = 0, color = "grey30", lwd = 1) +
+              geom_vline(xintercept = 0, color = "grey30", lwd = 1) +
+              geom_segment(data = PCO.pts, aes_string(xend = "xlabel"
+                                                      , yend = "ylabel"
+                                                      , size = "selected")) +
+              geom_path(data = PCO.ELL, aes_string(x = "x", y = "y", size = "selected")) +
+              geom_label_repel(data = labels.ELL, aes_string(x = "xlabel"
+                                                             , y = "ylabel"
+                                                             , label = "PFG")) +
+              scale_y_continuous(position = "right", labels = NULL
+                                 , sec.axis = sec_axis(~ . + 0)) +
+              scale_color_manual(guide = FALSE, values = pal_col) +
+              scale_alpha(guide = FALSE, range = c(0.2, 1)) +
+              scale_linetype_manual(guide = FALSE, values = c("TRUE" = 1, "FALSE" = 2)) +
+              scale_size_manual(guide = FALSE, values = c("TRUE" = 0.8, "FALSE" = 0.5)) +
+              labs(x = paste0("\nAXIS 1 = ", round(inert[1], 1), "% of inertia")
+                   , y = paste0("AXIS ", i.axis, " = ", round(inert[i.axis], 1), "% of inertia\n")
+                   , title = "STEP 2 : Selected dominant species"
+                   , subtitle = paste0("Colors highlight the rules of selection.\n"
+                                       , "Species not meeting any criteria or only A1 have been removed.\n"
+                                       , "Priority has been set to A2, B1 and B2 rules, rather than C. \n"
+                                       , "Hence, species selected according to A2, B1 and/or B2 can also meet criterion C\n"
+                                       , "while species selected according to C do not meet any of the three criteria.\n"
+                                       , "Species selected according to one (or more) criterion but not meeting criterion A1 are transparent."
+                                       , "\n")) +
+              .getGraphics_theme() +
+              theme(axis.title = element_text(size = 12))
+            
+            return(pp_pco)
+          }
+          names(pp_pco.list) = paste0("Axis1_Axis", num.axis)
+          pp_pco.list = pp_pco.list[names(pp_pco.list)[which(sapply(pp_pco.list, is.null) == FALSE)]]
+          
+          ## --------------------------------------------------------------------
+          if (!is.null(pp_pco.list))
+          {
+            pdf(file = "PRE_FATE_DOMINANT_STEP_2_selectedSpecies_PCO.pdf"
+                , width = 10, height = 8)
+            for (pp in pp_pco.list) if (!is.null(pp)) plot(pp)
+            dev.off()
+          }
         }
       }
     }

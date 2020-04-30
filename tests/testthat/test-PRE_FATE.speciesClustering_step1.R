@@ -49,11 +49,11 @@ test_that("PRE_FATE.speciesClustering_step1 gives error with wrong data", {
                , fixed = TRUE)
   
   ## TEST mat.species.DIST : correct number of rows and columns
-  expect_error(PRE_FATE.speciesClustering_step1(matrix(c(1,2,3,4,5,6,7,8), ncol=4))
+  expect_error(PRE_FATE.speciesClustering_step1(matrix(1:8, ncol=4))
                , "`mat.species.DIST` does not have the same number of rows (2) and columns (4)"
                , fixed = TRUE)
-  expect_error(PRE_FATE.speciesClustering_step1(list(matrix(c(1,2,3,4,5,6,7,8,9), ncol=3)
-                                                     , matrix(c(1,2,3,4,5,6,7,8), ncol=4)))
+  expect_error(PRE_FATE.speciesClustering_step1(list(matrix(1:9, ncol=3)
+                                                     , matrix(1:8, ncol=4)))
                , "`mat.species.DIST[[2]]` does not have the same number of rows (2) and columns (4)"
                , fixed = TRUE)
   
@@ -67,7 +67,7 @@ test_that("PRE_FATE.speciesClustering_step1 gives error with wrong data", {
   expect_error(PRE_FATE.speciesClustering_step1(list(matrix(c(1,2,3,4,NA,6,7,8,9), ncol=3)))
                , "`mat.species.DIST` contain NA values (1), clustering with `hclust` function might have problems dealing with this data"
                , fixed = TRUE)
-  expect_error(PRE_FATE.speciesClustering_step1(list(matrix(c(1,2,3,4,5,6,7,8,9), ncol=3)
+  expect_error(PRE_FATE.speciesClustering_step1(list(matrix(1:9, ncol=3)
                                                      , matrix(c(1,2,3,4,NA,6,7,8,9), ncol=3)))
                , "`mat.species.DIST` contain NA values (0, 1), clustering with `hclust` function might have problems dealing with this data"
                , fixed = TRUE)
@@ -80,7 +80,7 @@ test_that("PRE_FATE.speciesClustering_step1 gives error with wrong data", {
   expect_error(PRE_FATE.speciesClustering_step1(list(matrix(c(1,5,2,2), ncol=2)))
                , "All clustering methods (maybe for a specific group) give NA values for Mouchet measure"
                , fixed = TRUE)
-  expect_error(PRE_FATE.speciesClustering_step1(list(matrix(c(1,2,3,4,5,6,7,8,9), ncol=3)
+  expect_error(PRE_FATE.speciesClustering_step1(list(matrix(1:9, ncol=3)
                                                      , matrix(c(1,5,2,2), ncol=2)))
                , "All clustering methods (maybe for a specific group) give NA values for Mouchet measure"
                , fixed = TRUE)
