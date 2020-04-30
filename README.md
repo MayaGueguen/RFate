@@ -54,7 +54,7 @@ such as **demographic cycle**, obviously, but also **seeds dispersal**,
 for resources like light availability or soil suitability).
 
 If **primary succession** is the most obvious ecological process that 
-can be modelled with `FATE` (*see chart*), events related to **secondary succession** 
+can be modelled with `FATE`, events related to **secondary succession** 
 can be represented as well using the various **`FATE` add-on modules** : 
 disturbances (mowing, grazing, fire..), drought event, invasive species.
 

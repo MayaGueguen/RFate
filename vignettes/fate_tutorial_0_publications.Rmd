@@ -92,13 +92,13 @@ ________________________________________________________________________________
 
 <br/>
 
-- **Boulangeat** I., Georges D., Dentant C., Bonet R., Van Es J., Abdulhak S., Zimmermann N. E. and Thuiller W. (**2014**), Anticipating the spatio‐temporal response of plant diversity and vegetation structure to climate and land use change in a protected area. Ecography, 37: 1230-1239. https://doi:10.1111/ecog.00694
+- **Boulangeat** I., Georges D., Dentant C., Bonet R., Van Es J., Abdulhak S., Zimmermann N. E. and Thuiller W. (**2014**), *Anticipating the spatio‐temporal response of plant diversity and vegetation structure to climate and land use change in a protected area*. Ecography, 37: 1230-1239. https://doi:10.1111/ecog.00694
 
-- **Barros** C., Thuiller W., Georges D., Boulangeat I., Münkemüller T. and Bellwood D. (**2016**), N‐dimensional hypervolumes to study stability of complex ecosystems. Ecol Lett, 19: 729-742. https://doi.org/10.1111/ele.12617
+- **Barros** C., Thuiller W., Georges D., Boulangeat I., Münkemüller T. and Bellwood D. (**2016**), *N‐dimensional hypervolumes to study stability of complex ecosystems*. Ecol Lett, 19: 729-742. https://doi.org/10.1111/ele.12617
 
-- **Barros** C., Guéguen M., Douzet R., Carboni M., Boulangeat I., Zimmermann N. E., Münkemüller T., Thuiller W. and Mori A. (**2017**), Extreme climate events counteract the effects of climate and land‐use changes in Alpine tree lines. J Appl Ecol, 54: 39-50. https://doi.org/10.1111/1365-2664.12742
+- **Barros** C., Guéguen M., Douzet R., Carboni M., Boulangeat I., Zimmermann N. E., Münkemüller T., Thuiller W. and Mori A. (**2017**), *Extreme climate events counteract the effects of climate and land‐use changes in Alpine tree lines*. J Appl Ecol, 54: 39-50. https://doi.org/10.1111/1365-2664.12742
 
-- **Carboni** M., Guéguen M., Barros C., Georges D., Boulangeat I., Douzet R., Klonner G., Van Kleunen M., Essl F., Bossdorf O., Haeuser E., Talluto M. V., Moser D., Block S., Conti L., Dullinger I., Münkemüller T. and Thuiller W. (**2018**). Simulating plant invasion dynamics in mountain ecosystems under global change scenarios. Glob Change Biol, 24:e289–e302. https://doi.org/10.1111/gcb.13879
+- **Carboni** M., Guéguen M., Barros C., Georges D., Boulangeat I., Douzet R., Klonner G., Van Kleunen M., Essl F., Bossdorf O., Haeuser E., Talluto M. V., Moser D., Block S., Conti L., Dullinger I., Münkemüller T. and Thuiller W. (**2018**). *Simulating plant invasion dynamics in mountain ecosystems under global change scenarios*. Glob Change Biol, 24:e289–e302. https://doi.org/10.1111/gcb.13879
 
-- **Thuiller** W, Guéguen M, Bison M, et al (**2018**). Combining point‐process and landscape vegetation models to predict large herbivore distributions in space and time—A case study of Rupicapra rupicapra. Divers Distrib, 24:352–362. https://doi.org/10.1111/ddi.12684
+- **Thuiller** W, Guéguen M, Bison M, et al (**2018**). *Combining point‐process and landscape vegetation models to predict large herbivore distributions in space and time—A case study of Rupicapra rupicapra*. Divers Distrib, 24:352–362. https://doi.org/10.1111/ddi.12684
 

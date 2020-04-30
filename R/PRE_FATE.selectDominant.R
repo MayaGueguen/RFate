@@ -223,7 +223,7 @@
 ##' @importFrom foreach foreach %do%
 ##' @importFrom reshape2 melt
 ##' @importFrom FD gowdis
-##' @importFrom ade4 quasieuclid dudi.pco inertia.dudi
+##' @importFrom ade4 is.euclid quasieuclid dudi.pco inertia.dudi
 ##' @importFrom ape as.phylo plot.phylo
 ##' 
 ##' @importFrom ggplot2 ggplot ggsave aes_string 
