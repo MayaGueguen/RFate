@@ -116,8 +116,38 @@
     Reference
   </a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
 <li>
-  <a href="articles/index.html">Articles</a>
+      <a href="articles/fate_tutorial_0_publications.html">FATE tutorial 0 - Publications</a>
+    </li>
+    <li>
+      <a href="articles/fate_tutorial_0_modelling_framework.html">FATE tutorial 0 - Modelling framework</a>
+    </li>
+    <li>
+      <a href="articles/fate_tutorial_1_PFG.html">FATE tutorial 1 - Principle of PFG</a>
+    </li>
+    <li>
+      <a href="articles/fate_tutorial_2_RUN_SIMULATION.html">FATE tutorial 2 - Run a simulation</a>
+    </li>
+    <li>
+      <a href="articles/fate_tutorial_3_MODULES.html">FATE tutorial 3 - Use a module</a>
+    </li>
+    <li>
+      <a href="articles/rfate_tutorial_1_PFG.html">&lt;font color='#068f96'&gt;&lt;i class='fa fa-battery-quarter'&gt;&lt;/i&gt; `PRE_FATE` - build Plant Functional Groups (PFG)&lt;/font&gt;</a>
+    </li>
+    <li>
+      <a href="articles/rfate_tutorial_2_params.html">&lt;font color='#068f96'&gt; &lt;i class='fa fa-battery-half'&gt;&lt;/i&gt; `PRE_FATE` - build parameter files &lt;/font&gt;</a>
+    </li>
+    <li>
+      <a href="articles/rfate_tutorial_3_graphics.html">&lt;font color='#068f96'&gt; &lt;i class='fa fa-battery-three-quarters'&gt;&lt;/i&gt; `POST_FATE` - graphics &lt;/font&gt;</a>
+    </li>
+  </ul>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
@@ -148,6 +178,11 @@
   <div class="contents col-md-9">
 
 
+<hr>
+<p>title: resource_files:</p>
+<ul>
+<li><h2 id="articlespicturesschema_succession1.jpg">articles/pictures/SCHEMA_succession1.jpg</h2></li>
+</ul>
 <style>
 pre.bash {
  background-color: black;
@@ -187,7 +222,9 @@ devtools::install_github(repo="mayagueguen/RFate")
 <p><br></p>
 <p><code>FATE</code> is a <strong>spatially and temporally explicit vegetation model</strong>. It uses <strong>plant functional groups (PFG)</strong> and integrates important mechanisms driving vegetation dynamics, structure and diversity, such as <strong>demographic cycle</strong>, obviously, but also <strong>seeds dispersal</strong>, <strong>abiotic filtering</strong> or <strong>biotic interactions</strong> (through the competition for resources like light availability or soil suitability).</p>
 <p>If <strong>primary succession</strong> is the most obvious ecological process that can be modelled with <code>FATE</code>, events related to <strong>secondary succession</strong> can be represented as well using the various <strong><code>FATE</code> add-on modules</strong> : disturbances (mowing, grazing, fire..), drought event, invasive species.</p>
-<div style="text-align:center;"><img src="articles/pictures/SCHEMA_succession1.jpg" alt="Primary succession" style="width:600px;"></div>
+<div style="text-align:center;">
+<img src="articles/pictures/SCHEMA_succession1.jpg" alt="Primary succession" style="width:600px;">
+</div>
 <p><br></p>
 <p>As vegetation modelling can be challenging (data gathering, parameterization, handling results…), <code>RFate</code> provides <strong>user-friendly functions</strong> to go through the <strong>whole <code>FATE</code> workflow</strong>. Links below present some <strong>guidance documents</strong>, for the vegetation model as well as for the <code>R</code>package.</p>
 <p><br></p>

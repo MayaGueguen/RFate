@@ -1,5 +1,36 @@
 ---
 title: "FATE tutorial 0 - Publications"
+resource_files:
+  - papers/Moore_Noble_1990_JEM.pdf
+  - pictures/art_1990_Moore_Noble_JEM.png
+  - papers/Midgley_2010_Ecography.pdf
+  - pictures/art_2010_Midgley_Ecography.png
+  - papers/Boulangeat_2012_Global_Change_Biology.pdf
+  - pictures/art_2012_Boulangeat_GCB_1.png
+  - papers/Boulangeat_2012_Global_Change_Biology_SupMat.pdf
+  - pictures/art_2012_Boulangeat_GCB_2.png
+  - papers/Boulangeat_2014_Global_Change_Biology.pdf
+  - pictures/art_2014_Boulangeat_GCB_1.png
+  - papers/Boulangeat_2014_Global_Change_Biology_SupMat.pdf
+  - pictures/art_2014_Boulangeat_GCB_2.png
+  - papers/Boulangeat_2014_Ecography.pdf
+  - pictures/art_2014_Boulangeat_Ecography.png
+  - papers/Barros_2016_Ecology_Letters.pdf
+  - pictures/art_2016_Barros_EL_1.png
+  - papers/Barros_2016_Ecology_Letters_SupMat1.docx
+  - pictures/art_2016_Barros_EL_2.png
+  - papers/Barros_2017_Journal_Applied_Ecology.pdf
+  - pictures/art_2017_Barros_JAE_1.png
+  - papers/Barros_2017_Journal_Applied_Ecology_SupMat.7z
+  - pictures/art_2017_Barros_JAE_2.png
+  - papers/Carboni_2017_Global_Change_Biology.pdf
+  - pictures/art_2017_Carboni_GCB_1.png
+  - papers/Carboni_2017_Global_Change_Biology_SupMat.pdf
+  - pictures/art_2017_Carboni_GCB_2.png
+  - papers/Thuiller_2017_Diversity_Distributions.pdf
+  - pictures/art_2017_Thuiller_DD_1.png
+  - papers/Thuiller_2017_Diversity_Distributions_SupMat.docx
+  - pictures/art_2017_Thuiller_DD_2.png
 ---
 
 ## <i class="fa fa-battery-quarter"></i> BioMove

@@ -2,6 +2,7 @@
 [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/MayaGueguen/RFate?branch=master&svg=true)](https://ci.appveyor.com/project/MayaGueguen/RFate)
 [![Coverage status](https://codecov.io/gh/MayaGueguen/RFate/branch/master/graph/badge.svg)](https://codecov.io/github/MayaGueguen/RFate?branch=master)
 
+
 <style>
 pre.bash {
  background-color: black;
@@ -58,7 +59,9 @@ can be modelled with `FATE`, events related to **secondary succession**
 can be represented as well using the various **`FATE` add-on modules** : 
 disturbances (mowing, grazing, fire..), drought event, invasive species.
 
-<div style="text-align:center;"><img src="articles/pictures/SCHEMA_succession1.jpg" alt="Primary succession" style="width:600px;"></img></div>
+<div style="text-align:center;">
+<img src="articles/pictures/SCHEMA_succession1.jpg" alt="Primary succession" style="width:600px;"></img>
+</div>
 
 <br/>
 
