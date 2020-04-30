@@ -81,8 +81,8 @@
 ##'   }
 ##' }
 ##'     
-##' The information is written in \file{PRE_FATE_PFG_TRAITS_TABLE.csv} and 
-##' \file{PRE_FATE_CLUSTERING_STEP_3D_PFGtraitsValues.pdf} files. \cr
+##' The information is written in \file{PRE_FATE_PFG_TABLE_traits.csv} and 
+##' \file{PRE_FATE_CLUSTERING_STEP_3_PFGtraitsValues.pdf} files. \cr
 ##' This \code{.csv} file can be used to build parameter files to run a 
 ##' \code{FATE} simulation (e.g. \code{\link{PRE_FATE.params_PFGsuccession}}).
 ##' 
@@ -266,10 +266,11 @@ PRE_FATE.speciesClustering_step3 = function(mat.traits
   }
   
   write.csv(mat.traits.pfg
-            , file = "PRE_FATE_PFG_TRAITS_TABLE.csv"
+            , file = "PRE_FATE_PFG_TABLE_traits.csv"
             , row.names = F)
   
-  message(paste0("\n The parameter file PRE_FATE_PFG_TRAITS_TABLE.csv has been successfully created !\n"))
+  message(paste0("\n The parameter file PRE_FATE_PFG_TABLE_traits.csv "
+                 , "has been successfully created !\n"))
   
   
   #############################################################################
@@ -412,7 +413,7 @@ PRE_FATE.speciesClustering_step3 = function(mat.traits
   
   if (length(pp_list) > 0)
   {
-    pdf(file = "PRE_FATE_CLUSTERING_STEP_3D_PFGtraitsValues.pdf"
+    pdf(file = "PRE_FATE_CLUSTERING_STEP_3_PFGtraitsValues.pdf"
         , width = 10, height = 8)
     for (pp in pp_list) if (!is.null(pp)) plot(pp)
     dev.off()

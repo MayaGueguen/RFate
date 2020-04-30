@@ -116,9 +116,9 @@ objects with the following columns, and up to five \code{ggplot2} objects :
 The information is written in 
 \file{PRE_FATE_DOMINANT_[...].csv} files :
 \describe{
-  \item{\file{TABLE_COMPLETE}}{the complete table of all species and the 
+  \item{\file{TABLE_complete}}{the complete table of all species and the 
   selection rules described above (\code{tab.rules})}
-  \item{\file{TABLE_SPECIES}}{only the names / ID of the species selected}
+  \item{\file{TABLE_species}}{only the names / ID of the species selected}
 }
 
 Up to six \file{PRE_FATE_DOMINANT_[...].pdf} files are also created : 

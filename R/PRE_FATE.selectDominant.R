@@ -187,9 +187,9 @@
 ##' The information is written in 
 ##' \file{PRE_FATE_DOMINANT_[...].csv} files :
 ##' \describe{
-##'   \item{\file{TABLE_COMPLETE}}{the complete table of all species and the 
+##'   \item{\file{TABLE_complete}}{the complete table of all species and the 
 ##'   selection rules described above (\code{tab.rules})}
-##'   \item{\file{TABLE_SPECIES}}{only the names / ID of the species selected}
+##'   \item{\file{TABLE_species}}{only the names / ID of the species selected}
 ##' }
 ##' 
 ##' Up to six \file{PRE_FATE_DOMINANT_[...].pdf} files are also created : 
@@ -691,12 +691,12 @@ PRE_FATE.selectDominant = function(mat.observations
         end_filename = paste0(end_filenameA, end_filenameB, end_filenameC)
         
         write.csv(RULES
-                  , file = paste0("PRE_FATE_DOMINANT_TABLE_COMPLETE"
+                  , file = paste0("PRE_FATE_DOMINANT_TABLE_complete"
                                   , end_filename
                                   , ".csv")
                   , row.names = F)
         write.csv(RULES[which(RULES$SELECTED == TRUE), "species"]
-                  , file = paste0("PRE_FATE_DOMINANT_TABLE_SPECIES"
+                  , file = paste0("PRE_FATE_DOMINANT_TABLE_species"
                                   , end_filename
                                   , ".csv")
                   , row.names = F)
@@ -712,10 +712,10 @@ PRE_FATE.selectDominant = function(mat.observations
                        , ifelse(doRuleC
                                 , " > PRE_FATE_DOMINANT_mat.C.csv \n"
                                 , "")
-                       , " > PRE_FATE_DOMINANT_TABLE_COMPLETE"
+                       , " > PRE_FATE_DOMINANT_TABLE_complete"
                        , end_filename
                        , ".csv \n"
-                       , " > PRE_FATE_DOMINANT_TABLE_SPECIES"
+                       , " > PRE_FATE_DOMINANT_TABLE_species"
                        , end_filename
                        , ".csv \n"
                        , "have been successfully created !\n"))

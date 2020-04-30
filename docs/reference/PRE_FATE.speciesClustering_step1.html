@@ -156,8 +156,38 @@ choose the best number of clusters.." />
     Reference
   </a>
 </li>
-<li>
-  <a href="../articles/index.html">Articles</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/fate_tutorial_0_publications.html">FATE tutorial 0 - Publications</a>
+    </li>
+    <li>
+      <a href="../articles/fate_tutorial_0_modelling_framework.html">FATE tutorial 0 - Modelling framework</a>
+    </li>
+    <li>
+      <a href="../articles/fate_tutorial_1_PFG.html">FATE tutorial 1 - Principle of PFG</a>
+    </li>
+    <li>
+      <a href="../articles/fate_tutorial_2_RUN_SIMULATION.html">FATE tutorial 2 - Run a simulation</a>
+    </li>
+    <li>
+      <a href="../articles/fate_tutorial_3_MODULES.html">FATE tutorial 3 - Use a module</a>
+    </li>
+    <li>
+      <a href="../articles/rfate_tutorial_1_PFG.html">&lt;font color='#068f96'&gt;&lt;i class='fa fa-battery-quarter'&gt;&lt;/i&gt; `PRE_FATE` - build Plant Functional Groups (PFG)&lt;/font&gt;</a>
+    </li>
+    <li>
+      <a href="../articles/rfate_tutorial_2_params.html">&lt;font color='#068f96'&gt; &lt;i class='fa fa-battery-half'&gt;&lt;/i&gt; `PRE_FATE` - build parameter files &lt;/font&gt;</a>
+    </li>
+    <li>
+      <a href="../articles/rfate_tutorial_3_graphics.html">&lt;font color='#068f96'&gt; &lt;i class='fa fa-battery-three-quarters'&gt;&lt;/i&gt; `POST_FATE` - graphics &lt;/font&gt;</a>
+    </li>
+  </ul>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -229,11 +259,11 @@ with the following columns :</p>
 
 </dl>
 
-<p>Two <code class="file">PRE_FATE_CLUSTERING_[...].pdf</code> files are created :</p><dl'>
-  <dt><code class="file">STEP_1A <br /> clusteringMethod</code></dt><dd><p>to account for the chosen 
-  clustering method</p></dd>
-  <dt><code class="file">STEP_1B <br /> numberOfClusters</code></dt><dd><p>for decision support, to help 
-  the user to choose the adequate number of clusters to be given to the 
+<p>One <code class="file">PRE_FATE_CLUSTERING_STEP1_numberOfClusters.pdf</code> file is created 
+containing two types of graphics :</p><dl'>
+  <dt>clusteringMethod</dt><dd><p>to account for the chosen clustering method</p></dd>
+  <dt>numberOfClusters</dt><dd><p>for decision support, to help the user to choose 
+  the adequate number of clusters to be given to the 
   <code><a href='PRE_FATE.speciesClustering_step2.html'>PRE_FATE.speciesClustering_step2</a></code> function</p></dd>
 
 </dl>
@@ -262,7 +292,7 @@ a <code>list</code> of <code>dist</code> objects (instead of a <code>dist</code>
 </ul>
   <strong>For each agglomeration method, this measure is calculated. The 
   method that minimizes it is kept and used for further analyses (see 
-  <code class="file">STEP_1A</code> output file). <br /> <br /></strong></p></dd>
+  <code class="file">.pdf</code> output file). <br /> <br /></strong></p></dd>
   
   <dt><strong>2. Evaluation of the <br /> clustering</strong></dt><dd><p>once the hierarchical 
   clustering is done, the number of clusters to keep should be chosen. <br /> 
@@ -293,7 +323,7 @@ a <code>list</code> of <code>dist</code> objects (instead of a <code>dist</code>
   <strong>A graphic is produced, giving the values of these metrics in 
   function of the number of clusters used. Number of clusters with 
   evaluation metrics' values among the 3 best are highlighted to help the 
-  user to make his/her optimal choice (see <code class="file">STEP_1B</code> output file).</strong></p></dd>
+  user to make his/her optimal choice (see <code class="file">.pdf</code> output file).</strong></p></dd>
 
 </dl>
 

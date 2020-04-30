@@ -42,8 +42,8 @@ functional traits given in \code{mat.traits} :
   }
 }
     
-The information is written in \file{PRE_FATE_PFG_TRAITS_TABLE.csv} and 
-\file{PRE_FATE_CLUSTERING_STEP_3D_PFGtraitsValues.pdf} files. \cr
+The information is written in \file{PRE_FATE_PFG_TABLE_traits.csv} and 
+\file{PRE_FATE_CLUSTERING_STEP_3_PFGtraitsValues.pdf} files. \cr
 This \code{.csv} file can be used to build parameter files to run a 
 \code{FATE} simulation (e.g. \code{\link{PRE_FATE.params_PFGsuccession}}).
 }

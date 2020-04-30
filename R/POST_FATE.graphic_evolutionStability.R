@@ -106,7 +106,7 @@
 ##' }
 ##' 
 ##' 
-##' One \code{POST_FATE_[...].pdf} files are created : 
+##' One \code{POST_FATE_[...].pdf} files is created : 
 ##' \describe{
 ##'   \item{\file{GRAPHIC_A \cr stability}}{to visualize for each habitat the 
 ##'   evolution of its total abundance and its evenness through simulation time}

@@ -65,13 +65,13 @@ Two \code{POST_FATE_TABLE_ZONE_evolution_[...].csv} files are created :
 }
 
 
-Two \code{POST_FATE_[...].pdf} files are created : 
+One \code{POST_FATE_GRAPHIC_A_evolution_coverage_[...].pdf} file is created 
+containing two types of graphics : 
 \describe{
-  \item{\file{GRAPHIC_A \cr spaceOccupancy}}{to visualize for each PFG the 
-  evolution of its occupation of the studied area through simulation time}
-  \item{\file{GRAPHIC_A \cr totalAbundance}}{to visualize for each PFG the 
-  evolution of its abundance within the whole studied area through 
-  simulation time}
+  \item{spaceOccupancy}{to visualize for each PFG the evolution of its 
+  occupation of the studied area through simulation time}
+  \item{totalAbundance}{to visualize for each PFG the evolution of its 
+  abundance within the whole studied area through simulation time}
 }
 }
 \description{

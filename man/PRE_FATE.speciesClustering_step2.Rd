@@ -50,13 +50,14 @@ A \code{list} containing one \code{vector} and one
   }
 }
 
-Two \file{PRE_FATE_CLUSTERING_[...].pdf} files are created : 
+One \file{PRE_FATE_CLUSTERING_STEP_2_distantSpecies_PCO.pdf} file is created 
+containing two types of graphics : 
 \describe{
-  \item{\file{STEP_2C \cr distantSpecies}}{to visualize in each PFG the 
-  distribution of mean distance of each species to other species, and 
-  non-determinant species which are outside the distribution}
-  \item{\file{STEP_2C_PCO}}{to visualize in each PFG the distribution 
-  of species, with and without non-determinant species}
+  \item{distantSpecies}{to visualize in each PFG the distribution of mean 
+  distance of each species to other species, and non-determinant species 
+  which are outside the distribution}
+  \item{PCO}{to visualize in each PFG the distribution of species, with and 
+  without non-determinant species}
 }
 }
 \description{

@@ -29,12 +29,12 @@ with the following columns :
   }
 }
 
-Two \file{PRE_FATE_CLUSTERING_[...].pdf} files are created : 
+One \file{PRE_FATE_CLUSTERING_STEP1_numberOfClusters.pdf} file is created 
+containing two types of graphics : 
 \describe{
-  \item{\file{STEP_1A \cr clusteringMethod}}{to account for the chosen 
-  clustering method}
-  \item{\file{STEP_1B \cr numberOfClusters}}{for decision support, to help 
-  the user to choose the adequate number of clusters to be given to the 
+  \item{clusteringMethod}{to account for the chosen clustering method}
+  \item{numberOfClusters}{for decision support, to help the user to choose 
+  the adequate number of clusters to be given to the 
   \code{\link{PRE_FATE.speciesClustering_step2}} function}
 }
 }
@@ -71,7 +71,7 @@ The process is as follows :
   }
   \strong{For each agglomeration method, this measure is calculated. The 
   method that minimizes it is kept and used for further analyses (see 
-  \file{STEP_1A} output file). \cr \cr}
+  \file{.pdf} output file). \cr \cr}
   }
   
   \item{\strong{2. Evaluation of the \cr clustering}}{once the hierarchical 
@@ -103,7 +103,7 @@ The process is as follows :
   \strong{A graphic is produced, giving the values of these metrics in 
   function of the number of clusters used. Number of clusters with 
   evaluation metrics' values among the 3 best are highlighted to help the 
-  user to make his/her optimal choice (see \file{STEP_1B} output file).}
+  user to make his/her optimal choice (see \file{.pdf} output file).}
   }
 }
 

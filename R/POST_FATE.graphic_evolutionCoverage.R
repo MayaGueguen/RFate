@@ -89,13 +89,13 @@
 ##' }
 ##' 
 ##' 
-##' Two \code{POST_FATE_[...].pdf} files are created : 
+##' One \code{POST_FATE_GRAPHIC_A_evolution_coverage_[...].pdf} file is created 
+##' containing two types of graphics : 
 ##' \describe{
-##'   \item{\file{GRAPHIC_A \cr spaceOccupancy}}{to visualize for each PFG the 
-##'   evolution of its occupation of the studied area through simulation time}
-##'   \item{\file{GRAPHIC_A \cr totalAbundance}}{to visualize for each PFG the 
-##'   evolution of its abundance within the whole studied area through 
-##'   simulation time}
+##'   \item{spaceOccupancy}{to visualize for each PFG the evolution of its 
+##'   occupation of the studied area through simulation time}
+##'   \item{totalAbundance}{to visualize for each PFG the evolution of its 
+##'   abundance within the whole studied area through simulation time}
 ##' }
 ##' 
 ##' 
@@ -124,8 +124,9 @@
 ##' 
 ##' @importFrom utils write.csv
 ##' @importFrom data.table fread
+##' @importFrom grDevices pdf dev.off
 ##' 
-##' @importFrom ggplot2 ggplot ggsave aes_string 
+##' @importFrom ggplot2 ggplot aes_string 
 ##' geom_line 
 ##' scale_color_manual
 ##' facet_wrap labs theme element_text element_blank
@@ -285,10 +286,6 @@ POST_FATE.graphic_evolutionCoverage = function(
                                  , "pixels in which the abundance of the "
                                  , "species is greater than 0.\n")) +
         .getGraphics_theme()
-      ggsave(filename = paste0(name.simulation
-                               , "/RESULTS/POST_FATE_GRAPHIC_A_evolution_spaceOccupancy_"
-                               , basename(dir.save), ".pdf")
-             , plot = pp1, width = 10, height = 8)
       
       ## Evolution of abundance
       pp2 = ggplot(distriAbund.melt, aes_string(x = "YEAR"
@@ -304,10 +301,16 @@ POST_FATE.graphic_evolutionCoverage = function(
                                  , "over the whole studied area, meaning the "
                                  , "sum of its abundances in every pixel.\n")) +
         .getGraphics_theme()
-      ggsave(filename = paste0(name.simulation
-                               , "/RESULTS/POST_FATE_GRAPHIC_A_evolution_abundance_"
-                               , basename(dir.save), ".pdf")
-             , plot = pp2, width = 10, height = 8)
+      
+      ## ----------------------------------------------------------------------
+      pdf(file = paste0(name.simulation
+                        , "/RESULTS/POST_FATE_GRAPHIC_A_evolution_coverage_"
+                        , basename(dir.save), ".pdf")
+          , width = 10, height = 8)
+      plot(pp1)
+      plot(pp2)
+      dev.off()
+      
     } else
     {
       pp1 = pp2 = NULL
