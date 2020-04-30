@@ -226,40 +226,42 @@ test_that("POST_FATE.binaryMaps gives error with wrong data : method2.cutoff", {
 
 ## INPUTS
 test_that("POST_FATE.binaryMaps gives error with wrong data : rasters", {
-  if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
-  PRE_FATE.skeletonDirectory()
-  
-  library(raster)
-  map_mask = raster(nrows = 5, ncols = 5)
-  map_mask[] = 1
-  writeRaster(map_mask, filename = "FATE_simulation/DATA/MASK/map_mask.tif", overwrite = TRUE)
-  
-  PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
-                                   , required.no_PFG = 6
-                                   , required.no_strata = 5
-                                   , required.simul_duration = 100
-                                   , required.seeding_duration = 10
-                                   , required.seeding_timestep = 1
-                                   , required.seeding_input = 100
-                                   , required.max_abund_low = 3000
-                                   , required.max_abund_medium = 5000
-                                   , required.max_abund_high = 9000)
-  
-  PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
-                                , mat.PFG.succ = data.frame(PFG = paste0("PFG", 1:6)
-                                                            , type = c("C", "C", "H", "H", "P", "P")
-                                                            , height = c(10, 250, 36, 68, 1250, 550)
-                                                            , maturity = c(5, 5, 3, 3, 8, 9)
-                                                            , longevity = c(12, 200, 25, 4, 110, 70)))
-  
-  PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
-                                  , name.MASK = "map_mask.tif")
-  
-  dir.create("FATE_simulation/RESULTS/SIMUL_V1")
-  dir.create("FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_allStrata")
-  dir.create("FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_perStrata")
-  dir.create("FATE_simulation/RESULTS/SIMUL_V1/LIGHT")
-  dir.create("FATE_simulation/RESULTS/SIMUL_V1/SOIL")
+  {
+    if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
+    PRE_FATE.skeletonDirectory()
+    
+    library(raster)
+    map_mask = raster(nrows = 5, ncols = 5)
+    map_mask[] = 1
+    writeRaster(map_mask, filename = "FATE_simulation/DATA/MASK/map_mask.tif", overwrite = TRUE)
+    
+    PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                     , required.no_PFG = 6
+                                     , required.no_strata = 5
+                                     , required.simul_duration = 100
+                                     , required.seeding_duration = 10
+                                     , required.seeding_timestep = 1
+                                     , required.seeding_input = 100
+                                     , required.max_abund_low = 3000
+                                     , required.max_abund_medium = 5000
+                                     , required.max_abund_high = 9000)
+    
+    PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
+                                  , mat.PFG.succ = data.frame(PFG = paste0("PFG", 1:6)
+                                                              , type = c("C", "C", "H", "H", "P", "P")
+                                                              , height = c(10, 250, 36, 68, 1250, 550)
+                                                              , maturity = c(5, 5, 3, 3, 8, 9)
+                                                              , longevity = c(12, 200, 25, 4, 110, 70)))
+    
+    PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
+                                    , name.MASK = "map_mask.tif")
+    
+    dir.create("FATE_simulation/RESULTS/SIMUL_V1")
+    dir.create("FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_allStrata")
+    dir.create("FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_perStrata")
+    dir.create("FATE_simulation/RESULTS/SIMUL_V1/LIGHT")
+    dir.create("FATE_simulation/RESULTS/SIMUL_V1/SOIL")
+  }
   
   
   ## TEST RESULTS folder
@@ -279,57 +281,58 @@ test_that("POST_FATE.binaryMaps gives error with wrong data : rasters", {
 
 ## OUTPUTS
 test_that("POST_FATE.binaryMaps gives correct outputs : warnings", {
-  if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
-  PRE_FATE.skeletonDirectory()
-  
-  library(raster)
-  map_0 = raster(nrows = 5, ncols = 5, resolution = 50)
-  map_0[] = 0
-  map_1 = map_0
-  map_1[] = 1
-  writeRaster(map_1, filename = "FATE_simulation/DATA/MASK/map_mask.tif", overwrite = TRUE)
-  
-  PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
-                                   , required.no_PFG = 6
-                                   , required.no_strata = 5
-                                   , required.simul_duration = 100
-                                   , required.seeding_duration = 10
-                                   , required.seeding_timestep = 1
-                                   , required.seeding_input = 100
-                                   , required.max_abund_low = 3000
-                                   , required.max_abund_medium = 5000
-                                   , required.max_abund_high = 9000)
-  
-  PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
-                                , mat.PFG.succ = data.frame(PFG = paste0("PFG",1:6)
-                                                            , type = c("C", "C", "H", "H", "P", "P")
-                                                            , height = c(10, 250, 36, 68, 1250, 550)
-                                                            , maturity = c(5, 5, 3, 3, 8, 9)
-                                                            , longevity = c(12, 200, 25, 4, 110, 70)))
-  
-  PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
-                                  , name.MASK = "map_mask.tif")
-  
-  dir.create("FATE_simulation/RESULTS/SIMUL_V1")
-  dir.create("FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_allStrata")
-  dir.create("FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_perStrata")
-  dir.create("FATE_simulation/RESULTS/SIMUL_V1/LIGHT")
-  dir.create("FATE_simulation/RESULTS/SIMUL_V1/SOIL")
-  
-  for (i in 1:5)
   {
-    writeRaster(map_1, filename = paste0("FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_allStrata/"
-                                         , "Abund_YEAR_1_PFG", i, "_STRATA_all.tif"), overwrite = TRUE)
+    if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
+    PRE_FATE.skeletonDirectory()
+    
+    library(raster)
+    map_0 = raster(nrows = 5, ncols = 5, resolution = 50)
+    map_0[] = 0
+    map_1 = map_0
+    map_1[] = 1
+    writeRaster(map_1, filename = "FATE_simulation/DATA/MASK/map_mask.tif", overwrite = TRUE)
+    
+    PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                     , required.no_PFG = 6
+                                     , required.no_strata = 5
+                                     , required.simul_duration = 100
+                                     , required.seeding_duration = 10
+                                     , required.seeding_timestep = 1
+                                     , required.seeding_input = 100
+                                     , required.max_abund_low = 3000
+                                     , required.max_abund_medium = 5000
+                                     , required.max_abund_high = 9000)
+    
+    PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
+                                  , mat.PFG.succ = data.frame(PFG = paste0("PFG",1:6)
+                                                              , type = c("C", "C", "H", "H", "P", "P")
+                                                              , height = c(10, 250, 36, 68, 1250, 550)
+                                                              , maturity = c(5, 5, 3, 3, 8, 9)
+                                                              , longevity = c(12, 200, 25, 4, 110, 70)))
+    
+    PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
+                                    , name.MASK = "map_mask.tif")
+    
+    dir.create("FATE_simulation/RESULTS/SIMUL_V1")
+    dir.create("FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_allStrata")
+    dir.create("FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_perStrata")
+    dir.create("FATE_simulation/RESULTS/SIMUL_V1/LIGHT")
+    dir.create("FATE_simulation/RESULTS/SIMUL_V1/SOIL")
+    
+    for (i in 1:5)
+    {
+      writeRaster(map_1, filename = paste0("FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_allStrata/"
+                                           , "Abund_YEAR_1_PFG", i, "_STRATA_all.tif"), overwrite = TRUE)
+      writeRaster(map_1, filename = paste0("FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_perStrata/"
+                                           , "Abund_YEAR_1_PFG", i, "_STRATA_1.tif"), overwrite = TRUE)
+    }
+    writeRaster(map_0, filename = paste0("FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_allStrata/"
+                                         , "Abund_YEAR_1_PFG6_STRATA_all.tif"), overwrite = TRUE)
     writeRaster(map_1, filename = paste0("FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_perStrata/"
-                                         , "Abund_YEAR_1_PFG", i, "_STRATA_1.tif"), overwrite = TRUE)
+                                         , "Abund_YEAR_1_PFG6_STRATA_1.tif"), overwrite = TRUE)
+    
+    POST_FATE.relativeAbund(name.simulation = "FATE_simulation", years = 1)
   }
-  writeRaster(map_0, filename = paste0("FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_allStrata/"
-                                       , "Abund_YEAR_1_PFG6_STRATA_all.tif"), overwrite = TRUE)
-  writeRaster(map_1, filename = paste0("FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_perStrata/"
-                                       , "Abund_YEAR_1_PFG6_STRATA_1.tif"), overwrite = TRUE)
-  
-  POST_FATE.relativeAbund(name.simulation = "FATE_simulation", years = 1)
-  
   
   ## TEST output : method 2
   file.create("FATE_simulation/RESULTS/POST_FATE_TABLE_YEAR_1_validationStatistics_SIMUL_V0.csv")

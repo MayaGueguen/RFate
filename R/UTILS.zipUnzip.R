@@ -46,6 +46,7 @@ NULL
 
 .unzip = function(folder_name, list_files, no_cores = 1)
 {
+  list_files = list_files[file.exists(list_files)]
   if (length(list_files) > 0)
   {
     cat("\n UNZIP RASTER FILES from repository ", folder_name, "...\n")
@@ -80,6 +81,7 @@ NULL
 
 .zip = function(folder_name, list_files, no_cores = 1)
 {
+  list_files = list_files[file.exists(list_files)]
   if (length(list_files) > 0)
   {
     cat("\n ZIP RASTER FILES from repository ", folder_name, "...\n")
