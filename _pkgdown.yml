@@ -3,7 +3,6 @@ navbar:
   structure:
     left:
     - home
-    - intro
     - FATE
     - RFate
     - reference
@@ -58,8 +57,22 @@ navbar:
       href: https://github.com/MayaGueguen/RFate.git
       
 articles:
-  ~
-
+  - title: FATE
+    icon: fab fa-pagelines
+    navbar: ~
+    contents:
+      - "fate_tutorial_0_publications"
+      - "fate_tutorial_0_modelling_framework"
+      - "fate_tutorial_1_PFG"
+      - "fate_tutorial_2_RUN_SIMULATION"
+      - "fate_tutorial_3_MODULES"
+  - title: RFate
+    icon: fas fa-toolbox
+    navbar:
+    contents:
+      - "rfate_tutorial_1_PFG"
+      - "rfate_tutorial_2_params"
+      - "rfate_tutorial_3_graphics"
 
 reference:
   - title: Datasets

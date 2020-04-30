@@ -422,7 +422,7 @@ PRE_FATE.params_multipleSet = function(
   get_toSuppr = c("GLOBAL_PARAMS", "SAVE_DIR", "END_OF_FILE")
   if ("no_strata" %in% get_checked)
   {
-    get_toSuppr = c(get_toSuppr, "PFG_LIFE_HISTORY_PARAMS", "PFG_LIGHT_PARAMS")
+    get_toSuppr = c(get_toSuppr, "PFG_PARAMS_LIFE_HISTORY", "PFG_PARAMS_LIGHT")
   }
   for (i in get_checked)
   {
@@ -472,12 +472,12 @@ PRE_FATE.params_multipleSet = function(
     }
     
     ## Get succession and light PFG files
-    ind1 = ifelse(length(grep("PFG_LIFE_HISTORY_PARAMS", lines.simulParam)) > 0
-                  , grep("PFG_LIFE_HISTORY_PARAMS", lines.simulParam) + 1
+    ind1 = ifelse(length(grep("PFG_PARAMS_LIFE_HISTORY", lines.simulParam)) > 0
+                  , grep("PFG_PARAMS_LIFE_HISTORY", lines.simulParam) + 1
                   , 0) 
     ind2 = ifelse(ind1 > 0, ind[which(ind == (ind1 - 1)) + 1] - 1, 0)
-    ind3 = ifelse(length(grep("PFG_LIGHT_PARAMS", lines.simulParam)) > 0
-                  , grep("PFG_LIGHT_PARAMS", lines.simulParam) + 1
+    ind3 = ifelse(length(grep("PFG_PARAMS_LIGHT", lines.simulParam)) > 0
+                  , grep("PFG_PARAMS_LIGHT", lines.simulParam) + 1
                   , 0) 
     ind4 = ifelse(ind3 > 0, ind[which(ind == (ind3 - 1)) + 1] - 1, 0)
     params.simulParam.SUCC_LIGHT = list(SUCC = lines.simulParam[ind1:ind2]
@@ -631,13 +631,13 @@ PRE_FATE.params_multipleSet = function(
       PARAMS.range = as.data.frame(PARAMS.range)
       colnames(PARAMS.range) = names(unlist(PARAMS.min))
       rownames(PARAMS.range) = c("min", "max")
-      if ("soil_init" %in% colnames(PARAMS.range))
-      {
-        if (PARAMS.range[1, "soil_init"] < 0)
-        {
-          PARAMS.range[1, "soil_init"] = 0
-        }
-      }
+      # if ("soil_init" %in% colnames(PARAMS.range))
+      # {
+      #   if (PARAMS.range[1, "soil_init"] < 0)
+      #   {
+      #     PARAMS.range[1, "soil_init"] = 0
+      #   }
+      # }
       if ("soil_retention" %in% colnames(PARAMS.range))
       {
         if (PARAMS.range[1, "soil_retention"] < 0)
@@ -649,7 +649,8 @@ PRE_FATE.params_multipleSet = function(
           PARAMS.range[1, "soil_retention"] = 1
         }
       }
-      ind_notSoil = which(!(colnames(PARAMS.range) %in% c("soil_init", "soil_retention")))
+      # ind_notSoil = which(!(colnames(PARAMS.range) %in% c("soil_init", "soil_retention")))
+      ind_notSoil = which(!(colnames(PARAMS.range) %in% c("soil_retention")))
       if (length(which(PARAMS.range[1, ind_notSoil] < 1)) > 0)
       {
         PARAMS.range[1, which(PARAMS.range[1, ind_notSoil] < 1)] = 1
@@ -712,13 +713,13 @@ PRE_FATE.params_multipleSet = function(
         PARAMS.range = as.data.frame(PARAMS.range)
         colnames(PARAMS.range) = names(unlist(PARAMS.min))
         rownames(PARAMS.range) = c("min", "max")
-        if ("soil_init" %in% colnames(PARAMS.range))
-        {
-          if (PARAMS.range[1, "soil_init"] < 0)
-          {
-            PARAMS.range[1, "soil_init"] = 0
-          }
-        }
+        # if ("soil_init" %in% colnames(PARAMS.range))
+        # {
+        #   if (PARAMS.range[1, "soil_init"] < 0)
+        #   {
+        #     PARAMS.range[1, "soil_init"] = 0
+        #   }
+        # }
         if ("soil_retention" %in% colnames(PARAMS.range))
         {
           if (PARAMS.range[1, "soil_retention"] < 0)
@@ -730,7 +731,8 @@ PRE_FATE.params_multipleSet = function(
             PARAMS.range[1, "soil_retention"] = 1
           }
         }
-        ind_notSoil = which(!(colnames(PARAMS.range) %in% c("soil_init", "soil_retention")))
+        # ind_notSoil = which(!(colnames(PARAMS.range) %in% c("soil_init", "soil_retention")))
+        ind_notSoil = which(!(colnames(PARAMS.range) %in% c("soil_retention")))
         if (length(which(PARAMS.range[1, ind_notSoil] < 1)) > 0)
         {
           PARAMS.range[1, which(PARAMS.range[1, ind_notSoil] < 1)] = 1
@@ -922,7 +924,7 @@ PRE_FATE.params_multipleSet = function(
   {
     if (is.null(SUCC_LIGHT.simul$SUCC) || length(SUCC_LIGHT.simul$SUCC) == 0)
     {
-      stop(paste0("The flag --PFG_LIFE_HISTORY_PARAMS-- in the file "
+      stop(paste0("The flag --PFG_PARAMS_LIFE_HISTORY-- in the file "
                   , file.simulParam.1
                   , " does not contain any value. Please check."))
     }
@@ -953,7 +955,7 @@ PRE_FATE.params_multipleSet = function(
     {
       if (is.null(SUCC_LIGHT.simul$LIGHT) || length(SUCC_LIGHT.simul$LIGHT) == 0)
       {
-        stop(paste0("The flag --PFG_LIGHT_PARAMS-- in the file "
+        stop(paste0("The flag --PFG_PARAMS_LIGHT-- in the file "
                     , file.simulParam.1
                     , " does not contain any value. Please check."))
       }

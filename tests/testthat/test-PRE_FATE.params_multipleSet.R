@@ -385,7 +385,7 @@ test_that("PRE_FATE.params_multipleSet gives error with wrong data : within file
   expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
                                            , file.simulParam.1 = "toto.txt"
                                            , no_simulations = 10)
-               , "The flag --PFG_LIFE_HISTORY_PARAMS-- in the file FATE_simulation/PARAM_SIMUL/toto.txt does not contain any value. Please check."
+               , "The flag --PFG_PARAMS_LIFE_HISTORY-- in the file FATE_simulation/PARAM_SIMUL/toto.txt does not contain any value. Please check."
                , fixed = TRUE)
   
   
@@ -601,7 +601,7 @@ test_that("PRE_FATE.params_multipleSet gives error with wrong data : within file
   file.create("FATE_simulation/DATA/PFGS/SUCC/SUCC_3.txt")
   cat(paste0("--GLOBAL_PARAMS--\nFATE_simulation/glob.txt\n"
              , "--MASK--\nFATE_simulation/DATA/MASK/mask.txt\n"
-             , "--PFG_LIFE_HISTORY_PARAMS--\nFATE_simulation/DATA/PFGS/SUCC/SUCC_1.txt\n"
+             , "--PFG_PARAMS_LIFE_HISTORY--\nFATE_simulation/DATA/PFGS/SUCC/SUCC_1.txt\n"
              , "FATE_simulation/DATA/PFGS/SUCC/SUCC_2.txt\nFATE_simulation/DATA/PFGS/SUCC/SUCC_3.txt\n"
              , "--END_OF_FILE--\n")
       , file = "FATE_simulation/PARAM_SIMUL/toto.txt")
@@ -652,43 +652,45 @@ test_that("PRE_FATE.params_multipleSet gives correct output", {
 
 ## OUTPUTS
 test_that("PRE_FATE.params_multipleSet gives correct output with other conditions / scenarios", {
+  {
+    if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
+    if (dir.exists("FATE_simulation2")) unlink("FATE_simulation2", recursive = TRUE)
+    if (dir.exists("FATE_simulation_MULTIPLE_SET")) unlink("FATE_simulation_MULTIPLE_SET", recursive = TRUE)
+    
+    PRE_FATE.skeletonDirectory()
+    
+    file.create("FATE_simulation/DATA/MASK/mask.txt")
+    
+    file.create("FATE_simulation/DATA/PFGS/SUCC/SUCC_1.txt")
+    file.create("FATE_simulation/DATA/PFGS/SUCC/SUCC_2.txt")
+    file.create("FATE_simulation/DATA/PFGS/SUCC/SUCC_3.txt")
+    file.create("FATE_simulation/DATA/PFGS/DISP/DISP_1.txt")
+    file.create("FATE_simulation/DATA/PFGS/DISP/DISP_2.txt")
+    file.create("FATE_simulation/DATA/PFGS/DISP/DISP_3.txt")
+    
+    file.create("FATE_simulation/DATA/GLOBAL_PARAMETERS/glob.txt")
+    cat(paste0("## Test file\n"
+               , "NO_PFG 3\nNO_STRATA 4\nSIMULATION_DURATION 50\n"
+               , "SEEDING_DURATION 10\nSEEDING_TIMESTEP 1\nSEEDING_INPUT 100\n"
+               , "MAX_ABUND_LOW 500000\nMAX_ABUND_MEDIUM 600000\nMAX_ABUND_HIGH 700000\n"
+               , "DO_DISPERSAL 1\nDISPERSAL_MODE 1\n"
+               , "DO_HAB_SUITABILITY 0\nDO_LIGHT_COMPETITION 0\n"
+               , "DO_SOIL_COMPETITION 0\nDO_DISTURBANCES 0\n")
+        , file = "FATE_simulation/DATA/GLOBAL_PARAMETERS/glob.txt")
+    
+    file.create("FATE_simulation/PARAM_SIMUL/toto.txt")
+    cat(paste0("--GLOBAL_PARAMS--\nFATE_simulation/DATA/GLOBAL_PARAMETERS/glob.txt\n"
+               , "--TEST--\n"
+               , "--MASK--\nFATE_simulation/DATA/MASK/mask.txt\n"
+               , "--PFG_PARAMS_LIFE_HISTORY--\nFATE_simulation/DATA/PFGS/SUCC/SUCC_1.txt\n"
+               , "FATE_simulation/DATA/PFGS/SUCC/SUCC_2.txt\nFATE_simulation/DATA/PFGS/SUCC/SUCC_3.txt\n"
+               , "--PFG_DISP_PARAMS--\nFATE_simulation/DATA/PFGS/DISP/DISP_1.txt\n"
+               , "FATE_simulation/DATA/PFGS/DISP/DISP_2.txt\nFATE_simulation/DATA/PFGS/DISP/DISP_3.txt\n"
+               , "--END_OF_FILE--\n")
+        , file = "FATE_simulation/PARAM_SIMUL/toto.txt")
+  }
   
-  if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
-  if (dir.exists("FATE_simulation2")) unlink("FATE_simulation2", recursive = TRUE)
-  if (dir.exists("FATE_simulation_MULTIPLE_SET")) unlink("FATE_simulation_MULTIPLE_SET", recursive = TRUE)
-  
-  PRE_FATE.skeletonDirectory()
-  
-  file.create("FATE_simulation/DATA/MASK/mask.txt")
-  
-  file.create("FATE_simulation/DATA/PFGS/SUCC/SUCC_1.txt")
-  file.create("FATE_simulation/DATA/PFGS/SUCC/SUCC_2.txt")
-  file.create("FATE_simulation/DATA/PFGS/SUCC/SUCC_3.txt")
-  file.create("FATE_simulation/DATA/PFGS/DISP/DISP_1.txt")
-  file.create("FATE_simulation/DATA/PFGS/DISP/DISP_2.txt")
-  file.create("FATE_simulation/DATA/PFGS/DISP/DISP_3.txt")
-  
-  file.create("FATE_simulation/DATA/GLOBAL_PARAMETERS/glob.txt")
-  cat(paste0("## Test file\n"
-             , "NO_PFG 3\nNO_STRATA 4\nSIMULATION_DURATION 50\n"
-             , "SEEDING_DURATION 10\nSEEDING_TIMESTEP 1\nSEEDING_INPUT 100\n"
-             , "MAX_ABUND_LOW 500000\nMAX_ABUND_MEDIUM 600000\nMAX_ABUND_HIGH 700000\n"
-             , "DO_DISPERSAL 1\nDISPERSAL_MODE 1\n"
-             , "DO_HAB_SUITABILITY 0\nDO_LIGHT_COMPETITION 0\n"
-             , "DO_SOIL_COMPETITION 0\nDO_DISTURBANCES 0\n")
-      , file = "FATE_simulation/DATA/GLOBAL_PARAMETERS/glob.txt")
-  
-  file.create("FATE_simulation/PARAM_SIMUL/toto.txt")
-  cat(paste0("--GLOBAL_PARAMS--\nFATE_simulation/DATA/GLOBAL_PARAMETERS/glob.txt\n"
-             , "--TEST--\n"
-             , "--MASK--\nFATE_simulation/DATA/MASK/mask.txt\n"
-             , "--PFG_LIFE_HISTORY_PARAMS--\nFATE_simulation/DATA/PFGS/SUCC/SUCC_1.txt\n"
-             , "FATE_simulation/DATA/PFGS/SUCC/SUCC_2.txt\nFATE_simulation/DATA/PFGS/SUCC/SUCC_3.txt\n"
-             , "--PFG_DISP_PARAMS--\nFATE_simulation/DATA/PFGS/DISP/DISP_1.txt\n"
-             , "FATE_simulation/DATA/PFGS/DISP/DISP_2.txt\nFATE_simulation/DATA/PFGS/DISP/DISP_3.txt\n"
-             , "--END_OF_FILE--\n")
-      , file = "FATE_simulation/PARAM_SIMUL/toto.txt")
-  
+  ## TEST all but do.DISPERSAL.mode and do.no_strata (and light / soil / habsuit not activated)
   if (dir.exists("FATE_simulation_MULTIPLE_SET")) unlink("FATE_simulation_MULTIPLE_SET", recursive = TRUE)
   expect_message(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
                                              , file.simulParam.1 = "toto.txt"
@@ -698,6 +700,7 @@ test_that("PRE_FATE.params_multipleSet gives correct output with other condition
                  , "The parameter file FATE_simulation_MULTIPLE_SET/DATA/GLOBAL_PARAMETERS/Global_parameters_V1.txt has been successfully created !"
                  , fixed = TRUE)
   
+  ## TEST do.max_abund_low
   if (dir.exists("FATE_simulation_MULTIPLE_SET")) unlink("FATE_simulation_MULTIPLE_SET", recursive = TRUE)
   expect_message(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
                                              , file.simulParam.1 = "toto.txt"
@@ -718,6 +721,7 @@ test_that("PRE_FATE.params_multipleSet gives correct output with other condition
                  , "The parameter file FATE_simulation_MULTIPLE_SET/DATA/GLOBAL_PARAMETERS/Global_parameters_V1.txt has been successfully created !"
                  , fixed = TRUE)
   
+  ## TEST do.DISPERSAL.mode
   if (dir.exists("FATE_simulation_MULTIPLE_SET")) unlink("FATE_simulation_MULTIPLE_SET", recursive = TRUE)
   expect_message(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
                                              , file.simulParam.1 = "toto.txt"
@@ -738,35 +742,37 @@ test_that("PRE_FATE.params_multipleSet gives correct output with other condition
                  , "The parameter file FATE_simulation_MULTIPLE_SET/DATA/GLOBAL_PARAMETERS/Global_parameters_V1.txt has been successfully created !"
                  , fixed = TRUE)
   
+  {
+    if (dir.exists("FATE_simulation2")) unlink("FATE_simulation2", recursive = TRUE)
+    PRE_FATE.skeletonDirectory(name.simulation = "FATE_simulation2")
+    file.copy(from = list.files(path = "FATE_simulation"
+                                , all.files = TRUE
+                                , full.names = TRUE
+                                , recursive = TRUE
+                                , include.dirs = FALSE)
+              , to = sub("FATE_simulation/"
+                         , "FATE_simulation2/"
+                         , list.files(path = "FATE_simulation"
+                                      , all.files = TRUE
+                                      , full.names = TRUE
+                                      , recursive = TRUE
+                                      , include.dirs = FALSE))
+              , recursive = TRUE)
+    fi = readLines("FATE_simulation2/PARAM_SIMUL/toto.txt")
+    fi = sub("FATE_simulation/", "FATE_simulation2/", fi)
+    cat(fi, file = "FATE_simulation2/PARAM_SIMUL/toto.txt", sep = "\n")
+    
+    cat(paste0("## Test file\n"
+               , "NO_PFG 3\nNO_STRATA 4\nSIMULATION_DURATION 50\n"
+               , "SEEDING_DURATION 10\nSEEDING_TIMESTEP 1\nSEEDING_INPUT 100\n"
+               , "MAX_ABUND_MEDIUM 600000\nMAX_ABUND_HIGH 700000\n"
+               , "DO_DISPERSAL 1\nDISPERSAL_MODE 1\n"
+               , "DO_HAB_SUITABILITY 0\nDO_LIGHT_COMPETITION 0\n"
+               , "DO_SOIL_COMPETITION 0\nDO_DISTURBANCES 0\n")
+        , file = "FATE_simulation2/DATA/GLOBAL_PARAMETERS/glob.txt")
+  }
   
-  if (dir.exists("FATE_simulation2")) unlink("FATE_simulation2", recursive = TRUE)
-  PRE_FATE.skeletonDirectory(name.simulation = "FATE_simulation2")
-  file.copy(from = list.files(path = "FATE_simulation"
-                              , all.files = TRUE
-                              , full.names = TRUE
-                              , recursive = TRUE
-                              , include.dirs = FALSE)
-            , to = sub("FATE_simulation/"
-                       , "FATE_simulation2/"
-                       , list.files(path = "FATE_simulation"
-                                    , all.files = TRUE
-                                    , full.names = TRUE
-                                    , recursive = TRUE
-                                    , include.dirs = FALSE))
-            , recursive = TRUE)
-  fi = readLines("FATE_simulation2/PARAM_SIMUL/toto.txt")
-  fi = sub("FATE_simulation/", "FATE_simulation2/", fi)
-  cat(fi, file = "FATE_simulation2/PARAM_SIMUL/toto.txt", sep = "\n")
-  
-  cat(paste0("## Test file\n"
-             , "NO_PFG 3\nNO_STRATA 4\nSIMULATION_DURATION 50\n"
-             , "SEEDING_DURATION 10\nSEEDING_TIMESTEP 1\nSEEDING_INPUT 100\n"
-             , "MAX_ABUND_MEDIUM 600000\nMAX_ABUND_HIGH 700000\n"
-             , "DO_DISPERSAL 1\nDISPERSAL_MODE 1\n"
-             , "DO_HAB_SUITABILITY 0\nDO_LIGHT_COMPETITION 0\n"
-             , "DO_SOIL_COMPETITION 0\nDO_DISTURBANCES 0\n")
-      , file = "FATE_simulation2/DATA/GLOBAL_PARAMETERS/glob.txt")
-  
+  ## TEST do.max_abund_low ==> 2 folders
   if (dir.exists("FATE_simulation_MULTIPLE_SET")) unlink("FATE_simulation_MULTIPLE_SET", recursive = TRUE)
   expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
                                            , file.simulParam.1 = "toto.txt"
@@ -911,31 +917,32 @@ test_that("PRE_FATE.params_multipleSet gives correct output with other condition
 
 ## OUTPUTS
 test_that("PRE_FATE.params_multipleSet gives error for other conditions / scenarios", {
-  
-  if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
-  if (dir.exists("FATE_simulation2")) unlink("FATE_simulation2", recursive = TRUE)
-  if (dir.exists("FATE_simulation_MULTIPLE_SET")) unlink("FATE_simulation_MULTIPLE_SET", recursive = TRUE)
-  
-  PRE_FATE.skeletonDirectory()
-  
-  file.create("FATE_simulation/DATA/MASK/mask.txt")
-  
-  file.create("FATE_simulation/DATA/PFGS/SUCC/SUCC_1.txt")
-  file.create("FATE_simulation/DATA/PFGS/SUCC/SUCC_2.txt")
-  file.create("FATE_simulation/DATA/PFGS/SUCC/SUCC_3.txt")
-  file.create("FATE_simulation/DATA/PFGS/DISP/DISP_1.txt")
-  file.create("FATE_simulation/DATA/PFGS/DISP/DISP_2.txt")
-  file.create("FATE_simulation/DATA/PFGS/DISP/DISP_3.txt")
-  
-  file.create("FATE_simulation/DATA/GLOBAL_PARAMETERS/glob.txt")
-  cat(paste0("## Test file\n"
-             , "TEST 10000\n")
-      , file = "FATE_simulation/DATA/GLOBAL_PARAMETERS/glob.txt")
-  
-  file.create("FATE_simulation/PARAM_SIMUL/toto.txt")
-  cat(paste0("--GLOBAL_PARAMS--\nFATE_simulation/DATA/GLOBAL_PARAMETERS/glob.txt\n"
-             , "--END_OF_FILE--\n")
-      , file = "FATE_simulation/PARAM_SIMUL/toto.txt")
+  {
+    if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
+    if (dir.exists("FATE_simulation2")) unlink("FATE_simulation2", recursive = TRUE)
+    if (dir.exists("FATE_simulation_MULTIPLE_SET")) unlink("FATE_simulation_MULTIPLE_SET", recursive = TRUE)
+    
+    PRE_FATE.skeletonDirectory()
+    
+    file.create("FATE_simulation/DATA/MASK/mask.txt")
+    
+    file.create("FATE_simulation/DATA/PFGS/SUCC/SUCC_1.txt")
+    file.create("FATE_simulation/DATA/PFGS/SUCC/SUCC_2.txt")
+    file.create("FATE_simulation/DATA/PFGS/SUCC/SUCC_3.txt")
+    file.create("FATE_simulation/DATA/PFGS/DISP/DISP_1.txt")
+    file.create("FATE_simulation/DATA/PFGS/DISP/DISP_2.txt")
+    file.create("FATE_simulation/DATA/PFGS/DISP/DISP_3.txt")
+    
+    file.create("FATE_simulation/DATA/GLOBAL_PARAMETERS/glob.txt")
+    cat(paste0("## Test file\n"
+               , "TEST 10000\n")
+        , file = "FATE_simulation/DATA/GLOBAL_PARAMETERS/glob.txt")
+    
+    file.create("FATE_simulation/PARAM_SIMUL/toto.txt")
+    cat(paste0("--GLOBAL_PARAMS--\nFATE_simulation/DATA/GLOBAL_PARAMETERS/glob.txt\n"
+               , "--END_OF_FILE--\n")
+        , file = "FATE_simulation/PARAM_SIMUL/toto.txt")
+  }
   
   if (dir.exists("FATE_simulation_MULTIPLE_SET")) unlink("FATE_simulation_MULTIPLE_SET", recursive = TRUE)
   expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
@@ -962,33 +969,34 @@ test_that("PRE_FATE.params_multipleSet gives error for other conditions / scenar
 
 ## OUTPUTS
 test_that("PRE_FATE.params_multipleSet gives error for scenario NO_STRATA", {
-  
-  if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
-  if (dir.exists("FATE_simulation2")) unlink("FATE_simulation2", recursive = TRUE)
-  if (dir.exists("FATE_simulation_MULTIPLE_SET")) unlink("FATE_simulation_MULTIPLE_SET", recursive = TRUE)
-  
-  PRE_FATE.skeletonDirectory()
-  
-  file.create("FATE_simulation/DATA/MASK/mask.txt")
-  
-  file.create("FATE_simulation/DATA/PFGS/SUCC/SUCC_1.txt")
-  file.create("FATE_simulation/DATA/PFGS/SUCC/SUCC_2.txt")
-  file.create("FATE_simulation/DATA/PFGS/SUCC/SUCC_3.txt")
-  file.create("FATE_simulation/DATA/PFGS/DISP/DISP_1.txt")
-  file.create("FATE_simulation/DATA/PFGS/DISP/DISP_2.txt")
-  file.create("FATE_simulation/DATA/PFGS/DISP/DISP_3.txt")
-  
-  file.create("FATE_simulation/PARAM_SIMUL/toto.txt")
-  cat(paste0("--GLOBAL_PARAMS--\nFATE_simulation/DATA/GLOBAL_PARAMETERS/glob.txt\n"
-             , "--MASK--\nFATE_simulation/DATA/MASK/mask.txt\n"
-             , "--END_OF_FILE--\n")
-      , file = "FATE_simulation/PARAM_SIMUL/toto.txt")
-  
-  
-  file.create("FATE_simulation/DATA/GLOBAL_PARAMETERS/glob.txt")
-  cat(paste0("## Test file\n"
-             , "NO_STRATA 3\n")
-      , file = "FATE_simulation/DATA/GLOBAL_PARAMETERS/glob.txt")
+  {
+    if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
+    if (dir.exists("FATE_simulation2")) unlink("FATE_simulation2", recursive = TRUE)
+    if (dir.exists("FATE_simulation_MULTIPLE_SET")) unlink("FATE_simulation_MULTIPLE_SET", recursive = TRUE)
+    
+    PRE_FATE.skeletonDirectory()
+    
+    file.create("FATE_simulation/DATA/MASK/mask.txt")
+    
+    file.create("FATE_simulation/DATA/PFGS/SUCC/SUCC_1.txt")
+    file.create("FATE_simulation/DATA/PFGS/SUCC/SUCC_2.txt")
+    file.create("FATE_simulation/DATA/PFGS/SUCC/SUCC_3.txt")
+    file.create("FATE_simulation/DATA/PFGS/DISP/DISP_1.txt")
+    file.create("FATE_simulation/DATA/PFGS/DISP/DISP_2.txt")
+    file.create("FATE_simulation/DATA/PFGS/DISP/DISP_3.txt")
+    
+    file.create("FATE_simulation/PARAM_SIMUL/toto.txt")
+    cat(paste0("--GLOBAL_PARAMS--\nFATE_simulation/DATA/GLOBAL_PARAMETERS/glob.txt\n"
+               , "--MASK--\nFATE_simulation/DATA/MASK/mask.txt\n"
+               , "--END_OF_FILE--\n")
+        , file = "FATE_simulation/PARAM_SIMUL/toto.txt")
+    
+    
+    file.create("FATE_simulation/DATA/GLOBAL_PARAMETERS/glob.txt")
+    cat(paste0("## Test file\n"
+               , "NO_STRATA 3\n")
+        , file = "FATE_simulation/DATA/GLOBAL_PARAMETERS/glob.txt")
+  }
   
   if (dir.exists("FATE_simulation_MULTIPLE_SET")) unlink("FATE_simulation_MULTIPLE_SET", recursive = TRUE)
   expect_error(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
@@ -1007,11 +1015,11 @@ test_that("PRE_FATE.params_multipleSet gives error for scenario NO_STRATA", {
                                            , do.SOIL.retention = FALSE
                                            , do.DISPERSAL.mode = FALSE
                                            , do.HABSUIT.ref_option = FALSE)
-               , "The flag --PFG_LIFE_HISTORY_PARAMS-- in the file FATE_simulation/PARAM_SIMUL/toto.txt does not contain any value. Please check.")
+               , "The flag --PFG_PARAMS_LIFE_HISTORY-- in the file FATE_simulation/PARAM_SIMUL/toto.txt does not contain any value. Please check.")
   
   cat(paste0("--GLOBAL_PARAMS--\nFATE_simulation/DATA/GLOBAL_PARAMETERS/glob.txt\n"
              , "--MASK--\nFATE_simulation/DATA/MASK/mask.txt\n"
-             , "--PFG_LIFE_HISTORY_PARAMS--\nFATE_simulation/DATA/PFGS/SUCC/SUCC_1.txt\n"
+             , "--PFG_PARAMS_LIFE_HISTORY--\nFATE_simulation/DATA/PFGS/SUCC/SUCC_1.txt\n"
              , "FATE_simulation/DATA/PFGS/SUCC/SUCC_2.txt\nFATE_simulation/DATA/PFGS/SUCC/SUCC_3.txt\n"
              , "--END_OF_FILE--\n")
       , file = "FATE_simulation/PARAM_SIMUL/toto.txt")
@@ -1110,13 +1118,13 @@ test_that("PRE_FATE.params_multipleSet gives error for scenario NO_STRATA", {
                                            , do.SOIL.retention = FALSE
                                            , do.DISPERSAL.mode = FALSE
                                            , do.HABSUIT.ref_option = FALSE)
-               , "The flag --PFG_LIGHT_PARAMS-- in the file FATE_simulation/PARAM_SIMUL/toto.txt does not contain any value. Please check.")
+               , "The flag --PFG_PARAMS_LIGHT-- in the file FATE_simulation/PARAM_SIMUL/toto.txt does not contain any value. Please check.")
   
   cat(paste0("--GLOBAL_PARAMS--\nFATE_simulation/DATA/GLOBAL_PARAMETERS/glob.txt\n"
              , "--MASK--\nFATE_simulation/DATA/MASK/mask.txt\n"
-             , "--PFG_LIFE_HISTORY_PARAMS--\nFATE_simulation/DATA/PFGS/SUCC/SUCC_1.txt\n"
+             , "--PFG_PARAMS_LIFE_HISTORY--\nFATE_simulation/DATA/PFGS/SUCC/SUCC_1.txt\n"
              , "FATE_simulation/DATA/PFGS/SUCC/SUCC_2.txt\nFATE_simulation/DATA/PFGS/SUCC/SUCC_3.txt\n"
-             , "--PFG_LIGHT_PARAMS--\nFATE_simulation/DATA/PFGS/SUCC/SUCC_1.txt\n"
+             , "--PFG_PARAMS_LIGHT--\nFATE_simulation/DATA/PFGS/SUCC/SUCC_1.txt\n"
              , "FATE_simulation/DATA/PFGS/SUCC/SUCC_2.txt\nFATE_simulation/DATA/PFGS/SUCC/SUCC_3.txt\n"
              , "--END_OF_FILE--\n")
       , file = "FATE_simulation/PARAM_SIMUL/toto.txt")
@@ -1220,5 +1228,78 @@ test_that("PRE_FATE.params_multipleSet gives error for scenario NO_STRATA", {
                  , "The parameter file FATE_simulation_MULTIPLE_SET/DATA/PFGS/LIGHT/REP-1/LIGHT_FG1.txt has been successfully created !")
   
 })
+
+
+## OUTPUTS
+test_that("PRE_FATE.params_multipleSet gives error for scenario SOIL", {
+  {
+    if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
+    if (dir.exists("FATE_simulation2")) unlink("FATE_simulation2", recursive = TRUE)
+    if (dir.exists("FATE_simulation_MULTIPLE_SET")) unlink("FATE_simulation_MULTIPLE_SET", recursive = TRUE)
+    
+    PRE_FATE.skeletonDirectory()
+    
+    file.create("FATE_simulation/DATA/MASK/mask.txt")
+    
+    file.create("FATE_simulation/DATA/PFGS/SUCC/SUCC_1.txt")
+    file.create("FATE_simulation/DATA/PFGS/SUCC/SUCC_2.txt")
+    file.create("FATE_simulation/DATA/PFGS/SUCC/SUCC_3.txt")
+    cat(paste0("NAME FG1\nTYPE H\nHEIGHT 15\nMATURITY 2\nLONGEVITY 5\n")
+        , file = "FATE_simulation/DATA/PFGS/SUCC/SUCC_1.txt")
+    cat(paste0("NAME FG2\nTYPE C\nHEIGHT 150\nMATURITY 5\nLONGEVITY 10\n")
+        , file = "FATE_simulation/DATA/PFGS/SUCC/SUCC_2.txt")
+    cat(paste0("NAME FG3\nTYPE P\nHEIGHT 1100\nMATURITY 20\nLONGEVITY 80\n")
+        , file = "FATE_simulation/DATA/PFGS/SUCC/SUCC_3.txt")
+    
+    cat(paste0("NAME FG1\nTYPE H\nHEIGHT 15\nMATURITY 2\nLONGEVITY 5\n")
+        , file = "FATE_simulation/DATA/PFGS/SOIL/SOIL_1.txt")
+    cat(paste0("NAME FG2\nTYPE C\nHEIGHT 150\nMATURITY 5\nLONGEVITY 10\n")
+        , file = "FATE_simulation/DATA/PFGS/SOIL/SOIL_2.txt")
+    cat(paste0("NAME FG3\nTYPE P\nHEIGHT 1100\nMATURITY 20\nLONGEVITY 80\n")
+        , file = "FATE_simulation/DATA/PFGS/SOIL/SOIL_3.txt")
+    
+    cat(paste0("## Test file\n"
+               , "NO_PFG 3\nNO_STRATA 4\nSIMULATION_DURATION 50\n"
+               , "SEEDING_DURATION 10\nSEEDING_TIMESTEP 1\nSEEDING_INPUT 100\n"
+               , "MAX_ABUND_LOW 500000\nMAX_ABUND_MEDIUM 600000\nMAX_ABUND_HIGH 700000\n"
+               , "DO_DISPERSAL 0\n"
+               , "DO_HAB_SUITABILITY 0\nDO_LIGHT_COMPETITION 0\n"
+               , "DO_SOIL_COMPETITION 1\nSOIL_INIT 0.1\nSOIL_RETENTION 0.1\n"
+               , "DO_DISTURBANCES 0\n")
+        , file = "FATE_simulation/DATA/GLOBAL_PARAMETERS/glob.txt")
+    
+    file.create("FATE_simulation/PARAM_SIMUL/toto.txt")
+    cat(paste0("--GLOBAL_PARAMS--\nFATE_simulation/DATA/GLOBAL_PARAMETERS/glob.txt\n"
+               , "--MASK--\nFATE_simulation/DATA/MASK/mask.txt\n"
+               , "--PFG_PARAMS_LIFE_HISTORY--\nFATE_simulation/DATA/PFGS/SUCC/SUCC_1.txt\n"
+               , "FATE_simulation/DATA/PFGS/SUCC/SUCC_2.txt\nFATE_simulation/DATA/PFGS/SUCC/SUCC_3.txt\n"
+               , "--PFG_PARAMS_SOIL--\nFATE_simulation/DATA/PFGS/SOIL/SOIL_1.txt\n"
+               , "FATE_simulation/DATA/PFGS/SOIL/SOIL_2.txt\nFATE_simulation/DATA/PFGS/SOIL/SOIL_3.txt\n"
+               , "--END_OF_FILE--\n")
+        , file = "FATE_simulation/PARAM_SIMUL/toto.txt")
+  }
+  
+
+  expect_message(PRE_FATE.params_multipleSet(name.simulation.1 = "FATE_simulation"
+                                             , file.simulParam.1 = "toto.txt"
+                                             , no_simulations = 10
+                                             , opt.percent_soil = 0.9
+                                             , do.max_abund_low = FALSE
+                                             , do.max_abund_medium = FALSE
+                                             , do.max_abund_high = FALSE
+                                             , do.seeding_duration = FALSE
+                                             , do.seeding_timestep = FALSE
+                                             , do.seeding_input = FALSE
+                                             , do.no_strata = TRUE
+                                             , do.LIGHT.thresh_medium = FALSE
+                                             , do.LIGHT.thresh_low = FALSE
+                                             , do.SOIL.init = TRUE
+                                             , do.SOIL.retention = TRUE
+                                             , do.DISPERSAL.mode = FALSE
+                                             , do.HABSUIT.ref_option = FALSE)
+                 , "The parameter file FATE_simulation_MULTIPLE_SET/DATA/PFGS/SUCC/REP-1/SUCC_FG1.txt has been successfully created !")
+  
+})
+
 
 
