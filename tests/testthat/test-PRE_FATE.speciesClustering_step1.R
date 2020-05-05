@@ -49,7 +49,7 @@ test_that("PRE_FATE.speciesClustering_step1 gives error with wrong data", {
                , fixed = TRUE)
   
   ## TEST mat.species.DIST : correct number of rows and columns
-  expect_error(PRE_FATE.speciesClustering_step1(mat.species.DIST = matrix(1:8, ncol=4))
+  expect_error(PRE_FATE.speciesClustering_step1(mat.species.DIST = matrix(1:8, ncol = 4))
                , "`mat.species.DIST` does not have the same number of rows (2) and columns (4)"
                , fixed = TRUE)
   expect_error(PRE_FATE.speciesClustering_step1(mat.species.DIST = list(matrix(1:9, ncol=3)
