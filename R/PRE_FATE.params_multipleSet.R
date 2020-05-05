@@ -84,8 +84,8 @@
 ##' declined into its three possible values (either either packets kernel 
 ##' (\code{1}), exponential kernel (\code{2}) or exponential kernel with 
 ##' probability (\code{3}), see \code{\link{PRE_FATE.params_globalParameters}})
-##' @param do.HABSUIT.ref_option default \code{TRUE}. If \code{TRUE}, 
-##' \code{HABSUIT_OPTION} parameter within \emph{Global_parameters} file will be 
+##' @param do.HABSUIT.mode default \code{TRUE}. If \code{TRUE}, 
+##' \code{HABSUIT_MODE} parameter within \emph{Global_parameters} file will be 
 ##' declined into its two possible values (either random (\code{1}) or PFG 
 ##' specific (\code{2}), see \code{\link{PRE_FATE.params_globalParameters}})
 ##' 
@@ -196,7 +196,7 @@
 ##'   }
 ##'   If the simulation includes \emph{habitat suitability} :
 ##'   \itemize{
-##'     \item HABSUIT_OPTION \cr \cr
+##'     \item HABSUIT_MODE \cr \cr
 ##'   }
 ##'   \item Into the \code{name.simulation/DATA/PFGS/SUCC} folder :
 ##'   \itemize{
@@ -256,7 +256,7 @@ PRE_FATE.params_multipleSet = function(
   , do.SOIL.init = TRUE
   , do.SOIL.retention = TRUE
   , do.DISPERSAL.mode = TRUE
-  , do.HABSUIT.ref_option = TRUE
+  , do.HABSUIT.mode = TRUE
 ){
   
   #############################################################################
@@ -352,7 +352,7 @@ PRE_FATE.params_multipleSet = function(
             , do.LIGHT.thresh_low
             , do.SOIL.init
             , do.SOIL.retention
-            , do.HABSUIT.ref_option
+            , do.HABSUIT.mode
             , do.DISPERSAL.mode
             , do.no_strata)) == 0)
   {
@@ -391,8 +391,8 @@ PRE_FATE.params_multipleSet = function(
   if (do.SOIL.retention){
     get_checked[[4]] = c(get_checked[[4]], "soil_retention")
   }
-  if (do.HABSUIT.ref_option){
-    get_checked[[5]] = c(get_checked[[5]], "habsuit_ref_option")
+  if (do.HABSUIT.mode){
+    get_checked[[5]] = c(get_checked[[5]], "habsuit_mode")
   }
   if (do.DISPERSAL.mode){
     get_checked[[6]] = c(get_checked[[6]], "dispersal_mode")
@@ -414,7 +414,7 @@ PRE_FATE.params_multipleSet = function(
                           , "light_thresh_low" = "LIGHT_THRESH_LOW"
                           , "soil_init" = "SOIL_INIT"
                           , "soil_retention" = "SOIL_RETENTION"
-                          , "habsuit_ref_option" = "HABSUIT_OPTION"
+                          , "habsuit_mode" = "HABSUIT_MODE"
                           , "dispersal_mode" = "DISPERSAL_MODE"
                           , "no_strata" = "NO_STRATA")
   
@@ -583,7 +583,7 @@ PRE_FATE.params_multipleSet = function(
     if (is.null(unlist(PARAMS1)))
     { 
       if ("dispersal_mode" %in% get_checked ||
-          "habsuit_ref_option" %in% get_checked)
+          "habsuit_mode" %in% get_checked)
       {
         return(list(PARAMS.range = data.frame()
                     , TOKEEP.global = TOKEEP1.global
@@ -780,7 +780,7 @@ PRE_FATE.params_multipleSet = function(
             , "no_strata") %in% colnames(params.ranges)) > 0)
   {
     NO_SIMUL_LHS = no_simulations
-    if ("habsuit_ref_option" %in% unlist(get_checked))
+    if ("habsuit_mode" %in% unlist(get_checked))
     {
       NO_SIMUL_LHS = trunc(NO_SIMUL_LHS / 2)
     }
@@ -876,9 +876,9 @@ PRE_FATE.params_multipleSet = function(
     # ind = which(colnames(params.space) %in% c("seeding_duration", "seeding_input"))
     # if (length(ind) > 0) params.space[, ind] = params.space[, ind] * 10
   }
-  if ("habsuit_ref_option" %in% unlist(get_checked))
+  if ("habsuit_mode" %in% unlist(get_checked))
   {
-    params.space.BIS = data.frame(habsuit_ref_option = c(1, 2))
+    params.space.BIS = data.frame(habsuit_mode = c(1, 2))
     if (exists("params.space"))
     {
       params.space = merge(params.space, params.space.BIS)
@@ -1132,13 +1132,13 @@ PRE_FATE.params_multipleSet = function(
                                             , flag.split = " "
                                             , is.num = TRUE))
       , doHabSuitability = doHabSuitability
-      , HABSUIT.ref_option = ifelse(doHabSuitability &&
-                                      "habsuit_ref_option" %in% colnames(params.space)
-                                    , params.space$habsuit_ref_option[i]
-                                    , .getParam(params.lines = tmp_global_param
-                                                , flag = "HABSUIT_OPTION"
-                                                , flag.split = " "
-                                                , is.num = TRUE))
+      , HABSUIT.mode = ifelse(doHabSuitability &&
+                                "habsuit_mode" %in% colnames(params.space)
+                              , params.space$habsuit_mode[i]
+                              , .getParam(params.lines = tmp_global_param
+                                          , flag = "HABSUIT_MODE"
+                                          , flag.split = " "
+                                          , is.num = TRUE))
       , doDisturbances = doDisturbances
       , DIST.no = ifelse(doDisturbances
                          , .getParam(params.lines = tmp_global_param

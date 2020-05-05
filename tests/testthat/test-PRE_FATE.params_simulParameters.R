@@ -99,7 +99,7 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : folders
                                    , required.max_abund_medium = 5000
                                    , required.max_abund_high = 9000
                                    , doHabSuitability = TRUE
-                                   , HABSUIT.ref_option = 1
+                                   , HABSUIT.mode = 1
                                    , doDisturbances = TRUE
                                    , DIST.no = 1
                                    , DIST.no_sub = 4

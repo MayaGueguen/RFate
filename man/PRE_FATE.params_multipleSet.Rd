@@ -27,7 +27,7 @@ PRE_FATE.params_multipleSet(
   do.SOIL.init = TRUE,
   do.SOIL.retention = TRUE,
   do.DISPERSAL.mode = TRUE,
-  do.HABSUIT.ref_option = TRUE
+  do.HABSUIT.mode = TRUE
 )
 }
 \arguments{
@@ -126,8 +126,8 @@ declined into its three possible values (either either packets kernel
 (\code{1}), exponential kernel (\code{2}) or exponential kernel with 
 probability (\code{3}), see \code{\link{PRE_FATE.params_globalParameters}})}
 
-\item{do.HABSUIT.ref_option}{default \code{TRUE}. If \code{TRUE}, 
-\code{HABSUIT_OPTION} parameter within \emph{Global_parameters} file will be 
+\item{do.HABSUIT.mode}{default \code{TRUE}. If \code{TRUE}, 
+\code{HABSUIT_MODE} parameter within \emph{Global_parameters} file will be 
 declined into its two possible values (either random (\code{1}) or PFG 
 specific (\code{2}), see \code{\link{PRE_FATE.params_globalParameters}})}
 }
@@ -172,7 +172,7 @@ file :
   }
   If the simulation includes \emph{habitat suitability} :
   \itemize{
-    \item HABSUIT_OPTION \cr \cr
+    \item HABSUIT_MODE \cr \cr
   }
   \item Into the \code{name.simulation/DATA/PFGS/SUCC} folder :
   \itemize{

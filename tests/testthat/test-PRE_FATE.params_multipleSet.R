@@ -333,7 +333,7 @@ test_that("PRE_FATE.params_multipleSet gives error with wrong data : do...", {
                                            , do.SOIL.init = FALSE
                                            , do.SOIL.retention = FALSE
                                            , do.DISPERSAL.mode = FALSE
-                                           , do.HABSUIT.ref_option = FALSE)
+                                           , do.HABSUIT.mode = FALSE)
                , "You must select some parameters to vary !")
 })
 
@@ -717,7 +717,7 @@ test_that("PRE_FATE.params_multipleSet gives correct output with other condition
                                              , do.SOIL.init = FALSE
                                              , do.SOIL.retention = FALSE
                                              , do.DISPERSAL.mode = FALSE
-                                             , do.HABSUIT.ref_option = FALSE)
+                                             , do.HABSUIT.mode = FALSE)
                  , "The parameter file FATE_simulation_MULTIPLE_SET/DATA/GLOBAL_PARAMETERS/Global_parameters_V1.txt has been successfully created !"
                  , fixed = TRUE)
   
@@ -738,7 +738,7 @@ test_that("PRE_FATE.params_multipleSet gives correct output with other condition
                                              , do.SOIL.init = FALSE
                                              , do.SOIL.retention = FALSE
                                              , do.DISPERSAL.mode = TRUE
-                                             , do.HABSUIT.ref_option = FALSE)
+                                             , do.HABSUIT.mode = FALSE)
                  , "The parameter file FATE_simulation_MULTIPLE_SET/DATA/GLOBAL_PARAMETERS/Global_parameters_V1.txt has been successfully created !"
                  , fixed = TRUE)
   
@@ -791,7 +791,7 @@ test_that("PRE_FATE.params_multipleSet gives correct output with other condition
                                            , do.SOIL.init = FALSE
                                            , do.SOIL.retention = FALSE
                                            , do.DISPERSAL.mode = FALSE
-                                           , do.HABSUIT.ref_option = FALSE)
+                                           , do.HABSUIT.mode = FALSE)
                , "The files do not contain the same parameters to be evaluated."
                , fixed = TRUE)
   
@@ -822,7 +822,7 @@ test_that("PRE_FATE.params_multipleSet gives correct output with other condition
                                            , do.SOIL.init = FALSE
                                            , do.SOIL.retention = FALSE
                                            , do.DISPERSAL.mode = FALSE
-                                           , do.HABSUIT.ref_option = FALSE)
+                                           , do.HABSUIT.mode = FALSE)
                , "The global files have different fixed parameter values."
                , fixed = TRUE)
   
@@ -858,7 +858,7 @@ test_that("PRE_FATE.params_multipleSet gives correct output with other condition
                                            , do.SOIL.init = FALSE
                                            , do.SOIL.retention = FALSE
                                            , do.DISPERSAL.mode = FALSE
-                                           , do.HABSUIT.ref_option = FALSE)
+                                           , do.HABSUIT.mode = FALSE)
                , "The simulation files have different fixed parameter values."
                , fixed = TRUE)
   
@@ -884,7 +884,7 @@ test_that("PRE_FATE.params_multipleSet gives correct output with other condition
                                              , do.SOIL.init = FALSE
                                              , do.SOIL.retention = FALSE
                                              , do.DISPERSAL.mode = FALSE
-                                             , do.HABSUIT.ref_option = FALSE)
+                                             , do.HABSUIT.mode = FALSE)
                  , "The parameter file FATE_simulation_MULTIPLE_SET/DATA/GLOBAL_PARAMETERS/Global_parameters_V1.txt has been successfully created !"
                  , fixed = TRUE)
   
@@ -906,7 +906,7 @@ test_that("PRE_FATE.params_multipleSet gives correct output with other condition
                                            , do.SOIL.init = FALSE
                                            , do.SOIL.retention = FALSE
                                            , do.DISPERSAL.mode = TRUE
-                                           , do.HABSUIT.ref_option = FALSE)
+                                           , do.HABSUIT.mode = FALSE)
                , "The number of data sets requested (`no_simulations`) is too small compared to the number of parameters that must vary."
                , fixed = TRUE)
   
@@ -960,7 +960,7 @@ test_that("PRE_FATE.params_multipleSet gives error for other conditions / scenar
                                            , do.SOIL.init = FALSE
                                            , do.SOIL.retention = FALSE
                                            , do.DISPERSAL.mode = FALSE
-                                           , do.HABSUIT.ref_option = FALSE)
+                                           , do.HABSUIT.mode = FALSE)
                , "The global parameter file indicated in FATE_simulation/PARAM_SIMUL/toto.txt does not contain any of the required parameter values (MAX_ABUND_LOW). Please check."
                , fixed = TRUE)
   
@@ -1014,7 +1014,7 @@ test_that("PRE_FATE.params_multipleSet gives error for scenario NO_STRATA", {
                                            , do.SOIL.init = FALSE
                                            , do.SOIL.retention = FALSE
                                            , do.DISPERSAL.mode = FALSE
-                                           , do.HABSUIT.ref_option = FALSE)
+                                           , do.HABSUIT.mode = FALSE)
                , "The flag --PFG_PARAMS_LIFE_HISTORY-- in the file FATE_simulation/PARAM_SIMUL/toto.txt does not contain any value. Please check.")
   
   cat(paste0("--GLOBAL_PARAMS--\nFATE_simulation/DATA/GLOBAL_PARAMETERS/glob.txt\n"
@@ -1038,7 +1038,7 @@ test_that("PRE_FATE.params_multipleSet gives error for scenario NO_STRATA", {
                                            , do.SOIL.init = FALSE
                                            , do.SOIL.retention = FALSE
                                            , do.DISPERSAL.mode = FALSE
-                                           , do.HABSUIT.ref_option = FALSE)
+                                           , do.HABSUIT.mode = FALSE)
                , "Wrong type of data!\n `flag.split` ( ) is not found within `params.lines` (./FATE_simulation/DATA/PFGS/SUCC/SUCC_1.txt)"
                , fixed = TRUE)
   
@@ -1063,7 +1063,7 @@ test_that("PRE_FATE.params_multipleSet gives error for scenario NO_STRATA", {
                                            , do.SOIL.init = FALSE
                                            , do.SOIL.retention = FALSE
                                            , do.DISPERSAL.mode = FALSE
-                                           , do.HABSUIT.ref_option = FALSE)
+                                           , do.HABSUIT.mode = FALSE)
                , "Wrong type of data!\n `flag.split` ( ) is not found within `params.lines` (FATE_simulation_MULTIPLE_SET/tmp_global_param.txt)"
                , fixed = TRUE)
   
@@ -1090,7 +1090,7 @@ test_that("PRE_FATE.params_multipleSet gives error for scenario NO_STRATA", {
                                              , do.SOIL.init = FALSE
                                              , do.SOIL.retention = FALSE
                                              , do.DISPERSAL.mode = FALSE
-                                             , do.HABSUIT.ref_option = FALSE)
+                                             , do.HABSUIT.mode = FALSE)
                  , "The parameter file FATE_simulation_MULTIPLE_SET/DATA/PFGS/SUCC/REP-1/SUCC_FG1.txt has been successfully created !")
   
   
@@ -1117,7 +1117,7 @@ test_that("PRE_FATE.params_multipleSet gives error for scenario NO_STRATA", {
                                            , do.SOIL.init = FALSE
                                            , do.SOIL.retention = FALSE
                                            , do.DISPERSAL.mode = FALSE
-                                           , do.HABSUIT.ref_option = FALSE)
+                                           , do.HABSUIT.mode = FALSE)
                , "The flag --PFG_PARAMS_LIGHT-- in the file FATE_simulation/PARAM_SIMUL/toto.txt does not contain any value. Please check.")
   
   cat(paste0("--GLOBAL_PARAMS--\nFATE_simulation/DATA/GLOBAL_PARAMETERS/glob.txt\n"
@@ -1143,7 +1143,7 @@ test_that("PRE_FATE.params_multipleSet gives error for scenario NO_STRATA", {
                                            , do.SOIL.init = FALSE
                                            , do.SOIL.retention = FALSE
                                            , do.DISPERSAL.mode = FALSE
-                                           , do.HABSUIT.ref_option = FALSE)
+                                           , do.HABSUIT.mode = FALSE)
                , "`flag` (LIGHT) is not found within `params.lines` (./FATE_simulation/DATA/PFGS/SUCC/SUCC_1.txt)"
                , fixed = TRUE)
   
@@ -1168,7 +1168,7 @@ test_that("PRE_FATE.params_multipleSet gives error for scenario NO_STRATA", {
                                            , do.SOIL.init = FALSE
                                            , do.SOIL.retention = FALSE
                                            , do.DISPERSAL.mode = FALSE
-                                           , do.HABSUIT.ref_option = FALSE)
+                                           , do.HABSUIT.mode = FALSE)
                , "`flag` (LIGHT_THRESH_MEDIUM) is not found within `params.lines` (FATE_simulation_MULTIPLE_SET/tmp_global_param.txt)"
                , fixed = TRUE)
   
@@ -1196,7 +1196,7 @@ test_that("PRE_FATE.params_multipleSet gives error for scenario NO_STRATA", {
                                            , do.SOIL.init = FALSE
                                            , do.SOIL.retention = FALSE
                                            , do.DISPERSAL.mode = FALSE
-                                           , do.HABSUIT.ref_option = FALSE)
+                                           , do.HABSUIT.mode = FALSE)
                , "`flag` (LIGHT_THRESH_LOW) is not found within `params.lines` (FATE_simulation_MULTIPLE_SET/tmp_global_param.txt)"
                , fixed = TRUE)
   
@@ -1224,7 +1224,7 @@ test_that("PRE_FATE.params_multipleSet gives error for scenario NO_STRATA", {
                                              , do.SOIL.init = FALSE
                                              , do.SOIL.retention = FALSE
                                              , do.DISPERSAL.mode = FALSE
-                                             , do.HABSUIT.ref_option = FALSE)
+                                             , do.HABSUIT.mode = FALSE)
                  , "The parameter file FATE_simulation_MULTIPLE_SET/DATA/PFGS/LIGHT/REP-1/LIGHT_FG1.txt has been successfully created !")
   
 })
@@ -1296,7 +1296,7 @@ test_that("PRE_FATE.params_multipleSet gives error for scenario SOIL", {
                                              , do.SOIL.init = TRUE
                                              , do.SOIL.retention = TRUE
                                              , do.DISPERSAL.mode = FALSE
-                                             , do.HABSUIT.ref_option = FALSE)
+                                             , do.HABSUIT.mode = FALSE)
                  , "The parameter file FATE_simulation_MULTIPLE_SET/DATA/PFGS/SUCC/REP-1/SUCC_FG1.txt has been successfully created !")
   
 })

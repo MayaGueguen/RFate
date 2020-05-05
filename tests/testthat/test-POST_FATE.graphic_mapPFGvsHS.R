@@ -186,7 +186,7 @@ test_that("POST_FATE.graphic_mapPFGvsHS gives correct outputs :", {
                                      , required.max_abund_medium = 5000
                                      , required.max_abund_high = 9000
                                      , doHabSuitability = TRUE
-                                     , HABSUIT.ref_option = 1)
+                                     , HABSUIT.mode = 1)
     
     PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
                                   , mat.PFG.succ = data.frame(PFG = paste0("PFG",1:6)

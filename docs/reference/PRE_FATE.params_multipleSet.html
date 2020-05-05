@@ -252,7 +252,7 @@ using Latin Hypercube Sampling to help find best combination of parameters
   <span class='kw'>do.SOIL.init</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>do.SOIL.retention</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>do.DISPERSAL.mode</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>do.HABSUIT.ref_option</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+  <span class='kw'>do.HABSUIT.mode</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -396,9 +396,9 @@ declined into its three possible values (either either packets kernel
 probability (<code>3</code>), see <code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>)</p></td>
     </tr>
     <tr>
-      <th>do.HABSUIT.ref_option</th>
+      <th>do.HABSUIT.mode</th>
       <td><p>default <code>TRUE</code>. If <code>TRUE</code>, 
-<code>HABSUIT_OPTION</code> parameter within <em>Global_parameters</em> file will be 
+<code>HABSUIT_MODE</code> parameter within <em>Global_parameters</em> file will be 
 declined into its two possible values (either random (<code>1</code>) or PFG 
 specific (<code>2</code>), see <code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>)</p></td>
     </tr>
@@ -434,7 +434,7 @@ file :</p>
 </ul><p>If the simulation includes <em>dispersal</em> :</p><ul>
 <li><p>DISPERSAL_MODE</p></li>
 </ul><p>If the simulation includes <em>habitat suitability</em> :</p><ul>
-<li><p>HABSUIT_OPTION <br /> <br /></p></li>
+<li><p>HABSUIT_MODE <br /> <br /></p></li>
 </ul></li>
 <li><p>Into the <code>name.simulation/DATA/PFGS/SUCC</code> folder :</p><ul>
 <li><p>STRATA</p></li>
