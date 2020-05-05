@@ -33,7 +33,7 @@ test_that("PRE_FATE.speciesClustering_step1 gives error with wrong data", {
   
   ## TEST mat.species.DIST : dissimilarity object
   expect_error(PRE_FATE.speciesClustering_step1(data.frame(1))
-               , "`mat.species.DIST[[1]]` must be a dissimilarity object (`dist`, `niolap`, `matrix`)"
+               , "`mat.species.DIST` must be a dissimilarity object (`dist`, `niolap`, `matrix`)"
                , fixed = TRUE)
   expect_error(PRE_FATE.speciesClustering_step1(list(NA))
                , "`mat.species.DIST[[1]]` must be a dissimilarity object (`dist`, `niolap`, `matrix`)"
