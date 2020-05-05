@@ -668,9 +668,9 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : DISPER
 })
 
 ## INPUTS
-test_that("PRE_FATE.params_globalParameters gives error with wrong data : HABSUIT.ref_option", {
+test_that("PRE_FATE.params_globalParameters gives error with wrong data : HABSUIT.mode", {
   
-  ## TEST HABSUIT.ref_option : correct values
+  ## TEST HABSUIT.mode : correct values
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.no_PFG = 5
                                                 , required.no_strata = 2
@@ -682,8 +682,8 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : HABSUI
                                                 , required.max_abund_medium = 5000
                                                 , required.max_abund_high = 9000
                                                 , doHabSuitability = T
-                                                , HABSUIT.ref_option = NA)
-               , "`HABSUIT.ref_option` must be either `1` or `2`")
+                                                , HABSUIT.mode = NA)
+               , "`HABSUIT.mode` must be either `1` or `2`")
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.no_PFG = 5
                                                 , required.no_strata = 2
@@ -695,8 +695,8 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : HABSUI
                                                 , required.max_abund_medium = 5000
                                                 , required.max_abund_high = 9000
                                                 , doHabSuitability = T
-                                                , HABSUIT.ref_option = NULL)
-               , "`HABSUIT.ref_option` must be either `1` or `2`")
+                                                , HABSUIT.mode = NULL)
+               , "`HABSUIT.mode` must be either `1` or `2`")
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.no_PFG = 5
                                                 , required.no_strata = 2
@@ -708,8 +708,8 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : HABSUI
                                                 , required.max_abund_medium = 5000
                                                 , required.max_abund_high = 9000
                                                 , doHabSuitability = T
-                                                , HABSUIT.ref_option = "")
-               , "`HABSUIT.ref_option` must be either `1` or `2`")
+                                                , HABSUIT.mode = "")
+               , "`HABSUIT.mode` must be either `1` or `2`")
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.no_PFG = 5
                                                 , required.no_strata = 2
@@ -721,8 +721,8 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : HABSUI
                                                 , required.max_abund_medium = 5000
                                                 , required.max_abund_high = 9000
                                                 , doHabSuitability = T
-                                                , HABSUIT.ref_option = factor("a"))
-               , "`HABSUIT.ref_option` must be either `1` or `2`")
+                                                , HABSUIT.mode = factor("a"))
+               , "`HABSUIT.mode` must be either `1` or `2`")
 })
 
 ## INPUTS
@@ -1184,7 +1184,7 @@ test_that("PRE_FATE.params_globalParameters gives correct output : scenario modu
                                                   , required.max_abund_medium = 5000
                                                   , required.max_abund_high = 9000
                                                   , doHabSuitability = TRUE
-                                                  , HABSUIT.ref_option = 1)
+                                                  , HABSUIT.mode = 1)
                  , "The parameter file FATE_simulation/DATA/GLOBAL_PARAMETERS/Global_parameters_V1.txt has been successfully created !")
   
   ## Disturbances

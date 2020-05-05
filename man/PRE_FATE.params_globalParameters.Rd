@@ -27,7 +27,7 @@ PRE_FATE.params_globalParameters(
   doDispersal = FALSE,
   DISPERSAL.mode,
   doHabSuitability = FALSE,
-  HABSUIT.ref_option,
+  HABSUIT.mode,
   doDisturbances = FALSE,
   DIST.no,
   DIST.no_sub,
@@ -123,7 +123,7 @@ probability (\code{3})}
 suitability is activated in the \code{FATE} simulation, and associated 
 parameters are required}
 
-\item{HABSUIT.ref_option}{(\emph{optional}) \cr an \code{integer} 
+\item{HABSUIT.mode}{(\emph{optional}) \cr an \code{integer} 
 corresponding to the way of simulating the habitat suitability variation 
 between years for each PFG, either random (\code{1}) or PFG specific 
 (\code{2})}
@@ -205,7 +205,7 @@ If the simulation includes \emph{habitat suitability} :
 
 \itemize{
   \item DO_HAB_SUITABILITY
-  \item HABSUIT_OPTION
+  \item HABSUIT_MODE
 }
 
 If the simulation includes \emph{disturbances} :
@@ -339,7 +339,7 @@ file, and if so, some additional parameters will be required :
   (timestep), this value will be compared to a reference value, and if 
   superior, the PFG will be able to grow and survive. \cr
   Two methods to define this habitat suitability reference value are 
-  available (\code{HABSUIT.ref_option}) :
+  available (\code{HABSUIT.mode}) :
     \enumerate{
       \item \emph{random} : for each pixel, the reference value is drawn 
       from a uniform distribution, and the same value is used for each PFG 
@@ -466,7 +466,7 @@ PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                  , doDispersal = TRUE
                                  , DISPERSAL.mode = 1
                                  , doHabSuitability = TRUE
-                                 , HABSUIT.ref_option = 1
+                                 , HABSUIT.mode = 1
                                  )
                                    
 ## Create SEVERAL Global_parameters files
@@ -486,7 +486,7 @@ PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                  , doDispersal = TRUE
                                  , DISPERSAL.mode = 1
                                  , doHabSuitability = TRUE
-                                 , HABSUIT.ref_option = c(1,2)
+                                 , HABSUIT.mode = c(1,2)
                                  )
 
 

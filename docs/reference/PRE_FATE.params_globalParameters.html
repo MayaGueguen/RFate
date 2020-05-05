@@ -250,7 +250,7 @@ containing <code>GLOBAL PARAMETERS</code> used in <code>FATE</code> model.</p>
   <span class='kw'>doDispersal</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='no'>DISPERSAL.mode</span>,
   <span class='kw'>doHabSuitability</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>HABSUIT.ref_option</span>,
+  <span class='no'>HABSUIT.mode</span>,
   <span class='kw'>doDisturbances</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='no'>DIST.no</span>,
   <span class='no'>DIST.no_sub</span>,
@@ -391,7 +391,7 @@ suitability is activated in the <code>FATE</code> simulation, and associated
 parameters are required</p></td>
     </tr>
     <tr>
-      <th>HABSUIT.ref_option</th>
+      <th>HABSUIT.mode</th>
       <td><p>(<em>optional</em>) <br /> an <code>integer</code> 
 corresponding to the way of simulating the habitat suitability variation 
 between years for each PFG, either random (<code>1</code>) or PFG specific 
@@ -492,7 +492,7 @@ parameters :</p>
 <p>If the simulation includes <em>habitat suitability</em> :</p>
 <ul>
 <li><p>DO_HAB_SUITABILITY</p></li>
-<li><p>HABSUIT_OPTION</p></li>
+<li><p>HABSUIT_MODE</p></li>
 </ul>
 
 <p>If the simulation includes <em>disturbances</em> :</p>
@@ -607,7 +607,7 @@ file, and if so, some additional parameters will be required :</p>
   (timestep), this value will be compared to a reference value, and if 
   superior, the PFG will be able to grow and survive. <br />
   Two methods to define this habitat suitability reference value are 
-  available (<code>HABSUIT.ref_option</code>) :
+  available (<code>HABSUIT.mode</code>) :
     <ol>
 <li><p><em>random</em> : for each pixel, the reference value is drawn 
       from a uniform distribution, and the same value is used for each PFG 
@@ -734,7 +734,7 @@ file, and if so, some additional parameters will be required :</p>
                                  , <span class='kw'>doDispersal</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
                                  , <span class='kw'>DISPERSAL.mode</span> <span class='kw'>=</span> <span class='fl'>1</span>
                                  , <span class='kw'>doHabSuitability</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-                                 , <span class='kw'>HABSUIT.ref_option</span> <span class='kw'>=</span> <span class='fl'>1</span>
+                                 , <span class='kw'>HABSUIT.mode</span> <span class='kw'>=</span> <span class='fl'>1</span>
                                  )
 
 <span class='co'>## Create SEVERAL Global_parameters files</span>
@@ -754,7 +754,7 @@ file, and if so, some additional parameters will be required :</p>
                                  , <span class='kw'>doDispersal</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
                                  , <span class='kw'>DISPERSAL.mode</span> <span class='kw'>=</span> <span class='fl'>1</span>
                                  , <span class='kw'>doHabSuitability</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-                                 , <span class='kw'>HABSUIT.ref_option</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>2</span>)
+                                 , <span class='kw'>HABSUIT.mode</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>,<span class='fl'>2</span>)
                                  )
 
 

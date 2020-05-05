@@ -70,7 +70,7 @@
 ##' @param doHabSuitability default \code{FALSE}. \cr If \code{TRUE}, habitat 
 ##' suitability is activated in the \code{FATE} simulation, and associated 
 ##' parameters are required
-##' @param HABSUIT.ref_option (\emph{optional}) \cr an \code{integer} 
+##' @param HABSUIT.mode (\emph{optional}) \cr an \code{integer} 
 ##' corresponding to the way of simulating the habitat suitability variation 
 ##' between years for each PFG, either random (\code{1}) or PFG specific 
 ##' (\code{2})
@@ -203,7 +203,7 @@
 ##'   (timestep), this value will be compared to a reference value, and if 
 ##'   superior, the PFG will be able to grow and survive. \cr
 ##'   Two methods to define this habitat suitability reference value are 
-##'   available (\code{HABSUIT.ref_option}) :
+##'   available (\code{HABSUIT.mode}) :
 ##'     \enumerate{
 ##'       \item \emph{random} : for each pixel, the reference value is drawn 
 ##'       from a uniform distribution, and the same value is used for each PFG 
@@ -353,7 +353,7 @@
 ##' 
 ##' \itemize{
 ##'   \item DO_HAB_SUITABILITY
-##'   \item HABSUIT_OPTION
+##'   \item HABSUIT_MODE
 ##' }
 ##' 
 ##' If the simulation includes \emph{disturbances} :
@@ -414,7 +414,7 @@
 ##'                                  , doDispersal = TRUE
 ##'                                  , DISPERSAL.mode = 1
 ##'                                  , doHabSuitability = TRUE
-##'                                  , HABSUIT.ref_option = 1
+##'                                  , HABSUIT.mode = 1
 ##'                                  )
 ##'                                    
 ##' ## Create SEVERAL Global_parameters files
@@ -434,7 +434,7 @@
 ##'                                  , doDispersal = TRUE
 ##'                                  , DISPERSAL.mode = 1
 ##'                                  , doHabSuitability = TRUE
-##'                                  , HABSUIT.ref_option = c(1,2)
+##'                                  , HABSUIT.mode = c(1,2)
 ##'                                  )
 ##' 
 ##' 
@@ -471,7 +471,7 @@ PRE_FATE.params_globalParameters = function(
   , doDispersal = FALSE
   , DISPERSAL.mode
   , doHabSuitability = FALSE
-  , HABSUIT.ref_option
+  , HABSUIT.mode
   , doDisturbances = FALSE
   , DIST.no
   , DIST.no_sub
@@ -554,7 +554,7 @@ PRE_FATE.params_globalParameters = function(
   }
   if (doHabSuitability)
   {
-    .testParam_notInValues.m("HABSUIT.ref_option", HABSUIT.ref_option, c(1, 2))
+    .testParam_notInValues.m("HABSUIT.mode", HABSUIT.mode, c(1, 2))
   }
   if (doDisturbances)
   {
@@ -622,9 +622,9 @@ PRE_FATE.params_globalParameters = function(
   if (doHabSuitability)
   {
     params.HABSUIT = list(as.numeric(doHabSuitability)
-                          , HABSUIT.ref_option)
+                          , HABSUIT.mode)
     names.params.list.HABSUIT = c("DO_HAB_SUITABILITY"
-                                  , "HABSUIT_OPTION")
+                                  , "HABSUIT_MODE")
   } else
   {
     params.HABSUIT = list(as.numeric(doHabSuitability))
