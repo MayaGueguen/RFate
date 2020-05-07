@@ -16,26 +16,33 @@
 ##' corresponding to the cells of the studied area in which the succession 
 ##' (core) module of the \code{FATE} simulation will take place (see 
 ##' \href{PRE_FATE.params_globalParameters.html#details}{\code{PRE_FATE.params_globalParameters}})
+##' @param name.SAVED_STATE (\emph{optional}) \cr a \code{string} corresponding 
+##' to the file name of a \code{FATE} object, obtained from a previous 
+##' simulation and from which to restart this new simulation
 ##' @param name.DIST (\emph{optional}) \cr a \code{string} corresponding to the 
 ##' file name of a raster mask, with either \code{0} or \code{1} within each 
 ##' pixel, \code{1} corresponding to the cells of the studied area in which the 
 ##' disturbance module of the \code{FATE} simulation will take place (see 
 ##' \href{PRE_FATE.params_globalParameters.html#details}{\code{PRE_FATE.params_globalParameters}})
-## @param name.HABSTAB (\emph{optional}) \cr a \code{vector} containing 2 
-## \code{string} corresponding to :
-## \enumerate{
-##   \item the name of a raster file, with an \code{integer} within each pixel 
-##   corresponding to the ID of its habitat
-##   \item the name of a \code{.txt} file, containing baseline statistics for 
-##   each habitat defined in the above-mentioned raster
-## }
-## These files will be used by the habitat stability module of the 
-## \code{FATE} simulation (see 
-## \code{\href{PRE_FATE.params_globalParameters.html#details}{PRE_FATE.params_globalParameters}})
 ##' @param name.DROUGHT (\emph{optional}) \cr a \code{string} corresponding to 
 ##' the name of a raster file, with a \code{numeric} value within each pixel 
-##' corresponding to the drought intensity experienced by this pixel throught 
-##' the drought disturbance module of the \code{FATE} simulation (see 
+##' corresponding to the drought intensity experienced by this pixel through 
+##' the drought (or fire) disturbance module of the \code{FATE} simulation (see 
+##' \href{PRE_FATE.params_globalParameters.html#details}{\code{PRE_FATE.params_globalParameters}})
+##' @param name.FIRE (\emph{optional}) \cr a \code{string} corresponding to the 
+##' file name of a raster mask, with either \code{0} or \code{1} within each 
+##' pixel, \code{1} corresponding to the cells of the studied area in which the 
+##' fire disturbance module of the \code{FATE} simulation will take place (see 
+##' \href{PRE_FATE.params_globalParameters.html#details}{\code{PRE_FATE.params_globalParameters}})
+##' @param name.ELEVATION (\emph{optional}) \cr a \code{string} corresponding to 
+##' the name of a raster file, with a \code{numeric} value within each pixel 
+##' corresponding to the elevation of this pixel and used by the fire 
+##' disturbance module of the \code{FATE} simulation (see 
+##' \href{PRE_FATE.params_globalParameters.html#details}{\code{PRE_FATE.params_globalParameters}})
+##' @param name.SLOPE (\emph{optional}) \cr a \code{string} corresponding to 
+##' the name of a raster file, with a \code{numeric} value within each pixel 
+##' corresponding to the slope of this pixel and used by the fire 
+##' disturbance module of the \code{FATE} simulation (see 
 ##' \href{PRE_FATE.params_globalParameters.html#details}{\code{PRE_FATE.params_globalParameters}})
 ##' @param opt.global.name (\emph{optional}) \cr a \code{string} corresponding 
 ##' to the name of the global parameter file in the folder 
@@ -62,6 +69,9 @@
 ##'   (see \code{\link{PRE_FATE.params_globalParameters}}) \cr \cr
 ##'   }
 ##'   \item{SAVING_DIR}{directory where simulation outputs will be stored}
+##'   \item{SAVED_STATE (\emph{optional})}{file containing the results of a 
+##'   previous \code{FATE} simulation from which to restart this new simulation 
+##'   \cr }
 ##'   \item{SAVING_YEARS_ \cr ARRAYS (\emph{optional})}{file containing the 
 ##'   years for which simulation maps will be saved \cr
 ##'   (see \code{\link{PRE_FATE.params_saveYears}})
@@ -119,9 +129,6 @@
 ##'   to change rasters for the disturbance module \cr
 ##'   (see \code{\link{PRE_FATE.params_changingYears}}) \cr \cr
 ##'   }
-##   \item{HABSTAB_MASK \cr (\emph{optional})}{raster mask that will define the 
-##   habitat areas}
-##   \item{HABSTAB_BASELINE \cr (\emph{optional})}{tobefilled \cr \cr}
 ##'   \item{PFG_PARAMS_DROUGHT \cr (\emph{optional})}{PFG drought disturbance 
 ##'   related parameters in terms of resprouting and mortality (one by PFG) \cr
 ##'   (see \code{\link{PRE_FATE.params_PFGdrought}})}
@@ -146,7 +153,28 @@
 ##'   (see \code{\link{PRE_FATE.params_changingYears}})}
 ##'   \item{ALIENS_CHANGEFREQ_FILES \cr (\emph{optional})}{file containing the 
 ##'   files to change frequencies for the aliens introduction module \cr
+##'   (see \code{\link{PRE_FATE.params_changingYears}}) \cr \cr}
+##'   \item{PFG_PARAMS_FIRE \cr (\emph{optional})}{PFG fire disturbance 
+##'   related parameters in terms of resprouting and mortality (one by PFG) \cr
+##'   (see \code{\link{PRE_FATE.params_PFGdisturbance}})}
+##'   \item{FIRE_MASK \cr (\emph{optional})}{raster mask that will define the 
+##'   fire disturbance areas}
+##'   \item{FIRE_CHANGEMASK_YEARS \cr (\emph{optional})}{file containing the 
+##'   years to change rasters for the fire disturbances module \cr
 ##'   (see \code{\link{PRE_FATE.params_changingYears}})}
+##'   \item{FIRE_CHANGEMASK_FILES \cr (\emph{optional})}{file containing the 
+##'   files to change rasters for the fire disturbances module \cr
+##'   (see \code{\link{PRE_FATE.params_changingYears}})}
+##'   \item{FIRE_CHANGEFREQ_YEARS \cr (\emph{optional})}{file containing the 
+##'   years to change frequencies for the fire disturbances module \cr
+##'   (see \code{\link{PRE_FATE.params_changingYears}})}
+##'   \item{FIRE_CHANGEFREQ_FILES \cr (\emph{optional})}{file containing the 
+##'   files to change frequencies for the fire disturbances module \cr
+##'   (see \code{\link{PRE_FATE.params_changingYears}})}
+##'   \item{ELEVATION_MASK \cr (\emph{optional})}{raster mask that will define 
+##'   the elevation of the area}
+##'   \item{SLOPE_MASK \cr (\emph{optional})}{raster mask that will define the 
+##'   slope of the area}
 ##' }
 ##' 
 ##' 
@@ -176,6 +204,7 @@
 ##'   \item \strong{--GLOBAL_PARAMS--}
 ##'   \item \strong{--SAVING_DIR--}
 ##'   \itemize{
+##'   \item --SAVED_STATE-- (\emph{optional})
 ##'   \item --SAVING_YEARS_ARRAYS-- (\emph{optional})
 ##'   \item --SAVING_YEARS_OBJECTS-- (\emph{optional})
 ##'   }
@@ -205,6 +234,14 @@
 ##'   \item --ALIENS_CHANGEMASK_FILES-- (\emph{optional})
 ##'   \item --ALIENS_CHANGEFREQ_YEARS-- (\emph{optional})
 ##'   \item --ALIENS_CHANGEFREQ_FILES-- (\emph{optional})
+##'   \item --PFG_PARAMS_FIRE-- (\emph{optional})
+##'   \item --FIRE_MASK-- (\emph{optional})
+##'   \item --FIRE_CHANGEMASK_YEARS-- (\emph{optional})
+##'   \item --FIRE_CHANGEMASK_FILES-- (\emph{optional})
+##'   \item --FIRE_CHANGEFREQ_YEARS-- (\emph{optional})
+##'   \item --FIRE_CHANGEFREQ_FILES-- (\emph{optional})
+##'   \item --ELEVATION_MASK-- (\emph{optional})
+##'   \item --SLOPE_MASK-- (\emph{optional})
 ##' }
 ##'   \item \strong{--END_OF_FILE--}
 ##' }
@@ -241,8 +278,12 @@
 PRE_FATE.params_simulParameters = function(
   name.simulation
   , name.MASK
+  , name.SAVED_STATE = NULL
   , name.DIST = NULL
   , name.DROUGHT = NULL
+  , name.FIRE = NULL
+  , name.ELEVATION = NULL
+  , name.SLOPE = NULL
   , opt.global.name = NULL
   , opt.folder.name = NULL
 ){
@@ -268,7 +309,7 @@ PRE_FATE.params_simulParameters = function(
                                               , paste0(opt.folder.name, "/")
                                               , create.dir = FALSE)
   
-  type.changing1 = c("MASK", "HABSUIT", "DIST", "DROUGHT", "ALIENS") #, "ALIENS_F")
+  type.changing1 = c("MASK", "HABSUIT", "DIST", "DROUGHT", "ALIENS", "FIRE") #, "ALIENS_F")
   type.changing2 = c("HABSUIT", "ALIENS")
   
   
@@ -379,13 +420,14 @@ PRE_FATE.params_simulParameters = function(
   ## Combine the names found (global parameters, SAVE directory, 
   ## SCENARIO directory, HABSUIT directory)
   
-  sce.mask = sce.habsuit = sce.dist = sce.drought = sce.aliens = 0
+  sce.mask = sce.habsuit = sce.dist = sce.drought = sce.aliens = sce.fire = 0
   ras.habsuit = ras.aliens = 0
   if (length(dirs.SCENARIO.MASK) > 0) sce.mask = 1:length(dirs.SCENARIO.MASK)
   if (length(dirs.SCENARIO.HABSUIT) > 0) sce.habsuit = 1:length(dirs.SCENARIO.HABSUIT)
   if (length(dirs.SCENARIO.DIST) > 0) sce.dist = 1:length(dirs.SCENARIO.DIST)
   if (length(dirs.SCENARIO.DROUGHT) > 0) sce.drought = 1:length(dirs.SCENARIO.DROUGHT)
   if (length(dirs.SCENARIO.ALIENS) > 0) sce.aliens = 1:length(dirs.SCENARIO.ALIENS)
+  if (length(dirs.SCENARIO.FIRE) > 0) sce.fire = 1:length(dirs.SCENARIO.FIRE)
   if (length(dirs.HABSUIT) > 0) ras.habsuit = 1:length(dirs.HABSUIT)
   if (length(dirs.ALIENS) > 0) ras.aliens = 1:length(dirs.ALIENS)
   
@@ -396,6 +438,7 @@ PRE_FATE.params_simulParameters = function(
                              , SCENARIO.DIST = sce.dist
                              , SCENARIO.DROUGHT = sce.drought
                              , SCENARIO.ALIENS = sce.aliens
+                             , SCENARIO.FIRE = sce.fire
                              , PFG.HABSUIT = ras.habsuit
                              , PFG.ALIENS = ras.aliens)
   
@@ -412,6 +455,12 @@ PRE_FATE.params_simulParameters = function(
                                               , name.MASK)
                               , stringsAsFactors = FALSE)
     names.params.combi = c("--GLOBAL_PARAMS--", "--MASK--")
+    if (!is.null(name.SAVED_STATE) && nchar(name.SAVED_STATE) > 0)
+    {
+      .testParam_existFile(name.SAVED_STATE)
+      params.combi[["SAVED_STATE"]] = name.SAVED_STATE
+      names.params.combi = c(names.params.combi, "--SAVED_STATE--")
+    }
     
     #############################################################################
     
@@ -526,10 +575,14 @@ PRE_FATE.params_simulParameters = function(
                           , flag = "DO_ALIENS_INTRODUCTION"
                           , flag.split = " "
                           , is.num = TRUE)
+    do.FIRE = .getParam(params.lines = globi
+                        , flag = "DO_FIRE_DISTURBANCE"
+                        , flag.split = " "
+                        , is.num = TRUE)
     
     ### -------------------------------------------------------------------- ###
     
-    MODULES = c("SUCC", "LIGHT", "SOIL", "DISP", "DIST", "DROUGHT")
+    MODULES = c("SUCC", "LIGHT", "SOIL", "DISP", "DIST", "DROUGHT", "FIRE")
     for (mod in MODULES)
     {
       if (get(paste0("do.", mod)))
@@ -601,7 +654,7 @@ PRE_FATE.params_simulParameters = function(
     
     ### -------------------------------------------------------------------- ###
     
-    MODULES = c("DIST", "DROUGHT")
+    MODULES = c("DIST", "DROUGHT", "FIRE")
     for (mod in MODULES)
     {
       if (get(paste0("do.", mod)))
@@ -761,6 +814,23 @@ PRE_FATE.params_simulParameters = function(
         {
           params.list = c(params.list, list(SCENARIO.ALIENS))
           names.params.list = c(names.params.list, "--ALIENS_CHANGEMASK_FILES--")
+        }
+      }
+      if (do.FIRE)
+      {
+        params.list = c(params.list
+                        , list(files.PFG.FIRE[, PFG.combi$FIRE[ii]])
+                        , list(rep(paste0(name.simulation
+                                          , "/DATA/MASK/"
+                                          , name.FIRE)
+                                   , no.FIRE)))
+        names.params.list = c(names.params.list
+                              , "--PFG_PARAMS_FIRE--"
+                              , "--FIRE_MASK--")
+        if (exists("SCENARIO.FIRE"))
+        {
+          params.list = c(params.list, list(SCENARIO.FIRE))
+          names.params.list = c(names.params.list, "--FIRE_CHANGEMASK_FILES--")
         }
       }
       

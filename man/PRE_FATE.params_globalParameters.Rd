@@ -37,7 +37,22 @@ PRE_FATE.params_globalParameters(
   doAliens = FALSE,
   ALIEN.no,
   ALIEN.freq,
-  doFire = FALSE
+  doFire = FALSE,
+  FIRE.no,
+  FIRE.no_sub,
+  FIRE.freq,
+  FIRE.ignit_mode,
+  FIRE.ignit_no,
+  FIRE.ignit_noHist,
+  FIRE.ignit_logis,
+  FIRE.ignit_flammMax,
+  FIRE.neigh_mode,
+  FIRE.neigh_CC,
+  FIRE.prop_mode,
+  FIRE.prop_intensity,
+  FIRE.prop_logis,
+  FIRE.quota_mode,
+  FIRE.quota_max
 )
 }
 \arguments{
@@ -158,7 +173,87 @@ number of introductions}
 \item{ALIEN.freq}{(\emph{optional}) \cr a \code{vector} of \code{integer} 
 corresponding to the frequency of each introduction (\emph{in years})}
 
-\item{doFire}{\emph{to be filled}}
+\item{doFire}{default \code{FALSE}. \cr If \code{TRUE}, fire 
+disturbances are applied in the \code{FATE} simulation, and associated 
+parameters are required}
+
+\item{FIRE.no}{(\emph{optional}) \cr an \code{integer} corresponding to the 
+number of fire disturbances}
+
+\item{FIRE.no_sub}{(\emph{optional}) \cr an \code{integer} corresponding to 
+the number of way a PFG could react to a fire disturbance}
+
+\item{FIRE.freq}{(\emph{optional}) \cr a \code{vector} of \code{integer} 
+corresponding to the frequency of each fire disturbance (\emph{in years})}
+
+\item{FIRE.ignit_mode}{(\emph{optional}) \cr an \code{integer} 
+corresponding to the way of simulating the fire(s) ignition each year, 
+either random (\code{1}, \code{2} or \code{3}), according to cell conditions 
+(\code{4}) or through a map (\code{5})}
+
+\item{FIRE.ignit_no}{(\emph{optional}) (\emph{required if 
+\code{FIRE.ignit_mode = 1 or 2}}) \cr an \code{integer} corresponding to the 
+number of fires starting each year}
+
+\item{FIRE.ignit_noHist}{(\emph{optional}) (\emph{required if 
+\code{FIRE.ignit_mode = 3}}) \cr a \code{vector} of \code{integer} 
+corresponding to historical number of fires}
+
+\item{FIRE.ignit_logis}{(\emph{optional}) (\emph{required if 
+\code{FIRE.ignit_mode = 4}})\cr a \code{vector} of 3 values to parameterize 
+the logistic probability function :
+\enumerate{
+  \item asymptote of the function curve
+  \item time where the slope starts to increase
+  \item speed of slope increase
+}}
+
+\item{FIRE.ignit_flammMax}{(\emph{optional}) (\emph{required if 
+\code{FIRE.ignit_mode = 4}}) \cr an \code{integer} corresponding to the 
+maximum flammmability of PFG}
+
+\item{FIRE.neigh_mode}{(\emph{optional}) \cr an \code{integer} 
+corresponding to the way of finding neighboring cells each year, 
+either 8 adjacent (\code{1}) or with cookie cutter (\code{2} or \code{3})}
+
+\item{FIRE.neigh_CC}{(\emph{optional}) (\emph{required if 
+\code{FIRE.neigh_mode = 2 or 3}}) \cr a \code{vector} of 4 values 
+corresponding to the extent of cookie cutter :
+\enumerate{
+  \item number of cells towards north
+  \item number of cells towards east
+  \item number of cells towards south
+  \item number of cells towards west
+}}
+
+\item{FIRE.prop_mode}{(\emph{optional}) \cr an \code{integer} 
+corresponding to the way of simulating the fire(s) propagation each year, 
+either fire intensity (\code{1}), \% of plants consumed (\code{2}), maximum 
+amount of resources (\code{3} or \code{4}), or according to cell conditions 
+(\code{5})}
+
+\item{FIRE.prop_intensity}{(\emph{optional}) (\emph{required if 
+\code{FIRE.prop_mode = 1}}) \cr a \code{vector} of \code{double} 
+corresponding to the intensity or probability of dispersal of each fire 
+disturbance (\emph{between \code{0} and \code{1}})}
+
+\item{FIRE.prop_logis}{(\emph{optional}) (\emph{required if 
+\code{FIRE.prop_mode = 5}}) \cr a \code{vector} of 3 values to parameterize 
+the logistic probability function :
+\enumerate{
+  \item asymptote of the function curve
+  \item time where the slope starts to increase
+  \item speed of slope increase
+}}
+
+\item{FIRE.quota_mode}{(\emph{optional}) \cr an \code{integer} 
+corresponding to the way of ending the fire(s) spread each year, 
+either maximum steps (\code{1}), maximum amount of resources (\code{2}), 
+maximum cells (\code{3}), or keep going (\code{4})}
+
+\item{FIRE.quota_max}{(\emph{optional}) (\emph{required if 
+\code{FIRE.quota_mode = 1, 2 or 3}}) \cr an \code{integer} corresponding to 
+the maximum quantity limit (either steps, resources, cells)}
 }
 \value{
 A \code{.txt} file into the 
@@ -230,6 +325,27 @@ If the simulation includes \emph{aliens introduction} :
   \item DO_ALIENS_INTRODUCTION
   \item ALIENS_NO
   \item ALIENS_FREQ
+}
+
+If the simulation includes \emph{fire disturbance} :
+
+\itemize{
+  \item DO_FIRE_DISTURBANCE
+  \item FIRE_NO
+  \item FIRE_NOSUB
+  \item FIRE_FREQ
+  \item FIRE_IGNIT_MODE
+  \item FIRE_IGNIT_NO
+  \item FIRE_IGNIT_NOHIST
+  \item FIRE_IGNIT_LOGIS
+  \item FIRE_IGNIT_FLAMMMAX
+  \item FIRE_NEIGH_MODE
+  \item FIRE_NEIGH_CC
+  \item FIRE_PROP_MODE
+  \item FIRE_PROP_INTENSITY
+  \item FIRE_PROP_LOGIS
+  \item FIRE_QUOTA_MODE
+  \item FIRE_QUOTA_MAX
 }
 }
 \description{
@@ -440,6 +556,132 @@ file, and if so, some additional parameters will be required :
   \describe{
     \item{ALIEN.no}{the number of different introductions}
     \item{ALIEN.freq}{the frequency of each introduction (\emph{in years})}
+  }
+  }
+  \item{FIRE}{= to influence plant mortality and / or resprouting according 
+  to PFG tolerances to these events (see 
+  \code{\link{PRE_FATE.params_PFGdisturbance}}) \cr \cr
+  Fire extreme events are broken down into 4 steps representing their 
+  \emph{life cycle}, so to speak. Each of these steps can be parameterized 
+  according to different available options :
+  \describe{
+    \item{Ignition}{Five methods to define the cells that are going to burn 
+    first, and from which the fire will potentially spread, are available 
+    (\code{FIRE.ignit_mode}) :
+    \enumerate{
+      \item \emph{Random (fixed)} : \code{FIRE.ignit_no} positions are 
+      drawn randomly over the area
+      \item \emph{Random (normal distribution)} : \code{ignit_no} positions 
+      are drawn randomly over the area, with
+      \deqn{\text{ignit_no} \sim N(\text{FIRE.ignit_no}, 1 + 
+      \frac{\text{FIRE.ignit_no}}{10})}
+      \item \emph{Random (historic distribution)} : \code{ignit_no} positions 
+      are drawn randomly over the area, with
+      \deqn{\text{ignit_no} \sim \text{FIRE.ignit_noHist}
+      [\;\; U(1, length(\text{FIRE.ignit_noHist})) \;\;]}
+      \item \emph{Probability 
+(\href{https://www.sciencedirect.com/science/article/abs/pii/S0304380096019448}{Li et al. 1997 Ecology Modelling})} 
+      : each cell can be a fire start with a probability (\code{probLi}) 
+      taking into account a baseline probability (\code{BL}), the PFG 
+      composition and abundances (\code{fuel}), and a drought index 
+      (\code{DI}, only if values between \code{0} and \code{1}, given within 
+      the \emph{Simul_parameters} file with the \code{DROUGHT_MASK} flag 
+      (see \code{\link{PRE_FATE.params_simulParameters}})) : 
+      \deqn{probLi_y = \text{BL}_y * \text{fuel}_y * (-DI)} with 
+      \deqn{\text{BL}_y = \frac{\text{FIRE.ignit_logis}[1]}{1 + 
+      e^{\text{FIRE.ignit_logis}[2] - \text{FIRE.ignit_logis}[3] * TSLF_y}}}
+      \deqn{\text{fuel}_y = \sum \frac{\text{FLAMM}_{\text{ PFG}_i}}
+      {\text{FIRE.ignit_flammMax}} * \frac{abund_{\text{ PFG}_i\text{, }y}}
+      {abund_{\text{ PFG}_{all}\text{, }y}}}
+      \item \emph{Map} \strong{!no neighbours, propagation, quota steps!} \cr
+      Each cell specified by the map given within the 
+      \emph{Simul_parameters} file with the \code{FIRE_MASK} flag and 
+      containing either \code{0} or \code{1} to define the starting 
+      positions (see \code{\link{PRE_FATE.params_simulParameters}})
+    }
+    }
+    \item{Neighbours / dispersal range}{Three methods to define the 
+    neighboring cells of the cell currently burning, and to which the fire 
+    will \strong{potentially} spread, are available (\code{FIRE.neigh_mode}) :
+    \enumerate{
+      \item \emph{8 neighbours} : all the 8 adjacent cells can potentially 
+      be impacted by fire, and propagation will determine which ones are 
+      effectively affected.
+      \item \emph{Extent (fixed)} \strong{!no propagation step!} \cr All 
+      cells contained within the rectangle defined by the \emph{cookie 
+      cutter} extent (\code{FIRE.neigh_CC}) are impacted by fire
+      \item \emph{Extent (random)} \strong{!no propagation step!} \cr All 
+      cells contained within the rectangle defined by the \emph{cookie 
+      cutter} extent (\code{neigh_CC}) are impacted by fire, with
+      \deqn{neigh\_CC_y \in \sum U(1, \text{FIRE.neigh_CC}_i)} 
+    }
+    }
+    \item{Propagation}{Five methods to define which cells among the 
+    neighboring cells will actually burn are available 
+    (\code{FIRE.prop_mode}) :
+    \enumerate{
+      \item \emph{Probability (fire intensity)} : a probability is 
+      assigned to \emph{the cell currently burning} corresponding to the 
+      concerned fire intensity (\code{FIRE.prop_intensity}) and compared to a 
+      number drawn randomly for each neighbor cell
+      \item \emph{Probability (\% of plants consumed)} : a probability is 
+      assigned to \emph{the cell currently burning} linked to the percentage 
+      of PFG killed by the concerned fire (\code{prob}) and compared to a 
+      number drawn randomly for each neighbor cell
+      \deqn{\text{prob}_y = \sum \text{KilledIndiv}_{\text{ PFG}_i} * 
+      \frac{abund_{\text{ PFG}_i\text{, }y}}
+      {abund_{\text{ PFG}_{all}\text{, }y}}}
+      \item \emph{Maximum amount (PFG)} : the cell(s) with the maximum 
+      amount of plants weighted by their flammability (\code{fuel}) will 
+      burn
+      \deqn{\text{fuel}_y = \sum \text{FLAMM}_{\text{ PFG}_i} * 
+      abund_{\text{ PFG}_i\text{, }y}}
+      \item \emph{Maximum amount (soil)} : \emph{if the soil module was 
+      activated}, the cell(s) with the maximum amount of soil will burn
+      \item \emph{Probability 
+(\href{https://www.sciencedirect.com/science/article/abs/pii/S0304380096019448}{Li et al. 1997 Ecology Modelling})} 
+      : a probability is assigned to \emph{the cell currently burning} 
+      taking into account a baseline probability (\code{BL}), the PFG 
+      composition and abundances (\code{fuel}), the elevation and slope 
+      (given within the \emph{Simul_parameters} file with the 
+      \code{ELEVATION_MASK} and \code{SLOPE_MASK} flags (see 
+      \code{\link{PRE_FATE.params_simulParameters}})), and a drought index 
+      (\code{DI}, only if values between \code{0} and \code{1}, given within 
+      the \emph{Simul_parameters} file with the \code{DROUGHT_MASK} flag 
+      (see \code{\link{PRE_FATE.params_simulParameters}})) : 
+      \deqn{probLi_y = \text{BL}_y * \text{fuel}_y * (-DI) * probSlope} with 
+      \deqn{\text{BL}_y = \frac{\text{FIRE.prop_logis}[1]}{1 + 
+      e^{\text{FIRE.prop_logis}[2] - \text{FIRE.prop_logis}[3] * TSLF_y}}}
+      \deqn{\text{fuel}_y = \sum \frac{\text{FLAMM}_{\text{ PFG}_i}}
+      {\text{FIRE.ignit_flammMax}} * \frac{abund_{\text{ PFG}_i\text{, }y}}
+      {abund_{\text{ PFG}_{all}\text{, }y}}}
+      \deqn{\text{if going up, } probSlope = 1 + 0.001 * \text{SLOPE}}
+      \deqn{\text{if going down, } probSlope  = 1 + 0.001 * 
+      max(-30.0,-\text{SLOPE})}
+    }
+    }
+    \item{Quota / spread end}{Four methods to define when the fire will stop 
+    spreading are available (\code{FIRE.quota_mode}) :
+    \enumerate{
+      \item \emph{Maximum step} : after a fixed number of steps 
+      (\code{FIRE.quota_max})
+      \item \emph{Maximum amount} : when a fixed amount of PFG is consumed 
+      (\code{FIRE.quota_max})
+      \item \emph{Maximum cells} : when a fixed amount of cells is 
+      consumed (\code{FIRE.quota_max})
+      \item \emph{Keep going} : as long as it remains a fire that manages 
+      to spread
+    }
+    }
+  }
+  As for the disturbances module, the user will have to define how each PFG 
+  will be impacted depending on age and life stage. 
+  \describe{
+    \item{FIRE.no}{the number of different fire disturbances}
+    \item{FIRE.no_sub}{the number of way a PFG could react to a 
+    perturbation}
+    \item{FIRE.freq}{the frequency of each fire disturbance 
+    (\emph{in years}) \cr \cr}
   }
   }
 }

@@ -27,19 +27,21 @@ test_that("PRE_FATE.params_changingYears gives error with wrong data : name.simu
 
 ## INPUTS
 test_that("PRE_FATE.params_changingYears gives error with wrong data : type.changing", {
+  if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
+  PRE_FATE.skeletonDirectory()
   
   ## TEST type.changing : correct values
   expect_error(PRE_FATE.params_changingYears(name.simulation = "FATE_simulation")
-               , "`type.changing` must be either `MASK`, `HABSUIT`, `DIST`, `DROUGHT`, `ALIENS` or `ALIENS_F`"
+               , "`type.changing` must be either `MASK`, `HABSUIT`, `DIST`, `DROUGHT`, `ALIENS`, `ALIENS_F`, `FIRE` or `FIRE_F`"
                , fixed = TRUE)
   expect_error(PRE_FATE.params_changingYears(name.simulation = "FATE_simulation", type.changing = NULL)
-               , "`type.changing` must be either `MASK`, `HABSUIT`, `DIST`, `DROUGHT`, `ALIENS` or `ALIENS_F`"
+               , "`type.changing` must be either `MASK`, `HABSUIT`, `DIST`, `DROUGHT`, `ALIENS`, `ALIENS_F`, `FIRE` or `FIRE_F`"
                , fixed = TRUE)
   expect_error(PRE_FATE.params_changingYears(name.simulation = "FATE_simulation", type.changing = NA)
-               , "`type.changing` must be either `MASK`, `HABSUIT`, `DIST`, `DROUGHT`, `ALIENS` or `ALIENS_F`"
+               , "`type.changing` must be either `MASK`, `HABSUIT`, `DIST`, `DROUGHT`, `ALIENS`, `ALIENS_F`, `FIRE` or `FIRE_F`"
                , fixed = TRUE)
   expect_error(PRE_FATE.params_changingYears(name.simulation = "FATE_simulation", type.changing = "dist")
-               , "`type.changing` must be either `MASK`, `HABSUIT`, `DIST`, `DROUGHT`, `ALIENS` or `ALIENS_F`"
+               , "`type.changing` must be either `MASK`, `HABSUIT`, `DIST`, `DROUGHT`, `ALIENS`, `ALIENS_F`, `FIRE` or `FIRE_F`"
                , fixed = TRUE)
 })
 

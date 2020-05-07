@@ -253,8 +253,10 @@ or simulation name of the <code>FATE</code> simulation</p></td>
 <li><p><code>MASK</code> (succession),</p></li>
 <li><p><code>HABSUIT</code> (habitat suitability),</p></li>
 <li><p><code>DIST</code> (disturbances),</p></li>
-<li><p><code>DROUGHT</code> (drought disturbances),</p></li>
+<li><p><code>DROUGHT</code> (drought disturbance),</p></li>
 <li><p><code>ALIENS</code> or <code>ALIENS_F</code> (aliens introduction, masks or 
+  frequencies)</p></li>
+<li><p><code>FIRE</code> or <code>FIRE_F</code> (fire disturbance, masks or 
   frequencies)</p></li>
 </ul></td>
     </tr>
@@ -339,7 +341,19 @@ changes over time :</p>
   or <code>1</code></strong> to define where the introductions occur. The impacted pixels 
   can also change through time (e.g. colonization, eradication campaign, 
   etc), as well as the frequencies of introduction (see <code>ALIENS_FREQ</code> 
-  flag in <code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>). <br /> <br /></p></dd>
+  flag in <code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>).</p></dd>
+  
+  <dt>fire disturbance</dt><dd><p><strong>if this module is activated</strong> (see 
+  <code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>), fire disturbance 
+  can rely on a raster given within the <em>Simul_parameters</em> file with 
+  the <code>FIRE_MASK</code> flag (see 
+  <code><a href='PRE_FATE.params_simulParameters.html'>PRE_FATE.params_simulParameters</a></code>). <br />
+  As for succession, this mask is filled <strong>with either <code>0</code> 
+  or <code>1</code></strong> to define where the perturbation occurs. The impacted pixels 
+  can also change through time (e.g. change in forestry practices, expansion 
+  of drought events, etc), as well as the frequencies of perturbations (see 
+  <code>FIRE_FREQ</code> flag in <code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>). 
+  <br /> <br /></p></dd>
 
 </dl>
 
@@ -349,11 +363,13 @@ these temporal changes :</p>
   <dt>year</dt><dd><p>all simulation years at which the raster files of a specific 
   module <em>(succession <code>MASK</code>, habitat suitability <code>HABSUIT</code>, 
   disturbance <code>DIST</code>, drought <code>DROUGHT</code>, aliens introduction 
-  <code>ALIENS</code> or <code>ALIENS_F</code>)</em> will be changed</p></dd>
+  <code>ALIENS</code> or <code>ALIENS_F</code>, fire <code>FIRE</code> or <code>FIRE_F</code>)</em> will 
+  be changed</p></dd>
   <dt>new.value</dt><dd><p>the names of the new raster files for each year of 
   change. It can be either <code>.img</code> or <code>.tif</code>.<br />
-  There is an exception if <code>ALIENS_F</code> is selected : the values should 
-  be <code>integer</code> representing the frequencies of aliens introduction.</p></dd>
+  There is an exception if <code>ALIENS_F</code> or <code>FIRE_F</code> is selected : 
+  the values should be <code>integer</code> representing the frequencies of aliens 
+  introduction or fire perturbations.</p></dd>
   <dt>order</dt><dd><p>an <code>integer</code> associated to each new map in order to 
   always give the raster maps in the same order throughout the years <br /> <br /></p></dd>
 

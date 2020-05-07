@@ -260,7 +260,22 @@ containing <code>GLOBAL PARAMETERS</code> used in <code>FATE</code> model.</p>
   <span class='kw'>doAliens</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='no'>ALIEN.no</span>,
   <span class='no'>ALIEN.freq</span>,
-  <span class='kw'>doFire</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
+  <span class='kw'>doFire</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>FIRE.no</span>,
+  <span class='no'>FIRE.no_sub</span>,
+  <span class='no'>FIRE.freq</span>,
+  <span class='no'>FIRE.ignit_mode</span>,
+  <span class='no'>FIRE.ignit_no</span>,
+  <span class='no'>FIRE.ignit_noHist</span>,
+  <span class='no'>FIRE.ignit_logis</span>,
+  <span class='no'>FIRE.ignit_flammMax</span>,
+  <span class='no'>FIRE.neigh_mode</span>,
+  <span class='no'>FIRE.neigh_CC</span>,
+  <span class='no'>FIRE.prop_mode</span>,
+  <span class='no'>FIRE.prop_intensity</span>,
+  <span class='no'>FIRE.prop_logis</span>,
+  <span class='no'>FIRE.quota_mode</span>,
+  <span class='no'>FIRE.quota_max</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -447,7 +462,114 @@ corresponding to the frequency of each introduction (<em>in years</em>)</p></td>
     </tr>
     <tr>
       <th>doFire</th>
-      <td><p><em>to be filled</em></p></td>
+      <td><p>default <code>FALSE</code>. <br /> If <code>TRUE</code>, fire 
+disturbances are applied in the <code>FATE</code> simulation, and associated 
+parameters are required</p></td>
+    </tr>
+    <tr>
+      <th>FIRE.no</th>
+      <td><p>(<em>optional</em>) <br /> an <code>integer</code> corresponding to the 
+number of fire disturbances</p></td>
+    </tr>
+    <tr>
+      <th>FIRE.no_sub</th>
+      <td><p>(<em>optional</em>) <br /> an <code>integer</code> corresponding to 
+the number of way a PFG could react to a fire disturbance</p></td>
+    </tr>
+    <tr>
+      <th>FIRE.freq</th>
+      <td><p>(<em>optional</em>) <br /> a <code>vector</code> of <code>integer</code> 
+corresponding to the frequency of each fire disturbance (<em>in years</em>)</p></td>
+    </tr>
+    <tr>
+      <th>FIRE.ignit_mode</th>
+      <td><p>(<em>optional</em>) <br /> an <code>integer</code> 
+corresponding to the way of simulating the fire(s) ignition each year, 
+either random (<code>1</code>, <code>2</code> or <code>3</code>), according to cell conditions 
+(<code>4</code>) or through a map (<code>5</code>)</p></td>
+    </tr>
+    <tr>
+      <th>FIRE.ignit_no</th>
+      <td><p>(<em>optional</em>) (<em>required if 
+<code>FIRE.ignit_mode = 1 or 2</code></em>) <br /> an <code>integer</code> corresponding to the 
+number of fires starting each year</p></td>
+    </tr>
+    <tr>
+      <th>FIRE.ignit_noHist</th>
+      <td><p>(<em>optional</em>) (<em>required if 
+<code>FIRE.ignit_mode = 3</code></em>) <br /> a <code>vector</code> of <code>integer</code> 
+corresponding to historical number of fires</p></td>
+    </tr>
+    <tr>
+      <th>FIRE.ignit_logis</th>
+      <td><p>(<em>optional</em>) (<em>required if 
+<code>FIRE.ignit_mode = 4</code></em>)<br /> a <code>vector</code> of 3 values to parameterize 
+the logistic probability function :</p><ol>
+<li><p>asymptote of the function curve</p></li>
+<li><p>time where the slope starts to increase</p></li>
+<li><p>speed of slope increase</p></li>
+</ol></td>
+    </tr>
+    <tr>
+      <th>FIRE.ignit_flammMax</th>
+      <td><p>(<em>optional</em>) (<em>required if 
+<code>FIRE.ignit_mode = 4</code></em>) <br /> an <code>integer</code> corresponding to the 
+maximum flammmability of PFG</p></td>
+    </tr>
+    <tr>
+      <th>FIRE.neigh_mode</th>
+      <td><p>(<em>optional</em>) <br /> an <code>integer</code> 
+corresponding to the way of finding neighboring cells each year, 
+either 8 adjacent (<code>1</code>) or with cookie cutter (<code>2</code> or <code>3</code>)</p></td>
+    </tr>
+    <tr>
+      <th>FIRE.neigh_CC</th>
+      <td><p>(<em>optional</em>) (<em>required if 
+<code>FIRE.neigh_mode = 2 or 3</code></em>) <br /> a <code>vector</code> of 4 values 
+corresponding to the extent of cookie cutter :</p><ol>
+<li><p>number of cells towards north</p></li>
+<li><p>number of cells towards east</p></li>
+<li><p>number of cells towards south</p></li>
+<li><p>number of cells towards west</p></li>
+</ol></td>
+    </tr>
+    <tr>
+      <th>FIRE.prop_mode</th>
+      <td><p>(<em>optional</em>) <br /> an <code>integer</code> 
+corresponding to the way of simulating the fire(s) propagation each year, 
+either fire intensity (<code>1</code>), % of plants consumed (<code>2</code>), maximum 
+amount of resources (<code>3</code> or <code>4</code>), or according to cell conditions 
+(<code>5</code>)</p></td>
+    </tr>
+    <tr>
+      <th>FIRE.prop_intensity</th>
+      <td><p>(<em>optional</em>) (<em>required if 
+<code>FIRE.prop_mode = 1</code></em>) <br /> a <code>vector</code> of <code>double</code> 
+corresponding to the intensity or probability of dispersal of each fire 
+disturbance (<em>between <code>0</code> and <code>1</code></em>)</p></td>
+    </tr>
+    <tr>
+      <th>FIRE.prop_logis</th>
+      <td><p>(<em>optional</em>) (<em>required if 
+<code>FIRE.prop_mode = 5</code></em>) <br /> a <code>vector</code> of 3 values to parameterize 
+the logistic probability function :</p><ol>
+<li><p>asymptote of the function curve</p></li>
+<li><p>time where the slope starts to increase</p></li>
+<li><p>speed of slope increase</p></li>
+</ol></td>
+    </tr>
+    <tr>
+      <th>FIRE.quota_mode</th>
+      <td><p>(<em>optional</em>) <br /> an <code>integer</code> 
+corresponding to the way of ending the fire(s) spread each year, 
+either maximum steps (<code>1</code>), maximum amount of resources (<code>2</code>), 
+maximum cells (<code>3</code>), or keep going (<code>4</code>)</p></td>
+    </tr>
+    <tr>
+      <th>FIRE.quota_max</th>
+      <td><p>(<em>optional</em>) (<em>required if 
+<code>FIRE.quota_mode = 1, 2 or 3</code></em>) <br /> an <code>integer</code> corresponding to 
+the maximum quantity limit (either steps, resources, cells)</p></td>
     </tr>
     </table>
 
@@ -514,6 +636,26 @@ parameters :</p>
 <li><p>DO_ALIENS_INTRODUCTION</p></li>
 <li><p>ALIENS_NO</p></li>
 <li><p>ALIENS_FREQ</p></li>
+</ul>
+
+<p>If the simulation includes <em>fire disturbance</em> :</p>
+<ul>
+<li><p>DO_FIRE_DISTURBANCE</p></li>
+<li><p>FIRE_NO</p></li>
+<li><p>FIRE_NOSUB</p></li>
+<li><p>FIRE_FREQ</p></li>
+<li><p>FIRE_IGNIT_MODE</p></li>
+<li><p>FIRE_IGNIT_NO</p></li>
+<li><p>FIRE_IGNIT_NOHIST</p></li>
+<li><p>FIRE_IGNIT_LOGIS</p></li>
+<li><p>FIRE_IGNIT_FLAMMMAX</p></li>
+<li><p>FIRE_NEIGH_MODE</p></li>
+<li><p>FIRE_NEIGH_CC</p></li>
+<li><p>FIRE_PROP_MODE</p></li>
+<li><p>FIRE_PROP_INTENSITY</p></li>
+<li><p>FIRE_PROP_LOGIS</p></li>
+<li><p>FIRE_QUOTA_MODE</p></li>
+<li><p>FIRE_QUOTA_MAX</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
@@ -698,6 +840,125 @@ file, and if so, some additional parameters will be required :</p>
   <dl'>
     <dt>ALIEN.no</dt><dd><p>the number of different introductions</p></dd>
     <dt>ALIEN.freq</dt><dd><p>the frequency of each introduction (<em>in years</em>)</p></dd></dl></p></dd>
+  <dt>FIRE</dt><dd><p>= to influence plant mortality and / or resprouting according 
+  to PFG tolerances to these events (see 
+  <code><a href='PRE_FATE.params_PFGdisturbance.html'>PRE_FATE.params_PFGdisturbance</a></code>) <br /> <br />
+  Fire extreme events are broken down into 4 steps representing their 
+  <em>life cycle</em>, so to speak. Each of these steps can be parameterized 
+  according to different available options :
+  <dl'>
+    <dt>Ignition</dt><dd><p>Five methods to define the cells that are going to burn 
+    first, and from which the fire will potentially spread, are available 
+    (<code>FIRE.ignit_mode</code>) :
+    <ol>
+<li><p><em>Random (fixed)</em> : <code>FIRE.ignit_no</code> positions are 
+      drawn randomly over the area</p></li>
+<li><p><em>Random (normal distribution)</em> : <code>ignit_no</code> positions 
+      are drawn randomly over the area, with
+      $$\text{ignit_no} \sim N(\text{FIRE.ignit_no}, 1 + 
+      \frac{\text{FIRE.ignit_no}}{10})$$</p></li>
+<li><p><em>Random (historic distribution)</em> : <code>ignit_no</code> positions 
+      are drawn randomly over the area, with
+      $$\text{ignit_no} \sim \text{FIRE.ignit_noHist}
+      [\;\; U(1, length(\text{FIRE.ignit_noHist})) \;\;]$$</p></li>
+<li><p><em>Probability 
+(<a href='https://www.sciencedirect.com/science/article/abs/pii/S0304380096019448'>Li et al. 1997 Ecology Modelling</a>)</em> 
+      : each cell can be a fire start with a probability (<code>probLi</code>) 
+      taking into account a baseline probability (<code>BL</code>), the PFG 
+      composition and abundances (<code>fuel</code>), and a drought index 
+      (<code>DI</code>, only if values between <code>0</code> and <code>1</code>, given within 
+      the <em>Simul_parameters</em> file with the <code>DROUGHT_MASK</code> flag 
+      (see <code><a href='PRE_FATE.params_simulParameters.html'>PRE_FATE.params_simulParameters</a></code>)) : 
+      $$probLi_y = \text{BL}_y * \text{fuel}_y * (-DI)$$ with 
+      $$\text{BL}_y = \frac{\text{FIRE.ignit_logis}[1]}{1 + 
+      e^{\text{FIRE.ignit_logis}[2] - \text{FIRE.ignit_logis}[3] * TSLF_y}}$$
+      $$\text{fuel}_y = \sum \frac{\text{FLAMM}_{\text{ PFG}_i}}
+      {\text{FIRE.ignit_flammMax}} * \frac{abund_{\text{ PFG}_i\text{, }y}}
+      {abund_{\text{ PFG}_{all}\text{, }y}}$$</p></li>
+<li><p><em>Map</em> <strong>!no neighbours, propagation, quota steps!</strong> <br />
+      Each cell specified by the map given within the 
+      <em>Simul_parameters</em> file with the <code>FIRE_MASK</code> flag and 
+      containing either <code>0</code> or <code>1</code> to define the starting 
+      positions (see <code><a href='PRE_FATE.params_simulParameters.html'>PRE_FATE.params_simulParameters</a></code>)</p></li>
+</ol></p></dd>
+    <dt>Neighbours / dispersal range</dt><dd><p>Three methods to define the 
+    neighboring cells of the cell currently burning, and to which the fire 
+    will <strong>potentially</strong> spread, are available (<code>FIRE.neigh_mode</code>) :
+    <ol>
+<li><p><em>8 neighbours</em> : all the 8 adjacent cells can potentially 
+      be impacted by fire, and propagation will determine which ones are 
+      effectively affected.</p></li>
+<li><p><em>Extent (fixed)</em> <strong>!no propagation step!</strong> <br /> All 
+      cells contained within the rectangle defined by the <em>cookie 
+      cutter</em> extent (<code>FIRE.neigh_CC</code>) are impacted by fire</p></li>
+<li><p><em>Extent (random)</em> <strong>!no propagation step!</strong> <br /> All 
+      cells contained within the rectangle defined by the <em>cookie 
+      cutter</em> extent (<code>neigh_CC</code>) are impacted by fire, with
+      $$neigh\_CC_y \in \sum U(1, \text{FIRE.neigh_CC}_i)$$</p></li>
+</ol></p></dd>
+    <dt>Propagation</dt><dd><p>Five methods to define which cells among the 
+    neighboring cells will actually burn are available 
+    (<code>FIRE.prop_mode</code>) :
+    <ol>
+<li><p><em>Probability (fire intensity)</em> : a probability is 
+      assigned to <em>the cell currently burning</em> corresponding to the 
+      concerned fire intensity (<code>FIRE.prop_intensity</code>) and compared to a 
+      number drawn randomly for each neighbor cell</p></li>
+<li><p><em>Probability (% of plants consumed)</em> : a probability is 
+      assigned to <em>the cell currently burning</em> linked to the percentage 
+      of PFG killed by the concerned fire (<code>prob</code>) and compared to a 
+      number drawn randomly for each neighbor cell
+      $$\text{prob}_y = \sum \text{KilledIndiv}_{\text{ PFG}_i} * 
+      \frac{abund_{\text{ PFG}_i\text{, }y}}
+      {abund_{\text{ PFG}_{all}\text{, }y}}$$</p></li>
+<li><p><em>Maximum amount (PFG)</em> : the cell(s) with the maximum 
+      amount of plants weighted by their flammability (<code>fuel</code>) will 
+      burn
+      $$\text{fuel}_y = \sum \text{FLAMM}_{\text{ PFG}_i} * 
+      abund_{\text{ PFG}_i\text{, }y}$$</p></li>
+<li><p><em>Maximum amount (soil)</em> : <em>if the soil module was 
+      activated</em>, the cell(s) with the maximum amount of soil will burn</p></li>
+<li><p><em>Probability 
+(<a href='https://www.sciencedirect.com/science/article/abs/pii/S0304380096019448'>Li et al. 1997 Ecology Modelling</a>)</em> 
+      : a probability is assigned to <em>the cell currently burning</em> 
+      taking into account a baseline probability (<code>BL</code>), the PFG 
+      composition and abundances (<code>fuel</code>), the elevation and slope 
+      (given within the <em>Simul_parameters</em> file with the 
+      <code>ELEVATION_MASK</code> and <code>SLOPE_MASK</code> flags (see 
+      <code><a href='PRE_FATE.params_simulParameters.html'>PRE_FATE.params_simulParameters</a></code>)), and a drought index 
+      (<code>DI</code>, only if values between <code>0</code> and <code>1</code>, given within 
+      the <em>Simul_parameters</em> file with the <code>DROUGHT_MASK</code> flag 
+      (see <code><a href='PRE_FATE.params_simulParameters.html'>PRE_FATE.params_simulParameters</a></code>)) : 
+      $$probLi_y = \text{BL}_y * \text{fuel}_y * (-DI) * probSlope$$ with 
+      $$\text{BL}_y = \frac{\text{FIRE.prop_logis}[1]}{1 + 
+      e^{\text{FIRE.prop_logis}[2] - \text{FIRE.prop_logis}[3] * TSLF_y}}$$
+      $$\text{fuel}_y = \sum \frac{\text{FLAMM}_{\text{ PFG}_i}}
+      {\text{FIRE.ignit_flammMax}} * \frac{abund_{\text{ PFG}_i\text{, }y}}
+      {abund_{\text{ PFG}_{all}\text{, }y}}$$
+      $$\text{if going up, } probSlope = 1 + 0.001 * \text{SLOPE}$$
+      $$\text{if going down, } probSlope  = 1 + 0.001 * 
+      max(-30.0,-\text{SLOPE})$$</p></li>
+</ol></p></dd>
+    <dt>Quota / spread end</dt><dd><p>Four methods to define when the fire will stop 
+    spreading are available (<code>FIRE.quota_mode</code>) :
+    <ol>
+<li><p><em>Maximum step</em> : after a fixed number of steps 
+      (<code>FIRE.quota_max</code>)</p></li>
+<li><p><em>Maximum amount</em> : when a fixed amount of PFG is consumed 
+      (<code>FIRE.quota_max</code>)</p></li>
+<li><p><em>Maximum cells</em> : when a fixed amount of cells is 
+      consumed (<code>FIRE.quota_max</code>)</p></li>
+<li><p><em>Keep going</em> : as long as it remains a fire that manages 
+      to spread</p></li>
+</ol></p></dd></dl>
+  As for the disturbances module, the user will have to define how each PFG 
+  will be impacted depending on age and life stage. 
+  <dl'>
+    <dt>FIRE.no</dt><dd><p>the number of different fire disturbances</p></dd>
+    <dt>FIRE.no_sub</dt><dd><p>the number of way a PFG could react to a 
+    perturbation</p></dd>
+    <dt>FIRE.freq</dt><dd><p>the frequency of each fire disturbance 
+    (<em>in years</em>) <br /> <br /></p></dd></dl></p></dd>
 
 </dl>
 

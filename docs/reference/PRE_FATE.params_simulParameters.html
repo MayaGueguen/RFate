@@ -231,8 +231,12 @@ file containing <code>PARAMETER FILENAMES</code> used in <code>FATE</code> model
     <pre class="usage"><span class='fu'>PRE_FATE.params_simulParameters</span>(
   <span class='no'>name.simulation</span>,
   <span class='no'>name.MASK</span>,
+  <span class='kw'>name.SAVED_STATE</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>name.DIST</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>name.DROUGHT</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>name.FIRE</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>name.ELEVATION</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>name.SLOPE</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>opt.global.name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>opt.folder.name</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
 )</pre>
@@ -254,6 +258,12 @@ corresponding to the cells of the studied area in which the succession
 <a href='PRE_FATE.params_globalParameters.html#details'><code>PRE_FATE.params_globalParameters</code></a>)</p></td>
     </tr>
     <tr>
+      <th>name.SAVED_STATE</th>
+      <td><p>(<em>optional</em>) <br /> a <code>string</code> corresponding 
+to the file name of a <code>FATE</code> object, obtained from a previous 
+simulation and from which to restart this new simulation</p></td>
+    </tr>
+    <tr>
       <th>name.DIST</th>
       <td><p>(<em>optional</em>) <br /> a <code>string</code> corresponding to the 
 file name of a raster mask, with either <code>0</code> or <code>1</code> within each 
@@ -265,8 +275,32 @@ disturbance module of the <code>FATE</code> simulation will take place (see
       <th>name.DROUGHT</th>
       <td><p>(<em>optional</em>) <br /> a <code>string</code> corresponding to 
 the name of a raster file, with a <code>numeric</code> value within each pixel 
-corresponding to the drought intensity experienced by this pixel throught 
-the drought disturbance module of the <code>FATE</code> simulation (see 
+corresponding to the drought intensity experienced by this pixel through 
+the drought (or fire) disturbance module of the <code>FATE</code> simulation (see 
+<a href='PRE_FATE.params_globalParameters.html#details'><code>PRE_FATE.params_globalParameters</code></a>)</p></td>
+    </tr>
+    <tr>
+      <th>name.FIRE</th>
+      <td><p>(<em>optional</em>) <br /> a <code>string</code> corresponding to the 
+file name of a raster mask, with either <code>0</code> or <code>1</code> within each 
+pixel, <code>1</code> corresponding to the cells of the studied area in which the 
+fire disturbance module of the <code>FATE</code> simulation will take place (see 
+<a href='PRE_FATE.params_globalParameters.html#details'><code>PRE_FATE.params_globalParameters</code></a>)</p></td>
+    </tr>
+    <tr>
+      <th>name.ELEVATION</th>
+      <td><p>(<em>optional</em>) <br /> a <code>string</code> corresponding to 
+the name of a raster file, with a <code>numeric</code> value within each pixel 
+corresponding to the elevation of this pixel and used by the fire 
+disturbance module of the <code>FATE</code> simulation (see 
+<a href='PRE_FATE.params_globalParameters.html#details'><code>PRE_FATE.params_globalParameters</code></a>)</p></td>
+    </tr>
+    <tr>
+      <th>name.SLOPE</th>
+      <td><p>(<em>optional</em>) <br /> a <code>string</code> corresponding to 
+the name of a raster file, with a <code>numeric</code> value within each pixel 
+corresponding to the slope of this pixel and used by the fire 
+disturbance module of the <code>FATE</code> simulation (see 
 <a href='PRE_FATE.params_globalParameters.html#details'><code>PRE_FATE.params_globalParameters</code></a>)</p></td>
     </tr>
     <tr>
@@ -292,6 +326,7 @@ directory with the following parameters :</p>
 <ul>
 <li><p><strong>--GLOBAL_PARAMS--</strong></p></li>
 <li><p><strong>--SAVING_DIR--</strong></p><ul>
+<li><p>--SAVED_STATE-- (<em>optional</em>)</p></li>
 <li><p>--SAVING_YEARS_ARRAYS-- (<em>optional</em>)</p></li>
 <li><p>--SAVING_YEARS_OBJECTS-- (<em>optional</em>)</p></li>
 </ul></li>
@@ -319,6 +354,14 @@ directory with the following parameters :</p>
 <li><p>--ALIENS_CHANGEMASK_FILES-- (<em>optional</em>)</p></li>
 <li><p>--ALIENS_CHANGEFREQ_YEARS-- (<em>optional</em>)</p></li>
 <li><p>--ALIENS_CHANGEFREQ_FILES-- (<em>optional</em>)</p></li>
+<li><p>--PFG_PARAMS_FIRE-- (<em>optional</em>)</p></li>
+<li><p>--FIRE_MASK-- (<em>optional</em>)</p></li>
+<li><p>--FIRE_CHANGEMASK_YEARS-- (<em>optional</em>)</p></li>
+<li><p>--FIRE_CHANGEMASK_FILES-- (<em>optional</em>)</p></li>
+<li><p>--FIRE_CHANGEFREQ_YEARS-- (<em>optional</em>)</p></li>
+<li><p>--FIRE_CHANGEFREQ_FILES-- (<em>optional</em>)</p></li>
+<li><p>--ELEVATION_MASK-- (<em>optional</em>)</p></li>
+<li><p>--SLOPE_MASK-- (<em>optional</em>)</p></li>
 </ul></li>
 <li><p><strong>--END_OF_FILE--</strong></p></li>
 </ul>
@@ -335,6 +378,9 @@ needed by the program to run.</p>
   strata, simulation duration, computer resources, modules loaded, etc) <br />
   (see <code><a href='PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a></code>) <br /> <br /></p></dd>
   <dt>SAVING_DIR</dt><dd><p>directory where simulation outputs will be stored</p></dd>
+  <dt>SAVED_STATE (<em>optional</em>)</dt><dd><p>file containing the results of a 
+  previous <code>FATE</code> simulation from which to restart this new simulation 
+  <br /></p></dd>
   <dt>SAVING_YEARS_ <br /> ARRAYS (<em>optional</em>)</dt><dd><p>file containing the 
   years for which simulation maps will be saved <br />
   (see <code><a href='PRE_FATE.params_saveYears.html'>PRE_FATE.params_saveYears</a></code>)</p></dd>
@@ -403,7 +449,28 @@ needed by the program to run.</p>
   (see <code><a href='PRE_FATE.params_changingYears.html'>PRE_FATE.params_changingYears</a></code>)</p></dd>
   <dt>ALIENS_CHANGEFREQ_FILES <br /> (<em>optional</em>)</dt><dd><p>file containing the 
   files to change frequencies for the aliens introduction module <br />
+  (see <code><a href='PRE_FATE.params_changingYears.html'>PRE_FATE.params_changingYears</a></code>) <br /> <br /></p></dd>
+  <dt>PFG_PARAMS_FIRE <br /> (<em>optional</em>)</dt><dd><p>PFG fire disturbance 
+  related parameters in terms of resprouting and mortality (one by PFG) <br />
+  (see <code><a href='PRE_FATE.params_PFGdisturbance.html'>PRE_FATE.params_PFGdisturbance</a></code>)</p></dd>
+  <dt>FIRE_MASK <br /> (<em>optional</em>)</dt><dd><p>raster mask that will define the 
+  fire disturbance areas</p></dd>
+  <dt>FIRE_CHANGEMASK_YEARS <br /> (<em>optional</em>)</dt><dd><p>file containing the 
+  years to change rasters for the fire disturbances module <br />
   (see <code><a href='PRE_FATE.params_changingYears.html'>PRE_FATE.params_changingYears</a></code>)</p></dd>
+  <dt>FIRE_CHANGEMASK_FILES <br /> (<em>optional</em>)</dt><dd><p>file containing the 
+  files to change rasters for the fire disturbances module <br />
+  (see <code><a href='PRE_FATE.params_changingYears.html'>PRE_FATE.params_changingYears</a></code>)</p></dd>
+  <dt>FIRE_CHANGEFREQ_YEARS <br /> (<em>optional</em>)</dt><dd><p>file containing the 
+  years to change frequencies for the fire disturbances module <br />
+  (see <code><a href='PRE_FATE.params_changingYears.html'>PRE_FATE.params_changingYears</a></code>)</p></dd>
+  <dt>FIRE_CHANGEFREQ_FILES <br /> (<em>optional</em>)</dt><dd><p>file containing the 
+  files to change frequencies for the fire disturbances module <br />
+  (see <code><a href='PRE_FATE.params_changingYears.html'>PRE_FATE.params_changingYears</a></code>)</p></dd>
+  <dt>ELEVATION_MASK <br /> (<em>optional</em>)</dt><dd><p>raster mask that will define 
+  the elevation of the area</p></dd>
+  <dt>SLOPE_MASK <br /> (<em>optional</em>)</dt><dd><p>raster mask that will define the 
+  slope of the area</p></dd>
 
 </dl>
 

@@ -18,8 +18,10 @@
 ##'   \item \code{MASK} (succession),
 ##'   \item \code{HABSUIT} (habitat suitability),
 ##'   \item \code{DIST} (disturbances),
-##'   \item \code{DROUGHT} (drought disturbances),
+##'   \item \code{DROUGHT} (drought disturbance),
 ##'   \item \code{ALIENS} or \code{ALIENS_F} (aliens introduction, masks or 
+##'   frequencies)
+##'   \item \code{FIRE} or \code{FIRE_F} (fire disturbance, masks or 
 ##'   frequencies)
 ##' }
 ##' @param mat.changing a \code{data.frame} with 3 columns : \cr \code{year}, 
@@ -78,7 +80,19 @@
 ##'   or \code{1}} to define where the introductions occur. The impacted pixels 
 ##'   can also change through time (e.g. colonization, eradication campaign, 
 ##'   etc), as well as the frequencies of introduction (see \code{ALIENS_FREQ} 
-##'   flag in \code{\link{PRE_FATE.params_globalParameters}}). \cr \cr}
+##'   flag in \code{\link{PRE_FATE.params_globalParameters}}).}
+##'   
+##'   \item{fire disturbance}{\strong{if this module is activated} (see 
+##'   \code{\link{PRE_FATE.params_globalParameters}}), fire disturbance 
+##'   can rely on a raster given within the \emph{Simul_parameters} file with 
+##'   the \code{FIRE_MASK} flag (see 
+##'   \code{\link{PRE_FATE.params_simulParameters}}). \cr
+##'   As for succession, this mask is filled \strong{with either \code{0} 
+##'   or \code{1}} to define where the perturbation occurs. The impacted pixels 
+##'   can also change through time (e.g. change in forestry practices, expansion 
+##'   of drought events, etc), as well as the frequencies of perturbations (see 
+##'   \code{FIRE_FREQ} flag in \code{\link{PRE_FATE.params_globalParameters}}). 
+##'   \cr \cr}
 ##' }
 ##' 
 ##' Several parameters, given within \code{mat.changing}, are required to set up 
@@ -88,11 +102,13 @@
 ##'   \item{year}{all simulation years at which the raster files of a specific 
 ##'   module \emph{(succession \code{MASK}, habitat suitability \code{HABSUIT}, 
 ##'   disturbance \code{DIST}, drought \code{DROUGHT}, aliens introduction 
-##'   \code{ALIENS} or \code{ALIENS_F})} will be changed}
+##'   \code{ALIENS} or \code{ALIENS_F}, fire \code{FIRE} or \code{FIRE_F})} will 
+##'   be changed}
 ##'   \item{new.value}{the names of the new raster files for each year of 
 ##'   change. It can be either \code{.img} or \code{.tif}.\cr
-##'   There is an exception if \code{ALIENS_F} is selected : the values should 
-##'   be \code{integer} representing the frequencies of aliens introduction.}
+##'   There is an exception if \code{ALIENS_F} or \code{FIRE_F} is selected : 
+##'   the values should be \code{integer} representing the frequencies of aliens 
+##'   introduction or fire perturbations.}
 ##'   \item{order}{an \code{integer} associated to each new map in order to 
 ##'   always give the raster maps in the same order throughout the years \cr \cr}
 ##' }
@@ -161,7 +177,8 @@ PRE_FATE.params_changingYears = function(
   ## CHECK parameter type.changing
   .testParam_notInValues.m("type.changing", type.changing
                            , c("MASK", "HABSUIT", "DIST", "DROUGHT"
-                               , "ALIENS", "ALIENS_F"))
+                               , "ALIENS", "ALIENS_F"
+                               , "FIRE", "FIRE_F"))
   ## CHECK parameter mat.changing
   if (.testParam_notDf(mat.changing))
   {
@@ -193,8 +210,9 @@ PRE_FATE.params_changingYears = function(
   
   #############################################################################
   
-  TYPE.CHANGING = ifelse(type.changing == "ALIENS_F", "changingfreq", "changingmask")
-  type.changing = ifelse(type.changing == "ALIENS_F", "ALIENS", type.changing)
+  TYPE.CHANGING = ifelse(type.changing %in% c("ALIENS_F", "FIRE_F")
+                         , "changingfreq", "changingmask")
+  type.changing = sub("_F$", "", type.changing)
   
   #############################################################################
   

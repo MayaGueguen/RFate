@@ -8,8 +8,12 @@ simulation}
 PRE_FATE.params_simulParameters(
   name.simulation,
   name.MASK,
+  name.SAVED_STATE = NULL,
   name.DIST = NULL,
   name.DROUGHT = NULL,
+  name.FIRE = NULL,
+  name.ELEVATION = NULL,
+  name.SLOPE = NULL,
   opt.global.name = NULL,
   opt.folder.name = NULL
 )
@@ -24,6 +28,10 @@ corresponding to the cells of the studied area in which the succession
 (core) module of the \code{FATE} simulation will take place (see 
 \href{PRE_FATE.params_globalParameters.html#details}{\code{PRE_FATE.params_globalParameters}})}
 
+\item{name.SAVED_STATE}{(\emph{optional}) \cr a \code{string} corresponding 
+to the file name of a \code{FATE} object, obtained from a previous 
+simulation and from which to restart this new simulation}
+
 \item{name.DIST}{(\emph{optional}) \cr a \code{string} corresponding to the 
 file name of a raster mask, with either \code{0} or \code{1} within each 
 pixel, \code{1} corresponding to the cells of the studied area in which the 
@@ -32,8 +40,26 @@ disturbance module of the \code{FATE} simulation will take place (see
 
 \item{name.DROUGHT}{(\emph{optional}) \cr a \code{string} corresponding to 
 the name of a raster file, with a \code{numeric} value within each pixel 
-corresponding to the drought intensity experienced by this pixel throught 
-the drought disturbance module of the \code{FATE} simulation (see 
+corresponding to the drought intensity experienced by this pixel through 
+the drought (or fire) disturbance module of the \code{FATE} simulation (see 
+\href{PRE_FATE.params_globalParameters.html#details}{\code{PRE_FATE.params_globalParameters}})}
+
+\item{name.FIRE}{(\emph{optional}) \cr a \code{string} corresponding to the 
+file name of a raster mask, with either \code{0} or \code{1} within each 
+pixel, \code{1} corresponding to the cells of the studied area in which the 
+fire disturbance module of the \code{FATE} simulation will take place (see 
+\href{PRE_FATE.params_globalParameters.html#details}{\code{PRE_FATE.params_globalParameters}})}
+
+\item{name.ELEVATION}{(\emph{optional}) \cr a \code{string} corresponding to 
+the name of a raster file, with a \code{numeric} value within each pixel 
+corresponding to the elevation of this pixel and used by the fire 
+disturbance module of the \code{FATE} simulation (see 
+\href{PRE_FATE.params_globalParameters.html#details}{\code{PRE_FATE.params_globalParameters}})}
+
+\item{name.SLOPE}{(\emph{optional}) \cr a \code{string} corresponding to 
+the name of a raster file, with a \code{numeric} value within each pixel 
+corresponding to the slope of this pixel and used by the fire 
+disturbance module of the \code{FATE} simulation (see 
 \href{PRE_FATE.params_globalParameters.html#details}{\code{PRE_FATE.params_globalParameters}})}
 
 \item{opt.global.name}{(\emph{optional}) \cr a \code{string} corresponding 
@@ -54,6 +80,7 @@ directory with the following parameters :
   \item \strong{--GLOBAL_PARAMS--}
   \item \strong{--SAVING_DIR--}
   \itemize{
+  \item --SAVED_STATE-- (\emph{optional})
   \item --SAVING_YEARS_ARRAYS-- (\emph{optional})
   \item --SAVING_YEARS_OBJECTS-- (\emph{optional})
   }
@@ -83,6 +110,14 @@ directory with the following parameters :
   \item --ALIENS_CHANGEMASK_FILES-- (\emph{optional})
   \item --ALIENS_CHANGEFREQ_YEARS-- (\emph{optional})
   \item --ALIENS_CHANGEFREQ_FILES-- (\emph{optional})
+  \item --PFG_PARAMS_FIRE-- (\emph{optional})
+  \item --FIRE_MASK-- (\emph{optional})
+  \item --FIRE_CHANGEMASK_YEARS-- (\emph{optional})
+  \item --FIRE_CHANGEMASK_FILES-- (\emph{optional})
+  \item --FIRE_CHANGEFREQ_YEARS-- (\emph{optional})
+  \item --FIRE_CHANGEFREQ_FILES-- (\emph{optional})
+  \item --ELEVATION_MASK-- (\emph{optional})
+  \item --SLOPE_MASK-- (\emph{optional})
 }
   \item \strong{--END_OF_FILE--}
 }
@@ -104,6 +139,9 @@ needed by the program to run.
   (see \code{\link{PRE_FATE.params_globalParameters}}) \cr \cr
   }
   \item{SAVING_DIR}{directory where simulation outputs will be stored}
+  \item{SAVED_STATE (\emph{optional})}{file containing the results of a 
+  previous \code{FATE} simulation from which to restart this new simulation 
+  \cr }
   \item{SAVING_YEARS_ \cr ARRAYS (\emph{optional})}{file containing the 
   years for which simulation maps will be saved \cr
   (see \code{\link{PRE_FATE.params_saveYears}})
@@ -185,7 +223,28 @@ needed by the program to run.
   (see \code{\link{PRE_FATE.params_changingYears}})}
   \item{ALIENS_CHANGEFREQ_FILES \cr (\emph{optional})}{file containing the 
   files to change frequencies for the aliens introduction module \cr
+  (see \code{\link{PRE_FATE.params_changingYears}}) \cr \cr}
+  \item{PFG_PARAMS_FIRE \cr (\emph{optional})}{PFG fire disturbance 
+  related parameters in terms of resprouting and mortality (one by PFG) \cr
+  (see \code{\link{PRE_FATE.params_PFGdisturbance}})}
+  \item{FIRE_MASK \cr (\emph{optional})}{raster mask that will define the 
+  fire disturbance areas}
+  \item{FIRE_CHANGEMASK_YEARS \cr (\emph{optional})}{file containing the 
+  years to change rasters for the fire disturbances module \cr
   (see \code{\link{PRE_FATE.params_changingYears}})}
+  \item{FIRE_CHANGEMASK_FILES \cr (\emph{optional})}{file containing the 
+  files to change rasters for the fire disturbances module \cr
+  (see \code{\link{PRE_FATE.params_changingYears}})}
+  \item{FIRE_CHANGEFREQ_YEARS \cr (\emph{optional})}{file containing the 
+  years to change frequencies for the fire disturbances module \cr
+  (see \code{\link{PRE_FATE.params_changingYears}})}
+  \item{FIRE_CHANGEFREQ_FILES \cr (\emph{optional})}{file containing the 
+  files to change frequencies for the fire disturbances module \cr
+  (see \code{\link{PRE_FATE.params_changingYears}})}
+  \item{ELEVATION_MASK \cr (\emph{optional})}{raster mask that will define 
+  the elevation of the area}
+  \item{SLOPE_MASK \cr (\emph{optional})}{raster mask that will define the 
+  slope of the area}
 }
 }
 \note{
