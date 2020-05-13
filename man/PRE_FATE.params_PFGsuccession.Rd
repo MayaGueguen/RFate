@@ -19,7 +19,7 @@ or simulation name of the \code{FATE} simulation}
 \item{mat.PFG.succ}{a \code{data.frame} with at least 5 columns : \cr 
 \code{PFG}, \code{type}, \code{height}, \code{maturity}, \code{longevity} 
 \cr (\emph{and optionally, \code{max_abundance}, \code{potential_fecundity}, 
-\code{immature_size}, \code{is_alien}}) 
+\code{immature_size}, \code{is_alien}, \code{flammability}}) 
 \cr (see \href{PRE_FATE.params_PFGsuccession.html#details}{\code{Details}})}
 
 \item{strata.limits}{a \code{vector} of \code{integer} containing values 
@@ -57,7 +57,9 @@ parameters :
   \item{POTENTIAL_\cr FECUNDITY}{maximum number of seeds produced by the 
   PFG \cr \emph{(set by default to \code{100})}}
   \item{IS_ALIEN}{is the PFG an alien or not \emph{(\code{0}: No \code{1}: 
-  Yes)}\cr \cr}
+  Yes)}}
+  \item{FLAMMABILITY}{how easily the PFG burns \emph{(\code{numeric})}
+  \cr \cr}
 }
 
 A \file{SUCC_COMPLETE_TABLE.csv} file summarizing information for all 
@@ -94,7 +96,8 @@ each PFG in order to set up this life cycle :
   \item{(\emph{immature_size})}{the relative size of immature versus mature 
   plants}
   \item{(\emph{is_alien})}{if the PFG is to be considered as an alien 
-  (\code{1}) or not (\code{0}) \cr \cr}
+  (\code{1}) or not (\code{0})}
+  \item{(\emph{flammability})}{how easily the PFG burns \cr \cr}
 }
 
 
@@ -197,6 +200,7 @@ and a set of characteristics for each PFG :
   }
   \item{IS_ALIEN}{= if the PFG is to be considered as an alien (\code{1}) or 
   not (\code{0})}
+  \item{FLAMMABILITY}{= how easily the PFG burns}
 }
 }
 \examples{

@@ -148,15 +148,18 @@ POST_FATE.graphic_evolutionPixels = function(
   ## CHECK parameter file.simulParam
   abs.simulParams = .getParam_abs.simulParams(file.simulParam, name.simulation)
   
+  cat("\n\n #------------------------------------------------------------#")
+  cat("\n # POST_FATE.graphic_evolutionPixels")
+  cat("\n #------------------------------------------------------------# \n")
   
   #############################################################################
   
   res = foreach (abs.simulParam = abs.simulParams) %do%
   {
     
-    cat("\n ############## GRAPHIC POST FATE ############## \n")
-    cat("\n Simulation name : ", name.simulation)
-    cat("\n Simulation file : ", abs.simulParam)
+    cat("\n+++++++\n")
+    cat("\n  Simulation name : ", name.simulation)
+    cat("\n  Simulation file : ", abs.simulParam)
     cat("\n")
     
     ## Get results directories ------------------------------------------------
@@ -240,9 +243,9 @@ POST_FATE.graphic_evolutionPixels = function(
       }
     }
     
-    cat("\n Number of years : ", length(years))
-    cat("\n Selected years : ", years)
-    cat("\n Selected cells : ", IDS)
+    cat("\n  Number of years : ", length(years))
+    cat("\n  Selected years : ", years)
+    cat("\n  Selected cells : ", IDS)
     cat("\n")
     
     ## Transform the data inside the table ------------------------------------
@@ -278,7 +281,7 @@ POST_FATE.graphic_evolutionPixels = function(
     ## produce the plot -------------------------------------------------------
     if (opt.doPlot)
     {
-      cat("\n PRODUCING PLOT...")
+      cat("\n ---------- PRODUCING PLOT \n")
       vec_col1 = c('#0077BB', '#33BBEE', '#009988', '#EE7733', '#CC3311', '#EE3377')
       val_col1 = c(rep(rgb(1,1,1,1), no_STRATA)
                    , colorRampPalette(vec_col1)(no_PFG)
@@ -330,7 +333,6 @@ POST_FATE.graphic_evolutionPixels = function(
     ## ------------------------------------------------------------------------
     
     cat("\n> Done!\n")
-    cat("\n")
     
     return(list(tab = distriAbund, plot = pp))
   } ## END loop on abs.simulParams

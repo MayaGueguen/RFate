@@ -150,7 +150,7 @@
   }
   
   raster.names = grep(paste0(type.pattern, "_YEAR_", years, collapse = "|")
-                      , list.files(get(dir.name))
+                      , list.files(path = get(dir.name))
                       , value = TRUE)
   if (length(raster.names) == 0)
   {

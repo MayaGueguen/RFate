@@ -1,4 +1,11 @@
 
+.quiet = function(x)
+{
+  sink(tempfile())
+  on.exit(sink())
+  invisible(force(x))
+} 
+
 .stopMessage_notDef = function(param)
 {
   stop(paste0("No data given!\n (missing `", param, "` information)"))

@@ -36,7 +36,7 @@ NULL
 
 .unzip_ALL = function(folder_name, no_cores = 1)
 {
-  list_files = list.files(folder_name, pattern = ".gz$", full.names = T)
+  list_files = list.files(folder_name, pattern = ".gz$", full.names = FALSE)
   .unzip(folder_name = folder_name, list_files = list_files, no_cores = no_cores)
 }
 
@@ -46,6 +46,8 @@ NULL
 
 .unzip = function(folder_name, list_files, no_cores = 1)
 {
+  list_files = grep(pattern = ".gz$", list_files, value = TRUE)
+  list_files = paste0(folder_name, list_files)
   list_files = list_files[file.exists(list_files)]
   if (length(list_files) > 0)
   {
@@ -61,7 +63,6 @@ NULL
       gunzip(list_files[x], skip = TRUE, remove = FALSE)
     }, mc.cores = no_cores)
     close(PROGRESS)
-    cat(" Done!\n")
   }
 }
 
@@ -71,7 +72,7 @@ NULL
 
 .zip_ALL = function(folder_name, no_cores = 1)
 {
-  list_files = list.files(folder_name, pattern = ".tif$|.img$", full.names = T)
+  list_files = list.files(folder_name, pattern = ".tif$|.img$", full.names = FALSE)
   .zip(folder_name = folder_name, list_files = list_files, no_cores = no_cores)
 }
 
@@ -81,6 +82,8 @@ NULL
 
 .zip = function(folder_name, list_files, no_cores = 1)
 {
+  list_files = grep(pattern = ".tif$|.img$", list_files, value = TRUE)
+  list_files = paste0(folder_name, list_files)
   list_files = list_files[file.exists(list_files)]
   if (length(list_files) > 0)
   {
@@ -97,6 +100,5 @@ NULL
       if (file.exists(list_files[x])) file.remove(list_files[x])
     }, mc.cores = no_cores)
     close(PROGRESS)
-    cat(" Done!\n")
   }
 }

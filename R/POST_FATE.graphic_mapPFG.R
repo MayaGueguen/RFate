@@ -214,15 +214,18 @@ POST_FATE.graphic_mapPFG = function(
                 , "value equal or inferior to `opt.stratum_max`"))
   }
   
+  cat("\n\n #------------------------------------------------------------#")
+  cat("\n # POST_FATE.graphic_mapPFG")
+  cat("\n #------------------------------------------------------------# \n")
   
   #############################################################################
   
   res = foreach (abs.simulParam = abs.simulParams) %do%
   {
     
-    cat("\n ############## GRAPHIC POST FATE ############## \n")
-    cat("\n Simulation name : ", name.simulation)
-    cat("\n Simulation file : ", abs.simulParam)
+    cat("\n+++++++\n")
+    cat("\n  Simulation name : ", name.simulation)
+    cat("\n  Simulation file : ", abs.simulParam)
     cat("\n")
     
     ## Get results directories ----------------------------------------------
@@ -249,8 +252,8 @@ POST_FATE.graphic_mapPFG = function(
       opt.doStrata = TRUE
       range_strata = max(1, opt.stratum_min):min(no_STRATA, opt.stratum_max)
       name_strata = paste0(max(1, opt.stratum_min), "_", min(no_STRATA, opt.stratum_max))
-      cat("\n Number of strata : ", no_STRATA)
-      cat("\n Selected strata : ", range_strata)
+      cat("\n  Number of strata : ", no_STRATA)
+      cat("\n  Selected strata : ", range_strata)
       cat("\n")
     }
     
@@ -288,10 +291,10 @@ POST_FATE.graphic_mapPFG = function(
     }
     
     ## get the data inside the rasters --------------------------------------
-    cat("\n GETTING GRAPHIC for")
+    cat("\n ---------- GETTING GRAPHIC for")
     year_list = foreach (y = years) %do%
     {
-      cat("\n > year", y)
+      cat("\n> year", y, "\n")
       
       if (!opt.doStrata)
       {
@@ -492,7 +495,7 @@ POST_FATE.graphic_mapPFG = function(
       ## produce the plot -----------------------------------------------------
       if (opt.doPlot)
       {
-        cat("\n PRODUCING PLOT(S)...")
+        cat("\n ---------- PRODUCING PLOT(S)")
         
         pp.i = function(tab, i.col, i.axis, i.title, i.subtitle)
         {
@@ -522,6 +525,7 @@ POST_FATE.graphic_mapPFG = function(
         pp_list = list()
         
         ## PFG COVER ------------------------------------------------------------
+        cat("\n> PFG cover...")
         ras.pts = as.data.frame(rasterToPoints(ras.COVER))
         colnames(ras.pts) = c("X", "Y", "VALUE")
         pp_list$cover = pp.i(tab = ras.pts
@@ -534,6 +538,7 @@ POST_FATE.graphic_mapPFG = function(
                                                    , "by the maximum abundance obtained.\n"))
         
         ## PFG RICHNESS ---------------------------------------------------------
+        cat("\n> PFG richness...")
         ras.pts = as.data.frame(rasterToPoints(ras.DIV[[1]]))
         colnames(ras.pts) = c("X", "Y", "VALUE")
         pp_list$richness = pp.i(tab = ras.pts
@@ -550,6 +555,7 @@ POST_FATE.graphic_mapPFG = function(
         ## PFG CWM LIGHT --------------------------------------------------------
         if (doLight && exists("ras.CWM.light"))
         {
+          cat("\n> PFG CWM light...")
           ras.pts = as.data.frame(rasterToPoints(ras.CWM.light))
           colnames(ras.pts) = c("X", "Y", "VALUE")
           pp_list$CWM.light = pp.i(tab = ras.pts
@@ -566,6 +572,7 @@ POST_FATE.graphic_mapPFG = function(
         ## PFG CWM SOIL ---------------------------------------------------------
         if (doSoil && exists("ras.CWM.soil"))
         {
+          cat("\n> PFG CWM soil...")
           ras.pts = as.data.frame(rasterToPoints(ras.CWM.soil))
           colnames(ras.pts) = c("X", "Y", "VALUE")
           pp_list$CWM.light = pp.i(tab = ras.pts
@@ -581,6 +588,7 @@ POST_FATE.graphic_mapPFG = function(
         
         return(list(ras = ras_list, plot = pp_list))
       } ## END opt.doPlot
+      cat("\n")
     } ## END loop on years
     names(year_list) = years
     
@@ -617,7 +625,6 @@ POST_FATE.graphic_mapPFG = function(
     ## ------------------------------------------------------------------------
     
     cat("\n> Done!\n")
-    cat("\n")
     
     return(year_list)
   } ## END loop on abs.simulParams

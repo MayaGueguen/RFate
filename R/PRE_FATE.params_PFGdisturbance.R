@@ -376,8 +376,8 @@ PRE_FATE.params_PFGdisturbance = function(
   ## CHECK parameter opt.folder.name
   opt.folder.name = .getParam_opt.folder.name(opt.folder.name
                                               , paste0(name.simulation, "/DATA/PFGS/DIST/"))
-  
-  
+
+    
   #############################################################################
   
   ## GET informations
@@ -393,10 +393,10 @@ PRE_FATE.params_PFGdisturbance = function(
     no.STAGES = 4
   }
   
-  cat("\n ############## DIST INFORMATIONS ############## \n")
-  cat("\n Number of disturbances : ", no.DIST)
-  cat("\n Names of disturbances : ", DIST_NAME)
-  cat("\n Number of response stages : ", no.STAGES)
+  cat("\n ---------- INFORMATION : DIST \n")
+  cat("\n  Number of disturbances : ", no.DIST)
+  cat("\n  Names of disturbances : ", DIST_NAME)
+  cat("\n  Number of response stages : ", no.STAGES)
   cat("\n")
   
   

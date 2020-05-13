@@ -110,15 +110,18 @@ POST_FATE.relativeAbund = function(
   ## CHECK parameter years
   .testParam_notInteger.m("years", years)
   
+  cat("\n\n #------------------------------------------------------------#")
+  cat("\n # POST_FATE.relativeAbund")
+  cat("\n #------------------------------------------------------------# \n")
 
   #############################################################################
   
   for (abs.simulParam in abs.simulParams)
   {
     
-    cat("\n ############## GRAPHIC POST FATE ############## \n")
-    cat("\n Simulation name : ", name.simulation)
-    cat("\n Simulation file : ", abs.simulParam)
+    cat("\n+++++++\n")
+    cat("\n  Simulation name : ", name.simulation)
+    cat("\n  Simulation file : ", abs.simulParam)
     cat("\n")
     
     ## Get results directories ------------------------------------------------
@@ -146,7 +149,7 @@ POST_FATE.relativeAbund = function(
     
     
     ## get the data inside the rasters ----------------------------------------
-    cat("\n GETTING RELATIVE ABUNDANCES for year")
+    cat("\n ---------- GETTING RELATIVE ABUNDANCES for year")
     for (y in years)
     {
       cat(" ", y)
@@ -199,6 +202,8 @@ POST_FATE.relativeAbund = function(
     .zip(folder_name = dir.output.perPFG.allStrata
          , list_files = raster.perPFG.allStrata
          , no_cores = opt.no_CPU)
+    
+    cat("\n> Done!\n")
     
   }
 }

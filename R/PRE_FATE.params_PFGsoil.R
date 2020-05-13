@@ -481,10 +481,10 @@ PRE_FATE.params_PFGsoil = function(
                  , max(round(SOIL_CONTRIB))
                  , 1)
   
-  cat("\n ############## CLASS INFORMATIONS ############## \n")
-  cat("\n Classes : ", no.class)
-  cat("\n Number of classes : ", max(no.class))
-  cat("\n Number of PFG within each class (contribution) : "
+  cat("\n ---------- INFORMATION : SOIL \n")
+  cat("\n  Classes : ", no.class)
+  cat("\n  Number of classes : ", max(no.class))
+  cat("\n  Number of PFG within each class (contribution) : "
       , table(cut(SOIL_CONTRIB, breaks = 1:max(no.class))))
   cat("\n")
   

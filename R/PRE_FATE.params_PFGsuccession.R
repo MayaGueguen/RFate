@@ -14,7 +14,7 @@
 ##' @param mat.PFG.succ a \code{data.frame} with at least 5 columns : \cr 
 ##' \code{PFG}, \code{type}, \code{height}, \code{maturity}, \code{longevity} 
 ##' \cr (\emph{and optionally, \code{max_abundance}, \code{potential_fecundity}, 
-##' \code{immature_size}, \code{is_alien}}) 
+##' \code{immature_size}, \code{is_alien}, \code{flammability}}) 
 ##' \cr (see \href{PRE_FATE.params_PFGsuccession.html#details}{\code{Details}})
 ##' @param strata.limits a \code{vector} of \code{integer} containing values 
 ##' among which height strata limits will be chosen
@@ -48,7 +48,8 @@
 ##'   \item{(\emph{immature_size})}{the relative size of immature versus mature 
 ##'   plants}
 ##'   \item{(\emph{is_alien})}{if the PFG is to be considered as an alien 
-##'   (\code{1}) or not (\code{0}) \cr \cr}
+##'   (\code{1}) or not (\code{0})}
+##'   \item{(\emph{flammability})}{how easily the PFG burns \cr \cr}
 ##' }
 ##' 
 ##' 
@@ -151,6 +152,7 @@
 ##'   }
 ##'   \item{IS_ALIEN}{= if the PFG is to be considered as an alien (\code{1}) or 
 ##'   not (\code{0})}
+##'   \item{FLAMMABILITY}{= how easily the PFG burns}
 ##' }
 ##' 
 ##' 
@@ -178,7 +180,9 @@
 ##'   \item{POTENTIAL_\cr FECUNDITY}{maximum number of seeds produced by the 
 ##'   PFG \cr \emph{(set by default to \code{100})}}
 ##'   \item{IS_ALIEN}{is the PFG an alien or not \emph{(\code{0}: No \code{1}: 
-##'   Yes)}\cr \cr}
+##'   Yes)}}
+##'   \item{FLAMMABILITY}{how easily the PFG burns \emph{(\code{numeric})}
+##'   \cr \cr}
 ##' }
 ##' 
 ##' A \file{SUCC_COMPLETE_TABLE.csv} file summarizing information for all 
@@ -250,11 +254,11 @@ PRE_FATE.params_PFGsuccession = function(
     .stopMessage_beDataframe("mat.PFG.succ")
   } else
   {
-    if (nrow(mat.PFG.succ) == 0 || !(ncol(mat.PFG.succ) %in% c(5, 6, 7, 8, 9)))
+    if (nrow(mat.PFG.succ) == 0 || !(ncol(mat.PFG.succ) %in% c(5, 6, 7, 8, 9, 10)))
     {
       .stopMessage_numRowCol("mat.PFG.succ", c("PFG", "type","height", "maturity", "longevity"
                                                , "(max_abundance)", "(potential_fecundity)"
-                                               , "(immature_size)", "(is_alien)"))
+                                               , "(immature_size)", "(is_alien)", "(flammability)"))
     } else
     {
       notCorrect = switch(as.character(ncol(mat.PFG.succ))
@@ -266,7 +270,9 @@ PRE_FATE.params_PFGsuccession = function(
                                      .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
                                                                             , "longevity", "immature_size")) &&
                                      .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
-                                                                            , "longevity", "is_alien")))
+                                                                            , "longevity", "is_alien")) &&
+                                     .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
+                                                                            , "longevity", "flammability")))
                           , "7" = (.testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
                                                                           , "longevity", "max_abundance"
                                                                           , "potential_fecundity")) &&
@@ -277,34 +283,58 @@ PRE_FATE.params_PFGsuccession = function(
                                                                             , "longevity", "max_abundance"
                                                                             , "is_alien")) &&
                                      .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
+                                                                            , "longevity", "max_abundance"
+                                                                            , "flammability")) &&
+                                     .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
                                                                             , "longevity", "potential_fecundity"
                                                                             , "immature_size")) &&
                                      .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
                                                                             , "longevity", "potential_fecundity"
                                                                             , "is_alien")) &&
                                      .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
+                                                                            , "longevity", "potential_fecundity"
+                                                                            , "flammability")) &&
+                                     .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
                                                                             , "longevity", "immature_size"
-                                                                            , "is_alien")))
+                                                                            , "is_alien")) &&
+                                     .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
+                                                                            , "longevity", "immature_size"
+                                                                            , "flammability")))
                           , "8" = (.testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
                                                                           , "longevity", "max_abundance"
                                                                           , "potential_fecundity", "immature_size")) &&
                                      .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
-                                                                            , "longevity", "(max_abundance)"
+                                                                            , "longevity", "max_abundance"
                                                                             , "potential_fecundity", "is_alien")) &&
+                                     .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
+                                                                            , "longevity", "max_abundance"
+                                                                            , "potential_fecundity", "flammability")) &&
                                      .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
                                                                             , "longevity", "max_abundance"
                                                                             , "immature_size", "is_alien")) &&
                                      .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
+                                                                            , "longevity", "max_abundance"
+                                                                            , "immature_size", "flammability")) &&
+                                     .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
                                                                             , "longevity", "potential_fecundity"
-                                                                            , "potential_fecundity", "is_alien")))
-                          , "9" = .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity", "longevity"
-                                                                         , "max_abundance", "potential_fecundity"
-                                                                         , "immature_size", "is_alien"))
+                                                                            , "potential_fecundity", "is_alien")) &&
+                                     .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
+                                                                            , "longevity", "potential_fecundity"
+                                                                            , "potential_fecundity", "flammability")))
+                          , "9" = (.testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity", "longevity"
+                                                                          , "max_abundance", "potential_fecundity"
+                                                                          , "immature_size", "is_alien")) &&
+                                     .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity", "longevity"
+                                                                            , "max_abundance", "potential_fecundity"
+                                                                            , "immature_size", "flammability")))
+                          , "10" = .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity", "longevity"
+                                                                          , "max_abundance", "potential_fecundity"
+                                                                          , "immature_size", "is_alien", "flammability"))
                           , TRUE)
       if (notCorrect){
         .stopMessage_columnNames("mat.PFG.succ", c("PFG", "type","height", "maturity", "longevity"
                                                    , "(max_abundance)", "(potential_fecundity)"
-                                                   , "(immature_size)", "(is_alien)"))
+                                                   , "(immature_size)", "(is_alien)", "(flammability)"))
       }
     }
     mat.PFG.succ$PFG = as.character(mat.PFG.succ$PFG)
@@ -343,6 +373,11 @@ PRE_FATE.params_PFGsuccession = function(
       .testParam_NAvalues.m("mat.PFG.succ$is_alien", mat.PFG.succ$is_alien)
       .testParam_notInValues.m("mat.PFG.succ$is_alien", mat.PFG.succ$is_alien, 0:1)
     }
+    if (sum(colnames(mat.PFG.succ) == "flammability") == 1)
+    {
+      .testParam_notNum.m("mat.PFG.succ$flammability", mat.PFG.succ$flammability)
+      .testParam_NAvalues.m("mat.PFG.succ$flammability", mat.PFG.succ$flammability)
+    }
   }
   ## CHECK parameter strata.limits
   strata.limits = sort(unique(na.exclude(strata.limits)))
@@ -351,6 +386,9 @@ PRE_FATE.params_PFGsuccession = function(
   opt.folder.name = .getParam_opt.folder.name(opt.folder.name
                                               , paste0(name.simulation, "/DATA/PFGS/SUCC/"))
   
+  cat("\n\n #------------------------------------------------------------#")
+  cat("\n # PRE_FATE.params_PFGsuccession")
+  cat("\n #------------------------------------------------------------# \n")
   
   #############################################################################
   
@@ -372,13 +410,19 @@ PRE_FATE.params_PFGsuccession = function(
     IS_ALIEN = mat.PFG.succ$is_alien
   }
   
-  cat("\n ############## GROUP INFORMATIONS ############## \n")
-  cat("\n Number of groups : ", no.PFG)
-  cat("\n Number of PFG of each type : "
+  FLAMMABILITY = rep(0, no.PFG)
+  if (sum(colnames(mat.PFG.succ) == "flammability") == 1)
+  {
+    FLAMMABILITY = mat.PFG.succ$flammability
+  }
+  
+  cat("\n ---------- INFORMATION : GROUP \n")
+  cat("\n  Number of groups : ", no.PFG)
+  cat("\n  Number of PFG of each type : "
       , length(which(TYPE == "H")), " H, "
       , length(which(TYPE == "C")), " C, "
       , length(which(TYPE == "P")), " P, ")
-  cat("\n Number of aliens : ", length(which(IS_ALIEN == 1)))
+  cat("\n  Number of aliens : ", length(which(IS_ALIEN == 1)))
   cat("\n")
   
   #############################################################################
@@ -424,10 +468,10 @@ PRE_FATE.params_PFGsuccession = function(
   
   no.strata = max(STRATA)
   
-  cat("\n ############## STRATA INFORMATIONS ############## \n")
-  cat("\n Number of strata : ", no.strata)
-  cat("\n Height limits of selected strata : ", STRATA_LIMITS)
-  cat("\n Number of PFG within each stratum : "
+  cat("\n ---------- INFORMATION : STRATA \n")
+  cat("\n  Number of strata : ", no.strata)
+  cat("\n  Height limits of selected strata : ", STRATA_LIMITS)
+  cat("\n  Number of PFG within each stratum : "
       , table(cut(mat.PFG.succ$height
                   , breaks = STRATA_LIMITS)))
   cat("\n")
@@ -563,7 +607,8 @@ PRE_FATE.params_PFGsuccession = function(
                             , "SEED_POOL_LIFE"
                             , "SEED_DORMANCY"
                             , "POTENTIAL_FECUNDITY"
-                            , "IS_ALIEN")
+                            , "IS_ALIEN"
+                            , "FLAMMABILITY")
   
   params.list = lapply(names.params.list.sub, function(x) { return(get(x)) })
   
@@ -582,7 +627,8 @@ PRE_FATE.params_PFGsuccession = function(
                            , paste0("SEED_POOL_LIFE_", c("active", "dormant"))
                            , "SEED_DORMANCY"
                            , "POTENTIAL_FECUNDITY"
-                           , "IS_ALIEN")
+                           , "IS_ALIEN"
+                           , "FLAMMABILITY")
   
   write.table(params.csv
               , file = paste0(name.simulation

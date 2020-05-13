@@ -210,12 +210,15 @@ PRE_FATE.speciesDistance = function(mat.traits
   .testParam_notBetween.m("opt.maxPercent.similarSpecies", opt.maxPercent.similarSpecies, 0, 1)
   .testParam_notBetween.m("opt.min.sd", opt.min.sd, 0, 1)
   
+  cat("\n\n #------------------------------------------------------------#")
+  cat("\n # PRE_FATE.speciesDistance")
+  cat("\n #------------------------------------------------------------# \n")
   
   #############################################################################
   ### PREPARATION OF DATA
   #############################################################################
   
-  cat("\n ############## INFORMATION AVAILABLE ############## \n")
+  cat("\n ---------- INFORMATION : AVAILABLE \n")
   
   ## TRAITS -------------------------------------------------------------------
   mat.traits = as.data.frame(mat.traits)
@@ -225,9 +228,9 @@ PRE_FATE.speciesDistance = function(mat.traits
   names_groups = sort(unique(mat.traits$GROUP))
   
   cat("\n> FOR TRAITS ")
-  cat("\n Number of species : ", length(names_species.traits))
-  cat("\n Groups : ", paste0(names_groups, collapse = ", "))
-  cat("\n Measured traits : ", paste0(names_traits, collapse = ", "))
+  cat("\n  Number of species : ", length(names_species.traits))
+  cat("\n  Groups : ", paste0(names_groups, collapse = ", "))
+  cat("\n  Measured traits : ", paste0(names_traits, collapse = ", "))
   cat("\n")
   
   ## Remove species with no traits
@@ -277,7 +280,7 @@ PRE_FATE.speciesDistance = function(mat.traits
   names_species.overlap = sort(unique(colnames(mat.overlap)))
   
   cat("\n> FOR OVERLAP ")
-  cat("\n Number of species : ", length(names_species.overlap))
+  cat("\n  Number of species : ", length(names_species.overlap))
   cat("\n")
   
   ## SPLIT INFORMATION by species type
@@ -296,18 +299,18 @@ PRE_FATE.speciesDistance = function(mat.traits
   {
     ## Check for correspondence :
     cat("\n> FOR BOTH ")
-    cat("\n Number of species with traits and no overlap information : "
+    cat("\n  Number of species with traits and no overlap information : "
         , length(setdiff(names_species.traits, names_species.overlap)))
-    cat("\n Number of species with overlap and no traits information : "
+    cat("\n  Number of species with overlap and no traits information : "
         , length(setdiff(names_species.overlap, names_species.traits)))
     
     names_species.traits_overlap = intersect(names_species.traits, names_species.overlap)
-    cat("\n Number of species with both trait and overlap distances: "
+    cat("\n  Number of species with both trait and overlap distances: "
         , length(names_species.traits_overlap))
     cat("\n")
     
     ## Check for correspondence : DIM mat.species.gower.split = DIM mat.overlap.split ?
-    cat("\n Comparison of groups' dimensions : \n")
+    cat("\n  Comparison of groups' dimensions : \n")
     for(x in 1:length(names_groups)){
       cat("\n> Group", names_groups[x], ": ")
       cat("   trait values =", length(species.split[[x]]))
@@ -454,8 +457,8 @@ PRE_FATE.speciesDistance = function(mat.traits
   }
   
   ## SPLIT INFORMATION by species type
-  cat("\n ############## INFORMATION USED ############## \n")
-  cat("\n Traits used to calculate functional distances : \n")
+  cat("\n ---------- INFORMATION : USED \n")
+  cat("\n  Traits used to calculate functional distances : \n")
   mat.traits.split = split(mat.traits[, names_traits, drop = FALSE], f = mat.traits$GROUP)
   for (gp in 1:length(mat.traits.split))
   {
@@ -492,10 +495,10 @@ PRE_FATE.speciesDistance = function(mat.traits
     return(as.dist(tmp[ind, ind]))
   })
   
-  cat("\n Number of species : ", length(names_species.traits_overlap))
-  cat("\n Groups : ", paste0(names(mat.species.gower.split), collapse = ", "))
-  cat("\n Number of species in each group : ", sapply(species.split, length))
-  cat("\n Number of NA values due to `gowdis` function : "
+  cat("\n  Number of species : ", length(names_species.traits_overlap))
+  cat("\n  Groups : ", paste0(names(mat.species.gower.split), collapse = ", "))
+  cat("\n  Number of species in each group : ", sapply(species.split, length))
+  cat("\n  Number of NA values due to `gowdis` function : "
       , nrow(mat.traits) - sum(sapply(species.split, length)))
   cat("\n")
   

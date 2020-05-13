@@ -172,14 +172,18 @@ POST_FATE.temporalEvolution = function(
     ras.habitat = raster(opt.ras_habitat)
   }
   
+  cat("\n\n #------------------------------------------------------------#")
+  cat("\n # POST_FATE.temporalEvolution")
+  cat("\n #------------------------------------------------------------# \n")
+  
   #############################################################################
   
   res = foreach (abs.simulParam = abs.simulParams) %do%
   {
     
-    cat("\n ############## GRAPHIC POST FATE ############## \n")
-    cat("\n Simulation name : ", name.simulation)
-    cat("\n Simulation file : ", abs.simulParam)
+    cat("\n+++++++\n")
+    cat("\n  Simulation name : ", name.simulation)
+    cat("\n  Simulation file : ", abs.simulParam)
     cat("\n")
     
     ## Get results directories ----------------------------------------------
@@ -210,8 +214,8 @@ POST_FATE.temporalEvolution = function(
                             , length.out = min(no_years, length(years))))]
     no_years = length(years)
     
-    cat("\n Selected years : ", years)
-    cat("\n Number of years : ", no_years)
+    cat("\n  Selected years : ", years)
+    cat("\n  Number of years : ", no_years)
     cat("\n")
     
     ## UNZIP the raster saved -----------------------------------------------
@@ -225,7 +229,7 @@ POST_FATE.temporalEvolution = function(
     
     
     ## get the data inside the rasters --------------------------------------
-    cat("\n GETTING ABUNDANCE for pfg")
+    cat("\n ---------- GETTING ABUNDANCE for pfg")
     if (opt.no_CPU > 1)
     {
       if (.getOS() != "windows")
@@ -310,7 +314,7 @@ POST_FATE.temporalEvolution = function(
     ## get the data inside the rasters --------------------------------------
     if (doLight)
     {
-      cat("\n GETTING LIGHT for stratum")
+      cat("\n ---------- GETTING LIGHT for stratum")
       tabLight.list = foreach (stra = c(1:no_STRATA)-1) %dopar%
       {
         cat(" ", stra)
@@ -381,7 +385,7 @@ POST_FATE.temporalEvolution = function(
     ## get the data inside the rasters --------------------------------------
     if (doSoil)
     {
-      cat("\n GETTING SOIL")
+      cat("\n ---------- GETTING SOIL")
       file_name = paste0(dir.output.soil,
                          "Soil_Resources_YEAR_",
                          years)
@@ -446,7 +450,6 @@ POST_FATE.temporalEvolution = function(
     if (doSoil) .zip_ALL(folder_name = dir.output.soil, no_cores = opt.no_CPU)
     
     cat("\n> Done!\n")
-    cat("\n")
     
     if(doWriting.abund || doWriting.light || doWriting.soil)
     {

@@ -169,15 +169,19 @@ POST_FATE.binaryMaps = function(
     }
   }
   
+  cat("\n\n #------------------------------------------------------------#")
+  cat("\n # POST_FATE.binaryMaps")
+  cat("\n #------------------------------------------------------------# \n")
+  
   
   #############################################################################
   
   res = foreach (abs.simulParam = abs.simulParams) %do%
   {
     
-    cat("\n ############## GRAPHIC POST FATE ############## \n")
-    cat("\n Simulation name : ", name.simulation)
-    cat("\n Simulation file : ", abs.simulParam)
+    cat("\n+++++++\n")
+    cat("\n  Simulation name : ", name.simulation)
+    cat("\n  Simulation file : ", abs.simulParam)
     cat("\n")
     
     ## Get results directories ------------------------------------------------
@@ -235,10 +239,10 @@ POST_FATE.binaryMaps = function(
     
     
     ## get the data inside the rasters ----------------------------------------
-    cat("\n GETTING PRESENCE/ABSENCE maps for")
+    cat("\n ---------- GETTING PRESENCE/ABSENCE maps for")
     for (y in years)
     {
-      cat("\n > year", y)
+      cat("\n> year", y)
       
       file_name = paste0(dir.output.perPFG.allStrata.REL
                          , "Abund_relative_YEAR_"
@@ -316,6 +320,8 @@ POST_FATE.binaryMaps = function(
     .zip(folder_name = dir.output.perPFG.perStrata
          , list_files = raster.perPFG.perStrata
          , no_cores = opt.no_CPU)
+    
+    cat("\n> Done!\n")
     
   } ## END loop on abs.simulParams
 }

@@ -207,15 +207,18 @@ POST_FATE.graphic_validationStatistics = function(
     ras.habitat = raster(opt.ras_habitat)
   }
   
+  cat("\n\n #------------------------------------------------------------#")
+  cat("\n # POST_FATE.graphic_validationStatistics")
+  cat("\n #------------------------------------------------------------# \n")
   
   #############################################################################
   
   res = foreach (abs.simulParam = abs.simulParams) %do%
   {
     
-    cat("\n ############## GRAPHIC POST FATE ############## \n")
-    cat("\n Simulation name : ", name.simulation)
-    cat("\n Simulation file : ", abs.simulParam)
+    cat("\n+++++++\n")
+    cat("\n  Simulation name : ", name.simulation)
+    cat("\n  Simulation file : ", abs.simulParam)
     cat("\n")
     
     ## Get results directories ------------------------------------------------
@@ -262,11 +265,11 @@ POST_FATE.graphic_validationStatistics = function(
     
     
     ## get the data inside the rasters ----------------------------------------
-    cat("\n GETTING STATISTICS for")
+    cat("\n ---------- GETTING STATISTICS for")
     mat.valid_list = list()
     plot_list = foreach (y = years) %do%
     {
-      cat("\n > year", y)
+      cat("\n> year", y)
       
       file_name = paste0(dir.output.perPFG.allStrata.REL
                          , "Abund_relative_YEAR_"
@@ -304,7 +307,7 @@ POST_FATE.graphic_validationStatistics = function(
           mat = mat.y.split[[i]]
           isThereValues = TRUE
           
-          cat("\n PFG ", fg)
+          cat("\n  PFG ", fg)
           if (fg %in% gp)
           {
             if (nrow(mat) > 0)
@@ -389,6 +392,7 @@ POST_FATE.graphic_validationStatistics = function(
             return(mat.res)
           }
         } ## END mat.valid
+        cat("\n")
         
         if (nrow(na.exclude(mat.valid)) > 0)
         {
@@ -429,10 +433,10 @@ POST_FATE.graphic_validationStatistics = function(
           ## produce the plot -------------------------------------------------
           if (opt.doPlot)
           {
-            cat("\n PRODUCING PLOT(S)...")
+            cat("\n ---------- PRODUCING PLOT(S)")
             plot_list.hab = foreach(habi = hab_names) %do%
             {
-              cat("\n > Preparing for habitat ", habi)
+              cat("\n> Preparing for habitat ", habi)
               mat.plot = mat.valid[which(mat.valid$HAB == habi), ]
               
               ## 1. get the legend
@@ -559,7 +563,6 @@ POST_FATE.graphic_validationStatistics = function(
     ## ------------------------------------------------------------------------
     
     cat("\n> Done!\n")
-    cat("\n")
     
     return(list(tab = mat.valid_list, plot = plot_list))
   } ## END loop on abs.simulParams

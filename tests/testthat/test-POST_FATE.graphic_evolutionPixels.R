@@ -229,79 +229,81 @@ test_that("POST_FATE.graphic_evolutionPixels gives error with wrong data : csv f
 
 ## OUTPUTS
 test_that("POST_FATE.graphic_evolutionPixels gives correct outputs :", {
-  if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
-  PRE_FATE.skeletonDirectory()
-  
-  library(raster)
-  map_0 = raster(nrows = 5, ncols = 5, resolution = 50)
-  map_0[] = 0
-  map_1 = map_0
-  map_1[] = 1
-  map_hab = map_0
-  map_hab[] = sample(c(1, 5, 10), ncell(map_hab), replace = TRUE)
-  writeRaster(map_1, filename = "FATE_simulation/DATA/MASK/map_mask.tif", overwrite = TRUE)
-  writeRaster(map_hab, filename = "FATE_simulation/DATA/MASK/map_hab.tif", overwrite = TRUE)
-  
-  PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
-                                   , required.no_PFG = 6
-                                   , required.no_strata = 5
-                                   , required.simul_duration = 100
-                                   , required.seeding_duration = 10
-                                   , required.seeding_timestep = 1
-                                   , required.seeding_input = 100
-                                   , required.max_abund_low = 3000
-                                   , required.max_abund_medium = 5000
-                                   , required.max_abund_high = 9000
-                                   , doLight = TRUE
-                                   , LIGHT.thresh_medium = 4000
-                                   , LIGHT.thresh_low = 7000
-                                   , doSoil = TRUE
-                                   , SOIL.init = 2.5
-                                   , SOIL.retention = 0.5)
-  
-  PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
-                                , mat.PFG.succ = data.frame(PFG = paste0("PFG",1:6)
-                                                            , type = c("C", "C", "H", "H", "P", "P")
-                                                            , height = c(10, 250, 36, 68, 1250, 550)
-                                                            , maturity = c(5, 5, 3, 3, 8, 9)
-                                                            , longevity = c(12, 200, 25, 4, 110, 70)))
-  
-  PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
-                           , mat.PFG.light = data.frame(PFG = paste0("PFG",1:6)
-                                                        , type = c("C", "C", "H", "H", "P", "P"))
-                           , mat.PFG.tol = data.frame(PFG = paste0("PFG",1:6)
-                                                      , strategy_tol = c("ubiquist", "undergrowth"
-                                                                         , "ubiquist", "semi_shade"
-                                                                         , "pioneer", "full_light")))
-  
-  PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
-                          , mat.PFG.soil = data.frame(PFG = paste0("PFG",1:6)
-                                                      , type = c("C", "C", "H", "H", "P", "P")
-                                                      , soil_contrib = c(2, 2.5, 3.5, 3, 1.5, 3)
-                                                      , soil_tol_min = c(1, 2, 2, 1.5, 1, 2)
-                                                      , soil_tol_max = c(3, 3, 5, 4.5, 2, 4)))
-  
-  PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
-                                  , name.MASK = "map_mask.tif")
-  
-  dir.create("FATE_simulation/RESULTS/SIMUL_V1")
-  dir.create("FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_allStrata")
-  dir.create("FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_perStrata")
-  dir.create("FATE_simulation/RESULTS/SIMUL_V1/LIGHT")
-  dir.create("FATE_simulation/RESULTS/SIMUL_V1/SOIL")
-  
-  for (i in 1:6)
   {
-    writeRaster(map_1, filename = paste0("FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_allStrata/"
-                                         , "Abund_YEAR_1_PFG", i, "_STRATA_all.tif"), overwrite = TRUE)
+    if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
+    PRE_FATE.skeletonDirectory()
+    
+    library(raster)
+    map_0 = raster(nrows = 5, ncols = 5, resolution = 50)
+    map_0[] = 0
+    map_1 = map_0
+    map_1[] = 1
+    map_hab = map_0
+    map_hab[] = sample(c(1, 5, 10), ncell(map_hab), replace = TRUE)
+    writeRaster(map_1, filename = "FATE_simulation/DATA/MASK/map_mask.tif", overwrite = TRUE)
+    writeRaster(map_hab, filename = "FATE_simulation/DATA/MASK/map_hab.tif", overwrite = TRUE)
+    
+    PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                     , required.no_PFG = 6
+                                     , required.no_strata = 5
+                                     , required.simul_duration = 100
+                                     , required.seeding_duration = 10
+                                     , required.seeding_timestep = 1
+                                     , required.seeding_input = 100
+                                     , required.max_abund_low = 3000
+                                     , required.max_abund_medium = 5000
+                                     , required.max_abund_high = 9000
+                                     , doLight = TRUE
+                                     , LIGHT.thresh_medium = 4000
+                                     , LIGHT.thresh_low = 7000
+                                     , doSoil = TRUE
+                                     , SOIL.init = 2.5
+                                     , SOIL.retention = 0.5)
+    
+    PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
+                                  , mat.PFG.succ = data.frame(PFG = paste0("PFG",1:6)
+                                                              , type = c("C", "C", "H", "H", "P", "P")
+                                                              , height = c(10, 250, 36, 68, 1250, 550)
+                                                              , maturity = c(5, 5, 3, 3, 8, 9)
+                                                              , longevity = c(12, 200, 25, 4, 110, 70)))
+    
+    PRE_FATE.params_PFGlight(name.simulation = "FATE_simulation"
+                             , mat.PFG.light = data.frame(PFG = paste0("PFG",1:6)
+                                                          , type = c("C", "C", "H", "H", "P", "P"))
+                             , mat.PFG.tol = data.frame(PFG = paste0("PFG",1:6)
+                                                        , strategy_tol = c("ubiquist", "undergrowth"
+                                                                           , "ubiquist", "semi_shade"
+                                                                           , "pioneer", "full_light")))
+    
+    PRE_FATE.params_PFGsoil(name.simulation = "FATE_simulation"
+                            , mat.PFG.soil = data.frame(PFG = paste0("PFG",1:6)
+                                                        , type = c("C", "C", "H", "H", "P", "P")
+                                                        , soil_contrib = c(2, 2.5, 3.5, 3, 1.5, 3)
+                                                        , soil_tol_min = c(1, 2, 2, 1.5, 1, 2)
+                                                        , soil_tol_max = c(3, 3, 5, 4.5, 2, 4)))
+    
+    PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
+                                    , name.MASK = "map_mask.tif")
+    
+    dir.create("FATE_simulation/RESULTS/SIMUL_V1")
+    dir.create("FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_allStrata")
+    dir.create("FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_perStrata")
+    dir.create("FATE_simulation/RESULTS/SIMUL_V1/LIGHT")
+    dir.create("FATE_simulation/RESULTS/SIMUL_V1/SOIL")
+    
+    for (i in 1:6)
+    {
+      writeRaster(map_1, filename = paste0("FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_allStrata/"
+                                           , "Abund_YEAR_1_PFG", i, "_STRATA_all.tif"), overwrite = TRUE)
+    }
+    writeRaster(map_1, filename = paste0("FATE_simulation/RESULTS/SIMUL_V1/LIGHT/"
+                                         , "Light_Resources_YEAR_1_STRATA_1.tif"), overwrite = TRUE)
+    writeRaster(map_1, filename = paste0("FATE_simulation/RESULTS/SIMUL_V1/SOIL/"
+                                         , "Soil_Resources_YEAR_1.tif"), overwrite = TRUE)
+    tempEvol = POST_FATE.temporalEvolution(name.simulation = "FATE_simulation"
+                                           , no_years = 10
+                                           , opt.ras_habitat = "FATE_simulation/DATA/MASK/map_hab.tif")
   }
-  writeRaster(map_1, filename = paste0("FATE_simulation/RESULTS/SIMUL_V1/LIGHT/"
-                                       , "Light_Resources_YEAR_1_STRATA_1.tif"), overwrite = TRUE)
-  writeRaster(map_1, filename = paste0("FATE_simulation/RESULTS/SIMUL_V1/SOIL/"
-                                       , "Soil_Resources_YEAR_1.tif"), overwrite = TRUE)
-  tempEvol = POST_FATE.temporalEvolution(name.simulation = "FATE_simulation"
-                                         , no_years = 10
-                                         , opt.ras_habitat = "FATE_simulation/DATA/MASK/map_hab.tif")
   
   expect_message(POST_FATE.graphic_evolutionPixels(name.simulation = "FATE_simulation")
                  , "> POST_FATE_TABLE_PIXEL_evolution_pixels_")

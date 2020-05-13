@@ -365,6 +365,7 @@ PRE_FATE.params_simulParameters = function(
     dirs.SCENARIO = paste0(name.simulation, "/DATA/SCENARIO")
   }
   
+  warn.messages = list()
   for (ty in type.changing1)
   {
     assign(x = paste0("dirs.SCENARIO.", ty), value = vector())
@@ -380,12 +381,22 @@ PRE_FATE.params_simulParameters = function(
                                  , ", di)")))
       } else
       {
-        warning(paste0("There is no adequate file (`.txt` file starting with `"
-                       , ty, "_changingmask_years`) "
-                       , "into the folder ", di))
+        warn.messages[[length(warn.messages) +1]] = c(ty, di)
+        # warning(paste0("There is no adequate file (`.txt` file starting with `"
+        #                , ty, "_changingmask_years`) "
+        #                , "into the folder ", di))
       }
     }
   }
+  if (length(warn.messages) > 0)
+  {
+    warning(paste0("There is no adequate file(s) into some folder(s) : \n"
+                   , paste0(" > ", sapply(warn.messages, function(x) x[1])
+                            , "_changingmask_years[...].txt (folder "
+                            , sapply(warn.messages, function(x) x[2]), ") \n"
+                            , collapse = "")))
+  }
+
   
   #############################################################################
   ## Get the name(s) of HABSUIT / ALIENS directory
@@ -470,6 +481,7 @@ PRE_FATE.params_simulParameters = function(
                         , param = c("SAVING_YEARS_ARRAYS", "SAVING_YEARS_OBJECTS")
                         , stringsAsFactors = FALSE)
     
+    warn.messages = list()
     for (ii in 1:nrow(di.opt))
     {
       files.found = list.files(path = di
@@ -477,9 +489,10 @@ PRE_FATE.params_simulParameters = function(
                                , full.names = TRUE)
       if (length(files.found) == 0)
       {
-        warning(paste0("There is no adequate file (`.txt` file starting with `"
-                       , di.opt$pat[ii], "`) "
-                       , "into the folder ", di))
+        warn.messages[[length(warn.messages) +1]] = c(di.opt$pat[ii], di)
+        # warning(paste0("There is no adequate file (`.txt` file starting with `"
+        #                , di.opt$pat[ii], "`) "
+        #                , "into the folder ", di))
       } else if (length(files.found) == 1)
       {
         params.combi[[di.opt$nam[ii]]] = files.found
@@ -492,9 +505,18 @@ PRE_FATE.params_simulParameters = function(
                     , "into the folder ", di))
       }
     }
+    if (length(warn.messages) > 0)
+    {
+      warning(paste0("There is no adequate file(s) into some folder(s) : \n"
+                     , paste0(" > ", sapply(warn.messages, function(x) x[1])
+                              , "[...].txt (folder "
+                              , sapply(warn.messages, function(x) x[2]), ") \n"
+                              , collapse = "")))
+    }
     
     #############################################################################
     
+    warn.messages = list()
     for (ty in type.changing1)
     {
       if (PARAMS.combi[, paste0("SCENARIO.", ty)][i] > 0)
@@ -524,14 +546,23 @@ PRE_FATE.params_simulParameters = function(
                                      , full.names = TRUE)
         if (length(files.SCE.masks) == 0)
         {
-          warning(paste0("There is no adequate file (`.txt` file starting with `"
-                         , ty, "_changingmask_files`) "
-                         , "into the folder ", di))
+          warn.messages[[length(warn.messages) +1]] = c(ty, di)
+          # warning(paste0("There is no adequate file (`.txt` file starting with `"
+          #                , ty, "_changingmask_files`) "
+          #                , "into the folder ", di))
         } else if (length(files.SCE.masks) > 0)
         {
           assign(x = paste0("SCENARIO.", ty), value = files.SCE.masks)
         }
       }
+    }
+    if (length(warn.messages) > 0)
+    {
+      warning(paste0("There is no adequate file(s) into some folder(s) : \n"
+                     , paste0(" > ", sapply(warn.messages, function(x) x[1])
+                              , "_changingmask_files[...].txt (folder "
+                              , sapply(warn.messages, function(x) x[2]), ") \n"
+                              , collapse = "")))
     }
     
     #############################################################################

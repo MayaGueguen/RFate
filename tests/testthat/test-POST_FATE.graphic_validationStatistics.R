@@ -346,75 +346,77 @@ test_that("POST_FATE.graphic_validationStatistics gives correct outputs : warnin
                                                                                    , obs = 1)
                                                         , opt.ras_habitat = "FATE_simulation/DATA/MASK/map_hab.tif")
                  , "No validation has been calculated for year 1!")
-
+  
 })
 
 
 ## OUTPUTS
 test_that("POST_FATE.graphic_validationStatistics gives correct outputs : correct", {
-  if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
-  PRE_FATE.skeletonDirectory()
-  
-  library(raster)
-  map_0 = raster(nrows = 5, ncols = 5, resolution = 50)
-  map_0[] = 0
-  map_1 = map_0
-  map_1[] = 1
-  map_hab = map_0
-  map_hab[] = sample(c(1, 5, 10), ncell(map_hab), replace = TRUE)
-  writeRaster(map_1, filename = "FATE_simulation/DATA/MASK/map_mask.tif", overwrite = TRUE)
-  writeRaster(map_hab, filename = "FATE_simulation/DATA/MASK/map_hab.tif", overwrite = TRUE)
-  
-  PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
-                                   , required.no_PFG = 6
-                                   , required.no_strata = 5
-                                   , required.simul_duration = 100
-                                   , required.seeding_duration = 10
-                                   , required.seeding_timestep = 1
-                                   , required.seeding_input = 100
-                                   , required.max_abund_low = 3000
-                                   , required.max_abund_medium = 5000
-                                   , required.max_abund_high = 9000)
-  
-  PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
-                                , mat.PFG.succ = data.frame(PFG = paste0("PFG",1:6)
-                                                            , type = c("C", "C", "H", "H", "P", "P")
-                                                            , height = c(10, 250, 36, 68, 1250, 550)
-                                                            , maturity = c(5, 5, 3, 3, 8, 9)
-                                                            , longevity = c(12, 200, 25, 4, 110, 70)))
-  
-  PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
-                                  , name.MASK = "map_mask.tif")
-  
-  dir.create("FATE_simulation/RESULTS/SIMUL_V1")
-  dir.create("FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_allStrata")
-  dir.create("FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_perStrata")
-  dir.create("FATE_simulation/RESULTS/SIMUL_V1/LIGHT")
-  dir.create("FATE_simulation/RESULTS/SIMUL_V1/SOIL")
-  
-  for (i in 1:5)
   {
-    writeRaster(map_1, filename = paste0("FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_allStrata/"
-                                         , "Abund_YEAR_1_PFG", i, "_STRATA_all.tif"), overwrite = TRUE)
+    if (dir.exists("FATE_simulation")) unlink("FATE_simulation", recursive = TRUE)
+    PRE_FATE.skeletonDirectory()
+    
+    library(raster)
+    map_0 = raster(nrows = 5, ncols = 5, resolution = 50)
+    map_0[] = 0
+    map_1 = map_0
+    map_1[] = 1
+    map_hab = map_0
+    map_hab[] = sample(c(1, 5, 10), ncell(map_hab), replace = TRUE)
+    writeRaster(map_1, filename = "FATE_simulation/DATA/MASK/map_mask.tif", overwrite = TRUE)
+    writeRaster(map_hab, filename = "FATE_simulation/DATA/MASK/map_hab.tif", overwrite = TRUE)
+    
+    PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
+                                     , required.no_PFG = 6
+                                     , required.no_strata = 5
+                                     , required.simul_duration = 100
+                                     , required.seeding_duration = 10
+                                     , required.seeding_timestep = 1
+                                     , required.seeding_input = 100
+                                     , required.max_abund_low = 3000
+                                     , required.max_abund_medium = 5000
+                                     , required.max_abund_high = 9000)
+    
+    PRE_FATE.params_PFGsuccession(name.simulation = "FATE_simulation"
+                                  , mat.PFG.succ = data.frame(PFG = paste0("PFG",1:6)
+                                                              , type = c("C", "C", "H", "H", "P", "P")
+                                                              , height = c(10, 250, 36, 68, 1250, 550)
+                                                              , maturity = c(5, 5, 3, 3, 8, 9)
+                                                              , longevity = c(12, 200, 25, 4, 110, 70)))
+    
+    PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
+                                    , name.MASK = "map_mask.tif")
+    
+    dir.create("FATE_simulation/RESULTS/SIMUL_V1")
+    dir.create("FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_allStrata")
+    dir.create("FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_perStrata")
+    dir.create("FATE_simulation/RESULTS/SIMUL_V1/LIGHT")
+    dir.create("FATE_simulation/RESULTS/SIMUL_V1/SOIL")
+    
+    for (i in 1:5)
+    {
+      writeRaster(map_1, filename = paste0("FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_allStrata/"
+                                           , "Abund_YEAR_1_PFG", i, "_STRATA_all.tif"), overwrite = TRUE)
+    }
+    writeRaster(map_0, filename = paste0("FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_allStrata/"
+                                         , "Abund_YEAR_1_PFG6_STRATA_all.tif"), overwrite = TRUE)
+    
+    POST_FATE.relativeAbund(name.simulation = "FATE_simulation", years = 1)
+    
+    
+    mat.PFG.obs = xyFromCell(map_0, 1:ncell(map_0))
+    mat.PFG.obs = expand.grid(PFG = paste0("PFG",1:6)
+                              , X = mat.PFG.obs[, 1]
+                              , Y = mat.PFG.obs[, 2])
+    mat.PFG.obs$obs = sample(c(0, 1), nrow(mat.PFG.obs), prob = c(0.6, 0.4), replace = TRUE)
   }
-  writeRaster(map_0, filename = paste0("FATE_simulation/RESULTS/SIMUL_V1/ABUND_perPFG_allStrata/"
-                                       , "Abund_YEAR_1_PFG6_STRATA_all.tif"), overwrite = TRUE)
-  
-  POST_FATE.relativeAbund(name.simulation = "FATE_simulation", years = 1)
-  
-  
-  mat.PFG.obs = xyFromCell(map_0, 1:ncell(map_0))
-  mat.PFG.obs = expand.grid(PFG = paste0("PFG",1:6)
-                            , X = mat.PFG.obs[, 1]
-                            , Y = mat.PFG.obs[, 2])
-  mat.PFG.obs$obs = sample(c(0, 1), nrow(mat.PFG.obs), prob = c(0.6, 0.4), replace = TRUE)
   
   ## TEST output
   expect_message(POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
                                                         , years = 1
                                                         , mat.PFG.obs = mat.PFG.obs)
                  , "The output file POST_FATE_TABLE_YEAR_1_validationStatistics_SIMUL_V1.csv has been successfully created !")
-
+  
   
   validStats = POST_FATE.graphic_validationStatistics(name.simulation = "FATE_simulation"
                                                       , years = 1

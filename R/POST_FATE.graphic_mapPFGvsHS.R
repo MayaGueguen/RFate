@@ -124,14 +124,18 @@ POST_FATE.graphic_mapPFGvsHS = function(
   ## CHECK parameter years
   .testParam_notInteger.m("years", years)
   
+  cat("\n\n #------------------------------------------------------------#")
+  cat("\n # POST_FATE.graphic_mapPFGvsHS")
+  cat("\n #------------------------------------------------------------# \n")
+  
   #############################################################################
   
   res = foreach (abs.simulParam = abs.simulParams) %do%
   {
     
-    cat("\n ############## GRAPHIC POST FATE ############## \n")
-    cat("\n Simulation name : ", name.simulation)
-    cat("\n Simulation file : ", abs.simulParam)
+    cat("\n+++++++\n")
+    cat("\n  Simulation name : ", name.simulation)
+    cat("\n  Simulation file : ", abs.simulParam)
     cat("\n")
     
     ## Get results directories -----------------------------------------------------
@@ -189,10 +193,10 @@ POST_FATE.graphic_mapPFGvsHS = function(
     ###########################################################################
     
     ## get the data inside the rasters ----------------------------------------
-    cat("\n GETTING PFG and SDM maps for")
+    cat("\n ---------- GETTING PFG and SDM maps for")
     plot_list = foreach (y = years) %do%
     {
-      cat("\n > year", y)
+      cat("\n> year", y, "\n")
       
       ## PFG maps -------------------------------------------------------------
       file_name = paste0(dir.tmp
@@ -216,10 +220,10 @@ POST_FATE.graphic_mapPFGvsHS = function(
         
         
         ## produce the plot ---------------------------------------------------
-        cat("\n PRODUCING PLOT(S)...")
+        cat("\n ---------- PRODUCING PLOT(S)")
         plot_list.PFG = foreach(pfg = PFG) %do%
         {
-          cat("\n > Preparing for PFG ", pfg)
+          cat("\n> Preparing for PFG ", pfg)
           
           if (pfg %in% colnames(ras.hs.pts))
           {
@@ -286,7 +290,6 @@ POST_FATE.graphic_mapPFGvsHS = function(
     ## ------------------------------------------------------------------------
     
     cat("\n> Done!\n")
-    cat("\n")
     
     return(plot_list)
   } ## END loop on abs.simulParams

@@ -153,15 +153,18 @@ POST_FATE.graphic_evolutionCoverage = function(
   ## CHECK parameter file.simulParam
   abs.simulParams = .getParam_abs.simulParams(file.simulParam, name.simulation)
   
+  cat("\n\n #------------------------------------------------------------#")
+  cat("\n # POST_FATE.graphic_evolutionCoverage")
+  cat("\n #------------------------------------------------------------# \n")
   
   #############################################################################
   
   res = foreach (abs.simulParam = abs.simulParams) %do%
   {
     
-    cat("\n ############## GRAPHIC POST FATE ############## \n")
-    cat("\n Simulation name : ", name.simulation)
-    cat("\n Simulation file : ", abs.simulParam)
+    cat("\n+++++++\n")
+    cat("\n  Simulation name : ", name.simulation)
+    cat("\n  Simulation file : ", abs.simulParam)
     cat("\n")
     
     ## Get results directories ------------------------------------------------
@@ -193,12 +196,12 @@ POST_FATE.graphic_evolutionCoverage = function(
     hab_names = unique(tab.totalAbundance$HAB)
     no_hab = length(hab_names)
     
-    cat("\n Number of years : ", length(years))
-    cat("\n Number of habitat : ", no_hab)
+    cat("\n  Number of years : ", length(years))
+    cat("\n  Number of habitat : ", no_hab)
     cat("\n")
     
     ## Transform the data inside the table ------------------------------------
-    cat("\n GETTING COVERAGE and ABUNDANCE over the whole area...")
+    cat("\n ---------- GETTING COVERAGE and ABUNDANCE over the whole area...")
     
     tab.totalAbundance.split = split(tab.totalAbundance
                                      , list(tab.totalAbundance$PFG
@@ -267,7 +270,7 @@ POST_FATE.graphic_evolutionCoverage = function(
     ## produce the plot -------------------------------------------------------
     if (opt.doPlot)
     {
-      cat("\n PRODUCING PLOT(S)...")
+      cat("\n ---------- PRODUCING PLOTS \n")
       col_vec = c('#6da34d', '#297373', '#58a4b0', '#5c4742', '#3f334d')
       col_fun = colorRampPalette(col_vec)
       
@@ -320,7 +323,6 @@ POST_FATE.graphic_evolutionCoverage = function(
     ## ------------------------------------------------------------------------
     
     cat("\n> Done!\n")
-    cat("\n")
     
     return(list(tab.spaceOccupancy = distri.melt
                 , tab.totalAbundance = distriAbund.melt

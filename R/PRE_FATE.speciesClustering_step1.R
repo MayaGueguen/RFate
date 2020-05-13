@@ -238,6 +238,10 @@ PRE_FATE.speciesClustering_step1 = function(mat.species.DIST)
                 , "problems dealing with this data"))
   }
   
+  cat("\n\n #------------------------------------------------------------#")
+  cat("\n # PRE_FATE.speciesClustering_step1")
+  cat("\n #------------------------------------------------------------# \n")
+  
   #############################################################################
   ### CLUSTERING
   #############################################################################
@@ -323,9 +327,8 @@ PRE_FATE.speciesClustering_step1 = function(mat.species.DIST)
     hclust(as.dist(x), method = clust.method)
   })
   
-  cat("\n ############## CLUSTERING ############## \n")
-  cat("\n Clustering method : ", clust.method)
-  cat("\n Clustering evaluation...")
+  cat("\n  Clustering method : ", clust.method)
+  cat("\n  Clustering evaluation...")
   cat("\n")
   
   #############################################################################

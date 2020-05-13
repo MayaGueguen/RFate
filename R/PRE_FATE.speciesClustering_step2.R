@@ -184,6 +184,9 @@ PRE_FATE.speciesClustering_step2 = function(clust.dendrograms
     }
   }
   
+  cat("\n\n #------------------------------------------------------------#")
+  cat("\n # PRE_FATE.speciesClustering_step2 : DETERMINANT SPECIES")
+  cat("\n #------------------------------------------------------------# \n")
   
   #############################################################################
   ## DEFINITION OF CLUSTERED GROUPS
@@ -207,11 +210,7 @@ PRE_FATE.speciesClustering_step2 = function(clust.dendrograms
   #############################################################################
   ## IDENTIFY DETERMINANT SPECIES
   #############################################################################
-  
-  cat("\n ############## DETERMINANT SPECIES ############## \n")
-  cat("\n Identification...")
-  cat("\n")
-  
+
   ## DETERMINANT SPECIES are the ones whose mean distance to other species
   ## is in the distribution of mean distances of every species to other species
   

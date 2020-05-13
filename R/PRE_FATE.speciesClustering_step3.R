@@ -144,6 +144,10 @@ PRE_FATE.speciesClustering_step3 = function(mat.traits
     .testParam_notChar.m("mat.traits$PFG", mat.traits$PFG)
   }
   
+  cat("\n\n #------------------------------------------------------------#")
+  cat("\n # PRE_FATE.speciesClustering_step3 : PFG TRAIT VALUES")
+  cat("\n #------------------------------------------------------------# \n")
+  
   #############################################################################
   
   ## Get information about which traits are given
@@ -171,10 +175,6 @@ PRE_FATE.speciesClustering_step3 = function(mat.traits
   
   
   #############################################################################
-  
-  cat("\n ############## PLANT FUNCTIONAL GROUP values ############## \n")
-  cat("\n Computation...")
-  cat("\n")
   
   if (isThere.longevity && isThere.maturity)
   {
@@ -275,8 +275,7 @@ PRE_FATE.speciesClustering_step3 = function(mat.traits
   
   #############################################################################
   
-  cat("\n Graphical representations...")
-  cat("\n")
+  cat("\n ---------- PRODUCING PLOT(S) \n")
   
   mat.traits.melt = mat.traits
   for (i in ind.factor) mat.traits.melt[, i] = as.numeric(as.factor(mat.traits.melt[, i]))
@@ -345,7 +344,7 @@ PRE_FATE.speciesClustering_step3 = function(mat.traits
   #############################################################################
   if (isThere.longevity && isThere.maturity)
   {
-    cat("\n >> Longevity and maturity...")
+    cat("\n> Longevity and maturity...")
     pp_list$maturity_longevity = pp.i(i.trait = c("longevity", "maturity")
                                       , i.title = "longevity & maturity"
                                       , i.color = c("longevity" = "#377eb8", "maturity" = "#ff7f00")
@@ -361,7 +360,7 @@ PRE_FATE.speciesClustering_step3 = function(mat.traits
   #############################################################################
   if (isThere.height && isThere.light)
   {
-    cat("\n >> Height and light...")
+    cat("\n> Height and light...")
     pp_list$height_light = pp.i(i.trait = c("height", "light")
                                 , i.title = "height & light"
                                 , i.color = c("height" = "#238b45", "light" = "#1d91c0")
@@ -378,7 +377,7 @@ PRE_FATE.speciesClustering_step3 = function(mat.traits
   if ((isThere.soil_contrib && isThere.soil_tolerance) ||
       (isThere.soil_contrib && isThere.soil_tol_min && isThere.soil_tol_max))
   {
-    cat("\n >> Soil contribution and tolerance...")
+    cat("\n> Soil contribution and tolerance...")
     pp_list$soil = pp.i(i.trait = c("soil_tol_min", "soil_contrib", "soil_tol_max")
                         , i.title = "soil contribution & tolerance"
                         , i.color = c("soil_tol_min" = "#ec7014"
@@ -398,7 +397,7 @@ PRE_FATE.speciesClustering_step3 = function(mat.traits
   {
     for(i.trait in names_traits.factor)
     {
-      cat("\n >>", i.trait, "...")
+      cat(paste0("\n> ", i.trait, "..."))
       pp_list[[i.trait]] = pp.i(i.trait = i.trait
                                 , i.title = i.trait
                                 , i.color = "#02818a")

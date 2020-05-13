@@ -253,22 +253,12 @@ POST_FATE.graphics = function(
   res = foreach (abs.simulParam = abs.simulParams) %do%
   {
     
-    cat("\n ############## GRAPHIC POST FATE ############## \n")
-    cat("\n Simulation name : ", name.simulation)
-    cat("\n Simulation file : ", abs.simulParam)
-    cat("\n")
-    
-    ## Get global param file directories ------------------------------------
-    .getGraphics_PFG(name.simulation  = name.simulation
-                     , abs.simulParam = abs.simulParam)        
-    
     ## Get temporal evolution -----------------------------------------------
     if (doFunc.evolCov ||
         doFunc.evolPix)
     {
-      cat("\n ############## GET EVOLUTION PLOTS through time ############## \n")
-      cat("\n >> POST_FATE.temporalEvolution...")
-      cat("\n")
+      cat("\n ##############################################################")
+      cat("\n # GET EVOLUTION PLOTS through time \n")
       POST_FATE.temporalEvolution(name.simulation = name.simulation
                                   , file.simulParam = abs.simulParam
                                   , no_years = no_years
@@ -277,8 +267,6 @@ POST_FATE.graphics = function(
       
       if (doFunc.evolCov)
       {
-        cat("\n >> POST_FATE.graphic_evolutionCoverage...")
-        cat("\n")
         res.evolutionCoverage = POST_FATE.graphic_evolutionCoverage(name.simulation = name.simulation
                                                                     , file.simulParam = abs.simulParam
                                                                     , opt.fixedScale = evol.fixedScale
@@ -286,8 +274,6 @@ POST_FATE.graphics = function(
       }
       if (doFunc.evolPix)
       {
-        cat("\n >> POST_FATE.graphic_evolutionPixels...")
-        cat("\n")
         res.evolutionPixels = POST_FATE.graphic_evolutionPixels(name.simulation = name.simulation
                                                                 , file.simulParam = abs.simulParam
                                                                 , opt.cells_ID = evolPix.cells_ID
@@ -301,9 +287,8 @@ POST_FATE.graphics = function(
         doFunc.mapPFGvsHS ||
         doFunc.mapPFG)
     {
-      cat("\n ############## GET RELATIVE / BINARY MAPS and VALIDATION PLOTS ############## \n")
-      cat("\n >> POST_FATE.relativeAbund...")
-      cat("\n")
+      cat("\n ##############################################################")
+      cat("\n # GET RELATIVE / BINARY MAPS and VALIDATION PLOTS \n")
       POST_FATE.relativeAbund(name.simulation = name.simulation
                               , file.simulParam = abs.simulParam
                               , years = years
@@ -311,8 +296,6 @@ POST_FATE.graphics = function(
       
       if (doFunc.valid)
       {
-        cat("\n >> POST_FATE.graphic_validationStatistics...")
-        cat("\n")
         res.validation = POST_FATE.graphic_validationStatistics(name.simulation = name.simulation
                                                                 , file.simulParam = abs.simulParam
                                                                 , years = years
@@ -322,8 +305,6 @@ POST_FATE.graphics = function(
       }
       if (doFunc.mapPFGvsHS || doFunc.mapPFG)
       {
-        cat("\n >> POST_FATE.binaryMaps...")
-        cat("\n")
         POST_FATE.binaryMaps(name.simulation = name.simulation
                              , file.simulParam = abs.simulParam
                              , years = years
@@ -334,19 +315,16 @@ POST_FATE.graphics = function(
       }
       if (doFunc.mapPFGvsHS)
       {
-        cat("\n >> POST_FATE.graphic_mapPFGvsHS...")
-        cat("\n")
         res.mapPFGvsHS = POST_FATE.graphic_mapPFGvsHS(name.simulation = name.simulation
                                                       , file.simulParam = abs.simulParam
                                                       , years = years
                                                       , opt.stratum = mapPFGvsHS.stratum)
       }
       
-      cat("\n ############## GET SPATIAL PLOTS for a specific year ############## \n")
+      cat("\n ##############################################################")
+      cat("\n # GET SPATIAL PLOTS for a specific year \n")
       if (doFunc.mapPFG)
       {
-        cat("\n >> POST_FATE.graphic_mapPFG...")
-        cat("\n")
         res.mapPFG = POST_FATE.graphic_mapPFG(name.simulation = name.simulation
                                               , file.simulParam = abs.simulParam
                                               , years = years

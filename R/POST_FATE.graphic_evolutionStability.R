@@ -174,15 +174,18 @@ POST_FATE.graphic_evolutionStability = function(
   ## CHECK parameter movingWindow_step
   .testParam_notInteger.m("movingWindow_step", movingWindow_step)
 
+  cat("\n\n #------------------------------------------------------------#")
+  cat("\n # POST_FATE.graphic_evolutionStability")
+  cat("\n #------------------------------------------------------------# \n")
     
   #############################################################################
   
   res = foreach (abs.simulParam = abs.simulParams) %do%
   {
     
-    cat("\n ############## GRAPHIC POST FATE ############## \n")
-    cat("\n Simulation name : ", name.simulation)
-    cat("\n Simulation file : ", abs.simulParam)
+    cat("\n+++++++\n")
+    cat("\n  Simulation name : ", name.simulation)
+    cat("\n  Simulation file : ", abs.simulParam)
     cat("\n")
     
     ## Get results directories ------------------------------------------------
@@ -216,16 +219,16 @@ POST_FATE.graphic_evolutionStability = function(
     hab_names = unique(tab.totalAbundance$HAB)
     no_hab = length(hab_names)
     
-    cat("\n Number of years : ", no_years)
-    cat("\n Number of habitat : ", no_hab)
+    cat("\n  Number of years : ", no_years)
+    cat("\n  Number of habitat : ", no_hab)
     cat("\n")
     
     ###########################################################################
     ## Transform the data inside the table ------------------------------------
-    cat("\n GETTING TOTAL ABUNDANCE and EVENNESS within each habitat...")
+    cat("\n ---------- GETTING TOTAL ABUNDANCE and EVENNESS within each habitat... \n")
     
     ## Getting total abundance within each habitat
-    cat("\n >> Habitat total abundance...")
+    cat("\n> Habitat total abundance...")
     tab.split = split(tab.totalAbundance, list(tab.totalAbundance$HAB))
     tab.hab = foreach(i = 1:length(tab.split), .combine = "rbind") %do%
     {
@@ -241,7 +244,7 @@ POST_FATE.graphic_evolutionStability = function(
     }
     
     ## Getting PFG relative abundance within each habitat
-    cat("\n >> PFG relative abundance...")
+    cat("\n> PFG relative abundance...")
     tab.split = split(tab.totalAbundance, list(tab.totalAbundance$PFG
                                                , tab.totalAbundance$HAB))
     tab.prop = foreach(i = 1:length(tab.split), .combine = "rbind") %do%
@@ -263,7 +266,7 @@ POST_FATE.graphic_evolutionStability = function(
     }
     
     ## Calculating evenness within each habitat
-    cat("\n >> Habitat evenness...")
+    cat("\n> Habitat evenness...")
     tab.split = split(tab.prop, list(tab.prop$HAB, tab.prop$year))
     tab.even = foreach(i = 1:length(tab.split), .combine = "rbind") %do%
     {
@@ -411,7 +414,7 @@ POST_FATE.graphic_evolutionStability = function(
       ## produce the plot -----------------------------------------------------
       if (opt.doPlot)
       {
-        cat("\n PRODUCING PLOT(S)...")
+        cat("\n ---------- PRODUCING PLOT \n")
         col_vec = c('#6da34d', '#297373', '#58a4b0', '#5c4742', '#3f334d')
         col_fun = colorRampPalette(col_vec)
         
@@ -468,7 +471,6 @@ POST_FATE.graphic_evolutionStability = function(
     ## ------------------------------------------------------------------------
     
     cat("\n> Done!\n")
-    cat("\n")
     
     return(list(tab.hab = tab.HAB
                 , tab.stab = tab.STAB

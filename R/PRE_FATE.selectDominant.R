@@ -327,6 +327,9 @@ PRE_FATE.selectDominant = function(mat.observations
     mat.observations = unique(mat.observations)
   }
   
+  cat("\n\n #------------------------------------------------------------#")
+  cat("\n # PRE_FATE.selectDominant")
+  cat("\n #------------------------------------------------------------# \n")
   
   #############################################################################
   ### PREPARATION OF DATA : informations
@@ -345,19 +348,19 @@ PRE_FATE.selectDominant = function(mat.observations
   MO.no_species.notNA = length(unique(MO$species[ind.notNA]))
   
   {
-    cat("\n ############## SAMPLING INFORMATIONS ############## \n")
-    cat("\n Number of releves : ", MO.no_releves)
-    cat("\n Number of sites : ", MO.no_sites)
-    cat("\n Number of species : ", MO.no_species)
+    cat("\n ---------- INFORMATION : SAMPLING \n")
+    cat("\n  Number of releves : ", MO.no_releves)
+    cat("\n  Number of sites : ", MO.no_sites)
+    cat("\n  Number of species : ", MO.no_species)
     cat("\n")
     
     
-    cat("\n ############## ABUNDANCE INFORMATIONS ############## \n")
-    cat("\n Percentage of releves with abundance information : "
+    cat("\n ---------- INFORMATION : ABUNDANCE \n")
+    cat("\n  Percentage of releves with abundance information : "
         , round(100 * MO.no_releves.notNA / MO.no_releves, 2), "%")
-    cat("\n Percentage of sites with abundance information : "
+    cat("\n  Percentage of sites with abundance information : "
         , round(100 * MO.no_sites.notNA / MO.no_sites, 2), "%")
-    cat("\n Percentage of species with abundance information : "
+    cat("\n  Percentage of species with abundance information : "
         , round(100 * MO.no_species.notNA / MO.no_species, 2), "%")
     cat("\n")
     
@@ -373,13 +376,13 @@ PRE_FATE.selectDominant = function(mat.observations
                      , "selected with the criteria based on number of presences."))
     }
     
-    cat("\n ############## STATISTICS COMPUTATION ############## \n")
-    cat("\n For each species (site level) :")
+    cat("\n ---------- STATISTICS COMPUTATION \n")
+    cat("\n  For each species (site level) :")
     cat("\n     - total frequency and abundance (rule A1 & A2)")
     cat("\n     - mean relative abundance (rule B2)")
     cat("\n     - frequency (absolute and relative) of each relative abundance class (rule B1)")
     if (doRuleC) {
-      cat("\n For each species (habitat level) :")
+      cat("\n  For each species (habitat level) :")
       cat("\n     - frequency and abundance (absolute and relative) within each habitat (rule C)")
     }
     cat("\n\n")
@@ -735,7 +738,7 @@ PRE_FATE.selectDominant = function(mat.observations
   }
   
   
-  cat("\n ############## SELECTION OF DOMINANT SPECIES ############## \n")
+  cat("\n ---------- SELECTION OF DOMINANT SPECIES \n")
   
   ## Keep only part corresponding to full dataset
   if (opt.doRobustness)
@@ -777,7 +780,7 @@ PRE_FATE.selectDominant = function(mat.observations
   
   if (opt.doPlot)
   {
-    cat("\n PRODUCING PLOT(S)...")
+    cat("\n ---------- PRODUCING PLOT(S) \n")
     
     ###########################################################################
     ## ILLUSTRATION of rules A1, A2 and C -------------------------------------
