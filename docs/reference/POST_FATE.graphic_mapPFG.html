@@ -300,30 +300,36 @@ of outputs will occur, be saved and returned</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A <code>list</code> containing one or several (one for each simulation 
-year) <code>list</code> of <code>raster</code> and <code>data.frame</code> with the following 
-columns, and one or two <code>ggplot2</code> objects :</p>
+year) <code>list</code> of <code>raster</code> and <code>ggplot2</code> objects :</p>
 <dl'>
   <dt>tab</dt><dd><p><dl'>
-      <dt>raster</dt><dd><p></p></dd>
-      <dt>ccr</dt><dd><p><dl'>
-          <dt><code>PFG</code></dt><dd><p>the concerned Plant Functional Group</p></dd>
-          <dt><code>AUC.sd</code></dt><dd><p>standard deviation of the AUC values</p></dd></dl></p></dd></dl></p></dd>
+      <dt><code>cover</code></dt><dd><p><code>raster</code> of relative coverage</p></dd>
+      <dt><code>DIV.0</code></dt><dd><p><code>raster</code> of species richness</p></dd>
+      <dt><code>DIV.1</code></dt><dd><p><code>raster</code> of Shannon entropy</p></dd>
+      <dt><code>DIV.2</code></dt><dd><p><code>raster</code> of Simpson concentration</p></dd>
+      <dt><code>CWM.light</code></dt><dd><p><code>raster</code> of light community weighted mean</p></dd>
+      <dt><code>CWM.soil</code></dt><dd><p><code>raster</code> of soil community weighted mean</p></dd></dl></p></dd>
   <dt>plot</dt><dd><p><dl'>
-      <dt>plot.cover</dt><dd><p><code>ggplot2</code> object, representing the</p></dd>
-      <dt>plot.ccr</dt><dd><p><code>ggplot2</code> object, representing the <br /> <br /></p></dd></dl></p></dd>
+      <dt><code>cover</code></dt><dd><p><code>ggplot2</code> object, representing <code>cover</code> 
+      raster</p></dd>
+      <dt><code>richness</code></dt><dd><p><code>ggplot2</code> object, representing 
+      <code>DIV.0</code> raster</p></dd>
+      <dt><code>CWM.light</code></dt><dd><p><code>ggplot2</code> object, representing 
+      <code>CWM.light</code> raster</p></dd>
+      <dt><code>CWM.soil</code></dt><dd><p><code>ggplot2</code> object, representing 
+      <code>CWM.soil</code> raster <br /> <br /></p></dd></dl></p></dd>
 
 </dl>
 
 
-<p>Up to four <code class="file">POST_FATE_[...].pdf</code> file are created :</p><dl'>
-  <dt><code class="file">GRAPHIC_C <br /> map_PFGrichness</code></dt><dd><p>to visualize the PFG 
-  richness within the studied area</p></dd>
-  <dt><code class="file">GRAPHIC_C <br /> map_PFGcover</code></dt><dd><p>to visualize the PFG cover
-  within the studied area</p></dd>
-  <dt><code class="file">GRAPHIC_C <br /> PFGlight</code></dt><dd><p>to visualize the light CWM
-  within the studied area</p></dd>
-  <dt><code class="file">GRAPHIC_C <br /> PFGsoil</code></dt><dd><p>to visualize the soil CWM
-  within the studied area</p></dd>
+<p><code class="file">POST_FATE_GRAPHIC_C_map_PFG_[...].pdf</code> file is created containing up 
+to four graphics :</p><dl'>
+  <dt><code class="file">map_PFGcover</code></dt><dd><p>to visualize the PFG cover within the studied 
+  area</p></dd>
+  <dt><code class="file">map_PFGrichness</code></dt><dd><p>to visualize the PFG richness within the 
+  studied area</p></dd>
+  <dt><code class="file">PFGlight</code></dt><dd><p>to visualize the light CWM within the studied area</p></dd>
+  <dt><code class="file">PFGsoil</code></dt><dd><p>to visualize the soil CWM within the studied area</p></dd>
 
 </dl>
 

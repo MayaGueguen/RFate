@@ -52,40 +52,43 @@ of outputs will occur, be saved and returned}
 }
 \value{
 A \code{list} containing one or several (one for each simulation 
-year) \code{list} of \code{raster} and \code{data.frame} with the following 
-columns, and one or two \code{ggplot2} objects :
+year) \code{list} of \code{raster} and \code{ggplot2} objects :
 
 \describe{
   \item{tab}{ 
-    \describe{ 
-      \item{raster}{}
-      \item{ccr}{ 
-        \describe{
-          \item{\code{PFG}}{the concerned Plant Functional Group}
-          \item{\code{AUC.sd}}{standard deviation of the AUC values}
-        }
-      }
+    \describe{
+      \item{\code{cover}}{\code{raster} of relative coverage}
+      \item{\code{DIV.0}}{\code{raster} of species richness}
+      \item{\code{DIV.1}}{\code{raster} of Shannon entropy}
+      \item{\code{DIV.2}}{\code{raster} of Simpson concentration}
+      \item{\code{CWM.light}}{\code{raster} of light community weighted mean}
+      \item{\code{CWM.soil}}{\code{raster} of soil community weighted mean}
     }
   }
   \item{plot}{
     \describe{
-      \item{plot.cover}{\code{ggplot2} object, representing the }
-      \item{plot.ccr}{\code{ggplot2} object, representing the \cr \cr}
+      \item{\code{cover}}{\code{ggplot2} object, representing \code{cover} 
+      raster}
+      \item{\code{richness}}{\code{ggplot2} object, representing 
+      \code{DIV.0} raster}
+      \item{\code{CWM.light}}{\code{ggplot2} object, representing 
+      \code{CWM.light} raster}
+      \item{\code{CWM.soil}}{\code{ggplot2} object, representing 
+      \code{CWM.soil} raster \cr \cr}
     }
   }
 }
 
 
-Up to four \file{POST_FATE_[...].pdf} file are created : 
+\file{POST_FATE_GRAPHIC_C_map_PFG_[...].pdf} file is created containing up 
+to four graphics : 
 \describe{
-  \item{\file{GRAPHIC_C \cr map_PFGrichness}}{to visualize the PFG 
-  richness within the studied area}
-  \item{\file{GRAPHIC_C \cr map_PFGcover}}{to visualize the PFG cover
-  within the studied area}
-  \item{\file{GRAPHIC_C \cr PFGlight}}{to visualize the light CWM
-  within the studied area}
-  \item{\file{GRAPHIC_C \cr PFGsoil}}{to visualize the soil CWM
-  within the studied area}
+  \item{\file{map_PFGcover}}{to visualize the PFG cover within the studied 
+  area}
+  \item{\file{map_PFGrichness}}{to visualize the PFG richness within the 
+  studied area}
+  \item{\file{PFGlight}}{to visualize the light CWM within the studied area}
+  \item{\file{PFGsoil}}{to visualize the soil CWM within the studied area}
 }
 
 Three \file{PFGrichness_YEAR_[...]_STRATA_all_q[...].tif} files are created 

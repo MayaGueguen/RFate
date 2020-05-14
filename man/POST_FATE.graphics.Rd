@@ -136,30 +136,36 @@ resources that can be used to parallelize the \code{unzip/zip} of raster
 files, as well as the extraction of values from raster files}
 }
 \value{
-The following \code{POST_FATE_[...].pdf} files are created : 
+The following \code{POST_FATE_GRAPHIC_[...].pdf} files are created : 
 \describe{
-  \item{\file{GRAPHIC_A \cr spaceOccupancy}}{to visualize for each PFG the 
-  evolution of its occupation of the studied area through simulation time}
-  \item{\file{GRAPHIC_A \cr abundance}}{to visualize for each PFG the 
-  evolution of its abundance within the whole studied area through 
-  simulation time}
-  \item{\file{GRAPHIC_A \cr pixels}}{to visualize for each PFG the 
-  evolution of its abundance within each selected pixel through 
-  simulation time, as well as the evolution of light and soil resources}
-  \item{\file{GRAPHIC_A \cr stability}}{to visualize for each habitat the 
+  \item{\file{A_evolution_coverage}}{
+  \describe{
+    \item{\file{spaceOccupancy}}{to visualize for each PFG the evolution of 
+    its occupation of the studied area through simulation time}
+    \item{\file{abundance}}{to visualize for each PFG the evolution of its 
+    abundance within the whole studied area through simulation time}
+  }
+  }
+  \item{\file{A_evolution_pixels}}{to visualize for each PFG the evolution 
+  of its abundance within each selected pixel through simulation time, as 
+  well as the evolution of light and soil resources}
+  \item{\file{A_evolution_stability}}{to visualize for each habitat the 
   evolution of its total abundance and its evenness through simulation time}
-  \item{\file{GRAPHIC_B \cr validationStatistics}}{to assess the modeling 
-  quality of each PFG based on given observations within the studied area}
-  \item{\file{GRAPHIC_B \cr PFGvsHS}}{to visualize the PFG presence 
-  within the studied area (probability and simulated occurrence)}
-  \item{\file{GRAPHIC_C \cr PFGrichness}}{to visualize the PFG richness 
-  within the studied area}
-  \item{\file{GRAPHIC_C \cr PFGcover}}{to visualize the PFG cover 
-  within the studied area}
-  \item{\file{GRAPHIC_C \cr PFGlight}}{to visualize the light CWM 
-  within the studied area}
-  \item{\file{GRAPHIC_C \cr PFGlsoil}}{to visualize the soil CWM 
-  within the studied area}
+  \item{\file{B_validationStatistics}}{to assess the modeling quality of 
+  each PFG based on given observations within the studied area}
+  \item{\file{B_map_PFGvsHS}}{to visualize the PFG presence within the 
+  studied area (probability and simulated occurrence)}
+  \item{\file{C_map_PFG}}{
+  \describe{
+    \item{\file{PFGcover}}{to visualize the PFG cover within the studied 
+    area}
+    \item{\file{PFGrichness}}{to visualize the PFG richness within the 
+    studied area}
+    \item{\file{PFGlight}}{to visualize the light CWM within the studied 
+    area}
+    \item{\file{PFGsoil}}{to visualize the soil CWM within the studied area}
+  }
+  }
 }
 
 Three folders are created :
