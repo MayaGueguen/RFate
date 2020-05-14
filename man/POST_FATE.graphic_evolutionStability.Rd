@@ -69,7 +69,7 @@ following columns, and one \code{ggplot2} object :
       metric over the years of the concerned moving window}
     }
   }
-  \item{graph.stab}{\code{ggplot2} object, representing the evolution of 
+  \item{plot.stab}{\code{ggplot2} object, representing the evolution of 
   total abundance and evenness of each habitat \cr \cr}
 }
 

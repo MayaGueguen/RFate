@@ -36,9 +36,19 @@
 ##' \code{\link{POST_FATE.graphic_evolutionCoverage}} function will be run.
 ##' @param doFunc.evolPix default \code{TRUE}. \cr If \code{TRUE}, 
 ##' \code{\link{POST_FATE.graphic_evolutionPixels}} function will be run.
-##' @param evolPix.cells_ID (\emph{optional}) default \code{NULL}. \cr The cells ID 
-##' of the studied area for which PFG abundances will be extracted (see 
-##' \code{\link{POST_FATE.graphic_evolutionPixels}})
+##' @param doFunc.evolStab default \code{TRUE}. \cr If \code{TRUE}, 
+##' \code{\link{POST_FATE.graphic_evolutionStability}} function will be run.
+##' @param evolPix.cells_ID (\emph{optional}) default \code{NULL}. \cr The 
+##' cells ID of the studied area for which PFG abundances will be extracted 
+##' (see \code{\link{POST_FATE.graphic_evolutionPixels}})
+##' @param evolStab.mw_size (\emph{optional}) default \code{NULL}. \cr An 
+##' \code{integer} corresponding to the size (\emph{in years}) of the moving 
+##' window that will be used to calculate metrics of habitat stability (see 
+##' \code{\link{POST_FATE.graphic_evolutionStability}})
+##' @param evolStab.mw_step (\emph{optional}) default \code{NULL}. \cr An 
+##' \code{integer} corresponding to the step (\emph{in years}) of the moving 
+##' window that will be used to calculate metrics of habitat stability (see 
+##' \code{\link{POST_FATE.graphic_evolutionStability}})
 ##' @param evol.fixedScale (\emph{optional}) default \code{TRUE}. \cr If 
 ##' \code{FALSE}, the ordinate scale will be adapted for each PFG for the 
 ##' graphical representation of the  evolution of abundances through time (see 
@@ -53,11 +63,11 @@
 ##' \code{\link{POST_FATE.graphic_mapPFGvsHS}} function will be run.
 ##' @param doFunc.mapPFG default \code{TRUE}. \cr If \code{TRUE}, 
 ##' \code{\link{POST_FATE.graphic_mapPFG}} function will be run.
-##' @param mapPFGvsHS.stratum (\emph{optional}) default \code{all}. \cr The stratum 
-##' number from which to extract PFG binary maps (see 
+##' @param mapPFGvsHS.stratum (\emph{optional}) default \code{all}. \cr The 
+##' stratum number from which to extract PFG binary maps (see 
 ##' \code{\link{POST_FATE.graphic_mapPFGvsHS}})
-##' @param binMap.method an \code{integer} to choose the transformation method : \cr 
-##' \code{1} (relative abundance) or \code{2} (optimizing TSS) (see 
+##' @param binMap.method an \code{integer} to choose the transformation method : 
+##' \cr \code{1} (relative abundance) or \code{2} (optimizing TSS) (see 
 ##' \code{\link{POST_FATE.binaryMaps}})
 ##' @param binMap.method1.threshold default \code{0.05}. \cr If \code{method = 1}, 
 ##' minimum relative abundance required for each PFG to be considered as present 
@@ -86,7 +96,7 @@
 ##' @details 
 ##' 
 ##' This function allows to obtain, for a specific \code{FATE} simulation and a 
-##' specific parameter file within this simulation, \strong{up to ten 
+##' specific parameter file within this simulation, \strong{up to eleven 
 ##' preanalytical graphics}. \cr \cr
 ##' 
 ##' For each PFG and each selected simulation year, raster maps are retrieved 
@@ -116,6 +126,13 @@
 ##'   \code{2}: Medium, \code{3}: High}) and \strong{soil resources} 
 ##'   (user-defined scale) if these modules were selected (see 
 ##'   \code{\link{POST_FATE.graphic_evolutionPixels}})
+##'   }
+##'   \item{the evolution of \strong{total abundance} (\code{FATE} 
+##'   \emph{arbitrary unit}) and \strong{evenness} (\emph{between \code{0} and 
+##'   \code{1}}) of each habitat through simulation time, with \emph{evenness} 
+##'   representing the uniformity of the species composition of the habitat 
+##'   (similar to \strong{Shannon entropy}) (see 
+##'   \code{\link{POST_FATE.graphic_evolutionStability}})
 ##'   }
 ##'   \item{the value of \strong{several statistics to evaluate the predictive 
 ##'   quality of the model} for each plant functional group \cr 
@@ -159,6 +176,8 @@
 ##'   \item{\file{GRAPHIC_A \cr pixels}}{to visualize for each PFG the 
 ##'   evolution of its abundance within each selected pixel through 
 ##'   simulation time, as well as the evolution of light and soil resources}
+##'   \item{\file{GRAPHIC_A \cr stability}}{to visualize for each habitat the 
+##'   evolution of its total abundance and its evenness through simulation time}
 ##'   \item{\file{GRAPHIC_B \cr validationStatistics}}{to assess the modeling 
 ##'   quality of each PFG based on given observations within the studied area}
 ##'   \item{\file{GRAPHIC_B \cr PFGvsHS}}{to visualize the PFG presence 
@@ -192,6 +211,7 @@
 ##' @seealso \code{\link{POST_FATE.temporalEvolution}}, 
 ##' \code{\link{POST_FATE.graphic_evolutionCoverage}}, 
 ##' \code{\link{POST_FATE.graphic_evolutionPixels}},
+##' \code{\link{POST_FATE.graphic_evolutionStability}},
 ##' \code{\link{POST_FATE.relativeAbund}}, 
 ##' \code{\link{POST_FATE.binaryMaps}}, 
 ##' \code{\link{POST_FATE.graphic_validationStatistics}}, 
@@ -217,7 +237,10 @@ POST_FATE.graphics = function(
   
   , doFunc.evolCov = TRUE
   , doFunc.evolPix = TRUE
+  , doFunc.evolStab = TRUE
   , evolPix.cells_ID = NULL
+  , evolStab.mw_size = 3
+  , evolStab.mw_step = 1
   , evol.fixedScale = TRUE
   
   , doFunc.valid = TRUE
@@ -255,7 +278,8 @@ POST_FATE.graphics = function(
     
     ## Get temporal evolution -----------------------------------------------
     if (doFunc.evolCov ||
-        doFunc.evolPix)
+        doFunc.evolPix ||
+        doFunc.evolStab)
     {
       cat("\n ##############################################################")
       cat("\n # GET EVOLUTION PLOTS through time \n")
@@ -279,6 +303,14 @@ POST_FATE.graphics = function(
                                                                 , opt.cells_ID = evolPix.cells_ID
                                                                 , opt.fixedScale = evol.fixedScale
                                                                 , opt.doPlot = opt.doPlot)
+      }
+      if (doFunc.evolStab)
+      {
+        res.evolutionStability = POST_FATE.graphic_evolutionStability(name.simulation = name.simulation
+                                                                      , file.simulParam = abs.simulParam
+                                                                      , movingWindow_size = evolStab.mw_size
+                                                                      , movingWindow_step = evolStab.mw_step
+                                                                      , opt.doPlot = opt.doPlot)
       }
     }
     
@@ -341,6 +373,7 @@ POST_FATE.graphics = function(
     
     names.res = c("res.evolutionCoverage"
                   , "res.evolutionPixels"
+                  , "res.evolutionStability"
                   , "res.validation"
                   , "res.mapPFGvsHS"
                   , "res.mapPFG")

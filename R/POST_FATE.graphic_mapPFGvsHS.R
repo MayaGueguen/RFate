@@ -245,7 +245,7 @@ POST_FATE.graphic_mapPFGvsHS = function(
                 geom_raster() +
                 facet_wrap(~ TYPE, ncol = 2) +
                 labs(x = "", y = ""
-                     , title = paste0("GRAPH C : Habitat suitability vs FATE \n"
+                     , title = paste0("GRAPH B : Habitat suitability vs FATE \n"
                                       , "Simulation year : ", y, " - PFG : ", pfg)
                      , subtitle = paste0("For each pixel and stratum, first "
                                          , "relative abundances are calculated, "

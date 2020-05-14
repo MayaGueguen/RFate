@@ -311,8 +311,8 @@ POST_FATE.graphic_evolutionPixels = function(
              , title = paste0("GRAPH A : evolution of species' abundance")
              , subtitle = paste0("For each PFG, the line represents the "
                                  , "evolution through time of its abundance\n"
-                                 , "for 5 randomly selected pixels within the "
-                                 , "studied area.\n")) +
+                                 , "(as well as the light and soil resources if available)"
+                                 , "for the selected pixels within the studied area.\n")) +
         .getGraphics_theme()
       
       ggsave(filename = paste0(name.simulation

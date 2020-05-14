@@ -51,9 +51,9 @@ following columns, and two \code{ggplot2} objects :
       within the studied area}
     }
   }
-  \item{graph.spaceOccupancy}{\code{ggplot2} object, representing the 
+  \item{plot.spaceOccupancy}{\code{ggplot2} object, representing the 
   evolution of each PFG space occupancy}
-  \item{graph.totalAbundance}{\code{ggplot2} object, representing the 
+  \item{plot.totalAbundance}{\code{ggplot2} object, representing the 
   evolution of each PFG total abundance \cr \cr}
 }
 

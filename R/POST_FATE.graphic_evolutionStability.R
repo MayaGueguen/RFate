@@ -94,7 +94,7 @@
 ##'       metric over the years of the concerned moving window}
 ##'     }
 ##'   }
-##'   \item{graph.stab}{\code{ggplot2} object, representing the evolution of 
+##'   \item{plot.stab}{\code{ggplot2} object, representing the evolution of 
 ##'   total abundance and evenness of each habitat \cr \cr}
 ##' }
 ##' 
@@ -447,13 +447,7 @@ POST_FATE.graphic_evolutionStability = function(
           scale_color_manual("Habitat", values  = col_fun(no_hab)) +
           scale_fill_manual(guide = FALSE, values  = col_fun(no_hab)) +
           labs(x = "", y = ""
-               , title = paste0("GRAPH A : evolution of habitat composition")
-               # , subtitle = paste0("For each habitat, the line represents the "
-               #                     , "evolution through time of its space "
-               #                     , "occupancy,\n meaning the percentage of "
-               #                     , "pixels in which the abundance of the "
-               #                     , "species is greater than 0.\n")
-          ) +
+               , title = paste0("GRAPH A : evolution of habitat composition")) +
           .getGraphics_theme()
         
         
@@ -474,7 +468,7 @@ POST_FATE.graphic_evolutionStability = function(
     
     return(list(tab.hab = tab.HAB
                 , tab.stab = tab.STAB
-                , graph.stab = pp))
+                , plot.stab = pp))
   } ## END loop on abs.simulParams
   names(res) = abs.simulParams
   

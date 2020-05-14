@@ -82,9 +82,9 @@ Up to four \file{POST_FATE_[...].pdf} file are created :
   richness within the studied area}
   \item{\file{GRAPHIC_C \cr map_PFGcover}}{to visualize the PFG cover
   within the studied area}
-  \item{\file{GRAPHIC_B \cr PFGlight}}{to visualize the light CWM
+  \item{\file{GRAPHIC_C \cr PFGlight}}{to visualize the light CWM
   within the studied area}
-  \item{\file{GRAPHIC_B \cr PFGsoil}}{to visualize the soil CWM
+  \item{\file{GRAPHIC_C \cr PFGsoil}}{to visualize the soil CWM
   within the studied area}
 }
 

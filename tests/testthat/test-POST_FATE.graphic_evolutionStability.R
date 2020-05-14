@@ -256,5 +256,5 @@ test_that("POST_FATE.graphic_evolutionStability gives correct outputs :", {
   expect_output(str(resStab[[1]]$tab.hab), "5 variables")
   expect_output(str(resStab[[1]]$tab.stab), "data.frame")
   expect_output(str(resStab[[1]]$tab.stab), "9 variables")
-  expect_output(str(resStab[[1]]$graph.stab), "List")
+  expect_output(str(resStab[[1]]$plot.stab), "List")
 })

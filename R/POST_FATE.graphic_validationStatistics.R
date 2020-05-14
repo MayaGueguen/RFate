@@ -461,7 +461,7 @@ POST_FATE.graphic_validationStatistics = function(
                                                    , y = "value"
                                                    , fill = "value")) +
                     labs(x = "", y = ""
-                         , title = paste0("GRAPH F : validation statistics"
+                         , title = paste0("GRAPH B : validation statistics"
                                           , " - Simulation year : "
                                           , y, " - Habitat ", habi)
                          , subtitle = paste0("Sensitivity (or specificity) measures "

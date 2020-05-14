@@ -75,9 +75,9 @@
 ##'       within the studied area}
 ##'     }
 ##'   }
-##'   \item{graph.spaceOccupancy}{\code{ggplot2} object, representing the 
+##'   \item{plot.spaceOccupancy}{\code{ggplot2} object, representing the 
 ##'   evolution of each PFG space occupancy}
-##'   \item{graph.totalAbundance}{\code{ggplot2} object, representing the 
+##'   \item{plot.totalAbundance}{\code{ggplot2} object, representing the 
 ##'   evolution of each PFG total abundance \cr \cr}
 ##' }
 ##' 
@@ -326,8 +326,8 @@ POST_FATE.graphic_evolutionCoverage = function(
     
     return(list(tab.spaceOccupancy = distri.melt
                 , tab.totalAbundance = distriAbund.melt
-                , graph.spaceOccupancy = pp1
-                , graph.totalAbundance = pp2))
+                , plot.spaceOccupancy = pp1
+                , plot.totalAbundance = pp2))
   } ## END loop on abs.simulParams
   names(res) = abs.simulParams
   

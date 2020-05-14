@@ -172,6 +172,7 @@ test_that("POST_FATE.graphics gives correct outputs :", {
                                      , opt.ras_habitat = "FATE_simulation/DATA/MASK/map_hab.tif"
                                      , doFunc.evolCov = TRUE
                                      , doFunc.evolPix = TRUE
+                                     , doFunc.evolStab = TRUE
                                      , doFunc.valid = TRUE
                                      , valid.mat.PFG.obs = mat.PFG.obs
                                      , doFunc.mapPFGvsHS = TRUE
@@ -185,5 +186,5 @@ test_that("POST_FATE.graphics gives correct outputs :", {
   expect_equal(length(simulGraphics), 1)
 
   expect_output(str(simulGraphics[[1]]), "List")
-  expect_equal(length(simulGraphics[[1]]), 5)
+  expect_equal(length(simulGraphics[[1]]), 6)
 })

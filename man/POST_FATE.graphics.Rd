@@ -13,7 +13,10 @@ POST_FATE.graphics(
   opt.ras_habitat = NULL,
   doFunc.evolCov = TRUE,
   doFunc.evolPix = TRUE,
+  doFunc.evolStab = TRUE,
   evolPix.cells_ID = NULL,
+  evolStab.mw_size = 3,
+  evolStab.mw_step = 1,
   evol.fixedScale = TRUE,
   doFunc.valid = TRUE,
   valid.mat.PFG.obs,
@@ -60,9 +63,22 @@ A \code{string} corresponding to the file name of a raster mask, with an
 \item{doFunc.evolPix}{default \code{TRUE}. \cr If \code{TRUE}, 
 \code{\link{POST_FATE.graphic_evolutionPixels}} function will be run.}
 
-\item{evolPix.cells_ID}{(\emph{optional}) default \code{NULL}. \cr The cells ID 
-of the studied area for which PFG abundances will be extracted (see 
-\code{\link{POST_FATE.graphic_evolutionPixels}})}
+\item{doFunc.evolStab}{default \code{TRUE}. \cr If \code{TRUE}, 
+\code{\link{POST_FATE.graphic_evolutionStability}} function will be run.}
+
+\item{evolPix.cells_ID}{(\emph{optional}) default \code{NULL}. \cr The 
+cells ID of the studied area for which PFG abundances will be extracted 
+(see \code{\link{POST_FATE.graphic_evolutionPixels}})}
+
+\item{evolStab.mw_size}{(\emph{optional}) default \code{NULL}. \cr An 
+\code{integer} corresponding to the size (\emph{in years}) of the moving 
+window that will be used to calculate metrics of habitat stability (see 
+\code{\link{POST_FATE.graphic_evolutionStability}})}
+
+\item{evolStab.mw_step}{(\emph{optional}) default \code{NULL}. \cr An 
+\code{integer} corresponding to the step (\emph{in years}) of the moving 
+window that will be used to calculate metrics of habitat stability (see 
+\code{\link{POST_FATE.graphic_evolutionStability}})}
 
 \item{evol.fixedScale}{(\emph{optional}) default \code{TRUE}. \cr If 
 \code{FALSE}, the ordinate scale will be adapted for each PFG for the 
@@ -83,12 +99,12 @@ graphical representation of the  evolution of abundances through time (see
 \item{doFunc.mapPFG}{default \code{TRUE}. \cr If \code{TRUE}, 
 \code{\link{POST_FATE.graphic_mapPFG}} function will be run.}
 
-\item{mapPFGvsHS.stratum}{(\emph{optional}) default \code{all}. \cr The stratum 
-number from which to extract PFG binary maps (see 
+\item{mapPFGvsHS.stratum}{(\emph{optional}) default \code{all}. \cr The 
+stratum number from which to extract PFG binary maps (see 
 \code{\link{POST_FATE.graphic_mapPFGvsHS}})}
 
-\item{binMap.method}{an \code{integer} to choose the transformation method : \cr 
-\code{1} (relative abundance) or \code{2} (optimizing TSS) (see 
+\item{binMap.method}{an \code{integer} to choose the transformation method : 
+\cr \code{1} (relative abundance) or \code{2} (optimizing TSS) (see 
 \code{\link{POST_FATE.binaryMaps}})}
 
 \item{binMap.method1.threshold}{default \code{0.05}. \cr If \code{method = 1}, 
@@ -130,6 +146,8 @@ The following \code{POST_FATE_[...].pdf} files are created :
   \item{\file{GRAPHIC_A \cr pixels}}{to visualize for each PFG the 
   evolution of its abundance within each selected pixel through 
   simulation time, as well as the evolution of light and soil resources}
+  \item{\file{GRAPHIC_A \cr stability}}{to visualize for each habitat the 
+  evolution of its total abundance and its evenness through simulation time}
   \item{\file{GRAPHIC_B \cr validationStatistics}}{to assess the modeling 
   quality of each PFG based on given observations within the studied area}
   \item{\file{GRAPHIC_B \cr PFGvsHS}}{to visualize the PFG presence 
@@ -167,7 +185,7 @@ specific year (richness, abundance, light, soil).
 }
 \details{
 This function allows to obtain, for a specific \code{FATE} simulation and a 
-specific parameter file within this simulation, \strong{up to ten 
+specific parameter file within this simulation, \strong{up to eleven 
 preanalytical graphics}. \cr \cr
 
 For each PFG and each selected simulation year, raster maps are retrieved 
@@ -197,6 +215,13 @@ the following graphics before the maps are compressed again :
   \code{2}: Medium, \code{3}: High}) and \strong{soil resources} 
   (user-defined scale) if these modules were selected (see 
   \code{\link{POST_FATE.graphic_evolutionPixels}})
+  }
+  \item{the evolution of \strong{total abundance} (\code{FATE} 
+  \emph{arbitrary unit}) and \strong{evenness} (\emph{between \code{0} and 
+  \code{1}}) of each habitat through simulation time, with \emph{evenness} 
+  representing the uniformity of the species composition of the habitat 
+  (similar to \strong{Shannon entropy}) (see 
+  \code{\link{POST_FATE.graphic_evolutionStability}})
   }
   \item{the value of \strong{several statistics to evaluate the predictive 
   quality of the model} for each plant functional group \cr 
@@ -237,6 +262,7 @@ the following graphics before the maps are compressed again :
 \code{\link{POST_FATE.temporalEvolution}}, 
 \code{\link{POST_FATE.graphic_evolutionCoverage}}, 
 \code{\link{POST_FATE.graphic_evolutionPixels}},
+\code{\link{POST_FATE.graphic_evolutionStability}},
 \code{\link{POST_FATE.relativeAbund}}, 
 \code{\link{POST_FATE.binaryMaps}}, 
 \code{\link{POST_FATE.graphic_validationStatistics}}, 

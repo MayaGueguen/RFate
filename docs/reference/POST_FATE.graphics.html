@@ -244,7 +244,10 @@ specific year (richness, abundance, light, soil).</p>
   <span class='kw'>opt.ras_habitat</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>doFunc.evolCov</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>doFunc.evolPix</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>doFunc.evolStab</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>evolPix.cells_ID</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>evolStab.mw_size</span> <span class='kw'>=</span> <span class='fl'>3</span>,
+  <span class='kw'>evolStab.mw_step</span> <span class='kw'>=</span> <span class='fl'>1</span>,
   <span class='kw'>evol.fixedScale</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>doFunc.valid</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='no'>valid.mat.PFG.obs</span>,
@@ -308,10 +311,29 @@ A <code>string</code> corresponding to the file name of a raster mask, with an
 <code><a href='POST_FATE.graphic_evolutionPixels.html'>POST_FATE.graphic_evolutionPixels</a></code> function will be run.</p></td>
     </tr>
     <tr>
+      <th>doFunc.evolStab</th>
+      <td><p>default <code>TRUE</code>. <br /> If <code>TRUE</code>, 
+<code><a href='POST_FATE.graphic_evolutionStability.html'>POST_FATE.graphic_evolutionStability</a></code> function will be run.</p></td>
+    </tr>
+    <tr>
       <th>evolPix.cells_ID</th>
-      <td><p>(<em>optional</em>) default <code>NULL</code>. <br /> The cells ID 
-of the studied area for which PFG abundances will be extracted (see 
-<code><a href='POST_FATE.graphic_evolutionPixels.html'>POST_FATE.graphic_evolutionPixels</a></code>)</p></td>
+      <td><p>(<em>optional</em>) default <code>NULL</code>. <br /> The 
+cells ID of the studied area for which PFG abundances will be extracted 
+(see <code><a href='POST_FATE.graphic_evolutionPixels.html'>POST_FATE.graphic_evolutionPixels</a></code>)</p></td>
+    </tr>
+    <tr>
+      <th>evolStab.mw_size</th>
+      <td><p>(<em>optional</em>) default <code>NULL</code>. <br /> An 
+<code>integer</code> corresponding to the size (<em>in years</em>) of the moving 
+window that will be used to calculate metrics of habitat stability (see 
+<code><a href='POST_FATE.graphic_evolutionStability.html'>POST_FATE.graphic_evolutionStability</a></code>)</p></td>
+    </tr>
+    <tr>
+      <th>evolStab.mw_step</th>
+      <td><p>(<em>optional</em>) default <code>NULL</code>. <br /> An 
+<code>integer</code> corresponding to the step (<em>in years</em>) of the moving 
+window that will be used to calculate metrics of habitat stability (see 
+<code><a href='POST_FATE.graphic_evolutionStability.html'>POST_FATE.graphic_evolutionStability</a></code>)</p></td>
     </tr>
     <tr>
       <th>evol.fixedScale</th>
@@ -344,14 +366,14 @@ graphical representation of the  evolution of abundances through time (see
     </tr>
     <tr>
       <th>mapPFGvsHS.stratum</th>
-      <td><p>(<em>optional</em>) default <code>all</code>. <br /> The stratum 
-number from which to extract PFG binary maps (see 
+      <td><p>(<em>optional</em>) default <code>all</code>. <br /> The 
+stratum number from which to extract PFG binary maps (see 
 <code><a href='POST_FATE.graphic_mapPFGvsHS.html'>POST_FATE.graphic_mapPFGvsHS</a></code>)</p></td>
     </tr>
     <tr>
       <th>binMap.method</th>
-      <td><p>an <code>integer</code> to choose the transformation method : <br /> 
-<code>1</code> (relative abundance) or <code>2</code> (optimizing TSS) (see 
+      <td><p>an <code>integer</code> to choose the transformation method : 
+<br /> <code>1</code> (relative abundance) or <code>2</code> (optimizing TSS) (see 
 <code><a href='POST_FATE.binaryMaps.html'>POST_FATE.binaryMaps</a></code>)</p></td>
     </tr>
     <tr>
@@ -409,6 +431,8 @@ files, as well as the extraction of values from raster files</p></td>
   <dt><code class="file">GRAPHIC_A <br /> pixels</code></dt><dd><p>to visualize for each PFG the 
   evolution of its abundance within each selected pixel through 
   simulation time, as well as the evolution of light and soil resources</p></dd>
+  <dt><code class="file">GRAPHIC_A <br /> stability</code></dt><dd><p>to visualize for each habitat the 
+  evolution of its total abundance and its evenness through simulation time</p></dd>
   <dt><code class="file">GRAPHIC_B <br /> validationStatistics</code></dt><dd><p>to assess the modeling 
   quality of each PFG based on given observations within the studied area</p></dd>
   <dt><code class="file">GRAPHIC_B <br /> PFGvsHS</code></dt><dd><p>to visualize the PFG presence 
@@ -440,7 +464,7 @@ files, as well as the extraction of values from raster files</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>This function allows to obtain, for a specific <code>FATE</code> simulation and a 
-specific parameter file within this simulation, <strong>up to ten 
+specific parameter file within this simulation, <strong>up to eleven 
 preanalytical graphics</strong>. <br /> <br /></p>
 <p>For each PFG and each selected simulation year, raster maps are retrieved 
 from the results folders (<code>ABUND_perPFG_perStrata</code>, 
@@ -466,6 +490,12 @@ the following graphics before the maps are compressed again :</p>
   <code>2</code>: Medium, <code>3</code>: High</em>) and <strong>soil resources</strong> 
   (user-defined scale) if these modules were selected (see 
   <code><a href='POST_FATE.graphic_evolutionPixels.html'>POST_FATE.graphic_evolutionPixels</a></code>)</p></li>
+<li><p>the evolution of <strong>total abundance</strong> (<code>FATE</code> 
+  <em>arbitrary unit</em>) and <strong>evenness</strong> (<em>between <code>0</code> and 
+  <code>1</code></em>) of each habitat through simulation time, with <em>evenness</em> 
+  representing the uniformity of the species composition of the habitat 
+  (similar to <strong>Shannon entropy</strong>) (see 
+  <code><a href='POST_FATE.graphic_evolutionStability.html'>POST_FATE.graphic_evolutionStability</a></code>)</p></li>
 <li><p>the value of <strong>several statistics to evaluate the predictive 
   quality of the model</strong> for each plant functional group <br /> 
   (<code><a href='https://rdrr.io/pkg/PresenceAbsence/man/sensitivity.html'>sensitivity</a></code>, 
@@ -495,6 +525,7 @@ the following graphics before the maps are compressed again :</p>
     <div class='dont-index'><p><code><a href='POST_FATE.temporalEvolution.html'>POST_FATE.temporalEvolution</a></code>, 
 <code><a href='POST_FATE.graphic_evolutionCoverage.html'>POST_FATE.graphic_evolutionCoverage</a></code>, 
 <code><a href='POST_FATE.graphic_evolutionPixels.html'>POST_FATE.graphic_evolutionPixels</a></code>,
+<code><a href='POST_FATE.graphic_evolutionStability.html'>POST_FATE.graphic_evolutionStability</a></code>,
 <code><a href='POST_FATE.relativeAbund.html'>POST_FATE.relativeAbund</a></code>, 
 <code><a href='POST_FATE.binaryMaps.html'>POST_FATE.binaryMaps</a></code>, 
 <code><a href='POST_FATE.graphic_validationStatistics.html'>POST_FATE.graphic_validationStatistics</a></code>, 

@@ -107,8 +107,8 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : folders
                                    , doDispersal = TRUE
                                    , DISPERSAL.mode = 1
                                    , doLight = TRUE
-                                   , LIGHT.thresh_medium = 13000000
-                                   , LIGHT.thresh_low = 19000000
+                                   , LIGHT.thresh_medium = 3000
+                                   , LIGHT.thresh_low = 9000
                                    , doSoil = TRUE
                                    , SOIL.init = 2.5
                                    , SOIL.retention = 0.5
@@ -116,14 +116,18 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : folders
                                    , DROUGHT.no_sub = 2
                                    , doAliens = TRUE
                                    , ALIEN.no = 1
-                                   , ALIEN.freq = 1)
-  
-  # expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.MASK = "mask.tif")
-  #              , "`name.simulation` does not exist or does not contain a DATA/PFGS/HABSUIT/ folder")
-  # dir.create("FATE_simulation/DATA/PFGS/HABSUIT")
-  # expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.MASK = "mask.tif")
-  #              , "`name.simulation` does not exist or does not contain a DATA/PFGS/ALIENS/ folder")
-  # dir.create("FATE_simulation/DATA/PFGS/ALIENS")
+                                   , ALIEN.freq = 1
+                                   , doFire = TRUE
+                                   , FIRE.no = 1
+                                   , FIRE.no_sub = 4
+                                   , FIRE.freq = 1
+                                   , FIRE.ignit_mode = 1
+                                   , FIRE.ignit_no = 10
+                                   , FIRE.neigh_mode = 1
+                                   , FIRE.prop_mode = 1
+                                   , FIRE.prop_intensity = 0.5
+                                   , FIRE.quota_mode = 4)
+
   
   ## Create PFG succession parameter files
   expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.MASK = "mask.tif")
@@ -213,6 +217,29 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : folders
                                                             , counter_sens = 2
                                                             , counter_cum = 3))
   
+  ## Create PFG fire parameter files
+  expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.MASK = "mask.tif")
+               , "`name.simulation` does not exist or does not contain a DATA/PFGS/FIRE/ folder")
+  dir.create("FATE_simulation/DATA/PFGS/FIRE")
+  expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.MASK = "mask.tif")
+               , "There is not the same number of files (`.txt` file starting with `FIRE`) into the FATE_simulation/DATA/PFGS/FIRE/ folder as the number of PFG indicated into the file"
+               , fixed = TRUE)
+  PRE_FATE.params_PFGdisturbance(name.simulation = "FATE_simulation"
+                                 , opt.folder.name = "FIRE"
+                                 , mat.PFG.tol = data.frame(nameDist = "fire"
+                                                            , responseStage = rep(c(1,2), 6)
+                                                            , PFG = paste0("PFG", 1:6)
+                                                            , killedIndiv = rep(c(1, 3), 6)
+                                                            , resproutIndiv = rep(c(4, 9), 6)))
+  for(i in list.files("FATE_simulation/DATA/PFGS/DIST/FIRE/"))
+  {
+    file.copy(paste0("FATE_simulation/DATA/PFGS/DIST/FIRE/", i)
+              , paste0("FATE_simulation/DATA/PFGS/FIRE/", sub("^DIST_", "FIRE_", i)))
+    file.remove(paste0("FATE_simulation/DATA/PFGS/DIST/FIRE/", i))
+  }
+  if (dir.exists("FATE_simulation/DATA/PFGS/DIST/FIRE")) unlink("FATE_simulation/DATA/PFGS/DIST/FIRE", recursive = TRUE)
+  
+  
   ## TEST name.DIST : length > 0
   expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.MASK = "mask.tif")
                , "`name.DIST` must contain a character value of length > 0"
@@ -242,33 +269,47 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : folders
                , fixed = TRUE)
   file.create("FATE_simulation/DATA/MASK/drought.tif")
   
+  ## TEST name.FIRE : length > 0
+  expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
+                                               , name.MASK = "mask.tif"
+                                               , name.DIST = "dist.tif"
+                                               , name.DROUGHT = "drought.tif")
+               , "`name.FIRE` must contain a character value of length > 0"
+               , fixed = TRUE)
+  
+  ## TEST name.FIRE : exist
+  expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
+                                               , name.MASK = "mask.tif"
+                                               , name.DIST = "dist.tif"
+                                               , name.DROUGHT = "drought.tif"
+                                               , name.FIRE = "fire.tif")
+               , "Wrong name file given!\n `FATE_simulation/DATA/MASK/fire.tif` does not exist"
+               , fixed = TRUE)
+  file.create("FATE_simulation/DATA/MASK/fire.tif")
+  
   
   ## TEST ..._changingmask_years : no files
   expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
                                                , name.MASK = "mask.tif"
                                                , name.DIST = "dist.tif"
-                                               , name.DROUGHT = "drought.tif")
+                                               , name.DROUGHT = "drought.tif"
+                                               , name.FIRE = "fire.tif")
                , "`name.simulation` does not exist or does not contain a DATA/PFGS/HABSUIT/ folder")
   dir.create("FATE_simulation/DATA/PFGS/HABSUIT")
   expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
                                                , name.MASK = "mask.tif"
                                                , name.DIST = "dist.tif"
-                                               , name.DROUGHT = "drought.tif")
+                                               , name.DROUGHT = "drought.tif"
+                                               , name.FIRE = "fire.tif")
                , "`name.simulation` does not exist or does not contain a DATA/PFGS/ALIENS/ folder")
   dir.create("FATE_simulation/DATA/PFGS/ALIENS")
   expect_warning(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
                                                  , name.MASK = "mask.tif"
                                                  , name.DIST = "dist.tif"
-                                                 , name.DROUGHT = "drought.tif")
-                 , "There is no adequate file (`.txt` file starting with `MASK_changingmask_years`) into the folder FATE_simulation/DATA/SCENARIO"
+                                                 , name.DROUGHT = "drought.tif"
+                                                 , name.FIRE = "fire.tif")
+                 , "There is no adequate file(s) into some folder(s)"
                  , fixed = TRUE)
-  expect_warning(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
-                                                 , name.MASK = "mask.tif"
-                                                 , name.DIST = "dist.tif"
-                                                 , name.DROUGHT = "drought.tif")
-                 , "There is no adequate file (`.txt` file starting with `HABSUIT_changingmask_years`) into the folder FATE_simulation/DATA/SCENARIO"
-                 , fixed = TRUE)
-  
 })
 
 
@@ -277,23 +318,27 @@ test_that("PRE_FATE.params_simulParameters gives correct outputs 1", {
   expect_message(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
                                                  , name.MASK = "mask.tif"
                                                  , name.DIST = "dist.tif"
-                                                 , name.DROUGHT = "drought.tif")
+                                                 , name.DROUGHT = "drought.tif"
+                                                 , name.FIRE = "fire.tif")
                  , "The parameter file FATE_simulation/PARAM_SIMUL/Simul_parameters_V1.1.txt has been successfully created !")
   expect_message(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
                                                  , name.MASK = "mask.tif"
                                                  , name.DIST = "dist.tif"
-                                                 , name.DROUGHT = "drought.tif")
+                                                 , name.DROUGHT = "drought.tif"
+                                                 , name.FIRE = "fire.tif")
                  , "The parameter file FATE_simulation/PARAM_SIMUL/Simul_parameters_V2.1.txt has been successfully created !")
   expect_warning(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
                                                  , name.MASK = "mask.tif"
                                                  , name.DIST = "dist.tif"
-                                                 , name.DROUGHT = "drought.tif")
+                                                 , name.DROUGHT = "drought.tif"
+                                                 , name.FIRE = "fire.tif")
                  , "`params.file` (FATE_simulation/PARAM_SIMUL/Simul_parameters_V1.1.txt) already exists. It will be replaced."
                  , fixed = TRUE)
   expect_warning(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
                                                  , name.MASK = "mask.tif"
                                                  , name.DIST = "dist.tif"
-                                                 , name.DROUGHT = "drought.tif")
+                                                 , name.DROUGHT = "drought.tif"
+                                                 , name.FIRE = "fire.tif")
                  , "`params.file` (FATE_simulation/PARAM_SIMUL/Simul_parameters_V2.1.txt) already exists. It will be replaced."
                  , fixed = TRUE)
 })
@@ -328,10 +373,10 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : folders
   expect_message(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
                                                  , name.MASK = "mask.tif"
                                                  , name.DIST = "dist.tif"
-                                                 , name.DROUGHT = "drought.tif")
+                                                 , name.DROUGHT = "drought.tif"
+                                                 , name.FIRE = "fire.tif")
                  , "The parameter file FATE_simulation/PARAM_SIMUL/Simul_parameters_V1.1.txt has been successfully created !")
 })
-
 
 ## INPUTS
 test_that("PRE_FATE.params_simulParameters gives error with wrong data : folders and files 4", {
@@ -363,7 +408,8 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : folders
   expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
                                                , name.MASK = "mask.tif"
                                                , name.DIST = "dist.tif"
-                                               , name.DROUGHT = "drought.tif")
+                                               , name.DROUGHT = "drought.tif"
+                                               , name.FIRE = "fire.tif")
                , "There is too many adequate files (`.txt` file starting with `HABSUIT_changingmask_years`) into the folder FATE_simulation/DATA/SCENARIO"
                , fixed = TRUE)
   file.remove("FATE_simulation/DATA/SCENARIO/HABSUIT_changingmask_years_BIS.txt")
@@ -387,44 +433,50 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : folders
   expect_warning(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
                                                  , name.MASK = "mask.tif"
                                                  , name.DIST = "dist.tif"
-                                                 , name.DROUGHT = "drought.tif")
-                 , "There is no adequate file (`.txt` file starting with `MASK_changingmask_years`) into the folder FATE_simulation/DATA/SCENARIO/Scen1"
+                                                 , name.DROUGHT = "drought.tif"
+                                                 , name.FIRE = "fire.tif")
+                 , "MASK_changingmask_years[...].txt (folder FATE_simulation/DATA/SCENARIO/Scen1)"
                  , fixed = TRUE)
   expect_warning(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
                                                  , name.MASK = "mask.tif"
                                                  , name.DIST = "dist.tif"
-                                                 , name.DROUGHT = "drought.tif")
-                 , "There is no adequate file (`.txt` file starting with `HABSUIT_changingmask_years`) into the folder FATE_simulation/DATA/SCENARIO/Scen1"
+                                                 , name.DROUGHT = "drought.tif"
+                                                 , name.FIRE = "fire.tif")
+                 , "HABSUIT_changingmask_years[...].txt (folder FATE_simulation/DATA/SCENARIO/Scen1)"
                  , fixed = TRUE)
   expect_warning(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
                                                  , name.MASK = "mask.tif"
                                                  , name.DIST = "dist.tif"
-                                                 , name.DROUGHT = "drought.tif")
-                 , "There is no adequate file (`.txt` file starting with `DIST_changingmask_years`) into the folder FATE_simulation/DATA/SCENARIO/Scen1"
+                                                 , name.DROUGHT = "drought.tif"
+                                                 , name.FIRE = "fire.tif")
+                 , "DIST_changingmask_years[...].txt (folder FATE_simulation/DATA/SCENARIO/Scen1)"
                  , fixed = TRUE)
   
   file.create("FATE_simulation/DATA/SCENARIO/Scen1/MASK_changingmask_years.txt")
   expect_warning(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
                                                  , name.MASK = "mask.tif"
                                                  , name.DIST = "dist.tif"
-                                                 , name.DROUGHT = "drought.tif")
-                 , "There is no adequate file (`.txt` file starting with `MASK_changingmask_files`) into the folder FATE_simulation/DATA/SCENARIO/Scen1"
+                                                 , name.DROUGHT = "drought.tif"
+                                                 , name.FIRE = "fire.tif")
+                 , "MASK_changingmask_files[...].txt (folder FATE_simulation/DATA/SCENARIO/Scen1)"
                  , fixed = TRUE)
   file.remove("FATE_simulation/DATA/SCENARIO/Scen1/MASK_changingmask_years.txt")
   file.create("FATE_simulation/DATA/SCENARIO/Scen1/HABSUIT_changingmask_years.txt")
   expect_warning(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
                                                  , name.MASK = "mask.tif"
                                                  , name.DIST = "dist.tif"
-                                                 , name.DROUGHT = "drought.tif")
-                 , "There is no adequate file (`.txt` file starting with `HABSUIT_changingmask_files`) into the folder FATE_simulation/DATA/SCENARIO/Scen1"
+                                                 , name.DROUGHT = "drought.tif"
+                                                 , name.FIRE = "fire.tif")
+                 , "HABSUIT_changingmask_files[...].txt (folder FATE_simulation/DATA/SCENARIO/Scen1)"
                  , fixed = TRUE)
   file.remove("FATE_simulation/DATA/SCENARIO/Scen1/HABSUIT_changingmask_years.txt")
   file.create("FATE_simulation/DATA/SCENARIO/Scen1/DIST_changingmask_years.txt")
   expect_warning(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
                                                  , name.MASK = "mask.tif"
                                                  , name.DIST = "dist.tif"
-                                                 , name.DROUGHT = "drought.tif")
-                 , "There is no adequate file (`.txt` file starting with `DIST_changingmask_files`) into the folder FATE_simulation/DATA/SCENARIO/Scen1"
+                                                 , name.DROUGHT = "drought.tif"
+                                                 , name.FIRE = "fire.tif")
+                 , "DIST_changingmask_files[...].txt (folder FATE_simulation/DATA/SCENARIO/Scen1)"
                  , fixed = TRUE)
   file.remove("FATE_simulation/DATA/SCENARIO/Scen1/DIST_changingmask_years.txt")
   
@@ -440,7 +492,8 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : folders
   expect_message(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
                                                  , name.MASK = "mask.tif"
                                                  , name.DIST = "dist.tif"
-                                                 , name.DROUGHT = "drought.tif")
+                                                 , name.DROUGHT = "drought.tif"
+                                                 , name.FIRE = "fire.tif")
                  , "The parameter file FATE_simulation/PARAM_SIMUL/Simul_parameters_V1.1.txt has been successfully created !")
   PRE_FATE.params_changingYears(name.simulation = "FATE_simulation"
                                 , type.changing = "HABSUIT"
@@ -454,7 +507,8 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : folders
   expect_message(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
                                                  , name.MASK = "mask.tif"
                                                  , name.DIST = "dist.tif"
-                                                 , name.DROUGHT = "drought.tif")
+                                                 , name.DROUGHT = "drought.tif"
+                                                 , name.FIRE = "fire.tif")
                  , "The parameter file FATE_simulation/PARAM_SIMUL/Simul_parameters_V1.1.txt has been successfully created !")
   PRE_FATE.params_changingYears(name.simulation = "FATE_simulation"
                                 , type.changing = "DIST"
@@ -468,7 +522,8 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : folders
   expect_message(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
                                                  , name.MASK = "mask.tif"
                                                  , name.DIST = "dist.tif"
-                                                 , name.DROUGHT = "drought.tif")
+                                                 , name.DROUGHT = "drought.tif"
+                                                 , name.FIRE = "fire.tif")
                  , "The parameter file FATE_simulation/PARAM_SIMUL/Simul_parameters_V1.1.txt has been successfully created !")
 })
 
@@ -479,7 +534,8 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : folders
   expect_warning(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
                                                  , name.MASK = "mask.tif"
                                                  , name.DIST = "dist.tif"
-                                                 , name.DROUGHT = "drought.tif")
+                                                 , name.DROUGHT = "drought.tif"
+                                                 , name.FIRE = "fire.tif")
                  , "There is not the same number of files into the DATA/PFGS/HABSUIT/ folder as the number of PFG indicated into the file")
   
 })
@@ -491,6 +547,7 @@ test_that("PRE_FATE.params_simulParameters gives correct outputs 2 : opt.global.
                                                  , name.MASK = "mask.tif"
                                                  , name.DIST = "dist.tif"
                                                  , name.DROUGHT = "drought.tif"
+                                                 , name.FIRE = "fire.tif"
                                                  , opt.global.name = "")
                  , "There is not the same number of files into the DATA/PFGS/HABSUIT/ folder as the number of PFG indicated into the file")
   
@@ -498,6 +555,7 @@ test_that("PRE_FATE.params_simulParameters gives correct outputs 2 : opt.global.
                                                  , name.MASK = "mask.tif"
                                                  , name.DIST = "dist.tif"
                                                  , name.DROUGHT = "drought.tif"
+                                                 , name.FIRE = "fire.tif"
                                                  , opt.global.name = 1)
                  , "There is not the same number of files into the DATA/PFGS/HABSUIT/ folder as the number of PFG indicated into the file")
 })
@@ -509,6 +567,7 @@ test_that("PRE_FATE.params_simulParameters gives correct outputs 3 : opt.folder.
                                                  , name.MASK = "mask.tif"
                                                  , name.DIST = "dist.tif"
                                                  , name.DROUGHT = "drought.tif"
+                                                 , name.FIRE = "fire.tif"
                                                  , opt.folder.name = "")
                  , "There is not the same number of files into the DATA/PFGS/HABSUIT/ folder as the number of PFG indicated into the file")
   
@@ -516,6 +575,7 @@ test_that("PRE_FATE.params_simulParameters gives correct outputs 3 : opt.folder.
                                                  , name.MASK = "mask.tif"
                                                  , name.DIST = "dist.tif"
                                                  , name.DROUGHT = "drought.tif"
+                                                 , name.FIRE = "fire.tif"
                                                  , opt.folder.name = 1)
                  , "There is not the same number of files into the DATA/PFGS/HABSUIT/ folder as the number of PFG indicated into the file")
   
@@ -523,6 +583,7 @@ test_that("PRE_FATE.params_simulParameters gives correct outputs 3 : opt.folder.
                                                  , name.MASK = "mask.tif"
                                                  , name.DIST = "dist.tif"
                                                  , name.DROUGHT = "drought.tif"
+                                                 , name.FIRE = "fire.tif"
                                                  , opt.folder.name = "CASTOR")
                  , "There is not the same number of files into the DATA/PFGS/HABSUIT/ folder as the number of PFG indicated into the file")
   
@@ -532,6 +593,7 @@ test_that("PRE_FATE.params_simulParameters gives correct outputs 3 : opt.folder.
                                                , name.MASK = "mask.tif"
                                                , name.DIST = "dist.tif"
                                                , name.DROUGHT = "drought.tif"
+                                               , name.FIRE = "fire.tif"
                                                , opt.folder.name = "")
                , "There is not the same number of files (`.txt` file starting with `SUCC`) into the FATE_simulation/DATA/PFGS/SUCC/fraise/ folder as the number of PFG indicated into the file FATE_simulation/DATA/GLOBAL_PARAMETERS/Global_parameters_V1.txt"
                , fixed = TRUE)
@@ -540,6 +602,7 @@ test_that("PRE_FATE.params_simulParameters gives correct outputs 3 : opt.folder.
                                                , name.MASK = "mask.tif"
                                                , name.DIST = "dist.tif"
                                                , name.DROUGHT = "drought.tif"
+                                               , name.FIRE = "fire.tif"
                                                , opt.folder.name = "CASTOR")
                , "There is not the same number of files (`.txt` file starting with `SUCC`) into the FATE_simulation/DATA/PFGS/SUCC/fraise/ folder as the number of PFG indicated into the file FATE_simulation/DATA/GLOBAL_PARAMETERS/Global_parameters_V1.txt"
                , fixed = TRUE)

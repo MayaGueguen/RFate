@@ -183,5 +183,5 @@ test_that("POST_FATE.graphic_evolutionCoverage gives correct outputs :", {
   expect_output(str(plotCover[[1]]$tab.spaceOccupancy), "4 variables")
   expect_output(str(plotCover[[1]]$tab.totalAbundance), "data.frame")
   expect_output(str(plotCover[[1]]$tab.totalAbundance), "4 variables")
-  expect_output(str(plotCover[[1]]$graph.spaceOccupancy), "List")
+  expect_output(str(plotCover[[1]]$plot.spaceOccupancy), "List")
 })

@@ -126,9 +126,9 @@
 ##'   richness within the studied area}
 ##'   \item{\file{GRAPHIC_C \cr map_PFGcover}}{to visualize the PFG cover
 ##'   within the studied area}
-##'   \item{\file{GRAPHIC_B \cr PFGlight}}{to visualize the light CWM
+##'   \item{\file{GRAPHIC_C \cr PFGlight}}{to visualize the light CWM
 ##'   within the studied area}
-##'   \item{\file{GRAPHIC_B \cr PFGsoil}}{to visualize the soil CWM
+##'   \item{\file{GRAPHIC_C \cr PFGsoil}}{to visualize the soil CWM
 ##'   within the studied area}
 ##' }
 ##' 
@@ -271,8 +271,7 @@ POST_FATE.graphic_mapPFG = function(
                           , stratum = range_strata
                           , stringsAsFactors = FALSE)
       raster.perPFG.perStrata = sapply(1:nrow(combi), function(i)
-        paste0(dir.output.perPFG.perStrata
-               , "Abund_YEAR_"
+        paste0("Abund_YEAR_"
                , combi$year[i]
                , "_"
                , combi$pfg[i]
@@ -505,11 +504,6 @@ POST_FATE.graphic_mapPFG = function(
                                  , limits = c(0, 1)
                                  , breaks = seq(0, 1, 0.2)
                                  , labels = seq(0, 100, 20)) +
-            # scale_fill_gradientn("Number of PFG"
-            #                      , colors = viridis_pal()(max(ras.pts$NB))
-            #                      , breaks = seq(1, max(ras.pts$NB), 2)) +
-            # scale_fill_gradientn("Light (Landolt)"
-            #                      , colors = (brewer.pal(9, "Oranges"))) +
             coord_equal() +
             geom_raster() +
             labs(x = "", y = ""
@@ -531,7 +525,7 @@ POST_FATE.graphic_mapPFG = function(
         pp_list$cover = pp.i(tab = ras.pts
                              , i.col = "Greens"
                              , i.axis = "Abundance (%)"
-                             , i.title = paste0("GRAPH E : map of PFG cover - Simulation year : ", y)
+                             , i.title = paste0("GRAPH C : map of PFG cover - Simulation year : ", y)
                              , i.subtitle = paste0("For each pixel, PFG abundances from strata "
                                                    , opt.stratum_min, " to ", no_STRATA, " are summed,\n"
                                                    , "then transformed into relative values by dividing "
@@ -544,7 +538,7 @@ POST_FATE.graphic_mapPFG = function(
         pp_list$richness = pp.i(tab = ras.pts
                                 , i.col = "Greens"
                                 , i.axis = "Number of PFG"
-                                , i.title = paste0("GRAPH D : map of PFG richness - Simulation year : ", y)
+                                , i.title = paste0("GRAPH C : map of PFG richness - Simulation year : ", y)
                                 , i.subtitle = paste0("For each pixel and stratum, first relative abundances are calculated, "
                                                       , "then transformed into binary values :\n"
                                                       , "1 if the PFG abundance represents more than 5 % "
@@ -561,12 +555,11 @@ POST_FATE.graphic_mapPFG = function(
           pp_list$CWM.light = pp.i(tab = ras.pts
                                    , i.col = "Oranges"
                                    , i.axis = "PFG light CWM"
-                                   , i.title = paste0("GRAPH E : map of light CWM - Simulation year : ", y)
+                                   , i.title = paste0("GRAPH C : map of light CWM - Simulation year : ", y)
                                    , i.subtitle = paste0("For each pixel, PFG abundances from strata "
                                                          , opt.stratum_min, " to ", no_STRATA, " are summed,\n"
                                                          , "then transformed into relative values by dividing by the maximum abundance obtained.\n"
-                                                         , "Community Weighted Mean is then calculated with observed values of light\n"
-                                                         , "(Landolt - Flora Indicativa) for each PFG."))
+                                                         , "Community Weighted Mean is then calculated with observed values of light for each PFG."))
         }
         
         ## PFG CWM SOIL ---------------------------------------------------------
@@ -578,12 +571,11 @@ POST_FATE.graphic_mapPFG = function(
           pp_list$CWM.light = pp.i(tab = ras.pts
                                    , i.col = "Oranges"
                                    , i.axis = "PFG soil CWM"
-                                   , i.title = paste0("GRAPH E : map of soil CWM - Simulation year : ", y)
+                                   , i.title = paste0("GRAPH C : map of soil CWM - Simulation year : ", y)
                                    , i.subtitle = paste0("For each pixel, PFG abundances from strata "
                                                          , opt.stratum_min, " to ", no_STRATA, " are summed,\n"
                                                          , "then transformed into relative values by dividing by the maximum abundance obtained.\n"
-                                                         , "Community Weighted Mean is then calculated with observed values of soil\n"
-                                                         , "(Landolt - Flora Indicativa) for each PFG."))
+                                                         , "Community Weighted Mean is then calculated with observed values of soil for each PFG."))
         }
         
         return(list(ras = ras_list, plot = pp_list))
