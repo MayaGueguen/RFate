@@ -156,39 +156,6 @@ file containing PARAMETER FILENAMES used in FATE model." />
     Reference
   </a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/fate_tutorial_0_publications.html">FATE tutorial 0 - Publications</a>
-    </li>
-    <li>
-      <a href="../articles/fate_tutorial_0_modelling_framework.html">FATE tutorial 0 - Modelling framework</a>
-    </li>
-    <li>
-      <a href="../articles/fate_tutorial_1_PFG.html">FATE tutorial 1 - Principle of PFG</a>
-    </li>
-    <li>
-      <a href="../articles/fate_tutorial_2_RUN_SIMULATION.html">FATE tutorial 2 - Run a simulation</a>
-    </li>
-    <li>
-      <a href="../articles/fate_tutorial_3_MODULES.html">FATE tutorial 3 - Use a module</a>
-    </li>
-    <li>
-      <a href="../articles/rfate_tutorial_1_PFG.html">&lt;font color='#068f96'&gt;&lt;i class='fa fa-battery-quarter'&gt;&lt;/i&gt; `PRE_FATE` - build Plant Functional Groups (PFG)&lt;/font&gt;</a>
-    </li>
-    <li>
-      <a href="../articles/rfate_tutorial_2_params.html">&lt;font color='#068f96'&gt; &lt;i class='fa fa-battery-half'&gt;&lt;/i&gt; `PRE_FATE` - build parameter files &lt;/font&gt;</a>
-    </li>
-    <li>
-      <a href="../articles/rfate_tutorial_3_graphics.html">&lt;font color='#068f96'&gt; &lt;i class='fa fa-battery-three-quarters'&gt;&lt;/i&gt; `POST_FATE` - graphics &lt;/font&gt;</a>
-    </li>
-  </ul>
-</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -327,7 +294,7 @@ directory with the following parameters :</p>
 <li><p><strong>--GLOBAL_PARAMS--</strong></p></li>
 <li><p><strong>--SAVING_DIR--</strong></p><ul>
 <li><p>--SAVED_STATE-- (<em>optional</em>)</p></li>
-<li><p>--SAVING_YEARS_ARRAYS-- (<em>optional</em>)</p></li>
+<li><p>--SAVING_YEARS_MAPS-- (<em>optional</em>)</p></li>
 <li><p>--SAVING_YEARS_OBJECTS-- (<em>optional</em>)</p></li>
 </ul></li>
 <li><p><strong>--MASK--</strong></p><ul>
@@ -383,10 +350,10 @@ needed by the program to run.</p>
   <br /></p></dd>
   <dt>SAVING_YEARS_ <br /> ARRAYS (<em>optional</em>)</dt><dd><p>file containing the 
   years for which simulation maps will be saved <br />
-  (see <code><a href='PRE_FATE.params_saveYears.html'>PRE_FATE.params_saveYears</a></code>)</p></dd>
+  (see <code>PRE_FATE.params_savingYears</code>)</p></dd>
   <dt>SAVING_YEARS_ <br /> OBJECTS (<em>optional</em>)</dt><dd><p>file containing the 
   years for which simulation outputs will be saved <br />
-  (see <code><a href='PRE_FATE.params_saveYears.html'>PRE_FATE.params_saveYears</a></code>) <br /> <br /></p></dd>
+  (see <code>PRE_FATE.params_savingYears</code>) <br /> <br /></p></dd>
   <dt>MASK</dt><dd><p>raster mask that will define the study area</p></dd>
   <dt>MASK_CHANGEMASK_YEARS <br /> (<em>optional</em>)</dt><dd><p>file containing the years 
   to change rasters for the succession module <br />
@@ -500,7 +467,7 @@ needed by the program to run.</p>
 <code><a href='PRE_FATE.params_PFGdispersal.html'>PRE_FATE.params_PFGdispersal</a></code>,
 <code><a href='PRE_FATE.params_PFGdisturbance.html'>PRE_FATE.params_PFGdisturbance</a></code>,
 <code><a href='PRE_FATE.params_PFGdrought.html'>PRE_FATE.params_PFGdrought</a></code>,
-<code><a href='PRE_FATE.params_saveYears.html'>PRE_FATE.params_saveYears</a></code>,
+<code>PRE_FATE.params_savingYears</code>,
 <code><a href='PRE_FATE.params_changingYears.html'>PRE_FATE.params_changingYears</a></code>,
 <code><a href='dot-setPattern.html'>.setPattern</a></code></p></div>
 

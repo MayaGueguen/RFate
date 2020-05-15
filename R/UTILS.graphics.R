@@ -3,6 +3,7 @@
 .getGraphics_results = function(name.simulation, abs.simulParam)
 {
   ## Get results directories -----------------------------------------------------
+  dir.save <- NULL
   dir.save <<- .getParam(params.lines = abs.simulParam
                          , flag = "SAVING_DIR"
                          , flag.split = "^--.*--$"
@@ -10,20 +11,25 @@
   .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/"))
   
   ## ABUND folders, produced by FATE
+  dir.output.perPFG.allStrata <- NULL
   dir.output.perPFG.allStrata <<- paste0(name.simulation, "/RESULTS/", basename(dir.save), "/ABUND_perPFG_allStrata/")
   .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/ABUND_perPFG_allStrata/"))
   
+  dir.output.perPFG.perStrata <- NULL
   dir.output.perPFG.perStrata <<- paste0(name.simulation, "/RESULTS/", basename(dir.save), "/ABUND_perPFG_perStrata/")
   .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/ABUND_perPFG_perStrata/"))
   
   ## RESOURCES folders, produced by FATE
+  dir.output.light <- NULL
   dir.output.light <<- paste0(name.simulation, "/RESULTS/", basename(dir.save), "/LIGHT/")
   .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/LIGHT/"))
   
+  dir.output.soil <- NULL
   dir.output.soil <<- paste0(name.simulation, "/RESULTS/", basename(dir.save), "/SOIL/")
   .testParam_existFolder(name.simulation, paste0("RESULTS/", basename(dir.save), "/SOIL/"))
   
   ## ABUND REL folder, produced by POST_FATE.relativeAbund function
+  dir.output.perPFG.allStrata.REL <- NULL
   dir.output.perPFG.allStrata.REL <<- paste0(name.simulation, "/RESULTS/", basename(dir.save), "/ABUND_REL_perPFG_allStrata/")
   if (!dir.exists(dir.output.perPFG.allStrata.REL))
   {
@@ -31,11 +37,13 @@
   }
   
   ## BINARY folders, produced by POST_FATE.graphic_validationStatistics function
+  dir.output.perPFG.allStrata.BIN <- NULL
   dir.output.perPFG.allStrata.BIN <<- paste0(name.simulation, "/RESULTS/", basename(dir.save), "/BIN_perPFG_allStrata/")
   if (!dir.exists(dir.output.perPFG.allStrata.BIN))
   {
     dir.create(path = dir.output.perPFG.allStrata.BIN)
   }
+  dir.output.perPFG.perStrata.BIN <- NULL
   dir.output.perPFG.perStrata.BIN <<- paste0(name.simulation, "/RESULTS/", basename(dir.save), "/BIN_perPFG_perStrata/")
   if (!dir.exists(dir.output.perPFG.perStrata.BIN))
   {
@@ -51,6 +59,7 @@
                                , flag = "GLOBAL_PARAMS"
                                , flag.split = "^--.*--$"
                                , is.num = FALSE)
+  no_PFG <- NULL
   no_PFG <<- .getParam(params.lines = paste0(sub(basename(name.simulation), "", name.simulation)
                                              , file.globalParam)
                        , flag = "NO_PFG"
@@ -62,11 +71,13 @@
   }
   
   ## Get PFG names ---------------------------------------------------------------
+  PFG <- NULL
   PFG <<- .getParam(params.lines = abs.simulParam
                     , flag = "PFG_PARAMS_LIFE_HISTORY"
                     , flag.split = "^--.*--$"
                     , is.num = FALSE)
   pattern = ".*SUCC_"
+  PFG <- NULL
   PFG <<- sub(".txt", "", sub(pattern, "", basename(PFG)))
   if (length(PFG) != no_PFG)
   {
@@ -75,21 +86,25 @@
   }
   
   ## Get MODULES ---------------------------------------------------------------
+  no_STRATA <- NULL
   no_STRATA <<- .getParam(params.lines = paste0(sub(basename(name.simulation), "", name.simulation)
                                                 , file.globalParam)
                           , flag = "NO_STRATA"
                           , flag.split = " "
                           , is.num = TRUE)
+  doLight <- NULL
   doLight <<- .getParam(params.lines = paste0(sub(basename(name.simulation), "", name.simulation)
                                               , file.globalParam)
                         , flag = "DO_LIGHT_COMPETITION"
                         , flag.split = " "
                         , is.num = TRUE)
+  doSoil <- NULL
   doSoil <<- .getParam(params.lines = paste0(sub(basename(name.simulation), "", name.simulation)
                                              , file.globalParam)
                        , flag = "DO_SOIL_COMPETITION"
                        , flag.split = " "
                        , is.num = TRUE)
+  doHabsuit <- NULL
   doHabsuit <<- .getParam(params.lines = paste0(sub(basename(name.simulation), "", name.simulation)
                                                 , file.globalParam)
                           , flag = "DO_HAB_SUITABILITY"
@@ -101,6 +116,7 @@
 .getGraphics_mask = function(name.simulation, abs.simulParam)
 {
   ## Get raster mask -------------------------------------------------------------
+  file.mask <- NULL
   file.mask <<- .getParam(params.lines = abs.simulParam
                           , flag = "MASK"
                           , flag.split = "^--.*--$"
@@ -108,11 +124,15 @@
   .testParam_existFile(paste0(sub(basename(name.simulation), "", name.simulation)
                               , file.mask))
   
+  ras.mask <- NULL
   ras.mask <<- raster(paste0(sub(basename(name.simulation), "", name.simulation)
                              , file.mask))
   ras.mask[which(ras.mask[] == 0)] <<- NA
+  ind_1_mask <- NULL
   ind_1_mask <<- which(ras.mask[] == 1)
+  no_1_mask <- NULL
   no_1_mask <<- length(ind_1_mask)
+  xy.1 <- NULL
   xy.1 <<- xyFromCell(ras.mask, ind_1_mask)
 }
 

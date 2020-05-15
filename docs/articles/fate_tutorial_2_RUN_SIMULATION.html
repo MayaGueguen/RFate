@@ -112,39 +112,6 @@
     Reference
   </a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="../articles/fate_tutorial_0_publications.html">FATE tutorial 0 - Publications</a>
-    </li>
-    <li>
-      <a href="../articles/fate_tutorial_0_modelling_framework.html">FATE tutorial 0 - Modelling framework</a>
-    </li>
-    <li>
-      <a href="../articles/fate_tutorial_1_PFG.html">FATE tutorial 1 - Principle of PFG</a>
-    </li>
-    <li>
-      <a href="../articles/fate_tutorial_2_RUN_SIMULATION.html">FATE tutorial 2 - Run a simulation</a>
-    </li>
-    <li>
-      <a href="../articles/fate_tutorial_3_MODULES.html">FATE tutorial 3 - Use a module</a>
-    </li>
-    <li>
-      <a href="../articles/rfate_tutorial_1_PFG.html">&lt;font color='#068f96'&gt;&lt;i class='fa fa-battery-quarter'&gt;&lt;/i&gt; `PRE_FATE` - build Plant Functional Groups (PFG)&lt;/font&gt;</a>
-    </li>
-    <li>
-      <a href="../articles/rfate_tutorial_2_params.html">&lt;font color='#068f96'&gt; &lt;i class='fa fa-battery-half'&gt;&lt;/i&gt; `PRE_FATE` - build parameter files &lt;/font&gt;</a>
-    </li>
-    <li>
-      <a href="../articles/rfate_tutorial_3_graphics.html">&lt;font color='#068f96'&gt; &lt;i class='fa fa-battery-three-quarters'&gt;&lt;/i&gt; `POST_FATE` - graphics &lt;/font&gt;</a>
-    </li>
-  </ul>
-</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
@@ -240,7 +207,7 @@ See <a href="rfate_tutorial_2_params.html">Build parameter files</a> <code>RFate
 <h3 class="hasAnchor">
 <a href="#the-fate-friendly-directory-organization" class="anchor"></a><i class="fas fa-folder-open"></i> The FATE friendly directory organization</h3>
 <p>As <code>FATE</code> needs quite a lot of parameters given into different parameter files, it is important to organize them in a clear and intuitive way.</p>
-<p>While this is not mandatory to run a <code>FATE</code> simulation, a specific and methodical folder architecture can be obtained with <a href="reference/PRE_FATE.skeletonDirectory.html">the PRE_FATE.skeletonDirectory function</a> from the <a href="https://mayagueguen.github.io/RFate/">RFate</a> package.</p>
+<p>While this is not mandatory to run a <code>FATE</code> simulation, a specific and methodical folder architecture can be obtained with the <a href="../reference/PRE_FATE.skeletonDirectory.html">PRE_FATE.skeletonDirectory function</a> from the <a href="https://mayagueguen.github.io/RFate/">RFate</a> package.</p>
 <p>A good way to start is to create this skeleton directory, and then copy or create the needed files inside to have all simulation data into the same place.</p>
 <div style="text-align:center">
 <img src="pictures/skeleton_directory_2.PNG" style="width:65.0%">
@@ -252,18 +219,22 @@ See <a href="rfate_tutorial_2_params.html">Build parameter files</a> <code>RFate
 <h1 class="hasAnchor">
 <a href="#how-to-run-a-fate-simulation" class="anchor"></a>How to run a FATE Simulation ?</h1>
 <p><br></p>
-<p>When all data and parameter files have been produced and correctly referred in a <a href="reference/PRE_FATE.params_simulParameters.html">SimulParameters</a> file, a <code>FATE</code> simulation can be run by just typing something like :</p>
-<pre class="bash">
-./FATEHDD_6.0-0_UNIX path_to_your_ParamSimul_file
-</pre>
-<p>Then the simulation will start, and the software will print messages into the console indicating what the software is doing. Depending on the simulation duration, the size and the resolution of the study area, the number of Plant Functional Groups (PFG) involved, … running the full simulation <strong>could take a while</strong>.</p>
-<p><strong>Note :</strong> the folder from which the command is sent must be adapted based on how paths to files have been given :</p>
+<p>When all data and parameter files have been produced and correctly referred in a <a href="../reference/PRE_FATE.params_simulParameters.html">SimulParameters</a> file, a <code>FATE</code> simulation can be run using the <a href="../reference/FATE.run.html">FATE.run</a> function :</p>
+<ul>
+<li>the simulation will start, and the software will print messages into the console indicating what the software is doing.</li>
+<li>depending on the simulation duration, the size and the resolution of the study area, the number of Plant Functional Groups (PFG) involved, … running the full simulation <strong>could take a while</strong>.</li>
+</ul>
+<p><br></p>
+<p><strong>Note :</strong> the folder from which the command is sent must be adapted based on how paths to files have been given within the <a href="../reference/PRE_FATE.params_simulParameters.html">SimulParameters</a> file :</p>
 <ul>
 <li><p>If all paths are <strong>absolute</strong><br>
 (i.e. including the root, such as <em><code>/home/username/FATE_simulation/DATA/GLOBAL_PARAMETERS/Global_parameters_V1.txt</code></em>),<br>
-there should not be any problem. The only requirement then is to run the simulation from the folder containing the <code>FATE</code> executable file, or to also give absolute path for the executable file.</p></li>
+there should not be any problem.<br>
+The only requirement then is to also give absolute path to the simulation folder, if not in the current directory.</p></li>
 <li><p>If all paths are <strong>relative</strong><br>
-(i.e. starting from a specific folder, such as <em><code>FATE_simulation/DATA/GLOBAL_PARAMETERS/Global_parameters_V1.txt</code></em>), then the <code>FATE</code> simulation must be run from this specific folder (i.e. here from the folder containing the <em><code>FATE_simulation</code></em> folder).</p></li>
+(i.e. starting from a specific folder, such as <em><code>FATE_simulation/DATA/GLOBAL_PARAMETERS/Global_parameters_V1.txt</code></em>),<br>
+then the <code>FATE</code> simulation must be run from this specific folder<br>
+(i.e. here from the folder containing the <em><code>FATE_simulation</code></em> folder).</p></li>
 </ul>
 <p><br><br></p>
 </div>
@@ -271,7 +242,7 @@ there should not be any problem. The only requirement then is to run the simulat
 <h1 class="hasAnchor">
 <a href="#how-to-handle-the-results" class="anchor"></a>How to handle the results ?</h1>
 <p><br></p>
-<p>Once the simulation is completed, the directory defined under the flag <code>--SAVING_DIR--</code> within the <a href="reference/PRE_FATE.params_simulParameters.html">SimulParameters</a> file must contain the following directories :</p>
+<p>Once the simulation is completed, the directory defined under the flag <code>--SAVING_DIR--</code> within the <a href="../reference/PRE_FATE.params_simulParameters.html">SimulParameters</a> file must contain the following directories :</p>
 <ul>
 <li><em><code>ABUND_allPFG_perStrata/</code></em></li>
 <li><em><code>ABUND_perPFG_allStrata/</code></em></li>
@@ -288,6 +259,11 @@ there should not be any problem. The only requirement then is to run the simulat
 <li>
 <em><code>ABUND_perPFG_allStrata/</code></em> : a file represents <strong>one specific year</strong>, and the abundance of <strong>a specific PFG</strong> within <strong>all strata</strong>
 </li>
+</ul>
+<p>If the corresponding modules were activated within the <a href="../reference/PRE_FATE.params_globalParameters.html">GlobalParameters</a> file, the following folders should also contain files :</p>
+<ul>
+<li><em><code>LIGHT/</code></em></li>
+<li><em><code>SOIL/</code></em></li>
 </ul>
 <p>These ouputs can then be used as is, or post-treated with functions from the <a href="https://mayagueguen.github.io/RFate/">RFate</a> package to obtain more specific results (e.g. evolution of abundance curves, cover or diversity maps, etc).</p>
 <p><br></p>

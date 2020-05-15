@@ -48,6 +48,7 @@ navbar:
           icon: fa-battery-three-quarters
           href: articles/rfate_tutorial_3_graphics.html
         - text: "---------"
+    articles:
     download:
       text: 'Download Current Version'
       icon: fa-rocket fa-lg
@@ -56,27 +57,10 @@ navbar:
       icon: fa-github fa-lg
       href: https://github.com/MayaGueguen/RFate.git
       
-articles:
-  - title: FATE
-    icon: fab fa-pagelines
-    navbar: ~
-    contents:
-      - "fate_tutorial_0_publications"
-      - "fate_tutorial_0_modelling_framework"
-      - "fate_tutorial_1_PFG"
-      - "fate_tutorial_2_RUN_SIMULATION"
-      - "fate_tutorial_3_MODULES"
-  - title: RFate
-    icon: fas fa-toolbox
-    navbar:
-    contents:
-      - "rfate_tutorial_1_PFG"
-      - "rfate_tutorial_2_params"
-      - "rfate_tutorial_3_graphics"
 
 reference:
   - title: Datasets
-    desc:  Used in the examples. <br/> ..
+    desc:  Used in the examples.
     contents:
       - ".loadData"
   - title: Interface
@@ -84,7 +68,7 @@ reference:
     contents:
       - "RFATE_SHINY.run"
   - title: Build Plant Functional Groups (PFG)
-    desc:  Functions to select dominant species, compute functional distance between species and build clusters. <br/> ..
+    desc:  Functions to select dominant species, compute functional distance between species and build clusters.
     contents:
       - "PRE_FATE.abundBraunBlanquet"
       - "PRE_FATE.selectDominant"
@@ -93,7 +77,7 @@ reference:
       - "PRE_FATE.speciesClustering_step2"
       - "PRE_FATE.speciesClustering_step3"
   - title: Create FATE parameter files
-    desc:  Create user-friendly directory tree, parameter and simulation files for FATE simulation.  <br/> ..
+    desc:  Create user-friendly directory tree, parameter and simulation files for FATE simulation.
     contents:
       - "PRE_FATE.skeletonDirectory"
       - "PRE_FATE.params_PFGsuccession"
@@ -103,12 +87,12 @@ reference:
       - "PRE_FATE.params_PFGdisturbance"
       - "PRE_FATE.params_PFGdrought"
       - "PRE_FATE.params_changingYears"
-      - "PRE_FATE.params_saveYears"
+      - "PRE_FATE.params_savingYears"
       - "PRE_FATE.params_globalParameters"
       - "PRE_FATE.params_simulParameters"
       - "PRE_FATE.params_multipleSet"
   - title: Analyze FATE outputs
-    desc:  Evalute predicted maps, produce summary and dynamic graphics.  <br/> ..
+    desc:  Evalute predicted maps, produce summary and dynamic graphics.
     contents:
       - "POST_FATE.graphics"
       - "POST_FATE.temporalEvolution"
@@ -121,7 +105,7 @@ reference:
       - "POST_FATE.graphic_mapPFGvsHS"
       - "POST_FATE.graphic_mapPFG"
   - title: Tool box
-    desc:  Utility functions.  <br/> ..
+    desc:  Utility functions.
     contents:
       - ".getOS"
       - ".getParam"

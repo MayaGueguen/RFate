@@ -113,39 +113,6 @@
     Reference
   </a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="../articles/fate_tutorial_0_publications.html">FATE tutorial 0 - Publications</a>
-    </li>
-    <li>
-      <a href="../articles/fate_tutorial_0_modelling_framework.html">FATE tutorial 0 - Modelling framework</a>
-    </li>
-    <li>
-      <a href="../articles/fate_tutorial_1_PFG.html">FATE tutorial 1 - Principle of PFG</a>
-    </li>
-    <li>
-      <a href="../articles/fate_tutorial_2_RUN_SIMULATION.html">FATE tutorial 2 - Run a simulation</a>
-    </li>
-    <li>
-      <a href="../articles/fate_tutorial_3_MODULES.html">FATE tutorial 3 - Use a module</a>
-    </li>
-    <li>
-      <a href="../articles/rfate_tutorial_1_PFG.html">&lt;font color='#068f96'&gt;&lt;i class='fa fa-battery-quarter'&gt;&lt;/i&gt; `PRE_FATE` - build Plant Functional Groups (PFG)&lt;/font&gt;</a>
-    </li>
-    <li>
-      <a href="../articles/rfate_tutorial_2_params.html">&lt;font color='#068f96'&gt; &lt;i class='fa fa-battery-half'&gt;&lt;/i&gt; `PRE_FATE` - build parameter files &lt;/font&gt;</a>
-    </li>
-    <li>
-      <a href="../articles/rfate_tutorial_3_graphics.html">&lt;font color='#068f96'&gt; &lt;i class='fa fa-battery-three-quarters'&gt;&lt;/i&gt; `POST_FATE` - graphics &lt;/font&gt;</a>
-    </li>
-  </ul>
-</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
@@ -187,48 +154,44 @@
 <p><br></p>
 <p><em>A. Evolution of simulation through time</em></p>
 <ul>
+<li><p><strong>Create temporal evolution table</strong> : retrieve PFG pixel abundance (as well as light and soil resources) through time<br>
+with the function <a href="../reference/POST_FATE.temporalEvolution.html">POST_FATE.temporalEvolution</a></p></li>
 <li>
-<strong>Create temporal evolution table</strong> : retrieve PFG pixel abundance (as well as light and soil resources) through time<br>
-with the function <a href="https://mayagueguen.github.io/RFate/reference/POST_FATE.temporalEvolution.html">POST_FATE.temporalEvolution</a>
+<strong>Abundance over all studied area</strong> : with the function <a href="../reference/POST_FATE.graphic_evolutionCoverage.html">POST_FATE.graphic_evolutionCoverage</a>
 </li>
 <li>
-<strong>Abundance over all studied area</strong> : with the function <a href="https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_evolutionCoverage.html">POST_FATE.graphic_evolutionCoverage</a>
+<strong>Abundance / light / soil within some pixels</strong> : with the function <a href="../reference/POST_FATE.graphic_evolutionPixels.html">POST_FATE.graphic_evolutionPixels</a>
 </li>
-<li>
-<strong>Abundance / light / soil within some pixels</strong> : with the function <a href="https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_evolutionPixels.html">POST_FATE.graphic_evolutionPixels</a>
-</li>
+<li><p><strong>Habitat composition stability over all studied area</strong> : with the function <a href="../reference/POST_FATE.graphic_evolutionStability.html">POST_FATE.graphic_evolutionStability</a></p></li>
 </ul>
-<p><em>B. Evaluation of outputs</em></p>
+<p><br></p>
+<p><em>B. Relative / binary maps &amp; Evaluation of outputs</em></p>
 <ul>
 <li>
 <strong>Create relative abundance maps</strong> : transform absolute abundance maps into relative abundance maps<br>
-with the function <a href="https://mayagueguen.github.io/RFate/reference/POST_FATE.relativeAbund.html">POST_FATE.relativeAbund</a>
+with the function <a href="../reference/POST_FATE.relativeAbund.html">POST_FATE.relativeAbund</a>
 </li>
-<li>
-<strong>Validation statistics</strong> : calculate evaluation metrics (TSS, AUC) for each PFG, and transform relative abundance maps into presence / absence with the function <a href="https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_validationStatistics.html">POST_FATE.graphic_validationStatistics</a>
-</li>
-<li>
-<strong>PFG outputs vs Habitat suitability</strong> : compare binary maps (outputs) with habitat suitability maps (inputs)<br>
-with the function <a href="https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFGvsHS.html">POST_FATE.graphic_mapPFGvsHS</a>
-</li>
+<li><p><strong>Validation statistics</strong> : calculate evaluation metrics (TSS, AUC) for each PFG<br>
+with the function <a href="../reference/POST_FATE.graphic_validationStatistics.html">POST_FATE.graphic_validationStatistics</a></p></li>
+<li><p><strong>Create binary maps</strong> : transform relative abundance maps into presence / absence maps<br>
+with the function <a href="../reference/POST_FATE.binaryMaps.html">POST_FATE.binaryMaps</a></p></li>
+<li><p><strong>PFG outputs vs Habitat suitability</strong> : compare binary maps (outputs) with habitat suitability maps (inputs)<br>
+with the function <a href="../reference/POST_FATE.graphic_mapPFGvsHS.html">POST_FATE.graphic_mapPFGvsHS</a></p></li>
 </ul>
+<p><br></p>
 <p><em>C. Visualization of outputs</em></p>
 <ul>
 <li>
-<strong>PFG richness</strong> : create map of number of PFG alive within each pixel<br>
-with the function <a href="https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFGrichness.html">POST_FATE.graphic_mapPFGrichness</a>
+<strong>PFG cover / richness / light CWM / soil CWM</strong> :<br>
+with the function <a href="../reference/POST_FATE.graphic_mapPFG.html">POST_FATE.graphic_mapPFG</a>
+<ul>
+<li>create map of PFG abundance above 1.5 meters within each pixel<br>
 </li>
-<li>
-<strong>PFG cover</strong> : create map of PFG abundance above 1.5 meters within each pixel<br>
-with the function <a href="https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFGcover.html">POST_FATE.graphic_mapPFGcover</a>
+<li>create map of number of PFG alive within each pixel</li>
+<li>create map of light community weighted mean within each pixel<br>
 </li>
-<li>
-<strong>PFG CWM of light</strong> : create map of light community weighted mean within each pixel<br>
-with the function <a href="https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFGlight.html">POST_FATE.graphic_mapPFGlight</a>
-</li>
-<li>
-<strong>PFG CWM of soil</strong> : create map of soil community weighted mean within each pixel<br>
-with the function <a href="https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFGsoil.html">POST_FATE.graphic_mapPFGsoil</a>
+<li>create map of soil community weighted mean within each pixel</li>
+</ul>
 </li>
 </ul>
 </div>

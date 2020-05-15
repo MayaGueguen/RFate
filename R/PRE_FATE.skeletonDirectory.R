@@ -44,7 +44,7 @@
 ##'     \item{\code{SCENARIO}}{files containing information about changes in
 ##'     raster maps input \cr (see \code{\link{PRE_FATE.params_changingYears}})}
 ##'     \item{\code{SAVE}}{files containing information about simulation times 
-##'     to save outputs \cr (see \code{\link{PRE_FATE.params_saveYears}})}
+##'     to save outputs \cr (see \code{\link{PRE_FATE.params_savingYears}})}
 ##'     \item{\code{PFGS}}{ \cr
 ##'     \describe{
 ##'       \item{\code{SUCC}}{life history parameter files \cr 
@@ -90,7 +90,7 @@
 ##' \code{\link{PRE_FATE.params_PFGdisturbance}},
 ##' \code{\link{PRE_FATE.params_PFGdrought}},
 ##' \code{\link{PRE_FATE.params_changingYears}},
-##' \code{\link{PRE_FATE.params_saveYears}},
+##' \code{\link{PRE_FATE.params_savingYears}},
 ##' \code{\link{PRE_FATE.params_simulParameters}}
 ##' 
 ##' @examples

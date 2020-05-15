@@ -127,7 +127,7 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : folders
                                    , FIRE.prop_mode = 1
                                    , FIRE.prop_intensity = 0.5
                                    , FIRE.quota_mode = 4)
-
+  
   
   ## Create PFG succession parameter files
   expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.MASK = "mask.tif")
@@ -348,9 +348,9 @@ test_that("PRE_FATE.params_simulParameters gives correct outputs 1", {
 test_that("PRE_FATE.params_simulParameters gives error with wrong data : folders and files 3", {
   
   ## Create a SAVE_year_maps or/and SAVE_year_objects parameter file
-  PRE_FATE.params_saveYears(name.simulation = "FATE_simulation"
-                            , years.maps = c(100, 150, 200)
-                            , years.objects = 200)
+  PRE_FATE.params_savingYears(name.simulation = "FATE_simulation"
+                              , years.maps = c(100, 150, 200)
+                              , years.objects = 200)
   file.create("FATE_simulation/DATA/SAVE/SAVE_YEARS_maps_BIS.txt")
   expect_error(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation", name.MASK = "mask.tif")
                , "There is too many adequate files (`.txt` file starting with `SAVE_YEARS_maps`) into the folder FATE_simulation/DATA/SAVE"
@@ -362,14 +362,14 @@ test_that("PRE_FATE.params_simulParameters gives error with wrong data : folders
                , fixed = TRUE)
   file.remove("FATE_simulation/DATA/SAVE/SAVE_YEARS_objects_BIS.txt")
   
-  PRE_FATE.params_saveYears(name.simulation = "FATE_simulation"
-                            , years.maps = c(100, 150, 200)
-                            , years.objects = 200
-                            , opt.folder.name = "Scen1")
-  PRE_FATE.params_saveYears(name.simulation = "FATE_simulation"
-                            , years.maps = c(100, 150, 200)
-                            , years.objects = 200
-                            , opt.folder.name = "Scen2")
+  PRE_FATE.params_savingYears(name.simulation = "FATE_simulation"
+                              , years.maps = c(100, 150, 200)
+                              , years.objects = 200
+                              , opt.folder.name = "Scen1")
+  PRE_FATE.params_savingYears(name.simulation = "FATE_simulation"
+                              , years.maps = c(100, 150, 200)
+                              , years.objects = 200
+                              , opt.folder.name = "Scen2")
   expect_message(PRE_FATE.params_simulParameters(name.simulation = "FATE_simulation"
                                                  , name.MASK = "mask.tif"
                                                  , name.DIST = "dist.tif"

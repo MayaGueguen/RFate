@@ -40,8 +40,12 @@ parameters :
 
 \describe{
   \item{NAME}{name of the PFG}
+  \item{TYPE}{PFG life-form \emph{(\code{H}: herbaceous \code{C}: 
+  chamaephyte \code{P}: phanerophyte)}}
+  \item{HEIGHT}{PFG maximum height \emph{(in cm)}}
   \item{MATURITY}{PFG maturity age \emph{(in years)}}
-  \item{LONGEVITY}{ PFG life span \emph{(in years)}}
+  \item{LONGEVITY}{PFG life span \emph{(in years)}}
+  \item{MAX_STRATUM}{maximum height stratum that the PFG can reach}
   \item{MAX_ABUNDANCE}{maximum abundance / space (qualitative) that the PFG 
   is able to produce / occupy \cr \emph{(\code{1}: Low \code{2}: Medium 
   \code{3}: High)}}
@@ -130,7 +134,7 @@ all PFG :
 and a set of characteristics for each PFG :
 
 \describe{
-  \item{STRATA}{= maximum stratum that each PFG can reach}
+  \item{MAX_STRATUM}{= maximum stratum that each PFG can reach}
   \item{MAX_ABUNDANCE}{= maximum abundance of mature PFG in favorable 
   conditions \cr
    = It can be seen as a proxy of maximum carrying capacity for mature 
@@ -139,9 +143,9 @@ and a set of characteristics for each PFG :
   Two methods to define these abundances are available :
   \itemize{
     \item from \strong{predefined rules} (using \code{type}, 
-    \code{STRATA}) : \cr \cr
+    \code{MAX_STRATUM}) : \cr \cr
     \tabular{rcccc}{
-      \strong{STRATA} \tab \strong{1} \tab \strong{2} \tab 
+      \strong{MAX_STRATUM} \tab \strong{1} \tab \strong{2} \tab 
       \strong{3} \tab \strong{+}\cr
       \strong{\code{H} (herbaceous)} \tab \code{1} \tab \code{1} \tab 
       \code{2} \tab \code{2} \cr
@@ -161,11 +165,11 @@ and a set of characteristics for each PFG :
   contribute to shade half less}) than mature individuals \cr \cr
   Two methods to define these sizes are available :
   \itemize{
-    \item from \strong{predefined rules} (using \code{type}, \code{STRATA}) 
+    \item from \strong{predefined rules} (using \code{type}, \code{MAX_STRATUM}) 
     : \cr \cr
     
     \tabular{rcccc}{
-      \strong{STRATA} \tab \strong{1} \tab \strong{2} \tab 
+      \strong{MAX_STRATUM} \tab \strong{1} \tab \strong{2} \tab 
       \strong{3} \tab \strong{+}\cr
       \strong{\code{H} (herbaceous)} \tab \code{100\%} \tab \code{80\%} 
       \tab \code{50\%} \tab \code{50\%} \cr

@@ -155,39 +155,6 @@ core module of FATE." />
     Reference
   </a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/fate_tutorial_0_publications.html">FATE tutorial 0 - Publications</a>
-    </li>
-    <li>
-      <a href="../articles/fate_tutorial_0_modelling_framework.html">FATE tutorial 0 - Modelling framework</a>
-    </li>
-    <li>
-      <a href="../articles/fate_tutorial_1_PFG.html">FATE tutorial 1 - Principle of PFG</a>
-    </li>
-    <li>
-      <a href="../articles/fate_tutorial_2_RUN_SIMULATION.html">FATE tutorial 2 - Run a simulation</a>
-    </li>
-    <li>
-      <a href="../articles/fate_tutorial_3_MODULES.html">FATE tutorial 3 - Use a module</a>
-    </li>
-    <li>
-      <a href="../articles/rfate_tutorial_1_PFG.html">&lt;font color='#068f96'&gt;&lt;i class='fa fa-battery-quarter'&gt;&lt;/i&gt; `PRE_FATE` - build Plant Functional Groups (PFG)&lt;/font&gt;</a>
-    </li>
-    <li>
-      <a href="../articles/rfate_tutorial_2_params.html">&lt;font color='#068f96'&gt; &lt;i class='fa fa-battery-half'&gt;&lt;/i&gt; `PRE_FATE` - build parameter files &lt;/font&gt;</a>
-    </li>
-    <li>
-      <a href="../articles/rfate_tutorial_3_graphics.html">&lt;font color='#068f96'&gt; &lt;i class='fa fa-battery-three-quarters'&gt;&lt;/i&gt; `POST_FATE` - graphics &lt;/font&gt;</a>
-    </li>
-  </ul>
-</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -277,8 +244,12 @@ to the name of the folder that will be created into the
 parameters :</p>
 <dl'>
   <dt>NAME</dt><dd><p>name of the PFG</p></dd>
+  <dt>TYPE</dt><dd><p>PFG life-form <em>(<code>H</code>: herbaceous <code>C</code>: 
+  chamaephyte <code>P</code>: phanerophyte)</em></p></dd>
+  <dt>HEIGHT</dt><dd><p>PFG maximum height <em>(in cm)</em></p></dd>
   <dt>MATURITY</dt><dd><p>PFG maturity age <em>(in years)</em></p></dd>
   <dt>LONGEVITY</dt><dd><p>PFG life span <em>(in years)</em></p></dd>
+  <dt>MAX_STRATUM</dt><dd><p>maximum height stratum that the PFG can reach</p></dd>
   <dt>MAX_ABUNDANCE</dt><dd><p>maximum abundance / space (qualitative) that the PFG 
   is able to produce / occupy <br /> <em>(<code>1</code>: Low <code>2</code>: Medium 
   <code>3</code>: High)</em></p></dd>
@@ -358,7 +329,7 @@ all PFG :</p>
 
 <p>and a set of characteristics for each PFG :</p>
 <dl'>
-  <dt>STRATA</dt><dd><p>= maximum stratum that each PFG can reach</p></dd>
+  <dt>MAX_STRATUM</dt><dd><p>= maximum stratum that each PFG can reach</p></dd>
   <dt>MAX_ABUNDANCE</dt><dd><p>= maximum abundance of mature PFG in favorable 
   conditions <br />
    = It can be seen as a proxy of maximum carrying capacity for mature 
@@ -367,8 +338,8 @@ all PFG :</p>
   Two methods to define these abundances are available :
   <ul>
 <li><p>from <strong>predefined rules</strong> (using <code>type</code>, 
-    <code>STRATA</code>) : <br /> <br /></p><table class='table'>
-<tr><td><strong>STRATA</strong></td><td><strong>1</strong></td><td><strong>2</strong></td><td><strong>3</strong></td><td><strong>+</strong></td></tr>
+    <code>MAX_STRATUM</code>) : <br /> <br /></p><table class='table'>
+<tr><td><strong>MAX_STRATUM</strong></td><td><strong>1</strong></td><td><strong>2</strong></td><td><strong>3</strong></td><td><strong>+</strong></td></tr>
 <tr><td><strong><code>H</code> (herbaceous)</strong></td><td><code>1</code></td><td><code>1</code></td><td><code>2</code></td><td><code>2</code></td></tr>
 <tr><td><strong><code>C</code> (chamaephyte)</strong></td><td><code>1</code></td><td><code>2</code></td><td><code>2</code></td><td><code>3</code></td></tr>
 <tr><td><strong><code>P</code> (phanerophyte)</strong></td><td><code>1</code></td><td><code>2</code></td><td><code>3</code></td><td><code>3</code></td></tr>
@@ -384,10 +355,10 @@ all PFG :</p>
   contribute to shade half less</em>) than mature individuals <br /> <br />
   Two methods to define these sizes are available :
   <ul>
-<li><p>from <strong>predefined rules</strong> (using <code>type</code>, <code>STRATA</code>) 
+<li><p>from <strong>predefined rules</strong> (using <code>type</code>, <code>MAX_STRATUM</code>) 
     : <br /> <br /></p>    
 <p></p><table class='table'>
-<tr><td><strong>STRATA</strong></td><td><strong>1</strong></td><td><strong>2</strong></td><td><strong>3</strong></td><td><strong>+</strong></td></tr>
+<tr><td><strong>MAX_STRATUM</strong></td><td><strong>1</strong></td><td><strong>2</strong></td><td><strong>3</strong></td><td><strong>+</strong></td></tr>
 <tr><td><strong><code>H</code> (herbaceous)</strong></td><td><code>100%</code></td><td><code>80%</code></td><td><code>50%</code></td><td><code>50%</code></td></tr>
 <tr><td><strong><code>C</code> (chamaephyte)</strong></td><td><code>100%</code></td><td><code>50%</code></td><td><code>50%</code></td><td><code>50%</code></td></tr>
 <tr><td><strong><code>P</code> (phanerophyte)</strong></td><td><code>50%</code></td><td><code>50%</code></td><td><code>50%</code></td><td><code>10%</code></td></tr>

@@ -26,7 +26,7 @@ It contains documentation and functions to create and organize all input files r
 
 **1. Selection of dominant species** 
 
-- with the function [PRE_FATE.selectDominant](reference/PRE_FATE.selectDominant.html)  
+- with the function [PRE_FATE.selectDominant](../reference/PRE_FATE.selectDominant.html)  
 
 **2. Overlap of species climatic niches**  
 
@@ -34,15 +34,16 @@ It contains documentation and functions to create and organize all input files r
 
 **3. Calculation of species pairwise distance**  
 
-- by combining overlap and functional distances with the function [PRE_FATE.speciesDistance](reference/PRE_FATE.speciesDistance.html)
+- by combining overlap and functional distances with the function [PRE_FATE.speciesDistance](../reference/PRE_FATE.speciesDistance.html)
 
 **4. Clustering of species :**  
 
 - calculate all possible clusters, and the corresponding evaluation metrics  
-with the function [PRE_FATE.speciesClustering_step1](reference/PRE_FATE.speciesClustering_step1.html)
+with the function [PRE_FATE.speciesClustering_step1](../reference/PRE_FATE.speciesClustering_step1.html)
 - choose the best number of clusters from the previous step and find determinant species  
-with the function [PRE_FATE.speciesClustering_step2](reference/PRE_FATE.speciesClustering_step2.html)
-- toto [PRE_FATE.speciesClustering_step3](reference/PRE_FATE.speciesClustering_step3.html)
+with the function [PRE_FATE.speciesClustering_step2](../reference/PRE_FATE.speciesClustering_step2.html)
+- combine traits data and clustering to calculate mean / median trait values per PFG  
+with the function [PRE_FATE.speciesClustering_step3](../reference/PRE_FATE.speciesClustering_step3.html)
 
 
 <br/><br/>
@@ -54,7 +55,7 @@ with the function [PRE_FATE.speciesClustering_step2](reference/PRE_FATE.speciesC
 - Gather **occurrences** for all species within the studied area
 - Identify **dominant species** based on abundances and frequençy of sampling
 
-with the function [PRE_FATE.selectDominant](reference/PRE_FATE.selectDominant.html)  
+with the function [PRE_FATE.selectDominant](../reference/PRE_FATE.selectDominant.html)  
 
 
 #### 2. Overlap of species climatic niches
@@ -76,7 +77,7 @@ with either Principal Component Analysis (PCA) or Species Distribution Models (S
 
 
 #### 3. Calculation of species pairwise distance
-by combining overlap and functional distances with the function [PRE_FATE.speciesDistance](reference/PRE_FATE.speciesDistance.html)
+by combining overlap and functional distances with the function [PRE_FATE.speciesDistance](../reference/PRE_FATE.speciesDistance.html)
 
 - Gather **traits data** for all dominant species within the studied area  
 (traits need to be related to fundamental process of growth : light tolerance, dispersal, height...)
@@ -89,8 +90,9 @@ by combining overlap and functional distances with the function [PRE_FATE.specie
 using the **dissimilarity distances** from previous step :
 
 - calculate all possible clusters, and the corresponding evaluation metrics  
-with the function [PRE_FATE.speciesClustering_step1](reference/PRE_FATE.speciesClustering_step1.html)
+with the function [PRE_FATE.speciesClustering_step1](../reference/PRE_FATE.speciesClustering_step1.html)
 - choose the best number of clusters from the previous step and find determinant species  
-with the function [PRE_FATE.speciesClustering_step2](reference/PRE_FATE.speciesClustering_step2.html)
-- combine traits data and clustering to calculate mean / median trait values per PFG [PRE_FATE.speciesClustering_step3](reference/PRE_FATE.speciesClustering_step3.html)
+with the function [PRE_FATE.speciesClustering_step2](../reference/PRE_FATE.speciesClustering_step2.html)
+- combine traits data and clustering to calculate mean / median trait values per PFG  
+with the function [PRE_FATE.speciesClustering_step3](../reference/PRE_FATE.speciesClustering_step3.html)
 

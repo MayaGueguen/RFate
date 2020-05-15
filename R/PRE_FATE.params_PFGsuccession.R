@@ -82,7 +82,7 @@
 ##' and a set of characteristics for each PFG :
 ##' 
 ##' \describe{
-##'   \item{STRATA}{= maximum stratum that each PFG can reach}
+##'   \item{MAX_STRATUM}{= maximum stratum that each PFG can reach}
 ##'   \item{MAX_ABUNDANCE}{= maximum abundance of mature PFG in favorable 
 ##'   conditions \cr
 ##'    = It can be seen as a proxy of maximum carrying capacity for mature 
@@ -91,9 +91,9 @@
 ##'   Two methods to define these abundances are available :
 ##'   \itemize{
 ##'     \item from \strong{predefined rules} (using \code{type}, 
-##'     \code{STRATA}) : \cr \cr
+##'     \code{MAX_STRATUM}) : \cr \cr
 ##'     \tabular{rcccc}{
-##'       \strong{STRATA} \tab \strong{1} \tab \strong{2} \tab 
+##'       \strong{MAX_STRATUM} \tab \strong{1} \tab \strong{2} \tab 
 ##'       \strong{3} \tab \strong{+}\cr
 ##'       \strong{\code{H} (herbaceous)} \tab \code{1} \tab \code{1} \tab 
 ##'       \code{2} \tab \code{2} \cr
@@ -113,11 +113,11 @@
 ##'   contribute to shade half less}) than mature individuals \cr \cr
 ##'   Two methods to define these sizes are available :
 ##'   \itemize{
-##'     \item from \strong{predefined rules} (using \code{type}, \code{STRATA}) 
+##'     \item from \strong{predefined rules} (using \code{type}, \code{MAX_STRATUM}) 
 ##'     : \cr \cr
 ##'     
 ##'     \tabular{rcccc}{
-##'       \strong{STRATA} \tab \strong{1} \tab \strong{2} \tab 
+##'       \strong{MAX_STRATUM} \tab \strong{1} \tab \strong{2} \tab 
 ##'       \strong{3} \tab \strong{+}\cr
 ##'       \strong{\code{H} (herbaceous)} \tab \code{100\%} \tab \code{80\%} 
 ##'       \tab \code{50\%} \tab \code{50\%} \cr
@@ -163,8 +163,12 @@
 ##' 
 ##' \describe{
 ##'   \item{NAME}{name of the PFG}
+##'   \item{TYPE}{PFG life-form \emph{(\code{H}: herbaceous \code{C}: 
+##'   chamaephyte \code{P}: phanerophyte)}}
+##'   \item{HEIGHT}{PFG maximum height \emph{(in cm)}}
 ##'   \item{MATURITY}{PFG maturity age \emph{(in years)}}
-##'   \item{LONGEVITY}{ PFG life span \emph{(in years)}}
+##'   \item{LONGEVITY}{PFG life span \emph{(in years)}}
+##'   \item{MAX_STRATUM}{maximum height stratum that the PFG can reach}
 ##'   \item{MAX_ABUNDANCE}{maximum abundance / space (qualitative) that the PFG 
 ##'   is able to produce / occupy \cr \emph{(\code{1}: Low \code{2}: Medium 
 ##'   \code{3}: High)}}
@@ -461,12 +465,12 @@ PRE_FATE.params_PFGsuccession = function(
   }
   # barplot(table(cut(mat.PFG.succ$height, breaks = STRATA_LIMITS)))
   
-  ## GET STRATA attribution
-  STRATA = sapply(mat.PFG.succ$height, function(h) {
+  ## GET MAX_STRATUM attribution
+  MAX_STRATUM = sapply(mat.PFG.succ$height, function(h) {
     max(which(STRATA_LIMITS < h), na.rm = T)
   })
   
-  no.strata = max(STRATA)
+  no.strata = max(MAX_STRATUM)
   
   cat("\n ---------- INFORMATION : STRATA \n")
   cat("\n  Number of strata : ", no.strata)
@@ -499,10 +503,10 @@ PRE_FATE.params_PFGsuccession = function(
     MAX_ABUNDANCE[which(mat.PFG.succ$type == "H")] = 1
     MAX_ABUNDANCE[which(mat.PFG.succ$type == "C")] = 2
     MAX_ABUNDANCE[which(mat.PFG.succ$type == "P")] = 3
-    MAX_ABUNDANCE[which(STRATA == 1)] = 1
-    MAX_ABUNDANCE[which(STRATA == 2 & mat.PFG.succ$type != "H")] = 2
-    MAX_ABUNDANCE[which(STRATA > 2 & mat.PFG.succ$type == "H")] = 2
-    MAX_ABUNDANCE[which(STRATA > 3 & mat.PFG.succ$type == "C")] = 3
+    MAX_ABUNDANCE[which(MAX_STRATUM == 1)] = 1
+    MAX_ABUNDANCE[which(MAX_STRATUM == 2 & mat.PFG.succ$type != "H")] = 2
+    MAX_ABUNDANCE[which(MAX_STRATUM > 2 & mat.PFG.succ$type == "H")] = 2
+    MAX_ABUNDANCE[which(MAX_STRATUM > 3 & mat.PFG.succ$type == "C")] = 3
   }
   
   #############################################################################
@@ -536,9 +540,9 @@ PRE_FATE.params_PFGsuccession = function(
     IMM_SIZE[which(mat.PFG.succ$type == "H")] = 10
     IMM_SIZE[which(mat.PFG.succ$type == "C")] = 5
     IMM_SIZE[which(mat.PFG.succ$type == "P")] = 1
-    IMM_SIZE[which(mat.PFG.succ$type == "H" & STRATA == 2)] = 8
-    IMM_SIZE[which(mat.PFG.succ$type == "H" & STRATA > 2)] = 5
-    IMM_SIZE[which(mat.PFG.succ$type == "C" & STRATA == 1)] = 10
+    IMM_SIZE[which(mat.PFG.succ$type == "H" & MAX_STRATUM == 2)] = 8
+    IMM_SIZE[which(mat.PFG.succ$type == "H" & MAX_STRATUM > 2)] = 5
+    IMM_SIZE[which(mat.PFG.succ$type == "C" & MAX_STRATUM == 1)] = 10
     IMM_SIZE[which(mat.PFG.succ$type == "P" & mat.PFG.succ$height < 1000)] = 5
   }
   
@@ -600,7 +604,7 @@ PRE_FATE.params_PFGsuccession = function(
                             , "HEIGHT"
                             , "LONGEVITY"
                             , "MATURITY"
-                            , "STRATA"
+                            , "MAX_STRATUM"
                             , "MAX_ABUNDANCE"
                             , "IMM_SIZE"
                             , "CHANG_STR_AGES"
@@ -618,7 +622,7 @@ PRE_FATE.params_PFGsuccession = function(
                            , "HEIGHT"
                            , "LONGEVITY"
                            , "MATURITY"
-                           , "STRATA"
+                           , "MAX_STRATUM"
                            , "MAX_ABUNDANCE"
                            , "IMM_SIZE"
                            , paste0("CHANG_STR_AGES_to_str_"

@@ -74,11 +74,11 @@
 ##'   \cr }
 ##'   \item{SAVING_YEARS_ \cr ARRAYS (\emph{optional})}{file containing the 
 ##'   years for which simulation maps will be saved \cr
-##'   (see \code{\link{PRE_FATE.params_saveYears}})
+##'   (see \code{\link{PRE_FATE.params_savingYears}})
 ##'   }
 ##'   \item{SAVING_YEARS_ \cr OBJECTS (\emph{optional})}{file containing the 
 ##'   years for which simulation outputs will be saved \cr
-##'   (see \code{\link{PRE_FATE.params_saveYears}}) \cr \cr
+##'   (see \code{\link{PRE_FATE.params_savingYears}}) \cr \cr
 ##'   }
 ##'   \item{MASK}{raster mask that will define the study area}
 ##'   \item{MASK_CHANGEMASK_YEARS \cr (\emph{optional})}{file containing the years 
@@ -205,7 +205,7 @@
 ##'   \item \strong{--SAVING_DIR--}
 ##'   \itemize{
 ##'   \item --SAVED_STATE-- (\emph{optional})
-##'   \item --SAVING_YEARS_ARRAYS-- (\emph{optional})
+##'   \item --SAVING_YEARS_MAPS-- (\emph{optional})
 ##'   \item --SAVING_YEARS_OBJECTS-- (\emph{optional})
 ##'   }
 ##'   \item \strong{--MASK--}
@@ -257,7 +257,7 @@
 ##' \code{\link{PRE_FATE.params_PFGdispersal}},
 ##' \code{\link{PRE_FATE.params_PFGdisturbance}},
 ##' \code{\link{PRE_FATE.params_PFGdrought}},
-##' \code{\link{PRE_FATE.params_saveYears}},
+##' \code{\link{PRE_FATE.params_savingYears}},
 ##' \code{\link{PRE_FATE.params_changingYears}},
 ##' \code{\link{.setPattern}}
 ##' 
@@ -478,7 +478,7 @@ PRE_FATE.params_simulParameters = function(
     di = dirs.SAVE[PARAMS.combi$SAVE[i]]
     di.opt = data.frame(pat = c("SAVE_YEARS_maps", "SAVE_YEARS_objects")
                         , nam = c("SAVE.maps", "SAVE.obj")
-                        , param = c("SAVING_YEARS_ARRAYS", "SAVING_YEARS_OBJECTS")
+                        , param = c("SAVING_YEARS_MAPS", "SAVING_YEARS_OBJECTS")
                         , stringsAsFactors = FALSE)
     
     warn.messages = list()

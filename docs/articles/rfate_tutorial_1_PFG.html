@@ -113,39 +113,6 @@
     Reference
   </a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="../articles/fate_tutorial_0_publications.html">FATE tutorial 0 - Publications</a>
-    </li>
-    <li>
-      <a href="../articles/fate_tutorial_0_modelling_framework.html">FATE tutorial 0 - Modelling framework</a>
-    </li>
-    <li>
-      <a href="../articles/fate_tutorial_1_PFG.html">FATE tutorial 1 - Principle of PFG</a>
-    </li>
-    <li>
-      <a href="../articles/fate_tutorial_2_RUN_SIMULATION.html">FATE tutorial 2 - Run a simulation</a>
-    </li>
-    <li>
-      <a href="../articles/fate_tutorial_3_MODULES.html">FATE tutorial 3 - Use a module</a>
-    </li>
-    <li>
-      <a href="../articles/rfate_tutorial_1_PFG.html">&lt;font color='#068f96'&gt;&lt;i class='fa fa-battery-quarter'&gt;&lt;/i&gt; `PRE_FATE` - build Plant Functional Groups (PFG)&lt;/font&gt;</a>
-    </li>
-    <li>
-      <a href="../articles/rfate_tutorial_2_params.html">&lt;font color='#068f96'&gt; &lt;i class='fa fa-battery-half'&gt;&lt;/i&gt; `PRE_FATE` - build parameter files &lt;/font&gt;</a>
-    </li>
-    <li>
-      <a href="../articles/rfate_tutorial_3_graphics.html">&lt;font color='#068f96'&gt; &lt;i class='fa fa-battery-three-quarters'&gt;&lt;/i&gt; `POST_FATE` - graphics &lt;/font&gt;</a>
-    </li>
-  </ul>
-</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
@@ -200,7 +167,7 @@ See <a href="fate_tutorial_1_PFG.html">Principle of PFG</a> <code>FATE</code> tu
 <p><br></p>
 <p><strong>1. Selection of dominant species</strong></p>
 <ul>
-<li>with the function <a href="reference/PRE_FATE.selectDominant.html">PRE_FATE.selectDominant</a>
+<li>with the function <a href="../reference/PRE_FATE.selectDominant.html">PRE_FATE.selectDominant</a>
 </li>
 </ul>
 <p><strong>2. Overlap of species climatic niches</strong></p>
@@ -209,18 +176,19 @@ See <a href="fate_tutorial_1_PFG.html">Principle of PFG</a> <code>FATE</code> tu
 </ul>
 <p><strong>3. Calculation of species pairwise distance</strong></p>
 <ul>
-<li>by combining overlap and functional distances with the function <a href="reference/PRE_FATE.speciesDistance.html">PRE_FATE.speciesDistance</a>
+<li>by combining overlap and functional distances with the function <a href="../reference/PRE_FATE.speciesDistance.html">PRE_FATE.speciesDistance</a>
 </li>
 </ul>
 <p><strong>4. Clustering of species :</strong></p>
 <ul>
 <li>calculate all possible clusters, and the corresponding evaluation metrics<br>
-with the function <a href="reference/PRE_FATE.speciesClustering_step1.html">PRE_FATE.speciesClustering_step1</a>
+with the function <a href="../reference/PRE_FATE.speciesClustering_step1.html">PRE_FATE.speciesClustering_step1</a>
 </li>
 <li>choose the best number of clusters from the previous step and find determinant species<br>
-with the function <a href="reference/PRE_FATE.speciesClustering_step2.html">PRE_FATE.speciesClustering_step2</a>
+with the function <a href="../reference/PRE_FATE.speciesClustering_step2.html">PRE_FATE.speciesClustering_step2</a>
 </li>
-<li>toto <a href="reference/PRE_FATE.speciesClustering_step3.html">PRE_FATE.speciesClustering_step3</a>
+<li>combine traits data and clustering to calculate mean / median trait values per PFG<br>
+with the function <a href="../reference/PRE_FATE.speciesClustering_step3.html">PRE_FATE.speciesClustering_step3</a>
 </li>
 </ul>
 <p><br><br></p>
@@ -235,7 +203,7 @@ with the function <a href="reference/PRE_FATE.speciesClustering_step2.html">PRE_
 <li>Gather <strong>occurrences</strong> for all species within the studied area</li>
 <li>Identify <strong>dominant species</strong> based on abundances and frequençy of sampling</li>
 </ul>
-<p>with the function <a href="reference/PRE_FATE.selectDominant.html">PRE_FATE.selectDominant</a></p>
+<p>with the function <a href="../reference/PRE_FATE.selectDominant.html">PRE_FATE.selectDominant</a></p>
 </div>
 <div id="overlap-of-species-climatic-niches" class="section level4">
 <h4 class="hasAnchor">
@@ -270,7 +238,7 @@ combining environmental data and occurrences to determine the <em>climatic niche
 <div id="calculation-of-species-pairwise-distance" class="section level4">
 <h4 class="hasAnchor">
 <a href="#calculation-of-species-pairwise-distance" class="anchor"></a>3. Calculation of species pairwise distance</h4>
-<p>by combining overlap and functional distances with the function <a href="reference/PRE_FATE.speciesDistance.html">PRE_FATE.speciesDistance</a></p>
+<p>by combining overlap and functional distances with the function <a href="../reference/PRE_FATE.speciesDistance.html">PRE_FATE.speciesDistance</a></p>
 <ul>
 <li>Gather <strong>traits data</strong> for all dominant species within the studied area<br>
 (traits need to be related to fundamental process of growth : light tolerance, dispersal, height…)</li>
@@ -284,12 +252,13 @@ combining environmental data and occurrences to determine the <em>climatic niche
 <p>using the <strong>dissimilarity distances</strong> from previous step :</p>
 <ul>
 <li>calculate all possible clusters, and the corresponding evaluation metrics<br>
-with the function <a href="reference/PRE_FATE.speciesClustering_step1.html">PRE_FATE.speciesClustering_step1</a>
+with the function <a href="../reference/PRE_FATE.speciesClustering_step1.html">PRE_FATE.speciesClustering_step1</a>
 </li>
 <li>choose the best number of clusters from the previous step and find determinant species<br>
-with the function <a href="reference/PRE_FATE.speciesClustering_step2.html">PRE_FATE.speciesClustering_step2</a>
+with the function <a href="../reference/PRE_FATE.speciesClustering_step2.html">PRE_FATE.speciesClustering_step2</a>
 </li>
-<li>combine traits data and clustering to calculate mean / median trait values per PFG <a href="reference/PRE_FATE.speciesClustering_step3.html">PRE_FATE.speciesClustering_step3</a>
+<li>combine traits data and clustering to calculate mean / median trait values per PFG<br>
+with the function <a href="../reference/PRE_FATE.speciesClustering_step3.html">PRE_FATE.speciesClustering_step3</a>
 </li>
 </ul>
 </div>
