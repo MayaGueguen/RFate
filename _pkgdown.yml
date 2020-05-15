@@ -66,7 +66,7 @@ reference:
   - title: Interface
     desc:  Graphical User Interface (shiny application)
     contents:
-      - "RFATE_SHINY.run"
+      - "RFATE.run"
   - title: Build Plant Functional Groups (PFG)
     desc:  Functions to select dominant species, compute functional distance between species and build clusters.
     contents:
@@ -91,6 +91,9 @@ reference:
       - "PRE_FATE.params_globalParameters"
       - "PRE_FATE.params_simulParameters"
       - "PRE_FATE.params_multipleSet"
+  - title: Run FATE simulation
+    contents:
+      - "FATE.run"
   - title: Analyze FATE outputs
     desc:  Evalute predicted maps, produce summary and dynamic graphics.
     contents:
