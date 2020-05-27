@@ -1,11 +1,11 @@
 
 ####################################################################
 
-output$UI.soil.PFG = renderUI({
+output$UI.disp.PFG = renderUI({
   if (length(RV$names.PFG) == 0)
   {
     shinyjs::disabled(
-      selectInput(inputId = "soil.PFG"
+      selectInput(inputId = "disp.PFG"
                   , label = NULL
                   , choices = RV$names.PFG
                   , selected = RV$names.PFG[1]
@@ -14,10 +14,10 @@ output$UI.soil.PFG = renderUI({
     )
   } else
   {
-    selectInput(inputId = "soil.PFG"
+    selectInput(inputId = "disp.PFG"
                 , label = NULL
-                , choices = RV$names.PFG
-                , selected = RV$names.PFG[1]
+                , choices = RV$names.PFG[which(!(RV$names.PFG %in% RV$mat.PFG.disp$PFG))]
+                , selected = RV$names.PFG[which(!(RV$names.PFG %in% RV$mat.PFG.disp$PFG))][1]
                 , multiple = F
                 , width = "100%")
   }
@@ -26,48 +26,41 @@ output$UI.soil.PFG = renderUI({
 
 ####################################################################
 
-output$mat.PFG.soil = renderTable({ RV$mat.PFG.soil })
+output$mat.PFG.disp = renderTable({ RV$mat.PFG.disp })
 
-observeEvent(input$add.PFG.soil, {
-  RV$mat.PFG.soil <- rbind(RV$mat.PFG.soil
-                           , data.frame(PFG = input$soil.PFG
-                                        , type = input$soil.type
-                                        , soil_contrib = as.numeric(input$soil.contrib)
-                                        , soil_tol_min = as.numeric(input$soil.tol_min)
-                                        , soil_tol_max = as.numeric(input$soil.tol_max)
-                                        , lifeStage = rep(c("Germinant", "Immature", "Mature"), each = 3)
-                                        , soilResources = rep(c("Low", "Medium", "High"), 3)
-                                        , soil_tol = c(as.numeric(input$soil.Ge.L)
-                                                       , as.numeric(input$soil.Ge.M)
-                                                       , as.numeric(input$soil.Ge.H)
-                                                       , as.numeric(input$soil.Im.L)
-                                                       , as.numeric(input$soil.Im.M)
-                                                       , as.numeric(input$soil.Im.H)
-                                                       , as.numeric(input$soil.Ma.L)
-                                                       , as.numeric(input$soil.Ma.M)
-                                                       , as.numeric(input$soil.Ma.H))
-                           ))
-  
-  shinyjs::enable("create.soil")
+observeEvent(input$add.PFG.disp, {
+  RV$mat.PFG.disp <- rbind(RV$mat.PFG.disp
+                           , data.frame(PFG = input$disp.PFG
+                                        , d50 = as.numeric(input$disp.d50)
+                                        , d99 = as.numeric(input$disp.d99)
+                                        , ldd = as.numeric(input$disp.ldd)))
 })
 
-observeEvent(input$delete.PFG.soil, {
-  RV$mat.PFG.soil <- data.frame()
-  shinyjs::disable("create.soil")
+observeEvent(input$delete.PFG.disp, {
+  RV$mat.PFG.disp <- data.frame()
+})
+
+observeEvent(RV$mat.PFG.disp, {
+  if (nrow(RV$mat.PFG.disp) > 0)
+  {
+    shinyjs::enable("create.disp")
+  } else
+  {
+    shinyjs::disable("create.disp")
+  }
 })
 
 ####################################################################
 
-observeEvent(input$create.soil, {
+observeEvent(input$create.disp, {
   if (input$create.skeleton > 0)
   {
     get_res = print_messages(as.expression(
-      PRE_FATE.params_PFGsoil(name.simulation = input$name.simul
-                              , mat.PFG.soil = unique(RV$mat.PFG.soil[, c("PFG", "type", "soil_contrib", "soil_tol_min", "soil_tol_max")])
-                              , mat.PFG.tol = RV$mat.PFG.soil[, c("PFG", "lifeStage", "soilResources", "soil_tol")]
-                              , opt.folder.name = get_opt.folder.name()
+      PRE_FATE.params_PFGdispersal(name.simulation = input$name.simul
+                                   , mat.PFG.disp = RV$mat.PFG.disp
+                                   , opt.folder.name = get_opt.folder.name()
       )
-    ), cut_pattern = paste0(input$name.simul, "/DATA/PFGS/SOIL/"))
+    ), cut_pattern = paste0(input$name.simul, "/DATA/PFGS/DISP/"))
     
   } else
   {
@@ -77,25 +70,25 @@ observeEvent(input$create.soil, {
 
 ####################################################################
 
-get_tab.soil = eventReactive(paste(input$name.simul
-                                     , input$create.soil
-                                     , RV$compt.soil.nb), {
+get_tab.disp = eventReactive(paste(input$name.simul
+                                     , input$create.disp
+                                     , RV$compt.disp.nb), {
                                        if (!is.null(input$name.simul) && nchar(input$name.simul) > 0)
                                        {
-                                         path_folder = paste0(input$name.simul, "/DATA/PFGS/SOIL/")
+                                         path_folder = paste0(input$name.simul, "/DATA/PFGS/DISP/")
                                          tab = get_files(path_folder, skip.no = 0, opt.sub_folder = TRUE)
                                          
                                          if (!is.null(tab) && ncol(tab) > 0)
                                          {
-                                           RV$compt.soil.nb = ncol(tab)
-                                           RV$compt.soil.files = colnames(tab)
+                                           RV$compt.disp.nb = ncol(tab)
+                                           RV$compt.disp.files = colnames(tab)
                                            return(tab)
                                          }
                                        }
                                      })
 
-output$UI.files.soil = renderUI({
-  tab = get_tab.soil()
+output$UI.files.disp = renderUI({
+  tab = get_tab.disp()
   tab = as.data.frame(tab)
   
   if (!is.null(tab) && ncol(tab) > 0)
@@ -103,18 +96,18 @@ output$UI.files.soil = renderUI({
     tagList(
       fluidRow(
         column(4
-               , checkboxInput(inputId = "check.soil.all"
+               , checkboxInput(inputId = "check.disp.all"
                                , label = HTML("<em>Select all</em>")
                                , value = TRUE
                                , width = "100%"))
         , column(3
-                 , actionButton(inputId = "view.soil.select"
+                 , actionButton(inputId = "view.disp.select"
                                 , label = "View selected"
                                 , icon = icon("eye")
                                 , width = "100%"
                                 , style = HTML(paste(button.style, "margin-bottom: 3px;"))))
         , column(3
-                 , actionButton(inputId = "delete.soil.select"
+                 , actionButton(inputId = "delete.disp.select"
                                 , label = "Delete selected"
                                 , icon = icon("trash-alt")
                                 , width = "100%"
@@ -125,7 +118,7 @@ output$UI.files.soil = renderUI({
         column(10
                , lapply(1:ncol(tab)
                         , function(i) {
-                          checkboxInput(inputId = paste0("check.soil.", colnames(tab)[i])
+                          checkboxInput(inputId = paste0("check.disp.", colnames(tab)[i])
                                         , label = gsub("__", "/", colnames(tab)[i])
                                         , value = TRUE
                                         , width = "100%")
@@ -134,7 +127,7 @@ output$UI.files.soil = renderUI({
         # , column(2
         #          , lapply(1:ncol(tab)
         #                   , function(i) {
-        #                     actionButton(inputId = paste0("upload.soil.", colnames(tab)[i])
+        #                     actionButton(inputId = paste0("upload.disp.", colnames(tab)[i])
         #                                  , label = NULL
         #                                  , icon = icon("upload")
         #                                  , width = "100%"
@@ -146,44 +139,44 @@ output$UI.files.soil = renderUI({
   }
 })
 
-# observeEvent(RV$compt.soil.nb, {
-#   for (i in 1:RV$compt.soil.nb)
+# observeEvent(RV$compt.disp.nb, {
+#   for (i in 1:RV$compt.disp.nb)
 #   {
-#     observeEvent(input[[paste0("upload.soil.", RV$compt.soil.files[i])]], {
-#       get_update.soil(file.soilParam = paste0(input$name.simul
-#                                                   , "/DATA/PFGS/SOIL/"
-#                                                   , RV$compt.soil.files[i]))
+#     observeEvent(input[[paste0("upload.disp.", RV$compt.disp.files[i])]], {
+#       get_update.disp(file.dispParam = paste0(input$name.simul
+#                                                   , "/DATA/PFGS/DISP/"
+#                                                   , RV$compt.disp.files[i]))
 #     })
 #   }
 # })
 
 
-observeEvent(input$check.soil.all, {
-  for (col_tab in RV$compt.soil.files)
+observeEvent(input$check.disp.all, {
+  for (col_tab in RV$compt.disp.files)
   {
     updateCheckboxInput(session
-                        , inputId = paste0("check.soil.", col_tab)
-                        , value = input$check.soil.all)
+                        , inputId = paste0("check.disp.", col_tab)
+                        , value = input$check.disp.all)
   }
 })
 
-observeEvent(input$view.soil.select, {
-  output$created_table.soil = renderDataTable({
-    req(grep(pattern = "check.soil.", x = names(input), value = TRUE))
+observeEvent(input$view.disp.select, {
+  output$created_table.disp = renderDataTable({
+    req(grep(pattern = "check.disp.", x = names(input), value = TRUE))
     
-    tab = get_tab.soil()
+    tab = get_tab.disp()
     tab = as.data.frame(tab)
     
     if (!is.null(tab) && ncol(tab) > 0)
     {
-      if (input$check.soil.all)
+      if (input$check.disp.all)
       {
         col_toKeep = rep(TRUE, ncol(tab))
       } else
       {
         col_toKeep = foreach(i = 1:ncol(tab), .combine = "c") %do%
         {
-          eval(parse(text = paste0("res = input$check.soil.", colnames(tab)[i])))
+          eval(parse(text = paste0("res = input$check.disp.", colnames(tab)[i])))
           return(res)
         }
       }
@@ -192,26 +185,26 @@ observeEvent(input$view.soil.select, {
   })
 })
 
-observeEvent(input$delete.soil.select, {
-  if (input$check.soil.all)
+observeEvent(input$delete.disp.select, {
+  if (input$check.disp.all)
   {
-    col_toKeep = rep(TRUE,RV$compt.soil.nb)
+    col_toKeep = rep(TRUE,RV$compt.disp.nb)
   } else
   {
-    col_toKeep = foreach(i = 1:RV$compt.soil.nb, .combine = "c") %do%
+    col_toKeep = foreach(i = 1:RV$compt.disp.nb, .combine = "c") %do%
     {
-      eval(parse(text = paste0("res = input$check.soil.", RV$compt.soil.files[i])))
+      eval(parse(text = paste0("res = input$check.disp.", RV$compt.disp.files[i])))
       return(res)
     }
   }
   
   if (sum(col_toKeep) > 0)
   {
-    file.soilParam = RV$compt.soil.files[col_toKeep]
+    file.dispParam = RV$compt.disp.files[col_toKeep]
     shinyalert(type = "warning"
                , text = paste0("The simulation parameter file(s) "
-                               , paste0(input$name.simul, "/DATA/PFGS/SOIL/ \n")
-                               , paste0(gsub("__", "/", file.soilParam), collapse = " , ")
+                               , paste0(input$name.simul, "/DATA/PFGS/DISP/ \n")
+                               , paste0(gsub("__", "/", file.dispParam), collapse = " , ")
                                , "\n will be removed !\n"
                                , "Make sure this is what you want.")
                , showCancelButton = TRUE
@@ -220,25 +213,25 @@ observeEvent(input$delete.soil.select, {
                {
                  if (x)
                  {
-                   for (fi in file.soilParam) 
+                   for (fi in file.dispParam) 
                    {
-                     file.remove(paste0(input$name.simul, "/DATA/PFGS/SOIL/", gsub("__", "/", fi)))
+                     file.remove(paste0(input$name.simul, "/DATA/PFGS/DISP/", gsub("__", "/", fi)))
                      if (nchar(dirname(gsub("__", "/", fi))) > 0)
                      {
-                       sub_dir = paste0(input$name.simul, "/DATA/PFGS/SOIL/", dirname(gsub("__", "/", fi)))
+                       sub_dir = paste0(input$name.simul, "/DATA/PFGS/DISP/", dirname(gsub("__", "/", fi)))
                        if (dir.exists(sub_dir) && length(list.files(path = sub_dir)) == 0)
                        {
                          unlink(sub_dir, recursive = TRUE)
                        }
                      }
-                     removeUI(selector = paste0("check.soil.", fi)
+                     removeUI(selector = paste0("check.disp.", fi)
                               , multiple = FALSE
                               , immediate = TRUE)
-                     removeUI(selector = paste0("upload.soil.", fi)
+                     removeUI(selector = paste0("upload.disp.", fi)
                               , multiple = FALSE
                               , immediate = TRUE)
                    }
-                   RV$compt.soil.nb = min(0, RV$compt.soil.nb - sum(col_toKeep))
+                   RV$compt.disp.nb = min(0, RV$compt.disp.nb - sum(col_toKeep))
                  }
                })
   }

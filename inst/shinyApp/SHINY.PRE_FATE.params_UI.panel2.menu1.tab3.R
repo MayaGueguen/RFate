@@ -53,7 +53,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                )
              ) ## END wellPanel
              , tabsetPanel(
-               tabPanel(title = HTML("<span class='tabPanel_subtitle'>Succession - Light</span>")
+               tabPanel(title = HTML("<span class='tabPanel_subtitle'>Succession</span>")
                         , value = "panel.succ"
                         , fluidRow(
                           column(6
@@ -78,21 +78,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                      ) %>% helper(type = "inline"
                                                   , title = "Create PFG succession files"
                                                   , size = "l"
-                                                  , content = help.HTML("https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGsuccession.html")
-                                     )
-                                   )
-                                   , br()
-                                   , br()
-                                   , shinyjs::disabled(
-                                     actionButton(inputId = "create.light"
-                                                  , label = "Create PFG light files"
-                                                  , icon = icon("file")
-                                                  , width = "100%"
-                                                  , style = HTML(button.style)
-                                     ) %>% helper(type = "inline"
-                                                  , title = "Create PFG light files"
-                                                  , size = "l"
-                                                  , content = help.HTML("https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGlight.html")
+                                                  , content = help.HTML("./../../docs/reference/PRE_FATE.params_PFGsuccession.html")
                                      )
                                    )
                           )
@@ -123,7 +109,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                                   , value = 0
                                                   , min = 0
                                                   , width = "100%"))
-                          , column(2
+                          , column(3
                                    , br()
                                    , br()
                                    , HTML("<strong>maturity</strong>")
@@ -132,7 +118,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                                   , value = 0
                                                   , min = 0
                                                   , width = "100%"))
-                          , column(2
+                          , column(3
                                    , br()
                                    , br()
                                    , HTML("<strong>longevity</strong>")
@@ -141,25 +127,15 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                                   , value = 0
                                                   , min = 0
                                                   , width = "100%"))
-                          , column(2
-                                   , br()
-                                   , br()
-                                   , HTML("<strong>light</strong>")
-                                   , selectInput(inputId = "succ.light"
-                                                 , label = NULL
-                                                 , choices = 0:5
-                                                 , selected = NULL
-                                                 , multiple = F
-                                                 , width = "100%"))
                         )
                         , fluidRow(
                           column(11
                                  , br()
                                  , wellPanel(style = "overflow-x:scroll;"
-                                             , tableOutput(outputId = "mat.PFG.ALL")))
+                                             , tableOutput(outputId = "mat.PFG.succ")))
                           , column(1
                                    , br()
-                                   , actionButton(inputId = "delete.PFG.ALL"
+                                   , actionButton(inputId = "delete.PFG.succ"
                                                   , label = NULL
                                                   , icon = icon("trash")
                                                   , style = HTML(button.style)
@@ -178,24 +154,15 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                    , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px; overflow-x:scroll;"))
                                                , dataTableOutput(outputId = "created_table.succ"))
                           )
-                          , br()
-                          , br()
-                          , column(12
-                                   , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px; overflow-y:scroll; max-height:250px;"))
-                                               , uiOutput(outputId = "UI.files.light")))
-                          , column(12
-                                   , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px; overflow-x:scroll;"))
-                                               , dataTableOutput(outputId = "created_table.light"))
-                          )
                         )
                ) ## END tabPanel (succ)
-               , tabPanel(title = HTML("<span class='tabPanel_subtitle'>Dispersal</span>")
-                          , value = "panel.disp"
+               , tabPanel(title = HTML("<span class='tabPanel_subtitle'>Light</span>")
+                          , value = "panel.light"
                           , fluidRow(
                             column(6
                                    , br()
                                    , shinyjs::disabled(
-                                     actionButton(inputId = "add.PFG.disp"
+                                     actionButton(inputId = "add.PFG.light"
                                                   , label = "Add PFG"
                                                   , icon = icon("plus")
                                                   , width = "100%"
@@ -206,15 +173,15 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                             , column(6
                                      , br()
                                      , shinyjs::disabled(
-                                       actionButton(inputId = "create.disp"
-                                                    , label = "Create PFG dispersal files"
+                                       actionButton(inputId = "create.light"
+                                                    , label = "Create PFG light files"
                                                     , icon = icon("file")
                                                     , width = "100%"
                                                     , style = HTML(button.style)
                                        ) %>% helper(type = "inline"
-                                                    , title = "Create PFG dispersal files"
+                                                    , title = "Create PFG light files"
                                                     , size = "l"
-                                                    , content = help.HTML("https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGdispersal.html")
+                                                    , content = help.HTML("./../../docs/reference/PRE_FATE.params_PFGlight.html")
                                        )
                                      )
                             )
@@ -224,121 +191,59 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                    , br()
                                    , br()
                                    , HTML("<strong>PFG</strong>")
-                                   , uiOutput(outputId = "UI.disp.PFG")
+                                   , uiOutput(outputId = "UI.light.PFG")
                             )
                             , column(2
                                      , br()
                                      , br()
-                                     , HTML("<strong>d50</strong>")
-                                     , numericInput(inputId = "disp.d50"
-                                                    , label = NULL
-                                                    , value = 0
-                                                    , min = 0
-                                                    , width = "100%"))
+                                     , HTML("<strong>type</strong>")
+                                     , selectInput(inputId = "light.type"
+                                                   , label = NULL
+                                                   , choices = c(".", "H", "C", "P")
+                                                   , selected = "."
+                                                   , multiple = F
+                                                   , width = "100%"))
                             , column(2
                                      , br()
                                      , br()
-                                     , HTML("<strong>d99</strong>")
-                                     , numericInput(inputId = "disp.d99"
+                                     , HTML("<strong>Active germination</strong>")
+                                     , radioButtons(inputId = "light.opt.ag"
                                                     , label = NULL
-                                                    , value = 0
-                                                    , min = 0
-                                                    , width = "100%"))
-                            , column(2
-                                     , br()
-                                     , br()
-                                     , HTML("<strong>ldd</strong>")
-                                     , numericInput(inputId = "disp.ldd"
-                                                    , label = NULL
-                                                    , value = 0
-                                                    , min = 0
-                                                    , width = "100%"))
-                          )
-                          , fluidRow(
-                            column(10
-                                   , br()
-                                   , wellPanel(style = "overflow-x:scroll;"
-                                               , tableOutput(outputId = "mat.PFG.disp")))
-                            , column(2
-                                     , br()
-                                     , actionButton(inputId = "delete.PFG.disp"
-                                                    , label = NULL
-                                                    , icon = icon("trash")
-                                                    , style = HTML(button.style)
-                                     )
-                            )
-                          )
-                          , fluidRow(
-                            br()
-                            , br()
-                            , br()
-                            , br()
-                            , column(12
-                                     , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px; overflow-y:scroll; max-height:250px;"))
-                                                 , uiOutput(outputId = "UI.files.disp")))
-                            , column(12
-                                     , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px; overflow-x:scroll;"))
-                                                 , dataTableOutput(outputId = "created_table.disp"))
-                            )
-                          )
-               ) ## END tabPanel (dispersal)
-               , tabPanel(title = HTML("<span class='tabPanel_subtitle'>Disturbances</span>")
-                          , value = "panel.dist"
-                          , fluidRow(
-                            column(6
-                                   , br()
-                                   , actionButton(inputId = "add.PFG.dist"
-                                                  , label = "Add disturbance"
-                                                  , icon = icon("plus")
-                                                  , width = "100%"
-                                                  , style = HTML(button.style)
-                                   )
-                            )
-                            , column(6
-                                     , br()
-                                     , shinyjs::disabled(
-                                       actionButton(inputId = "create.dist"
-                                                    , label = "Create PFG disturbance files"
-                                                    , icon = icon("file")
-                                                    , width = "100%"
-                                                    , style = HTML(button.style)
-                                       ) %>% helper(type = "inline"
-                                                    , title = "Create PFG disturbance files"
-                                                    , size = "l"
-                                                    , content = help.HTML("https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGdisturbance.html")
-                                       )
-                                     )
-                            )
-                          )
-                          , fluidRow(
-                            column(4
-                                   , br()
-                                   , br()
-                                   , HTML("<strong>Disturbance</strong>")
-                                   , textInput(inputId = "dist.name"
-                                               , label = NULL
-                                               , width = "100%"))
-                            , column(4
-                                     , br()
-                                     , br()
-                                     , HTML("<strong>Disturbance</strong>")
-                                     , radioButtons(inputId = "dist.grouping"
-                                                    , label = NULL
-                                                    , choices = c("by type", "by PFG")
+                                                    , choices = c("by type", "by strategy", "user-defined")
                                                     , selected = "by type"
                                                     , width = "100%"))
-                          )
-                          ,fluidRow(
-                            uiOutput(outputId = "UI.dist.grouping")
+                            , column(6, br(), br(), uiOutput(outputId = "UI.light.opt.ag"))
                           )
                           , fluidRow(
-                            column(10
-                                   , br()
-                                   , wellPanel(style = "overflow-x:scroll;"
-                                               , tableOutput(outputId = "mat.PFG.dist")))
+                            column(2
+                                     , br()
+                                     , br()
+                                     , HTML("<strong>light</strong>")
+                                     , selectInput(inputId = "light.light"
+                                                   , label = NULL
+                                                   , choices = c(".", 0:5)
+                                                   , selected = "."
+                                                   , multiple = F
+                                                   , width = "100%"))
                             , column(2
                                      , br()
-                                     , actionButton(inputId = "delete.PFG.dist"
+                                     , br()
+                                     , HTML("<strong>Tolerance</strong>")
+                                     , radioButtons(inputId = "light.opt.tol"
+                                                    , label = NULL
+                                                    , choices = c("by type & light", "by strategy", "user-defined")
+                                                    , selected = "by type & light"
+                                                    , width = "100%"))
+                            , column(8, br(), br(), uiOutput(outputId = "UI.light.opt.tol"))
+                          )
+                          , fluidRow(
+                            column(11
+                                   , br()
+                                   , wellPanel(style = "overflow-x:scroll;"
+                                               , tableOutput(outputId = "mat.PFG.light")))
+                            , column(1
+                                     , br()
+                                     , actionButton(inputId = "delete.PFG.light"
                                                     , label = NULL
                                                     , icon = icon("trash")
                                                     , style = HTML(button.style)
@@ -352,13 +257,13 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                             , br()
                             , column(12
                                      , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px; overflow-y:scroll; max-height:250px;"))
-                                                 , uiOutput(outputId = "UI.files.dist")))
+                                                 , uiOutput(outputId = "UI.files.light")))
                             , column(12
                                      , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px; overflow-x:scroll;"))
-                                                 , dataTableOutput(outputId = "created_table.dist"))
+                                                 , dataTableOutput(outputId = "created_table.light"))
                             )
                           )
-               ) ## END tabPanel (disturbances)
+               ) ## END tabPanel (light)
                , tabPanel(title = HTML("<span class='tabPanel_subtitle'>Soil</span>")
                           , value = "panel.soil"
                           , fluidRow(
@@ -384,7 +289,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                        ) %>% helper(type = "inline"
                                                     , title = "Create PFG soil files"
                                                     , size = "l"
-                                                    , content = help.HTML("https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGsoil.html")
+                                                    , content = help.HTML("./../../docs/reference/PRE_FATE.params_PFGsoil.html")
                                        )
                                      )
                             )
@@ -538,6 +443,176 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                             )
                           )
                ) ## END tabPanel (soil)
+               , tabPanel(title = HTML("<span class='tabPanel_subtitle'>Dispersal</span>")
+                          , value = "panel.disp"
+                          , fluidRow(
+                            column(6
+                                   , br()
+                                   , shinyjs::disabled(
+                                     actionButton(inputId = "add.PFG.disp"
+                                                  , label = "Add PFG"
+                                                  , icon = icon("plus")
+                                                  , width = "100%"
+                                                  , style = HTML(button.style)
+                                     )
+                                   )
+                            )
+                            , column(6
+                                     , br()
+                                     , shinyjs::disabled(
+                                       actionButton(inputId = "create.disp"
+                                                    , label = "Create PFG dispersal files"
+                                                    , icon = icon("file")
+                                                    , width = "100%"
+                                                    , style = HTML(button.style)
+                                       ) %>% helper(type = "inline"
+                                                    , title = "Create PFG dispersal files"
+                                                    , size = "l"
+                                                    , content = help.HTML("./../../docs/reference/PRE_FATE.params_PFGdispersal.html")
+                                       )
+                                     )
+                            )
+                          )
+                          , fluidRow(
+                            column(2
+                                   , br()
+                                   , br()
+                                   , HTML("<strong>PFG</strong>")
+                                   , uiOutput(outputId = "UI.disp.PFG")
+                            )
+                            , column(2
+                                     , br()
+                                     , br()
+                                     , HTML("<strong>d50</strong>")
+                                     , numericInput(inputId = "disp.d50"
+                                                    , label = NULL
+                                                    , value = 0
+                                                    , min = 0
+                                                    , width = "100%"))
+                            , column(2
+                                     , br()
+                                     , br()
+                                     , HTML("<strong>d99</strong>")
+                                     , numericInput(inputId = "disp.d99"
+                                                    , label = NULL
+                                                    , value = 0
+                                                    , min = 0
+                                                    , width = "100%"))
+                            , column(2
+                                     , br()
+                                     , br()
+                                     , HTML("<strong>ldd</strong>")
+                                     , numericInput(inputId = "disp.ldd"
+                                                    , label = NULL
+                                                    , value = 0
+                                                    , min = 0
+                                                    , width = "100%"))
+                          )
+                          , fluidRow(
+                            column(10
+                                   , br()
+                                   , wellPanel(style = "overflow-x:scroll;"
+                                               , tableOutput(outputId = "mat.PFG.disp")))
+                            , column(2
+                                     , br()
+                                     , actionButton(inputId = "delete.PFG.disp"
+                                                    , label = NULL
+                                                    , icon = icon("trash")
+                                                    , style = HTML(button.style)
+                                     )
+                            )
+                          )
+                          , fluidRow(
+                            br()
+                            , br()
+                            , br()
+                            , br()
+                            , column(12
+                                     , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px; overflow-y:scroll; max-height:250px;"))
+                                                 , uiOutput(outputId = "UI.files.disp")))
+                            , column(12
+                                     , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px; overflow-x:scroll;"))
+                                                 , dataTableOutput(outputId = "created_table.disp"))
+                            )
+                          )
+               ) ## END tabPanel (dispersal)
+               , tabPanel(title = HTML("<span class='tabPanel_subtitle'>Disturbances</span>")
+                          , value = "panel.dist"
+                          , fluidRow(
+                            column(6
+                                   , br()
+                                   , actionButton(inputId = "add.PFG.dist"
+                                                  , label = "Add disturbance"
+                                                  , icon = icon("plus")
+                                                  , width = "100%"
+                                                  , style = HTML(button.style)
+                                   )
+                            )
+                            , column(6
+                                     , br()
+                                     , shinyjs::disabled(
+                                       actionButton(inputId = "create.dist"
+                                                    , label = "Create PFG disturbance files"
+                                                    , icon = icon("file")
+                                                    , width = "100%"
+                                                    , style = HTML(button.style)
+                                       ) %>% helper(type = "inline"
+                                                    , title = "Create PFG disturbance files"
+                                                    , size = "l"
+                                                    , content = help.HTML("./../../docs/reference/PRE_FATE.params_PFGdisturbance.html")
+                                       )
+                                     )
+                            )
+                          )
+                          , fluidRow(
+                            column(4
+                                   , br()
+                                   , br()
+                                   , HTML("<strong>Disturbance</strong>")
+                                   , textInput(inputId = "dist.name"
+                                               , label = NULL
+                                               , width = "100%"))
+                            , column(4
+                                     , br()
+                                     , br()
+                                     , HTML("<strong>Disturbance</strong>")
+                                     , radioButtons(inputId = "dist.grouping"
+                                                    , label = NULL
+                                                    , choices = c("by type", "by PFG")
+                                                    , selected = "by type"
+                                                    , width = "100%"))
+                          )
+                          ,fluidRow(
+                            uiOutput(outputId = "UI.dist.grouping")
+                          )
+                          , fluidRow(
+                            column(10
+                                   , br()
+                                   , wellPanel(style = "overflow-x:scroll;"
+                                               , tableOutput(outputId = "mat.PFG.dist")))
+                            , column(2
+                                     , br()
+                                     , actionButton(inputId = "delete.PFG.dist"
+                                                    , label = NULL
+                                                    , icon = icon("trash")
+                                                    , style = HTML(button.style)
+                                     )
+                            )
+                          )
+                          , fluidRow(
+                            br()
+                            , br()
+                            , br()
+                            , br()
+                            , column(12
+                                     , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px; overflow-y:scroll; max-height:250px;"))
+                                                 , uiOutput(outputId = "UI.files.dist")))
+                            , column(12
+                                     , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px; overflow-x:scroll;"))
+                                                 , dataTableOutput(outputId = "created_table.dist"))
+                            )
+                          )
+               ) ## END tabPanel (disturbances)
              ) ## END tabSetPanel
            ) ## END mainPanel
          ) ## END sidebarLayout

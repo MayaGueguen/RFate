@@ -189,10 +189,11 @@ server <- function(input, output, session) {
   observe_helpers(withMathJax = TRUE)
   
   RV = reactiveValues(names.PFG = c()
-                      , mat.PFG.ALL = data.frame()
+                      , mat.PFG.succ = data.frame()
+                      , mat.PFG.light = data.frame()
+                      , mat.PFG.soil = data.frame()
                       , mat.PFG.disp = data.frame()
                       , mat.PFG.dist = data.frame()
-                      , mat.PFG.soil = data.frame()
                       , mat.changing = data.frame()
                       , compt.global.nb = 0
                       , compt.global.files = c()

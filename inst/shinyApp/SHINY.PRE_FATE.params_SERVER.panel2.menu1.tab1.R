@@ -273,11 +273,19 @@ output$UI.doFire2.3 = renderUI({
       column(6
              , selectInput(inputId = "FIRE.prop_mode"
                            , label = param.style("FIRE.prop_mode")
-                           , choices = c("(1) probability (fire intensity)"
-                                         , "(2) probability (% of plants consumed)"
-                                         , "(3) maximum amount (PFG)"
-                                         , "(4) maximum amount (soil)"
-                                         , "(5) probability (Li et al. 1997)")
+                           , choices = unlist(ifelse(input$FIRE.ignit_mode == "(4) probability (Li et al. 1997)"
+                                                     , "(5) probability (Li et al. 1997)"
+                                                     , ifelse(input$doSoil
+                                                              , list(c("(1) probability (fire intensity)"
+                                                                       , "(2) probability (% of plants consumed)"
+                                                                       , "(3) maximum amount (PFG)"
+                                                                       , "(4) maximum amount (soil)"
+                                                                       , "(5) probability (Li et al. 1997)"))
+                                                              , list(c("(1) probability (fire intensity)"
+                                                                       , "(2) probability (% of plants consumed)"
+                                                                       , "(3) maximum amount (PFG)"
+                                                                       , "(5) probability (Li et al. 1997)"))
+                                                     )))
                            , selected = "(1) probability (fire intensity)"
                            , multiple = FALSE
                            , width = "100%")

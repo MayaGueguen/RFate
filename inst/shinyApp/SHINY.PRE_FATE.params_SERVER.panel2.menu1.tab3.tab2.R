@@ -1,11 +1,11 @@
 
 ####################################################################
 
-output$UI.disp.PFG = renderUI({
+output$UI.light.PFG = renderUI({
   if (length(RV$names.PFG) == 0)
   {
     shinyjs::disabled(
-      selectInput(inputId = "disp.PFG"
+      selectInput(inputId = "light.PFG"
                   , label = NULL
                   , choices = RV$names.PFG
                   , selected = RV$names.PFG[1]
@@ -14,53 +14,289 @@ output$UI.disp.PFG = renderUI({
     )
   } else
   {
-    selectInput(inputId = "disp.PFG"
+    selectInput(inputId = "light.PFG"
                 , label = NULL
-                , choices = RV$names.PFG[which(!(RV$names.PFG %in% RV$mat.PFG.disp$PFG))]
-                , selected = RV$names.PFG[which(!(RV$names.PFG %in% RV$mat.PFG.disp$PFG))][1]
+                , choices = RV$names.PFG[which(!(RV$names.PFG %in% RV$mat.PFG.light$PFG))]
+                , selected = RV$names.PFG[which(!(RV$names.PFG %in% RV$mat.PFG.light$PFG))][1]
                 , multiple = F
                 , width = "100%")
   }
 })
 
+####################################################################
+
+# observeEvent(input$light.light, {
+#   if (input$light.light != ".")
+#   {
+#     updateSelectInput(session
+#                       , inputId = "light.strategy_tol"
+#                       , choices = c(".", "full_light", "pioneer", "ubiquist"
+#                                     , "semi_shade", "undergrowth")
+#                       , selected = ".")
+#   }
+# })
+# 
+# observeEvent(input$light.strategy_tol, {
+#   if (input$light.strategy_tol != ".")
+#   {
+#     updateSelectInput(session
+#                       , inputId = "light.light"
+#                       , choices = c(".", 0:5)
+#                       , selected = ".")
+#   }
+# })
 
 ####################################################################
 
-output$mat.PFG.disp = renderTable({ RV$mat.PFG.disp })
-
-observeEvent(input$add.PFG.disp, {
-  RV$mat.PFG.disp <- rbind(RV$mat.PFG.disp
-                           , data.frame(PFG = input$disp.PFG
-                                        , d50 = as.numeric(input$disp.d50)
-                                        , d99 = as.numeric(input$disp.d99)
-                                        , ldd = as.numeric(input$disp.ldd)))
-})
-
-observeEvent(input$delete.PFG.disp, {
-  RV$mat.PFG.disp <- data.frame()
-})
-
-observeEvent(RV$mat.PFG.disp, {
-  if (nrow(RV$mat.PFG.disp) > 0)
+output$UI.light.opt.ag = renderUI({
+  if (input$light.opt.ag == "by strategy")
   {
-    shinyjs::enable("create.disp")
-  } else
+    column(4, selectInput(inputId = "light.strategy_ag"
+                          , label = NULL
+                          , choices = c("light_lover", "indifferent", "shade_lover")
+                          , selected = "indifferent"
+                          , multiple = F
+                          , width = "100%"))
+  } else if (input$light.opt.ag == "user-defined")
   {
-    shinyjs::disable("create.disp")
+    fluidRow(
+      column(4
+             , HTML("<strong>Low</strong>")
+             , selectInput(inputId = "light.Ge.L.act"
+                           , label = NULL
+                           , choices = seq(0,100,10)
+                           , selected = 100
+                           , multiple = FALSE
+                           , width = "100%"))
+      , column(4
+               , HTML("<strong>Medium</strong>")
+               , selectInput(inputId = "light.Ge.M.act"
+                             , label = NULL
+                             , choices = seq(0,100,10)
+                             , selected = 100
+                             , multiple = FALSE
+                             , width = "100%"))
+      , column(4
+               , HTML("<strong>High</strong>")
+               , selectInput(inputId = "light.Ge.H.act"
+                             , label = NULL
+                             , choices = seq(0,100,10)
+                             , selected = 100
+                             , multiple = FALSE
+                             , width = "100%"))
+    )
   }
 })
 
 ####################################################################
 
-observeEvent(input$create.disp, {
+output$UI.light.opt.tol = renderUI({
+  if (input$light.opt.tol == "by strategy")
+  {
+    column(4, selectInput(inputId = "light.strategy_tol"
+                          , label = NULL
+                          , choices = c("full_light", "pioneer", "ubiquist"
+                                        , "semi_shade", "undergrowth")
+                          , selected = "ubiquist"
+                          , multiple = F
+                          , width = "100%"))
+  } else if (input$light.opt.tol == "user-defined")
+  {
+    name.1st_col = ""
+    if (length(RV$names.PFG) > 0)
+    {
+      name.1st_col = RV$names.PFG[1]
+    }
+
+    if (nchar(name.1st_col) > 0)
+    {
+      fluidRow(
+        column(6
+               , br()
+               , fluidRow(
+                 column(4, HTML(""))
+                 , column(4, HTML(""))
+                 , column(4, HTML(paste0("<strong>", name.1st_col, "</strong>")))
+               )
+               , fluidRow(
+                 column(4, HTML("<strong> Germinant</strong>"))
+                 , column(4, HTML("<strong>Low</strong>"))
+                 , column(4
+                          , selectInput(inputId = paste0("light.Ge.L.tol.", name.1st_col)
+                                        , label = NULL
+                                        , choices = seq(0,100,10)
+                                        , multiple = FALSE
+                                        , width = "100%"))
+               )
+               , fluidRow(
+                 column(4, HTML(""))
+                 , column(4, HTML("<strong>Medium</strong>"))
+                 , column(4
+                          , selectInput(inputId = paste0("light.Ge.M.tol.", name.1st_col)
+                                        , label = NULL
+                                        , choices = seq(0,100,10)
+                                        , multiple = FALSE
+                                        , width = "100%"))
+               )
+               , fluidRow(
+                 column(4, HTML(""))
+                 , column(4, HTML("<strong>High</strong>"))
+                 , column(4
+                          , selectInput(inputId = paste0("light.Ge.H.tol.", name.1st_col)
+                                        , label = NULL
+                                        , choices = seq(0,100,10)
+                                        , multiple = FALSE
+                                        , width = "100%"))
+               )
+               , fluidRow(
+                 column(4, HTML("<strong> Immature</strong>"))
+                 , column(4, HTML("<strong>Low</strong>"))
+                 , column(4
+                          , selectInput(inputId = paste0("light.Im.L.tol.", name.1st_col)
+                                        , label = NULL
+                                        , choices = seq(0,100,10)
+                                        , multiple = FALSE
+                                        , width = "100%"))
+               )
+               , fluidRow(
+                 column(4, HTML(""))
+                 , column(4, HTML("<strong>Medium</strong>"))
+                 , column(4
+                          , selectInput(inputId = paste0("light.Im.M.tol.", name.1st_col)
+                                        , label = NULL
+                                        , choices = seq(0,100,10)
+                                        , multiple = FALSE
+                                        , width = "100%"))
+               )
+               , fluidRow(
+                 column(4, HTML(""))
+                 , column(4, HTML("<strong>High</strong>"))
+                 , column(4
+                          , selectInput(inputId = paste0("light.Im.H.tol.", name.1st_col)
+                                        , label = NULL
+                                        , choices = seq(0,100,10)
+                                        , multiple = FALSE
+                                        , width = "100%"))
+               )
+               , fluidRow(
+                 column(4, HTML("<strong> Mature</strong>"))
+                 , column(4, HTML("<strong>Low</strong>"))
+                 , column(4
+                          , selectInput(inputId = paste0("light.Ma.L.tol.", name.1st_col)
+                                        , label = NULL
+                                        , choices = seq(0,100,10)
+                                        , multiple = FALSE
+                                        , width = "100%"))
+               )
+               , fluidRow(
+                 column(4, HTML(""))
+                 , column(4, HTML("<strong>Medium</strong>"))
+                 , column(4
+                          , selectInput(inputId = paste0("light.Ma.M.tol.", name.1st_col)
+                                        , label = NULL
+                                        , choices = seq(0,100,10)
+                                        , multiple = FALSE
+                                        , width = "100%"))
+               )
+               , fluidRow(
+                 column(4, HTML(""))
+                 , column(4, HTML("<strong>High</strong>"))
+                 , column(4
+                          , selectInput(inputId = paste0("light.Ma.H.tol.", name.1st_col)
+                                        , label = NULL
+                                        , choices = seq(0,100,10)
+                                        , multiple = FALSE
+                                        , width = "100%"))
+               )
+               
+        )
+        , uiOutput(outputId = "UI.light.opt.tol.BIS")
+      ) ## END fluidRow
+    }
+  }
+})
+
+output$UI.light.opt.tol.BIS = renderUI({
+  name.2nd_col = vector()
+  if (length(RV$names.PFG) > 1)
+  {
+    name.2nd_col = RV$names.PFG[2:length(RV$names.PFG)]
+  }
+  
+  if (length(name.2nd_col) > 0)
+  {
+    lapply(name.2nd_col, function(j) {
+      column(2
+             , br()
+             , HTML(paste0("<strong>", j, "</strong>"))
+             , lapply(as.vector(sapply(c("Ge", "Im", "Ma")
+                                       , function(x) paste0("light.", x, ".", c("L", "M", "H"), ".", j)))
+                      , function(i) {
+                        selectInput(inputId = i
+                                    , label = NULL
+                                    , choices = seq(0,100,10)
+                                    , multiple = FALSE
+                                    , width = "100%")
+                      })
+      )
+    })
+  }
+})
+
+
+####################################################################
+
+output$mat.PFG.light = renderTable({ RV$mat.PFG.light })
+
+observeEvent(input$add.PFG.light, {
+  req(input$light.PFG)
+  RV$mat.PFG.light <- rbind(RV$mat.PFG.light
+                            , data.frame(PFG = input$light.PFG
+                                         , type = input$light.type
+                                         , light_need = as.numeric(input$light.light)
+                                         , strategy_ag = input$light.strategy_ag
+                                         , strategy_tol = input$light.strategy_tol
+                            ))
+})
+
+observeEvent(input$delete.PFG.light, {
+  RV$mat.PFG.light <- data.frame()
+})
+
+observeEvent(RV$mat.PFG.light, {
+  if (nrow(RV$mat.PFG.light) > 0)
+  {
+    shinyjs::enable("create.light")
+  } else
+  {
+    shinyjs::disable("create.light")
+  }
+})
+
+
+####################################################################
+
+observeEvent(input$create.light, {
   if (input$create.skeleton > 0)
   {
+    col.light = c("PFG", ifelse(length(which(RV$mat.PFG.light$strategy_ag == ".")) == nrow(RV$mat.PFG.light)
+                                , "type", "strategy_ag"))
+    if (length(which(RV$mat.PFG.light$strategy_tol == ".")) == nrow(RV$mat.PFG.light))
+    {
+      col.light = c(col.light, c("type", "light_need"))
+      mat.tol = NULL
+    } else
+    {
+      mat.tol = RV$mat.PFG.light[, c("PFG", "strategy_tol")]
+    }
+    
     get_res = print_messages(as.expression(
-      PRE_FATE.params_PFGdispersal(name.simulation = input$name.simul
-                                   , mat.PFG.disp = RV$mat.PFG.disp
-                                   , opt.folder.name = get_opt.folder.name()
+      PRE_FATE.params_PFGlight(name.simulation = input$name.simul
+                               , mat.PFG.light = RV$mat.PFG.light[, unique(col.light)]
+                               , mat.PFG.tol = mat.tol
+                               , opt.folder.name = get_opt.folder.name()
       )
-    ), cut_pattern = paste0(input$name.simul, "/DATA/PFGS/DISP/"))
+    ), cut_pattern = paste0(input$name.simul, "/DATA/PFGS/LIGHT/"))
     
   } else
   {
@@ -68,27 +304,28 @@ observeEvent(input$create.disp, {
   }
 })
 
+
 ####################################################################
 
-get_tab.disp = eventReactive(paste(input$name.simul
-                                     , input$create.disp
-                                     , RV$compt.disp.nb), {
-                                       if (!is.null(input$name.simul) && nchar(input$name.simul) > 0)
-                                       {
-                                         path_folder = paste0(input$name.simul, "/DATA/PFGS/DISP/")
-                                         tab = get_files(path_folder, skip.no = 0, opt.sub_folder = TRUE)
-                                         
-                                         if (!is.null(tab) && ncol(tab) > 0)
-                                         {
-                                           RV$compt.disp.nb = ncol(tab)
-                                           RV$compt.disp.files = colnames(tab)
-                                           return(tab)
-                                         }
-                                       }
-                                     })
+get_tab.light = eventReactive(paste(input$name.simul
+                                    , input$create.light
+                                    , RV$compt.light.nb), {
+                                      if (!is.null(input$name.simul) && nchar(input$name.simul) > 0)
+                                      {
+                                        path_folder = paste0(input$name.simul, "/DATA/PFGS/LIGHT/")
+                                        tab = get_files(path_folder, skip.no = 2, opt.sub_folder = TRUE)
+                                        
+                                        if (!is.null(tab) && ncol(tab) > 0)
+                                        {
+                                          RV$compt.light.nb = ncol(tab)
+                                          RV$compt.light.files = colnames(tab)
+                                          return(tab)
+                                        }
+                                      }
+                                    })
 
-output$UI.files.disp = renderUI({
-  tab = get_tab.disp()
+output$UI.files.light = renderUI({
+  tab = get_tab.light()
   tab = as.data.frame(tab)
   
   if (!is.null(tab) && ncol(tab) > 0)
@@ -96,18 +333,18 @@ output$UI.files.disp = renderUI({
     tagList(
       fluidRow(
         column(4
-               , checkboxInput(inputId = "check.disp.all"
+               , checkboxInput(inputId = "check.light.all"
                                , label = HTML("<em>Select all</em>")
                                , value = TRUE
                                , width = "100%"))
         , column(3
-                 , actionButton(inputId = "view.disp.select"
+                 , actionButton(inputId = "view.light.select"
                                 , label = "View selected"
                                 , icon = icon("eye")
                                 , width = "100%"
                                 , style = HTML(paste(button.style, "margin-bottom: 3px;"))))
         , column(3
-                 , actionButton(inputId = "delete.disp.select"
+                 , actionButton(inputId = "delete.light.select"
                                 , label = "Delete selected"
                                 , icon = icon("trash-alt")
                                 , width = "100%"
@@ -118,7 +355,7 @@ output$UI.files.disp = renderUI({
         column(10
                , lapply(1:ncol(tab)
                         , function(i) {
-                          checkboxInput(inputId = paste0("check.disp.", colnames(tab)[i])
+                          checkboxInput(inputId = paste0("check.light.", colnames(tab)[i])
                                         , label = gsub("__", "/", colnames(tab)[i])
                                         , value = TRUE
                                         , width = "100%")
@@ -127,7 +364,7 @@ output$UI.files.disp = renderUI({
         # , column(2
         #          , lapply(1:ncol(tab)
         #                   , function(i) {
-        #                     actionButton(inputId = paste0("upload.disp.", colnames(tab)[i])
+        #                     actionButton(inputId = paste0("upload.light.", colnames(tab)[i])
         #                                  , label = NULL
         #                                  , icon = icon("upload")
         #                                  , width = "100%"
@@ -139,44 +376,44 @@ output$UI.files.disp = renderUI({
   }
 })
 
-# observeEvent(RV$compt.disp.nb, {
-#   for (i in 1:RV$compt.disp.nb)
+# observeEvent(RV$compt.light.nb, {
+#   for (i in 1:RV$compt.light.nb)
 #   {
-#     observeEvent(input[[paste0("upload.disp.", RV$compt.disp.files[i])]], {
-#       get_update.disp(file.dispParam = paste0(input$name.simul
-#                                                   , "/DATA/PFGS/DISP/"
-#                                                   , RV$compt.disp.files[i]))
+#     observeEvent(input[[paste0("upload.light.", RV$compt.light.files[i])]], {
+#       get_update.light(file.lightParam = paste0(input$name.simul
+#                                                   , "/DATA/PFGS/LIGHT/"
+#                                                   , RV$compt.light.files[i]))
 #     })
 #   }
 # })
 
 
-observeEvent(input$check.disp.all, {
-  for (col_tab in RV$compt.disp.files)
+observeEvent(input$check.light.all, {
+  for (col_tab in RV$compt.light.files)
   {
     updateCheckboxInput(session
-                        , inputId = paste0("check.disp.", col_tab)
-                        , value = input$check.disp.all)
+                        , inputId = paste0("check.light.", col_tab)
+                        , value = input$check.light.all)
   }
 })
 
-observeEvent(input$view.disp.select, {
-  output$created_table.disp = renderDataTable({
-    req(grep(pattern = "check.disp.", x = names(input), value = TRUE))
+observeEvent(input$view.light.select, {
+  output$created_table.light = renderDataTable({
+    req(grep(pattern = "check.light.", x = names(input), value = TRUE))
     
-    tab = get_tab.disp()
+    tab = get_tab.light()
     tab = as.data.frame(tab)
     
     if (!is.null(tab) && ncol(tab) > 0)
     {
-      if (input$check.disp.all)
+      if (input$check.light.all)
       {
         col_toKeep = rep(TRUE, ncol(tab))
       } else
       {
         col_toKeep = foreach(i = 1:ncol(tab), .combine = "c") %do%
         {
-          eval(parse(text = paste0("res = input$check.disp.", colnames(tab)[i])))
+          eval(parse(text = paste0("res = input$check.light.", colnames(tab)[i])))
           return(res)
         }
       }
@@ -185,26 +422,26 @@ observeEvent(input$view.disp.select, {
   })
 })
 
-observeEvent(input$delete.disp.select, {
-  if (input$check.disp.all)
+observeEvent(input$delete.light.select, {
+  if (input$check.light.all)
   {
-    col_toKeep = rep(TRUE,RV$compt.disp.nb)
+    col_toKeep = rep(TRUE,RV$compt.light.nb)
   } else
   {
-    col_toKeep = foreach(i = 1:RV$compt.disp.nb, .combine = "c") %do%
+    col_toKeep = foreach(i = 1:RV$compt.light.nb, .combine = "c") %do%
     {
-      eval(parse(text = paste0("res = input$check.disp.", RV$compt.disp.files[i])))
+      eval(parse(text = paste0("res = input$check.light.", RV$compt.light.files[i])))
       return(res)
     }
   }
   
   if (sum(col_toKeep) > 0)
   {
-    file.dispParam = RV$compt.disp.files[col_toKeep]
+    file.lightParam = RV$compt.light.files[col_toKeep]
     shinyalert(type = "warning"
                , text = paste0("The simulation parameter file(s) "
-                               , paste0(input$name.simul, "/DATA/PFGS/DISP/ \n")
-                               , paste0(gsub("__", "/", file.dispParam), collapse = " , ")
+                               , paste0(input$name.simul, "/DATA/PFGS/LIGHT/ \n")
+                               , paste0(gsub("__", "/", file.saveParam), collapse = " , ")
                                , "\n will be removed !\n"
                                , "Make sure this is what you want.")
                , showCancelButton = TRUE
@@ -213,27 +450,28 @@ observeEvent(input$delete.disp.select, {
                {
                  if (x)
                  {
-                   for (fi in file.dispParam) 
+                   for (fi in file.lightParam) 
                    {
-                     file.remove(paste0(input$name.simul, "/DATA/PFGS/DISP/", gsub("__", "/", fi)))
+                     file.remove(paste0(input$name.simul, "/DATA/PFGS/LIGHT/", gsub("__", "/", fi)))
                      if (nchar(dirname(gsub("__", "/", fi))) > 0)
                      {
-                       sub_dir = paste0(input$name.simul, "/DATA/PFGS/DISP/", dirname(gsub("__", "/", fi)))
+                       sub_dir = paste0(input$name.simul, "/DATA/PFGS/LIGHT/", dirname(gsub("__", "/", fi)))
                        if (dir.exists(sub_dir) && length(list.files(path = sub_dir)) == 0)
                        {
                          unlink(sub_dir, recursive = TRUE)
                        }
                      }
-                     removeUI(selector = paste0("check.disp.", fi)
+                     removeUI(selector = paste0("check.light.", file.lightParam)
                               , multiple = FALSE
                               , immediate = TRUE)
-                     removeUI(selector = paste0("upload.disp.", fi)
+                     removeUI(selector = paste0("upload.light.", file.lightParam)
                               , multiple = FALSE
                               , immediate = TRUE)
                    }
-                   RV$compt.disp.nb = min(0, RV$compt.disp.nb - sum(col_toKeep))
+                   RV$compt.light.nb = min(0, RV$compt.light.nb - sum(col_toKeep))
                  }
                })
   }
 })
+
 
