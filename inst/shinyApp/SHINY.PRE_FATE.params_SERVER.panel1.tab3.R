@@ -14,11 +14,11 @@ output$UI.species.distance = renderUI({
 
 ####################################################################
 
-output$UI.nb.clusters = renderUI({
+output$UI.no.clusters = renderUI({
   sp.clust = get_CLUST1()
   if (!is.null(sp.clust))
   {
-    group_names = names(sp.clust$clust.dendograms)
+    group_names = names(sp.clust$clust.dendrograms)
     lapply(group_names, function(i) {
       fluidRow(
         column(3, param.style(paste0("no.clust_", i)))
@@ -26,7 +26,7 @@ output$UI.nb.clusters = renderUI({
                  , sliderInput(inputId = paste0("no.clust_", i)
                                , label = NULL
                                , min = 2
-                               , max = max(sp.clust$clust.evaluation$nb.cluster[which(sp.clust$clust.evaluation$group == i)])
+                               , max = max(sp.clust$clust.evaluation$no.clusters[which(sp.clust$clust.evaluation$GROUP == i)])
                                , value = 2
                                , step = 1
                                , round = TRUE
@@ -71,7 +71,7 @@ get_dist = eventReactive(list(input$choice.distance, input$clustering.step1), {
     }
   } else
   {
-    end_filename = list.files(pattern = "^PRE_FATE_DOMINANT_species_distance_")
+    end_filename = list.files(pattern = "^PRE_FATE_DOMINANT_speciesDistance")
   }
   if (end_filename != "" && length(end_filename) > 0)
   {
@@ -99,7 +99,7 @@ get_dist = eventReactive(list(input$choice.distance, input$clustering.step1), {
       }
     if (sum(sapply(sp.dist, is.null)) == 0)
     {
-      names(sp.dist) = sub("^PRE_FATE_DOMINANT_species_distance_", "", sub(".csv$", "", end_filename))
+      names(sp.dist) = sub("^PRE_FATE_DOMINANT_speciesDistance", "", sub(".csv$", "", end_filename))
       return(sp.dist)
     }
   } else
@@ -150,20 +150,19 @@ get_CLUST2 = eventReactive(input$clustering.step2, {
     sp.clust = get_CLUST1()
     if (!is.null(sp.clust))
     {
-      no.clusters = foreach(i = names(sp.clust$clust.dendograms), .combine = "c") %do%
+      no.clusters = foreach(i = names(sp.clust$clust.dendrograms), .combine = "c") %do%
         {
           input[[paste0("no.clust_", i)]]
         }
       
-      showModal(modalDialog(HTML(paste0("Choose clusters and select determinant species with :
-                                        <ul>
-                                    <li><strong>no.clusters :</strong> ", paste(unlist(no.clusters)),"</li>
-                                    </ul>"))
+      showModal(modalDialog(HTML(paste0("Choose clusters and select determinant species with : <ul>"
+                                        , "<li><strong>no.clusters :</strong> ", paste(unlist(no.clusters)),"</li>"
+                                        , "</ul>"))
                             , title = HTML("PFG clustering : step 2")
                             , footer = NULL))
       Sys.sleep(3)
       get_res = print_messages(as.expression(
-        PRE_FATE.speciesClustering_step2(clust.dendograms = sp.clust$clust.dendograms
+        PRE_FATE.speciesClustering_step2(clust.dendrograms = sp.clust$clust.dendrograms
                                          , no.clusters = no.clusters
                                          , mat.species.DIST = sp.dist)
       ))
@@ -215,7 +214,7 @@ get_CLUST3 = eventReactive(input$clustering.step3, {
                           , footer = NULL))
     Sys.sleep(3)
     get_res = print_messages(as.expression(
-      PRE_FATE.speciesClustering_step3(mat.species.traits = sp.pfg.traits)
+      PRE_FATE.speciesClustering_step3(mat.traits = sp.pfg.traits)
     ))
     removeModal()
     

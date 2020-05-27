@@ -87,10 +87,10 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
                                                              ) %>% helper(type = "inline"
                                                                           , title = "FATE-HD modules : CORE - Required and impacted parameters"
                                                                           , size = "l"
-                                                                          , content = help.HTML(html.file = "https://mayagueguen.github.io/FATE-WEBSITE/1c_fate-hd_tutorial_MODULES.html"
-                                                                                                , target.anchor = '<h1'
-                                                                                                , target.class = "CORE"
-                                                                                                , web.address = "https://mayagueguen.github.io/FATE-WEBSITE/1c_fate-hd_tutorial_MODULES.html#_core_module_(succession)")
+                                                                          , content = help.HTML(html.file = "https://mayagueguen.github.io/RFate/articles/fate_tutorial_3_MODULES.html"
+                                                                                                , target.anchor = 'class="section level1'
+                                                                                                , target.class = "core-module-succession"
+                                                                                                , web.address = "https://mayagueguen.github.io/RFate/articles/fate_tutorial_3_MODULES.html#core-module-succession")
                                                              )
                                                       )
                                                       , column(3
@@ -120,10 +120,10 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
                                                     ) %>% helper(type = "inline"
                                                                  , title = "FATE-HD modules : HABITAT SUITABILITY - Required and impacted parameters"
                                                                  , size = "l"
-                                                                 , content = help.HTML(html.file = "https://mayagueguen.github.io/FATE-WEBSITE/1c_fate-hd_tutorial_MODULES.html"
-                                                                                       , target.anchor = '<h1'
-                                                                                       , target.class = "HABITAT SUITABILITY"
-                                                                                       , web.address = "https://mayagueguen.github.io/FATE-WEBSITE/1c_fate-hd_tutorial_MODULES.html#_habitat_suitability_module_")
+                                                                 , content = help.HTML(html.file = "https://mayagueguen.github.io/RFate/articles/fate_tutorial_3_MODULES.html"
+                                                                                       , target.anchor = 'class="section level1'
+                                                                                       , target.class = "habitat-suitability-module"
+                                                                                       , web.address = "https://mayagueguen.github.io/RFate/articles/fate_tutorial_3_MODULES.html#habitat-suitability-module")
                                                     )
                                                     , fluidRow(
                                                       br()
@@ -162,10 +162,10 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
                                                     ) %>% helper(type = "inline"
                                                                  , title = "FATE-HD modules : DISPERSAL - Required and impacted parameters"
                                                                  , size = "l"
-                                                                 , content = help.HTML(html.file = "https://mayagueguen.github.io/FATE-WEBSITE/1c_fate-hd_tutorial_MODULES.html"
-                                                                                       , target.anchor = '<h1'
-                                                                                       , target.class = "DISPERSAL"
-                                                                                       , web.address = "https://mayagueguen.github.io/FATE-WEBSITE/1c_fate-hd_tutorial_MODULES.html#_dispersal_module_")
+                                                                 , content = help.HTML(html.file = "https://mayagueguen.github.io/RFate/articles/fate_tutorial_3_MODULES.html"
+                                                                                       , target.anchor = 'class="section level1'
+                                                                                       , target.class = "dispersal-module"
+                                                                                       , web.address = "https://mayagueguen.github.io/RFate/articles/fate_tutorial_3_MODULES.html#dispersal-module")
                                                     )
                                                     , fluidRow(
                                                       br()
@@ -201,12 +201,12 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
                                                                )
                                                       )
                                                     ) %>% helper(type = "inline"
-                                                                 , title = "FATE-HD modules : LIGHT - Required and impacted parameters"
+                                                                 , title = "FATE modules : LIGHT - Required and impacted parameters"
                                                                  , size = "l"
-                                                                 , content = help.HTML(html.file = "https://mayagueguen.github.io/FATE-WEBSITE/1c_fate-hd_tutorial_MODULES.html"
-                                                                                       , target.anchor = '<h1'
-                                                                                       , target.class = "LIGHT"
-                                                                                       , web.address = "https://mayagueguen.github.io/FATE-WEBSITE/1c_fate-hd_tutorial_MODULES.html#_light_module_")
+                                                                 , content = help.HTML(html.file = "https://mayagueguen.github.io/RFate/articles/fate_tutorial_3_MODULES.html"
+                                                                                       , target.anchor = 'class="section level1'
+                                                                                       , target.class = "light-module-competition"
+                                                                                       , web.address = "https://mayagueguen.github.io/RFate/articles/fate_tutorial_3_MODULES.html#light-module-competition")
                                                     ) ## END fluidRow
                                         ) ## END main.panel1
                                   )

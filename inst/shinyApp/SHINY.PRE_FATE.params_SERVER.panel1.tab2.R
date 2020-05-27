@@ -43,24 +43,30 @@ get_traits = eventReactive(list(input$species.traits, input$compute.distance), {
   }
 })
 
-get_dom_param = eventReactive(list(input$selectionRule.quanti
-                                   , input$selectionRule.min_mean_abund
-                                   , input$selectionRule.min_no_abund_over25
-                                   , input$doHabitatSelection
-                                   , input$selectionRule.min_percent_habitat
-                                   , input$selectionRule.min_no_habitat
+get_dom_param = eventReactive(list(input$doRuleA
+                                   , input$rule.A1
+                                   , input$rule.A2_quantile
+                                   , input$doRuleB
+                                   , input$rule.B1_number
+                                   , input$rule.B1_percentage
+                                   , input$rule.B2
+                                   , input$doRuleC
 ), {
-  end_filename = paste0(c(input$selectionRule.quanti
-                          , input$selectionRule.min_mean_abund
-                          , input$selectionRule.min_no_abund_over25)
-                        , collapse = "_")
-  if(input$doHabitatSelection)
-  {
-    end_filename = paste0(c(end_filename
-                            , input$selectionRule.min_percent_habitat
-                            , input$selectionRule.min_no_habitat)
-                          , collapse = "_")
+  end_filename = end_filenameA = end_filenameB = end_filenameC = ""
+  if (input$doRuleA) {
+    end_filenameA = paste0("_A_", input$rule.A1
+                           , "_", input$rule.A2_quantile)
   }
+  if (input$doRuleB) {
+    end_filenameB = paste0("_B_", input$rule.B1_number
+                           , "_", input$rule.B1_percentage
+                           , "_", input$rule.B2)
+  }
+  if (input$doRuleC) {
+    end_filenameC = paste0("_C_", input$rule.A1
+                           , "_", input$rule.A2_quantile)
+  }
+  end_filename = paste0(end_filenameA, end_filenameB, end_filenameC)
   return(end_filename)
 })
 
@@ -83,7 +89,7 @@ get_dom = eventReactive(list(input$choice.dominant, input$compute.distance), {
     }
   } else
   {
-    end_filename = paste0("PRE_FATE_DOMINANT_species_selected_SPECIES_ONLY_"
+    end_filename = paste0("PRE_FATE_DOMINANT_TABLE_species"
                           , get_dom_param()
                           , ".csv")
   }
@@ -138,20 +144,19 @@ get_DIST = eventReactive(input$compute.distance, {
           if (length(which(colnames(sp.niche) %in% sp.dom)) > 0)
           {
             
-            showModal(modalDialog(HTML(paste0("Compute distances between species based on traits and niche overlap, with parameters :
-                                        <ul>
-                                    <li><strong>opt.max.percent.NA :</strong> ", as.numeric(input$opt.max.percent.NA),"</li>
-                                    <li><strong>opt.max.percent.similarSpecies :</strong> ", as.numeric(input$opt.max.percent.similarSpecies), "</li>
-                                    <li><strong>opt.min.sd :</strong> ", as.numeric(input$opt.min.sd),"</li>
-                                    </ul>"))
+            showModal(modalDialog(HTML(paste0("Compute distances between species based on traits and niche overlap, with parameters : <ul>"
+                                              , "<li><strong>opt.maxPercent.NA :</strong> ", as.numeric(input$opt.maxPercent.NA), "</li>"
+                                              , "<li><strong>opt.maxPercent.similarSpecies :</strong> ", as.numeric(input$opt.maxPercent.similarSpecies), "</li>"
+                                              , "<li><strong>opt.min.sd :</strong> ", as.numeric(input$opt.min.sd), "</li>"
+                                              , "</ul>"))
                                   , title = HTML("Distance matrix between selected species")
                                   , footer = NULL))
             Sys.sleep(3)
             get_res = print_messages(as.expression(
-                PRE_FATE.speciesDistance(mat.species.traits = sp.traits
-                                         , mat.species.overlap = sp.niche
-                                         , opt.max.percent.NA = as.numeric(input$opt.max.percent.NA)
-                                         , opt.max.percent.similarSpecies = as.numeric(input$opt.max.percent.similarSpecies)
+                PRE_FATE.speciesDistance(mat.traits = sp.traits
+                                         , mat.overlap = sp.niche
+                                         , opt.maxPercent.NA = as.numeric(input$opt.maxPercent.NA)
+                                         , opt.maxPercent.similarSpecies = as.numeric(input$opt.maxPercent.similarSpecies)
                                          , opt.min.sd = as.numeric(input$opt.min.sd)
                 )
               ))

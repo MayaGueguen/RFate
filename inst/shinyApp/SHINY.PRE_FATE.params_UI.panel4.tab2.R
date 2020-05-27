@@ -82,7 +82,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Through time</span>")
                         ) %>% helper(type = "inline"
                                      , title = "Plot evolution abund (PIXELS)"
                                      , size = "l"
-                                     , content = help.HTML("https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_evolutionAbund_pixels.html")
+                                     , content = help.HTML("https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_evolutionPixels.html")
                         )
                )
              ))
@@ -101,7 +101,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Through time</span>")
                         ) %>% helper(type = "inline"
                                      , title = "Plot evolution light (PIXELS)"
                                      , size = "l"
-                                     , content = help.HTML("https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_evolutionLight_pixels.html")
+                                     , content = help.HTML("https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_evolutionPixels.html")
                         )
                         , br()
                         , textOutput(outputId = "output.evolutionLight"))
@@ -121,7 +121,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Through time</span>")
                         ) %>% helper(type = "inline"
                                      , title = "Plot evolution soil (PIXELS)"
                                      , size = "l"
-                                     , content = help.HTML("https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_evolutionSoil_pixels.html")
+                                     , content = help.HTML("https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_evolutionPixels.html")
                         )
                )
              ))

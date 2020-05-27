@@ -13,14 +13,14 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Global parameters</span>")
                                      , value = 1
                                      , min = 1
                                      , width = "100%")
-                      , numericInput(inputId = "required.no_STRATA"
-                                     , label = param.style("required.no_STRATA")
+                      , numericInput(inputId = "required.no_strata"
+                                     , label = param.style("required.no_strata")
                                      , value = 1
                                      , min = 1
                                      , width = "100%")
                       , numericInput(inputId = "required.simul_duration"
                                      , label = param.style("required.simul_duration")
-                                     , value = 1
+                                     , value = 1000
                                      , min = 1
                                      , width = "100%")
                       , numericInput(inputId = "opt.no_CPU"
@@ -33,7 +33,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Global parameters</span>")
                         , br()
                         , numericInput(inputId = "required.seeding_duration"
                                        , label = param.style("required.seeding_duration")
-                                       , value = 1
+                                       , value = 300
                                        , min = 1
                                        , width = "100%")
                         , numericInput(inputId = "required.seeding_timestep"
@@ -43,17 +43,12 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Global parameters</span>")
                                        , width = "100%")
                         , numericInput(inputId = "required.seeding_input"
                                        , label = param.style("required.seeding_input")
-                                       , value = 1
-                                       , min = 1
+                                       , value = 100
+                                       , min = 0
                                        , width = "100%")
                )
                , column(4
                         , br()
-                        , numericInput(inputId = "required.max_by_cohort"
-                                       , label = param.style("required.max_by_cohort")
-                                       , value = 1
-                                       , min = 1
-                                       , width = "100%")
                         , numericInput(inputId = "required.max_abund_low"
                                        , label = param.style("required.max_abund_low")
                                        , value = 1
@@ -88,14 +83,6 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Global parameters</span>")
                                         , width = "100%")
                         , uiOutput(outputId = "UI.doHabSuitability")
                )
-               , column(4
-                        , br()
-                        , checkboxInput(inputId = "doDisturbances"
-                                        , label = param.style("doDisturbances")
-                                        , value = FALSE
-                                        , width = "100%")
-                        , uiOutput(outputId = "UI.doDisturbances")
-               )
              )
              , fluidRow(
                column(4
@@ -112,6 +99,50 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Global parameters</span>")
                                         , label = param.style("doSoil")
                                         , value = FALSE
                                         , width = "100%")
+                        , uiOutput(outputId = "UI.doSoil")
+               )
+             )
+             , fluidRow(
+               column(4
+                        , br()
+                        , checkboxInput(inputId = "doDisturbances"
+                                        , label = param.style("doDisturbances")
+                                        , value = FALSE
+                                        , width = "100%")
+                        , uiOutput(outputId = "UI.doDisturbances")
+               )
+               , column(4
+                        , br()
+                        , checkboxInput(inputId = "doDrought"
+                                        , label = param.style("doDrought")
+                                        , value = FALSE
+                                        , width = "100%")
+                        , uiOutput(outputId = "UI.doDrought")
+               )
+               , column(4
+                        , br()
+                        , checkboxInput(inputId = "doAliens"
+                                        , label = param.style("doAliens")
+                                        , value = FALSE
+                                        , width = "100%")
+                        , uiOutput(outputId = "UI.doAliens")
+               )
+             )
+             , fluidRow(
+               column(4
+                      , br()
+                      , checkboxInput(inputId = "doFire"
+                                      , label = param.style("doFire")
+                                      , value = FALSE
+                                      , width = "100%")
+                      , uiOutput(outputId = "UI.doFire1")
+               )
+               , column(8
+                        , br()
+                        , uiOutput(outputId = "UI.doFire2.1")
+                        , uiOutput(outputId = "UI.doFire2.2")
+                        , uiOutput(outputId = "UI.doFire2.3")
+                        , uiOutput(outputId = "UI.doFire2.4")
                )
              )
              , fluidRow(
@@ -125,7 +156,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Global parameters</span>")
                       ) %>% helper(type = "inline"
                                    , title = "Global parameter file"
                                    , size = "l"
-                                   , content = help.HTML("https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_globalParameters.html")
+                                   , content = help.HTML("./../../docs/reference/PRE_FATE.params_globalParameters.html")
                       )
                )
              )

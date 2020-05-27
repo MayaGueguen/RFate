@@ -2,41 +2,51 @@
 tabPanel(title = HTML("<span class='tabPanel_title'>1. Dominant species</span>")
          , value = "panel.dominant"
          , fluidRow(
-           column(6, br())
+           column(3
+                  , br()
+                  , checkboxInput(inputId = "doRuleA"
+                                  , label = param.style("doRuleA")
+                                  , value = FALSE
+                                  , width = "100%")
+           )
+           , column(3
+                    , br()
+                    , checkboxInput(inputId = "doRuleC"
+                                    , label = param.style("doRuleC")
+                                    , value = FALSE
+                                    , width = "100%")
+           )
            , column(6
                     , br()
-                    , checkboxInput(inputId = "doHabitatSelection"
-                                    , label = param.style("doHabitatSelection")
+                    , checkboxInput(inputId = "doRuleB"
+                                    , label = param.style("doRuleB")
                                     , value = FALSE
                                     , width = "100%")
            )
          ) ## END fluidRow
          , fluidRow(
+           column(3
+                  , checkboxInput(inputId = "doRobustness"
+                                  , label = param.style("doRobustness")
+                                  , value = FALSE
+                                  , width = "100%")
+           )
+           , column(9, br())
+         ) ## END fluidRow
+         , fluidRow(
            column(6
                   , br()
-                  , sliderInput(inputId = "selectionRule.quanti"
-                                , label = param.style("quanti")
-                                , min = 0
-                                , max = 1
-                                , value = 0.8
-                                , step = 0.05
-                                , width = "100%")
-                  , numericInput(inputId = "selectionRule.min_mean_abund"
-                                 , label = param.style("min_mean_abund")
-                                 , min = 0
-                                 , value = 10
-                                 , step = 1
-                                 , width = "100%")
-                  , numericInput(inputId = "selectionRule.min_no_abund_over25"
-                                 , label = param.style("min_no_abund_over25")
-                                 , min = 0
-                                 , value = 10
-                                 , step = 1
-                                 , width = "100%")
+                  , uiOutput(outputId = "UI.doRuleAC")
            )
            , column(6
                     , br()
-                    , uiOutput(outputId = "UI.doHabitatSelection")
+                    , uiOutput(outputId = "UI.doRuleB")
+           )
+         ) ## END fluidRow
+         , fluidRow(
+           column(12
+                  , br()
+                  , uiOutput(outputId = "UI.doRobustness")
            )
          ) ## END fluidRow
          , fluidRow(
@@ -50,7 +60,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>1. Dominant species</span>")
                   ) %>% helper(type = "inline"
                                , title = "Selection of dominant species"
                                , size = "l"
-                               , content = help.HTML("https://mayagueguen.github.io/RFate/reference/PRE_FATE.selectDominant.html")
+                               , content = help.HTML("./../../docs/reference/PRE_FATE.selectDominant.html")
                   )
            )
          ) ## END fluidRow

@@ -144,22 +144,22 @@ get_val_param = function(filename)
 get_update.global = function(file.globalParam)
 {
   update.param = list(
-    "required.no_PFG" = .getParam(params.lines = file.globalParam
-                                  , flag = "NB_FG"
-                                  , flag.split = " "
-                                  , is.num = TRUE)
-    , "required.no_STRATA" = .getParam(params.lines = file.globalParam
-                                       , flag = "NB_STRATUM"
+    "opt.no_CPU" = .getParam(params.lines = file.globalParam
+                             , flag = "NO_CPU"
+                             , flag.split = " "
+                             , is.num = TRUE)
+    , "required.no_PFG" = .getParam(params.lines = file.globalParam
+                                    , flag = "NO_PFG"
+                                    , flag.split = " "
+                                    , is.num = TRUE)
+    , "required.no_strata" = .getParam(params.lines = file.globalParam
+                                       , flag = "NO_STRATA"
                                        , flag.split = " "
                                        , is.num = TRUE)
     , "required.simul_duration" = .getParam(params.lines = file.globalParam
                                             , flag = "SIMULATION_DURATION"
                                             , flag.split = " "
                                             , is.num = TRUE)
-    , "opt.no_CPU" = .getParam(params.lines = file.globalParam
-                               , flag = "NB_CPUS"
-                               , flag.split = " "
-                               , is.num = TRUE)
     , "required.seeding_duration" = .getParam(params.lines = file.globalParam
                                               , flag = "SEEDING_DURATION"
                                               , flag.split = " "
@@ -170,10 +170,6 @@ get_update.global = function(file.globalParam)
                                               , is.num = TRUE)
     , "required.seeding_input" = .getParam(params.lines = file.globalParam
                                            , flag = "SEEDING_INPUT"
-                                           , flag.split = " "
-                                           , is.num = TRUE)
-    , "required.max_by_cohort" = .getParam(params.lines = file.globalParam
-                                           , flag = "MAX_BY_COHORT"
                                            , flag.split = " "
                                            , is.num = TRUE)
     , "required.max_abund_low" = .getParam(params.lines = file.globalParam
@@ -192,30 +188,18 @@ get_update.global = function(file.globalParam)
                                 , flag = "DO_DISPERSAL"
                                 , flag.split = " "
                                 , is.num = TRUE)
+    , "DISPERSAL.mode" = .getParam(params.lines = file.globalParam
+                                   , flag = "DISPERSAL_MODE"
+                                   , flag.split = " "
+                                   , is.num = TRUE)
     , "doHabSuitability" = .getParam(params.lines = file.globalParam
                                      , flag = "DO_HAB_SUITABILITY"
                                      , flag.split = " "
                                      , is.num = TRUE)
-    , "HABSUIT.ref_option" = .getParam(params.lines = file.globalParam
-                                       , flag = "HABSUIT_OPTION"
-                                       , flag.split = " "
-                                       , is.num = TRUE)
-    , "doDisturbances" = .getParam(params.lines = file.globalParam
-                                   , flag = "DO_DISTURBANCES"
-                                   , flag.split = " "
-                                   , is.num = TRUE)
-    , "DIST.no" = .getParam(params.lines = file.globalParam
-                            , flag = "NB_DISTURBANCES"
-                            , flag.split = " "
-                            , is.num = TRUE)
-    , "DIST.no_sub" = .getParam(params.lines = file.globalParam
-                                , flag = "NB_SUBDISTURBANCES"
-                                , flag.split = " "
-                                , is.num = TRUE)
-    , "DIST.freq" = .getParam(params.lines = file.globalParam
-                              , flag = "FREQ_DISTURBANCES"
-                              , flag.split = " "
-                              , is.num = TRUE)
+    , "HABSUIT.mode" = .getParam(params.lines = file.globalParam
+                                 , flag = "HABSUIT_MODE"
+                                 , flag.split = " "
+                                 , is.num = TRUE)
     , "doLight" = .getParam(params.lines = file.globalParam
                             , flag = "DO_LIGHT_COMPETITION"
                             , flag.split = " "
@@ -232,6 +216,114 @@ get_update.global = function(file.globalParam)
                            , flag = "DO_SOIL_COMPETITION"
                            , flag.split = " "
                            , is.num = TRUE)
+    , "SOIL.init" = .getParam(params.lines = file.globalParam
+                              , flag = "SOIL_INIT"
+                              , flag.split = " "
+                              , is.num = TRUE)
+    , "SOIL.retention" = .getParam(params.lines = file.globalParam
+                                   , flag = "SOIL_RETENTION"
+                                   , flag.split = " "
+                                   , is.num = TRUE)
+    , "doDisturbances" = .getParam(params.lines = file.globalParam
+                                   , flag = "DO_DISTURBANCES"
+                                   , flag.split = " "
+                                   , is.num = TRUE)
+    , "DIST.no" = .getParam(params.lines = file.globalParam
+                            , flag = "DIST_NO"
+                            , flag.split = " "
+                            , is.num = TRUE)
+    , "DIST.no_sub" = .getParam(params.lines = file.globalParam
+                                , flag = "DIST_NOSUB"
+                                , flag.split = " "
+                                , is.num = TRUE)
+    , "DIST.freq" = .getParam(params.lines = file.globalParam
+                              , flag = "DIST_FREQ"
+                              , flag.split = " "
+                              , is.num = TRUE)
+    , "doDrought" = .getParam(params.lines = file.globalParam
+                              , flag = "DO_DROUGHT_DISTURBANCE"
+                              , flag.split = " "
+                              , is.num = TRUE)
+    , "DROUGHT.no_sub" = .getParam(params.lines = file.globalParam
+                                   , flag = "DROUGHT_NOSUB"
+                                   , flag.split = " "
+                                   , is.num = TRUE)
+    , "doAliens" = .getParam(params.lines = file.globalParam
+                             , flag = "DO_ALIENS_INTRODUCTION"
+                             , flag.split = " "
+                             , is.num = TRUE)
+    , "ALIENS.no" = .getParam(params.lines = file.globalParam
+                              , flag = "ALIENS_NO"
+                              , flag.split = " "
+                              , is.num = TRUE)
+    , "ALIENS.freq" = .getParam(params.lines = file.globalParam
+                                , flag = "ALIENS_FREQ"
+                                , flag.split = " "
+                                , is.num = TRUE)
+    , "doFire" = .getParam(params.lines = file.globalParam
+                           , flag = "DO_FIRE_DISTURBANCE"
+                           , flag.split = " "
+                           , is.num = TRUE)
+    , "FIRE.no" = .getParam(params.lines = file.globalParam
+                            , flag = "FIRE_NO"
+                            , flag.split = " "
+                            , is.num = TRUE)
+    , "FIRE.no_sub" = .getParam(params.lines = file.globalParam
+                                , flag = "FIRE_NOSUB"
+                                , flag.split = " "
+                                , is.num = TRUE)
+    , "FIRE.freq" = .getParam(params.lines = file.globalParam
+                              , flag = "FIRE_FREQ"
+                              , flag.split = " "
+                              , is.num = TRUE)
+    , "FIRE.ignit_mode" = .getParam(params.lines = file.globalParam
+                                    , flag = "FIRE_IGNIT_MODE"
+                                    , flag.split = " "
+                                    , is.num = TRUE)
+    , "FIRE.ignit_no" = .getParam(params.lines = file.globalParam
+                                  , flag = "FIRE_IGNIT_NO"
+                                  , flag.split = " "
+                                  , is.num = TRUE)
+    , "FIRE.ignit_nohist" = .getParam(params.lines = file.globalParam
+                                      , flag = "FIRE_IGNIT_NOHIST"
+                                      , flag.split = " "
+                                      , is.num = TRUE)
+    , "FIRE.ignit_logis" = .getParam(params.lines = file.globalParam
+                                     , flag = "FIRE_IGNIT_LOGIS"
+                                     , flag.split = " "
+                                     , is.num = TRUE)
+    , "FIRE.ignit_flammmax" = .getParam(params.lines = file.globalParam
+                                        , flag = "FIRE_IGNIT_FLAMMMAX"
+                                        , flag.split = " "
+                                        , is.num = TRUE)
+    , "FIRE.neigh_mode" = .getParam(params.lines = file.globalParam
+                                    , flag = "FIRE_NEIGH_MODE"
+                                    , flag.split = " "
+                                    , is.num = TRUE)
+    , "FIRE.neigh_cc" = .getParam(params.lines = file.globalParam
+                                  , flag = "FIRE_NEIGH_CC"
+                                  , flag.split = " "
+                                  , is.num = TRUE)
+    , "FIRE.prop_mode" = .getParam(params.lines = file.globalParam
+                                   , flag = "FIRE_PROP_MODE"
+                                   , flag.split = " "
+                                   , is.num = TRUE)
+    , "FIRE.prop_intensity" = .getParam(params.lines = file.globalParam
+                                        , flag = "FIRE_PROP_INTENSITY"
+                                        , flag.split = " "
+                                        , is.num = TRUE)
+    , "FIRE.prop_logis" = .getParam(params.lines = file.globalParam
+                                    , flag = "FIRE_PROP_LOGIS"
+                                    , flag.split = " "
+                                    , is.num = TRUE)
+    , "FIRE.quota_mode" = .getParam(params.lines = file.globalParam
+                                    , flag = "FIRE_QUOTA_MODE"
+                                    , flag.split = " "
+                                    , is.num = TRUE)
+    , "FIRE.quota_max" = .getParam(params.lines = file.globalParam
+                                   , flag = "FIRE_QUOTA_MAX"
+                                   , flag.split = " "
+                                   , is.num = TRUE)
   )
   
   ## update shiny input parameters
@@ -239,16 +331,16 @@ get_update.global = function(file.globalParam)
                     , updates = update.param)
 }
 
-get_update.save = function(file.saveArrays, file.saveObjects, file.PFGsucc)
+get_update.save = function(file.saveMaps, file.saveObjects, file.PFGsucc)
 {
-  val.saveArrays = get_val_param(file.saveArrays)
+  val.saveMaps = get_val_param(file.saveMaps)
   val.saveObjects = get_val_param(file.saveObjects)
   
   update.param = list(
-    "save.maps.folder" = sub(paste0(input$name.simul, "/DATA/SAVE"), "", dirname(file.saveArrays))
-    , "save.maps.year1" = val.saveArrays[1]
-    , "save.maps.year2" = val.saveArrays[length(val.saveArrays)]
-    , "save.maps.no" = length(val.saveArrays)
+    "save.maps.folder" = sub(paste0(input$name.simul, "/DATA/SAVE"), "", dirname(file.saveMaps))
+    , "save.maps.year1" = val.saveMaps[1]
+    , "save.maps.year2" = val.saveMaps[length(val.saveMaps)]
+    , "save.maps.no" = length(val.saveMaps)
     , "save.objects.folder" = sub(paste0(input$name.simul, "/DATA/SAVE"), "", dirname(file.saveObjects))
     , "save.objects.year1" = val.saveObjects[1]
     , "save.objects.year2" = ifelse(length(val.saveObjects) > 1, val.saveObjects[2], "")
@@ -264,11 +356,15 @@ get_update.save = function(file.saveArrays, file.saveObjects, file.PFGsucc)
 observeEvent(input$load.param, {
   
   file.globalParam = ""
-  file.saveArrays = file.saveObjects = ""
-  file.PFGsucc = file.PFGlight = file.PFGdisp = file.PFGdist = file.PFGsoil = ""
+  file.saveMaps = file.saveObjects = ""
+  file.PFGsucc = file.PFGdisp = file.PFGlight = file.PFGsoil = ""
+  file.PFGdist = file.PFGdrought = file.PFGfire = ""
   file.changeMask_t = file.changeMask_m = ""
-  file.changeHS_t = file.changeHS_m = ""
+  file.changeHabsuit_t = file.changeHabsuit_m = ""
   file.changeDist_t = file.changeDist_m = ""
+  file.changeDrought_t = file.changeDrought_m = ""
+  file.changeAliens_t = file.changeAliens_m = ""
+  file.changeFire_t = file.changeFire_m = ""
   
   if (nchar(input$load.file) > 0)
   {
@@ -279,19 +375,27 @@ observeEvent(input$load.param, {
       val.simulParam = readLines(file.simulParam)
       
       file.globalParam = get_files_simulParam(file.simulParam, val.simulParam, flag = "GLOBAL_PARAMS")
-      file.saveArrays = get_files_simulParam(file.simulParam, val.simulParam, flag = "ARRAYS_SAVING_YEARS")
-      file.saveObjects = get_files_simulParam(file.simulParam, val.simulParam, flag = "OBJECTS_SAVING_YEARS")
-      file.PFGsucc = get_files_simulParam(file.simulParam, val.simulParam, flag = "PFG_LIFE_HISTORY_PARAMS")
-      file.PFGlight = get_files_simulParam(file.simulParam, val.simulParam, flag = "PFG_LIGHT_PARAMS")
-      file.PFGdisp = get_files_simulParam(file.simulParam, val.simulParam, flag = "PFG_DISPERSAL_PARAMS")
-      file.PFGdist = get_files_simulParam(file.simulParam, val.simulParam, flag = "PFG_DISTURBANCES_PARAMS")
-      file.PFGsoil = get_files_simulParam(file.simulParam, val.simulParam, flag = "PFG_SOIL_PARAMS")
-      file.changeMask_t = get_files_simulParam(file.simulParam, val.simulParam, flag = "MASK_CHANGE_TIME")
-      file.changeMask_m = get_files_simulParam(file.simulParam, val.simulParam, flag = "MASK_CHANGE_MASK")
-      file.changeHS_t = get_files_simulParam(file.simulParam, val.simulParam, flag = "HAB_CHANGE_TIME")
-      file.changeHS_m = get_files_simulParam(file.simulParam, val.simulParam, flag = "HAB_CHANGE_MASK")
-      file.changeDist_t = get_files_simulParam(file.simulParam, val.simulParam, flag = "DIST_CHANGE_TIME")
-      file.changeDist_m = get_files_simulParam(file.simulParam, val.simulParam, flag = "DIST_CHANGE_MASK")
+      file.saveMaps = get_files_simulParam(file.simulParam, val.simulParam, flag = "SAVING_YEARS_MAPS")
+      file.saveObjects = get_files_simulParam(file.simulParam, val.simulParam, flag = "SAVING_YEARS_OBJECTS")
+      file.PFGsucc = get_files_simulParam(file.simulParam, val.simulParam, flag = "PFG_PARAMS_LIFE_HISTORY")
+      file.PFGdisp = get_files_simulParam(file.simulParam, val.simulParam, flag = "PFG_PARAMS_DISPERSAL")
+      file.PFGlight = get_files_simulParam(file.simulParam, val.simulParam, flag = "PFG_PARAMS_LIGHT")
+      file.PFGsoil = get_files_simulParam(file.simulParam, val.simulParam, flag = "PFG_PARAMS_SOIL")
+      file.PFGdist = get_files_simulParam(file.simulParam, val.simulParam, flag = "PFG_PARAMS_DISTURBANCES")
+      file.PFGdrought = get_files_simulParam(file.simulParam, val.simulParam, flag = "PFG_PARAMS_DROUGHT")
+      file.PFGfire = get_files_simulParam(file.simulParam, val.simulParam, flag = "PFG_PARAMS_FIRE")
+      file.changeMask_t = get_files_simulParam(file.simulParam, val.simulParam, flag = "MASK_CHANGEMASK_YEARS")
+      file.changeMask_m = get_files_simulParam(file.simulParam, val.simulParam, flag = "MASK_CHANGEMASK_FILES")
+      file.changeHabsuit_t = get_files_simulParam(file.simulParam, val.simulParam, flag = "HABSUIT_CHANGEMASK_YEARS")
+      file.changeHabsuit_m = get_files_simulParam(file.simulParam, val.simulParam, flag = "HABSUIT_CHANGEMASK_FILES")
+      file.changeDist_t = get_files_simulParam(file.simulParam, val.simulParam, flag = "DIST_CHANGEMASK_YEARS")
+      file.changeDist_m = get_files_simulParam(file.simulParam, val.simulParam, flag = "DIST_CHANGEMASK_FILES")
+      file.changeDrought_t = get_files_simulParam(file.simulParam, val.simulParam, flag = "DIST_CHANGEMASK_YEARS")
+      file.changeDrought_m = get_files_simulParam(file.simulParam, val.simulParam, flag = "DIST_CHANGEMASK_FILES")
+      file.changeAliens_t = get_files_simulParam(file.simulParam, val.simulParam, flag = "ALIENS_CHANGEMASK_YEARS")
+      file.changeAliens_m = get_files_simulParam(file.simulParam, val.simulParam, flag = "ALIENS_CHANGEMASK_FILES")
+      file.changeFire_t = get_files_simulParam(file.simulParam, val.simulParam, flag = "FIRE_CHANGEMASK_YEARS")
+      file.changeFire_m = get_files_simulParam(file.simulParam, val.simulParam, flag = "FIRE_CHANGEMASK_FILES")
     } else
     {
       shinyalert(type = "warning", text = paste0("The file '", file.simulParam, "'does not exist !"))
@@ -305,7 +409,7 @@ observeEvent(input$load.param, {
   {
     ## update global /save values
     get_update.global(file.globalParam = file.globalParam)
-    get_update.save(file.saveArrays = file.saveArrays
+    get_update.save(file.saveMaps = file.saveMaps
                     , file.saveObjects = file.saveObjects
                     , file.PFGsucc = file.PFGsucc)
     
@@ -335,6 +439,14 @@ observeEvent(input$load.param, {
                               , flag = "LONGEVITY"
                               , flag.split = " "
                               , is.num = TRUE)
+        max_stratum = .getParam(params.lines = fi
+                              , flag = "MAX_STRATUM"
+                              , flag.split = " "
+                              , is.num = TRUE)
+        max_abundance = .getParam(params.lines = fi
+                              , flag = "MAX_ABUNDANCE"
+                              , flag.split = " "
+                              , is.num = TRUE)
         light = 0
         
         return(data.frame(PFG = ifelse(is.null(PFG), "", PFG)
@@ -342,6 +454,8 @@ observeEvent(input$load.param, {
                           , height = ifelse(is.null(height), "", height)
                           , maturity = ifelse(is.null(maturity), "", maturity)
                           , longevity = ifelse(is.null(longevity), "", longevity)
+                          , max_stratum = ifelse(is.null(max_stratum), "", max_stratum)
+                          , max_abundance = ifelse(is.null(max_abundance), "", max_abundance)
                           , light = 0
         ))
       }
@@ -364,59 +478,6 @@ observeEvent(input$load.param, {
           }
         }
       }
-    }
-    ## Dispersal
-    if (length(file.PFGdisp) > 0 && nchar(file.PFGdisp) > 0)
-    {
-      RV$mat.PFG.disp = foreach(fi = file.PFGdisp, .combine = 'rbind') %do%
-      {
-        PFG = .getParam(params.lines = fi
-                        , flag = "NAME"
-                        , flag.split = " "
-                        , is.num = FALSE)
-        MODE = .getParam(params.lines = fi
-                         , flag = "MODE_DISPERS"
-                         , flag.split = " "
-                         , is.num = TRUE)
-        dd = .getParam(params.lines = fi
-                       , flag = "DISPERS_DIST"
-                       , flag.split = " "
-                       , is.num = TRUE)
-        
-        return(data.frame(PFG = ifelse(is.null(PFG), "", PFG)
-                          , MODE = ifelse(is.null(MODE), "", MODE)
-                          , d50 = ifelse(is.null(dd), "", dd[1])
-                          , d99 = ifelse(is.null(dd), "", dd[2])
-                          , ldd = ifelse(is.null(dd), "", dd[3])
-        ))
-      }
-    }
-    ## Disturbances
-    if (length(file.PFGdist) > 0 && nchar(file.PFGdist) > 0)
-    {
-      res = foreach(fi = file.PFGdist) %do%
-      {
-        PFG = .getParam(params.lines = fi
-                        , flag = "NAME"
-                        , flag.split = " "
-                        , is.num = FALSE)
-        FATES = .getParam(params.lines = fi
-                          , flag = "FATES"
-                          , flag.split = " "
-                          , is.num = TRUE)
-        
-        no.dist = length(FATES) / (4 * 2)
-        ind_Kill = seq(1, 4 * 2, 2)
-        res = foreach(di = 1:no.dist, .combine = "rbind") %do%
-        {
-          res = data.frame(name = paste0("DIST_", di), responseStage = 1:4)
-          eval(parse(text = paste0("res$KilledIndiv_", PFG, " = FATES[ind_Kill + (di -1) * 8]")))
-          eval(parse(text = paste0("res$ResproutIndiv_", PFG, " = FATES[ind_Kill + 1 + (di -1) * 8]")))
-          return(res)
-        }
-        return(res)
-      }
-      RV$mat.PFG.dist = Reduce(f = function(x, y) merge(x, y, by = c("name", "responseStage")), x = res)
     }
     ## Soil
     if (length(file.PFGsoil) > 0 && nchar(file.PFGsoil) > 0)
@@ -458,16 +519,73 @@ observeEvent(input$load.param, {
         RV$mat.PFG.soil = merge(RV$mat.PFG.soil, RV$mat.PFG.ALL[, c("PFG", "type")], by = "PFG", all.x = TRUE)
       }
     }
+    ## Dispersal
+    if (length(file.PFGdisp) > 0 && nchar(file.PFGdisp) > 0)
+    {
+      RV$mat.PFG.disp = foreach(fi = file.PFGdisp, .combine = 'rbind') %do%
+      {
+        PFG = .getParam(params.lines = fi
+                        , flag = "NAME"
+                        , flag.split = " "
+                        , is.num = FALSE)
+        dd = .getParam(params.lines = fi
+                       , flag = "DISPERS_DIST"
+                       , flag.split = " "
+                       , is.num = TRUE)
+        
+        return(data.frame(PFG = ifelse(is.null(PFG), "", PFG)
+                          , d50 = ifelse(is.null(dd), "", dd[1])
+                          , d99 = ifelse(is.null(dd), "", dd[2])
+                          , ldd = ifelse(is.null(dd), "", dd[3])
+        ))
+      }
+    }
+    ## Disturbances
+    if (length(file.PFGdist) > 0 && nchar(file.PFGdist) > 0)
+    {
+      res = foreach(fi = file.PFGdist) %do%
+      {
+        PFG = .getParam(params.lines = fi
+                        , flag = "NAME"
+                        , flag.split = " "
+                        , is.num = FALSE)
+        FATES = .getParam(params.lines = fi
+                          , flag = "FATES"
+                          , flag.split = " "
+                          , is.num = TRUE)
+        
+        no.dist = length(FATES) / (4 * 2)
+        ind_Kill = seq(1, 4 * 2, 2)
+        res = foreach(di = 1:no.dist, .combine = "rbind") %do%
+        {
+          res = data.frame(name = paste0("DIST_", di), responseStage = 1:4)
+          eval(parse(text = paste0("res$KilledIndiv_", PFG, " = FATES[ind_Kill + (di -1) * 8]")))
+          eval(parse(text = paste0("res$ResproutIndiv_", PFG, " = FATES[ind_Kill + 1 + (di -1) * 8]")))
+          return(res)
+        }
+        return(res)
+      }
+      RV$mat.PFG.dist = Reduce(f = function(x, y) merge(x, y, by = c("name", "responseStage")), x = res)
+    }
     ## Changing
     if ((length(file.changeMask_t) > 0 && nchar(file.changeMask_t) > 0) ||
-        (length(file.changeHS_t) > 0 && nchar(file.changeHS_t) > 0) ||
-        (length(file.changeDist_t) > 0 && nchar(file.changeDist_t) > 0))
+        (length(file.changeHabsuit_t) > 0 && nchar(file.changeHabsuit_t) > 0) ||
+        (length(file.changeDist_t) > 0 && nchar(file.changeDist_t) > 0) ||
+        (length(file.changeDrought_t) > 0 && nchar(file.changeDrought_t) > 0) ||
+        (length(file.changeAliens_t) > 0 && nchar(file.changeAliens_t) > 0) ||
+        (length(file.changeFire_t) > 0 && nchar(file.changeFire_t) > 0))
     {
-      RV$mat.changing = foreach(ty = c("MASK", "HS", "DIST"), .combine = 'rbind') %do%
+      RV$mat.changing = foreach(ty = c("MASK", "HABSUIT", "DIST", "DROUGHT", "ALIENS", "FIRE")
+                                , .combine = 'rbind') %do%
       {
-        if (ty == "MASK") file.change_m = file.changeMask_m
-        if (ty == "HS") file.change_m = file.changeHS_m
-        if (ty == "DIST") file.change_m = file.changeDist_m
+        file.change_m = switch (ty
+                                , "MASK" = file.changeMask_m
+                                , "HABSUIT" = file.changeHabsuit_m
+                                , "DIST" = file.changeDist_m
+                                , "DROUGHT" = file.changeDrought_m
+                                , "ALIENS" = file.changeAliens_m
+                                , "FIRE" = file.changeFire_m
+        )
         if (length(file.change_m) > 0 && nchar(file.change_m) > 0)
         {
           res = foreach(fi = file.change_m, .combine = "rbind") %do%

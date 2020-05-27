@@ -52,11 +52,11 @@ tabPanel(title = HTML("<span class='panel_title'><i class='fa fa-chart-bar'></i>
                        ) ## END tabsetPanel
              ) ## END wellPanel
            ) ## END mainPanel
-         ) %>% helper(type = "inline"
-                      , title = "Evaluate FATE-HD simulation outputs"
-                      , size = "l"
-                      , content = help.HTML(html.file = "https://mayagueguen.github.io/RFate/index.html"
-                                            , target.anchor = '<div '
-                                            , target.class = "post_fate---evaluation-of-simulation")
+         # ) %>% helper(type = "inline"
+         #              , title = "Evaluate FATE-HD simulation outputs"
+         #              , size = "l"
+         #              , content = help.HTML(html.file = "https://mayagueguen.github.io/RFate/articles/rfate_tutorial_3_graphics.html"
+         #                                    , target.anchor = 'class="hidden name'
+         #                                    , target.class = "rfate_tutorial_3_graphics.Rmd")
          ) ## END sidebarLayout
 ) ## tabPanel

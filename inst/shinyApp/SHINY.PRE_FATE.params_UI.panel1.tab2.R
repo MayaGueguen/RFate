@@ -26,15 +26,15 @@ tabPanel(title = HTML("<span class='tabPanel_title'>2. Pairwise distance</span>"
          ) ## END fluidRow
          , fluidRow(
            column(12
-                  , sliderInput(inputId = "opt.max.percent.NA"
-                                , label = param.style("opt.max.percent.NA")
+                  , sliderInput(inputId = "opt.maxPercent.NA"
+                                , label = param.style("opt.maxPercent.NA")
                                 , min = 0
                                 , max = 1
                                 , value = 0
                                 , step = 0.05
                                 , width = "100%")
-                  , sliderInput(inputId = "opt.max.percent.similarSpecies"
-                                , label = param.style("opt.max.percent.similarSpecies")
+                  , sliderInput(inputId = "opt.maxPercent.similarSpecies"
+                                , label = param.style("opt.maxPercent.similarSpecies")
                                 , min = 0
                                 , max = 1
                                 , value = 0.25
@@ -43,7 +43,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>2. Pairwise distance</span>"
                   , numericInput(inputId = "opt.min.sd"
                                  , label = param.style("opt.min.sd")
                                  , min = 0
-                                 , value = 0.5
+                                 , value = 0.3
                                  , width = "100%")
            )
          ) ## END fluidRow
@@ -58,7 +58,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>2. Pairwise distance</span>"
                   ) %>% helper(type = "inline"
                                , title = "Computation of species pairwise distance"
                                , size = "l"
-                               , content = help.HTML("https://mayagueguen.github.io/RFate/reference/PRE_FATE.speciesDistance.html")
+                               , content = help.HTML("./../../docs/reference/PRE_FATE.speciesDistance.html")
                   )
            )
          ) ## END fluidRow

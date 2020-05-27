@@ -1,5 +1,5 @@
 
-tabPanel(title = HTML("<p class='panel_title'><i class='fa fa-folder-plus'></i> New / <i class='fa fa-folder-open'></i> Modify</p>")
+tabPanel(title = HTML("<p class='panel_title'><i class='fa fa-folder-plus'></i> New / &emsp;<i class='fa fa-folder-open'></i> Modify</p>")
 # tabPanel(title = HTML("<span class='panel_title'><i class='fa fa-copy'></i> Simulation parameter files</span>")
          , value = "panel2"
          , sidebarLayout(
@@ -52,6 +52,8 @@ tabPanel(title = HTML("<p class='panel_title'><i class='fa fa-folder-plus'></i> 
                                <li>LIGHT</li>
                                <li>SOIL</li>
                                <li>DIST</li>
+                               <li>DROUGHT</li>
+                               <li>ALIENS</li>
                                </ul>
                                </li>
                                </ul>
@@ -139,10 +141,10 @@ tabPanel(title = HTML("<p class='panel_title'><i class='fa fa-folder-plus'></i> 
              ) ## END hidden
            ) ## END mainPanel
              ) %>% helper(type = "inline"
-                          , title = "Create FATE-HD parameter files"
+                          , title = "Create FATE parameter files"
                           , size = "l"
-                          , content = help.HTML(html.file = "https://mayagueguen.github.io/RFate/index.html"
+                          , content = help.HTML(html.file = "./../../docs/articles/rfate_tutorial_2_params.html"
                                                 , target.anchor = 'class="section level2"'
-                                                , target.class = "pre_fate---build-parameter-files")
+                                                , target.class = "the-different-type-of-parameters-and-flags")
              ) ## END sidebarLayout
          ) ## END tabPanel

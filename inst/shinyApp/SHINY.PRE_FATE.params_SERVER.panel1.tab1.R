@@ -1,23 +1,72 @@
 
 ####################################################################
 
-output$UI.doHabitatSelection = renderUI({
-  if (input$doHabitatSelection)
+output$UI.doRuleAC = renderUI({
+  if (input$doRuleA || input$doRuleC)
   {
     tagList(
-      sliderInput(inputId = "selectionRule.min_percent_habitat"
-                  , label = param.style("min_percent_habitat")
-                  , min = 0
-                  , max = 1
-                  , value = 0.05
-                  , step = 0.05
-                  , width = "100%")
-      , numericInput(inputId = "selectionRule.min_no_habitat"
-                     , label = param.style("min_no_habitat")
-                     , min = 0
-                     , value = 0.05
-                     , step = 1
-                     , width = "100%")
+      numericInput(inputId = "rule.A1"
+                   , label = param.style("rule.A1")
+                   , min = 0
+                   , value = 10
+                   , step = 1
+                   , width = "100%")
+      , sliderInput(inputId = "rule.A2_quantile"
+                    , label = param.style("rule.A2_quantile")
+                    , min = 0
+                    , max = 1
+                    , value = 0.9
+                    , step = 0.05
+                    , width = "100%")
+    )
+  }
+})
+
+
+output$UI.doRuleB = renderUI({
+  if (input$doRuleB)
+  {
+    tagList(
+      numericInput(inputId = "rule.B1_number"
+                   , label = param.style("rule.B1_number")
+                   , min = 0
+                   , value = 5
+                   , step = 1
+                   , width = "100%")
+      , sliderInput(inputId = "rule.B1_percentage"
+                    , label = param.style("rule.B1_percentage")
+                    , min = 0
+                    , max = 1
+                    , value = 0.25
+                    , step = 0.05
+                    , width = "100%")
+      , sliderInput(inputId = "rule.B2"
+                    , label = param.style("rule.B2")
+                    , min = 0
+                    , max = 1
+                    , value = 0.5
+                    , step = 0.05
+                    , width = "100%")
+    )
+  }
+})
+
+output$UI.doRobustness = renderUI({
+  if (input$doRobustness)
+  {
+    tagList(
+      numericInput(inputId = "robustness_rep"
+                   , label = param.style("robustness_rep")
+                   , min = 0
+                   , value = 10
+                   , step = 1
+                   , width = "100%")
+      , selectInput(inputId = "robustness_percent"
+                    , label = param.style("robustness_percent")
+                    , choices = seq(0.1, 0.9, 0.1)
+                    , selected = seq(0.1, 0.9, 0.1)
+                    , multiple = TRUE
+                    , width = "100%")
     )
   }
 })
@@ -61,42 +110,67 @@ observeEvent(input$select.dominant, {
   sp.obs = get_obs()
   if (!is.null(sp.obs))
   {
-    selectionRule.min_percent_habitat = NULL
-    if (!is.null(input$selectionRule.min_percent_habitat)){
-      selectionRule.min_percent_habitat = as.numeric(input$selectionRule.min_percent_habitat)
+    rule.A1 = rule.A2_quantile = NULL
+    if (!is.null(input$rule.A1)){
+      rule.A1 = as.numeric(input$rule.A1)
     }
-    selectionRule.min_no_habitat = NULL
-    if (!is.null(input$selectionRule.min_no_habitat)){
-      selectionRule.min_no_habitat = as.numeric(input$selectionRule.min_no_habitat)
+    if (!is.null(input$rule.A2_quantile)){
+      rule.A2_quantile = as.numeric(input$rule.A2_quantile)
+    }
+    rule.B1_percentage = rule.B1_number = rule.B2 = NULL
+    if (!is.null(input$rule.B1_percentage)){
+      rule.B1_percentage = as.numeric(input$rule.B1_percentage)
+    }
+    if (!is.null(input$rule.B1_number)){
+      rule.B1_number = as.numeric(input$rule.B1_number)
+    }
+    if (!is.null(input$rule.B2)){
+      rule.B2 = as.numeric(input$rule.B2)
+    }
+    robustness_percent = robustness_rep = NULL
+    if (!is.null(input$robustness_percent)){
+      robustness_percent = as.numeric(input$robustness_percent)
+    }
+    if (!is.null(input$robustness_rep)){
+      robustness_rep = as.numeric(input$robustness_rep)
     }
     
-    showModal(modalDialog(HTML(paste0("Select dominant species with parameters :
-                                        <ul>
-                                    <li><strong>selectionRule.quanti :</strong> ", as.numeric(input$selectionRule.quanti),"</li>
-                                    <li><strong>selectionRule.min_mean_abund :</strong> ", as.numeric(input$selectionRule.min_mean_abund), "</li>
-                                    <li><strong>selectionRule.min_no_abund_over25 :</strong> ", as.numeric(input$selectionRule.min_no_abund_over25),"</li>
-                                    <li><strong>doHabitatSelection :</strong> ", input$doHabitatSelection,"</li>
-                                    <li><strong>selectionRule.min_percent_habitat :</strong> ", selectionRule.min_percent_habitat,"</li>
-                                    <li><strong>selectionRule.min_no_habitat :</strong> ", selectionRule.min_no_habitat,"</li>
-                                    </ul>"))
+    showModal(modalDialog(HTML(paste0("Select dominant species with parameters : <ul>"
+                                      , ifelse(input$doRuleA || input$doRuleC
+                                               , paste0("<li><strong>rule.A1 :</strong> ", rule.A1, "</li>"
+                                                        , "<li><strong>rule.A2_quantile :</strong> ", rule.A2_quantile, "</li>")
+                                               , "")
+                                      , ifelse(input$doRuleB
+                                               , paste0("<li><strong>rule.B1_percentage :</strong> ", rule.B1_percentage, "</li>"
+                                                        , "<li><strong>rule.B1_number :</strong> ", rule.B1_number, "</li>"
+                                                        , "<li><strong>rule.B2 :</strong> ", rule.B2, "</li>")
+                                               , "")
+                                      , ifelse(input$doRobustness
+                                               , paste0("<li><strong>robustness_percent :</strong> "
+                                                        , paste0(robustness_percent, collapse = ", "), "</li>"
+                                                        , "<li><strong>robustness_rep :</strong> ", robustness_rep, "</li>")
+                                               , "")
+                                      , "</ul>"))
                           , title = HTML("Selection of dominant species from abundance releves")
                           , footer = NULL))
     Sys.sleep(3)
     get_res = print_messages(as.expression(
-      PRE_FATE.selectDominant(mat.site.species.abund = sp.obs
-                              , selectionRule.quanti = as.numeric(input$selectionRule.quanti)
-                              , selectionRule.min_mean_abund = as.numeric(input$selectionRule.min_mean_abund)
-                              , selectionRule.min_no_abund_over25 = as.numeric(input$selectionRule.min_no_abund_over25)
-                              , doHabitatSelection = input$doHabitatSelection
-                              , selectionRule.min_percent_habitat = selectionRule.min_percent_habitat
-                              , selectionRule.min_no_habitat = selectionRule.min_no_habitat
+      PRE_FATE.selectDominant(mat.observations = sp.obs
+                              , doRuleA = input$doRuleA
+                              , rule.A1 = rule.A1
+                              , rule.A2_quantile = rule.A2_quantile
+                              , doRuleB = input$doRuleB
+                              , rule.B1_percentage = rule.B1_percentage
+                              , rule.B1_number = rule.B1_number
+                              , rule.B2 = rule.B2
+                              , doRuleC = input$doRuleC
+                              , opt.doRobustness = input$doRobustness
+                              , opt.robustness_percent = robustness_percent
+                              , opt.robustness_rep = robustness_rep
       )
     ))
     removeModal()
     
     RV$pfg.graph <- c(RV$pfg.graph, "dom") 
-  } else
-  {
-    shinyalert(type = "warning", text = "You must provide a text file for the species.observations !")
   }
 })
