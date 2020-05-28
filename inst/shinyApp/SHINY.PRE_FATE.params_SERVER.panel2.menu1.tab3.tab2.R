@@ -60,6 +60,8 @@ output$UI.light.opt.tl = renderUI({
   }
 })
 
+####################################################################
+
 output$UI.light.opt.ag = renderUI({
   if (input$light.opt.ag == "by strategy")
   {
@@ -76,79 +78,85 @@ output$UI.light.opt.ag = renderUI({
   } else if (input$light.opt.ag == "user-defined")
   {
     fluidRow(
-      column(4
-             , HTML("<strong>Low</strong>")
-             , selectInput(inputId = "light.Ge.L.act"
-                           , label = NULL
-                           , choices = seq(0,100,10)
-                           , selected = 100
-                           , multiple = FALSE
-                           , width = "100%"))
-      , column(4
-               , HTML("<strong>Medium</strong>")
-               , selectInput(inputId = "light.Ge.M.act"
+      lapply(1:3, function(x)
+      {
+        column(4
+               , HTML(paste0("<strong>", c("Low", "Medium", "High")[x], "</strong>"))
+               , selectInput(inputId = paste0("light.Ge.", c("L", "M", "H")[x], ".act")
                              , label = NULL
                              , choices = seq(0,100,10)
                              , selected = 100
                              , multiple = FALSE
                              , width = "100%"))
-      , column(4
-               , HTML("<strong>High</strong>")
-               , selectInput(inputId = "light.Ge.H.act"
-                             , label = NULL
-                             , choices = seq(0,100,10)
-                             , selected = 100
-                             , multiple = FALSE
-                             , width = "100%"))
+      })
+      # column(4
+      #        , HTML("<strong>Low</strong>")
+      #        , selectInput(inputId = "light.Ge.L.act"
+      #                      , label = NULL
+      #                      , choices = seq(0,100,10)
+      #                      , selected = 100
+      #                      , multiple = FALSE
+      #                      , width = "100%"))
+      # , column(4
+      #          , HTML("<strong>Medium</strong>")
+      #          , selectInput(inputId = "light.Ge.M.act"
+      #                        , label = NULL
+      #                        , choices = seq(0,100,10)
+      #                        , selected = 100
+      #                        , multiple = FALSE
+      #                        , width = "100%"))
+      # , column(4
+      #          , HTML("<strong>High</strong>")
+      #          , selectInput(inputId = "light.Ge.H.act"
+      #                        , label = NULL
+      #                        , choices = seq(0,100,10)
+      #                        , selected = 100
+      #                        , multiple = FALSE
+      #                        , width = "100%"))
     )
   }
 })
 
 ####################################################################
 
-output$UI.light.opt.tol = renderUI({
+output$UI.light.opt.tol1 = renderUI({
   if (input$light.opt.tol == "by strategy")
   {
     fluidRow(
-      column(6, br())
-      , column(6
-               , HTML("<strong>Tolerance</strong>")
-               , selectInput(inputId = "light.strategy_tol"
-                             , label = NULL
-                             , choices = c("full_light", "pioneer", "ubiquist"
-                                           , "semi_shade", "undergrowth")
-                             , selected = "ubiquist"
-                             , multiple = F
-                             , width = "100%"))
+      column(12
+             , HTML("<strong>Tolerance</strong>")
+             , selectInput(inputId = "light.strategy_tol"
+                           , label = NULL
+                           , choices = c("full_light", "pioneer", "ubiquist"
+                                         , "semi_shade", "undergrowth")
+                           , selected = "ubiquist"
+                           , multiple = F
+                           , width = "100%"))
     )
-  } else if (input$light.opt.tol == "user-defined")
+  }
+})
+
+output$UI.light.opt.tol2 = renderUI({
+  if (input$light.opt.tol == "user-defined")
   {
     req(input$light.PFG)
     
     tagList(
       fluidRow(
-        # column(2, HTML(""))
-        # , column(10
-        #          , fluidRow(
-                   column(4, HTML("<strong>Germinant</strong>"))
-                   , column(4, HTML("<strong>Immature</strong>"))
-                   , column(4, HTML("<strong>Mature</strong>"))
-                 # ))
+        column(4, HTML("<strong>Germinant</strong>"))
+        , column(4, HTML("<strong>Immature</strong>"))
+        , column(4, HTML("<strong>Mature</strong>"))
       )
       , fluidRow(
-        # column(2, HTML(""), br(), br())
-        # , column(10
-        #          , fluidRow(
-                   lapply(1:3, function(i)
-                   {
-                     column(4
-                            , fluidRow(
-                              column(4, HTML("<strong>L</strong>"), br(), br())
-                              , column(4, HTML("<strong>H</strong>"), br(), br())
-                              , column(4, HTML("<strong>M</strong>"), br(), br())
-                            ))
-                   })
-                 # ))
+        lapply(1:3, function(i)
+        {
+          column(4
+                 , fluidRow(
+                   column(4, HTML("<strong>L</strong>"), br(), br())
+                   , column(4, HTML("<strong>H</strong>"), br(), br())
+                   , column(4, HTML("<strong>M</strong>"), br(), br())
+                 ))
+        })
       )
       , fluidRow(
         lapply(c("Ge", "Im", "Ma"), function(k)
@@ -158,7 +166,7 @@ output$UI.light.opt.tol = renderUI({
                    lapply(c("L", "M", "H"), function(l)
                    {
                      column(4
-                            , selectInput(inputId = paste0("light.", k, ".", l, ".tol.", input$light.PFG)
+                            , selectInput(inputId = paste0("light.", k, ".", l, ".tol")
                                           , label = NULL
                                           , choices = seq(0,100,10)
                                           , multiple = FALSE
@@ -167,81 +175,58 @@ output$UI.light.opt.tol = renderUI({
                  ))
         })
       )
-      # , uiOutput(outputId = "UI.light.opt.tol.BIS")
     )
   }
 })
 
-# output$UI.light.opt.tol.BIS = renderUI({
-#   req(input$light.PFG)
-#   
-#   fluidRow(
-#     column(2, HTML(paste0("<strong>", input$light.PFG, "</strong>")))
-#     , column(10
-#              , fluidRow(
-#                lapply(c("Ge", "Im", "Ma"), function(k)
-#                {
-#                  column(4
-#                         , fluidRow(
-#                           lapply(c("L", "M", "H"), function(l)
-#                           {
-#                             column(4
-#                                    , selectInput(inputId = paste0("light.", k, ".", l, ".tol.", input$light.PFG)
-#                                                  , label = NULL
-#                                                  , choices = seq(0,100,10)
-#                                                  , multiple = FALSE
-#                                                  , width = "100%"))
-#                           })
-#                         ))
-#                })
-#              ))
-#   )
-#   
-#   # if (length(RV$names.PFG) > 0)
-#   # {
-#   #   lapply(RV$names.PFG, function(j) {
-#   #     fluidRow(
-#   #       column(2, HTML(paste0("<strong>", j, "</strong>")))
-#   #       , column(10
-#   #                , fluidRow(
-#   #                  lapply(c("Ge", "Im", "Ma"), function(k)
-#   #                  {
-#   #                    column(4
-#   #                           , fluidRow(
-#   #                             lapply(c("L", "M", "H"), function(l)
-#   #                             {
-#   #                               column(4
-#   #                                      , selectInput(inputId = paste0("light.", k, ".", l, ".tol.", j)
-#   #                                                    , label = NULL
-#   #                                                    , choices = seq(0,100,10)
-#   #                                                    , multiple = FALSE
-#   #                                                    , width = "100%"))
-#   #                             })
-#   #                           ))
-#   #                  })
-#   #                ))
-#   #     )
-#   #   })
-#   # }
-# })
-
 
 ####################################################################
 
-output$mat.PFG.light = renderTable({ RV$mat.PFG.light })
+output$mat.PFG.light = renderTable({
+  RV$mat.PFG.light[, which(apply(RV$mat.PFG.light, 2, function(x) length(which(!is.na(x)))) > 0)]
+})
 
 observeEvent(input$add.PFG.light, {
   req(input$light.PFG)
   RV$mat.PFG.light <- rbind(RV$mat.PFG.light
                             , data.frame(PFG = input$light.PFG
-                                         , type = input$light.type
-                                         , light_need = as.numeric(input$light.light)
-                                         , strategy_ag = input$light.strategy_ag
-                                         , active_germ_low = as.numeric(input$light.Ge.L.act)
-                                         , active_germ_medium = as.numeric(input$light.Ge.M.act)
-                                         , active_germ_high = as.numeric(input$light.Ge.H.act)
-                                         , strategy_tol = input$light.strategy_tol
+                                         , type = ifelse(input$light.opt.tol == "by type & light" ||
+                                                           input$light.opt.ag == "by type"
+                                                         , input$light.type
+                                                         , NA)
+                                         , light_need = ifelse(input$light.opt.tol == "by type & light"
+                                                               , as.numeric(input$light.light)
+                                                               , NA)
+                                         , strategy_ag = ifelse(input$light.opt.ag == "by strategy"
+                                                                , input$light.strategy_ag
+                                                                , NA)
+                                         , active_germ_low = ifelse(input$light.opt.ag == "user-defined"
+                                                                    , as.numeric(input$light.Ge.L.act)
+                                                                    , NA)
+                                         , active_germ_medium = ifelse(input$light.opt.ag == "user-defined"
+                                                                       , as.numeric(input$light.Ge.M.act)
+                                                                       , NA)
+                                         , active_germ_high = ifelse(input$light.opt.ag == "user-defined"
+                                                                     , as.numeric(input$light.Ge.H.act)
+                                                                     , NA)
+                                         , strategy_tol = ifelse(input$light.opt.tol == "by strategy"
+                                                                 , input$light.strategy_tol
+                                                                 , NA)
                             ))
+  if (input$light.opt.tol == "user-defined")
+  {
+    combi = expand.grid(lifeStage = c("Ge", "Im", "Ma")
+                        , resources = c("L", "M", "H"))
+    mat.tol = foreach(ls = combi$lifeStage, re = combi$resources, .combine = "rbind") %do%
+    {
+      eval(parse(text = paste0("tol = as.numeric(input$light.", ls, ".", re, ".tol) / 10")))
+      return(data.frame(PFG = input$light.PFG
+                        , lifeStage = c("Ge" = "Germinant", "Im" = "Immature", "Ma" = "Mature")[ls]
+                        , resources = c("L" = "Low", "M" = "Medium", "H" = "High")[re]
+                        , tolerance = tol))
+    }
+    RV$mat.PFG.light.tol <- rbind(RV$mat.PFG.light.tol, mat.tol)
+  }
 })
 
 observeEvent(input$delete.PFG.light, {
@@ -279,23 +264,7 @@ observeEvent(input$create.light, {
       mat.tol = RV$mat.PFG.light[, c("PFG", "strategy_tol")]
     } else if (input$light.opt.tol == "user-defined")
     {
-      ###
-      # name.cols = ifelse(input$dist.grouping == "by type", list(c("H", "C", "P")), list(RV$names.PFG))
-      if (length(RV$names.PFG) > 0)
-      {
-        combi = expand.grid(PFG = RV$names.PFG
-                            , lifeStage = c("Ge", "Im", "Ma")
-                            , resources = c("L", "M", "H"))
-        mat.tol = foreach(pfg = combi$PFG, ls = combi$lifeStage, re = combi$resources, .combine = "rbind") %do%
-        {
-          data.frame(PFG = pfg
-                     , lifeStage = ls
-                     , resources = re
-                     , tolerance = as.numeric(get(paste0("input$light.", ls, ".", re, ".tol.", pfg)))
-          )
-        }
-        # RV$mat.PFG.dist <- rbind(RV$mat.PFG.dist, res)
-      }
+      mat.tol = RV$mat.PFG.light.tol
     }
     
     get_res = print_messages(as.expression(

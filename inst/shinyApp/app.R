@@ -191,6 +191,7 @@ server <- function(input, output, session) {
   RV = reactiveValues(names.PFG = c()
                       , mat.PFG.succ = data.frame()
                       , mat.PFG.light = data.frame()
+                      , mat.PFG.light.tol = data.frame()
                       , mat.PFG.soil = data.frame()
                       , mat.PFG.disp = data.frame()
                       , mat.PFG.dist = data.frame()

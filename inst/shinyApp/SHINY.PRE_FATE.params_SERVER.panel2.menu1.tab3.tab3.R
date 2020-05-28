@@ -16,10 +16,261 @@ output$UI.soil.PFG = renderUI({
   {
     selectInput(inputId = "soil.PFG"
                 , label = NULL
-                , choices = RV$names.PFG
-                , selected = RV$names.PFG[1]
+                , choices = RV$names.PFG[which(!(RV$names.PFG %in% RV$mat.PFG.soil$PFG))]
+                , selected = RV$names.PFG[which(!(RV$names.PFG %in% RV$mat.PFG.soil$PFG))][1]
                 , multiple = F
                 , width = "100%")
+  }
+})
+
+
+####################################################################
+
+output$UI.soil.opt.con = renderUI({
+  if (input$soil.opt.con == "by strategy")
+  {
+    fluidRow(
+      column(12
+             , HTML("<strong>Contribution</strong>")
+             , selectInput(inputId = "soil.strategy_con"
+                           , label = NULL
+                           , choices = c("ubiquist")
+                           , selected = "ubiquist"
+                           , multiple = F
+                           , width = "100%"))
+    )
+  } else if (input$soil.opt.con == "user-defined")
+  {
+    fluidRow(
+      column(4
+             , HTML("<strong>Contribution</strong>")
+             , numericInput(inputId = "soil.contrib"
+                            , label = NULL
+                            , value = 0
+                            , min = 0
+                            , max = 5
+                            , width = "100%"))
+      , column(4
+               , HTML("<strong>Min value tolerated</strong>")
+               , numericInput(inputId = "soil.tol_min"
+                              , label = NULL
+                              , value = 0
+                              , min = 0
+                              , max = 5
+                              , width = "100%"))
+      , column(4
+               , HTML("<strong>Max value tolerated</strong>")
+               , numericInput(inputId = "soil.tol_max"
+                              , label = NULL
+                              , value = 0
+                              , min = 0
+                              , max = 5
+                              , width = "100%"))
+    )
+  }
+})
+
+####################################################################
+
+output$UI.soil.opt.ag = renderUI({
+  if (input$soil.opt.ag == "by type")
+  {
+    fluidRow(
+      column(12
+             , HTML("<strong>type</strong>")
+             , selectInput(inputId = "soil.type"
+                           , label = NULL
+                           , choices = c("H", "C", "P")
+                           , multiple = F
+                           , width = "100%"))
+    )
+  } else if (input$soil.opt.ag == "by strategy")
+  {
+    fluidRow(
+      column(12
+             , HTML("<strong>Germination</strong>")
+             , selectInput(inputId = "soil.strategy_ag"
+                           , label = NULL
+                           , choices = c("poor_lover", "indifferent", "rich_lover")
+                           , selected = "indifferent"
+                           , multiple = F
+                           , width = "100%"))
+    )
+  } else if (input$soil.opt.ag == "user-defined")
+  {
+    fluidRow(
+      lapply(1:3, function(x)
+      {
+        column(4
+               , HTML(paste0("<strong>", c("Low", "Medium", "High")[x], "</strong>"))
+               , selectInput(inputId = paste0("soil.Ge.", c("L", "M", "H")[x], ".act")
+                             , label = NULL
+                             , choices = seq(0,100,10)
+                             , selected = 100
+                             , multiple = FALSE
+                             , width = "100%"))
+      })
+      # , column(4
+      #          , HTML("<strong>Medium</strong>")
+      #          , selectInput(inputId = "soil.Ge.M.act"
+      #                        , label = NULL
+      #                        , choices = seq(0,100,10)
+      #                        , selected = 100
+      #                        , multiple = FALSE
+      #                        , width = "100%"))
+      # , column(4
+      #          , HTML("<strong>High</strong>")
+      #          , selectInput(inputId = "soil.Ge.H.act"
+      #                        , label = NULL
+      #                        , choices = seq(0,100,10)
+      #                        , selected = 100
+      #                        , multiple = FALSE
+      #                        , width = "100%"))
+    )
+  }
+})
+
+####################################################################
+
+output$UI.soil.opt.tol1 = renderUI({
+  if (input$soil.opt.tol == "by strategy")
+  {
+    fluidRow(
+      column(12
+           , HTML("<strong>Tolerance</strong>")
+           , selectInput(inputId = "soil.strategy_tol"
+                         , label = NULL
+                         , choices = c("ubiquist")
+                         , selected = "ubiquist"
+                         , multiple = F
+                         , width = "100%"))
+    )
+  }
+})
+
+output$UI.soil.opt.tol2 = renderUI({
+  if (input$soil.opt.tol == "user-defined")
+  {
+    req(input$soil.PFG)
+    
+    # fluidRow(
+    #   column(2, br())
+    #   , column(2
+    #            , br()
+    #            , br()
+    #            , br()
+    #            , br()
+    #            , HTML("<strong>Germinant</strong>")
+    #            , br()
+    #            , br()
+    #            , HTML("<strong>Immature</strong>")
+    #            , br()
+    #            , br()
+    #            , HTML("<strong>Mature</strong>")
+    #   )
+    #   , column(2
+    #            , br()
+    #            , br()
+    #            , HTML("<strong>Low</strong>")
+    #            , lapply(1:3, function(y)
+    #            {
+    #              selectInput(inputId = paste0("soil.", c("Ge", "Im", "Ma")[y], ".", c("L", "M", "H")[x])
+    #                          , label = NULL
+    #                          , choices = seq(0,100,10)
+    #                          , multiple = FALSE
+    #                          , width = "100%")
+    #            })
+    #            # , selectInput(inputId = "soil.Ge.L"
+    #            #               , label = NULL
+    #            #               , choices = seq(0,100,10)
+    #            #               , multiple = FALSE
+    #            #               , width = "100%")
+    #            # , selectInput(inputId = "soil.Im.L"
+    #            #               , label = NULL
+    #            #               , choices = seq(0,100,10)
+    #            #               , multiple = FALSE
+    #            #               , width = "100%")
+    #            # , selectInput(inputId = "soil.Ma.L"
+    #            #               , label = NULL
+    #            #               , choices = seq(0,100,10)
+    #            #               , multiple = FALSE
+    #            #               , width = "100%"))
+    #   , column(2
+    #            , br()
+    #            , br()
+    #            , HTML("<strong>Medium</strong>")
+    #            , selectInput(inputId = "soil.Ge.M"
+    #                          , label = NULL
+    #                          , choices = seq(0,100,10)
+    #                          , multiple = FALSE
+    #                          , width = "100%")
+    #            , selectInput(inputId = "soil.Im.M"
+    #                          , label = NULL
+    #                          , choices = seq(0,100,10)
+    #                          , multiple = FALSE
+    #                          , width = "100%")
+    #            , selectInput(inputId = "soil.Ma.M"
+    #                          , label = NULL
+    #                          , choices = seq(0,100,10)
+    #                          , multiple = FALSE
+    #                          , width = "100%"))
+    #   , column(2
+    #            , br()
+    #            , br()
+    #            , HTML("<strong>High</strong>")
+    #            , selectInput(inputId = "soil.Ge.H"
+    #                          , label = NULL
+    #                          , choices = seq(0,100,10)
+    #                          , multiple = FALSE
+    #                          , width = "100%")
+    #            , selectInput(inputId = "soil.Im.H"
+    #                          , label = NULL
+    #                          , choices = seq(0,100,10)
+    #                          , multiple = FALSE
+    #                          , width = "100%")
+    #            , selectInput(inputId = "soil.Ma.H"
+    #                          , label = NULL
+    #                          , choices = seq(0,100,10)
+    #                          , multiple = FALSE
+    #                          , width = "100%"))
+    # )
+    
+    tagList(
+      column(12, br())
+      , fluidRow(
+        column(4, HTML("<strong>Germinant</strong>"))
+        , column(4, HTML("<strong>Immature</strong>"))
+        , column(4, HTML("<strong>Mature</strong>"))
+      )
+      , fluidRow(
+        lapply(1:3, function(i)
+        {
+          column(4
+                 , fluidRow(
+                   column(4, HTML("<strong>L</strong>"), br(), br())
+                   , column(4, HTML("<strong>H</strong>"), br(), br())
+                   , column(4, HTML("<strong>M</strong>"), br(), br())
+                 ))
+        })
+      )
+      , fluidRow(
+        lapply(c("Ge", "Im", "Ma"), function(k)
+        {
+          column(4
+                 , fluidRow(
+                   lapply(c("L", "M", "H"), function(l)
+                   {
+                     column(4
+                            , selectInput(inputId = paste0("soil.", k, ".", l, ".tol")
+                                          , label = NULL
+                                          , choices = seq(0,100,10)
+                                          , multiple = FALSE
+                                          , width = "100%"))
+                   })
+                 ))
+        })
+      )
+    )
   }
 })
 
@@ -31,21 +282,21 @@ output$mat.PFG.soil = renderTable({ RV$mat.PFG.soil })
 observeEvent(input$add.PFG.soil, {
   RV$mat.PFG.soil <- rbind(RV$mat.PFG.soil
                            , data.frame(PFG = input$soil.PFG
-                                        , type = input$soil.type
-                                        , soil_contrib = as.numeric(input$soil.contrib)
-                                        , soil_tol_min = as.numeric(input$soil.tol_min)
-                                        , soil_tol_max = as.numeric(input$soil.tol_max)
-                                        , lifeStage = rep(c("Germinant", "Immature", "Mature"), each = 3)
-                                        , soilResources = rep(c("Low", "Medium", "High"), 3)
-                                        , soil_tol = c(as.numeric(input$soil.Ge.L)
-                                                       , as.numeric(input$soil.Ge.M)
-                                                       , as.numeric(input$soil.Ge.H)
-                                                       , as.numeric(input$soil.Im.L)
-                                                       , as.numeric(input$soil.Im.M)
-                                                       , as.numeric(input$soil.Im.H)
-                                                       , as.numeric(input$soil.Ma.L)
-                                                       , as.numeric(input$soil.Ma.M)
-                                                       , as.numeric(input$soil.Ma.H))
+                                        # , type = input$soil.type
+                                        # , soil_contrib = as.numeric(input$soil.contrib)
+                                        # , soil_tol_min = as.numeric(input$soil.tol_min)
+                                        # , soil_tol_max = as.numeric(input$soil.tol_max)
+                                        # , lifeStage = rep(c("Germinant", "Immature", "Mature"), each = 3)
+                                        # , soilResources = rep(c("Low", "Medium", "High"), 3)
+                                        # , soil_tol = c(as.numeric(input$soil.Ge.L)
+                                        #                , as.numeric(input$soil.Ge.M)
+                                        #                , as.numeric(input$soil.Ge.H)
+                                        #                , as.numeric(input$soil.Im.L)
+                                        #                , as.numeric(input$soil.Im.M)
+                                        #                , as.numeric(input$soil.Im.H)
+                                        #                , as.numeric(input$soil.Ma.L)
+                                        #                , as.numeric(input$soil.Ma.M)
+                                        #                , as.numeric(input$soil.Ma.H))
                            ))
   
   shinyjs::enable("create.soil")
@@ -62,11 +313,11 @@ observeEvent(input$create.soil, {
   if (input$create.skeleton > 0)
   {
     get_res = print_messages(as.expression(
-      PRE_FATE.params_PFGsoil(name.simulation = input$name.simul
-                              , mat.PFG.soil = unique(RV$mat.PFG.soil[, c("PFG", "type", "soil_contrib", "soil_tol_min", "soil_tol_max")])
-                              , mat.PFG.tol = RV$mat.PFG.soil[, c("PFG", "lifeStage", "soilResources", "soil_tol")]
-                              , opt.folder.name = get_opt.folder.name()
-      )
+      # PRE_FATE.params_PFGsoil(name.simulation = input$name.simul
+      #                         , mat.PFG.soil = unique(RV$mat.PFG.soil[, c("PFG", "type", "soil_contrib", "soil_tol_min", "soil_tol_max")])
+      #                         , mat.PFG.tol = RV$mat.PFG.soil[, c("PFG", "lifeStage", "soilResources", "soil_tol")]
+      #                         , opt.folder.name = get_opt.folder.name()
+      # )
     ), cut_pattern = paste0(input$name.simul, "/DATA/PFGS/SOIL/"))
     
   } else

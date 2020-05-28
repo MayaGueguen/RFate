@@ -186,6 +186,28 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                      )
                             )
                           )
+                          # , fluidRow(
+                          #   column(6
+                          #            , br()
+                          #            , br()
+                          #            , HTML("<strong>Active germination</strong>")
+                          #            , radioButtons(inputId = "light.opt.ag"
+                          #                           , label = NULL
+                          #                           , choices = c("by type", "by strategy", "user-defined")
+                          #                           , selected = "by type"
+                          #                           , inline = TRUE
+                          #                           , width = "100%"))
+                          #   , column(6
+                          #          , br()
+                          #          , br()
+                          #          , HTML("<strong>Tolerance</strong>")
+                          #          , radioButtons(inputId = "light.opt.tol"
+                          #                         , label = NULL
+                          #                         , choices = c("by type & light", "by strategy", "user-defined")
+                          #                         , selected = "by type & light"
+                          #                         , inline = TRUE
+                          #                         , width = "100%"))
+                          # )
                           , fluidRow(
                             column(2
                                    , br()
@@ -193,18 +215,26 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                    , HTML("<strong>PFG</strong>")
                                    , uiOutput(outputId = "UI.light.PFG")
                             )
-                            , column(5
-                                     , br()
-                                     , br()
-                                     , HTML("<strong>Active germination</strong>")
-                                     , radioButtons(inputId = "light.opt.ag"
-                                                    , label = NULL
-                                                    , choices = c("by type", "by strategy", "user-defined")
-                                                    , selected = "by type"
-                                                    , inline = TRUE
-                                                    , width = "100%"))
-                            , column(5
+                            , column(4, br(), br(), uiOutput(outputId = "UI.light.opt.tl"))
+                          )
+                          # , fluidRow(
+                          #   column(6, br(), uiOutput(outputId = "UI.light.opt.tl"))
+                          #   , column(6, br(), uiOutput(outputId = "UI.light.opt.ag"))
+                          # )
+                          , fluidRow(
+                            column(6
                                    , br()
+                                   , HTML("<strong>Active germination</strong>")
+                                   , radioButtons(inputId = "light.opt.ag"
+                                                  , label = NULL
+                                                  , choices = c("by type", "by strategy", "user-defined")
+                                                  , selected = "by type"
+                                                  , inline = TRUE
+                                                  , width = "100%"))
+                            , column(6, br(), uiOutput(outputId = "UI.light.opt.ag"))
+                          )
+                          , fluidRow(
+                            column(6
                                    , br()
                                    , HTML("<strong>Tolerance</strong>")
                                    , radioButtons(inputId = "light.opt.tol"
@@ -213,25 +243,9 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                                   , selected = "by type & light"
                                                   , inline = TRUE
                                                   , width = "100%"))
-                            # , column(6, br(), br(), uiOutput(outputId = "UI.light.opt.ag"))
+                            , column(6, br(), uiOutput(outputId = "UI.light.opt.tol1"))
                           )
-                          , fluidRow(
-                            column(6, br(), uiOutput(outputId = "UI.light.opt.tl"))
-                            , column(6, br(), uiOutput(outputId = "UI.light.opt.ag"))
-                          )
-                          , fluidRow(br(), uiOutput(outputId = "UI.light.opt.tol"))
-                          # , fluidRow(
-                          #   column(2
-                          #            , br()
-                          #            , br()
-                          #            , HTML("<strong>Tolerance</strong>")
-                          #            , radioButtons(inputId = "light.opt.tol"
-                          #                           , label = NULL
-                          #                           , choices = c("by type & light", "by strategy", "user-defined")
-                          #                           , selected = "by type & light"
-                          #                           , width = "100%"))
-                          #   , column(10, br(), br(), uiOutput(outputId = "UI.light.opt.tol"))
-                          # )
+                          , fluidRow(column(12, br(), uiOutput(outputId = "UI.light.opt.tol2")))
                           , fluidRow(
                             column(11
                                    , br()
@@ -297,120 +311,117 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                    , HTML("<strong>PFG</strong>")
                                    , uiOutput(outputId = "UI.soil.PFG")
                             )
-                            , column(2
-                                     , br()
-                                     , br()
-                                     , HTML("<strong>type</strong>")
-                                     , selectInput(inputId = "soil.type"
-                                                   , label = NULL
-                                                   , choices = c("H", "C", "P")
-                                                   , selected = NULL
-                                                   , multiple = F
-                                                   , width = "100%"))
-                            , column(2
-                                     , br()
-                                     , br()
-                                     , HTML("<strong>soil contribution</strong>")
-                                     , numericInput(inputId = "soil.contrib"
-                                                    , label = NULL
-                                                    , value = 0
-                                                    , min = 0
-                                                    , max = 5
-                                                    , width = "100%"))
-                            , column(2
-                                     , br()
-                                     , br()
-                                     , HTML("<strong>soil min tolerance</strong>")
-                                     , numericInput(inputId = "soil.tol_min"
-                                                    , label = NULL
-                                                    , value = 0
-                                                    , min = 0
-                                                    , max = 5
-                                                    , width = "100%"))
-                            , column(2
-                                     , br()
-                                     , br()
-                                     , HTML("<strong>soil max tolerance</strong>")
-                                     , numericInput(inputId = "soil.tol_max"
-                                                    , label = NULL
-                                                    , value = 0
-                                                    , min = 0
-                                                    , max = 5
-                                                    , width = "100%"))
                           )
                           , fluidRow(
-                            column(2, br())
-                            , column(2
-                                     , br()
-                                     , br()
-                                     , br()
-                                     , br()
-                                     , HTML("<strong>Germinant</strong>")
-                                     , br()
-                                     , br()
-                                     , HTML("<strong>Immature</strong>")
-                                     , br()
-                                     , br()
-                                     , HTML("<strong>Mature</strong>")
-                            )
-                            , column(2
-                                     , br()
-                                     , br()
-                                     , HTML("<strong>Low</strong>")
-                                     , selectInput(inputId = "soil.Ge.L"
-                                                   , label = NULL
-                                                   , choices = seq(0,100,10)
-                                                   , multiple = FALSE
-                                                   , width = "100%")
-                                     , selectInput(inputId = "soil.Im.L"
-                                                   , label = NULL
-                                                   , choices = seq(0,100,10)
-                                                   , multiple = FALSE
-                                                   , width = "100%")
-                                     , selectInput(inputId = "soil.Ma.L"
-                                                   , label = NULL
-                                                   , choices = seq(0,100,10)
-                                                   , multiple = FALSE
-                                                   , width = "100%"))
-                            , column(2
-                                     , br()
-                                     , br()
-                                     , HTML("<strong>Medium</strong>")
-                                     , selectInput(inputId = "soil.Ge.M"
-                                                   , label = NULL
-                                                   , choices = seq(0,100,10)
-                                                   , multiple = FALSE
-                                                   , width = "100%")
-                                     , selectInput(inputId = "soil.Im.M"
-                                                   , label = NULL
-                                                   , choices = seq(0,100,10)
-                                                   , multiple = FALSE
-                                                   , width = "100%")
-                                     , selectInput(inputId = "soil.Ma.M"
-                                                   , label = NULL
-                                                   , choices = seq(0,100,10)
-                                                   , multiple = FALSE
-                                                   , width = "100%"))
-                            , column(2
-                                     , br()
-                                     , br()
-                                     , HTML("<strong>High</strong>")
-                                     , selectInput(inputId = "soil.Ge.H"
-                                                   , label = NULL
-                                                   , choices = seq(0,100,10)
-                                                   , multiple = FALSE
-                                                   , width = "100%")
-                                     , selectInput(inputId = "soil.Im.H"
-                                                   , label = NULL
-                                                   , choices = seq(0,100,10)
-                                                   , multiple = FALSE
-                                                   , width = "100%")
-                                     , selectInput(inputId = "soil.Ma.H"
-                                                   , label = NULL
-                                                   , choices = seq(0,100,10)
-                                                   , multiple = FALSE
-                                                   , width = "100%"))
+                            column(6
+                                   , br()
+                                   , HTML("<strong>Contribution</strong>")
+                                   , radioButtons(inputId = "soil.opt.con"
+                                                  , label = NULL
+                                                  , choices = c("by strategy", "user-defined")
+                                                  , selected = "by strategy"
+                                                  , inline = TRUE
+                                                  , width = "100%"))
+                            , column(6, br(), uiOutput(outputId = "UI.soil.opt.con"))
                           )
+                          , fluidRow(
+                            column(6
+                                   , br()
+                                   , HTML("<strong>Active germination</strong>")
+                                   , radioButtons(inputId = "soil.opt.ag"
+                                                  , label = NULL
+                                                  , choices = c("by type", "by strategy", "user-defined")
+                                                  , selected = "by type"
+                                                  , inline = TRUE
+                                                  , width = "100%"))
+                            , column(6, br(), uiOutput(outputId = "UI.soil.opt.ag"))
+                          )
+                          , fluidRow(
+                            column(6
+                                     , br()
+                                     , HTML("<strong>Tolerance</strong>")
+                                     , radioButtons(inputId = "soil.opt.tol"
+                                                    , label = NULL
+                                                    , choices = c("pre-defined", "by strategy", "user-defined")
+                                                    , selected = "pre-defined"
+                                                    , inline = TRUE
+                                                    , width = "100%"))
+                            , column(6, br(), uiOutput(outputId = "UI.soil.opt.tol1"))
+                          )
+                          , fluidRow(column(12, br(), uiOutput(outputId = "UI.soil.opt.tol2")))
+                          # , fluidRow(
+                          #   column(2, br())
+                          #   , column(2
+                          #            , br()
+                          #            , br()
+                          #            , br()
+                          #            , br()
+                          #            , HTML("<strong>Germinant</strong>")
+                          #            , br()
+                          #            , br()
+                          #            , HTML("<strong>Immature</strong>")
+                          #            , br()
+                          #            , br()
+                          #            , HTML("<strong>Mature</strong>")
+                          #   )
+                          #   , column(2
+                          #            , br()
+                          #            , br()
+                          #            , HTML("<strong>Low</strong>")
+                          #            , selectInput(inputId = "soil.Ge.L"
+                          #                          , label = NULL
+                          #                          , choices = seq(0,100,10)
+                          #                          , multiple = FALSE
+                          #                          , width = "100%")
+                          #            , selectInput(inputId = "soil.Im.L"
+                          #                          , label = NULL
+                          #                          , choices = seq(0,100,10)
+                          #                          , multiple = FALSE
+                          #                          , width = "100%")
+                          #            , selectInput(inputId = "soil.Ma.L"
+                          #                          , label = NULL
+                          #                          , choices = seq(0,100,10)
+                          #                          , multiple = FALSE
+                          #                          , width = "100%"))
+                          #   , column(2
+                          #            , br()
+                          #            , br()
+                          #            , HTML("<strong>Medium</strong>")
+                          #            , selectInput(inputId = "soil.Ge.M"
+                          #                          , label = NULL
+                          #                          , choices = seq(0,100,10)
+                          #                          , multiple = FALSE
+                          #                          , width = "100%")
+                          #            , selectInput(inputId = "soil.Im.M"
+                          #                          , label = NULL
+                          #                          , choices = seq(0,100,10)
+                          #                          , multiple = FALSE
+                          #                          , width = "100%")
+                          #            , selectInput(inputId = "soil.Ma.M"
+                          #                          , label = NULL
+                          #                          , choices = seq(0,100,10)
+                          #                          , multiple = FALSE
+                          #                          , width = "100%"))
+                          #   , column(2
+                          #            , br()
+                          #            , br()
+                          #            , HTML("<strong>High</strong>")
+                          #            , selectInput(inputId = "soil.Ge.H"
+                          #                          , label = NULL
+                          #                          , choices = seq(0,100,10)
+                          #                          , multiple = FALSE
+                          #                          , width = "100%")
+                          #            , selectInput(inputId = "soil.Im.H"
+                          #                          , label = NULL
+                          #                          , choices = seq(0,100,10)
+                          #                          , multiple = FALSE
+                          #                          , width = "100%")
+                          #            , selectInput(inputId = "soil.Ma.H"
+                          #                          , label = NULL
+                          #                          , choices = seq(0,100,10)
+                          #                          , multiple = FALSE
+                          #                          , width = "100%"))
+                          # )
                           , fluidRow(
                             column(10
                                    , br()
