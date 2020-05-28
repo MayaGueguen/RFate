@@ -193,17 +193,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                    , HTML("<strong>PFG</strong>")
                                    , uiOutput(outputId = "UI.light.PFG")
                             )
-                            , column(2
-                                     , br()
-                                     , br()
-                                     , HTML("<strong>type</strong>")
-                                     , selectInput(inputId = "light.type"
-                                                   , label = NULL
-                                                   , choices = c(".", "H", "C", "P")
-                                                   , selected = "."
-                                                   , multiple = F
-                                                   , width = "100%"))
-                            , column(2
+                            , column(5
                                      , br()
                                      , br()
                                      , HTML("<strong>Active germination</strong>")
@@ -211,31 +201,37 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                                     , label = NULL
                                                     , choices = c("by type", "by strategy", "user-defined")
                                                     , selected = "by type"
+                                                    , inline = TRUE
                                                     , width = "100%"))
-                            , column(6, br(), br(), uiOutput(outputId = "UI.light.opt.ag"))
+                            , column(5
+                                   , br()
+                                   , br()
+                                   , HTML("<strong>Tolerance</strong>")
+                                   , radioButtons(inputId = "light.opt.tol"
+                                                  , label = NULL
+                                                  , choices = c("by type & light", "by strategy", "user-defined")
+                                                  , selected = "by type & light"
+                                                  , inline = TRUE
+                                                  , width = "100%"))
+                            # , column(6, br(), br(), uiOutput(outputId = "UI.light.opt.ag"))
                           )
                           , fluidRow(
-                            column(2
-                                     , br()
-                                     , br()
-                                     , HTML("<strong>light</strong>")
-                                     , selectInput(inputId = "light.light"
-                                                   , label = NULL
-                                                   , choices = c(".", 0:5)
-                                                   , selected = "."
-                                                   , multiple = F
-                                                   , width = "100%"))
-                            , column(2
-                                     , br()
-                                     , br()
-                                     , HTML("<strong>Tolerance</strong>")
-                                     , radioButtons(inputId = "light.opt.tol"
-                                                    , label = NULL
-                                                    , choices = c("by type & light", "by strategy", "user-defined")
-                                                    , selected = "by type & light"
-                                                    , width = "100%"))
-                            , column(8, br(), br(), uiOutput(outputId = "UI.light.opt.tol"))
+                            column(6, br(), uiOutput(outputId = "UI.light.opt.tl"))
+                            , column(6, br(), uiOutput(outputId = "UI.light.opt.ag"))
                           )
+                          , fluidRow(br(), uiOutput(outputId = "UI.light.opt.tol"))
+                          # , fluidRow(
+                          #   column(2
+                          #            , br()
+                          #            , br()
+                          #            , HTML("<strong>Tolerance</strong>")
+                          #            , radioButtons(inputId = "light.opt.tol"
+                          #                           , label = NULL
+                          #                           , choices = c("by type & light", "by strategy", "user-defined")
+                          #                           , selected = "by type & light"
+                          #                           , width = "100%"))
+                          #   , column(10, br(), br(), uiOutput(outputId = "UI.light.opt.tol"))
+                          # )
                           , fluidRow(
                             column(11
                                    , br()

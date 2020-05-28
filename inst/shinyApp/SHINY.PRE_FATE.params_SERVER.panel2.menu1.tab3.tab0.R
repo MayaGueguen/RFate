@@ -25,18 +25,22 @@ observeEvent(RV$names.PFG, {
   {
     shinyjs::enable("succ.PFG")
     shinyjs::enable("add.PFG.succ")
-    shinyjs::enable("disp.PFG")
-    shinyjs::enable("add.PFG.disp")
+    shinyjs::enable("light.PFG")
+    shinyjs::enable("add.PFG.light")
     shinyjs::enable("soil.PFG")
     shinyjs::enable("add.PFG.soil")
+    shinyjs::enable("disp.PFG")
+    shinyjs::enable("add.PFG.disp")
   } else
   {
     shinyjs::disable("succ.PFG")
     shinyjs::disable("add.PFG.succ")
-    shinyjs::disable("disp.PFG")
-    shinyjs::disable("add.PFG.disp")
+    shinyjs::disable("light.PFG")
+    shinyjs::disable("add.PFG.light")
     shinyjs::disable("soil.PFG")
     shinyjs::disable("add.PFG.soil")
+    shinyjs::disable("disp.PFG")
+    shinyjs::disable("add.PFG.disp")
   }
 })
 
@@ -67,7 +71,8 @@ observeEvent(input$delete.names.PFG, {
   
   shinyjs::reset("name.PFG")
   shinyjs::reset("succ.PFG")
-  shinyjs::reset("disp.PFG")
+  shinyjs::reset("light.PFG")
   shinyjs::reset("soil.PFG")
+  shinyjs::reset("disp.PFG")
 })
 
