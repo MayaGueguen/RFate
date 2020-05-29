@@ -193,6 +193,7 @@ server <- function(input, output, session) {
                       , mat.PFG.light = data.frame()
                       , mat.PFG.light.tol = data.frame()
                       , mat.PFG.soil = data.frame()
+                      , mat.PFG.soil.tol = data.frame()
                       , mat.PFG.disp = data.frame()
                       , mat.PFG.dist = data.frame()
                       , mat.changing = data.frame()
@@ -242,6 +243,7 @@ server <- function(input, output, session) {
   source("SHINY.PRE_FATE.params_SERVER.panel2.menu1.tab3.tab2.R", local = TRUE)$value
   source("SHINY.PRE_FATE.params_SERVER.panel2.menu1.tab3.tab3.R", local = TRUE)$value
   source("SHINY.PRE_FATE.params_SERVER.panel2.menu1.tab3.tab4.R", local = TRUE)$value
+  source("SHINY.PRE_FATE.params_SERVER.panel2.menu1.tab3.tab5.R", local = TRUE)$value
   source("SHINY.PRE_FATE.params_SERVER.panel2.menu1.tab4.R", local = TRUE)$value
   source("SHINY.PRE_FATE.params_SERVER.panel2.menu2.R", local = TRUE)$value
   

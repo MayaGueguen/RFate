@@ -89,30 +89,6 @@ output$UI.light.opt.ag = renderUI({
                              , multiple = FALSE
                              , width = "100%"))
       })
-      # column(4
-      #        , HTML("<strong>Low</strong>")
-      #        , selectInput(inputId = "light.Ge.L.act"
-      #                      , label = NULL
-      #                      , choices = seq(0,100,10)
-      #                      , selected = 100
-      #                      , multiple = FALSE
-      #                      , width = "100%"))
-      # , column(4
-      #          , HTML("<strong>Medium</strong>")
-      #          , selectInput(inputId = "light.Ge.M.act"
-      #                        , label = NULL
-      #                        , choices = seq(0,100,10)
-      #                        , selected = 100
-      #                        , multiple = FALSE
-      #                        , width = "100%"))
-      # , column(4
-      #          , HTML("<strong>High</strong>")
-      #          , selectInput(inputId = "light.Ge.H.act"
-      #                        , label = NULL
-      #                        , choices = seq(0,100,10)
-      #                        , selected = 100
-      #                        , multiple = FALSE
-      #                        , width = "100%"))
     )
   }
 })
@@ -215,8 +191,7 @@ observeEvent(input$add.PFG.light, {
                             ))
   if (input$light.opt.tol == "user-defined")
   {
-    combi = expand.grid(lifeStage = c("Ge", "Im", "Ma")
-                        , resources = c("L", "M", "H"))
+    combi = expand.grid(lifeStage = c("Ge", "Im", "Ma"), resources = c("L", "M", "H"))
     mat.tol = foreach(ls = combi$lifeStage, re = combi$resources, .combine = "rbind") %do%
     {
       eval(parse(text = paste0("tol = as.numeric(input$light.", ls, ".", re, ".tol) / 10")))

@@ -186,28 +186,6 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                      )
                             )
                           )
-                          # , fluidRow(
-                          #   column(6
-                          #            , br()
-                          #            , br()
-                          #            , HTML("<strong>Active germination</strong>")
-                          #            , radioButtons(inputId = "light.opt.ag"
-                          #                           , label = NULL
-                          #                           , choices = c("by type", "by strategy", "user-defined")
-                          #                           , selected = "by type"
-                          #                           , inline = TRUE
-                          #                           , width = "100%"))
-                          #   , column(6
-                          #          , br()
-                          #          , br()
-                          #          , HTML("<strong>Tolerance</strong>")
-                          #          , radioButtons(inputId = "light.opt.tol"
-                          #                         , label = NULL
-                          #                         , choices = c("by type & light", "by strategy", "user-defined")
-                          #                         , selected = "by type & light"
-                          #                         , inline = TRUE
-                          #                         , width = "100%"))
-                          # )
                           , fluidRow(
                             column(2
                                    , br()
@@ -217,10 +195,6 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                             )
                             , column(4, br(), br(), uiOutput(outputId = "UI.light.opt.tl"))
                           )
-                          # , fluidRow(
-                          #   column(6, br(), uiOutput(outputId = "UI.light.opt.tl"))
-                          #   , column(6, br(), uiOutput(outputId = "UI.light.opt.ag"))
-                          # )
                           , fluidRow(
                             column(6
                                    , br()
@@ -349,79 +323,6 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                             , column(6, br(), uiOutput(outputId = "UI.soil.opt.tol1"))
                           )
                           , fluidRow(column(12, br(), uiOutput(outputId = "UI.soil.opt.tol2")))
-                          # , fluidRow(
-                          #   column(2, br())
-                          #   , column(2
-                          #            , br()
-                          #            , br()
-                          #            , br()
-                          #            , br()
-                          #            , HTML("<strong>Germinant</strong>")
-                          #            , br()
-                          #            , br()
-                          #            , HTML("<strong>Immature</strong>")
-                          #            , br()
-                          #            , br()
-                          #            , HTML("<strong>Mature</strong>")
-                          #   )
-                          #   , column(2
-                          #            , br()
-                          #            , br()
-                          #            , HTML("<strong>Low</strong>")
-                          #            , selectInput(inputId = "soil.Ge.L"
-                          #                          , label = NULL
-                          #                          , choices = seq(0,100,10)
-                          #                          , multiple = FALSE
-                          #                          , width = "100%")
-                          #            , selectInput(inputId = "soil.Im.L"
-                          #                          , label = NULL
-                          #                          , choices = seq(0,100,10)
-                          #                          , multiple = FALSE
-                          #                          , width = "100%")
-                          #            , selectInput(inputId = "soil.Ma.L"
-                          #                          , label = NULL
-                          #                          , choices = seq(0,100,10)
-                          #                          , multiple = FALSE
-                          #                          , width = "100%"))
-                          #   , column(2
-                          #            , br()
-                          #            , br()
-                          #            , HTML("<strong>Medium</strong>")
-                          #            , selectInput(inputId = "soil.Ge.M"
-                          #                          , label = NULL
-                          #                          , choices = seq(0,100,10)
-                          #                          , multiple = FALSE
-                          #                          , width = "100%")
-                          #            , selectInput(inputId = "soil.Im.M"
-                          #                          , label = NULL
-                          #                          , choices = seq(0,100,10)
-                          #                          , multiple = FALSE
-                          #                          , width = "100%")
-                          #            , selectInput(inputId = "soil.Ma.M"
-                          #                          , label = NULL
-                          #                          , choices = seq(0,100,10)
-                          #                          , multiple = FALSE
-                          #                          , width = "100%"))
-                          #   , column(2
-                          #            , br()
-                          #            , br()
-                          #            , HTML("<strong>High</strong>")
-                          #            , selectInput(inputId = "soil.Ge.H"
-                          #                          , label = NULL
-                          #                          , choices = seq(0,100,10)
-                          #                          , multiple = FALSE
-                          #                          , width = "100%")
-                          #            , selectInput(inputId = "soil.Im.H"
-                          #                          , label = NULL
-                          #                          , choices = seq(0,100,10)
-                          #                          , multiple = FALSE
-                          #                          , width = "100%")
-                          #            , selectInput(inputId = "soil.Ma.H"
-                          #                          , label = NULL
-                          #                          , choices = seq(0,100,10)
-                          #                          , multiple = FALSE
-                          #                          , width = "100%"))
-                          # )
                           , fluidRow(
                             column(10
                                    , br()
@@ -589,9 +490,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                                     , selected = "by type"
                                                     , width = "100%"))
                           )
-                          ,fluidRow(
-                            uiOutput(outputId = "UI.dist.grouping")
-                          )
+                          , fluidRow(column(12, br(), uiOutput(outputId = "UI.dist.grouping")))
                           , fluidRow(
                             column(10
                                    , br()
