@@ -117,12 +117,9 @@ observeEvent(input$create.validationStat, {
     plot(get_res[[1]]$plot[[1]][['ALL']])
   })
   
-  shinyjs::hide("plot.PFGvsHS")
   shinyjs::show("plot.validationStat")
-  shinyjs::hide("plot.PFGrichness")
-  shinyjs::hide("plot.PFGcover")
-  shinyjs::hide("plot.PFGlight")
-  shinyjs::hide("plot.PFGsoil")
+  shinyjs::hide("plot.PFGvsHS")
+  shinyjs::hide("plot.PFGmap")
   
   setwd(path.init)
 })
@@ -159,96 +156,93 @@ observeEvent(input$create.PFGvsHS, {
     plot(get_res[[1]]$plot[[1]][[1]])
   })
   
+  shinyjs::hide("plot.validationStat")
   shinyjs::show("plot.PFGvsHS")
-  shinyjs::hide("plot.validationStat")
-  shinyjs::hide("plot.PFGrichness")
-  shinyjs::hide("plot.PFGcover")
-  shinyjs::hide("plot.PFGlight")
-  shinyjs::hide("plot.PFGsoil")
+  shinyjs::hide("plot.PFGmap")
 
   setwd(path.init)
 })
 
 ####################################################################
 
-observeEvent(input$create.PFGrichness, {
-  
-  path.init = getwd()
-  setwd(get_path.folder())
-  
-  showModal(modalDialog(HTML(paste0("Creating map of PFG richness with :
-                                        <ul>
-                                    <li><strong>folder :</strong> ", basename(get_name.simul()),"</li>
-                                    <li><strong>simulation parameter file :</strong> ", basename(get_param.simul()), "</li>
-                                    <li><strong>year :</strong> ", as.numeric(input$graph.year),"</li>
-                                    <li><strong>opt.no_CPU :</strong> ", input$graph.opt.no_CPU,"</li>
-                                    </ul>"))
-                        , title = HTML("Map of PFG richness (specific year)")
-                        , footer = NULL))
-  Sys.sleep(3)
-  get_res = print_messages(as.expression(
-    POST_FATE.graphic_mapPFGrichness(name.simulation = get_name.simul()
-                                     , file.simulParam = get_param.simul()
-                                     , year = as.numeric(input$graph.year)
-                                     , opt.no_CPU = input$graph.opt.no_CPU
-    )
-  ))
-  removeModal()
-  
-  output$plot.PFGrichness = renderPlotly({
-    plot(get_res[[1]][[1]][[2]])
-  })
-  
-  shinyjs::hide("plot.PFGvsHS")
-  shinyjs::hide("plot.validationStat")
-  shinyjs::show("plot.PFGrichness")
-  shinyjs::hide("plot.PFGcover")
-  shinyjs::hide("plot.PFGlight")
-  shinyjs::hide("plot.PFGsoil")
-
-  setwd(path.init)
-})
-
-####################################################################
-
-observeEvent(input$create.PFGcover, {
-  
-  path.init = getwd()
-  setwd(get_path.folder())
-  
-  showModal(modalDialog(HTML(paste0("Creating map of PFG cover with :
-                                        <ul>
-                                    <li><strong>folder :</strong> ", basename(get_name.simul()),"</li>
-                                    <li><strong>simulation parameter file :</strong> ", basename(get_param.simul()), "</li>
-                                    <li><strong>year :</strong> ", as.numeric(input$graph.year),"</li>
-                                    <li><strong>strata_min :</strong> ", as.numeric(input$graph.strata_min),"</li>
-                                    <li><strong>opt.no_CPU :</strong> ", input$graph.opt.no_CPU,"</li>
-                                    </ul>"))
-                        , title = HTML("Map of PFG cover (specific year)")
-                        , footer = NULL))
-  Sys.sleep(3)
-  get_res = print_messages(as.expression(
-    POST_FATE.graphic_mapPFGcover(name.simulation = get_name.simul()
-                                 , file.simulParam = get_param.simul()
-                                 , year = as.numeric(input$graph.year)
-                                 , strata_min = as.numeric(input$graph.strata_min)
-                                 , opt.no_CPU = input$graph.opt.no_CPU
-                                 , opt.mat.cover.obs = NULL
-                                 , opt.ras.cover.obs = NULL
-    )
-  ))
-  removeModal()
-  
-  output$plot.PFGcover = renderPlotly({
-    plot(get_res[[1]]$plot[[1]])
-  })
-  
-  shinyjs::hide("plot.PFGvsHS")
-  shinyjs::hide("plot.validationStat")
-  shinyjs::hide("plot.PFGrichness")
-  shinyjs::show("plot.PFGcover")
-  shinyjs::hide("plot.PFGlight")
-  shinyjs::hide("plot.PFGsoil")
-  
-  setwd(path.init)
-})
+# observeEvent(input$create.PFGrichness, {
+#   
+#   path.init = getwd()
+#   setwd(get_path.folder())
+#   
+#   showModal(modalDialog(HTML(paste0("Creating map of PFG richness with :
+#                                         <ul>
+#                                     <li><strong>folder :</strong> ", basename(get_name.simul()),"</li>
+#                                     <li><strong>simulation parameter file :</strong> ", basename(get_param.simul()), "</li>
+#                                     <li><strong>year :</strong> ", as.numeric(input$graph.year),"</li>
+#                                     <li><strong>opt.no_CPU :</strong> ", input$graph.opt.no_CPU,"</li>
+#                                     </ul>"))
+#                         , title = HTML("Map of PFG richness (specific year)")
+#                         , footer = NULL))
+#   Sys.sleep(3)
+#   get_res = print_messages(as.expression(
+#     POST_FATE.graphic_mapPFGrichness(name.simulation = get_name.simul()
+#                                      , file.simulParam = get_param.simul()
+#                                      , year = as.numeric(input$graph.year)
+#                                      , opt.no_CPU = input$graph.opt.no_CPU
+#     )
+#   ))
+#   removeModal()
+#   
+#   output$plot.PFGrichness = renderPlotly({
+#     plot(get_res[[1]][[1]][[2]])
+#   })
+#   
+#   shinyjs::hide("plot.PFGvsHS")
+#   shinyjs::hide("plot.validationStat")
+#   shinyjs::show("plot.PFGrichness")
+#   shinyjs::hide("plot.PFGcover")
+#   shinyjs::hide("plot.PFGlight")
+#   shinyjs::hide("plot.PFGsoil")
+# 
+#   setwd(path.init)
+# })
+# 
+# ####################################################################
+# 
+# observeEvent(input$create.PFGcover, {
+#   
+#   path.init = getwd()
+#   setwd(get_path.folder())
+#   
+#   showModal(modalDialog(HTML(paste0("Creating map of PFG cover with :
+#                                         <ul>
+#                                     <li><strong>folder :</strong> ", basename(get_name.simul()),"</li>
+#                                     <li><strong>simulation parameter file :</strong> ", basename(get_param.simul()), "</li>
+#                                     <li><strong>year :</strong> ", as.numeric(input$graph.year),"</li>
+#                                     <li><strong>strata_min :</strong> ", as.numeric(input$graph.strata_min),"</li>
+#                                     <li><strong>opt.no_CPU :</strong> ", input$graph.opt.no_CPU,"</li>
+#                                     </ul>"))
+#                         , title = HTML("Map of PFG cover (specific year)")
+#                         , footer = NULL))
+#   Sys.sleep(3)
+#   get_res = print_messages(as.expression(
+#     POST_FATE.graphic_mapPFGcover(name.simulation = get_name.simul()
+#                                  , file.simulParam = get_param.simul()
+#                                  , year = as.numeric(input$graph.year)
+#                                  , strata_min = as.numeric(input$graph.strata_min)
+#                                  , opt.no_CPU = input$graph.opt.no_CPU
+#                                  , opt.mat.cover.obs = NULL
+#                                  , opt.ras.cover.obs = NULL
+#     )
+#   ))
+#   removeModal()
+#   
+#   output$plot.PFGcover = renderPlotly({
+#     plot(get_res[[1]]$plot[[1]])
+#   })
+#   
+#   shinyjs::hide("plot.PFGvsHS")
+#   shinyjs::hide("plot.validationStat")
+#   shinyjs::hide("plot.PFGrichness")
+#   shinyjs::show("plot.PFGcover")
+#   shinyjs::hide("plot.PFGlight")
+#   shinyjs::hide("plot.PFGsoil")
+#   
+#   setwd(path.init)
+# })

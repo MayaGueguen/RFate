@@ -2,43 +2,54 @@
 tabPanel(title = HTML("<span class='tabPanel_title'>Through time</span>")
          , value = "panel.through_time"
          , fluidRow(
-           column(3
+           column(2
                   , br()
+                  , HTML(param.style("no.years"))
                   , numericInput(inputId = "graph.no.years"
-                                 , label = param.style("no.years")
+                                 , label = NULL
                                  , value = 10
                                  , min = 1
                                  , width = "100%")
            )
-           , column(3
+           , column(2
                     , br()
+                    , HTML(param.style("opt.no_CPU"))
                     , numericInput(inputId = "graph.opt.no_CPU"
-                                   , label = param.style("opt.no_CPU")
+                                   , label = NULL
                                    , value = 1
                                    , min = 1
                                    , width = "100%")
            )
-           , column(3
+           , column(4
                     , br()
-                    , checkboxInput(inputId = "graph.opt.fixedScale"
-                                    , label = param.style("opt.fixedScale")
-                                    , value = TRUE
-                                    , width = "100%")
-           )
-           , column(3
-                    , br()
+                    , HTML(param.style("opt.ras_habitat"))
                     , fileInput(inputId = "graph.opt.ras_habitat"
-                                , label = param.style("opt.ras_habitat")
+                                , label = NULL
                                 , multiple = FALSE
                                 , width = "100%")
+           )
+           , column(4
+                    , br()
+                    , br()
+                    , shinyjs::disabled(
+                      actionButton(inputId = "create.temporalEvolution"
+                                   , label = "Run temporal evolution"
+                                   , icon = icon("play")
+                                   , width = "100%"
+                                   , style = HTML(button.style)
+                      ) %>% helper(type = "inline"
+                                   , title = "Calculate tables of temporal evolution of pixels resources"
+                                   , size = "l"
+                                   , content = help.HTML("./../../docs/reference/POST_FATE.temporalEvolution.html")
+                      )
+                    )
            )
          )
          , radioGroupButtons(inputId = "show.through_time"
                              , label = ""
-                             , choices = c("Abundance & coverage"
-                                           , "Abundance (PIXELS)"
-                                           , "Light (PIXELS)"
-                                           , "Soil (PIXELS)")
+                             , choices = c("Total abundance & coverage"
+                                           , "Pixels abundance & resources"
+                                           , "Community composition stability")
                              , selected = 0
                              , justified = TRUE
                              , status = "panelgraph"
@@ -55,6 +66,11 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Through time</span>")
                         , plotlyOutput(outputId = "plot.evolutionCoverage2", width = "100%", height = "600px")
                )
                , column(4
+                        , checkboxInput(inputId = "graph.opt.fixedScale"
+                                        , label = param.style("opt.fixedScale")
+                                        , value = TRUE
+                                        , width = "100%")
+                        , br()
                         , actionButton(inputId = "create.evolutionCoverage"
                                        , label = "Run plot"
                                        , icon = icon("play")
@@ -63,65 +79,64 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Through time</span>")
                           ) %>% helper(type = "inline"
                                        , title = "Plot evolution coverage"
                                        , size = "l"
-                                       , content = help.HTML("https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_evolutionCoverage.html")
+                                       , content = help.HTML("./../../docs/reference/POST_FATE.graphic_evolutionCoverage.html")
                           )
                )
              ))
            , shinyjs::hidden(
              fluidRow(
-               id = "panel.evolutionAbund"
+               id = "panel.evolutionPixels"
                , column(8
-                        , plotlyOutput(outputId = "plot.evolutionAbund", width = "100%", height = "600px")
+                        , plotlyOutput(outputId = "plot.evolutionPixels", width = "100%", height = "600px")
                )
                , column(4
-                        , actionButton(inputId = "create.evolutionAbund"
-                                       , label = "Run plot"
-                                       , icon = icon("play")
-                                       , width = "100%"
-                                       , style = HTML(button.style)
-                        ) %>% helper(type = "inline"
-                                     , title = "Plot evolution abund (PIXELS)"
-                                     , size = "l"
-                                     , content = help.HTML("https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_evolutionPixels.html")
-                        )
-               )
-             ))
-           , shinyjs::hidden(
-             fluidRow(
-               id = "panel.evolutionLight"
-               , column(8
-                        , plotlyOutput(outputId = "plot.evolutionLight", width = "100%", height = "600px")
-               )
-               , column(4
-                        , actionButton(inputId = "create.evolutionLight"
-                                       , label = "Run plot"
-                                       , icon = icon("play")
-                                       , width = "100%"
-                                       , style = HTML(button.style)
-                        ) %>% helper(type = "inline"
-                                     , title = "Plot evolution light (PIXELS)"
-                                     , size = "l"
-                                     , content = help.HTML("https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_evolutionPixels.html")
-                        )
+                        , checkboxInput(inputId = "graph.opt.fixedScale"
+                                        , label = param.style("opt.fixedScale")
+                                        , value = TRUE
+                                        , width = "100%")
+                        , checkboxInput(inputId = "graph.opt.cells_ID"
+                                        , label = param.style("opt.cells_ID")
+                                        , value = FALSE
+                                        , width = "100%")
+                        , uiOutput(outputId = "UI.opt.cells_ID")
                         , br()
-                        , textOutput(outputId = "output.evolutionLight"))
-             ))
-           , shinyjs::hidden(
-             fluidRow(
-               id = "panel.evolutionSoil"
-               , column(8
-                        , plotlyOutput(outputId = "plot.evolutionSoil", width = "100%", height = "600px")
-               )
-               , column(4
-                        , actionButton(inputId = "create.evolutionSoil"
+                        , actionButton(inputId = "create.evolutionPixels"
                                        , label = "Run plot"
                                        , icon = icon("play")
                                        , width = "100%"
                                        , style = HTML(button.style)
                         ) %>% helper(type = "inline"
-                                     , title = "Plot evolution soil (PIXELS)"
+                                     , title = "Plot evolution pixels"
                                      , size = "l"
-                                     , content = help.HTML("https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_evolutionPixels.html")
+                                     , content = help.HTML("./../../docs/reference/POST_FATE.graphic_evolutionPixels.html")
+                        )
+               )
+             ))
+           , shinyjs::hidden(
+             fluidRow(
+               id = "panel.evolutionStability"
+               , column(8
+                        , plotlyOutput(outputId = "plot.evolutionStability", width = "100%", height = "600px")
+               )
+               , column(4
+                        , numericInput(inputId = "graph.mw.size"
+                                        , label = param.style("movingWindow_size")
+                                        , value = TRUE
+                                        , width = "100%")
+                        , numericInput(inputId = "graph.mw.step"
+                                        , label = param.style("movingWindow_step")
+                                        , value = TRUE
+                                        , width = "100%")
+                        , br()
+                        , actionButton(inputId = "create.evolutionStability"
+                                       , label = "Run plot"
+                                       , icon = icon("play")
+                                       , width = "100%"
+                                       , style = HTML(button.style)
+                        ) %>% helper(type = "inline"
+                                     , title = "Plot evolution stability"
+                                     , size = "l"
+                                     , content = help.HTML("./../../docs/reference/POST_FATE.graphic_evolutionStability.html")
                         )
                )
              ))

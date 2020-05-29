@@ -17,7 +17,7 @@ get_names.files = eventReactive(input$graph.folder.simul, {
   dir.files2 = sub(".pdf$", "", dir.files2)
   
   names.files3 = list.files(path = paste0(get_path.simul(), "/RESULTS/", dir.files2)
-                            , pattern = "^PFGrichness|^PFGcover"
+                            , pattern = "^PFGcover|^PFGrichness|^PFGlight|^PFGsoil"
                             , all.files = FALSE
                             , full.names = TRUE)
   names.files3 = paste0(basename(dirname(names.files3)), "/", basename(names.files3))
@@ -32,12 +32,9 @@ update_browser.files = function()
   names.files = get_names.files()
   if (length(names.files) > 0)
   {
-    ind.toSuppr = get_browser.abundance()
+    ind.toSuppr = get_browser.evolution()
     ind.toSuppr = c(ind.toSuppr, get_browser.validation())
-    ind.toSuppr = c(ind.toSuppr, get_browser.richness())
-    ind.toSuppr = c(ind.toSuppr, get_browser.cover())
-    ind.toSuppr = c(ind.toSuppr, get_browser.light())
-    ind.toSuppr = c(ind.toSuppr, get_browser.soil())
+    ind.toSuppr = c(ind.toSuppr, get_browser.map())
     if (length(ind.toSuppr) > 0)
     {
       names.files = names.files[-ind.toSuppr]
@@ -56,10 +53,10 @@ update_browser.files = function()
 
 ####################################################################
 
-get_browser.abundance = eventReactive(input$browser.abundance, {
-  if (!input$browser.abundance)
+get_browser.evolution = eventReactive(input$browser.evolution, {
+  if (!input$browser.evolution)
   {
-    return(grep("abundance|spaceOccupancy", get_names.files()))
+    return(grep("evolution_coverage|evolution_pixels|evolution_stability", get_names.files()))
   } 
 })
 
@@ -70,43 +67,19 @@ get_browser.validation = eventReactive(input$browser.validation, {
   } 
 })
 
-get_browser.richness = eventReactive(input$browser.richness, {
-  if (!input$browser.richness)
+get_browser.map = eventReactive(input$browser.map, {
+  if (!input$browser.map)
   {
-    return(grep("richness", get_names.files()))
-  } 
-})
-
-get_browser.cover = eventReactive(input$browser.cover, {
-  if (!input$browser.cover)
-  {
-    return(grep("cover", get_names.files()))
-  } 
-})
-
-get_browser.light = eventReactive(input$browser.light, {
-  if (!input$browser.light)
-  {
-    return(grep("light", get_names.files()))
-  } 
-})
-
-get_browser.soil = eventReactive(input$browser.soil, {
-  if (!input$browser.soil)
-  {
-    return(grep("soil", get_names.files()))
+    return(grep("map_PFG", get_names.files()))
   } 
 })
 
 
 ####################################################################
 
-observeEvent(input$browser.abundance, { update_browser.files() })
+observeEvent(input$browser.evolution, { update_browser.files() })
 observeEvent(input$browser.validation, { update_browser.files() })
-observeEvent(input$browser.richness, { update_browser.files() })
-observeEvent(input$browser.cover, { update_browser.files() })
-observeEvent(input$browser.light, { update_browser.files() })
-observeEvent(input$browser.soil, { update_browser.files() })
+observeEvent(input$browser.map, { update_browser.files() })
 
 ####################################################################
 

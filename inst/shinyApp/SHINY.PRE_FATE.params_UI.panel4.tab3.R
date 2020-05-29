@@ -2,54 +2,42 @@
 tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
          , value = "panel.specific_year"
          , fluidRow(
-           column(3
+           column(4
                   , br()
+                  , HTML(param.style("year(s)"))
                   , shinyjs::disabled(
                     selectInput(inputId = "graph.year"
-                                , label = param.style("year(s)")
+                                , label = NULL
                                 , choices = NULL
                                 , selected = NULL
                                 , multiple = FALSE
                                 , width = "100%")
                   )
            )
-           , column(3
+           , column(4
                     , br()
-                    , shinyjs::disabled(
-                      selectInput(inputId = "graph.strata_min"
-                                  , label = param.style("strata_min")
-                                  , choices = NULL
-                                  , selected = NULL
-                                  , multiple = F
-                                  , width = "100%")
-                    )
-           )
-           , column(3
-                    , br()
+                    , HTML(param.style("opt.no_CPU"))
                     , numericInput(inputId = "graph.opt.no_CPU"
-                                   , label = param.style("opt.no_CPU")
+                                   , label = NULL
                                    , value = 1
                                    , min = 1
                                    , width = "100%")
            )
-         )
-         , fluidRow(
-           column(3, br()),
-           column(3, br()),
-           column(3, br()),
-           column(3
-                  , shinyjs::disabled(
-                    actionButton(inputId = "create.relativeAbund"
-                                 , label = "Run relative abund"
-                                 , icon = icon("play")
-                                 , width = "100%"
-                                 , style = HTML(button.style)
-                    ) %>% helper(type = "inline"
-                                 , title = "Create maps of relative abundance"
-                                 , size = "l"
-                                 , content = help.HTML("https://mayagueguen.github.io/RFate/reference/POST_FATE.relativeAbund.html")
+           , column(4
+                    , br()
+                    , br()
+                    , shinyjs::disabled(
+                      actionButton(inputId = "create.relativeAbund"
+                                   , label = "Run relative abund"
+                                   , icon = icon("play")
+                                   , width = "100%"
+                                   , style = HTML(button.style)
+                      ) %>% helper(type = "inline"
+                                   , title = "Create maps of relative abundance"
+                                   , size = "l"
+                                   , content = help.HTML("./../../docs/reference/POST_FATE.relativeAbund.html")
+                      )
                     )
-                  )
            )
          )
          , fluidRow(
@@ -94,7 +82,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
                   ) %>% helper(type = "inline"
                                , title = "Plot validation statistics and transform maps of abundances into 0/1"
                                , size = "l"
-                               , content = help.HTML("https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_validationStatistics.html")
+                               , content = help.HTML("./../../docs/reference/POST_FATE.graphic_validationStatistics.html")
                   )
                   , br()
                   , actionButton(inputId = "create.PFGvsHS"
@@ -105,60 +93,60 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
                   ) %>% helper(type = "inline"
                                , title = "Plot maps of 0/1 predicted by FATE vs Habitat suitability"
                                , size = "l"
-                               , content = help.HTML("https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFGvsHS.html")
+                               , content = help.HTML("./../../docs/reference/POST_FATE.graphic_mapPFGvsHS.html")
                   )
                   , br()
-                  , actionButton(inputId = "create.PFGrichness"
-                                 , label = "Run PFG richness"
+                  , actionButton(inputId = "create.PFGmap"
+                                 , label = "Run PFG map"
                                  , icon = icon("play")
                                  , width = "100%"
                                  , style = HTML(button.style)
                   ) %>% helper(type = "inline"
-                               , title = "Plot map of PFG richness"
+                               , title = "Plot map of PFG outputs"
                                , size = "l"
-                               , content = help.HTML("https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFG.html")
+                               , content = help.HTML("./../../docs/reference/POST_FATE.graphic_mapPFG.html")
                   )
-                  , br()
-                  , actionButton(inputId = "create.PFGcover"
-                                 , label = "Run PFG cover"
-                                 , icon = icon("play")
-                                 , width = "100%"
-                                 , style = HTML(button.style)
-                  ) %>% helper(type = "inline"
-                               , title = "Plot map of PFG cover"
-                               , size = "l"
-                               , content = help.HTML("https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFG.html")
-                  )
-                  , br()
-                  , actionButton(inputId = "create.PFGlight"
-                                 , label = "Run PFG light"
-                                 , icon = icon("play")
-                                 , width = "100%"
-                                 , style = HTML(button.style)
-                  ) %>% helper(type = "inline"
-                               , title = "Plot map of PFG light"
-                               , size = "l"
-                               , content = help.HTML("https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFG.html")
-                  )
-                  , br()
-                  , actionButton(inputId = "create.PFGsoil"
-                                 , label = "Run PFG soil"
-                                 , icon = icon("play")
-                                 , width = "100%"
-                                 , style = HTML(button.style)
-                  ) %>% helper(type = "inline"
-                               , title = "Plot map of PFG soil"
-                               , size = "l"
-                               , content = help.HTML("https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFG.html")
-                  )
+                  # , br()
+                  # , actionButton(inputId = "create.PFGcover"
+                  #                , label = "Run PFG cover"
+                  #                , icon = icon("play")
+                  #                , width = "100%"
+                  #                , style = HTML(button.style)
+                  # ) %>% helper(type = "inline"
+                  #              , title = "Plot map of PFG cover"
+                  #              , size = "l"
+                  #              , content = help.HTML("https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFG.html")
+                  # )
+                  # , br()
+                  # , actionButton(inputId = "create.PFGlight"
+                  #                , label = "Run PFG light"
+                  #                , icon = icon("play")
+                  #                , width = "100%"
+                  #                , style = HTML(button.style)
+                  # ) %>% helper(type = "inline"
+                  #              , title = "Plot map of PFG light"
+                  #              , size = "l"
+                  #              , content = help.HTML("https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFG.html")
+                  # )
+                  # , br()
+                  # , actionButton(inputId = "create.PFGsoil"
+                  #                , label = "Run PFG soil"
+                  #                , icon = icon("play")
+                  #                , width = "100%"
+                  #                , style = HTML(button.style)
+                  # ) %>% helper(type = "inline"
+                  #              , title = "Plot map of PFG soil"
+                  #              , size = "l"
+                  #              , content = help.HTML("https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFG.html")
+                  # )
            )
            , column(9
                     , shinyjs::hidden(plotOutput(outputId = "plot.validationStat", width = "100%", height = "600px"))
                     , shinyjs::hidden(plotlyOutput(outputId = "plot.PFGvsHS", width = "100%", height = "600px"))
-                    , shinyjs::hidden(plotlyOutput(outputId = "plot.PFGrichness", width = "100%", height = "600px"))
-                    , shinyjs::hidden(plotlyOutput(outputId = "plot.PFGcover", width = "100%", height = "600px"))
-                    , shinyjs::hidden(plotlyOutput(outputId = "plot.PFGlight", width = "100%", height = "600px"))
-                    , shinyjs::hidden(plotlyOutput(outputId = "plot.PFGsoil", width = "100%", height = "600px"))
+                    , shinyjs::hidden(plotlyOutput(outputId = "plot.PFGmap", width = "100%", height = "600px"))
+                    # , shinyjs::hidden(plotlyOutput(outputId = "plot.PFGcover", width = "100%", height = "600px"))
+                    # , shinyjs::hidden(plotlyOutput(outputId = "plot.PFGlight", width = "100%", height = "600px"))
+                    # , shinyjs::hidden(plotlyOutput(outputId = "plot.PFGsoil", width = "100%", height = "600px"))
            )
          ) ## END fluidRow
 ) ## END tabPanel (Global parameters)

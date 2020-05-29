@@ -2,49 +2,27 @@
 tabPanel(title = HTML("<span class='tabPanel_title'>BROWSER</span>")
          , value = "panel.browser"
          , fluidRow(
-           column(2
+           column(4
                   , br()
-                  , checkboxInput(inputId = "browser.abundance"
-                                  , label = "Abundance"
+                  , checkboxInput(inputId = "browser.evolution"
+                                  , label = "Temporal evolution"
                                   , value = TRUE
                                   , width = "100%")
            )
-           , column(2
+           , column(4
                     , br()
                     , checkboxInput(inputId = "browser.validation"
                                     , label = "Validation"
                                     , value = TRUE
                                     , width = "100%")
            )
-           , column(2
+           , column(4
                     , br()
-                    , checkboxInput(inputId = "browser.richness"
-                                    , label = "Richness"
+                    , checkboxInput(inputId = "browser.map"
+                                    , label = "Maps"
                                     , value = TRUE
                                     , width = "100%")
            )
-           , column(2
-                    , br()
-                    , checkboxInput(inputId = "browser.cover"
-                                    , label = "Cover"
-                                    , value = TRUE
-                                    , width = "100%")
-           )
-           , column(2
-                    , br()
-                    , checkboxInput(inputId = "browser.light"
-                                    , label = "Light"
-                                    , value = TRUE
-                                    , width = "100%")
-           )
-           , column(2
-                    , br()
-                    , checkboxInput(inputId = "browser.soil"
-                                    , label = "Soil"
-                                    , value = TRUE
-                                    , width = "100%")
-           )
-           
          )
          , fluidRow(
            column(12
