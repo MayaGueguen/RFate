@@ -44,7 +44,7 @@
 ##' 
 ##' 
 ##' \strong{It requires} that the \code{\link{POST_FATE.relativeAbund}} and the 
-##' \code{\link{POST_FATE.graphic_validationStatistics}} function have been run 
+##' \code{\link{POST_FATE.binaryMaps}} function have been run 
 ##' and that the folders \code{BIN_perPFG_allStrata} and 
 ##' \code{BIN_perPFG_perStrata} exist.
 ##' 
@@ -66,7 +66,7 @@
 ##' @keywords FATE, outputs, habitat suitability, binary
 ##' 
 ##' @seealso \code{\link{POST_FATE.relativeAbund}}, 
-##' \code{\link{POST_FATE.graphic_validationStatistics}}
+##' \code{\link{POST_FATE.binaryMaps}}
 ##' 
 ##' @examples
 ##' 

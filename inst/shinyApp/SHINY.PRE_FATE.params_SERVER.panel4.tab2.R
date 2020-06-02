@@ -37,40 +37,64 @@ output$UI.opt.cells_ID = renderUI({
 
 ####################################################################
 
+observeEvent(input$create.temporalEvolution, {
+  
+  path.init = getwd()
+  setwd(get_path.folder())
+  
+  showModal(modalDialog(HTML(paste0("Creating PFG abundance tables with : <ul>"
+                                    , "<li><strong>folder :</strong> ", basename(get_name.simul()), "</li>"
+                                    , "<li><strong>simulation parameter file :</strong> "
+                                    , basename(get_param.simul()), "</li>"
+                                    , "<li><strong>no_years :</strong> ", as.numeric(input$graph.no.years), "</li>"
+                                    , "<li><strong>opt.ras_habitat :</strong> ", input$graph.opt.ras_habitat, "</li>"
+                                    , "<li><strong>opt.no_CPU :</strong> ", input$graph.opt.no_CPU, "</li>"
+                                    , "</ul>"))
+                        , title = HTML("Relative PFG abundance tables through time")
+                        , footer = NULL))
+  Sys.sleep(3)
+  get_res = print_messages(as.expression(
+    POST_FATE.temporalEvolution(name.simulation = get_name.simul()
+                                , file.simulParam = get_param.simul()
+                                , no_years = as.numeric(input$graph.no.years)
+                                , opt.ras_habitat = NULL #"" #input$graph.opt.ras_habitat
+                                , opt.no_CPU = as.numeric(input$graph.opt.no_CPU)
+    )
+  ))
+  removeModal()
+  
+  setwd(path.init)
+})
+
+####################################################################
+
 observeEvent(input$create.evolutionCoverage, {
   
   path.init = getwd()
   setwd(get_path.folder())
   
-  showModal(modalDialog(HTML(paste0("Creating evolution coverage graphic with :
-                                        <ul>
-                                    <li><strong>folder :</strong> ", basename(get_name.simul()),"</li>
-                                    <li><strong>simulation parameter file :</strong> ", basename(get_param.simul()), "</li>
-                                    <li><strong>no.years :</strong> ", input$graph.no.years,"</li>
-                                    <li><strong>opt.abund_fixedScale :</strong> ", input$graph.opt.fixedScale,"</li>
-                                    <li><strong>opt.ras_habitat :</strong> ", input$graph.opt.ras_habitat,"</li>
-                                    <li><strong>opt.no_CPU :</strong> ", input$graph.opt.no_CPU,"</li>
-                                    </ul>"))
+  showModal(modalDialog(HTML(paste0("Creating evolution coverage graphic with : <ul>"
+                                    , "<li><strong>folder :</strong> ", basename(get_name.simul()),"</li>"
+                                    , "<li><strong>simulation parameter file :</strong> ", basename(get_param.simul()), "</li>"
+                                    , "<li><strong>opt.fixedScale :</strong> ", input$graph.opt.fixedScale, "</li>"
+                                    , "</ul>"))
                         , title = HTML("Evolution coverage graphic")
                         , footer = NULL))
   Sys.sleep(3)
   get_res = print_messages(as.expression(
     POST_FATE.graphic_evolutionCoverage(name.simulation = get_name.simul()
                                         , file.simulParam = get_param.simul()
-                                        , no.years = input$graph.no.years
-                                        , opt.abund_fixedScale = input$graph.opt.fixedScale
-                                        , opt.ras_habitat = input$graph.opt.ras_habitat
-                                        , opt.no_CPU = input$graph.opt.no_CPU
+                                        , opt.fixedScale = input$graph.opt.fixedScale
     )
   ))
   removeModal()
   
   output$plot.evolutionCoverage1 = renderPlotly({
-    plot(get_res[[1]]$graph.spaceOccupancy)
+    plot(get_res[[1]]$plot.spaceOccupancy)
   })
   
   output$plot.evolutionCoverage2 = renderPlotly({
-    plot(get_res[[1]]$graph.abundance)
+    plot(get_res[[1]]$plot.totalAbundance)
   })
   
   setwd(path.init)
@@ -79,108 +103,75 @@ observeEvent(input$create.evolutionCoverage, {
 
 ####################################################################
 
-observeEvent(input$create.evolutionAbund, {
+observeEvent(input$create.evolutionPixels, {
   
   path.init = getwd()
   setwd(get_path.folder())
   
-  showModal(modalDialog(HTML(paste0("Creating evolution of PFG abundance (pixels) graphic with :
-                                        <ul>
-                                    <li><strong>folder :</strong> ", basename(get_name.simul()),"</li>
-                                    <li><strong>simulation parameter file :</strong> ", basename(get_param.simul()), "</li>
-                                    <li><strong>no.years :</strong> ", input$graph.no.years,"</li>
-                                    <li><strong>opt.abund_fixedScale :</strong> ", input$graph.opt.fixedScale,"</li>
-                                    <li><strong>opt.no_CPU :</strong> ", input$graph.opt.no_CPU,"</li>
-                                    </ul>"))
+  if (input$graph.opt.cells_ID)
+  {
+    graph.opt.cells_ID = c(input$cells_ID.1, input$cells_ID.2, input$cells_ID.3
+                           , input$cells_ID.4, input$cells_ID.5)
+  } else
+  {
+    graph.opt.cells_ID = ""
+  }
+  
+  showModal(modalDialog(HTML(paste0("Creating evolution of PFG abundance (pixels) graphic with : <ul>"
+                                    , "<li><strong>folder :</strong> ", basename(get_name.simul()), "</li>"
+                                    , "<li><strong>simulation parameter file :</strong> ", basename(get_param.simul()), "</li>"
+                                    , "<li><strong>opt.cells_ID :</strong> ", graph.opt.cells_ID, "</li>"
+                                    , "<li><strong>opt.fixedScale :</strong> ", input$graph.opt.fixedScale, "</li>"
+                                    , "</ul>"))
                         , title = HTML("Evolution of PFG abundance through time (pixels)")
                         , footer = NULL))
   Sys.sleep(3)
   get_res = print_messages(as.expression(
-    POST_FATE.graphic_evolutionAbund_pixels(name.simulation = get_name.simul()
-                                            , file.simulParam = get_param.simul()
-                                            , no.years = input$graph.no.years
-                                            , opt.abund_fixedScale = input$graph.opt.fixedScale
-                                            , opt.cells_ID = NULL
-                                            , opt.no_CPU = input$graph.opt.no_CPU
+    POST_FATE.graphic_evolutionPixels(name.simulation = get_name.simul()
+                                      , file.simulParam = get_param.simul()
+                                      , opt.cells_ID = graph.opt.cells_ID
+                                      , opt.fixedScale = input$graph.opt.fixedScale
     )
   ))
   removeModal()
   
-  output$plot.evolutionAbund = renderPlotly({
+  output$plot.evolutionPixels = renderPlotly({
     plot(get_res[[1]]$plot)
   })
   
   setwd(path.init)
 })
 
-####################################################################
-
-# observeEvent(input$create.evolutionLight, {
-#   
-#   path.init = getwd()
-#   setwd(get_path.folder())
-#   
-#   showModal(modalDialog(HTML(paste0("Creating evolution of light resources (pixels) graphic with :
-#                                         <ul>
-#                                     <li><strong>folder :</strong> ", basename(get_name.simul()),"</li>
-#                                     <li><strong>simulation parameter file :</strong> ", basename(get_param.simul()), "</li>
-#                                     <li><strong>no.years :</strong> ", input$graph.no.years,"</li>
-#                                     <li><strong>opt.abund_fixedScale :</strong> ", input$graph.opt.fixedScale,"</li>
-#                                     <li><strong>opt.no_CPU :</strong> ", input$graph.opt.no_CPU,"</li>
-#                                     </ul>"))
-#                         , title = HTML("Evolution of light resources through time (pixels)")
-#                         , footer = NULL))
-#   Sys.sleep(3)
-#   get_res = print_messages(as.expression(
-#     POST_FATE.graphic_evolutionLight_pixels(name.simulation = get_name.simul()
-#                                             , file.simulParam = get_param.simul()
-#                                             , no.years = input$graph.no.years
-#                                             , opt.abund_fixedScale = input$graph.opt.fixedScale
-#                                             , opt.cells_ID = NULL
-#                                             , opt.no_CPU = input$graph.opt.no_CPU
-#     )
-#   ))
-#   removeModal()
-#   
-#   output$plot.evolutionLight = renderPlotly({
-#     plot(get_res[[1]]$plot)
-#   })
-#   
-#   setwd(path.init)
-# })
 
 ####################################################################
 
-# observeEvent(input$create.evolutionSoil, {
-#   
-#   path.init = getwd()
-#   setwd(get_path.folder())
-#   
-#   showModal(modalDialog(HTML(paste0("Creating evolution of soil resources (pixels) graphic with :
-#                                         <ul>
-#                                     <li><strong>folder :</strong> ", basename(get_name.simul()),"</li>
-#                                     <li><strong>simulation parameter file :</strong> ", basename(get_param.simul()), "</li>
-#                                     <li><strong>no.years :</strong> ", input$graph.no.years,"</li>
-#                                     <li><strong>opt.abund_fixedScale :</strong> ", input$graph.opt.fixedScale,"</li>
-#                                     <li><strong>opt.no_CPU :</strong> ", input$graph.opt.no_CPU,"</li>
-#                                     </ul>"))
-#                         , title = HTML("Evolution of soil resources through time (pixels)")
-#                         , footer = NULL))
-#   Sys.sleep(3)
-#   get_res = print_messages(as.expression(
-#     POST_FATE.graphic_evolutionSoil_pixels(name.simulation = get_name.simul()
-#                                            , file.simulParam = get_param.simul()
-#                                            , no.years = input$graph.no.years
-#                                            , opt.cells_ID = NULL
-#                                            , opt.no_CPU = input$graph.opt.no_CPU
-#     )
-#   ))
-#   removeModal()
-#   
-#   output$plot.evolutionSoil = renderPlotly({
-#     plot(get_res[[1]]$plot)
-#   })
-#   
-#   setwd(path.init)
-# })
+observeEvent(input$create.evolutionStability, {
+  
+  path.init = getwd()
+  setwd(get_path.folder())
+  
+  showModal(modalDialog(HTML(paste0("Creating evolution of habitat composition graphic with : <ul>"
+                                    , "<li><strong>folder :</strong> ", basename(get_name.simul()), "</li>"
+                                    , "<li><strong>simulation parameter file :</strong> ", basename(get_param.simul()), "</li>"
+                                    , "<li><strong>movingWindow_size :</strong> ", input$graph.mw.size, "</li>"
+                                    , "<li><strong>movingWindow_step :</strong> ", input$graph.mw.step, "</li>"
+                                    , "</ul>"))
+                        , title = HTML("Evolution of habitat composition through time")
+                        , footer = NULL))
+  Sys.sleep(3)
+  get_res = print_messages(as.expression(
+    POST_FATE.graphic_evolutionStability(name.simulation = get_name.simul()
+                                         , file.simulParam = get_param.simul()
+                                         , movingWindow_size = as.numeric(input$graph.mw.size)
+                                         , movingWindow_step = as.numeric(input$graph.mw.step)
+    )
+  ))
+  removeModal()
+  
+  output$plot.evolutionStability = renderPlotly({
+    plot(get_res[[1]]$plot.stab)
+  })
+  
+  setwd(path.init)
+})
 

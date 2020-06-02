@@ -10,7 +10,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
                                 , label = NULL
                                 , choices = NULL
                                 , selected = NULL
-                                , multiple = FALSE
+                                , multiple = TRUE
                                 , width = "100%")
                   )
            )
@@ -41,112 +41,201 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
            )
          )
          , fluidRow(
-           column(5
+           column(4
                   , br()
-                  , br()
-                  , uiOutput(outputId = "UI.graph.mat.PFG.obs")
+                  , HTML(param.style("method"))
+                  , shinyjs::disabled(
+                    radioButtons(inputId = "graph.binMethod"
+                                 , label = NULL
+                                 , choices = c("(1) fixed threshold", "(2) optimizing TSS")
+                                 , selected = "(1) fixed threshold"
+                                 , inline = TRUE
+                                 , width = "100%")
+                  )
            )
-           , column(1
+           , column(4
+                    , br()
+                    , HTML(param.style("threshold / cutoff"))
+                    , uiOutput(outputId = "UI.graph.binMethod.opt")
+           )
+           , column(4
                     , br()
                     , br()
-                    , actionButton(inputId = "graph.mat.PFG.obs.delete"
-                                   , label = ""
-                                   , icon = icon("broom")
+                    , shinyjs::disabled(
+                      actionButton(inputId = "create.binaryMaps"
+                                   , label = "Run binary maps"
+                                   , icon = icon("play")
                                    , width = "100%"
                                    , style = HTML(button.style)
-                    )
-           )
-           , column(5
-                    , br()
-                    , br()
-                    , uiOutput(outputId = "UI.graph.opt.cover.obs")
-           )
-           , column(1
-                    , br()
-                    , br()
-                    , actionButton(inputId = "graph.opt.cover.obs.delete"
-                                   , label = ""
-                                   , icon = icon("broom")
-                                   , width = "100%"
-                                   , style = HTML(button.style)
+                      ) %>% helper(type = "inline"
+                                   , title = "Create binary maps (transform relative abundance into 0/1)"
+                                   , size = "l"
+                                   , content = help.HTML("./../../docs/reference/POST_FATE.binaryMaps.html")
+                      )
                     )
            )
          )
+         , radioGroupButtons(inputId = "show.spatial_maps"
+                             , label = ""
+                             , choices = c("Validation statistics"
+                                           , "Maps : PFG vs HS"
+                                           , "Maps : PFG cover, richness, CWM")
+                             , selected = 0
+                             , justified = TRUE
+                             , status = "panelgraph"
+                             , checkIcon = list(yes = icon("ok", lib = "glyphicon")
+                                                , no = icon("remove", lib = "glyphicon"))
+         )
          , fluidRow(
-           column(3
-                  , actionButton(inputId = "create.validationStat"
-                                 , label = "Run Validation statistics"
-                                 , icon = icon("play")
-                                 , width = "100%"
-                                 , style = HTML(button.style)
-                  ) %>% helper(type = "inline"
-                               , title = "Plot validation statistics and transform maps of abundances into 0/1"
-                               , size = "l"
-                               , content = help.HTML("./../../docs/reference/POST_FATE.graphic_validationStatistics.html")
-                  )
-                  , br()
-                  , actionButton(inputId = "create.PFGvsHS"
-                                 , label = "Run PFG vs HS"
-                                 , icon = icon("play")
-                                 , width = "100%"
-                                 , style = HTML(button.style)
-                  ) %>% helper(type = "inline"
-                               , title = "Plot maps of 0/1 predicted by FATE vs Habitat suitability"
-                               , size = "l"
-                               , content = help.HTML("./../../docs/reference/POST_FATE.graphic_mapPFGvsHS.html")
-                  )
-                  , br()
-                  , actionButton(inputId = "create.PFGmap"
-                                 , label = "Run PFG map"
-                                 , icon = icon("play")
-                                 , width = "100%"
-                                 , style = HTML(button.style)
-                  ) %>% helper(type = "inline"
-                               , title = "Plot map of PFG outputs"
-                               , size = "l"
-                               , content = help.HTML("./../../docs/reference/POST_FATE.graphic_mapPFG.html")
-                  )
-                  # , br()
-                  # , actionButton(inputId = "create.PFGcover"
-                  #                , label = "Run PFG cover"
-                  #                , icon = icon("play")
-                  #                , width = "100%"
-                  #                , style = HTML(button.style)
-                  # ) %>% helper(type = "inline"
-                  #              , title = "Plot map of PFG cover"
-                  #              , size = "l"
-                  #              , content = help.HTML("https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFG.html")
-                  # )
-                  # , br()
-                  # , actionButton(inputId = "create.PFGlight"
-                  #                , label = "Run PFG light"
-                  #                , icon = icon("play")
-                  #                , width = "100%"
-                  #                , style = HTML(button.style)
-                  # ) %>% helper(type = "inline"
-                  #              , title = "Plot map of PFG light"
-                  #              , size = "l"
-                  #              , content = help.HTML("https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFG.html")
-                  # )
-                  # , br()
-                  # , actionButton(inputId = "create.PFGsoil"
-                  #                , label = "Run PFG soil"
-                  #                , icon = icon("play")
-                  #                , width = "100%"
-                  #                , style = HTML(button.style)
-                  # ) %>% helper(type = "inline"
-                  #              , title = "Plot map of PFG soil"
-                  #              , size = "l"
-                  #              , content = help.HTML("https://mayagueguen.github.io/RFate/reference/POST_FATE.graphic_mapPFG.html")
-                  # )
-           )
-           , column(9
-                    , shinyjs::hidden(plotOutput(outputId = "plot.validationStat", width = "100%", height = "600px"))
-                    , shinyjs::hidden(plotlyOutput(outputId = "plot.PFGvsHS", width = "100%", height = "600px"))
-                    , shinyjs::hidden(plotlyOutput(outputId = "plot.PFGmap", width = "100%", height = "600px"))
-                    # , shinyjs::hidden(plotlyOutput(outputId = "plot.PFGcover", width = "100%", height = "600px"))
-                    # , shinyjs::hidden(plotlyOutput(outputId = "plot.PFGlight", width = "100%", height = "600px"))
-                    # , shinyjs::hidden(plotlyOutput(outputId = "plot.PFGsoil", width = "100%", height = "600px"))
-           )
+           br()
+           , shinyjs::hidden(
+             fluidRow(
+               id = "panel.validationStat"
+               , column(8
+                        , plotlyOutput(outputId = "plot.validationStat", width = "100%", height = "600px")
+               )
+               , column(4
+                        , fluidRow(
+                          column(10
+                                 , br()
+                                 , br()
+                                 , uiOutput(outputId = "UI.graph.mat.PFG.obs")
+                          )
+                          , column(2
+                                   , br()
+                                   , br()
+                                   , actionButton(inputId = "graph.mat.PFG.obs.delete"
+                                                  , label = ""
+                                                  , icon = icon("broom")
+                                                  , width = "100%"
+                                                  , style = HTML(button.style)
+                                   )
+                          )
+                        )
+                        , HTML(param.style("opt.ras_habitat"))
+                        , fileInput(inputId = "graph.opt.ras_habitat"
+                                    , label = NULL
+                                    , multiple = FALSE
+                                    , width = "100%")
+                        , br()
+                        , actionButton(inputId = "create.validationStat"
+                                       , label = "Run Validation statistics"
+                                       , icon = icon("play")
+                                       , width = "100%"
+                                       , style = HTML(button.style)
+                        ) %>% helper(type = "inline"
+                                     , title = "Plot validation statistics and transform maps of abundances into 0/1"
+                                     , size = "l"
+                                     , content = help.HTML("./../../docs/reference/POST_FATE.graphic_validationStatistics.html")
+                        )
+               )
+             ))
+           , shinyjs::hidden(
+             fluidRow(
+               id = "panel.PFGvsHS"
+               , column(8
+                        , plotlyOutput(outputId = "plot.PFGvsHS", width = "100%", height = "600px")
+               )
+               , column(4
+                        , HTML(param.style("opt.stratum"))
+                        , selectInput(inputId = "graph.opt.stratum"
+                                      , label = NULL
+                                      , choices = "all"
+                                      , selected = "all"
+                                      , multiple = FALSE
+                                      , width = "100%")
+                        , br()
+                        , actionButton(inputId = "create.PFGvsHS"
+                                       , label = "Run PFG vs HS"
+                                       , icon = icon("play")
+                                       , width = "100%"
+                                       , style = HTML(button.style)
+                        ) %>% helper(type = "inline"
+                                     , title = "Plot maps of 0/1 predicted by FATE vs Habitat suitability"
+                                     , size = "l"
+                                     , content = help.HTML("./../../docs/reference/POST_FATE.graphic_mapPFGvsHS.html")
+                        )
+               )
+             ))
+           , shinyjs::hidden(
+             fluidRow(
+               id = "panel.PFGmap"
+               , column(8
+                        , plotlyOutput(outputId = "plot.PFGmap", width = "100%", height = "600px")
+               )
+               , column(4
+                        , fluidRow(
+                          column(8
+                                 , HTML(param.style("opt.stratum min - max"))
+                                 , sliderInput(inputId = "graph.opt.stratum_minmax"
+                                               , label = NULL
+                                               , min = 1
+                                               , max = 10
+                                               , value = c(1, 10)
+                                               , step = 1
+                                               , width = "100%")
+                          )
+                          , column(4
+                                   , HTML(param.style("opt.doBinary"))
+                                   , checkboxInput(inputId = "graph.opt.doBinary"
+                                                   , label = NULL
+                                                   , value = FALSE
+                                                   , width = "100%")
+                          )
+                        )
+                        , br()
+                        , actionButton(inputId = "create.PFGmap"
+                                       , label = "Run PFG map"
+                                       , icon = icon("play")
+                                       , width = "100%"
+                                       , style = HTML(button.style)
+                        ) %>% helper(type = "inline"
+                                     , title = "Plot map of PFG outputs"
+                                     , size = "l"
+                                     , content = help.HTML("./../../docs/reference/POST_FATE.graphic_mapPFG.html")
+                        )
+               )
+             ))
          ) ## END fluidRow
+         # , fluidRow(
+         #   column(3
+         #          , actionButton(inputId = "create.validationStat"
+         #                         , label = "Run Validation statistics"
+         #                         , icon = icon("play")
+         #                         , width = "100%"
+         #                         , style = HTML(button.style)
+         #          ) %>% helper(type = "inline"
+         #                       , title = "Plot validation statistics and transform maps of abundances into 0/1"
+         #                       , size = "l"
+         #                       , content = help.HTML("./../../docs/reference/POST_FATE.graphic_validationStatistics.html")
+         #          )
+         #          , br()
+         #          , actionButton(inputId = "create.PFGvsHS"
+         #                         , label = "Run PFG vs HS"
+         #                         , icon = icon("play")
+         #                         , width = "100%"
+         #                         , style = HTML(button.style)
+         #          ) %>% helper(type = "inline"
+         #                       , title = "Plot maps of 0/1 predicted by FATE vs Habitat suitability"
+         #                       , size = "l"
+         #                       , content = help.HTML("./../../docs/reference/POST_FATE.graphic_mapPFGvsHS.html")
+         #          )
+         #          , br()
+         #          , actionButton(inputId = "create.PFGmap"
+         #                         , label = "Run PFG map"
+         #                         , icon = icon("play")
+         #                         , width = "100%"
+         #                         , style = HTML(button.style)
+         #          ) %>% helper(type = "inline"
+         #                       , title = "Plot map of PFG outputs"
+         #                       , size = "l"
+         #                       , content = help.HTML("./../../docs/reference/POST_FATE.graphic_mapPFG.html")
+         #          )
+         #   )
+         #   , column(9
+         #            , shinyjs::hidden(plotOutput(outputId = "plot.validationStat", width = "100%", height = "600px"))
+         #            , shinyjs::hidden(plotlyOutput(outputId = "plot.PFGvsHS", width = "100%", height = "600px"))
+         #            , shinyjs::hidden(plotlyOutput(outputId = "plot.PFGmap", width = "100%", height = "600px"))
+         #   )
+         # ) ## END fluidRow
 ) ## END tabPanel (Global parameters)

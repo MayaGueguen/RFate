@@ -121,11 +121,11 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Through time</span>")
                , column(4
                         , numericInput(inputId = "graph.mw.size"
                                         , label = param.style("movingWindow_size")
-                                        , value = TRUE
+                                        , value = 3
                                         , width = "100%")
                         , numericInput(inputId = "graph.mw.step"
                                         , label = param.style("movingWindow_step")
-                                        , value = TRUE
+                                        , value = 1
                                         , width = "100%")
                         , br()
                         , actionButton(inputId = "create.evolutionStability"

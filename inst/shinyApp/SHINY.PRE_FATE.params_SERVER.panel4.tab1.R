@@ -56,7 +56,7 @@ update_browser.files = function()
 get_browser.evolution = eventReactive(input$browser.evolution, {
   if (!input$browser.evolution)
   {
-    return(grep("evolution_coverage|evolution_pixels|evolution_stability", get_names.files()))
+    return(grep("evolution_spaceOccupancy|evolution_totalAbundance|evolution_pixels|evolution_stability", get_names.files()))
   } 
 })
 
@@ -70,7 +70,7 @@ get_browser.validation = eventReactive(input$browser.validation, {
 get_browser.map = eventReactive(input$browser.map, {
   if (!input$browser.map)
   {
-    return(grep("map_PFG", get_names.files()))
+    return(grep("map_PFG|^PFGcover|^PFGrichness|^PFGlight|^PFGsoil", get_names.files()))
   } 
 })
 
@@ -86,22 +86,19 @@ observeEvent(input$browser.map, { update_browser.files() })
 get_graph.type = eventReactive(input$browser.files, {
   if (nchar(input$browser.files) > 0)
   {
-    if (length(grep("evolution_abundance_pixels", input$browser.files)) > 0)
+    if (length(grep("evolution_spaceOccupancy", input$browser.files)) > 0)
     {
-      return("abund.pixels")
-    } else if (length(grep("evolution_light_pixels", input$browser.files)) > 0)
+      return("evolution_spaceOccupancy")
+    } else if (length(grep("evolution_totalAbundance", input$browser.files)) > 0)
     {
-      return("light.pixels")
-    } else if (length(grep("evolution_soil_pixels", input$browser.files)) > 0)
+      return("evolution_totalAbundance")
+    } else if (length(grep("evolution_pixels", input$browser.files)) > 0)
     {
-      return("soil.pixels")
-    } else if (length(grep("evolution_abundance", input$browser.files)) > 0)
+      return("evolution_pixels")
+    } else if (length(grep("evolution_stability", input$browser.files)) > 0)
     {
-      return("abund")
-    } else if (length(grep("evolution_spaceOccupancy", input$browser.files)) > 0)
-    {
-      return("spaceOccupancy")
-    } else if (length(grep("VALIDATION_STATISTICS", input$browser.files)) > 0)
+      return("evolution_stability")
+    } else if (length(grep("validation", input$browser.files)) > 0)
     {
       return("validation")
     } else if (length(grep("PFGrichness", input$browser.files)) > 0)
@@ -144,13 +141,18 @@ observeEvent(input$browser.files, {
       {
         graph.type.file = paste0(get_path.simul(), "/RESULTS/", input$browser.files, ".csv")
         if (file.exists(graph.type.file)){
-          tab = fread(graph.type.file)
+          tab = fread(graph.type.file, stringsAsFactors = FALSE)
         } else {
           shinyalert(type = "warning", text = paste0("The file selected (", graph.type.file, ") does not exist !"))
         }
       }
       
-      opt.abund_fixedScale = FALSE
+      opt.fixedScale = FALSE
+      
+      ## PLUSIEURS VECTEURS DE COULEURS, et une function pour chaque
+      ## Calculer ici le nombre de PFG, nombre de strates, nombre d'habitats ?
+      ## CAS particulier pour stabilité : deux fichiers à lire
+      ## MAUVAISE MAJ de la liste des fichiers disponibles...
       
       ## pixels
       vec_col = c('#a6cee3', '#1f78b4', '#b2df8a', '#33a02c'
@@ -162,81 +164,46 @@ observeEvent(input$browser.files, {
       col_vec = c('#6da34d', '#297373', '#58a4b0', '#5c4742', '#3f334d')
       col_fun = colorRampPalette(col_vec)
       
+      ## PFG maps
+      pp.i = function(tab, i.col, i.axis, i.title, i.subtitle)
+      {
+        pp.i = ggplot(tab, aes_string(x = "X", y = "Y", fill = "VALUE")) +
+          scale_fill_gradientn(i.axis
+                               , colors = brewer.pal(9, i.col)
+                               , limits = c(0, 1)
+                               , breaks = seq(0, 1, 0.2)
+                               , labels = seq(0, 100, 20)) +
+          coord_equal() +
+          geom_raster() +
+          labs(x = "", y = ""
+               , title = i.title
+               , subtitle = i.subtitle) +
+          .getGraphics_theme() +
+          theme(axis.text = element_blank()
+                , legend.key.width = unit(2, "lines"))
+        
+        return(pp.i)
+      }
+      
+      
       pp = switch(graph.type
                   ## ---------------------------------------------------------------------------------------------------------- ##
-                  , abund.pixels = {
-                    if (length(which(colnames(tab) %in% c("YEAR", "Abund", "PFG", "TYPE", "ID"))) == 5)
+                  , evolution_spaceOccupancy = {
+                    if (length(which(colnames(tab) %in% c("PFG", "HAB", "YEAR", "spaceOccupancy"))) == 4)
                     {
-                      list(ggplot(tab, aes_string(x = "YEAR", y = "Abund", color = "PFG")) +
-                             scale_color_manual("", values = fun_col(length(unique(tab$PFG)))) +
-                             geom_line() +
-                             facet_grid("TYPE ~ ID", scales = ifelse(opt.abund_fixedScale, "fixed", "free_y")) +
-                             labs(x = "", y = "", title = paste0("GRAPH A : evolution of species' abundance"),
-                                  subtitle = paste0("For each PFG, the line represents the evolution through time of its abundance\n",
-                                                    "for 5 randomly selected pixels within the studied area.\n")) +
-                             .getGraphics_theme())
-                    } else
-                    {
-                      shinyalert(type = "warning", text = "The file provided does not contain the required columns (YEAR, Abund, PFG, TYPE, ID) !")
-                    }
-                  }
-                  ## ---------------------------------------------------------------------------------------------------------- ##
-                  , light.pixels = {
-                    if (length(which(colnames(tab) %in% c("YEAR", "Abund", "STRATUM", "TYPE", "ID"))) == 5)
-                    {
-                      list(ggplot(tab, aes_string(x = "YEAR", y = "Abund", color = "STRATUM")) +
-                             scale_color_manual("", values = fun_col(max(sub("STRATUM_", "", tab$STRATUM)))) +
-                             geom_line() +
-                             facet_grid("TYPE ~ ID", scales = ifelse(opt.abund_fixedScale, "fixed", "free_y")) +
-                             labs(x = "", y = "", title = paste0("GRAPH B : evolution of light resources"),
-                                  subtitle = paste0("For each stratum, the line represents the evolution through time of its light resources\n",
-                                                    "for 5 randomly selected pixels within the studied area.\n")) +
-                             .getGraphics_theme())
-                    } else
-                    {
-                      shinyalert(type = "warning", text = "The file provided does not contain the required columns (YEAR, Abund, STRATUM, TYPE, ID) !")
-                    }
-                  }
-                  ## ---------------------------------------------------------------------------------------------------------- ##
-                  , soil.pixels = {
-                    if (length(which(colnames(tab) %in% c("YEAR", "SOIL", "ID"))) == 3)
-                    {
-                      pp = ggplot(tab, aes_string(x = "YEAR", y = "SOIL"))
-                      
-                      if ("Abund" %in% colnames(tab))
-                      {
-                        pp = pp +
-                          geom_line(aes_string(y = "Abund", color = "PFG"), lwd = 0.4) +
-                          scale_color_manual("", values = fun_col(length(unique(tab$PFG)))) +
-                          facet_grid("TYPE ~ ID", scales = "fixed")
-                      } else
-                      {
-                        pp = pp +
-                          facet_grid(" ~ ID", scales = "fixed")
-                      }
-                      pp = pp +
-                        geom_line(lwd = 0.8) +
-                        labs(x = "", y = "", title = paste0("GRAPH B : evolution of soil resources"),
-                             subtitle = paste0("The line represents the evolution through time of the soil resources\n",
-                                               "for 5 randomly selected pixels within the studied area.\n")) +
-                        .getGraphics_theme()
-                      list(pp)
-                    } else
-                    {
-                      shinyalert(type = "warning", text = "The file provided does not contain the required columns (YEAR, SOIL, ID) !")
-                    }
-                  }
-                  ## ---------------------------------------------------------------------------------------------------------- ##
-                  , spaceOccupancy = {
-                    if (length(which(colnames(tab) %in% c("YEAR", "Abund", "HAB", "PFG"))) == 4)
-                    {
-                      list(ggplot(tab, aes_string(x = "YEAR", y = "Abund * 100", color = "factor(HAB)")) +
+                      list(ggplot(tab, aes_string(x = "YEAR"
+                                                  , y = "spaceOccupancy * 100"
+                                                  , color = "factor(HAB)")) +
                              geom_line(lwd = 1) +
                              facet_wrap("~ PFG") +
                              scale_color_manual("Habitat", values = col_fun(length(unique(tab$HAB)))) +
-                             labs(x = "", y = "", title = paste0("GRAPH A : evolution of species' space occupation"),
-                                  subtitle = paste0("For each PFG, the line represents the evolution through time of its space occupancy,\n",
-                                                    "meaning the percentage of pixels in which the abundance of the species is greater than 0.\n")) +
+                             labs(x = "", y = ""
+                                  , title = paste0("GRAPH A : evolution of species' space occupation")
+                                  , subtitle = paste0("For each PFG, the line represents the "
+                                                      , "evolution through time of its space "
+                                                      , "occupancy,\n meaning the percentage of "
+                                                      , "pixels in which the abundance of the "
+                                                      , "species is greater than 0.\n")) +
                              .getGraphics_theme())
                     } else
                     {
@@ -244,17 +211,99 @@ observeEvent(input$browser.files, {
                     }
                   }
                   ## ---------------------------------------------------------------------------------------------------------- ##
-                  , abund = {
-                    if (length(which(colnames(tab) %in% c("YEAR", "Abund", "HAB", "PFG"))) == 4)
+                  , evolution_totalAbundance = {
+                    if (length(which(colnames(tab) %in% c("PFG", "HAB", "YEAR", "totalAbundance"))) == 4)
                     {
-                      list(ggplot(tab, aes_string(x = "YEAR", y = "Abund", color = "HAB")) +
+                      list(ggplot(tab, aes_string(x = "YEAR"
+                                                  , y = "totalAbundance"
+                                                  , color = "HAB")) +
                              geom_line(lwd = 1) +
-                             facet_wrap("~ PFG", scales = ifelse(opt.abund_fixedScale, "fixed", "free_y")) +
+                             facet_wrap("~ PFG", scales = ifelse(opt.fixedScale, "fixed", "free_y")) +
                              scale_color_manual("Habitat", values = col_fun(length(unique(tab$HAB)))) +
-                             labs(x = "", y = "", title = paste0("GRAPH A : evolution of species' abundance"),
-                                  subtitle = paste0("For each PFG, the line represents the evolution through time of its abundance\n",
-                                                    "over the whole studied area, meaning the sum of its abundances in every pixel.\n")) +
+                             labs(x = "", y = ""
+                                  , title = paste0("GRAPH A : evolution of species' abundance")
+                                  , subtitle = paste0("For each PFG, the line represents the "
+                                                      , "evolution through time of its abundance\n"
+                                                      , "over the whole studied area, meaning the "
+                                                      , "sum of its abundances in every pixel.\n")) +
                              .getGraphics_theme())
+                    } else
+                    {
+                      shinyalert(type = "warning", text = "The file provided does not contain the required columns (YEAR, Abund, HAB, PFG) !")
+                    }
+                  }
+                  ## ---------------------------------------------------------------------------------------------------------- ##
+                  , evolution_pixels = {
+                    if (length(which(colnames(tab) %in% c("TYPE", "GROUP", "ID.pixel", "HAB", "YEAR", "value"))) == 6)
+                    {
+                      PFG = unique(tab$GROUP[which(tab$TYPE == "abundance")])
+                      no_PFG = length(PFG)
+                      
+                      strata = 1:10
+                      if (length(which(tab$TYPE == "light")) > 0)
+                      {
+                        strata = unique(tab$GROUP[which(tab$TYPE == "light")])
+                      }
+                      no_STRATA = length(strata)
+                      
+                      tab$YEAR = as.numeric(as.character(tab$YEAR))
+                      tab$TYPE = factor(tab$TYPE, c("light", "abundance", "soil"))
+                      tab$GROUP = factor(tab$GROUP, c(strata, PFG, "soil"))
+
+                      vec_col1 = c('#0077BB', '#33BBEE', '#009988', '#EE7733', '#CC3311', '#EE3377')
+                      val_col1 = c(rep(rgb(1,1,1,1), no_STRATA), colorRampPalette(vec_col1)(no_PFG), "grey30")
+                      names(val_col1) = c(strata, PFG, "soil")
+
+                      vec_col2 = c('#FEC44F', '#FB9A29', '#EC7014', '#CC4C02', '#993404', '#662506')
+                      val_col2 = colorRampPalette(vec_col2)(no_STRATA)
+                      names(val_col2) = strata
+                      
+                      
+                      pp = ggplot(tab, aes_string(x = "YEAR", y = "value")) +
+                        geom_line(data = tab[which(tab$TYPE == "soil"),]
+                                  , color = "grey30"
+                                  , lwd = 0.7) +
+                        geom_line(data = tab[which(tab$TYPE == "abundance"),]
+                                  , aes_string(color = "GROUP")
+                                  , lwd = 0.7) +
+                        scale_color_manual("", values = val_col1) +
+                        geom_area(data = tab[which(tab$TYPE == "light"),]
+                                  , aes_string(fill = "GROUP")
+                                  , position = "identity", alpha= 0.4) +
+                        scale_fill_manual("", values = val_col2) +
+                        facet_grid("TYPE ~ ID.pixel"
+                                   , scales = ifelse(opt.fixedScale, "fixed", "free_y")) +
+                        labs(x = "", y = ""
+                             , title = paste0("GRAPH A : evolution of species' abundance")
+                             , subtitle = paste0("For each PFG, the line represents the "
+                                                 , "evolution through time of its abundance\n"
+                                                 , "(as well as the light and soil resources if available)"
+                                                 , "for the selected pixels within the studied area.\n")) +
+                        .getGraphics_theme()
+                      list(pp)
+                    } else
+                    {
+                      shinyalert(type = "warning", text = "The file provided does not contain the required columns (YEAR, Abund, HAB, PFG) !")
+                    }
+                  }
+                  ## ---------------------------------------------------------------------------------------------------------- ##
+                  , evolution_stability = {
+                    if (length(which(colnames(tab) %in% c("PFG", "HAB", "YEAR", "spaceOccupancy"))) == 4)
+                    {
+                      # list(ggplot(tab, aes_string(x = "YEAR"
+                      #                             , y = "spaceOccupancy * 100"
+                      #                             , color = "factor(HAB)")) +
+                      #        geom_line(lwd = 1) +
+                      #        facet_wrap("~ PFG") +
+                      #        scale_color_manual("Habitat", values = col_fun(length(unique(tab$HAB)))) +
+                      #        labs(x = "", y = ""
+                      #             , title = paste0("GRAPH A : evolution of species' space occupation")
+                      #             , subtitle = paste0("For each PFG, the line represents the "
+                      #                                 , "evolution through time of its space "
+                      #                                 , "occupancy,\n meaning the percentage of "
+                      #                                 , "pixels in which the abundance of the "
+                      #                                 , "species is greater than 0.\n")) +
+                      #        .getGraphics_theme())
                     } else
                     {
                       shinyalert(type = "warning", text = "The file provided does not contain the required columns (YEAR, Abund, HAB, PFG) !")
@@ -303,18 +352,30 @@ observeEvent(input$browser.files, {
                             theme(legend.key.width = unit(2, "lines"))
                           
                           pp_leg = suppressWarnings(get_legend(pp))
+                          
                           ## 2. get one plot for the title and for each statistic
                           pp_list = foreach(vari = c("all", "sensitivity", "specificity", "TSS", "AUC")) %do%
                             {
                               if (vari == "all"){
-                                pp = ggplot(mat.plot, aes_string(x = "PFG", y = "value", fill = "value")) +
-                                  labs(x = "", y = "", title = paste0("GRAPH F : validation statistics - Simulation year : "
-                                                                      , strsplit(sub(".*YEAR_", "", "POST_FATE_prediction_YEAR_950_VALIDATION_STATISTICS_Graz1_CA_rcp85"), "_")[[1]][1]
-                                                                      , " - Habitat ", habi),
-                                       subtitle = paste0("Sensitivity (or specificity) measures the proportion of actual positives (or negatives) that are correctly identified as such.\n"
-                                                         , "True skill statistic (TSS) values of -1 indicate predictive abilities of not better than a random model,\n"
-                                                         , "0 indicates an indiscriminate model and +1 a perfect model.\n"
-                                                         , "AUC corresponds to the area under the ROC curve (Receiver Operating Characteristic).\n")) +
+                                pp = ggplot(mat.plot, aes_string(x = "PFG"
+                                                                 , y = "value"
+                                                                 , fill = "value")) +
+                                  labs(x = "", y = ""
+                                       , title = paste0("GRAPH B : validation statistics"
+                                                        , " - Simulation year : "
+                                                        , y, " - Habitat ", habi)
+                                       , subtitle = paste0("Sensitivity (or specificity) measures "
+                                                           , "the proportion of actual positives "
+                                                           , "(or negatives) that are correctly "
+                                                           , "identified as such.\n"
+                                                           , "True skill statistic (TSS) values "
+                                                           , "of -1 indicate predictive abilities "
+                                                           , "of not better than a random model,\n"
+                                                           , "0 indicates an indiscriminate model "
+                                                           , "and +1 a perfect model.\n"
+                                                           , "AUC corresponds to the area under "
+                                                           , "the ROC curve (Receiver Operating "
+                                                           , "Characteristic).\n")) +
                                   .getGraphics_theme() +
                                   theme(panel.grid = element_blank()
                                         , axis.text = element_blank())
@@ -333,11 +394,22 @@ observeEvent(input$browser.files, {
                                   scale_y_continuous(breaks = seq(0, 1, 0.2), limits = c(0, 1.08)) +
                                   geom_point(alpha = 0) +
                                   geom_bar(stat = "identity", na.rm = TRUE) +
-                                  geom_hline(aes_string(yintercept = "hline"), lty = 2, color = "grey30") +
-                                  geom_errorbar(aes(ymin = value - sensitivity.sd, ymax = value + sensitivity.sd), color = "grey30", na.rm = TRUE) +
-                                  geom_errorbar(aes(ymin = value - specificity.sd, ymax = value + specificity.sd), color = "grey30", na.rm = TRUE) +
-                                  geom_errorbar(aes(ymin = value - AUC.sd, ymax = value + AUC.sd), color = "grey30", na.rm = TRUE) +
-                                  annotate(geom = "text", x = length(unique(tab$PFG)) / 2, y = 1.05, label = subti, size = 4) +
+                                  geom_hline(aes_string(yintercept = "hline")
+                                             , lty = 2, color = "grey30") +
+                                  geom_errorbar(aes_string(ymin = "value - sensitivity.sd"
+                                                           , ymax = "value + sensitivity.sd")
+                                                , color = "grey30", na.rm = TRUE) +
+                                  geom_errorbar(aes_string(ymin = "value - specificity.sd"
+                                                           , ymax = "value + specificity.sd")
+                                                , color = "grey30", na.rm = TRUE) +
+                                  geom_errorbar(aes_string(ymin = "value - AUC.sd"
+                                                           , ymax = "value + AUC.sd")
+                                                , color = "grey30", na.rm = TRUE) +
+                                  annotate(geom = "text"
+                                           , x = no_PFG / 2
+                                           , y = 1.05
+                                           , label = subti
+                                           , size = 4) +
                                   .getGraphics_theme() +
                                   theme(axis.text.x = element_text(angle = 90))
                                 
@@ -365,102 +437,72 @@ observeEvent(input$browser.files, {
                   ## ---------------------------------------------------------------------------------------------------------- ##
                   , richness = {
                     ras.pts = as.data.frame(rasterToPoints(ras))
-                    colnames(ras.pts) = c("X", "Y", "NB")
-                    
-                    pp = ggplot(ras.pts, aes_string(x = "X", y = "Y", fill = "NB")) +
-                      scale_fill_gradientn("Number of PFG"
-                                           , colors = viridis_pal()(max(ras.pts$NB))
-                                           , breaks = seq(1, max(ras.pts$NB), 2)) +
-                      coord_equal() +
-                      geom_raster() +
-                      labs(x = "", y = ""
-                           , title = paste0("GRAPH D : map of PFG richness - Simulation year : "
-                                            , strsplit(sub(".*YEAR_", "", input$browser.files), "_")[[1]][1])
-                           , subtitle = paste0("For each pixel and stratum, first relative abundances are calculated, "
-                                               , "then transformed into binary values :\n"
-                                               , "1 if the PFG abundance represents more than 5 % "
-                                               , "of the pixel abundance, 0 otherwise.\n"
-                                               , "If the PFG is present in one stratum, then it is considered present within the pixel.\n"
-                                               , "Finally, simulated PFG occurrences are summed.\n")) +
-                      .getGraphics_theme() +
-                      theme(axis.text = element_blank()
-                            , legend.key.width = unit(2, "lines"))
+                    colnames(ras.pts) = c("X", "Y", "VALUE")
+                    pp = pp.i(tab = ras.pts
+                              , i.col = "Greens"
+                              , i.axis = "Number of PFG"
+                              , i.title = paste0("GRAPH C : map of PFG richness - Simulation year : "
+                                                 , strsplit(sub(".*YEAR_", "", input$browser.files), "_")[[1]][1])
+                              , i.subtitle = paste0("For each pixel and stratum, first relative abundances are calculated, "
+                                                    , "then transformed into binary values :\n"
+                                                    , "1 if the PFG abundance represents more than 5 % "
+                                                    , "of the pixel abundance, 0 otherwise.\n"
+                                                    , "If the PFG is present in one stratum, then it is considered present within the pixel.\n"
+                                                    , "Finally, simulated PFG occurrences are summed.\n"))
                     list(pp)
                   }
                   ## ---------------------------------------------------------------------------------------------------------- ##
                   , cover = {
                     ras.pts = as.data.frame(rasterToPoints(ras))
-                    colnames(ras.pts) = c("X", "Y", "COVER")
-                    
-                    pp = ggplot(ras.pts, aes_string(x = "X", y = "Y", fill = "COVER")) +
-                      scale_fill_gradientn("Abundance (%)"
-                                           , colors = brewer.pal(9, "Greens")
-                                           , limits = c(0, 1)
-                                           , breaks = seq(0, 1, 0.2)
-                                           , labels = seq(0, 100, 20)) +
-                      coord_equal() +
-                      geom_raster() +
-                      labs(x = "", y = "", title = paste0("GRAPH E : map of PFG cover - Simulation year : "
-                                                          , strsplit(sub(".*YEAR_", "", input$browser.files), "_")[[1]][1]),
-                           subtitle = paste0("For each pixel, PFG abundances from strata "
-                                             , strsplit(sub(".*STRATA_", "", input$browser.files), "_")[[1]][1]
-                                             , " to "
-                                             , sub(".tif", "", tail(strsplit(input$browser.files, "_")[[1]], 1))
-                                             , " are summed,\n"
-                                             , "then transformed into relative values by dividing by the maximum abundance obtained.\n")) +
-                      .getGraphics_theme() +
-                      theme(axis.text = element_blank()
-                            , legend.key.width = unit(2, "lines"))
+                    colnames(ras.pts) = c("X", "Y", "VALUE")
+                    pp = pp.i(tab = ras.pts
+                              , i.col = "Greens"
+                              , i.axis = "Abundance (%)"
+                              , i.title = paste0("GRAPH C : map of PFG cover - Simulation year : "
+                                                 , strsplit(sub(".*YEAR_", "", input$browser.files), "_")[[1]][1])
+                              , i.subtitle = paste0("For each pixel, PFG abundances from strata "
+                                                    , strsplit(sub(".*STRATA_", "", input$browser.files), "_")[[1]][1]
+                                                    , " to "
+                                                    , sub(".tif", "", tail(strsplit(input$browser.files, "_")[[1]], 1))
+                                                    , " are summed,\n"
+                                                    , "then transformed into relative values by dividing "
+                                                    , "by the maximum abundance obtained.\n"))
                     list(pp)
                   }
                   ## ---------------------------------------------------------------------------------------------------------- ##
                   , light = {
-                    ras.pts = as.data.frame(rasterToPoints(ras_light))
-                    colnames(ras.pts) = c("X", "Y", "LIGHT")
-                    
-                    pp = ggplot(ras.pts, aes_string(x = "X", y = "Y", fill = "LIGHT")) +
-                      scale_fill_gradientn("Light (Landolt)"
-                                           , colors = (brewer.pal(9, "Oranges"))) +
-                      coord_equal() +
-                      geom_raster() +
-                      labs(x = "", y = "", title = paste0("GRAPH E : map of light CWM - Simulation year : "
-                                                          , strsplit(sub(".*YEAR_", "", input$browser.files), "_")[[1]][1]),
-                           subtitle = paste0("For each pixel, PFG abundances from strata "
-                                             , strsplit(sub(".*STRATA_", "", input$browser.files), "_")[[1]][1]
-                                             , " to "
-                                             , sub(".tif", "", tail(strsplit(input$browser.files, "_")[[1]], 1))
-                                             , " are summed,\n"
-                                             , "then transformed into relative values by dividing by the maximum abundance obtained.\n"
-                                             , "Community Weighted Mean is then calculated with observed values of light\n"
-                                             , "(Landolt - Flora Indicativa) for each PFG.")) +
-                      .getGraphics_theme() +
-                      theme(axis.text = element_blank()
-                            , legend.key.width = unit(2, "lines"))
+                    ras.pts = as.data.frame(rasterToPoints(ras))
+                    colnames(ras.pts) = c("X", "Y", "VALUE")
+                    pp = pp.i(tab = ras.pts
+                              , i.col = "Oranges"
+                              , i.axis = "PFG light CWM"
+                              , i.title = paste0("GRAPH C : map of light CWM - Simulation year : "
+                                                 , strsplit(sub(".*YEAR_", "", input$browser.files), "_")[[1]][1])
+                              , i.subtitle = paste0("For each pixel, PFG abundances from strata "
+                                                    , strsplit(sub(".*STRATA_", "", input$browser.files), "_")[[1]][1]
+                                                    , " to "
+                                                    , sub(".tif", "", tail(strsplit(input$browser.files, "_")[[1]], 1))
+                                                    , " are summed,\n"
+                                                    , "then transformed into relative values by dividing by the maximum abundance obtained.\n"
+                                                    , "Community Weighted Mean is then calculated with observed values of light for each PFG."))
                     list(pp)
                   }
                   ## ---------------------------------------------------------------------------------------------------------- ##
                   , soil = {
-                    ras.pts = as.data.frame(rasterToPoints(ras_light))
-                    colnames(ras.pts) = c("X", "Y", "SOIL")
-                    
-                    pp = ggplot(ras.pts, aes_string(x = "X", y = "Y", fill = "SOIL")) +
-                      scale_fill_gradientn("Soil (Landolt)"
-                                           , colors = (brewer.pal(9, "Oranges"))) +
-                      coord_equal() +
-                      geom_raster() +
-                      labs(x = "", y = "", title = paste0("GRAPH E : map of soil CWM - Simulation year : "
-                                                          , strsplit(sub(".*YEAR_", "", input$browser.files), "_")[[1]][1]),
-                           subtitle = paste0("For each pixel, PFG abundances from strata "
-                                             , strsplit(sub(".*STRATA_", "", input$browser.files), "_")[[1]][1]
-                                             , " to "
-                                             , sub(".tif", "", tail(strsplit(input$browser.files, "_")[[1]], 1))
-                                             , " are summed,\n"
-                                             , "then transformed into relative values by dividing by the maximum abundance obtained.\n"
-                                             , "Community Weighted Mean is then calculated with observed values of soil\n"
-                                             , "(Landolt - Flora Indicativa) for each PFG.")) +
-                      .getGraphics_theme() +
-                      theme(axis.text = element_blank()
-                            , legend.key.width = unit(2, "lines"))
+                    ras.pts = as.data.frame(rasterToPoints(ras))
+                    colnames(ras.pts) = c("X", "Y", "VALUE")
+                    pp = pp.i(tab = ras.pts
+                              , i.col = "Oranges"
+                              , i.axis = "PFG soil CWM"
+                              , i.title = paste0("GRAPH C : map of soil CWM - Simulation year : "
+                                                 , strsplit(sub(".*YEAR_", "", input$browser.files), "_")[[1]][1])
+                              , i.subtitle = paste0("For each pixel, PFG abundances from strata "
+                                                    , strsplit(sub(".*STRATA_", "", input$browser.files), "_")[[1]][1]
+                                                    , " to "
+                                                    , sub(".tif", "", tail(strsplit(input$browser.files, "_")[[1]], 1))
+                                                    , " are summed,\n"
+                                                    , "then transformed into relative values by dividing by the maximum abundance obtained.\n"
+                                                    , "Community Weighted Mean is then calculated with observed values of soil for each PFG."))
                     list(pp)
                   }
       )
