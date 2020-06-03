@@ -7,6 +7,13 @@ get_names.files = eventReactive(input$graph.folder.simul, {
                             , all.files = FALSE
                             , full.names = TRUE)
   names.files1 = basename(names.files1)
+  if (length(grep("evolution_abundance", names.files1)) > 0){
+    names.files1 = names.files1[-grep("evolution_abundance", names.files1)]
+  }
+  if (length(grep("evolution_stability", names.files1)) > 0){
+    names.files1 = sub("evolution_stability[12]", "evolution_stability", names.files1)
+    names.files1 = unique(names.files1)
+  }
   
   
   names.files2 = list.files(path = paste0(get_path.simul(), "/RESULTS")
@@ -70,7 +77,7 @@ get_browser.validation = eventReactive(input$browser.validation, {
 get_browser.map = eventReactive(input$browser.map, {
   if (!input$browser.map)
   {
-    return(grep("map_PFG|^PFGcover|^PFGrichness|^PFGlight|^PFGsoil", get_names.files()))
+    return(grep("^PFGcover|^PFGrichness|^PFGlight|^PFGsoil", get_names.files()))
   } 
 })
 
@@ -140,27 +147,31 @@ observeEvent(input$browser.files, {
       } else
       {
         graph.type.file = paste0(get_path.simul(), "/RESULTS/", input$browser.files, ".csv")
-        if (file.exists(graph.type.file)){
-          tab = fread(graph.type.file, stringsAsFactors = FALSE)
-        } else {
-          shinyalert(type = "warning", text = paste0("The file selected (", graph.type.file, ") does not exist !"))
+        if (graph.type == "evolution_stability")
+        {
+          file1 = sub("evolution_stability_", "evolution_stability1_", graph.type.file)
+          file2 = sub("evolution_stability_", "evolution_stability2_", graph.type.file)
+          tab1 = tab2 = NULL
+          if (file.exists(file1)){ tab1 = fread(file1, stringsAsFactors = FALSE) }
+          if (file.exists(file2)){ tab2 = fread(file2, stringsAsFactors = FALSE) }
+        } else
+        {
+          if (file.exists(graph.type.file)){
+            tab = fread(graph.type.file, stringsAsFactors = FALSE)
+          } else {
+            shinyalert(type = "warning", text = paste0("The file selected ("
+                                                       , graph.type.file
+                                                       , ") does not exist !"))
+          }
         }
       }
       
       opt.fixedScale = FALSE
       
-      ## PLUSIEURS VECTEURS DE COULEURS, et une function pour chaque
       ## Calculer ici le nombre de PFG, nombre de strates, nombre d'habitats ?
-      ## CAS particulier pour stabilité : deux fichiers à lire
       ## MAUVAISE MAJ de la liste des fichiers disponibles...
       
-      ## pixels
-      vec_col = c('#a6cee3', '#1f78b4', '#b2df8a', '#33a02c'
-                  , '#fb9a99', '#e31a1c', '#fdbf6f', '#ff7f00'
-                  , '#cab2d6', '#6a3d9a', '#ffff99', '#b15928')
-      fun_col = colorRampPalette(vec_col)
-      
-      ## abund
+      ## spaceOccupancy, totalAbundance
       col_vec = c('#6da34d', '#297373', '#58a4b0', '#5c4742', '#3f334d')
       col_fun = colorRampPalette(col_vec)
       
@@ -288,22 +299,48 @@ observeEvent(input$browser.files, {
                   }
                   ## ---------------------------------------------------------------------------------------------------------- ##
                   , evolution_stability = {
-                    if (length(which(colnames(tab) %in% c("PFG", "HAB", "YEAR", "spaceOccupancy"))) == 4)
+                    if (length(which(colnames(tab1) %in% c("HAB", "year", "totalAbundance"
+                                                           , "no.PFG", "evenness"))) == 5)
                     {
-                      # list(ggplot(tab, aes_string(x = "YEAR"
-                      #                             , y = "spaceOccupancy * 100"
-                      #                             , color = "factor(HAB)")) +
-                      #        geom_line(lwd = 1) +
-                      #        facet_wrap("~ PFG") +
-                      #        scale_color_manual("Habitat", values = col_fun(length(unique(tab$HAB)))) +
-                      #        labs(x = "", y = ""
-                      #             , title = paste0("GRAPH A : evolution of species' space occupation")
-                      #             , subtitle = paste0("For each PFG, the line represents the "
-                      #                                 , "evolution through time of its space "
-                      #                                 , "occupancy,\n meaning the percentage of "
-                      #                                 , "pixels in which the abundance of the "
-                      #                                 , "species is greater than 0.\n")) +
-                      #        .getGraphics_theme())
+                      ## Evolution of abundance and evenness through time -------------------
+                      tab.plot1 = suppressWarnings(melt(tab1, id.vars = c("HAB", "year")))
+                      colnames(tab.plot1) = c("HAB", "year", "metric", "value")
+                      tab.plot1$metric = factor(tab.plot1$metric, c("totalAbundance", "evenness", "no.PFG"))
+                      
+                      ## plot
+                      pp = ggplot(tab.plot1, aes_string(x = "year", y = "value", color = "HAB"))
+                      
+                      if (!is.null(tab2))
+                      {
+                        ## Evolution of stability through time --------------------------------
+                        tab.plot2 = tab2
+                        tab.plot2$year_median = sapply(1:nrow(tab.plot2), function(x) {
+                          median(as.numeric(as.character(tab.plot2[x, c("yearStart", "yearEnd")]))) })
+                        tab.plot2 = tab.plot2[which(tab.plot2$sd > 0.00001), ]
+                        
+                        ## plot
+                        pp = pp +
+                          geom_rect(data = tab.plot2, inherit.aes = FALSE, alpha = 0.5
+                                    , aes_string(xmin = "yearStart", xmax = "yearEnd"
+                                                 , ymin = "mean - sd"
+                                                 , ymax = "mean + sd"
+                                                 , fill = "HAB"))
+                      }
+                      
+                      ## plot
+                      pp = pp +
+                        geom_line(lwd = 1) +
+                        geom_point() +
+                        facet_grid("metric ~ .", scales = "free_y"
+                                   , labeller = as_labeller(c("totalAbundance" = "Total abundance"
+                                                              , "evenness" = "Evenness"
+                                                              , "no.PFG" = "Number of PFG"))) +
+                        scale_color_manual("Habitat", values  = col_fun(length(unique(tab1$HAB)))) +
+                        scale_fill_manual(guide = FALSE, values  = col_fun(length(unique(tab1$HAB)))) +
+                        labs(x = "", y = ""
+                             , title = paste0("GRAPH A : evolution of habitat composition")) +
+                        .getGraphics_theme()
+                      list(pp)
                     } else
                     {
                       shinyalert(type = "warning", text = "The file provided does not contain the required columns (YEAR, Abund, HAB, PFG) !")

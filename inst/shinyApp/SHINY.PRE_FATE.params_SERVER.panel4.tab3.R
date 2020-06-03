@@ -101,6 +101,43 @@ observeEvent(input$create.relativeAbund, {
   setwd(path.init)
 })
 
+
+####################################################################
+
+observeEvent(input$create.binaryMaps, {
+  
+  path.init = getwd()
+  setwd(get_path.folder())
+  
+  showModal(modalDialog(HTML(paste0("Creating PFG binary maps with : <ul>"
+                                    , "<li><strong>folder :</strong> ", basename(get_name.simul()), "</li>"
+                                    , "<li><strong>simulation parameter file :</strong> "
+                                    , basename(get_param.simul()), "</li>"
+                                    , "<li><strong>year(s) :</strong> ", paste0(as.numeric(input$graph.year), collapse = " ; "), "</li>"
+                                    , "<li><strong>method :</strong> ", input$graph.binMethod, "</li>"
+                                    , "<li><strong>method1.threshold :</strong> ", input$graph.binMethod.1, "</li>"
+                                    , "<li><strong>method2.cutoff :</strong> ", input$graph.binMethod.2, "</li>"
+                                    , "<li><strong>opt.no_CPU :</strong> ", input$graph.opt.no_CPU, "</li>"
+                                    , "</ul>"))
+                        , title = HTML("PFG binary maps (specific year)")
+                        , footer = NULL))
+  Sys.sleep(3)
+  get_res = print_messages(as.expression(
+    POST_FATE.binaryMaps(name.simulation = get_name.simul()
+                         , file.simulParam = get_param.simul()
+                         , years = as.numeric(input$graph.year)
+                         , method = as.vector(c("(1) fixed threshold" = 1
+                                                , "(2) optimizing TSS" = 2)[input$graph.binMethod])
+                         , method1.threshold = input$graph.binMethod.1
+                         , method2.cutoff = input$graph.binMethod.2
+                         , opt.no_CPU = input$graph.opt.no_CPU
+    )
+  ))
+  removeModal()
+  
+  setwd(path.init)
+})
+
 ####################################################################
 
 observeEvent(input$create.validationStat, {
@@ -213,7 +250,7 @@ observeEvent(input$create.PFGmap, {
   removeModal()
   
   output$plot.PFGmap = renderPlotly({
-    plot(get_res[[1]][[1]][[1]])
+    plot(get_res[[1]][[1]]$plot[[1]])
   })
   
   setwd(path.init)

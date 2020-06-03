@@ -168,9 +168,12 @@ observeEvent(input$create.evolutionStability, {
   ))
   removeModal()
   
-  output$plot.evolutionStability = renderPlotly({
-    plot(get_res[[1]]$plot.stab)
-  })
+  if (!is.null(get_res[[1]]$plot.stab))
+  {
+    output$plot.evolutionStability = renderPlotly({
+      plot(get_res[[1]]$plot.stab)
+    })
+  }
   
   setwd(path.init)
 })

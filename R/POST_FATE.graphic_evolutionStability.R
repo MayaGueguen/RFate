@@ -295,7 +295,7 @@ POST_FATE.graphic_evolutionStability = function(
                               , "/RESULTS/POST_FATE_TABLE_HAB_evolution_stability1_"
                               , basename(dir.save)
                               , ".csv")
-              , row.names = TRUE)
+              , row.names = FALSE)
     
     message(paste0("\n The output file \n"
                    , " > POST_FATE_TABLE_HAB_evolution_stability1_"
@@ -304,6 +304,7 @@ POST_FATE.graphic_evolutionStability = function(
                    , "has been successfully created !\n"))
     
     ###########################################################################
+    cat("\n ---------- EVALUATE, if possible, ABUNDANCE and EVENNESS STABILITY within each habitat... \n")
     
     .getSucc = function(vec.years)
     {
@@ -400,7 +401,7 @@ POST_FATE.graphic_evolutionStability = function(
                                 , "/RESULTS/POST_FATE_TABLE_HAB_evolution_stability2_"
                                 , basename(dir.save)
                                 , ".csv")
-                , row.names = TRUE)
+                , row.names = FALSE)
       
       message(paste0("\n The output file \n"
                      , " > POST_FATE_TABLE_HAB_evolution_stability2_"
@@ -412,7 +413,7 @@ POST_FATE.graphic_evolutionStability = function(
       ## TO BE DONE ??
       
       ## produce the plot -----------------------------------------------------
-      if (opt.doPlot)
+      if (opt.doPlot && !is.null(tab.HAB))
       {
         cat("\n ---------- PRODUCING PLOT \n")
         col_vec = c('#6da34d', '#297373', '#58a4b0', '#5c4742', '#3f334d')
@@ -424,20 +425,28 @@ POST_FATE.graphic_evolutionStability = function(
         colnames(tab.plot1) = c("HAB", "year", "metric", "value")
         tab.plot1$metric = factor(tab.plot1$metric, c("totalAbundance", "evenness", "no.PFG"))
         
-        ## Evolution of stability through time --------------------------------
-        tab.plot2 = tab.STAB
-        tab.plot2$year_median = sapply(1:nrow(tab.plot2), function(x) {
-          median(as.numeric(as.character(tab.plot2[x, c("yearStart", "yearEnd")]))) })
-        tab.plot2 = tab.plot2[which(tab.plot2$sd > 0.00001), ]
+        ## plot
+        pp = ggplot(tab.plot1, aes_string(x = "year", y = "value", color = "HAB"))
         
+        if (!is.null(tab.STAB))
+        {
+          ## Evolution of stability through time --------------------------------
+          tab.plot2 = tab.STAB
+          tab.plot2$year_median = sapply(1:nrow(tab.plot2), function(x) {
+            median(as.numeric(as.character(tab.plot2[x, c("yearStart", "yearEnd")]))) })
+          tab.plot2 = tab.plot2[which(tab.plot2$sd > 0.00001), ]
+          
+          ## plot
+          pp = pp +
+            geom_rect(data = tab.plot2, inherit.aes = FALSE, alpha = 0.5
+                      , aes_string(xmin = "yearStart", xmax = "yearEnd"
+                                   , ymin = "mean - sd"
+                                   , ymax = "mean + sd"
+                                   , fill = "HAB"))
+        }
         
         ## plot
-        pp = ggplot(tab.plot1, aes_string(x = "year", y = "value", color = "HAB")) +
-          geom_rect(data = tab.plot2, inherit.aes = FALSE, alpha = 0.5
-                    , aes_string(xmin = "yearStart", xmax = "yearEnd"
-                                 , ymin = "mean - sd"
-                                 , ymax = "mean + sd"
-                                 , fill = "HAB")) +
+        pp = pp +
           geom_line(lwd = 1) +
           geom_point() +
           facet_grid("metric ~ .", scales = "free_y"
