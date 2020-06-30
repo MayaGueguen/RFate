@@ -132,10 +132,10 @@ tabPanel(title = HTML("<p class='panel_title'><i class='fa fa-folder-plus'></i> 
                wellPanel(id = "main.panel",
                          style = "border-solid:solid; border-width:0px; border-color:#068f96;",
                          tabsetPanel(
-                           source("SHINY.PRE_FATE.params_UI.panel2.menu1.tab1.R", local = TRUE)$value
-                           , source("SHINY.PRE_FATE.params_UI.panel2.menu1.tab2.R", local = TRUE)$value
-                           , source("SHINY.PRE_FATE.params_UI.panel2.menu1.tab3.R", local = TRUE)$value
-                           , source("SHINY.PRE_FATE.params_UI.panel2.menu1.tab4.R", local = TRUE)$value
+                           source("SHINY.RFATE_UI.panel2.menu1.tab1.R", local = TRUE)$value
+                           , source("SHINY.RFATE_UI.panel2.menu1.tab2.R", local = TRUE)$value
+                           , source("SHINY.RFATE_UI.panel2.menu1.tab3.R", local = TRUE)$value
+                           , source("SHINY.RFATE_UI.panel2.menu1.tab4.R", local = TRUE)$value
                          ) ## END tabsetPanel
                ) ## END wellPanel
              ) ## END hidden

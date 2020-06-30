@@ -311,57 +311,57 @@ PRE_FATE.speciesClustering_step2 = function(clust.dendrograms
   colRamp = colorRampPalette(c('#8e0152','#c51b7d','#de77ae','#7fbc41','#4d9221','#276419'))
   
   pp4_list = foreach(group = group_names) %do%
-    {
-      ## Transform results of clustering into distance matrix
-      tmp = determ[which(determ$GROUP == group),]
-      mat = mat.species.DIST[[group]]
-      mat = quasieuclid(as.dist(mat))
-      
-      ## Transform distance matrix into PCO
-      PCO = dudi.pco(mat, scannf = FALSE, nf = 3) ## PCO
-      PCO.li = PCO$li
-      PCO.li$det = ifelse(rownames(PCO.li) %in% tmp$sp[which(tmp$DETERMINANT == FALSE)], 0, 1)
-      PCO.li$det = factor(PCO.li$det, c(0, 1))
-      PCO.li$PFG = clust.groups[rownames(PCO.li)]
-      
-      ## GET inertia values
-      inert = inertia.dudi(PCO)$tot.inertia
-      inert = c(inert$`cum(%)`[1]
-                , inert$`cum(%)`[2] - inert$`cum(%)`[1]
-                , inert$`cum(%)`[3] - inert$`cum(%)`[2])
-      
-      ## GET ellipses
-      PCO.li.ELL = .getELLIPSE(xy = PCO.li[, c("A1", "A2")], fac = PCO.li$PFG)
-      PCO.li.ELL.det = .getELLIPSE(xy = PCO.li[which(PCO.li$det == 1), c("A1", "A2")]
-                                   , fac = PCO.li$PFG[which(PCO.li$det == 1)])
-      
-      
-      pp4 = ggplot(PCO.li, aes_string(x = "A1", y = "A2", color = "PFG")) +
-        geom_hline(yintercept = 0, color = "grey30", lwd = 1) +
-        geom_vline(xintercept = 0, color = "grey30", lwd = 1) +
-        geom_point(aes_string(shape = "det", size = "det"), alpha = 0.5) +
-        geom_path(data = PCO.li.ELL, aes_string(x = "x", y = "y"), lty = 2) +
-        geom_path(data = PCO.li.ELL.det, aes_string(x = "x", y = "y")) +
-        geom_label_repel(data = unique(PCO.li.ELL[, c("xlabel", "ylabel", "PFG")])
-                         , aes_string(x = "xlabel", y = "ylabel", label = "PFG")) +
-        scale_shape_manual(guide = F, values = c("0" = 8, "1" = 20)) +
-        scale_size_manual(guide = F, values = c("0" = 3, "1" = 1)) +
-        scale_color_discrete(guide = F) +
-        labs(x = paste0("\n1st axis = ", round(inert[1], 1), "% of inertia")
-             , y = paste0("2nd axis = ", round(inert[2], 1), "% of inertia\n")
-             , title = paste0("STEP C : Removal of distant species : group ", group)
-             , subtitle = paste0("Only species whose mean distance to other species "
-                                 , "is included in the distribution\n"
-                                 , "of all PFG's species mean distances to other species are kept.\n"
-                                 , "Species indicated with * will be removed from PFGs.\n"
-                                 , "Inertia ellipse are represented, with (dashed) and "
-                                 , "without (solid) non-determinant species.")) +
-        .getGraphics_theme() +
-        theme(axis.title = element_text(inherit.blank = FALSE))
-      
-      plot(pp4)
-      return(pp4)
-    }
+  {
+    ## Transform results of clustering into distance matrix
+    tmp = determ[which(determ$GROUP == group),]
+    mat = mat.species.DIST[[group]]
+    mat = quasieuclid(as.dist(mat))
+    
+    ## Transform distance matrix into PCO
+    PCO = dudi.pco(mat, scannf = FALSE, nf = 3) ## PCO
+    PCO.li = PCO$li
+    PCO.li$det = ifelse(rownames(PCO.li) %in% tmp$sp[which(tmp$DETERMINANT == FALSE)], 0, 1)
+    PCO.li$det = factor(PCO.li$det, c(0, 1))
+    PCO.li$PFG = clust.groups[rownames(PCO.li)]
+    
+    ## GET inertia values
+    inert = inertia.dudi(PCO)$tot.inertia
+    inert = c(inert$`cum(%)`[1]
+              , inert$`cum(%)`[2] - inert$`cum(%)`[1]
+              , inert$`cum(%)`[3] - inert$`cum(%)`[2])
+    
+    ## GET ellipses
+    PCO.li.ELL = .getELLIPSE(xy = PCO.li[, c("A1", "A2")], fac = PCO.li$PFG)
+    PCO.li.ELL.det = .getELLIPSE(xy = PCO.li[which(PCO.li$det == 1), c("A1", "A2")]
+                                 , fac = PCO.li$PFG[which(PCO.li$det == 1)])
+    
+    
+    pp4 = ggplot(PCO.li, aes_string(x = "A1", y = "A2", color = "PFG")) +
+      geom_hline(yintercept = 0, color = "grey30", lwd = 1) +
+      geom_vline(xintercept = 0, color = "grey30", lwd = 1) +
+      geom_point(aes_string(shape = "det", size = "det"), alpha = 0.5) +
+      geom_path(data = PCO.li.ELL, aes_string(x = "x", y = "y"), lty = 2) +
+      geom_path(data = PCO.li.ELL.det, aes_string(x = "x", y = "y")) +
+      geom_label_repel(data = unique(PCO.li.ELL[, c("xlabel", "ylabel", "PFG")])
+                       , aes_string(x = "xlabel", y = "ylabel", label = "PFG")) +
+      scale_shape_manual(guide = F, values = c("0" = 8, "1" = 20)) +
+      scale_size_manual(guide = F, values = c("0" = 3, "1" = 1)) +
+      scale_color_discrete(guide = F) +
+      labs(x = paste0("\n1st axis = ", round(inert[1], 1), "% of inertia")
+           , y = paste0("2nd axis = ", round(inert[2], 1), "% of inertia\n")
+           , title = paste0("STEP C : Removal of distant species : group ", group)
+           , subtitle = paste0("Only species whose mean distance to other species "
+                               , "is included in the distribution\n"
+                               , "of all PFG's species mean distances to other species are kept.\n"
+                               , "Species indicated with * will be removed from PFGs.\n"
+                               , "Inertia ellipse are represented, with (dashed) and "
+                               , "without (solid) non-determinant species.")) +
+      .getGraphics_theme() +
+      theme(axis.title = element_text(inherit.blank = FALSE))
+    
+    plot(pp4)
+    return(pp4)
+  }
   names(pp4_list) = group_names
   
   

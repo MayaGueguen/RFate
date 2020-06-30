@@ -263,6 +263,7 @@ PRE_FATE.selectDominant = function(mat.observations
     .stopMessage_beDataframe("mat.observations")
   } else
   {
+    mat.observations = as.data.frame(mat.observations)
     if (nrow(mat.observations) == 0 || !(ncol(mat.observations) %in% c(3, 4)))
     {
       .stopMessage_numRowCol("mat.observations", c("sites", "species", "abund", "(habitat)"))
@@ -378,12 +379,19 @@ PRE_FATE.selectDominant = function(mat.observations
     
     cat("\n ---------- STATISTICS COMPUTATION \n")
     cat("\n  For each species (site level) :")
+    if (doRuleA) {
     cat("\n     - total frequency and abundance (rule A1 & A2)")
+    }
+    if (doRuleB) {
     cat("\n     - mean relative abundance (rule B2)")
     cat("\n     - frequency (absolute and relative) of each relative abundance class (rule B1)")
+    }
     if (doRuleC) {
       cat("\n  For each species (habitat level) :")
       cat("\n     - frequency and abundance (absolute and relative) within each habitat (rule C)")
+    }
+    if (!doRuleA && !doRuleB && !doRuleC) {
+      cat("\n     Nothing! No rule selected! Please check.")
     }
     cat("\n\n")
   }

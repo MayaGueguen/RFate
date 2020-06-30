@@ -52,9 +52,9 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-object-group'>
                       wellPanel(id = "pfg.panel1",
                                 style = "border-solid:solid; border-width:0px;",
                                 tabsetPanel(
-                                  source("SHINY.PRE_FATE.params_UI.panel1.tab1.R", local = TRUE)$value
-                                  , source("SHINY.PRE_FATE.params_UI.panel1.tab2.R", local = TRUE)$value
-                                  , source("SHINY.PRE_FATE.params_UI.panel1.tab3.R", local = TRUE)$value
+                                  source("SHINY.RFATE_UI.panel1.tab1.R", local = TRUE)$value
+                                  , source("SHINY.RFATE_UI.panel1.tab2.R", local = TRUE)$value
+                                  , source("SHINY.RFATE_UI.panel1.tab3.R", local = TRUE)$value
                                 ) ## END tabsetPanel
                       ) ## END wellPanel
                )

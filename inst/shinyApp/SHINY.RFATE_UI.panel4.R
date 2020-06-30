@@ -46,9 +46,9 @@ tabPanel(title = HTML("<span class='panel_title'><i class='fa fa-chart-bar'></i>
              wellPanel(id = "main.panel",
                        style = "border-solid:solid; border-width:0px;",
                        tabsetPanel(
-                         source("SHINY.PRE_FATE.params_UI.panel4.tab1.R", local = TRUE)$value
-                         , source("SHINY.PRE_FATE.params_UI.panel4.tab2.R", local = TRUE)$value
-                         , source("SHINY.PRE_FATE.params_UI.panel4.tab3.R", local = TRUE)$value
+                         source("SHINY.RFATE_UI.panel4.tab1.R", local = TRUE)$value
+                         , source("SHINY.RFATE_UI.panel4.tab2.R", local = TRUE)$value
+                         , source("SHINY.RFATE_UI.panel4.tab3.R", local = TRUE)$value
                        ) ## END tabsetPanel
              ) ## END wellPanel
            ) ## END mainPanel

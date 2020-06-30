@@ -38,7 +38,7 @@ load.packages = sapply(list.packages, require, character.only = TRUE)
 ###################################################################################################################################
 
 # setwd("/home/gueguema/Documents/_TUTOS/3_R/_PACKAGES/RFate/")
-source("SHINY.PRE_FATE.params_FUNCTIONS.R", local = TRUE)
+source("SHINY.RFATE_FUNCTIONS.R", local = TRUE)
 
 ###################################################################################################################################
 ###################################################################################################################################
@@ -164,15 +164,15 @@ ui <- fluidPage(
     width = 12,
     navbarPage(""
                , id = "navbar"
-               , source("SHINY.PRE_FATE.params_UI.panel0.R", local = TRUE)$value
-               , source("SHINY.PRE_FATE.params_UI.panel1.R", local = TRUE)$value
-               # , source("SHINY.PRE_FATE.params_UI.panel2.R", local = TRUE)$value
+               , source("SHINY.RFATE_UI.panel0.R", local = TRUE)$value
+               , source("SHINY.RFATE_UI.panel1.R", local = TRUE)$value
+               # , source("SHINY.RFATE_UI.panel2.R", local = TRUE)$value
                , navbarMenu(title = HTML("<span class='panel_title'><i class='fa fa-copy'></i> Simulation parameter files</span>")
-                            , source("SHINY.PRE_FATE.params_UI.panel2.menu1.R", local = TRUE)$value
-                            , source("SHINY.PRE_FATE.params_UI.panel2.menu2.R", local = TRUE)$value)
+                            , source("SHINY.RFATE_UI.panel2.menu1.R", local = TRUE)$value
+                            , source("SHINY.RFATE_UI.panel2.menu2.R", local = TRUE)$value)
                             # , tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Create multiple set</span>")))
-               , source("SHINY.PRE_FATE.params_UI.panel3.R", local = TRUE)$value
-               , source("SHINY.PRE_FATE.params_UI.panel4.R", local = TRUE)$value
+               , source("SHINY.RFATE_UI.panel3.R", local = TRUE)$value
+               , source("SHINY.RFATE_UI.panel4.R", local = TRUE)$value
     )
   )
     ) ## END fluidPage
@@ -224,39 +224,39 @@ server <- function(input, output, session) {
   
   ####################################################################
 
-  source("SHINY.PRE_FATE.params_SERVER.panel0.R", local = TRUE)$value
+  source("SHINY.RFATE_SERVER.panel0.R", local = TRUE)$value
   
   ####################################################################
 
-  source("SHINY.PRE_FATE.params_SERVER.panel1.R", local = TRUE)$value
-  source("SHINY.PRE_FATE.params_SERVER.panel1.tab1.R", local = TRUE)$value
-  source("SHINY.PRE_FATE.params_SERVER.panel1.tab2.R", local = TRUE)$value
-  source("SHINY.PRE_FATE.params_SERVER.panel1.tab3.R", local = TRUE)$value
+  source("SHINY.RFATE_SERVER.panel1.R", local = TRUE)$value
+  source("SHINY.RFATE_SERVER.panel1.tab1.R", local = TRUE)$value
+  source("SHINY.RFATE_SERVER.panel1.tab2.R", local = TRUE)$value
+  source("SHINY.RFATE_SERVER.panel1.tab3.R", local = TRUE)$value
   
   ####################################################################
   
-  source("SHINY.PRE_FATE.params_SERVER.panel2.menu1.R", local = TRUE)$value
-  source("SHINY.PRE_FATE.params_SERVER.panel2.menu1.tab1.R", local = TRUE)$value
-  source("SHINY.PRE_FATE.params_SERVER.panel2.menu1.tab2.R", local = TRUE)$value
-  source("SHINY.PRE_FATE.params_SERVER.panel2.menu1.tab3.tab0.R", local = TRUE)$value
-  source("SHINY.PRE_FATE.params_SERVER.panel2.menu1.tab3.tab1.R", local = TRUE)$value
-  source("SHINY.PRE_FATE.params_SERVER.panel2.menu1.tab3.tab2.R", local = TRUE)$value
-  source("SHINY.PRE_FATE.params_SERVER.panel2.menu1.tab3.tab3.R", local = TRUE)$value
-  source("SHINY.PRE_FATE.params_SERVER.panel2.menu1.tab3.tab4.R", local = TRUE)$value
-  source("SHINY.PRE_FATE.params_SERVER.panel2.menu1.tab3.tab5.R", local = TRUE)$value
-  source("SHINY.PRE_FATE.params_SERVER.panel2.menu1.tab4.R", local = TRUE)$value
-  source("SHINY.PRE_FATE.params_SERVER.panel2.menu2.R", local = TRUE)$value
+  source("SHINY.RFATE_SERVER.panel2.menu1.R", local = TRUE)$value
+  source("SHINY.RFATE_SERVER.panel2.menu1.tab1.R", local = TRUE)$value
+  source("SHINY.RFATE_SERVER.panel2.menu1.tab2.R", local = TRUE)$value
+  source("SHINY.RFATE_SERVER.panel2.menu1.tab3.tab0.R", local = TRUE)$value
+  source("SHINY.RFATE_SERVER.panel2.menu1.tab3.tab1.R", local = TRUE)$value
+  source("SHINY.RFATE_SERVER.panel2.menu1.tab3.tab2.R", local = TRUE)$value
+  source("SHINY.RFATE_SERVER.panel2.menu1.tab3.tab3.R", local = TRUE)$value
+  source("SHINY.RFATE_SERVER.panel2.menu1.tab3.tab4.R", local = TRUE)$value
+  source("SHINY.RFATE_SERVER.panel2.menu1.tab3.tab5.R", local = TRUE)$value
+  source("SHINY.RFATE_SERVER.panel2.menu1.tab4.R", local = TRUE)$value
+  source("SHINY.RFATE_SERVER.panel2.menu2.R", local = TRUE)$value
   
   ####################################################################
   
-  source("SHINY.PRE_FATE.params_SERVER.panel3.R", local = TRUE)$value
+  source("SHINY.RFATE_SERVER.panel3.R", local = TRUE)$value
 
   ####################################################################
   
-  source("SHINY.PRE_FATE.params_SERVER.panel4.R", local = TRUE)$value
-  source("SHINY.PRE_FATE.params_SERVER.panel4.tab1.R", local = TRUE)$value
-  source("SHINY.PRE_FATE.params_SERVER.panel4.tab2.R", local = TRUE)$value
-  source("SHINY.PRE_FATE.params_SERVER.panel4.tab3.R", local = TRUE)$value
+  source("SHINY.RFATE_SERVER.panel4.R", local = TRUE)$value
+  source("SHINY.RFATE_SERVER.panel4.tab1.R", local = TRUE)$value
+  source("SHINY.RFATE_SERVER.panel4.tab2.R", local = TRUE)$value
+  source("SHINY.RFATE_SERVER.panel4.tab3.R", local = TRUE)$value
   
   output$report <- downloadHandler(
     # For PDF output, change this to "report.pdf"
