@@ -66,7 +66,7 @@ maps are compressed again :
 
 
 \strong{It requires} that the \code{\link{POST_FATE.relativeAbund}} and the 
-\code{\link{POST_FATE.graphic_validationStatistics}} function have been run 
+\code{\link{POST_FATE.binaryMaps}} function have been run 
 and that the folders \code{BIN_perPFG_allStrata} and 
 \code{BIN_perPFG_perStrata} exist.
 }
@@ -92,7 +92,7 @@ POST_FATE.graphic_mapPFGvsHS(name.simulation = "FATE_simulation"
 }
 \seealso{
 \code{\link{POST_FATE.relativeAbund}}, 
-\code{\link{POST_FATE.graphic_validationStatistics}}
+\code{\link{POST_FATE.binaryMaps}}
 }
 \author{
 Maya Guéguen

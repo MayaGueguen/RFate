@@ -67,7 +67,7 @@ from the results folder \code{ABUND_REL_perPFG_allStrata} and lead to the
 production of as many maps as those found :
 
 \describe{
-  \item{\code{1} relative abundance}{relative abundance maps are transformed 
+  \item{\code{1} fixed threshold}{relative abundance maps are transformed 
   into binary maps according to the threshold given by 
   \code{method1.threshold} : 
   \deqn{abund\_rel_{\text{ PFG}_i} > \text{method1.threshold} \;\; 

@@ -1,7 +1,7 @@
 
 rm(list=ls())
-# setwd("/home/gueguema/Documents/_TUTOS/3_R/_PACKAGES/")
-setwd("/Users/gueguen/Documents/PACKAGES/")
+setwd("/home/gueguema/Documents/_TUTOS/3_R/_PACKAGES/")
+# setwd("/Users/gueguen/Documents/PACKAGES/")
 
 library(devtools)
 library(tools)

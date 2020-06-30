@@ -345,7 +345,7 @@ POST_FATE.graphic_validationStatistics = function(
                 {
                   if (habi == "ALL")
                   {
-                    cutoff <- NULL
+                    assign("cutoff", NULL, envir = .GlobalEnv) 
                     cutoff <<- .getCutoff(Obs = tmp[, "obs"], Fit = tmp[, "fg"])
                   }
                   if (exists("cutoff") && !(is.na(cutoff[1])))

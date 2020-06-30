@@ -28,6 +28,6 @@ Suggests:
 License:
     file LICENSE
 URL: https://github.com/MayaGueguen/RFate.git
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Language: en-US
 LazyData: true
