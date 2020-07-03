@@ -1,13 +1,34 @@
 
+path.reference = "https://mayagueguen.github.io/RFate/reference/"
+path.articles = "https://mayagueguen.github.io/RFate/articles/"
+
 ###################################################################################################################################
 
 theme.color = "#3a7da8"
+theme.font = "'Londrina Solid', cursive"
 navbar.color = "#e0dbd9"
 navbar.color.text = "#8c8582"
 
+baliseHTML.font = "@import url('https://fonts.googleapis.com/css?family=Londrina+Solid:200,300|Medula+One|Slabo+27px|Francois+One');"
+baliseHTML.theme = paste0("
+      background-color: ", theme.color, ";
+      color: #FFFFFF;
+      border-radius: 0px;")
+baliseHTML.title = paste0("
+      font-family: ", theme.font, ";
+      font-size: 20px;
+      font-weight: 200;")
+baliseHTML.margin0 = paste0("
+      padding: 0px;
+      margin-top: 0px;")
+
 button.color = "rgba(96, 129, 150, 0.5)"
-button.style = paste0("background-color: ", button.color, "; border-width:0px;")
-button.style.help = paste0("color:#FFFFFF; font-family: 'Londrina Solid', cursive; font-size: 18px; background-color: rgba(10, 58, 135, 0.8); border-width:0px;")
+button.style = paste0("background-color: ", button.color, "; border-width: 0px;")
+button.style.action = paste0("background-color: ", button.color, "; border-width: 0px; margin-bottom: 3px;")
+button.style.help = paste0("color:#FFFFFF; font-family: 'Londrina Solid', cursive; "
+                           , "font-size: 18px; background-color: rgba(10, 58, 135, 0.8); border-width:0px;")
+
+
 
 # panel.style = paste0("color:#FFFFFF; background-color:", button.color, "; border-width:0px;")
 # panel.style.hover = paste0("color:#FFFFFF; background-color:", theme.color, "; border-width:0px;")
@@ -67,7 +88,7 @@ help.full = function(param.web = NULL, param.name.vec, param.desc.vec)
 help.HTML = function(html.file, target.anchor = 'class="hasAnchor"', target.class = '#arguments', web.address = NULL)
 {
   TEXT = readLines(html.file)
-  TEXT.keep = help.web(web.address = paste0("https://mayagueguen.github.io/RFate/reference/", basename(html.file)))
+  TEXT.keep = help.web(web.address = paste0(path.reference, basename(html.file)))
   if (!is.null(web.address))
   {
     TEXT.keep = help.web(web.address = web.address)

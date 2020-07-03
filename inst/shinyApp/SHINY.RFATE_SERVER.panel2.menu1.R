@@ -17,48 +17,48 @@ observeEvent(input$HELP.panel2.menu1, {
                                                             simulation.</p>"
                                                             , "<p><code>PRE_FATE.skeletonDirectory</code> function creates a user-friendly directory tree to run a <code>FATE-HD</code> simulation.
                                                             <p>The tree structure is detailed below the button.</p>"
-                                                            , "<p><em>1. Simulation parameterization</em></p>
+                                                            , paste0("<p><em>1. Simulation parameterization</em></p>
                                                             <ul>
                                                             <li>
                                                             <strong>Global parameters</strong> (simulation duration, computer resources, manage abundance values, modules loaded...)<br>
-                                                            (<a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a>)
+                                                            (<a href='", path.reference, "PRE_FATE.params_globalParameters.html'>PRE_FATE.params_globalParameters</a>)
                                                             </li>
                                                             <li>
                                                             <strong>Years to save abundance rasters and simulation outputs</strong>
-                                                            (<a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_saveYears.html'>PRE_FATE.params_saveYears</a>)
+                                                            (<a href='", path.reference, "PRE_FATE.params_saveYears.html'>PRE_FATE.params_saveYears</a>)
                                                             </li>
                                                             <li>
                                                             <strong>Years and files to change rasters</strong> for the succession, habitat suitability or disturbance modules<br>
-                                                            (<a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_changingYears.html'>PRE_FATE.params_changingYears</a>)
+                                                            (<a href='", path.reference, "PRE_FATE.params_changingYears.html'>PRE_FATE.params_changingYears</a>)
                                                             </li>
                                                             </ul>
                                                             <p><em>2. For each PFG : behavior and characteristics</em></p>
                                                             <ul>
                                                             <li>
-                                                            <strong>Succession files</strong> (<a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGsuccession.html'>PRE_FATE.params_PFGsuccession</a>)
+                                                            <strong>Succession files</strong> (<a href='", path.reference, "PRE_FATE.params_PFGsuccession.html'>PRE_FATE.params_PFGsuccession</a>)
                                                             </li>
                                                             <li>
-                                                            <strong>Dispersal files</strong> (<a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGdispersal.html'>PRE_FATE.params_PFGdispersal</a>)
+                                                            <strong>Dispersal files</strong> (<a href='", path.reference, "PRE_FATE.params_PFGdispersal.html'>PRE_FATE.params_PFGdispersal</a>)
                                                             </li>
                                                             <li>
-                                                            <strong>Light files</strong> (<a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGlight.html'>PRE_FATE.params_PFGlight</a>)
+                                                            <strong>Light files</strong> (<a href='", path.reference, "PRE_FATE.params_PFGlight.html'>PRE_FATE.params_PFGlight</a>)
                                                             </li>
                                                             <li>
-                                                            <strong>Soil files</strong> (<a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGsoil.html'>PRE_FATE.params_PFGsoil</a>)
+                                                            <strong>Soil files</strong> (<a href='", path.reference, "PRE_FATE.params_PFGsoil.html'>PRE_FATE.params_PFGsoil</a>)
                                                             </li>
                                                             <li>
                                                             <strong>Disturbance files</strong> : response to perturbations in terms of resprouting and mortality<br>
-                                                            (<a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_PFGdisturbance.html'>PRE_FATE.params_PFGdisturbance</a>)
+                                                            (<a href='", path.reference, "PRE_FATE.params_PFGdisturbance.html'>PRE_FATE.params_PFGdisturbance</a>)
                                                             </li>
-                                                            </ul>"
-                                                            , "<p><em>3. Parameter management</em></p>
+                                                            </ul>")
+                                                            , paste0("<p><em>3. Parameter management</em></p>
                                                             <ul>
                                                             <li>
                                                             <strong>ParamSimulation file</strong> : containing all links to the files created with the previous functions.<br>
                                                             This is the file that will be given as the only argument to the <code>FATE-HD</code> executable file into the command line.<br>
-                                                            It can be created with the function <a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_simulParameters.html'>PRE_FATE.params_simulParameters</a>
+                                                            It can be created with the function <a href='", path.reference, "PRE_FATE.params_simulParameters.html'>PRE_FATE.params_simulParameters</a>
                                                             </li>
-                                                            </ul>"
+                                                            </ul>")
                                                             , "<p>A pre-existing ParamSimulation file can be given to load previous parameters and help create new parameter files from basis.</p>"
                                                             , "<p>Download the complete simulation folder as an archive file (<code>FATE_simulation.zip</code>).</p>"))
           )

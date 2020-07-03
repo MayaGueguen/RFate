@@ -169,18 +169,28 @@ observeEvent(input$create.validationStat, {
   get_res = print_messages(as.expression(
     POST_FATE.graphic_validationStatistics(name.simulation = get_name.simul()
                                            , file.simulParam = get_param.simul()
-                                           , year = as.numeric(input$graph.year)
+                                           , years = as.numeric(input$graph.year)
                                            , mat.PFG.obs = graph.mat.PFG.obs
                                            , opt.ras_habitat = graph.opt.ras_habitat
-                                           , opt.no_CPU = input$graph.opt.no_CPU
     )
   ))
   removeModal()
   
-  output$plot.validationStat = renderPlot({
-    plot(get_res[[1]]$plot[[1]][['ALL']])
-  })
-  
+  print(str(get_res))
+  res.plot = get_res[[1]] ## simulParam
+  if (is.list(res.plot) && length(res.plot) == 2 && names(res.plot)[2] == "plot") { ## tab and plot
+    res.plot = res.plot$plot
+    if (is.list(res.plot) && length(res.plot) > 0) { ## years
+      res.plot = res.plot[[1]]
+      if (is.list(res.plot) && length(res.plot) > 0) { ## habitat
+        res.plot = res.plot[[1]]
+        if (!is.null(res.plot)) {
+          output$plot.validationStat = renderPlot({ plot(res.plot) })
+        }
+      }
+    }
+  }
+
   # shinyjs::show("plot.validationStat")
   
   setwd(path.init)

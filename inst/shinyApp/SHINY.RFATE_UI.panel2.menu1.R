@@ -31,7 +31,7 @@ tabPanel(title = HTML("<p class='panel_title'><i class='fa fa-folder-plus'></i> 
                                                , label = "Create folder"
                                                , icon = icon("folder")
                                                , width = "100%"
-                                               , style = HTML(button.style))
+                                               , style = HTML(button.style.action))
                           )
                    )
                  ),
@@ -81,7 +81,7 @@ tabPanel(title = HTML("<p class='panel_title'><i class='fa fa-folder-plus'></i> 
                                                  , label = HTML("Load parameters")
                                                  , icon = icon("upload")
                                                  , width = "100%"
-                                                 , style = HTML(button.style)
+                                                 , style = HTML(button.style.action)
                                   )
                                 )
                           )
@@ -94,7 +94,7 @@ tabPanel(title = HTML("<p class='panel_title'><i class='fa fa-folder-plus'></i> 
                                                , label = HTML("Create Simulation <br/>parameters file")
                                                , icon = icon("file")
                                                , width = "100%"
-                                               , style = HTML(button.style)
+                                               , style = HTML(button.style.action)
                                   )
                                 )
                           )
@@ -117,7 +117,7 @@ tabPanel(title = HTML("<p class='panel_title'><i class='fa fa-folder-plus'></i> 
                                          , label = "Start new folder"
                                          , icon = icon("refresh")
                                          , width = "100%"
-                                         , style = HTML(button.style)
+                                         , style = HTML(button.style.action)
                             )
                           )
                    )
@@ -143,7 +143,7 @@ tabPanel(title = HTML("<p class='panel_title'><i class='fa fa-folder-plus'></i> 
              ) %>% helper(type = "inline"
                           , title = "Create FATE parameter files"
                           , size = "l"
-                          , content = help.HTML(html.file = "./../../docs/articles/rfate_tutorial_2_params.html"
+                          , content = help.HTML(html.file = paste0(path.articles, "rfate_tutorial_2_params.html")
                                                 , target.anchor = 'class="section level2"'
                                                 , target.class = "the-different-type-of-parameters-and-flags")
              ) ## END sidebarLayout

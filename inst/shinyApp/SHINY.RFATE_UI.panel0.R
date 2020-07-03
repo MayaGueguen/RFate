@@ -39,7 +39,7 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-home'></i></sp
                , column(1, br())
                , column(3
                         , br()
-                        , div(id = "help0_4"
+                        , div(id = "help0_6"
                               , actionButton(inputId = "HELP.panel0"
                                              , label = "Need some help"
                                              , icon = icon("question-circle", class = "icon-help")
@@ -74,7 +74,7 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-home'></i></sp
                , column(1, br())
                , column(3
                         , br()
-                        , div(id = "help0_5"
+                        , div(id = "help0_7"
                               , actionButton(inputId = "web.RFate"
                                              , label = "Go to RFate website"
                                              , icon = icon("arrow-circle-right", class = "icon-help")
@@ -114,23 +114,27 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-home'></i></sp
                                    ")
                       )
                       , br()
-                      , div(id = "help0_3"
+                      , div(id = "help0_4"
                             , HTML("
                                    <p><i class='fa fa-cogs' style='font-size:30px;'></i>&emsp;&emsp;
                                    <strong>STEP 3 : Run a simulation</strong><br/></p>
-                                   <p style='padding:0 0 0 40px;'><code>FATE</code> requires a quite large number of 
-                                   parameters, which are stored into <code>.txt</code> files, presented to and 
-                                   recovered by the software. <br/>These <strong>parameters</strong> can be of 3 types :</p>
+                                   <p style='padding:0 0 0 40px;'>Give a simulation folder and a simulation parameters file, 
+                                   and run your <code>FATE</code> simulation.
                                    ")
                       )
                       , br()
-                      , div(id = "help0_3"
+                      , div(id = "help0_5"
                             , HTML("
                                    <p><i class='fa fa-chart-bar' style='font-size:30px;'></i>&emsp;&emsp;
                                    <strong>STEP 4 : Creation of simulation outputs & graphics</strong><br/></p>
-                                   <p style='padding:0 0 0 40px;'><code>FATE</code> requires a quite large number of 
-                                   parameters, which are stored into <code>.txt</code> files, presented to and 
-                                   recovered by the software. <br/>These <strong>parameters</strong> can be of 3 types :</p>
+                                   <p style='padding:0 0 0 40px;'>Once a <code>FATE</code> simulation is done, 
+                                   some post treatment panels and functions are available :</p>
+                                   <ul>
+                                   <li><strong>BROWSER :</strong> to visualize existing graphics</li>
+                                   <li><strong>Through time :</strong> create tables and graphics for temporal evolution of PFG abundances ...</li>
+                                   <li><strong>Specific year :</strong> create tables and spatial maps of basic patterns (richness, diversities ...) 
+                                   for specific years</li>
+                                   </ul>
                                    ")
                       )
                )

@@ -25,7 +25,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Raster files</span>")
                                                   , label = HTML("Upload <br/>simulation mask")
                                                   , icon = icon("upload")
                                                   , width = "100%"
-                                                  , style = HTML(button.style)
+                                                  , style = HTML(button.style.action)
                                    )
                                  ) %>% helper(type = "inline"
                                               , title = "Simulation mask"
@@ -53,7 +53,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Raster files</span>")
                                                     , label = HTML("Upload <br/>disturbance masks")
                                                     , icon = icon("upload")
                                                     , width = "100%"
-                                                    , style = HTML(button.style)
+                                                    , style = HTML(button.style.action)
                                      )
                                    ) %>% helper(type = "inline"
                                                 , title = "Disturbance masks"
@@ -81,7 +81,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Raster files</span>")
                                                     , label = HTML("Upload <br/>drought masks")
                                                     , icon = icon("upload")
                                                     , width = "100%"
-                                                    , style = HTML(button.style)
+                                                    , style = HTML(button.style.action)
                                      )
                                    ) %>% helper(type = "inline"
                                                 , title = "Drought masks"
@@ -111,7 +111,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Raster files</span>")
                                                   , label = HTML("Upload <br/>fire masks")
                                                   , icon = icon("upload")
                                                   , width = "100%"
-                                                  , style = HTML(button.style)
+                                                  , style = HTML(button.style.action)
                                    )
                                  ) %>% helper(type = "inline"
                                               , title = "Fire masks"
@@ -139,7 +139,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Raster files</span>")
                                                     , label = HTML("Upload <br/>elevation mask")
                                                     , icon = icon("upload")
                                                     , width = "100%"
-                                                    , style = HTML(button.style)
+                                                    , style = HTML(button.style.action)
                                      )
                                    ) %>% helper(type = "inline"
                                                 , title = "Elevation mask"
@@ -166,7 +166,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Raster files</span>")
                                                     , label = HTML("Upload <br/>slope mask")
                                                     , icon = icon("upload")
                                                     , width = "100%"
-                                                    , style = HTML(button.style)
+                                                    , style = HTML(button.style.action)
                                      )
                                    ) %>% helper(type = "inline"
                                                 , title = "Slope mask"
@@ -199,7 +199,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Raster files</span>")
                                                   , label = HTML("Upload habitat <br/>suitability masks")
                                                   , icon = icon("upload")
                                                   , width = "100%"
-                                                  , style = HTML(button.style)
+                                                  , style = HTML(button.style.action)
                                    )
                                  ) %>% helper(type = "inline"
                                               , title = "Habitat suitability masks"
@@ -234,7 +234,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Raster files</span>")
                                                     , label = HTML("Upload <br/>aliens masks")
                                                     , icon = icon("upload")
                                                     , width = "100%"
-                                                    , style = HTML(button.style)
+                                                    , style = HTML(button.style.action)
                                      )
                                    ) %>% helper(type = "inline"
                                                 , title = "Aliens masks"
@@ -261,7 +261,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Raster files</span>")
                                                   , label = "Add changing year"
                                                   , icon = icon("plus")
                                                   , width = "100%"
-                                                  , style = HTML(button.style)
+                                                  , style = HTML(button.style.action)
                                      )
                                    )
                             )
@@ -272,11 +272,11 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Raster files</span>")
                                                     , label = "Create Scenario files"
                                                     , icon = icon("file")
                                                     , width = "100%"
-                                                    , style = HTML(button.style)
+                                                    , style = HTML(button.style.action)
                                        ) %>% helper(type = "inline"
                                                     , title = "Create Scenario files"
                                                     , size = "l"
-                                                    , content = help.HTML("./../../docs/reference/PRE_FATE.params_changingYears.html")
+                                                    , content = help.HTML(paste0(path.reference, "PRE_FATE.params_changingYears.html"))
                                        )
                                      )
                             )
@@ -307,7 +307,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Raster files</span>")
                                                     , label = "Get available files"
                                                     , icon = icon("refresh")
                                                     , width = "100%"
-                                                    , style = HTML(button.style)
+                                                    , style = HTML(button.style.action)
                                      ))
                           )
                           , fluidRow(
@@ -349,7 +349,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Raster files</span>")
                                      , actionButton(inputId = "delete.changing"
                                                     , label = NULL
                                                     , icon = icon("trash")
-                                                    , style = HTML(button.style)
+                                                    , style = HTML(button.style.action)
                                      )
                             )
                           )

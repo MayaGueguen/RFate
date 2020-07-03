@@ -11,11 +11,11 @@ observeEvent(input$HELP.panel2.menu2, {
                                                 , intro = c("<p>Multiple sets of global parameters (i.e. whose parameterization depends on the model, not on the data)
                                                             can be easily created from a pre-existing simulation folder.</p>
                                                             <p>The basic values and their variation range can be defined in three ways.</p>"
-                                                            , "<p>A folder name with a typical <code>FATE-HD</code> organization, that can be created with the function 
-                                                            <a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.skeletonDirectory.html'>PRE_FATE.skeletonDirectory</a>.</p>
+                                                            , paste0("<p>A folder name with a typical <code>FATE-HD</code> organization, that can be created with the function 
+                                                            <a href='", path.reference, "PRE_FATE.skeletonDirectory.html'>PRE_FATE.skeletonDirectory</a>.</p>
                                                             <p><strong>ParamSimulation file</strong> : containing all links to the parameter files.<br>
-                                                            It can be created with the function <a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_simulParameters.html'>PRE_FATE.params_simulParameters</a>.</p>
-                                                            <p>Parameters will be extracted and used to produce a new simulation folder.</p>"
+                                                            It can be created with the function <a href='", path.reference, "PRE_FATE.params_simulParameters.html'>PRE_FATE.params_simulParameters</a>.</p>
+                                                            <p>Parameters will be extracted and used to produce a new simulation folder.</p>")
                                                             , "<p>Parameters presented here are the ones that will be varied. They are global parameters, not dependent on data rather on
                                                             model processes or implementation. They can be linked to specific modules, and these modules will need to be activated
                                                             within the given ParamSimulation file to be taken into account.</p>"

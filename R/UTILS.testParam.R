@@ -4,6 +4,7 @@
 {
   if (missing(param) ||
       (length(param) == 1 && is.na(param)) ||
+      (length(param) == 1 && nchar(param) == 0) ||
       is.null(param) ||
       length(param) == 0)
   {

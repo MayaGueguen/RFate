@@ -87,10 +87,10 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
                                                              ) %>% helper(type = "inline"
                                                                           , title = "FATE-HD modules : CORE - Required and impacted parameters"
                                                                           , size = "l"
-                                                                          , content = help.HTML(html.file = "https://mayagueguen.github.io/RFate/articles/fate_tutorial_3_MODULES.html"
+                                                                          , content = help.HTML(html.file = paste0(path.articles, "fate_tutorial_3_MODULES.html")
                                                                                                 , target.anchor = 'class="section level1'
                                                                                                 , target.class = "core-module-succession"
-                                                                                                , web.address = "https://mayagueguen.github.io/RFate/articles/fate_tutorial_3_MODULES.html#core-module-succession")
+                                                                                                , web.address = paste0(path.articles, "fate_tutorial_3_MODULES.html#core-module-succession"))
                                                              )
                                                       )
                                                       , column(3
@@ -120,10 +120,10 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
                                                     ) %>% helper(type = "inline"
                                                                  , title = "FATE-HD modules : HABITAT SUITABILITY - Required and impacted parameters"
                                                                  , size = "l"
-                                                                 , content = help.HTML(html.file = "https://mayagueguen.github.io/RFate/articles/fate_tutorial_3_MODULES.html"
+                                                                 , content = help.HTML(html.file = paste0(path.articles, "fate_tutorial_3_MODULES.html")
                                                                                        , target.anchor = 'class="section level1'
                                                                                        , target.class = "habitat-suitability-module"
-                                                                                       , web.address = "https://mayagueguen.github.io/RFate/articles/fate_tutorial_3_MODULES.html#habitat-suitability-module")
+                                                                                       , web.address = paste0(path.articles, "fate_tutorial_3_MODULES.html#habitat-suitability-module"))
                                                     )
                                                     , fluidRow(
                                                       br()
@@ -162,10 +162,10 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
                                                     ) %>% helper(type = "inline"
                                                                  , title = "FATE-HD modules : DISPERSAL - Required and impacted parameters"
                                                                  , size = "l"
-                                                                 , content = help.HTML(html.file = "https://mayagueguen.github.io/RFate/articles/fate_tutorial_3_MODULES.html"
+                                                                 , content = help.HTML(html.file = paste0(path.articles, "fate_tutorial_3_MODULES.html")
                                                                                        , target.anchor = 'class="section level1'
                                                                                        , target.class = "dispersal-module"
-                                                                                       , web.address = "https://mayagueguen.github.io/RFate/articles/fate_tutorial_3_MODULES.html#dispersal-module")
+                                                                                       , web.address = paste0(path.articles, "fate_tutorial_3_MODULES.html#dispersal-module"))
                                                     )
                                                     , fluidRow(
                                                       br()
@@ -203,10 +203,10 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
                                                     ) %>% helper(type = "inline"
                                                                  , title = "FATE modules : LIGHT - Required and impacted parameters"
                                                                  , size = "l"
-                                                                 , content = help.HTML(html.file = "https://mayagueguen.github.io/RFate/articles/fate_tutorial_3_MODULES.html"
+                                                                 , content = help.HTML(html.file = paste0(path.articles, "fate_tutorial_3_MODULES.html")
                                                                                        , target.anchor = 'class="section level1'
                                                                                        , target.class = "light-module-competition"
-                                                                                       , web.address = "https://mayagueguen.github.io/RFate/articles/fate_tutorial_3_MODULES.html#light-module-competition")
+                                                                                       , web.address = paste0(path.articles, "fate_tutorial_3_MODULES.html#light-module-competition"))
                                                     ) ## END fluidRow
                                         ) ## END main.panel1
                                   )
@@ -231,11 +231,11 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
                                                                , label = HTML("Create <br/>multiple set")
                                                                , icon = icon("play")
                                                                , width = "100%"
-                                                               , style = HTML(button.style)
+                                                               , style = HTML(button.style.action)
                                                   ) %>% helper(type = "inline"
                                                                , title = "Multiple sets of parameters"
                                                                , size = "l"
-                                                               , content = help.HTML("https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_multipleSet.html")
+                                                               , content = help.HTML(paste0(path.reference, "PRE_FATE.params_multipleSet.html"))
                                                   )
                                                 )
                                     ) ## END main.panel2

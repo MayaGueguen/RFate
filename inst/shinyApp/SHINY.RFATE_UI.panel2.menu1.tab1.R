@@ -152,11 +152,11 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Global parameters</span>")
                                      , label = "Create Global parameters file"
                                      , icon = icon("file")
                                      , width = "100%"
-                                     , style = HTML(button.style)
+                                     , style = HTML(button.style.action)
                       ) %>% helper(type = "inline"
                                    , title = "Global parameter file"
                                    , size = "l"
-                                   , content = help.HTML("./../../docs/reference/PRE_FATE.params_globalParameters.html")
+                                   , content = help.HTML(paste0(path.reference, "PRE_FATE.params_globalParameters.html"))
                       )
                )
              )

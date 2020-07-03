@@ -41,12 +41,12 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Scenario files</span>")
                                        , label = "Create SAVE maps files"
                                        , icon = icon("file")
                                        , width = "100%"
-                                       , style = HTML(button.style)
+                                       , style = HTML(button.style.action)
                         )
                       ) %>% helper(type = "inline"
                                    , title = "Create SAVE maps files"
                                    , size = "l"
-                                   , content = help.HTML("./../../docs/reference/PRE_FATE.params_savingYears.html")
+                                   , content = help.HTML(paste0(path.reference, "PRE_FATE.params_savingYears.html"))
                       )
                )
                , column(6
@@ -82,12 +82,12 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Scenario files</span>")
                                          , label = "Create SAVE objects files"
                                          , icon = icon("file")
                                          , width = "100%"
-                                         , style = HTML(button.style)
+                                         , style = HTML(button.style.action)
                           )
                         ) %>% helper(type = "inline"
                                      , title = "Create SAVE objects files"
                                      , size = "l"
-                                     , content = help.HTML("./../../docs/reference/PRE_FATE.params_savingYears.html")
+                                     , content = help.HTML(paste0(path.reference, "PRE_FATE.params_savingYears.html"))
                         )
                )
                )

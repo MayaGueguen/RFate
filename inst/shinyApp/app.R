@@ -52,91 +52,57 @@ ui <- fluidPage(
   
   # tags$link(rel="stylesheet", type="text/css", href="app.css"),
   tags$body(
-    tags$style(HTML("
-                    @import url('https://fonts.googleapis.com/css?family=Londrina+Solid:200,300|Medula+One|Slabo+27px|Francois+One');
-           #loadmessage {
-           position: fixed;
-           top: 0px;
-           left: 0px;
-           width: 100%;
-           padding: 5px 0px 5px 0px;
-           text-align: center;
-           font-family: 'Londrina Solid', cursive;
-           font-weight: 300;
-           line-height: 1.1;
-           color: #000000;
-           background-color: #CCFF66;
-           z-index: 105;
-           }
-                    .icon-helpd { color: Darkblue; }
-                    h1 {
-                    font-family: 'Londrina Solid', cursive;
-                    font-weight: 300;
-                    line-height: 1.1;
-                    background-color: #3a7da8;
-                    padding: 20px;
-                    margin-top: 0px;
-                    margin-bottom: 0px;
-                    border-radius: 0px;
-                    color: #FFFFFF;
-                    }
-                    .tabbable > .nav > li > a {
-                    background-color: #e0dbd9;
-                    color: #8c8582;
-                    border-radius: 0px;
-                    }
-                    .tabbable > .nav > li > a:hover {
-                    background-color: #3a7da8;
-                    color:#FFFFFF;
-                    border-radius: 0px;
-                    }
-                    .tabbable > .nav > li[class=active] > a {
-                    background-color: #3a7da8;
-                    color:#FFFFFF;
-                    border-radius: 0px;
-                    }
-                    .navbar-default .navbar-nav > not(.active) > a {
-                    color: #8c8582;
-                    }
-                    .navbar-default .navbar-nav > .active > a, 
-                    .navbar-default .navbar-nav > .active > a:focus, 
-                    .navbar-default .navbar-nav > .active > a:hover {
-                    background-color: #e0dbd9;
-                    }
-                    .panel_title {
-                    font-family: 'Londrina Solid', cursive;
-                    font-size: 20px;
-                    font-weight: 200;
-                    padding: 0px;
-                    margin-top: 0px;
-                    }
-                    .tabPanel_title {
-                    font-family: 'Londrina Solid', cursive;
-                    font-size: 20px;
-                    font-weight: 200;
-                    padding: 0px;
-                    margin-top: 0px;
-                    }
-                    .tabPanel_subtitle {
-                    font-family: 'Londrina Solid', cursive;
-                    font-size: 18px;
-                    font-weight: 200;
-                    padding: 0px;
-                    margin-top: 0px;
-                    }
-                    .radioGroupButtons .btn {
-                    background-color: rgba(96, 129, 150, 0.5);
-                    color: #FFFFFF;
-                    border-radius: 5px;
-                    }
-                    .radioGroupButtons .btn:hover {
-                    background-color: #3a7da8;
-                    }
-                    .radioGroupButtons .btn-panelgraph.active {
-                    background-color: #3a7da8;
-                    }
-                    "))
-    ),
+    tags$style(HTML(paste0(
+      baliseHTML.font
+      # , "#loadmessage {
+      # position: fixed;
+      # top: 0px;
+      # left: 0px;
+      # width: 100%;
+      # padding: 5px 0px 5px 0px;
+      # text-align: center;
+      # font-family: ", theme.font, ";
+      # font-weight: 300;
+      # line-height: 1.1;
+      # color: #000000;
+      # background-color: #CCFF66;
+      # z-index: 105;
+      # }\n"
+      # , ".icon-helpd { color: Darkblue; }\n"
+      , "h1 {
+      font-family: ", theme.font, ";
+      font-weight: 300;
+      line-height: 1.1;
+      padding: 20px;
+      margin-top: 0px;
+      margin-bottom: 0px;
+      ", baliseHTML.theme
+      , "}\n"
+      , ".tabbable > .nav > li > a {
+      background-color: ", navbar.color, ";
+      color: ", navbar.color.text, ";
+      border-radius: 0px;
+      }\n"
+      , ".tabbable > .nav > li > a:hover {", baliseHTML.theme, "}\n"
+      , ".tabbable > .nav > li[class=active] > a {", baliseHTML.theme, "}\n"
+      , ".navbar-default .navbar-nav > not(.active) > a { color: ", navbar.color.text, "; }\n"
+      , ".navbar-default .navbar-nav > .active > a, 
+      .navbar-default .navbar-nav > .active > a:focus, 
+      .navbar-default .navbar-nav > .active > a:hover { background-color: ", navbar.color, "; }\n"
+      , ".panel_title {", baliseHTML.title, baliseHTML.margin0, "}\n"
+      , ".tabPanel_title {", baliseHTML.title, baliseHTML.margin0, "}\n"
+      , ".tabPanel_subtitle {", baliseHTML.title, "font-size: 18px;", baliseHTML.margin0, "}\n"
+      , ".radioGroupButtons .btn {
+      background-color: rgba(96, 129, 150, 0.5);
+      color: #FFFFFF;
+      border-radius: 5px;
+      }\n"
+      , ".radioGroupButtons .btn:hover { background-color: ", theme.color, "; }\n"
+      , ".radioGroupButtons .btn-panelgraph.active { background-color: ", theme.color, "; }\n"
+    )
+    )
+    ) ## END tag$style
+  ), ## END tag$body
   
   fluidRow(
     style = HTML(paste0("background-color: #3a7da8; margin-top: 20px; margin-bottom: 20px;")),
@@ -151,14 +117,14 @@ ui <- fluidPage(
                                          #"https://cdn-images-1.medium.com/max/2400/1*F_5AEXIfr1AXuShXhYT4zg.gif"
                                          #"http://thinkfuture.com/wp-content/uploads/2013/10/loading_spinner.gif"
                                          "https://cdn.dribbble.com/users/1169971/screenshots/3553587/graphloader.gif"
-                                         # "https://loading.io/spinners/equalizer/lg.equalizer-bars-loader.gif"
+                                       # "https://loading.io/spinners/equalizer/lg.equalizer-bars-loader.gif"
                                        , height = "80px")
              )
              # conditionalPanel(condition = "$('html').hasClass('shiny-busy')",
              #                  tags$div("Loading...", id = "loadmessage"))
     )
   ),
-
+  
   # Sidebar layout with a input and output definitions
   mainPanel(
     width = 12,
@@ -170,12 +136,12 @@ ui <- fluidPage(
                , navbarMenu(title = HTML("<span class='panel_title'><i class='fa fa-copy'></i> Simulation parameter files</span>")
                             , source("SHINY.RFATE_UI.panel2.menu1.R", local = TRUE)$value
                             , source("SHINY.RFATE_UI.panel2.menu2.R", local = TRUE)$value)
-                            # , tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Create multiple set</span>")))
+               # , tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Create multiple set</span>")))
                , source("SHINY.RFATE_UI.panel3.R", local = TRUE)$value
                , source("SHINY.RFATE_UI.panel4.R", local = TRUE)$value
     )
   )
-    ) ## END fluidPage
+) ## END fluidPage
 
 
 ###################################################################################################################################
@@ -223,11 +189,11 @@ server <- function(input, output, session) {
   )
   
   ####################################################################
-
+  
   source("SHINY.RFATE_SERVER.panel0.R", local = TRUE)$value
   
   ####################################################################
-
+  
   source("SHINY.RFATE_SERVER.panel1.R", local = TRUE)$value
   source("SHINY.RFATE_SERVER.panel1.tab1.R", local = TRUE)$value
   source("SHINY.RFATE_SERVER.panel1.tab2.R", local = TRUE)$value
@@ -250,7 +216,7 @@ server <- function(input, output, session) {
   ####################################################################
   
   source("SHINY.RFATE_SERVER.panel3.R", local = TRUE)$value
-
+  
   ####################################################################
   
   source("SHINY.RFATE_SERVER.panel4.R", local = TRUE)$value
@@ -267,7 +233,7 @@ server <- function(input, output, session) {
       # can happen when deployed).
       tempReport <- file.path(tempdir(), "report.Rmd")
       file.copy("report.Rmd", tempReport, overwrite = TRUE)
-
+      
       # Set up parameters to pass to Rmd document
       # params <- list(n = input$slider)
       params.names = c("name.simul"
@@ -308,9 +274,9 @@ server <- function(input, output, session) {
       {
         eval(parse(text = paste0("params[[i]] = RV$", i)))
       }
-
+      
       print(params)
-
+      
       # Knit the document, passing in the `params` list, and eval it in a
       # child of the global environment (this isolates the code in the document
       # from the code in this app).
@@ -322,7 +288,7 @@ server <- function(input, output, session) {
     }
   )
   
-}
+} ## END server
 
 ###################################################################################################################################
 # Create a Shiny app object

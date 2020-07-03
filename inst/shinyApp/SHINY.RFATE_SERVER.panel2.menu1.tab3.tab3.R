@@ -310,13 +310,13 @@ output$UI.files.soil = renderUI({
                                 , label = "View selected"
                                 , icon = icon("eye")
                                 , width = "100%"
-                                , style = HTML(paste(button.style, "margin-bottom: 3px;"))))
+                                , style = HTML(button.style.action)))
         , column(3
                  , actionButton(inputId = "delete.soil.select"
                                 , label = "Delete selected"
                                 , icon = icon("trash-alt")
                                 , width = "100%"
-                                , style = HTML(paste(button.style, "margin-bottom: 3px;"))))
+                                , style = HTML(button.style.action)))
       ),
       hr(),
       fluidRow(
@@ -336,7 +336,7 @@ output$UI.files.soil = renderUI({
         #                                  , label = NULL
         #                                  , icon = icon("upload")
         #                                  , width = "100%"
-        #                                  , style = HTML(paste(button.style, "margin-bottom: 3px;")))
+        #                                  , style = HTML(button.style.action))
         #                   })
         # )
       )

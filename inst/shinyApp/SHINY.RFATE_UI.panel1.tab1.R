@@ -56,11 +56,11 @@ tabPanel(title = HTML("<span class='tabPanel_title'>1. Dominant species</span>")
                                  , label = "Select dominant species"
                                  , icon = icon("list")
                                  , width = "100%"
-                                 , style = HTML(button.style)
+                                 , style = HTML(button.style.action)
                   ) %>% helper(type = "inline"
                                , title = "Selection of dominant species"
                                , size = "l"
-                               , content = help.HTML("./../../docs/reference/PRE_FATE.selectDominant.html")
+                               , content = help.HTML(paste0(path.reference, "PRE_FATE.selectDominant.html"))
                   )
            )
          ) ## END fluidRow

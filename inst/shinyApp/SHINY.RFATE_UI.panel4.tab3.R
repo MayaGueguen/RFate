@@ -31,11 +31,11 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
                                    , label = "Run relative abund"
                                    , icon = icon("play")
                                    , width = "100%"
-                                   , style = HTML(button.style)
+                                   , style = HTML(button.style.action)
                       ) %>% helper(type = "inline"
                                    , title = "Create maps of relative abundance"
                                    , size = "l"
-                                   , content = help.HTML("./../../docs/reference/POST_FATE.relativeAbund.html")
+                                   , content = help.HTML(paste0(path.reference, "POST_FATE.relativeAbund.html"))
                       )
                     )
            )
@@ -66,11 +66,11 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
                                    , label = "Run binary maps"
                                    , icon = icon("play")
                                    , width = "100%"
-                                   , style = HTML(button.style)
+                                   , style = HTML(button.style.action)
                       ) %>% helper(type = "inline"
                                    , title = "Create binary maps (transform relative abundance into 0/1)"
                                    , size = "l"
-                                   , content = help.HTML("./../../docs/reference/POST_FATE.binaryMaps.html")
+                                   , content = help.HTML(paste0(path.reference, "POST_FATE.binaryMaps.html"))
                       )
                     )
            )
@@ -108,7 +108,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
                                                   , label = ""
                                                   , icon = icon("broom")
                                                   , width = "100%"
-                                                  , style = HTML(button.style)
+                                                  , style = HTML(button.style.action)
                                    )
                           )
                         )
@@ -122,11 +122,11 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
                                        , label = "Run Validation statistics"
                                        , icon = icon("play")
                                        , width = "100%"
-                                       , style = HTML(button.style)
+                                       , style = HTML(button.style.action)
                         ) %>% helper(type = "inline"
                                      , title = "Plot validation statistics and transform maps of abundances into 0/1"
                                      , size = "l"
-                                     , content = help.HTML("./../../docs/reference/POST_FATE.graphic_validationStatistics.html")
+                                     , content = help.HTML(paste0(path.reference, "POST_FATE.graphic_validationStatistics.html"))
                         )
                )
              ))
@@ -149,11 +149,11 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
                                        , label = "Run PFG vs HS"
                                        , icon = icon("play")
                                        , width = "100%"
-                                       , style = HTML(button.style)
+                                       , style = HTML(button.style.action)
                         ) %>% helper(type = "inline"
                                      , title = "Plot maps of 0/1 predicted by FATE vs Habitat suitability"
                                      , size = "l"
-                                     , content = help.HTML("./../../docs/reference/POST_FATE.graphic_mapPFGvsHS.html")
+                                     , content = help.HTML(paste0(path.reference, "POST_FATE.graphic_mapPFGvsHS.html"))
                         )
                )
              ))
@@ -188,11 +188,11 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
                                        , label = "Run PFG map"
                                        , icon = icon("play")
                                        , width = "100%"
-                                       , style = HTML(button.style)
+                                       , style = HTML(button.style.action)
                         ) %>% helper(type = "inline"
                                      , title = "Plot map of PFG outputs"
                                      , size = "l"
-                                     , content = help.HTML("./../../docs/reference/POST_FATE.graphic_mapPFG.html")
+                                     , content = help.HTML(paste0(path.reference, "POST_FATE.graphic_mapPFG.html"))
                         )
                )
              ))
@@ -203,33 +203,33 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
          #                         , label = "Run Validation statistics"
          #                         , icon = icon("play")
          #                         , width = "100%"
-         #                         , style = HTML(button.style)
+         #                         , style = HTML(button.style.action)
          #          ) %>% helper(type = "inline"
          #                       , title = "Plot validation statistics and transform maps of abundances into 0/1"
          #                       , size = "l"
-         #                       , content = help.HTML("./../../docs/reference/POST_FATE.graphic_validationStatistics.html")
+         #                       , content = help.HTML(paste0(path.reference, "POST_FATE.graphic_validationStatistics.html"))
          #          )
          #          , br()
          #          , actionButton(inputId = "create.PFGvsHS"
          #                         , label = "Run PFG vs HS"
          #                         , icon = icon("play")
          #                         , width = "100%"
-         #                         , style = HTML(button.style)
+         #                         , style = HTML(button.style.action)
          #          ) %>% helper(type = "inline"
          #                       , title = "Plot maps of 0/1 predicted by FATE vs Habitat suitability"
          #                       , size = "l"
-         #                       , content = help.HTML("./../../docs/reference/POST_FATE.graphic_mapPFGvsHS.html")
+         #                       , content = help.HTML(paste0(path.reference, "POST_FATE.graphic_mapPFGvsHS.html"))
          #          )
          #          , br()
          #          , actionButton(inputId = "create.PFGmap"
          #                         , label = "Run PFG map"
          #                         , icon = icon("play")
          #                         , width = "100%"
-         #                         , style = HTML(button.style)
+         #                         , style = HTML(button.style.action)
          #          ) %>% helper(type = "inline"
          #                       , title = "Plot map of PFG outputs"
          #                       , size = "l"
-         #                       , content = help.HTML("./../../docs/reference/POST_FATE.graphic_mapPFG.html")
+         #                       , content = help.HTML(paste0(path.reference, "POST_FATE.graphic_mapPFG.html"))
          #          )
          #   )
          #   , column(9

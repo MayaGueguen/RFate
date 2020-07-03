@@ -7,12 +7,12 @@ observeEvent(input$HELP.panel4, {
                            , "prevLabel" = "Prev"
                            , "skipLabel" = "Close"
                            , steps = data.frame(element = c(paste0("#help4_", 1:2),"#main.panel")
-                                                , intro = c("<p>A folder name with a typical <code>FATE-HD</code> organization, that can be created with the function 
-                                                              <a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.skeletonDirectory.html'>PRE_FATE.skeletonDirectory</a>.</p>
-                                                              <p><strong>RESULTS</strong> folder should contain <code>FATE-HD</code> output maps.</p>"
-                                                            , "<p><strong>ParamSimulation file</strong> : containing all links to the files created with the previous functions.<br>
-                                                              It can be created with the function <a href='https://mayagueguen.github.io/RFate/reference/PRE_FATE.params_simulParameters.html'>PRE_FATE.params_simulParameters</a>.</p>
-                                                              <p>Parameters will be extracted and used to produce output graphics.</p>"
+                                                , intro = c(paste0("<p>A folder name with a typical <code>FATE-HD</code> organization, that can be created with the function 
+                                                              <a href='", path.reference, "PRE_FATE.skeletonDirectory.html'>PRE_FATE.skeletonDirectory</a>.</p>
+                                                              <p><strong>RESULTS</strong> folder should contain <code>FATE-HD</code> output maps.</p>")
+                                                            , paste0("<p><strong>ParamSimulation file</strong> : containing all links to the files created with the previous functions.<br>
+                                                              It can be created with the function <a href='", path.reference, "PRE_FATE.params_simulParameters.html'>PRE_FATE.params_simulParameters</a>.</p>
+                                                              <p>Parameters will be extracted and used to produce output graphics.</p>")
                                                             , "<p><em>1. BROWSER</em></p>
                                                             <ul><li>Explore <strong>pre-existing graphics</strong> into the selected simulation folder</li></ul>
                                                             <p><em>2. Evolution of simulation through time</em></p>
@@ -221,6 +221,7 @@ observeEvent(input$graph.simulParam, {
                       , inputId = "graph.opt.stratum_minmax"
                       , min = min(strata.available)
                       , max = max(strata.available)
+                      , step = 1
                       , value = range(strata.available))
   } else
   {

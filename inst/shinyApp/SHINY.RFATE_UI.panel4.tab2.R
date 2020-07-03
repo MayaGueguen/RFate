@@ -36,11 +36,11 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Through time</span>")
                                    , label = "Run temporal evolution"
                                    , icon = icon("play")
                                    , width = "100%"
-                                   , style = HTML(button.style)
+                                   , style = HTML(button.style.action)
                       ) %>% helper(type = "inline"
                                    , title = "Calculate tables of temporal evolution of pixels resources"
                                    , size = "l"
-                                   , content = help.HTML("./../../docs/reference/POST_FATE.temporalEvolution.html")
+                                   , content = help.HTML(paste0(path.reference, "POST_FATE.temporalEvolution.html"))
                       )
                     )
            )
@@ -75,11 +75,11 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Through time</span>")
                                        , label = "Run plot"
                                        , icon = icon("play")
                                        , width = "100%"
-                                       , style = HTML(button.style)
+                                       , style = HTML(button.style.action)
                           ) %>% helper(type = "inline"
                                        , title = "Plot evolution coverage"
                                        , size = "l"
-                                       , content = help.HTML("./../../docs/reference/POST_FATE.graphic_evolutionCoverage.html")
+                                       , content = help.HTML(paste0(path.reference, "POST_FATE.graphic_evolutionCoverage.html"))
                           )
                )
              ))
@@ -104,11 +104,11 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Through time</span>")
                                        , label = "Run plot"
                                        , icon = icon("play")
                                        , width = "100%"
-                                       , style = HTML(button.style)
+                                       , style = HTML(button.style.action)
                         ) %>% helper(type = "inline"
                                      , title = "Plot evolution pixels"
                                      , size = "l"
-                                     , content = help.HTML("./../../docs/reference/POST_FATE.graphic_evolutionPixels.html")
+                                     , content = help.HTML(paste0(path.reference, "POST_FATE.graphic_evolutionPixels.html"))
                         )
                )
              ))
@@ -132,11 +132,11 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Through time</span>")
                                        , label = "Run plot"
                                        , icon = icon("play")
                                        , width = "100%"
-                                       , style = HTML(button.style)
+                                       , style = HTML(button.style.action)
                         ) %>% helper(type = "inline"
                                      , title = "Plot evolution stability"
                                      , size = "l"
-                                     , content = help.HTML("./../../docs/reference/POST_FATE.graphic_evolutionStability.html")
+                                     , content = help.HTML(paste0(path.reference, "POST_FATE.graphic_evolutionStability.html"))
                         )
                )
              ))

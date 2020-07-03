@@ -248,14 +248,14 @@ POST_FATE.graphic_evolutionCoverage = function(
                               , "/RESULTS/POST_FATE_TABLE_ZONE_evolution_spaceOccupancy_"
                               , basename(dir.save)
                               , ".csv")
-              , row.names = TRUE)
+              , row.names = FALSE)
     
     write.csv(distriAbund.melt
               , file = paste0(name.simulation
                               , "/RESULTS/POST_FATE_TABLE_ZONE_evolution_totalAbundance_"
                               , basename(dir.save)
                               , ".csv")
-              , row.names = TRUE)
+              , row.names = FALSE)
     
     message(paste0("\n The output files \n"
                    , " > POST_FATE_TABLE_ZONE_evolution_spaceOccupancy_"

@@ -144,7 +144,7 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-cogs'></i> Run
            # ) %>% helper(type = "inline"
            #              , title = "Evaluate FATE-HD simulation outputs"
            #              , size = "l"
-           #              , content = help.HTML(html.file = "https://mayagueguen.github.io/RFate/index.html"
+           #              , content = help.HTML(html.file = paste0(path.articles)
            #                                    , target.anchor = '<div '
            #                                    , target.class = "post_fate---evaluation-of-simulation")
                ) ## END sidebarLayout

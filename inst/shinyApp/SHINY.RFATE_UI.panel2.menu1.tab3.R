@@ -25,7 +25,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                          , label = "Add PFG"
                                          , icon = icon("plus")
                                          , width = "100%"
-                                         , style = HTML(button.style)
+                                         , style = HTML(button.style.action)
                             )
                           )
                  )
@@ -38,7 +38,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                           , actionButton(inputId = "delete.names.PFG"
                                          , label = NULL
                                          , icon = icon("trash")
-                                         , style = HTML(button.style)
+                                         , style = HTML(button.style.action)
                           )
                  )
                )
@@ -63,7 +63,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                                 , label = "Add PFG"
                                                 , icon = icon("plus")
                                                 , width = "100%"
-                                                , style = HTML(button.style)
+                                                , style = HTML(button.style.action)
                                    )
                                  )
                           )
@@ -74,11 +74,11 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                                   , label = "Create PFG succession files"
                                                   , icon = icon("file")
                                                   , width = "100%"
-                                                  , style = HTML(button.style)
+                                                  , style = HTML(button.style.action)
                                      ) %>% helper(type = "inline"
                                                   , title = "Create PFG succession files"
                                                   , size = "l"
-                                                  , content = help.HTML("./../../docs/reference/PRE_FATE.params_PFGsuccession.html")
+                                                  , content = help.HTML(paste0(path.reference, "PRE_FATE.params_PFGsuccession.html"))
                                      )
                                    )
                           )
@@ -138,7 +138,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                    , actionButton(inputId = "delete.PFG.succ"
                                                   , label = NULL
                                                   , icon = icon("trash")
-                                                  , style = HTML(button.style)
+                                                  , style = HTML(button.style.action)
                                    )
                           )
                         )
@@ -166,7 +166,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                                   , label = "Add PFG"
                                                   , icon = icon("plus")
                                                   , width = "100%"
-                                                  , style = HTML(button.style)
+                                                  , style = HTML(button.style.action)
                                      )
                                    )
                             )
@@ -177,11 +177,11 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                                     , label = "Create PFG light files"
                                                     , icon = icon("file")
                                                     , width = "100%"
-                                                    , style = HTML(button.style)
+                                                    , style = HTML(button.style.action)
                                        ) %>% helper(type = "inline"
                                                     , title = "Create PFG light files"
                                                     , size = "l"
-                                                    , content = help.HTML("./../../docs/reference/PRE_FATE.params_PFGlight.html")
+                                                    , content = help.HTML(paste0(path.reference, "PRE_FATE.params_PFGlight.html"))
                                        )
                                      )
                             )
@@ -230,7 +230,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                      , actionButton(inputId = "delete.PFG.light"
                                                     , label = NULL
                                                     , icon = icon("trash")
-                                                    , style = HTML(button.style)
+                                                    , style = HTML(button.style.action)
                                      )
                             )
                           )
@@ -258,7 +258,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                                   , label = "Add PFG"
                                                   , icon = icon("plus")
                                                   , width = "100%"
-                                                  , style = HTML(button.style)
+                                                  , style = HTML(button.style.action)
                                      )
                                    )
                             )
@@ -269,11 +269,11 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                                     , label = "Create PFG soil files"
                                                     , icon = icon("file")
                                                     , width = "100%"
-                                                    , style = HTML(button.style)
+                                                    , style = HTML(button.style.action)
                                        ) %>% helper(type = "inline"
                                                     , title = "Create PFG soil files"
                                                     , size = "l"
-                                                    , content = help.HTML("./../../docs/reference/PRE_FATE.params_PFGsoil.html")
+                                                    , content = help.HTML(paste0(path.reference, "PRE_FATE.params_PFGsoil.html"))
                                        )
                                      )
                             )
@@ -333,7 +333,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                      , actionButton(inputId = "delete.PFG.soil"
                                                     , label = NULL
                                                     , icon = icon("trash")
-                                                    , style = HTML(button.style)
+                                                    , style = HTML(button.style.action)
                                      )
                             )
                           )
@@ -361,7 +361,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                                   , label = "Add PFG"
                                                   , icon = icon("plus")
                                                   , width = "100%"
-                                                  , style = HTML(button.style)
+                                                  , style = HTML(button.style.action)
                                      )
                                    )
                             )
@@ -372,11 +372,11 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                                     , label = "Create PFG dispersal files"
                                                     , icon = icon("file")
                                                     , width = "100%"
-                                                    , style = HTML(button.style)
+                                                    , style = HTML(button.style.action)
                                        ) %>% helper(type = "inline"
                                                     , title = "Create PFG dispersal files"
                                                     , size = "l"
-                                                    , content = help.HTML("./../../docs/reference/PRE_FATE.params_PFGdispersal.html")
+                                                    , content = help.HTML(paste0(path.reference, "PRE_FATE.params_PFGdispersal.html"))
                                        )
                                      )
                             )
@@ -426,7 +426,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                      , actionButton(inputId = "delete.PFG.disp"
                                                     , label = NULL
                                                     , icon = icon("trash")
-                                                    , style = HTML(button.style)
+                                                    , style = HTML(button.style.action)
                                      )
                             )
                           )
@@ -453,7 +453,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                                   , label = "Add disturbance"
                                                   , icon = icon("plus")
                                                   , width = "100%"
-                                                  , style = HTML(button.style)
+                                                  , style = HTML(button.style.action)
                                    )
                             )
                             , column(6
@@ -463,11 +463,11 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                                     , label = "Create PFG disturbance files"
                                                     , icon = icon("file")
                                                     , width = "100%"
-                                                    , style = HTML(button.style)
+                                                    , style = HTML(button.style.action)
                                        ) %>% helper(type = "inline"
                                                     , title = "Create PFG disturbance files"
                                                     , size = "l"
-                                                    , content = help.HTML("./../../docs/reference/PRE_FATE.params_PFGdisturbance.html")
+                                                    , content = help.HTML(paste0(path.reference, "PRE_FATE.params_PFGdisturbance.html"))
                                        )
                                      )
                             )
@@ -501,7 +501,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                      , actionButton(inputId = "delete.PFG.dist"
                                                     , label = NULL
                                                     , icon = icon("trash")
-                                                    , style = HTML(button.style)
+                                                    , style = HTML(button.style.action)
                                      )
                             )
                           )

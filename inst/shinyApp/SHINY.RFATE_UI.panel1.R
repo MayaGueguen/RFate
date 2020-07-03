@@ -141,7 +141,7 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-object-group'>
            ) %>% helper(type = "inline"
                         , title = "Create Plant Functional Group (PFG) for a FATE simulation"
                         , size = "l"
-                        , content = help.HTML(html.file = "https://mayagueguen.github.io/RFate/articles/rfate_tutorial_1_PFG.html"
+                        , content = help.HTML(html.file = paste0(path.articles, "rfate_tutorial_1_PFG.html")
                                               , target.anchor = 'class="section level2"'
                                               , target.class = "what-are-the-key-steps-of-this-process")
            ) ## END mainPanel
