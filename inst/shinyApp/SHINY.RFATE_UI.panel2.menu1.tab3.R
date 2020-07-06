@@ -25,7 +25,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                          , label = "Add PFG"
                                          , icon = icon("plus")
                                          , width = "100%"
-                                         , style = HTML(button.style.action)
+                                         , style = button.style.action
                             )
                           )
                  )
@@ -38,7 +38,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                           , actionButton(inputId = "delete.names.PFG"
                                          , label = NULL
                                          , icon = icon("trash")
-                                         , style = HTML(button.style.action)
+                                         , style = button.style.action
                           )
                  )
                )
@@ -63,7 +63,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                                 , label = "Add PFG"
                                                 , icon = icon("plus")
                                                 , width = "100%"
-                                                , style = HTML(button.style.action)
+                                                , style = button.style.action
                                    )
                                  )
                           )
@@ -74,7 +74,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                                   , label = "Create PFG succession files"
                                                   , icon = icon("file")
                                                   , width = "100%"
-                                                  , style = HTML(button.style.action)
+                                                  , style = button.style.action
                                      ) %>% helper(type = "inline"
                                                   , title = "Create PFG succession files"
                                                   , size = "l"
@@ -138,7 +138,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                    , actionButton(inputId = "delete.PFG.succ"
                                                   , label = NULL
                                                   , icon = icon("trash")
-                                                  , style = HTML(button.style.action)
+                                                  , style = button.style.action
                                    )
                           )
                         )
@@ -148,10 +148,10 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                           , br()
                           , br()
                           , column(12
-                                   , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px; overflow-y:scroll; max-height:250px;"))
+                                   , wellPanel(style = panel.style.scrollY
                                                , uiOutput(outputId = "UI.files.succ")))
                           , column(12
-                                   , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px; overflow-x:scroll;"))
+                                   , wellPanel(style = panel.style.scrollX
                                                , dataTableOutput(outputId = "created_table.succ"))
                           )
                         )
@@ -166,7 +166,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                                   , label = "Add PFG"
                                                   , icon = icon("plus")
                                                   , width = "100%"
-                                                  , style = HTML(button.style.action)
+                                                  , style = button.style.action
                                      )
                                    )
                             )
@@ -177,7 +177,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                                     , label = "Create PFG light files"
                                                     , icon = icon("file")
                                                     , width = "100%"
-                                                    , style = HTML(button.style.action)
+                                                    , style = button.style.action
                                        ) %>% helper(type = "inline"
                                                     , title = "Create PFG light files"
                                                     , size = "l"
@@ -230,7 +230,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                      , actionButton(inputId = "delete.PFG.light"
                                                     , label = NULL
                                                     , icon = icon("trash")
-                                                    , style = HTML(button.style.action)
+                                                    , style = button.style.action
                                      )
                             )
                           )
@@ -240,10 +240,10 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                             , br()
                             , br()
                             , column(12
-                                     , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px; overflow-y:scroll; max-height:250px;"))
+                                     , wellPanel(style = panel.style.scrollY
                                                  , uiOutput(outputId = "UI.files.light")))
                             , column(12
-                                     , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px; overflow-x:scroll;"))
+                                     , wellPanel(style = panel.style.scrollX
                                                  , dataTableOutput(outputId = "created_table.light"))
                             )
                           )
@@ -258,7 +258,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                                   , label = "Add PFG"
                                                   , icon = icon("plus")
                                                   , width = "100%"
-                                                  , style = HTML(button.style.action)
+                                                  , style = button.style.action
                                      )
                                    )
                             )
@@ -269,7 +269,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                                     , label = "Create PFG soil files"
                                                     , icon = icon("file")
                                                     , width = "100%"
-                                                    , style = HTML(button.style.action)
+                                                    , style = button.style.action
                                        ) %>% helper(type = "inline"
                                                     , title = "Create PFG soil files"
                                                     , size = "l"
@@ -333,7 +333,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                      , actionButton(inputId = "delete.PFG.soil"
                                                     , label = NULL
                                                     , icon = icon("trash")
-                                                    , style = HTML(button.style.action)
+                                                    , style = button.style.action
                                      )
                             )
                           )
@@ -343,10 +343,10 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                             , br()
                             , br()
                             , column(12
-                                     , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px; overflow-y:scroll; max-height:250px;"))
+                                     , wellPanel(style = panel.style.scrollY
                                                  , uiOutput(outputId = "UI.files.soil")))
                             , column(12
-                                     , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px; overflow-x:scroll;"))
+                                     , wellPanel(style = panel.style.scrollX
                                                  , dataTableOutput(outputId = "created_table.soil"))
                             )
                           )
@@ -361,7 +361,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                                   , label = "Add PFG"
                                                   , icon = icon("plus")
                                                   , width = "100%"
-                                                  , style = HTML(button.style.action)
+                                                  , style = button.style.action
                                      )
                                    )
                             )
@@ -372,7 +372,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                                     , label = "Create PFG dispersal files"
                                                     , icon = icon("file")
                                                     , width = "100%"
-                                                    , style = HTML(button.style.action)
+                                                    , style = button.style.action
                                        ) %>% helper(type = "inline"
                                                     , title = "Create PFG dispersal files"
                                                     , size = "l"
@@ -426,7 +426,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                      , actionButton(inputId = "delete.PFG.disp"
                                                     , label = NULL
                                                     , icon = icon("trash")
-                                                    , style = HTML(button.style.action)
+                                                    , style = button.style.action
                                      )
                             )
                           )
@@ -436,10 +436,10 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                             , br()
                             , br()
                             , column(12
-                                     , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px; overflow-y:scroll; max-height:250px;"))
+                                     , wellPanel(style = panel.style.scrollY
                                                  , uiOutput(outputId = "UI.files.disp")))
                             , column(12
-                                     , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px; overflow-x:scroll;"))
+                                     , wellPanel(style = panel.style.scrollX
                                                  , dataTableOutput(outputId = "created_table.disp"))
                             )
                           )
@@ -453,7 +453,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                                   , label = "Add disturbance"
                                                   , icon = icon("plus")
                                                   , width = "100%"
-                                                  , style = HTML(button.style.action)
+                                                  , style = button.style.action
                                    )
                             )
                             , column(6
@@ -463,7 +463,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                                     , label = "Create PFG disturbance files"
                                                     , icon = icon("file")
                                                     , width = "100%"
-                                                    , style = HTML(button.style.action)
+                                                    , style = button.style.action
                                        ) %>% helper(type = "inline"
                                                     , title = "Create PFG disturbance files"
                                                     , size = "l"
@@ -501,7 +501,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                      , actionButton(inputId = "delete.PFG.dist"
                                                     , label = NULL
                                                     , icon = icon("trash")
-                                                    , style = HTML(button.style.action)
+                                                    , style = button.style.action
                                      )
                             )
                           )
@@ -511,10 +511,10 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                             , br()
                             , br()
                             , column(12
-                                     , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px; overflow-y:scroll; max-height:250px;"))
+                                     , wellPanel(style = panel.style.scrollY
                                                  , uiOutput(outputId = "UI.files.dist")))
                             , column(12
-                                     , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px; overflow-x:scroll;"))
+                                     , wellPanel(style = panel.style.scrollX
                                                  , dataTableOutput(outputId = "created_table.dist"))
                             )
                           )

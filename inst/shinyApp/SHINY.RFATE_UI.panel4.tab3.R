@@ -31,7 +31,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
                                    , label = "Run relative abund"
                                    , icon = icon("play")
                                    , width = "100%"
-                                   , style = HTML(button.style.action)
+                                   , style = button.style.action
                       ) %>% helper(type = "inline"
                                    , title = "Create maps of relative abundance"
                                    , size = "l"
@@ -66,7 +66,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
                                    , label = "Run binary maps"
                                    , icon = icon("play")
                                    , width = "100%"
-                                   , style = HTML(button.style.action)
+                                   , style = button.style.action
                       ) %>% helper(type = "inline"
                                    , title = "Create binary maps (transform relative abundance into 0/1)"
                                    , size = "l"
@@ -108,7 +108,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
                                                   , label = ""
                                                   , icon = icon("broom")
                                                   , width = "100%"
-                                                  , style = HTML(button.style.action)
+                                                  , style = button.style.action
                                    )
                           )
                         )
@@ -122,7 +122,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
                                        , label = "Run Validation statistics"
                                        , icon = icon("play")
                                        , width = "100%"
-                                       , style = HTML(button.style.action)
+                                       , style = button.style.action
                         ) %>% helper(type = "inline"
                                      , title = "Plot validation statistics and transform maps of abundances into 0/1"
                                      , size = "l"
@@ -149,7 +149,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
                                        , label = "Run PFG vs HS"
                                        , icon = icon("play")
                                        , width = "100%"
-                                       , style = HTML(button.style.action)
+                                       , style = button.style.action
                         ) %>% helper(type = "inline"
                                      , title = "Plot maps of 0/1 predicted by FATE vs Habitat suitability"
                                      , size = "l"
@@ -188,7 +188,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
                                        , label = "Run PFG map"
                                        , icon = icon("play")
                                        , width = "100%"
-                                       , style = HTML(button.style.action)
+                                       , style = button.style.action
                         ) %>% helper(type = "inline"
                                      , title = "Plot map of PFG outputs"
                                      , size = "l"
@@ -197,45 +197,4 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Specific year</span>")
                )
              ))
          ) ## END fluidRow
-         # , fluidRow(
-         #   column(3
-         #          , actionButton(inputId = "create.validationStat"
-         #                         , label = "Run Validation statistics"
-         #                         , icon = icon("play")
-         #                         , width = "100%"
-         #                         , style = HTML(button.style.action)
-         #          ) %>% helper(type = "inline"
-         #                       , title = "Plot validation statistics and transform maps of abundances into 0/1"
-         #                       , size = "l"
-         #                       , content = help.HTML(paste0(path.reference, "POST_FATE.graphic_validationStatistics.html"))
-         #          )
-         #          , br()
-         #          , actionButton(inputId = "create.PFGvsHS"
-         #                         , label = "Run PFG vs HS"
-         #                         , icon = icon("play")
-         #                         , width = "100%"
-         #                         , style = HTML(button.style.action)
-         #          ) %>% helper(type = "inline"
-         #                       , title = "Plot maps of 0/1 predicted by FATE vs Habitat suitability"
-         #                       , size = "l"
-         #                       , content = help.HTML(paste0(path.reference, "POST_FATE.graphic_mapPFGvsHS.html"))
-         #          )
-         #          , br()
-         #          , actionButton(inputId = "create.PFGmap"
-         #                         , label = "Run PFG map"
-         #                         , icon = icon("play")
-         #                         , width = "100%"
-         #                         , style = HTML(button.style.action)
-         #          ) %>% helper(type = "inline"
-         #                       , title = "Plot map of PFG outputs"
-         #                       , size = "l"
-         #                       , content = help.HTML(paste0(path.reference, "POST_FATE.graphic_mapPFG.html"))
-         #          )
-         #   )
-         #   , column(9
-         #            , shinyjs::hidden(plotOutput(outputId = "plot.validationStat", width = "100%", height = "600px"))
-         #            , shinyjs::hidden(plotlyOutput(outputId = "plot.PFGvsHS", width = "100%", height = "600px"))
-         #            , shinyjs::hidden(plotlyOutput(outputId = "plot.PFGmap", width = "100%", height = "600px"))
-         #   )
-         # ) ## END fluidRow
 ) ## END tabPanel (Global parameters)

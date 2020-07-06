@@ -151,7 +151,7 @@ observeEvent(input$select.dominant, {
                                                         , "<li><strong>robustness_rep :</strong> ", robustness_rep, "</li>")
                                                , "")
                                       , "</ul>"))
-                          , title = HTML("Selection of dominant species from abundance releves")
+                          , title = "Selection of dominant species from abundance releves"
                           , footer = NULL))
     Sys.sleep(3)
     get_res = print_messages(as.expression(

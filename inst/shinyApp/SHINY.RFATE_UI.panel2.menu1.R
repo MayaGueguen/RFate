@@ -1,13 +1,12 @@
 
 tabPanel(title = HTML("<p class='panel_title'><i class='fa fa-folder-plus'></i> New / &emsp;<i class='fa fa-folder-open'></i> Modify</p>")
-# tabPanel(title = HTML("<span class='panel_title'><i class='fa fa-copy'></i> Simulation parameter files</span>")
          , value = "panel2"
          , sidebarLayout(
            
            # Inputs
            sidebarPanel(
              width = 3,
-             style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px;")),
+             style = panel.style,
              withMathJax(),
              
              div(id = "help2_1_1"
@@ -15,9 +14,9 @@ tabPanel(title = HTML("<p class='panel_title'><i class='fa fa-folder-plus'></i> 
                    column(12
                           , actionButton(inputId = "HELP.panel2.menu1"
                                          , label = "Need some help"
-                                         , icon = icon("question-circle", class = "icon-help")
+                                         , icon = icon("question-circle")
                                          , width = "100%"
-                                         , style = HTML(button.style.help))
+                                         , style = button.style.help)
                           , br()
                           , br()
                           , br()
@@ -31,7 +30,7 @@ tabPanel(title = HTML("<p class='panel_title'><i class='fa fa-folder-plus'></i> 
                                                , label = "Create folder"
                                                , icon = icon("folder")
                                                , width = "100%"
-                                               , style = HTML(button.style.action))
+                                               , style = button.style.action)
                           )
                    )
                  ),
@@ -78,10 +77,10 @@ tabPanel(title = HTML("<p class='panel_title'><i class='fa fa-folder-plus'></i> 
                                               , width = "100%"
                                   )
                                   , actionButton(inputId = "load.param"
-                                                 , label = HTML("Load parameters")
+                                                 , label = "Load parameters"
                                                  , icon = icon("upload")
                                                  , width = "100%"
-                                                 , style = HTML(button.style.action)
+                                                 , style = button.style.action
                                   )
                                 )
                           )
@@ -94,7 +93,7 @@ tabPanel(title = HTML("<p class='panel_title'><i class='fa fa-folder-plus'></i> 
                                                , label = HTML("Create Simulation <br/>parameters file")
                                                , icon = icon("file")
                                                , width = "100%"
-                                               , style = HTML(button.style.action)
+                                               , style = button.style.action
                                   )
                                 )
                           )
@@ -105,7 +104,7 @@ tabPanel(title = HTML("<p class='panel_title'><i class='fa fa-folder-plus'></i> 
                                                  , label = "Download folder"
                                                  , icon = icon("download")
                                                  , width = "100%"
-                                                 , style = HTML(button.style)
+                                                 , style = button.style
                                   )
                                 )
                           )
@@ -117,7 +116,7 @@ tabPanel(title = HTML("<p class='panel_title'><i class='fa fa-folder-plus'></i> 
                                          , label = "Start new folder"
                                          , icon = icon("refresh")
                                          , width = "100%"
-                                         , style = HTML(button.style.action)
+                                         , style = button.style.action
                             )
                           )
                    )
@@ -129,9 +128,9 @@ tabPanel(title = HTML("<p class='panel_title'><i class='fa fa-folder-plus'></i> 
            , mainPanel(
              width = 9,
              shinyjs::hidden(
-               wellPanel(id = "main.panel",
-                         style = "border-solid:solid; border-width:0px; border-color:#068f96;",
-                         tabsetPanel(
+               wellPanel(id = "main.panel"
+                         , style = border.style
+                         , tabsetPanel(
                            source("SHINY.RFATE_UI.panel2.menu1.tab1.R", local = TRUE)$value
                            , source("SHINY.RFATE_UI.panel2.menu1.tab2.R", local = TRUE)$value
                            , source("SHINY.RFATE_UI.panel2.menu1.tab3.R", local = TRUE)$value

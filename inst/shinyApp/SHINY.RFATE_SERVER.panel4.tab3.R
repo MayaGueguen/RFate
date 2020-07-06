@@ -86,7 +86,7 @@ observeEvent(input$create.relativeAbund, {
                                     , "<li><strong>year(s) :</strong> ", paste0(as.numeric(input$graph.year), collapse = " ; "), "</li>"
                                     , "<li><strong>opt.no_CPU :</strong> ", input$graph.opt.no_CPU, "</li>"
                                     , "</ul>"))
-                        , title = HTML("Relative PFG abundance maps (specific year)")
+                        , title = "Relative PFG abundance maps (specific year)"
                         , footer = NULL))
   Sys.sleep(3)
   get_res = print_messages(as.expression(
@@ -119,7 +119,7 @@ observeEvent(input$create.binaryMaps, {
                                     , "<li><strong>method2.cutoff :</strong> ", input$graph.binMethod.2, "</li>"
                                     , "<li><strong>opt.no_CPU :</strong> ", input$graph.opt.no_CPU, "</li>"
                                     , "</ul>"))
-                        , title = HTML("PFG binary maps (specific year)")
+                        , title = "PFG binary maps (specific year)"
                         , footer = NULL))
   Sys.sleep(3)
   get_res = print_messages(as.expression(
@@ -163,7 +163,7 @@ observeEvent(input$create.validationStat, {
                                     , "<li><strong>opt.ras_habitat :</strong> ", graph.opt.ras_habitat,"</li>"
                                     , "<li><strong>opt.no_CPU :</strong> ", input$graph.opt.no_CPU,"</li>"
                                     , "</ul>"))
-                        , title = HTML("Statistics for quality assessment (specific year)")
+                        , title = "Statistics for quality assessment (specific year)"
                         , footer = NULL))
   Sys.sleep(3)
   get_res = print_messages(as.expression(
@@ -209,7 +209,7 @@ observeEvent(input$create.PFGvsHS, {
                                     , "<li><strong>year(s) :</strong> ", as.numeric(input$graph.year), "</li>"
                                     , "<li><strong>opt.stratum :</strong> ", input$graph.opt.stratum, "</li>"
                                     , "</ul>"))
-                        , title = HTML("Maps of PFG habitat suitability vs simulated occurrences (specific year)")
+                        , title = "Maps of PFG habitat suitability vs simulated occurrences (specific year)"
                         , footer = NULL))
   Sys.sleep(3)
   get_res = print_messages(as.expression(
@@ -244,7 +244,7 @@ observeEvent(input$create.PFGmap, {
                                     , "<li><strong>opt.doBinary :</strong> ", input$graph.opt.doBinary,"</li>"
                                     , "<li><strong>opt.no_CPU :</strong> ", input$graph.opt.no_CPU,"</li>"
                                     , "</ul>"))
-                        , title = HTML("Maps of PFG richness, relative cover, CWM (specific year)")
+                        , title = "Maps of PFG richness, relative cover, CWM (specific year)"
                         , footer = NULL))
   Sys.sleep(3)
   get_res = print_messages(as.expression(

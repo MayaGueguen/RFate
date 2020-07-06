@@ -6,7 +6,7 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-object-group'>
            # Inputs
            sidebarPanel(
              width = 12,
-             style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px;")),
+             style = panel.style,
              withMathJax(),
              
              br(),
@@ -38,9 +38,9 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-object-group'>
                , column(2
                         , actionButton(inputId = "HELP.panel1"
                                        , label = "Need some help"
-                                       , icon = icon("question-circle", class = "icon-help")
+                                       , icon = icon("question-circle")
                                        , width = "100%"
-                                       , style = HTML(button.style.help)))
+                                       , style = button.style.help))
              ) ## END fluidRow
            ) ## END sidebarPanel
            
@@ -49,9 +49,9 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-object-group'>
              width = 12,
              fluidRow(
                column(4,
-                      wellPanel(id = "pfg.panel1",
-                                style = "border-solid:solid; border-width:0px;",
-                                tabsetPanel(
+                      wellPanel(id = "pfg.panel1"
+                                , style = border.style
+                                , tabsetPanel(
                                   source("SHINY.RFATE_UI.panel1.tab1.R", local = TRUE)$value
                                   , source("SHINY.RFATE_UI.panel1.tab2.R", local = TRUE)$value
                                   , source("SHINY.RFATE_UI.panel1.tab3.R", local = TRUE)$value
@@ -59,9 +59,9 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-object-group'>
                       ) ## END wellPanel
                )
                , column(8,
-                        wellPanel(id = "pfg.panel2",
-                                  style = "border-solid:solid; border-width:0px;",
-                                  tabsetPanel(
+                        wellPanel(id = "pfg.panel2"
+                                  , style = border.style
+                                  , tabsetPanel(
                                     tabPanel(title = HTML("<span class='tabPanel_title'>Graphics</span>")
                                                , value = "panel.graphics"
                                                , fluidRow(
@@ -76,18 +76,18 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-object-group'>
                                                           , shinyjs::disabled(
                                                             actionButton(inputId = "pfg.go.left"
                                                                          , label = ""
-                                                                         , icon = icon("arrow-circle-left", class = "icon-help")
+                                                                         , icon = icon("arrow-circle-left")
                                                                          , width = "100%"
-                                                                         , style = HTML(button.style.help))
+                                                                         , style = button.style.help)
                                                           )
                                                           , br()
                                                           , br()
                                                           , shinyjs::disabled(
                                                             actionButton(inputId = "pfg.go.right"
                                                                          , label = ""
-                                                                         , icon = icon("arrow-circle-right", class = "icon-help")
+                                                                         , icon = icon("arrow-circle-right")
                                                                          , width = "100%"
-                                                                         , style = HTML(button.style.help))
+                                                                         , style = button.style.help)
                                                           )
                                                  )
                                                ) ## END fluidRow
@@ -96,7 +96,7 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-object-group'>
                                              , value = "panel.observations"
                                              , fluidRow(
                                                column(12
-                                                      , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-top:18px; overflow-y:scroll; max-height:400px;"))
+                                                      , wellPanel(style = panel.style.scrollY
                                                                   , shinyjs::hidden(
                                                                     dataTableOutput(outputId = "table.observations"
                                                                                     , width = "100%"
@@ -110,7 +110,7 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-object-group'>
                                                , value = "panel.traits.sp"
                                                , fluidRow(
                                                  column(12
-                                                        , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-top:18px; overflow-y:scroll; max-height:400px;"))
+                                                        , wellPanel(style = panel.style.scrollY
                                                                     , shinyjs::hidden(
                                                                       dataTableOutput(outputId = "table.traits.sp"
                                                                                       , width = "100%"
@@ -124,7 +124,7 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-object-group'>
                                                , value = "panel.traits.pfg"
                                                , fluidRow(
                                                  column(12
-                                                        , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-top:18px; overflow-y:scroll; max-height:400px;"))
+                                                        , wellPanel(style = panel.style.scrollY
                                                                     , shinyjs::hidden(
                                                                       dataTableOutput(outputId = "table.traits.pfg"
                                                                                       , width = "100%"

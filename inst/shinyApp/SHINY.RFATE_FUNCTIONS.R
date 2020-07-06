@@ -8,6 +8,9 @@ theme.color = "#3a7da8"
 theme.font = "'Londrina Solid', cursive"
 navbar.color = "#e0dbd9"
 navbar.color.text = "#8c8582"
+button.color = "rgba(96, 129, 150, 0.5)"
+help.color = "#dee2e8"
+help.color = "#cdcfd1"
 
 baliseHTML.font = "@import url('https://fonts.googleapis.com/css?family=Londrina+Solid:200,300|Medula+One|Slabo+27px|Francois+One');"
 baliseHTML.theme = paste0("
@@ -22,18 +25,20 @@ baliseHTML.margin0 = paste0("
       padding: 0px;
       margin-top: 0px;")
 
-button.color = "rgba(96, 129, 150, 0.5)"
+
 button.style = paste0("background-color: ", button.color, "; border-width: 0px;")
-button.style.action = paste0("background-color: ", button.color, "; border-width: 0px; margin-bottom: 3px;")
+button.style.action = paste0(button.style, " margin-bottom: 3px;")
 button.style.help = paste0("color:#FFFFFF; font-family: 'Londrina Solid', cursive; "
                            , "font-size: 18px; background-color: rgba(10, 58, 135, 0.8); border-width:0px;")
 
+border.style = "background-color:#FFFFFF; border-solid:solid; border-width:1px;"
+
+panel.style = paste0("border-width:0px; background-color:", help.color, "; margin-top:18px;")
+# , "; margin-left:15px; margin-top:18px;")
+panel.style.scrollX = paste0(panel.style, " overflow-x:scroll;")
+panel.style.scrollY = paste0(panel.style, " overflow-y:scroll; max-height:300px;")
 
 
-# panel.style = paste0("color:#FFFFFF; background-color:", button.color, "; border-width:0px;")
-# panel.style.hover = paste0("color:#FFFFFF; background-color:", theme.color, "; border-width:0px;")
-
-help.color = "#dee2e8"
 
 param.style = function(param.text)
 {

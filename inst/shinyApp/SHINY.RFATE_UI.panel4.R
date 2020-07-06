@@ -6,7 +6,7 @@ tabPanel(title = HTML("<span class='panel_title'><i class='fa fa-chart-bar'></i>
            # Inputs
            sidebarPanel(
              width = 12,
-             style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px;")),
+             style = panel.style,
              withMathJax(),
              
              br(),
@@ -34,29 +34,23 @@ tabPanel(title = HTML("<span class='panel_title'><i class='fa fa-chart-bar'></i>
                         , br()
                         , actionButton(inputId = "HELP.panel4"
                                        , label = "Need some help"
-                                       , icon = icon("question-circle", class = "icon-help")
+                                       , icon = icon("question-circle")
                                        , width = "100%"
-                                       , style = HTML(button.style.help)))
+                                       , style = button.style.help))
              ) ## END fluidRow
            ) ## END sidebarPanel
            
            # Output
            , mainPanel(
              width = 12,
-             wellPanel(id = "main.panel",
-                       style = "border-solid:solid; border-width:0px;",
-                       tabsetPanel(
+             wellPanel(id = "main.panel"
+                       , style = border.style
+                       , tabsetPanel(
                          source("SHINY.RFATE_UI.panel4.tab1.R", local = TRUE)$value
                          , source("SHINY.RFATE_UI.panel4.tab2.R", local = TRUE)$value
                          , source("SHINY.RFATE_UI.panel4.tab3.R", local = TRUE)$value
                        ) ## END tabsetPanel
              ) ## END wellPanel
            ) ## END mainPanel
-         # ) %>% helper(type = "inline"
-         #              , title = "Evaluate FATE-HD simulation outputs"
-         #              , size = "l"
-         #              , content = help.HTML(html.file = "paste0(path.articles, "rfate_tutorial_3_graphics.html")
-         #                                    , target.anchor = 'class="hidden name'
-         #                                    , target.class = "rfate_tutorial_3_graphics.Rmd")
          ) ## END sidebarLayout
 ) ## tabPanel

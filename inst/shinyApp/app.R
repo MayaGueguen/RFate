@@ -37,7 +37,6 @@ load.packages = sapply(list.packages, require, character.only = TRUE)
 
 ###################################################################################################################################
 
-# setwd("/home/gueguema/Documents/_TUTOS/3_R/_PACKAGES/RFate/")
 source("SHINY.RFATE_FUNCTIONS.R", local = TRUE)
 
 ###################################################################################################################################
@@ -54,21 +53,6 @@ ui <- fluidPage(
   tags$body(
     tags$style(HTML(paste0(
       baliseHTML.font
-      # , "#loadmessage {
-      # position: fixed;
-      # top: 0px;
-      # left: 0px;
-      # width: 100%;
-      # padding: 5px 0px 5px 0px;
-      # text-align: center;
-      # font-family: ", theme.font, ";
-      # font-weight: 300;
-      # line-height: 1.1;
-      # color: #000000;
-      # background-color: #CCFF66;
-      # z-index: 105;
-      # }\n"
-      # , ".icon-helpd { color: Darkblue; }\n"
       , "h1 {
       font-family: ", theme.font, ";
       font-weight: 300;
@@ -78,6 +62,12 @@ ui <- fluidPage(
       margin-bottom: 0px;
       ", baliseHTML.theme
       , "}\n"
+      ## Main navigation menu
+      , ".navbar-default .navbar-nav > not(.active) > a { color: ", navbar.color.text, "; }\n"
+      , ".navbar-default .navbar-nav > .active > a, 
+      .navbar-default .navbar-nav > .active > a:focus, 
+      .navbar-default .navbar-nav > .active > a:hover { background-color: ", navbar.color, "; }\n"
+      ## Panel navigation menu
       , ".tabbable > .nav > li > a {
       background-color: ", navbar.color, ";
       color: ", navbar.color.text, ";
@@ -85,13 +75,10 @@ ui <- fluidPage(
       }\n"
       , ".tabbable > .nav > li > a:hover {", baliseHTML.theme, "}\n"
       , ".tabbable > .nav > li[class=active] > a {", baliseHTML.theme, "}\n"
-      , ".navbar-default .navbar-nav > not(.active) > a { color: ", navbar.color.text, "; }\n"
-      , ".navbar-default .navbar-nav > .active > a, 
-      .navbar-default .navbar-nav > .active > a:focus, 
-      .navbar-default .navbar-nav > .active > a:hover { background-color: ", navbar.color, "; }\n"
       , ".panel_title {", baliseHTML.title, baliseHTML.margin0, "}\n"
       , ".tabPanel_title {", baliseHTML.title, baliseHTML.margin0, "}\n"
       , ".tabPanel_subtitle {", baliseHTML.title, "font-size: 18px;", baliseHTML.margin0, "}\n"
+      ## Button panels 
       , ".radioGroupButtons .btn {
       background-color: rgba(96, 129, 150, 0.5);
       color: #FFFFFF;
@@ -105,10 +92,8 @@ ui <- fluidPage(
   ), ## END tag$body
   
   fluidRow(
-    style = HTML(paste0("background-color: #3a7da8; margin-top: 20px; margin-bottom: 20px;")),
-    column(10,
-           headerPanel("FATE", windowTitle = "FATE")
-    )
+    style = HTML(paste0("background-color: ", theme.color, "; margin-top: 20px; margin-bottom: 20px;"))
+    , column(10, headerPanel("FATE", windowTitle = "FATE"))
     , column(2,
              conditionalPanel(condition="$('html').hasClass('shiny-busy')",
                               tags$img(src =
@@ -132,11 +117,9 @@ ui <- fluidPage(
                , id = "navbar"
                , source("SHINY.RFATE_UI.panel0.R", local = TRUE)$value
                , source("SHINY.RFATE_UI.panel1.R", local = TRUE)$value
-               # , source("SHINY.RFATE_UI.panel2.R", local = TRUE)$value
                , navbarMenu(title = HTML("<span class='panel_title'><i class='fa fa-copy'></i> Simulation parameter files</span>")
                             , source("SHINY.RFATE_UI.panel2.menu1.R", local = TRUE)$value
                             , source("SHINY.RFATE_UI.panel2.menu2.R", local = TRUE)$value)
-               # , tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Create multiple set</span>")))
                , source("SHINY.RFATE_UI.panel3.R", local = TRUE)$value
                , source("SHINY.RFATE_UI.panel4.R", local = TRUE)$value
     )

@@ -23,7 +23,7 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
            # Inputs
            sidebarPanel(
              width = 12,
-             style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px;")),
+             style = panel.style,
              withMathJax(),
              
              br(),
@@ -56,9 +56,9 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
                         , br()
                         , actionButton(inputId = "HELP.panel2.menu2"
                                        , label = "Need some help"
-                                       , icon = icon("question-circle", class = "icon-help")
+                                       , icon = icon("question-circle")
                                        , width = "100%"
-                                       , style = HTML(button.style.help)))
+                                       , style = button.style.help))
              ) ## END fluidRow
            ) ## END sidebarPanel
            
@@ -67,9 +67,9 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
              width = 12
              , shinyjs::hidden(
                
-               wellPanel(id = "main.panel",
-                         style = "border-solid:solid; border-width:0px;",
-                         fluidRow(
+               wellPanel(id = "main.panel"
+                         , style = border.style
+                         , fluidRow(
                            column(10
                                   , div(id = "help2_2_3"
                                         , wellPanel(id = "main.panel1",
@@ -231,7 +231,7 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
                                                                , label = HTML("Create <br/>multiple set")
                                                                , icon = icon("play")
                                                                , width = "100%"
-                                                               , style = HTML(button.style.action)
+                                                               , style = button.style.action
                                                   ) %>% helper(type = "inline"
                                                                , title = "Multiple sets of parameters"
                                                                , size = "l"

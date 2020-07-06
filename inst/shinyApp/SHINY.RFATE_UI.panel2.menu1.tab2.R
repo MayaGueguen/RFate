@@ -41,7 +41,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Scenario files</span>")
                                        , label = "Create SAVE maps files"
                                        , icon = icon("file")
                                        , width = "100%"
-                                       , style = HTML(button.style.action)
+                                       , style = button.style.action
                         )
                       ) %>% helper(type = "inline"
                                    , title = "Create SAVE maps files"
@@ -82,7 +82,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Scenario files</span>")
                                          , label = "Create SAVE objects files"
                                          , icon = icon("file")
                                          , width = "100%"
-                                         , style = HTML(button.style.action)
+                                         , style = button.style.action
                           )
                         ) %>% helper(type = "inline"
                                      , title = "Create SAVE objects files"
@@ -97,10 +97,10 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Scenario files</span>")
                , br()
                , br()
                , column(12
-                        , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px; overflow-y:scroll; max-height:250px;"))
+                        , wellPanel(style = panel.style.scrollY
                                     , uiOutput(outputId = "UI.files.save")))
                , column(12
-                        , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px; overflow-x:scroll;"))
+                        , wellPanel(style = panel.style.scrollX
                                     , dataTableOutput(outputId = "created_table.save"))
                )
              )

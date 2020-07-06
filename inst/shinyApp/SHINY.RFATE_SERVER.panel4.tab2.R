@@ -50,7 +50,7 @@ observeEvent(input$create.temporalEvolution, {
                                     , "<li><strong>opt.ras_habitat :</strong> ", input$graph.opt.ras_habitat, "</li>"
                                     , "<li><strong>opt.no_CPU :</strong> ", input$graph.opt.no_CPU, "</li>"
                                     , "</ul>"))
-                        , title = HTML("Relative PFG abundance tables through time")
+                        , title = "Relative PFG abundance tables through time"
                         , footer = NULL))
   Sys.sleep(3)
   get_res = print_messages(as.expression(
@@ -78,7 +78,7 @@ observeEvent(input$create.evolutionCoverage, {
                                     , "<li><strong>simulation parameter file :</strong> ", basename(get_param.simul()), "</li>"
                                     , "<li><strong>opt.fixedScale :</strong> ", input$graph.opt.fixedScale, "</li>"
                                     , "</ul>"))
-                        , title = HTML("Evolution coverage graphic")
+                        , title = "Evolution coverage graphic"
                         , footer = NULL))
   Sys.sleep(3)
   get_res = print_messages(as.expression(
@@ -123,7 +123,7 @@ observeEvent(input$create.evolutionPixels, {
                                     , "<li><strong>opt.cells_ID :</strong> ", graph.opt.cells_ID, "</li>"
                                     , "<li><strong>opt.fixedScale :</strong> ", input$graph.opt.fixedScale, "</li>"
                                     , "</ul>"))
-                        , title = HTML("Evolution of PFG abundance through time (pixels)")
+                        , title = "Evolution of PFG abundance through time (pixels)"
                         , footer = NULL))
   Sys.sleep(3)
   get_res = print_messages(as.expression(
@@ -156,7 +156,7 @@ observeEvent(input$create.evolutionStability, {
                                     , "<li><strong>movingWindow_size :</strong> ", input$graph.mw.size, "</li>"
                                     , "<li><strong>movingWindow_step :</strong> ", input$graph.mw.step, "</li>"
                                     , "</ul>"))
-                        , title = HTML("Evolution of habitat composition through time")
+                        , title = "Evolution of habitat composition through time"
                         , footer = NULL))
   Sys.sleep(3)
   get_res = print_messages(as.expression(

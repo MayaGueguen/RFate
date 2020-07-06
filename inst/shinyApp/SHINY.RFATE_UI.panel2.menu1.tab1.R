@@ -152,7 +152,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Global parameters</span>")
                                      , label = "Create Global parameters file"
                                      , icon = icon("file")
                                      , width = "100%"
-                                     , style = HTML(button.style.action)
+                                     , style = button.style.action
                       ) %>% helper(type = "inline"
                                    , title = "Global parameter file"
                                    , size = "l"
@@ -166,10 +166,10 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Global parameters</span>")
                , br()
                , br()
                , column(12
-                        , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px; overflow-y:scroll; max-height:250px;"))
+                        , wellPanel(style = panel.style.scrollY
                                     , uiOutput(outputId = "UI.files.global")))
                , column(12
-                        , wellPanel(style = HTML(paste0("border-width:0px; background-color:", help.color, "; margin-left:15px; margin-top:18px; overflow-x:scroll;"))
+                        , wellPanel(style = panel.style.scrollX
                                     , dataTableOutput(outputId = "created_table.global"))
                )
              )

@@ -54,7 +54,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>2. Pairwise distance</span>"
                                  , label = "Compute pairwise distance"
                                  , icon = icon("ruler")
                                  , width = "100%"
-                                 , style = HTML(button.style.action)
+                                 , style = button.style.action
                   ) %>% helper(type = "inline"
                                , title = "Computation of species pairwise distance"
                                , size = "l"

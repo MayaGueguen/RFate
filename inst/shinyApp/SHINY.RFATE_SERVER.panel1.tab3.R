@@ -124,7 +124,7 @@ get_CLUST1 = eventReactive(input$clustering.step1, {
   if (!is.null(sp.dist))
   {
     showModal(modalDialog(HTML(paste0("Create hierarchical clusters (dendograms) from dissimilarity matrix ..."))
-                          , title = HTML("PFG clustering : step 1")
+                          , title = "PFG clustering : step 1"
                           , footer = NULL))
     Sys.sleep(3)
     get_res = print_messages(as.expression(
@@ -158,7 +158,7 @@ get_CLUST2 = eventReactive(input$clustering.step2, {
       showModal(modalDialog(HTML(paste0("Choose clusters and select determinant species with : <ul>"
                                         , "<li><strong>no.clusters :</strong> ", paste(unlist(no.clusters)),"</li>"
                                         , "</ul>"))
-                            , title = HTML("PFG clustering : step 2")
+                            , title = "PFG clustering : step 2"
                             , footer = NULL))
       Sys.sleep(3)
       get_res = print_messages(as.expression(
@@ -210,7 +210,7 @@ get_CLUST3 = eventReactive(input$clustering.step3, {
   if (!is.null(sp.pfg.traits))
   {
     showModal(modalDialog(HTML(paste0("Compute PFG traits values based on determinant species..."))
-                          , title = HTML("PFG clustering : step 3")
+                          , title = "PFG clustering : step 3"
                           , footer = NULL))
     Sys.sleep(3)
     get_res = print_messages(as.expression(

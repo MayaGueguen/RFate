@@ -149,7 +149,7 @@ get_DIST = eventReactive(input$compute.distance, {
                                               , "<li><strong>opt.maxPercent.similarSpecies :</strong> ", as.numeric(input$opt.maxPercent.similarSpecies), "</li>"
                                               , "<li><strong>opt.min.sd :</strong> ", as.numeric(input$opt.min.sd), "</li>"
                                               , "</ul>"))
-                                  , title = HTML("Distance matrix between selected species")
+                                  , title = "Distance matrix between selected species"
                                   , footer = NULL))
             Sys.sleep(3)
             get_res = print_messages(as.expression(

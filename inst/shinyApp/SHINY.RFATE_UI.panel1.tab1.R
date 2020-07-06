@@ -56,7 +56,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>1. Dominant species</span>")
                                  , label = "Select dominant species"
                                  , icon = icon("list")
                                  , width = "100%"
-                                 , style = HTML(button.style.action)
+                                 , style = button.style.action
                   ) %>% helper(type = "inline"
                                , title = "Selection of dominant species"
                                , size = "l"

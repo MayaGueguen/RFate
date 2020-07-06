@@ -24,7 +24,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>3. Hierarchical clustering</
                                  , label = "Build dendrograms"
                                  , icon = icon("bezier-curve")
                                  , width = "100%"
-                                 , style = HTML(button.style.action)
+                                 , style = button.style.action
                   ) %>% helper(type = "inline"
                                , title = "Clustering : build dendrograms"
                                , size = "l"
@@ -36,7 +36,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>3. Hierarchical clustering</
                                  , label = "Build PFG"
                                  , icon = icon("object-group")
                                  , width = "100%"
-                                 , style = HTML(button.style.action)
+                                 , style = button.style.action
                     ) %>% helper(type = "inline"
                                  , title = "Clustering : build PFG"
                                  , size = "l"
@@ -49,7 +49,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>3. Hierarchical clustering</
                                  , label = "Calculate PFG traits values"
                                  , icon = icon("clipboard-list")
                                  , width = "100%"
-                                 , style = HTML(button.style.action)
+                                 , style = button.style.action
                     ) %>% helper(type = "inline"
                                  , title = "Clustering : calculate PFG traits values"
                                  , size = "l"
