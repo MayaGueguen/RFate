@@ -38,7 +38,7 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-cogs'></i> Run
                                        , width = "100%"
                                        , style = button.style.help
                         ) %>% helper(type = "inline"
-                                     , title = "Run a FATE-HD simulation"
+                                     , title = "Run a FATE simulation"
                                      , size = "l"
                                      , colour = "#e0dbd9"
                                      , content = help.full(param.name.vec = c("<hr/>"
@@ -47,12 +47,12 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-cogs'></i> Run
                                                                               , "name.FATE_executable")
                                                            , param.desc.vec = c("<hr/>"
                                                                                 , "a <span style='font-family:Monospace;'>string</span> that corresponds to
-                                                                                the main directory or simulation name of the <span style='font-family:Monospace;'>FATE-HD</span> simulation"
+                                                                                the main directory or simulation name of the <span style='font-family:Monospace;'>FATE</span> simulation"
                                                                                 , "a <span style='font-family:Monospace;'>string</span> that corresponds to
                                                                                 the name of a parameter file that will be contained into the <span style='font-family:Monospace;'>PARAM_SIMUL</span>
-                                                                                folder of the <span style='font-family:Monospace;'>FATE-HD</span> simulation"
+                                                                                folder of the <span style='font-family:Monospace;'>FATE</span> simulation"
                                                                                 , "a <span style='font-family:Monospace;'>string</span> that corresponds to
-                                                                                the file name of the <span style='font-family:Monospace;'>FATE-HD</span> executable"
+                                                                                the file name of the <span style='font-family:Monospace;'>FATE</span> executable"
                                                            )
                                                            )
                                      )

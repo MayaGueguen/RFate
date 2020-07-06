@@ -11,7 +11,6 @@ params:
   required.seeding_duration: NA
   required.seeding_timestep: NA
   required.seeding_input: NA
-  required.max_by_cohort: NA
   required.max_abund_low: NA
   required.max_abund_medium: NA
   required.max_abund_high: NA
@@ -21,7 +20,7 @@ params:
   doLight: NA
   doSoil: NA
   DISPERSAL.mode: NA
-  HABSUIT.ref_option: NA
+  HABSUIT.mode: NA
   DIST.no: NA
   DIST.no_sub: NA
   DIST.freq: NA
@@ -50,7 +49,6 @@ params:
 # params$required.seeding_duration
 # params$required.seeding_timestep
 # params$required.seeding_input
-# params$required.max_by_cohort
 # params$required.max_abund_low
 # params$required.max_abund_medium
 # params$required.max_abund_high
@@ -98,7 +96,6 @@ if (params$create.skeleton > 0)
                                    , required.seeding_duration = params$required.seeding_duration
                                    , required.seeding_timestep = params$required.seeding_timestep
                                    , required.seeding_input = params$required.seeding_input
-                                   , required.max_by_cohort = params$required.max_by_cohort
                                    , required.max_abund_low = params$required.max_abund_low
                                    , required.max_abund_medium = params$required.max_abund_medium
                                    , required.max_abund_high = params$required.max_abund_high
@@ -107,7 +104,7 @@ if (params$create.skeleton > 0)
                                                                   , "(2) exponential kernel" = 2
                                                                   , "(3) exponential kernel with probability" = 3)[params$DISPERSAL.mode])
                                    , doHabSuitability = params$doHabSuitability
-                                   , HABSUIT.ref_option = ifelse(params$HABSUIT.ref_option == "(1) random", 1, 2)
+                                   , HABSUIT.mode = ifelse(params$HABSUIT.mode == "(1) random", 1, 2)
                                    , doLight = params$doLight
                                    , LIGHT.thresh_medium = params$LIGHT.thresh_medium
                                    , LIGHT.thresh_low = params$LIGHT.thresh_low

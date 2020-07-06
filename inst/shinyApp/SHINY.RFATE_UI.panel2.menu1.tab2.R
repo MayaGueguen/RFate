@@ -9,7 +9,8 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Scenario files</span>")
                column(6
                       , br()
                       , wellPanel(
-                        HTML("<strong>Save maps ?</strong>")
+                        HTML(paste0("<i class='far fa-heart' style='font-size:15px;'></i>"
+                                    , " <strong>Save maps ?</strong>"))
                         , br()
                         , br()
                         , textInput(inputId = "save.maps.folder"
@@ -52,7 +53,8 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Scenario files</span>")
                , column(6
                         , br()
                         , wellPanel(
-                          HTML("<strong>Save simulation ?</strong>")
+                          HTML(paste0("<i class='far fa-heart' style='font-size:15px;'></i>"
+                                      , " <strong>Save simulation ?</strong>"))
                           , br()
                           , br()
                           , textInput(inputId = "save.objects.folder"

@@ -53,7 +53,9 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                )
              ) ## END wellPanel
              , tabsetPanel(
-               tabPanel(title = HTML("<span class='tabPanel_subtitle'>Succession</span>")
+               tabPanel(title = HTML(paste0("<span class='tabPanel_subtitle'>"
+                                            , "<i class='fa fa-heart' style='font-size:15px;'></i>"
+                                            , " Succession</span>"))
                         , value = "panel.succ"
                         , fluidRow(
                           column(6
@@ -156,7 +158,9 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                           )
                         )
                ) ## END tabPanel (succ)
-               , tabPanel(title = HTML("<span class='tabPanel_subtitle'>Light</span>")
+               , tabPanel(title = HTML(paste0("<span class='tabPanel_subtitle'>"
+                                              , "<i class='fa fa-sun' style='font-size:15px;'></i>"
+                                              , " Light</span>"))
                           , value = "panel.light"
                           , fluidRow(
                             column(6
@@ -248,7 +252,9 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                             )
                           )
                ) ## END tabPanel (light)
-               , tabPanel(title = HTML("<span class='tabPanel_subtitle'>Soil</span>")
+               , tabPanel(title = HTML(paste0("<span class='tabPanel_subtitle'>"
+                                              , "<i class='fas fa-recycle' style='font-size:15px;'></i>"
+                                              , " Soil</span>"))
                           , value = "panel.soil"
                           , fluidRow(
                             column(6
@@ -351,7 +357,9 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                             )
                           )
                ) ## END tabPanel (soil)
-               , tabPanel(title = HTML("<span class='tabPanel_subtitle'>Dispersal</span>")
+               , tabPanel(title = HTML(paste0("<span class='tabPanel_subtitle'>"
+                                              , "<i class='fa fa-seedling' style='font-size:15px;'></i>"
+                                              , " Dispersal</span>"))
                           , value = "panel.disp"
                           , fluidRow(
                             column(6
@@ -444,7 +452,9 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                             )
                           )
                ) ## END tabPanel (dispersal)
-               , tabPanel(title = HTML("<span class='tabPanel_subtitle'>Disturbances</span>")
+               , tabPanel(title = HTML(paste0("<span class='tabPanel_subtitle'>"
+                                              , "<i class='fas fa-bolt' style='font-size:15px;'></i>"
+                                              , " Disturbances</span>"))
                           , value = "panel.dist"
                           , fluidRow(
                             column(6

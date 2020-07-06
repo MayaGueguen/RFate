@@ -78,14 +78,13 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
                                                       column(4
                                                              , checkboxGroupInput(inputId = "set.choices.1"
                                                                                   , label = HTML("<i class='fa fa-heart'></i> global parameters")
-                                                                                  , choices = c("max_by_cohort"
-                                                                                                , "max_abund_low"
+                                                                                  , choices = c("max_abund_low"
                                                                                                 , "max_abund_medium"
                                                                                                 , "max_abund_high")
                                                                                   , selected = NULL
                                                                                   , width = "100%"
                                                              ) %>% helper(type = "inline"
-                                                                          , title = "FATE-HD modules : CORE - Required and impacted parameters"
+                                                                          , title = "FATE modules : CORE - Required and impacted parameters"
                                                                           , size = "l"
                                                                           , content = help.HTML(html.file = paste0(path.articles, "fate_tutorial_3_MODULES.html")
                                                                                                 , target.anchor = 'class="section level1'
@@ -112,13 +111,13 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
                                                       , column(4
                                                                , checkboxGroupInput(inputId = "set.choices.4"
                                                                                     , label = HTML("<i class='fa fa-globe'></i> habitat suitability")
-                                                                                    , choices = c("habsuit_ref_option")
+                                                                                    , choices = "habsuit_mode"
                                                                                     , selected = NULL
                                                                                     , width = "100%"
                                                                )
                                                       )
                                                     ) %>% helper(type = "inline"
-                                                                 , title = "FATE-HD modules : HABITAT SUITABILITY - Required and impacted parameters"
+                                                                 , title = "FATE modules : HABITAT SUITABILITY - Required and impacted parameters"
                                                                  , size = "l"
                                                                  , content = help.HTML(html.file = paste0(path.articles, "fate_tutorial_3_MODULES.html")
                                                                                        , target.anchor = 'class="section level1'
@@ -160,7 +159,7 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-clone'></i> Cr
                                                                )
                                                       )
                                                     ) %>% helper(type = "inline"
-                                                                 , title = "FATE-HD modules : DISPERSAL - Required and impacted parameters"
+                                                                 , title = "FATE modules : DISPERSAL - Required and impacted parameters"
                                                                  , size = "l"
                                                                  , content = help.HTML(html.file = paste0(path.articles, "fate_tutorial_3_MODULES.html")
                                                                                        , target.anchor = 'class="section level1'

@@ -13,16 +13,17 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Raster files</span>")
                           column(4
                                  , br()
                                  , wellPanel(
-                                   HTML("<strong>Simulation mask</strong>")
+                                   HTML(paste0("<i class='fa fa-heart' style='font-size:15px;'></i>"
+                                               , " <strong>Simulation mask</strong>"))
                                    , br()
                                    , br()
                                    , fileInput(inputId = "simul.mask"
-                                               , label = param.style("name.mask")
+                                               , label = NULL
                                                , multiple = FALSE
                                                , width = "100%"
                                    )
                                    , actionButton(inputId = "upload.mask"
-                                                  , label = HTML("Upload <br/>simulation mask")
+                                                  , label = "Upload"
                                                   , icon = icon("upload")
                                                   , width = "100%"
                                                   , style = button.style.action
@@ -35,22 +36,23 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Raster files</span>")
                                                                     , param.desc.vec = c("<hr/>"
                                                                                          , "a <span style='font-family:Monospace;'>string</span> that corresponds to
                                                                                          the file name of a raster mask, with either 0 or 1 within each pixel, 1 corresponding to the cells of the studied area in which the succession
-                                                                                         module of the FATE-HD simulation will take place")
+                                                                                         module of the FATE simulation will take place")
                                                                     ))
                                                                     )
                           , column(4
                                    , br()
                                    , wellPanel(
-                                     HTML("<strong>Disturbances masks</strong>")
+                                     HTML(paste0("<i class='fas fa-bolt' style='font-size:15px;'></i>"
+                                                 , " <strong>Disturbances masks</strong>"))
                                      , br()
                                      , br()
                                      , fileInput(inputId = "dist.mask"
-                                                 , label = param.style("dist.mask")
+                                                 , label = NULL
                                                  , multiple = TRUE
                                                  , width = "100%"
                                      )
                                      , actionButton(inputId = "upload.dist.mask"
-                                                    , label = HTML("Upload <br/>disturbance masks")
+                                                    , label = "Upload"
                                                     , icon = icon("upload")
                                                     , width = "100%"
                                                     , style = button.style.action
@@ -69,16 +71,17 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Raster files</span>")
                           , column(4
                                    , br()
                                    , wellPanel(
-                                     HTML("<strong>Drought masks</strong>")
+                                     HTML(paste0("<i class='fas fa-tint' style='font-size:15px;'></i>"
+                                                 , " <strong>Drought masks</strong>"))
                                      , br()
                                      , br()
                                      , fileInput(inputId = "drought.mask"
-                                                 , label = param.style("drought.mask")
+                                                 , label = NULL
                                                  , multiple = TRUE
                                                  , width = "100%"
                                      )
                                      , actionButton(inputId = "upload.drought.mask"
-                                                    , label = HTML("Upload <br/>drought masks")
+                                                    , label = "Upload"
                                                     , icon = icon("upload")
                                                     , width = "100%"
                                                     , style = button.style.action
@@ -99,16 +102,17 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Raster files</span>")
                           column(4
                                  , br()
                                  , wellPanel(
-                                   HTML("<strong>Fire masks</strong>")
+                                   HTML(paste0("<i class='fas fa-fire' style='font-size:15px;'></i>"
+                                               , " <strong>Fire masks</strong>"))
                                    , br()
                                    , br()
                                    , fileInput(inputId = "fire.mask"
-                                               , label = param.style("fire.mask")
+                                               , label = NULL
                                                , multiple = TRUE
                                                , width = "100%"
                                    )
                                    , actionButton(inputId = "upload.fire.mask"
-                                                  , label = HTML("Upload <br/>fire masks")
+                                                  , label = "Upload"
                                                   , icon = icon("upload")
                                                   , width = "100%"
                                                   , style = button.style.action
@@ -127,16 +131,17 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Raster files</span>")
                           , column(4
                                    , br()
                                    , wellPanel(
-                                     HTML("<strong>Elevation mask</strong>")
+                                     HTML(paste0("<i class='fas fa-fire' style='font-size:15px;'></i>"
+                                                 , " <strong>Elevation mask</strong>"))
                                      , br()
                                      , br()
                                      , fileInput(inputId = "elevation.mask"
-                                                 , label = param.style("elevation.mask")
+                                                 , label = NULL
                                                  , multiple = TRUE
                                                  , width = "100%"
                                      )
                                      , actionButton(inputId = "upload.elevation.mask"
-                                                    , label = HTML("Upload <br/>elevation mask")
+                                                    , label = "Upload"
                                                     , icon = icon("upload")
                                                     , width = "100%"
                                                     , style = button.style.action
@@ -154,16 +159,17 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Raster files</span>")
                           , column(4
                                    , br()
                                    , wellPanel(
-                                     HTML("<strong>Slope mask</strong>")
+                                     HTML(paste0("<i class='fas fa-fire' style='font-size:15px;'></i>"
+                                                 , " <strong>Slope mask</strong>"))
                                      , br()
                                      , br()
                                      , fileInput(inputId = "slope.mask"
-                                                 , label = param.style("slope.mask")
+                                                 , label = NULL
                                                  , multiple = TRUE
                                                  , width = "100%"
                                      )
                                      , actionButton(inputId = "upload.slope.mask"
-                                                    , label = HTML("Upload <br/>slope mask")
+                                                    , label = "Upload"
                                                     , icon = icon("upload")
                                                     , width = "100%"
                                                     , style = button.style.action
@@ -183,7 +189,8 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Raster files</span>")
                           column(4
                                  , br()
                                  , wellPanel(
-                                   HTML("<strong>Habitat suitability masks</strong>")
+                                   HTML(paste0("<i class='fas fa-globe' style='font-size:15px;'></i>"
+                                               , " <strong>Habitat suitability masks</strong>"))
                                    , br()
                                    , br()
                                    , textInput(inputId = "habsuit.folder"
@@ -196,7 +203,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Raster files</span>")
                                                , width = "100%"
                                    )
                                    , actionButton(inputId = "upload.habsuit.mask"
-                                                  , label = HTML("Upload habitat <br/>suitability masks")
+                                                  , label = "Upload"
                                                   , icon = icon("upload")
                                                   , width = "100%"
                                                   , style = button.style.action
@@ -218,7 +225,8 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Raster files</span>")
                           , column(4
                                    , br()
                                    , wellPanel(
-                                     HTML("<strong>Aliens masks</strong>")
+                                     HTML(paste0("<i class='fab fa-reddit-alien' style='font-size:15px;'></i>"
+                                               , " <strong>Aliens masks</strong>"))
                                      , br()
                                      , br()
                                      , textInput(inputId = "aliens.folder"
@@ -231,7 +239,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Raster files</span>")
                                                  , width = "100%"
                                      )
                                      , actionButton(inputId = "upload.aliens.mask"
-                                                    , label = HTML("Upload <br/>aliens masks")
+                                                    , label = "Upload"
                                                     , icon = icon("upload")
                                                     , width = "100%"
                                                     , style = button.style.action

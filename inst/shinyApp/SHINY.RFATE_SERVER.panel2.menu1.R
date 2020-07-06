@@ -8,14 +8,14 @@ observeEvent(input$HELP.panel2.menu1, {
                            , "skipLabel" = "Close"
                            , steps = data.frame(element = c(paste0("#help2_1_", 1:2),"#main.panel",paste0("#help2_", 4:6))
                                                 # , position = c("auto", "auto", "bottom-middle-aligned", "auto", "auto")
-                                                , intro = c("<p><code>FATE-HD</code> requires only one input parameter, which is a file containing
+                                                , intro = c("<p><code>FATE</code> requires only one input parameter, which is a file containing
                                                             the names of parameter files, which may themselves contain parameters or other
                                                             file names. The point is : the user could give names of files stored everywhere
                                                             on a machine, and does not have to put them all in one same place.</p>
                                                             <p>But as this is more practical, this panel proposes a way to organize all
-                                                            those files or parameter files that will or could be used by a <code>FATE-HD</code>
+                                                            those files or parameter files that will or could be used by a <code>FATE</code>
                                                             simulation.</p>"
-                                                            , "<p><code>PRE_FATE.skeletonDirectory</code> function creates a user-friendly directory tree to run a <code>FATE-HD</code> simulation.
+                                                            , "<p><code>PRE_FATE.skeletonDirectory</code> function creates a user-friendly directory tree to run a <code>FATE</code> simulation.
                                                             <p>The tree structure is detailed below the button.</p>"
                                                             , paste0("<p><em>1. Simulation parameterization</em></p>
                                                             <ul>
@@ -55,7 +55,7 @@ observeEvent(input$HELP.panel2.menu1, {
                                                             <ul>
                                                             <li>
                                                             <strong>ParamSimulation file</strong> : containing all links to the files created with the previous functions.<br>
-                                                            This is the file that will be given as the only argument to the <code>FATE-HD</code> executable file into the command line.<br>
+                                                            This is the file that will be given as the only argument to the <code>FATE</code> executable file into the command line.<br>
                                                             It can be created with the function <a href='", path.reference, "PRE_FATE.params_simulParameters.html'>PRE_FATE.params_simulParameters</a>
                                                             </li>
                                                             </ul>")

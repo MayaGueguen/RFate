@@ -11,7 +11,7 @@ observeEvent(input$HELP.panel2.menu2, {
                                                 , intro = c("<p>Multiple sets of global parameters (i.e. whose parameterization depends on the model, not on the data)
                                                             can be easily created from a pre-existing simulation folder.</p>
                                                             <p>The basic values and their variation range can be defined in three ways.</p>"
-                                                            , paste0("<p>A folder name with a typical <code>FATE-HD</code> organization, that can be created with the function 
+                                                            , paste0("<p>A folder name with a typical <code>FATE</code> organization, that can be created with the function 
                                                             <a href='", path.reference, "PRE_FATE.skeletonDirectory.html'>PRE_FATE.skeletonDirectory</a>.</p>
                                                             <p><strong>ParamSimulation file</strong> : containing all links to the parameter files.<br>
                                                             It can be created with the function <a href='", path.reference, "PRE_FATE.params_simulParameters.html'>PRE_FATE.params_simulParameters</a>.</p>
@@ -205,7 +205,7 @@ observeEvent(input$create.multiple_set, {
                                         <li><strong>parameters selected :</strong> "
                                       , paste0(unlist(params.checked), collapse = ', ')
                                       , "</li></ul>"))
-                          , title = HTML("Creating multiple sets of parameters for a <code>FATE-HD</code> simulation")
+                          , title = HTML("Creating multiple sets of parameters for a <code>FATE</code> simulation")
                           , footer = NULL))
     Sys.sleep(3)
     get_res = print_messages(as.expression(
@@ -224,7 +224,6 @@ observeEvent(input$create.multiple_set, {
                                   , opt.percent_max = input$set.slider.1 / 100
                                   , opt.percent_seeding = input$set.slider.2 / 100
                                   , opt.percent_light = input$set.slider.3 / 100
-                                  , do.max_by_cohort = ("max_by_cohort" %in% unlist(params.checked))
                                   , do.max_abund_low = ("max_abund_low" %in% unlist(params.checked))
                                   , do.max_abund_medium = ("max_abund_medium" %in% unlist(params.checked))
                                   , do.max_abund_high = ("max_abund_high" %in% unlist(params.checked))
@@ -233,7 +232,7 @@ observeEvent(input$create.multiple_set, {
                                   , do.seeding_input = ("seeding_input" %in% unlist(params.checked))
                                   , do.LIGHT.thresh_medium = ("light_thresh_medium" %in% unlist(params.checked))
                                   , do.LIGHT.thresh_low = ("light_thresh_low" %in% unlist(params.checked))
-                                  , do.HABSUIT.ref_option = ("habsuit_ref_option" %in% unlist(params.checked))
+                                  , do.HABSUIT.mode = ("habsuit_mode" %in% unlist(params.checked))
                                   , do.DISPERSAL.mode = ("dispersal_mode" %in% unlist(params.checked))
                                   , do.nb_stratum =("strata_limits" %in% unlist(params.checked))
       )
