@@ -183,59 +183,93 @@ output$mat.PFG.soil = renderTable({
 })
 
 observeEvent(input$add.PFG.soil, {
-  RV$mat.PFG.soil <- rbind(RV$mat.PFG.soil
-                           , data.frame(PFG = input$soil.PFG
-                                        , strategy_contrib = ifelse(input$soil.opt.con == "by strategy"
-                                                                    , input$soil.strategy_con
-                                                                    , NA)
-                                        , soil_tol_min = ifelse(input$soil.opt.con == "user-defined"
-                                                                , as.numeric(input$soil.tol_min)
-                                                                , NA)
-                                        , soil_contrib = ifelse(input$soil.opt.con == "user-defined"
-                                                                , as.numeric(input$soil.contrib)
-                                                                , NA)
-                                        , soil_tol_max = ifelse(input$soil.opt.con == "user-defined"
-                                                                , as.numeric(input$soil.tol_max)
-                                                                , NA)
-                                        , type = ifelse(input$soil.opt.ag == "by type"
-                                                        , input$soil.type
-                                                        , NA)
-                                        , strategy_ag = ifelse(input$soil.opt.ag == "by strategy"
-                                                               , input$soil.strategy_ag
-                                                               , NA)
-                                        , active_germ_low = ifelse(input$soil.opt.ag == "user-defined"
-                                                                   , as.numeric(input$soil.Ge.L.act)
-                                                                   , NA)
-                                        , active_germ_medium = ifelse(input$soil.opt.ag == "user-defined"
-                                                                      , as.numeric(input$soil.Ge.M.act)
-                                                                      , NA)
-                                        , active_germ_high = ifelse(input$soil.opt.ag == "user-defined"
-                                                                    , as.numeric(input$soil.Ge.H.act)
-                                                                    , NA)
-                                        , strategy_tol = ifelse(input$soil.opt.tol == "by strategy"
-                                                                , input$soil.strategy_tol
-                                                                , NA)
-                           ))
-  if (input$soil.opt.tol == "user-defined")
+  if ((input$soil.opt.con == "by strategy" && RV$compt.soil.options[2]) ||
+      (input$soil.opt.con == "user-defined" && RV$compt.soil.options[1]))
   {
-    combi = expand.grid(lifeStage = c("Ge", "Im", "Ma"), resources = c("L", "M", "H"))
-    mat.tol = foreach(ls = combi$lifeStage, re = combi$resources, .combine = "rbind") %do%
+    shinyalert(type = "warning", text = "You can not mix Contribution 'by strategy' and 'user-defined' !")
+  } else if ((input$soil.opt.ag == "by type" && (RV$compt.soil.options[4] || RV$compt.soil.options[5])) ||
+             (input$soil.opt.ag == "by strategy" && (RV$compt.soil.options[3] || RV$compt.soil.options[5])) ||
+             (input$soil.opt.ag == "user-defined" && (RV$compt.soil.options[3] || RV$compt.soil.options[4])))
+  {
+    shinyalert(type = "warning", text = "You can not mix Active germination 'by type', 'by strategy' and 'user-defined' !")
+  } else if ((input$soil.opt.tol == "pre-defined" && (RV$compt.soil.options[7] || RV$compt.soil.options[8])) ||
+             (input$soil.opt.tol == "by strategy" && (RV$compt.soil.options[6] || RV$compt.soil.options[8])) ||
+             (input$soil.opt.tol == "user-defined" && (RV$compt.soil.options[6] || RV$compt.soil.options[7])))
+  {
+    shinyalert(type = "warning", text = "You can not mix Tolerance 'pre-defined', 'by strategy' and 'user-defined' !")
+  } else
+  {
+    RV$mat.PFG.soil <- rbind(RV$mat.PFG.soil
+                             , data.frame(PFG = input$soil.PFG
+                                          , strategy_contrib = ifelse(input$soil.opt.con == "by strategy"
+                                                                      , input$soil.strategy_con
+                                                                      , NA)
+                                          , soil_tol_min = ifelse(input$soil.opt.con == "user-defined"
+                                                                  , as.numeric(input$soil.tol_min)
+                                                                  , NA)
+                                          , soil_contrib = ifelse(input$soil.opt.con == "user-defined"
+                                                                  , as.numeric(input$soil.contrib)
+                                                                  , NA)
+                                          , soil_tol_max = ifelse(input$soil.opt.con == "user-defined"
+                                                                  , as.numeric(input$soil.tol_max)
+                                                                  , NA)
+                                          , type = ifelse(input$soil.opt.ag == "by type"
+                                                          , input$soil.type
+                                                          , NA)
+                                          , strategy_ag = ifelse(input$soil.opt.ag == "by strategy"
+                                                                 , input$soil.strategy_ag
+                                                                 , NA)
+                                          , active_germ_low = ifelse(input$soil.opt.ag == "user-defined"
+                                                                     , as.numeric(input$soil.Ge.L.act)
+                                                                     , NA)
+                                          , active_germ_medium = ifelse(input$soil.opt.ag == "user-defined"
+                                                                        , as.numeric(input$soil.Ge.M.act)
+                                                                        , NA)
+                                          , active_germ_high = ifelse(input$soil.opt.ag == "user-defined"
+                                                                      , as.numeric(input$soil.Ge.H.act)
+                                                                      , NA)
+                                          , strategy_tol = ifelse(input$soil.opt.tol == "by strategy"
+                                                                  , input$soil.strategy_tol
+                                                                  , NA)
+                             ))
+    if (input$soil.opt.tol == "user-defined")
     {
-      eval(parse(text = paste0("tol = as.numeric(input$soil.", ls, ".", re, ".tol) / 10")))
-      return(data.frame(PFG = input$soil.PFG
-                        , lifeStage = c("Ge" = "Germinant", "Im" = "Immature", "Ma" = "Mature")[ls]
-                        , resources = c("L" = "Low", "M" = "Medium", "H" = "High")[re]
-                        , tolerance = tol))
+      combi = expand.grid(lifeStage = c("Ge", "Im", "Ma"), resources = c("L", "M", "H"))
+      mat.tol = foreach(ls = combi$lifeStage, re = combi$resources, .combine = "rbind") %do%
+        {
+          eval(parse(text = paste0("tol = as.numeric(input$soil.", ls, ".", re, ".tol) / 10")))
+          return(data.frame(PFG = input$soil.PFG
+                            , lifeStage = c("Ge" = "Germinant", "Im" = "Immature", "Ma" = "Mature")[ls]
+                            , resources = c("L" = "Low", "M" = "Medium", "H" = "High")[re]
+                            , tolerance = tol))
+        }
+      RV$mat.PFG.soil.tol <- rbind(RV$mat.PFG.soil.tol, mat.tol)
     }
-    RV$mat.PFG.soil.tol <- rbind(RV$mat.PFG.soil.tol, mat.tol)
+    RV$compt.soil.options = c(input$soil.opt.con == "by strategy"
+                              , input$soil.opt.con == "user-defined"
+                              , input$soil.opt.ag == "by type"
+                              , input$soil.opt.ag == "by strategy"
+                              , input$soil.opt.ag == "user-defined"
+                              , input$soil.opt.tol == "pre-defined"
+                              , input$soil.opt.tol == "by strategy"
+                              , input$soil.opt.tol == "user-defined")
   }
-  
   shinyjs::enable("create.soil")
 })
 
 observeEvent(input$delete.PFG.soil, {
   RV$mat.PFG.soil <- data.frame()
-  shinyjs::disable("create.soil")
+  RV$compt.soil.options <- rep(FALSE, 8)
+})
+
+observeEvent(RV$mat.PFG.soil, {
+  if (nrow(RV$mat.PFG.soil) > 0)
+  {
+    shinyjs::enable("create.soil")
+  } else
+  {
+    shinyjs::disable("create.soil")
+  }
 })
 
 ####################################################################
@@ -277,7 +311,7 @@ observeEvent(input$create.soil, {
 
 get_tab.soil = eventReactive(paste(input$name.simul
                                      , input$create.soil
-                                     , RV$compt.soil.nb), {
+                                     , RV$compt.soil.no), {
                                        if (!is.null(input$name.simul) && nchar(input$name.simul) > 0)
                                        {
                                          path_folder = paste0(input$name.simul, "/DATA/PFGS/SOIL/")
@@ -285,7 +319,7 @@ get_tab.soil = eventReactive(paste(input$name.simul
                                          
                                          if (!is.null(tab) && ncol(tab) > 0)
                                          {
-                                           RV$compt.soil.nb = ncol(tab)
+                                           RV$compt.soil.no = ncol(tab)
                                            RV$compt.soil.files = colnames(tab)
                                            return(tab)
                                          }
@@ -344,8 +378,8 @@ output$UI.files.soil = renderUI({
   }
 })
 
-# observeEvent(RV$compt.soil.nb, {
-#   for (i in 1:RV$compt.soil.nb)
+# observeEvent(RV$compt.soil.no, {
+#   for (i in 1:RV$compt.soil.no)
 #   {
 #     observeEvent(input[[paste0("upload.soil.", RV$compt.soil.files[i])]], {
 #       get_update.soil(file.soilParam = paste0(input$name.simul
@@ -393,10 +427,10 @@ observeEvent(input$view.soil.select, {
 observeEvent(input$delete.soil.select, {
   if (input$check.soil.all)
   {
-    col_toKeep = rep(TRUE,RV$compt.soil.nb)
+    col_toKeep = rep(TRUE,RV$compt.soil.no)
   } else
   {
-    col_toKeep = foreach(i = 1:RV$compt.soil.nb, .combine = "c") %do%
+    col_toKeep = foreach(i = 1:RV$compt.soil.no, .combine = "c") %do%
     {
       eval(parse(text = paste0("res = input$check.soil.", RV$compt.soil.files[i])))
       return(res)
@@ -436,7 +470,7 @@ observeEvent(input$delete.soil.select, {
                               , multiple = FALSE
                               , immediate = TRUE)
                    }
-                   RV$compt.soil.nb = min(0, RV$compt.soil.nb - sum(col_toKeep))
+                   RV$compt.soil.no = min(0, RV$compt.soil.no - sum(col_toKeep))
                  }
                })
   }

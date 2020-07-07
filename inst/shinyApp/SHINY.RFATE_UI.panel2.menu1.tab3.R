@@ -456,6 +456,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                               , "<i class='fas fa-bolt' style='font-size:15px;'></i>"
                                               , " Disturbances</span>"))
                           , value = "panel.dist"
+                          , fluidRow(column(12, br(), uiOutput(outputId = "UI.dist.opt.ages")))
                           , fluidRow(
                             column(6
                                    , br()
@@ -486,21 +487,41 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                             column(4
                                    , br()
                                    , br()
-                                   , HTML("<strong>Disturbance</strong>")
+                                   , HTML("<strong>Disturbance name</strong>")
                                    , textInput(inputId = "dist.name"
                                                , label = NULL
                                                , width = "100%"))
-                            , column(4
+                            , column(2
                                      , br()
                                      , br()
-                                     , HTML("<strong>Disturbance</strong>")
-                                     , radioButtons(inputId = "dist.grouping"
+                                     , HTML("<strong>Grouping</strong>")
+                                     , radioButtons(inputId = "dist.opt.group"
                                                     , label = NULL
                                                     , choices = c("by type", "by PFG")
                                                     , selected = "by type"
                                                     , width = "100%"))
+                            , column(3
+                                     , br()
+                                     , br()
+                                     , HTML("<strong>Resprout & break ages</strong>")
+                                     , shinyjs::disabled(
+                                       radioButtons(inputId = "dist.opt.ages"
+                                                    , label = NULL
+                                                    , choices = c("pre-defined", "user-defined")
+                                                    , selected = "pre-defined"
+                                                    , width = "100%")
+                                     ))
+                            , column(3
+                                     , br()
+                                     , br()
+                                     , HTML("<strong>Response</strong>")
+                                     , radioButtons(inputId = "dist.opt.resp"
+                                                    , label = NULL
+                                                    , choices = c("by strategy", "user-defined")
+                                                    , selected = "by strategy"
+                                                    , width = "100%"))
                           )
-                          , fluidRow(column(12, br(), uiOutput(outputId = "UI.dist.grouping")))
+                          , fluidRow(column(12, br(), uiOutput(outputId = "UI.dist_table")))
                           , fluidRow(
                             column(10
                                    , br()
@@ -529,6 +550,17 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                             )
                           )
                ) ## END tabPanel (disturbances)
+               , tabPanel(title = HTML(paste0("<span class='tabPanel_subtitle'>"
+                                              , "<i class='fas fa-tint' style='font-size:15px;'></i>"
+                                              , " Drought</span>"))
+                          , value = "panel.drought"
+                          , fluidRow(
+                            column(6
+                                   , br()
+                                   
+                            )
+                          )
+               ) ## END tabPanel (drought)
              ) ## END tabSetPanel
            ) ## END mainPanel
          ) ## END sidebarLayout

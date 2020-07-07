@@ -163,49 +163,68 @@ output$mat.PFG.light = renderTable({
 })
 
 observeEvent(input$add.PFG.light, {
-  req(input$light.PFG)
-  RV$mat.PFG.light <- rbind(RV$mat.PFG.light
-                            , data.frame(PFG = input$light.PFG
-                                         , type = ifelse(input$light.opt.tol == "by type & light" ||
-                                                           input$light.opt.ag == "by type"
-                                                         , input$light.type
-                                                         , NA)
-                                         , light_need = ifelse(input$light.opt.tol == "by type & light"
-                                                               , as.numeric(input$light.light)
-                                                               , NA)
-                                         , strategy_ag = ifelse(input$light.opt.ag == "by strategy"
-                                                                , input$light.strategy_ag
-                                                                , NA)
-                                         , active_germ_low = ifelse(input$light.opt.ag == "user-defined"
-                                                                    , as.numeric(input$light.Ge.L.act)
-                                                                    , NA)
-                                         , active_germ_medium = ifelse(input$light.opt.ag == "user-defined"
-                                                                       , as.numeric(input$light.Ge.M.act)
-                                                                       , NA)
-                                         , active_germ_high = ifelse(input$light.opt.ag == "user-defined"
-                                                                     , as.numeric(input$light.Ge.H.act)
-                                                                     , NA)
-                                         , strategy_tol = ifelse(input$light.opt.tol == "by strategy"
-                                                                 , input$light.strategy_tol
-                                                                 , NA)
-                            ))
-  if (input$light.opt.tol == "user-defined")
+  if ((input$light.opt.ag == "by type" && (RV$compt.light.options[2] || RV$compt.light.options[3])) ||
+      (input$light.opt.ag == "by strategy" && (RV$compt.light.options[1] || RV$compt.light.options[3])) ||
+      (input$light.opt.ag == "user-defined" && (RV$compt.light.options[1] || RV$compt.light.options[2])))
   {
-    combi = expand.grid(lifeStage = c("Ge", "Im", "Ma"), resources = c("L", "M", "H"))
-    mat.tol = foreach(ls = combi$lifeStage, re = combi$resources, .combine = "rbind") %do%
+    shinyalert(type = "warning", text = "You can not mix Active germination 'by type', 'by strategy' and 'user-defined' !")
+  } else if ((input$light.opt.tol == "by type & light" && (RV$compt.light.options[5] || RV$compt.light.options[6])) ||
+             (input$light.opt.tol == "by strategy" && (RV$compt.light.options[4] || RV$compt.light.options[6])) ||
+             (input$light.opt.tol == "user-defined" && (RV$compt.light.options[4] || RV$compt.light.options[5])))
+  {
+    shinyalert(type = "warning", text = "You can not mix Tolerance 'by type & light', 'by strategy' and 'user-defined' !")
+  } else
+  {
+    RV$mat.PFG.light <- rbind(RV$mat.PFG.light
+                              , data.frame(PFG = input$light.PFG
+                                           , type = ifelse(input$light.opt.tol == "by type & light" ||
+                                                             input$light.opt.ag == "by type"
+                                                           , input$light.type
+                                                           , NA)
+                                           , light_need = ifelse(input$light.opt.tol == "by type & light"
+                                                                 , as.numeric(input$light.light)
+                                                                 , NA)
+                                           , strategy_ag = ifelse(input$light.opt.ag == "by strategy"
+                                                                  , input$light.strategy_ag
+                                                                  , NA)
+                                           , active_germ_low = ifelse(input$light.opt.ag == "user-defined"
+                                                                      , as.numeric(input$light.Ge.L.act)
+                                                                      , NA)
+                                           , active_germ_medium = ifelse(input$light.opt.ag == "user-defined"
+                                                                         , as.numeric(input$light.Ge.M.act)
+                                                                         , NA)
+                                           , active_germ_high = ifelse(input$light.opt.ag == "user-defined"
+                                                                       , as.numeric(input$light.Ge.H.act)
+                                                                       , NA)
+                                           , strategy_tol = ifelse(input$light.opt.tol == "by strategy"
+                                                                   , input$light.strategy_tol
+                                                                   , NA)
+                              ))
+    if (input$light.opt.tol == "user-defined")
     {
-      eval(parse(text = paste0("tol = as.numeric(input$light.", ls, ".", re, ".tol) / 10")))
-      return(data.frame(PFG = input$light.PFG
-                        , lifeStage = c("Ge" = "Germinant", "Im" = "Immature", "Ma" = "Mature")[ls]
-                        , resources = c("L" = "Low", "M" = "Medium", "H" = "High")[re]
-                        , tolerance = tol))
+      combi = expand.grid(lifeStage = c("Ge", "Im", "Ma"), resources = c("L", "M", "H"))
+      mat.tol = foreach(ls = combi$lifeStage, re = combi$resources, .combine = "rbind") %do%
+        {
+          eval(parse(text = paste0("tol = as.numeric(input$light.", ls, ".", re, ".tol) / 10")))
+          return(data.frame(PFG = input$light.PFG
+                            , lifeStage = c("Ge" = "Germinant", "Im" = "Immature", "Ma" = "Mature")[ls]
+                            , resources = c("L" = "Low", "M" = "Medium", "H" = "High")[re]
+                            , tolerance = tol))
+        }
+      RV$mat.PFG.light.tol <- rbind(RV$mat.PFG.light.tol, mat.tol)
     }
-    RV$mat.PFG.light.tol <- rbind(RV$mat.PFG.light.tol, mat.tol)
+    RV$compt.light.options = c(input$light.opt.ag == "by type"
+                              , input$light.opt.ag == "by strategy"
+                              , input$light.opt.ag == "user-defined"
+                              , input$light.opt.tol == "by type & light"
+                              , input$light.opt.tol == "by strategy"
+                              , input$light.opt.ol == "user-defined")
   }
 })
 
 observeEvent(input$delete.PFG.light, {
   RV$mat.PFG.light <- data.frame()
+  RV$compt.light.options <- rep(FALSE, 6)
 })
 
 observeEvent(RV$mat.PFG.light, {
@@ -261,7 +280,7 @@ observeEvent(input$create.light, {
 
 get_tab.light = eventReactive(paste(input$name.simul
                                     , input$create.light
-                                    , RV$compt.light.nb), {
+                                    , RV$compt.light.no), {
                                       if (!is.null(input$name.simul) && nchar(input$name.simul) > 0)
                                       {
                                         path_folder = paste0(input$name.simul, "/DATA/PFGS/LIGHT/")
@@ -269,7 +288,7 @@ get_tab.light = eventReactive(paste(input$name.simul
                                         
                                         if (!is.null(tab) && ncol(tab) > 0)
                                         {
-                                          RV$compt.light.nb = ncol(tab)
+                                          RV$compt.light.no = ncol(tab)
                                           RV$compt.light.files = colnames(tab)
                                           return(tab)
                                         }
@@ -328,8 +347,8 @@ output$UI.files.light = renderUI({
   }
 })
 
-# observeEvent(RV$compt.light.nb, {
-#   for (i in 1:RV$compt.light.nb)
+# observeEvent(RV$compt.light.no, {
+#   for (i in 1:RV$compt.light.no)
 #   {
 #     observeEvent(input[[paste0("upload.light.", RV$compt.light.files[i])]], {
 #       get_update.light(file.lightParam = paste0(input$name.simul
@@ -377,10 +396,10 @@ observeEvent(input$view.light.select, {
 observeEvent(input$delete.light.select, {
   if (input$check.light.all)
   {
-    col_toKeep = rep(TRUE,RV$compt.light.nb)
+    col_toKeep = rep(TRUE,RV$compt.light.no)
   } else
   {
-    col_toKeep = foreach(i = 1:RV$compt.light.nb, .combine = "c") %do%
+    col_toKeep = foreach(i = 1:RV$compt.light.no, .combine = "c") %do%
     {
       eval(parse(text = paste0("res = input$check.light.", RV$compt.light.files[i])))
       return(res)
@@ -420,7 +439,7 @@ observeEvent(input$delete.light.select, {
                               , multiple = FALSE
                               , immediate = TRUE)
                    }
-                   RV$compt.light.nb = min(0, RV$compt.light.nb - sum(col_toKeep))
+                   RV$compt.light.no = min(0, RV$compt.light.no - sum(col_toKeep))
                  }
                })
   }
