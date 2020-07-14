@@ -163,6 +163,9 @@ server <- function(input, output, session) {
                       , compt.dist.no = 0
                       , compt.dist.files = c()
                       , compt.dist.options = rep(FALSE, 6)
+                      # , compt.drought.no = 0
+                      , compt.drought.files = c()
+                      , compt.drought.options = rep(FALSE, 6)
                       , compt.changing.nb = 0
                       , compt.changing.files = c()
                       , compt.browser = 1
@@ -194,6 +197,7 @@ server <- function(input, output, session) {
   source("SHINY.RFATE_SERVER.panel2.menu1.tab3.tab3.R", local = TRUE)$value
   source("SHINY.RFATE_SERVER.panel2.menu1.tab3.tab4.R", local = TRUE)$value
   source("SHINY.RFATE_SERVER.panel2.menu1.tab3.tab5.R", local = TRUE)$value
+  source("SHINY.RFATE_SERVER.panel2.menu1.tab3.tab6.R", local = TRUE)$value
   source("SHINY.RFATE_SERVER.panel2.menu1.tab4.R", local = TRUE)$value
   source("SHINY.RFATE_SERVER.panel2.menu2.R", local = TRUE)$value
   

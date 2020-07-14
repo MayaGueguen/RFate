@@ -318,14 +318,14 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                           )
                           , fluidRow(
                             column(6
-                                     , br()
-                                     , HTML("<strong>Tolerance</strong>")
-                                     , radioButtons(inputId = "soil.opt.tol"
-                                                    , label = NULL
-                                                    , choices = c("pre-defined", "by strategy", "user-defined")
-                                                    , selected = "pre-defined"
-                                                    , inline = TRUE
-                                                    , width = "100%"))
+                                   , br()
+                                   , HTML("<strong>Tolerance</strong>")
+                                   , radioButtons(inputId = "soil.opt.tol"
+                                                  , label = NULL
+                                                  , choices = c("pre-defined", "by strategy", "user-defined")
+                                                  , selected = "pre-defined"
+                                                  , inline = TRUE
+                                                  , width = "100%"))
                             , column(6, br(), uiOutput(outputId = "UI.soil.opt.tol1"))
                           )
                           , fluidRow(column(12, br(), uiOutput(outputId = "UI.soil.opt.tol2")))
@@ -554,10 +554,110 @@ tabPanel(title = HTML("<span class='tabPanel_title'>PFG files</span>")
                                               , "<i class='fas fa-tint' style='font-size:15px;'></i>"
                                               , " Drought</span>"))
                           , value = "panel.drought"
+                          , fluidRow(column(12, br(), uiOutput(outputId = "UI.drought.opt.ages")))
                           , fluidRow(
                             column(6
                                    , br()
-                                   
+                                   , actionButton(inputId = "add.PFG.drought"
+                                                  , label = "Add drought"
+                                                  , icon = icon("plus")
+                                                  , width = "100%"
+                                                  , style = button.style.action
+                                   )
+                            )
+                            , column(6
+                                     , br()
+                                     , shinyjs::disabled(
+                                       actionButton(inputId = "create.drought"
+                                                    , label = "Create PFG drought files"
+                                                    , icon = icon("file")
+                                                    , width = "100%"
+                                                    , style = button.style.action
+                                       ) %>% helper(type = "inline"
+                                                    , title = "Create PFG drought files"
+                                                    , size = "l"
+                                                    , content = help.HTML(paste0(path.reference, "PRE_FATE.params_PFGdrought.html"))
+                                       )
+                                     )
+                            )
+                          )
+                          , fluidRow(
+                            column(4
+                                   , br()
+                                   , br()
+                                   , HTML("<strong>Drought name</strong>")
+                                   , selectInput(inputId = "drought.name"
+                                                 , label = NULL
+                                                 , choices = c("immediate", "delayed")
+                                                 , selected = "immediate"
+                                                 , multiple = FALSE
+                                                 , width = "100%"))
+                            , column(2
+                                     , br()
+                                     , br()
+                                     , HTML("<strong>Grouping</strong>")
+                                     , radioButtons(inputId = "drought.opt.group"
+                                                    , label = NULL
+                                                    , choices = c("by type", "by PFG")
+                                                    , selected = "by type"
+                                                    , width = "100%"))
+                            , column(2
+                                     , br()
+                                     , br()
+                                     , HTML("<strong>Resprout & break ages</strong>")
+                                     , shinyjs::disabled(
+                                       radioButtons(inputId = "drought.opt.ages"
+                                                    , label = NULL
+                                                    , choices = c("pre-defined", "user-defined")
+                                                    , selected = "pre-defined"
+                                                    , width = "100%")
+                                     ))
+                            , column(2
+                                     , br()
+                                     , br()
+                                     , HTML("<strong>Response</strong>")
+                                     , radioButtons(inputId = "drought.opt.resp"
+                                                    , label = NULL
+                                                    , choices = c("by strategy", "user-defined")
+                                                    , selected = "by strategy"
+                                                    , width = "100%"))
+                            , column(2
+                                     , br()
+                                     , br()
+                                     , HTML("<strong>Sensitivity</strong>")
+                                     , radioButtons(inputId = "drought.opt.sens"
+                                                    , label = NULL
+                                                    , choices = c("by strategy", "user-defined")
+                                                    , selected = "by strategy"
+                                                    , width = "100%"))
+                          )
+                          , fluidRow(column(12, br(), uiOutput(outputId = "UI.drought_table")))
+                          , fluidRow(column(12, br(), uiOutput(outputId = "UI.drought_table.BIS")))
+                          , fluidRow(
+                            column(10
+                                   , br()
+                                   , wellPanel(style = "overflow-x:scroll;"
+                                               , tableOutput(outputId = "mat.PFG.drought")))
+                            , column(2
+                                     , br()
+                                     , actionButton(inputId = "delete.PFG.drought"
+                                                    , label = NULL
+                                                    , icon = icon("trash")
+                                                    , style = button.style.action
+                                     )
+                            )
+                          )
+                          , fluidRow(
+                            br()
+                            , br()
+                            , br()
+                            , br()
+                            , column(12
+                                     , wellPanel(style = panel.style.scrollY
+                                                 , uiOutput(outputId = "UI.files.drought")))
+                            , column(12
+                                     , wellPanel(style = panel.style.scrollX
+                                                 , dataTableOutput(outputId = "created_table.drought"))
                             )
                           )
                ) ## END tabPanel (drought)
