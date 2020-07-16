@@ -13,8 +13,8 @@ distance between each pair of species. \cr Such an object can be obtained
 with the \code{\link{PRE_FATE.speciesDistance}} function.}
 }
 \value{
-A \code{list} containing one \code{list} and one \code{data.frame} 
-with the following columns :
+A \code{list} containing one \code{list}, one \code{data.frame} with 
+the following columns, and two \code{ggplot2} objects :
 
 \describe{
   \item{clust.dendrograms}{a \code{list} with as many objects of 
@@ -24,9 +24,13 @@ with the following columns :
     \item{\code{GROUP}}{name of data subset}
     \item{\code{no.clusters}}{number of clusters used for the clustering}
     \item{\code{variable}}{evaluation metrics' name}
-    \item{\code{value}}{value of evaluation metric}
+    \item{\code{value}}{value of evaluation metric \cr \cr}
   }
   }
+  \item{plot.clustMethod}{\code{ggplot2} object, representing the different 
+  values of metrics to choose the clustering method}
+  \item{plot.clustNo}{\code{ggplot2} object, representing the different 
+  values of metrics to choose the number of clusters \cr \cr}
 }
 
 One \file{PRE_FATE_CLUSTERING_STEP1_numberOfClusters.pdf} file is created 

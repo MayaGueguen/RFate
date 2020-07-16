@@ -212,8 +212,8 @@ with the <code><a href='PRE_FATE.speciesDistance.html'>PRE_FATE.speciesDistance<
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>list</code> containing one <code>list</code> and one <code>data.frame</code> 
-with the following columns :</p>
+    <p>A <code>list</code> containing one <code>list</code>, one <code>data.frame</code> with 
+the following columns, and two <code>ggplot2</code> objects :</p>
 <dl'>
   <dt>clust.dendrograms</dt><dd><p>a <code>list</code> with as many objects of 
   class <code><a href='https://rdrr.io/r/stats/hclust.html'>hclust</a></code> as data subsets</p></dd>
@@ -222,7 +222,11 @@ with the following columns :</p>
     <dt><code>GROUP</code></dt><dd><p>name of data subset</p></dd>
     <dt><code>no.clusters</code></dt><dd><p>number of clusters used for the clustering</p></dd>
     <dt><code>variable</code></dt><dd><p>evaluation metrics' name</p></dd>
-    <dt><code>value</code></dt><dd><p>value of evaluation metric</p></dd></dl></p></dd>
+    <dt><code>value</code></dt><dd><p>value of evaluation metric <br /> <br /></p></dd></dl></p></dd>
+  <dt>plot.clustMethod</dt><dd><p><code>ggplot2</code> object, representing the different 
+  values of metrics to choose the clustering method</p></dd>
+  <dt>plot.clustNo</dt><dd><p><code>ggplot2</code> object, representing the different 
+  values of metrics to choose the number of clusters <br /> <br /></p></dd>
 
 </dl>
 

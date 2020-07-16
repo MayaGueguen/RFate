@@ -327,8 +327,6 @@ updateShinyInput <- function(session, id, value) {
 # Update multiple Shiny inputs simultaneously
 updateShinyInputs <- function(session, updates) {
   lapply(names(updates), function(id) {
-    # print(id)
-    # print(updates[[id]])
     updateShinyInput(session, id, updates[[id]])
   })
 }

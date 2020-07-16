@@ -113,6 +113,10 @@ get_dom = eventReactive(list(input$choice.dominant, input$compute.distance), {
 
 ####################################################################
 
+observeEvent(input$compute.distance, {
+  RV$pfg.graph <- c(RV$pfg.graph, "dist")
+})
+
 get_DIST = eventReactive(input$compute.distance, {
   
   ## GET species traits
@@ -143,7 +147,6 @@ get_DIST = eventReactive(input$compute.distance, {
           
           if (length(which(colnames(sp.niche) %in% sp.dom)) > 0)
           {
-            
             showModal(modalDialog(HTML(paste0("Compute distances between species based on traits and niche overlap, with parameters : <ul>"
                                               , "<li><strong>opt.maxPercent.NA :</strong> ", as.numeric(input$opt.maxPercent.NA), "</li>"
                                               , "<li><strong>opt.maxPercent.similarSpecies :</strong> ", as.numeric(input$opt.maxPercent.similarSpecies), "</li>"
@@ -162,7 +165,6 @@ get_DIST = eventReactive(input$compute.distance, {
               ))
             removeModal()
             
-            RV$pfg.graph <- c(RV$pfg.graph, "dist") 
             return(get_res)
           } else
           {

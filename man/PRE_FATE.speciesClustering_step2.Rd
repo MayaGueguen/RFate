@@ -24,8 +24,8 @@ distance between each pair of species. \cr Such an object can be obtained
 with the \code{\link{PRE_FATE.speciesDistance}} function.}
 }
 \value{
-A \code{list} containing one \code{vector} and one 
-\code{data.frame} with the following columns :
+A \code{list} containing one \code{vector}, one \code{data.frame} 
+with the following columns, and two \code{ggplot2} objects :
 
 \describe{
   \item{determ.sp}{the names of all determinant species}
@@ -48,6 +48,10 @@ A \code{list} containing one \code{vector} and one
     otherwise}
   }
   }
+  \item{plot.distance}{\code{ggplot2} object, representing the distribution 
+  of mean distances between species for each functional group} 
+  \item{plot.PCO}{\code{list} of \code{ggplot2} objects, representing the 
+  PFG within the functional space \cr \cr}
 }
 
 One \file{PRE_FATE_CLUSTERING_STEP_2_distantSpecies_PCO.pdf} file is created 

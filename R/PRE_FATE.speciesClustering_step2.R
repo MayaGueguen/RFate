@@ -58,8 +58,8 @@
 ##'   }
 ##' }
 ##' 
-##' @return A \code{list} containing one \code{vector} and one 
-##' \code{data.frame} with the following columns :
+##' @return A \code{list} containing one \code{vector}, one \code{data.frame} 
+##' with the following columns, and two \code{ggplot2} objects :
 ##' 
 ##' \describe{
 ##'   \item{determ.sp}{the names of all determinant species}
@@ -82,6 +82,10 @@
 ##'     otherwise}
 ##'   }
 ##'   }
+##'   \item{plot.distance}{\code{ggplot2} object, representing the distribution 
+##'   of mean distances between species for each functional group} 
+##'   \item{plot.PCO}{\code{list} of \code{ggplot2} objects, representing the 
+##'   PFG within the functional space \cr \cr}
 ##' }
 ##' 
 ##' One \file{PRE_FATE_CLUSTERING_STEP_2_distantSpecies_PCO.pdf} file is created 
@@ -276,7 +280,7 @@ PRE_FATE.speciesClustering_step2 = function(clust.dendrograms
   colRamp = colorRampPalette(c('#8e0152','#c51b7d','#de77ae','#7fbc41','#4d9221','#276419'))
   colLev = levels(interaction(determ$DETERMINANT, determ$GROUP))
   
-  pp3 = ggplot(determ, aes_string(x = "pfg", y = "sp.mean.dist"
+  pp3 = ggplot(determ, aes_string(x = "PFG", y = "sp.mean.dist"
                                   , color = interaction(determ$DETERMINANT, determ$GROUP)
                                   , shape = "DETERMINANT")) +
     scale_color_manual(guide = F, values = colRamp(length(colLev))) +
@@ -379,6 +383,8 @@ PRE_FATE.speciesClustering_step2 = function(clust.dendrograms
   dev.off()
   
   return(list(determ.sp = determ$sp[which(determ$DETERMINANT == TRUE)]
-              , determ.all = determ))
+              , determ.all = determ
+              , plot.distance = pp3
+              , plot.PCO = pp4_list))
 }
 

@@ -15,6 +15,7 @@ list.packages = c(list.packages
                   , "markdown", "zip", "raster", "rintrojs"
                   , "SPOT" ## designLHD
                   , "ade4" ## quasieuclid
+                  , "FD" ## gowdis
 )
 
 load.shinyDirectoryInput = requireNamespace("shinyDirectoryInput")

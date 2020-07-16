@@ -460,13 +460,23 @@ PRE_FATE.speciesDistance = function(mat.traits
   cat("\n ---------- INFORMATION : USED \n")
   cat("\n  Traits used to calculate functional distances : \n")
   mat.traits.split = split(mat.traits[, names_traits, drop = FALSE], f = mat.traits$GROUP)
+  toRemove = vector()
   for (gp in 1:length(mat.traits.split))
   {
     tmp = traits_toKeep[which(traits_toKeep$GROUP == names(mat.traits.split)[gp]), ]
     tmp = tmp$TRAIT[which(tmp$toKeep == TRUE)]
-    mat.traits.split[[gp]] = mat.traits.split[[gp]][, tmp, drop = FALSE]
-    cat("\n> Group", names(mat.traits.split)[gp], ":", as.character(tmp))
+    if (length(tmp) > 0)
+    {
+      mat.traits.split[[gp]] = mat.traits.split[[gp]][, tmp, drop = FALSE]
+      cat("\n> Group", names(mat.traits.split)[gp], ":", as.character(tmp)) 
+    } else
+    {
+      toRemove = c(toRemove, gp)
+    }
   }
+  mat.traits.split = mat.traits.split[-toRemove]
+  mat.overlap.split = mat.overlap.split[-toRemove]
+  names_groups = names_groups[-toRemove]
   cat("\n")
   
   ## GOWER DISSIMILARITY FOR MIXED VARIABLES
@@ -492,7 +502,7 @@ PRE_FATE.speciesDistance = function(mat.traits
   mat.overlap.split = lapply(1:length(names_groups), function(x) {
     tmp = as.matrix(mat.overlap.split[[x]])
     ind = which(colnames(tmp) %in% names_species.traits_overlap)
-    return(as.dist(tmp[ind, ind]))
+    return(as.dist(tmp[ind, ind])) 
   })
   
   cat("\n  Number of species : ", length(names_species.traits_overlap))
@@ -517,7 +527,7 @@ PRE_FATE.speciesDistance = function(mat.traits
     tmp.overlap = as.matrix(mat.overlap.split[[x]])
     n.traits = ncol(mat.traits.split[[x]])
     mat = (tmp.overlap + n.traits * tmp.gower) / (n.traits + 1)
-    return(as.dist(mat))
+    return(as.dist(mat)) 
   })
   names(mat.species.DIST) = names_groups
   

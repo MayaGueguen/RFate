@@ -227,8 +227,8 @@ with the <code><a href='PRE_FATE.speciesDistance.html'>PRE_FATE.speciesDistance<
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>list</code> containing one <code>vector</code> and one 
-<code>data.frame</code> with the following columns :</p>
+    <p>A <code>list</code> containing one <code>vector</code>, one <code>data.frame</code> 
+with the following columns, and two <code>ggplot2</code> objects :</p>
 <dl'>
   <dt>determ.sp</dt><dd><p>the names of all determinant species</p></dd>
   <dt>determ.all</dt><dd><p>(<em>determinant and non-determinant species</em>)
@@ -248,6 +248,10 @@ with the <code><a href='PRE_FATE.speciesDistance.html'>PRE_FATE.speciesDistance<
     sd(\text{sp.mean.dist})\) within the PFG</p></dd>
     <dt><code>DETERMINANT</code></dt><dd><p><code>TRUE</code> if determinant species, <code>FALSE</code> 
     otherwise</p></dd></dl></p></dd>
+  <dt>plot.distance</dt><dd><p><code>ggplot2</code> object, representing the distribution 
+  of mean distances between species for each functional group</p></dd> 
+  <dt>plot.PCO</dt><dd><p><code>list</code> of <code>ggplot2</code> objects, representing the 
+  PFG within the functional space <br /> <br /></p></dd>
 
 </dl>
 

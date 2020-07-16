@@ -85,8 +85,8 @@
 ##' Mouillot D., 2008. Towards a consensus for calculating dendrogam-based 
 ##' functional diversity indices. Oikos, 117, 794-800.}
 ##' 
-##' @return A \code{list} containing one \code{list} and one \code{data.frame} 
-##' with the following columns :
+##' @return A \code{list} containing one \code{list}, one \code{data.frame} with 
+##' the following columns, and two \code{ggplot2} objects :
 ##' 
 ##' \describe{
 ##'   \item{clust.dendrograms}{a \code{list} with as many objects of 
@@ -96,9 +96,13 @@
 ##'     \item{\code{GROUP}}{name of data subset}
 ##'     \item{\code{no.clusters}}{number of clusters used for the clustering}
 ##'     \item{\code{variable}}{evaluation metrics' name}
-##'     \item{\code{value}}{value of evaluation metric}
+##'     \item{\code{value}}{value of evaluation metric \cr \cr}
 ##'   }
 ##'   }
+##'   \item{plot.clustMethod}{\code{ggplot2} object, representing the different 
+##'   values of metrics to choose the clustering method}
+##'   \item{plot.clustNo}{\code{ggplot2} object, representing the different 
+##'   values of metrics to choose the number of clusters \cr \cr}
 ##' }
 ##' 
 ##' One \file{PRE_FATE_CLUSTERING_STEP1_numberOfClusters.pdf} file is created 
@@ -454,7 +458,9 @@ PRE_FATE.speciesClustering_step1 = function(mat.species.DIST)
   cat("\n> Done!\n")
   
   return(list(clust.dendrograms = clust.dendrograms
-              , clust.evaluation = clust.evaluation))
+              , clust.evaluation = clust.evaluation
+              , plot.clustMethod = pp1
+              , plot.clustNo = pp2))
   
 }
 

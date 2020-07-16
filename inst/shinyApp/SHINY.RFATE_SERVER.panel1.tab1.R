@@ -79,8 +79,19 @@ get_obs = eventReactive(list(input$species.observations, input$select.dominant),
     if (extension(input$species.observations$name) %in% c(".txt", ".csv"))
     {
       sp.obs = fread(input$species.observations$datapath)
-      shinyjs::show("table.observations")
-      return(sp.obs)
+      
+      if (!is.null(sp.obs))
+      {
+        shinyjs::show("table.observations")
+        output$table.observations = renderDataTable({
+          sp.obs
+        })
+        return(sp.obs)
+      } else
+      {
+        shinyalert(type = "warning", text = "The species.observations is not correct !")
+        return(NULL)
+      }
     } else
     {
       shinyalert(type = "warning", text = "You must provide a text file (.txt or .csv) for the species.observations !")
@@ -106,7 +117,11 @@ output$table.observations = renderDataTable({
 ####################################################################
 
 observeEvent(input$select.dominant, {
-  
+  RV$pfg.graph <- c(RV$pfg.graph, "dom")
+})
+
+get_DOM = eventReactive(input$select.dominant, {
+
   sp.obs = get_obs()
   if (!is.null(sp.obs))
   {
@@ -171,6 +186,6 @@ observeEvent(input$select.dominant, {
     ))
     removeModal()
     
-    RV$pfg.graph <- c(RV$pfg.graph, "dom") 
+    return(get_res)
   }
 })

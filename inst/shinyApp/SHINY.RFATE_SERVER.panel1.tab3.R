@@ -123,7 +123,7 @@ get_CLUST1 = eventReactive(input$clustering.step1, {
   sp.dist = get_dist()
   if (!is.null(sp.dist))
   {
-    showModal(modalDialog(HTML(paste0("Create hierarchical clusters (dendograms) from dissimilarity matrix ..."))
+    showModal(modalDialog(HTML(paste0("Create hierarchical clusters (dendrograms) from dissimilarity matrix ..."))
                           , title = "PFG clustering : step 1"
                           , footer = NULL))
     Sys.sleep(3)
@@ -139,6 +139,10 @@ get_CLUST1 = eventReactive(input$clustering.step1, {
 })
 
 ####################################################################
+
+observeEvent(input$clustering.step2, {
+  RV$pfg.graph <- c(RV$pfg.graph, "clust2")
+})
 
 get_CLUST2 = eventReactive(input$clustering.step2, {
   
@@ -156,7 +160,8 @@ get_CLUST2 = eventReactive(input$clustering.step2, {
         }
       
       showModal(modalDialog(HTML(paste0("Choose clusters and select determinant species with : <ul>"
-                                        , "<li><strong>no.clusters :</strong> ", paste(unlist(no.clusters)),"</li>"
+                                        , "<li><strong>no.clusters :</strong> ", paste(unlist(no.clusters), collapse = " ")
+                                        ,"</li>"
                                         , "</ul>"))
                             , title = "PFG clustering : step 2"
                             , footer = NULL))
@@ -168,7 +173,6 @@ get_CLUST2 = eventReactive(input$clustering.step2, {
       ))
       removeModal()
       
-      RV$pfg.graph <- c(RV$pfg.graph, "clust2")
       shinyjs::enable("clustering.step3")
       return(get_res)
     }
@@ -191,16 +195,20 @@ get_sp.pfg.traits = eventReactive(input$clustering.step3, {
       sp.traits$species = as.character(sp.traits$species)
       
       sp.determ = as.data.frame(sp.determ$determ.all)
-      sp.determ$sp = as.character(sp.determ$sp)
+      sp.determ$species = as.character(sp.determ$species)
       
-      sp.pfg.traits = merge(sp.traits, sp.determ[, c("sp", "pfg")], by.x = c("species"), by.y = "sp")
-      colnames(sp.pfg.traits)[which(colnames(sp.pfg.traits) %in% c("sp", "species"))] = "species"
-      colnames(sp.pfg.traits)[which(colnames(sp.pfg.traits) %in% c("pfg"))] = "PFG"
-      colnames(sp.pfg.traits)[which(colnames(sp.pfg.traits) %in% c("GROUP", "TYPE"))] = "type"
+      sp.pfg.traits = merge(sp.traits, sp.determ[, c("species", "PFG")], by = "species")
+      if ("GROUP" %in% colnames(sp.pfg.traits)){
+        sp.pfg.traits = sp.pfg.traits[, -which(colnames(sp.pfg.traits) == "GROUP"), drop = FALSE]
+      }
       
       return(sp.pfg.traits)
     }
   }
+})
+
+observeEvent(input$clustering.step3, {
+  RV$pfg.graph <- c(RV$pfg.graph, "clust3")
 })
 
 get_CLUST3 = eventReactive(input$clustering.step3, {
@@ -218,7 +226,6 @@ get_CLUST3 = eventReactive(input$clustering.step3, {
     ))
     removeModal()
     
-    RV$pfg.graph <- c(RV$pfg.graph, "clust3")
     shinyjs::show("table.traits.pfg")
     output$table.traits.pfg = renderDataTable({
       get_res

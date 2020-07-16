@@ -77,7 +77,7 @@ roxygenize(
   , clean = TRUE)
 
 setwd("./../")
-roxygenize(
+  roxygenize(
   package.dir = package_name
   , clean = TRUE)
 setwd("RFate/")
