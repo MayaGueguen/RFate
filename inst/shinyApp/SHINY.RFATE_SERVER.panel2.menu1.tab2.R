@@ -98,7 +98,7 @@ observeEvent(input$create.save.objects, {
 get_tab.save = eventReactive(paste(input$name.simul
                                      , input$create.save.maps
                                      , input$create.save.objects
-                                     , RV$compt.save.nb), {
+                                     , RV$compt.save.no), {
                                        if (!is.null(input$name.simul) && nchar(input$name.simul) > 0)
                                        {
                                          path_folder = paste0(input$name.simul, "/DATA/SAVE/")
@@ -106,7 +106,7 @@ get_tab.save = eventReactive(paste(input$name.simul
                                          
                                          if (!is.null(tab) && ncol(tab) > 0)
                                          {
-                                           RV$compt.save.nb = ncol(tab)
+                                           RV$compt.save.no = ncol(tab)
                                            RV$compt.save.files = colnames(tab)
                                            return(tab)
                                          }
@@ -165,8 +165,8 @@ output$UI.files.save = renderUI({
   }
 })
 
-observeEvent(RV$compt.save.nb, {
-  for (i in 1:RV$compt.save.nb)
+observeEvent(RV$compt.save.no, {
+  for (i in 1:RV$compt.save.no)
   {
     observeEvent(input[[paste0("upload.save.", RV$compt.save.files[i])]], {
       get_update.save(file.saveParam = paste0(input$name.simul
@@ -214,10 +214,10 @@ observeEvent(input$view.save.select, {
 observeEvent(input$delete.save.select, {
   if (input$check.save.all)
   {
-    col_toKeep = rep(TRUE,RV$compt.save.nb)
+    col_toKeep = rep(TRUE,RV$compt.save.no)
   } else
   {
-    col_toKeep = foreach(i = 1:RV$compt.save.nb, .combine = "c") %do%
+    col_toKeep = foreach(i = 1:RV$compt.save.no, .combine = "c") %do%
     {
       eval(parse(text = paste0("res = input$check.save.", RV$compt.save.files[i])))
       return(res)
@@ -257,7 +257,7 @@ observeEvent(input$delete.save.select, {
                               , multiple = FALSE
                               , immediate = TRUE)
                    }
-                   RV$compt.save.nb = min(0, RV$compt.save.nb - sum(col_toKeep))
+                   RV$compt.save.no = min(0, RV$compt.save.no - sum(col_toKeep))
                  }
                })
   }

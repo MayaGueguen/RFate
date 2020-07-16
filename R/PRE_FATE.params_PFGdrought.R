@@ -786,8 +786,8 @@ PRE_FATE.params_PFGdrought = function(
                                        , ""
                                        , sub("/$", "_", opt.folder.name))
                               , "DROUGHT_COMPLETE_TABLE.csv")
-              , row.names = T
-              , col.names = F)
+              , row.names = TRUE
+              , col.names = FALSE)
   
   #############################################################################
   

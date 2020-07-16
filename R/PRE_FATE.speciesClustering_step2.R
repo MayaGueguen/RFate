@@ -192,7 +192,7 @@ PRE_FATE.speciesClustering_step2 = function(clust.dendrograms
   ## DEFINITION OF CLUSTERED GROUPS
   #############################################################################
   
-  ### CUT dendrogramS (or trees) RESULTING FROM hclust INTO SEVERAL GROUPS (nb = k)
+  ### CUT dendrogramS (or trees) RESULTING FROM hclust INTO SEVERAL GROUPS (no = k)
   ## Number of groups for each group has been chosen 
   ## according to the previous plot (CLUSTERING_STEP_1B)
   clust.groups = lapply(1:length(group_names), function(x) 

@@ -246,6 +246,10 @@ observeEvent(input$add.PFG.drought, {
              (input$drought.opt.resp == "user-defined" && RV$compt.drought.options[5]))
   {
     shinyalert(type = "warning", text = "You can not mix Responses 'by strategy' and 'user-defined' !")
+  } else if ((input$drought.opt.sens == "by strategy" && RV$compt.drought.options[8]) ||
+             (input$drought.opt.sens == "user-defined" && RV$compt.drought.options[7]))
+  {
+    shinyalert(type = "warning", text = "You can not mix Sensitivity 'by strategy' and 'user-defined' !")
   } else
   {
     name.cols = unlist(ifelse(input$drought.opt.group == "by type", list(c("H", "C", "P")), list(RV$names.PFG)))
@@ -296,19 +300,44 @@ observeEvent(input$add.PFG.drought, {
         res = unique(res[, -which(colnames(res) == "responseStage")])
       }
       RV$mat.PFG.drought <- rbind(RV$mat.PFG.drought, res)
+      
+      mat.tol = foreach(group = name.cols, .combine = "rbind") %do%
+      {
+        eval(parse(text = paste0("threshMod = input$drought.threshMod.", group)))
+        eval(parse(text = paste0("threshSev = input$drought.threshSev.", group)))
+        res = data.frame(PFG = group
+                         , threshold_moderate = threshMod
+                         , threshold_severe = threshSev
+                         , stringsAsFactors = FALSE)
+        if (input$drought.opt.sens == "user-defined")
+        {
+          eval(parse(text = paste0("res[['counter_recovery']] = input$drought.countRec.", group)))
+          eval(parse(text = paste0("res[['counter_sens']] = input$drought.countSens.", group)))
+          eval(parse(text = paste0("res[['counter_cum']] = input$drought.countCum.", group)))
+        } else
+        {
+          eval(parse(text = paste0("res[['strategy_drou']] = input$drought.strategy_sens.", group)))
+        }
+        return(res)
+      }
+      RV$mat.PFG.drought.tol <- rbind(RV$mat.PFG.drought.tol, mat.tol)
+      
       RV$compt.drought.options = c(input$drought.opt.group == "by type"
                                    , input$drought.opt.group == "by PFG"
                                    , input$drought.opt.ages == "pre-defined"
                                    , input$drought.opt.ages == "user-defined"
                                    , input$drought.opt.resp == "by strategy"
-                                   , input$drought.opt.resp == "user-defined")
+                                   , input$drought.opt.resp == "user-defined"
+                                   , input$drought.opt.sens == "by strategy"
+                                   , input$drought.opt.sens == "user-defined")
     }
   }
 })
 
 observeEvent(input$delete.PFG.drought, {
   RV$mat.PFG.drought <- data.frame()
-  RV$compt.drought.options <- rep(FALSE, 6)
+  RV$mat.PFG.drought.tol <- data.frame()
+  RV$compt.drought.options <- rep(FALSE, 8)
 })
 
 observeEvent(RV$mat.PFG.drought, {
@@ -329,17 +358,16 @@ observeEvent(input$create.drought, {
     get_res = print_messages(as.expression(
       PRE_FATE.params_PFGdrought(name.simulation = input$name.simul
                                  , mat.PFG.tol = RV$mat.PFG.drought
+                                 , mat.PFG.drought = RV$mat.PFG.drought.tol
                                  , opt.folder.name = get_opt.folder.name()
       )
     ), cut_pattern = paste0(input$name.simul, "/DATA/PFGS/DROUGHT/"))
     
-    # if (input$DROUGHT.no != length(unique(RV$mat.PFG.drought$nameDist))) {
-    #   showNotification(paste0(length(unique(RV$mat.PFG.drought$nameDist))
-    #                           , " drought were defined ("
-    #                           , input$DROUGHT.no
-    #                           , " indicated in Global Parameters panel). "
-    #                           , "Please check or consider changing the value!"), type = "warning")
-    # }
+    if (2 != length(unique(RV$mat.PFG.drought$nameDist))) {
+      showNotification(paste0(length(unique(RV$mat.PFG.drought$nameDist))
+                              , " drought were defined (2 expected : 'immediate' and 'delayed'). "
+                              , "Please check!"), type = "warning")
+    }
   } else
   {
     shinyalert(type = "warning", text = "You must create a simulation folder first !")

@@ -77,7 +77,7 @@ observeEvent(input$create.succ, {
 
 get_tab.succ = eventReactive(paste(input$name.simul
                                    , input$create.succ
-                                   , RV$compt.succ.nb), {
+                                   , RV$compt.succ.no), {
                                      if (!is.null(input$name.simul) && nchar(input$name.simul) > 0)
                                      {
                                        path_folder = paste0(input$name.simul, "/DATA/PFGS/SUCC/")
@@ -85,7 +85,7 @@ get_tab.succ = eventReactive(paste(input$name.simul
                                        
                                        if (!is.null(tab) && ncol(tab) > 0)
                                        {
-                                         RV$compt.succ.nb = ncol(tab)
+                                         RV$compt.succ.no = ncol(tab)
                                          RV$compt.succ.files = colnames(tab)
                                          return(tab)
                                        }
@@ -144,8 +144,8 @@ output$UI.files.succ = renderUI({
   }
 })
 
-# observeEvent(RV$compt.succ.nb, {
-#   for (i in 1:RV$compt.succ.nb)
+# observeEvent(RV$compt.succ.no, {
+#   for (i in 1:RV$compt.succ.no)
 #   {
 #     observeEvent(input[[paste0("upload.succ.", RV$compt.succ.files[i])]], {
 #       get_update.succ(file.succParam = paste0(input$name.simul
@@ -193,10 +193,10 @@ observeEvent(input$view.succ.select, {
 observeEvent(input$delete.succ.select, {
   if (input$check.succ.all)
   {
-    col_toKeep = rep(TRUE,RV$compt.succ.nb)
+    col_toKeep = rep(TRUE,RV$compt.succ.no)
   } else
   {
-    col_toKeep = foreach(i = 1:RV$compt.succ.nb, .combine = "c") %do%
+    col_toKeep = foreach(i = 1:RV$compt.succ.no, .combine = "c") %do%
     {
       eval(parse(text = paste0("res = input$check.succ.", RV$compt.succ.files[i])))
       return(res)
@@ -236,7 +236,7 @@ observeEvent(input$delete.succ.select, {
                               , multiple = FALSE
                               , immediate = TRUE)
                    }
-                   RV$compt.succ.nb = min(0, RV$compt.succ.nb - sum(col_toKeep))
+                   RV$compt.succ.no = min(0, RV$compt.succ.no - sum(col_toKeep))
                  }
                })
   }

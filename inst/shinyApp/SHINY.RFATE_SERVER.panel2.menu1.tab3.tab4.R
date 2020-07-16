@@ -72,7 +72,7 @@ observeEvent(input$create.disp, {
 
 get_tab.disp = eventReactive(paste(input$name.simul
                                      , input$create.disp
-                                     , RV$compt.disp.nb), {
+                                     , RV$compt.disp.no), {
                                        if (!is.null(input$name.simul) && nchar(input$name.simul) > 0)
                                        {
                                          path_folder = paste0(input$name.simul, "/DATA/PFGS/DISP/")
@@ -80,7 +80,7 @@ get_tab.disp = eventReactive(paste(input$name.simul
                                          
                                          if (!is.null(tab) && ncol(tab) > 0)
                                          {
-                                           RV$compt.disp.nb = ncol(tab)
+                                           RV$compt.disp.no = ncol(tab)
                                            RV$compt.disp.files = colnames(tab)
                                            return(tab)
                                          }
@@ -139,8 +139,8 @@ output$UI.files.disp = renderUI({
   }
 })
 
-# observeEvent(RV$compt.disp.nb, {
-#   for (i in 1:RV$compt.disp.nb)
+# observeEvent(RV$compt.disp.no, {
+#   for (i in 1:RV$compt.disp.no)
 #   {
 #     observeEvent(input[[paste0("upload.disp.", RV$compt.disp.files[i])]], {
 #       get_update.disp(file.dispParam = paste0(input$name.simul
@@ -188,10 +188,10 @@ observeEvent(input$view.disp.select, {
 observeEvent(input$delete.disp.select, {
   if (input$check.disp.all)
   {
-    col_toKeep = rep(TRUE,RV$compt.disp.nb)
+    col_toKeep = rep(TRUE,RV$compt.disp.no)
   } else
   {
-    col_toKeep = foreach(i = 1:RV$compt.disp.nb, .combine = "c") %do%
+    col_toKeep = foreach(i = 1:RV$compt.disp.no, .combine = "c") %do%
     {
       eval(parse(text = paste0("res = input$check.disp.", RV$compt.disp.files[i])))
       return(res)
@@ -231,7 +231,7 @@ observeEvent(input$delete.disp.select, {
                               , multiple = FALSE
                               , immediate = TRUE)
                    }
-                   RV$compt.disp.nb = min(0, RV$compt.disp.nb - sum(col_toKeep))
+                   RV$compt.disp.no = min(0, RV$compt.disp.no - sum(col_toKeep))
                  }
                })
   }

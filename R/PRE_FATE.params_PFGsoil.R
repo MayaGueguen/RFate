@@ -583,8 +583,8 @@ PRE_FATE.params_PFGsoil = function(
                                        , ""
                                        , sub("/$", "_", opt.folder.name))
                               , "SOIL_COMPLETE_TABLE.csv")
-              , row.names = F
-              , col.names = T)
+              , row.names = FALSE
+              , col.names = TRUE)
   
   #############################################################################
   

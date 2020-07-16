@@ -206,7 +206,7 @@ observeEvent(input$create.changing, {
 
 get_tab.changing = eventReactive(paste(input$name.simul
                                      , input$create.changing
-                                     , RV$compt.changing.nb), {
+                                     , RV$compt.changing.no), {
                                        if (!is.null(input$name.simul) && nchar(input$name.simul) > 0)
                                        {
                                          path_folder = paste0(input$name.simul, "/DATA/SCENARIO/")
@@ -214,7 +214,7 @@ get_tab.changing = eventReactive(paste(input$name.simul
                                          
                                          if (!is.null(tab) && ncol(tab) > 0)
                                          {
-                                           RV$compt.changing.nb = ncol(tab)
+                                           RV$compt.changing.no = ncol(tab)
                                            RV$compt.changing.files = colnames(tab)
                                            return(tab)
                                          }
@@ -273,8 +273,8 @@ output$UI.files.changing = renderUI({
   }
 })
 
-# observeEvent(RV$compt.changing.nb, {
-#   for (i in 1:RV$compt.changing.nb)
+# observeEvent(RV$compt.changing.no, {
+#   for (i in 1:RV$compt.changing.no)
 #   {
 #     observeEvent(input[[paste0("upload.changing.", RV$compt.changing.files[i])]], {
 #       get_update.changing(file.changingParam = paste0(input$name.simul
@@ -322,10 +322,10 @@ observeEvent(input$view.changing.select, {
 observeEvent(input$delete.changing.select, {
   if (input$check.changing.all)
   {
-    col_toKeep = rep(TRUE,RV$compt.changing.nb)
+    col_toKeep = rep(TRUE,RV$compt.changing.no)
   } else
   {
-    col_toKeep = foreach(i = 1:RV$compt.changing.nb, .combine = "c") %do%
+    col_toKeep = foreach(i = 1:RV$compt.changing.no, .combine = "c") %do%
     {
       eval(parse(text = paste0("res = input$check.changing.", RV$compt.changing.files[i])))
       return(res)
@@ -365,7 +365,7 @@ observeEvent(input$delete.changing.select, {
                               , multiple = FALSE
                               , immediate = TRUE)
                    }
-                   RV$compt.changing.nb = min(0, RV$compt.changing.nb - sum(col_toKeep))
+                   RV$compt.changing.no = min(0, RV$compt.changing.no - sum(col_toKeep))
                  }
                })
   }

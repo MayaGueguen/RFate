@@ -703,8 +703,8 @@ PRE_FATE.params_PFGdisturbance = function(
                                        , ""
                                        , sub("/$", "_", opt.folder.name))
                               , "DIST_COMPLETE_TABLE.csv")
-              , row.names = T
-              , col.names = F)
+              , row.names = TRUE
+              , col.names = FALSE)
   
   #############################################################################
   

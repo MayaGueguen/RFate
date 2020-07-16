@@ -538,8 +538,8 @@ PRE_FATE.params_PFGlight = function(
                                        , ""
                                        , sub("/$", "_", opt.folder.name))
                               , "LIGHT_COMPLETE_TABLE.csv")
-              , row.names = F
-              , col.names = T)
+              , row.names = FALSE
+              , col.names = TRUE)
   
   #############################################################################
   

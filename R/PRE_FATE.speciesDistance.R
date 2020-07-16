@@ -532,7 +532,7 @@ PRE_FATE.speciesDistance = function(mat.traits
     rownames(toSave) = colnames(toSave)
     write.csv(toSave
               , file = paste0("PRE_FATE_DOMINANT_speciesDistance.csv")
-              , row.names = T)
+              , row.names = TRUE)
     message(paste0("\n The output file \n"
                    , " > PRE_FATE_DOMINANT_speciesDistance.csv \n"
                    , "has been successfully created !\n"))
@@ -546,7 +546,7 @@ PRE_FATE.speciesDistance = function(mat.traits
                 , file = paste0("PRE_FATE_DOMINANT_speciesDistance_"
                                 , names(mat.species.DIST)[i]
                                 , ".csv")
-                , row.names = T)
+                , row.names = TRUE)
     }
     message(paste0("\n The output files \n"
                    , paste0(" > PRE_FATE_DOMINANT_speciesDistance_"

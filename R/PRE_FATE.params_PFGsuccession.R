@@ -641,8 +641,8 @@ PRE_FATE.params_PFGsuccession = function(
                                        , ""
                                        , sub("/$", "_", opt.folder.name))
                               , "SUCC_COMPLETE_TABLE.csv")
-              , row.names = F
-              , col.names = T)
+              , row.names = FALSE
+              , col.names = TRUE)
   
   #############################################################################
   

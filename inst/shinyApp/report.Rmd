@@ -26,7 +26,7 @@ params:
   DIST.freq: NA
   LIGHT.thresh_medium: NA
   LIGHT.thresh_low: NA
-  compt.global.nb: NA
+  compt.global.no: NA
   compt.global.files: NA
 ---
 
@@ -126,7 +126,7 @@ get_tab.global = function() {
     
     if (!is.null(tab) && ncol(tab) > 0)
     {
-      params$compt.global.nb = ncol(tab)
+      params$compt.global.no = ncol(tab)
       params$compt.global.files = colnames(tab)
       return(tab)
     }

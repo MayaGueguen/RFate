@@ -426,13 +426,13 @@ PRE_FATE.selectDominant = function(mat.observations
     if (i.type == "releves")
     {
       sel.vec = 1:MO.no_releves
-      sel.nb = round(i.percent * MO.no_releves)
-      sel.ind = sample(sel.vec, sel.nb)
+      sel.no = round(i.percent * MO.no_releves)
+      sel.ind = sample(sel.vec, sel.no)
     } else
     {
       sel.vec = 1:MO.no_sites
-      sel.nb = round(i.percent * MO.no_sites)
-      sel.ind = sample(sel.vec, sel.nb)
+      sel.no = round(i.percent * MO.no_sites)
+      sel.ind = sample(sel.vec, sel.no)
       sel.ind = which(MO$sites %in% MO.sites[sel.ind])
     }
     
@@ -682,7 +682,7 @@ PRE_FATE.selectDominant = function(mat.observations
                                  , "_", rule.A2_quantile)
           write.csv(mat.A_B2
                     , file = "PRE_FATE_DOMINANT_mat.A_B2.csv"
-                    , row.names = F)
+                    , row.names = FALSE)
         }
         if (doRuleB) {
           end_filenameB = paste0("_B_", rule.B1_number
@@ -690,14 +690,14 @@ PRE_FATE.selectDominant = function(mat.observations
                                  , "_", rule.B2)
           write.csv(mat.B1
                     , file = "PRE_FATE_DOMINANT_mat.B1.csv"
-                    , row.names = F)
+                    , row.names = FALSE)
         }
         if (doRuleC) {
           end_filenameC = paste0("_C_", rule.A1
                                  , "_", rule.A2_quantile)
           write.csv(mat.C
                     , file = "PRE_FATE_DOMINANT_mat.C.csv"
-                    , row.names = F)
+                    , row.names = FALSE)
         }
         end_filename = paste0(end_filenameA, end_filenameB, end_filenameC)
         
@@ -705,12 +705,12 @@ PRE_FATE.selectDominant = function(mat.observations
                   , file = paste0("PRE_FATE_DOMINANT_TABLE_complete"
                                   , end_filename
                                   , ".csv")
-                  , row.names = F)
+                  , row.names = FALSE)
         write.csv(RULES[which(RULES$SELECTED == TRUE), "species"]
                   , file = paste0("PRE_FATE_DOMINANT_TABLE_species"
                                   , end_filename
                                   , ".csv")
-                  , row.names = F)
+                  , row.names = FALSE)
         
         
         message(paste0("\n The output files \n"
@@ -1324,17 +1324,17 @@ PRE_FATE.selectDominant = function(mat.observations
           
           if (nrow(tab.subset) > 0)
           {
-            ## NB OF SPECIES
-            tab.nbSp = tapply(X = as.numeric(tab.subset$SELECTED)
+            ## NO OF SPECIES
+            tab.noSp = tapply(X = as.numeric(tab.subset$SELECTED)
                               , INDEX = list(tab.subset$type
                                              , tab.subset$percent
                                              , tab.subset$rep)
                               , FUN = sum
                               , na.rm = TRUE)
-            tab.nbSp = melt(tab.nbSp)
-            colnames(tab.nbSp) = c("type", "percent", "rep", "value")
-            tab.nbSp$analysis = "nb.sp"
-            tab.nbSp$value = tab.nbSp$value / length(sel.sp)
+            tab.noSp = melt(tab.noSp)
+            colnames(tab.noSp) = c("type", "percent", "rep", "value")
+            tab.noSp$analysis = "no.sp"
+            tab.noSp$value = tab.noSp$value / length(sel.sp)
             
             ## SIMILAR SPECIES
             tab.simSp = foreach(i.type = combi$type
@@ -1358,8 +1358,8 @@ PRE_FATE.selectDominant = function(mat.observations
                                 }
             
             ## PLOT
-            tab.plot = rbind(tab.nbSp, tab.simSp)
-            tab.plot$analysis = factor(tab.plot$analysis, c("nb.sp", "all", "percent"))
+            tab.plot = rbind(tab.noSp, tab.simSp)
+            tab.plot$analysis = factor(tab.plot$analysis, c("no.sp", "all", "percent"))
             tab.plot$percent_fac = factor(tab.plot$percent, seq(0, 1, 0.1))
             tab.plot$percent_num = as.numeric(tab.plot$percent_fac)
             
@@ -1367,7 +1367,7 @@ PRE_FATE.selectDominant = function(mat.observations
               geom_boxplot(aes_string(x = "percent_fac"), na.rm = TRUE) +
               geom_smooth(aes_string(x = "percent_num"), method = "loess", na.rm = TRUE) +
               facet_wrap(analysis ~ ., ncol = 3
-                         , labeller = as_labeller(c("nb.sp" = "a"
+                         , labeller = as_labeller(c("no.sp" = "a"
                                                     , "all" = "b"
                                                     , "percent" = "c"))) +
               scale_x_discrete(name = "\nPercentage of observations (%)"

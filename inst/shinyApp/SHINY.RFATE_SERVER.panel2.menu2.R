@@ -234,7 +234,7 @@ observeEvent(input$create.multiple_set, {
                                   , do.LIGHT.thresh_low = ("light_thresh_low" %in% unlist(params.checked))
                                   , do.HABSUIT.mode = ("habsuit_mode" %in% unlist(params.checked))
                                   , do.DISPERSAL.mode = ("dispersal_mode" %in% unlist(params.checked))
-                                  , do.nb_stratum =("strata_limits" %in% unlist(params.checked))
+                                  , do.no_strata =("strata_limits" %in% unlist(params.checked))
       )
     ), cut_pattern = paste0(input$name.simul, "/DATA/PFGS/SUCC/"))
     removeModal()

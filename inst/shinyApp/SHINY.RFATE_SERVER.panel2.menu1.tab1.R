@@ -1,4 +1,10 @@
 
+observeEvent(input$required.simul_duration, {
+  updateNumericInput(session
+                     , inputId = "save.maps.year2"
+                     , value = input$required.simul_duration)
+})
+
 ####################################################################
 
 output$UI.doDispersal = renderUI({
@@ -15,6 +21,16 @@ output$UI.doDispersal = renderUI({
   } 
 })
 
+observeEvent(input$doDispersal, {
+  if (input$doDispersal)
+  {
+    showTab(inputId = "panel.PFG_sub", target = "panel.disp", select = TRUE)
+  } else
+  {
+    hideTab(inputId = "panel.PFG_sub", target = "panel.disp")
+  }
+})
+
 ####################################################################
 
 output$UI.doHabSuitability = renderUI({
@@ -29,6 +45,16 @@ output$UI.doHabSuitability = renderUI({
   } 
 })
 
+observeEvent(input$doHabSuitability, {
+  if (input$doHabSuitability)
+  {
+    shinyjs::enable("raster.habsuit")
+  } else
+  {
+    shinyjs::disable("raster.habsuit")
+  }
+})
+
 ####################################################################
 
 output$UI.doLight = renderUI({
@@ -38,15 +64,24 @@ output$UI.doLight = renderUI({
            , numericInput(inputId = "LIGHT.thresh_medium"
                           , label = param.style("LIGHT.thresh_medium")
                           , min = 1
-                          , value = 1
+                          , value = 5000
                           , width = "100%")
            , numericInput(inputId = "LIGHT.thresh_low"
                           , label = param.style("LIGHT.thresh_low")
-                          , min = 4
-                          , max = 4
-                          , value = 1
+                          , min = 1
+                          , value = 8000
                           , width = "100%")
     )
+  }
+})
+
+observeEvent(input$doLight, {
+  if (input$doLight)
+  {
+    showTab(inputId = "panel.PFG_sub", target = "panel.light", select = TRUE)
+  } else
+  {
+    hideTab(inputId = "panel.PFG_sub", target = "panel.light")
   }
 })
 
@@ -69,6 +104,16 @@ output$UI.doSoil = renderUI({
                          , step = 0.05
                          , width = "100%")
     )
+  }
+})
+
+observeEvent(input$doSoil, {
+  if (input$doSoil)
+  {
+    showTab(inputId = "panel.PFG_sub", target = "panel.soil", select = TRUE)
+  } else
+  {
+    hideTab(inputId = "panel.PFG_sub", target = "panel.soil")
   }
 })
 
@@ -98,6 +143,18 @@ output$UI.doDisturbances = renderUI({
   }
 })
 
+observeEvent(input$doDisturbances, {
+  if (input$doDisturbances)
+  {
+    showTab(inputId = "panel.PFG_sub", target = "panel.dist", select = TRUE)
+    shinyjs::enable("raster.dist")
+  } else
+  {
+    hideTab(inputId = "panel.PFG_sub", target = "panel.dist")
+    shinyjs::disable("raster.dist")
+  }
+})
+
 ####################################################################
 
 output$UI.doDrought = renderUI({
@@ -111,6 +168,18 @@ output$UI.doDrought = renderUI({
                           , value = 1
                           , width = "100%")
     )
+  }
+})
+
+observeEvent(input$doDrought, {
+  if (input$doDrought)
+  {
+    showTab(inputId = "panel.PFG_sub", target = "panel.drought", select = TRUE)
+    shinyjs::enable("raster.drought")
+  } else
+  {
+    hideTab(inputId = "panel.PFG_sub", target = "panel.drought")
+    shinyjs::disable("raster.drought")
   }
 })
 
@@ -131,6 +200,16 @@ output$UI.doAliens = renderUI({
                           , value = 1
                           , width = "100%")
     )
+  }
+})
+
+observeEvent(input$doAliens, {
+  if (input$doAliens)
+  {
+    shinyjs::enable("raster.aliens")
+  } else
+  {
+    shinyjs::disable("raster.aliens")
   }
 })
 
@@ -350,6 +429,18 @@ output$UI.doFire2.4bis = renderUI({
   )
 })
 
+observeEvent(input$doFire, {
+  if (input$doFire)
+  {
+    shinyjs::enable("raster.fire")
+    shinyjs::enable("raster.elevation")
+    shinyjs::enable("raster.slope")
+  } else
+  {
+    shinyjs::disable("raster.fire")
+    shinyjs::disable("raster.elevation")
+    shinyjs::disable("raster.slope")  }
+})
 
 
 ####################################################################
@@ -436,7 +527,7 @@ observeEvent(input$create.global, {
 
 get_tab.global = eventReactive(paste(input$name.simul
                                      , input$create.global
-                                     , RV$compt.global.nb), {
+                                     , RV$compt.global.no), {
                                        if (!is.null(input$name.simul) && nchar(input$name.simul) > 0)
                                        {
                                          path_folder = paste0(input$name.simul, "/DATA/GLOBAL_PARAMETERS/")
@@ -444,7 +535,7 @@ get_tab.global = eventReactive(paste(input$name.simul
                                          
                                          if (!is.null(tab) && ncol(tab) > 0)
                                          {
-                                           RV$compt.global.nb = ncol(tab)
+                                           RV$compt.global.no = ncol(tab)
                                            RV$compt.global.files = colnames(tab)
                                            return(tab)
                                          }
@@ -503,8 +594,8 @@ output$UI.files.global = renderUI({
   }
 })
 
-observeEvent(RV$compt.global.nb, {
-  for (i in 1:RV$compt.global.nb)
+observeEvent(RV$compt.global.no, {
+  for (i in 1:RV$compt.global.no)
   {
     observeEvent(input[[paste0("upload.global.", RV$compt.global.files[i])]], {
       get_update.global(file.globalParam = paste0(input$name.simul
@@ -552,10 +643,10 @@ observeEvent(input$view.global.select, {
 observeEvent(input$delete.global.select, {
   if (input$check.global.all)
   {
-    col_toKeep = rep(TRUE,RV$compt.global.nb)
+    col_toKeep = rep(TRUE,RV$compt.global.no)
   } else
   {
-    col_toKeep = foreach(i = 1:RV$compt.global.nb, .combine = "c") %do%
+    col_toKeep = foreach(i = 1:RV$compt.global.no, .combine = "c") %do%
     {
       eval(parse(text = paste0("res = input$check.global.", RV$compt.global.files[i])))
       return(res)
@@ -595,7 +686,7 @@ observeEvent(input$delete.global.select, {
                               , multiple = FALSE
                               , immediate = TRUE)
                    }
-                   RV$compt.global.nb = min(0, RV$compt.global.nb - sum(col_toKeep))
+                   RV$compt.global.no = min(0, RV$compt.global.no - sum(col_toKeep))
                  }
                })
   }

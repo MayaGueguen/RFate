@@ -91,27 +91,28 @@ ui <- fluidPage(
     ) ## END tag$style
   ), ## END tag$body
   
-  fluidRow(
-    style = HTML(paste0("background-color: ", theme.color, "; margin-top: 20px; margin-bottom: 20px;"))
-    , column(10, headerPanel("FATE", windowTitle = "FATE"))
-    , column(2,
-             conditionalPanel(condition="$('html').hasClass('shiny-busy')",
-                              tags$img(src =
-                                         #"http://www.grobelny.pl/kola.gif"
-                                         #"https://i.pinimg.com/originals/18/42/81/184281f0fe87517a950beb8112c308dd.gif"
-                                         #"https://cdn-images-1.medium.com/max/2400/1*F_5AEXIfr1AXuShXhYT4zg.gif"
-                                         #"http://thinkfuture.com/wp-content/uploads/2013/10/loading_spinner.gif"
-                                         "https://cdn.dribbble.com/users/1169971/screenshots/3553587/graphloader.gif"
-                                       # "https://loading.io/spinners/equalizer/lg.equalizer-bars-loader.gif"
-                                       , height = "80px")
-             )
-             # conditionalPanel(condition = "$('html').hasClass('shiny-busy')",
-             #                  tags$div("Loading...", id = "loadmessage"))
+  titlePanel(
+    fluidRow(
+      style = HTML(paste0("background-color: ", theme.color, "; margin-top: 20px; margin-bottom: 20px;"))
+      , column(10, headerPanel("FATE", windowTitle = "FATE"))
+      , column(2, conditionalPanel(condition="$('html').hasClass('shiny-busy')"
+                                   , tags$img(src =
+                                                #"http://www.grobelny.pl/kola.gif"
+                                                #"https://i.pinimg.com/originals/18/42/81/184281f0fe87517a950beb8112c308dd.gif"
+                                                #"https://cdn-images-1.medium.com/max/2400/1*F_5AEXIfr1AXuShXhYT4zg.gif"
+                                                #"http://thinkfuture.com/wp-content/uploads/2013/10/loading_spinner.gif"
+                                                "https://cdn.dribbble.com/users/1169971/screenshots/3553587/graphloader.gif"
+                                              # "https://loading.io/spinners/equalizer/lg.equalizer-bars-loader.gif"
+                                              , height = "80px")
+      )
+      # conditionalPanel(condition = "$('html').hasClass('shiny-busy')",
+      #                  tags$div("Loading...", id = "loadmessage"))
+      )
     )
-  ),
+  ) ## END titlePanel
   
   # Sidebar layout with a input and output definitions
-  mainPanel(
+  , mainPanel(
     width = 12,
     navbarPage(""
                , id = "navbar"
@@ -145,12 +146,14 @@ server <- function(input, output, session) {
                       , mat.PFG.soil.tol = data.frame()
                       , mat.PFG.disp = data.frame()
                       , mat.PFG.dist = data.frame()
+                      , mat.PFG.drought = data.frame()
+                      , mat.PFG.drought.tol = data.frame()
                       , mat.changing = data.frame()
-                      , compt.global.nb = 0
+                      , compt.global.no = 0
                       , compt.global.files = c()
-                      , compt.save.nb = 0
+                      , compt.save.no = 0
                       , compt.save.files = c()
-                      , compt.succ.nb = 0
+                      , compt.succ.no = 0
                       , compt.succ.files = c()
                       , compt.light.no = 0
                       , compt.light.files = c()
@@ -158,15 +161,15 @@ server <- function(input, output, session) {
                       , compt.soil.no = 0
                       , compt.soil.files = c()
                       , compt.soil.options = rep(FALSE, 8)
-                      , compt.disp.nb = 0
+                      , compt.disp.no = 0
                       , compt.disp.files = c()
                       , compt.dist.no = 0
                       , compt.dist.files = c()
                       , compt.dist.options = rep(FALSE, 6)
                       # , compt.drought.no = 0
                       , compt.drought.files = c()
-                      , compt.drought.options = rep(FALSE, 6)
-                      , compt.changing.nb = 0
+                      , compt.drought.options = rep(FALSE, 8)
+                      , compt.changing.no = 0
                       , compt.changing.files = c()
                       , compt.browser = 1
                       , compt.browser.max = 1
@@ -249,7 +252,7 @@ server <- function(input, output, session) {
                        , "LIGHT.thresh_medium"
                        , "LIGHT.thresh_low"
       )
-      RV.names = c("compt.global.nb"
+      RV.names = c("compt.global.no"
                    , "compt.global.files")
       
       params = vector("list")

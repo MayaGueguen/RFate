@@ -42,7 +42,8 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Raster files</span>")
                           , column(4
                                    , br()
                                    , wellPanel(
-                                     HTML(paste0("<i class='fas fa-bolt' style='font-size:15px;'></i>"
+                                     id = "raster.dist"
+                                     , HTML(paste0("<i class='fas fa-bolt' style='font-size:15px;'></i>"
                                                  , " <strong>Disturbances masks</strong>"))
                                      , br()
                                      , br()
@@ -71,7 +72,8 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Raster files</span>")
                           , column(4
                                    , br()
                                    , wellPanel(
-                                     HTML(paste0("<i class='fas fa-tint' style='font-size:15px;'></i>"
+                                     id = "raster.drought"
+                                     , HTML(paste0("<i class='fas fa-tint' style='font-size:15px;'></i>"
                                                  , " <strong>Drought masks</strong>"))
                                      , br()
                                      , br()
@@ -102,7 +104,8 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Raster files</span>")
                           column(4
                                  , br()
                                  , wellPanel(
-                                   HTML(paste0("<i class='fas fa-fire' style='font-size:15px;'></i>"
+                                   id = "raster.fire"
+                                   , HTML(paste0("<i class='fas fa-fire' style='font-size:15px;'></i>"
                                                , " <strong>Fire masks</strong>"))
                                    , br()
                                    , br()
@@ -131,7 +134,8 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Raster files</span>")
                           , column(4
                                    , br()
                                    , wellPanel(
-                                     HTML(paste0("<i class='fas fa-fire' style='font-size:15px;'></i>"
+                                     id = "raster.elevation"
+                                     , HTML(paste0("<i class='fas fa-fire' style='font-size:15px;'></i>"
                                                  , " <strong>Elevation mask</strong>"))
                                      , br()
                                      , br()
@@ -159,7 +163,8 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Raster files</span>")
                           , column(4
                                    , br()
                                    , wellPanel(
-                                     HTML(paste0("<i class='fas fa-fire' style='font-size:15px;'></i>"
+                                     id = "raster.slope"
+                                     , HTML(paste0("<i class='fas fa-fire' style='font-size:15px;'></i>"
                                                  , " <strong>Slope mask</strong>"))
                                      , br()
                                      , br()
@@ -189,7 +194,8 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Raster files</span>")
                           column(4
                                  , br()
                                  , wellPanel(
-                                   HTML(paste0("<i class='fas fa-globe' style='font-size:15px;'></i>"
+                                   id = "raster.habsuit"
+                                   , HTML(paste0("<i class='fas fa-globe' style='font-size:15px;'></i>"
                                                , " <strong>Habitat suitability masks</strong>"))
                                    , br()
                                    , br()
@@ -225,7 +231,8 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Raster files</span>")
                           , column(4
                                    , br()
                                    , wellPanel(
-                                     HTML(paste0("<i class='fab fa-reddit-alien' style='font-size:15px;'></i>"
+                                     id = "raster.aliens"
+                                     , HTML(paste0("<i class='fab fa-reddit-alien' style='font-size:15px;'></i>"
                                                , " <strong>Aliens masks</strong>"))
                                      , br()
                                      , br()
@@ -303,7 +310,8 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Raster files</span>")
                                      , HTML("<strong>Type</strong>")
                                      , selectInput(inputId = "type.changing"
                                                    , label = NULL
-                                                   , choices = c("MASK", "HABSUIT", "DIST", "DROUGHT", "ALIENS", "FIRE")
+                                                   , choices = c("MASK", "HABSUIT", "DIST", "DROUGHT"
+                                                                 , "ALIENS", "ALIENS_F", "FIRE", "FIRE_F")
                                                    , selected = "MASK"
                                                    , multiple = FALSE
                                                    , width = "100%"))

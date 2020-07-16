@@ -32,19 +32,19 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Global parameters</span>")
                         , numericInput(inputId = "required.max_abund_low"
                                        , label = HTML(paste0("<i class='fa fa-heart' style='font-size:15px;'></i>"
                                                              , param.style(" required.max_abund_low")))
-                                       , value = 1
+                                       , value = 3000
                                        , min = 1
                                        , width = "100%")
                         , numericInput(inputId = "required.max_abund_medium"
                                        , label = HTML(paste0("<i class='fa fa-heart' style='font-size:15px;'></i>"
                                                              , param.style(" required.max_abund_medium")))
-                                       , value = 1
+                                       , value = 6000
                                        , min = 1
                                        , width = "100%")
                         , numericInput(inputId = "required.max_abund_high"
                                        , label = HTML(paste0("<i class='fa fa-heart' style='font-size:15px;'></i>"
                                                              , param.style(" required.max_abund_high")))
-                                       , value = 1
+                                       , value = 9000
                                        , min = 1
                                        , width = "100%")
                )
@@ -82,7 +82,7 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Global parameters</span>")
                       , checkboxInput(inputId = "doDispersal"
                                       , label = HTML(paste0("<i class='fa fa-seedling' style='font-size:15px;'></i>"
                                                        , param.style(" doDispersal")))
-                                      , value = TRUE
+                                      , value = FALSE
                                       , width = "100%")
                       , uiOutput(outputId = "UI.doDispersal")
                )

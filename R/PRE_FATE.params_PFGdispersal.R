@@ -146,8 +146,8 @@ PRE_FATE.params_PFGdispersal = function(
                                        , ""
                                        , sub("/$", "_", opt.folder.name))
                               , "DISP_COMPLETE_TABLE.csv")
-              , row.names = F
-              , col.names = T)
+              , row.names = FALSE
+              , col.names = TRUE)
   
   #############################################################################
   

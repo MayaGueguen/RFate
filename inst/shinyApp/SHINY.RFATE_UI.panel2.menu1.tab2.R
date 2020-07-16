@@ -31,9 +31,9 @@ tabPanel(title = HTML("<span class='tabPanel_title'>Scenario files</span>")
                                        , width = "100%")
                         , numericInput(inputId = "save.maps.no"
                                        , label = param.style("years.maps.number")
-                                       , value = 0
+                                       , value = 100
                                        , min = 0
-                                       , max = 100
+                                       , max = 200
                                        , step = 10
                                        , width = "100%")
                         , br()
