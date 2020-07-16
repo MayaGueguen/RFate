@@ -400,7 +400,8 @@ observeEvent(input$browser.files, {
                                   labs(x = "", y = ""
                                        , title = paste0("GRAPH B : validation statistics"
                                                         , " - Simulation year : "
-                                                        , y, " - Habitat ", habi)
+                                                        , strsplit(sub(".*YEAR_", "", input$browser.files), "_")[[1]][1]
+                                                        , " - Habitat ", habi)
                                        , subtitle = paste0("Sensitivity (or specificity) measures "
                                                            , "the proportion of actual positives "
                                                            , "(or negatives) that are correctly "
@@ -443,7 +444,7 @@ observeEvent(input$browser.files, {
                                                            , ymax = "value + AUC.sd")
                                                 , color = "grey30", na.rm = TRUE) +
                                   annotate(geom = "text"
-                                           , x = no_PFG / 2
+                                           , x = length(unique(mat.plot$PFG)) / 2
                                            , y = 1.05
                                            , label = subti
                                            , size = 4) +
@@ -460,6 +461,8 @@ observeEvent(input$browser.files, {
                           pp_final = grid.arrange(grobs = pp_list
                                                   , layout_matrix = matrix(c(1,1,2,3,2,3,4,5,4,5,6,6)
                                                                            , ncol = 2, byrow = TRUE))
+                          pp_final = cowplot::ggdraw(pp_final) + 
+                            theme(plot.background = element_rect(fill = "transparent", color = NA))
                           return(pp_final)
                         } ## END loop on hab_names
                       pp

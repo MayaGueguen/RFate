@@ -525,10 +525,16 @@ POST_FATE.graphic_validationStatistics = function(
               
               ## 3. gather everything
               pp_list[[6]] = pp_leg
-              return(grid.arrange(grobs = pp_list
-                                  , layout_matrix = matrix(c(1,1,2,3,2,3,4,5,4,5,6,6)
-                                                           , ncol = 2, byrow = TRUE)
-                                  , newpage = ifelse(y == years[1], FALSE, TRUE)))
+              pp_final = grid.arrange(grobs = pp_list
+                                      , layout_matrix = matrix(c(1,1,2,3,2,3,4,5,4,5,6,6)
+                                                               , ncol = 2, byrow = TRUE)
+                                      , newpage = ifelse(y == years[1], FALSE, TRUE))                    
+              pp_final = cowplot::ggdraw(pp_final) + 
+                theme(plot.background = element_rect(fill = "transparent", color = NA))
+              # require(patchwork)
+              # pp_final <- pp_list[[1]] / (pp_list[[2]] | pp_list[[3]]) / (pp_list[[4]] | pp_list[[5]]) / pp_list[[6]]
+              
+              return(pp_final)
             } ## END loop on hab_names
             names(plot_list.hab) = hab_names
             return(plot_list.hab)

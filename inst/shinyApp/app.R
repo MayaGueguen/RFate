@@ -9,7 +9,7 @@ list.packages = c(list.packages
 ## GRAPHICS packages
 list.packages = c(list.packages
                   , "ggplot2", "ggthemes", "ggdendro", "ggrepel", "ggExtra", "gridExtra"
-                  , "viridis", "RColorBrewer", "plotly", "cowplot")
+                  , "viridis", "RColorBrewer", "plotly", "cowplot", "patchwork")
 ## OTHER packages
 list.packages = c(list.packages
                   , "markdown", "zip", "raster", "rintrojs"
