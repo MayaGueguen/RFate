@@ -20,6 +20,7 @@ get_traits = eventReactive(list(input$species.traits, input$compute.distance), {
     if (extension(input$species.traits$name) %in% c(".txt", ".csv"))
     {
       sp.traits = fread(input$species.traits$datapath)
+	  sp.traits = as.data.frame(sp.traits, stringsAsFactors = FALSE)
       
       if (length(which(colnames(sp.traits) == "species")) == 1)
       {
@@ -96,13 +97,14 @@ get_dom = eventReactive(list(input$choice.dominant, input$compute.distance), {
   if (file.exists(end_filename))
   {
     sp.select = fread(end_filename)
+	
     if (ncol(sp.select) > 1)
     {
       warning(paste0("The file ", input$species.selected$name, " contains ", ncol(sp.select)
                      , " columns. Only the first, which should contain dominant species, will be used."))
     }
     
-    sp.dom = as.data.frame(sp.select)[, 1]
+    sp.dom = as.data.frame(sp.select, stringsAsFactors = FALSE)[, 1]
     return(sp.dom)
   } else
   {
@@ -137,6 +139,7 @@ get_DIST = eventReactive(input$compute.distance, {
           if (extension(input$species.niche.distance$name) %in% c(".txt", ".csv"))
           {
             sp.niche = fread(input$species.niche.distance$datapath)
+			sp.niche = as.data.frame(sp.niche, stringsAsFactors = FALSE)
           } else if (extension(input$species.niche.distance$name) == ".RData")
           {
             sp.niche = get(load(input$species.niche.distance$datapath))

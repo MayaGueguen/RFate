@@ -79,6 +79,7 @@ get_obs = eventReactive(list(input$species.observations, input$select.dominant),
     if (extension(input$species.observations$name) %in% c(".txt", ".csv"))
     {
       sp.obs = fread(input$species.observations$datapath)
+	  sp.obs = as.data.frame(sp.obs, stringsAsFactors = FALSE)
       
       if (!is.null(sp.obs))
       {

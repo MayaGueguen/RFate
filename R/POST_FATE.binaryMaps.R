@@ -217,6 +217,7 @@ POST_FATE.binaryMaps = function(
           ye = sub("_validationStatistics.*", "", fi)
           ye = sub("POST_FATE_TABLE_YEAR_", "", ye)
           tab = fread(paste0(name.simulation, "/RESULTS/", fi))
+		  tab = as.data.frame(tab, stringsAsFactors = FALSE)
           tab = unique(tab[, c("PFG", "cutoff")])
           tab$year = as.numeric(ye)
           return(tab)

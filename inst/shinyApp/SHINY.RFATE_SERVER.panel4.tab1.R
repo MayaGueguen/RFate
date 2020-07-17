@@ -152,12 +152,12 @@ observeEvent(input$browser.files, {
           file1 = sub("evolution_stability_", "evolution_stability1_", graph.type.file)
           file2 = sub("evolution_stability_", "evolution_stability2_", graph.type.file)
           tab1 = tab2 = NULL
-          if (file.exists(file1)){ tab1 = fread(file1, stringsAsFactors = FALSE) }
-          if (file.exists(file2)){ tab2 = fread(file2, stringsAsFactors = FALSE) }
+          if (file.exists(file1)){ tab1 = as.data.frame(fread(file1, stringsAsFactors = FALSE)) }
+          if (file.exists(file2)){ tab2 = as.data.frame(fread(file2, stringsAsFactors = FALSE)) }
         } else
         {
           if (file.exists(graph.type.file)){
-            tab = fread(graph.type.file, stringsAsFactors = FALSE)
+            tab = as.data.frame(fread(graph.type.file, stringsAsFactors = FALSE))
           } else {
             shinyalert(type = "warning", text = paste0("The file selected ("
                                                        , graph.type.file

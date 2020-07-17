@@ -149,6 +149,7 @@ observeEvent(input$create.validationStat, {
   if (is.data.frame(input$graph.mat.PFG.obs))
   {
     graph.mat.PFG.obs = fread(input$graph.mat.PFG.obs$datapath)
+	graph.mat.PFG.obs = as.data.frame(graph.mat.PFG.obs, stringsAsFactors = FALSE)
   }
   if (is.data.frame(input$graph.opt.ras_habitat))
   {

@@ -78,6 +78,7 @@ get_dist = eventReactive(list(input$choice.distance, input$clustering.step1), {
     sp.dist = foreach(fi = end_filename) %do%
       {
         sp.di = fread(fi, header = TRUE, drop = 1)
+		sp.di = as.data.frame(sp.di, stringsAsFactors = FALSE)
         if (ncol(sp.di) == 0 || nrow(sp.di) == 0 || ncol(sp.di) != nrow(sp.di))
         {
           if (length(which(RV$pfg.graph == "clust1")) > 0)

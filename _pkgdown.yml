@@ -114,6 +114,7 @@ reference:
       - ".getParam"
       - ".setParam"
       - ".setPattern"
+      - ".adaptMaps"
       - ".upscaleMaps"
       - ".getCutoff"
       - ".unzip_ALL"
