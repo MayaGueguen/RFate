@@ -1,146 +1,153 @@
 ### HEADER #####################################################################
-##' @title Save data to reproduce building of Plant Functional Groups
+##' @title Save data to reproduce building of parameter files
 ##'
-##' @name SAVE_FATE.step1_PFG
+##' @name SAVE_FATE.step2_parameters
 ##'
 ##' @author Maya Guéguen
 ##' 
 ##' @description This script is designed to gather all data and parameters 
-##' used to build a set of Plant Functional Groups.
+##' used to build a \code{FATE} simulation folder.
 ##' 
 ##' @param name.dataset a \code{string} corresponding to the name to give to 
 ##' archive folder
-##' @param mat.observations a \code{data.frame} with at least 3 columns : \cr
-##' \code{sites}, \code{species}, \code{abund} (\emph{and optionally, 
-##' \code{habitat}}) (see \code{\link{PRE_FATE.selectDominant}})
-##' @param rules.selectDominant (\emph{optional}) default \code{NA}. \cr A 
-##' \code{vector} containing all the parameter values given to the 
-##' \code{\link{PRE_FATE.selectDominant}} function, if used 
-##' (\code{doRuleA}, \code{rule.A1}, \code{rule.A2_quantile}, \code{doRuleB}, 
-##' \code{rule.B1_percentage}, \code{rule.B1_number}, \code{rule.B2}, 
-##' \code{doRuleC}).
-##' @param mat.traits a \code{data.frame} with at least 3 columns :
-##' \code{species}, \code{GROUP}, \code{...} (one column for each functional 
-##' trait) \cr (see \code{\link{PRE_FATE.speciesDistance}})
-##' @param mat.overlap (\emph{optional}) default \code{NA}. \cr 
-##' Otherwise, two options :
+##' @param name.simulation a \code{string} corresponding to the name of 
+##' the simulation folder
+##' @param strata.limits a \code{vector} of \code{integer} containing height 
+##' strata limits
+##' @param mat.PFG.succ a \code{data.frame} with at least 5 columns : \cr 
+##' \code{PFG}, \code{type}, \code{height}, \code{maturity}, \code{longevity} 
+##' \cr (\emph{and optionally, \code{max_abundance}, \code{potential_fecundity}, 
+##' \code{immature_size}, \code{is_alien}, \code{flammability}}) 
+##' \cr (see \code{\link{PRE_FATE.params_PFGsuccession}})
+##' @param mat.PFG.light (\emph{optional}) default \code{NA}. \cr 
+##' A \code{data.frame} with 2 to 6 columns : \cr 
 ##' \itemize{
-##'   \item a \code{data.frame} with 2 columns : \code{species}, \code{raster}
-##'   \item a dissimilarity structure representing the niche overlap between 
-##'   each pair of species. \cr It can be a \code{dist} object, a 
-##'   \code{niolap} object, or simply a \code{matrix}.
+##'   \item \code{PFG},
+##'   \item \code{type}, (\emph{or \code{active_germ_low}, 
+##'   \code{active_germ_medium}, \code{active_germ_high}}) (\emph{or
+##'   \code{strategy_ag}})
+##'   \item \emph{\code{type}, \code{light_need}}
 ##' }
-##' (see \code{\link{PRE_FATE.speciesDistance}})
-##' @param rules.speciesDistance (\emph{optional}) default \code{NA}. \cr A 
-##' \code{vector} containing all the parameter values given to the 
-##' \code{\link{PRE_FATE.speciesDistance}} function, if used \cr (
-##' \code{opt.maxPercent.NA}, \code{opt.maxPercent.similarSpecies}, 
-##' \code{opt.min.sd}).
-##' @param mat.species.DIST a \code{dist} object, or a \code{list} of 
-##' \code{dist} objects (one for each \code{GROUP} value), corresponding to the 
-##' distance between each pair of species. \cr Such an object can be obtained 
-##' with the \code{\link{PRE_FATE.speciesDistance}} function.
-##' @param clust.evaluation (\emph{optional}) default \code{NA}. \cr A 
-##' \code{data.frame} with 4 columns : \cr
-##' \code{GROUP}, \code{no.clusters}, \code{variable}, \code{value}. \cr Such an 
-##' object can be obtained with the 
-##' \code{\link{PRE_FATE.speciesClustering_step1}} function.
-##' @param no.clusters an \code{integer}, or a \code{vector} of \code{integer} 
-##' (one for each \code{GROUP} value), with the number of clusters to be kept 
-##' (see \code{\link{PRE_FATE.speciesClustering_step2}})
-##' @param determ.all a \code{data.frame} with 6 or 10 columns : \cr
-##' \code{PFG}, \code{GROUP}, \code{ID.cluster}, \code{species}, 
-##' \code{ID.species}, \code{DETERMINANT} \cr (\emph{and optionally, 
-##' \code{sp.mean.dist}, \code{allSp.mean}, \code{allSp.min}, 
-##' \code{allSp.max}}). \cr Such an object can be obtained 
-##' with the \code{\link{PRE_FATE.speciesClustering_step2}} function.
-##' @param mat.traits.PFG a \code{data.frame} with at least 3 columns :
-##' \code{PFG}, \code{no.species}, \code{...} (one column for each functional 
-##' trait, computed as the \code{mean} (for numeric traits) or the \code{median} 
-##' (for categorical traits) of the values of the determinant species of this 
-##' PFG). \cr Such an object can be obtained with the 
-##' \code{\link{PRE_FATE.speciesClustering_step3}} function.
+##' (see \code{\link{PRE_FATE.params_PFGlight}})
+##' @param mat.PFG.light.tol (\emph{optional}) default \code{NA}. \cr 
+##' A \code{data.frame} with 2 to 4 columns : \cr 
+##' \itemize{
+##'   \item \code{PFG},
+##'   \item \code{lifeStage}, \code{resources}, \code{tolerance} 
+##'   (\emph{or \code{strategy_tol}})
+##' }
+##' (see \code{\link{PRE_FATE.params_PFGlight}})
+##' @param mat.PFG.soil (\emph{optional}) default \code{NA}. \cr 
+##' A \code{data.frame} with 3 to 7 columns : \cr 
+##' \itemize{
+##'   \item \code{PFG},
+##'   \item \code{type}, (\emph{or \code{active_germ_low}, 
+##'   \code{active_germ_medium}, \code{active_germ_high}}) (\emph{or
+##'   \code{strategy_ag}})
+##'   \item \code{soil_contrib}, \code{soil_tol_min}, \code{soil_tol_max} 
+##'   (\emph{or \code{strategy_contrib}})
+##' }
+##' (see \code{\link{PRE_FATE.params_PFGsoil}})
+##' @param mat.PFG.soil.tol (\emph{optional}) default \code{NA}. \cr 
+##' A \code{data.frame} with 2 to 4 columns : \cr 
+##' \itemize{
+##'   \item \code{PFG},
+##'   \item \code{lifeStage}, \code{resources}, \code{tolerance} 
+##'   (\emph{or \code{strategy_tol}})
+##' }
+##' (see \code{\link{PRE_FATE.params_PFGsoil}})
+##' @param mat.PFG.disp (\emph{optional}) default \code{NA}. \cr 
+##' A \code{data.frame} with 4 columns : \code{PFG}, \code{d50}, \code{d99}, 
+##' \code{ldd} (see \code{\link{PRE_FATE.params_PFGdispersal}})
+##' @param mat.PFG.dist (\emph{optional}) default \code{NA}. \cr 
+##' A \code{data.frame} with 5 columns : \cr 
+##' \code{PFG}, \code{type}, \code{maturity}, \code{longevity}, 
+##' \code{age_above_150cm} (see \code{\link{PRE_FATE.params_PFGdisturbance}})
+##' @param mat.PFG.dist.tol (\emph{optional}) default \code{NA}. \cr 
+##' A \code{data.frame} with 3 to 7 columns : \cr 
+##' \itemize{
+##'   \item \code{nameDist},
+##'   \item \code{PFG},
+##'   \item (\emph{\code{responseStage}, \code{breakAge}, \code{resproutAge}}), 
+##'   \item \code{responseStage}, \code{killedIndiv}, \code{resproutIndiv}  
+##'   (\emph{or \code{strategy_tol}})
+##' }
+##' (see \code{\link{PRE_FATE.params_PFGdisturbance}})
+##' @param mat.PFG.drought (\emph{optional}) default \code{NA}. \cr 
+##' A \code{data.frame} with 4 or 6 columns : \cr 
+##' \itemize{
+##'   \item \code{PFG},
+##'   \item \code{threshold_moderate}, \code{threshold_severe},
+##'   \item \code{counter_recovery}, \code{counter_sens}, \code{counter_cum}
+##'   (\emph{or \code{strategy_drou}})
+##' }
+##' (see \code{\link{PRE_FATE.params_PFGdrought}})
+##' @param mat.PFG.drought.tol (\emph{optional}) default \code{NA}. \cr 
+##' A \code{data.frame} with 3 to 7 columns : \cr 
+##' \itemize{
+##'   \item \code{nameDist},
+##'   \item \code{PFG},
+##'   \item (\emph{\code{responseStage}, \code{breakAge}, \code{resproutAge}}), 
+##'   \item \code{responseStage}, \code{killedIndiv}, \code{resproutIndiv}  
+##'   (\emph{or \code{strategy_tol}})
+##' }
+##' (see \code{\link{PRE_FATE.params_PFGdrought}})
+##' @param rasters a \code{list} containing all the rasters given to the 
+##' \code{\link{PRE_FATE.params_simulParameters}} function, if used 
+##' (\code{name.MASK}, \code{name.DIST}, \code{name.DROUGHT}, \code{name.FIRE}, 
+##' \code{name.ELEVATION}, \code{name.SLOPE})
+##' @param multipleSet a \code{list} containing all the parameter values given 
+##' to the \code{\link{PRE_FATE.params_multipleSet}} function, if used 
+##' (\code{name.simulation.1}, \code{name.simulation.2}, 
+##' \code{file.simulParam.1}, \code{file.simulParam.2}, 
+##' \code{no_simulations}, \code{opt.percent_maxAbund}, 
+##' \code{opt.percent_seeding}, \code{opt.percent_light}, 
+##' \code{opt.percent_soil}, \code{do.max_abund_low}, 
+##' \code{do.max_abund_medium}, \code{do.max_abund_high}, 
+##' \code{do.seeding_duration}, \code{do.seeding_timestep}, 
+##' \code{do.seeding_input}, \code{do.no_strata}, 
+##' \code{do.LIGHT.thresh_medium}, \code{do.LIGHT.thresh_low}, 
+##' \code{do.SOIL.init}, \code{do.SOIL.retention}, 
+##' \code{do.DISPERSAL.mode}, \code{do.HABSUIT.mode})
+##' 
+##' 
 ##' 
 ##' @return A \code{list} containing all the elements given to the function and 
 ##' checked :
 ##' 
 ##' \describe{
-##'   \item{name.dataset}{the name of the dataset}
-##'   \item{mat.observations}{(see \code{\link{PRE_FATE.selectDominant}}) \cr
-##'   \describe{
-##'     \item{\code{sites}}{name of sampling site}
-##'     \item{\code{x, y}}{coordinates of sampling site}
-##'     \item{\code{species}}{name of the concerned species}
-##'     \item{\code{abund}}{abundance of the concerned species}
-##'     \item{\code{(habitat)}}{habitat of sampling site \cr \cr}
-##'   }
-##'   }
-##'   \item{rules.selectDominant}{a \code{vector} containing values for the 
-##'   parameters \code{doRuleA}, \code{rule.A1}, \code{rule.A2_quantile}, 
-##'   \code{doRuleB}, \code{rule.B1_percentage}, \code{rule.B1_number}, 
-##'   \code{rule.B2}, \code{doRuleC} (see \code{\link{PRE_FATE.selectDominant}})}
-##'   \item{mat.traits}{(see \code{\link{PRE_FATE.speciesDistance}}) \cr
-##'   \describe{
-##'     \item{\code{species}}{name of the concerned species}
-##'     \item{\code{GROUP}}{name of the concerned data subset}
-##'     \item{\code{...}}{one column for each functional trait \cr \cr}
-##'   }
-##'   }
-##'   \item{mat.overlap}{a \code{dist} object corresponding to the distance 
-##'   between each pair of species in terms of niche overlap (see 
-##'   \code{\link{PRE_FATE.speciesDistance}})}
-##'   \item{rules.speciesDistance}{a \code{vector} containing values for the 
-##'   parameters \code{opt.maxPercent.NA}, \code{opt.maxPercent.similarSpecies}, 
-##'   \code{opt.min.sd} (see \code{\link{PRE_FATE.speciesDistance}})}
-##'   \item{mat.species.DIST}{a \code{dist} object corresponding to the distance 
-##'   between each pair of species, or a \code{list} of \code{dist} objects, one 
-##'   for each \code{GROUP} value (see \code{\link{PRE_FATE.speciesDistance}})}
-##'   \item{clust.evaluation}{(see \code{\link{PRE_FATE.speciesClustering_step1}}) \cr
-##'   \describe{
-##'     \item{\code{GROUP}}{name of data subset}
-##'     \item{\code{no.clusters}}{number of clusters used for the clustering}
-##'     \item{\code{variable}}{evaluation metrics' name}
-##'     \item{\code{value}}{value of evaluation metric \cr \cr}
-##'   }
-##'   }
-##'   \item{no.clusters}{number of clusters to be kept for each data subset}
-##'   \item{determ.all}{(see \code{\link{PRE_FATE.speciesClustering_step2}}) \cr
-##'   \describe{
-##'     \item{\code{PFG}}{ID of the plant functional group 
-##'     (\code{GROUP} + \code{ID.cluster})}
-##'     \item{\code{GROUP}}{name of data subset}
-##'     \item{\code{ID.cluster}}{cluster number}
-##'     \item{\code{species}}{name of species}
-##'     \item{\code{ID.species}}{species number in each PFG}
-##'     \item{\code{DETERMINANT}}{\code{TRUE} if determinant species, \code{FALSE} 
-##'     otherwise}
-##'     \item{\code{(sp.mean.dist)}}{species mean distance to other species of 
-##'     the same PFG}
-##'     \item{\code{(allSp.mean)}}{\eqn{mean(\text{sp.mean.dist})} within the PFG}
-##'     \item{\code{(allSp.min)}}{\eqn{mean(\text{sp.mean.dist}) - 1.64 * 
-##'     sd(\text{sp.mean.dist})} within the PFG}
-##'     \item{\code{(allSp.max)}}{\eqn{mean(\text{sp.mean.dist}) + 1.64 * 
-##'     sd(\text{sp.mean.dist})} within the PFG}
-##'   }
-##'   }
-##'   \item{mat.traits.PFG}{(see \code{\link{PRE_FATE.speciesClustering_step3}}) \cr
-##'   \describe{
-##'     \item{\code{PFG}}{name of the concerned functional group}
-##'     \item{\code{no.species}}{number of species in the concerned PFG}
-##'     \item{\code{...}}{one column for each functional trait \cr \cr}
-##'   }
-##'   }
+##'   \item{name.dataset}{name of the dataset}
+##'   \item{name.simulation}{name of the simulation folder}
+##'   \item{strata.limits}{height strata limits}
+##'   \item{mat.PFG.succ}{}
+##'   \item{(mat.PFG.light)}{}
+##'   \item{(mat.PFG.light.tol)}{}
+##'   \item{(mat.PFG.soil)}{}
+##'   \item{(mat.PFG.soil.tol)}{}
+##'   \item{(mat.PFG.disp)}{}
+##'   \item{(mat.PFG.dist)}{}
+##'   \item{(mat.PFG.dist.tol)}{}
+##'   \item{(mat.PFG.drought)}{}
+##'   \item{(mat.PFG.drought.tol)}{}
+##'   \item{rasters}{raster files of all simulation masks}
+##'   \item{(multipleSet)}{ \cr \cr}
 ##' }
 ##' 
-##' The information is written in \file{FATE_dataset_[name.dataset]_step1_PFG.RData} file.
+##' The information is written in \file{FATE_dataset_[name.dataset]_step2_parameters.RData} file.
 ##' 
 ##' 
-##' @seealso \code{\link{PRE_FATE.abundBraunBlanquet}}, 
-##' \code{\link{PRE_FATE.selectDominant}}, 
-##' \code{\link{PRE_FATE.speciesDistance}}, 
-##' \code{\link{PRE_FATE.speciesClustering_step1}}, 
-##' \code{\link{PRE_FATE.speciesClustering_step2}}, 
-##' \code{\link{PRE_FATE.speciesClustering_step3}}
+##' @seealso \code{\link{PRE_FATE.skeletonDirectory}}, 
+##' \code{\link{PRE_FATE.params_PFGsuccession}}, 
+##' \code{\link{PRE_FATE.params_PFGlight}}, 
+##' \code{\link{PRE_FATE.params_PFGsoil}}, 
+##' \code{\link{PRE_FATE.params_PFGdispersal}}, 
+##' \code{\link{PRE_FATE.params_PFGdisturbance}}, 
+##' \code{\link{PRE_FATE.params_PFGdrought}}, 
+##' \code{\link{PRE_FATE.params_changingYears}}, 
+##' \code{\link{PRE_FATE.params_savingYears}}, 
+##' \code{\link{PRE_FATE.params_globalParameters}}, 
+##' \code{\link{PRE_FATE.params_simulParameters}}, 
+##' \code{\link{PRE_FATE.params_multipleSet}}
 ##' 
 ##' @examples
 ##' 
@@ -151,344 +158,778 @@
 ## END OF HEADER ###############################################################
 
 
-SAVE_FATE.step1_PFG = function(name.dataset
-                               , mat.observations
-                               , rules.selectDominant = c("doRuleA" = NA
-                                                          , "rule.A1" = NA
-                                                          , "rule.A2_quantile" = NA
-                                                          , "doRuleB" = NA
-                                                          , "rule.B1_percentage" = NA
-                                                          , "rule.B1_number" = NA
-                                                          , "rule.B2" = NA
-                                                          , "doRuleC" = NA)
-                               , mat.traits
-                               , mat.overlap = NA
-                               , rules.speciesDistance = c("opt.maxPercent.NA" = NA
-                                                           , "opt.maxPercent.similarSpecies" = NA
-                                                           , "opt.min.sd" = NA)
-                               , mat.species.DIST
-                               , clust.evaluation = NA
-                               , no.clusters
-                               , determ.all
-                               , mat.traits.PFG
+SAVE_FATE.step2_parameters = function(name.dataset
+                                      , name.simulation
+                                      , strata.limits
+                                      , mat.PFG.succ
+                                      , mat.PFG.light = NA
+                                      , mat.PFG.light.tol = NA
+                                      , mat.PFG.soil = NA
+                                      , mat.PFG.soil.tol = NA
+                                      , mat.PFG.disp = NA
+                                      , mat.PFG.dist = NA
+                                      , mat.PFG.dist.tol = NA
+                                      , mat.PFG.drought = NA
+                                      , mat.PFG.drought.tol = NA
+                                      , rasters = list("name.MASK" = NA
+                                                       , "name.DIST" = NA
+                                                       , "name.DROUGHT" = NA
+                                                       , "name.FIRE" = NA
+                                                       , "name.ELEVATION" = NA
+                                                       , "name.SLOPE" = NA)
+                                      , multipleSet = list("name.simulation.1" = NA
+                                                           , "name.simulation.2" = NA
+                                                           , "file.simulParam.1" = NA
+                                                           , "file.simulParam.2" = NA
+                                                           , "no_simulations" = NA
+                                                           , "opt.percent_maxAbund" = NA
+                                                           , "opt.percent_seeding" = NA
+                                                           , "opt.percent_light" = NA
+                                                           , "opt.percent_soil" = NA
+                                                           , "do.max_abund_low" = NA
+                                                           , "do.max_abund_medium" = NA
+                                                           , "do.max_abund_high" = NA
+                                                           , "do.seeding_duration" = NA
+                                                           , "do.seeding_timestep" = NA
+                                                           , "do.seeding_input" = NA
+                                                           , "do.no_strata" = NA
+                                                           , "do.LIGHT.thresh_medium" = NA
+                                                           , "do.LIGHT.thresh_low" = NA
+                                                           , "do.SOIL.init" = NA
+                                                           , "do.SOIL.retention" = NA
+                                                           , "do.DISPERSAL.mode" = NA
+                                                           , "do.HABSUIT.mode" = NA)
 ){
   
   #############################################################################
   
   .testParam_notChar.m("name.dataset", name.dataset)
-  ## CHECK parameter mat.observations
-  if (.testParam_notDf(mat.observations))
+  .testParam_existFolder(name.simulation, "DATA/")
+  .testParam_existFolder(name.simulation, "PARAM_SIMUL/")
+  
+  ## CHECK parameter strata.limits
+  strata.limits = sort(unique(na.exclude(strata.limits)))
+  .testParam_notInteger.m("strata.limits", strata.limits)
+  ## CHECK parameter mat.PFG.succ
+  if (.testParam_notDf(mat.PFG.succ))
   {
-    .stopMessage_beDataframe("mat.observations")
+    .stopMessage_beDataframe("mat.PFG.succ")
   } else
   {
-    mat.observations = as.data.frame(mat.observations)
-    if (nrow(mat.observations) == 0 || !(ncol(mat.observations) %in% c(3, 4)))
+    if (nrow(mat.PFG.succ) == 0 || !(ncol(mat.PFG.succ) %in% c(5, 6, 7, 8, 9, 10)))
     {
-      .stopMessage_numRowCol("mat.observations", c("sites", "species", "abund", "(habitat)"))
+      .stopMessage_numRowCol("mat.PFG.succ", c("PFG", "type","height", "maturity", "longevity"
+                                               , "(max_abundance)", "(potential_fecundity)"
+                                               , "(immature_size)", "(is_alien)", "(flammability)"))
     } else
     {
-      notCorrect = switch(as.character(ncol(mat.observations))
-                          , "3" = .testParam_notColnames(mat.observations, c("sites", "species", "abund"))
-                          , "4" = .testParam_notColnames(mat.observations, c("sites", "species", "abund", "habitat"))
+      notCorrect = switch(as.character(ncol(mat.PFG.succ))
+                          , "5" = .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity", "longevity"))
+                          , "6" = (.testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
+                                                                          , "longevity", "max_abundance")) &&
+                                     .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
+                                                                            , "longevity", "potential_fecundity")) &&
+                                     .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
+                                                                            , "longevity", "immature_size")) &&
+                                     .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
+                                                                            , "longevity", "is_alien")) &&
+                                     .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
+                                                                            , "longevity", "flammability")))
+                          , "7" = (.testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
+                                                                          , "longevity", "max_abundance"
+                                                                          , "potential_fecundity")) &&
+                                     .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
+                                                                            , "longevity", "max_abundance"
+                                                                            , "immature_size")) &&
+                                     .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
+                                                                            , "longevity", "max_abundance"
+                                                                            , "is_alien")) &&
+                                     .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
+                                                                            , "longevity", "max_abundance"
+                                                                            , "flammability")) &&
+                                     .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
+                                                                            , "longevity", "potential_fecundity"
+                                                                            , "immature_size")) &&
+                                     .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
+                                                                            , "longevity", "potential_fecundity"
+                                                                            , "is_alien")) &&
+                                     .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
+                                                                            , "longevity", "potential_fecundity"
+                                                                            , "flammability")) &&
+                                     .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
+                                                                            , "longevity", "immature_size"
+                                                                            , "is_alien")) &&
+                                     .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
+                                                                            , "longevity", "immature_size"
+                                                                            , "flammability")))
+                          , "8" = (.testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
+                                                                          , "longevity", "max_abundance"
+                                                                          , "potential_fecundity", "immature_size")) &&
+                                     .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
+                                                                            , "longevity", "max_abundance"
+                                                                            , "potential_fecundity", "is_alien")) &&
+                                     .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
+                                                                            , "longevity", "max_abundance"
+                                                                            , "potential_fecundity", "flammability")) &&
+                                     .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
+                                                                            , "longevity", "max_abundance"
+                                                                            , "immature_size", "is_alien")) &&
+                                     .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
+                                                                            , "longevity", "max_abundance"
+                                                                            , "immature_size", "flammability")) &&
+                                     .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
+                                                                            , "longevity", "potential_fecundity"
+                                                                            , "potential_fecundity", "is_alien")) &&
+                                     .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity"
+                                                                            , "longevity", "potential_fecundity"
+                                                                            , "potential_fecundity", "flammability")))
+                          , "9" = (.testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity", "longevity"
+                                                                          , "max_abundance", "potential_fecundity"
+                                                                          , "immature_size", "is_alien")) &&
+                                     .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity", "longevity"
+                                                                            , "max_abundance", "potential_fecundity"
+                                                                            , "immature_size", "flammability")))
+                          , "10" = .testParam_notColnames(mat.PFG.succ, c("PFG", "type","height", "maturity", "longevity"
+                                                                          , "max_abundance", "potential_fecundity"
+                                                                          , "immature_size", "is_alien", "flammability"))
                           , TRUE)
       if (notCorrect){
-        .stopMessage_columnNames("mat.observations", c("sites", "species", "abund", "(habitat)"))
+        .stopMessage_columnNames("mat.PFG.succ", c("PFG", "type","height", "maturity", "longevity"
+                                                   , "(max_abundance)", "(potential_fecundity)"
+                                                   , "(immature_size)", "(is_alien)", "(flammability)"))
       }
     }
-    mat.observations$sites = as.character(mat.observations$sites)
-    mat.observations$species = as.character(mat.observations$species)
-    .testParam_notNum.m("mat.observations$abund", mat.observations$abund)
-    if (sum(colnames(mat.observations) == "habitat") == 0)
-    {
-      mat.observations$habitat = "all"
+    mat.PFG.succ$PFG = as.character(mat.PFG.succ$PFG)
+    .testParam_samevalues.m("mat.PFG.succ$PFG", mat.PFG.succ$PFG)
+    .testParam_notChar.m("mat.PFG.succ$PFG", mat.PFG.succ$PFG)
+    mat.PFG.succ$type = as.character(mat.PFG.succ$type)
+    .testParam_notInValues.m("mat.PFG.succ$type", mat.PFG.succ$type, c("H", "C", "P"))
+    .testParam_notNum.m("mat.PFG.succ$height", mat.PFG.succ$height)
+    .testParam_NAvalues.m("mat.PFG.succ$height", mat.PFG.succ$height)
+    .testParam_notNum.m("mat.PFG.succ$maturity", mat.PFG.succ$maturity)
+    .testParam_NAvalues.m("mat.PFG.succ$maturity", mat.PFG.succ$maturity)
+    .testParam_notNum.m("mat.PFG.succ$longevity", mat.PFG.succ$longevity)
+    .testParam_NAvalues.m("mat.PFG.succ$longevity", mat.PFG.succ$longevity)
+    if (sum(mat.PFG.succ$maturity > mat.PFG.succ$longevity) > 0){
+      stop(paste0("Wrong type of data!\n `mat.PFG.succ$maturity` must contain "
+                  , "values equal or inferior to `mat.PFG.succ$longevity`"))
     }
-    mat.observations$habitat = as.character(mat.observations$habitat)
+    
+    if (sum(colnames(mat.PFG.succ) == "max_abundance") == 1)
+    {
+      .testParam_NAvalues.m("mat.PFG.succ$max_abundance", mat.PFG.succ$max_abundance)
+      .testParam_notInValues.m("mat.PFG.succ$max_abundance", mat.PFG.succ$max_abundance, 1:3)
+    }
+    if (sum(colnames(mat.PFG.succ) == "potential_fecundity") == 1)
+    {
+      .testParam_notNum.m("mat.PFG.succ$potential_fecundity", mat.PFG.succ$potential_fecundity)
+      .testParam_NAvalues.m("mat.PFG.succ$potential_fecundity", mat.PFG.succ$potential_fecundity)
+    }
+    if (sum(colnames(mat.PFG.succ) == "immature_size") == 1)
+    {
+      .testParam_NAvalues.m("mat.PFG.succ$immature_size", mat.PFG.succ$immature_size)
+      .testParam_notInValues.m("mat.PFG.succ$immature_size", mat.PFG.succ$immature_size, 0:10)
+    }
+    if (sum(colnames(mat.PFG.succ) == "is_alien") == 1)
+    {
+      .testParam_NAvalues.m("mat.PFG.succ$is_alien", mat.PFG.succ$is_alien)
+      .testParam_notInValues.m("mat.PFG.succ$is_alien", mat.PFG.succ$is_alien, 0:1)
+    }
+    if (sum(colnames(mat.PFG.succ) == "flammability") == 1)
+    {
+      .testParam_notNum.m("mat.PFG.succ$flammability", mat.PFG.succ$flammability)
+      .testParam_NAvalues.m("mat.PFG.succ$flammability", mat.PFG.succ$flammability)
+    }
   }
-  ## CHECK parameter rules.selectDominant
-  names.rules.selectDominant = c("doRuleA", "rule.A1", "rule.A2_quantile", "doRuleB", "rule.B1_percentage"
-                                 , "rule.B1_number", "rule.B2", "doRuleC")
-  .testParam_notInValues.m(names(rules.selectDominant), names.rules.selectDominant)
-  if (length(rules.selectDominant) != 8)
+  ## CHECK parameter mat.PFG.light
+  if (.testParam_notDf(mat.PFG.light))
   {
-    for (name.i in names.rules.selectDominant)
-    {
-      if (!(name.i %in% names(rules.selectDominant)))
-      {
-        rules.selectDominant[name.i] = NA
-      }
-    }
-  }
-  rules.selectDominant = rules.selectDominant[names.rules.selectDominant]
-  if (length(which(is.na(rules.selectDominant))) < 8)
-  {
-    .testParam_notInValues.m("rules.selectDominant['doRuleA']", rules.selectDominant['doRuleA'], c(0, 1))
-    .testParam_notInValues.m("rules.selectDominant['doRuleB']", rules.selectDominant['doRuleB'], c(0, 1))
-    .testParam_notInValues.m("rules.selectDominant['doRuleC']", rules.selectDominant['doRuleC'], c(0, 1))
-    ## CHECK parameter doRuleA / doRuleC
-    if (rules.selectDominant['doRuleA'] || rules.selectDominant['doRuleC'])
-    {
-      .testParam_notNum.m("rules.selectDominant['rule.A1']", rules.selectDominant['rule.A1'])
-      .testParam_notBetween.m("rules.selectDominant['rule.A2_quantile']", rules.selectDominant['rule.A2_quantile'], 0, 1)
-    }
-    ## CHECK parameter doRuleB
-    if (rules.selectDominant['doRuleB'])
-    {
-      .testParam_notNum.m("rules.selectDominant['rule.B1_number']", rules.selectDominant['rule.B1_number'])
-      .testParam_notBetween.m("rules.selectDominant['rule.B1_percentage']", rules.selectDominant['rule.B1_percentage'], 0, 1)
-      .testParam_notBetween.m("rules.selectDominant['rule.B2']", rules.selectDominant['rule.B2'], 0, 1)
-    }
-  }
-  ## CHECK parameter mat.traits
-  if (.testParam_notDf(mat.traits))
-  {
-    .stopMessage_beDataframe("mat.traits")
+    .stopMessage_beDataframe("mat.PFG.light")
   } else
   {
-    if (nrow(mat.traits) < 2 || ncol(mat.traits) <= 2 )
+    if (nrow(mat.PFG.light) == 0 || !(ncol(mat.PFG.light) %in% c(2, 3, 4, 6)))
     {
-      stop(paste0("Wrong dimension(s) of data!\n `mat.traits` does not have the "
-                  , "appropriate number of rows (>=2, at least 2 species) "
-                  , "or columns (>=3, at least 2 traits)"))
-    } else if (sum(colnames(mat.traits) == "species") == 0)
+      .stopMessage_numRowCol("mat.PFG.light", c("PFG", "type", "(active_germ_low)", "(active_germ_medium)"
+                                                , "(active_germ_high)", "(strategy_ag)", "(light_need)"))
+    } else
     {
-      .stopMessage_columnNames("mat.traits", c("species", "(GROUP)", "(trait1)", "(trait2)", "..."))
-    } else if (sum(colnames(mat.traits) == "GROUP") == 0)
-    {
-      warning(paste0("`mat.traits` does not contain any column with `GROUP` information\n"
-                     , "Data will be considered as one unique dataset."))
-      mat.traits$GROUP = "AllSpecies"
+      notCorrect = switch(as.character(ncol(mat.PFG.light))
+                          , "2" = (.testParam_notColnames(mat.PFG.light, c("PFG", "type")) &&
+                                     .testParam_notColnames(mat.PFG.light, c("PFG", "strategy_ag")))
+                          , "3" = .testParam_notColnames(mat.PFG.light, c("PFG", "type", "light_need"))
+                          , "4" = (.testParam_notColnames(mat.PFG.light, c("PFG", "active_germ_low"
+                                                                           , "active_germ_medium"
+                                                                           , "active_germ_high")) &&
+                                     .testParam_notColnames(mat.PFG.light, c("PFG", "strategy_ag"
+                                                                             , "type", "light_need")))
+                          , "6" = .testParam_notColnames(mat.PFG.light, c("PFG", "active_germ_low"
+                                                                          , "active_germ_medium"
+                                                                          , "active_germ_high"
+                                                                          , "type", "light_need"))
+                          , TRUE)
+      if (notCorrect){
+        .stopMessage_columnNames("mat.PFG.light", c("PFG", "type", "(active_germ_low)", "(active_germ_medium)"
+                                                    , "(active_germ_high)", "(strategy_ag)", "(light_need)"))
+      }
     }
-    mat.traits$species = as.character(mat.traits$species)
-    mat.traits$GROUP = as.character(mat.traits$GROUP)
-    .testParam_samevalues.m("mat.traits$species", mat.traits$species)
+    mat.PFG.light$PFG = as.character(mat.PFG.light$PFG)
+    .testParam_samevalues.m("mat.PFG.light$PFG", mat.PFG.light$PFG)
+    .testParam_notChar.m("mat.PFG.light$PFG", mat.PFG.light$PFG)
+    if (sum(colnames(mat.PFG.light) == "type") == 1)
+    {
+      mat.PFG.light$type = as.character(mat.PFG.light$type)
+      .testParam_notInValues.m("mat.PFG.light$type", mat.PFG.light$type, c("H", "C", "P"))
+    }
+    if (sum(colnames(mat.PFG.light) == "light_need") == 1)
+    {
+      .testParam_NAvalues.m("mat.PFG.light$light_need", mat.PFG.light$light_need)
+      .testParam_notInValues.m("mat.PFG.light$light_need", mat.PFG.light$light_need, 0:5)
+    }
+    if (sum(colnames(mat.PFG.light) == "active_germ_low") == 1)
+    {
+      .testParam_NAvalues.m("mat.PFG.light$active_germ_low", mat.PFG.light$active_germ_low)
+      .testParam_notInValues.m("mat.PFG.light$active_germ_low", mat.PFG.light$active_germ_low, 0:10)
+      .testParam_NAvalues.m("mat.PFG.light$active_germ_medium", mat.PFG.light$active_germ_medium)
+      .testParam_notInValues.m("mat.PFG.light$active_germ_medium", mat.PFG.light$active_germ_medium, 0:10)
+      .testParam_NAvalues.m("mat.PFG.light$active_germ_high", mat.PFG.light$active_germ_high)
+      .testParam_notInValues.m("mat.PFG.light$active_germ_high", mat.PFG.light$active_germ_high, 0:10)
+    }
+    if (sum(colnames(mat.PFG.light) == "strategy_ag") == 1)
+    {
+      mat.PFG.light$strategy_ag = as.character(mat.PFG.light$strategy_ag)
+      .testParam_notInValues.m("mat.PFG.light$strategy_ag", mat.PFG.light$strategy_ag
+                               , c("light_lover", "indifferent", "shade_lover"))
+    }
   }
-  ## CHECK parameter mat.overlap
-  if(missing(mat.overlap) || is.null(mat.overlap))
+  ## CHECK parameter mat.PFG.light.tol
+  if (!is.null(mat.PFG.light.tol))
   {
-    stop(paste0("Wrong type of data!\n `mat.overlap` must be either "
-                , "a data.frame or a dissimilarity object (`dist`, `niolap`, `matrix`)"))
-  } else
-  {
-    if (!.testParam_notInClass(mat.overlap, c("dist", "niolap")))
+    if (.testParam_notDf(mat.PFG.light.tol))
     {
-      mat.overlap = as.matrix(mat.overlap)
-    } else if (is.matrix(mat.overlap))
+      .stopMessage_beDataframe("mat.PFG.light.tol")
+    } else
     {
-      if (ncol(mat.overlap) != nrow(mat.overlap))
+      if (nrow(mat.PFG.light.tol) == 0 || !(ncol(mat.PFG.light.tol) %in% c(2, 4)))
       {
-        stop(paste0("Wrong dimension(s) of data!\n `mat.overlap` does not have the same number of rows ("
-                    ,nrow(mat.overlap)
-                    ,") and columns ("
-                    ,ncol(mat.overlap)
-                    ,")"))
-      }
-    } else if (is.data.frame(mat.overlap))
-    {
-      if (nrow(mat.overlap) < 2 || ncol(mat.overlap) != 2 )
-      {
-        stop(paste0("Wrong dimension(s) of data!\n `mat.overlap` does not have the "
-                    , "appropriate number of rows (>=2, at least 2 species) "
-                    , "or columns (species, raster)"))
-      } else if (.testParam_notColnames(mat.overlap, c("species", "raster")))
-      {
-        .stopMessage_columnNames("mat.overlap", c("species", "raster"))
-      }
-      mat.overlap$species = as.character(mat.overlap$species)
-      mat.overlap$raster = as.character(mat.overlap$raster)
-      .testParam_samevalues.m("mat.overlap$species", mat.overlap$species)
-      if (sum(file.exists(mat.overlap$raster)) < nrow(mat.overlap))
-      {
-        stop("Wrong data given!\n `mat.overlap$raster` must contain file names which exist")
-      }
-      if (sum(extension(mat.overlap$raster) %in% c(".tif", ".img", ".asc")) == nrow(mat.overlap))
-      {
-        raster.list = lapply(mat.overlap$raster, function(x) as(raster(x), "SpatialGridDataFrame"))
-        overlap.mat = as.matrix(niche.overlap(raster.list))
-        rownames(overlap.mat) = colnames(overlap.mat) = mat.overlap$species
-        mat.overlap = overlap.mat
+        .stopMessage_numRowCol("mat.PFG.light.tol", c("PFG", "lifeStage", "resources", "tolerance", "(strategy_tol)"))
       } else
       {
-        stop(paste0("Wrong data given!\n `mat.overlap$raster` must contain "
-                    , "file names with appropriate extension (`.tif`, `.img`, `.asc`)"))
-      }
-    } else
-    {
-      stop(paste0("Wrong type of data!\n `mat.overlap` must be either "
-                  , "a data.frame or a dissimilarity object (`dist`, `niolap`, `matrix`)"))
-    }
-  }
-  ## CHECK parameter rules.speciesDistance
-  names.rules.speciesDistance = c("opt.maxPercent.NA", "opt.maxPercent.similarSpecies", "opt.min.sd")
-  .testParam_notInValues.m(names(rules.speciesDistance), names.rules.speciesDistance)
-  if (length(rules.speciesDistance) != 3)
-  {
-    for (name.i in names.rules.speciesDistance)
-    {
-      if (!(name.i %in% names(rules.speciesDistance)))
-      {
-        rules.speciesDistance[name.i] = NA
-      }
-    }
-  }
-  rules.speciesDistance = rules.speciesDistance[names.rules.speciesDistance]
-  if (length(which(is.na(rules.speciesDistance))) < 3)
-  {
-    .testParam_notBetween.m("rules.speciesDistance['opt.maxPercent.NA']"
-                            , rules.speciesDistance['opt.maxPercent.NA'], 0, 1)
-    .testParam_notBetween.m("rules.speciesDistance['opt.maxPercent.similarSpecies']"
-                            , rules.speciesDistance['opt.maxPercent.similarSpecies'], 0, 1)
-    .testParam_notBetween.m("rules.speciesDistance['opt.min.sd']", rules.speciesDistance['opt.min.sd'], 0, 1)
-  }
-  ## Check existence of parameters
-  if (missing(mat.species.DIST) || is.null(mat.species.DIST))
-  {
-    stop("No data given!\n (missing `mat.species.DIST` information)")
-  }
-  ## CHECK parameter mat.species.DIST
-  if(class(mat.species.DIST) == "list") ##is.list(mat.species.DIST))
-  {
-    if (length(mat.species.DIST) > 0)
-    {
-      for (i in 1:length(mat.species.DIST))
-      {
-        if (class(mat.species.DIST[[i]]) %in% c("dist", "niolap"))
-        {
-          mat.species.DIST[[i]] = as.matrix(mat.species.DIST[[i]])
-        } else if (class(mat.species.DIST[[i]]) == "matrix") #is.matrix(mat.species.DIST[[i]]))
-        {
-          if (ncol(mat.species.DIST[[i]]) != nrow(mat.species.DIST[[i]]))
-          {
-            stop(paste0("Wrong dimension(s) of data!\n `mat.species.DIST[[",
-                        i,
-                        "]]` does not have the same number of rows (",
-                        nrow(mat.species.DIST[[i]]),
-                        ") and columns (",
-                        ncol(mat.species.DIST[[i]]),
-                        ")"
-            ))
-          }
-        } else {
-          stop(paste0("Wrong type of data!\n `mat.species.DIST[["
-                      , i
-                      , "]]` must be a dissimilarity object "
-                      , "(`dist`, `niolap`, `matrix`)"))
+        notCorrect = switch(as.character(ncol(mat.PFG.light.tol))
+                            , "2" = .testParam_notColnames(mat.PFG.light.tol, c("PFG", "strategy_tol"))
+                            , "4" = .testParam_notColnames(mat.PFG.light.tol, c("PFG", "lifeStage", "resources", "tolerance"))
+                            , TRUE)
+        if (notCorrect){
+          .stopMessage_columnNames("mat.PFG.light.tol", c("PFG", "lifeStage", "resources", "tolerance", "(strategy_tol)"))
         }
       }
-    } else
-    {
-      stop("Wrong dimension(s) of data!\n `mat.species.DIST` must be of length > 0")
-    }
-    if(!is.null(names(mat.species.DIST)))
-    {
-      group_names = names(mat.species.DIST)
-    } else {
-      group_names = paste0("GROUP", 1:length(mat.species.DIST))
-    }
-  } else
-  {
-    if (class(mat.species.DIST) %in% c("dist", "niolap"))
-    {
-      mat.species.DIST = as.matrix(mat.species.DIST)
-    } else if (is.matrix(mat.species.DIST))
-    {
-      if (ncol(mat.species.DIST) != nrow(mat.species.DIST))
+      mat.PFG.light.tol$PFG = as.character(mat.PFG.light.tol$PFG)
+      .testParam_notChar.m("mat.PFG.light.tol$PFG", mat.PFG.light.tol$PFG)
+      if (sum(colnames(mat.PFG.light.tol) == "lifeStage") == 1)
       {
-        stop(paste0("Wrong dimension(s) of data!\n `mat.species.DIST` "
-                    , "does not have the same number of rows (",
-                    nrow(mat.species.DIST),
-                    ") and columns (",
-                    ncol(mat.species.DIST),
-                    ")"
-        ))
+        .testParam_notInValues.m("mat.PFG.light.tol$lifeStage", mat.PFG.light.tol$lifeStage, c("Germinant", "Immature", "Mature"))
+        .testParam_notInValues.m("mat.PFG.light.tol$resources", mat.PFG.light.tol$resources, c("Low", "Medium", "High"))
+        .testParam_NAvalues.m("mat.PFG.light.tol$tolerance", mat.PFG.light.tol$tolerance)
+        .testParam_notInValues.m("mat.PFG.light.tol$tolerance", mat.PFG.light.tol$tolerance, 0:10)
       }
-    } else
-    {
-      stop(paste0("Wrong type of data!\n `mat.species.DIST` must be a "
-                  , "dissimilarity object (`dist`, `niolap`, `matrix`) "
-                  , "or a list of dissimilarity objects"))
-    }
-    mat.species.DIST = list(mat.species.DIST)
-    group_names = paste0("GROUP", 1:length(mat.species.DIST))
-  }
-  ## CHECK parameter clust.evaluation 	
-  if (.testParam_notDf(clust.evaluation))
-  {
-    .stopMessage_beDataframe("clust.evaluation")
-  } else
-  {
-    clust.evaluation = as.data.frame(clust.evaluation)
-    if (nrow(clust.evaluation) == 0 || ncol(clust.evaluation) != 4)
-    {
-      .stopMessage_numRowCol("clust.evaluation", c("GROUP", "no.clusters", "variable", "value"))
-    } else
-    {
-      if (.testParam_notColnames(clust.evaluation, c("GROUP", "no.clusters", "variable", "value")))
+      if (sum(colnames(mat.PFG.light.tol) == "strategy_tol") == 1)
       {
-        .stopMessage_columnNames("clust.evaluation", c("GROUP", "no.clusters", "variable", "value"))
+        mat.PFG.light.tol$strategy_tol = as.character(mat.PFG.light.tol$strategy_tol)
+        .testParam_notInValues.m("mat.PFG.light.tol$strategy_tol", mat.PFG.light.tol$strategy_tol
+                                 , c("full_light", "pioneer", "ubiquist", "semi_shade", "undergrowth"))
       }
     }
   }
-  ## CHECK parameter no.clusters
-  if (.testParam_notNum(no.clusters))
+  ## CHECK parameter mat.PFG.soil
+  if (.testParam_notDf(mat.PFG.soil))
   {
-    stop("No data given!\n (missing `no.clusters` information)")
+    .stopMessage_beDataframe("mat.PFG.soil")
   } else
   {
-    if (class(mat.species.DIST) == "list" && length(no.clusters) != length(mat.species.DIST))
+    if (nrow(mat.PFG.soil) == 0 || !(ncol(mat.PFG.soil) %in% c(3, 5, 7)))
     {
-      stop("Wrong type of data!\n `no.clusters` must have the same length than `mat.species.DIST`")
-    } else if (length(no.clusters) != 1)
-    {
-      stop("Wrong type of data!\n `no.clusters` must have the same length than `mat.species.DIST`")
-    }
-  }
-  ## CHECK parameter determ.all 	
-  if (.testParam_notDf(determ.all))
-  {
-    .stopMessage_beDataframe("determ.all")
-  } else
-  {
-    determ.all = as.data.frame(determ.all)
-    if (nrow(determ.all) == 0 || !(ncol(determ.all) %in% c(6, 10)))
-    {
-      .stopMessage_numRowCol("determ.all", c("PFG", "GROUP", "ID.cluster", "species", "ID.species", "DETERMINANT"
-                                             , "(sp.mean.dist)", "(allSp.mean)", "(allSp.min)", "(allSp.max)"))
+      .stopMessage_numRowCol("mat.PFG.soil", c("PFG", "type", "(active_germ_low)", "(active_germ_medium)"
+                                               , "(active_germ_high)", "(strategy_ag)", "soil_contrib"
+                                               , "soil_tol_min", "soil_tol_max", "(strategy_contrib)"))
     } else
     {
-      notCorrect = switch(as.character(ncol(determ.all))
-                          , "6" = .testParam_notColnames(determ.all, c("PFG", "GROUP", "ID.cluster", "species", "ID.species", "DETERMINANT"))
-                          , "10" = .testParam_notColnames(determ.all, c("PFG", "GROUP", "ID.cluster", "species", "ID.species", "DETERMINANT"
-                                                                        , "sp.mean.dist", "allSp.mean", "allSp.min", "allSp.max"))
+      notCorrect = switch(as.character(ncol(mat.PFG.soil))
+                          , "3" = (.testParam_notColnames(mat.PFG.soil, c("PFG", "type", "strategy_contrib")) &&
+                                     .testParam_notColnames(mat.PFG.soil, c("PFG", "strategy_ag", "strategy_contrib")))
+                          , "5" = (.testParam_notColnames(mat.PFG.soil, c("PFG", "type", "soil_contrib"
+                                                                          , "soil_tol_min", "soil_tol_max")) &&
+                                     .testParam_notColnames(mat.PFG.soil, c("PFG", "active_germ_low"
+                                                                            , "active_germ_medium"
+                                                                            , "active_germ_high"
+                                                                            , "strategy_contrib")) &&
+                                     .testParam_notColnames(mat.PFG.soil, c("PFG", "strategy_ag", "soil_contrib"
+                                                                            , "soil_tol_min", "soil_tol_max")))
+                          , "7" = .testParam_notColnames(mat.PFG.soil, c("PFG", "active_germ_low"
+                                                                         , "active_germ_medium"
+                                                                         , "active_germ_high", "soil_contrib"
+                                                                         , "soil_tol_min", "soil_tol_max"))
                           , TRUE)
       if (notCorrect){
-        .stopMessage_columnNames("determ.all", c("PFG", "GROUP", "ID.cluster", "species", "ID.species", "DETERMINANT"
-                                                 , "(sp.mean.dist)", "(allSp.mean)", "(allSp.min)", "(allSp.max)"))
+        .stopMessage_columnNames("mat.PFG.soil", c("PFG", "type", "(active_germ_low)", "(active_germ_medium)"
+                                                   , "(active_germ_high)", "(strategy_ag)", "soil_contrib"
+                                                   , "soil_tol_min", "soil_tol_max", "(strategy_contrib)"))
+      }
+    }
+    mat.PFG.soil$PFG = as.character(mat.PFG.soil$PFG)
+    .testParam_samevalues.m("mat.PFG.soil$PFG", mat.PFG.soil$PFG)
+    .testParam_notChar.m("mat.PFG.soil$PFG", mat.PFG.soil$PFG)
+    if (sum(colnames(mat.PFG.soil) == "type") == 1)
+    {
+      mat.PFG.soil$type = as.character(mat.PFG.soil$type)
+      .testParam_notInValues.m("mat.PFG.soil$type", mat.PFG.soil$type, c("H", "C", "P"))
+    }
+    if (sum(colnames(mat.PFG.soil) == "active_germ_low") == 1)
+    {
+      .testParam_NAvalues.m("mat.PFG.soil$active_germ_low", mat.PFG.soil$active_germ_low)
+      .testParam_notInValues.m("mat.PFG.soil$active_germ_low", mat.PFG.soil$active_germ_low, 0:10)
+      .testParam_NAvalues.m("mat.PFG.soil$active_germ_medium", mat.PFG.soil$active_germ_medium)
+      .testParam_notInValues.m("mat.PFG.soil$active_germ_medium", mat.PFG.soil$active_germ_medium, 0:10)
+      .testParam_NAvalues.m("mat.PFG.soil$active_germ_high", mat.PFG.soil$active_germ_high)
+      .testParam_notInValues.m("mat.PFG.soil$active_germ_high", mat.PFG.soil$active_germ_high, 0:10)
+    }
+    if (sum(colnames(mat.PFG.soil) == "strategy_ag") == 1)
+    {
+      mat.PFG.soil$strategy_ag = as.character(mat.PFG.soil$strategy_ag)
+      .testParam_notInValues.m("mat.PFG.soil$strategy_ag", mat.PFG.soil$strategy_ag
+                               , c("poor_lover", "indifferent", "rich_lover"))
+    }
+    if (sum(colnames(mat.PFG.soil) == "soil_contrib") == 1)
+    {
+      .testParam_notNum.m("mat.PFG.soil$soil_contrib", mat.PFG.soil$soil_contrib)
+      .testParam_NAvalues.m("mat.PFG.soil$soil_contrib", mat.PFG.soil$soil_contrib)
+      .testParam_notNum.m("mat.PFG.soil$soil_tol_min", mat.PFG.soil$soil_tol_min)
+      .testParam_NAvalues.m("mat.PFG.soil$soil_tol_min", mat.PFG.soil$soil_tol_min)
+      .testParam_notNum.m("mat.PFG.soil$soil_tol_max", mat.PFG.soil$soil_tol_max)
+      .testParam_NAvalues.m("mat.PFG.soil$soil_tol_max", mat.PFG.soil$soil_tol_max)
+      if (sum(mat.PFG.soil$soil_tol_min > mat.PFG.soil$soil_contrib) > 0){
+        stop(paste0("Wrong type of data!\n `mat.PFG.soil$soil_tol_min` must contain "
+                    , "values equal or inferior to `mat.PFG.soil$soil_contrib`"))
+      }
+      if (sum(mat.PFG.soil$soil_tol_max < mat.PFG.soil$soil_contrib) > 0){
+        stop(paste0("Wrong type of data!\n `mat.PFG.soil$soil_tol_max` must contain "
+                    , "values equal or superior to `mat.PFG.soil$soil_contrib`"))
+      }
+    }
+    if (sum(colnames(mat.PFG.soil) == "strategy_contrib") == 1)
+    {
+      mat.PFG.soil$strategy_contrib = as.character(mat.PFG.soil$strategy_contrib)
+      .testParam_notInValues.m("mat.PFG.soil$strategy_contrib", mat.PFG.soil$strategy_contrib
+                               , c("full_light", "pioneer", "ubiquist", "semi_shade", "undergrowth"))
+    }
+  }
+  ## CHECK parameter mat.PFG.soil.tol
+  if (!is.null(mat.PFG.soil.tol))
+  {
+    if (.testParam_notDf(mat.PFG.soil.tol))
+    {
+      .stopMessage_beDataframe("mat.PFG.soil.tol")
+    } else
+    {
+      if (nrow(mat.PFG.soil.tol) == 0 || !(ncol(mat.PFG.soil.tol) %in% c(2, 4)))
+      {
+        .stopMessage_numRowCol("mat.PFG.soil.tol", c("PFG", "lifeStage", "resources", "tolerance", "(strategy_tol)"))
+      } else
+      {
+        notCorrect = switch(as.character(ncol(mat.PFG.soil.tol))
+                            , "2" = .testParam_notColnames(mat.PFG.soil.tol, c("PFG", "strategy_tol"))
+                            , "4" = .testParam_notColnames(mat.PFG.soil.tol, c("PFG", "lifeStage", "resources", "tolerance"))
+                            , TRUE)
+        if (notCorrect){
+          .stopMessage_columnNames("mat.PFG.soil.tol", c("PFG", "lifeStage", "resources", "tolerance", "(strategy_tol)"))
+        }
+      }
+      mat.PFG.soil.tol$PFG = as.character(mat.PFG.soil.tol$PFG)
+      .testParam_notChar.m("mat.PFG.soil.tol$PFG", mat.PFG.soil.tol$PFG)
+      if (sum(colnames(mat.PFG.soil.tol) == "lifeStage") == 1)
+      {
+        .testParam_notInValues.m("mat.PFG.soil.tol$lifeStage", mat.PFG.soil.tol$lifeStage, c("Germinant", "Immature", "Mature"))
+        .testParam_notInValues.m("mat.PFG.soil.tol$resources", mat.PFG.soil.tol$resources, c("Low", "Medium", "High"))
+        .testParam_NAvalues.m("mat.PFG.soil.tol$tolerance", mat.PFG.soil.tol$tolerance)
+        .testParam_notInValues.m("mat.PFG.soil.tol$tolerance", mat.PFG.soil.tol$tolerance, 0:10)
+      }
+      if (sum(colnames(mat.PFG.soil.tol) == "strategy_tol") == 1)
+      {
+        mat.PFG.soil.tol$strategy_tol = as.character(mat.PFG.soil.tol$strategy_tol)
+        .testParam_notInValues.m("mat.PFG.soil.tol$strategy_tol", mat.PFG.soil.tol$strategy_tol
+                                 , c("full_light", "pioneer", "ubiquist", "semi_shade", "undergrowth"))
       }
     }
   }
-  ## CHECK parameter mat.traits.PFG
-  if (.testParam_notDf(mat.traits.PFG))
+  ## CHECK parameter mat.PFG.disp
+  if (.testParam_notDf(mat.PFG.disp))
   {
-    .stopMessage_beDataframe("mat.traits.PFG")
+    .stopMessage_beDataframe("mat.PFG.disp")
   } else
   {
-    if (nrow(mat.traits.PFG) < 2 || ncol(mat.traits.PFG) <= 2 )
+    if (nrow(mat.PFG.disp) == 0 || ncol(mat.PFG.disp) != 4)
     {
-      stop(paste0("Wrong dimension(s) of data!\n `mat.traits.PFG` does not have the "
-                  , "appropriate number of rows (>=2, at least 2 species) "
-                  , "or columns (>=3, at least 1 trait)"))
-    } else if (sum(colnames(mat.traits.PFG) == "PFG") == 0 ||
-               sum(colnames(mat.traits.PFG) == "no.species") == 0)
+      .stopMessage_numRowCol("mat.PFG.disp", c("PFG", "d50", "d99", "ldd"))
+    } else if (.testParam_notColnames(mat.PFG.disp, c("PFG", "d50", "d99", "ldd")))
     {
-      .stopMessage_columnNames("mat.traits.PFG", c("PFG", "no.species", "(trait1)", "(trait2)", "..."))
+      .stopMessage_columnNames("mat.PFG.disp", c("PFG", "d50", "d99", "ldd"))
     }
-    mat.traits.PFG$PFG = as.character(mat.traits.PFG$PFG)
-    .testParam_samevalues.m("mat.traits.PFG$PFG", mat.traits.PFG$PFG)
+    mat.PFG.disp$PFG = as.character(mat.PFG.disp$PFG)
+    .testParam_samevalues.m("mat.PFG.disp$PFG", mat.PFG.disp$PFG)
+    .testParam_notChar.m("mat.PFG.disp$PFG", mat.PFG.disp$PFG)
+    .testParam_notNum.m("mat.PFG.disp$d50", mat.PFG.disp$d50)
+    .testParam_NAvalues.m("mat.PFG.disp$d50", mat.PFG.disp$d50)
+    .testParam_notNum.m("mat.PFG.disp$d99", mat.PFG.disp$d99)
+    .testParam_NAvalues.m("mat.PFG.disp$d99", mat.PFG.disp$d99)
+    .testParam_notNum.m("mat.PFG.disp$ldd", mat.PFG.disp$ldd)
+    .testParam_NAvalues.m("mat.PFG.disp$ldd", mat.PFG.disp$ldd)
+  }
+  ## CHECK parameter mat.PFG.dist
+  if (!is.null(mat.PFG.dist))
+  {
+    if (.testParam_notDf(mat.PFG.dist))
+    {
+      .stopMessage_beDataframe("mat.PFG.dist")
+    } else
+    {
+      if (nrow(mat.PFG.dist) == 0 || ncol(mat.PFG.dist) != 5)
+      {
+        .stopMessage_numRowCol("mat.PFG.dist", c("PFG", "type", "maturity", "longevity", "age_above_150cm"))
+      } else if (.testParam_notColnames(mat.PFG.dist, c("PFG", "type", "maturity", "longevity", "age_above_150cm")))
+      {
+        .stopMessage_columnNames("mat.PFG.dist", c("PFG", "type", "maturity", "longevity", "age_above_150cm"))
+      }
+      mat.PFG.dist$PFG = as.character(mat.PFG.dist$PFG)
+      .testParam_samevalues.m("mat.PFG.dist$PFG", mat.PFG.dist$PFG)
+      .testParam_notChar.m("mat.PFG.dist$PFG", mat.PFG.dist$PFG)
+      mat.PFG.dist$type = as.character(mat.PFG.dist$type)
+      .testParam_notInValues.m("mat.PFG.dist$type", mat.PFG.dist$type, c("H", "C", "P"))
+      .testParam_notNum.m("mat.PFG.dist$maturity", mat.PFG.dist$maturity)
+      .testParam_NAvalues.m("mat.PFG.dist$maturity", mat.PFG.dist$maturity)
+      .testParam_notNum.m("mat.PFG.dist$longevity", mat.PFG.dist$longevity)
+      .testParam_NAvalues.m("mat.PFG.dist$longevity", mat.PFG.dist$longevity)
+      .testParam_notNum.m("mat.PFG.dist$age_above_150cm", mat.PFG.dist$age_above_150cm)
+      .testParam_NAvalues.m("mat.PFG.dist$age_above_150cm", mat.PFG.dist$age_above_150cm)
+      if (sum(mat.PFG.dist$maturity > mat.PFG.dist$longevity) > 0){
+        stop(paste0("Wrong type of data!\n `mat.PFG.dist$maturity` must contain "
+                    , "values equal or inferior to `mat.PFG.dist$longevity`"))
+      }
+      mat.PFG.dist$longevity = mat.PFG.dist$longevity - 1
+    }
+  }
+  ## CHECK parameter mat.PFG.dist.tol
+  if (.testParam_notDf(mat.PFG.dist.tol))
+  {
+    .stopMessage_beDataframe("mat.PFG.dist.tol")
+  } else
+  {
+    if (nrow(mat.PFG.dist.tol) == 0 || !(ncol(mat.PFG.dist.tol) %in% c(3, 5, 6, 7)))
+    {
+      .stopMessage_numRowCol("mat.PFG.dist.tol", c("nameDist", "PFG", "responseStage", "(breakAge)", "(resproutAge)"
+                                                   , "killedIndiv", "resproutIndiv", "(strategy_tol)"))
+    } else
+    {
+      notCorrect = switch(as.character(ncol(mat.PFG.dist.tol))
+                          , "3" = .testParam_notColnames(mat.PFG.dist.tol, c("nameDist", "PFG", "strategy_tol"))
+                          , "5" = .testParam_notColnames(mat.PFG.dist.tol, c("nameDist", "PFG", "responseStage"
+                                                                             , "killedIndiv", "resproutIndiv"))
+                          , "6" = .testParam_notColnames(mat.PFG.dist.tol, c("nameDist", "PFG", "responseStage"
+                                                                             , "breakAge", "resproutAge"
+                                                                             , "strategy_tol"))
+                          , "7" = .testParam_notColnames(mat.PFG.dist.tol, c("nameDist", "PFG", "responseStage"
+                                                                             , "breakAge", "resproutAge"
+                                                                             , "killedIndiv", "resproutIndiv"))
+                          , TRUE)
+      if (notCorrect){
+        .stopMessage_columnNames("mat.PFG.dist.tol", c("nameDist", "PFG", "responseStage", "(breakAge)", "(resproutAge)"
+                                                       , "killedIndiv", "resproutIndiv", "(strategy_tol)"))
+      }
+    }
+    mat.PFG.dist.tol$nameDist = as.character(mat.PFG.dist.tol$nameDist)
+    .testParam_notChar.m("mat.PFG.dist.tol$nameDist", mat.PFG.dist.tol$nameDist)
+    mat.PFG.dist.tol$PFG = as.character(mat.PFG.dist.tol$PFG)
+    .testParam_notChar.m("mat.PFG.dist.tol$PFG", mat.PFG.dist.tol$PFG)
+    if (!is.null(mat.PFG.dist))
+    {
+      .testParam_notInValues.m("mat.PFG.dist.tol$PFG", mat.PFG.dist.tol$PFG, c("H", "C", "P", mat.PFG.dist$PFG))
+    }
+    if (sum(colnames(mat.PFG.dist.tol) == "responseStage") == 1)
+    {
+      .testParam_NAvalues.m("mat.PFG.dist.tol$responseStage", mat.PFG.dist.tol$responseStage)
+      .testParam_notInValues.m("mat.PFG.dist.tol$responseStage", mat.PFG.dist.tol$responseStage, 0:10)
+      if (sum(colnames(mat.PFG.dist.tol) == "breakAge") == 1)
+      {
+        .testParam_notNum.m("mat.PFG.dist.tol$breakAge", mat.PFG.dist.tol$breakAge)
+        .testParam_NAvalues.m("mat.PFG.dist.tol$breakAge", mat.PFG.dist.tol$breakAge)
+        .testParam_notNum.m("mat.PFG.dist.tol$resproutAge", mat.PFG.dist.tol$resproutAge)
+        .testParam_NAvalues.m("mat.PFG.dist.tol$resproutAge", mat.PFG.dist.tol$resproutAge)
+      }
+      if (sum(colnames(mat.PFG.dist.tol) == "killedIndiv") == 1)
+      {
+        .testParam_NAvalues.m("mat.PFG.dist.tol$killedIndiv", mat.PFG.dist.tol$killedIndiv)
+        .testParam_notInValues.m("mat.PFG.dist.tol$killedIndiv", mat.PFG.dist.tol$killedIndiv, 0:10)
+        .testParam_NAvalues.m("mat.PFG.dist.tol$resproutIndiv", mat.PFG.dist.tol$resproutIndiv)
+        .testParam_notInValues.m("mat.PFG.dist.tol$resproutIndiv", mat.PFG.dist.tol$resproutIndiv, 0:10)
+      }
+    }
+    if (sum(colnames(mat.PFG.dist.tol) == "strategy_tol") == 1)
+    {
+      mat.PFG.dist.tol$strategy_tol = as.character(mat.PFG.dist.tol$strategy_tol)
+      .testParam_notInValues.m("mat.PFG.dist.tol$strategy_tol", mat.PFG.dist.tol$strategy_tol
+                               , c("indifferent", "mowing_herbs", "mowing_trees"
+                                   , "grazing_herbs_1", "grazing_herbs_2", "grazing_herbs_3"
+                                   , "grazing_trees_1", "grazing_trees_2", "grazing_trees_3"))
+    }
+  }
+  ## CHECK parameter mat.PFG.drought
+  if (.testParam_notDf(mat.PFG.drought))
+  {
+    .stopMessage_beDataframe("mat.PFG.drought")
+  } else
+  {
+    if (nrow(mat.PFG.drought) == 0 || !(ncol(mat.PFG.drought) %in% c(4, 6)))
+    {
+      .stopMessage_numRowCol("mat.PFG.drought", c("PFG", "threshold_moderate"
+                                                  , "threshold_severe", "counter_recovery"
+                                                  , "counter_sens", "counter_cum"
+                                                  , "(strategy_drou)"))
+    } else
+    {
+      notCorrect = switch(as.character(ncol(mat.PFG.drought))
+                          , "4" = .testParam_notColnames(mat.PFG.drought
+                                                         , c("PFG", "threshold_moderate"
+                                                             , "threshold_severe","strategy_drou"))
+                          , "6" = .testParam_notColnames(mat.PFG.drought
+                                                         , c("PFG", "threshold_moderate"
+                                                             , "threshold_severe", "counter_recovery"
+                                                             , "counter_sens", "counter_cum"))
+                          , TRUE)
+      if (notCorrect){
+        .stopMessage_columnNames("mat.PFG.drought", c("PFG", "threshold_moderate"
+                                                      , "threshold_severe", "counter_recovery"
+                                                      , "counter_sens", "counter_cum"
+                                                      , "(strategy_drou)"))
+      }
+    }
+    mat.PFG.drought$PFG = as.character(mat.PFG.drought$PFG)
+    .testParam_notChar.m("mat.PFG.drought$PFG", mat.PFG.drought$PFG)
+    .testParam_notNum.m("mat.PFG.drought$threshold_moderate", mat.PFG.drought$threshold_moderate)
+    .testParam_NAvalues.m("mat.PFG.drought$threshold_moderate", mat.PFG.drought$threshold_moderate)
+    .testParam_notNum.m("mat.PFG.drought$threshold_severe", mat.PFG.drought$threshold_severe)
+    .testParam_NAvalues.m("mat.PFG.drought$threshold_severe", mat.PFG.drought$threshold_severe)
+    if (sum(mat.PFG.drought$threshold_severe > mat.PFG.drought$threshold_moderate) > 0){
+      stop(paste0("Wrong type of data!\n `mat.PFG.drought$threshold_severe` must contain "
+                  , "values equal or inferior to `mat.PFG.drought$threshold_moderate`"))
+    }
+    if (ncol(mat.PFG.drought) == 6)
+    {
+      .testParam_NAvalues.m("mat.PFG.drought$counter_recovery", mat.PFG.drought$counter_recovery)
+      .testParam_notInteger.m("mat.PFG.drought$counter_recovery", mat.PFG.drought$counter_recovery)
+      .testParam_NAvalues.m("mat.PFG.drought$counter_sens", mat.PFG.drought$counter_sens)
+      .testParam_notInteger.m("mat.PFG.drought$counter_sens", mat.PFG.drought$counter_sens)
+      .testParam_NAvalues.m("mat.PFG.drought$counter_cum", mat.PFG.drought$counter_cum)
+      .testParam_notInteger.m("mat.PFG.drought$counter_cum", mat.PFG.drought$counter_cum)
+      if (sum(mat.PFG.drought$counter_sens > mat.PFG.drought$counter_cum) > 0){
+        stop(paste0("Wrong type of data!\n `mat.PFG.drought$counter_sens` must contain "
+                    , "values equal or inferior to `mat.PFG.drought$counter_cum`"))
+      }
+    }
+    if (sum(colnames(mat.PFG.drought) == "strategy_drou") == 1)
+    {
+      mat.PFG.drought$strategy_drou = as.character(mat.PFG.drought$strategy_drou)
+      .testParam_notInValues.m("mat.PFG.drought$strategy_drou", mat.PFG.drought$strategy_drou
+                               , c("herbs", "chamaephytes", "trees_shrubs"))
+    }
+  }
+  ## CHECK parameter mat.PFG.drought.tol
+  if (.testParam_notDf(mat.PFG.drought.tol))
+  {
+    .stopMessage_beDataframe("mat.PFG.drought.tol")
+  } else
+  {
+    if (nrow(mat.PFG.drought.tol) == 0 || !(ncol(mat.PFG.drought.tol) %in% c(3, 5, 6, 7)))
+    {
+      .stopMessage_numRowCol("mat.PFG.drought.tol", c("nameDist", "PFG", "responseStage", "(breakAge)", "(resproutAge)"
+                                                      , "killedIndiv", "resproutIndiv", "(strategy_tol)"))
+    } else
+    {
+      notCorrect = switch(as.character(ncol(mat.PFG.drought.tol))
+                          , "3" = .testParam_notColnames(mat.PFG.drought.tol, c("nameDist", "PFG", "strategy_tol"))
+                          , "5" = .testParam_notColnames(mat.PFG.drought.tol, c("nameDist", "PFG", "responseStage"
+                                                                                , "killedIndiv", "resproutIndiv"))
+                          , "6" = .testParam_notColnames(mat.PFG.drought.tol, c("nameDist", "PFG", "responseStage"
+                                                                                , "breakAge", "resproutAge"
+                                                                                , "strategy_tol"))
+                          , "7" = .testParam_notColnames(mat.PFG.drought.tol, c("nameDist", "PFG", "responseStage"
+                                                                                , "breakAge", "resproutAge"
+                                                                                , "killedIndiv", "resproutIndiv"))
+                          , TRUE)
+      if (notCorrect){
+        .stopMessage_columnNames("mat.PFG.drought.tol", c("nameDist", "PFG", "responseStage", "(breakAge)", "(resproutAge)"
+                                                          , "killedIndiv", "resproutIndiv", "(strategy_tol)"))
+      }
+    }
+    mat.PFG.drought.tol$nameDist = as.character(mat.PFG.drought.tol$nameDist)
+    .testParam_notInValues.m("mat.PFG.drought.tol$nameDist", mat.PFG.drought.tol$nameDist, c("immediate", "delayed"))
+    mat.PFG.drought.tol$PFG = as.character(mat.PFG.drought.tol$PFG)
+    .testParam_notChar.m("mat.PFG.drought.tol$PFG", mat.PFG.drought.tol$PFG)
+    if (!is.null(mat.PFG.dist))
+    {
+      .testParam_notInValues.m("mat.PFG.drought.tol$PFG", mat.PFG.drought.tol$PFG, c("H", "C", "P", mat.PFG.dist$PFG))
+    }
+    if (sum(colnames(mat.PFG.drought.tol) == "responseStage") == 1)
+    {
+      .testParam_NAvalues.m("mat.PFG.drought.tol$responseStage", mat.PFG.drought.tol$responseStage)
+      .testParam_notInValues.m("mat.PFG.drought.tol$responseStage", mat.PFG.drought.tol$responseStage, 0:10)
+      if (sum(colnames(mat.PFG.drought.tol) == "breakAge") == 1)
+      {
+        .testParam_notNum.m("mat.PFG.drought.tol$breakAge", mat.PFG.drought.tol$breakAge)
+        .testParam_NAvalues.m("mat.PFG.drought.tol$breakAge", mat.PFG.drought.tol$breakAge)
+        .testParam_notNum.m("mat.PFG.drought.tol$resproutAge", mat.PFG.drought.tol$resproutAge)
+        .testParam_NAvalues.m("mat.PFG.drought.tol$resproutAge", mat.PFG.drought.tol$resproutAge)
+      }
+      if (sum(colnames(mat.PFG.drought.tol) == "killedIndiv") == 1)
+      {
+        .testParam_NAvalues.m("mat.PFG.drought.tol$killedIndiv", mat.PFG.drought.tol$killedIndiv)
+        .testParam_notInValues.m("mat.PFG.drought.tol$killedIndiv", mat.PFG.drought.tol$killedIndiv, 0:10)
+        .testParam_NAvalues.m("mat.PFG.drought.tol$resproutIndiv", mat.PFG.drought.tol$resproutIndiv)
+        .testParam_notInValues.m("mat.PFG.drought.tol$resproutIndiv", mat.PFG.drought.tol$resproutIndiv, 0:10)
+      }
+    }
+    if (sum(colnames(mat.PFG.drought.tol) == "strategy_tol") == 1)
+    {
+      mat.PFG.drought.tol$strategy_tol = as.character(mat.PFG.drought.tol$strategy_tol)
+      .testParam_notInValues.m("mat.PFG.drought.tol$strategy_tol", mat.PFG.drought.tol$strategy_tol
+                               , c("herbs_cham_1", "herbs_cham_2", "herbs_cham_3"
+                                   , "trees_1", "trees_2", "trees_3"))
+    }
+  }
+  ## CHECK parameter rasters
+  names.rasters = c("name.MASK", "name.DIST", "name.DROUGHT", "name.FIRE", "name.ELEVATION", "name.SLOPE")
+  .testParam_notInValues.m(names(rasters), names.rasters)
+  if (length(rasters) != 6)
+  {
+    for (name.i in names.rasters)
+    {
+      if (!(name.i %in% names(rasters)))
+      {
+        rasters[name.i] = NA
+      }
+    }
+  }
+  rasters = rasters[names.rasters]
+  ## CHECK parameter multipleSet
+  names.multipleSet = c("name.simulation.1", "name.simulation.2", "file.simulParam.1", "file.simulParam.2"
+                        , "no_simulations", "opt.percent_maxAbund", "opt.percent_seeding", "opt.percent_light"
+                        , "opt.percent_soil", "do.max_abund_low", "do.max_abund_medium", "do.max_abund_high"
+                        , "do.seeding_duration", "do.seeding_timestep", "do.seeding_input", "do.no_strata"
+                        , "do.LIGHT.thresh_medium", "do.LIGHT.thresh_low", "do.SOIL.init", "do.SOIL.retention"
+                        , "do.DISPERSAL.mode", "do.HABSUIT.mode")
+  .testParam_notInValues.m(names(multipleSet), names.multipleSet)
+  if (length(multipleSet) != 22)
+  {
+    for (name.i in names.multipleSet)
+    {
+      if (!(name.i %in% names(multipleSet)))
+      {
+        multipleSet[name.i] = NA
+      }
+    }
+  }
+  multipleSet = multipleSet[names.multipleSet]
+  if (length(which(is.na(multipleSet))) < 22)
+  {
+    ## CHECK parameter name.simulation.1
+    .testParam_existFolder(multipleSet['name.simulation.1'], "PARAM_SIMUL/")
+    .testParam_existFolder(multipleSet['name.simulation.1'], "DATA/GLOBAL_PARAMETERS/")
+    multipleSet['name.simulation.1'] = sub("/$", "", multipleSet['name.simulation.1'])
+    
+    ## CHECK parameter file.simulParam.1
+    if (.testParam_notChar(multipleSet['file.simulParam.1']))
+    {
+      abs.simulParams = list.files(paste0(multipleSet['name.simulation.1'], "/PARAM_SIMUL/"))
+      if (length(abs.simulParams) == 0)
+      {
+        stop(paste0("Missing data!\n The folder ", multipleSet['name.simulation.1']
+                    , "/PARAM_SIMUL/ does not contain adequate files"))
+      } else
+      {
+        stop(paste0("Missing data!\n The folder "
+                    , multipleSet['name.simulation.1']
+                    , "/PARAM_SIMUL/ contain one or more files.\n"
+                    , "You must select one with the `file.simulParam.1` parameter "))
+      }
+    } else
+    {
+      multipleSet['file.simulParam.1'] = basename(multipleSet['file.simulParam.1'])
+      multipleSet['file.simulParam.1'] = paste0(multipleSet['name.simulation.1'], "/PARAM_SIMUL/", multipleSet['file.simulParam.1'])
+      .testParam_existFile(multipleSet['file.simulParam.1'])
+      scenario1 = TRUE
+    }
+    ## CHECK parameter file.simulParam.2
+    if (!.testParam_notChar(multipleSet['file.simulParam.2']))
+    {
+      if (!.testParam_notChar(multipleSet['name.simulation.2']))
+      {
+        .testParam_existFolder(multipleSet['name.simulation.2'], "PARAM_SIMUL/")
+        .testParam_existFolder(multipleSet['name.simulation.2'], "DATA/GLOBAL_PARAMETERS/")
+        multipleSet['name.simulation.2'] = sub("/$", "", multipleSet['name.simulation.2'])
+        
+        multipleSet['file.simulParam.2'] = basename(multipleSet['file.simulParam.2'])
+        multipleSet['file.simulParam.2'] = paste0(multipleSet['name.simulation.2'], "/PARAM_SIMUL/", multipleSet['file.simulParam.2'])
+        .testParam_existFile(multipleSet['file.simulParam.2'])
+        
+        if (multipleSet['name.simulation.1'] == multipleSet['name.simulation.2'] &&
+            multipleSet['file.simulParam.1'] == multipleSet['file.simulParam.2'])
+        {
+          stop(paste0("You must select different simulation parameter files !"))
+        }
+        scenario1 = FALSE
+      } else
+      {
+        multipleSet['file.simulParam.2'] = basename(multipleSet['file.simulParam.2'])
+        multipleSet['file.simulParam.2'] = paste0(multipleSet['name.simulation.1']
+                                                  , "/PARAM_SIMUL/", multipleSet['file.simulParam.2'])
+        .testParam_existFile(multipleSet['file.simulParam.2'])
+        if (multipleSet['file.simulParam.1'] == multipleSet['file.simulParam.2'])
+        {
+          stop(paste0("You must select different simulation parameter files !"))
+        }
+        scenario1 = FALSE
+      }
+    }
+    ## CHECK parameter no_simulations
+    .testParam_notInteger.m("multipleSet['no_simulations']", multipleSet['no_simulations'])
+    .testParam_notRound.m("multipleSet['no_simulations']", multipleSet['no_simulations'])
+    ## CHECK parameters scenario1
+    if (scenario1)
+    {
+      .testParam_notNum.m("multipleSet['opt.percent_maxAbund']", multipleSet['opt.percent_maxAbund'])
+      .testParam_notBetween.m("multipleSet['opt.percent_maxAbund']", multipleSet['opt.percent_maxAbund'], 0, 1)
+      .testParam_notNum.m("multipleSet['opt.percent_seeding']", multipleSet['opt.percent_seeding'])
+      .testParam_notBetween.m("multipleSet['opt.percent_seeding']", multipleSet['opt.percent_seeding'], 0, 1)
+      .testParam_notNum.m("multipleSet['opt.percent_light']", multipleSet['opt.percent_light'])
+      .testParam_notBetween.m("multipleSet['opt.percent_light']", multipleSet['opt.percent_light'], 0, 1)
+      .testParam_notNum.m("multipleSet['opt.percent_soil']", multipleSet['opt.percent_soil'])
+      .testParam_notBetween.m("multipleSet['opt.percent_soil']", multipleSet['opt.percent_soil'], 0, 1)
+    }
+    ## CHECK parameters do.[...]
+    .testParam_notInValues.m("multipleSet['do.max_abund_low']", multipleSet['do.max_abund_low'], c(0, 1))
+    .testParam_notInValues.m("multipleSet['do.max_abund_medium']", multipleSet['do.max_abund_medium'], c(0, 1))
+    .testParam_notInValues.m("multipleSet['do.max_abund_high']", multipleSet['do.max_abund_high'], c(0, 1))
+    .testParam_notInValues.m("multipleSet['do.seeding_duration']", multipleSet['do.seeding_duration'], c(0, 1))
+    .testParam_notInValues.m("multipleSet['do.seeding_timestep']", multipleSet['do.seeding_timestep'], c(0, 1))
+    .testParam_notInValues.m("multipleSet['do.seeding_input']", multipleSet['do.seeding_input'], c(0, 1))
+    .testParam_notInValues.m("multipleSet['do.no_strata']", multipleSet['do.no_strata'], c(0, 1))
+    .testParam_notInValues.m("multipleSet['do.LIGHT.thresh_medium']", multipleSet['do.LIGHT.thresh_medium'], c(0, 1))
+    .testParam_notInValues.m("multipleSet['do.LIGHT.thresh_low']", multipleSet['do.LIGHT.thresh_low'], c(0, 1))
+    .testParam_notInValues.m("multipleSet['do.SOIL.init']", multipleSet['do.SOIL.init'], c(0, 1))
+    .testParam_notInValues.m("multipleSet['do.SOIL.retention']", multipleSet['do.SOIL.retention'], c(0, 1))
+    .testParam_notInValues.m("multipleSet['do.DISPERSAL.mode']", multipleSet['do.DISPERSAL.mode'], c(0, 1))
+    .testParam_notInValues.m("multipleSet['do.HABSUIT.mode']", multipleSet['do.HABSUIT.mode'], c(0, 1))
   }
   
+  
   cat("\n\n #------------------------------------------------------------#")
-  cat("\n # SAVE_FATE.step1_PFG")
+  cat("\n # SAVE_FATE.step2_parameters")
   cat("\n #------------------------------------------------------------# \n")
   
   # {
@@ -502,18 +943,22 @@ SAVE_FATE.step1_PFG = function(name.dataset
   #############################################################################
   
   results = list(name.dataset
-                 , mat.observations
-                 , rules.selectDominant
-                 , mat.traits
-                 , mat.overlap
-                 , rules.speciesDistance
-                 , mat.species.DIST
-                 , clust.evaluation
-                 , no.clusters
-                 , determ.all
-                 , mat.traits.PFG)
+                 , name.simulation
+                 , strata.limits
+                 , mat.PFG.succ
+                 , mat.PFG.light
+                 , mat.PFG.light.tol
+                 , mat.PFG.soil
+                 , mat.PFG.soil.tol
+                 , mat.PFG.disp
+                 , mat.PFG.dist
+                 , mat.PFG.dist.tol
+                 , mat.PFG.drought
+                 , mat.PFG.drought.tol
+                 , rasters
+                 , multipleSet)
   
-  name.dataset = paste0("FATE_dataset_", name.dataset, "_step1_PFG")
+  name.dataset = paste0("FATE_dataset_", name.dataset, "_step2_parameters")
   assign(name.dataset, results)
   save(name.dataset, file = paste0(name.dataset, ".RData"))
   

@@ -110,6 +110,7 @@ reference:
   - title: Save FATE simulation
     contents:
       - "SAVE_FATE.step1_PFG"
+      - "SAVE_FATE.step2_parameters"
   - title: Tool box
     desc:  Utility functions.
     contents:

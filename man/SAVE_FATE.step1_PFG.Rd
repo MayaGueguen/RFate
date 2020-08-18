@@ -89,7 +89,7 @@ A \code{list} containing all the elements given to the function and
 checked :
 
 \describe{
-  \item{name.dataset}{the name of the dataset}
+  \item{name.dataset}{name of the dataset}
   \item{mat.observations}{(see \code{\link{PRE_FATE.selectDominant}}) \cr
   \describe{
     \item{\code{sites}}{name of sampling site}
