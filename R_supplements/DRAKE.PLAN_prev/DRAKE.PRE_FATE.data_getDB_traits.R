@@ -12,7 +12,8 @@ getDB_ANDROSACE = function()
   ## note that "con" will be used later in each connection to the database
   con <- dbConnect(drv,
                    dbname = "androsace_v3",
-                   host = "152.77.214.210",
+                   # host = "152.77.214.210",
+                   host = "129.88.201.97",
                    port = 5432,
                    user = username,
                    password = pw

@@ -12,7 +12,7 @@ library(drake)
 
 registerDoParallel(cores = 7)
 
-setwd("/home/gueguen/Documents/_TUTOS/3_R/_PACKAGES")
+setwd("/home/gueguema/Documents/_TUTOS/3_R/_PACKAGES")
 source("RFate/R_supplements/DRAKE.PRE_FATE.data_getDB_traits.R")
 source("RFate/R_supplements/DRAKE.PRE_FATE.data_getTraitsPerSpecies.R")
 source("RFate/R_supplements/DRAKE.PRE_FATE.data_getTraitsFATErelated.R")

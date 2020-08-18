@@ -68,8 +68,9 @@ below :}
 \describe{
   \item{\code{maturity}, \code{longevity}}{to visualize the difference 
   between these two values, for the maturity time has an impact on the 
-  fecundity of the PFG within \code{FATE} (see XXX, CORE module) \cr
-  \emph{If there is NO values for longevity within one PFG, and some 
+  fecundity of the PFG within \code{FATE} (see 
+  \href{../articles/fate_tutorial_3_MODULES.html#core-module-succession}{CORE module})
+  \cr \emph{If there is NO values for longevity within one PFG, and some 
   maturity values are available, some values might be inferred as 
   \eqn{\text{maturity} * 2}. If there is NO values for maturity within 
   one PFG, and some longevity values are available, some values might be 
@@ -77,11 +78,15 @@ below :}
   }
   \item{\code{height}, \code{light}}{to visualize the PFG light 
   preference, and help decide and understand the choice of the height 
-  limits of strata in \code{FATE} (see XXX, LIGHT competition module)}
+  limits of strata in \code{FATE} (see 
+  \href{../articles/fate_tutorial_3_MODULES.html#light-module-competition}{LIGHT 
+  competition module})}
   \item{\code{soil_contrib}, \cr \code{soil_tol_min}, \cr 
   \code{soil_tol_max}}{to visualize the PFG soil preference, and help 
   parameterize the global parameters of the soil competition module 
-  within \code{FATE} (see XXX, SOIL competition module)}
+  within \code{FATE} (see 
+  \href{../articles/fate_tutorial_3_MODULES.html#soil-module-competition}{SOIL 
+  competition module})}
   \item{\cr \code{soil_contrib}, \cr \code{soil_tolerance}}{same as the 
   previous one, but \code{soil_tol_min} and \code{soil_tol_max} values 
   are obtained by adding or removing \code{soil_tolerance} to 
