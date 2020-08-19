@@ -17,9 +17,10 @@ getOcc_1_XY = function(stations)
 
 getOcc_1_obs = function(observations, stations, maskSimul, maskDem)
 {
+  observations$codecover[which(nchar(observations$codecover) == 0)] = "NA"
   observations$codecover = PRE_FATE.abundBraunBlanquet(observations$codecover)
   observations.xy = merge(observations, stations, by = "numchrono")
-  head(observations.xy)
+  # head(observations.xy)
   
   observations.xy$dem = extract(maskDem, observations.xy[, c("longitudel93_rel", "latitudel93_rel")])
   
@@ -27,8 +28,7 @@ getOcc_1_obs = function(observations, stations, maskSimul, maskDem)
   # min.dem[which(maskSimul[] == 0)] = NA
   # min.dem = min(min.dem[], na.rm = TRUE)
   # observations.xy = observations.xy[which(observations.xy$dem >= min.dem), ]
-  
-  head(observations.xy)
+  # head(observations.xy)
   
   return(observations.xy)
 }
@@ -38,29 +38,36 @@ getOcc_1_obs = function(observations, stations, maskSimul, maskDem)
 ### 2. SELECT DOMINANT SPECIES
 ################################################################################################################
 
-getOcc_2_selectDom = function(observations.xy, species, zone.name
-                              , selRule1, selRule2, selRule3, selRule4, selRule5)
+getOcc_2_selectDom = function(observations.xy, species, zone.name, zone.env.hab, selRules)
 {
   setwd(zone.name)
   
   occ = observations.xy[, c("numchrono", "numtaxon", "codecover", "longitudel93_rel", "latitudel93_rel")]
   occ = unique(occ) ## remove strata redundancy
   colnames(occ) = c("sites", "species", "abund", "X", "Y")
+  occ$habitat = extract(zone.env.hab, occ[, c("X", "Y")])
+  occ$habitat = ifelse(is.na(occ$habitat), NA, paste0("HABITAT-", occ$habitat))
   
-  # hab = raster("/home/gueguen/Documents/_DATA/DATA_FATE_Bauges/Bauges_Habitats/habitats_simple.img")
-  # occ$habitat = extract(hab, occ[, c("X", "Y")])
+  fwrite(occ, file = "DATASET_mat.observations.csv", sep = "\t", row.names = FALSE, col.names = TRUE)
+  
+  
   
   ## SELECT DOMINANT SPECIES
-  sp.SELECT = PRE_FATE.selectDominant(mat.site.species.abund = occ
-                                      , selectionRule.quanti = selRule1
-                                      , selectionRule.min_mean_abund = selRule2
-                                      , selectionRule.min_no_abund_over25 = selRule3
-                                      , doHabitatSelection = FALSE
-                                      , selectionRule.min_percent_habitat = selRule4
-                                      , selectionRule.min_no_habitat = selRule5)
+  sp.SELECT = PRE_FATE.selectDominant(mat.observations = occ[, c("sites", "species", "abund", "habitat")]
+                                      , doRuleA = selRules[['doRuleA']]
+                                      , rule.A1 = selRules[['rule.A1']]
+                                      , rule.A2_quantile = selRules[['rule.A2_quantile']]
+                                      , doRuleB = selRules[['doRuleB']]
+                                      , rule.B1_percentage = selRules[['rule.B1_percentage']]
+                                      , rule.B1_number = selRules[['rule.B1_number']]
+                                      , rule.B2 = selRules[['rule.B2']]
+                                      , doRuleC = selRules[['doRuleC']]
+                                      , opt.doRobustness = selRules[['opt.doRobustness']]
+                                      , opt.robustness_percent = selRules[['opt.robustness_percent']]
+                                      , opt.robustness_rep = selRules[['opt.robustness_rep']])
   
   ## Get species names
-  sp.SELECT = merge(species, sp.SELECT, by.x = "numtaxon", by.y = "species", all.y = TRUE)
+  sp.SELECT$tab.rules = merge(species, sp.SELECT$tab.rules, by.x = "numtaxon", by.y = "species", all.y = TRUE)
   
   setwd("./../")
   
@@ -80,17 +87,18 @@ getOcc_3_matDom = function(sp.SELECT, observations.xy, stations.COMMUNITY, zone.
   occ$numchrono = paste0("NUMCHRONO-", occ$numchrono)
   
   ## Get dominant species observations
-  # sp.SELECT.occ = merge(sp.SELECT[, c("numtaxon", "genre", "libcbna")], observations.xy, by = "numtaxon")
-  # sp.SELECT.occ$numchrono = paste0("NUMCHRONO-", sp.SELECT.occ$numchrono)
-  
-  selected.sp = fread(file_in(paste0(zone.name, "/PFG_Bauges_Description_2017.csv")))
-  colnames(selected.sp) = c("numtaxon", "PFG", "libcbna", "TO_REMOVE")
-  sp.SELECT.occ = merge(selected.sp[, c("numtaxon", "libcbna")], observations.xy, by = "numtaxon")
+  sp.SELECT.occ = merge(sp.SELECT[, c("numtaxon", "genre", "libcbna")], observations.xy, by = "numtaxon")
   sp.SELECT.occ$numchrono = paste0("NUMCHRONO-", sp.SELECT.occ$numchrono)
+  
+  # selected.sp = fread(file_in(paste0(zone.name, "/PFG_Bauges_Description_2017.csv")))
+  # colnames(selected.sp) = c("numtaxon", "PFG", "libcbna", "TO_REMOVE")
+  # sp.SELECT.occ = merge(selected.sp[, c("numtaxon", "libcbna")], observations.xy, by = "numtaxon")
+  # sp.SELECT.occ$numchrono = paste0("NUMCHRONO-", sp.SELECT.occ$numchrono)
   
   ## Get information about community plots
   stations.COMMUNITY = paste0("NUMCHRONO-", stations.COMMUNITY)
   save(stations.COMMUNITY, file = paste0(zone.name, "/DOM.stations.COMMUNITY.RData"))
+  # fwrite(stations.COMMUNITY, file = paste0(zone.name, "/DOM.stations.COMMUNITY.csv"))
   
   ## For relative abundances -----------------------------------------------------
 
@@ -111,8 +119,7 @@ getOcc_3_matDom = function(sp.SELECT, observations.xy, stations.COMMUNITY, zone.
   {
     mat.sites.species.abund[i, ] = ifelse(is.na(mat.sites.species.abund[i, ]), 0, mat.sites.species.abund[i, ])
   }
-  
-  save(mat.sites.species.abund, file = file_out(paste0(zone.name, "/FULL.mat.sites.species.abund.RData")))
+  save(mat.sites.species.abund, file = paste0(zone.name, "/FULL.mat.sites.species.abund.RData"))
   
   ## Keep only dominant species
   dim(mat.sites.species.abund)
@@ -120,8 +127,7 @@ getOcc_3_matDom = function(sp.SELECT, observations.xy, stations.COMMUNITY, zone.
   ind_dom = which(colnames(mat.sites.species.abund) %in% selected.sp$numtaxon)
   mat.sites.species.abund = mat.sites.species.abund[, ind_dom]
   dim(mat.sites.species.abund)
-  
-  save(mat.sites.species.abund, file = file_out(paste0(zone.name, "/DOM.mat.sites.species.abund.RData")))
+  save(mat.sites.species.abund, file = paste0(zone.name, "/DOM.mat.sites.species.abund.RData"))
   
   ## For presence / absence ------------------------------------------------------
 
@@ -138,8 +144,7 @@ getOcc_3_matDom = function(sp.SELECT, observations.xy, stations.COMMUNITY, zone.
   }
   dim(mat.sites.species.PA)
   mat.sites.species.PA[1:10, 1:10]
-  
-  save(mat.sites.species.PA, file = file_out(paste0(zone.name, "/DOM.mat.sites.species.PA.RData")))
+  save(mat.sites.species.PA, file = paste0(zone.name, "/DOM.mat.sites.species.PA.RData"))
   
   return(mat.sites.species.PA)
 }
@@ -161,21 +166,21 @@ getOcc_3_occDom = function(mat.sites.species, species, zone.name, sp.type)
       sp.suppr = c(sp.suppr, sp)
     } else
     {
-      if (sp.type == "SP"){
-        save(sp.occ, file = file_out(paste0(zone.name, "/", sp.type, "_OCC/OCC_X", sp)))
-      } else {
-        save(sp.occ, file = file_out(paste0(zone.name, "/", sp.type, "_OCC/OCC_", sp)))
-      }
+      # if (sp.type == "SP"){
+      #   save(sp.occ, file = file_out(paste0(zone.name, "/", sp.type, "_OCC/OCC_X", sp)))
+      # } else {
+      #   save(sp.occ, file = file_out(paste0(zone.name, "/", sp.type, "_OCC/OCC_", sp)))
+      # }
     }
   }
   cat(" ==> No absence data for :", sp.suppr)
   dom_missing = species[which(species$numtaxon %in% sp.suppr), , drop = FALSE]
-  if (nrow(dom_missing) > 0)
-  {
-    write.csv(dom_missing
-              , file = file_out(paste0(zone.name, "/MISSING_", sp.type, "_observations.csv"))
-              , row.names = F)
-  }
+  # if (nrow(dom_missing) > 0)
+  # {
+  #   write.csv(dom_missing
+  #             , file = file_out(paste0(zone.name, "/MISSING_", sp.type, "_observations.csv"))
+  #             , row.names = F)
+  # }
   
   list_sp = list.files(path = paste0(zone.name, "/", sp.type, "_OCC/"))
   list_sp = sub("OCC_", "", list_sp)

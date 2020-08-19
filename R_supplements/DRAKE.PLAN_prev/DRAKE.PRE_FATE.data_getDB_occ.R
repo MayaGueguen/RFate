@@ -13,6 +13,7 @@ getDB_CBNA = function(x.min, x.max, y.min, y.max)
   con <- dbConnect(drv,
                    dbname = "cbna",
                    host = "152.77.214.210",
+                   # host = "129.88.201.97",
                    port = 5432,
                    user = username,
                    password = pw

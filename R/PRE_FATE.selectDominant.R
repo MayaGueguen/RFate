@@ -446,7 +446,13 @@ PRE_FATE.selectDominant = function(mat.observations
         #########################################################################
         
         class_breaks = seq(0, 1, 0.05)
-        
+        class_breaks.levels = foreach(i = 1:(length(class_breaks)-1)
+                                      , j = 2:length(class_breaks)
+                                      , .combine = "c") %do%
+          {
+            paste0("(", class_breaks[i], ",", class_breaks[j], "]")
+          }
+          
         
         ## Calculate relative abundances per site
         list.dat.sites = split(mat.observations, mat.observations$sites)
@@ -587,9 +593,13 @@ PRE_FATE.selectDominant = function(mat.observations
         if (doRuleB)
         {
           ## B1 : relative abundance or dominancy in a certain number of sites
-          class_B1 = levels(mat.B1$class_rel.sites)[(class_breaks[-1] >= rule.B1_percentage)]
-          sp_ruleB1 = mat.B1$species[which(mat.B1$class_rel.sites %in% class_B1 &
-                                             mat.B1$freq.class_rel.sites >= rule.B1_number)]
+          class_B1 = class_breaks.levels[(class_breaks[-1] >= rule.B1_percentage)]
+          tmpB1 = mat.B1[which(mat.B1$class_rel.sites %in% class_B1), ]
+          sp_ruleB1 = foreach(i.sp = unique(as.character(tmpB1$species)), .combine = "c") %do%
+            {
+              tab = tmpB1[which(tmpB1$species == i.sp), ]
+              if (sum(tab$freq.class_rel.sites) >= rule.B1_number) { return(i.sp) }
+            }
           sp_ruleB1 = unique(as.character(sp_ruleB1))
           
           ## B2 : minimum mean relative abundance
@@ -609,6 +619,7 @@ PRE_FATE.selectDominant = function(mat.observations
           
           ## C1 : similar to B1 for each habitat
           # class_C1 = levels(mat.C$class_rel.sites)[(class_breaks[-1] >= rule.B1_percentage)]
+          # class_C1 = class_breaks.levels[(class_breaks[-1] >= rule.B1_percentage)]
           # sp_ruleCB1 = mat.B1$species[which(mat.C$class_rel.sites %in% class_C1 &
           #                                     mat.C$freq.class_rel.sites >= rule.B1_number)]
           # sp_ruleCB1 = unique(as.character(sp_ruleCB1))
@@ -959,6 +970,7 @@ PRE_FATE.selectDominant = function(mat.observations
       tab.plot$id_color[which(is.na(tab.plot$id_color))] = "darkgray"
       tab.plot$class_B = ifelse(tab.plot$id_color == "darkgray"
                                 , 1, 2)
+      tab.plot$class_rel.sites = factor(tab.plot$class_rel.sites, class_breaks.levels)
       
       ## Associate a color to each species : rule B2
       pal_sp = sequential_hcl(n = length(sp_ruleB2)

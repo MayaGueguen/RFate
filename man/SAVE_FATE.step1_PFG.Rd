@@ -93,7 +93,7 @@ checked :
   \item{mat.observations}{(see \code{\link{PRE_FATE.selectDominant}}) \cr
   \describe{
     \item{\code{sites}}{name of sampling site}
-    \item{\code{x, y}}{coordinates of sampling site}
+    \item{\code{(x, y)}}{coordinates of sampling site}
     \item{\code{species}}{name of the concerned species}
     \item{\code{abund}}{abundance of the concerned species}
     \item{\code{(habitat)}}{habitat of sampling site \cr \cr}

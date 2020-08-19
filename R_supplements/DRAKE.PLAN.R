@@ -26,29 +26,42 @@ library(ggiraph)
 setwd("/home/gueguema/Documents/_TUTOS/3_R/_PACKAGES")
 source("RFate/R_supplements/DRAKE.PRE_FATE.data_getDB_occ.R")
 source("RFate/R_supplements/DRAKE.PRE_FATE.data_getOccDominantSpecies.R")
-source("RFate/R_supplements/DRAKE.PRE_FATE.data_getDB_traits.R")
-source("RFate/R_supplements/DRAKE.PRE_FATE.data_getTraitsPerSpecies.R")
-source("RFate/R_supplements/DRAKE.PRE_FATE.data_getTraitsFATErelated.R")
-source("RFate/R_supplements/DRAKE.PRE_FATE.data_getPFG.R")
-source("RFate/R_supplements/DRAKE.PRE_FATE.data_getOccDominantSpecies.R")
+# source("RFate/R_supplements/DRAKE.PRE_FATE.data_getDB_traits.R")
+# source("RFate/R_supplements/DRAKE.PRE_FATE.data_getTraitsPerSpecies.R")
+# source("RFate/R_supplements/DRAKE.PRE_FATE.data_getTraitsFATErelated.R")
+# source("RFate/R_supplements/DRAKE.PRE_FATE.data_getPFG.R")
+# source("RFate/R_supplements/DRAKE.PRE_FATE.data_getOccDominantSpecies.R")
 
-path.data = "RFate/data_supplements/"
-path.data = "RFate/data/"
+# path.data = "RFate/data_supplements/"
+path.data = "RFate/data-raw/"
 setwd(path.data)
 
-file_date = "190621"
+# file_date = "190621"
+file_date = Sys.Date()
 
 
 ################################################################################################################
 
 BAUGES = list(zone.name = "Bauges"
               , zone.extent = c(910795, 983695, 6489093, 6538793)
-              , zone.selection.rules = c(0.95, 20, 20, 0.1, 10)
-              , zone.mask = "Bauges/MASK_100m.tif"
-              , zone.env.folder = "ENV_VARIABLES/EOBS_1970_2005/"
+              , zone.selectDominant.rules = list('doRuleA' = 1
+                                                 , 'rule.A1' = 10
+                                                 , 'rule.A2_quantile' = 0.9
+                                                 , 'doRuleB' = 1
+                                                 , 'rule.B1_percentage' = 0.25
+                                                 , 'rule.B1_number' = 5
+                                                 , 'rule.B2' = 0.5
+                                                 , 'doRuleC' = 1
+                                                 , 'opt.doRobustness' = 0
+                                                 , 'opt.robustness_percent' = c(0.2, 0.5, 0.8) #seq(0.1, 0.9, 0.1)
+                                                 , 'opt.robustness_rep' = 3)
+              , zone.mask = "Bauges/RASTERS/MASK_100m.tif"
+              , zone.env.folder = "RASTERS/EOBS_1970_2005/"
               , zone.env.variables = c("bio_1_0", "bio_8_0", "bio_12_0", "bio_19_0", "slope")
-              , zone.mask.pert.all = c("Bauges/MASK_grazing.tif", "Bauges/MASK_noPerturb.tif")
-              , zone.mask.pert.def = "Bauges/MASK_noPerturb.tif"
+              , zone.mask.dem = "Bauges/RASTERS/EOBS_1970_2005/dem.tif"
+              , zone.mask.hab = "Bauges/RASTERS/MASK_land.tif" #"Bauges/RASTERS/MASK_100m.tif"
+              , zone.mask.pert.all = c("Bauges/RASTERS/MASK_grazing.tif", "Bauges/RASTERS/MASK_noPerturb.tif")
+              , zone.mask.pert.def = "Bauges/RASTERS/MASK_noPerturb.tif"
 )
 ZONE = BAUGES
 ## ECRINS
@@ -56,69 +69,80 @@ ZONE = BAUGES
 ## LAUTARET
 
 
-for(ZONE in list(BAUGES))
+# for(ZONE in list(BAUGES))
 {
-  
-  ################################################################################################################
-  ### 1. GET DB VALUES - SELECT DOMINANT SPECIES
-  ################################################################################################################
+  vis_drake_graph(PLAN.full)
+  make(plan = PLAN.full)
   
   # clean()
   PLAN.full = drake_plan(
     zone.name = ZONE$zone.name
     , zone.extent = ZONE$zone.extent
-    , zone.selection.rules = ZONE$zone.selection.rules
+    , zone.selectDominant.rules = ZONE$zone.selectDominant.rules
     , zone.env.folder = ZONE$zone.env.folder
     , zone.env.variables = ZONE$zone.env.variables
+    , zone.env.dem = raster(file_in(ZONE$zone.mask.dem))
+    , zone.env.hab = raster(file_in(ZONE$zone.mask.hab))
     , zone.mask = raster(file_in(ZONE$zone.mask))
     
-    ## Get environmental data
-    , zone.env.dem = raster(file_in(paste0(zone.name, "/", zone.env.folder, "/dem.tif")))
-    , zone.env.stk = getSDM_env(zone.name = zone.name
-                                , zone.env.folder = zone.env.folder
-                                , zone.env.variables = zone.env.variables
-                                , maskSimul = zone.mask)
-    , zone.env.stk.CALIB = zone.env.stk$env.CALIB
-    , zone.env.stk.CALIB.saved = save(zone.env.stk.CALIB, file = file_out(paste0(zone.name, "/", zone.name, ".zone.env.stk.CALIB.RData")))
-    , zone.env.stk.PROJ = zone.env.stk$env.PROJ
-    , zone.env.stk.PROJ.saved = save(zone.env.stk.PROJ, file = file_out(paste0(zone.name, "/", zone.name, ".zone.env.stk.PROJ.RData")))
-
-    ## Get DB
+    ###############################################################################################
+    ## Get environmental data ---------------------------------------------------------------------
+    # , zone.env.stk = getSDM_env(zone.name = zone.name
+    #                             , zone.env.folder = zone.env.folder
+    #                             , zone.env.variables = zone.env.variables
+    #                             , maskSimul = zone.mask)
+    # , zone.env.stk.CALIB = zone.env.stk$env.CALIB
+    # , zone.env.stk.CALIB.saved = save(zone.env.stk.CALIB
+    #                                   , file = file_out(paste0(zone.name, "/", zone.name
+    #                                                            , ".zone.env.stk.CALIB.RData")))
+    # , zone.env.stk.PROJ = zone.env.stk$env.PROJ
+    # , zone.env.stk.PROJ.saved = save(zone.env.stk.PROJ
+    #                                  , file = file_out(paste0(zone.name, "/", zone.name
+    #                                                           , ".zone.env.stk.PROJ.RData")))
+    
+    ###############################################################################################
+    ## Get CBNA DB data ---------------------------------------------------------------------------
     , DB.OCC = getDB_CBNA(x.min = zone.extent[1]
                           , x.max = zone.extent[2]
                           , y.min = zone.extent[3]
                           , y.max = zone.extent[4])
-    ## Get species
+    ## Get species --------------------------------------------------------------------------------
     , DB.species = DB.OCC$species[, c("numtaxon", "genre", "libcbna")]
-    , DB.species.saved = save(DB.species, file = file_out(paste0(zone.name, "/DB.species.RData")))
-    ## Get sites informations
-    , DB.stations = DB.OCC$stations[, c("numchrono", "coderqualif", "longitudel93_rel", "latitudel93_rel")]
+    , DB.species.saved = fwrite(DB.species, file = file_out(paste0(zone.name, "/DB.species.csv"))
+                                , sep = "\t", row.names = FALSE, col.names = TRUE)
+    ## Get sites informations----------------------------------------------------------------------
+    , DB.stations = DB.OCC$stations[, c("numchrono", "coderqualif"
+                                        , "longitudel93_rel", "latitudel93_rel")]
     , DB.stations.COMMUNITY = DB.stations$numchrono[which(DB.stations$coderqualif %in% c("R06", "R07"))]
     , DB.XY = getOcc_1_XY(stations = DB.stations)
-    , DB.XY.saved = save(DB.XY, file = file_out(paste0(zone.name, "/DB.XY.RData")))
-    ## Get occurrences
+    , DB.XY.saved = fwrite(DB.XY, file = file_out(paste0(zone.name, "/DB.XY.csv"))
+                           , sep = "\t", row.names = FALSE, col.names = TRUE)
+    ## Get occurrences ----------------------------------------------------------------------------
     , DB.observations = DB.OCC$observations[, c("numchrono", "numtaxon", "codecover")]
     , DB.observations.xy = getOcc_1_obs(observations = DB.observations
                                         , stations = DB.stations
                                         , maskSimul = zone.mask
                                         , maskDem = zone.env.dem)
-    , DB.observations.xy.saved = save(DB.observations.xy, file = file_out(paste0(zone.name, "/DB.observations.xy.RData")))
+    , DB.observations.xy.saved = fwrite(DB.observations.xy
+                                        , file = file_out(paste0(zone.name, "/DB.observations.xy.csv"))
+                                        , sep = "\t", row.names = FALSE, col.names = TRUE)
 
+    ###############################################################################################
     ## Get dominant species informations
     , DOM.sp.dom = getOcc_2_selectDom(observations.xy = DB.observations.xy
                                       , species = DB.species
                                       , zone.name = zone.name
-                                      , selRule1 = zone.selection.rules[1]
-                                      , selRule2 = zone.selection.rules[2]
-                                      , selRule3 = zone.selection.rules[3]
-                                      , selRule4 = zone.selection.rules[4]
-                                      , selRule5 = zone.selection.rules[5])
-    , DOM.sp.dom.Marj = na.exclude(read.csv(file_in(paste0(zone.name, "/DOM.Marjorie_selection.csv"))
-                                            , fileEncoding = "windows-1252", header = TRUE, sep = "\t")[,1:2])
-    , DOM.sp.dom.updated = merge(DOM.sp.dom, DOM.sp.dom.Marj, by = c("numtaxon", "libcbna"), all = TRUE)
+                                      , zone.env.hab = zone.env.hab
+                                      , selRules = zone.selectDominant.rules)
+    , DOM.sp.dom.saved = fwrite(DOM.sp.dom$tab.rules
+                                , file = file_out(paste0(zone.name, "/DOM.sp.dom.csv"))
+                                , sep = "\t", row.names = FALSE, col.names = TRUE)
+    # , DOM.sp.dom.Marj = na.exclude(read.csv(file_in(paste0(zone.name, "/DOM.Marjorie_selection.csv"))
+    #                                         , fileEncoding = "windows-1252", header = TRUE, sep = "\t")[,1:2])
+    # , DOM.sp.dom.updated = merge(DOM.sp.dom, DOM.sp.dom.Marj, by = c("numtaxon", "libcbna"), all = TRUE)
     # , name.file_DOM = paste0(zone.name, "/DOM_species_", zone.name, ".csv")
     # , DOM.sp.dom.updated.written = fwrite(DOM.sp.dom.updated, file = name.file_DOM, sep = "\t")
-    , DOM.sp.dom.mat = getOcc_3_matDom(sp.SELECT = DOM.sp.dom.updated
+    , DOM.sp.dom.mat = getOcc_3_matDom(sp.SELECT = DOM.sp.dom$tab.rules
                                        , observations.xy = DB.observations.xy
                                        , stations.COMMUNITY = DB.stations.COMMUNITY
                                        , zone.name = zone.name)
@@ -137,6 +161,7 @@ for(ZONE in list(BAUGES))
                                           , list_sp = DOM.sp.dom.occ
                                           , maskSimul = zone.mask)
     
+    ###############################################################################################
     ## Traits
     , TR.traits = getDB_ANDROSACE()
     , TR.data_1 = getTraits_1_merge.species(traits = TR.traits)
@@ -160,6 +185,7 @@ for(ZONE in list(BAUGES))
                                                 , namefile = file_out("GRAPH1_numberValuesPerTrait_quanti.pdf"))
     , TR.graph.quali = getTraits_4_graphBarplot(traits = TR.traits.quali.med
                                                 , namefile = file_out("GRAPH2_numberValuesPerTrait_quali.pdf"))
+    ###############################################################################################
     ## Traits for FATE
     , TR_FATE.traits_names = getTraitsFATE_names()
     , TR_FATE.TAB_traits = getTraitsFATE_merge(traits.quant = TR.traits.quant.med
@@ -169,6 +195,7 @@ for(ZONE in list(BAUGES))
     , TR_FATE.TAB_traits_FATE.written = fwrite(TR_FATE.TAB_traits_FATE
                                                , file = file_out(paste0("TRAITS_FATE_", file_date, ".csv"))
                                                , sep = "\t")
+    ###############################################################################################
     ## Select traits
     , PFG.mat.traits.select = getPFG_1_selectTraits(mat.traits = TR_FATE.TAB_traits_FATE)
     ## Build PFG
@@ -187,6 +214,8 @@ for(ZONE in list(BAUGES))
                              , zone.env.stk.CALIB = zone.env.stk.CALIB
                              , zone.env.stk.PROJ = zone.env.stk.PROJ
                              , sp.type = "PFG")
+    
+    ###############################################################################################
     ## Calculate PFG parameters
     , PFG.mat.traits.pfg = getPFG_4_calcMeanTraits(zone.name = zone.name
                                                    , mat.traits = TR_FATE.TAB_traits_FATE

@@ -69,7 +69,7 @@
 ##'   \item{mat.observations}{(see \code{\link{PRE_FATE.selectDominant}}) \cr
 ##'   \describe{
 ##'     \item{\code{sites}}{name of sampling site}
-##'     \item{\code{x, y}}{coordinates of sampling site}
+##'     \item{\code{(x, y)}}{coordinates of sampling site}
 ##'     \item{\code{species}}{name of the concerned species}
 ##'     \item{\code{abund}}{abundance of the concerned species}
 ##'     \item{\code{(habitat)}}{habitat of sampling site \cr \cr}
@@ -183,22 +183,30 @@ SAVE_FATE.step1_PFG = function(name.dataset
   } else
   {
     mat.observations = as.data.frame(mat.observations)
-    if (nrow(mat.observations) == 0 || !(ncol(mat.observations) %in% c(5, 6)))
+    if (nrow(mat.observations) == 0 || !(ncol(mat.observations) %in% c(3, 4, 5, 6)))
     {
-      .stopMessage_numRowCol("mat.observations", c("sites", "x", "y", "species", "abund", "(habitat)"))
+      .stopMessage_numRowCol("mat.observations", c("sites", "(x)", "(y)", "species", "abund", "(habitat)"))
     } else
     {
       notCorrect = switch(as.character(ncol(mat.observations))
+                          , "3" = .testParam_notColnames(mat.observations, c("sites", "species", "abund"))
+                          , "4" = .testParam_notColnames(mat.observations, c("sites", "species", "abund", "habitat"))
                           , "5" = .testParam_notColnames(mat.observations, c("sites", "x", "y", "species", "abund"))
                           , "6" = .testParam_notColnames(mat.observations, c("sites", "x", "y", "species", "abund", "habitat"))
                           , TRUE)
       if (notCorrect){
-        .stopMessage_columnNames("mat.observations", c("sites", "x", "y", "species", "abund", "(habitat)"))
+        .stopMessage_columnNames("mat.observations", c("sites", "(x)", "(y)", "species", "abund", "(habitat)"))
       }
     }
     mat.observations$sites = as.character(mat.observations$sites)
-    .testParam_notNum.m("mat.observations$x", mat.observations$x)
-    .testParam_notNum.m("mat.observations$y", mat.observations$y)
+    if (sum(colnames(mat.observations) == "x") == 1)
+    {
+      .testParam_notNum.m("mat.observations$x", mat.observations$x)
+    }
+    if (sum(colnames(mat.observations) == "y") == 1)
+    {
+      .testParam_notNum.m("mat.observations$y", mat.observations$y)
+    }
     mat.observations$species = as.character(mat.observations$species)
     .testParam_notNum.m("mat.observations$abund", mat.observations$abund)
     if (sum(colnames(mat.observations) == "habitat") == 0)
