@@ -26,18 +26,13 @@ library(ggiraph)
 setwd("/home/gueguema/Documents/_TUTOS/3_R/_PACKAGES")
 source("RFate/R_supplements/DRAKE.PRE_FATE.data_getDB_occ.R")
 source("RFate/R_supplements/DRAKE.PRE_FATE.data_getOccDominantSpecies.R")
-# source("RFate/R_supplements/DRAKE.PRE_FATE.data_getDB_traits.R")
-# source("RFate/R_supplements/DRAKE.PRE_FATE.data_getTraitsPerSpecies.R")
-# source("RFate/R_supplements/DRAKE.PRE_FATE.data_getTraitsFATErelated.R")
-# source("RFate/R_supplements/DRAKE.PRE_FATE.data_getPFG.R")
-# source("RFate/R_supplements/DRAKE.PRE_FATE.data_getOccDominantSpecies.R")
+source("RFate/R_supplements/DRAKE.PRE_FATE.data_getDB_traits.R")
+source("RFate/R_supplements/DRAKE.PRE_FATE.data_getTraitsPerSpecies.R")
+source("RFate/R_supplements/DRAKE.PRE_FATE.data_getTraitsFATErelated.R")
+source("RFate/R_supplements/DRAKE.PRE_FATE.data_getPFG.R")
 
-# path.data = "RFate/data_supplements/"
 path.data = "RFate/data-raw/"
 setwd(path.data)
-
-# file_date = "190621"
-file_date = Sys.Date()
 
 
 ################################################################################################################
@@ -73,32 +68,37 @@ ZONE = BAUGES
 {
   vis_drake_graph(PLAN.full)
   make(plan = PLAN.full)
+  make(plan = PLAN.full, lock_envir = FALSE)
+  
+  file_date = Sys.Date()
+  no_cores = 6
+  zone.name = ZONE$zone.name
   
   # clean()
   PLAN.full = drake_plan(
-    zone.name = ZONE$zone.name
-    , zone.extent = ZONE$zone.extent
+    # zone.name = ZONE$zone.name
+    zone.extent = ZONE$zone.extent
     , zone.selectDominant.rules = ZONE$zone.selectDominant.rules
     , zone.env.folder = ZONE$zone.env.folder
     , zone.env.variables = ZONE$zone.env.variables
-    , zone.env.dem = raster(file_in(ZONE$zone.mask.dem))
-    , zone.env.hab = raster(file_in(ZONE$zone.mask.hab))
-    , zone.mask = raster(file_in(ZONE$zone.mask))
+    , zone.env.dem = raster(file_in(!!ZONE$zone.mask.dem))
+    , zone.env.hab = raster(file_in(!!ZONE$zone.mask.hab))
+    , zone.mask = raster(file_in(!!ZONE$zone.mask))
     
     ###############################################################################################
     ## Get environmental data ---------------------------------------------------------------------
-    # , zone.env.stk = getSDM_env(zone.name = zone.name
-    #                             , zone.env.folder = zone.env.folder
-    #                             , zone.env.variables = zone.env.variables
-    #                             , maskSimul = zone.mask)
-    # , zone.env.stk.CALIB = zone.env.stk$env.CALIB
-    # , zone.env.stk.CALIB.saved = save(zone.env.stk.CALIB
-    #                                   , file = file_out(paste0(zone.name, "/", zone.name
-    #                                                            , ".zone.env.stk.CALIB.RData")))
-    # , zone.env.stk.PROJ = zone.env.stk$env.PROJ
-    # , zone.env.stk.PROJ.saved = save(zone.env.stk.PROJ
-    #                                  , file = file_out(paste0(zone.name, "/", zone.name
-    #                                                           , ".zone.env.stk.PROJ.RData")))
+    , zone.env.stk = getSDM_env(zone.name = zone.name
+                                , zone.env.folder = zone.env.folder
+                                , zone.env.variables = zone.env.variables
+                                , maskSimul = zone.mask)
+    , zone.env.stk.CALIB = zone.env.stk$env.CALIB
+    , zone.env.stk.CALIB.saved = save(zone.env.stk.CALIB
+                                      , file = file_out(!!paste0(zone.name, "/", zone.name
+                                                               , ".zone.env.stk.CALIB.RData")))
+    , zone.env.stk.PROJ = zone.env.stk$env.PROJ
+    , zone.env.stk.PROJ.saved = save(zone.env.stk.PROJ
+                                     , file = file_out(!!paste0(zone.name, "/", zone.name
+                                                              , ".zone.env.stk.PROJ.RData")))
     
     ###############################################################################################
     ## Get CBNA DB data ---------------------------------------------------------------------------
@@ -108,14 +108,18 @@ ZONE = BAUGES
                           , y.max = zone.extent[4])
     ## Get species --------------------------------------------------------------------------------
     , DB.species = DB.OCC$species[, c("numtaxon", "genre", "libcbna")]
-    , DB.species.saved = fwrite(DB.species, file = file_out(paste0(zone.name, "/DB.species.csv"))
+    , DB.species.saved = fwrite(DB.species, file = file_out(!!paste0(zone.name, "/DB.species.csv"))
                                 , sep = "\t", row.names = FALSE, col.names = TRUE)
     ## Get sites informations----------------------------------------------------------------------
     , DB.stations = DB.OCC$stations[, c("numchrono", "coderqualif"
                                         , "longitudel93_rel", "latitudel93_rel")]
-    , DB.stations.COMMUNITY = DB.stations$numchrono[which(DB.stations$coderqualif %in% c("R06", "R07"))]
+    , DB.stations.COMMUNITY = paste0("NUMCHRONO-"
+                                     , DB.stations$numchrono[which(DB.stations$coderqualif %in% c("R06", "R07"))])
+    , DB.stations.COMMUNITY.saved = fwrite(data.frame(DB.stations.COMMUNITY)
+                                           , file = file_out(!!paste0(zone.name, "/DB.stations.COMMUNITY.csv"))
+                                           , sep = "\t", row.names = FALSE, col.names = FALSE)
     , DB.XY = getOcc_1_XY(stations = DB.stations)
-    , DB.XY.saved = fwrite(DB.XY, file = file_out(paste0(zone.name, "/DB.XY.csv"))
+    , DB.XY.saved = fwrite(DB.XY, file = file_out(!!paste0(zone.name, "/DB.XY.csv"))
                            , sep = "\t", row.names = FALSE, col.names = TRUE)
     ## Get occurrences ----------------------------------------------------------------------------
     , DB.observations = DB.OCC$observations[, c("numchrono", "numtaxon", "codecover")]
@@ -124,34 +128,40 @@ ZONE = BAUGES
                                         , maskSimul = zone.mask
                                         , maskDem = zone.env.dem)
     , DB.observations.xy.saved = fwrite(DB.observations.xy
-                                        , file = file_out(paste0(zone.name, "/DB.observations.xy.csv"))
+                                        , file = file_out(!!paste0(zone.name, "/DB.observations.xy.csv"))
                                         , sep = "\t", row.names = FALSE, col.names = TRUE)
 
     ###############################################################################################
-    ## Get dominant species informations
-    , DOM.sp.dom = getOcc_2_selectDom(observations.xy = DB.observations.xy
-                                      , species = DB.species
-                                      , zone.name = zone.name
-                                      , zone.env.hab = zone.env.hab
-                                      , selRules = zone.selectDominant.rules)
+    ## Get dominant species -----------------------------------------------------------------------
+    , DOM.occ = getOcc_2_formatOcc(observations.xy = DB.observations.xy
+                                   , zone.env.hab = zone.env.hab)
+    , DOM.occ.saved = fwrite(DOM.occ, file = file_out(!!paste0(zone.name, "/DATASET_mat.observations.csv"))
+                             , sep = "\t", row.names = FALSE, col.names = TRUE)
+    , DOM.sp.dom = getOcc_2_selectDom(zone.name = zone.name
+                                      , occ = DOM.occ
+                                      , selRules = zone.selectDominant.rules
+                                      , species = DB.species)
     , DOM.sp.dom.saved = fwrite(DOM.sp.dom$tab.rules
-                                , file = file_out(paste0(zone.name, "/DOM.sp.dom.csv"))
+                                , file = file_out(!!paste0(zone.name, "/DOM.sp.dom.csv"))
                                 , sep = "\t", row.names = FALSE, col.names = TRUE)
-    # , DOM.sp.dom.Marj = na.exclude(read.csv(file_in(paste0(zone.name, "/DOM.Marjorie_selection.csv"))
-    #                                         , fileEncoding = "windows-1252", header = TRUE, sep = "\t")[,1:2])
-    # , DOM.sp.dom.updated = merge(DOM.sp.dom, DOM.sp.dom.Marj, by = c("numtaxon", "libcbna"), all = TRUE)
-    # , name.file_DOM = paste0(zone.name, "/DOM_species_", zone.name, ".csv")
-    # , DOM.sp.dom.updated.written = fwrite(DOM.sp.dom.updated, file = name.file_DOM, sep = "\t")
-    , DOM.sp.dom.mat = getOcc_3_matDom(sp.SELECT = DOM.sp.dom$tab.rules
-                                       , observations.xy = DB.observations.xy
+    ## Get sites x species matrix -----------------------------------------------------------------
+    , DOM.sp.dom.mat = getOcc_3_matDom(occ = DOM.occ
                                        , stations.COMMUNITY = DB.stations.COMMUNITY
-                                       , zone.name = zone.name)
-    , DOM.sp.dom.occ = getOcc_3_occDom(mat.sites.species = DOM.sp.dom.mat
-                                       , species = species
+                                       , selected.sp = DOM.sp.dom$tab.rules$species[DOM.sp.dom$tab.rules$SELECTED])
+    , DOM.mat.FULL_abund = DOM.sp.dom.mat$FULL_abund
+    , DOM.mat.DOM_abund = DOM.sp.dom.mat$DOM_abund
+    , DOM.mat.DOM_PA = DOM.sp.dom.mat$DOM_PA
+    , DOM.mat.FULL_abund.saved = save(DOM.mat.FULL_abund, file = file_out(!!paste0(zone.name, "/FULL.mat.sites.species.abund.RData")))
+    , DOM.mat.DOM_abund.saved = save(DOM.mat.DOM_abund, file = file_out(!!paste0(zone.name, "/DOM.mat.sites.species.abund.RData")))
+    , DOM.mat.DOM_PA.saved = save(DOM.mat.DOM_PA, file = file_out(!!paste0(zone.name, "/DOM.mat.sites.species.PA.RData")))
+    ## Get occurrences per dominant species -------------------------------------------------------
+    , DOM.sp.dom.occ = getOcc_3_occDom(mat.sites.species = DOM.mat.DOM_PA
+                                       , species = DB.species
                                        , zone.name = zone.name
                                        , sp.type = "SP")
-    ## Build dominant species sdm
-    , DOM.sp.dom.sdm = getSDM_build(zone.name = zone.name
+    ## Build dominant species sdm -----------------------------------------------------------------
+    , DOM.sp.dom.sdm = getSDM_build(no_cores = no_cores
+                                    , zone.name = zone.name
                                     , list_sp = DOM.sp.dom.occ
                                     , XY = DB.XY
                                     , zone.env.stk.CALIB = zone.env.stk$env.CALIB
@@ -159,10 +169,13 @@ ZONE = BAUGES
                                     , sp.type = "SP")
     , DOM.sp.dom.overlap = getSDM_overlap(zone.name = zone.name
                                           , list_sp = DOM.sp.dom.occ
-                                          , maskSimul = zone.mask)
+                                          , maskSimul = zone.mask
+                                          , SDMbuilt = DOM.sp.dom.sdm)
+    , DOM.sp.dom.overlap.saved = save(DOM.sp.dom.overlap, file = file_out(!!paste0(zone.name, "/DOM.sp.dom.overlap.RData")))
+
     
     ###############################################################################################
-    ## Traits
+    ## Traits -------------------------------------------------------------------------------------
     , TR.traits = getDB_ANDROSACE()
     , TR.data_1 = getTraits_1_merge.species(traits = TR.traits)
     , TR.data_2 = getTraits_1_merge.traits(traits = TR.data_1)
