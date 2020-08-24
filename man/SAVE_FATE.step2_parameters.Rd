@@ -149,7 +149,7 @@ to the \code{\link{PRE_FATE.params_multipleSet}} function, if used
 }
 \value{
 A \code{list} containing all the elements given to the function and 
-checked :
+checked, and two archive files :
 
 \describe{
   \item{name.dataset}{name of the dataset}
@@ -167,6 +167,10 @@ checked :
   \item{(mat.PFG.drought.tol)}{}
   \item{rasters}{raster files of all simulation masks}
   \item{(multipleSet)}{ \cr \cr}
+  \item{(\code{DATA} folder)}{contained in \code{name.simulation} folder 
+  and archived}
+  \item{(\code{PARAM_SIMUL} folder)}{contained in \code{name.simulation} 
+  folder and archived \cr \cr}
 }
 
 The information is written in \file{FATE_dataset_[name.dataset]_step2_parameters.RData} file.

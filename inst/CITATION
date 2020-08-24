@@ -2,12 +2,12 @@ citHeader("To cite RFate in publications use:")
 
 citEntry(
   entry = "Manual",
-  title = "RFate package - to be used with FATE-HD",
+  title = "RFate package : vegetation modelling with FATE",
   author = personList(as.person("Maya Guéguen")),
-  year = "2019",
-  version = "0.0.8.9000",
+  year = "2020",
+  version = "0.2.0.9000",
   url = "https://mayagueguen.github.io/RFate/",
-  textVersion = paste("Maya Guéguen (2019).",
+  textVersion = paste("Maya Guéguen (2020).",
         "Laboratoire d'Ecologie Alpine (LECA), Grenoble (38), France.",
         "URL: https://github.com/MayaGueguen/RFate.git")
 )

@@ -62,7 +62,7 @@ reference:
   - title: Datasets
     desc:  Used in the examples.
     contents:
-      - ".loadData"
+      - "DATASET_Bauges_PFG"
   - title: Interface
     desc:  Graphical User Interface (shiny application)
     contents:

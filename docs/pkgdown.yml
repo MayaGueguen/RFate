@@ -1,4 +1,4 @@
-pandoc: 1.19.2.1
+pandoc: 2.3.1
 pkgdown: 1.5.1
 pkgdown_sha: ~
 articles:
@@ -10,5 +10,5 @@ articles:
   rfate_tutorial_1_PFG: rfate_tutorial_1_PFG.html
   rfate_tutorial_2_params: rfate_tutorial_2_params.html
   rfate_tutorial_3_graphics: rfate_tutorial_3_graphics.html
-last_built: 2020-04-29T16:36Z
+last_built: 2020-08-24T14:43Z
 

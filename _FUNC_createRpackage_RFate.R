@@ -30,6 +30,8 @@ tools::checkRdaFiles("data/")
 # load("data_supplements/FATE_Bauges")
 # usethis::use_data(FATE_Bauges, overwrite = TRUE)
 # load("data_supplements/PNE.PFG.RData")
+load("data-raw/DATASET_Bauges_PFG.RData")
+usethis::use_data(DATASET_Bauges_PFG, overwrite = TRUE)
 
 # source("data-raw/PNE_PFG.R")
 # source("data-raw/PNE_PARAM.R")
