@@ -48,7 +48,7 @@ getOcc_2_formatOcc = function(observations.xy, zone.env.hab)
   return(occ)
 }
 
-getOcc_2_selectDom = function(zone.name, occ, selRules, species)
+getOcc_2_selectDom = function(zone.name, occ, selRules)
 {
   setwd(zone.name)
   
@@ -314,7 +314,7 @@ getSDM_build = function(no_cores, zone.name, list_sp, XY, zone.env.stk.CALIB, zo
     }
   
   cat("\nended at:", format(Sys.time(), "%a %d %b %Y %X"), "\n")
-  return(wrap)
+  return(TRUE)
 }
 
 

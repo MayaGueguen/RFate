@@ -44,30 +44,18 @@ getPFG_1_selectTraits = function(mat.traits)
 ## 2. DO CLUSTERING 
 ################################################################################################################
 
-getPFG_2_calcDistClust = function(zone.name, sp.dom, mat.traits.select, mat.overlap)
+getPFG_2_calcDistClust = function(zone.name, sp.dom, mat.traits.select, mat.overlap, selRules)
 {
   setwd(zone.name)
+  
+  mat.traits = mat.traits.select[which(mat.traits.select$species %in% sp.dom), ]
   mat.overlap = as.matrix(mat.overlap)
-  ind_sp = which(colnames(mat.overlap) %in% paste0("X", sp.dom$numtaxon))
-  names_sp = colnames(mat.overlap)[ind_sp]
-  mat.overlap = mat.overlap[ind_sp, ind_sp]
-  colnames(mat.overlap) = rownames(mat.overlap) = names_sp
-  
-  mat.traits.DOM = mat.traits.select[which(mat.traits.select$species %in% colnames(mat.overlap)),]
-  mat.traits.DOM = mat.traits.DOM[which(mat.traits.DOM$GROUP != ""), ]
-  ind.GROUP = table(mat.traits.DOM$GROUP)
-  ind.GROUP = names(ind.GROUP)[which(ind.GROUP <= 1)]
-  if (length(ind.GROUP) > 0)
-  {
-    mat.traits.DOM = mat.traits.DOM[-which(mat.traits.DOM$GROUP %in% ind.GROUP), ]
-  }
-  # mat.traits.DOM$GROUP[which(mat.traits.DOM$species %in% c("X8207", "X12696"))] = "Geophyte_Hemicryptophyte"
-  print(summary(mat.traits.DOM))
-  
-  sp.DIST = PRE_FATE.speciesDistance(mat.species.traits = mat.traits.DOM
-                                     , mat.species.overlap = mat.overlap
-                                     , min.info.thresh = 0.3
-                                     , opt.traits.selection = c(0.25, 0.20))
+
+  sp.DIST = PRE_FATE.speciesDistance(mat.traits = mat.traits
+                                     , mat.overlap = mat.overlap
+                                     , opt.maxPercent.NA = selRules[['opt.maxPercent.NA']]
+                                     , opt.maxPercent.similarSpecies = selRules[['opt.maxPercent.similarSpecies']]
+                                     , opt.min.sd = selRules[['opt.min.sd']])
   
   sp.CLUST = PRE_FATE.speciesClustering_step1(mat.species.DIST = sp.DIST)
   
@@ -80,62 +68,44 @@ getPFG_2_calcDeterm = function(zone.name, sp.DIST, sp.CLUST, no.clusters, specie
 {
   setwd(zone.name)
   
-  sp.DETERM = PRE_FATE.speciesClustering_step2(clust.dendograms = sp.CLUST$clust.dendograms
+  sp.DETERM = PRE_FATE.speciesClustering_step2(clust.dendrograms = sp.CLUST$clust.dendrograms
                                                , no.clusters = no.clusters
                                                , mat.species.DIST = sp.DIST)
   
-  selected.sp = sp.DETERM$determ.all
-  selected.sp$pfg = as.character(selected.sp$pfg)
-  selected.sp$sp = as.character(selected.sp$sp)
-  selected.sp$sp = sub("X", "", selected.sp$sp)
-  
-  selected.sp = merge(species, selected.sp, by.x = "numtaxon", by.y = "sp", all.y = TRUE)
-  colnames(selected.sp)[c(1:4, 12)] = c("CODE_CBNA", "GENUS", "SPECIES_NAME", "PFG", "TO_REMOVE")
-  selected.sp = selected.sp[, c("CODE_CBNA", "GENUS", "SPECIES_NAME", "PFG", "group", "TO_REMOVE"
-                                , "sp.mean.dist", "allSp.mean", "allSp.min", "allSp.max")]
-  selected.sp = selected.sp[order(selected.sp$PFG, selected.sp$SPECIES_NAME), ]
-  
-  PFG1 = sapply(selected.sp$PFG, function(x) strsplit(x, "_")[[1]][1])
-  PFG1 = sapply(PFG1, function(x) strsplit(x, "")[[1]][1])
-  
-  PFG2 = sapply(selected.sp$PFG, function(x) strsplit(x, "_")[[1]][2])
-  PFG2 = sapply(PFG2, function(x) strsplit(x, "")[[1]][1])
-  PFG2 = ifelse(is.na(PFG2), "", PFG2)
-  
-  PFG3 = sapply(selected.sp$PFG, function(x) strsplit(x, "[.]")[[1]][2])
-  
-  selected.sp$PFG = paste0(PFG1, PFG2, PFG3)
-  fwrite(x = selected.sp, file = "PRE_FATE_PFG_selection_PFG_ALL.csv")
-  
-  determinant_PFG = selected.sp[which(selected.sp$CODE_CBNA %in% sp.DETERM$determ.sp), ]
-  fwrite(x = determinant_PFG, file = "PRE_FATE_PFG_selection_PFG_DETERMINANT.csv")
-  
   setwd("./../")
-  return(selected.sp)
+  return(sp.DETERM)
 }
 
-getPFG_2_keepDeterm = function(zone.name, selected.sp)
+getPFG_2_calcTraits = function(zone.name, sp.DETERM, mat.traits.select)
 {
-  selected.sp = selected.sp[which(selected.sp$TO_REMOVE == 0), ]
+  setwd(zone.name)
   
-  return(selected.sp)
+  mat.traits = merge(sp.DETERM[, c("species", "PFG")], mat.traits.select, by = "species", all.x = TRUE)
+  sp.PFG = PRE_FATE.speciesClustering_step3(mat.traits = mat.traits)
+  
+  setwd("./../")
+  return(sp.PFG)
 }
+
+# getPFG_2_keepDeterm = function(zone.name, selected.sp)
+# {
+#   selected.sp = selected.sp[which(selected.sp$TO_REMOVE == 0), ]
+#   
+#   return(selected.sp)
+# }
 
 ################################################################################################################
 ## 3. GET SITES x PFG occurrences matrix
 ################################################################################################################
 
-getPFG_3_matSitesPFG = function(zone.name, mat.sites.species, selected.sp)
+getPFG_3_matSitesPFG = function(zone.name, mat.sites.species, sp.DETERM)
 {
-  setwd(zone.name)
+  mat.sites.species = mat.sites.species[, which(colnames(mat.sites.species) %in% sub("X", "", sp.DETERM$determ.sp))]
   
-  ind.toKeep = selected.sp$CODE_CBNA[which(selected.sp$TO_REMOVE == 0)]
-  mat.sites.species = mat.sites.species[, which(colnames(mat.sites.species) %in% ind.toKeep)]
-  
-  mat.sites.pfg = foreach (fg = unique(selected.sp$PFG), .combine = "cbind") %do%
+  mat.sites.pfg = foreach (fg = unique(sp.DETERM$determ.all$PFG), .combine = "cbind") %do%
   {
-    ind.fg = selected.sp$CODE_CBNA[which(selected.sp$PFG == fg)]
-    ind.fg = which(colnames(mat.sites.species) %in% ind.fg)
+    ind.fg = sp.DETERM$determ.all$species[which(sp.DETERM$determ.all$PFG == fg)]
+    ind.fg = which(colnames(mat.sites.species) %in% sub("X", "", ind.fg))
     val.fg = mat.sites.species[, ind.fg, drop = FALSE]
     val.fg = apply(val.fg, 1, function(x){
       if (length(which(is.na(x))) == length(x)){
@@ -148,13 +118,6 @@ getPFG_3_matSitesPFG = function(zone.name, mat.sites.species, selected.sp)
     })
     return(matrix(data = val.fg, ncol = 1, dimnames = list(rownames(mat.sites.species), fg)))
   }
-  
-  dim(mat.sites.pfg)
-  mat.sites.pfg[1:10, 1:10]
-  
-  save(mat.sites.pfg, file = "PFG.mat.sites.pfg.RData")
-  
-  setwd("./../")
   return(mat.sites.pfg)
 }
 

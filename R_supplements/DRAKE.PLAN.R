@@ -85,13 +85,15 @@ setwd(path.data)
                                                , sep = "\t")
   )
 }
+
+
 ################################################################################################################
 ### DOMINANT SPECIES, PFG - for specific area
 ################################################################################################################
 
 BAUGES = list(zone.name = "Bauges"
               , zone.extent = c(910795, 983695, 6489093, 6538793)
-              , zone.selectDominant.rules = list('doRuleA' = 1
+              , zone.rules.dominant = list('doRuleA' = 1
                                                  , 'rule.A1' = 10
                                                  , 'rule.A2_quantile' = 0.9
                                                  , 'doRuleB' = 1
@@ -102,6 +104,10 @@ BAUGES = list(zone.name = "Bauges"
                                                  , 'opt.doRobustness' = 0
                                                  , 'opt.robustness_percent' = c(0.2, 0.5, 0.8) #seq(0.1, 0.9, 0.1)
                                                  , 'opt.robustness_rep' = 3)
+              , zone.rules.spDist = list('opt.maxPercent.NA' = 0.05 #0
+                                         , 'opt.maxPercent.similarSpecies' = 0.4 #0.25
+                                         , 'opt.min.sd' = 0.3)
+              , zone.rules.clusters = c(6, 8, 6)
               , zone.mask = "Bauges/RASTERS/MASK_100m.tif"
               , zone.env.folder = "RASTERS/EOBS_1970_2005/"
               , zone.env.variables = c("bio_1_0", "bio_8_0", "bio_12_0", "bio_19_0", "slope")
@@ -129,12 +135,14 @@ ZONE = BAUGES
   # clean()
   PLAN_dominant = drake_plan(
     zone.extent = ZONE$zone.extent
-    , zone.selectDominant.rules = ZONE$zone.selectDominant.rules
     , zone.env.folder = ZONE$zone.env.folder
     , zone.env.variables = ZONE$zone.env.variables
     , zone.env.dem = raster(file_in(!!ZONE$zone.mask.dem))
     , zone.env.hab = raster(file_in(!!ZONE$zone.mask.hab))
     , zone.mask = raster(file_in(!!ZONE$zone.mask))
+    , zone.rules.dominant = ZONE$zone.rules.dominant
+    , zone.rules.spDist = ZONE$zone.rules.spDist
+    , zone.rules.clusters = ZONE$zone.rules.clusters
     
     ###############################################################################################
     ## Get environmental data ---------------------------------------------------------------------
@@ -144,6 +152,12 @@ ZONE = BAUGES
                                 , maskSimul = zone.mask)
     , zone.env.stk.CALIB = zone.env.stk$env.CALIB
     , zone.env.stk.PROJ = zone.env.stk$env.PROJ
+    , zone.env.stk.CALIB.saved = save(zone.env.stk.CALIB
+                                      , file = file_out(!!paste0(zone.name, "/", zone.name
+                                                                 , ".zone.env.stk.CALIB.RData")))
+    , zone.env.stk.PROJ.saved = save(zone.env.stk.PROJ
+                                     , file = file_out(!!paste0(zone.name, "/", zone.name
+                                                                , ".zone.env.stk.PROJ.RData")))
     
     ###############################################################################################
     ## Get CBNA DB data ---------------------------------------------------------------------------
@@ -184,8 +198,7 @@ ZONE = BAUGES
                              , sep = "\t", row.names = FALSE, col.names = TRUE)
     , DOM.sp.dom = getOcc_2_selectDom(zone.name = zone.name
                                       , occ = DOM.occ
-                                      , selRules = zone.selectDominant.rules
-                                      , species = DB.species)
+                                      , selRules = zone.rules.dominant)
     , DOM.sp.dom.saved = fwrite(DOM.sp.dom$tab.rules
                                 , file = file_out(!!paste0(zone.name, "/DOM.sp.dom.csv"))
                                 , sep = "\t", row.names = FALSE, col.names = TRUE)
@@ -205,33 +218,54 @@ ZONE = BAUGES
                                        , zone.name = zone.name
                                        , sp.type = "SP")
     ## Build dominant species sdm -----------------------------------------------------------------
-    , DOM.sp.dom.sdm = getSDM_build(no_cores = no_cores
-                                    , zone.name = zone.name
-                                    , list_sp = DOM.sp.dom.occ
-                                    , XY = DB.XY
-                                    , zone.env.stk.CALIB = zone.env.stk$env.CALIB
-                                    , zone.env.stk.PROJ = zone.env.stk$env.PROJ
-                                    , sp.type = "SP")
+    # , DOM.sp.dom.sdm = getSDM_build(no_cores = no_cores
+    #                                 , zone.name = zone.name
+    #                                 , list_sp = DOM.sp.dom.occ
+    #                                 , XY = DB.XY
+    #                                 , zone.env.stk.CALIB = zone.env.stk$env.CALIB
+    #                                 , zone.env.stk.PROJ = zone.env.stk$env.PROJ
+    #                                 , sp.type = "SP")
     # , DOM.sp.dom.overlap = getSDM_overlap(no_cores = no_cores
     #                                       , zone.name = zone.name
     #                                       , list_sp = DOM.sp.dom.occ
     #                                       , maskSimul = zone.mask
     #                                       , SDMbuilt = TRUE)
+    # , DOM.sp.dom.overlap.saved = save(DOM.sp.dom.overlap
+    #                                   , file = file_out(!!paste0(zone.name, "/DOM.sp.dom.overlap.RData")))
+    , DOM.sp.dom.overlap = get(load(file_in(!!paste0(zone.name, "/DOM.mat.overlap.RData"))))
     
     ###############################################################################################
-    ## Select traits
+    ## Select traits ------------------------------------------------------------------------------
+    , TR_FATE.TAB_traits_FATE = fread(file = file_in("TRAITS_FATE_2020-08-24.csv"), sep = "\t")
     , PFG.mat.traits.select = getPFG_1_selectTraits(mat.traits = TR_FATE.TAB_traits_FATE)
+
     ## Build PFG
-    , selected.sp = fread(file_in(paste0(zone.name, "/PFG_Bauges_Description_2017_BIS.csv")))
+    # , selected.sp = fread(file_in(paste0(zone.name, "/PFG_Bauges_Description_2017_BIS.csv")))
+    , PFG.dist.clust1 = getPFG_2_calcDistClust(zone.name = zone.name
+                                               , sp.dom = DOM.sp.dom.occ
+                                               , mat.traits.select = PFG.mat.traits.select
+                                               , mat.overlap = DOM.sp.dom.overlap
+                                               , selRules = zone.rules.spDist)
+    , PFG.clust2 = getPFG_2_calcDeterm(zone.name = zone.name
+                                       , sp.DIST = PFG.dist.clust1$sp.DIST
+                                       , sp.CLUST = PFG.dist.clust1$sp.CLUST
+                                       , no.clusters = zone.rules.clusters
+                                       , species = DB.species)
+    , PFG.clust3 = getPFG_2_calcTraits(zone.name = zone.name
+                                       , sp.DETERM = PFG.clust2$determ.all
+                                       , mat.traits.select = PFG.mat.traits.select)
+    
     # Build PFG sdm
     , PFG.mat = getPFG_3_matSitesPFG(zone.name = zone.name
-                                     , mat.sites.species = DOM.sp.dom.mat
-                                     , selected.sp = selected.sp)
+                                     , mat.sites.species = DOM.mat.DOM_PA #DOM.sp.dom.mat
+                                     , sp.DETERM = PFG.clust2)
+    , PFG.mat.saved = save(PFG.mat, file = file_out(!!paste0(zone.name, "/PFG.mat.sites.pfg.RData")))
     , PFG.occ = getOcc_3_occDom(mat.sites.species = PFG.mat
                                 , species = DB.species
                                 , zone.name = zone.name
                                 , sp.type = "PFG")
-    , PFG.sdm = getSDM_build(zone.name = zone.name
+    , PFG.sdm = getSDM_build(no_cores = no_cores
+                             , zone.name = zone.name
                              , list_sp = PFG.occ
                              , XY = DB.XY
                              , zone.env.stk.CALIB = zone.env.stk.CALIB
@@ -240,15 +274,15 @@ ZONE = BAUGES
     
     ###############################################################################################
     ## Calculate PFG parameters
-    , PFG.mat.traits.pfg = getPFG_4_calcMeanTraits(zone.name = zone.name
-                                                   , mat.traits = TR_FATE.TAB_traits_FATE
-                                                   , selected.sp = selected.sp)
-    , PFG.param = getPFG_5_FATEparam(zone.name = zone.name
-                                     , zone.mask = ZONE$zone.mask
-                                     , zone.mask.pert.all = ZONE$zone.mask.pert.all
-                                     , zone.mask.pert.def = ZONE$zone.mask.pert.def
-                                     , TRAITS_PFG = PFG.mat.traits.pfg
-                                     , pfg.sdm = PFG.sdm)
+    # , PFG.mat.traits.pfg = getPFG_4_calcMeanTraits(zone.name = zone.name
+    #                                                , mat.traits = TR_FATE.TAB_traits_FATE
+    #                                                , selected.sp = selected.sp)
+    # , PFG.param = getPFG_5_FATEparam(zone.name = zone.name
+    #                                  , zone.mask = ZONE$zone.mask
+    #                                  , zone.mask.pert.all = ZONE$zone.mask.pert.all
+    #                                  , zone.mask.pert.def = ZONE$zone.mask.pert.def
+    #                                  , TRAITS_PFG = PFG.mat.traits.pfg
+    #                                  , pfg.sdm = PFG.sdm)
   )
 }
 
