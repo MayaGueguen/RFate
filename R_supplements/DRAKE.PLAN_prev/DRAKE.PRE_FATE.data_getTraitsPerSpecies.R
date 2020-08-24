@@ -338,15 +338,15 @@ getTraits_3_thresholdGenus = function(traits, traits.genre)
   return( traits)
 }
 
-getTraits_4_save = function(traits, namefile)
-{
-  table(traits$CODE)
-  table(traits$source)
-  summary(traits)
-  fwrite(traits, file = namefile, sep = "\t")
-  ## TRAITS_quantitative_median_181210.csv
-  ## TRAITS_qualitative_181210.csv
-}
+# getTraits_4_save = function(traits, namefile)
+# {
+#   table(traits$CODE)
+#   table(traits$source)
+#   summary(traits)
+#   fwrite(traits, file = namefile, sep = "\t")
+#   ## TRAITS_quantitative_median_181210.csv
+#   ## TRAITS_qualitative_181210.csv
+# }
 
 
 getTraits_4_graphBarplot = function(traits, namefile)

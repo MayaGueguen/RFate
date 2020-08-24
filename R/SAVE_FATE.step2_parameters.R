@@ -113,7 +113,7 @@
 ##' 
 ##' 
 ##' @return A \code{list} containing all the elements given to the function and 
-##' checked :
+##' checked, and two archive files :
 ##' 
 ##' \describe{
 ##'   \item{name.dataset}{name of the dataset}
@@ -131,6 +131,10 @@
 ##'   \item{(mat.PFG.drought.tol)}{}
 ##'   \item{rasters}{raster files of all simulation masks}
 ##'   \item{(multipleSet)}{ \cr \cr}
+##'   \item{(\code{DATA} folder)}{contained in \code{name.simulation} folder 
+##'   and archived}
+##'   \item{(\code{PARAM_SIMUL} folder)}{contained in \code{name.simulation} 
+##'   folder and archived \cr \cr}
 ##' }
 ##' 
 ##' The information is written in \file{FATE_dataset_[name.dataset]_step2_parameters.RData} file.
@@ -206,6 +210,11 @@ SAVE_FATE.step2_parameters = function(name.dataset
   .testParam_notChar.m("name.dataset", name.dataset)
   .testParam_existFolder(name.simulation, "DATA/")
   .testParam_existFolder(name.simulation, "PARAM_SIMUL/")
+  ## ARCHIVE folders
+  name.arch_data = paste0(name.simulation, "_DATA.zip")
+  name.arch_paramsimul = paste0(name.simulation, "_PARAM_SIMUL.zip")
+  zip(zipfile  = name.arch_data, files = paste0(name.simulation, "DATA/"), flags = "-r")
+  zip(zipfile  = name.arch_paramsimul, files = paste0(name.simulation, "PARAM_SIMUL/"), flags = "-r")
   
   ## CHECK parameter strata.limits
   strata.limits = sort(unique(na.exclude(strata.limits)))
@@ -956,7 +965,9 @@ SAVE_FATE.step2_parameters = function(name.dataset
                  , mat.PFG.drought
                  , mat.PFG.drought.tol
                  , rasters
-                 , multipleSet)
+                 , multipleSet
+                 , name.arch_data
+                 , name.arch_paramsimul)
   
   name.dataset = paste0("FATE_dataset_", name.dataset, "_step2_parameters")
   assign(name.dataset, results)

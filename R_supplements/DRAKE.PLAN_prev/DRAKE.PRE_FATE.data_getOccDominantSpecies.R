@@ -304,7 +304,7 @@ getSDM_env = function(zone.name, zone.env.folder, zone.env.variables, maskSimul)
 }
 
 
-getSDM_build = function(zone.name, list_sp, XY, zone.env.stk.CALIB, zone.env.stk.PROJ, sp.type)
+getSDM_build = function(no_cores, zone.name, list_sp, XY, zone.env.stk.CALIB, zone.env.stk.PROJ, sp.type)
 {
   dir.create(paste0(zone.name, "/", sp.type, "_SDM"))
   
@@ -316,9 +316,10 @@ getSDM_build = function(zone.name, list_sp, XY, zone.env.stk.CALIB, zone.env.stk
            , zone.env.stk.PROJ = zone.env.stk.PROJ
            , check.computed = TRUE
            , sp.type = sp.type
-           , mc.cores = 4)
+           , mc.cores = no_cores)
   
   cat("\nended at:", format(Sys.time(), "%a %d %b %Y %X"))
+  return(TRUE)
 }
 
 
@@ -326,35 +327,38 @@ getSDM_build = function(zone.name, list_sp, XY, zone.env.stk.CALIB, zone.env.stk
 ### 5. CALCULATE DOMINANT SPECIES SDM OVERLAP
 ################################################################################################################
 
-getSDM_overlap = function(zone.name, list_sp, maskSimul)
+getSDM_overlap = function(no_cores, zone.name, list_sp, maskSimul, SDMbuilt)
 {
-  setwd(paste0(zone.name, "/SP_SDM/"))
-
-  proj.files = sapply(list_sp, function(x) paste0(x, "/proj_current/proj_current_", x, "_ensemble.img"))
-  proj.files = proj.files[file.exists(proj.files)]
-  
-  for (fi in proj.files)
+  if (SDMbuilt && !file.exists(paste0(zone.name, "/DOM.mat.overlap.RData")))
   {
-    ras = raster(fi)
-    # ras[] = ras[] * maskSimul
-    ras[which(maskSimul[] == 0)] = NA
-    ras[] = ras[] / 1000
-    writeRaster(ras, filename = sub(".img", ".asc", basename(fi)), overwrite = TRUE)
+    setwd(paste0(zone.name, "/SP_SDM/"))
+    
+    proj.files = sapply(list_sp, function(x) paste0(x, "/proj_current/proj_current_", x, "_ensemble.tif"))
+    proj.files = proj.files[file.exists(proj.files)]
+    
+    foreach (fi = proj.files) %dopar%
+    {
+      ras = raster(fi)
+      # ras[] = ras[] * maskSimul
+      ras[which(maskSimul[] == 0)] = NA
+      ras[] = ras[] / 1000
+      writeRaster(ras, filename = sub(".tif", ".asc", basename(fi)), overwrite = TRUE)
+    }
+    
+    proj.files = sapply(list_sp, function(x) paste0("proj_current_", x, "_ensemble.asc"))
+    proj.files = proj.files[file.exists(proj.files)]
+    
+    mat.overlap = niche.overlap(proj.files)
+    colnames(mat.overlap) = sub("proj_current_", "", colnames(mat.overlap))
+    colnames(mat.overlap) = sub("_ensemble.asc", "", colnames(mat.overlap))
+    rownames(mat.overlap) = sub("proj_current_", "", rownames(mat.overlap))
+    rownames(mat.overlap) = sub("_ensemble.asc", "", rownames(mat.overlap))
+    
+    file.remove(proj.files)
+    
+    setwd("./../../")
+    save(mat.overlap, file = paste0(zone.name, "/DOM.mat.overlap.RData"))
+    
+    return(mat.overlap)
   }
-  
-  proj.files = sapply(list_sp, function(x) paste0("proj_current_", x, "_ensemble.asc"))
-  proj.files = proj.files[file.exists(proj.files)]
-
-  mat.overlap = niche.overlap(proj.files)
-  colnames(mat.overlap) = sub("proj_current_", "", colnames(mat.overlap))
-  colnames(mat.overlap) = sub("_ensemble.asc", "", colnames(mat.overlap))
-  rownames(mat.overlap) = sub("proj_current_", "", rownames(mat.overlap))
-  rownames(mat.overlap) = sub("_ensemble.asc", "", rownames(mat.overlap))
-  
-  file.remove(proj.files)
-  
-  setwd("./../../")
-  save(mat.overlap, file = paste0(zone.name, "/DOM.mat.overlap.RData"))
-  
-  return(mat.overlap)
 }

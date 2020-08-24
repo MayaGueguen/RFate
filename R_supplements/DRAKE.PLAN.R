@@ -36,6 +36,58 @@ setwd(path.data)
 
 
 ################################################################################################################
+### TRAITS - for everyone
+################################################################################################################
+
+{
+  vis_drake_graph(PLAN_traits)
+  make(plan = PLAN_traits)
+  
+  file_date = Sys.Date()
+  no_cores = 6
+  
+  PLAN_traits = drake_plan(
+    ###############################################################################################
+    ## Get Androsace DB data ----------------------------------------------------------------------
+    TR.traits = getDB_ANDROSACE()
+    , TR.data_1 = getTraits_1_merge.species(traits = TR.traits)
+    , TR.data_2 = getTraits_1_merge.traits(traits = TR.data_1)
+    , TR.data_3 = getTraits_1_removeUninformative(traits = TR.data_2)
+    , TR.data_4 = getTraits_1_remove(traits = TR.data_3)
+    , TR.data_5 = getTraits_1_change(traits = TR.data_4)
+    , TR.data.split = getTraits_2_split(traits = TR.data_5)
+    , TR.traits.quant = TR.data.split$QUANT
+    , TR.traits.quali = TR.data.split$QUALI
+    , TR.traits.quant.med = getTraits_3_quantMedian(traits_quant = TR.traits.quant)
+    , TR.traits.quali.med = getTraits_3_qualiMerged(traits_quali = TR.traits.quali)
+    # , TR.traits.genre = traits_genre(TR.data_4)
+    # , TR.traits.quant.med_suppr = getTraits_3_thresholdGenus(TR.traits.quant.med, TR.traits.genre)
+    # , TR.traits.quali.med_suppr = getTraits_3_thresholdGenus(TR.traits.quali.med, TR.traits.genre)
+    , TR.traits.quant.med.saved = fwrite(TR.traits.quant.med
+                                         , file = file_out(!!paste0("TRAITS_quantitative_median_", file_date, ".csv"))
+                                         , sep = "\t", row.names = FALSE, col.names = TRUE)
+    , TR.traits.quali.med.saved = fwrite(TR.traits.quali.med
+                                         , file = file_out(!!paste0("TRAITS_qualitative_", file_date, ".csv"))
+                                         , sep = "\t", row.names = FALSE, col.names = TRUE)
+    , TR.graph.quant = getTraits_4_graphBarplot(traits = TR.traits.quant.med
+                                                , namefile = file_out("GRAPH1_numberValuesPerTrait_quanti.pdf"))
+    , TR.graph.quali = getTraits_4_graphBarplot(traits = TR.traits.quali.med
+                                                , namefile = file_out("GRAPH2_numberValuesPerTrait_quali.pdf"))
+    ###############################################################################################
+    ## Traits for FATE
+    , TR_FATE.traits_names = getTraitsFATE_names()
+    , TR_FATE.TAB_traits = getTraitsFATE_merge(traits.quant = TR.traits.quant.med
+                                               , traits.quali = TR.traits.quali.med
+                                               , TRAIT_names = TR_FATE.traits_names)
+    , TR_FATE.TAB_traits_FATE = getTraitsFATE_reorganize(TAB_traits = TR_FATE.TAB_traits)
+    , TR_FATE.TAB_traits_FATE.written = fwrite(TR_FATE.TAB_traits_FATE
+                                               , file = file_out(!!paste0("TRAITS_FATE_", file_date, ".csv"))
+                                               , sep = "\t")
+  )
+}
+################################################################################################################
+### DOMINANT SPECIES, PFG - for specific area
+################################################################################################################
 
 BAUGES = list(zone.name = "Bauges"
               , zone.extent = c(910795, 983695, 6489093, 6538793)
@@ -62,21 +114,20 @@ ZONE = BAUGES
 ## ECRINS
 ## MONTBLANC
 ## LAUTARET
-
+  
 
 # for(ZONE in list(BAUGES))
 {
-  vis_drake_graph(PLAN.full)
-  make(plan = PLAN.full)
-  make(plan = PLAN.full, lock_envir = FALSE)
+  vis_drake_graph(PLAN_dominant)
+  make(plan = PLAN_dominant)
+  make(plan = PLAN_dominant, lock_envir = FALSE)
   
   file_date = Sys.Date()
   no_cores = 6
   zone.name = ZONE$zone.name
   
   # clean()
-  PLAN.full = drake_plan(
-    # zone.name = ZONE$zone.name
+  PLAN_dominant = drake_plan(
     zone.extent = ZONE$zone.extent
     , zone.selectDominant.rules = ZONE$zone.selectDominant.rules
     , zone.env.folder = ZONE$zone.env.folder
@@ -92,13 +143,7 @@ ZONE = BAUGES
                                 , zone.env.variables = zone.env.variables
                                 , maskSimul = zone.mask)
     , zone.env.stk.CALIB = zone.env.stk$env.CALIB
-    , zone.env.stk.CALIB.saved = save(zone.env.stk.CALIB
-                                      , file = file_out(!!paste0(zone.name, "/", zone.name
-                                                               , ".zone.env.stk.CALIB.RData")))
     , zone.env.stk.PROJ = zone.env.stk$env.PROJ
-    , zone.env.stk.PROJ.saved = save(zone.env.stk.PROJ
-                                     , file = file_out(!!paste0(zone.name, "/", zone.name
-                                                              , ".zone.env.stk.PROJ.RData")))
     
     ###############################################################################################
     ## Get CBNA DB data ---------------------------------------------------------------------------
@@ -167,47 +212,12 @@ ZONE = BAUGES
                                     , zone.env.stk.CALIB = zone.env.stk$env.CALIB
                                     , zone.env.stk.PROJ = zone.env.stk$env.PROJ
                                     , sp.type = "SP")
-    , DOM.sp.dom.overlap = getSDM_overlap(zone.name = zone.name
-                                          , list_sp = DOM.sp.dom.occ
-                                          , maskSimul = zone.mask
-                                          , SDMbuilt = DOM.sp.dom.sdm)
-    , DOM.sp.dom.overlap.saved = save(DOM.sp.dom.overlap, file = file_out(!!paste0(zone.name, "/DOM.sp.dom.overlap.RData")))
-
+    # , DOM.sp.dom.overlap = getSDM_overlap(no_cores = no_cores
+    #                                       , zone.name = zone.name
+    #                                       , list_sp = DOM.sp.dom.occ
+    #                                       , maskSimul = zone.mask
+    #                                       , SDMbuilt = TRUE)
     
-    ###############################################################################################
-    ## Traits -------------------------------------------------------------------------------------
-    , TR.traits = getDB_ANDROSACE()
-    , TR.data_1 = getTraits_1_merge.species(traits = TR.traits)
-    , TR.data_2 = getTraits_1_merge.traits(traits = TR.data_1)
-    , TR.data_3 = getTraits_1_removeUninformative(traits = TR.data_2)
-    , TR.data_4 = getTraits_1_remove(traits = TR.data_3)
-    , TR.data_5 = getTraits_1_change(traits = TR.data_4)
-    , TR.data.split = getTraits_2_split(traits = TR.data_5)
-    , TR.traits.quant = TR.data.split$QUANT
-    , TR.traits.quali = TR.data.split$QUALI
-    , TR.traits.quant.med = getTraits_3_quantMedian(traits_quant = TR.traits.quant)
-    , TR.traits.quali.med = getTraits_3_qualiMerged(traits_quali = TR.traits.quali)
-    # , TR.traits.genre = traits_genre(TR.data_4)
-    # , TR.traits.quant.med_suppr = getTraits_3_thresholdGenus(TR.traits.quant.med, TR.traits.genre)
-    # , TR.traits.quali.med_suppr = getTraits_3_thresholdGenus(TR.traits.quali.med, TR.traits.genre)
-    , TR.traits.quant.med.saved = getTraits_4_save(traits = TR.traits.quant.med
-                                                   , namefile = file_out(paste0("TRAITS_quantitative_median_", file_date, ".csv")))
-    , TR.traits.quali.med.saved = getTraits_4_save(traits = TR.traits.quali.med
-                                                   , namefile = file_out(paste0("TRAITS_qualitative_", file_date, ".csv")))
-    , TR.graph.quant = getTraits_4_graphBarplot(traits = TR.traits.quant.med
-                                                , namefile = file_out("GRAPH1_numberValuesPerTrait_quanti.pdf"))
-    , TR.graph.quali = getTraits_4_graphBarplot(traits = TR.traits.quali.med
-                                                , namefile = file_out("GRAPH2_numberValuesPerTrait_quali.pdf"))
-    ###############################################################################################
-    ## Traits for FATE
-    , TR_FATE.traits_names = getTraitsFATE_names()
-    , TR_FATE.TAB_traits = getTraitsFATE_merge(traits.quant = TR.traits.quant.med
-                                               , traits.quali = TR.traits.quali.med
-                                               , TRAIT_names = TR_FATE.traits_names)
-    , TR_FATE.TAB_traits_FATE = getTraitsFATE_reorganize(TAB_traits = TR_FATE.TAB_traits)
-    , TR_FATE.TAB_traits_FATE.written = fwrite(TR_FATE.TAB_traits_FATE
-                                               , file = file_out(paste0("TRAITS_FATE_", file_date, ".csv"))
-                                               , sep = "\t")
     ###############################################################################################
     ## Select traits
     , PFG.mat.traits.select = getPFG_1_selectTraits(mat.traits = TR_FATE.TAB_traits_FATE)
@@ -240,10 +250,18 @@ ZONE = BAUGES
                                      , TRAITS_PFG = PFG.mat.traits.pfg
                                      , pfg.sdm = PFG.sdm)
   )
+}
+
+
+
+
+
+
+################################################################################################################
   
   ### GET AS ADJACENCY MATRIX --------------------------------------------------------------------------
-  mat_adj = as.matrix(as_adjacency_matrix(drake_config(PLAN.full)$graph))
-  toKeep = which(rownames(mat_adj) %in% PLAN.full$target)
+  mat_adj = as.matrix(as_adjacency_matrix(drake_config(PLAN_dominant)$graph))
+  toKeep = which(rownames(mat_adj) %in% PLAN_dominant$target)
   mat_adj = mat_adj[toKeep, toKeep]
   
   palette_val = c("zone" = "#FDB462"
@@ -276,7 +294,7 @@ ZONE = BAUGES
   print(pp)
   
   ### WORKFLOW step by step ----------------------------------------------------------------------------
-  # categories = unique(sapply(PLAN.full$target, function(x) strsplit(as.character(x), "[.]")[[1]][1]))
+  # categories = unique(sapply(PLAN_dominant$target, function(x) strsplit(as.character(x), "[.]")[[1]][1]))
   # categories = categories[-which(categories == "selected")]
   # categories = categories[-1] ## remove 'zone'
   # categories[1] = "zone|DB"
@@ -358,14 +376,14 @@ ZONE = BAUGES
   }
 
   ### --------------------------------------------------------------------------------------------------
-  vis_drake_graph(config = drake_config(PLAN.full)
+  vis_drake_graph(config = drake_config(PLAN_dominant)
                   , targets_only = TRUE
                   , from_scratch = TRUE
   )
   # , clusters = c("pfg.mat", "pfg.sdm"))
-  # outdated(drake_config(PLAN.full))
-  # make(PLAN.full)
-  # vis_drake_graph(drake_config(PLAN.full)
+  # outdated(drake_config(PLAN_dominant))
+  # make(PLAN_dominant)
+  # vis_drake_graph(drake_config(PLAN_dominant)
   #                 , targets_only = TRUE)
   
 }
