@@ -474,9 +474,12 @@ PRE_FATE.speciesDistance = function(mat.traits
       toRemove = c(toRemove, gp)
     }
   }
-  mat.traits.split = mat.traits.split[-toRemove]
-  mat.overlap.split = mat.overlap.split[-toRemove]
-  names_groups = names_groups[-toRemove]
+  if (length(toRemove) > 0)
+  {
+    mat.traits.split = mat.traits.split[-toRemove]
+    mat.overlap.split = mat.overlap.split[-toRemove]
+    names_groups = names_groups[-toRemove]
+  }
   cat("\n")
   
   ## GOWER DISSIMILARITY FOR MIXED VARIABLES

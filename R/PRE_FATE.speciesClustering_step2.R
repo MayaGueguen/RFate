@@ -259,6 +259,7 @@ PRE_FATE.speciesClustering_step2 = function(clust.dendrograms
       }
     }
   determ = do.call(rbind, determ)
+  rownames(determ) = determ$species
   if (length(determ) == 0 || is.null(determ))
   {
     stop("No determinant species have been selected. Please check your data")
@@ -382,7 +383,7 @@ PRE_FATE.speciesClustering_step2 = function(clust.dendrograms
   }
   dev.off()
   
-  return(list(determ.sp = determ$sp[which(determ$DETERMINANT == TRUE)]
+  return(list(determ.sp = determ$species[which(determ$DETERMINANT == TRUE)]
               , determ.all = determ
               , plot.distance = pp3
               , plot.PCO = pp4_list))
