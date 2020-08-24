@@ -238,12 +238,12 @@ ZONE = BAUGES
     ## Select traits ------------------------------------------------------------------------------
     , TR_FATE.TAB_traits_FATE = fread(file = file_in("TRAITS_FATE_2020-08-24.csv"), sep = "\t")
     , PFG.mat.traits.select = getPFG_1_selectTraits(mat.traits = TR_FATE.TAB_traits_FATE)
+    , PFG.mat.traits.dom = PFG.mat.traits.select[which(PFG.mat.traits.select$species %in% DOM.sp.dom.occ), ]
 
     ## Build PFG
     # , selected.sp = fread(file_in(paste0(zone.name, "/PFG_Bauges_Description_2017_BIS.csv")))
     , PFG.dist.clust1 = getPFG_2_calcDistClust(zone.name = zone.name
-                                               , sp.dom = DOM.sp.dom.occ
-                                               , mat.traits.select = PFG.mat.traits.select
+                                               , mat.traits = PFG.mat.traits.dom
                                                , mat.overlap = DOM.sp.dom.overlap
                                                , selRules = zone.rules.spDist)
     , PFG.clust2 = getPFG_2_calcDeterm(zone.name = zone.name
@@ -264,25 +264,30 @@ ZONE = BAUGES
                                 , species = DB.species
                                 , zone.name = zone.name
                                 , sp.type = "PFG")
-    , PFG.sdm = getSDM_build(no_cores = no_cores
-                             , zone.name = zone.name
-                             , list_sp = PFG.occ
-                             , XY = DB.XY
-                             , zone.env.stk.CALIB = zone.env.stk.CALIB
-                             , zone.env.stk.PROJ = zone.env.stk.PROJ
-                             , sp.type = "PFG")
+    # , PFG.sdm = getSDM_build(no_cores = no_cores
+    #                          , zone.name = zone.name
+    #                          , list_sp = PFG.occ
+    #                          , XY = DB.XY
+    #                          , zone.env.stk.CALIB = zone.env.stk.CALIB
+    #                          , zone.env.stk.PROJ = zone.env.stk.PROJ
+    #                          , sp.type = "PFG")
     
     ###############################################################################################
-    ## Calculate PFG parameters
-    # , PFG.mat.traits.pfg = getPFG_4_calcMeanTraits(zone.name = zone.name
-    #                                                , mat.traits = TR_FATE.TAB_traits_FATE
-    #                                                , selected.sp = selected.sp)
-    # , PFG.param = getPFG_5_FATEparam(zone.name = zone.name
-    #                                  , zone.mask = ZONE$zone.mask
-    #                                  , zone.mask.pert.all = ZONE$zone.mask.pert.all
-    #                                  , zone.mask.pert.def = ZONE$zone.mask.pert.def
-    #                                  , TRAITS_PFG = PFG.mat.traits.pfg
-    #                                  , pfg.sdm = PFG.sdm)
+    ## SAVE for examples
+    , DATASET.save = target({
+      list(sp.observations = as.data.frame(DOM.occ)
+           , dom.traits = as.data.frame(PFG.mat.traits.dom)
+           , dom.dist_overlap = DOM.sp.dom.overlap
+           , dom.dist_total = PFG.dist.clust1$sp.DIST
+           , dom.determ = as.data.frame(PFG.clust2$determ.all)
+           , PFG.observations = as.data.frame(PFG.mat)
+           , PFG.traits = as.data.frame(PFG.clust3$tab))
+    })
+    , DATASET.saved = target({
+      assign(paste0("DATASET_", zone.name, "_PFG"), DATASET.save)
+      save(list = paste0("DATASET_", zone.name, "_PFG")
+           , file = file_out(!!paste0("DATASET_", zone.name, "_PFG.RData")))
+    })
   )
 }
 
@@ -293,134 +298,134 @@ ZONE = BAUGES
 
 ################################################################################################################
   
-  ### GET AS ADJACENCY MATRIX --------------------------------------------------------------------------
-  mat_adj = as.matrix(as_adjacency_matrix(drake_config(PLAN_dominant)$graph))
-  toKeep = which(rownames(mat_adj) %in% PLAN_dominant$target)
-  mat_adj = mat_adj[toKeep, toKeep]
-  
-  palette_val = c("zone" = "#FDB462"
-                  , "DB" = "#8DD3C7"
-                  , "DOM" = "#FFFFB3"
-                  , "TR" = "#B3DE69"
-                  , "TR_FATE" = "#80B1D3"
-                  , "selected" = "#FB8072"
-                  , "PFG" = "#BEBADA"
-  )
-
-  ### WORKFLOW full ------------------------------------------------------------------------------------
-  mat_net = network(mat_adj
-                   , matrix = "adjacency"
-                   , directed = TRUE)
-  network.vertex.names(mat_net) = sapply(rownames(mat_adj)
-                                        , function(x) paste0(strsplit(as.character(x), "[.]")[[1]][-1]
-                                                             , collapse = "."))
-  mat_net %v% "color" = sapply(rownames(mat_adj), function(x) strsplit(as.character(x), "[.]")[[1]][1])
-  
-  pp = ggnet2(mat_net
-              , node.size = 15
-              , node.shape = 15
-              , node.color = "color"
-              , color.palette = palette_val
-              , color.legend = ""
-              , edge.size = 0.5
-              , label = TRUE
-  )
-  print(pp)
-  
-  ### WORKFLOW step by step ----------------------------------------------------------------------------
-  # categories = unique(sapply(PLAN_dominant$target, function(x) strsplit(as.character(x), "[.]")[[1]][1]))
-  # categories = categories[-which(categories == "selected")]
-  # categories = categories[-1] ## remove 'zone'
-  # categories[1] = "zone|DB"
-  categories = c("zone|DB", "DOM", "TR|TR_FATE", "PFG")
-  for(cc in categories)
-  {
-    cat("\n ==>", cc)
-    
-    ## Get nodes of interest
-    toKeep.1 = grep(paste0("^", cc, "[.]"), rownames(mat_adj))
-    
-    ## Get incoming nodes
-    toKeep.2 = rowSums(mat_adj[ , toKeep.1])
-    toKeep.2 = toKeep.2[which(toKeep.2 > 0)]
-    
-    ## Keep both
-    toKeep = unique(c(toKeep.1, which(rownames(mat_adj) %in% names(toKeep.2))))
-    cc_mat = mat_adj[toKeep, toKeep]
-    
-    ## Create network
-    cc_net = network(cc_mat
-                     , matrix = "adjacency"
-                     , directed = TRUE)
-    
-    ## Change vertex names
-    tmp = sapply(rownames(cc_mat)
-                 , function(x) paste0(strsplit(as.character(x), "[.]")[[1]][-1]
-                                      , collapse = "."))
-    # tmp = sapply(tmp, function(x) {
-    #   tmp = strsplit(x, "")[[1]]
-    #   ind = seq(1, length(tmp), 7)
-    #   ind = c(ind, length(tmp) + 1)
-    #   tmp = sapply(2:length(ind), function(y) paste0(tmp[(1 + (y-2)*7):(ind[y] - 1)], collapse = ""))
-    #   return(paste0(tmp, collapse = "\n"))
-    # })
-    network.vertex.names(cc_net) = tmp
-    
-    ## Change vertex colors
-    cc_net %v% "color" = sapply(rownames(cc_mat), function(x) strsplit(as.character(x), "[.]")[[1]][1])
-    
-    ## Plot network
-    pp = ggnet2(cc_net
-                # , size = 0
-                # , label.color = "color"
-                , node.size = 25
-                , node.shape = 15
-                , node.color = "color"
-                , color.palette = palette_val
-                , color.legend = ""
-                , edge.size = 1
-                , edge.color = c("color", "gray88")
-                , arrow.size = 12
-                , arrow.gap = 0.05
-                , label = TRUE
-                , legend.size = 12
-                , legend.position = "right"
-    )
-    pp = pp +
-      labs(title = paste0("Workflow to obtain ", cc)) +
-      theme(plot.title = element_text(margin = margin(1, 1, 3, 1, "lines")))
-    # pp = pp + theme(panel.background = element_rect(fill = "grey15"))
-    print(pp)
-    
-    
-    df = ggnetwork(cc_net, layout = "fruchtermanreingold", cell.jitter = 0.75)
-    df$tooltip = paste0("Betweenness = ", round(sna::betweenness(cc_net)[df$vertex.names],2))
-    gg_point_1 <-
-      ggplot(df, aes(x = x, y = y, xend = xend, yend = yend, tooltip = tooltip)) +
-      geom_edges(aes(color = color), lwd = 1) +
-      geom_nodes(aes(color = color), size = 15, shape = 15) +
-      theme_blank() +
-      geom_nodetext(aes(label = vertex.names), fontface = "bold") + 
-      geom_point_interactive(aes(color = color, alpha = 1), size = 15, shape = 15) + #this make the node interactive
-      scale_color_manual("", values = palette_val) +
-      scale_alpha(guide = F, range = c(0,0.1))
-    
-    
-    ggiraph(code = {print(gg_point_1)}) 
-  }
-
-  ### --------------------------------------------------------------------------------------------------
-  vis_drake_graph(config = drake_config(PLAN_dominant)
-                  , targets_only = TRUE
-                  , from_scratch = TRUE
-  )
-  # , clusters = c("pfg.mat", "pfg.sdm"))
-  # outdated(drake_config(PLAN_dominant))
-  # make(PLAN_dominant)
-  # vis_drake_graph(drake_config(PLAN_dominant)
-  #                 , targets_only = TRUE)
-  
-}
+#   ### GET AS ADJACENCY MATRIX --------------------------------------------------------------------------
+#   mat_adj = as.matrix(as_adjacency_matrix(drake_config(PLAN_dominant)$graph))
+#   toKeep = which(rownames(mat_adj) %in% PLAN_dominant$target)
+#   mat_adj = mat_adj[toKeep, toKeep]
+#   
+#   palette_val = c("zone" = "#FDB462"
+#                   , "DB" = "#8DD3C7"
+#                   , "DOM" = "#FFFFB3"
+#                   , "TR" = "#B3DE69"
+#                   , "TR_FATE" = "#80B1D3"
+#                   , "selected" = "#FB8072"
+#                   , "PFG" = "#BEBADA"
+#   )
+# 
+#   ### WORKFLOW full ------------------------------------------------------------------------------------
+#   mat_net = network(mat_adj
+#                    , matrix = "adjacency"
+#                    , directed = TRUE)
+#   network.vertex.names(mat_net) = sapply(rownames(mat_adj)
+#                                         , function(x) paste0(strsplit(as.character(x), "[.]")[[1]][-1]
+#                                                              , collapse = "."))
+#   mat_net %v% "color" = sapply(rownames(mat_adj), function(x) strsplit(as.character(x), "[.]")[[1]][1])
+#   
+#   pp = ggnet2(mat_net
+#               , node.size = 15
+#               , node.shape = 15
+#               , node.color = "color"
+#               , color.palette = palette_val
+#               , color.legend = ""
+#               , edge.size = 0.5
+#               , label = TRUE
+#   )
+#   print(pp)
+#   
+#   ### WORKFLOW step by step ----------------------------------------------------------------------------
+#   # categories = unique(sapply(PLAN_dominant$target, function(x) strsplit(as.character(x), "[.]")[[1]][1]))
+#   # categories = categories[-which(categories == "selected")]
+#   # categories = categories[-1] ## remove 'zone'
+#   # categories[1] = "zone|DB"
+#   categories = c("zone|DB", "DOM", "TR|TR_FATE", "PFG")
+#   for(cc in categories)
+#   {
+#     cat("\n ==>", cc)
+#     
+#     ## Get nodes of interest
+#     toKeep.1 = grep(paste0("^", cc, "[.]"), rownames(mat_adj))
+#     
+#     ## Get incoming nodes
+#     toKeep.2 = rowSums(mat_adj[ , toKeep.1])
+#     toKeep.2 = toKeep.2[which(toKeep.2 > 0)]
+#     
+#     ## Keep both
+#     toKeep = unique(c(toKeep.1, which(rownames(mat_adj) %in% names(toKeep.2))))
+#     cc_mat = mat_adj[toKeep, toKeep]
+#     
+#     ## Create network
+#     cc_net = network(cc_mat
+#                      , matrix = "adjacency"
+#                      , directed = TRUE)
+#     
+#     ## Change vertex names
+#     tmp = sapply(rownames(cc_mat)
+#                  , function(x) paste0(strsplit(as.character(x), "[.]")[[1]][-1]
+#                                       , collapse = "."))
+#     # tmp = sapply(tmp, function(x) {
+#     #   tmp = strsplit(x, "")[[1]]
+#     #   ind = seq(1, length(tmp), 7)
+#     #   ind = c(ind, length(tmp) + 1)
+#     #   tmp = sapply(2:length(ind), function(y) paste0(tmp[(1 + (y-2)*7):(ind[y] - 1)], collapse = ""))
+#     #   return(paste0(tmp, collapse = "\n"))
+#     # })
+#     network.vertex.names(cc_net) = tmp
+#     
+#     ## Change vertex colors
+#     cc_net %v% "color" = sapply(rownames(cc_mat), function(x) strsplit(as.character(x), "[.]")[[1]][1])
+#     
+#     ## Plot network
+#     pp = ggnet2(cc_net
+#                 # , size = 0
+#                 # , label.color = "color"
+#                 , node.size = 25
+#                 , node.shape = 15
+#                 , node.color = "color"
+#                 , color.palette = palette_val
+#                 , color.legend = ""
+#                 , edge.size = 1
+#                 , edge.color = c("color", "gray88")
+#                 , arrow.size = 12
+#                 , arrow.gap = 0.05
+#                 , label = TRUE
+#                 , legend.size = 12
+#                 , legend.position = "right"
+#     )
+#     pp = pp +
+#       labs(title = paste0("Workflow to obtain ", cc)) +
+#       theme(plot.title = element_text(margin = margin(1, 1, 3, 1, "lines")))
+#     # pp = pp + theme(panel.background = element_rect(fill = "grey15"))
+#     print(pp)
+#     
+#     
+#     df = ggnetwork(cc_net, layout = "fruchtermanreingold", cell.jitter = 0.75)
+#     df$tooltip = paste0("Betweenness = ", round(sna::betweenness(cc_net)[df$vertex.names],2))
+#     gg_point_1 <-
+#       ggplot(df, aes(x = x, y = y, xend = xend, yend = yend, tooltip = tooltip)) +
+#       geom_edges(aes(color = color), lwd = 1) +
+#       geom_nodes(aes(color = color), size = 15, shape = 15) +
+#       theme_blank() +
+#       geom_nodetext(aes(label = vertex.names), fontface = "bold") + 
+#       geom_point_interactive(aes(color = color, alpha = 1), size = 15, shape = 15) + #this make the node interactive
+#       scale_color_manual("", values = palette_val) +
+#       scale_alpha(guide = F, range = c(0,0.1))
+#     
+#     
+#     ggiraph(code = {print(gg_point_1)}) 
+#   }
+# 
+#   ### --------------------------------------------------------------------------------------------------
+#   vis_drake_graph(config = drake_config(PLAN_dominant)
+#                   , targets_only = TRUE
+#                   , from_scratch = TRUE
+#   )
+#   # , clusters = c("pfg.mat", "pfg.sdm"))
+#   # outdated(drake_config(PLAN_dominant))
+#   # make(PLAN_dominant)
+#   # vis_drake_graph(drake_config(PLAN_dominant)
+#   #                 , targets_only = TRUE)
+#   
+# }
 
 ## Run missing species SDM
 # loadd(zone.name)
