@@ -24,11 +24,11 @@
 ##' \code{fac} and \code{nrow(z) = length(fac) = nrow(xy)}. Values are 
 ##' corresponding to the relative representation of each level (for level 
 ##' \code{i} : \eqn{\frac{1}{N_i}})
-##' @param mx 
-##' @param my 
-##' @param vx 
-##' @param cxy 
-##' @param vy 
+##' @param mx \eqn{\Sigma x * \frac{z}{\Sigma z}}
+##' @param my \eqn{\Sigma y * \frac{z}{\Sigma z}}
+##' @param vx \eqn{\Sigma (x - mx) * (x - mx) * \frac{z}{\Sigma z}}
+##' @param cxy \eqn{\Sigma (x - mx) * (y - my) * \frac{z}{\Sigma z}}
+##' @param vy \eqn{\Sigma (y - my) * (y - my) * \frac{z}{\Sigma z}}
 ##' @param coeff default \code{1}
 ##' 
 ##' @importFrom stats model.matrix

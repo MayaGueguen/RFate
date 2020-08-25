@@ -194,7 +194,7 @@ used to build a <code>FATE</code> simulation folder.</p>
 
     <pre class="usage"><span class='fu'>SAVE_FATE.step2_parameters</span>(
   <span class='no'>name.dataset</span>,
-  <span class='no'>name.simulation</span>,
+  <span class='kw'>name.simulation</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
   <span class='no'>strata.limits</span>,
   <span class='no'>mat.PFG.succ</span>,
   <span class='kw'>mat.PFG.light</span> <span class='kw'>=</span> <span class='fl'>NA</span>,
@@ -228,8 +228,8 @@ archive folder</p></td>
     </tr>
     <tr>
       <th>name.simulation</th>
-      <td><p>a <code>string</code> corresponding to the name of 
-the simulation folder</p></td>
+      <td><p>(<em>optional</em>) default <code>NA</code>. <br /> 
+A <code>string</code> corresponding to the name of the simulation folder</p></td>
     </tr>
     <tr>
       <th>strata.limits</th>
@@ -361,7 +361,6 @@ to the <code><a href='PRE_FATE.params_multipleSet.html'>PRE_FATE.params_multiple
 checked, and two archive files :</p>
 <dl'>
   <dt>name.dataset</dt><dd><p>name of the dataset</p></dd>
-  <dt>name.simulation</dt><dd><p>name of the simulation folder</p></dd>
   <dt>strata.limits</dt><dd><p>height strata limits</p></dd>
   <dt>mat.PFG.succ</dt><dd><p></p></dd>
   <dt>(mat.PFG.light)</dt><dd><p></p></dd>
@@ -375,6 +374,7 @@ checked, and two archive files :</p>
   <dt>(mat.PFG.drought.tol)</dt><dd><p></p></dd>
   <dt>rasters</dt><dd><p>raster files of all simulation masks</p></dd>
   <dt>(multipleSet)</dt><dd><p><br /> <br /></p></dd>
+  <dt>(name.simulation)</dt><dd><p>name of the simulation folder</p></dd>
   <dt>(<code>DATA</code> folder)</dt><dd><p>contained in <code>name.simulation</code> folder 
   and archived</p></dd>
   <dt>(<code>PARAM_SIMUL</code> folder)</dt><dd><p>contained in <code>name.simulation</code> 

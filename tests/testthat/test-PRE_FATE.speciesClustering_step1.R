@@ -92,7 +92,7 @@ test_that("PRE_FATE.speciesClustering_step1 gives right output", {
   tmp1 = PRE_FATE.speciesClustering_step1(matrix(seq(9), ncol=3))
   
   expect_output(str(tmp1), "List")
-  expect_equal(length(tmp1), 2)
+  expect_equal(length(tmp1), 4)
   
   expect_output(str(tmp1$clust.dendrograms), "List")
   expect_equal(length(tmp1$clust.dendrograms), 1)

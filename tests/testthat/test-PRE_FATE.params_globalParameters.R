@@ -69,10 +69,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : requir
   ## TEST required.simul_duration : integer
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.no_PFG = 5
-                                                , required.no_strata = 2)
-               , "`required.simul_duration` must be an integer > 0")
-  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
                                                 , required.no_strata = 2
                                                 , required.simul_duration = NA)
                , "`required.simul_duration` must be an integer > 0")
@@ -92,11 +88,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : requir
 test_that("PRE_FATE.params_globalParameters gives error with wrong data : required.seeding_duration", {
   
   ## TEST required.seeding_duration : integer
-  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_strata = 2
-                                                , required.simul_duration = 100)
-               , "`required.seeding_duration` must be an integer > 0")
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.no_PFG = 5
                                                 , required.no_strata = 2
@@ -121,12 +112,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : requir
 test_that("PRE_FATE.params_globalParameters gives error with wrong data : required.seeding_timestep", {
   
   ## TEST required.seeding_timestep : integer
-  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_strata = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100)
-               , "`required.seeding_timestep` must be an integer > 0")
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.no_PFG = 5
                                                 , required.no_strata = 2
@@ -835,7 +820,8 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : DIST.f
                                                 , doDisturbances = T
                                                 , DIST.no = 2
                                                 , DIST.no_sub = 2)
-               , "`DIST.freq` must be an integer > 0")
+               , "`DIST.freq` must contain as many values as the number of disturbances (`DIST.no`)"
+               , fixed = TRUE)
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.no_PFG = 5
                                                 , required.no_strata = 2
@@ -1007,7 +993,8 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : ALIEN.
                                                 , required.max_abund_high = 9000
                                                 , doAliens = T
                                                 , ALIEN.no = 2)
-               , "`ALIEN.freq` must be an integer > 0")
+               , "`ALIEN.freq` must contain as many values as the number of introductions (`ALIEN.no`)"
+               , fixed = TRUE)
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.no_PFG = 5
                                                 , required.no_strata = 2
@@ -1179,7 +1166,8 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : FIRE.f
                                                 , doFire = T
                                                 , FIRE.no = 2
                                                 , FIRE.no_sub = 2)
-               , "`FIRE.freq` must be an integer > 0")
+               , "`FIRE.freq` must contain as many values as the number of disturbances (`FIRE.no`)"
+               , fixed = TRUE)
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.no_PFG = 5
                                                 , required.no_strata = 2
@@ -1445,22 +1433,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : FIRE.i
                                                 , FIRE.no = 1
                                                 , FIRE.no_sub = 2
                                                 , FIRE.freq = 2
-                                                , FIRE.ignit_mode = 4)
-               , "`FIRE.ignit_logis` must contain numeric values")
-  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_strata = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_abund_low = 3000
-                                                , required.max_abund_medium = 5000
-                                                , required.max_abund_high = 9000
-                                                , doFire = T
-                                                , FIRE.no = 1
-                                                , FIRE.no_sub = 2
-                                                , FIRE.freq = 2
                                                 , FIRE.ignit_mode = 4
                                                 , FIRE.ignit_logis = NULL)
                , "`FIRE.ignit_logis` must contain numeric values")
@@ -1579,22 +1551,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : FIRE.n
                                                 , FIRE.no = 1
                                                 , FIRE.no_sub = 2
                                                 , FIRE.freq = 2
-                                                , FIRE.ignit_mode = 5)
-               , "`FIRE.neigh_mode` must be either `1`, `2` or `3`")
-  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_strata = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_abund_low = 3000
-                                                , required.max_abund_medium = 5000
-                                                , required.max_abund_high = 9000
-                                                , doFire = T
-                                                , FIRE.no = 1
-                                                , FIRE.no_sub = 2
-                                                , FIRE.freq = 2
                                                 , FIRE.ignit_mode = 5
                                                 , FIRE.neigh_mode = NULL)
                , "`FIRE.neigh_mode` must be either `1`, `2` or `3`")
@@ -1638,23 +1594,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : FIRE.n
 test_that("PRE_FATE.params_globalParameters gives error with wrong data : FIRE.neigh_CC", {
   
   ## TEST FIRE.neigh_CC : integer
-  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_strata = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_abund_low = 3000
-                                                , required.max_abund_medium = 5000
-                                                , required.max_abund_high = 9000
-                                                , doFire = T
-                                                , FIRE.no = 1
-                                                , FIRE.no_sub = 2
-                                                , FIRE.freq = 2
-                                                , FIRE.ignit_mode = 5
-                                                , FIRE.neigh_mode = 2)
-               , "`FIRE.neigh_CC` must be an integer > 0")
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.no_PFG = 5
                                                 , required.no_strata = 2
@@ -1717,23 +1656,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : FIRE.n
 test_that("PRE_FATE.params_globalParameters gives error with wrong data : FIRE.prop_mode", {
   
   ## TEST FIRE.prop_mode : correct values
-  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_strata = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_abund_low = 3000
-                                                , required.max_abund_medium = 5000
-                                                , required.max_abund_high = 9000
-                                                , doFire = T
-                                                , FIRE.no = 1
-                                                , FIRE.no_sub = 2
-                                                , FIRE.freq = 2
-                                                , FIRE.ignit_mode = 5
-                                                , FIRE.neigh_mode = 1)
-               , "`FIRE.prop_mode` must be either `1`, `2`, `3`, `4` or `5`")
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.no_PFG = 5
                                                 , required.no_strata = 2
@@ -1915,24 +1837,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : FIRE.p
                                                 , FIRE.freq = 2
                                                 , FIRE.ignit_mode = 5
                                                 , FIRE.neigh_mode = 1
-                                                , FIRE.prop_mode = 5)
-               , "`FIRE.prop_logis` must contain numeric values")
-  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_strata = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_abund_low = 3000
-                                                , required.max_abund_medium = 5000
-                                                , required.max_abund_high = 9000
-                                                , doFire = T
-                                                , FIRE.no = 1
-                                                , FIRE.no_sub = 2
-                                                , FIRE.freq = 2
-                                                , FIRE.ignit_mode = 5
-                                                , FIRE.neigh_mode = 1
                                                 , FIRE.prop_mode = 5
                                                 , FIRE.prop_logis = NULL)
                , "`FIRE.prop_logis` must contain numeric values")
@@ -1982,24 +1886,6 @@ test_that("PRE_FATE.params_globalParameters gives error with wrong data : FIRE.p
 test_that("PRE_FATE.params_globalParameters gives error with wrong data : FIRE.quota_mode", {
   
   ## TEST FIRE.quota_mode : correct values
-  expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
-                                                , required.no_PFG = 5
-                                                , required.no_strata = 2
-                                                , required.simul_duration = 100
-                                                , required.seeding_duration = 100
-                                                , required.seeding_timestep = 100
-                                                , required.seeding_input = 100
-                                                , required.max_abund_low = 3000
-                                                , required.max_abund_medium = 5000
-                                                , required.max_abund_high = 9000
-                                                , doFire = T
-                                                , FIRE.no = 1
-                                                , FIRE.no_sub = 2
-                                                , FIRE.freq = 2
-                                                , FIRE.ignit_mode = 5
-                                                , FIRE.neigh_mode = 1
-                                                , FIRE.prop_mode = 2)
-               , "`FIRE.quota_mode` must be either `1`, `2`, `3` or `4`")
   expect_error(PRE_FATE.params_globalParameters(name.simulation = "FATE_simulation"
                                                 , required.no_PFG = 5
                                                 , required.no_strata = 2

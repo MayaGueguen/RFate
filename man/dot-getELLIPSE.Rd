@@ -11,15 +11,15 @@ util.ELLIPSE(x, y, z)
 .getELLIPSE(xy, fac)
 }
 \arguments{
-\item{mx}{}
+\item{mx}{\eqn{\Sigma x * \frac{z}{\Sigma z}}}
 
-\item{my}{}
+\item{my}{\eqn{\Sigma y * \frac{z}{\Sigma z}}}
 
-\item{vx}{}
+\item{vx}{\eqn{\Sigma (x - mx) * (x - mx) * \frac{z}{\Sigma z}}}
 
-\item{cxy}{}
+\item{cxy}{\eqn{\Sigma (x - mx) * (y - my) * \frac{z}{\Sigma z}}}
 
-\item{vy}{}
+\item{vy}{\eqn{\Sigma (y - my) * (y - my) * \frac{z}{\Sigma z}}}
 
 \item{coeff}{default \code{1}}
 

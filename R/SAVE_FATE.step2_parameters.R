@@ -10,8 +10,8 @@
 ##' 
 ##' @param name.dataset a \code{string} corresponding to the name to give to 
 ##' archive folder
-##' @param name.simulation a \code{string} corresponding to the name of 
-##' the simulation folder
+##' @param name.simulation (\emph{optional}) default \code{NA}. \cr 
+##' A \code{string} corresponding to the name of the simulation folder
 ##' @param strata.limits a \code{vector} of \code{integer} containing height 
 ##' strata limits
 ##' @param mat.PFG.succ a \code{data.frame} with at least 5 columns : \cr 
@@ -117,7 +117,6 @@
 ##' 
 ##' \describe{
 ##'   \item{name.dataset}{name of the dataset}
-##'   \item{name.simulation}{name of the simulation folder}
 ##'   \item{strata.limits}{height strata limits}
 ##'   \item{mat.PFG.succ}{}
 ##'   \item{(mat.PFG.light)}{}
@@ -131,6 +130,7 @@
 ##'   \item{(mat.PFG.drought.tol)}{}
 ##'   \item{rasters}{raster files of all simulation masks}
 ##'   \item{(multipleSet)}{ \cr \cr}
+##'   \item{(name.simulation)}{name of the simulation folder}
 ##'   \item{(\code{DATA} folder)}{contained in \code{name.simulation} folder 
 ##'   and archived}
 ##'   \item{(\code{PARAM_SIMUL} folder)}{contained in \code{name.simulation} 
@@ -159,11 +159,13 @@
 ##' 
 ##' @export
 ##' 
+##' @importFrom utils zip
+##' 
 ## END OF HEADER ###############################################################
 
 
 SAVE_FATE.step2_parameters = function(name.dataset
-                                      , name.simulation
+                                      , name.simulation = NA
                                       , strata.limits
                                       , mat.PFG.succ
                                       , mat.PFG.light = NA
@@ -208,13 +210,18 @@ SAVE_FATE.step2_parameters = function(name.dataset
   #############################################################################
   
   .testParam_notChar.m("name.dataset", name.dataset)
-  .testParam_existFolder(name.simulation, "DATA/")
-  .testParam_existFolder(name.simulation, "PARAM_SIMUL/")
-  ## ARCHIVE folders
-  name.arch_data = paste0(name.simulation, "_DATA.zip")
-  name.arch_paramsimul = paste0(name.simulation, "_PARAM_SIMUL.zip")
-  zip(zipfile  = name.arch_data, files = paste0(name.simulation, "DATA/"), flags = "-r")
-  zip(zipfile  = name.arch_paramsimul, files = paste0(name.simulation, "PARAM_SIMUL/"), flags = "-r")
+  
+  if (!is.na(name.simulation))
+  {
+    ## CHECK parameter name.simulation
+    .testParam_existFolder(name.simulation, "DATA/")
+    .testParam_existFolder(name.simulation, "PARAM_SIMUL/")
+    ## ARCHIVE folders
+    name.arch_data = paste0(paste0(unique(c(name.dataset, name.simulation)), collapse = "_"), "_DATA.zip")
+    name.arch_paramsimul = paste0(name.simulation, "_PARAM_SIMUL.zip")
+    zip(zipfile  = name.arch_data, files = paste0(name.simulation, "DATA/"), flags = "-r")
+    zip(zipfile  = name.arch_paramsimul, files = paste0(name.simulation, "PARAM_SIMUL/"), flags = "-r")
+  }
   
   ## CHECK parameter strata.limits
   strata.limits = sort(unique(na.exclude(strata.limits)))

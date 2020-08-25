@@ -4,7 +4,7 @@
 {
   if (missing(param) ||
       (length(param) == 1 && is.na(param)) ||
-      (length(param) == 1 && nchar(param) == 0) ||
+      (!is.factor(param) && (length(param) == 1 && nchar(param) == 0)) ||
       is.null(param) ||
       length(param) == 0)
   {
@@ -20,6 +20,7 @@
 {
   if (.testParam_notDef(param) ||
       !is.character(param) ||
+      is.factor(param) ||
       sum(nchar(param) == 0, na.rm = TRUE) > 0)
   {
     return(TRUE)

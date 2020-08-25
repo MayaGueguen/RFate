@@ -136,7 +136,7 @@ test_that("PRE_FATE.speciesClustering_step2 gives right output", {
                                                , mat.species.DIST = sp.DIST[[1]])
   
   expect_output(str(sp.CLUST2), "List")
-  expect_equal(length(sp.CLUST2), 2)
+  expect_equal(length(sp.CLUST2), 4)
   expect_output(str(sp.CLUST2$determ.all), "10 variables")
   
   
@@ -145,6 +145,6 @@ test_that("PRE_FATE.speciesClustering_step2 gives right output", {
                                                , mat.species.DIST = sp.DIST)
   
   expect_output(str(sp.CLUST2), "List")
-  expect_equal(length(sp.CLUST2), 2)
+  expect_equal(length(sp.CLUST2), 4)
   expect_output(str(sp.CLUST2$determ.all), "10 variables")
 })

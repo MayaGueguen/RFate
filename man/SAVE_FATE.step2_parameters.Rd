@@ -6,7 +6,7 @@
 \usage{
 SAVE_FATE.step2_parameters(
   name.dataset,
-  name.simulation,
+  name.simulation = NA,
   strata.limits,
   mat.PFG.succ,
   mat.PFG.light = NA,
@@ -34,8 +34,8 @@ SAVE_FATE.step2_parameters(
 \item{name.dataset}{a \code{string} corresponding to the name to give to 
 archive folder}
 
-\item{name.simulation}{a \code{string} corresponding to the name of 
-the simulation folder}
+\item{name.simulation}{(\emph{optional}) default \code{NA}. \cr 
+A \code{string} corresponding to the name of the simulation folder}
 
 \item{strata.limits}{a \code{vector} of \code{integer} containing height 
 strata limits}
@@ -153,7 +153,6 @@ checked, and two archive files :
 
 \describe{
   \item{name.dataset}{name of the dataset}
-  \item{name.simulation}{name of the simulation folder}
   \item{strata.limits}{height strata limits}
   \item{mat.PFG.succ}{}
   \item{(mat.PFG.light)}{}
@@ -167,6 +166,7 @@ checked, and two archive files :
   \item{(mat.PFG.drought.tol)}{}
   \item{rasters}{raster files of all simulation masks}
   \item{(multipleSet)}{ \cr \cr}
+  \item{(name.simulation)}{name of the simulation folder}
   \item{(\code{DATA} folder)}{contained in \code{name.simulation} folder 
   and archived}
   \item{(\code{PARAM_SIMUL} folder)}{contained in \code{name.simulation} 
