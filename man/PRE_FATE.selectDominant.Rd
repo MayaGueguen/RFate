@@ -227,6 +227,54 @@ but not meeting criterion A1 are also considered as "\emph{Not selected}".
 \examples{
 
 ## Load example data
+data(DATASET_Bauges_PFG)
+
+## Species observations
+tab = DATASET_Bauges_PFG$sp.observations
+str(tab)
+
+## No habitat, no robustness -----------------------------------------------------------------
+tab.select = tab[, c("sites", "species", "abund")]
+sp.SELECT = PRE_FATE.selectDominant(mat.observations = tab.select)
+names(sp.SELECT)
+str(sp.SELECT$tab.rules)
+plot(sp.SELECT$plot.A)
+plot(sp.SELECT$plot.B$abs)
+plot(sp.SELECT$plot.B$rel)
+plot(sp.SELECT$plot.pco$Axis1_Axis2)
+plot(sp.SELECT$plot.pco$Axis1_Axis3)
+
+## Habitat, change parameters ----------------------------------------------------------------
+tab.select = tab[, c("sites", "species", "abund", "habitat")]
+sp.SELECT = PRE_FATE.selectDominant(mat.observations = tab.select
+                                    , doRuleA = TRUE
+                                    , rule.A1 = 10
+                                    , rule.A2_quantile = 0.9
+                                    , doRuleB = TRUE
+                                    , rule.B1_percentage = 0.2
+                                    , rule.B1_number = 3
+                                    , rule.B2 = 0.4
+                                    , doRuleC = TRUE)
+names(sp.SELECT)
+str(sp.SELECT$tab.rules)
+plot(sp.SELECT$plot.C)
+plot(sp.SELECT$plot.pco$Axis1_Axis2)
+plot(sp.SELECT$plot.pco$Axis1_Axis3)
+                                    
+## Robustness (!quite long!) -----------------------------------------------------------------
+\dontrun{
+tab.select = tab[, c("sites", "species", "abund")]
+sp.SELECT = PRE_FATE.selectDominant(mat.observations = tab.select
+                                    , opt.doRobustness = TRUE
+                                    , opt.robustness_percent = c(0.2, 0.8)
+                                    , opt.robustness_rep = 3)
+names(sp.SELECT)
+str(sp.SELECT$tab.rules)
+str(sp.SELECT$tab.robustness)
+names(sp.SELECT$plot.robustness)
+plot(sp.SELECT$plot.robustness$`All dataset`)
+}
+                                    
 
 }
 \seealso{

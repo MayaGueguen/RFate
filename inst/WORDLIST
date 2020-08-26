@@ -5,6 +5,7 @@ ABUND
 AbundImmature
 AbundMature
 al
+allSp
 Altwegg
 Appl
 AppVeyor
@@ -14,6 +15,7 @@ Barros
 Basse
 BAU
 Baudière
+Bauges
 Beaubien
 Bellwood
 binaryMaps
@@ -34,6 +36,7 @@ ceil
 centres
 centroid
 chamaephyte
+Chamaephyte
 chamaephytes
 CHANGEFREQ
 CHANGEMASK
@@ -124,6 +127,7 @@ Kleunen
 Klonner
 labelled
 Lambers
+LAMOS
 Lavergne
 Lavorel
 lcc
@@ -187,6 +191,7 @@ PFGs
 PFGsoil
 PFGsuccession
 phanerophyte
+Phanerophyte
 phanerophytes
 phytogéographique
 Phytosoc
@@ -205,6 +210,7 @@ rasters
 Raunkier
 RecruitmentRate
 relativeAbund
+releve
 releves
 rescale
 resprout
@@ -225,6 +231,7 @@ Simul
 simulParameters
 SimulParameters
 skeletonDirectory
+sp
 spatio
 spatiotemporal
 speciesClustering
@@ -236,6 +243,7 @@ Talluto
 temporalEvolution
 Thorne
 Thuiller
+tif
 TOL
 Tomasini
 totAbund

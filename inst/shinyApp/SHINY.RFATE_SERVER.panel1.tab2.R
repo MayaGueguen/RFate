@@ -139,7 +139,7 @@ get_DIST = eventReactive(input$compute.distance, {
           if (extension(input$species.niche.distance$name) %in% c(".txt", ".csv"))
           {
             sp.niche = fread(input$species.niche.distance$datapath)
-			sp.niche = as.data.frame(sp.niche, stringsAsFactors = FALSE)
+			      sp.niche = as.data.frame(sp.niche, stringsAsFactors = FALSE)
           } else if (extension(input$species.niche.distance$name) == ".RData")
           {
             sp.niche = get(load(input$species.niche.distance$datapath))

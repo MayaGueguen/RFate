@@ -48,7 +48,9 @@
 ##' 
 ##' @examples
 ##' 
-##' ## Loading example data
+##' abund_BB = sample(x = c(NA, "+", "r", 1:5), size = 100, replace = TRUE)
+##' abund = PRE_FATE.abundBraunBlanquet(abund_BB)
+##' summary(abund)
 ##' 
 ##' @export
 ##' 
