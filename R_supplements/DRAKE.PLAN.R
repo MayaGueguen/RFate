@@ -24,6 +24,7 @@ library(ggnetwork)
 library(ggiraph)
 
 setwd("/home/gueguema/Documents/_TUTOS/3_R/_PACKAGES")
+# setwd("C://Users/gueguen/Documents/PACKAGES/")
 source("RFate/R_supplements/DRAKE.PRE_FATE.data_getDB_occ.R")
 source("RFate/R_supplements/DRAKE.PRE_FATE.data_getOccDominantSpecies.R")
 source("RFate/R_supplements/DRAKE.PRE_FATE.data_getDB_traits.R")
@@ -94,16 +95,16 @@ setwd(path.data)
 BAUGES = list(zone.name = "Bauges"
               , zone.extent = c(910795, 983695, 6489093, 6538793)
               , zone.rules.dominant = list('doRuleA' = 1
-                                                 , 'rule.A1' = 10
-                                                 , 'rule.A2_quantile' = 0.9
-                                                 , 'doRuleB' = 1
-                                                 , 'rule.B1_percentage' = 0.25
-                                                 , 'rule.B1_number' = 5
-                                                 , 'rule.B2' = 0.5
-                                                 , 'doRuleC' = 1
-                                                 , 'opt.doRobustness' = 0
-                                                 , 'opt.robustness_percent' = c(0.2, 0.5, 0.8) #seq(0.1, 0.9, 0.1)
-                                                 , 'opt.robustness_rep' = 3)
+                                           , 'rule.A1' = 10
+                                           , 'rule.A2_quantile' = 0.9
+                                           , 'doRuleB' = 1
+                                           , 'rule.B1_percentage' = 0.25
+                                           , 'rule.B1_number' = 5
+                                           , 'rule.B2' = 0.5
+                                           , 'doRuleC' = 1
+                                           , 'opt.doRobustness' = 0
+                                           , 'opt.robustness_percent' = c(0.2, 0.5, 0.8) #seq(0.1, 0.9, 0.1)
+                                           , 'opt.robustness_rep' = 3)
               , zone.rules.spDist = list('opt.maxPercent.NA' = 0.05 #0
                                          , 'opt.maxPercent.similarSpecies' = 0.4 #0.25
                                          , 'opt.min.sd' = 0.3)
@@ -120,7 +121,7 @@ ZONE = BAUGES
 ## ECRINS
 ## MONTBLANC
 ## LAUTARET
-  
+
 
 # for(ZONE in list(BAUGES))
 {
@@ -189,13 +190,18 @@ ZONE = BAUGES
     , DB.observations.xy.saved = fwrite(DB.observations.xy
                                         , file = file_out(!!paste0(zone.name, "/DB.observations.xy.csv"))
                                         , sep = "\t", row.names = FALSE, col.names = TRUE)
-
+    
     ###############################################################################################
     ## Get dominant species -----------------------------------------------------------------------
     , DOM.occ = getOcc_2_formatOcc(observations.xy = DB.observations.xy
                                    , zone.env.hab = zone.env.hab)
     , DOM.occ.saved = fwrite(DOM.occ, file = file_out(!!paste0(zone.name, "/DATASET_mat.observations.csv"))
                              , sep = "\t", row.names = FALSE, col.names = TRUE)
+    , DOM.species = target({
+      tab = DB.species[which(DB.species$numtaxon %in% DOM.occ$species), ]
+      colnames(tab) = c("species", "GENUS", "NAME")
+      return(tab)
+    })
     , DOM.sp.dom = getOcc_2_selectDom(zone.name = zone.name
                                       , occ = DOM.occ
                                       , selRules = zone.rules.dominant)
@@ -239,7 +245,7 @@ ZONE = BAUGES
     , TR_FATE.TAB_traits_FATE = fread(file = file_in("TRAITS_FATE_2020-08-24.csv"), sep = "\t")
     , PFG.mat.traits.select = getPFG_1_selectTraits(mat.traits = TR_FATE.TAB_traits_FATE)
     , PFG.mat.traits.dom = PFG.mat.traits.select[which(PFG.mat.traits.select$species %in% DOM.sp.dom.occ), ]
-
+    
     ## Build PFG
     # , selected.sp = fread(file_in(paste0(zone.name, "/PFG_Bauges_Description_2017_BIS.csv")))
     , PFG.dist.clust1 = getPFG_2_calcDistClust(zone.name = zone.name
@@ -275,7 +281,8 @@ ZONE = BAUGES
     ###############################################################################################
     ## SAVE for examples
     , DATASET.save = target({
-      list(sp.observations = as.data.frame(DOM.occ)
+      list(sp.names = as.data.frame(DOM.species)
+           , sp.observations = as.data.frame(DOM.occ)
            , dom.traits = as.data.frame(PFG.mat.traits.dom)
            , dom.dist_overlap = DOM.sp.dom.overlap
            , dom.dist_total = PFG.dist.clust1$sp.DIST
@@ -297,7 +304,7 @@ ZONE = BAUGES
 
 
 ################################################################################################################
-  
+
 #   ### GET AS ADJACENCY MATRIX --------------------------------------------------------------------------
 #   mat_adj = as.matrix(as_adjacency_matrix(drake_config(PLAN_dominant)$graph))
 #   toKeep = which(rownames(mat_adj) %in% PLAN_dominant$target)
