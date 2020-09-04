@@ -289,9 +289,39 @@ below :</em></p><dl'>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples">
-## Load example data
+<span class='co'>## Load example data</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>DATASET_Bauges_PFG</span>)
 
-</pre>
+<span class='co'>## Species traits</span>
+<span class='no'>tab.traits</span> <span class='kw'>=</span> <span class='no'>DATASET_Bauges_PFG</span>$<span class='no'>dom.traits</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>tab.traits</span>)
+
+<span class='co'>## Determinant species</span>
+<span class='no'>sp.DETERM</span> <span class='kw'>=</span> <span class='no'>DATASET_Bauges_PFG</span>$<span class='no'>dom.determ</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>sp.DETERM</span>)
+
+<span class='co'>## Merge traits and PFG informations</span>
+<span class='no'>mat.traits</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/merge.html'>merge</a></span>(<span class='no'>sp.DETERM</span>[, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"species"</span>, <span class='st'>"PFG"</span>)]
+                   , <span class='no'>tab.traits</span>
+                   , <span class='kw'>by</span> <span class='kw'>=</span> <span class='st'>"species"</span>, <span class='kw'>all.x</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+
+<span class='co'>## Compute traits per PFG : no specific graphic ----------------------------------------------</span>
+<span class='no'>sp.PFG</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.speciesClustering_step3</span>(<span class='kw'>mat.traits</span> <span class='kw'>=</span> <span class='no'>mat.traits</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>sp.PFG</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>sp.PFG</span>$<span class='no'>tab</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>sp.PFG</span>$<span class='no'>plot</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>sp.PFG</span>$<span class='no'>plot</span>)
+
+
+<span class='co'>## Compute traits per PFG : with one specific graphic ----------------------------------------</span>
+<span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>colnames</a></span>(<span class='no'>mat.traits</span>) <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"species"</span>, <span class='st'>"PFG"</span>, <span class='st'>"GROUP"</span>, <span class='st'>"DISPERSAL"</span>
+                         , <span class='st'>"light"</span>, <span class='st'>"NITROGEN"</span>, <span class='st'>"MOISTURE"</span>, <span class='st'>"height"</span>)
+<span class='no'>sp.PFG</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.speciesClustering_step3</span>(<span class='kw'>mat.traits</span> <span class='kw'>=</span> <span class='no'>mat.traits</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>sp.PFG</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>sp.PFG</span>$<span class='no'>tab</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>sp.PFG</span>$<span class='no'>plot</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>sp.PFG</span>$<span class='no'>plot</span>$<span class='no'>height_light</span>)</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

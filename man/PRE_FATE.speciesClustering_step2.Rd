@@ -109,6 +109,43 @@ species based on these PFG. \cr \cr
 \examples{
 
 ## Load example data
+data(DATASET_Bauges_PFG)
+
+## Species dissimilarity distance (niche overlap + traits distance)
+tab.dist = DATASET_Bauges_PFG$dom.dist_total
+str(tab.dist)
+as.matrix(tab.dist[[1]])[1:5, 1:5]
+
+
+## Build dendrograms -------------------------------------------------------------------------
+sp.CLUST = PRE_FATE.speciesClustering_step1(mat.species.DIST = tab.dist)
+names(sp.CLUST)
+
+
+## Number of clusters per group
+plot(sp.CLUST$plot.clustNo)
+no.clusters = c(5, 5, 9)
+
+## Find determinant species ------------------------------------------------------------------
+sp.DETERM = PRE_FATE.speciesClustering_step2(clust.dendrograms = sp.CLUST$clust.dendrograms
+                                             , no.clusters = no.clusters
+                                             , mat.species.DIST = tab.dist)
+names(sp.DETERM)
+
+str(sp.DETERM$determ.sp)
+str(sp.DETERM$determ.all)
+
+## Species names
+sp.NAMES = DATASET_Bauges_PFG$sp.names
+sp.NAMES$species = paste0("X", sp.NAMES$species)
+determ = merge(sp.DETERM$determ.all, sp.NAMES, by = "species", all.x = TRUE)
+str(determ)
+
+plot(sp.DETERM$plot.distance)
+plot(sp.DETERM$plot.PCO$Chamaephyte)
+plot(sp.DETERM$plot.PCO$Herbaceous)
+plot(sp.DETERM$plot.PCO$Phanerophyte)
+
 
 }
 \seealso{

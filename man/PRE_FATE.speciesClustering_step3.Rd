@@ -96,6 +96,39 @@ below :}
 \examples{
 
 ## Load example data
+data(DATASET_Bauges_PFG)
+
+## Species traits
+tab.traits = DATASET_Bauges_PFG$dom.traits
+str(tab.traits)
+
+## Determinant species
+sp.DETERM = DATASET_Bauges_PFG$dom.determ
+str(sp.DETERM)
+
+## Merge traits and PFG informations
+mat.traits = merge(sp.DETERM[, c("species", "PFG")]
+                   , tab.traits
+                   , by = "species", all.x = TRUE)
+
+
+## Compute traits per PFG : no specific graphic ----------------------------------------------
+sp.PFG = PRE_FATE.speciesClustering_step3(mat.traits = mat.traits)
+names(sp.PFG)
+str(sp.PFG$tab)
+names(sp.PFG$plot)
+plot(sp.PFG$plot)
+
+
+## Compute traits per PFG : with one specific graphic ----------------------------------------
+colnames(mat.traits) = c("species", "PFG", "GROUP", "DISPERSAL"
+                         , "light", "NITROGEN", "MOISTURE", "height")
+sp.PFG = PRE_FATE.speciesClustering_step3(mat.traits = mat.traits)
+names(sp.PFG)
+str(sp.PFG$tab)
+names(sp.PFG$plot)
+plot(sp.PFG$plot$height_light)
+
 
 }
 \seealso{

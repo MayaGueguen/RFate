@@ -99,6 +99,39 @@
 ##' @examples
 ##' 
 ##' ## Load example data
+##' data(DATASET_Bauges_PFG)
+##' 
+##' ## Species traits
+##' tab.traits = DATASET_Bauges_PFG$dom.traits
+##' str(tab.traits)
+##' 
+##' ## Determinant species
+##' sp.DETERM = DATASET_Bauges_PFG$dom.determ
+##' str(sp.DETERM)
+##' 
+##' ## Merge traits and PFG informations
+##' mat.traits = merge(sp.DETERM[, c("species", "PFG")]
+##'                    , tab.traits
+##'                    , by = "species", all.x = TRUE)
+##' 
+##' 
+##' ## Compute traits per PFG : no specific graphic ----------------------------------------------
+##' sp.PFG = PRE_FATE.speciesClustering_step3(mat.traits = mat.traits)
+##' names(sp.PFG)
+##' str(sp.PFG$tab)
+##' names(sp.PFG$plot)
+##' plot(sp.PFG$plot)
+##' 
+##' 
+##' ## Compute traits per PFG : with one specific graphic ----------------------------------------
+##' colnames(mat.traits) = c("species", "PFG", "GROUP", "DISPERSAL"
+##'                          , "light", "NITROGEN", "MOISTURE", "height")
+##' sp.PFG = PRE_FATE.speciesClustering_step3(mat.traits = mat.traits)
+##' names(sp.PFG)
+##' str(sp.PFG$tab)
+##' names(sp.PFG$plot)
+##' plot(sp.PFG$plot$height_light)
+##' 
 ##' 
 ##' @export
 ##' 
@@ -170,8 +203,15 @@ PRE_FATE.speciesClustering_step3 = function(mat.traits
       }
     }
   }
-  names_traits.factor = c(names_traits.factor
-                          , names_traits[-which(names_traits %in% names_traits.factor)])
+  if (length(which(names_traits %in% names_traits.factor)) > 0)
+  {
+    names_traits.factor = c(names_traits.factor
+                            , names_traits[-which(names_traits %in% names_traits.factor)])
+  } else
+  {
+    names_traits.factor = c(names_traits.factor, names_traits)
+  }
+  
   
   ## Get information about which traits are factor / character
   ind.factor = sapply(names_traits, function(x) {
@@ -339,7 +379,9 @@ PRE_FATE.speciesClustering_step3 = function(mat.traits
                                , "If the trait is factorial or categorical, median value is taken.\n"
                                , "Light-grey boxplot represent determinant species values.\n"
                                , "Colored points represent the PFG calculated values.\n\n")) +
-      .getGraphics_theme()
+      .getGraphics_theme() +
+      theme(axis.ticks.x = element_blank()
+            , axis.text.x = element_text(angle = 90))
     
     return(pp.i)
   }

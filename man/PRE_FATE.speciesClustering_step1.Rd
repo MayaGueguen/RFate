@@ -126,6 +126,39 @@ function.
 \examples{
 
 ## Load example data
+data(DATASET_Bauges_PFG)
+
+## Species dissimilarity distance (niche overlap + traits distance)
+tab.dist = DATASET_Bauges_PFG$dom.dist_total
+str(tab.dist)
+as.matrix(tab.dist[[1]])[1:5, 1:5]
+
+## Build dendrograms -------------------------------------------------------------------------
+sp.CLUST = PRE_FATE.speciesClustering_step1(mat.species.DIST = tab.dist)
+names(sp.CLUST)
+
+require(foreach)
+require(ggplot2)
+require(ggdendro)
+pp = foreach(x = names(sp.CLUST$clust.dendrograms)) \%do\%
+{
+  hc = sp.CLUST$clust.dendrograms[[x]]
+  pp = ggdendrogram(hc, rotate = TRUE) +
+    labs(title = paste0("Hierarchical clustering based on species distance "
+                        , ifelse(length(names(sp.CLUST$clust.dendrograms)) > 1
+                                 , paste0("(group ", x, ")")
+                                 , "")))
+  return(pp)
+}
+plot(pp[[1]])
+plot(pp[[2]])
+plot(pp[[3]])
+
+str(sp.CLUST$clust.evaluation)
+
+plot(sp.CLUST$plot.clustMethod)
+plot(sp.CLUST$plot.clustNo)
+
 
 }
 \seealso{
