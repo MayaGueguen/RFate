@@ -12,14 +12,14 @@
 ##'              
 ##' @param mat.species.DIST a \code{dist} object, or a \code{list} of 
 ##' \code{dist} objects (one for each \code{GROUP} value), corresponding to the 
-##' distance between each pair of species. \cr Such an object can be obtained 
-##' with the \code{\link{PRE_FATE.speciesDistance}} function.
+##' dissimilarity distance between each pair of species. \cr Such an object can 
+##' be obtained with the \code{\link{PRE_FATE.speciesDistance}} function.
 ##' 
 ##' 
 ##' @details 
 ##' 
-##' This function allows to \strong{obtain dendrograms based on a distance 
-##' matrix between species}.
+##' This function allows to \strong{obtain dendrograms based on a dissimilarity 
+##' distance matrix between species}.
 ##' 
 ##' As for the \code{\link{PRE_FATE.speciesDistance}} method, clustering can be 
 ##' run for data subsets, conditioning that \code{mat.species.DIST} is given as 
@@ -146,6 +146,7 @@
 ##' sp.CLUST = PRE_FATE.speciesClustering_step1(mat.species.DIST = tab.dist)
 ##' names(sp.CLUST)
 ##' 
+##' \dontrun{
 ##' require(foreach)
 ##' require(ggplot2)
 ##' require(ggdendro)
@@ -162,6 +163,7 @@
 ##' plot(pp[[1]])
 ##' plot(pp[[2]])
 ##' plot(pp[[3]])
+##' }
 ##' 
 ##' str(sp.CLUST$clust.evaluation)
 ##' 

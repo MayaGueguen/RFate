@@ -205,8 +205,8 @@ choose the best number of clusters..</p>
       <th>mat.species.DIST</th>
       <td><p>a <code>dist</code> object, or a <code>list</code> of 
 <code>dist</code> objects (one for each <code>GROUP</code> value), corresponding to the 
-distance between each pair of species. <br /> Such an object can be obtained 
-with the <code><a href='PRE_FATE.speciesDistance.html'>PRE_FATE.speciesDistance</a></code> function.</p></td>
+dissimilarity distance between each pair of species. <br /> Such an object can 
+be obtained with the <code><a href='PRE_FATE.speciesDistance.html'>PRE_FATE.speciesDistance</a></code> function.</p></td>
     </tr>
     </table>
 
@@ -241,8 +241,8 @@ containing two types of graphics :</p><dl'>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function allows to <strong>obtain dendrograms based on a distance 
-matrix between species</strong>.</p>
+    <p>This function allows to <strong>obtain dendrograms based on a dissimilarity 
+distance matrix between species</strong>.</p>
 <p>As for the <code><a href='PRE_FATE.speciesDistance.html'>PRE_FATE.speciesDistance</a></code> method, clustering can be 
 run for data subsets, conditioning that <code>mat.species.DIST</code> is given as 
 a <code>list</code> of <code>dist</code> objects (instead of a <code>dist</code> object alone).
@@ -332,6 +332,7 @@ function.</p>
 <span class='no'>sp.CLUST</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.speciesClustering_step1</span>(<span class='kw'>mat.species.DIST</span> <span class='kw'>=</span> <span class='no'>tab.dist</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>sp.CLUST</span>)
 
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='no'>foreach</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='no'>ggplot2</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='no'>ggdendro</span>)
@@ -348,6 +349,7 @@ function.</p>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>pp</span><span class='kw'>[[</span><span class='fl'>1</span>]])
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>pp</span><span class='kw'>[[</span><span class='fl'>2</span>]])
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>pp</span><span class='kw'>[[</span><span class='fl'>3</span>]])
+}
 
 <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>sp.CLUST</span>$<span class='no'>clust.evaluation</span>)
 

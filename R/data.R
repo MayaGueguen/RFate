@@ -7,10 +7,19 @@
 ##'
 ##' @description Dataset : Bauges - Step : find dominant species and build PFG
 ##' 
-##' @format A \code{list} object with 6 elements to help finding dominant 
+##' @format A \code{list} object with 7 elements to help finding dominant 
 ##' species and building Plant Functional Groups in Bauges area :
 ##'   
 ##'   \describe{
+##'     \item{sp.names}{a \code{data.frame} of dimension 
+##'     \code{2963 x 3} \cr
+##'     containing information about names of plant species in Bauges \cr
+##'     \itemize{
+##'       \item \strong{species} : species ID
+##'       \item \strong{GENUS} : species' genus
+##'       \item \strong{NAME} : species' full name
+##'     }
+##'     }
 ##'     \item{sp.observations}{a \code{data.frame} of dimension 
 ##'     \code{288654 x 6} \cr
 ##'     containing releves data about plant species in Bauges \cr

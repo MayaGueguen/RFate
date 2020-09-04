@@ -119,6 +119,7 @@
 ##'                                    , mat.overlap = as.matrix(tab.overlap))
 ##' str(sp.DIST)
 ##' 
+##' \dontrun{
 ##' require(foreach)
 ##' require(ggplot2)
 ##' require(ggdendro)
@@ -135,6 +136,7 @@
 ##' plot(pp[[1]])
 ##' plot(pp[[2]])
 ##' plot(pp[[3]])
+##' }
 ##' 
 ##' ## Change parameters to allow more NAs (and change traits used) ------------------------------
 ##' sp.DIST = PRE_FATE.speciesDistance(mat.traits = tab.traits

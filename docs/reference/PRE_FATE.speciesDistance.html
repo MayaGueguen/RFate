@@ -320,6 +320,7 @@ is weighted by the number of traits used</strong>.</p>
                                    , <span class='kw'>mat.overlap</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span>(<span class='no'>tab.overlap</span>))
 <span class='fu'><a href='https://rdrr.io/r/utils/str.html'>str</a></span>(<span class='no'>sp.DIST</span>)
 
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='no'>foreach</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='no'>ggplot2</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>require</a></span>(<span class='no'>ggdendro</span>)
@@ -336,6 +337,7 @@ is weighted by the number of traits used</strong>.</p>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>pp</span><span class='kw'>[[</span><span class='fl'>1</span>]])
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>pp</span><span class='kw'>[[</span><span class='fl'>2</span>]])
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>pp</span><span class='kw'>[[</span><span class='fl'>3</span>]])
+}
 
 <span class='co'>## Change parameters to allow more NAs (and change traits used) ------------------------------</span>
 <span class='no'>sp.DIST</span> <span class='kw'>=</span> <span class='fu'>PRE_FATE.speciesDistance</span>(<span class='kw'>mat.traits</span> <span class='kw'>=</span> <span class='no'>tab.traits</span>

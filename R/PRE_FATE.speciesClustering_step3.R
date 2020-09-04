@@ -120,7 +120,9 @@
 ##' names(sp.PFG)
 ##' str(sp.PFG$tab)
 ##' names(sp.PFG$plot)
-##' plot(sp.PFG$plot)
+##' plot(sp.PFG$plot$DISPERSAL)
+##' plot(sp.PFG$plot$LIGHT)
+##' plot(sp.PFG$plot$MOISTURE)
 ##' 
 ##' 
 ##' ## Compute traits per PFG : with one specific graphic ----------------------------------------

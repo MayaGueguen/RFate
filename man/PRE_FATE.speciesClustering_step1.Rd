@@ -9,8 +9,8 @@ PRE_FATE.speciesClustering_step1(mat.species.DIST)
 \arguments{
 \item{mat.species.DIST}{a \code{dist} object, or a \code{list} of 
 \code{dist} objects (one for each \code{GROUP} value), corresponding to the 
-distance between each pair of species. \cr Such an object can be obtained 
-with the \code{\link{PRE_FATE.speciesDistance}} function.}
+dissimilarity distance between each pair of species. \cr Such an object can 
+be obtained with the \code{\link{PRE_FATE.speciesDistance}} function.}
 }
 \value{
 A \code{list} containing one \code{list}, one \code{data.frame} with 
@@ -49,8 +49,8 @@ to evaluate these clusters and a graphic is produced to help the user to
 choose the best number of clusters..
 }
 \details{
-This function allows to \strong{obtain dendrograms based on a distance 
-matrix between species}.
+This function allows to \strong{obtain dendrograms based on a dissimilarity 
+distance matrix between species}.
 
 As for the \code{\link{PRE_FATE.speciesDistance}} method, clustering can be 
 run for data subsets, conditioning that \code{mat.species.DIST} is given as 
@@ -137,6 +137,7 @@ as.matrix(tab.dist[[1]])[1:5, 1:5]
 sp.CLUST = PRE_FATE.speciesClustering_step1(mat.species.DIST = tab.dist)
 names(sp.CLUST)
 
+\dontrun{
 require(foreach)
 require(ggplot2)
 require(ggdendro)
@@ -153,6 +154,7 @@ pp = foreach(x = names(sp.CLUST$clust.dendrograms)) \%do\%
 plot(pp[[1]])
 plot(pp[[2]])
 plot(pp[[3]])
+}
 
 str(sp.CLUST$clust.evaluation)
 
