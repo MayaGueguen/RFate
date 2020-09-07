@@ -125,7 +125,11 @@ species and building Plant Functional Groups in Bauges area :
 DATASET_Bauges_PFG
 }
 \description{
-Dataset : Bauges - Step : find dominant species and build PFG
+\strong{Dataset :} Bauges
+
+\strong{Step :} find dominant species and build PFG
+
+\emph{Base de données du Conservatoire Botanique National Alpin - 2018}
 }
 \author{
 Maya Guéguen
