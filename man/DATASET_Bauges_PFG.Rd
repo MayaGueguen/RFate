@@ -10,7 +10,7 @@ species and building Plant Functional Groups in Bauges area :
   
   \describe{
     \item{sp.names}{a \code{data.frame} of dimension 
-    \code{2963 x 3} \cr
+    \code{2913 x 3} \cr
     containing information about names of plant species in Bauges \cr
     \itemize{
       \item \strong{species} : species ID

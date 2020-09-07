@@ -291,6 +291,8 @@ ZONE = BAUGES
            , PFG.traits = as.data.frame(PFG.clust3$tab))
     })
     , DATASET.saved = target({
+      Encoding(DATASET.save$sp.names$NAME) = "latin1"
+      DATASET.save$sp.names$NAME = iconv(DATASET.save$sp.names$NAME, "latin1", "UTF-8")
       assign(paste0("DATASET_", zone.name, "_PFG"), DATASET.save)
       save(list = paste0("DATASET_", zone.name, "_PFG")
            , file = file_out(!!paste0("DATASET_", zone.name, "_PFG.RData")))

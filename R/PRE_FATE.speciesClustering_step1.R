@@ -247,7 +247,7 @@ PRE_FATE.speciesClustering_step1 = function(mat.species.DIST)
     if (class(mat.species.DIST) %in% c("dist", "niolap"))
     {
       mat.species.DIST = as.matrix(mat.species.DIST)
-    } else if (is.matrix(mat.species.DIST))
+    } else if (class(mat.species.DIST) == "matrix") #is.matrix(mat.species.DIST))
     {
       if (ncol(mat.species.DIST) != nrow(mat.species.DIST))
       {
