@@ -52,7 +52,25 @@ observeEvent(RV$pfg.graph, {
         
         pp = switch(graph.type
                     ## ---------------------------------------------------------------------------------------------------------- ##
-                    , dom = { return(list(tab[[grep("plot", names(tab), value = TRUE)]])) }
+                    , dom = {
+                      pp = foreach(x = names(tab)) %do%
+                        {
+                          if (length(grep("plot", x)) > 0)
+                          {
+                            if (x == "plot.pco" || x == "plot.B" || x == "plot.robustness")
+                            {
+                              pp_bis = foreach(y = names(tab[[x]])) %do% { return(tab[[x]][[y]]) }
+                              names(pp_bis) = names(tab[[x]])
+                            } else
+                            {
+                              pp_bis = list(tab[[x]])
+                              names(pp_bis) = x
+                            }
+                            return(pp_bis)
+                          }
+                        }
+                      return(unlist(pp, recursive = FALSE))
+                      }
                     ## ---------------------------------------------------------------------------------------------------------- ##
                     , dist = {
                       pp = foreach(x = names(tab)) %do%
