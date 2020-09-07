@@ -5,7 +5,11 @@ dist: bionic
 
 addons:
   apt:
-    packages:
+    sources:
+      - google-chrome	    
+    packages:	
+      - dpkg  
+      - google-chrome-stable
       - gdal-bin
       - proj-bin
       - libgdal-dev
