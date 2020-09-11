@@ -1,7 +1,8 @@
 
 rm(list=ls())
-setwd("/home/gueguema/Documents/_TUTOS/3_R/_PACKAGES/")
-# setwd("/Users/gueguen/Documents/PACKAGES/")
+# setwd("/home/gueguema/Documents/_TUTOS/3_R/_PACKAGES/")
+setwd("/Users/gueguen/Documents/PACKAGES/")
+# setwd("/Users/gueguen/Documents/PACKAGES/leca-dev/")
 
 library(devtools)
 library(tools)
@@ -18,6 +19,7 @@ library(raster)
 
 package_name = "RFate"
 package_version = "0.2.0.9000"
+# package_version = "1.0"
 
 #####################################################################
 

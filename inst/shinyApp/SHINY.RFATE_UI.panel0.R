@@ -31,10 +31,10 @@ tabPanel(title =  HTML("<span class='panel_title'><i class='fa fa-home'></i></sp
                       )
                       , br()
                       , br()
-                      , downloadButton(outputId = "report"
-                                       , label = "Generate report"
-                                       , width = "100%"
-                                       , style = button.style.help)
+                      # , downloadButton(outputId = "report"
+                      #                  , label = "Generate report"
+                      #                  , width = "100%"
+                      #                  , style = button.style.help)
                       
                )
                , column(1, br())

@@ -35,7 +35,7 @@ observeEvent(input$HELP.panel0, {
                                                             <li>the different steps to be followed in each part</li>
                                                             <li>the different parameters needed by the available functions, and redirection to more complete documentation</li>
                                                             </ul>"
-                                                            , "More detailed informations about <code>FATE</code> software or <code>RFate</code> package can be found on their corresponding websites.
+                                                            , "More detailed informations about <code>FATE</code> software or <code>RFate</code> package can be found on their website.
                                                             "))
           )
   )
