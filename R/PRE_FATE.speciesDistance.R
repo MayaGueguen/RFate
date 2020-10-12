@@ -404,9 +404,8 @@ PRE_FATE.speciesDistance = function(mat.traits
   ##  - standard deviation (variability of distances)
   tab_eval.2 = foreach(tr = names_traits, .combine = "rbind") %do%
   {
-    mat.traits.split = split(mat.traits[, tr, drop = FALSE]
-                             , f = mat.traits$GROUP)
-    mat.species.gower.split = lapply(mat.traits.split, FD::gowdis)
+    mat.traits.split = split(mat.traits[, tr], f = mat.traits$GROUP)
+    mat.species.gower.split = lapply(mat.traits.split, function(x) FD::gowdis(x = data.frame(x)))
     res = foreach(x = names(mat.species.gower.split), .combine = "rbind") %do%
     {
       mat = as.matrix(mat.species.gower.split[[x]])

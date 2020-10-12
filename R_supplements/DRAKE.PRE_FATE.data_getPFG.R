@@ -16,25 +16,26 @@ getPFG_1_selectTraits = function(mat.traits)
   mat.traits.select$GROUP[which(mat.traits$LHIST == "Helophyte_Hydrophyte")] = "Herbaceous"
   mat.traits.select$GROUP[which(mat.traits$LHIST == "Therophyte")] = "Herbaceous"
   
+  ## Take the root square of height:
+  mat.traits.select$MATURITY = as.numeric(mat.traits$MATURITY)
+  mat.traits.select$LONGEVITY = as.numeric(mat.traits$LONGEVITY)
+  mat.traits.select$HEIGHT = as.numeric(log(as.numeric(mat.traits$HEIGHT)))
+  # mat.traits.select$DISPERSAL = exp(as.numeric(as.character(mat.traits.select$DISPERSAL))) # Disp is not an ordered factor anymore!
+  
   ## Fix ordered factors
   mat.traits.select$DISPERSAL = ordered(factor(mat.traits$DISPERSAL))
   mat.traits.select$LIGHT = ordered(factor(mat.traits$LIGHT))
-  mat.traits.select$NITROGEN = ordered(factor(mat.traits$NITROGEN))
-  mat.traits.select$MOISTURE = ordered(factor(mat.traits$MOISTURE))
+  # mat.traits.select$MOISTURE = ordered(factor(mat.traits$MOISTURE))
+  mat.traits.select$NITROGEN = as.numeric(as.character(mat.traits$NITROGEN))
+  # mat.traits.select$NITROGEN_TOLERANCE = ordered(factor(mat.traits$NITROGEN_TOLERANCE))
+  mat.traits.select$NITROGEN_TOLERANCE = c(0.2, 1)[mat.traits$NITROGEN_TOLERANCE]
+  mat.traits.select$GRAZ_MOW_TOLERANCE = ordered(factor(mat.traits$GRAZ_MOW_TOLERANCE))
   
-  # mat.traits.select$DISPERSAL = as.numeric(as.character(mat.traits$DISPERSAL))
-  # mat.traits.select$LIGHT = as.numeric(as.character(mat.traits$LIGHT))
-  # mat.traits.select$NITROGEN = as.numeric(as.character(mat.traits$NITROGEN))
-  # mat.traits.select$MOISTURE = as.numeric(as.character(mat.traits$MOISTURE))
   # mat.traits.select$PALATABILITY = ifelse(is.na(mat.traits$PALATABILITY), NA, paste0("pal", mat.traits$PALATABILITY))
   # mat.traits.select$PALATABILITY = ordered(factor(mat.traits.select$PALATABILITY))
   # mat.traits.select$GRAZ_MOW_TOLERANCE = ifelse(is.na(mat.traits$GRAZ_MOW_TOLERANCE)
   #                                               , NA, paste0("pal", mat.traits$GRAZ_MOW_TOLERANCE))
   # mat.traits.select$GRAZ_MOW_TOLERANCE = ordered(factor(mat.traits.select$GRAZ_MOW_TOLERANCE))
-  
-  ## Take the root square of height:
-  mat.traits.select$HEIGHT = as.numeric(log(as.numeric(mat.traits$HEIGHT)))
-  # mat.traits.select$DISPERSAL = exp(as.numeric(as.character(mat.traits.select$DISPERSAL))) # Disp is not an ordered factor anymore!
   
   return(mat.traits.select)
 }

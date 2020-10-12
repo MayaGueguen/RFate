@@ -249,7 +249,7 @@ ZONE = BAUGES
     ## Build PFG
     # , selected.sp = fread(file_in(paste0(zone.name, "/PFG_Bauges_Description_2017_BIS.csv")))
     , PFG.dist.clust1 = getPFG_2_calcDistClust(zone.name = zone.name
-                                               , mat.traits = PFG.mat.traits.dom
+                                               , mat.traits = PFG.mat.traits.dom[, c(1:2,5:8)]
                                                , mat.overlap = DOM.sp.dom.overlap
                                                , selRules = zone.rules.spDist)
     , PFG.clust2 = getPFG_2_calcDeterm(zone.name = zone.name
@@ -300,6 +300,42 @@ ZONE = BAUGES
   )
 }
 
+
+{
+  zone.name = ZONE$zone.name
+  sp.selected = fread("../data_supplements/Bauges/PFG_Bauges_Description_2017_BIS.csv")
+  sp.selected = as.data.frame(sp.selected, stringAsFactors = FALSE)
+  sp.selected$CODE_CBNA = paste0("X", sp.selected$CODE_CBNA)
+  sp.selected = sp.selected[, c("species", "CODE_CBNA", "PFG")]
+  colnames(sp.selected) = c("NAME", "species", "PFG")
+  
+  TR_FATE.TAB_traits_FATE = fread(file = file_in("TRAITS_FATE_2020-08-24.csv"), sep = "\t")
+  TR_FATE.TAB_traits_FATE = as.data.frame(TR_FATE.TAB_traits_FATE)
+  PFG.mat.traits.select = getPFG_1_selectTraits(mat.traits = TR_FATE.TAB_traits_FATE)
+  PFG.mat.traits.dom = PFG.mat.traits.select[which(PFG.mat.traits.select$species %in% sp.selected$species), ]
+  
+  PFG.table = merge(sp.selected, PFG.mat.traits.dom, by = "species")
+  colnames(PFG.table) = c("species", "NAME", "PFG", "type", "maturity", "longevity", "height"
+                          , "dispersal", "light", "soil_contrib", "soil_tolerance", "dist_tolerance")
+  PFG.traits = PRE_FATE.speciesClustering_step3(mat.traits = PFG.table[, -which(colnames(PFG.table) %in% c("NAME", "type"))])
+  PFG.traits = as.data.frame(PFG.traits$tab)
+  PFG.traits$type = strtrim(PFG.traits$PFG, 1)
+  
+  DATASET.save = list(dom.traits = as.data.frame(PFG.table)
+                      , PFG.traits = PFG.traits
+                      , tab.succ = PFG.traits[, c("PFG", "type", "height", "maturity", "longevity")]
+                      , tab.light = PFG.traits[, c("PFG", "type", "light")]
+                      , tab.soil = PFG.traits[, c("PFG", "type", "soil_contrib", "soil_tol_min", "soil_tol_max")]
+                      , tab.disp = PFG.traits[, c("PFG", "type", "dispersal")]
+                      , tab.dist = PFG.traits[, c("PFG", "type", "dist_tolerance")])
+  DATASET.saved = {
+    Encoding(DATASET.save$dom.traits$NAME) = "latin1"
+    DATASET.save$dom.traits$NAME = iconv(DATASET.save$dom.traits$NAME, "latin1", "UTF-8")
+    assign(paste0("DATASET_", zone.name, "_parameters"), DATASET.save)
+    save(list = paste0("DATASET_", zone.name, "_parameters")
+         , file = paste0("DATASET_", zone.name, "_parameters.RData"))
+  }
+}
 
 
 
